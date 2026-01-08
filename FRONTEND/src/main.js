@@ -1,0 +1,483 @@
+// Main entry point
+import { Router } from './router.js';
+import { renderHeader } from './components/Header.js';
+import { renderOverview, initOverview } from './views/Overview.js';
+import { renderLedger, initLedger } from './views/Ledger.js';
+import { renderContracts, initContracts } from './views/Contracts.js';
+import { renderContractDetail, initContractDetail } from './views/ContractDetail.js';
+import { renderProfile, initProfile } from './views/Profile.js';
+import { renderMyContracts, initMyContracts } from './views/MyContracts.js';
+import { renderDocs, initDocs } from './views/Docs.js';
+import { renderFunding, initFunding } from './views/Funding.js';
+import { renderReceipts, initReceipts } from './views/Receipts.js';
+import { renderReceiptDetail, initReceiptDetail } from './views/ReceiptDetail.js';
+
+// App state
+const appState = {
+    isLoggedIn: false,
+    username: null,
+    displayName: null,
+    connectedSources: {
+        twitter: false,
+        github: false,
+        stripe: false
+    }
+};
+
+// Expose appState globally for views to access
+window.appState = appState;
+
+// Routes configuration
+const routes = [
+    { path: '/overview', render: renderOverview, init: initOverview },
+    { path: '/ledger', render: renderLedger, init: initLedger },
+    { path: '/contracts', render: renderContracts, init: initContracts },
+    { path: '/contracts/:id', render: renderContractDetail, init: initContractDetail },
+    { path: '/profile', render: renderProfile, init: initProfile },
+    { path: '/my-contracts', render: renderMyContracts, init: initMyContracts },
+    { path: '/docs', render: renderDocs, init: initDocs },
+    { path: '/funding', render: renderFunding, init: initFunding },
+    { path: '/receipts', render: renderReceipts, init: initReceipts },
+    { path: '/receipts/:id', render: renderReceiptDetail, init: initReceiptDetail }
+];
+
+// Initialize router
+const router = new Router(routes);
+window.router = router;
+
+// App methods exposed globally
+window.app = {
+    openAccessModal: function () {
+        const backdrop = document.getElementById('modal-access-backdrop');
+        const modal = document.getElementById('modal-access');
+        backdrop.classList.remove('hidden');
+        modal.classList.remove('hidden');
+        setTimeout(() => {
+            backdrop.classList.remove('opacity-0');
+            modal.classList.remove('scale-95', 'opacity-0');
+            modal.classList.add('scale-100', 'opacity-100');
+        }, 10);
+    },
+    closeAccessModal: function () {
+        const backdrop = document.getElementById('modal-access-backdrop');
+        const modal = document.getElementById('modal-access');
+        backdrop.classList.add('opacity-0');
+        modal.classList.add('scale-95', 'opacity-0');
+        modal.classList.remove('scale-100', 'opacity-100');
+        setTimeout(() => {
+            backdrop.classList.add('hidden');
+            modal.classList.add('hidden');
+        }, 300);
+    },
+    handleAuthClick: function () {
+        if (appState.isLoggedIn) {
+            window.router.navigate('/profile');
+        } else {
+            window.app.openAccessModal();
+        }
+    },
+    handleInitiate: function () {
+        if (!appState.isLoggedIn) {
+            window.app.openAccessModal();
+        } else {
+            window.router.navigate('/contracts');
+        }
+    },
+    handleLoginSubmit: function () {
+        const btn = document.getElementById('btn-login-submit');
+        const originalText = btn.innerText;
+        btn.innerHTML = `<div class="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin mx-auto"></div>`;
+
+        setTimeout(() => {
+            appState.isLoggedIn = true;
+            appState.username = "@user_demo";
+
+            window.app.closeAccessModal();
+            updateAuthUI();
+            btn.innerText = originalText;
+        }, 800);
+    },
+    goToCreateIdentity: function () {
+        window.app.closeAccessModal();
+        setTimeout(() => {
+            window.app.openCreateModal();
+        }, 350);
+    },
+    openCreateModal: function () {
+        const backdrop = document.getElementById('modal-create-backdrop');
+        const modal = document.getElementById('modal-create');
+        backdrop.classList.remove('hidden');
+        modal.classList.remove('hidden');
+        setTimeout(() => {
+            backdrop.classList.remove('opacity-0');
+            modal.classList.remove('scale-95', 'opacity-0');
+            modal.classList.add('scale-100', 'opacity-100');
+        }, 10);
+    },
+    closeCreateModal: function () {
+        const backdrop = document.getElementById('modal-create-backdrop');
+        const modal = document.getElementById('modal-create');
+        backdrop.classList.add('opacity-0');
+        modal.classList.add('scale-95', 'opacity-0');
+        modal.classList.remove('scale-100', 'opacity-100');
+        setTimeout(() => {
+            backdrop.classList.add('hidden');
+            modal.classList.add('hidden');
+        }, 300);
+    },
+    handleCreateAccount: function () {
+        const btn = document.getElementById('btn-create-submit');
+        const displayName = document.getElementById('create-displayname').value;
+        const originalText = btn.innerText;
+        btn.innerHTML = `<div class="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin mx-auto"></div>`;
+
+        setTimeout(() => {
+            appState.isLoggedIn = true;
+            appState.username = "@" + (displayName || "new_user");
+
+            window.app.closeCreateModal();
+            updateAuthUI();
+            btn.innerText = originalText;
+        }, 1000);
+    },
+    handleSignOut: function () {
+        appState.isLoggedIn = false;
+        appState.username = null;
+        updateAuthUI();
+        window.router.navigate('/overview');
+    },
+    toggleMenuPersistence: function (e) {
+        e.stopPropagation();
+        const dropdown = document.getElementById('user-dropdown-content');
+        if (dropdown) dropdown.classList.toggle('!block');
+    },
+    connectSource: function (source) {
+        const btn = document.getElementById(source + '-btn');
+        const status = document.getElementById(source + '-status');
+        const sourceCard = document.getElementById('source-' + source);
+
+        if (!btn) return;
+
+        const originalText = btn.innerText;
+        btn.innerHTML = `<div class="w-3 h-3 border-2 border-neutral-300 border-t-neutral-600 rounded-full animate-spin"></div>`;
+        btn.disabled = true;
+
+        // Simulate OAuth connection
+        setTimeout(() => {
+            appState.connectedSources[source] = true;
+
+            // Update UI
+            const usernames = {
+                twitter: '@' + (appState.username?.replace('@', '') || 'user'),
+                github: appState.username?.replace('@', '') || 'user',
+                stripe: 'acct_' + Math.random().toString(36).substr(2, 6)
+            };
+
+            status.textContent = usernames[source] + ' • Connected';
+            status.classList.remove('text-neutral-400');
+            status.classList.add('text-neutral-500');
+
+            btn.outerHTML = `
+                <span class="flex items-center gap-1.5 text-[#1F7A4D] text-[11px] font-mono uppercase">
+                    <i data-lucide="check-circle" class="w-4 h-4"></i>
+                    Verified
+                </span>
+            `;
+
+            // Re-init icons
+            if (window.lucide) window.lucide.createIcons();
+
+            // Hide alert if all sources connected or at least one
+            const hasAnySource = Object.values(appState.connectedSources).some(v => v);
+            if (hasAnySource) {
+                const alert = document.getElementById('sources-alert');
+                if (alert) alert.classList.add('hidden');
+            }
+        }, 1500);
+    },
+    // Card Modal Functions (SetupIntent pattern)
+    openCardModal: function () {
+        const backdrop = document.getElementById('modal-card-backdrop');
+        const modal = document.getElementById('modal-card');
+        backdrop.classList.remove('hidden');
+        modal.classList.remove('hidden');
+        setTimeout(() => {
+            backdrop.classList.remove('opacity-0');
+            modal.classList.remove('scale-95', 'opacity-0');
+            modal.classList.add('scale-100', 'opacity-100');
+        }, 10);
+        // Init lucide icons in modal
+        if (window.lucide) window.lucide.createIcons();
+    },
+    closeCardModal: function () {
+        const backdrop = document.getElementById('modal-card-backdrop');
+        const modal = document.getElementById('modal-card');
+        backdrop.classList.add('opacity-0');
+        modal.classList.add('scale-95', 'opacity-0');
+        modal.classList.remove('scale-100', 'opacity-100');
+        setTimeout(() => {
+            backdrop.classList.add('hidden');
+            modal.classList.add('hidden');
+            // Clear form
+            document.getElementById('card-number').value = '';
+            document.getElementById('card-expiry').value = '';
+            document.getElementById('card-cvc').value = '';
+        }, 300);
+    },
+    addCard: function () {
+        // Open the inline card entry modal (SetupIntent pattern)
+        window.app.openCardModal();
+    },
+    confirmCardSetup: function () {
+        const btn = document.getElementById('btn-card-submit');
+        const cardNumber = document.getElementById('card-number').value;
+        const expiry = document.getElementById('card-expiry').value;
+        const cvc = document.getElementById('card-cvc').value;
+
+        // Basic validation
+        if (!cardNumber || !expiry || !cvc) {
+            return;
+        }
+
+        const originalText = btn.innerHTML;
+        btn.innerHTML = `<div class="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin"></div>`;
+        btn.disabled = true;
+
+        // Simulate SetupIntent confirmation
+        // In production: POST /v1/funding/setup-intent → get clientSecret → stripe.confirmSetup()
+        setTimeout(() => {
+            // Get last 4 digits
+            const last4 = cardNumber.replace(/\s/g, '').slice(-4);
+
+            // Update the funding page if we're on it
+            const status = document.getElementById('card-status');
+            const addBtn = document.getElementById('add-card-btn');
+
+            if (status) {
+                status.textContent = `•••• •••• •••• ${last4} • Active`;
+                status.classList.remove('text-neutral-400');
+                status.classList.add('text-neutral-500');
+            }
+
+            if (addBtn) {
+                addBtn.innerHTML = 'Remove';
+                addBtn.onclick = () => window.app.removeCard();
+            }
+
+            // Store in state
+            appState.hasCard = true;
+            appState.cardLast4 = last4;
+
+            // Close modal
+            window.app.closeCardModal();
+            btn.innerHTML = originalText;
+            btn.disabled = false;
+        }, 1500);
+    },
+    removeCard: function () {
+        const btn = document.getElementById('add-card-btn');
+        const status = document.getElementById('card-status');
+
+        status.textContent = 'No card on file';
+        status.classList.remove('text-neutral-500');
+        status.classList.add('text-neutral-400');
+
+        btn.innerHTML = 'Add Card';
+        btn.onclick = () => window.app.addCard();
+
+        appState.hasCard = false;
+        appState.cardLast4 = null;
+
+        btn.innerHTML = 'Add Card';
+        btn.onclick = () => window.app.addCard();
+    },
+    setupPayout: function () {
+        const btn = document.getElementById('setup-payout-btn');
+        const status = document.getElementById('payout-status');
+
+        if (!btn) return;
+
+        btn.innerHTML = `<div class="w-3 h-3 border-2 border-neutral-300 border-t-neutral-600 rounded-full animate-spin"></div>`;
+        btn.disabled = true;
+
+        // Simulate Stripe Connect
+        setTimeout(() => {
+            status.textContent = 'Bank account ••••6789 • Active';
+            status.classList.remove('text-neutral-400');
+            status.classList.add('text-neutral-500');
+
+            btn.innerHTML = 'Update';
+            btn.disabled = false;
+        }, 2000);
+    },
+    // Settings Modal Functions
+    openSettingsModal: function () {
+        const backdrop = document.getElementById('modal-settings-backdrop');
+        const modal = document.getElementById('modal-settings');
+        backdrop.classList.remove('hidden');
+        modal.classList.remove('hidden');
+        setTimeout(() => {
+            backdrop.classList.remove('opacity-0');
+            modal.classList.remove('scale-95', 'opacity-0');
+            modal.classList.add('scale-100', 'opacity-100');
+        }, 10);
+
+        // Update settings username from state
+        const usernameEl = document.getElementById('settings-username');
+        if (usernameEl && appState.username) {
+            usernameEl.textContent = appState.username;
+        }
+
+        // Populate connected sources
+        window.app.populateSettingsSources();
+
+        // Init lucide icons and tabs
+        if (window.lucide) window.lucide.createIcons();
+        window.app.initSettingsTabs();
+    },
+    closeSettingsModal: function () {
+        const backdrop = document.getElementById('modal-settings-backdrop');
+        const modal = document.getElementById('modal-settings');
+        backdrop.classList.add('opacity-0');
+        modal.classList.add('scale-95', 'opacity-0');
+        modal.classList.remove('scale-100', 'opacity-100');
+        setTimeout(() => {
+            backdrop.classList.add('hidden');
+            modal.classList.add('hidden');
+            // Reset to first tab
+            window.app.switchSettingsTab('account');
+        }, 300);
+    },
+    initSettingsTabs: function () {
+        const tabs = document.querySelectorAll('.settings-tab');
+        tabs.forEach(tab => {
+            tab.onclick = () => {
+                const tabName = tab.getAttribute('data-settings-tab');
+                window.app.switchSettingsTab(tabName);
+            };
+        });
+    },
+    switchSettingsTab: function (tabName) {
+        const tabs = document.querySelectorAll('.settings-tab');
+        const panels = document.querySelectorAll('.settings-panel');
+
+        // Update tab styles - Aura pattern
+        tabs.forEach(t => {
+            t.classList.remove('bg-neutral-100', 'bg-red-50', 'text-neutral-900');
+            t.classList.add('text-neutral-500');
+            if (t.getAttribute('data-settings-tab') === 'danger') {
+                t.classList.add('text-[#B91C1C]');
+                t.classList.remove('text-neutral-500');
+            }
+        });
+
+        const activeTab = document.querySelector(`[data-settings-tab="${tabName}"]`);
+        if (activeTab) {
+            if (tabName === 'danger') {
+                activeTab.classList.add('bg-red-50');
+            } else {
+                activeTab.classList.add('bg-neutral-100', 'text-neutral-900');
+                activeTab.classList.remove('text-neutral-500');
+            }
+        }
+
+        // Show/hide panels
+        panels.forEach(p => p.classList.add('hidden'));
+        const activePanel = document.getElementById('settings-panel-' + tabName);
+        if (activePanel) activePanel.classList.remove('hidden');
+
+        if (window.lucide) window.lucide.createIcons();
+    },
+    populateSettingsSources: function () {
+        const container = document.getElementById('settings-sources-list');
+        if (!container) return;
+
+        const sources = [
+            { id: 'stripe', name: 'Stripe', icon: 'credit-card', connected: appState.connectedSources?.stripe },
+            { id: 'github', name: 'GitHub', icon: 'github', connected: appState.connectedSources?.github },
+            { id: 'twitter', name: 'X (Twitter)', icon: 'twitter', connected: appState.connectedSources?.twitter }
+        ];
+
+        container.innerHTML = sources.map(s => `
+            <div class="border border-neutral-200 p-4 rounded-[2px] flex items-center justify-between">
+                <div class="flex items-center gap-3">
+                    <div class="w-10 h-10 bg-neutral-100 rounded flex items-center justify-center">
+                        <i data-lucide="${s.icon}" class="w-5 h-5 text-neutral-500"></i>
+                    </div>
+                    <div>
+                        <p class="text-sm font-medium text-neutral-900">${s.name}</p>
+                        <p class="font-mono text-[10px] ${s.connected ? 'text-[#1F7A4D]' : 'text-neutral-400'} flex items-center gap-1">
+                            ${s.connected ? '<span class="w-1.5 h-1.5 bg-[#1F7A4D] rounded-full"></span> CONNECTED' : '• DISCONNECTED'}
+                        </p>
+                    </div>
+                </div>
+                <button onclick="window.app.${s.connected ? 'disconnect' : 'connect'}Source('${s.id}')" class="px-3 py-1.5 border border-neutral-200 text-[11px] font-mono uppercase tracking-wide text-neutral-600 hover:border-neutral-400 transition-colors">
+                    ${s.connected ? 'Disconnect' : 'Connect'}
+                </button>
+            </div>
+        `).join('');
+
+        if (window.lucide) window.lucide.createIcons();
+    },
+    disconnectSource: function (source) {
+        appState.connectedSources[source] = false;
+        window.app.populateSettingsSources();
+    }
+};
+
+function updateAuthUI() {
+    const btnAuth = document.getElementById('btn-auth');
+    const userMenu = document.getElementById('user-menu');
+
+    if (appState.isLoggedIn && btnAuth && userMenu) {
+        btnAuth.classList.add('hidden');
+        userMenu.classList.remove('hidden');
+        document.getElementById('menu-username').innerText = appState.username;
+    } else if (btnAuth && userMenu) {
+        btnAuth.classList.remove('hidden');
+        userMenu.classList.add('hidden');
+    }
+}
+
+// Protected routes that require login
+const protectedRoutes = ['/contracts', '/my-contracts', '/profile', '/funding'];
+
+// Route change handler
+router.onRouteChange = function (route, path) {
+    // Check if route requires authentication
+    const isProtected = protectedRoutes.some(pr => path === pr || path.startsWith(pr + '/'));
+
+    if (isProtected && !appState.isLoggedIn) {
+        // Show login modal and stay on current page
+        window.app.openAccessModal();
+        // Redirect to overview
+        window.location.hash = '/overview';
+        return;
+    }
+
+    // Render header with current route
+    const headerMount = document.getElementById('header-mount');
+    headerMount.innerHTML = renderHeader(path);
+
+    // Render view content
+    const appMount = document.getElementById('app');
+    appMount.innerHTML = route.render(route.params);
+
+    // Initialize view
+    if (route.init) {
+        setTimeout(() => route.init(), 0);
+    }
+
+    // Reinitialize Lucide icons
+    if (window.lucide) {
+        setTimeout(() => window.lucide.createIcons(), 10);
+    }
+
+    // Update auth UI
+    updateAuthUI();
+};
+
+// Handle default route
+if (!window.location.hash) {
+    window.location.hash = '/overview';
+}

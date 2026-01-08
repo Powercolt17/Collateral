@@ -1,0 +1,514 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Collateral | Contract Receipt</title>
+<!-- Fonts -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+<link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600&amp;family=Inter:wght@400;500&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap" rel="stylesheet">
+<!-- Scripts -->
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="https://unpkg.com/lucide@latest"></script>
+<script>
+tailwind.config = {
+theme: {
+extend: {
+fontFamily: {
+sans: ['Inter', 'sans-serif'],
+display: ['Inter Tight', 'sans-serif'],
+mono: ['JetBrains Mono', 'monospace'],
+},
+animation: {
+'activate': 'activate 300ms cubic-bezier(0.16, 1, 0.3, 1) forwards',
+},
+keyframes: {
+activate: {
+'0%': { opacity: '0', transform: 'translateY(4px)' },
+'100%': { opacity: '1', transform: 'translateY(0)' },
+}
+},
+colors: {
+brand: {
+DEFAULT: '#A02020', // Updated Red
+hover: '#851B1B',
+dim: '#FEF2F2'
+}
+}
+}
+}
+}
+</script>
+<style>
+/* Custom Scrollbar */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: #E5E5E5; border-radius: 10px; }
+::-webkit-scrollbar-thumb:hover { background: #D4D4D4; }
+/* Hide scrollbar for tabs but allow scroll */
+.no-scrollbar::-webkit-scrollbar { display: none; }
+.no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+/* Utility for changing views */
+.view-section { display: none; }
+.view-section.active { display: flex; }
+/* Details summary marker customization */
+details > summary { list-style: none; }
+details > summary::-webkit-details-marker { display: none; }
+</style></head>
+<body class="min-h-screen flex flex-col font-sans relative selection:bg-neutral-200 selection:text-neutral-900 text-neutral-900 bg-[#FAFAFA] antialiased overflow-x-hidden">
+
+    <!-- Subtle Grid Background -->
+    <div class="fixed inset-0 pointer-events-none z-0" style="background-size: 40px 40px; background-image: linear-gradient(to right, rgba(0,0,0,0.02) 1px, transparent 1px), linear-gradient(to bottom, rgba(0,0,0,0.02) 1px, transparent 1px);"></div>
+    
+    <!-- Noise Overlay -->
+    <div class="fixed inset-0 pointer-events-none z-0 opacity-[0.03]" style="background-image: url('data:image/svg+xml,%3Csvg viewBox=%220 0 200 200%22 xmlns=%22http://www.w3.org/2000/svg%22%3E%3Cfilter id=%22noise%22%3E%3CfeTurbulence type=%22fractalNoise%22 baseFrequency=%220.65%22 numOctaves=%223%22 stitchTiles=%22stitch%22/%3E%3C/filter%3E%3Crect width=%22100%25%22 height=%22100%25%22 filter=%22url(%23noise)%22/%3E%3C/svg%3E');"></div>
+
+    <!-- Sticky Navigation -->
+    <nav class="fixed top-0 w-full z-50 border-b border-neutral-200/60 bg-[#FAFAFA]/80 backdrop-blur-md">
+        <div class="max-w-5xl mx-auto px-6 h-16 flex justify-between items-center">
+            <!-- Left: Brand -->
+            <a onclick="navigateTo('profile')" class="flex items-center gap-2.5 group cursor-pointer">
+                <div class="w-4 h-4 bg-neutral-900 flex items-center justify-center rounded-[2px] transition-transform group-hover:scale-90 shadow-sm">
+                    <div class="w-1.5 h-1.5 bg-white rounded-[0.5px]"></div>
+                </div>
+                <span class="font-mono text-xs font-medium tracking-wider uppercase text-neutral-900">Collateral</span>
+            </a>
+
+            <!-- Center: Links -->
+            <div class="hidden md:flex items-center bg-white/50 border border-neutral-200/50 rounded-full px-1 py-1 shadow-sm">
+                <button onclick="navigateTo('ledger')" id="nav-ledger" class="nav-btn relative px-4 py-1.5 text-[11px] font-medium tracking-wide uppercase text-neutral-500 hover:text-neutral-900 transition-colors rounded-full">Global Ledger</button>
+                <button onclick="navigateTo('profile')" id="nav-profile" class="nav-btn relative px-4 py-1.5 text-[11px] font-medium tracking-wide uppercase text-neutral-900 bg-white shadow-sm rounded-full transition-all">Identity</button>
+            </div>
+
+            <!-- Right: Logged In State -->
+            <div class="flex items-center gap-4">
+                <div class="hidden md:flex items-center gap-2">
+                    <span class="w-1.5 h-1.5 rounded-full bg-neutral-300"></span>
+                    <span class="font-mono text-[10px] text-neutral-400 uppercase tracking-widest">Protocol V1</span>
+                </div>
+                <!-- Profile Button -->
+                <button onclick="navigateTo('profile')" class="bg-white hover:bg-neutral-50 text-neutral-900 text-[11px] font-medium px-4 py-2 rounded-[4px] border border-neutral-200 transition-all shadow-sm flex items-center gap-2 group">
+                    <div class="w-1.5 h-1.5 bg-emerald-500 rounded-full animate-pulse"></div>
+                    <span class="font-mono tracking-wide">@alex_dev</span>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- MAIN CONTAINER -->
+    <div class="pt-28 pb-32 w-full max-w-5xl mx-auto px-6 relative z-10 min-h-screen">
+
+        <!-- VIEW: LEDGER -->
+        <div id="view-ledger" class="view-section flex-col animate-activate">
+            <div class="mb-8">
+                <h1 class="font-display font-semibold text-2xl text-neutral-900">Global Ledger</h1>
+                <p class="text-sm text-neutral-500 mt-2 font-sans">Public record of all settlement events.</p>
+            </div>
+            <div class="bg-white border border-neutral-200 rounded-lg overflow-hidden">
+                <table class="w-full text-left">
+                     <thead class="bg-neutral-50/50 border-b border-neutral-200">
+                        <tr>
+                            <th class="px-6 py-3 font-mono text-[10px] font-medium text-neutral-400 uppercase tracking-widest">Timestamp</th>
+                            <th class="px-6 py-3 font-mono text-[10px] font-medium text-neutral-400 uppercase tracking-widest">Type</th>
+                            <th class="px-6 py-3 font-mono text-[10px] font-medium text-neutral-400 uppercase tracking-widest text-right">Value</th>
+                            <th class="px-6 py-3 font-mono text-[10px] font-medium text-neutral-400 uppercase tracking-widest text-right">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-neutral-100">
+                        <tr class="group hover:bg-neutral-50 transition-colors">
+                            <td class="px-6 py-4 font-mono text-[11px] text-neutral-500">2023-10-27 14:32:01</td>
+                            <td class="px-6 py-4 font-sans text-xs font-medium text-neutral-900">Contract Settlement</td>
+                            <td class="px-6 py-4 font-mono text-[11px] text-neutral-900 text-right">$500.00</td>
+                            <td class="px-6 py-4 text-right">
+                                <button onclick="navigateTo('receipt', '4421')" class="text-[10px] font-medium uppercase tracking-wider text-neutral-500 hover:text-neutral-900 underline decoration-neutral-300 underline-offset-4 transition-colors">View Receipt</button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- VIEW: PROFILE / IDENTITY -->
+        <div id="view-profile" class="view-section flex-col animate-activate active">
+            <!-- Header Section -->
+            <div class="flex flex-col md:flex-row justify-between items-start md:items-end gap-6 mb-10">
+                <div class="flex flex-col gap-6">
+                    <div class="flex items-center gap-2 font-mono text-[10px] text-neutral-400 uppercase tracking-widest">
+                        <span class="hover:text-neutral-900 cursor-pointer transition-colors">Collateral</span>
+                        <i data-lucide="chevron-right" class="w-3 h-3"></i>
+                        <span class="text-neutral-900">Identity Record</span>
+                    </div>
+                    <div>
+                        <h1 class="font-display font-semibold text-3xl md:text-4xl tracking-tight text-[#A02020]">Alexander Doe</h1>
+                        <div class="flex items-center gap-3 mt-3">
+                            <span class="font-mono text-xs text-neutral-500">@alex_dev</span>
+                            <span class="w-1 h-1 bg-neutral-300 rounded-full"></span>
+                            <span class="font-mono text-[11px] text-neutral-400 bg-neutral-100 px-1.5 py-0.5 rounded border border-neutral-200">0x8a7...b21</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="flex flex-col items-end gap-2">
+                    <div class="flex items-center gap-3">
+                        <button class="h-9 px-4 bg-white border border-neutral-200 text-neutral-500 text-[11px] font-medium uppercase tracking-widest rounded-[4px] hover:border-neutral-300 hover:text-neutral-900 transition-all shadow-sm flex items-center gap-2">
+                            <i data-lucide="link" class="w-3 h-3"></i> Copy Record Link
+                        </button>
+                        <button class="h-9 px-4 bg-[#A02020] text-white text-[11px] font-medium uppercase tracking-widest rounded-[4px] hover:bg-[#851B1B] transition-all shadow-sm flex items-center gap-2">
+                            <i data-lucide="settings-2" class="w-3 h-3"></i> Edit Profile
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Content Tabs -->
+            <div class="flex flex-col w-full">
+                <div class="flex border-b border-neutral-200 mb-8 overflow-x-auto no-scrollbar">
+                    <button onclick="switchTab('overview')" id="tab-btn-overview" class="profile-tab-btn px-1 py-3 mr-8 text-[11px] font-medium uppercase tracking-wide border-b-2 border-neutral-900 text-neutral-900 transition-colors whitespace-nowrap">Overview</button>
+                    <button onclick="switchTab('contracts')" id="tab-btn-contracts" class="profile-tab-btn px-1 py-3 mr-8 text-[11px] font-medium uppercase tracking-wide border-b-2 border-transparent text-neutral-500 hover:text-neutral-900 transition-colors whitespace-nowrap">Active Contracts <span class="ml-1.5 bg-neutral-100 text-neutral-600 px-1.5 py-0.5 rounded-full text-[9px] align-middle">3</span></button>
+                </div>
+
+                <!-- Tab: Overview -->
+                <div id="tab-overview" class="profile-tab-content grid grid-cols-1 lg:grid-cols-3 gap-8">
+                    <div class="lg:col-span-2 flex flex-col gap-6">
+                        <div class="flex items-center justify-between">
+                            <h3 class="font-mono text-[11px] font-medium uppercase tracking-widest text-neutral-900">Active Commitments</h3>
+                            <a href="#" onclick="switchTab('contracts')" class="text-[10px] text-neutral-500 hover:text-neutral-900 underline decoration-neutral-300 underline-offset-2">View all</a>
+                        </div>
+
+                        <div class="flex flex-col gap-4">
+                            <!-- Card 1 -->
+                            <div class="group bg-white border border-neutral-200 rounded-lg p-5 hover:border-neutral-300 hover:shadow-md transition-all relative overflow-hidden">
+                                <div class="absolute top-0 left-0 w-[3px] h-full bg-[#A02020]"></div>
+                                <div class="flex justify-between items-start mb-3">
+                                    <div class="flex flex-col gap-1">
+                                        <span class="font-mono text-[10px] text-neutral-400 uppercase tracking-widest">Expires in 12h</span>
+                                        <h4 class="font-display font-medium text-lg text-neutral-900">Ship v2.1 to Production</h4>
+                                    </div>
+                                    <span class="font-mono text-xs font-medium text-neutral-900 bg-neutral-50 px-2 py-1 rounded border border-neutral-100">$500.00 Locked</span>
+                                </div>
+                                <div class="flex items-center justify-between mt-4">
+                                     <div class="flex items-center gap-4 text-[11px] text-neutral-500">
+                                        <div class="flex items-center gap-1.5">
+                                            <i data-lucide="git-commit" class="w-3.5 h-3.5"></i>
+                                            <span>GitHub Integration</span>
+                                        </div>
+                                    </div>
+                                    <!-- View Receipt Link -->
+                                    <button onclick="navigateTo('receipt', '4421')" class="flex items-center gap-1 text-[10px] font-medium uppercase tracking-wider text-neutral-500 hover:text-neutral-900 transition-colors">
+                                        View Receipt <i data-lucide="arrow-right" class="w-3 h-3"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tab: Contracts -->
+                <div id="tab-contracts" class="profile-tab-content hidden">
+                    <div class="w-full bg-white border border-neutral-200 rounded-lg overflow-hidden shadow-sm">
+                        <div class="overflow-x-auto">
+                            <table class="w-full text-left min-w-[600px]">
+                                <thead class="bg-neutral-50/50 border-b border-neutral-200">
+                                    <tr>
+                                        <th class="px-6 py-3 font-mono text-[10px] font-medium text-neutral-400 uppercase tracking-widest w-24">ID</th>
+                                        <th class="px-6 py-3 font-mono text-[10px] font-medium text-neutral-400 uppercase tracking-widest">Description</th>
+                                        <th class="px-6 py-3 font-mono text-[10px] font-medium text-neutral-400 uppercase tracking-widest w-32">Staked</th>
+                                        <th class="px-6 py-3 font-mono text-[10px] font-medium text-neutral-400 uppercase tracking-widest text-right w-24">Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="divide-y divide-neutral-100">
+                                    <tr class="group hover:bg-neutral-50 transition-colors">
+                                        <td class="px-6 py-4 font-mono text-[11px] text-neutral-500">#4421</td>
+                                        <td class="px-6 py-4 font-sans text-xs font-medium text-neutral-900">Ship v2.1 to Production</td>
+                                        <td class="px-6 py-4 font-mono text-[11px] text-neutral-900">$500.00</td>
+                                        <td class="px-6 py-4 text-right">
+                                            <button onclick="navigateTo('receipt', '4421')" class="text-[10px] font-medium uppercase tracking-wider text-neutral-500 hover:text-neutral-900 underline decoration-neutral-300 underline-offset-4 transition-colors">View</button>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- VIEW: CONTRACT DETAIL / RECEIPT -->
+        <div id="view-receipt" class="view-section flex-col animate-activate">
+            
+            <!-- Breadcrumb Navigation -->
+            <div class="flex items-center gap-2 mb-8 font-mono text-[10px] text-neutral-400 uppercase tracking-widest">
+                <button onclick="navigateTo('profile')" class="hover:text-neutral-900 cursor-pointer transition-colors">Contracts</button>
+                <i data-lucide="chevron-right" class="w-3 h-3"></i>
+                <span class="text-neutral-900" id="receipt-id-crumb">4421-8A7B-21C4</span>
+            </div>
+
+            <!-- DOCUMENT CONTAINER -->
+            <div class="bg-white border border-neutral-200 shadow-sm max-w-3xl mx-auto w-full relative rounded-sm overflow-hidden">
+                
+                <!-- 1. CONTRACT HEADER -->
+                <div class="p-8 border-b border-neutral-200">
+                    <div class="flex justify-between items-start">
+                        <div class="flex flex-col gap-2">
+                            <span class="font-mono text-[10px] text-neutral-400 uppercase tracking-widest">Contract ID</span>
+                            <h1 class="font-mono text-xl tracking-tight text-neutral-900" id="receipt-contract-id">4421-8A7B-21C4</h1>
+                        </div>
+                        <div class="flex flex-col items-end gap-2">
+                             <div class="inline-flex items-center px-2 py-1 rounded bg-emerald-50 border border-emerald-100 text-emerald-700">
+                                <span class="font-mono text-[10px] font-medium uppercase tracking-widest">Settled</span>
+                            </div>
+                            <span class="font-mono text-[10px] text-neutral-400 uppercase tracking-wider">2023-10-27 14:32 UTC</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 2. PARTIES & CAPITAL GRID -->
+                <div class="grid grid-cols-1 md:grid-cols-2 border-b border-neutral-200">
+                    <!-- Left: Parties -->
+                    <div class="p-8 border-b md:border-b-0 md:border-r border-neutral-200 flex flex-col gap-6">
+                        <h4 class="font-mono text-[10px] font-medium uppercase tracking-widest text-neutral-400">Parties Involved</h4>
+                        
+                        <div class="space-y-4">
+                            <div class="flex flex-col gap-1">
+                                <span class="font-mono text-[9px] uppercase tracking-widest text-neutral-500">Principal</span>
+                                <div class="flex items-center gap-2">
+                                    <span class="font-mono text-[11px] font-medium text-neutral-900">@alex_dev</span>
+                                    <span class="text-[9px] bg-neutral-100 text-neutral-500 px-1 rounded border border-neutral-200">Origin</span>
+                                </div>
+                            </div>
+                            
+                            <div class="flex flex-col gap-1">
+                                <span class="font-mono text-[9px] uppercase tracking-widest text-neutral-500">Counterparty</span>
+                                <span class="font-mono text-[11px] text-neutral-400">None (Public Commitment)</span>
+                            </div>
+
+                            <div class="flex flex-col gap-1">
+                                <span class="font-mono text-[9px] uppercase tracking-widest text-neutral-500">Verification Source</span>
+                                <div class="flex items-center gap-1.5">
+                                    <i data-lucide="git-commit" class="w-3 h-3 text-neutral-400"></i>
+                                    <span class="font-mono text-[11px] font-medium text-neutral-900">GitHub API</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Right: Capital Block -->
+                    <div class="p-8 flex flex-col gap-6 bg-neutral-50/20">
+                        <h4 class="font-mono text-[10px] font-medium uppercase tracking-widest text-neutral-400">Capital Block</h4>
+                        
+                        <div class="space-y-4">
+                            <div class="flex flex-col gap-1">
+                                <span class="font-mono text-[9px] uppercase tracking-widest text-neutral-500">Funding Method</span>
+                                <span class="font-mono text-[11px] font-medium text-neutral-900">USD (Stripe ACH)</span>
+                            </div>
+
+                            <div class="flex flex-col gap-1">
+                                <span class="font-mono text-[9px] uppercase tracking-widest text-neutral-500">Total Locked</span>
+                                <span class="font-mono text-lg font-medium text-neutral-900">$500.00</span>
+                            </div>
+
+                            <div class="flex flex-col gap-1">
+                                <span class="font-mono text-[9px] uppercase tracking-widest text-neutral-500">Settlement Outcome</span>
+                                <span class="font-mono text-[11px] font-medium text-emerald-700">Funds Returned to Principal</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 3. CONDITION BLOCK -->
+                <div class="p-8 border-b border-neutral-200">
+                    <h4 class="font-mono text-[10px] font-medium uppercase tracking-widest text-neutral-400 mb-4">Condition Terms</h4>
+                    
+                    <div class="flex flex-col gap-4">
+                        <div class="bg-neutral-50 border border-neutral-100 p-4 rounded-sm">
+                            <p class="font-sans text-sm text-neutral-900 leading-relaxed">
+                                The principal must merge a Pull Request into the <code class="bg-white border border-neutral-200 px-1 py-0.5 rounded text-[11px]">main</code> branch of the repository <code class="bg-white border border-neutral-200 px-1 py-0.5 rounded text-[11px]">collateral-v2</code> before the deadline. Failure to do so results in forfeiture.
+                            </p>
+                        </div>
+
+                        <!-- Collapsible Machine Logic -->
+                        <details class="group bg-neutral-900 text-neutral-200 rounded-sm overflow-hidden text-[11px] font-mono border border-neutral-800">
+                            <summary class="cursor-pointer p-3 flex items-center justify-between select-none hover:bg-neutral-800 transition-colors">
+                                <span class="uppercase tracking-widest text-neutral-400 text-[10px]">Compiled Logic</span>
+                                <div class="flex items-center gap-2">
+                                    <span class="text-[9px] text-neutral-500">JSON</span>
+                                    <i data-lucide="chevron-down" class="w-3 h-3 text-neutral-400 group-open:rotate-180 transition-transform"></i>
+                                </div>
+                            </summary>
+                            <div class="p-4 pt-0 border-t border-neutral-800 text-neutral-400 leading-relaxed overflow-x-auto">
+<pre class="whitespace-pre">{
+  "logic_version": "1.2",
+  "conditions": [
+    {
+      "source": "github.pr.merge",
+      "repo_id": "829102",
+      "branch": "main",
+      "operator": "==",
+      "target_value": true
+    },
+    {
+      "source": "timestamp",
+      "operator": "&lt;",
+      "target_value": 1698451140
+    }
+  ],
+  "consequence": {
+    "true": "RELEASE_PRINCIPAL",
+    "false": "FORFEIT_PROTOCOL"
+  }
+}</pre>
+                            </div>
+                        </details>
+                    </div>
+                </div>
+
+                <!-- 4. IMMUTABLE TIMELINE -->
+                <div class="p-8 bg-white">
+                    <h4 class="font-mono text-[10px] font-medium uppercase tracking-widest text-neutral-400 mb-6">Event Log</h4>
+                    
+                    <div class="relative pl-2 space-y-8 before:absolute before:left-[4px] before:top-2 before:bottom-2 before:w-px before:bg-neutral-200">
+                        
+                        <!-- Event 1 -->
+                        <div class="relative pl-6">
+                            <div class="absolute left-0 top-1.5 w-2 h-2 rounded-full bg-neutral-300 border-2 border-white box-content shadow-sm"></div>
+                            <div class="flex flex-col gap-1">
+                                <div class="flex justify-between items-baseline">
+                                    <span class="font-mono text-[11px] font-medium text-neutral-900 uppercase">Contract Created</span>
+                                    <span class="font-mono text-[10px] text-neutral-400">2023-10-25 09:00 UTC</span>
+                                </div>
+                                <span class="font-mono text-[10px] text-neutral-500">Hash: 0x9a...21b</span>
+                            </div>
+                        </div>
+
+                        <!-- Event 2 -->
+                         <div class="relative pl-6">
+                            <div class="absolute left-0 top-1.5 w-2 h-2 rounded-full bg-neutral-300 border-2 border-white box-content shadow-sm"></div>
+                            <div class="flex flex-col gap-1">
+                                <div class="flex justify-between items-baseline">
+                                    <span class="font-mono text-[11px] font-medium text-neutral-900 uppercase">Funds Locked ($500.00)</span>
+                                    <span class="font-mono text-[10px] text-neutral-400">2023-10-25 09:05 UTC</span>
+                                </div>
+                                <span class="font-mono text-[10px] text-neutral-500">Stripe Ref: pi_3N...29a</span>
+                            </div>
+                        </div>
+
+                        <!-- Event 3 -->
+                         <div class="relative pl-6">
+                            <div class="absolute left-0 top-1.5 w-2 h-2 rounded-full bg-neutral-300 border-2 border-white box-content shadow-sm"></div>
+                            <div class="flex flex-col gap-1">
+                                <div class="flex justify-between items-baseline">
+                                    <span class="font-mono text-[11px] font-medium text-neutral-900 uppercase">Verification Success</span>
+                                    <span class="font-mono text-[10px] text-neutral-400">2023-10-27 14:32 UTC</span>
+                                </div>
+                                <span class="font-mono text-[10px] text-neutral-500">Oracle ID: gh_api_200</span>
+                            </div>
+                        </div>
+
+                        <!-- Event 4 (Final) -->
+                        <div class="relative pl-6">
+                            <div class="absolute left-0 top-1.5 w-2 h-2 rounded-full bg-emerald-500 border-2 border-white box-content shadow-sm"></div>
+                            <div class="flex flex-col gap-1">
+                                <div class="flex justify-between items-baseline">
+                                    <span class="font-mono text-[11px] font-medium text-emerald-700 uppercase">Settled</span>
+                                    <span class="font-mono text-[10px] text-neutral-400">2023-10-27 14:32 UTC</span>
+                                </div>
+                                <span class="font-mono text-[10px] text-neutral-500">Payout ID: po_1M...88x</span>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+                <!-- 5. RECORD INTEGRITY FOOTER -->
+                <div class="bg-neutral-50 border-t border-neutral-200 px-8 py-6">
+                    <div class="flex flex-col md:flex-row justify-between items-end md:items-center gap-4">
+                        <div class="flex flex-col gap-1">
+                            <span class="font-mono text-[9px] uppercase tracking-widest text-neutral-400">Record Hash</span>
+                            <span class="font-mono text-[10px] text-neutral-500 break-all">0x7f8a92b1c4d5e6f7a8b9c0d1e2f3a4b5c6d7e8f9</span>
+                        </div>
+                        <div class="flex items-center gap-2 text-neutral-400">
+                            <i data-lucide="lock" class="w-3 h-3"></i>
+                            <span class="font-mono text-[9px] uppercase tracking-widest">This record is immutable</span>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Status Bar -->
+    <div class="fixed bottom-0 w-full bg-white/90 backdrop-blur border-t border-neutral-200 py-2.5 px-6 flex justify-between items-center z-40 text-[10px] font-mono uppercase tracking-widest text-neutral-400">
+        <div class="flex items-center gap-4">
+            <span class="text-neutral-900 font-medium">System Status</span>
+            <span class="flex items-center gap-1.5"><span class="w-1.5 h-1.5 bg-emerald-500 rounded-full animate-pulse"></span> Operational</span>
+        </div>
+        <div class="flex items-center gap-4">
+             <span class="hover:text-neutral-900 cursor-pointer transition-colors">Docs</span>
+             <span class="hover:text-neutral-900 cursor-pointer transition-colors">Terms</span>
+        </div>
+    </div>
+
+    <script>
+        lucide.createIcons();
+
+        // Navigation Logic
+        function navigateTo(viewId, contractId = null) {
+            // Hide all views
+            document.querySelectorAll('.view-section').forEach(el => {
+                el.classList.remove('active');
+            });
+            
+            // Show target view
+            const target = document.getElementById(`view-${viewId}`);
+            if(target) {
+                target.classList.add('active');
+                // Restart animation
+                target.classList.remove('animate-activate');
+                void target.offsetWidth; // trigger reflow
+                target.classList.add('animate-activate');
+            }
+
+            // Update Nav States
+            const navIds = ['profile', 'ledger'];
+            navIds.forEach(id => {
+                const btn = document.getElementById(`nav-${id}`);
+                if(btn) {
+                    if(id === viewId || (viewId === 'receipt' && id === 'profile')) {
+                         btn.classList.remove('text-neutral-500', 'hover:text-neutral-900', 'bg-white/0');
+                         btn.classList.add('text-neutral-900', 'bg-white', 'shadow-sm', 'cursor-default');
+                    } else {
+                         btn.classList.add('text-neutral-500', 'hover:text-neutral-900', 'bg-white/0');
+                         btn.classList.remove('text-neutral-900', 'bg-white', 'shadow-sm', 'cursor-default');
+                    }
+                }
+            });
+
+            // If navigating to receipt, scroll top
+            if(viewId === 'receipt') {
+                window.scrollTo(0,0);
+            }
+        }
+
+        function switchTab(tabName) {
+            // Hide all contents
+            document.querySelectorAll('.profile-tab-content').forEach(el => el.classList.add('hidden'));
+            // Show target
+            document.getElementById(`tab-${tabName}`).classList.remove('hidden');
+            
+            // Update buttons
+            document.querySelectorAll('.profile-tab-btn').forEach(btn => {
+                if (btn.id === `tab-btn-${tabName}`) {
+                    btn.classList.remove('border-transparent', 'text-neutral-500', 'hover:text-neutral-900');
+                    btn.classList.add('border-neutral-900', 'text-neutral-900');
+                } else {
+                    btn.classList.add('border-transparent', 'text-neutral-500', 'hover:text-neutral-900');
+                    btn.classList.remove('border-neutral-900', 'text-neutral-900');
+                }
+            });
+            lucide.createIcons();
+        }
+    </script>
+
+
+</body></html>

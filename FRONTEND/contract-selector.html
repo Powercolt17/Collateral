@@ -1,0 +1,837 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AURA | CONTRACT SELECTOR</title>
+<!-- Fonts -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&amp;family=Inter+Tight:wght@700;800;900&amp;family=JetBrains+Mono:wght@400;500;700&amp;display=swap" rel="stylesheet">
+<!-- Scripts -->
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="https://unpkg.com/lucide@latest"></script>
+<script>
+tailwind.config = {
+theme: {
+extend: {
+fontFamily: {
+sans: ['"Inter"', 'sans-serif'],
+mono: ['"JetBrains Mono"', 'monospace'],
+stamp: ['"Inter Tight"', 'sans-serif'],
+},
+colors: {
+red: {
+50: '#FEF2F2',
+600: '#D02B20', // System Risk / Irreversible
+700: '#B91C1C',
+},
+emerald: { // Terminal Success Only
+600: '#059669',
+700: '#047857',
+},
+gold: { // Upside Only (Muted)
+600: '#B49266',
+700: '#92724D',
+},
+zinc: {
+850: '#202023',
+900: '#18181B',
+950: '#09090B',
+}
+},
+letterSpacing: {
+tighter: '-0.04em',
+tight: '-0.02em',
+widest: '0.08em',
+},
+}
+}
+}
+</script>
+<style>
+body {
+background-color: #FFFFFF;
+color: #18181B;
+-webkit-font-smoothing: antialiased;
+font-family: 'Inter', sans-serif;
+}
+/* TYPOGRAPHY UTILS */
+.display-title {
+font-family: 'Inter', sans-serif;
+font-weight: 700; /* Reduced from 800 */
+font-size: 2.25rem;
+line-height: 0.95;
+letter-spacing: -0.04em;
+color: #18181B;
+text-transform: uppercase;
+}
+.mono-label {
+font-family: 'JetBrains Mono', monospace;
+font-size: 10px;
+text-transform: uppercase;
+letter-spacing: 0.06em;
+font-weight: 500;
+color: #71717A; /* zinc-500 */
+}
+/* INPUTS & CONTROLS */
+.legal-input {
+border-bottom: 1px solid #E4E4E7;
+background: transparent;
+border-radius: 0;
+padding: 8px 0;
+font-family: 'Inter', sans-serif;
+font-weight: 600;
+color: #18181B;
+transition: border-color 0.2s;
+}
+.legal-input:focus {
+outline: none;
+border-bottom-color: #18181B;
+}
+.legal-input::placeholder {
+color: #D4D4D8;
+font-weight: 400;
+}
+/* CUSTOM DROPDOWN - Minimal */
+.custom-dropdown-btn {
+border-bottom: 1px solid #E4E4E7;
+background: transparent;
+width: 100%;
+text-align: left;
+padding: 8px 0;
+font-family: 'Inter', sans-serif;
+font-weight: 600;
+font-size: 1.125rem;
+color: #18181B;
+display: flex;
+justify-content: space-between;
+align-items: center;
+}
+.custom-dropdown-btn:focus { outline: none; border-bottom-color: #18181B; }
+.dropdown-menu {
+position: absolute;
+top: 100%;
+left: 0;
+width: 100%;
+background: white;
+border: 1px solid #E4E4E7;
+box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+z-index: 50;
+margin-top: 0px;
+opacity: 0;
+visibility: hidden;
+transition: all 0.1s ease-out;
+}
+.dropdown-menu.open {
+opacity: 1;
+visibility: visible;
+}
+.dropdown-item {
+display: block;
+width: 100%;
+text-align: left;
+padding: 10px 12px;
+font-size: 0.875rem;
+font-weight: 400;
+color: #52525B;
+}
+.dropdown-item:hover { background: #F4F4F5; color: #18181B; }
+.dropdown-item.selected { background: #FAFAFA; color: #18181B; font-weight: 600; }
+/* Range Slider - Financial/Instrument */
+input[type=range] {
+-webkit-appearance: none;
+background: transparent;
+width: 100%;
+}
+input[type=range]::-webkit-slider-thumb {
+-webkit-appearance: none;
+height: 16px;
+width: 16px;
+background: #18181B; /* Zinc-900 */
+border: none;
+border-radius: 0; /* Square thumb */
+cursor: pointer;
+margin-top: -7px;
+box-shadow: none;
+}
+input[type=range]::-webkit-slider-runnable-track {
+width: 100%;
+height: 2px;
+background: #E4E4E7;
+}
+input[type=range]:focus::-webkit-slider-runnable-track {
+background: #A1A1AA;
+}
+/* CARD STATES - Strict Selection Semantics */
+.source-card, .tier-card {
+border: 1px solid #E4E4E7;
+background: #FFFFFF;
+color: #18181B;
+transition: all 0.15s ease-out;
+position: relative;
+}
+.source-card:hover, .tier-card:hover {
+border-color: #A1A1AA;
+}
+/* Selected: Thick dark border + subtle shadow. No color. */
+.card-selected {
+border: 2px solid #18181B !important;
+box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+background: #FAFAFA;
+padding: calc(2rem - 1px) !important; /* Adjust padding to prevent layout shift from border */
+}
+.tier-card.card-selected {
+padding: calc(1.25rem - 1px) !important;
+}
+/* CHECKBOX */
+.custom-checkbox {
+width: 16px;
+height: 16px;
+border: 1px solid #71717A;
+display: flex;
+align-items: center;
+justify-content: center;
+cursor: pointer;
+border-radius: 0px;
+background: white;
+transition: background-color 0.1s;
+}
+.custom-checkbox:hover { border-color: #000; }
+.custom-checkbox.checked {
+background: #000;
+border-color: #000;
+}
+/* STAMP - Terminal Success Only */
+.stamp-wrapper {
+position: absolute;
+top: 20px;
+right: 0px;
+width: 280px;
+height: 140px;
+pointer-events: none;
+z-index: 60;
+opacity: 0;
+transform: scale(1.0) rotate(-9deg);
+transition: opacity 0.2s ease-out;
+}
+.stamp--fired { opacity: 1; }
+.ink-group { fill: #047857; /* Emerald-700 */ }
+.ink-text { font-family: "Inter Tight", sans-serif; font-weight: 800; font-size: 44px; text-transform: uppercase; letter-spacing: 0.02em; }
+.ink-border { fill: none; stroke: #047857; stroke-width: 6; }
+.ink-micro { font-family: "JetBrains Mono", monospace; font-weight: 700; font-size: 10px; letter-spacing: 0.1em; fill: #047857; }
+/* LOCKED STATE */
+.page-locked { pointer-events: none; user-select: none; }
+.page-locked .custom-checkbox { opacity: 0.5 !important; cursor: default; }
+.page-locked .legal-input, .page-locked .source-card, .page-locked .tier-card, .page-locked input[type=range] { opacity: 0.5; filter: grayscale(1); }
+/* UTILS */
+.hide-scroll::-webkit-scrollbar { display: none; }
+.nav-item { border-left: 2px solid transparent; padding-left: 16px; margin-bottom: 4px; padding-top: 4px; padding-bottom: 4px;}
+.nav-active { border-left-color: #18181B; color: #18181B; font-weight: 600; }
+.nav-inactive { border-left-color: #F4F4F5; color: #A1A1AA; }
+.tier-label {
+font-family: 'JetBrains Mono', monospace;
+font-size: 10px;
+font-weight: 700;
+letter-spacing: 0.08em;
+text-transform: uppercase;
+margin-bottom: 8px;
+display: block;
+}
+/* Source Badges */
+.coming-online-badge {
+font-family: 'JetBrains Mono', monospace;
+font-size: 9px;
+font-weight: 500;
+color: #A1A1AA;
+border: 1px solid #F4F4F5;
+background: #FAFAFA;
+padding: 2px 6px;
+border-radius: 0;
+letter-spacing: 0.05em;
+}
+</style></head>
+<body class="h-screen overflow-hidden flex flex-col text-sm bg-white selection:bg-zinc-200 selection:text-black" onclick="closeDropdowns(event)">
+
+    <!-- HEADER -->
+    <header class="h-16 border-b border-zinc-200 flex items-center justify-between px-6 shrink-0 z-50 bg-white relative">
+        <div class="flex items-center gap-5">
+            <!-- Icon: Shield -> Square (More Institutional) -->
+            <div class="w-8 h-8 bg-zinc-900 flex items-center justify-center cursor-default">
+                <div class="w-3 h-3 border border-zinc-400"></div>
+            </div>
+            <div class="flex items-center gap-3 select-none">
+                <span class="font-bold text-xs tracking-[0.2em] text-zinc-900">AURA//CONTRACT</span>
+            </div>
+        </div>
+        
+        <div class="flex items-center gap-6">
+            <div class="hidden md:flex flex-col items-end">
+                <span class="mono-label text-[9px] mb-1">USER_ID</span>
+                <span class="font-mono text-xs font-medium text-zinc-900">0x82...9A</span>
+            </div>
+        </div>
+    </header>
+
+    <div class="flex flex-1 overflow-hidden">
+        
+        <!-- SIDEBAR -->
+        <aside class="w-64 border-r border-zinc-200 flex flex-col hidden md:flex bg-white pt-12 pb-6 justify-between">
+            <div class="px-0">
+                <span class="mono-label block mb-6 px-6">CONTRACT_SEQUENCE</span>
+                <nav class="flex flex-col">
+                    <div id="nav-step-1" class="nav-item nav-active cursor-default">
+                        <span class="mono-label tracking-wide block text-inherit">01 SOURCE</span>
+                    </div>
+                    <div id="nav-step-2" class="nav-item nav-inactive cursor-default">
+                        <span class="mono-label tracking-wide block text-inherit">02 COMMITMENT</span>
+                    </div>
+                    <div id="nav-step-3" class="nav-item nav-inactive cursor-default">
+                        <span class="mono-label tracking-wide block text-inherit">03 APPROVAL</span>
+                    </div>
+                </nav>
+            </div>
+            <div class="px-6 pb-6">
+                 <div class="text-[10px] text-zinc-400 leading-relaxed font-mono">
+                     IMMUTABLE LEDGER<br>NO APPEALS<br>V 2.0.4
+                 </div>
+            </div>
+        </aside>
+
+        <!-- MAIN CONTENT -->
+        <main class="flex-1 flex flex-col relative overflow-hidden bg-white">
+            
+            <div class="flex-1 overflow-y-auto p-8 md:p-16 relative hide-scroll w-full max-w-[1200px] mx-auto">
+                
+                <!-- STEP 1: SOURCE BINDING -->
+                <section id="view-step-1" class="block pt-2">
+                    <div class="mb-12">
+                        <h1 class="display-title mb-3">Identity Binding</h1>
+                        <p class="text-zinc-500 max-w-lg leading-relaxed text-sm font-medium">
+                            Choose the arena where you will be judged. This binds an external authority to your contract.
+                        </p>
+                    </div>
+
+                    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-12">
+                        <!-- Twitter -->
+                        <button class="source-card p-8 text-left h-48 flex flex-col justify-between group" onclick="selectSource(this, 'TWITTER')">
+                            <div class="w-full">
+                                <span class="mono-label mb-2 block group-hover:text-zinc-600">PUBLIC SIGNAL</span>
+                                <h3 class="font-bold text-xl text-zinc-900 tracking-tight mb-2">X (Twitter)</h3>
+                            </div>
+                            <div>
+                                <p class="text-sm text-zinc-500 font-medium leading-relaxed">Public growth. No excuses. Everyone can see it.</p>
+                            </div>
+                        </button>
+                        
+                        <!-- Stripe -->
+                        <button class="source-card p-8 text-left h-48 flex flex-col justify-between group" onclick="selectSource(this, 'STRIPE')">
+                            <div class="w-full">
+                                <span class="mono-label mb-2 block group-hover:text-zinc-600">ECONOMIC SIGNAL</span>
+                                <h3 class="font-bold text-xl text-zinc-900 tracking-tight mb-2">Stripe</h3>
+                            </div>
+                            <div>
+                                <p class="text-sm text-zinc-500 font-medium leading-relaxed">Revenue only. No vanity. Money doesn't lie.</p>
+                            </div>
+                        </button>
+
+                         <!-- GitHub -->
+                         <button class="source-card p-8 text-left h-48 flex flex-col justify-between group" onclick="selectSource(this, 'GITHUB')">
+                            <div class="w-full">
+                                <div class="flex justify-between items-start mb-2">
+                                    <span class="mono-label block group-hover:text-zinc-600">BUILD SIGNAL</span>
+                                    <span class="coming-online-badge">COMING ONLINE</span>
+                                </div>
+                                <h3 class="font-bold text-xl text-zinc-900 tracking-tight mb-2 opacity-60">GitHub</h3>
+                            </div>
+                            <div>
+                                <p class="text-sm text-zinc-400 font-medium leading-relaxed">Code shipped. Merge history doesn't lie.</p>
+                            </div>
+                        </button>
+                    </div>
+
+                    <div id="source-warning" class="hidden border-l-2 border-zinc-900 pl-4 py-1">
+                        <p class="text-xs font-bold uppercase tracking-wide text-zinc-900">Warning: Once bound, this source cannot be changed.</p>
+                    </div>
+                </section>
+
+                <!-- STEP 2: COMMITMENT & TIERS -->
+                <section id="view-step-2" class="hidden pt-2 pb-24">
+                    <div class="mb-12 flex justify-between items-end border-b border-zinc-200 pb-6">
+                        <div>
+                            <h1 class="display-title mb-3">Commitment</h1>
+                            <p class="text-zinc-500 max-w-lg leading-relaxed text-sm font-medium">
+                                Define the line you must cross.
+                            </p>
+                        </div>
+                        <div class="text-right">
+                            <span class="mono-label block mb-1">BOUND AUTHORITY</span>
+                            <span class="font-bold text-zinc-900 uppercase tracking-tight" id="bound-authority-display">X (TWITTER)</span>
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-1 lg:grid-cols-12 gap-16">
+                        
+                        <!-- Left Column: Inputs -->
+                        <div class="lg:col-span-5 space-y-12">
+                            
+                            <!-- Baseline (Passive) -->
+                            <div class="space-y-2" id="baseline-container">
+                                <span class="mono-label">CURRENT BASELINE (RECORDED)</span>
+                                <div class="text-lg font-mono text-zinc-400 font-bold" id="baseline-value">--</div>
+                            </div>
+
+                            <!-- INPUT CONTROLS -->
+                            <div class="space-y-6">
+
+                                <!-- Time Window Selector -->
+                                <div class="relative z-20">
+                                    <span class="mono-label mb-1 block">TIME WINDOW</span>
+                                    <button class="custom-dropdown-btn" onclick="toggleDropdown(event)" id="time-window-btn">
+                                        <span>30 Days</span>
+                                        <i data-lucide="chevron-down" class="w-4 h-4 text-zinc-400"></i>
+                                    </button>
+                                    <div class="dropdown-menu" id="time-window-menu">
+                                        <button class="dropdown-item selected" onclick="selectTimeWindow(30)">30 Days</button>
+                                        <button class="dropdown-item" onclick="selectTimeWindow(60)">60 Days</button>
+                                        <button class="dropdown-item" onclick="selectTimeWindow(90)">90 Days</button>
+                                    </div>
+                                </div>
+                                
+                                <!-- STANDARD INPUTS (Twitter/Stripe) -->
+                                <div id="controls-standard">
+                                    <div class="space-y-2">
+                                        <span class="mono-label">COMMITMENT LINE</span>
+                                        <input type="number" id="threshold-val" value="10000" class="legal-input w-full text-3xl tracking-tighter font-bold" oninput="syncSlider(this.value)">
+                                        <p class="text-xs text-zinc-500 font-medium pt-1">Target metric to hit within <span id="time-window-hint">30 days</span>.</p>
+                                    </div>
+                                    <div class="pt-6">
+                                        <input type="range" id="threshold-slide" min="4000" max="50000" step="100" value="10000" oninput="syncInput(this.value)">
+                                    </div>
+                                </div>
+
+                                <!-- GITHUB INPUTS -->
+                                <div id="controls-github" class="hidden space-y-8">
+                                    <div class="grid grid-cols-2 gap-6">
+                                        <div class="space-y-2">
+                                            <span class="mono-label">REPOSITORY OWNER</span>
+                                            <input type="text" id="gh-owner" placeholder="owner" class="legal-input w-full text-base font-bold">
+                                        </div>
+                                        <div class="space-y-2">
+                                            <span class="mono-label">REPOSITORY NAME</span>
+                                            <input type="text" id="gh-repo" placeholder="repo-name" class="legal-input w-full text-base font-bold">
+                                        </div>
+                                    </div>
+
+                                    <div class="space-y-2">
+                                        <span class="mono-label">METRIC: PRs MERGED</span>
+                                        <input type="number" id="gh-threshold" placeholder="10" class="legal-input w-full text-3xl tracking-tighter font-bold" oninput="syncGitHub(this.value)">
+                                        <p class="text-xs text-zinc-500 font-medium pt-1">Total merged pull requests within <span id="time-window-hint-gh">30 days</span>.</p>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                            <!-- Payout Text (Summary Card - Neutral) -->
+                            <div id="summary-card" class="bg-transparent border border-zinc-200 p-6 relative overflow-hidden">
+                                <div class="flex justify-between items-start mb-4">
+                                    <span class="mono-label">RISK DISCLOSURE</span>
+                                    <span class="mono-label text-gold-600" id="high-reward-label">UPSIDE</span>
+                                </div>
+
+                                <p class="font-medium text-base text-zinc-800 leading-snug">
+                                    You are staking <span class="font-bold text-zinc-900">$5,000</span> against your own behavior to unlock <span class="font-bold text-gold-600" id="payout-amount">$12,500</span>.
+                                </p>
+                                
+                                <!-- Irreversible Risk (Red) -->
+                                <div class="mt-4 flex items-center gap-2 text-red-700">
+                                    <span class="text-[10px] font-bold uppercase tracking-widest font-mono">Failure forfeits capital. No appeals.</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Right Column: Tiers -->
+                        <div class="lg:col-span-7">
+                            <span class="mono-label block mb-6">SELECT IDENTITY CLASS</span>
+                            
+                            <div class="space-y-3">
+                                <!-- Steady (Baseline -> Contained) -->
+                                <button class="tier-card w-full p-5 text-left flex items-start gap-4 group" onclick="selectTier(this, 1)">
+                                    <div class="w-4 h-4 mt-1 border border-zinc-300 rounded-full flex items-center justify-center shrink-0 tier-radio">
+                                        <div class="w-1.5 h-1.5 bg-zinc-900 rounded-full opacity-0"></div>
+                                    </div>
+                                    <div>
+                                        <span class="tier-label text-zinc-500 group-hover:text-zinc-700">STEADY</span>
+                                        <p class="text-sm text-zinc-600 leading-relaxed mb-1" id="desc-standard">This is where most contracts stop. This assumes continuation of recent behavior.</p>
+                                    </div>
+                                </button>
+
+                                <!-- Bold (Above Baseline -> Disruptive) -->
+                                <button class="tier-card w-full p-5 text-left flex items-start gap-4 group card-selected" onclick="selectTier(this, 1.5)">
+                                    <div class="w-4 h-4 mt-1 border border-zinc-300 rounded-full flex items-center justify-center shrink-0 tier-radio">
+                                        <div class="w-1.5 h-1.5 bg-zinc-900 rounded-full opacity-100"></div>
+                                    </div>
+                                    <div>
+                                        <span class="tier-label text-zinc-900">BOLD</span>
+                                        <p class="text-sm text-zinc-900 leading-relaxed mb-1" id="desc-advanced">This assumes a break from recent behavior.</p>
+                                    </div>
+                                </button>
+
+                                <!-- All-In (Irreversible) - NEUTRAL TONE -->
+                                <button class="tier-card w-full p-5 text-left flex items-start gap-4 group" onclick="selectTier(this, 2.5)">
+                                    <div class="w-4 h-4 mt-1 border border-zinc-300 rounded-full flex items-center justify-center shrink-0 tier-radio">
+                                        <div class="w-1.5 h-1.5 bg-zinc-900 rounded-full opacity-0"></div>
+                                    </div>
+                                    <div>
+                                        <span class="tier-label text-zinc-900">ALL-IN</span>
+                                        <p class="text-sm text-zinc-600 leading-relaxed mb-1" id="desc-elite">This assumes behavior you have not yet demonstrated.</p>
+                                        <p class="text-[10px] text-zinc-400 uppercase tracking-widest mt-2">Winning here becomes part of your record.</p>
+                                    </div>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- STEP 3: APPROVAL -->
+                <section id="view-step-3" class="hidden pt-2 relative max-w-2xl mx-auto">
+                    
+                    <!-- Stamp: Green Allowed Here (Terminal Success) -->
+                    <div id="stamp-el" class="stamp-wrapper">
+                        <svg width="100%" height="100%" viewBox="0 0 300 140">
+                            <defs>
+                                <filter id="rough-ink" x="-20%" y="-20%" width="140%" height="140%">
+                                    <feTurbulence type="fractalNoise" baseFrequency="0.04" numOctaves="3" result="noise"></feTurbulence>
+                                    <feDisplacementMap in="SourceGraphic" in2="noise" scale="4" xChannelSelector="R" yChannelSelector="G"></feDisplacementMap>
+                                </filter>
+                            </defs>
+                            <g filter="url(#rough-ink)" class="ink-group">
+                                <rect x="8" y="8" width="284" height="124" rx="4" class="ink-border"></rect>
+                                <text x="150" y="80" text-anchor="middle" class="ink-text">APPROVED</text>
+                                <text x="150" y="105" text-anchor="middle" class="ink-micro">NO APPEALS</text>
+                            </g>
+                        </svg>
+                    </div>
+
+                    <div class="text-center mb-12">
+                        <h1 class="display-title mb-4">Approval</h1>
+                    </div>
+
+                    <div class="border-y border-zinc-200 py-8 mb-10">
+                        <div class="grid grid-cols-2 gap-y-6 text-sm">
+                            <div class="text-zinc-500 font-mono text-xs uppercase tracking-wide">Signal Authority</div>
+                            <div class="font-bold text-right uppercase text-zinc-900" id="final-source">X (Twitter)</div>
+
+                            <div class="text-zinc-500 font-mono text-xs uppercase tracking-wide" id="label-final-metric">Commitment Line</div>
+                            <div class="font-bold text-right text-zinc-900">≥ <span id="final-line">10,000</span></div>
+                            
+                            <!-- Duration Row -->
+                            <div class="text-zinc-500 font-mono text-xs uppercase tracking-wide">Duration</div>
+                            <div class="font-bold text-right uppercase text-zinc-900" id="final-duration">30 DAYS</div>
+
+                            <!-- GitHub Repo Row (Hidden by default) -->
+                            <div id="row-final-repo" class="hidden contents">
+                                <div class="text-zinc-500 font-mono text-xs uppercase tracking-wide">Repository</div>
+                                <div class="font-bold text-right text-zinc-900" id="final-repo-val">owner/repo</div>
+                            </div>
+
+                            <div class="text-zinc-500 font-mono text-xs uppercase tracking-wide">Capital at Risk</div>
+                            <div class="font-bold text-right text-zinc-900">$5,000.00</div>
+
+                            <div class="text-zinc-500 font-mono text-xs uppercase tracking-wide">Release Condition</div>
+                            <div class="font-bold text-right text-zinc-900">PASS OR FORFEIT</div>
+                        </div>
+                    </div>
+
+                    <!-- GitHub Disclaimer -->
+                    <div id="github-disclaimer" class="hidden text-center mb-6">
+                        <p class="text-xs text-zinc-500 font-medium">Verification source will be enforced once GitHub integration is live.</p>
+                    </div>
+
+                    <div class="bg-zinc-50 p-8 border border-zinc-200 mb-8">
+                        <p class="text-sm font-medium text-zinc-800 leading-7 text-center">
+                            This contract will be approved exactly as written.<br>
+                            External data sources decide the outcome.<br>
+                            Contract executes immediately upon approval.<br>
+                            Failure forfeits funds.<br>
+                            <span class="font-bold text-red-600">There are no appeals.</span>
+                        </p>
+                    </div>
+
+                    <div class="flex justify-center">
+                         <div class="flex items-center gap-3 select-none cursor-pointer group mb-6" onclick="toggleAgree()">
+                            <div class="custom-checkbox shrink-0" id="chk-box">
+                                <div class="w-2 h-2 bg-white" id="chk-fill"></div>
+                            </div>
+                            <span class="font-bold text-zinc-900 text-xs uppercase tracking-widest">I Confirm The Above</span>
+                        </div>
+                    </div>
+                </section>
+                
+                <div class="h-24"></div>
+            </div>
+
+            <!-- FOOTER ACTION -->
+            <div class="absolute bottom-0 w-full bg-white border-t border-zinc-200 px-8 py-6 z-30 flex justify-between items-center">
+                <div class="hidden md:block">
+                     <!-- Empty space used for silence -->
+                </div>
+                
+                <button id="main-btn" disabled="" onclick="nextStep()" class="h-14 bg-zinc-900 text-white min-w-[200px] text-xs font-bold font-mono tracking-widest hover:bg-zinc-800 disabled:bg-zinc-100 disabled:text-zinc-300 disabled:cursor-not-allowed transition-colors w-full md:w-auto uppercase">
+                    Select Identity
+                </button>
+            </div>
+
+        </main>
+    </div>
+
+    <script>
+        lucide.createIcons();
+
+        // State
+        let step = 1;
+        let selectedSource = null;
+        let threshold = 10000;
+        let ghThreshold = 10;
+        let riskCapital = 5000;
+        let multiplier = 1.5; // Default Above Baseline
+        let timeWindow = 30; // Default 30 days
+        let agreed = false;
+        let executed = false;
+        
+        // Mock Baselines
+        const BASELINES = {
+            'TWITTER': '3,842',
+            'STRIPE': '$12,500/mo',
+            'GITHUB': '12 PRs'
+        };
+
+        function selectSource(el, id) {
+            // Strict selection visual reset
+            document.querySelectorAll('.source-card').forEach(c => {
+                c.classList.remove('card-selected');
+                c.classList.add('border-zinc-200'); // Ensure default border return
+            });
+            
+            // Apply Selection
+            el.classList.add('card-selected');
+            el.classList.remove('border-zinc-200'); // Remove default to let selected styles take over if needed
+
+            selectedSource = id;
+            document.getElementById('source-warning').classList.remove('hidden');
+            
+            const btn = document.getElementById('main-btn');
+            btn.disabled = false;
+            btn.innerText = "CONFIRM IDENTITY";
+            
+            // Update bound authority text for next step logic
+            let displayAuth = 'X (TWITTER)';
+            if (id === 'STRIPE') displayAuth = 'STRIPE';
+            if (id === 'GITHUB') displayAuth = 'GITHUB';
+            
+            document.getElementById('bound-authority-display').innerText = displayAuth;
+        }
+
+        /* DROPDOWN LOGIC */
+        function toggleDropdown(e) {
+            e.stopPropagation();
+            const menu = document.getElementById('time-window-menu');
+            menu.classList.toggle('open');
+        }
+
+        function closeDropdowns(e) {
+            const menu = document.getElementById('time-window-menu');
+            if (menu && menu.classList.contains('open')) {
+                menu.classList.remove('open');
+            }
+        }
+
+        function selectTimeWindow(days) {
+            timeWindow = days;
+            
+            // Visual Update in Dropdown
+            document.querySelector('#time-window-btn span').innerText = `${days} Days`;
+            document.querySelectorAll('#time-window-menu .dropdown-item').forEach(item => {
+                item.classList.remove('selected');
+                if(item.innerText.includes(days)) item.classList.add('selected');
+            });
+
+            // Update hint texts
+            document.getElementById('time-window-hint').innerText = `${days} days`;
+            document.getElementById('time-window-hint-gh').innerText = `${days} days`;
+
+            // Close
+            document.getElementById('time-window-menu').classList.remove('open');
+        }
+
+        function syncSlider(val) {
+            document.getElementById('threshold-slide').value = val;
+            threshold = val;
+            updatePayout();
+        }
+
+        function syncInput(val) {
+            document.getElementById('threshold-val').value = val;
+            threshold = val;
+            updatePayout();
+        }
+
+        function syncGitHub(val) {
+            ghThreshold = val;
+            updatePayout(); 
+        }
+
+        function selectTier(el, mult) {
+            document.querySelectorAll('.tier-card').forEach(c => {
+                c.classList.remove('card-selected');
+                c.classList.add('border-zinc-200'); // Reset border
+                c.querySelector('.tier-radio div').classList.remove('opacity-100');
+                c.querySelector('.tier-radio div').classList.add('opacity-0');
+            });
+            el.classList.add('card-selected');
+            el.classList.remove('border-zinc-200');
+            el.querySelector('.tier-radio div').classList.remove('opacity-0');
+            el.querySelector('.tier-radio div').classList.add('opacity-100');
+            
+            multiplier = mult;
+            updatePayout();
+        }
+
+        function updatePayout() {
+            // Formula: Capital * Multiplier
+            let potential = riskCapital + (riskCapital * multiplier);
+            document.getElementById('payout-amount').innerText = '$' + potential.toLocaleString('en-US', {minimumFractionDigits: 0, maximumFractionDigits: 0});
+            
+            // Update threshold text based on source
+            if (selectedSource === 'GITHUB') {
+                document.getElementById('final-line').innerText = parseInt(ghThreshold || 0).toLocaleString();
+            } else {
+                document.getElementById('final-line').innerText = parseInt(threshold).toLocaleString();
+            }
+        }
+
+        function toggleAgree() {
+            if (executed) return;
+            agreed = !agreed;
+            const fill = document.getElementById('chk-fill');
+            const box = document.getElementById('chk-box');
+            const btn = document.getElementById('main-btn');
+
+            if(agreed) {
+                fill.classList.remove('bg-white');
+                fill.classList.add('bg-black');
+                box.classList.add('checked');
+                btn.disabled = false;
+            } else {
+                fill.classList.add('bg-white');
+                fill.classList.remove('bg-black');
+                box.classList.remove('checked');
+                btn.disabled = true;
+            }
+        }
+
+        function nextStep() {
+            const btn = document.getElementById('main-btn');
+            
+            if(step === 1) {
+                step = 2;
+                document.getElementById('view-step-1').classList.add('hidden');
+                document.getElementById('view-step-2').classList.remove('hidden');
+                
+                // Configure Step 2 based on selection
+                const standardControls = document.getElementById('controls-standard');
+                const githubControls = document.getElementById('controls-github');
+                const baselineVal = document.getElementById('baseline-value');
+
+                const descStd = document.getElementById('desc-standard');
+                const descAdv = document.getElementById('desc-advanced');
+                const descElt = document.getElementById('desc-elite');
+
+                // DYNAMIC BASELINE
+                if(selectedSource) {
+                    baselineVal.innerText = BASELINES[selectedSource];
+                }
+
+                if (selectedSource === 'GITHUB') {
+                    standardControls.classList.add('hidden');
+                    githubControls.classList.remove('hidden');
+                    baselineVal.classList.add('text-xs', 'tracking-wide');
+                    baselineVal.classList.remove('text-lg');
+
+                    // Tier Text Updates
+                    descStd.innerText = "Assumes normal merge cadence.";
+                    descAdv.innerText = "Assumes sustained output above recent behavior.";
+                    descElt.innerText = "Assumes behavior you have not yet demonstrated.";
+                } else {
+                    standardControls.classList.remove('hidden');
+                    githubControls.classList.add('hidden');
+                    baselineVal.classList.remove('text-xs', 'tracking-wide');
+                    baselineVal.classList.add('text-lg');
+
+                    // Reset Tier Text
+                    descStd.innerText = "This is where most contracts stop. This assumes continuation of recent behavior.";
+                    descAdv.innerText = "This assumes a break from recent behavior.";
+                    descElt.innerText = "This assumes behavior you have not yet demonstrated.";
+                }
+
+                updateNav(1, 2);
+                btn.innerText = "REVIEW CONTRACT";
+                window.scrollTo(0,0);
+            } 
+            else if (step === 2) {
+                step = 3;
+                document.getElementById('view-step-2').classList.add('hidden');
+                document.getElementById('view-step-3').classList.remove('hidden');
+                
+                // Update final duration
+                document.getElementById('final-duration').innerText = `${timeWindow} DAYS`;
+
+                // Configure Step 3 based on selection
+                if (selectedSource === 'GITHUB') {
+                    document.getElementById('final-source').innerText = 'GITHUB';
+                    document.getElementById('label-final-metric').innerText = 'METRIC: PRs MERGED';
+                    document.getElementById('row-final-repo').classList.remove('contents', 'hidden'); 
+                    document.getElementById('row-final-repo').classList.add('contents');
+                    
+                    const owner = document.getElementById('gh-owner').value || '{owner}';
+                    const repo = document.getElementById('gh-repo').value || '{repo}';
+                    document.getElementById('final-repo-val').innerText = `${owner}/${repo}`;
+                    
+                    document.getElementById('github-disclaimer').classList.remove('hidden');
+                    document.getElementById('final-line').innerText = ghThreshold;
+                } else {
+                    const label = selectedSource === 'TWITTER' ? 'X (TWITTER)' : 'STRIPE';
+                    document.getElementById('final-source').innerText = label;
+                    document.getElementById('label-final-metric').innerText = 'COMMITMENT LINE';
+                    document.getElementById('row-final-repo').classList.remove('contents');
+                    document.getElementById('row-final-repo').classList.add('hidden');
+                    document.getElementById('github-disclaimer').classList.add('hidden');
+                    document.getElementById('final-line').innerText = parseInt(threshold).toLocaleString();
+                }
+
+                updateNav(2, 3);
+                btn.innerText = "APPROVE CONTRACT";
+                btn.disabled = true; // Wait for checkbox
+                agreed = false;
+                window.scrollTo(0,0);
+            }
+            else if (step === 3) {
+                executed = true;
+                const content = document.getElementById('view-step-3');
+                content.classList.add('page-locked');
+                
+                btn.disabled = true;
+                btn.innerText = "CONTRACT APPROVED";
+                btn.classList.remove('bg-zinc-900', 'text-white');
+                btn.classList.add('bg-zinc-200', 'text-zinc-500', 'cursor-default');
+                
+                const stamp = document.getElementById('stamp-el');
+                stamp.classList.add('stamp--fired');
+            }
+        }
+
+        function updateNav(prev, current) {
+            document.getElementById(`nav-step-${prev}`).classList.replace('nav-active', 'nav-inactive');
+            document.getElementById(`nav-step-${current}`).classList.replace('nav-inactive', 'nav-active');
+        }
+    </script>
+
+</body></html>

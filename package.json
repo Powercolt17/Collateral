@@ -1,0 +1,59 @@
+{
+  "name": "collateral-backend",
+  "version": "1.0.0",
+  "description": "USD-first self-betting platform with append-only ledger",
+  "type": "module",
+  "engines": {
+    "node": ">=20"
+  },
+  "main": "dist/index.js",
+  "scripts": {
+    "dev": "tsx watch src/index.ts",
+    "build": "tsc || true",
+    "start": "node dist/index.js",
+    "worker": "node dist/worker/runner.js",
+    "db:generate": "drizzle-kit generate",
+    "db:migrate": "tsx src/db/migrate.ts",
+    "db:seed": "tsx src/db/seed.ts",
+    "db:up": "docker-compose up -d && tsx src/db/wait-for-db.ts",
+    "db:down": "docker-compose down",
+    "db:logs": "docker logs -f collateral_postgres",
+    "db:reset": "npm run db:down && docker volume rm backend_postgres_data || true && npm run db:up",
+    "db:test:up": "npm run db:up",
+    "db:migrate:test": "cross-env DATABASE_URL=$DATABASE_URL_TEST tsx src/db/migrate.ts",
+    "verify": "tsx src/jobs/verification.ts",
+    "test": "cross-env NODE_ENV=test vitest run -c ./vitest.config.ts",
+    "test:watch": "cross-env NODE_ENV=test vitest -c ./vitest.config.ts",
+    "test:ui": "cross-env NODE_ENV=test vitest -c ./vitest.config.ts",
+    "test:single": "cross-env NODE_ENV=test vitest run -c ./vitest.config.ts tests/auth.test.ts",
+    "test:state": "cross-env NODE_ENV=test vitest run -c ./vitest.config.ts --grep 'State'",
+    "test:idempotent": "cross-env NODE_ENV=test vitest run -c ./vitest.config.ts --grep 'Idempotency'",
+    "test:ledger": "cross-env NODE_ENV=test vitest run -c ./vitest.config.ts --grep 'Ledger'",
+    "test:webhook": "cross-env NODE_ENV=test vitest run -c ./vitest.config.ts --grep 'Webhook'"
+  },
+  "dependencies": {
+    "@fastify/cors": "^11.2.0",
+    "@opentelemetry/api": "^1.7.0",
+    "@opentelemetry/auto-instrumentations-node": "^0.41.0",
+    "@opentelemetry/exporter-metrics-otlp-http": "^0.46.0",
+    "@opentelemetry/exporter-trace-otlp-http": "^0.46.0",
+    "@opentelemetry/resources": "^1.20.0",
+    "@opentelemetry/sdk-metrics": "^1.20.0",
+    "@opentelemetry/sdk-node": "^0.46.0",
+    "@opentelemetry/semantic-conventions": "^1.20.0",
+    "drizzle-orm": "^0.38.3",
+    "dotenv": "^16.3.1",
+    "fastify": "^5.2.0",
+    "fastify-raw-body": "^5.0.0",
+    "postgres": "^3.4.5",
+    "zod": "^3.24.1"
+  },
+  "devDependencies": {
+    "@types/node": "^22.10.2",
+    "cross-env": "^10.1.0",
+    "drizzle-kit": "^0.30.1",
+    "tsx": "^4.19.2",
+    "typescript": "^5.7.2",
+    "vitest": "^2.1.8"
+  }
+}

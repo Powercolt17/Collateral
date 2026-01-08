@@ -1,0 +1,148 @@
+/**
+ * Contract Locks - I3 Single-Writer Contract Drivers
+ * 
+ * CRITICAL: Uses TRANSACTION-SCOPED advisory locks inside db.transaction()
+ * to guarantee the lock pins the same connection that executes fn().
+ * 
+ * This is the ONLY correct approach in a connection-pooled environment.
+ * 
+ * INVARIANT: Only one process can drive a contract's state at a time.
+ * 
+ * HOW IT WORKS:
+ * 1. Open a Drizzle transaction (pins a connection)
+ * 2. Acquire pg_advisory_xact_lock INSIDE that transaction
+ * 3. Execute fn(tx) using the SAME transaction client
+ * 4. Lock auto-releases on commit/rollback (no manual unlock needed)
+ */
+
+import { db } from '../db/client.js';
+import { sql } from 'drizzle-orm';
+import type { PgTransaction } from 'drizzle-orm/pg-core';
+
+// =============================================================================
+// TYPES
+// =============================================================================
+
+/**
+ * Transaction client type for use in locked operations
+ * All DB writes inside withContractLock MUST use this client
+ */
+export type TransactionClient = Parameters<Parameters<typeof db.transaction>[0]>[0];
+
+// =============================================================================
+// LOCK KEY DERIVATION
+// =============================================================================
+
+/**
+ * Convert contract ID (UUID) to a BIGINT for advisory lock
+ * 
+ * Takes first 8 bytes of the UUID and converts to a signed 64-bit integer.
+ * This is stable and deterministic for the same contract ID.
+ */
+function hashContractIdToLockKey(contractId: string): bigint {
+    // Remove dashes and take first 16 hex chars (8 bytes)
+    const hex = contractId.replace(/-/g, '').slice(0, 16);
+    // Parse as unsigned, then interpret as signed for advisory lock
+    const unsigned = BigInt('0x' + hex);
+    // Convert to signed (advisory locks use signed BIGINT)
+    const maxSigned = BigInt('0x7FFFFFFFFFFFFFFF');
+    if (unsigned > maxSigned) {
+        return unsigned - BigInt('0x10000000000000000');
+    }
+    return unsigned;
+}
+
+// =============================================================================
+// MAIN LOCK HELPER
+// =============================================================================
+
+export interface LockOptions {
+    /** If true, fail immediately if lock unavailable instead of blocking */
+    noWait?: boolean;
+}
+
+export class ContractLockError extends Error {
+    code: string;
+    contractId: string;
+
+    constructor(message: string, code: string, contractId: string) {
+        super(message);
+        this.name = 'ContractLockError';
+        this.code = code;
+        this.contractId = contractId;
+    }
+}
+
+/**
+ * Execute a function while holding an exclusive lock on a contract
+ * 
+ * CRITICAL: Uses TRANSACTION-SCOPED advisory lock inside db.transaction()
+ * - Lock is acquired inside the transaction (connection-pinned)
+ * - fn receives the transaction client and MUST use it for all DB writes
+ * - Lock auto-releases on commit/rollback
+ * 
+ * @param contractId Contract ID to lock
+ * @param fn Function to execute while holding lock - receives transaction client
+ * @param options Lock options
+ */
+export async function withContractLock<T>(
+    contractId: string,
+    fn: (tx: TransactionClient) => Promise<T>,
+    options: LockOptions = {}
+): Promise<T> {
+    const { noWait = false } = options;
+    const lockKey = hashContractIdToLockKey(contractId);
+
+    return await db.transaction(async (tx) => {
+        // Acquire lock INSIDE the transaction (connection-pinned)
+        if (noWait) {
+            const result = await tx.execute(
+                sql`SELECT pg_try_advisory_xact_lock(${lockKey.toString()}::bigint) as acquired`
+            );
+            const acquired = (result.rows[0] as any)?.acquired === true;
+
+            if (!acquired) {
+                throw new ContractLockError(
+                    `Failed to acquire lock for contract ${contractId}`,
+                    'LOCK_UNAVAILABLE',
+                    contractId
+                );
+            }
+        } else {
+            // Blocking acquire
+            await tx.execute(
+                sql`SELECT pg_advisory_xact_lock(${lockKey.toString()}::bigint)`
+            );
+        }
+
+        // Execute fn with the SAME transaction client
+        // All DB writes inside fn() MUST use tx
+        return await fn(tx);
+
+        // Lock auto-releases when transaction commits/rollbacks
+    });
+}
+
+// =============================================================================
+// JOB-SPECIFIC LOCK WRAPPERS
+// =============================================================================
+
+/**
+ * Execute verification job with contract lock (non-blocking)
+ */
+export async function withVerificationLock<T>(
+    contractId: string,
+    fn: (tx: TransactionClient) => Promise<T>
+): Promise<T> {
+    return withContractLock(contractId, fn, { noWait: true });
+}
+
+/**
+ * Execute settlement job with contract lock (non-blocking)
+ */
+export async function withSettlementLock<T>(
+    contractId: string,
+    fn: (tx: TransactionClient) => Promise<T>
+): Promise<T> {
+    return withContractLock(contractId, fn, { noWait: true });
+}

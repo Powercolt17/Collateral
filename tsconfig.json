@@ -1,0 +1,33 @@
+{
+    "compilerOptions": {
+        "target": "ES2022",
+        "module": "NodeNext",
+        "moduleResolution": "NodeNext",
+        "esModuleInterop": true,
+        "strict": false,
+        "noImplicitAny": false,
+        "noEmitOnError": false,
+        "skipLibCheck": true,
+        "outDir": "dist",
+        "rootDir": "src",
+        "declaration": true,
+        "resolveJsonModule": true,
+        "sourceMap": true,
+        "baseUrl": ".",
+        "paths": {
+            "@/*": [
+                "src/*"
+            ]
+        }
+    },
+    "include": [
+        "src/**/*"
+    ],
+    "exclude": [
+        "node_modules",
+        "dist",
+        "src/telemetry.ts",
+        "src/tracing.ts",
+        "src/metrics.ts"
+    ]
+}

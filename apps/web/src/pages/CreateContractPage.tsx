@@ -1,39 +1,20 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { createContract } from '../lib/hooks/use-create-contract';
 import { runActionWithState, createActionState, getErrorMessage } from '../lib/api/run-action';
 import { can, ContractAction } from '../lib/state/contract-states';
-import { get } from '../lib/api/api';
+// import { get } from '../lib/api/api';
 
-interface ExistingContract {
-    id: string;
-    platform: string;
-    metricType: string;
-    derivedState: string;
-}
+// interface ExistingContract { ... }
 
 export function CreateContractPage({ onContractCreated }: { onContractCreated: (id: string) => void }) {
     const [threshold, setThreshold] = useState(10000);
     const [durationDays, setDurationDays] = useState(30);
     const [stakeUsd, setStakeUsd] = useState(100);
     const [state, setState] = useState(createActionState());
-    const [existingContracts, setExistingContracts] = useState<ExistingContract[]>([]);
-    const [loading, setLoading] = useState(true);
+    // const [existingContracts, setExistingContracts] = useState<ExistingContract[]>([]);
+    // const [loading, setLoading] = useState(true);
 
-    // Fetch existing contracts on mount
-    useEffect(() => {
-        get<{ contracts: ExistingContract[] }>('/v1/contracts')
-            .then(data => {
-                const contracts = (data as any).contracts || [];
-                setExistingContracts(contracts);
-                // If user has an X contract, navigate to it automatically
-                const xContract = contracts.find((c: ExistingContract) => c.platform === 'X');
-                if (xContract) {
-                    onContractCreated(xContract.id);
-                }
-            })
-            .catch(err => console.error('Failed to fetch contracts:', err))
-            .finally(() => setLoading(false));
-    }, [onContractCreated]);
+
 
     const handleCreate = async () => {
         // Calculate deadline

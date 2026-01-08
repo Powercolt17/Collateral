@@ -3,7 +3,7 @@ import {
     startDetailPolling,
     fetchContractDetail,
 } from '../lib/hooks/use-contract-detail';
-// // import type { ContractDetailResponse } from '../lib/hooks/use-contract-detail';
+import type { ContractDetailResponse } from '../lib/hooks/use-contract-detail';
 import {
     createFundingIntent,
     waitForFundsLocked

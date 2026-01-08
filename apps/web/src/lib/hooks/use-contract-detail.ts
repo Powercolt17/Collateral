@@ -10,8 +10,9 @@
 import { get } from '../api/api.js';
 import { runAction } from '../api/run-action.js';
 import { startContractDetailPolling } from '../api/polling.js';
-import type { ContractDetailResponse, ContractListItem } from '../api/polling.js';
+import type { ContractListItem } from '../api/polling.js';
 import { isInFlight, isTerminal } from '../state/contract-states.js';
+import type { ContractDerivedStateType } from '../state/contract-states.js';
 
 // =============================================================================
 // FETCH CONTRACT DETAIL
@@ -45,6 +46,23 @@ export async function fetchContractList() {
         const response = await get<{ contracts: ContractListItem[] }>('/v1/contracts');
         return response.contracts;
     });
+}
+
+export interface ContractDetailResponse {
+    contract: {
+        id: string;
+        derivedState: ContractDerivedStateType;
+        metricType: string;
+        lockAmountUsdCents: number;
+        deadlineUtc: string;
+        condition: unknown;
+    };
+    events: {
+        id: string;
+        eventType: string;
+        timestampUtc: string;
+        eventHash: string;
+    }[];
 }
 
 // =============================================================================

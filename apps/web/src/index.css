@@ -1,3 +1,57 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
+
+/* ============================================
+   COLLATERAL DESIGN SYSTEM - CSS Variables
+   ============================================ */
+
+:root {
+    --bg-grid: #F7F7F6;
+    --panel: #FFFFFF;
+    --text-primary: #0E0E11;
+    --text-secondary: #6B6E76;
+    --divider: #D9DBE1;
+    --red: #921818;
+    --red-hover: #751212;
+    --gold: #A18239;
+    --gold-subtle: #947C43;
+    --gold-wash: rgba(161, 130, 57, 0.06);
+    --green: #1F7A4D;
+    --green-dim: #E8F4ED;
+}
+
+/* ============================================
+   BASE STYLES
+   ============================================ */
+
+body {
+    min-height: 100vh;
+    font-family: 'Inter', sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    background-color: var(--bg-grid);
+    color: var(--text-primary);
+}
+
+::selection {
+    background-color: var(--text-primary);
+    color: #ffffff;
+}
+
+/* ============================================
+   UTILITIES
+   ============================================ */
+
+.no-scrollbar::-webkit-scrollbar {
+    display: none;
+}
+
+.no-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}
+
+/* Background noise texture (subtle) */
+.bg-noise {
+    background-image: url('data:image/svg+xml,%3Csvg viewBox=%220 0 200 200%22 xmlns=%22http://www.w3.org/2000/svg%22%3E%3Cfilter id=%22noise%22%3E%3CfeTurbulence type=%22fractalNoise%22 baseFrequency=%220.65%22 numOctaves=%223%22 stitchTiles=%22stitch%22/%3E%3C/filter%3E%3Crect width=%22100%25%22 height=%22100%25%22 filter=%22url(%23noise)%22/%3E%3C/svg%3E');
+    opacity: 0.02;
+}

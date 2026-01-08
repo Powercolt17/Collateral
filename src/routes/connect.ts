@@ -411,10 +411,18 @@ async function connectRoutes(fastify: FastifyInstance) {
             }
 
             const bio = profile.description || '';
+
+            // DEBUG: Log what we're checking
+            console.log('[X Verify] Expected code:', account.challengeCode);
+            console.log('[X Verify] Bio text from X API:', bio);
+            console.log('[X Verify] Bio contains code?', bioContainsChallenge(bio, account.challengeCode));
+
             if (!bioContainsChallenge(bio, account.challengeCode)) {
                 return reply.status(409).send({
                     error: 'CHALLENGE_NOT_FOUND_IN_BIO',
                     message: 'Challenge code not found in your X bio. Please add it (case doesn\'t matter) and try again.',
+                    expectedCode: account.challengeCode,  // Include for debugging
+                    bioReceived: bio.substring(0, 100),   // Truncated for privacy
                     retryable: false,
                 });
             }

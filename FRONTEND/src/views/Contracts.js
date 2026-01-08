@@ -1025,7 +1025,26 @@ export function initContracts() {
                 console.log('[Contracts] startXVerification result:', result);
 
                 xUsername = username;
+
+                // Backend returns challengeCode in dev, codeMasked in prod
+                // If we got the code, use it. If only masked, we need backend update.
                 xVerifyCode = result.challengeCode || result.code;
+
+                if (!xVerifyCode && result.codeMasked) {
+                    // Production is hiding the code - shouldn't happen after backend update
+                    alert('Backend update required. Please deploy the latest code to Railway and try again.');
+                    btn.textContent = 'Generate Code';
+                    btn.disabled = false;
+                    return;
+                }
+
+                if (!xVerifyCode) {
+                    console.error('[Contracts] No code in response:', result);
+                    alert('Failed to get verification code. Please try again.');
+                    btn.textContent = 'Generate Code';
+                    btn.disabled = false;
+                    return;
+                }
 
                 // Show step 2 (code display)
                 document.getElementById('x-verify-step1').classList.add('hidden');

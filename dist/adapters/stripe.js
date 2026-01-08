@@ -19,6 +19,7 @@ export const stripeAdapter = {
             metrics: {
                 revenue: mockRevenue,
             },
+            evidence: {},
         };
     },
     async evaluate(contract) {

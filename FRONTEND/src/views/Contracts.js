@@ -448,6 +448,70 @@ export function renderContracts() {
                         <p class="text-xs text-neutral-500">Binding is <span class="text-accent-red font-medium">irreversible</span> after confirmation.</p>
                     </div>
                     
+                    <!-- X VERIFICATION PANEL (Shows when X is selected) -->
+                    <div id="x-verify-panel" class="border border-neutral-200 bg-white p-6 mb-8" style="display: none;">
+                        <div class="flex items-center justify-between mb-4">
+                            <h4 class="font-medium text-base">Verify X Account</h4>
+                            <span id="x-verify-status" class="text-body-mono text-neutral-400 uppercase text-[10px]">Not Verified</span>
+                        </div>
+                        
+                        <!-- Step 1: Enter Username -->
+                        <div id="x-verify-step1">
+                            <label class="block font-mono text-[10px] text-neutral-400 uppercase tracking-widest mb-2">X Username</label>
+                            <div class="flex gap-3">
+                                <div class="flex-1 flex items-center border border-neutral-200 focus-within:border-neutral-900 transition-colors">
+                                    <span class="text-neutral-400 pl-3">@</span>
+                                    <input type="text" id="x-username-input" 
+                                        class="flex-1 px-2 py-3 text-sm font-mono bg-transparent border-none outline-none" 
+                                        placeholder="yourhandle">
+                                </div>
+                                <button onclick="window.wizard.generateVerifyCode()" id="x-generate-btn"
+                                    class="px-4 py-3 bg-neutral-900 text-white text-[11px] font-medium uppercase tracking-wide hover:bg-black transition-colors">
+                                    Generate Code
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <!-- Step 2: Show Code & Verify (Hidden initially) -->
+                        <div id="x-verify-step2" class="hidden mt-6">
+                            <div class="bg-neutral-50 border border-neutral-200 p-4 mb-4">
+                                <label class="block font-mono text-[10px] text-neutral-400 uppercase tracking-widest mb-2">Add this code to your X bio</label>
+                                <div class="flex items-center justify-between">
+                                    <code id="x-verify-code" class="font-mono text-lg font-semibold text-neutral-900 tracking-wide">COL-XXXXXX</code>
+                                    <button onclick="window.wizard.copyVerifyCode()" class="text-neutral-400 hover:text-neutral-900 transition-colors">
+                                        <i data-lucide="copy" class="w-4 h-4"></i>
+                                    </button>
+                                </div>
+                                <p class="text-xs text-neutral-500 mt-2">The code must be visible in your public bio when you click verify.</p>
+                            </div>
+                            
+                            <div class="flex gap-3">
+                                <a id="x-profile-link" href="https://twitter.com/settings/profile" target="_blank" rel="noopener"
+                                    class="flex-1 flex items-center justify-center gap-2 px-4 py-3 border border-neutral-200 text-neutral-600 text-[11px] font-medium uppercase tracking-wide hover:border-neutral-400 transition-colors">
+                                    <i data-lucide="external-link" class="w-3 h-3"></i>
+                                    Edit X Bio
+                                </a>
+                                <button onclick="window.wizard.verifyXAccount()" id="x-verify-btn"
+                                    class="flex-1 px-4 py-3 bg-neutral-900 text-white text-[11px] font-medium uppercase tracking-wide hover:bg-black transition-colors">
+                                    Verify Account
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <!-- Verified State (Hidden initially) -->
+                        <div id="x-verify-success" class="hidden mt-4">
+                            <div class="flex items-center gap-3 p-4 bg-[#E8F4ED] border border-[#1F7A4D]/20">
+                                <div class="w-8 h-8 bg-[#1F7A4D] rounded-full flex items-center justify-center">
+                                    <i data-lucide="check" class="w-4 h-4 text-white"></i>
+                                </div>
+                                <div>
+                                    <p class="font-sans text-sm font-medium text-[#1F7A4D]">Account Verified</p>
+                                    <p id="x-verified-handle" class="font-mono text-[11px] text-neutral-500">@handle • Connected</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
                     <!-- Metric Preview (Light - Current only) -->
                     <div id="metric-preview" class="metric-status-card mb-8" style="display: none;">
                         <div class="card-header" style="border-bottom: none; margin-bottom: 0; padding-bottom: 0;">
@@ -595,6 +659,11 @@ export function initContracts() {
     let selectedSource = null;
     let holdTimer = null;
     let holdComplete = false;
+
+    // X Verification state
+    let xVerified = false;
+    let xUsername = null;
+    let xVerifyCode = null;
 
     // === METRIC STATUS MODULE (Backend-ready) ===
     // Mock data for metric status - will be replaced by API call
@@ -805,10 +874,22 @@ export function initContracts() {
                 document.getElementById('status-row').classList.add('hidden');
             }
 
-            // Show metric preview (light - current only)
+            // Show/hide X verification panel based on source
+            const xVerifyPanel = document.getElementById('x-verify-panel');
+            if (source === 'TWITTER') {
+                xVerifyPanel.style.display = 'block';
+                // Disable next button until X is verified
+                document.getElementById('btn-step-2').disabled = !xVerified;
+            } else {
+                xVerifyPanel.style.display = 'none';
+                // Non-X sources can proceed immediately
+                document.getElementById('btn-step-2').disabled = false;
+            }
+
+            // Show metric preview (light - current only) - only if verified for X
             const metricPreview = document.getElementById('metric-preview');
             const mockData = mockMetricData[source];
-            if (metricPreview && mockData) {
+            if (metricPreview && mockData && (source !== 'TWITTER' || xVerified)) {
                 metricPreview.style.display = 'block';
 
                 const isRevenue = mockData.metricType === 'REVENUE';
@@ -819,7 +900,7 @@ export function initContracts() {
                 document.getElementById('preview-authority-badge').textContent = source === 'TWITTER' ? 'X' : 'Stripe';
             }
 
-            document.getElementById('btn-step-2').disabled = false;
+            if (window.lucide) window.lucide.createIcons();
         },
 
         nextStep: function () {
@@ -860,21 +941,174 @@ export function initContracts() {
             clearTimeout(holdTimer);
         },
 
-        completeHold: function () {
+        completeHold: async function () {
             holdComplete = true;
-            this.markCompleted(3);
             const btn = document.getElementById('btn-execute');
-            document.getElementById('btn-text').textContent = "Contract Executed";
-            btn.classList.remove('bg-neutral-900');
-            btn.classList.add('bg-black', 'cursor-default');
+            document.getElementById('btn-text').textContent = "Executing...";
             btn.disabled = true;
 
-            // Update status
-            const statusText = document.querySelector('.step-status');
-            if (statusText) statusText.textContent = 'S: Complete';
+            try {
+                // Get capital amount from input
+                const capitalInput = document.querySelector('#step-3 input[type="number"]');
+                const capitalAmount = parseFloat(capitalInput?.value || 5000);
 
-            // Fill progress bar to 100%
-            updateProgressBar(3, true);
+                // Build contract params
+                const deadline = new Date();
+                deadline.setDate(deadline.getDate() + 30);
+
+                const params = {
+                    platform: selectedSource === 'TWITTER' ? 'X' : 'STRIPE',
+                    metricType: selectedSource === 'TWITTER' ? 'FOLLOWERS' : 'REVENUE',
+                    condition: {
+                        operator: 'GTE',
+                        threshold: 10000,
+                        deadline: deadline.toISOString(),
+                    },
+                    lockAmountUsdCents: Math.round(capitalAmount * 100),
+                    payoutAmountUsdCents: Math.round(capitalAmount * 100),
+                };
+
+                // Call real API
+                const result = await window.api.createContract(params);
+                console.log('[Contracts] Contract created:', result);
+
+                // Mark completed
+                this.markCompleted(3);
+                document.getElementById('btn-text').textContent = "Contract Executed";
+                btn.classList.remove('bg-neutral-900');
+                btn.classList.add('bg-black', 'cursor-default');
+
+                // Update status
+                const statusText = document.querySelector('.step-status');
+                if (statusText) statusText.textContent = 'S: Complete';
+
+                // Fill progress bar to 100%
+                updateProgressBar(3, true);
+
+                // Navigate to contract detail after short delay
+                setTimeout(() => {
+                    const contractId = result.contractId || result.contract?.id;
+                    if (contractId) {
+                        window.router.navigate('/contracts/' + contractId);
+                    } else {
+                        window.router.navigate('/my-contracts');
+                    }
+                }, 1500);
+
+            } catch (error) {
+                console.error('[Contracts] Create contract error:', error);
+                holdComplete = false;
+                document.getElementById('btn-text').textContent = "Hold to Execute";
+                btn.disabled = false;
+                alert('Contract creation failed: ' + (error.message || 'Unknown error'));
+            }
+        },
+
+        // === X VERIFICATION METHODS ===
+
+        generateVerifyCode: async function () {
+            const usernameInput = document.getElementById('x-username-input');
+            const username = usernameInput?.value?.trim();
+            const btn = document.getElementById('x-generate-btn');
+
+            if (!username) {
+                alert('Please enter your X username');
+                return;
+            }
+
+            btn.disabled = true;
+            btn.innerHTML = '<div class="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin mx-auto"></div>';
+
+            try {
+                // Call backend to generate challenge code
+                const result = await window.api.startXVerification(username);
+                console.log('[Contracts] startXVerification result:', result);
+
+                xUsername = username;
+                xVerifyCode = result.challengeCode || result.code;
+
+                // Show step 2 (code display)
+                document.getElementById('x-verify-step1').classList.add('hidden');
+                document.getElementById('x-verify-step2').classList.remove('hidden');
+                document.getElementById('x-verify-code').textContent = xVerifyCode;
+                document.getElementById('x-verify-status').textContent = 'Pending';
+
+                if (window.lucide) window.lucide.createIcons();
+            } catch (error) {
+                console.error('[Contracts] startXVerification error:', error);
+                alert('Failed to generate code: ' + (error.message || 'Unknown error'));
+                btn.textContent = 'Generate Code';
+                btn.disabled = false;
+            }
+        },
+
+        copyVerifyCode: function () {
+            if (xVerifyCode) {
+                navigator.clipboard.writeText(xVerifyCode).then(() => {
+                    const btn = document.querySelector('#x-verify-step2 button[onclick*="copyVerifyCode"]');
+                    if (btn) {
+                        const originalHTML = btn.innerHTML;
+                        btn.innerHTML = '<i data-lucide="check" class="w-4 h-4"></i>';
+                        if (window.lucide) window.lucide.createIcons();
+                        setTimeout(() => {
+                            btn.innerHTML = originalHTML;
+                            if (window.lucide) window.lucide.createIcons();
+                        }, 2000);
+                    }
+                });
+            }
+        },
+
+        verifyXAccount: async function () {
+            const btn = document.getElementById('x-verify-btn');
+            const originalText = btn.textContent;
+            btn.innerHTML = '<div class="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin mx-auto"></div>';
+            btn.disabled = true;
+
+            try {
+                // Call the real backend API (no username needed, backend tracks challenge)
+                const result = await window.api.verifyX();
+                console.log('[Contracts] X verification result:', result);
+
+                // Mark as verified
+                xVerified = true;
+
+                // Update UI to show success
+                document.getElementById('x-verify-step1').classList.add('hidden');
+                document.getElementById('x-verify-step2').classList.add('hidden');
+                document.getElementById('x-verify-success').classList.remove('hidden');
+                document.getElementById('x-verified-handle').textContent = '@' + xUsername + ' • Connected';
+                document.getElementById('x-verify-status').textContent = 'Verified';
+                document.getElementById('x-verify-status').classList.remove('text-neutral-400');
+                document.getElementById('x-verify-status').classList.add('text-[#1F7A4D]');
+
+                // Enable the next button and show metric preview
+                document.getElementById('btn-step-2').disabled = false;
+
+                // Show metric preview now
+                const metricPreview = document.getElementById('metric-preview');
+                const mockData = mockMetricData['TWITTER'];
+                if (metricPreview && mockData) {
+                    metricPreview.style.display = 'block';
+                    document.getElementById('preview-current').textContent = formatNumber(mockData.currentValue) + ' followers';
+                    document.getElementById('preview-authority-badge').textContent = 'X';
+                }
+
+                if (window.lucide) window.lucide.createIcons();
+
+            } catch (error) {
+                console.error('[Contracts] X verification error:', error);
+                btn.textContent = originalText;
+                btn.disabled = false;
+
+                // Show specific error message
+                const errorMsg = error.message || 'Verification failed';
+                if (errorMsg.includes('could not find') || errorMsg.includes('not found')) {
+                    alert('Verification failed: Could not find the code "' + xVerifyCode + '" in your X bio. Please add it and try again.');
+                } else {
+                    alert('Verification failed: ' + errorMsg);
+                }
+            }
         }
     };
 

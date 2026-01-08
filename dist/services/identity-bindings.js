@@ -174,7 +174,7 @@ export async function bindGithubIdentity(userId, githubUserId, githubLogin) {
         userId,
         provider: 'github',
         providerUserId: githubUserId,
-        providerAccountId: githubLogin || null,
+        providerAccountId: githubLogin || undefined,
     });
 }
 // =============================================================================

@@ -14,8 +14,8 @@ import { type XAccountHealth } from './x-eligibility.js';
 export declare class XAdapterError extends Error {
     readonly retryable: boolean;
     readonly category: 'RATE_LIMIT' | 'AUTH' | 'API' | 'CONFIG' | 'UNSUPPORTED';
-    readonly code?: string | undefined;
-    constructor(message: string, retryable: boolean, category: 'RATE_LIMIT' | 'AUTH' | 'API' | 'CONFIG' | 'UNSUPPORTED', code?: string | undefined);
+    readonly code?: string;
+    constructor(message: string, retryable: boolean, category: 'RATE_LIMIT' | 'AUTH' | 'API' | 'CONFIG' | 'UNSUPPORTED', code?: string);
 }
 export interface XClient {
     getFollowers(usernameOrId: string): Promise<number>;

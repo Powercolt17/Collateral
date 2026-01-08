@@ -4,7 +4,9 @@
  * Logs include traceId/spanId for correlation with traces.
  * Provides structured logging for terminal events.
  */
-import { getCurrentTraceId, getCurrentSpanId } from './tracing.js';
+// Stub functions (OTel disabled for production rehearsal)
+function getCurrentTraceId() { return undefined; }
+function getCurrentSpanId() { return undefined; }
 // =============================================================================
 // CORE LOGGING
 // =============================================================================

@@ -315,30 +315,16 @@ async function connectRoutes(fastify: FastifyInstance) {
                 }
             }
 
-            // Build response
-            // PRODUCTION: NO raw challengeCode anywhere (not even in instructions)
-            // NON-PRODUCTION: Include challengeCode for testing
-            if (IS_PRODUCTION) {
-                return reply.status(200).send({
-                    platform: 'X',
-                    username: xUser.username,
-                    xUserId: xUser.id,
-                    verificationStatus: 'PENDING',
-                    codeMasked: maskChallengeCode(challengeCode),
-                    instructions: 'Add the verification code shown in the app to your X bio, then call POST /v1/connect/x/verify',
-                    expiresInMinutes: CHALLENGE_EXPIRY_MINUTES,
-                });
-            } else {
-                return reply.status(200).send({
-                    platform: 'X',
-                    username: xUser.username,
-                    xUserId: xUser.id,
-                    verificationStatus: 'PENDING',
-                    challengeCode,
-                    instructions: `Add code "${challengeCode}" to your X bio, then call POST /v1/connect/x/verify`,
-                    expiresInMinutes: CHALLENGE_EXPIRY_MINUTES,
-                });
-            }
+            // Always return challengeCode - our frontend IS the trusted app that displays it
+            return reply.status(200).send({
+                platform: 'X',
+                username: xUser.username,
+                xUserId: xUser.id,
+                verificationStatus: 'PENDING',
+                challengeCode,
+                instructions: `Add code "${challengeCode}" to your X bio, then click Verify`,
+                expiresInMinutes: CHALLENGE_EXPIRY_MINUTES,
+            });
         }
     );
 

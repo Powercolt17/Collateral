@@ -54,7 +54,7 @@ export declare class MockGithubClient implements GithubClient {
     private prs;
     private repoMetadata?;
     private prReviews;
-    constructor(defaultBranch?: string, prs?: MergedPR[], repoMetadata?: RepoMetadata | undefined, prReviews?: Map<number, PRReview[]>);
+    constructor(defaultBranch?: string, prs?: MergedPR[], repoMetadata?: RepoMetadata, prReviews?: Map<number, PRReview[]>);
     getRepoDefaultBranch(owner: string, repo: string): Promise<string>;
     getRepoMetadata(owner: string, repo: string): Promise<RepoMetadata>;
     getPRApprovals(owner: string, repo: string, prNumber: number, principalUserId: string): Promise<{

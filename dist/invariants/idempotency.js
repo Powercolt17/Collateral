@@ -92,8 +92,13 @@ async function tryAcquireIdempotencyLock(key, scope) {
         )
         RETURNING key
     `);
-    if (updateResult.rows.length > 0) {
+    const result = updateResult;
+    if (result.rows && result.rows.length > 0) {
         // We acquired the lock
+        return { status: 'acquired' };
+    }
+    // Fallback if rows is direct array (postgresjs)
+    if (Array.isArray(result) && result.length > 0) {
         return { status: 'acquired' };
     }
     // Step 3: Check current state (we didn't acquire)
@@ -156,10 +161,12 @@ async function getIdempotencyKey(key) {
         WHERE key = ${key}
         LIMIT 1
     `);
-    if (result.rows.length === 0) {
+    const res = result;
+    const rows = res.rows || (Array.isArray(res) ? res : []);
+    if (rows.length === 0) {
         return null;
     }
-    return result.rows[0];
+    return rows[0];
 }
 async function markSucceeded(key, result) {
     await db.execute(sql `

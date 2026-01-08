@@ -11,12 +11,16 @@ import { renderDocs, initDocs } from './views/Docs.js';
 import { renderFunding, initFunding } from './views/Funding.js';
 import { renderReceipts, initReceipts } from './views/Receipts.js';
 import { renderReceiptDetail, initReceiptDetail } from './views/ReceiptDetail.js';
+// API Client for backend integration
+import api from './api.js';
 
-// App state
+// App state - initialized from localStorage if available
+const storedUser = api.getStoredUser();
 const appState = {
-    isLoggedIn: false,
-    username: null,
-    displayName: null,
+    isLoggedIn: api.hasAuthToken(),
+    username: storedUser?.email ? '@' + storedUser.email.split('@')[0] : null,
+    displayName: storedUser?.email?.split('@')[0] || null,
+    userId: storedUser?.userId || null,
     connectedSources: {
         twitter: false,
         github: false,
@@ -24,8 +28,9 @@ const appState = {
     }
 };
 
-// Expose appState globally for views to access
+// Expose appState and api globally for views to access
 window.appState = appState;
+window.api = api;
 
 // Routes configuration
 const routes = [
@@ -83,19 +88,29 @@ window.app = {
             window.router.navigate('/contracts');
         }
     },
-    handleLoginSubmit: function () {
+    handleLoginSubmit: async function () {
         const btn = document.getElementById('btn-login-submit');
+        const emailInput = document.getElementById('login-email');
+        const email = emailInput?.value || 'demo@collateral.market';
         const originalText = btn.innerText;
         btn.innerHTML = `<div class="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin mx-auto"></div>`;
+        btn.disabled = true;
 
-        setTimeout(() => {
+        try {
+            const result = await api.devLogin(email);
             appState.isLoggedIn = true;
-            appState.username = "@user_demo";
+            appState.username = '@' + email.split('@')[0];
+            appState.userId = result.userId;
 
             window.app.closeAccessModal();
             updateAuthUI();
+        } catch (error) {
+            console.error('Login failed:', error);
+            alert('Login failed: ' + (error.message || 'Unknown error'));
+        } finally {
             btn.innerText = originalText;
-        }, 800);
+            btn.disabled = false;
+        }
     },
     goToCreateIdentity: function () {
         window.app.closeAccessModal();
@@ -125,24 +140,39 @@ window.app = {
             modal.classList.add('hidden');
         }, 300);
     },
-    handleCreateAccount: function () {
+    handleCreateAccount: async function () {
         const btn = document.getElementById('btn-create-submit');
+        const emailInput = document.getElementById('create-email');
         const displayName = document.getElementById('create-displayname').value;
+        const email = emailInput?.value || (displayName + '@collateral.market');
         const originalText = btn.innerText;
         btn.innerHTML = `<div class="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin mx-auto"></div>`;
+        btn.disabled = true;
 
-        setTimeout(() => {
+        try {
+            console.log('[App] Creating account with email:', email);
+            const result = await api.devLogin(email);
+            console.log('[App] Account created, token stored:', !!api.getAuthToken());
+
             appState.isLoggedIn = true;
-            appState.username = "@" + (displayName || "new_user");
+            appState.username = '@' + (displayName || email.split('@')[0]);
+            appState.userId = result.userId;
 
             window.app.closeCreateModal();
             updateAuthUI();
+        } catch (error) {
+            console.error('Account creation failed:', error);
+            alert('Account creation failed: ' + (error.message || 'Unknown error'));
+        } finally {
             btn.innerText = originalText;
-        }, 1000);
+            btn.disabled = false;
+        }
     },
     handleSignOut: function () {
+        api.logout();
         appState.isLoggedIn = false;
         appState.username = null;
+        appState.userId = null;
         updateAuthUI();
         window.router.navigate('/overview');
     },

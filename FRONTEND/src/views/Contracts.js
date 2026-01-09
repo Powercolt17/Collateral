@@ -512,6 +512,37 @@ export function renderContracts() {
                         </div>
                     </div>
                     
+                    <!-- STRIPE CONNECT PANEL (Shows when Stripe is selected) -->
+                    <div id="stripe-verify-panel" class="border border-neutral-200 bg-white p-6 mb-8" style="display: none;">
+                        <div class="flex items-center justify-between mb-4">
+                            <h4 class="font-medium text-base">Connect Stripe Account</h4>
+                            <span id="stripe-verify-status" class="text-body-mono text-neutral-400 uppercase text-[10px]">Not Connected</span>
+                        </div>
+                        
+                        <!-- Step 1: Connect Button -->
+                        <div id="stripe-connect-step1">
+                            <p class="text-sm text-neutral-600 mb-4">Connect your Stripe account to enable revenue verification. We'll use read-only access to verify your revenue metrics.</p>
+                            <button onclick="window.wizard.startStripeConnect()" id="stripe-connect-btn"
+                                class="w-full flex items-center justify-center gap-2 px-4 py-3 bg-[#635bff] text-white text-[11px] font-medium uppercase tracking-wide hover:bg-[#5851eb] transition-colors">
+                                <svg class="w-4 h-4" viewBox="0 0 24 24" fill="currentColor"><path d="M13.976 9.15c-2.172-.806-3.356-1.426-3.356-2.409 0-.831.683-1.305 1.901-1.305 2.227 0 4.515.858 6.09 1.631l.89-5.494C18.252.975 15.697 0 12.165 0 9.667 0 7.589.654 6.104 1.872 4.56 3.147 3.757 4.992 3.757 7.218c0 4.039 2.467 5.76 6.476 7.219 2.585.92 3.445 1.574 3.445 2.583 0 .98-.84 1.545-2.354 1.545-1.875 0-4.965-.921-6.99-2.109l-.9 5.555C5.175 22.99 8.385 24 11.714 24c2.641 0 4.843-.624 6.328-1.813 1.664-1.305 2.525-3.236 2.525-5.732 0-4.128-2.524-5.851-6.591-7.305z"/></svg>
+                                Connect with Stripe
+                            </button>
+                        </div>
+                        
+                        <!-- Connected State (Hidden initially) -->
+                        <div id="stripe-connect-success" class="hidden">
+                            <div class="flex items-center gap-3 p-4 bg-[#E8F4ED] border border-[#1F7A4D]/20">
+                                <div class="w-8 h-8 bg-[#1F7A4D] rounded-full flex items-center justify-center">
+                                    <i data-lucide="check" class="w-4 h-4 text-white"></i>
+                                </div>
+                                <div>
+                                    <p class="font-sans text-sm font-medium text-[#1F7A4D]">Stripe Connected</p>
+                                    <p id="stripe-account-id" class="font-mono text-[11px] text-neutral-500">acct_xxx • Connected</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
                     <!-- Metric Preview (Light - Current only) -->
                     <div id="metric-preview" class="metric-status-card mb-8" style="display: none;">
                         <div class="card-header" style="border-bottom: none; margin-bottom: 0; padding-bottom: 0;">
@@ -664,6 +695,10 @@ export function initContracts() {
     let xVerified = false;
     let xUsername = null;
     let xVerifyCode = null;
+
+    // Stripe Connect state
+    let stripeVerified = false;
+    let stripeAccountId = null;
 
     // === METRIC STATUS MODULE (Backend-ready) ===
     // Mock data for metric status - will be replaced by API call
@@ -876,13 +911,22 @@ export function initContracts() {
 
             // Show/hide X verification panel based on source
             const xVerifyPanel = document.getElementById('x-verify-panel');
+            const stripeVerifyPanel = document.getElementById('stripe-verify-panel');
+
+            // Hide both panels first
+            xVerifyPanel.style.display = 'none';
+            stripeVerifyPanel.style.display = 'none';
+
             if (source === 'TWITTER') {
                 xVerifyPanel.style.display = 'block';
                 // Disable next button until X is verified
                 document.getElementById('btn-step-2').disabled = !xVerified;
+            } else if (source === 'STRIPE') {
+                stripeVerifyPanel.style.display = 'block';
+                // Disable next button until Stripe is connected
+                document.getElementById('btn-step-2').disabled = !stripeVerified;
             } else {
-                xVerifyPanel.style.display = 'none';
-                // Non-X sources can proceed immediately
+                // Non-X/Stripe sources can proceed immediately
                 document.getElementById('btn-step-2').disabled = false;
             }
 
@@ -1127,6 +1171,75 @@ export function initContracts() {
                 } else {
                     alert('Verification failed: ' + errorMsg);
                 }
+            }
+        },
+
+        // === STRIPE CONNECT METHODS ===
+
+        startStripeConnect: async function () {
+            const btn = document.getElementById('stripe-connect-btn');
+            btn.disabled = true;
+            btn.innerHTML = '<div class="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin mx-auto"></div>';
+
+            try {
+                // Get OAuth URL from backend
+                const result = await window.api.startStripeConnect();
+                console.log('[Contracts] startStripeConnect result:', result);
+
+                if (result.alreadyConnected) {
+                    // Already connected - show success state
+                    stripeVerified = true;
+                    stripeAccountId = result.stripeAccountId;
+                    document.getElementById('stripe-connect-step1').classList.add('hidden');
+                    document.getElementById('stripe-connect-success').classList.remove('hidden');
+                    document.getElementById('stripe-account-id').textContent = stripeAccountId + ' • Connected';
+                    document.getElementById('stripe-verify-status').textContent = 'Connected';
+                    document.getElementById('stripe-verify-status').classList.remove('text-neutral-400');
+                    document.getElementById('stripe-verify-status').classList.add('text-[#1F7A4D]');
+                    document.getElementById('btn-step-2').disabled = false;
+                    if (window.lucide) window.lucide.createIcons();
+                    return;
+                }
+
+                // Store state for callback handling
+                localStorage.setItem('stripe_oauth_state', result.state);
+
+                // Open Stripe Connect in a popup
+                const popup = window.open(
+                    result.oauthUrl,
+                    'stripe-connect',
+                    'width=600,height=700,scrollbars=yes'
+                );
+
+                // Listen for OAuth callback completion
+                const checkPopup = setInterval(async () => {
+                    if (popup.closed) {
+                        clearInterval(checkPopup);
+                        btn.textContent = 'Connect with Stripe';
+                        btn.disabled = false;
+
+                        // Check if Stripe was connected
+                        const status = await window.api.getStripeStatus();
+                        if (status.connected) {
+                            stripeVerified = true;
+                            stripeAccountId = status.stripeAccountId;
+                            document.getElementById('stripe-connect-step1').classList.add('hidden');
+                            document.getElementById('stripe-connect-success').classList.remove('hidden');
+                            document.getElementById('stripe-account-id').textContent = stripeAccountId + ' • Connected';
+                            document.getElementById('stripe-verify-status').textContent = 'Connected';
+                            document.getElementById('stripe-verify-status').classList.remove('text-neutral-400');
+                            document.getElementById('stripe-verify-status').classList.add('text-[#1F7A4D]');
+                            document.getElementById('btn-step-2').disabled = false;
+                            if (window.lucide) window.lucide.createIcons();
+                        }
+                    }
+                }, 500);
+
+            } catch (error) {
+                console.error('[Contracts] startStripeConnect error:', error);
+                btn.innerHTML = '<svg class="w-4 h-4" viewBox="0 0 24 24" fill="currentColor"><path d="M13.976 9.15c-2.172-.806-3.356-1.426-3.356-2.409 0-.831.683-1.305 1.901-1.305 2.227 0 4.515.858 6.09 1.631l.89-5.494C18.252.975 15.697 0 12.165 0 9.667 0 7.589.654 6.104 1.872 4.56 3.147 3.757 4.992 3.757 7.218c0 4.039 2.467 5.76 6.476 7.219 2.585.92 3.445 1.574 3.445 2.583 0 .98-.84 1.545-2.354 1.545-1.875 0-4.965-.921-6.99-2.109l-.9 5.555C5.175 22.99 8.385 24 11.714 24c2.641 0 4.843-.624 6.328-1.813 1.664-1.305 2.525-3.236 2.525-5.732 0-4.128-2.524-5.851-6.591-7.305z"/></svg> Connect with Stripe';
+                btn.disabled = false;
+                alert('Failed to start Stripe Connect: ' + (error.message || 'Unknown error'));
             }
         }
     };

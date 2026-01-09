@@ -26,6 +26,41 @@ export const STRIPE_ALLOWED_CURRENCY = 'usd';
 // https://stripe.com/docs/api/balance_transactions/object#balance_transaction_object-type
 export const STRIPE_ALLOWED_TRANSACTION_TYPES = ['charge'];
 export const STRIPE_DEDUCTION_TYPES = ['refund', 'dispute', 'charge_failure'];
+// =============================================================================
+// V1 SPEC CONSTANTS
+// =============================================================================
+export const STRIPE_WINDOW_DAYS = 30; // Contract window is exactly 30 days
+export const STRIPE_MIN_DELTA_CENTS = 50000; // $500.00 minimum delta
+export const STRIPE_DELTA_FLOOR_PERCENTAGE = 0.10; // 10% of baseline minimum
+/**
+ * Calculate the delta floor for Stripe revenue contracts.
+ *
+ * Delta floor = max($500, baseline * 10%)
+ *
+ * This prevents trivial contracts where users lock capital for minimal gain.
+ *
+ * @param baselineNetRevenueCents - The baseline net revenue in cents
+ * @returns The minimum delta required in cents
+ */
+export function calculateStripeDeltaFloor(baselineNetRevenueCents) {
+    const percentageFloor = Math.floor(baselineNetRevenueCents * STRIPE_DELTA_FLOOR_PERCENTAGE);
+    return Math.max(STRIPE_MIN_DELTA_CENTS, percentageFloor);
+}
+/**
+ * Validate that a delta target meets the floor requirements.
+ *
+ * @param baselineNetRevenueCents - The baseline net revenue in cents
+ * @param deltaTargetCents - The user's requested delta target in cents
+ * @returns Validation result with details
+ */
+export function validateStripeDeltaFloor(baselineNetRevenueCents, deltaTargetCents) {
+    const requiredDelta = calculateStripeDeltaFloor(baselineNetRevenueCents);
+    return {
+        valid: deltaTargetCents >= requiredDelta,
+        requiredDelta,
+        actualDelta: deltaTargetCents,
+    };
+}
 export class MockStripeRevenueClient {
     fixedRevenueInWindow;
     fixedLifetimeRevenue;
@@ -111,6 +146,15 @@ export class MockStripeRevenueClient {
     async getLifetimeRevenue(connectedAccountId) {
         return this.fixedLifetimeRevenue;
     }
+    async getBaselineSnapshot(connectedAccountId, executionTime) {
+        // Calculate 30-day baseline window
+        const windowEnd = executionTime;
+        const windowStart = new Date(executionTime);
+        windowStart.setDate(windowStart.getDate() - STRIPE_WINDOW_DAYS);
+        // No refund buffer for baseline (we're calculating historical, not evaluating)
+        const refundBufferDate = windowEnd;
+        return this.getNetSettledRevenue(connectedAccountId, windowStart, windowEnd, refundBufferDate, STRIPE_ALLOWED_CURRENCY);
+    }
     // Test helper
     setMockTransactions(txns) {
         this.mockTransactions = txns;
@@ -129,11 +173,12 @@ export function setRevenueClient(client) {
 }
 export const stripeRevenueAdapter = {
     platform: 'STRIPE',
+    /**
+     * @deprecated Use createV1BaselineSnapshot for V1 spec compliance
+     */
     async snapshotBaseline(user) {
         const client = getRevenueClient();
         if (!user.stripeConnectedAccountId) {
-            // If no connected account at creation, baseline is 0 (or error?)
-            // We'll assume 0 and store evidence that account was missing.
             return {
                 snapshotAt: new Date().toISOString(),
                 metrics: { lifetime_revenue: 0 },
@@ -147,53 +192,127 @@ export const stripeRevenueAdapter = {
             },
         };
     },
-    async evaluate(contract, context) {
-        const condition = contract.conditionJson;
+    /**
+     * V1 SPEC: Create immutable baseline snapshot at execution time.
+     *
+     * This function:
+     * 1. Fetches 30-day prior net revenue from Stripe
+     * 2. Validates delta floor requirements
+     * 3. Returns V1-compliant frozen baseline JSON
+     *
+     * @param stripeConnectedAccountId - The user's verified Stripe account ID
+     * @param deltaTargetCents - The user's requested delta (must meet floor)
+     * @param executionTime - The execution timestamp
+     * @returns V1-compliant baseline JSON for freezing in contract
+     * @throws Error if delta floor not met or Stripe data unavailable
+     */
+    async createV1BaselineSnapshot(stripeConnectedAccountId, deltaTargetCents, executionTime) {
         const client = getRevenueClient();
-        // 1. Validate Context
-        if (!context.stripeConnectedAccountId) {
-            // Should be impossible if verification service does its job, but safety first
-            // We cannot verify revenue without the target account ID.
-            throw new Error(`Cannot verify Stripe Revenue: Missing stripeConnectedAccountId in context.`);
+        // 1. Fetch baseline (30-day prior net revenue)
+        const baselineResult = await client.getBaselineSnapshot(stripeConnectedAccountId, executionTime);
+        const baselineNetRevenueCents = baselineResult.netRevenue;
+        // 2. Calculate and validate delta floor
+        const deltaFloor = calculateStripeDeltaFloor(baselineNetRevenueCents);
+        const deltaValidation = validateStripeDeltaFloor(baselineNetRevenueCents, deltaTargetCents);
+        if (!deltaValidation.valid) {
+            throw new Error(`Delta target does not meet minimum floor. ` +
+                `Baseline: ${baselineNetRevenueCents} cents ($${(baselineNetRevenueCents / 100).toFixed(2)}), ` +
+                `Target delta: ${deltaTargetCents} cents ($${(deltaTargetCents / 100).toFixed(2)}), ` +
+                `Required delta: ${deltaValidation.requiredDelta} cents ($${(deltaValidation.requiredDelta / 100).toFixed(2)})`);
         }
-        const connectedAccountId = context.stripeConnectedAccountId;
+        // 3. Calculate baseline window bounds
+        const windowEnd = executionTime;
+        const windowStart = new Date(executionTime);
+        windowStart.setDate(windowStart.getDate() - STRIPE_WINDOW_DAYS);
+        // 4. Return immutable V1 baseline
+        return {
+            platform: 'STRIPE',
+            stripeConnectedAccountId,
+            baselineNetRevenueCents,
+            deltaTargetCents,
+            windowDays: STRIPE_WINDOW_DAYS,
+            baselineWindow: {
+                fromUtc: windowStart.toISOString(),
+                toUtc: windowEnd.toISOString(),
+            },
+            frozenAtUtc: executionTime.toISOString(),
+            deltaFloor,
+            deltaFloorCheck: {
+                passed: deltaValidation.valid,
+                requiredDelta: deltaValidation.requiredDelta,
+                actualDelta: deltaValidation.actualDelta,
+            },
+        };
+    },
+    async evaluate(contract, context) {
+        const client = getRevenueClient();
+        // 1. Extract frozen baseline from contract (V1 spec)
+        const baseline = contract.baselineJson;
+        // Check if this is a V1 baseline
+        const isV1Baseline = baseline && 'baselineNetRevenueCents' in baseline;
+        // 2. Get frozen Stripe account ID (MUST use frozen ID, never current)
+        let connectedAccountId;
+        let frozenBaseline;
+        let frozenDelta;
+        if (isV1Baseline) {
+            const v1Baseline = baseline;
+            connectedAccountId = v1Baseline.stripeConnectedAccountId; // FROZEN ID
+            frozenBaseline = v1Baseline.baselineNetRevenueCents;
+            frozenDelta = v1Baseline.deltaTargetCents;
+        }
+        else {
+            // Legacy fallback for older contracts
+            if (!context.stripeConnectedAccountId) {
+                throw new Error(`Cannot verify Stripe Revenue: Missing stripeConnectedAccountId in context.`);
+            }
+            connectedAccountId = context.stripeConnectedAccountId;
+            frozenBaseline = baseline?.lifetime_revenue || 0;
+            const condition = contract.conditionJson;
+            frozenDelta = condition.threshold - frozenBaseline; // Approximate for legacy
+        }
         const windowStartUtc = context.windowStartUtc;
         const windowEndUtc = contract.deadlineUtc;
         const measuredAtUtc = new Date().toISOString();
-        // =========================================================
-        // ANTI-ABUSE: Refund Cooling Window
-        // Charges must be created >= REFUND_BUFFER_DAYS before deadline
-        // =========================================================
+        // 3. ANTI-ABUSE: Refund Cooling Window
         const refundBufferDate = new Date(windowEndUtc);
         refundBufferDate.setDate(refundBufferDate.getDate() - STRIPE_REFUND_BUFFER_DAYS);
-        // 2. Fetch NET SETTLED Revenue (charges - refunds - disputes)
-        // with anti-abuse filtering: charge-only, single-currency, refund buffer
+        // 4. Fetch NET SETTLED Revenue (charges - refunds - disputes)
         const revenueResult = await client.getNetSettledRevenue(connectedAccountId, windowStartUtc, windowEndUtc, refundBufferDate, STRIPE_ALLOWED_CURRENCY);
-        // 3. Identify Baseline (Reference only)
-        const baseline = contract.baselineJson;
-        const baselineRevenue = baseline?.lifetime_revenue || 0;
-        // 4. Observed Value = Net Settled Revenue
         const observedRevenue = revenueResult.netRevenue;
-        const pass = evaluateCondition(observedRevenue, condition.operator, condition.threshold);
+        // 5. V1 SPEC: Pass condition is observed >= baseline + delta
+        const targetThreshold = frozenBaseline + frozenDelta;
+        const pass = observedRevenue >= targetThreshold;
         return {
             pass,
             observedValue: observedRevenue,
-            threshold: condition.threshold,
-            operator: condition.operator,
+            threshold: targetThreshold,
+            operator: 'GTE',
             evidence: {
                 source: 'STRIPE',
+                v1Compliant: isV1Baseline,
                 measuredAtUtc,
                 windowStartUtc: windowStartUtc.toISOString(),
                 windowEndUtc: windowEndUtc.toISOString(),
                 refundBufferDate: refundBufferDate.toISOString(),
-                baselineRevenue,
-                // Anti-abuse breakdown
+                // V1 frozen values
+                frozenStripeAccountId: connectedAccountId,
+                frozenBaseline,
+                frozenDelta,
+                targetThreshold,
+                // Observed results
                 grossCharges: revenueResult.grossCharges,
                 refunds: revenueResult.refunds,
                 disputes: revenueResult.disputes,
                 netRevenue: revenueResult.netRevenue,
                 observedRevenue,
-                threshold: condition.threshold,
+                // Pass calculation breakdown
+                passCalculation: {
+                    observed: observedRevenue,
+                    baseline: frozenBaseline,
+                    delta: frozenDelta,
+                    target: targetThreshold,
+                    result: pass ? 'PASS' : 'FAIL',
+                },
                 currency: STRIPE_ALLOWED_CURRENCY,
                 // Exclusion counts for transparency
                 excludedWrongCurrency: revenueResult.excludedWrongCurrency,

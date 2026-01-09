@@ -142,6 +142,40 @@ export async function getXStatus() {
     return handleResponse(response);
 }
 
+// --- STRIPE CONNECT ---
+
+export async function startStripeConnect() {
+    console.log('[API] startStripeConnect called');
+
+    const response = await fetch(`${API_BASE_URL}/v1/connect/stripe/start`, {
+        method: 'GET',
+        headers: getHeaders(),
+    });
+
+    return handleResponse(response);
+}
+
+export async function completeStripeConnect(code, state) {
+    console.log('[API] completeStripeConnect called');
+
+    const response = await fetch(`${API_BASE_URL}/v1/connect/stripe/callback`, {
+        method: 'POST',
+        headers: getHeaders(),
+        body: JSON.stringify({ code, state }),
+    });
+
+    return handleResponse(response);
+}
+
+export async function getStripeStatus() {
+    const response = await fetch(`${API_BASE_URL}/v1/connect/stripe/status`, {
+        method: 'GET',
+        headers: getHeaders(),
+    });
+
+    return handleResponse(response);
+}
+
 // --- CONTRACTS ---
 
 export async function createContract(params) {
@@ -230,6 +264,11 @@ export default {
     startXVerification,
     verifyX,
     getXStatus,
+
+    // Stripe Connect
+    startStripeConnect,
+    completeStripeConnect,
+    getStripeStatus,
 
     // Contracts
     createContract,

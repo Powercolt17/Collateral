@@ -13,6 +13,7 @@ import authRoutes from './routes/auth.js';
 import identityRoutes from './routes/identity.js';
 import webhookRoutes from './routes/webhooks.js';
 import connectRoutes from './routes/connect.js';
+import stripeConnectRoutes from './routes/stripe-connect.js';
 import quoteRoutes from './routes/quote.js';
 import opsRoutes from './routes/ops.js';
 const PORT = parseInt(process.env.PORT || '3000', 10);
@@ -87,6 +88,7 @@ async function main() {
     await fastify.register(authRoutes);
     await fastify.register(identityRoutes);
     await fastify.register(connectRoutes);
+    await fastify.register(stripeConnectRoutes); // Stripe Connect OAuth
     await fastify.register(quoteRoutes);
     // V1 Contract endpoints (CANONICAL)
     await fastify.register(contractReadRoutes); // GET /v1/contracts, GET /v1/contracts/:id

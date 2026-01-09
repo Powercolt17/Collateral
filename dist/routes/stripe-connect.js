@@ -1,0 +1,207 @@
+/**
+ * Stripe Connect Routes
+ *
+ * OAuth flow for connecting user's Stripe account:
+ * 1. GET /v1/connect/stripe/start - Redirect to Stripe OAuth
+ * 2. GET /v1/connect/stripe/callback - Handle OAuth callback
+ * 3. GET /v1/connect/stripe/status - Check connection status
+ */
+import { db } from '../db/client.js';
+import { connectedAccounts } from '../db/schema.js';
+import { eq, and } from 'drizzle-orm';
+import { randomBytes } from 'crypto';
+// =============================================================================
+// CONSTANTS
+// =============================================================================
+const STRIPE_CLIENT_ID = process.env.STRIPE_CLIENT_ID;
+const STRIPE_SECRET_KEY = process.env.STRIPE_SECRET_KEY;
+const FRONTEND_URL = process.env.FRONTEND_URL || 'http://localhost:5173';
+// OAuth state tokens (in production, use Redis or DB)
+const oauthStates = new Map();
+// =============================================================================
+// ROUTES
+// =============================================================================
+async function stripeConnectRoutes(fastify) {
+    /**
+     * GET /v1/connect/stripe/start
+     *
+     * Initiate Stripe Connect OAuth flow
+     * Returns URL to redirect user to Stripe
+     */
+    fastify.get('/v1/connect/stripe/start', {
+        preHandler: async (request, reply) => {
+            if (!request.userId) {
+                return reply.status(401).send({ error: 'Authentication required' });
+            }
+        },
+    }, async (request, reply) => {
+        const userId = request.userId;
+        if (!STRIPE_CLIENT_ID) {
+            return reply.status(500).send({
+                error: 'Stripe Connect not configured. Set STRIPE_CLIENT_ID.',
+            });
+        }
+        // Check if already connected
+        const [existing] = await db
+            .select()
+            .from(connectedAccounts)
+            .where(and(eq(connectedAccounts.userId, userId), eq(connectedAccounts.platform, 'STRIPE')))
+            .limit(1);
+        if (existing?.verificationStatus === 'VERIFIED') {
+            return reply.status(200).send({
+                alreadyConnected: true,
+                stripeAccountId: existing.externalAccountId,
+            });
+        }
+        // Generate state token for CSRF protection
+        const state = randomBytes(16).toString('hex');
+        oauthStates.set(state, {
+            userId,
+            expiresAt: Date.now() + 10 * 60 * 1000, // 10 minutes
+        });
+        // Build Stripe Connect OAuth URL
+        const redirectUri = `${FRONTEND_URL}/stripe/callback`;
+        const oauthUrl = new URL('https://connect.stripe.com/oauth/authorize');
+        oauthUrl.searchParams.set('response_type', 'code');
+        oauthUrl.searchParams.set('client_id', STRIPE_CLIENT_ID);
+        oauthUrl.searchParams.set('scope', 'read_only');
+        oauthUrl.searchParams.set('redirect_uri', redirectUri);
+        oauthUrl.searchParams.set('state', state);
+        return reply.status(200).send({
+            oauthUrl: oauthUrl.toString(),
+            state,
+        });
+    });
+    /**
+     * POST /v1/connect/stripe/callback
+     *
+     * Handle OAuth callback - exchange code for account ID
+     */
+    fastify.post('/v1/connect/stripe/callback', {
+        preHandler: async (request, reply) => {
+            if (!request.userId) {
+                return reply.status(401).send({ error: 'Authentication required' });
+            }
+        },
+    }, async (request, reply) => {
+        const userId = request.userId;
+        const { code, state } = request.body;
+        if (!code || !state) {
+            return reply.status(400).send({ error: 'code and state are required' });
+        }
+        // Verify state token
+        const stateData = oauthStates.get(state);
+        if (!stateData) {
+            return reply.status(400).send({ error: 'Invalid or expired state token' });
+        }
+        if (stateData.userId !== userId) {
+            return reply.status(400).send({ error: 'State token mismatch' });
+        }
+        if (Date.now() > stateData.expiresAt) {
+            oauthStates.delete(state);
+            return reply.status(400).send({ error: 'State token expired' });
+        }
+        oauthStates.delete(state);
+        // Exchange code for connected account ID
+        if (!STRIPE_SECRET_KEY) {
+            return reply.status(500).send({ error: 'Stripe not configured' });
+        }
+        try {
+            const tokenResponse = await fetch('https://connect.stripe.com/oauth/token', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                },
+                body: new URLSearchParams({
+                    grant_type: 'authorization_code',
+                    code,
+                    client_secret: STRIPE_SECRET_KEY,
+                }),
+            });
+            const tokenData = await tokenResponse.json();
+            if (!tokenResponse.ok || tokenData.error) {
+                console.error('[Stripe Connect] Token exchange failed:', tokenData);
+                return reply.status(400).send({
+                    error: tokenData.error_description || 'Failed to connect Stripe account',
+                });
+            }
+            const stripeAccountId = tokenData.stripe_user_id;
+            if (!stripeAccountId) {
+                return reply.status(400).send({ error: 'No account ID returned from Stripe' });
+            }
+            const now = new Date();
+            // Upsert connected account
+            await db
+                .insert(connectedAccounts)
+                .values({
+                userId,
+                platform: 'STRIPE',
+                externalAccountId: stripeAccountId,
+                status: 'ACTIVE',
+                verificationStatus: 'VERIFIED', // OAuth = verified
+                verifiedAt: now,
+                connectedAt: now,
+                metadataJson: {
+                    connectedVia: 'oauth',
+                    connectedAt: now.toISOString(),
+                },
+            })
+                .onConflictDoUpdate({
+                target: [connectedAccounts.userId, connectedAccounts.platform],
+                set: {
+                    externalAccountId: stripeAccountId,
+                    status: 'ACTIVE',
+                    verificationStatus: 'VERIFIED',
+                    verifiedAt: now,
+                    metadataJson: {
+                        connectedVia: 'oauth',
+                        connectedAt: now.toISOString(),
+                    },
+                },
+            });
+            console.log(`[Stripe Connect] User ${userId} connected account ${stripeAccountId}`);
+            return reply.status(200).send({
+                success: true,
+                stripeAccountId,
+                verificationStatus: 'VERIFIED',
+            });
+        }
+        catch (err) {
+            console.error('[Stripe Connect] Error:', err);
+            return reply.status(500).send({ error: 'Failed to connect Stripe account' });
+        }
+    });
+    /**
+     * GET /v1/connect/stripe/status
+     *
+     * Get Stripe connection status for current user
+     */
+    fastify.get('/v1/connect/stripe/status', {
+        preHandler: async (request, reply) => {
+            if (!request.userId) {
+                return reply.status(401).send({ error: 'Authentication required' });
+            }
+        },
+    }, async (request, reply) => {
+        const userId = request.userId;
+        const [account] = await db
+            .select()
+            .from(connectedAccounts)
+            .where(and(eq(connectedAccounts.userId, userId), eq(connectedAccounts.platform, 'STRIPE')))
+            .limit(1);
+        if (!account) {
+            return reply.status(200).send({
+                connected: false,
+                verificationStatus: null,
+            });
+        }
+        return reply.status(200).send({
+            connected: true,
+            stripeAccountId: account.externalAccountId,
+            verificationStatus: account.verificationStatus,
+            connectedAt: account.connectedAt?.toISOString(),
+        });
+    });
+}
+export default stripeConnectRoutes;
+//# sourceMappingURL=stripe-connect.js.map

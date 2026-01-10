@@ -158,7 +158,15 @@ export async function getXStatus() {
 // --- STRIPE CONNECT ---
 
 export async function startStripeConnect() {
+    const token = getAuthToken();
     console.log('[API] startStripeConnect called');
+    console.log('[API] 🔐 Token present:', !!token);
+    console.log('[API] 🔗 API Base URL:', API_BASE_URL);
+
+    // If no token, throw immediately with clear error
+    if (!token) {
+        throw new Error('Login required to connect Stripe. Please log in first.');
+    }
 
     const response = await fetch(`${API_BASE_URL}/v1/connect/stripe/start`, {
         method: 'GET',

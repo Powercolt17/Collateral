@@ -6,9 +6,11 @@
  * 2. POST /v1/connect/x/verify - Verify challenge in bio
  * 
  * SECURITY:
- * - challengeCode never exposed in production responses (including instructions)
  * - 60-second cooldown between /start calls (atomic check)
+ * - 60-second cooldown between /verify calls (atomic check, prevents rate limit exhaustion)
  * - Case-insensitive bio matching
+ * 
+ * NOTE: challengeCode IS returned to frontend (first-party app needs to display it)
  * 
  * STATUS SEMANTICS:
  * - status: 'ACTIVE' = account row exists and is usable
@@ -29,7 +31,8 @@ import { randomBytes } from 'crypto';
 
 const CHALLENGE_CODE_LENGTH = 8;
 const CHALLENGE_EXPIRY_MINUTES = 30;
-const CHALLENGE_COOLDOWN_SECONDS = 60;
+const CHALLENGE_COOLDOWN_SECONDS = 60;     // Cooldown between /start requests
+const VERIFY_COOLDOWN_SECONDS = 60;        // Cooldown between /verify requests (was 15 min, reduced for UX)
 
 const IS_PRODUCTION = process.env.NODE_ENV === 'production';
 
@@ -40,7 +43,17 @@ const IS_PRODUCTION = process.env.NODE_ENV === 'production';
 function mapXAdapterErrorToHttp(error: XAdapterError): { status: number; body: object } {
     switch (error.category) {
         case 'RATE_LIMIT':
-            return { status: 429, body: { error: error.message, retryable: true } };
+            // Include resetAt for UI countdown display
+            const resetAt = (error as any).resetAt;
+            return {
+                status: 429,
+                body: {
+                    error: error.message,
+                    code: 'X_API_RATE_LIMITED',
+                    retryable: true,
+                    resetAt: resetAt || null,
+                }
+            };
         case 'AUTH':
             return { status: 401, body: { error: error.message, retryable: false } };
         case 'API':
@@ -110,6 +123,7 @@ interface XConnectionMetadata {
     xUserId: string;
     challengeIssuedAt?: string;
     verifiedAt?: string;
+    lastVerifyAttemptAt?: string;  // For verify cooldown tracking
 }
 
 // =============================================================================
@@ -389,6 +403,73 @@ async function connectRoutes(fastify: FastifyInstance) {
                     code: 'CHALLENGE_EXPIRED',
                 });
             }
+
+            // ===========================================================
+            // ATOMIC VERIFY COOLDOWN - Single UPDATE with WHERE guard
+            // Prevents race condition where concurrent requests both pass cooldown
+            // ===========================================================
+            const now = new Date();
+            const nowIso = now.toISOString();
+            const cooldownThreshold = new Date(now.getTime() - VERIFY_COOLDOWN_SECONDS * 1000);
+
+            // Attempt atomic update: only succeeds if cooldown has passed
+            // This query updates lastVerifyAttemptAt ONLY if enough time has passed
+            // Using timestamptz for timezone-safe comparison
+            const updateResult = await db
+                .update(connectedAccounts)
+                .set({
+                    metadataJson: sql`
+                        COALESCE(${connectedAccounts.metadataJson}, '{}'::jsonb) || 
+                        jsonb_build_object('lastVerifyAttemptAt', ${nowIso}::text)
+                    `,
+                })
+                .where(
+                    and(
+                        eq(connectedAccounts.userId, userId),
+                        eq(connectedAccounts.platform, 'X'),
+                        // Only update if cooldown has passed (atomic guard)
+                        // Using timestamptz for timezone-safe comparison
+                        or(
+                            sql`${connectedAccounts.metadataJson}->>'lastVerifyAttemptAt' IS NULL`,
+                            sql`(${connectedAccounts.metadataJson}->>'lastVerifyAttemptAt')::timestamptz < ${cooldownThreshold.toISOString()}::timestamptz`
+                        )
+                    )
+                )
+                .returning({ id: connectedAccounts.id });
+
+            // If no rows updated, cooldown is still active
+            if (updateResult.length === 0) {
+                // Re-select to get accurate remaining time (handles concurrent update race)
+                const [freshAccount] = await db
+                    .select({ metadataJson: connectedAccounts.metadataJson })
+                    .from(connectedAccounts)
+                    .where(
+                        and(
+                            eq(connectedAccounts.userId, userId),
+                            eq(connectedAccounts.platform, 'X')
+                        )
+                    )
+                    .limit(1);
+
+                const freshMetadata = freshAccount?.metadataJson as XConnectionMetadata | null;
+                const lastAttempt = freshMetadata?.lastVerifyAttemptAt
+                    ? new Date(freshMetadata.lastVerifyAttemptAt).getTime()
+                    : Date.now();  // Fallback to now if somehow missing
+                const cooldownEnd = lastAttempt + VERIFY_COOLDOWN_SECONDS * 1000;
+                const remaining = Math.max(1, Math.ceil((cooldownEnd - Date.now()) / 1000));
+                const resetAt = Math.ceil(cooldownEnd / 1000);
+
+                console.log(`[X Verify] ATOMIC COOLDOWN: Blocked user ${userId}. ${remaining}s remaining.`);
+                return reply.status(429).send({
+                    code: 'X_VERIFY_COOLDOWN',
+                    error: 'Please wait before trying again.',
+                    retryable: true,
+                    retryAfterSeconds: remaining,
+                    resetAt,
+                });
+            }
+
+            console.log(`[X Verify] ATOMIC COOLDOWN: Granted user ${userId} at ${nowIso}`);
 
             const client = getXClient();
             let profile: { description?: string } | null;

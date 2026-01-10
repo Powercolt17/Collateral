@@ -114,13 +114,23 @@ export class RealXClient implements XClient {
             },
         });
 
+        // ALWAYS log rate limit headers for visibility
+        const rateLimitLimit = response.headers.get('x-rate-limit-limit');
+        const rateLimitRemaining = response.headers.get('x-rate-limit-remaining');
+        const rateLimitReset = response.headers.get('x-rate-limit-reset');
+
+        console.log(`[X API] ${endpoint} → ${response.status} | Rate Limit: ${rateLimitRemaining}/${rateLimitLimit} | Reset: ${rateLimitReset}`);
+
         if (response.status === 429) {
-            const resetHeader = response.headers.get('x-rate-limit-reset');
-            throw new XAdapterError(
-                `X API rate limited. Reset at: ${resetHeader || 'unknown'}`,
+            const resetAt = rateLimitReset ? parseInt(rateLimitReset, 10) : null;
+            const error = new XAdapterError(
+                `X API rate limited. Retry at: ${rateLimitReset || 'unknown'}`,
                 true,
                 'RATE_LIMIT'
             );
+            // Attach resetAt for UI countdown
+            (error as any).resetAt = resetAt;
+            throw error;
         }
 
         if (response.status === 401 || response.status === 403) {
@@ -528,52 +538,30 @@ export const xAdapter: SimplePlatformAdapter = {
         const frozenBaseline = baseline.followers;
         const frozenDeltaFloor = baseline.deltaFloor;
 
-        // MULTI-SAMPLE VERIFICATION: Take 3 samples for stability
-        // In production, these would be taken over time. For now, take 3 consecutive samples.
-        const REQUIRED_CONSECUTIVE = 3;
-        const samples: FollowerSample[] = [];
+        // SINGLE-SAMPLE VERIFICATION (V2 - Production-safe)
+        // Take exactly 1 sample. If rate-limited, error bubbles up with resetAt for job worker.
+        // Multi-sample was causing rate limit exhaustion.
+        const sampleTimestamp = new Date().toISOString();
+        const latestFollowers = await client.getFollowers(xUserId);
 
-        for (let i = 0; i < REQUIRED_CONSECUTIVE; i++) {
-            try {
-                const followers = await client.getFollowers(xUserId);
-                samples.push({
-                    timestampUtc: new Date().toISOString(),
-                    followers,
-                });
+        // Single sample for evidence
+        const samples: FollowerSample[] = [{
+            timestampUtc: sampleTimestamp,
+            followers: latestFollowers,
+        }];
 
-                // Small delay between samples in production (skip in test)
-                if (process.env.NODE_ENV !== 'test' && i < REQUIRED_CONSECUTIVE - 1) {
-                    await new Promise(resolve => setTimeout(resolve, 1000));
-                }
-            } catch (err) {
-                if (err instanceof XAdapterError && err.retryable) {
-                    // Rate limit - wait and retry
-                    await new Promise(resolve => setTimeout(resolve, 5000));
-                    i--; // Retry this sample
-                    continue;
-                }
-                throw err; // Fail closed on non-retryable errors
-            }
-        }
-
-        // Evaluate samples
-        const sampleResult = evaluateSamples(
-            samples,
-            condition.threshold,
-            condition.operator,
-            REQUIRED_CONSECUTIVE
-        );
+        // Evaluate single sample against threshold
+        const pass = evaluateCondition(latestFollowers, condition.operator, condition.threshold);
 
         // Also verify delta floor is met
-        const latestFollowers = samples[samples.length - 1]?.followers ?? 0;
         const actualDelta = latestFollowers - frozenBaseline;
         const deltaFloorMet = actualDelta >= frozenDeltaFloor;
 
         // Pass only if both conditions met
-        const pass = sampleResult.pass && deltaFloorMet;
+        const finalPass = pass && deltaFloorMet;
 
         return {
-            pass,
+            pass: finalPass,
             observedValue: latestFollowers,
             threshold: condition.threshold,
             operator: condition.operator,
@@ -586,10 +574,10 @@ export const xAdapter: SimplePlatformAdapter = {
                 threshold: condition.threshold,
                 operator: condition.operator,
                 endpoint: '/2/users/:id with public_metrics',
-                // Multi-sample evidence
+                // Single-sample evidence (V2)
                 samples,
-                consecutivePassCount: sampleResult.consecutivePassCount,
-                requiredConsecutive: REQUIRED_CONSECUTIVE,
+                consecutivePassCount: pass ? 1 : 0,
+                requiredConsecutive: 1,  // V2: Single sample
                 // Delta floor evidence
                 frozenBaseline,
                 frozenDeltaFloor,

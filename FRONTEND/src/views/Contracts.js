@@ -1161,6 +1161,51 @@ export function initContracts() {
 
             } catch (error) {
                 console.error('[Contracts] X verification error:', error);
+
+                // Check for rate limit or cooldown errors
+                const errorData = error.data || {};
+                const isRateLimited = errorData.code === 'X_VERIFY_COOLDOWN' ||
+                    errorData.code === 'X_API_RATE_LIMITED' ||
+                    error.status === 429;
+
+                if (isRateLimited) {
+                    // Show countdown timer - keep button disabled
+                    const resetAt = errorData.resetAt;
+                    const retryAfterSeconds = errorData.retryAfterSeconds;
+
+                    let remainingSeconds = retryAfterSeconds || 60;
+                    if (resetAt) {
+                        remainingSeconds = Math.max(1, Math.ceil(resetAt - Date.now() / 1000));
+                    }
+
+                    // Store unlock time in localStorage for page reload persistence
+                    const unlockTime = Date.now() + remainingSeconds * 1000;
+                    localStorage.setItem('x_verify_unlock_time', unlockTime.toString());
+
+                    // Start countdown
+                    const countdownInterval = setInterval(() => {
+                        const now = Date.now();
+                        const storedUnlockTime = parseInt(localStorage.getItem('x_verify_unlock_time') || '0', 10);
+                        const remaining = Math.ceil((storedUnlockTime - now) / 1000);
+
+                        if (remaining <= 0) {
+                            clearInterval(countdownInterval);
+                            btn.textContent = originalText;
+                            btn.disabled = false;
+                            localStorage.removeItem('x_verify_unlock_time');
+                        } else {
+                            btn.textContent = `Wait ${remaining}s`;
+                            btn.disabled = true;
+                        }
+                    }, 1000);
+
+                    btn.textContent = `Wait ${remainingSeconds}s`;
+                    btn.disabled = true;
+                    console.log(`[Contracts] X rate limited. Retry in ${remainingSeconds}s`);
+                    return;
+                }
+
+                // Non-rate-limit error - re-enable button
                 btn.textContent = originalText;
                 btn.disabled = false;
 

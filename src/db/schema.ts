@@ -105,7 +105,10 @@ export const ledgerEventTypeEnum = pgEnum('ledger_event_type', [
     'RETRY_SCHEDULED',
     // Identity binding events (operational, auditable)
     'IDENTITY_BOUND',
-    'IDENTITY_REVOKED'
+    'IDENTITY_REVOKED',
+    // Dispute/Chargeback events
+    'PAYMENT_DISPUTED',
+    'SETTLED'
 ]);
 
 // =====================
@@ -319,6 +322,9 @@ export const EventType = {
     // Identity binding events (operational, auditable)
     IDENTITY_BOUND: 'IDENTITY_BOUND',
     IDENTITY_REVOKED: 'IDENTITY_REVOKED',
+    // Dispute/Chargeback events
+    PAYMENT_DISPUTED: 'PAYMENT_DISPUTED',
+    SETTLED: 'SETTLED',
 } as const;
 
 export type EventTypeType = typeof EventType[keyof typeof EventType];

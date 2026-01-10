@@ -11,6 +11,7 @@ import { renderDocs, initDocs } from './views/Docs.js';
 import { renderFunding, initFunding } from './views/Funding.js';
 import { renderReceipts, initReceipts } from './views/Receipts.js';
 import { renderReceiptDetail, initReceiptDetail } from './views/ReceiptDetail.js';
+import { renderStripeCallback, initStripeCallback } from './views/StripeCallback.js';
 // API Client for backend integration
 import api from './api.js';
 
@@ -43,7 +44,8 @@ const routes = [
     { path: '/docs', render: renderDocs, init: initDocs },
     { path: '/funding', render: renderFunding, init: initFunding },
     { path: '/receipts', render: renderReceipts, init: initReceipts },
-    { path: '/receipts/:id', render: renderReceiptDetail, init: initReceiptDetail }
+    { path: '/receipts/:id', render: renderReceiptDetail, init: initReceiptDetail },
+    { path: '/stripe/callback', render: renderStripeCallback, init: initStripeCallback }
 ];
 
 // Initialize router

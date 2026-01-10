@@ -39,6 +39,13 @@ import {
     validateDeltaFloor,
     type FrozenXBinding,
 } from '../adapters/x-eligibility.js';
+import {
+    stripeRevenueAdapter,
+    validateTierEligibility,
+    STRIPE_ERROR_CODES,
+    STRIPE_TIER_PERCENTAGES,
+    type StripeV1BaselineJson,
+} from '../adapters/stripe-revenue.js';
 
 // =====================================================
 // WRITE ENDPOINT EVENT TYPES (explicit canonical list)
@@ -540,7 +547,6 @@ const contractWriteRoutes: FastifyPluginAsync = async (fastify) => {
 
                 await updateContractBaseline(id, baselineToStore);
 
-                // 6h. Compute termsHash (for audit, not including secrets)
                 termsHash = createHash('sha256')
                     .update(JSON.stringify({
                         xUserId,
@@ -551,6 +557,91 @@ const contractWriteRoutes: FastifyPluginAsync = async (fastify) => {
                         frozenAtUtc: measuredAtUtc,
                     }))
                     .digest('hex');
+            }
+
+            // STRIPE PLATFORM EXECUTE LOGIC
+            if (contract.platform === 'STRIPE') {
+                // 6a. Get VERIFIED Stripe connected account
+                const [stripeAccount] = await db
+                    .select()
+                    .from(connectedAccounts)
+                    .where(
+                        and(
+                            eq(connectedAccounts.userId, principalUserId),
+                            eq(connectedAccounts.platform, 'STRIPE'),
+                            eq(connectedAccounts.status, 'ACTIVE'),
+                            eq(connectedAccounts.verificationStatus, 'VERIFIED')
+                        )
+                    )
+                    .limit(1);
+
+                if (!stripeAccount) {
+                    reply.status(400);
+                    return {
+                        ok: false,
+                        code: 'STRIPE_NOT_VERIFIED',
+                        error: 'No verified Stripe account. Connect via Stripe Connect first.',
+                    };
+                }
+
+                const stripeConnectedAccountId = stripeAccount.externalAccountId;
+                const condition = contract.conditionJson as { threshold: number; operator: string };
+                const executionTime = new Date();
+
+                // 6b. Determine tier based on condition/riskTier (default STEADY)
+                let tier: 'STEADY' | 'BROAD' | 'ALL_IN' = 'STEADY';
+                const riskTier = (contract as any).riskTier;
+                if (riskTier === 'ADVANCED') tier = 'BROAD';
+                else if (riskTier === 'ELITE') tier = 'ALL_IN';
+
+                try {
+                    // 6c. Create V1 baseline snapshot (validates tier eligibility + delta floor)
+                    const v1Baseline = await stripeRevenueAdapter.createV1BaselineSnapshot(
+                        stripeConnectedAccountId,
+                        condition.threshold, // Use threshold as delta target
+                        executionTime,
+                        tier
+                    );
+
+                    // 6d. Persist frozen baseline into contract
+                    await updateContractBaseline(id, v1Baseline);
+
+                    // 6e. Compute termsHash
+                    termsHash = createHash('sha256')
+                        .update(JSON.stringify({
+                            stripeConnectedAccountId: v1Baseline.stripeConnectedAccountId,
+                            baselineNetRevenueCents: v1Baseline.baselineNetRevenueCents,
+                            deltaTargetCents: v1Baseline.deltaTargetCents,
+                            tier: v1Baseline.tier,
+                            tierPercentage: v1Baseline.tierPercentage,
+                            verificationWindow: v1Baseline.verificationWindow,
+                            frozenAtUtc: v1Baseline.frozenAtUtc,
+                            noAppeals: true,
+                            deterministicSettlement: true,
+                        }))
+                        .digest('hex');
+
+                } catch (err: any) {
+                    // Handle tier eligibility or delta floor errors
+                    const errorMessage = err.message || 'Unknown error';
+                    if (errorMessage.includes(STRIPE_ERROR_CODES.INELIGIBLE_BASELINE_TOO_LOW)) {
+                        reply.status(400);
+                        return {
+                            ok: false,
+                            code: STRIPE_ERROR_CODES.INELIGIBLE_BASELINE_TOO_LOW,
+                            error: errorMessage,
+                        };
+                    }
+                    if (errorMessage.includes(STRIPE_ERROR_CODES.DELTA_FLOOR_NOT_MET)) {
+                        reply.status(400);
+                        return {
+                            ok: false,
+                            code: STRIPE_ERROR_CODES.DELTA_FLOOR_NOT_MET,
+                            error: errorMessage,
+                        };
+                    }
+                    throw err;
+                }
             }
 
             // 7. Append EXECUTION_CONFIRMED - transitions to LOCKED

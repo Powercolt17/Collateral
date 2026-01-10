@@ -209,8 +209,33 @@ export async function getContract(contractId) {
 // --- FUNDING ---
 
 export async function createFundingIntent(contractId) {
-    const response = await fetch(`${API_BASE_URL}/v1/contracts/${contractId}/fund`, {
+    const response = await fetch(`${API_BASE_URL}/v1/contracts/${contractId}/funding-intent`, {
         method: 'POST',
+        headers: getHeaders(),
+    });
+
+    return handleResponse(response);
+}
+
+// --- EXECUTE ---
+
+export async function executeContract(contractId) {
+    console.log('[API] executeContract called for:', contractId);
+
+    const response = await fetch(`${API_BASE_URL}/v1/contracts/${contractId}/execute`, {
+        method: 'POST',
+        headers: getHeaders(),
+        body: JSON.stringify({}),
+    });
+
+    return handleResponse(response);
+}
+
+// --- CONNECTED ACCOUNTS ---
+
+export async function getConnectedAccounts() {
+    const response = await fetch(`${API_BASE_URL}/v1/me/connected-accounts`, {
+        method: 'GET',
         headers: getHeaders(),
     });
 
@@ -277,6 +302,12 @@ export default {
 
     // Funding
     createFundingIntent,
+
+    // Execute
+    executeContract,
+
+    // Connected Accounts
+    getConnectedAccounts,
 
     // Ledger
     getLedgerEvents,

@@ -248,6 +248,48 @@ export async function getContractIdByPaymentIntent(
 }
 
 /**
+ * Lookup contractId by chargeId from FUNDS_LOCKED event.
+ * Used for dispute webhook lookup when metadata is missing.
+ * 
+ * @param chargeId - Stripe Charge ID (stored in externalRef or metadata.chargeId)
+ * @returns contractId if found, null otherwise
+ */
+export async function getContractIdByChargeId(
+    chargeId: string
+): Promise<string | null> {
+    // First try: chargeId is stored as externalRef in FUNDS_LOCKED event
+    const [eventByRef] = await db
+        .select({ contractId: ledgerEvents.contractId })
+        .from(ledgerEvents)
+        .where(
+            and(
+                eq(ledgerEvents.externalRef, chargeId),
+                eq(ledgerEvents.eventType, EventType.FUNDS_LOCKED)
+            )
+        )
+        .limit(1);
+
+    if (eventByRef?.contractId) {
+        return eventByRef.contractId;
+    }
+
+    // Second try: chargeId might be in metadata.chargeId
+    // Use raw SQL for JSON field search
+    const [eventByMeta] = await db
+        .select({ contractId: ledgerEvents.contractId })
+        .from(ledgerEvents)
+        .where(
+            and(
+                eq(ledgerEvents.eventType, EventType.FUNDS_LOCKED),
+                sql`${ledgerEvents.metadataJson}->>'chargeId' = ${chargeId}`
+            )
+        )
+        .limit(1);
+
+    return eventByMeta?.contractId || null;
+}
+
+/**
  * Get existing event by externalRef (for returning idempotent duplicates).
  * 
  * @param txClient - Optional transaction client for read-your-writes

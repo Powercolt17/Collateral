@@ -83,68 +83,75 @@ export class MockStripeClient implements StripeClient {
 // const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!);
 
 export class ProductionStripeClient implements StripeClient {
-    // private stripe: Stripe;
+    private stripe: any; // Using 'any' to avoid direct import issues
 
     constructor() {
-        // this.stripe = new Stripe(process.env.STRIPE_SECRET_KEY!);
+        const secretKey = process.env.STRIPE_SECRET_KEY;
+        if (!secretKey) {
+            throw new Error('STRIPE_SECRET_KEY not configured');
+        }
+        // Dynamic import of Stripe to avoid bundling issues
+        // In production, you'd use: import Stripe from 'stripe';
+        // eslint-disable-next-line @typescript-eslint/no-var-requires
+        const Stripe = require('stripe').default || require('stripe');
+        this.stripe = new Stripe(secretKey, {
+            apiVersion: '2023-10-16',
+        });
     }
 
     async createPaymentIntent(params: CreatePaymentIntentParams): Promise<PaymentIntentResult> {
-        // Production implementation:
-        // const paymentIntent = await this.stripe.paymentIntents.create({
-        //     amount: params.amountUsdCents,
-        //     currency: 'usd',
-        //     capture_method: params.captureMethod || 'automatic',
-        //     metadata: { contractId: params.contractId },
-        // }, {
-        //     idempotencyKey: `pi_${params.contractId}`,
-        // });
-        // return {
-        //     id: paymentIntent.id,
-        //     clientSecret: paymentIntent.client_secret!,
-        //     status: paymentIntent.status,
-        // };
+        const paymentIntent = await this.stripe.paymentIntents.create({
+            amount: params.amountUsdCents,
+            currency: 'usd',
+            capture_method: params.captureMethod || 'automatic',
+            // Enable all payment methods configured in Stripe Dashboard
+            automatic_payment_methods: { enabled: true },
+            metadata: {
+                contractId: params.contractId,
+                platform: 'collateral',
+            },
+        }, {
+            idempotencyKey: `pi_create_${params.contractId}`,
+        });
 
-        throw new Error('Production Stripe not configured. Set STRIPE_SECRET_KEY.');
+        return {
+            id: paymentIntent.id,
+            clientSecret: paymentIntent.client_secret!,
+            status: paymentIntent.status,
+        };
     }
 
     async capturePaymentIntent(paymentIntentId: string, idempotencyKey: string): Promise<{ success: boolean; chargeId?: string }> {
-        // Production implementation:
-        // const paymentIntent = await this.stripe.paymentIntents.capture(paymentIntentId, {}, {
-        //     idempotencyKey,
-        // });
-        // return {
-        //     success: paymentIntent.status === 'succeeded',
-        //     chargeId: paymentIntent.latest_charge as string,
-        // };
-
-        throw new Error('Production Stripe not configured. Set STRIPE_SECRET_KEY.');
+        const paymentIntent = await this.stripe.paymentIntents.capture(paymentIntentId, {}, {
+            idempotencyKey,
+        });
+        return {
+            success: paymentIntent.status === 'succeeded',
+            chargeId: paymentIntent.latest_charge as string,
+        };
     }
 
     async createTransfer(params: CreateTransferParams): Promise<TransferResult> {
-        // Production implementation:
-        // try {
-        //     const transfer = await this.stripe.transfers.create({
-        //         amount: params.amountUsdCents,
-        //         currency: 'usd',
-        //         destination: params.destinationAccountId,
-        //         metadata: { contractId: params.contractId },
-        //     }, {
-        //         idempotencyKey: params.idempotencyKey,
-        //     });
-        //     return {
-        //         success: true,
-        //         id: transfer.id,
-        //     };
-        // } catch (err: any) {
-        //     return {
-        //         success: false,
-        //         error: err.message,
-        //         retryable: err.type === 'StripeConnectionError' || err.statusCode >= 500,
-        //     };
-        // }
-
-        throw new Error('Production Stripe not configured. Set STRIPE_SECRET_KEY.');
+        try {
+            const transfer = await this.stripe.transfers.create({
+                amount: params.amountUsdCents,
+                currency: 'usd',
+                destination: params.destinationAccountId,
+                metadata: { contractId: params.contractId },
+            }, {
+                idempotencyKey: params.idempotencyKey,
+            });
+            return {
+                success: true,
+                id: transfer.id,
+            };
+        } catch (err: any) {
+            return {
+                success: false,
+                error: err.message,
+                retryable: err.type === 'StripeConnectionError' || err.statusCode >= 500,
+            };
+        }
     }
 }
 
@@ -156,9 +163,21 @@ let stripeClientInstance: StripeClient | null = null;
 
 export function getStripeClient(): StripeClient {
     if (!stripeClientInstance) {
-        // Use mock in development/test, production client when STRIPE_SECRET_KEY is set
-        const isProduction = process.env.STRIPE_SECRET_KEY && process.env.NODE_ENV === 'production';
-        stripeClientInstance = isProduction ? new ProductionStripeClient() : new MockStripeClient();
+        // SAFETY: Use real client if key exists, regardless of NODE_ENV
+        // Only force mock with explicit FORCE_MOCK_STRIPE=true
+        const forceMock = process.env.FORCE_MOCK_STRIPE === 'true';
+        const hasKey = !!process.env.STRIPE_SECRET_KEY;
+
+        if (forceMock) {
+            console.log('[StripeClient] ⚠️ Using MockStripeClient (FORCE_MOCK_STRIPE=true)');
+            stripeClientInstance = new MockStripeClient();
+        } else if (hasKey) {
+            console.log('[StripeClient] ✅ Using ProductionStripeClient');
+            stripeClientInstance = new ProductionStripeClient();
+        } else {
+            console.log('[StripeClient] ⚠️ Using MockStripeClient (no STRIPE_SECRET_KEY)');
+            stripeClientInstance = new MockStripeClient();
+        }
     }
     return stripeClientInstance;
 }

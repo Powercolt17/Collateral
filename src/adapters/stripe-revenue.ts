@@ -579,12 +579,278 @@ export class MockStripeRevenueClient implements StripeRevenueClient {
     }
 }
 
+// =============================================================================
+// REAL STRIPE REVENUE CLIENT (Production)
+// =============================================================================
+
+/**
+ * Production Stripe Revenue Client
+ * 
+ * Uses Stripe SDK to fetch real balance transactions.
+ * Implements retry logic for 429/5xx, fail-closed for auth errors.
+ */
+export class RealStripeRevenueClient implements StripeRevenueClient {
+    private stripe: import('stripe').default;
+    private maxRetries = 3;
+    private retryDelayMs = 1000;
+
+    constructor(stripeSecretKey: string) {
+        // Dynamic import to avoid requiring stripe in all environments
+        const Stripe = require('stripe').default;
+        this.stripe = new Stripe(stripeSecretKey, {
+            apiVersion: '2023-10-16',
+        });
+    }
+
+    /**
+     * Retry helper for transient errors (429, 5xx)
+     */
+    private async withRetry<T>(operation: () => Promise<T>, operationName: string): Promise<T> {
+        let lastError: Error | null = null;
+
+        for (let attempt = 1; attempt <= this.maxRetries; attempt++) {
+            try {
+                return await operation();
+            } catch (err: any) {
+                lastError = err;
+
+                // Check if retryable
+                const statusCode = err.statusCode || err.status;
+                const isRetryable = statusCode === 429 || (statusCode >= 500 && statusCode < 600);
+
+                if (!isRetryable) {
+                    // Non-retryable: auth errors, 4xx (except 429), config errors
+                    throw new Error(
+                        `[${STRIPE_ERROR_CODES.API_UNAVAILABLE}] ` +
+                        `Stripe API error (non-retryable): ${err.message}`
+                    );
+                }
+
+                if (attempt < this.maxRetries) {
+                    console.log(`[Stripe] ${operationName} attempt ${attempt} failed with ${statusCode}, retrying...`);
+                    await new Promise(resolve => setTimeout(resolve, this.retryDelayMs * attempt));
+                }
+            }
+        }
+
+        throw new Error(
+            `[${STRIPE_ERROR_CODES.API_UNAVAILABLE}] ` +
+            `Stripe API failed after ${this.maxRetries} attempts: ${lastError?.message}`
+        );
+    }
+
+    async getRevenueInWindow(connectedAccountId: string, start: Date, end: Date): Promise<number> {
+        const result = await this.getNetSettledRevenue(
+            connectedAccountId,
+            start,
+            end,
+            end, // No refund buffer for simple window query
+            STRIPE_ALLOWED_CURRENCY
+        );
+        return result.netRevenue;
+    }
+
+    async getNetSettledRevenue(
+        connectedAccountId: string,
+        windowStart: Date,
+        windowEnd: Date,
+        refundBufferDate: Date,
+        currency: string
+    ): Promise<StripeNetRevenueResult> {
+        return this.withRetry(async () => {
+            let grossCharges = 0;
+            let refunds = 0;
+            let disputes = 0;
+            let excludedWrongCurrency = 0;
+            let excludedWrongType = 0;
+            let excludedOutsideBuffer = 0;
+            let excludedManipulation = 0;
+            let unlinkedDeductions = 0;
+            let disputesPendingCount = 0;
+            let disputesResolvedCount = 0;
+            const countedChargeIds: string[] = [];
+            const transactions: StripeBalanceTransaction[] = [];
+
+            // Fetch all balance transactions in the window
+            let hasMore = true;
+            let startingAfter: string | undefined;
+
+            while (hasMore) {
+                const params: any = {
+                    created: {
+                        gte: Math.floor(windowStart.getTime() / 1000),
+                        lte: Math.floor(windowEnd.getTime() / 1000),
+                    },
+                    limit: 100,
+                    expand: ['data.source'],
+                };
+
+                if (startingAfter) {
+                    params.starting_after = startingAfter;
+                }
+
+                const response = await this.stripe.balanceTransactions.list(params, {
+                    stripeAccount: connectedAccountId,
+                });
+
+                for (const txn of response.data) {
+                    const txnData: StripeBalanceTransaction = {
+                        id: txn.id,
+                        type: txn.type,
+                        amount: txn.amount,
+                        currency: txn.currency,
+                        created: txn.created,
+                        source: typeof txn.source === 'string' ? txn.source : txn.source?.id || null,
+                    };
+                    transactions.push(txnData);
+
+                    // ANTI-MANIPULATION: Explicit type exclusion
+                    if (STRIPE_EXCLUDED_TRANSACTION_TYPES.includes(txn.type)) {
+                        excludedManipulation++;
+                        continue;
+                    }
+
+                    // Currency check
+                    if (txn.currency.toLowerCase() !== currency.toLowerCase()) {
+                        excludedWrongCurrency++;
+                        continue;
+                    }
+
+                    // Count charges
+                    if (STRIPE_ALLOWED_TRANSACTION_TYPES.includes(txn.type)) {
+                        const txnDate = new Date(txn.created * 1000);
+                        if (txnDate > refundBufferDate) {
+                            excludedOutsideBuffer++;
+                            continue;
+                        }
+                        grossCharges += txn.amount;
+                        countedChargeIds.push(txn.id);
+                    }
+
+                    // Count deductions
+                    if (STRIPE_DEDUCTION_TYPES.includes(txn.type)) {
+                        const linkedToCountedCharge = txnData.source && countedChargeIds.includes(txnData.source);
+                        if (!linkedToCountedCharge) {
+                            unlinkedDeductions++;
+                            continue;
+                        }
+                        if (txn.type === 'refund') {
+                            refunds += Math.abs(txn.amount);
+                        } else if (txn.type === 'dispute') {
+                            disputes += Math.abs(txn.amount);
+                            disputesPendingCount++; // We count all as pending initially
+                        }
+                    }
+                }
+
+                hasMore = response.has_more;
+                if (response.data.length > 0) {
+                    startingAfter = response.data[response.data.length - 1].id;
+                } else {
+                    hasMore = false;
+                }
+            }
+
+            // Calculate single-invoice dominance
+            const chargeAmounts = transactions
+                .filter(t => countedChargeIds.includes(t.id))
+                .map(t => ({ id: t.id, netAmountCents: t.amount }));
+            const dominanceCheck = checkSingleInvoiceDominance(chargeAmounts);
+
+            return {
+                grossCharges,
+                refunds,
+                disputes,
+                netRevenue: grossCharges - refunds - disputes,
+                transactions,
+                countedChargeIds,
+                excludedWrongCurrency,
+                excludedWrongType,
+                excludedOutsideBuffer,
+                excludedManipulation,
+                unlinkedDeductions,
+                refundsExcludedCents: refunds,
+                disputesPendingCount,
+                disputesResolvedCount,
+                largestChargeCents: dominanceCheck.largestChargeCents,
+                largestChargePct: dominanceCheck.largestChargePct,
+                singleInvoiceViolation: dominanceCheck.violation,
+            };
+        }, 'getNetSettledRevenue');
+    }
+
+    async getLifetimeRevenue(connectedAccountId: string): Promise<number> {
+        // For historical baseline, we need to sum all balance transactions
+        // This is expensive so we limit to recent history
+        return this.withRetry(async () => {
+            let total = 0;
+            let hasMore = true;
+            let startingAfter: string | undefined;
+
+            while (hasMore) {
+                const params: any = { limit: 100 };
+                if (startingAfter) params.starting_after = startingAfter;
+
+                const response = await this.stripe.balanceTransactions.list(params, {
+                    stripeAccount: connectedAccountId,
+                });
+
+                for (const txn of response.data) {
+                    if (STRIPE_EXCLUDED_TRANSACTION_TYPES.includes(txn.type)) continue;
+                    if (txn.currency.toLowerCase() !== STRIPE_ALLOWED_CURRENCY) continue;
+                    if (STRIPE_ALLOWED_TRANSACTION_TYPES.includes(txn.type)) {
+                        total += txn.amount;
+                    } else if (STRIPE_DEDUCTION_TYPES.includes(txn.type)) {
+                        total -= Math.abs(txn.amount);
+                    }
+                }
+
+                hasMore = response.has_more;
+                if (response.data.length > 0) {
+                    startingAfter = response.data[response.data.length - 1].id;
+                } else {
+                    hasMore = false;
+                }
+            }
+
+            return total;
+        }, 'getLifetimeRevenue');
+    }
+
+    async getBaselineSnapshot(connectedAccountId: string, executionTime: Date): Promise<StripeNetRevenueResult> {
+        const windowEnd = executionTime;
+        const windowStart = new Date(executionTime);
+        windowStart.setDate(windowStart.getDate() - STRIPE_WINDOW_DAYS);
+        const refundBufferDate = windowEnd; // No buffer for baseline
+
+        return this.getNetSettledRevenue(
+            connectedAccountId,
+            windowStart,
+            windowEnd,
+            refundBufferDate,
+            STRIPE_ALLOWED_CURRENCY
+        );
+    }
+}
+
 let clientInstance: StripeRevenueClient | null = null;
 
 export function getRevenueClient(): StripeRevenueClient {
     if (!clientInstance) {
-        // Default to mock for safety until explicitly configured
-        clientInstance = new MockStripeRevenueClient();
+        // Select client based on environment
+        const stripeSecretKey = process.env.STRIPE_SECRET_KEY;
+        const nodeEnv = process.env.NODE_ENV;
+
+        if (nodeEnv === 'production' && stripeSecretKey) {
+            console.log('[Stripe] Using RealStripeRevenueClient (production)');
+            clientInstance = new RealStripeRevenueClient(stripeSecretKey);
+        } else if (stripeSecretKey && nodeEnv !== 'test') {
+            console.log('[Stripe] Using RealStripeRevenueClient (development)');
+            clientInstance = new RealStripeRevenueClient(stripeSecretKey);
+        } else {
+            console.log('[Stripe] Using MockStripeRevenueClient (test/no-key)');
+            clientInstance = new MockStripeRevenueClient();
+        }
     }
     return clientInstance;
 }

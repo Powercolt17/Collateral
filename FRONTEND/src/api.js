@@ -2,8 +2,21 @@
 // API CLIENT - Collateral Backend Integration
 // =============================================================================
 
-// Production API URL - Railway deployment
-const API_BASE_URL = 'https://collateral-production.up.railway.app';
+// API Base URL - Use environment variable with localhost fallback for development
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:3000';
+
+// Startup log - Makes environment mistakes instantly obvious
+console.log(`[API] 🔗 Base URL: ${API_BASE_URL}`);
+
+// Export for UI debugging (e.g. show in footer)
+export function getApiEnvironment() {
+    const isLocal = API_BASE_URL.includes('localhost');
+    return {
+        url: API_BASE_URL,
+        env: isLocal ? 'LOCAL' : 'PRODUCTION',
+        display: isLocal ? 'localhost:3000' : new URL(API_BASE_URL).hostname,
+    };
+}
 
 // =============================================================================
 // AUTH TOKEN MANAGEMENT

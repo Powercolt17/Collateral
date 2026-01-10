@@ -2,8 +2,8 @@
 // API CLIENT - Collateral Backend Integration
 // =============================================================================
 
-// API Base URL - Use environment variable with localhost fallback for development
-const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:3000';
+// API Base URL - Default to Railway production, override with VITE_API_BASE_URL for local dev
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'https://collateral-production.up.railway.app';
 
 // Startup log - Makes environment mistakes instantly obvious
 console.log(`[API] 🔗 Base URL: ${API_BASE_URL}`);

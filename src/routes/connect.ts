@@ -23,7 +23,8 @@ import { db } from '../db/client.js';
 import { connectedAccounts } from '../db/schema.js';
 import { getXClient, XAdapterError } from '../adapters/x.js';
 import { eq, and, sql, lt, or, isNull } from 'drizzle-orm';
-import { randomBytes } from 'crypto';
+import { randomBytes, randomUUID } from 'crypto';
+import { checkGlobalRateLimit } from '../services/x-rate-limit-circuit.js';
 
 // =============================================================================
 // CONSTANTS
@@ -42,18 +43,23 @@ const IS_PRODUCTION = process.env.NODE_ENV === 'production';
 
 function mapXAdapterErrorToHttp(error: XAdapterError): { status: number; body: object } {
     switch (error.category) {
-        case 'RATE_LIMIT':
-            // Include resetAt for UI countdown display
-            const resetAt = (error as any).resetAt;
+        case 'RATE_LIMIT': {
+            // Use typed resetAt from XAdapterError
+            const resetAt = error.resetAt ?? null;
+            const nowSec = Math.floor(Date.now() / 1000);
+            const retryAfterSeconds = resetAt ? Math.max(1, resetAt - nowSec) : 60;
+
             return {
                 status: 429,
                 body: {
                     error: error.message,
-                    code: 'X_API_RATE_LIMITED',
+                    code: error.code || 'X_API_RATE_LIMITED',
                     retryable: true,
-                    resetAt: resetAt || null,
+                    resetAt,
+                    retryAfterSeconds,
                 }
             };
+        }
         case 'AUTH':
             return { status: 401, body: { error: error.message, retryable: false } };
         case 'API':
@@ -225,6 +231,50 @@ async function connectRoutes(fastify: FastifyInstance) {
                     error: `X user not found: @${normalizedUsername}`,
                     retryable: false,
                 });
+            }
+
+            // =========================================================
+            // GLOBAL UNIQUENESS CHECK - Is this X account already verified by ANYONE?
+            // =========================================================
+            const [globallyVerified] = await db
+                .select({
+                    userId: connectedAccounts.userId,
+                    verifiedAt: connectedAccounts.verifiedAt,
+                })
+                .from(connectedAccounts)
+                .where(
+                    and(
+                        eq(connectedAccounts.platform, 'X'),
+                        eq(connectedAccounts.externalAccountId, xUser.id),
+                        sql`${connectedAccounts.verificationStatus} = 'VERIFIED'`
+                    )
+                )
+                .limit(1);
+
+            if (globallyVerified) {
+                // X account is verified by someone (could be this user or another)
+                if (globallyVerified.userId === userId) {
+                    // This user already verified this X account - return success
+                    return reply.status(200).send({
+                        platform: 'X',
+                        alreadyVerified: true,
+                        username: xUser.username,
+                        xUserId: xUser.id,
+                        verificationStatus: 'VERIFIED',
+                        verifiedAt: globallyVerified.verifiedAt?.toISOString(),
+                    });
+                } else {
+                    // DIFFERENT user verified this X account - BLOCK
+                    console.log(`[X Verify] BLOCKED: @${xUser.username} (${xUser.id}) already verified by user ${globallyVerified.userId}`);
+                    return reply.status(200).send({
+                        platform: 'X',
+                        alreadyVerifiedGlobal: true,
+                        username: xUser.username,
+                        xUserId: xUser.id,
+                        verificationStatus: 'VERIFIED',
+                        message: 'This X username is already verified by another account.',
+                    });
+                }
             }
 
             const now = new Date();
@@ -401,6 +451,30 @@ async function connectRoutes(fastify: FastifyInstance) {
                 return reply.status(400).send({
                     error: 'Challenge code expired. Call POST /v1/connect/x/start to get a new code.',
                     code: 'CHALLENGE_EXPIRED',
+                });
+            }
+
+            // =========================================================
+            // GLOBAL UNIQUENESS CHECK - Ensure no one else verified this X account
+            // =========================================================
+            const [globallyVerified] = await db
+                .select({ userId: connectedAccounts.userId })
+                .from(connectedAccounts)
+                .where(
+                    and(
+                        eq(connectedAccounts.platform, 'X'),
+                        eq(connectedAccounts.externalAccountId, account.externalAccountId),
+                        sql`${connectedAccounts.verificationStatus} = 'VERIFIED'`
+                    )
+                )
+                .limit(1);
+
+            if (globallyVerified && globallyVerified.userId !== userId) {
+                console.log(`[X Verify] BLOCKED: xUserId ${account.externalAccountId} already verified by user ${globallyVerified.userId}`);
+                return reply.status(409).send({
+                    code: 'X_ALREADY_VERIFIED_GLOBAL',
+                    error: 'This X username is already verified by another account.',
+                    retryable: false,
                 });
             }
 

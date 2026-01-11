@@ -1068,6 +1068,39 @@ export function initContracts() {
                 const result = await window.api.startXVerification(username);
                 console.log('[Contracts] startXVerification result:', result);
 
+                // =========================================================
+                // GLOBAL UNIQUENESS BLOCKED - X account verified by another user
+                // =========================================================
+                if (result.alreadyVerifiedGlobal) {
+                    console.log('[Contracts] X username already verified globally');
+                    alert('This X username (@' + result.username + ') is already verified by another account. Please use a different X handle.');
+                    btn.textContent = 'Generate Code';
+                    btn.disabled = false;
+                    return;
+                }
+
+                // =========================================================
+                // ALREADY VERIFIED FOR THIS USER - Show success
+                // =========================================================
+                if (result.alreadyVerified || result.verificationStatus === 'VERIFIED') {
+                    console.log('[Contracts] X already verified for this user');
+                    xUsername = result.username || username;
+                    xVerified = true;
+
+                    // Show success UI
+                    document.getElementById('x-verify-step1').classList.add('hidden');
+                    document.getElementById('x-verify-step2').classList.add('hidden');
+                    document.getElementById('x-verify-success').classList.remove('hidden');
+                    document.getElementById('x-verified-handle').textContent = '@' + xUsername + ' • Connected';
+                    document.getElementById('x-verify-status').textContent = 'Verified';
+                    document.getElementById('x-verify-status').classList.remove('text-neutral-400');
+                    document.getElementById('x-verify-status').classList.add('text-[#1F7A4D]');
+                    document.getElementById('btn-step-2').disabled = false;
+
+                    if (window.lucide) window.lucide.createIcons();
+                    return;
+                }
+
                 xUsername = username;
 
                 // Backend returns challengeCode in dev, codeMasked in prod

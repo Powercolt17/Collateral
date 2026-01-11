@@ -27,14 +27,18 @@ import {
 // =============================================================================
 
 export class XAdapterError extends Error {
+    public readonly resetAt?: number;  // Epoch seconds when rate limit resets
+
     constructor(
         message: string,
         public readonly retryable: boolean,
         public readonly category: 'RATE_LIMIT' | 'AUTH' | 'API' | 'CONFIG' | 'UNSUPPORTED',
-        public readonly code?: string
+        public readonly code?: string,
+        resetAt?: number
     ) {
         super(message);
         this.name = 'XAdapterError';
+        this.resetAt = resetAt;
     }
 }
 
@@ -93,6 +97,8 @@ export class MockXClient implements XClient {
 // REAL X CLIENT (Production)
 // =============================================================================
 
+import { checkGlobalRateLimit, setGlobalRateLimit } from '../services/x-rate-limit-circuit.js';
+
 export class RealXClient implements XClient {
     private bearerToken: string;
     private baseUrl = 'https://api.twitter.com/2';
@@ -101,7 +107,20 @@ export class RealXClient implements XClient {
         this.bearerToken = bearerToken;
     }
 
-    private async request<T>(endpoint: string, params?: Record<string, string>): Promise<T> {
+    private async request<T>(endpoint: string, params?: Record<string, string>, requestId?: string): Promise<T> {
+        // GLOBAL CIRCUIT BREAKER CHECK - Fail fast if rate limited
+        const circuitState = checkGlobalRateLimit();
+        if (circuitState) {
+            console.log(`[X API] ${requestId || '-'} CIRCUIT OPEN - Blocking ${endpoint}`);
+            throw new XAdapterError(
+                `X API globally rate limited. Retry at: ${circuitState.resetAt}`,
+                true,
+                'RATE_LIMIT',
+                'X_GLOBAL_RATE_LIMIT',
+                circuitState.resetAt
+            );
+        }
+
         const url = new URL(`${this.baseUrl}${endpoint}`);
         if (params) {
             Object.entries(params).forEach(([k, v]) => url.searchParams.set(k, v));
@@ -114,23 +133,27 @@ export class RealXClient implements XClient {
             },
         });
 
-        // ALWAYS log rate limit headers for visibility
+        // ALWAYS log rate limit headers for observability
         const rateLimitLimit = response.headers.get('x-rate-limit-limit');
         const rateLimitRemaining = response.headers.get('x-rate-limit-remaining');
         const rateLimitReset = response.headers.get('x-rate-limit-reset');
+        const resetAt = rateLimitReset ? parseInt(rateLimitReset, 10) : null;
 
-        console.log(`[X API] ${endpoint} → ${response.status} | Rate Limit: ${rateLimitRemaining}/${rateLimitLimit} | Reset: ${rateLimitReset}`);
+        console.log(`[X API] ${requestId || '-'} ${endpoint} → ${response.status} | Remaining: ${rateLimitRemaining}/${rateLimitLimit} | Reset: ${resetAt}`);
 
         if (response.status === 429) {
-            const resetAt = rateLimitReset ? parseInt(rateLimitReset, 10) : null;
-            const error = new XAdapterError(
-                `X API rate limited. Retry at: ${rateLimitReset || 'unknown'}`,
+            // UPDATE GLOBAL CIRCUIT BREAKER
+            if (resetAt) {
+                setGlobalRateLimit(resetAt);
+            }
+
+            throw new XAdapterError(
+                `X API rate limited. Retry at: ${resetAt || 'unknown'}`,
                 true,
-                'RATE_LIMIT'
+                'RATE_LIMIT',
+                'X_API_RATE_LIMITED',
+                resetAt ?? undefined
             );
-            // Attach resetAt for UI countdown
-            (error as any).resetAt = resetAt;
-            throw error;
         }
 
         if (response.status === 401 || response.status === 403) {

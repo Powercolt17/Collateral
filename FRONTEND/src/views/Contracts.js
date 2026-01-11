@@ -1124,6 +1124,31 @@ export function initContracts() {
 
         verifyXAccount: async function () {
             const btn = document.getElementById('x-verify-btn');
+
+            // UPFRONT COOLDOWN CHECK - Don't call API if still in cooldown
+            const storedUnlockTime = parseInt(localStorage.getItem('x_verify_unlock_time') || '0', 10);
+            if (storedUnlockTime > Date.now()) {
+                const remaining = Math.ceil((storedUnlockTime - Date.now()) / 1000);
+                console.log(`[Contracts] BLOCKED: Cooldown active. ${remaining}s remaining.`);
+                btn.textContent = `Wait ${remaining}s`;
+                btn.disabled = true;
+                // Start countdown if not already running
+                const countdownInterval = setInterval(() => {
+                    const now = Date.now();
+                    const unlock = parseInt(localStorage.getItem('x_verify_unlock_time') || '0', 10);
+                    const rem = Math.ceil((unlock - now) / 1000);
+                    if (rem <= 0) {
+                        clearInterval(countdownInterval);
+                        btn.textContent = 'Verify X Account';
+                        btn.disabled = false;
+                        localStorage.removeItem('x_verify_unlock_time');
+                    } else {
+                        btn.textContent = `Wait ${rem}s`;
+                    }
+                }, 1000);
+                return; // DON'T call API
+            }
+
             const originalText = btn.textContent;
             btn.innerHTML = '<div class="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin mx-auto"></div>';
             btn.disabled = true;

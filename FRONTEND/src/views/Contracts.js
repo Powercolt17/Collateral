@@ -15,6 +15,169 @@ export function renderContracts() {
                 --border-strong: rgba(0,0,0,0.22);
                 --panel: rgba(0,0,0,0.02);
                 --step-active-bg: rgba(139,30,30,0.03);
+                --error-bg: #0a0a0a;
+                --error-border: rgba(139,30,30,0.25);
+                --error-accent: #8B1E1E;
+                --error-accent-muted: rgba(139,30,30,0.6);
+            }
+            
+            /* === ENFORCEMENT MODAL === */
+            .enforcement-overlay {
+                display: none;
+                position: fixed;
+                inset: 0;
+                background: rgba(0,0,0,0.75);
+                backdrop-filter: blur(2px);
+                z-index: 9999;
+                align-items: center;
+                justify-content: center;
+                padding: 20px;
+            }
+            .enforcement-overlay.visible {
+                display: flex;
+                animation: enforceFadeIn 0.14s ease-out;
+            }
+            @keyframes enforceFadeIn {
+                from { opacity: 0; }
+                to { opacity: 1; }
+            }
+            .enforcement-modal {
+                background: linear-gradient(180deg, #0c0c0c 0%, #0a0a0a 100%);
+                border: 1px solid var(--error-border);
+                border-radius: 14px;
+                max-width: 440px;
+                width: 100%;
+                overflow: hidden;
+                animation: enforceSlideUp 0.16s ease-out;
+                box-shadow: 0 24px 48px rgba(0,0,0,0.4), 0 0 0 1px rgba(255,255,255,0.03) inset;
+            }
+            @keyframes enforceSlideUp {
+                from { opacity: 0; transform: translateY(6px); }
+                to { opacity: 1; transform: translateY(0); }
+            }
+            
+            /* Top status bar line */
+            .enforcement-status-bar {
+                height: 2px;
+                background: linear-gradient(90deg, var(--error-accent) 0%, transparent 100%);
+            }
+            
+            /* Header with icon */
+            .enforcement-header {
+                display: flex;
+                align-items: center;
+                gap: 8px;
+                padding: 16px 24px 0 24px;
+            }
+            .enforcement-icon {
+                width: 16px;
+                height: 16px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+            .enforcement-icon svg {
+                width: 16px;
+                height: 16px;
+                color: var(--error-accent-muted);
+            }
+            .enforcement-label {
+                font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+                font-size: 10px;
+                font-weight: 600;
+                letter-spacing: 0.12em;
+                text-transform: uppercase;
+                color: var(--error-accent-muted);
+            }
+            
+            /* Title */
+            .enforcement-title {
+                font-family: ui-sans-serif, system-ui, -apple-system, sans-serif;
+                font-size: 20px;
+                font-weight: 600;
+                letter-spacing: -0.02em;
+                color: #ffffff;
+                padding: 12px 24px 0 24px;
+                line-height: 1.3;
+            }
+            
+            /* Body */
+            .enforcement-body {
+                padding: 16px 24px 20px 24px;
+            }
+            .enforcement-message {
+                font-family: ui-sans-serif, system-ui, sans-serif;
+                font-size: 14px;
+                line-height: 1.6;
+                color: #888;
+            }
+            .enforcement-message strong {
+                color: #ccc;
+                font-weight: 500;
+            }
+            
+            /* Rule ID (subtle) */
+            .enforcement-rule {
+                font-family: ui-monospace, monospace;
+                font-size: 10px;
+                letter-spacing: 0.05em;
+                color: #444;
+                padding: 0 24px 16px 24px;
+            }
+            
+            /* Footer */
+            .enforcement-footer {
+                display: flex;
+                justify-content: flex-end;
+                gap: 10px;
+                padding: 16px 24px;
+                border-top: 1px solid rgba(255,255,255,0.05);
+                background: rgba(0,0,0,0.3);
+            }
+            .enforcement-btn {
+                font-family: ui-sans-serif, system-ui, sans-serif;
+                font-size: 13px;
+                font-weight: 500;
+                padding: 10px 18px;
+                border-radius: 8px;
+                cursor: pointer;
+                transition: all 0.12s ease;
+            }
+            .enforcement-btn-secondary {
+                background: transparent;
+                color: #777;
+                border: 1px solid #333;
+            }
+            .enforcement-btn-secondary:hover {
+                background: rgba(255,255,255,0.03);
+                color: #aaa;
+                border-color: #444;
+            }
+            .enforcement-btn-primary {
+                background: var(--error-accent);
+                color: #fff;
+                border: none;
+            }
+            .enforcement-btn-primary:hover {
+                background: #a02828;
+            }
+            
+            /* Mobile responsive */
+            @media (max-width: 480px) {
+                .enforcement-modal {
+                    border-radius: 12px;
+                }
+                .enforcement-title {
+                    font-size: 18px;
+                }
+                .enforcement-footer {
+                    flex-direction: column-reverse;
+                    gap: 8px;
+                }
+                .enforcement-btn {
+                    width: 100%;
+                    text-align: center;
+                }
             }
             
             /* Typography Scale */
@@ -701,6 +864,147 @@ export function initContracts() {
     let stripeAccountId = null;
 
     // =========================================================
+    // ENFORCEMENT MODAL - Institutional rule enforcement notices
+    // =========================================================
+    const showEnforcementModal = ({
+        title = 'Policy Block',
+        message = '',
+        ruleId = null,
+        primaryText = null,
+        primaryAction = null,
+        secondaryText = 'Dismiss'
+    } = {}) => {
+        // Remove any existing modal
+        const existing = document.getElementById('enforcement-overlay');
+        if (existing) existing.remove();
+
+        // Shield icon SVG
+        const shieldIcon = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>`;
+
+        // Create modal HTML
+        const modalHTML = `
+            <div id="enforcement-overlay" class="enforcement-overlay visible">
+                <div class="enforcement-modal">
+                    <div class="enforcement-status-bar"></div>
+                    <div class="enforcement-header">
+                        <div class="enforcement-icon">${shieldIcon}</div>
+                        <span class="enforcement-label">Enforcement</span>
+                    </div>
+                    <div class="enforcement-title">${title}</div>
+                    <div class="enforcement-body">
+                        <div class="enforcement-message">${message}</div>
+                    </div>
+                    ${ruleId ? `<div class="enforcement-rule">Rule: ${ruleId}</div>` : ''}
+                    <div class="enforcement-footer">
+                        <button class="enforcement-btn enforcement-btn-secondary" id="enforcement-dismiss">${secondaryText}</button>
+                        ${primaryText ? `<button class="enforcement-btn enforcement-btn-primary" id="enforcement-primary">${primaryText}</button>` : ''}
+                    </div>
+                </div>
+            </div>
+        `;
+
+        document.body.insertAdjacentHTML('beforeend', modalHTML);
+
+        // Event listeners
+        const overlay = document.getElementById('enforcement-overlay');
+        const dismissBtn = document.getElementById('enforcement-dismiss');
+        const primaryBtn = document.getElementById('enforcement-primary');
+
+        const closeModal = () => overlay?.remove();
+
+        dismissBtn?.addEventListener('click', closeModal);
+        overlay?.addEventListener('click', (e) => {
+            if (e.target === overlay) closeModal();
+        });
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') closeModal();
+        }, { once: true });
+
+        if (primaryBtn && primaryAction) {
+            primaryBtn.addEventListener('click', () => {
+                closeModal();
+                primaryAction();
+            });
+        }
+    };
+
+    // Error-to-enforcement mapping
+    const showErrorModal = (rawMessage, { code = null, title = null, actionText = null, onAction = null, activeContractId = null } = {}) => {
+        // Map specific error codes to enforcement-style messages
+        const enforcementMappings = {
+            'MAX_ACTIVE_CONTRACT_PER_PLATFORM': {
+                title: 'One active contract per platform',
+                message: `You already have an active contract on <strong>${selectedSource === 'TWITTER' ? 'X' : 'Stripe'}</strong>.<br><br>To protect against duplicate commitments, only <strong>1 active contract</strong> per platform is allowed.`,
+                ruleId: 'MAX_ACTIVE_PER_PLATFORM',
+                primaryText: activeContractId ? 'View Active Contract' : null,
+                primaryAction: activeContractId ? () => window.router.navigate('/contracts/' + activeContractId) : null
+            },
+            'PLATFORM_NOT_CONNECTED': {
+                title: 'Platform connection required',
+                message: `Connect your <strong>${selectedSource === 'TWITTER' ? 'X (Twitter)' : 'Stripe'}</strong> account before creating a contract.`,
+                ruleId: 'REQUIRE_PLATFORM_CONNECTION',
+                primaryText: 'Connect Account',
+                primaryAction: () => {
+                    const panel = selectedSource === 'TWITTER' ? document.getElementById('x-verify-panel') : document.getElementById('stripe-connect-panel');
+                    panel?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                }
+            },
+            'PLATFORM_NOT_VERIFIED': {
+                title: 'Verification incomplete',
+                message: `Complete verification for your <strong>${selectedSource === 'TWITTER' ? 'X' : 'Stripe'}</strong> account to proceed.`,
+                ruleId: 'REQUIRE_VERIFIED_CONNECTION',
+                primaryText: 'Complete Verification',
+                primaryAction: () => {
+                    const panel = selectedSource === 'TWITTER' ? document.getElementById('x-verify-panel') : document.getElementById('stripe-connect-panel');
+                    panel?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                }
+            },
+            'PLATFORM_CONNECTION_INACTIVE': {
+                title: 'Connection revoked',
+                message: `Your <strong>${selectedSource === 'TWITTER' ? 'X' : 'Stripe'}</strong> connection has been revoked or expired. Please reconnect.`,
+                ruleId: 'CONNECTION_STATUS_ACTIVE',
+                primaryText: 'Reconnect',
+                primaryAction: () => {
+                    const panel = selectedSource === 'TWITTER' ? document.getElementById('x-verify-panel') : document.getElementById('stripe-connect-panel');
+                    panel?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                }
+            },
+            'FLOW_LOCKED': {
+                title: 'Execution in progress',
+                message: 'A contract execution is already running. Please wait for it to complete or close the other browser tab.',
+                ruleId: 'SINGLE_FLOW_LOCK'
+            },
+            'FUNDS_LOCK_TIMEOUT': {
+                title: 'Funds not locked',
+                message: 'The payment was authorized but funds have not fully locked yet. Please wait a moment and try again.',
+                ruleId: 'FUNDS_LOCK_REQUIRED'
+            }
+        };
+
+        // Check for enforcement mapping
+        const mapping = code ? enforcementMappings[code] : null;
+
+        if (mapping) {
+            showEnforcementModal({
+                title: mapping.title,
+                message: mapping.message,
+                ruleId: mapping.ruleId,
+                primaryText: mapping.primaryText || actionText,
+                primaryAction: mapping.primaryAction || onAction
+            });
+        } else {
+            // Fallback for unmapped errors - still use enforcement style
+            showEnforcementModal({
+                title: title || 'Execution blocked',
+                message: rawMessage || 'An unexpected issue occurred. Please try again.',
+                ruleId: code || null,
+                primaryText: actionText,
+                primaryAction: onAction
+            });
+        }
+    };
+
+    // =========================================================
     // AUTO-CHECK CONNECTION STATUS ON PAGE LOAD
     // =========================================================
     (async function checkConnectionStatus() {
@@ -1029,7 +1333,10 @@ export function initContracts() {
                 try {
                     const lock = JSON.parse(flowLockData);
                     if (Date.now() - lock.startedAt < 300000) { // 5 min lock
-                        alert('Flow already running in another tab. Please wait or close the other tab.');
+                        showErrorModal('A contract execution is already in progress. Please wait for it to complete or close the other browser tab.', {
+                            code: 'FLOW_LOCKED',
+                            title: 'Flow In Progress'
+                        });
                         return;
                     }
                 } catch (e) { /* Invalid lock data, proceed */ }
@@ -1316,20 +1623,12 @@ export function initContracts() {
                 btnText.textContent = "Hold to Execute";
                 btn.disabled = false;
 
-                // Handle platform errors with actionable UX
+                // Show enforcement modal - mapping is handled internally
                 const errCode = error?.code || error?.data?.code;
-                const platform = error?.platform || (selectedSource === 'TWITTER' ? 'X' : 'STRIPE');
-
-                if (isPlatformBlock(errCode)) {
-                    const action = getPlatformErrorAction(errCode, platform);
-                    if (action) {
-                        alert(action.message);
-                    } else {
-                        alert('Platform verification required.');
-                    }
-                } else {
-                    alert('Contract execution failed: ' + (error.message || 'Unknown error'));
-                }
+                showErrorModal(error.message, {
+                    code: errCode,
+                    activeContractId: error?.activeContractId || error?.data?.activeContractId
+                });
             }
         },
 

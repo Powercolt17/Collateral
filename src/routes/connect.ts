@@ -183,18 +183,7 @@ async function connectRoutes(fastify: FastifyInstance) {
                 )
                 .limit(1);
 
-            // IDEMPOTENT: Already VERIFIED - return success, no new challenge
-            if (existingAccount?.verificationStatus === 'VERIFIED') {
-                const metadata = existingAccount.metadataJson as XConnectionMetadata | null;
-                return reply.status(200).send({
-                    platform: 'X',
-                    username: metadata?.resolvedUsername || normalizedUsername,
-                    xUserId: existingAccount.externalAccountId,
-                    verificationStatus: 'VERIFIED',
-                    verifiedAt: existingAccount.verifiedAt?.toISOString(),
-                });
-            }
-
+            // NOTE: VERIFIED check moved to AFTER X API resolution to compare xUser.id
             // EARLY COOLDOWN CHECK: Return 429 BEFORE calling X API to save rate limit
             if (existingAccount?.verificationStatus === 'PENDING' && existingAccount.challengeIssuedAt) {
                 const cooldownEnd = existingAccount.challengeIssuedAt.getTime() + CHALLENGE_COOLDOWN_SECONDS * 1000;
@@ -234,12 +223,40 @@ async function connectRoutes(fastify: FastifyInstance) {
             }
 
             // =========================================================
+            // USER ALREADY HAS X CHECK - Does THIS user already have a verified X account?
+            // =========================================================
+            if (existingAccount?.verificationStatus === 'VERIFIED') {
+                // User already has a verified X account
+                if (existingAccount.externalAccountId === xUser.id) {
+                    // Same X account - return success (idempotent)
+                    const metadata = existingAccount.metadataJson as XConnectionMetadata | null;
+                    return reply.status(200).send({
+                        platform: 'X',
+                        alreadyVerified: true,
+                        username: metadata?.resolvedUsername || xUser.username,
+                        xUserId: xUser.id,
+                        verificationStatus: 'VERIFIED',
+                        verifiedAt: existingAccount.verifiedAt?.toISOString(),
+                    });
+                } else {
+                    // DIFFERENT X account - BLOCK (one user can only have one X)
+                    const metadata = existingAccount.metadataJson as XConnectionMetadata | null;
+                    console.log(`[X Verify] BLOCKED: User ${userId} already has verified X: ${existingAccount.externalAccountId}, tried to verify ${xUser.id}`);
+                    return reply.status(409).send({
+                        code: 'USER_ALREADY_HAS_X',
+                        error: 'This account already has a verified X profile.',
+                        existingUsername: metadata?.resolvedUsername,
+                        existingXUserId: existingAccount.externalAccountId,
+                    });
+                }
+            }
+
+            // =========================================================
             // GLOBAL UNIQUENESS CHECK - Is this X account already verified by ANYONE?
             // =========================================================
             const [globallyVerified] = await db
                 .select({
                     userId: connectedAccounts.userId,
-                    verifiedAt: connectedAccounts.verifiedAt,
                 })
                 .from(connectedAccounts)
                 .where(
@@ -251,30 +268,15 @@ async function connectRoutes(fastify: FastifyInstance) {
                 )
                 .limit(1);
 
-            if (globallyVerified) {
-                // X account is verified by someone (could be this user or another)
-                if (globallyVerified.userId === userId) {
-                    // This user already verified this X account - return success
-                    return reply.status(200).send({
-                        platform: 'X',
-                        alreadyVerified: true,
-                        username: xUser.username,
-                        xUserId: xUser.id,
-                        verificationStatus: 'VERIFIED',
-                        verifiedAt: globallyVerified.verifiedAt?.toISOString(),
-                    });
-                } else {
-                    // DIFFERENT user verified this X account - BLOCK
-                    console.log(`[X Verify] BLOCKED: @${xUser.username} (${xUser.id}) already verified by user ${globallyVerified.userId}`);
-                    return reply.status(200).send({
-                        platform: 'X',
-                        alreadyVerifiedGlobal: true,
-                        username: xUser.username,
-                        xUserId: xUser.id,
-                        verificationStatus: 'VERIFIED',
-                        message: 'This X username is already verified by another account.',
-                    });
-                }
+            // If another user has verified this X account, block
+            if (globallyVerified && globallyVerified.userId !== userId) {
+                console.log(`[X Verify] BLOCKED: @${xUser.username} (${xUser.id}) already verified by user ${globallyVerified.userId}`);
+                return reply.status(409).send({
+                    code: 'X_ALREADY_VERIFIED_GLOBAL',
+                    error: 'This X username is already verified by another account.',
+                    username: xUser.username,
+                    xUserId: xUser.id,
+                });
             }
 
             const now = new Date();

@@ -1068,16 +1068,7 @@ export function initContracts() {
                 const result = await window.api.startXVerification(username);
                 console.log('[Contracts] startXVerification result:', result);
 
-                // =========================================================
-                // GLOBAL UNIQUENESS BLOCKED - X account verified by another user
-                // =========================================================
-                if (result.alreadyVerifiedGlobal) {
-                    console.log('[Contracts] X username already verified globally');
-                    alert('This X username (@' + result.username + ') is already verified by another account. Please use a different X handle.');
-                    btn.textContent = 'Generate Code';
-                    btn.disabled = false;
-                    return;
-                }
+                // Note: X_ALREADY_VERIFIED_GLOBAL now returns 409 and is handled in catch block
 
                 // =========================================================
                 // ALREADY VERIFIED FOR THIS USER - Show success
@@ -1132,6 +1123,25 @@ export function initContracts() {
                 if (window.lucide) window.lucide.createIcons();
             } catch (error) {
                 console.error('[Contracts] startXVerification error:', error);
+
+                // Handle specific error codes from backend
+                const errorCode = error.data?.code || error.code;
+
+                if (errorCode === 'USER_ALREADY_HAS_X') {
+                    const existingUsername = error.data?.existingUsername || 'your X account';
+                    alert('You already have a verified X account (@' + existingUsername + '). One account can only verify one X profile.');
+                    btn.textContent = 'Generate Code';
+                    btn.disabled = false;
+                    return;
+                }
+
+                if (errorCode === 'X_ALREADY_VERIFIED_GLOBAL') {
+                    alert('This X username is already verified by another account. Please use a different X handle.');
+                    btn.textContent = 'Generate Code';
+                    btn.disabled = false;
+                    return;
+                }
+
                 alert('Failed to generate code: ' + (error.message || 'Unknown error'));
                 btn.textContent = 'Generate Code';
                 btn.disabled = false;

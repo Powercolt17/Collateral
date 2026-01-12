@@ -252,10 +252,20 @@ export async function executeContract(contractId) {
     return handleResponse(response);
 }
 
+
 // --- CONNECTED ACCOUNTS ---
 
 export async function getConnectedAccounts() {
     const response = await fetch(`${API_BASE_URL}/v1/me/connected-accounts`, {
+        method: 'GET',
+        headers: getHeaders(),
+    });
+
+    return handleResponse(response);
+}
+
+export async function getConnectionStatus() {
+    const response = await fetch(`${API_BASE_URL}/v1/connect/status`, {
         method: 'GET',
         headers: getHeaders(),
     });
@@ -329,6 +339,7 @@ export default {
 
     // Connected Accounts
     getConnectedAccounts,
+    getConnectionStatus,
 
     // Ledger
     getLedgerEvents,

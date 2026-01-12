@@ -700,6 +700,36 @@ export function initContracts() {
     let stripeVerified = false;
     let stripeAccountId = null;
 
+    // =========================================================
+    // AUTO-CHECK CONNECTION STATUS ON PAGE LOAD
+    // =========================================================
+    (async function checkConnectionStatus() {
+        try {
+            const status = await window.api.getConnectionStatus();
+            console.log('[Contracts] Connection status:', status);
+
+            if (status?.platforms) {
+                // Check X (Twitter) status
+                const xStatus = status.platforms.find(p => p.platform === 'X');
+                if (xStatus?.verificationStatus === 'VERIFIED') {
+                    xVerified = true;
+                    xUsername = xStatus.metadata?.resolvedUsername || xStatus.externalAccountId;
+                    console.log('[Contracts] X already verified:', xUsername);
+                }
+
+                // Check Stripe status
+                const stripeStatus = status.platforms.find(p => p.platform === 'STRIPE');
+                if (stripeStatus?.verificationStatus === 'VERIFIED') {
+                    stripeVerified = true;
+                    stripeAccountId = stripeStatus.externalAccountId;
+                    console.log('[Contracts] Stripe already connected:', stripeAccountId);
+                }
+            }
+        } catch (err) {
+            console.log('[Contracts] Could not check connection status:', err.message);
+        }
+    })();
+
     // === METRIC STATUS MODULE (Backend-ready) ===
     // Mock data for metric status - will be replaced by API call
     const mockMetricData = {
@@ -986,10 +1016,79 @@ export function initContracts() {
         },
 
         completeHold: async function () {
-            holdComplete = true;
             const btn = document.getElementById('btn-execute');
-            document.getElementById('btn-text').textContent = "Executing...";
+            const btnText = document.getElementById('btn-text');
+
+            // ==================================================
+            // FLOW LOCK - Prevent multi-click / multi-tab double runs
+            // Uses localStorage for cross-tab visibility
+            // ==================================================
+            const FLOW_LOCK_KEY = `collateral_flow_lock:v1:${location.pathname}`;
+            const flowLockData = localStorage.getItem(FLOW_LOCK_KEY);
+            if (flowLockData) {
+                try {
+                    const lock = JSON.parse(flowLockData);
+                    if (Date.now() - lock.startedAt < 300000) { // 5 min lock
+                        alert('Flow already running in another tab. Please wait or close the other tab.');
+                        return;
+                    }
+                } catch (e) { /* Invalid lock data, proceed */ }
+            }
+            localStorage.setItem(FLOW_LOCK_KEY, JSON.stringify({ startedAt: Date.now() }));
+            const releaseLock = () => localStorage.removeItem(FLOW_LOCK_KEY);
+
+            holdComplete = true;
             btn.disabled = true;
+
+            // Helper: poll until state matches (with timeout return)
+            const pollUntilState = async (contractId, acceptStates, timeoutMs = 90000) => {
+                const start = Date.now();
+                let delay = 750;
+                const maxDelay = 4000;
+                let lastState = null;
+
+                while (true) {
+                    const res = await window.api.getContract(contractId);
+                    lastState = res.contract?.state;
+                    console.log(`[Contracts] Polling state: ${lastState}`);
+
+                    if (acceptStates.includes(lastState)) return res;
+
+                    if (Date.now() - start > timeoutMs) {
+                        return { timeout: true, lastState, contract: res.contract, events: res.events };
+                    }
+
+                    await new Promise(r => setTimeout(r, delay));
+                    delay = Math.min(maxDelay, Math.floor(delay * 1.35));
+                }
+            };
+
+            // Helper: map platform error codes to actionable UX
+            const getPlatformErrorAction = (code, platform) => {
+                const name = platform === 'X' ? 'X (Twitter)' : 'Stripe';
+                switch (code) {
+                    case 'PLATFORM_NOT_CONNECTED':
+                        return { message: `Connect your ${name} account first.`, action: 'connect' };
+                    case 'PLATFORM_NOT_VERIFIED':
+                        return { message: `Complete ${name} verification.`, action: 'verify' };
+                    case 'PLATFORM_CONNECTION_INACTIVE':
+                        return { message: `${name} connection revoked. Please reconnect.`, action: 'reconnect' };
+                    default: return null;
+                }
+            };
+
+            // Helper: check if platform enforcement error
+            const isPlatformBlock = (code) => {
+                return code === 'PLATFORM_NOT_CONNECTED' ||
+                    code === 'PLATFORM_CONNECTION_INACTIVE' ||
+                    code === 'PLATFORM_NOT_VERIFIED';
+            };
+
+            // DEV MODE CHECK
+            const IS_DEV_MODE = !window.stripe || !window.stripeElements;
+            if (IS_DEV_MODE) {
+                console.warn('[Contracts] DEV MODE: Stripe not initialized.');
+            }
 
             try {
                 // Get capital amount from input
@@ -1000,9 +1099,12 @@ export function initContracts() {
                 const deadline = new Date();
                 deadline.setDate(deadline.getDate() + 30);
 
+                // Extract platform for use in error handling
+                const chosenPlatform = selectedSource === 'TWITTER' ? 'X' : 'STRIPE';
+
                 const params = {
-                    platform: selectedSource === 'TWITTER' ? 'X' : 'STRIPE',
-                    metricType: selectedSource === 'TWITTER' ? 'FOLLOWERS' : 'REVENUE',
+                    platform: chosenPlatform,
+                    metricType: chosenPlatform === 'X' ? 'FOLLOWERS' : 'REVENUE',
                     condition: {
                         operator: 'GTE',
                         threshold: 10000,
@@ -1010,41 +1112,224 @@ export function initContracts() {
                     },
                     lockAmountUsdCents: Math.round(capitalAmount * 100),
                     payoutAmountUsdCents: Math.round(capitalAmount * 100),
+                    fundingMethod: 'USD_CARD',
                 };
 
-                // Call real API
-                const result = await window.api.createContract(params);
-                console.log('[Contracts] Contract created:', result);
+                // ==================================================
+                // STEP 1: CREATE CONTRACT
+                // ==================================================
+                btnText.textContent = "Creating contract...";
+                console.log('[Contracts] Step 1: Creating contract...');
 
-                // Mark completed
+                const createRes = await window.api.createContract(params);
+                console.log('[Contracts] Contract created:', createRes);
+
+                // Strict success check: ok must be truthy
+                if (!createRes?.ok) {
+                    const code = createRes?.code;
+                    const e = new Error(createRes?.error || 'Contract creation failed');
+                    e.code = code;
+                    e.platform = chosenPlatform;
+                    throw e;
+                }
+
+                const contractId = createRes.contractId || createRes.contract?.id;
+                if (!contractId) {
+                    throw new Error('Contract created but no ID returned');
+                }
+                console.log('[Contracts] Contract ID:', contractId);
+
+                // ==================================================
+                // STEP 2: CREATE FUNDING INTENT
+                // ==================================================
+                btnText.textContent = "Preparing payment...";
+                console.log('[Contracts] Step 2: Creating funding intent...');
+
+                const fundingRes = await window.api.createFundingIntent(contractId);
+                console.log('[Contracts] Funding intent:', fundingRes);
+
+                const clientSecret = fundingRes?.clientSecret;
+                if (!clientSecret) {
+                    throw new Error('Failed to create payment intent');
+                }
+
+                // ==================================================
+                // STEP 3: CONFIRM PAYMENT WITH STRIPE
+                // ==================================================
+                btnText.textContent = "Confirming payment...";
+                console.log('[Contracts] Step 3: Confirming payment...');
+
+                // Note: In production, you'd use stripe.confirmPayment here
+                // For now, we simulate direct confirmation or skip if no Stripe
+                if (window.stripe && window.stripeElements) {
+                    const confirm = await window.stripe.confirmPayment({
+                        elements: window.stripeElements,
+                        clientSecret,
+                        redirect: 'if_required',
+                    });
+
+                    if (confirm?.error) {
+                        throw new Error(confirm.error.message || 'Payment failed');
+                    }
+                } else {
+                    console.log('[Contracts] Stripe not initialized - skipping payment confirmation (dev mode)');
+                }
+
+                // ==================================================
+                // STEP 4: POLL UNTIL FUNDS_LOCKED (accept FUNDS_AUTHORIZED as intermediate)
+                // ==================================================
+                btnText.textContent = "Locking funds...";
+                console.log('[Contracts] Step 4: Waiting for funds to lock...');
+
+                const lockRes = await pollUntilState(contractId, ['FUNDS_AUTHORIZED', 'FUNDS_LOCKED', 'LOCKED'], 90000);
+
+                // Handle timeout
+                if (lockRes.timeout) {
+                    console.error('[Contracts] Timeout waiting for funds lock. State:', lockRes.lastState);
+                    console.error('[Contracts] Last events:', lockRes.events?.slice(-5));
+                    const e = new Error(`Funds did not lock. State: ${lockRes.lastState}. Check again in a minute.`);
+                    e.code = 'FUNDS_LOCK_TIMEOUT';
+                    throw e;
+                }
+
+                // Skip execute if already LOCKED (idempotent)
+                if (lockRes.contract?.state === 'LOCKED') {
+                    console.log('[Contracts] Already LOCKED, skipping execute...');
+                    // Jump to finalize
+                    btnText.textContent = "Already executed";
+                    releaseLock();
+                    setTimeout(() => {
+                        window.router.navigate('/contracts/' + contractId);
+                    }, 1000);
+                    return;
+                }
+
+                // Wait for FUNDS_LOCKED if still FUNDS_AUTHORIZED
+                if (lockRes.contract?.state === 'FUNDS_AUTHORIZED') {
+                    console.log('[Contracts] FUNDS_AUTHORIZED, waiting for FUNDS_LOCKED...');
+                    const lockedRes = await pollUntilState(contractId, ['FUNDS_LOCKED', 'LOCKED'], 60000);
+                    if (lockedRes.timeout) {
+                        const e = new Error(`Funds authorized but not locked. State: ${lockedRes.lastState}`);
+                        e.code = 'FUNDS_LOCK_TIMEOUT';
+                        throw e;
+                    }
+                    if (lockedRes.contract?.state === 'LOCKED') {
+                        console.log('[Contracts] Already LOCKED, skipping execute...');
+                        btnText.textContent = "Already executed";
+                        releaseLock();
+                        setTimeout(() => {
+                            window.router.navigate('/contracts/' + contractId);
+                        }, 1000);
+                        return;
+                    }
+                }
+                console.log('[Contracts] Funds locked!');
+
+                // ==================================================
+                // STEP 5: EXECUTE CONTRACT
+                // ==================================================
+                btnText.textContent = "Sealing contract...";
+                console.log('[Contracts] Step 5: Executing contract...');
+
+                try {
+                    const execRes = await window.api.executeContract(contractId);
+                    console.log('[Contracts] Execute result:', execRes);
+
+                    if (!execRes?.ok) {
+                        const code = execRes?.code;
+                        if (code === 'FUNDS_NOT_LOCKED') {
+                            // Webhook lag - poll and retry once
+                            console.log('[Contracts] Funds not locked yet, retrying...');
+                            btnText.textContent = "Waiting for lock...";
+                            const retryLock = await pollUntilState(contractId, ['FUNDS_LOCKED', 'LOCKED'], 60000);
+                            if (retryLock.timeout) {
+                                const e = new Error(`Funds still locking. State: ${retryLock.lastState}`);
+                                e.code = 'FUNDS_NOT_LOCKED';
+                                throw e;
+                            }
+                            const retry = await window.api.executeContract(contractId);
+                            if (!retry?.ok) {
+                                const e = new Error(retry?.error || 'Execute failed after retry');
+                                e.code = retry?.code;
+                                e.platform = retry?.platform;
+                                throw e;
+                            }
+                        } else if (isPlatformBlock(code)) {
+                            const e = new Error(execRes?.error || 'Connection issue');
+                            e.code = code;
+                            e.platform = execRes?.platform || chosenPlatform;
+                            throw e;
+                        } else if (code === 'DELTA_FLOOR_NOT_MET' || code?.includes('INELIGIBLE')) {
+                            const e = new Error(`Eligibility check failed: ${execRes?.error}`);
+                            e.code = code;
+                            throw e;
+                        } else {
+                            const e = new Error(execRes?.error || 'Execution failed');
+                            e.code = code;
+                            throw e;
+                        }
+                    }
+                } catch (execErr) {
+                    console.error('[Contracts] Execute error:', execErr);
+                    throw execErr;
+                }
+
+                // ==================================================
+                // STEP 6: POLL UNTIL LOCKED
+                // ==================================================
+                btnText.textContent = "Finalizing...";
+                console.log('[Contracts] Step 6: Waiting for LOCKED state...');
+
+                const finalRes = await pollUntilState(contractId, ['LOCKED'], 30000);
+
+                // Handle timeout with audit trail
+                if (finalRes.timeout) {
+                    console.error('[Contracts] Failed to reach LOCKED. State:', finalRes.lastState);
+                    console.error('[Contracts] Last events:', finalRes.events?.slice(-5));
+                    throw new Error(`Contract not finalized. State: ${finalRes.lastState}. Check ledger.`);
+                }
+                console.log('[Contracts] Contract LOCKED! Baseline:', finalRes.contract?.baseline);
+
+                // ==================================================
+                // SUCCESS - Update UI
+                // ==================================================
+                releaseLock(); // Release flow lock on success
                 this.markCompleted(3);
-                document.getElementById('btn-text').textContent = "Contract Executed";
+                btnText.textContent = "Contract Executed";
                 btn.classList.remove('bg-neutral-900');
                 btn.classList.add('bg-black', 'cursor-default');
 
-                // Update status
                 const statusText = document.querySelector('.step-status');
                 if (statusText) statusText.textContent = 'S: Complete';
 
-                // Fill progress bar to 100%
                 updateProgressBar(3, true);
 
-                // Navigate to contract detail after short delay
+                // Navigate to contract detail
                 setTimeout(() => {
-                    const contractId = result.contractId || result.contract?.id;
-                    if (contractId) {
-                        window.router.navigate('/contracts/' + contractId);
-                    } else {
-                        window.router.navigate('/my-contracts');
-                    }
+                    window.router.navigate('/contracts/' + contractId);
                 }, 1500);
 
             } catch (error) {
-                console.error('[Contracts] Create contract error:', error);
+                console.error('[Contracts] completeHold error:', error);
+                releaseLock(); // Release lock on failure
                 holdComplete = false;
-                document.getElementById('btn-text').textContent = "Hold to Execute";
+                btnText.textContent = "Hold to Execute";
                 btn.disabled = false;
-                alert('Contract creation failed: ' + (error.message || 'Unknown error'));
+
+                // Handle platform errors with actionable UX
+                const errCode = error?.code || error?.data?.code;
+                const platform = error?.platform || (selectedSource === 'TWITTER' ? 'X' : 'STRIPE');
+
+                if (isPlatformBlock(errCode)) {
+                    const action = getPlatformErrorAction(errCode, platform);
+                    if (action) {
+                        alert(action.message);
+                    } else {
+                        alert('Platform verification required.');
+                    }
+                } else {
+                    alert('Contract execution failed: ' + (error.message || 'Unknown error'));
+                }
             }
         },
 
@@ -1139,6 +1424,35 @@ export function initContracts() {
                     alert('This X username is already verified by another account. Please use a different X handle.');
                     btn.textContent = 'Generate Code';
                     btn.disabled = false;
+                    return;
+                }
+
+                // Handle global rate limit with countdown
+                if (errorCode === 'X_GLOBAL_RATE_LIMIT' || errorCode === 'X_API_RATE_LIMITED') {
+                    const resetAt = error.data?.resetAt;
+                    const retryAfterSeconds = error.data?.retryAfterSeconds || 60;
+                    let remaining = retryAfterSeconds;
+                    if (resetAt) {
+                        remaining = Math.max(1, resetAt - Math.floor(Date.now() / 1000));
+                    }
+                    const unlockTime = Date.now() + remaining * 1000;
+                    localStorage.setItem('x_verify_unlock_time', unlockTime.toString());
+
+                    console.log(`[Contracts] X API rate limited. Retry in ${remaining}s`);
+                    btn.textContent = `Wait ${remaining}s`;
+                    btn.disabled = true;
+
+                    const countdownInterval = setInterval(() => {
+                        const rem = Math.ceil((unlockTime - Date.now()) / 1000);
+                        if (rem <= 0) {
+                            clearInterval(countdownInterval);
+                            btn.textContent = 'Generate Code';
+                            btn.disabled = false;
+                            localStorage.removeItem('x_verify_unlock_time');
+                        } else {
+                            btn.textContent = `Wait ${rem}s`;
+                        }
+                    }, 1000);
                     return;
                 }
 

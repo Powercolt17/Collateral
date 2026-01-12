@@ -22,8 +22,8 @@ import { FastifyInstance, FastifyRequest, FastifyReply } from 'fastify';
 import { db } from '../db/client.js';
 import { connectedAccounts } from '../db/schema.js';
 import { getXClient, XAdapterError } from '../adapters/x.js';
-import { eq, and, sql, lt, or, isNull } from 'drizzle-orm';
-import { randomBytes, randomUUID } from 'crypto';
+import { eq, and, sql, or, isNull } from 'drizzle-orm';
+import { randomBytes } from 'crypto';
 import { checkGlobalRateLimit } from '../services/x-rate-limit-circuit.js';
 
 // =============================================================================
@@ -199,6 +199,21 @@ async function connectRoutes(fastify: FastifyInstance) {
                             : { challengeCode: existingAccount.challengeCode }),
                     });
                 }
+            }
+
+            // =========================================================
+            // GLOBAL CIRCUIT BREAKER - Block if X API is rate limited
+            // =========================================================
+            const circuitState = checkGlobalRateLimit();
+            if (circuitState) {
+                console.log(`[X Start] CIRCUIT OPEN - Blocked for ${circuitState.retryAfterSeconds}s`);
+                return reply.status(429).send({
+                    code: 'X_GLOBAL_RATE_LIMIT',
+                    error: 'X API is temporarily unavailable. Please try again later.',
+                    retryable: true,
+                    resetAt: circuitState.resetAt,
+                    retryAfterSeconds: circuitState.retryAfterSeconds,
+                });
             }
 
             // Resolve username via X API
@@ -547,6 +562,21 @@ async function connectRoutes(fastify: FastifyInstance) {
 
             console.log(`[X Verify] ATOMIC COOLDOWN: Granted user ${userId} at ${nowIso}`);
 
+            // =========================================================
+            // GLOBAL CIRCUIT BREAKER - Block if X API is rate limited
+            // =========================================================
+            const circuitState = checkGlobalRateLimit();
+            if (circuitState) {
+                console.log(`[X Verify] CIRCUIT OPEN - Blocked for ${circuitState.retryAfterSeconds}s`);
+                return reply.status(429).send({
+                    code: 'X_GLOBAL_RATE_LIMIT',
+                    error: 'X API is temporarily unavailable. Please try again later.',
+                    retryable: true,
+                    resetAt: circuitState.resetAt,
+                    retryAfterSeconds: circuitState.retryAfterSeconds,
+                });
+            }
+
             const client = getXClient();
             let profile: { description?: string } | null;
 
@@ -576,11 +606,14 @@ async function connectRoutes(fastify: FastifyInstance) {
 
             if (!bioContainsChallenge(bio, account.challengeCode)) {
                 return reply.status(409).send({
-                    error: 'CHALLENGE_NOT_FOUND_IN_BIO',
-                    message: 'Challenge code not found in your X bio. Please add it (case doesn\'t matter) and try again.',
-                    expectedCode: account.challengeCode,  // Include for debugging
-                    bioReceived: bio.substring(0, 100),   // Truncated for privacy
+                    code: 'CHALLENGE_NOT_FOUND_IN_BIO',
+                    error: 'Challenge code not found in your X bio. Please add it and try again.',
                     retryable: false,
+                    // Debug fields only in dev (don't leak in production)
+                    ...(IS_PRODUCTION ? {} : {
+                        expectedCode: account.challengeCode,
+                        bioReceived: bio.substring(0, 100),
+                    }),
                 });
             }
 
@@ -596,16 +629,76 @@ async function connectRoutes(fastify: FastifyInstance) {
                 verifiedAt: now.toISOString(),
             };
 
-            await db
-                .update(connectedAccounts)
-                .set({
-                    verificationStatus: 'VERIFIED',
-                    verifiedAt: now,
-                    challengeCode: null,
-                    challengeIssuedAt: null,
-                    metadataJson: updatedMetadata,
-                })
-                .where(eq(connectedAccounts.id, account.id));
+            // Wrap in try-catch to handle unique constraint violation (race condition protection)
+            try {
+                // Conditional update: only set VERIFIED if still PENDING (state machine guard)
+                const updateResult = await db
+                    .update(connectedAccounts)
+                    .set({
+                        verificationStatus: 'VERIFIED',
+                        verifiedAt: now,
+                        challengeCode: null,
+                        challengeIssuedAt: null,
+                        metadataJson: updatedMetadata,
+                    })
+                    .where(
+                        and(
+                            eq(connectedAccounts.id, account.id),
+                            sql`${connectedAccounts.verificationStatus} = 'PENDING'`
+                        )
+                    )
+                    .returning({ id: connectedAccounts.id });
+
+                // If no rows updated, state changed - check if already VERIFIED (idempotent)
+                if (updateResult.length === 0) {
+                    console.log(`[X Verify] State changed: account ${account.id} no longer PENDING`);
+
+                    // Re-fetch to check current state
+                    const [currentState] = await db
+                        .select({
+                            verificationStatus: connectedAccounts.verificationStatus,
+                            verifiedAt: connectedAccounts.verifiedAt,
+                        })
+                        .from(connectedAccounts)
+                        .where(eq(connectedAccounts.id, account.id))
+                        .limit(1);
+
+                    // If already VERIFIED, return success (idempotent / retry-safe)
+                    if (currentState?.verificationStatus === 'VERIFIED') {
+                        return reply.status(200).send({
+                            platform: 'X',
+                            alreadyVerified: true,
+                            xUserId: account.externalAccountId,
+                            verificationStatus: 'VERIFIED',
+                            verifiedAt: currentState.verifiedAt?.toISOString(),
+                        });
+                    }
+
+                    // Otherwise, state truly changed (challenge reset, etc)
+                    return reply.status(409).send({
+                        code: 'STATE_CHANGED',
+                        error: 'Verification state changed. Please restart verification.',
+                        retryable: true,
+                    });
+                }
+            } catch (err: any) {
+                // Check for unique constraint violation - only our specific index
+                const isUnique = err?.code === '23505';
+                const isThisIndex =
+                    err?.constraint === 'ux_connected_accounts_x_verified' ||
+                    String(err?.detail || '').includes('ux_connected_accounts_x_verified') ||
+                    String(err?.message || '').includes('ux_connected_accounts_x_verified');
+
+                if (isUnique && isThisIndex) {
+                    console.log(`[X Verify] RACE BLOCKED: Unique constraint violation for xUserId ${account.externalAccountId}`);
+                    return reply.status(409).send({
+                        code: 'X_ALREADY_VERIFIED_GLOBAL',
+                        error: 'This X username was just verified by another account.',
+                        retryable: false,
+                    });
+                }
+                throw err;
+            }
 
             return reply.status(200).send({
                 platform: 'X',
@@ -641,19 +734,27 @@ async function connectRoutes(fastify: FastifyInstance) {
                     verificationStatus: connectedAccounts.verificationStatus,
                     connectedAt: connectedAccounts.connectedAt,
                     verifiedAt: connectedAccounts.verifiedAt,
+                    metadataJson: connectedAccounts.metadataJson,
                 })
                 .from(connectedAccounts)
                 .where(eq(connectedAccounts.userId, userId));
 
             return reply.status(200).send({
-                platforms: accounts.map(a => ({
-                    platform: a.platform,
-                    externalAccountId: a.externalAccountId,
-                    status: a.status,
-                    verificationStatus: a.verificationStatus,
-                    connectedAt: a.connectedAt?.toISOString(),
-                    verifiedAt: a.verifiedAt?.toISOString(),
-                })),
+                platforms: accounts.map(a => {
+                    // Extract safe subset of metadata
+                    const meta = a.metadataJson as { resolvedUsername?: string } | null;
+                    return {
+                        platform: a.platform,
+                        externalAccountId: a.externalAccountId,
+                        status: a.status,
+                        verificationStatus: a.verificationStatus,
+                        connectedAt: a.connectedAt?.toISOString(),
+                        verifiedAt: a.verifiedAt?.toISOString(),
+                        metadata: meta ? {
+                            resolvedUsername: meta.resolvedUsername,
+                        } : null,
+                    };
+                }),
             });
         }
     );

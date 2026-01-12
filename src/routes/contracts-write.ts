@@ -46,6 +46,10 @@ import {
     STRIPE_TIER_PERCENTAGES,
     type StripeV1BaselineJson,
 } from '../adapters/stripe-revenue.js';
+import {
+    requireVerifiedConnection,
+    PlatformNotVerifiedError,
+} from '../services/require-verified-connection.js';
 
 // =====================================================
 // WRITE ENDPOINT EVENT TYPES (explicit canonical list)
@@ -111,10 +115,32 @@ const contractWriteRoutes: FastifyPluginAsync = async (fastify) => {
             } = request.body;
             console.log('[contracts-write] Body parsed, platform:', platform, 'metricType:', metricType);
 
-            // Get username from identity if not provided
+            // =========================================================
+            // ENFORCE VERIFIED CONNECTION - Fail-closed if not verified
+            // Store result for username resolution
+            // =========================================================
+            let verifiedConnection: Awaited<ReturnType<typeof requireVerifiedConnection>> | null = null;
+
+            if (platform === 'X' || platform === 'STRIPE') {
+                try {
+                    verifiedConnection = await requireVerifiedConnection(principalUserId, platform);
+                    console.log(`[contracts-write] Verified ${platform} connection:`, verifiedConnection.externalAccountId);
+                } catch (err) {
+                    if (err instanceof PlatformNotVerifiedError) {
+                        reply.status(err.status);
+                        return {
+                            code: err.code,
+                            error: err.message,
+                            platform: err.platform,
+                        };
+                    }
+                    throw err;
+                }
+            }
+
+            // Get username: body > identity > verified X metadata
             let username = bodyUsername;
             if (!username) {
-                // Try identity first
                 const [identity] = await db
                     .select()
                     .from(identities)
@@ -123,24 +149,9 @@ const contractWriteRoutes: FastifyPluginAsync = async (fastify) => {
 
                 if (identity) {
                     username = identity.username;
-                } else {
-                    // Fall back to connected X account username
-                    const [xAccount] = await db
-                        .select()
-                        .from(connectedAccounts)
-                        .where(
-                            and(
-                                eq(connectedAccounts.userId, principalUserId),
-                                eq(connectedAccounts.platform, 'X'),
-                                eq(connectedAccounts.verificationStatus, 'VERIFIED')
-                            )
-                        )
-                        .limit(1);
-
-                    if (xAccount && xAccount.metadataJson) {
-                        const metadata = xAccount.metadataJson as { resolvedUsername?: string };
-                        username = metadata.resolvedUsername;
-                    }
+                } else if (platform === 'X' && verifiedConnection) {
+                    // Use typed metadata from verified connection (no extra DB query)
+                    username = (verifiedConnection.metadata as { resolvedUsername?: string }).resolvedUsername;
                 }
             }
 
@@ -153,6 +164,17 @@ const contractWriteRoutes: FastifyPluginAsync = async (fastify) => {
             if (!platform || !metricType || !condition || !lockAmountUsdCents) {
                 reply.status(400);
                 return { error: 'Missing required fields' };
+            }
+
+            // =========================================================
+            // BASELINE REJECTION - X/STRIPE baseline frozen at execution, not creation
+            // =========================================================
+            if ((platform === 'X' || platform === 'STRIPE') && baseline) {
+                reply.status(400);
+                return {
+                    code: 'BASELINE_NOT_ALLOWED_AT_CREATION',
+                    error: `Baseline cannot be set at creation for ${platform}. Baseline is automatically frozen at execution.`,
+                };
             }
 
             // PRECOMMITTED PAYOUT VALIDATION
@@ -188,38 +210,7 @@ const contractWriteRoutes: FastifyPluginAsync = async (fastify) => {
                 return { error: 'Deadline must be in the future' };
             }
 
-            // CONNECTED ACCOUNT GUARD: X platform requires VERIFIED connected account
-            if (platform === 'X') {
-                const [xAccount] = await db
-                    .select()
-                    .from(connectedAccounts)
-                    .where(
-                        and(
-                            eq(connectedAccounts.userId, principalUserId),
-                            eq(connectedAccounts.platform, 'X'),
-                            eq(connectedAccounts.status, 'ACTIVE')
-                        )
-                    )
-                    .limit(1);
-
-                if (!xAccount) {
-                    reply.status(400);
-                    return {
-                        error: 'X account not connected. Call POST /v1/connect/x/start first.',
-                        code: 'X_NOT_CONNECTED',
-                    };
-                }
-
-                // Require VERIFIED status (proof-of-control)
-                if (xAccount.verificationStatus !== 'VERIFIED') {
-                    reply.status(400);
-                    return {
-                        error: 'X account not verified. Call POST /v1/connect/x/verify after adding challenge to bio.',
-                        code: 'X_NOT_VERIFIED',
-                    };
-                }
-            }
-
+            // NOTE: X/STRIPE connection verification handled by requireVerifiedConnection() above
             // Get binding snapshot for contract creation (immutable reference)
             let bindingId: string | null = null;
             let binding: any = null;
@@ -403,6 +394,28 @@ const contractWriteRoutes: FastifyPluginAsync = async (fastify) => {
         if (contract.principalUserId !== principalUserId) {
             reply.status(403);
             return { error: 'Not authorized to execute this contract' };
+        }
+
+        // =========================================================
+        // ENFORCE VERIFIED CONNECTION - Fail-closed if revoked
+        // =========================================================
+        const contractPlatform = contract.platform;
+        if (contractPlatform === 'X' || contractPlatform === 'STRIPE') {
+            try {
+                await requireVerifiedConnection(principalUserId, contractPlatform);
+                console.log(`[Execute] Verified ${contractPlatform} connection for contract ${id}`);
+            } catch (err) {
+                if (err instanceof PlatformNotVerifiedError) {
+                    reply.status(err.status);
+                    return {
+                        ok: false,
+                        code: err.code,
+                        error: `Cannot execute: ${err.message}`,
+                        platform: err.platform,
+                    };
+                }
+                throw err;
+            }
         }
 
         // 2. Load events and derive current state

@@ -113,7 +113,7 @@ async function xOAuthRoutes(fastify: FastifyInstance) {
             oauthUrl.searchParams.set('response_type', 'code');
             oauthUrl.searchParams.set('client_id', X_OAUTH_CLIENT_ID);
             oauthUrl.searchParams.set('redirect_uri', X_OAUTH_REDIRECT_URI);
-            oauthUrl.searchParams.set('scope', 'users.read tweet.read offline_access');
+            oauthUrl.searchParams.set('scope', 'users.read tweet.read');
             oauthUrl.searchParams.set('state', state);
             oauthUrl.searchParams.set('code_challenge', codeChallenge);
             oauthUrl.searchParams.set('code_challenge_method', 'S256');

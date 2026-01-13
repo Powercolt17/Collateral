@@ -618,7 +618,7 @@ async function connectRoutes(fastify: FastifyInstance) {
             }
 
             // Verification successful - preserve existing metadata, add verifiedAt
-            const now = new Date();
+            const verifiedNow = new Date();
             const existingMetadata = account.metadataJson as XConnectionMetadata | null;
 
             const updatedMetadata: XConnectionMetadata = {
@@ -626,7 +626,7 @@ async function connectRoutes(fastify: FastifyInstance) {
                 resolvedUsername: existingMetadata?.resolvedUsername ?? '',
                 xUserId: existingMetadata?.xUserId ?? account.externalAccountId,
                 challengeIssuedAt: existingMetadata?.challengeIssuedAt,
-                verifiedAt: now.toISOString(),
+                verifiedAt: verifiedNow.toISOString(),
             };
 
             // Wrap in try-catch to handle unique constraint violation (race condition protection)

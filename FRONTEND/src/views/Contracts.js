@@ -611,66 +611,42 @@ export function renderContracts() {
                         <p class="text-xs text-neutral-500">Binding is <span class="text-accent-red font-medium">irreversible</span> after confirmation.</p>
                     </div>
                     
-                    <!-- X VERIFICATION PANEL (Shows when X is selected) -->
+                    <!-- X AUTHORITY BINDING PANEL (OAuth) -->
                     <div id="x-verify-panel" class="border border-neutral-200 bg-white p-6 mb-8" style="display: none;">
                         <div class="flex items-center justify-between mb-4">
-                            <h4 class="font-medium text-base">Verify X Account</h4>
-                            <span id="x-verify-status" class="text-body-mono text-neutral-400 uppercase text-[10px]">Not Verified</span>
+                            <h4 class="font-medium text-base">Authority Binding — X (Twitter)</h4>
+                            <span id="x-verify-status" class="text-body-mono text-neutral-400 uppercase text-[10px]">Not Connected</span>
                         </div>
                         
-                        <!-- Step 1: Enter Username -->
-                        <div id="x-verify-step1">
-                            <label class="block font-mono text-[10px] text-neutral-400 uppercase tracking-widest mb-2">X Username</label>
-                            <div class="flex gap-3">
-                                <div class="flex-1 flex items-center border border-neutral-200 focus-within:border-neutral-900 transition-colors">
-                                    <span class="text-neutral-400 pl-3">@</span>
-                                    <input type="text" id="x-username-input" 
-                                        class="flex-1 px-2 py-3 text-sm font-mono bg-transparent border-none outline-none" 
-                                        placeholder="yourhandle">
+                        <p class="text-sm text-neutral-600 mb-4">
+                            Read-only OAuth connection. Used to snapshot follower counts at execution and settlement.
+                            Binding is <span class="text-accent-red font-medium">irreversible</span> after confirmation.
+                        </p>
+                        
+                        <!-- Not Connected State -->
+                        <div id="x-connect-section">
+                            <button onclick="window.wizard.connectXOAuth()" id="x-connect-btn"
+                                class="w-full flex items-center justify-center gap-3 px-4 py-4 bg-neutral-900 text-white text-[12px] font-medium uppercase tracking-wide hover:bg-black transition-colors">
+                                <svg class="w-5 h-5" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+                                Connect X Account
+                            </button>
+                        </div>
+                        
+                        <!-- Connected State (Hidden initially, shown via JS) -->
+                        <div id="x-connected-state" class="hidden">
+                            <div class="flex items-center justify-between p-4 bg-[#E8F4ED] border border-[#1F7A4D]/20">
+                                <div class="flex items-center gap-3">
+                                    <div class="w-10 h-10 bg-[#1F7A4D] rounded-full flex items-center justify-center">
+                                        <svg class="w-5 h-5 text-white" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+                                    </div>
+                                    <div>
+                                        <p id="x-connected-handle" class="font-mono text-sm font-medium text-[#1F7A4D]">@username</p>
+                                        <p class="text-[10px] text-neutral-500 uppercase tracking-wider">Connected</p>
+                                    </div>
                                 </div>
-                                <button onclick="window.wizard.generateVerifyCode()" id="x-generate-btn"
-                                    class="px-4 py-3 bg-neutral-900 text-white text-[11px] font-medium uppercase tracking-wide hover:bg-black transition-colors">
-                                    Generate Code
+                                <button onclick="window.wizard.disconnectX()" class="text-[10px] text-neutral-400 hover:text-neutral-600 uppercase tracking-wider transition-colors">
+                                    Disconnect
                                 </button>
-                            </div>
-                        </div>
-                        
-                        <!-- Step 2: Show Code & Verify (Hidden initially) -->
-                        <div id="x-verify-step2" class="hidden mt-6">
-                            <div class="bg-neutral-50 border border-neutral-200 p-4 mb-4">
-                                <label class="block font-mono text-[10px] text-neutral-400 uppercase tracking-widest mb-2">Add this code to your X bio</label>
-                                <div class="flex items-center justify-between">
-                                    <code id="x-verify-code" class="font-mono text-lg font-semibold text-neutral-900 tracking-wide">COL-XXXXXX</code>
-                                    <button onclick="window.wizard.copyVerifyCode()" class="text-neutral-400 hover:text-neutral-900 transition-colors">
-                                        <i data-lucide="copy" class="w-4 h-4"></i>
-                                    </button>
-                                </div>
-                                <p class="text-xs text-neutral-500 mt-2">The code must be visible in your public bio when you click verify.</p>
-                            </div>
-                            
-                            <div class="flex gap-3">
-                                <a id="x-profile-link" href="https://twitter.com/settings/profile" target="_blank" rel="noopener"
-                                    class="flex-1 flex items-center justify-center gap-2 px-4 py-3 border border-neutral-200 text-neutral-600 text-[11px] font-medium uppercase tracking-wide hover:border-neutral-400 transition-colors">
-                                    <i data-lucide="external-link" class="w-3 h-3"></i>
-                                    Edit X Bio
-                                </a>
-                                <button onclick="window.wizard.verifyXAccount()" id="x-verify-btn"
-                                    class="flex-1 px-4 py-3 bg-neutral-900 text-white text-[11px] font-medium uppercase tracking-wide hover:bg-black transition-colors">
-                                    Verify Account
-                                </button>
-                            </div>
-                        </div>
-                        
-                        <!-- Verified State (Hidden initially) -->
-                        <div id="x-verify-success" class="hidden mt-4">
-                            <div class="flex items-center gap-3 p-4 bg-[#E8F4ED] border border-[#1F7A4D]/20">
-                                <div class="w-8 h-8 bg-[#1F7A4D] rounded-full flex items-center justify-center">
-                                    <i data-lucide="check" class="w-4 h-4 text-white"></i>
-                                </div>
-                                <div>
-                                    <p class="font-sans text-sm font-medium text-[#1F7A4D]">Account Verified</p>
-                                    <p id="x-verified-handle" class="font-mono text-[11px] text-neutral-500">@handle • Connected</p>
-                                </div>
                             </div>
                         </div>
                     </div>
@@ -1253,6 +1229,8 @@ export function initContracts() {
 
             if (source === 'TWITTER') {
                 xVerifyPanel.style.display = 'block';
+                // Check if X is already connected via OAuth
+                this.checkXConnection();
                 // Disable next button until X is verified
                 document.getElementById('btn-step-2').disabled = !xVerified;
             } else if (source === 'STRIPE') {
@@ -1632,7 +1610,47 @@ export function initContracts() {
             }
         },
 
-        // === X OAUTH CONNECTION (NEW) ===
+        // === X OAUTH CONNECTION ===
+
+        // Check X connection status on page load
+        checkXConnection: async function () {
+            try {
+                const result = await window.api.getXStatus();
+                console.log('[Contracts] getXStatus result:', result);
+
+                if (result.connected) {
+                    xUsername = result.xUsername;
+                    xVerified = true;
+                    this.showXConnectedState(result.xUsername);
+                    return true;
+                }
+            } catch (error) {
+                console.error('[Contracts] checkXConnection error:', error);
+            }
+            return false;
+        },
+
+        // Show connected state in UI
+        showXConnectedState: function (username) {
+            // Hide connect button, show connected state
+            const connectSection = document.getElementById('x-connect-section');
+            const connectedState = document.getElementById('x-connected-state');
+            const connectedHandle = document.getElementById('x-connected-handle');
+            const statusLabel = document.getElementById('x-verify-status');
+
+            if (connectSection) connectSection.classList.add('hidden');
+            if (connectedState) connectedState.classList.remove('hidden');
+            if (connectedHandle) connectedHandle.textContent = '@' + username;
+            if (statusLabel) {
+                statusLabel.textContent = 'Connected';
+                statusLabel.classList.remove('text-neutral-400');
+                statusLabel.classList.add('text-[#1F7A4D]');
+            }
+
+            // Enable Bind Authority button
+            const bindBtn = document.getElementById('btn-step-2');
+            if (bindBtn) bindBtn.disabled = false;
+        },
 
         connectXOAuth: async function () {
             const btn = document.getElementById('x-connect-btn');
@@ -1650,24 +1668,7 @@ export function initContracts() {
                 if (result.connected) {
                     xUsername = result.xUsername;
                     xVerified = true;
-
-                    // Show connected state
-                    const connectSection = document.getElementById('x-connect-section');
-                    if (connectSection) {
-                        connectSection.innerHTML = `
-                            <div class="flex items-center justify-between p-4 bg-[#1F7A4D]/10 border border-[#1F7A4D]/30 rounded-lg">
-                                <div class="flex items-center gap-3">
-                                    <svg class="w-5 h-5 text-[#1F7A4D]" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
-                                    <div>
-                                        <div class="text-sm font-medium text-white">@${result.xUsername}</div>
-                                        <div class="text-xs text-[#1F7A4D]">Connected</div>
-                                    </div>
-                                </div>
-                                <button onclick="window.contractWizard?.disconnectX()" class="text-xs text-neutral-400 hover:text-white transition-colors">Disconnect</button>
-                            </div>
-                        `;
-                    }
-                    document.getElementById('btn-step-2').disabled = false;
+                    this.showXConnectedState(result.xUsername);
                     return;
                 }
 
@@ -1680,7 +1681,7 @@ export function initContracts() {
             } catch (error) {
                 console.error('[Contracts] startXOAuth error:', error);
                 alert('Failed to connect X: ' + (error.message || 'Unknown error'));
-                btn.innerHTML = 'Connect X';
+                btn.innerHTML = '<svg class="w-5 h-5" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg> Connect X Account';
                 btn.disabled = false;
             }
         },

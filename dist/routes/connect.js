@@ -242,14 +242,14 @@ async function connectRoutes(fastify) {
                 xUserId: xUser.id,
             });
         }
-        const now = new Date();
-        const cooldownThreshold = new Date(now.getTime() - CHALLENGE_COOLDOWN_SECONDS * 1000);
+        const startNow = new Date();
+        const cooldownThreshold = new Date(startNow.getTime() - CHALLENGE_COOLDOWN_SECONDS * 1000);
         const challengeCode = generateChallengeCode();
         const metadata = {
             normalizedUsername,
             resolvedUsername: xUser.username,
             xUserId: xUser.id,
-            challengeIssuedAt: now.toISOString(),
+            challengeIssuedAt: startNow.toISOString(),
         };
         // RACE-SAFE UPSERT (Option B):
         // 1. Always try conditional UPDATE first (handles both existing rows and cooldown)
@@ -496,14 +496,14 @@ async function connectRoutes(fastify) {
             });
         }
         // Verification successful - preserve existing metadata, add verifiedAt
-        const now = new Date();
+        const verifiedNow = new Date();
         const existingMetadata = account.metadataJson;
         const updatedMetadata = {
             normalizedUsername: existingMetadata?.normalizedUsername ?? '',
             resolvedUsername: existingMetadata?.resolvedUsername ?? '',
             xUserId: existingMetadata?.xUserId ?? account.externalAccountId,
             challengeIssuedAt: existingMetadata?.challengeIssuedAt,
-            verifiedAt: now.toISOString(),
+            verifiedAt: verifiedNow.toISOString(),
         };
         // Wrap in try-catch to handle unique constraint violation (race condition protection)
         try {

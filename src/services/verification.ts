@@ -291,12 +291,12 @@ export async function verifyContract(contractId: string, tx?: DbLike): Promise<V
                     operator: '',
                     evidence: { snapshotAt: '', metrics: {}, source: '' },
                     error: `Cannot verify Stripe Revenue: User ${contract.principalUserId} has no connected Stripe account.`,
-                    success: false
                 };
             }
 
             const stripeResult = await stripeRevenueAdapter.evaluate(contract, context);
             evalResult = {
+                success: true,
                 pass: stripeResult.pass,
                 observedValue: stripeResult.observedValue,
                 threshold: stripeResult.threshold,
@@ -306,6 +306,7 @@ export async function verifyContract(contractId: string, tx?: DbLike): Promise<V
         } else if (contract.platform === 'GITHUB') {
             const githubResult = await githubAdapter.evaluate(contract, context);
             evalResult = {
+                success: true,
                 pass: githubResult.pass,
                 observedValue: githubResult.observedValue,
                 threshold: githubResult.threshold,

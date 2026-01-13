@@ -294,15 +294,15 @@ async function connectRoutes(fastify: FastifyInstance) {
                 });
             }
 
-            const now = new Date();
-            const cooldownThreshold = new Date(now.getTime() - CHALLENGE_COOLDOWN_SECONDS * 1000);
+            const startNow = new Date();
+            const cooldownThreshold = new Date(startNow.getTime() - CHALLENGE_COOLDOWN_SECONDS * 1000);
             const challengeCode = generateChallengeCode();
 
             const metadata: XConnectionMetadata = {
                 normalizedUsername,
                 resolvedUsername: xUser.username,
                 xUserId: xUser.id,
-                challengeIssuedAt: now.toISOString(),
+                challengeIssuedAt: startNow.toISOString(),
             };
 
             // RACE-SAFE UPSERT (Option B):

@@ -46,6 +46,7 @@ export declare class MockStripeClient implements StripeClient {
     createTransfer(params: CreateTransferParams): Promise<TransferResult>;
 }
 export declare class ProductionStripeClient implements StripeClient {
+    private stripe;
     constructor();
     createPaymentIntent(params: CreatePaymentIntentParams): Promise<PaymentIntentResult>;
     capturePaymentIntent(paymentIntentId: string, idempotencyKey: string): Promise<{

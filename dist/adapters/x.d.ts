@@ -15,7 +15,8 @@ export declare class XAdapterError extends Error {
     readonly retryable: boolean;
     readonly category: 'RATE_LIMIT' | 'AUTH' | 'API' | 'CONFIG' | 'UNSUPPORTED';
     readonly code?: string;
-    constructor(message: string, retryable: boolean, category: 'RATE_LIMIT' | 'AUTH' | 'API' | 'CONFIG' | 'UNSUPPORTED', code?: string);
+    readonly resetAt?: number;
+    constructor(message: string, retryable: boolean, category: 'RATE_LIMIT' | 'AUTH' | 'API' | 'CONFIG' | 'UNSUPPORTED', code?: string, resetAt?: number);
 }
 export interface XClient {
     getFollowers(usernameOrId: string): Promise<number>;

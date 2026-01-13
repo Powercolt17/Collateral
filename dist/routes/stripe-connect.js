@@ -16,8 +16,33 @@ import { randomBytes } from 'crypto';
 const STRIPE_CLIENT_ID = process.env.STRIPE_CLIENT_ID;
 const STRIPE_SECRET_KEY = process.env.STRIPE_SECRET_KEY;
 const FRONTEND_URL = process.env.FRONTEND_URL || 'http://localhost:5173';
+const API_BASE_URL = process.env.API_BASE_URL || 'http://localhost:3000';
 // OAuth state tokens (in production, use Redis or DB)
 const oauthStates = new Map();
+// =============================================================================
+// VALIDATION HELPERS
+// =============================================================================
+function isPlaceholderValue(value) {
+    if (!value)
+        return true;
+    return value.includes('YOUR') ||
+        value.includes('CHANGEME') ||
+        value.includes('xxx') ||
+        value === 'ca_' ||
+        value.length < 10;
+}
+function getStripeMode() {
+    if (STRIPE_SECRET_KEY?.startsWith('sk_test_'))
+        return 'test';
+    if (STRIPE_SECRET_KEY?.startsWith('sk_live_'))
+        return 'live';
+    return 'unknown';
+}
+// Startup logging (safe - no secrets)
+console.log(`[Stripe Connect] mode=${getStripeMode()} client_id=${STRIPE_CLIENT_ID ? 'present' : 'MISSING'}`);
+if (STRIPE_CLIENT_ID && isPlaceholderValue(STRIPE_CLIENT_ID)) {
+    console.warn('[Stripe Connect] ⚠️ STRIPE_CLIENT_ID appears to be a placeholder!');
+}
 // =============================================================================
 // ROUTES
 // =============================================================================
@@ -36,9 +61,23 @@ async function stripeConnectRoutes(fastify) {
         },
     }, async (request, reply) => {
         const userId = request.userId;
+        // Validate STRIPE_CLIENT_ID exists and is not placeholder
         if (!STRIPE_CLIENT_ID) {
             return reply.status(500).send({
-                error: 'Stripe Connect not configured. Set STRIPE_CLIENT_ID.',
+                error: 'STRIPE_CLIENT_ID not configured',
+                hint: 'Set STRIPE_CLIENT_ID in backend .env (get from Stripe Dashboard > Connect > Settings)',
+            });
+        }
+        if (isPlaceholderValue(STRIPE_CLIENT_ID)) {
+            return reply.status(500).send({
+                error: 'STRIPE_CLIENT_ID is a placeholder value',
+                hint: 'Replace ca_YOUR_CLIENT_ID_HERE with your real Client ID from Stripe Dashboard > Connect > Settings',
+            });
+        }
+        if (!STRIPE_CLIENT_ID.startsWith('ca_')) {
+            return reply.status(500).send({
+                error: 'STRIPE_CLIENT_ID has invalid format',
+                hint: 'Client ID must start with ca_ (get from Stripe Dashboard > Connect > Settings)',
             });
         }
         // Check if already connected
@@ -64,7 +103,7 @@ async function stripeConnectRoutes(fastify) {
         const oauthUrl = new URL('https://connect.stripe.com/oauth/authorize');
         oauthUrl.searchParams.set('response_type', 'code');
         oauthUrl.searchParams.set('client_id', STRIPE_CLIENT_ID);
-        oauthUrl.searchParams.set('scope', 'read_only');
+        oauthUrl.searchParams.set('scope', 'read_write'); // Stripe requires read_write - we enforce read-only at API level
         oauthUrl.searchParams.set('redirect_uri', redirectUri);
         oauthUrl.searchParams.set('state', state);
         return reply.status(200).send({

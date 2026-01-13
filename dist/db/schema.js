@@ -83,7 +83,10 @@ export const ledgerEventTypeEnum = pgEnum('ledger_event_type', [
     'RETRY_SCHEDULED',
     // Identity binding events (operational, auditable)
     'IDENTITY_BOUND',
-    'IDENTITY_REVOKED'
+    'IDENTITY_REVOKED',
+    // Dispute/Chargeback events
+    'PAYMENT_DISPUTED',
+    'SETTLED'
 ]);
 // =====================
 // TABLES
@@ -265,5 +268,8 @@ export const EventType = {
     // Identity binding events (operational, auditable)
     IDENTITY_BOUND: 'IDENTITY_BOUND',
     IDENTITY_REVOKED: 'IDENTITY_REVOKED',
+    // Dispute/Chargeback events
+    PAYMENT_DISPUTED: 'PAYMENT_DISPUTED',
+    SETTLED: 'SETTLED',
 };
 //# sourceMappingURL=schema.js.map

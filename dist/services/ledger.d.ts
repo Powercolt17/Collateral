@@ -78,6 +78,14 @@ export declare function eventExistsForExternalRef(contractId: string, externalRe
  */
 export declare function getContractIdByPaymentIntent(paymentIntentId: string): Promise<string | null>;
 /**
+ * Lookup contractId by chargeId from FUNDS_LOCKED event.
+ * Used for dispute webhook lookup when metadata is missing.
+ *
+ * @param chargeId - Stripe Charge ID (stored in externalRef or metadata.chargeId)
+ * @returns contractId if found, null otherwise
+ */
+export declare function getContractIdByChargeId(chargeId: string): Promise<string | null>;
+/**
  * Append a new event to the ledger.
  *
  * This is the ONLY way to add events - ensures hash chain integrity.

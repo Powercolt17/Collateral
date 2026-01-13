@@ -29,12 +29,14 @@ import { eq, and } from 'drizzle-orm';
 import { createHash } from 'crypto';
 import { getXClient, } from '../adapters/x.js';
 import { checkXEligibility, calculateDeltaFloor, validateDeltaFloor, } from '../adapters/x-eligibility.js';
+import { stripeRevenueAdapter, STRIPE_ERROR_CODES, } from '../adapters/stripe-revenue.js';
+import { requireVerifiedConnection, PlatformNotVerifiedError, } from '../services/require-verified-connection.js';
 // =====================================================
 // WRITE ENDPOINT EVENT TYPES (explicit canonical list)
 // =====================================================
 // POST /contracts              → CONTRACT_CREATED, BASELINE_SNAPSHOTTED
 // POST /:id/funding-intent     → FUNDS_AUTHORIZED
-// POST /stripe/webhook         → FUNDS_LOCKED (via handlePaymentSuccess)
+// POST /v1/stripe/webhook      → FUNDS_LOCKED (via handlePaymentSuccess)
 // POST /:id/execute            → EXECUTION_REQUESTED, EXECUTION_CONFIRMED
 const contractWriteRoutes = async (fastify) => {
     // =======================================================================
@@ -64,10 +66,31 @@ const contractWriteRoutes = async (fastify) => {
             console.log('[contracts-write] principalUserId:', principalUserId);
             const { username: bodyUsername, platform, metricType, condition, baseline, lockAmountUsdCents, payoutAmountUsdCents, fundingMethod, riskTier } = request.body;
             console.log('[contracts-write] Body parsed, platform:', platform, 'metricType:', metricType);
-            // Get username from identity if not provided
+            // =========================================================
+            // ENFORCE VERIFIED CONNECTION - Fail-closed if not verified
+            // Store result for username resolution
+            // =========================================================
+            let verifiedConnection = null;
+            if (platform === 'X' || platform === 'STRIPE') {
+                try {
+                    verifiedConnection = await requireVerifiedConnection(principalUserId, platform);
+                    console.log(`[contracts-write] Verified ${platform} connection:`, verifiedConnection.externalAccountId);
+                }
+                catch (err) {
+                    if (err instanceof PlatformNotVerifiedError) {
+                        reply.status(err.status);
+                        return {
+                            code: err.code,
+                            error: err.message,
+                            platform: err.platform,
+                        };
+                    }
+                    throw err;
+                }
+            }
+            // Get username: body > identity > verified X metadata
             let username = bodyUsername;
             if (!username) {
-                // Try identity first
                 const [identity] = await db
                     .select()
                     .from(identities)
@@ -76,17 +99,9 @@ const contractWriteRoutes = async (fastify) => {
                 if (identity) {
                     username = identity.username;
                 }
-                else {
-                    // Fall back to connected X account username
-                    const [xAccount] = await db
-                        .select()
-                        .from(connectedAccounts)
-                        .where(and(eq(connectedAccounts.userId, principalUserId), eq(connectedAccounts.platform, 'X'), eq(connectedAccounts.verificationStatus, 'VERIFIED')))
-                        .limit(1);
-                    if (xAccount && xAccount.metadataJson) {
-                        const metadata = xAccount.metadataJson;
-                        username = metadata.resolvedUsername;
-                    }
+                else if (platform === 'X' && verifiedConnection) {
+                    // Use typed metadata from verified connection (no extra DB query)
+                    username = verifiedConnection.metadata.resolvedUsername;
                 }
             }
             if (!username) {
@@ -97,6 +112,16 @@ const contractWriteRoutes = async (fastify) => {
             if (!platform || !metricType || !condition || !lockAmountUsdCents) {
                 reply.status(400);
                 return { error: 'Missing required fields' };
+            }
+            // =========================================================
+            // BASELINE REJECTION - X/STRIPE baseline frozen at execution, not creation
+            // =========================================================
+            if ((platform === 'X' || platform === 'STRIPE') && baseline) {
+                reply.status(400);
+                return {
+                    code: 'BASELINE_NOT_ALLOWED_AT_CREATION',
+                    error: `Baseline cannot be set at creation for ${platform}. Baseline is automatically frozen at execution.`,
+                };
             }
             // PRECOMMITTED PAYOUT VALIDATION
             if (payoutAmountUsdCents === undefined || payoutAmountUsdCents === null) {
@@ -125,29 +150,7 @@ const contractWriteRoutes = async (fastify) => {
                 reply.status(400);
                 return { error: 'Deadline must be in the future' };
             }
-            // CONNECTED ACCOUNT GUARD: X platform requires VERIFIED connected account
-            if (platform === 'X') {
-                const [xAccount] = await db
-                    .select()
-                    .from(connectedAccounts)
-                    .where(and(eq(connectedAccounts.userId, principalUserId), eq(connectedAccounts.platform, 'X'), eq(connectedAccounts.status, 'ACTIVE')))
-                    .limit(1);
-                if (!xAccount) {
-                    reply.status(400);
-                    return {
-                        error: 'X account not connected. Call POST /v1/connect/x/start first.',
-                        code: 'X_NOT_CONNECTED',
-                    };
-                }
-                // Require VERIFIED status (proof-of-control)
-                if (xAccount.verificationStatus !== 'VERIFIED') {
-                    reply.status(400);
-                    return {
-                        error: 'X account not verified. Call POST /v1/connect/x/verify after adding challenge to bio.',
-                        code: 'X_NOT_VERIFIED',
-                    };
-                }
-            }
+            // NOTE: X/STRIPE connection verification handled by requireVerifiedConnection() above
             // Get binding snapshot for contract creation (immutable reference)
             let bindingId = null;
             let binding = null;
@@ -284,7 +287,7 @@ const contractWriteRoutes = async (fastify) => {
         }
     });
     // NOTE: FUNDS_AUTHORIZED → FUNDS_LOCKED transition happens via:
-    //   - PRODUCTION: Stripe webhook (POST /stripe/webhook → payment_intent.succeeded)
+    //   - PRODUCTION: Stripe webhook (POST /v1/stripe/webhook → payment_intent.succeeded)
     //   - DEVELOPMENT: Can simulate via direct webhook call or test helper
     // See: src/routes/webhooks.ts → handlePaymentSuccess
     /**
@@ -317,6 +320,28 @@ const contractWriteRoutes = async (fastify) => {
         if (contract.principalUserId !== principalUserId) {
             reply.status(403);
             return { error: 'Not authorized to execute this contract' };
+        }
+        // =========================================================
+        // ENFORCE VERIFIED CONNECTION - Fail-closed if revoked
+        // =========================================================
+        const contractPlatform = contract.platform;
+        if (contractPlatform === 'X' || contractPlatform === 'STRIPE') {
+            try {
+                await requireVerifiedConnection(principalUserId, contractPlatform);
+                console.log(`[Execute] Verified ${contractPlatform} connection for contract ${id}`);
+            }
+            catch (err) {
+                if (err instanceof PlatformNotVerifiedError) {
+                    reply.status(err.status);
+                    return {
+                        ok: false,
+                        code: err.code,
+                        error: `Cannot execute: ${err.message}`,
+                        platform: err.platform,
+                    };
+                }
+                throw err;
+            }
         }
         // 2. Load events and derive current state
         const events = await getEventsForContract(id);
@@ -438,7 +463,6 @@ const contractWriteRoutes = async (fastify) => {
                     frozenAtUtc: measuredAtUtc,
                 };
                 await updateContractBaseline(id, baselineToStore);
-                // 6h. Compute termsHash (for audit, not including secrets)
                 termsHash = createHash('sha256')
                     .update(JSON.stringify({
                     xUserId,
@@ -449,6 +473,75 @@ const contractWriteRoutes = async (fastify) => {
                     frozenAtUtc: measuredAtUtc,
                 }))
                     .digest('hex');
+            }
+            // STRIPE PLATFORM EXECUTE LOGIC
+            if (contract.platform === 'STRIPE') {
+                // 6a. Get VERIFIED Stripe connected account
+                const [stripeAccount] = await db
+                    .select()
+                    .from(connectedAccounts)
+                    .where(and(eq(connectedAccounts.userId, principalUserId), eq(connectedAccounts.platform, 'STRIPE'), eq(connectedAccounts.status, 'ACTIVE'), eq(connectedAccounts.verificationStatus, 'VERIFIED')))
+                    .limit(1);
+                if (!stripeAccount) {
+                    reply.status(400);
+                    return {
+                        ok: false,
+                        code: 'STRIPE_NOT_VERIFIED',
+                        error: 'No verified Stripe account. Connect via Stripe Connect first.',
+                    };
+                }
+                const stripeConnectedAccountId = stripeAccount.externalAccountId;
+                const condition = contract.conditionJson;
+                const executionTime = new Date();
+                // 6b. Determine tier based on condition/riskTier (default STEADY)
+                let tier = 'STEADY';
+                const riskTier = contract.riskTier;
+                if (riskTier === 'ADVANCED')
+                    tier = 'BROAD';
+                else if (riskTier === 'ELITE')
+                    tier = 'ALL_IN';
+                try {
+                    // 6c. Create V1 baseline snapshot (validates tier eligibility + delta floor)
+                    const v1Baseline = await stripeRevenueAdapter.createV1BaselineSnapshot(stripeConnectedAccountId, condition.threshold, // Use threshold as delta target
+                    executionTime, tier);
+                    // 6d. Persist frozen baseline into contract
+                    await updateContractBaseline(id, v1Baseline);
+                    // 6e. Compute termsHash
+                    termsHash = createHash('sha256')
+                        .update(JSON.stringify({
+                        stripeConnectedAccountId: v1Baseline.stripeConnectedAccountId,
+                        baselineNetRevenueCents: v1Baseline.baselineNetRevenueCents,
+                        deltaTargetCents: v1Baseline.deltaTargetCents,
+                        tier: v1Baseline.tier,
+                        tierPercentage: v1Baseline.tierPercentage,
+                        verificationWindow: v1Baseline.verificationWindow,
+                        frozenAtUtc: v1Baseline.frozenAtUtc,
+                        noAppeals: true,
+                        deterministicSettlement: true,
+                    }))
+                        .digest('hex');
+                }
+                catch (err) {
+                    // Handle tier eligibility or delta floor errors
+                    const errorMessage = err.message || 'Unknown error';
+                    if (errorMessage.includes(STRIPE_ERROR_CODES.INELIGIBLE_BASELINE_TOO_LOW)) {
+                        reply.status(400);
+                        return {
+                            ok: false,
+                            code: STRIPE_ERROR_CODES.INELIGIBLE_BASELINE_TOO_LOW,
+                            error: errorMessage,
+                        };
+                    }
+                    if (errorMessage.includes(STRIPE_ERROR_CODES.DELTA_FLOOR_NOT_MET)) {
+                        reply.status(400);
+                        return {
+                            ok: false,
+                            code: STRIPE_ERROR_CODES.DELTA_FLOOR_NOT_MET,
+                            error: errorMessage,
+                        };
+                    }
+                    throw err;
+                }
             }
             // 7. Append EXECUTION_CONFIRMED - transitions to LOCKED
             await appendEvent({

@@ -84,6 +84,59 @@ const usersRoutes = async (fastify) => {
         };
     });
     /**
+     * GET /v1/me/connected-accounts
+     * Get all connected accounts for the current user
+     * Used by frontend to determine available platforms
+     */
+    fastify.get('/v1/me/connected-accounts', async (request, reply) => {
+        const userId = request.userId;
+        if (!userId) {
+            reply.status(401);
+            return { error: 'Authentication required' };
+        }
+        // Import connectedAccounts here
+        const { connectedAccounts } = await import('../db/schema.js');
+        const accounts = await db
+            .select({
+            id: connectedAccounts.id,
+            platform: connectedAccounts.platform,
+            externalAccountId: connectedAccounts.externalAccountId,
+            status: connectedAccounts.status,
+            verificationStatus: connectedAccounts.verificationStatus,
+            verifiedAt: connectedAccounts.verifiedAt,
+            connectedAt: connectedAccounts.connectedAt,
+        })
+            .from(connectedAccounts)
+            .where(eq(connectedAccounts.userId, userId));
+        // Build platform status map
+        const platforms = {
+            X: { connected: false, verified: false },
+            STRIPE: { connected: false, verified: false },
+            GITHUB: { connected: false, verified: false },
+        };
+        for (const account of accounts) {
+            if (platforms[account.platform]) {
+                platforms[account.platform] = {
+                    connected: account.status === 'ACTIVE',
+                    verified: account.verificationStatus === 'VERIFIED',
+                    accountId: account.externalAccountId,
+                };
+            }
+        }
+        return {
+            accounts: accounts.map(a => ({
+                id: a.id,
+                platform: a.platform,
+                accountId: a.externalAccountId,
+                status: a.status,
+                verificationStatus: a.verificationStatus,
+                verifiedAt: a.verifiedAt?.toISOString() || null,
+                connectedAt: a.connectedAt.toISOString(),
+            })),
+            platforms,
+        };
+    });
+    /**
      * PUT /users/:id/stripe-connect
      * Update user's Stripe Connected Account ID
      * Required for receiving payouts

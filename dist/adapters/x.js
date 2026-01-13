@@ -12,7 +12,7 @@
 import { db } from '../db/client.js';
 import { connectedAccounts } from '../db/schema.js';
 import { eq, and } from 'drizzle-orm';
-import { checkXEligibility, calculateDeltaFloor, validateDeltaFloor, evaluateSamples, } from './x-eligibility.js';
+import { checkXEligibility, calculateDeltaFloor, validateDeltaFloor, } from './x-eligibility.js';
 // =============================================================================
 // ERROR TYPES (for upstream classifyError integration)
 // =============================================================================
@@ -20,12 +20,14 @@ export class XAdapterError extends Error {
     retryable;
     category;
     code;
-    constructor(message, retryable, category, code) {
+    resetAt; // Epoch seconds when rate limit resets
+    constructor(message, retryable, category, code, resetAt) {
         super(message);
         this.retryable = retryable;
         this.category = category;
         this.code = code;
         this.name = 'XAdapterError';
+        this.resetAt = resetAt;
     }
 }
 // =============================================================================
@@ -68,13 +70,20 @@ export class MockXClient {
 // =============================================================================
 // REAL X CLIENT (Production)
 // =============================================================================
+import { checkGlobalRateLimit, setGlobalRateLimit } from '../services/x-rate-limit-circuit.js';
 export class RealXClient {
     bearerToken;
     baseUrl = 'https://api.twitter.com/2';
     constructor(bearerToken) {
         this.bearerToken = bearerToken;
     }
-    async request(endpoint, params) {
+    async request(endpoint, params, requestId) {
+        // GLOBAL CIRCUIT BREAKER CHECK - Fail fast if rate limited
+        const circuitState = checkGlobalRateLimit();
+        if (circuitState) {
+            console.log(`[X API] ${requestId || '-'} CIRCUIT OPEN - Blocking ${endpoint}`);
+            throw new XAdapterError(`X API globally rate limited. Retry at: ${circuitState.resetAt}`, true, 'RATE_LIMIT', 'X_GLOBAL_RATE_LIMIT', circuitState.resetAt);
+        }
         const url = new URL(`${this.baseUrl}${endpoint}`);
         if (params) {
             Object.entries(params).forEach(([k, v]) => url.searchParams.set(k, v));
@@ -85,9 +94,18 @@ export class RealXClient {
                 'Content-Type': 'application/json',
             },
         });
+        // ALWAYS log rate limit headers for observability
+        const rateLimitLimit = response.headers.get('x-rate-limit-limit');
+        const rateLimitRemaining = response.headers.get('x-rate-limit-remaining');
+        const rateLimitReset = response.headers.get('x-rate-limit-reset');
+        const resetAt = rateLimitReset ? parseInt(rateLimitReset, 10) : null;
+        console.log(`[X API] ${requestId || '-'} ${endpoint} → ${response.status} | Remaining: ${rateLimitRemaining}/${rateLimitLimit} | Reset: ${resetAt}`);
         if (response.status === 429) {
-            const resetHeader = response.headers.get('x-rate-limit-reset');
-            throw new XAdapterError(`X API rate limited. Reset at: ${resetHeader || 'unknown'}`, true, 'RATE_LIMIT');
+            // UPDATE GLOBAL CIRCUIT BREAKER
+            if (resetAt) {
+                setGlobalRateLimit(resetAt);
+            }
+            throw new XAdapterError(`X API rate limited. Retry at: ${resetAt || 'unknown'}`, true, 'RATE_LIMIT', 'X_API_RATE_LIMITED', resetAt ?? undefined);
         }
         if (response.status === 401 || response.status === 403) {
             throw new XAdapterError(`X API auth error (${response.status}). User must reconnect X account.`, false, 'AUTH');
@@ -314,42 +332,25 @@ export const xAdapter = {
         }
         const frozenBaseline = baseline.followers;
         const frozenDeltaFloor = baseline.deltaFloor;
-        // MULTI-SAMPLE VERIFICATION: Take 3 samples for stability
-        // In production, these would be taken over time. For now, take 3 consecutive samples.
-        const REQUIRED_CONSECUTIVE = 3;
-        const samples = [];
-        for (let i = 0; i < REQUIRED_CONSECUTIVE; i++) {
-            try {
-                const followers = await client.getFollowers(xUserId);
-                samples.push({
-                    timestampUtc: new Date().toISOString(),
-                    followers,
-                });
-                // Small delay between samples in production (skip in test)
-                if (process.env.NODE_ENV !== 'test' && i < REQUIRED_CONSECUTIVE - 1) {
-                    await new Promise(resolve => setTimeout(resolve, 1000));
-                }
-            }
-            catch (err) {
-                if (err instanceof XAdapterError && err.retryable) {
-                    // Rate limit - wait and retry
-                    await new Promise(resolve => setTimeout(resolve, 5000));
-                    i--; // Retry this sample
-                    continue;
-                }
-                throw err; // Fail closed on non-retryable errors
-            }
-        }
-        // Evaluate samples
-        const sampleResult = evaluateSamples(samples, condition.threshold, condition.operator, REQUIRED_CONSECUTIVE);
+        // SINGLE-SAMPLE VERIFICATION (V2 - Production-safe)
+        // Take exactly 1 sample. If rate-limited, error bubbles up with resetAt for job worker.
+        // Multi-sample was causing rate limit exhaustion.
+        const sampleTimestamp = new Date().toISOString();
+        const latestFollowers = await client.getFollowers(xUserId);
+        // Single sample for evidence
+        const samples = [{
+                timestampUtc: sampleTimestamp,
+                followers: latestFollowers,
+            }];
+        // Evaluate single sample against threshold
+        const pass = evaluateCondition(latestFollowers, condition.operator, condition.threshold);
         // Also verify delta floor is met
-        const latestFollowers = samples[samples.length - 1]?.followers ?? 0;
         const actualDelta = latestFollowers - frozenBaseline;
         const deltaFloorMet = actualDelta >= frozenDeltaFloor;
         // Pass only if both conditions met
-        const pass = sampleResult.pass && deltaFloorMet;
+        const finalPass = pass && deltaFloorMet;
         return {
-            pass,
+            pass: finalPass,
             observedValue: latestFollowers,
             threshold: condition.threshold,
             operator: condition.operator,
@@ -362,10 +363,10 @@ export const xAdapter = {
                 threshold: condition.threshold,
                 operator: condition.operator,
                 endpoint: '/2/users/:id with public_metrics',
-                // Multi-sample evidence
+                // Single-sample evidence (V2)
                 samples,
-                consecutivePassCount: sampleResult.consecutivePassCount,
-                requiredConsecutive: REQUIRED_CONSECUTIVE,
+                consecutivePassCount: pass ? 1 : 0,
+                requiredConsecutive: 1, // V2: Single sample
                 // Delta floor evidence
                 frozenBaseline,
                 frozenDeltaFloor,

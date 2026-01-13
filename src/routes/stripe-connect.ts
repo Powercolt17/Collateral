@@ -126,7 +126,7 @@ async function stripeConnectRoutes(fastify: FastifyInstance) {
             const oauthUrl = new URL('https://connect.stripe.com/oauth/authorize');
             oauthUrl.searchParams.set('response_type', 'code');
             oauthUrl.searchParams.set('client_id', STRIPE_CLIENT_ID);
-            oauthUrl.searchParams.set('scope', 'read_only');
+            oauthUrl.searchParams.set('scope', 'read_write'); // Stripe requires read_write - we enforce read-only at API level
             oauthUrl.searchParams.set('redirect_uri', redirectUri);
             oauthUrl.searchParams.set('state', state);
 

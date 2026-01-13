@@ -108,17 +108,23 @@ async function xOAuthRoutes(fastify: FastifyInstance) {
                 expiresAt: Date.now() + STATE_EXPIRY_MS,
             });
 
-            // Build OAuth URL
+            // Build OAuth URL - MINIMAL scope: only users.read
+            // Do NOT add tweet.read or offline.access unless portal explicitly allows them
             const oauthUrl = new URL('https://twitter.com/i/oauth2/authorize');
             oauthUrl.searchParams.set('response_type', 'code');
             oauthUrl.searchParams.set('client_id', X_OAUTH_CLIENT_ID);
             oauthUrl.searchParams.set('redirect_uri', X_OAUTH_REDIRECT_URI);
-            oauthUrl.searchParams.set('scope', 'users.read tweet.read');
+            oauthUrl.searchParams.set('scope', 'users.read');
             oauthUrl.searchParams.set('state', state);
             oauthUrl.searchParams.set('code_challenge', codeChallenge);
             oauthUrl.searchParams.set('code_challenge_method', 'S256');
 
-            console.log(`[X OAuth] Generated OAuth URL for user ${userId}`);
+            // Diagnostic logging
+            console.log(`[X OAuth START] userId=${userId}`);
+            console.log(`[X OAuth START] client_id=${X_OAUTH_CLIENT_ID}`);
+            console.log(`[X OAuth START] redirect_uri=${X_OAUTH_REDIRECT_URI}`);
+            console.log(`[X OAuth START] scope=users.read`);
+            console.log(`[X OAuth START] Full URL: ${oauthUrl.toString()}`);
 
             return reply.status(200).send({
                 oauthUrl: oauthUrl.toString(),

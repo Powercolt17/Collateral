@@ -121,8 +121,16 @@ export const users = pgTable('users', {
     passkeyId: varchar('passkey_id', { length: 255 }),
     // Stripe Connect: required for payouts
     stripeConnectedAccountId: varchar('stripe_connected_account_id', { length: 255 }),
+    // X OAuth: direct binding (replaces connected_accounts for X)
+    xUserId: text('x_user_id'),           // X user ID from OAuth
+    xUsername: text('x_username'),         // X handle (e.g., "elonmusk")
+    xConnectedAt: timestamp('x_connected_at', { withTimezone: true }),
+    xRefreshToken: text('x_refresh_token'), // For durable access (encrypted at rest recommended)
+    xTokenExpiresAt: timestamp('x_token_expires_at', { withTimezone: true }),
     createdAt: timestamp('created_at', { withTimezone: true }).defaultNow().notNull(),
-});
+}, (table) => [
+    uniqueIndex('idx_users_x_user_id').on(table.xUserId),
+]);
 
 export const identities = pgTable('identities', {
     id: uuid('id').primaryKey().defaultRandom(),

@@ -1632,133 +1632,82 @@ export function initContracts() {
             }
         },
 
-        // === X VERIFICATION METHODS ===
+        // === X OAUTH CONNECTION (NEW) ===
 
-        generateVerifyCode: async function () {
-            const usernameInput = document.getElementById('x-username-input');
-            const username = usernameInput?.value?.trim();
-            const btn = document.getElementById('x-generate-btn');
-
-            if (!username) {
-                alert('Please enter your X username');
-                return;
-            }
+        connectXOAuth: async function () {
+            const btn = document.getElementById('x-connect-btn');
+            if (!btn) return;
 
             btn.disabled = true;
             btn.innerHTML = '<div class="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin mx-auto"></div>';
 
             try {
-                // Call backend to generate challenge code
-                const result = await window.api.startXVerification(username);
-                console.log('[Contracts] startXVerification result:', result);
+                // Call backend to get OAuth URL
+                const result = await window.api.startXOAuth();
+                console.log('[Contracts] startXOAuth result:', result);
 
-                // Note: X_ALREADY_VERIFIED_GLOBAL now returns 409 and is handled in catch block
-
-                // =========================================================
-                // ALREADY VERIFIED FOR THIS USER - Show success
-                // =========================================================
-                if (result.alreadyVerified || result.verificationStatus === 'VERIFIED') {
-                    console.log('[Contracts] X already verified for this user');
-                    xUsername = result.username || username;
+                // If already connected, show success
+                if (result.connected) {
+                    xUsername = result.xUsername;
                     xVerified = true;
 
-                    // Show success UI
-                    document.getElementById('x-verify-step1').classList.add('hidden');
-                    document.getElementById('x-verify-step2').classList.add('hidden');
-                    document.getElementById('x-verify-success').classList.remove('hidden');
-                    document.getElementById('x-verified-handle').textContent = '@' + xUsername + ' • Connected';
-                    document.getElementById('x-verify-status').textContent = 'Verified';
-                    document.getElementById('x-verify-status').classList.remove('text-neutral-400');
-                    document.getElementById('x-verify-status').classList.add('text-[#1F7A4D]');
-                    document.getElementById('btn-step-2').disabled = false;
-
-                    if (window.lucide) window.lucide.createIcons();
-                    return;
-                }
-
-                xUsername = username;
-
-                // Backend returns challengeCode in dev, codeMasked in prod
-                // If we got the code, use it. If only masked, we need backend update.
-                xVerifyCode = result.challengeCode || result.code;
-
-                if (!xVerifyCode && result.codeMasked) {
-                    // Production is hiding the code - shouldn't happen after backend update
-                    alert('Backend update required. Please deploy the latest code to Railway and try again.');
-                    btn.textContent = 'Generate Code';
-                    btn.disabled = false;
-                    return;
-                }
-
-                if (!xVerifyCode) {
-                    console.error('[Contracts] No code in response:', result);
-                    alert('Failed to get verification code. Please try again.');
-                    btn.textContent = 'Generate Code';
-                    btn.disabled = false;
-                    return;
-                }
-
-                // Show step 2 (code display)
-                document.getElementById('x-verify-step1').classList.add('hidden');
-                document.getElementById('x-verify-step2').classList.remove('hidden');
-                document.getElementById('x-verify-code').textContent = xVerifyCode;
-                document.getElementById('x-verify-status').textContent = 'Pending';
-
-                if (window.lucide) window.lucide.createIcons();
-            } catch (error) {
-                console.error('[Contracts] startXVerification error:', error);
-
-                // Handle specific error codes from backend
-                const errorCode = error.data?.code || error.code;
-
-                if (errorCode === 'USER_ALREADY_HAS_X') {
-                    const existingUsername = error.data?.existingUsername || 'your X account';
-                    alert('You already have a verified X account (@' + existingUsername + '). One account can only verify one X profile.');
-                    btn.textContent = 'Generate Code';
-                    btn.disabled = false;
-                    return;
-                }
-
-                if (errorCode === 'X_ALREADY_VERIFIED_GLOBAL') {
-                    alert('This X username is already verified by another account. Please use a different X handle.');
-                    btn.textContent = 'Generate Code';
-                    btn.disabled = false;
-                    return;
-                }
-
-                // Handle global rate limit with countdown
-                if (errorCode === 'X_GLOBAL_RATE_LIMIT' || errorCode === 'X_API_RATE_LIMITED') {
-                    const resetAt = error.data?.resetAt;
-                    const retryAfterSeconds = error.data?.retryAfterSeconds || 60;
-                    let remaining = retryAfterSeconds;
-                    if (resetAt) {
-                        remaining = Math.max(1, resetAt - Math.floor(Date.now() / 1000));
+                    // Show connected state
+                    const connectSection = document.getElementById('x-connect-section');
+                    if (connectSection) {
+                        connectSection.innerHTML = `
+                            <div class="flex items-center justify-between p-4 bg-[#1F7A4D]/10 border border-[#1F7A4D]/30 rounded-lg">
+                                <div class="flex items-center gap-3">
+                                    <svg class="w-5 h-5 text-[#1F7A4D]" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+                                    <div>
+                                        <div class="text-sm font-medium text-white">@${result.xUsername}</div>
+                                        <div class="text-xs text-[#1F7A4D]">Connected</div>
+                                    </div>
+                                </div>
+                                <button onclick="window.contractWizard?.disconnectX()" class="text-xs text-neutral-400 hover:text-white transition-colors">Disconnect</button>
+                            </div>
+                        `;
                     }
-                    const unlockTime = Date.now() + remaining * 1000;
-                    localStorage.setItem('x_verify_unlock_time', unlockTime.toString());
-
-                    console.log(`[Contracts] X API rate limited. Retry in ${remaining}s`);
-                    btn.textContent = `Wait ${remaining}s`;
-                    btn.disabled = true;
-
-                    const countdownInterval = setInterval(() => {
-                        const rem = Math.ceil((unlockTime - Date.now()) / 1000);
-                        if (rem <= 0) {
-                            clearInterval(countdownInterval);
-                            btn.textContent = 'Generate Code';
-                            btn.disabled = false;
-                            localStorage.removeItem('x_verify_unlock_time');
-                        } else {
-                            btn.textContent = `Wait ${rem}s`;
-                        }
-                    }, 1000);
+                    document.getElementById('btn-step-2').disabled = false;
                     return;
                 }
 
-                alert('Failed to generate code: ' + (error.message || 'Unknown error'));
-                btn.textContent = 'Generate Code';
+                // Redirect to X OAuth
+                if (result.oauthUrl) {
+                    window.location.href = result.oauthUrl;
+                } else {
+                    throw new Error('No OAuth URL returned from server');
+                }
+            } catch (error) {
+                console.error('[Contracts] startXOAuth error:', error);
+                alert('Failed to connect X: ' + (error.message || 'Unknown error'));
+                btn.innerHTML = 'Connect X';
                 btn.disabled = false;
             }
+        },
+
+        disconnectX: async function () {
+            if (!confirm('Are you sure you want to disconnect your X account?')) return;
+
+            try {
+                await window.api.disconnectX();
+                xUsername = null;
+                xVerified = false;
+
+                // Reload to reset UI
+                location.reload();
+            } catch (error) {
+                console.error('[Contracts] disconnectX error:', error);
+                alert('Failed to disconnect: ' + (error.message || 'Unknown error'));
+            }
+        },
+
+        // === DEPRECATED: X BIO VERIFICATION ===
+        // Kept for backward compatibility but should not be used
+
+        generateVerifyCode: async function () {
+            console.warn('[Contracts] generateVerifyCode is DEPRECATED. Use connectXOAuth instead.');
+            // Redirect to OAuth flow instead
+            return this.connectXOAuth();
         },
 
         copyVerifyCode: function () {

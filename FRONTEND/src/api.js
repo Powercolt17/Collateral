@@ -118,9 +118,42 @@ export async function logout() {
     clearAuthToken();
 }
 
-// --- X VERIFICATION ---
+// --- X OAUTH (NEW) ---
+
+export async function startXOAuth() {
+    console.log('[API] startXOAuth called');
+
+    const response = await fetch(`${API_BASE_URL}/v1/connect/x/oauth/start`, {
+        method: 'GET',
+        headers: getHeaders(),
+    });
+
+    return handleResponse(response);
+}
+
+export async function getXStatus() {
+    const response = await fetch(`${API_BASE_URL}/v1/connect/x/status`, {
+        method: 'GET',
+        headers: getHeaders(),
+    });
+
+    return handleResponse(response);
+}
+
+export async function disconnectX() {
+    const response = await fetch(`${API_BASE_URL}/v1/connect/x/disconnect`, {
+        method: 'POST',
+        headers: getHeaders(),
+    });
+
+    return handleResponse(response);
+}
+
+// --- DEPRECATED: X VERIFICATION (bio challenge) ---
+// These are kept for backward compatibility but should not be used
 
 export async function startXVerification(xUsername) {
+    console.warn('[API] startXVerification is DEPRECATED. Use startXOAuth instead.');
     console.log('[API] startXVerification called with username:', xUsername);
 
     const response = await fetch(`${API_BASE_URL}/v1/connect/x/start`, {
@@ -133,23 +166,14 @@ export async function startXVerification(xUsername) {
 }
 
 export async function verifyX() {
+    console.warn('[API] verifyX is DEPRECATED. Use startXOAuth instead.');
     const headers = getHeaders();
     console.log('[API] verifyX called');
-    console.log('[API] Auth token present:', !!getAuthToken());
 
     const response = await fetch(`${API_BASE_URL}/v1/connect/x/verify`, {
         method: 'POST',
         headers: headers,
         body: JSON.stringify({}),
-    });
-
-    return handleResponse(response);
-}
-
-export async function getXStatus() {
-    const response = await fetch(`${API_BASE_URL}/v1/connect/x/status`, {
-        method: 'GET',
-        headers: getHeaders(),
     });
 
     return handleResponse(response);
@@ -316,10 +340,13 @@ export default {
     clearAuthToken,
     getStoredUser,
 
-    // X
+    // X (OAuth - recommended)
+    startXOAuth,
+    getXStatus,
+    disconnectX,
+    // X (deprecated bio challenge)
     startXVerification,
     verifyX,
-    getXStatus,
 
     // Stripe Connect
     startStripeConnect,

@@ -317,8 +317,8 @@ async function connectRoutes(fastify: FastifyInstance) {
                     status: 'ACTIVE',
                     verificationStatus: 'PENDING',
                     challengeCode,
-                    challengeIssuedAt: now,
-                    connectedAt: now,
+                    challengeIssuedAt: startNow,
+                    connectedAt: startNow,
                     metadataJson: metadata,
                 })
                 .where(
@@ -347,8 +347,8 @@ async function connectRoutes(fastify: FastifyInstance) {
                         status: 'ACTIVE',
                         verificationStatus: 'PENDING',
                         challengeCode,
-                        challengeIssuedAt: now,
-                        connectedAt: now,
+                        challengeIssuedAt: startNow,
+                        connectedAt: startNow,
                         metadataJson: metadata,
                     })
                     .onConflictDoNothing({

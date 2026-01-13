@@ -40,7 +40,7 @@ function getStripe() {
 
 const webhookRoutes: FastifyPluginAsync = async (fastify) => {
     /**
-     * POST /stripe/webhook
+     * POST /v1/stripe/webhook
      * Handle Stripe payment events
      * 
      * CRITICAL: Uses Stripe SDK constructEvent for signature verification

@@ -20,6 +20,42 @@ import opsRoutes from './routes/ops.js';
 
 const PORT = parseInt(process.env.PORT || '3000', 10);
 
+// =========================================================
+// PRODUCTION ASSERTIONS - Fail fast on missing config
+// =========================================================
+const IS_PRODUCTION = process.env.NODE_ENV === 'production';
+
+if (IS_PRODUCTION) {
+    const requiredEnvVars = [
+        'STRIPE_SECRET_KEY',
+        'STRIPE_WEBHOOK_SECRET',
+        'STRIPE_CLIENT_ID',
+        'DATABASE_URL',
+    ];
+
+    const missing = requiredEnvVars.filter(v => !process.env[v]);
+    if (missing.length > 0) {
+        console.error('❌ FATAL: Missing required env vars:', missing.join(', '));
+        process.exit(1);
+    }
+
+    // Validate Stripe key format
+    if (!process.env.STRIPE_SECRET_KEY?.startsWith('sk_')) {
+        console.error('❌ FATAL: STRIPE_SECRET_KEY must start with sk_');
+        process.exit(1);
+    }
+    if (!process.env.STRIPE_CLIENT_ID?.startsWith('ca_')) {
+        console.error('❌ FATAL: STRIPE_CLIENT_ID must start with ca_');
+        process.exit(1);
+    }
+    if (!process.env.STRIPE_WEBHOOK_SECRET?.startsWith('whsec_')) {
+        console.error('❌ FATAL: STRIPE_WEBHOOK_SECRET must start with whsec_');
+        process.exit(1);
+    }
+
+    console.log('✅ All required Stripe env vars validated');
+}
+
 async function main() {
     const fastify = Fastify({
         logger: {

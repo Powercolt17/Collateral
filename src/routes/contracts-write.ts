@@ -56,7 +56,7 @@ import {
 // =====================================================
 // POST /contracts              → CONTRACT_CREATED, BASELINE_SNAPSHOTTED
 // POST /:id/funding-intent     → FUNDS_AUTHORIZED
-// POST /stripe/webhook         → FUNDS_LOCKED (via handlePaymentSuccess)
+// POST /v1/stripe/webhook      → FUNDS_LOCKED (via handlePaymentSuccess)
 // POST /:id/execute            → EXECUTION_REQUESTED, EXECUTION_CONFIRMED
 
 const contractWriteRoutes: FastifyPluginAsync = async (fastify) => {
@@ -354,7 +354,7 @@ const contractWriteRoutes: FastifyPluginAsync = async (fastify) => {
     });
 
     // NOTE: FUNDS_AUTHORIZED → FUNDS_LOCKED transition happens via:
-    //   - PRODUCTION: Stripe webhook (POST /stripe/webhook → payment_intent.succeeded)
+    //   - PRODUCTION: Stripe webhook (POST /v1/stripe/webhook → payment_intent.succeeded)
     //   - DEVELOPMENT: Can simulate via direct webhook call or test helper
     // See: src/routes/webhooks.ts → handlePaymentSuccess
 

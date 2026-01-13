@@ -20,7 +20,7 @@
 import { db } from '../db/client.js';
 import { connectedAccounts } from '../db/schema.js';
 import { getXClient, XAdapterError } from '../adapters/x.js';
-import { eq, and, sql, or, isNull } from 'drizzle-orm';
+import { eq, and, sql, or, isNull, lt } from 'drizzle-orm';
 import { randomBytes } from 'crypto';
 import { checkGlobalRateLimit } from '../services/x-rate-limit-circuit.js';
 // =============================================================================

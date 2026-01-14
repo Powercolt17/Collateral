@@ -185,49 +185,42 @@ window.app = {
         const dropdown = document.getElementById('user-dropdown-content');
         if (dropdown) dropdown.classList.toggle('!block');
     },
-    connectSource: function (source) {
+    connectSource: async function (source) {
         const btn = document.getElementById(source + '-btn');
-        const status = document.getElementById(source + '-status');
-        const sourceCard = document.getElementById('source-' + source);
-
         if (!btn) return;
 
-        const originalText = btn.innerText;
         btn.innerHTML = `<div class="w-3 h-3 border-2 border-neutral-300 border-t-neutral-600 rounded-full animate-spin"></div>`;
         btn.disabled = true;
 
-        // Simulate OAuth connection
-        setTimeout(() => {
-            appState.connectedSources[source] = true;
-
-            // Update UI
-            const usernames = {
-                twitter: '@' + (appState.username?.replace('@', '') || 'user'),
-                github: appState.username?.replace('@', '') || 'user',
-                stripe: 'acct_' + Math.random().toString(36).substr(2, 6)
-            };
-
-            status.textContent = usernames[source] + ' • Connected';
-            status.classList.remove('text-neutral-400');
-            status.classList.add('text-neutral-500');
-
-            btn.outerHTML = `
-                <span class="flex items-center gap-1.5 text-[#1F7A4D] text-[11px] font-mono uppercase">
-                    <i data-lucide="check-circle" class="w-4 h-4"></i>
-                    Verified
-                </span>
-            `;
-
-            // Re-init icons
-            if (window.lucide) window.lucide.createIcons();
-
-            // Hide alert if all sources connected or at least one
-            const hasAnySource = Object.values(appState.connectedSources).some(v => v);
-            if (hasAnySource) {
-                const alert = document.getElementById('sources-alert');
-                if (alert) alert.classList.add('hidden');
+        try {
+            // Call real OAuth start endpoints
+            if (source === 'twitter') {
+                const result = await window.api.startXOAuth();
+                if (result.oauthUrl) {
+                    window.location.href = result.oauthUrl;
+                    return;
+                }
+            } else if (source === 'stripe') {
+                const result = await window.api.startStripeConnect();
+                if (result.oauthUrl) {
+                    // Store state for CSRF protection
+                    localStorage.setItem('stripe_oauth_state', result.state);
+                    window.location.href = result.oauthUrl;
+                    return;
+                }
+            } else if (source === 'github') {
+                // GitHub not yet implemented
+                alert('GitHub integration coming soon.');
+                btn.innerHTML = 'Connect';
+                btn.disabled = false;
+                return;
             }
-        }, 1500);
+        } catch (err) {
+            console.error(`[App] connectSource ${source} error:`, err);
+            alert('Failed to connect: ' + (err.message || 'Unknown error'));
+            btn.innerHTML = 'Connect';
+            btn.disabled = false;
+        }
     },
     // Card Modal Functions (SetupIntent pattern)
     openCardModal: function () {

@@ -849,53 +849,112 @@ export function initContracts() {
     const connectedParam = urlParams.get('connected');
 
     // Refresh connection status from backend on init
+    // CANONICAL: Uses only /v1/connect/status endpoint (single source of truth)
     const refreshConnectionStatus = async () => {
         try {
-            // Check X status
-            const xStatus = await window.api.getXStatus();
-            console.log('[Contracts] X Status:', xStatus);
-            if (xStatus.connected) {
+            const status = await window.api.getConnectionStatus();
+            console.log('[Contracts] Canonical status:', status);
+
+            if (!status?.platforms) {
+                console.warn('[Contracts] No platforms in status response');
+                updateAuthorityGatingUI();
+                return;
+            }
+
+            // X: Check verificationStatus === 'VERIFIED' (not just connected)
+            const x = status.platforms.find(p => p.platform === 'X');
+            if (x && x.verificationStatus === 'VERIFIED') {
                 xVerified = true;
-                xUsername = xStatus.xUsername;
+                xUsername = x.metadata?.resolvedUsername || null;
                 window.appState.connectedSources.twitter = true;
                 // Update UI if X panel is visible
                 const xPanel = document.getElementById('x-verify-panel');
-                if (xPanel && xPanel.style.display !== 'none') {
-                    window.wizard?.showXConnectedState?.(xStatus.xUsername);
+                if (xPanel && xPanel.style.display !== 'none' && xUsername) {
+                    window.wizard?.showXConnectedState?.(xUsername);
                 }
+            } else {
+                xVerified = false;
+                xUsername = null;
+                window.appState.connectedSources.twitter = false;
             }
+
+            // Stripe: Check verificationStatus === 'VERIFIED'
+            const stripe = status.platforms.find(p => p.platform === 'STRIPE');
+            if (stripe && stripe.verificationStatus === 'VERIFIED') {
+                stripeVerified = true;
+                stripeAccountId = stripe.externalAccountId || null;
+                window.appState.connectedSources.stripe = true;
+            } else {
+                stripeVerified = false;
+                stripeAccountId = null;
+                window.appState.connectedSources.stripe = false;
+            }
+
         } catch (err) {
-            console.log('[Contracts] X status check failed:', err.message);
+            console.log('[Contracts] Status check failed:', err.message);
         }
 
-        try {
-            // Check Stripe status
-            const stripeStatus = await window.api.getStripeStatus();
-            console.log('[Contracts] Stripe Status:', stripeStatus);
-            if (stripeStatus.connected) {
-                stripeVerified = true;
-                stripeAccountId = stripeStatus.stripeAccountId;
-                window.appState.connectedSources.stripe = true;
+        // Re-render panel state based on selectedSource
+        if (selectedSource === 'TWITTER') {
+            if (xVerified && xUsername) {
+                window.wizard?.showXConnectedState?.(xUsername);
             }
-        } catch (err) {
-            console.log('[Contracts] Stripe status check failed:', err.message);
+        } else if (selectedSource === 'STRIPE') {
+            if (stripeVerified && stripeAccountId) {
+                // Show Stripe connected UI
+                const step1 = document.getElementById('stripe-connect-step1');
+                const success = document.getElementById('stripe-connect-success');
+                const accountId = document.getElementById('stripe-account-id');
+                const status = document.getElementById('stripe-verify-status');
+                if (step1) step1.classList.add('hidden');
+                if (success) success.classList.remove('hidden');
+                if (accountId) accountId.textContent = stripeAccountId + ' • Connected';
+                if (status) {
+                    status.textContent = 'Connected';
+                    status.classList.remove('text-neutral-400');
+                    status.classList.add('text-[#1F7A4D]');
+                }
+            }
         }
+
+        // Update authority gating UI based on fetched status
+        updateAuthorityGatingUI();
     };
 
     // Run status refresh
     refreshConnectionStatus();
+
+    // Step mapper for query param jumping
+    const stepMap = {
+        'profile': 1,
+        'source': 2,
+        'lock': 3
+    };
+
+    // Jump to step if specified in query param
+    if (stepParam && stepMap[stepParam]) {
+        currentStep = stepMap[stepParam];
+        // Mark previous steps as completed if jumping forward
+        for (let i = 1; i < currentStep; i++) {
+            if (!completedSteps.includes(i)) {
+                completedSteps.push(i);
+            }
+        }
+    }
 
     // Show toast if just connected
     if (connectedParam === 'x') {
         setTimeout(() => {
             showToast('X Account Connected', 'Authority binding established successfully.');
         }, 500);
-        // Clean URL
-        window.history.replaceState({}, '', window.location.pathname + '#/contracts');
     } else if (connectedParam === 'stripe') {
         setTimeout(() => {
             showToast('Stripe Connected', 'Revenue authority binding established.');
         }, 500);
+    }
+
+    // Clean URL after consuming all query params (prevent toast replay on refresh)
+    if (stepParam || connectedParam) {
         window.history.replaceState({}, '', window.location.pathname + '#/contracts');
     }
 
@@ -912,6 +971,67 @@ export function initContracts() {
             toast.classList.add('opacity-0', 'transition-opacity');
             setTimeout(() => toast.remove(), 300);
         }, 4000);
+    }
+
+    // =========================================================
+    // AUTHORITY GATING - Fail-closed verification
+    // =========================================================
+
+    // Single source of truth: is the selected platform authority satisfied?
+    function isAuthoritySatisfied() {
+        if (!selectedSource) return false; // No source selected = not satisfied
+        if (selectedSource === 'TWITTER') return !!xVerified;
+        if (selectedSource === 'STRIPE') return !!stripeVerified;
+        return false; // Unknown source = not satisfied
+    }
+
+    // Update UI based on authority gating status
+    function updateAuthorityGatingUI() {
+        const bindBtn = document.getElementById('btn-step-2');
+        if (!bindBtn) return;
+
+        const satisfied = isAuthoritySatisfied();
+        bindBtn.disabled = !satisfied;
+
+        // Update button appearance
+        if (satisfied) {
+            bindBtn.classList.remove('opacity-50', 'cursor-not-allowed');
+        } else {
+            bindBtn.classList.add('opacity-50', 'cursor-not-allowed');
+        }
+
+        // Also update metric preview visibility (only show if authority satisfied)
+        const metricPreview = document.getElementById('metric-preview');
+        if (metricPreview) {
+            metricPreview.style.display = satisfied ? 'block' : 'none';
+        }
+    }
+
+    // Helper: show authority required modal
+    function showAuthorityRequiredModal() {
+        // Handle no source selected
+        if (!selectedSource) {
+            showEnforcementModal({
+                title: 'Select an Authority',
+                message: 'You must select an authority source (X or Stripe) before proceeding.',
+                ruleId: 'REQUIRE_AUTHORITY_SELECTION'
+            });
+            return;
+        }
+
+        const platformName = selectedSource === 'TWITTER' ? 'X (Twitter)' : 'Stripe';
+        const panelId = selectedSource === 'TWITTER' ? 'x-verify-panel' : 'stripe-verify-panel';
+
+        showEnforcementModal({
+            title: 'Authority Binding Required',
+            message: `You must connect and verify your ${platformName} account before proceeding. Authority binding ensures oracle integrity during contract execution.`,
+            ruleId: 'REQUIRE_AUTHORITY_BINDING',
+            primaryText: 'Connect Authority',
+            primaryAction: () => {
+                const panel = document.getElementById(panelId);
+                if (panel) panel.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            }
+        });
     }
 
     // =========================================================
@@ -1261,9 +1381,22 @@ export function initContracts() {
             updateStepHeader(currentStep);
         },
 
-        // Navigate to step (only if completed)
+        // Navigate to step (enforces authority gating on forward navigation)
         goToStep: function (stepNumber) {
-            if (completedSteps.includes(stepNumber) || stepNumber === currentStep) {
+            // Always allow backward navigation
+            if (stepNumber <= currentStep) {
+                this.setStep(stepNumber);
+                return;
+            }
+
+            // Forward navigation: check authority gating for Step 3
+            if (stepNumber >= 3 && !isAuthoritySatisfied()) {
+                showAuthorityRequiredModal();
+                return;
+            }
+
+            // Only allow forward if previous step is completed
+            if (completedSteps.includes(stepNumber - 1)) {
                 this.setStep(stepNumber);
             }
         },
@@ -1306,30 +1439,12 @@ export function initContracts() {
                 xVerifyPanel.style.display = 'block';
                 // Check if X is already connected via OAuth
                 this.checkXConnection();
-                // Disable next button until X is verified
-                document.getElementById('btn-step-2').disabled = !xVerified;
             } else if (source === 'STRIPE') {
                 stripeVerifyPanel.style.display = 'block';
-                // Disable next button until Stripe is connected
-                document.getElementById('btn-step-2').disabled = !stripeVerified;
-            } else {
-                // Non-X/Stripe sources can proceed immediately
-                document.getElementById('btn-step-2').disabled = false;
             }
 
-            // Show metric preview (light - current only) - only if verified for X
-            const metricPreview = document.getElementById('metric-preview');
-            const mockData = mockMetricData[source];
-            if (metricPreview && mockData && (source !== 'TWITTER' || xVerified)) {
-                metricPreview.style.display = 'block';
-
-                const isRevenue = mockData.metricType === 'REVENUE';
-                const formatValue = isRevenue ? formatCurrency : formatNumber;
-                const unit = isRevenue ? '' : ' followers';
-
-                document.getElementById('preview-current').textContent = formatValue(mockData.currentValue) + unit;
-                document.getElementById('preview-authority-badge').textContent = source === 'TWITTER' ? 'X' : 'Stripe';
-            }
+            // Update authority gating UI (controls button disabled state + metric preview)
+            updateAuthorityGatingUI();
 
             if (window.lucide) window.lucide.createIcons();
         },
@@ -1339,6 +1454,11 @@ export function initContracts() {
                 this.markCompleted(1);
                 this.setStep(2);
             } else if (currentStep === 2) {
+                // AUTHORITY GATE: cannot proceed to Step 3 without VERIFIED binding
+                if (!isAuthoritySatisfied()) {
+                    showAuthorityRequiredModal();
+                    return;
+                }
                 this.markCompleted(2);
                 this.setStep(3);
 
@@ -1685,27 +1805,13 @@ export function initContracts() {
             }
         },
 
-        // === X OAUTH CONNECTION ===
-
-        // Check X connection status on page load
+        // Check X connection - thin wrapper around canonical refreshConnectionStatus
         checkXConnection: async function () {
-            try {
-                const result = await window.api.getXStatus();
-                console.log('[Contracts] getXStatus result:', result);
-
-                if (result.connected) {
-                    xUsername = result.xUsername;
-                    xVerified = true;
-                    this.showXConnectedState(result.xUsername);
-                    return true;
-                }
-            } catch (error) {
-                console.error('[Contracts] checkXConnection error:', error);
-            }
-            return false;
+            await refreshConnectionStatus();
+            return xVerified;
         },
 
-        // Show connected state in UI
+        // Show connected state in UI (PURE RENDERER - does NOT set gating)
         showXConnectedState: function (username) {
             // Hide connect button, show connected state
             const connectSection = document.getElementById('x-connect-section');
@@ -1715,16 +1821,15 @@ export function initContracts() {
 
             if (connectSection) connectSection.classList.add('hidden');
             if (connectedState) connectedState.classList.remove('hidden');
-            if (connectedHandle) connectedHandle.textContent = '@' + username;
+            if (connectedHandle) connectedHandle.textContent = '@' + (username || 'connected');
             if (statusLabel) {
                 statusLabel.textContent = 'Connected';
                 statusLabel.classList.remove('text-neutral-400');
                 statusLabel.classList.add('text-[#1F7A4D]');
             }
 
-            // Enable Bind Authority button
-            const bindBtn = document.getElementById('btn-step-2');
-            if (bindBtn) bindBtn.disabled = false;
+            // Gating is controlled by updateAuthorityGatingUI() - NOT here
+            updateAuthorityGatingUI();
         },
 
         connectXOAuth: async function () {
@@ -1739,11 +1844,9 @@ export function initContracts() {
                 const result = await window.api.startXOAuth();
                 console.log('[Contracts] startXOAuth result:', result);
 
-                // If already connected, show success
+                // If already connected, refresh canonical status
                 if (result.connected) {
-                    xUsername = result.xUsername;
-                    xVerified = true;
-                    this.showXConnectedState(result.xUsername);
+                    await refreshConnectionStatus();
                     return;
                 }
 
@@ -1938,16 +2041,15 @@ export function initContracts() {
                 console.log('[Contracts] startStripeConnect result:', result);
 
                 if (result.alreadyConnected) {
-                    // Already connected - show success state
-                    stripeVerified = true;
-                    stripeAccountId = result.stripeAccountId;
+                    // Already connected - refresh canonical status
+                    await refreshConnectionStatus();
+                    // Show UI immediately since we know it's connected
                     document.getElementById('stripe-connect-step1').classList.add('hidden');
                     document.getElementById('stripe-connect-success').classList.remove('hidden');
-                    document.getElementById('stripe-account-id').textContent = stripeAccountId + ' • Connected';
+                    document.getElementById('stripe-account-id').textContent = result.stripeAccountId + ' • Connected';
                     document.getElementById('stripe-verify-status').textContent = 'Connected';
                     document.getElementById('stripe-verify-status').classList.remove('text-neutral-400');
                     document.getElementById('stripe-verify-status').classList.add('text-[#1F7A4D]');
-                    document.getElementById('btn-step-2').disabled = false;
                     if (window.lucide) window.lucide.createIcons();
                     return;
                 }
@@ -1968,19 +2070,17 @@ export function initContracts() {
                         clearInterval(checkPopup);
                         btn.textContent = 'Connect with Stripe';
                         btn.disabled = false;
+                        // Refresh canonical status after popup closes
+                        await refreshConnectionStatus();
 
-                        // Check if Stripe was connected
-                        const status = await window.api.getStripeStatus();
-                        if (status.connected) {
-                            stripeVerified = true;
-                            stripeAccountId = status.stripeAccountId;
+                        // If verified, show connected UI
+                        if (stripeVerified) {
                             document.getElementById('stripe-connect-step1').classList.add('hidden');
                             document.getElementById('stripe-connect-success').classList.remove('hidden');
-                            document.getElementById('stripe-account-id').textContent = stripeAccountId + ' • Connected';
+                            document.getElementById('stripe-account-id').textContent = (stripeAccountId || 'acct_xxx') + ' • Connected';
                             document.getElementById('stripe-verify-status').textContent = 'Connected';
                             document.getElementById('stripe-verify-status').classList.remove('text-neutral-400');
                             document.getElementById('stripe-verify-status').classList.add('text-[#1F7A4D]');
-                            document.getElementById('btn-step-2').disabled = false;
                             if (window.lucide) window.lucide.createIcons();
                         }
                     }
@@ -1995,6 +2095,7 @@ export function initContracts() {
         }
     };
 
-    // Initialize progress bar on load
-    updateProgressBar(1);
+    // Initialize wizard to correct step (supports query param jumping)
+    window.wizard.setStep(currentStep);
+    updateProgressBar(currentStep);
 }

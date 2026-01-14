@@ -712,7 +712,10 @@ async function connectRoutes(fastify: FastifyInstance) {
     /**
      * GET /v1/connect/status
      * 
-     * Get connected platform status for current user
+     * CANONICAL status endpoint for all platform connections.
+     * Returns connectionStatus and verificationStatus per platform.
+     * 
+     * Frontend should use ONLY this endpoint for authority gating.
      */
     fastify.get(
         '/v1/connect/status',
@@ -726,6 +729,7 @@ async function connectRoutes(fastify: FastifyInstance) {
         async (request, reply) => {
             const userId = request.userId!;
 
+            // 1. Get connectedAccounts (legacy X bio verification + Stripe)
             const accounts = await db
                 .select({
                     platform: connectedAccounts.platform,
@@ -739,22 +743,102 @@ async function connectRoutes(fastify: FastifyInstance) {
                 .from(connectedAccounts)
                 .where(eq(connectedAccounts.userId, userId));
 
+            // 2. Get X OAuth data from users table
+            const { users } = await import('../db/schema.js');
+            const [user] = await db
+                .select({
+                    xUserId: users.xUserId,
+                    xUsername: users.xUsername,
+                    xConnectedAt: users.xConnectedAt,
+                    xAccessToken: users.xAccessToken,
+                })
+                .from(users)
+                .where(eq(users.id, userId))
+                .limit(1);
+
+            // 3. Build canonical platforms array
+            type PlatformStatus = {
+                platform: string;
+                connectionStatus: 'DISCONNECTED' | 'CONNECTED' | 'INACTIVE';
+                verificationStatus: 'UNVERIFIED' | 'PENDING' | 'VERIFIED';
+                externalAccountId: string | null;
+                connectedAt: string | null;
+                verifiedAt: string | null;
+                metadata: Record<string, unknown> | null;
+            };
+
+            const platforms: PlatformStatus[] = [];
+
+            // X: Prefer OAuth data from users table, fallback to connectedAccounts
+            const xFromOAuth = user?.xUserId && user?.xAccessToken;
+            const xFromConnectedAccounts = accounts.find(a => a.platform === 'X');
+
+            if (xFromOAuth) {
+                // X OAuth 1.0a connection (canonical)
+                platforms.push({
+                    platform: 'X',
+                    connectionStatus: 'CONNECTED',
+                    verificationStatus: 'VERIFIED', // OAuth = verified by definition
+                    externalAccountId: user.xUserId,
+                    connectedAt: user.xConnectedAt?.toISOString() || null,
+                    verifiedAt: user.xConnectedAt?.toISOString() || null, // OAuth verify is instant
+                    metadata: {
+                        resolvedUsername: user.xUsername,
+                    },
+                });
+            } else if (xFromConnectedAccounts) {
+                // Legacy bio verification
+                platforms.push({
+                    platform: 'X',
+                    connectionStatus: xFromConnectedAccounts.status === 'ACTIVE' ? 'CONNECTED' : 'INACTIVE',
+                    verificationStatus: xFromConnectedAccounts.verificationStatus === 'VERIFIED' ? 'VERIFIED' :
+                        xFromConnectedAccounts.verificationStatus === 'PENDING' ? 'PENDING' : 'UNVERIFIED',
+                    externalAccountId: xFromConnectedAccounts.externalAccountId,
+                    connectedAt: xFromConnectedAccounts.connectedAt?.toISOString() || null,
+                    verifiedAt: xFromConnectedAccounts.verifiedAt?.toISOString() || null,
+                    metadata: xFromConnectedAccounts.metadataJson as Record<string, unknown> | null,
+                });
+            } else {
+                // Not connected
+                platforms.push({
+                    platform: 'X',
+                    connectionStatus: 'DISCONNECTED',
+                    verificationStatus: 'UNVERIFIED',
+                    externalAccountId: null,
+                    connectedAt: null,
+                    verifiedAt: null,
+                    metadata: null,
+                });
+            }
+
+            // Stripe: from connectedAccounts
+            const stripeAccount = accounts.find(a => a.platform === 'STRIPE');
+            if (stripeAccount) {
+                platforms.push({
+                    platform: 'STRIPE',
+                    connectionStatus: stripeAccount.status === 'ACTIVE' ? 'CONNECTED' : 'INACTIVE',
+                    verificationStatus: stripeAccount.verificationStatus === 'VERIFIED' ? 'VERIFIED' :
+                        stripeAccount.verificationStatus === 'PENDING' ? 'PENDING' : 'UNVERIFIED',
+                    externalAccountId: stripeAccount.externalAccountId,
+                    connectedAt: stripeAccount.connectedAt?.toISOString() || null,
+                    verifiedAt: stripeAccount.verifiedAt?.toISOString() || null,
+                    metadata: stripeAccount.metadataJson as Record<string, unknown> | null,
+                });
+            } else {
+                platforms.push({
+                    platform: 'STRIPE',
+                    connectionStatus: 'DISCONNECTED',
+                    verificationStatus: 'UNVERIFIED',
+                    externalAccountId: null,
+                    connectedAt: null,
+                    verifiedAt: null,
+                    metadata: null,
+                });
+            }
+
             return reply.status(200).send({
-                platforms: accounts.map(a => {
-                    // Extract safe subset of metadata
-                    const meta = a.metadataJson as { resolvedUsername?: string } | null;
-                    return {
-                        platform: a.platform,
-                        externalAccountId: a.externalAccountId,
-                        status: a.status,
-                        verificationStatus: a.verificationStatus,
-                        connectedAt: a.connectedAt?.toISOString(),
-                        verifiedAt: a.verifiedAt?.toISOString(),
-                        metadata: meta ? {
-                            resolvedUsername: meta.resolvedUsername,
-                        } : null,
-                    };
-                }),
+                ok: true,
+                platforms,
             });
         }
     );

@@ -12,6 +12,7 @@ import { renderFunding, initFunding } from './views/Funding.js';
 import { renderReceipts, initReceipts } from './views/Receipts.js';
 import { renderReceiptDetail, initReceiptDetail } from './views/ReceiptDetail.js';
 import { renderStripeCallback, initStripeCallback } from './views/StripeCallback.js';
+import { renderXCallback, initXCallback } from './views/XCallback.js';
 // API Client for backend integration
 import api from './api.js';
 
@@ -45,7 +46,8 @@ const routes = [
     { path: '/funding', render: renderFunding, init: initFunding },
     { path: '/receipts', render: renderReceipts, init: initReceipts },
     { path: '/receipts/:id', render: renderReceiptDetail, init: initReceiptDetail },
-    { path: '/stripe/callback', render: renderStripeCallback, init: initStripeCallback }
+    { path: '/stripe/callback', render: renderStripeCallback, init: initStripeCallback },
+    { path: '/x/callback', render: renderXCallback, init: initXCallback }
 ];
 
 // Initialize router

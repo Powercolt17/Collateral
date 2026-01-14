@@ -97,6 +97,11 @@ export async function initStripeCallback() {
             accountDisplayEl.textContent = `Account: ${result.stripeAccountId}`;
         }
 
+        // Auto-redirect to Contracts wizard Step 2 (Source) after 2 seconds
+        setTimeout(() => {
+            window.router.navigate('/contracts?step=source&connected=stripe');
+        }, 2000);
+
         // If opened in popup, close it and let parent refresh
         if (window.opener) {
             window.close();

@@ -840,6 +840,81 @@ export function initContracts() {
     let stripeAccountId = null;
 
     // =========================================================
+    // QUERY PARAM HANDLING + STATUS REFRESH
+    // =========================================================
+
+    // Parse URL query params (e.g., /contracts?step=source&connected=x)
+    const urlParams = new URLSearchParams(window.location.search);
+    const stepParam = urlParams.get('step');
+    const connectedParam = urlParams.get('connected');
+
+    // Refresh connection status from backend on init
+    const refreshConnectionStatus = async () => {
+        try {
+            // Check X status
+            const xStatus = await window.api.getXStatus();
+            console.log('[Contracts] X Status:', xStatus);
+            if (xStatus.connected) {
+                xVerified = true;
+                xUsername = xStatus.xUsername;
+                window.appState.connectedSources.twitter = true;
+                // Update UI if X panel is visible
+                const xPanel = document.getElementById('x-verify-panel');
+                if (xPanel && xPanel.style.display !== 'none') {
+                    window.wizard?.showXConnectedState?.(xStatus.xUsername);
+                }
+            }
+        } catch (err) {
+            console.log('[Contracts] X status check failed:', err.message);
+        }
+
+        try {
+            // Check Stripe status
+            const stripeStatus = await window.api.getStripeStatus();
+            console.log('[Contracts] Stripe Status:', stripeStatus);
+            if (stripeStatus.connected) {
+                stripeVerified = true;
+                stripeAccountId = stripeStatus.stripeAccountId;
+                window.appState.connectedSources.stripe = true;
+            }
+        } catch (err) {
+            console.log('[Contracts] Stripe status check failed:', err.message);
+        }
+    };
+
+    // Run status refresh
+    refreshConnectionStatus();
+
+    // Show toast if just connected
+    if (connectedParam === 'x') {
+        setTimeout(() => {
+            showToast('X Account Connected', 'Authority binding established successfully.');
+        }, 500);
+        // Clean URL
+        window.history.replaceState({}, '', window.location.pathname + '#/contracts');
+    } else if (connectedParam === 'stripe') {
+        setTimeout(() => {
+            showToast('Stripe Connected', 'Revenue authority binding established.');
+        }, 500);
+        window.history.replaceState({}, '', window.location.pathname + '#/contracts');
+    }
+
+    // Helper: show toast notification
+    function showToast(title, message) {
+        const toast = document.createElement('div');
+        toast.className = 'fixed bottom-6 right-6 bg-[#1F7A4D] text-white px-6 py-4 rounded-lg shadow-lg z-50 animate-fade-in';
+        toast.innerHTML = `
+            <div class="font-semibold text-sm">${title}</div>
+            <div class="text-xs opacity-90 mt-1">${message}</div>
+        `;
+        document.body.appendChild(toast);
+        setTimeout(() => {
+            toast.classList.add('opacity-0', 'transition-opacity');
+            setTimeout(() => toast.remove(), 300);
+        }, 4000);
+    }
+
+    // =========================================================
     // ENFORCEMENT MODAL - Institutional rule enforcement notices
     // =========================================================
     const showEnforcementModal = ({

@@ -25,10 +25,18 @@ import { randomBytes, createHmac } from 'crypto';
 // CONSTANTS
 // =============================================================================
 
-// OAuth 1.0a uses API Key/Secret (Consumer credentials)
-const X_API_KEY = process.env.X_API_KEY || process.env.X_OAUTH_CLIENT_ID || '';
-const X_API_SECRET = process.env.X_API_SECRET || process.env.X_OAUTH_CLIENT_SECRET || '';
-const X_OAUTH_REDIRECT_URI = process.env.X_OAUTH_REDIRECT_URI || '';
+// OAuth 1.0a uses ONLY API Key/Secret (Consumer credentials)
+// DO NOT fallback to OAuth 2.0 credentials - they will cause 400 errors
+const X_API_KEY = process.env.X_API_KEY;
+const X_API_SECRET = process.env.X_API_SECRET;
+const X_OAUTH_REDIRECT_URI = process.env.X_OAUTH_REDIRECT_URI;
+
+// Validate on startup - fail fast if missing
+if (!X_API_KEY || !X_API_SECRET || !X_OAUTH_REDIRECT_URI) {
+    console.error('[X OAuth 1.0a] FATAL: Missing required environment variables');
+    console.error('[X OAuth 1.0a] Required: X_API_KEY, X_API_SECRET, X_OAUTH_REDIRECT_URI');
+    console.error('[X OAuth 1.0a] DO NOT use X_OAUTH_CLIENT_ID or X_OAUTH_CLIENT_SECRET - those are OAuth 2.0');
+}
 
 // Request tokens expire after 10 minutes
 const TOKEN_EXPIRY_MS = 10 * 60 * 1000;

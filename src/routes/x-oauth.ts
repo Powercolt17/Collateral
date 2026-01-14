@@ -1,51 +1,98 @@
 /**
- * X OAuth Routes - Connect X via OAuth 2.0 PKCE
+ * X OAuth Routes - Connect X via OAuth 1.0a
+ * 
+ * Uses OAuth 1.0a because the Free tier X API blocks /2/users/me.
+ * OAuth 1.0a with verify_credentials works reliably on all tiers.
  * 
  * Flow:
- * 1. GET /v1/connect/x/oauth/start - Generate OAuth URL with PKCE challenge
- * 2. GET /v1/connect/x/oauth/callback - Handle callback, exchange code for tokens
+ * 1. GET /v1/connect/x/oauth/start - Get request token, redirect to X
+ * 2. GET /v1/connect/x/oauth/callback - Exchange for access token, fetch profile
  * 3. GET /v1/connect/x/status - Check current X connection status
  * 
- * X API calls happen ONLY at:
- * - OAuth callback (to get user profile)
- * - Contract execution (baseline followers)
- * - Contract verification (final followers)
+ * Requires env vars:
+ * - X_API_KEY (Consumer Key)
+ * - X_API_SECRET (Consumer Secret)
+ * - X_OAUTH_REDIRECT_URI (Callback URL)
  */
 
 import { FastifyInstance, FastifyRequest, FastifyReply } from 'fastify';
 import { db } from '../db/client.js';
 import { users } from '../db/schema.js';
 import { eq } from 'drizzle-orm';
-import { randomBytes, createHash } from 'crypto';
+import { randomBytes, createHmac } from 'crypto';
 
 // =============================================================================
 // CONSTANTS
 // =============================================================================
 
-const X_OAUTH_CLIENT_ID = process.env.X_OAUTH_CLIENT_ID || '';
-const X_OAUTH_CLIENT_SECRET = process.env.X_OAUTH_CLIENT_SECRET || '';
+// OAuth 1.0a uses API Key/Secret (Consumer credentials)
+const X_API_KEY = process.env.X_API_KEY || process.env.X_OAUTH_CLIENT_ID || '';
+const X_API_SECRET = process.env.X_API_SECRET || process.env.X_OAUTH_CLIENT_SECRET || '';
 const X_OAUTH_REDIRECT_URI = process.env.X_OAUTH_REDIRECT_URI || '';
 
-// State tokens expire after 10 minutes
-const STATE_EXPIRY_MS = 10 * 60 * 1000;
+// Request tokens expire after 10 minutes
+const TOKEN_EXPIRY_MS = 10 * 60 * 1000;
 
-// In-memory state store (use Redis in production for multi-instance)
-const pendingOAuthStates = new Map<string, { userId: string; codeVerifier: string; expiresAt: number }>();
+// In-memory store for OAuth 1.0a request tokens (use Redis in production)
+const pendingOAuthTokens = new Map<string, {
+    userId: string;
+    oauthTokenSecret: string;
+    expiresAt: number;
+}>();
 
 // =============================================================================
-// HELPERS
+// OAUTH 1.0a HELPERS
 // =============================================================================
 
-function generateCodeVerifier(): string {
-    return randomBytes(32).toString('base64url');
-}
-
-function generateCodeChallenge(verifier: string): string {
-    return createHash('sha256').update(verifier).digest('base64url');
-}
-
-function generateState(): string {
+function generateNonce(): string {
     return randomBytes(16).toString('hex');
+}
+
+function percentEncode(str: string): string {
+    return encodeURIComponent(str)
+        .replace(/!/g, '%21')
+        .replace(/'/g, '%27')
+        .replace(/\(/g, '%28')
+        .replace(/\)/g, '%29')
+        .replace(/\*/g, '%2A');
+}
+
+function generateOAuthSignature(
+    method: string,
+    url: string,
+    params: Record<string, string>,
+    consumerSecret: string,
+    tokenSecret: string = ''
+): string {
+    // Sort and encode parameters
+    const sortedParams = Object.keys(params)
+        .sort()
+        .map(key => `${percentEncode(key)}=${percentEncode(params[key])}`)
+        .join('&');
+
+    // Create signature base string
+    const signatureBase = [
+        method.toUpperCase(),
+        percentEncode(url),
+        percentEncode(sortedParams)
+    ].join('&');
+
+    // Create signing key
+    const signingKey = `${percentEncode(consumerSecret)}&${percentEncode(tokenSecret)}`;
+
+    // Generate HMAC-SHA1 signature
+    const signature = createHmac('sha1', signingKey)
+        .update(signatureBase)
+        .digest('base64');
+
+    return signature;
+}
+
+function buildOAuthHeader(params: Record<string, string>): string {
+    return 'OAuth ' + Object.keys(params)
+        .sort()
+        .map(key => `${percentEncode(key)}="${percentEncode(params[key])}"`)
+        .join(', ');
 }
 
 // =============================================================================
@@ -56,8 +103,7 @@ async function xOAuthRoutes(fastify: FastifyInstance) {
     /**
      * GET /v1/connect/x/oauth/start
      * 
-     * Generate OAuth authorization URL with PKCE challenge.
-     * Requires authentication.
+     * Step 1: Get request token from X, then redirect user to authorize.
      */
     fastify.get(
         '/v1/connect/x/oauth/start',
@@ -72,8 +118,8 @@ async function xOAuthRoutes(fastify: FastifyInstance) {
             const userId = request.userId!;
 
             // Check if OAuth is configured
-            if (!X_OAUTH_CLIENT_ID || !X_OAUTH_REDIRECT_URI) {
-                console.error('[X OAuth] Missing X_OAUTH_CLIENT_ID or X_OAUTH_REDIRECT_URI');
+            if (!X_API_KEY || !X_API_SECRET || !X_OAUTH_REDIRECT_URI) {
+                console.error('[X OAuth 1.0a] Missing X_API_KEY, X_API_SECRET, or X_OAUTH_REDIRECT_URI');
                 return reply.status(500).send({
                     error: 'X OAuth not configured',
                     code: 'X_OAUTH_NOT_CONFIGURED',
@@ -96,218 +142,304 @@ async function xOAuthRoutes(fastify: FastifyInstance) {
                 });
             }
 
-            // Generate PKCE challenge
-            const codeVerifier = generateCodeVerifier();
-            const codeChallenge = generateCodeChallenge(codeVerifier);
-            const state = generateState();
+            try {
+                // Step 1: Get request token
+                const requestTokenUrl = 'https://api.twitter.com/oauth/request_token';
+                const timestamp = Math.floor(Date.now() / 1000).toString();
+                const nonce = generateNonce();
 
-            // Store state for callback verification
-            pendingOAuthStates.set(state, {
-                userId,
-                codeVerifier,
-                expiresAt: Date.now() + STATE_EXPIRY_MS,
-            });
+                const oauthParams: Record<string, string> = {
+                    oauth_callback: X_OAUTH_REDIRECT_URI,
+                    oauth_consumer_key: X_API_KEY,
+                    oauth_nonce: nonce,
+                    oauth_signature_method: 'HMAC-SHA1',
+                    oauth_timestamp: timestamp,
+                    oauth_version: '1.0',
+                };
 
-            // Build OAuth URL - MINIMAL scope: only users.read
-            // Do NOT add tweet.read or offline.access unless portal explicitly allows them
-            const oauthUrl = new URL('https://twitter.com/i/oauth2/authorize');
-            oauthUrl.searchParams.set('response_type', 'code');
-            oauthUrl.searchParams.set('client_id', X_OAUTH_CLIENT_ID);
-            oauthUrl.searchParams.set('redirect_uri', X_OAUTH_REDIRECT_URI);
-            oauthUrl.searchParams.set('scope', 'users.read');
-            oauthUrl.searchParams.set('state', state);
-            oauthUrl.searchParams.set('code_challenge', codeChallenge);
-            oauthUrl.searchParams.set('code_challenge_method', 'S256');
+                const signature = generateOAuthSignature(
+                    'POST',
+                    requestTokenUrl,
+                    oauthParams,
+                    X_API_SECRET
+                );
 
-            // Diagnostic logging
-            console.log(`[X OAuth START] userId=${userId}`);
-            console.log(`[X OAuth START] client_id=${X_OAUTH_CLIENT_ID}`);
-            console.log(`[X OAuth START] redirect_uri=${X_OAUTH_REDIRECT_URI}`);
-            console.log(`[X OAuth START] scope=users.read`);
-            console.log(`[X OAuth START] Full URL: ${oauthUrl.toString()}`);
+                oauthParams.oauth_signature = signature;
 
-            return reply.status(200).send({
-                oauthUrl: oauthUrl.toString(),
-                state,
-            });
+                const response = await fetch(requestTokenUrl, {
+                    method: 'POST',
+                    headers: {
+                        'Authorization': buildOAuthHeader(oauthParams),
+                        'Content-Type': 'application/x-www-form-urlencoded',
+                    },
+                });
+
+                if (!response.ok) {
+                    const errorText = await response.text();
+                    console.error(`[X OAuth 1.0a] Request token failed: ${response.status} ${errorText}`);
+                    return reply.status(400).send({
+                        error: 'Failed to get request token from X',
+                        code: 'X_OAUTH_REQUEST_TOKEN_FAILED',
+                        details: errorText,
+                    });
+                }
+
+                const responseText = await response.text();
+                const tokenData = new URLSearchParams(responseText);
+                const oauthToken = tokenData.get('oauth_token');
+                const oauthTokenSecret = tokenData.get('oauth_token_secret');
+
+                if (!oauthToken || !oauthTokenSecret) {
+                    console.error('[X OAuth 1.0a] Missing tokens in response:', responseText);
+                    return reply.status(400).send({
+                        error: 'Invalid response from X',
+                        code: 'X_OAUTH_INVALID_RESPONSE',
+                    });
+                }
+
+                // Store the token secret for the callback (keyed by oauth_token)
+                pendingOAuthTokens.set(oauthToken, {
+                    userId,
+                    oauthTokenSecret,
+                    expiresAt: Date.now() + TOKEN_EXPIRY_MS,
+                });
+
+                // Build authorize URL
+                const authorizeUrl = `https://api.twitter.com/oauth/authorize?oauth_token=${oauthToken}`;
+
+                console.log(`[X OAuth 1.0a START] userId=${userId}`);
+                console.log(`[X OAuth 1.0a START] redirect_uri=${X_OAUTH_REDIRECT_URI}`);
+                console.log(`[X OAuth 1.0a START] Authorize URL: ${authorizeUrl}`);
+
+                return reply.status(200).send({
+                    oauthUrl: authorizeUrl,
+                });
+
+            } catch (err) {
+                console.error('[X OAuth 1.0a] Start error:', err);
+                return reply.status(500).send({
+                    error: 'Internal error during OAuth start',
+                    code: 'X_OAUTH_INTERNAL_ERROR',
+                });
+            }
         }
     );
 
     /**
      * GET /v1/connect/x/oauth/callback
      * 
-     * Handle OAuth callback from X.
-     * Exchange authorization code for access token.
-     * Fetch user profile and bind to account.
+     * Step 2: Exchange oauth_verifier for access token, then fetch user profile.
      */
     fastify.get(
         '/v1/connect/x/oauth/callback',
-        async (request: FastifyRequest<{ Querystring: { code?: string; state?: string; error?: string } }>, reply: FastifyReply) => {
-            const { code, state, error } = request.query;
+        async (request: FastifyRequest<{ Querystring: { oauth_token?: string; oauth_verifier?: string; denied?: string } }>, reply: FastifyReply) => {
+            const { oauth_token, oauth_verifier, denied } = request.query;
 
-            if (error) {
-                console.log(`[X OAuth] User denied access: ${error}`);
-                return reply.status(400).send({
-                    error: 'OAuth authorization denied',
-                    code: 'X_OAUTH_DENIED',
-                    details: error,
-                });
+            // User denied authorization
+            if (denied) {
+                console.log('[X OAuth 1.0a] User denied access');
+                const frontendUrl = process.env.FRONTEND_URL || 'http://localhost:5173';
+                return reply.redirect(`${frontendUrl}/x/callback?error=denied`);
             }
 
-            if (!code || !state) {
+            if (!oauth_token || !oauth_verifier) {
                 return reply.status(400).send({
-                    error: 'Missing code or state parameter',
+                    error: 'Missing oauth_token or oauth_verifier',
                     code: 'X_OAUTH_INVALID_CALLBACK',
                 });
             }
 
-            // Validate state
-            const pending = pendingOAuthStates.get(state);
+            // Validate and retrieve stored request token
+            const pending = pendingOAuthTokens.get(oauth_token);
             if (!pending) {
                 return reply.status(400).send({
-                    error: 'Invalid or expired state',
-                    code: 'X_OAUTH_INVALID_STATE',
+                    error: 'Invalid or expired oauth_token',
+                    code: 'X_OAUTH_INVALID_TOKEN',
                 });
             }
 
-            // Check expiry
             if (Date.now() > pending.expiresAt) {
-                pendingOAuthStates.delete(state);
+                pendingOAuthTokens.delete(oauth_token);
                 return reply.status(400).send({
                     error: 'OAuth session expired',
                     code: 'X_OAUTH_EXPIRED',
                 });
             }
 
-            // Clean up state immediately (one-time use)
-            pendingOAuthStates.delete(state);
+            // Clean up (one-time use)
+            pendingOAuthTokens.delete(oauth_token);
 
-            const { userId, codeVerifier } = pending;
+            const { userId, oauthTokenSecret } = pending;
 
             try {
-                // Exchange code for access token
-                const tokenResponse = await fetch('https://api.twitter.com/2/oauth2/token', {
+                // Step 2: Exchange for access token
+                const accessTokenUrl = 'https://api.twitter.com/oauth/access_token';
+                const timestamp = Math.floor(Date.now() / 1000).toString();
+                const nonce = generateNonce();
+
+                const oauthParams: Record<string, string> = {
+                    oauth_consumer_key: X_API_KEY,
+                    oauth_nonce: nonce,
+                    oauth_signature_method: 'HMAC-SHA1',
+                    oauth_timestamp: timestamp,
+                    oauth_token: oauth_token,
+                    oauth_version: '1.0',
+                };
+
+                // Include oauth_verifier in params for signature
+                const signatureParams = { ...oauthParams, oauth_verifier };
+
+                const signature = generateOAuthSignature(
+                    'POST',
+                    accessTokenUrl,
+                    signatureParams,
+                    X_API_SECRET,
+                    oauthTokenSecret
+                );
+
+                oauthParams.oauth_signature = signature;
+
+                const tokenResponse = await fetch(accessTokenUrl, {
                     method: 'POST',
                     headers: {
+                        'Authorization': buildOAuthHeader(oauthParams),
                         'Content-Type': 'application/x-www-form-urlencoded',
-                        'Authorization': `Basic ${Buffer.from(`${X_OAUTH_CLIENT_ID}:${X_OAUTH_CLIENT_SECRET}`).toString('base64')}`,
                     },
-                    body: new URLSearchParams({
-                        grant_type: 'authorization_code',
-                        code,
-                        redirect_uri: X_OAUTH_REDIRECT_URI,
-                        code_verifier: codeVerifier,
-                    }),
+                    body: `oauth_verifier=${encodeURIComponent(oauth_verifier)}`,
                 });
 
                 if (!tokenResponse.ok) {
-                    const errorBody = await tokenResponse.text();
-                    console.error(`[X OAuth] Token exchange failed: ${tokenResponse.status} ${errorBody}`);
+                    const errorText = await tokenResponse.text();
+                    console.error(`[X OAuth 1.0a] Access token failed: ${tokenResponse.status} ${errorText}`);
                     return reply.status(400).send({
-                        error: 'Failed to exchange authorization code',
-                        code: 'X_OAUTH_TOKEN_FAILED',
+                        error: 'Failed to exchange for access token',
+                        code: 'X_OAUTH_ACCESS_TOKEN_FAILED',
                     });
                 }
 
-                const tokenData = await tokenResponse.json() as {
-                    access_token: string;
-                    token_type: string;
-                    refresh_token?: string;
-                    expires_in?: number;  // Seconds until access_token expires
-                };
-                const accessToken = tokenData.access_token;
-                const refreshToken = tokenData.refresh_token;
-                const expiresIn = tokenData.expires_in;
-                const tokenExpiresAt = expiresIn ? new Date(Date.now() + expiresIn * 1000) : undefined;
+                const tokenText = await tokenResponse.text();
+                const accessData = new URLSearchParams(tokenText);
+                const accessToken = accessData.get('oauth_token');
+                const accessTokenSecret = accessData.get('oauth_token_secret');
+                const xUserId = accessData.get('user_id');
+                const xUsername = accessData.get('screen_name');
 
-                // Fetch user profile with access token
-                const userResponse = await fetch('https://api.twitter.com/2/users/me?user.fields=id,username,created_at,protected,public_metrics', {
+                if (!accessToken || !accessTokenSecret || !xUserId) {
+                    console.error('[X OAuth 1.0a] Missing data in access token response:', tokenText);
+                    return reply.status(400).send({
+                        error: 'Invalid access token response',
+                        code: 'X_OAUTH_INVALID_ACCESS_RESPONSE',
+                    });
+                }
+
+                console.log(`[X OAuth 1.0a] Got access token for @${xUsername} (${xUserId})`);
+
+                // Step 3: Fetch user profile via verify_credentials (works on Free tier!)
+                const verifyUrl = 'https://api.twitter.com/1.1/account/verify_credentials.json';
+                const verifyTimestamp = Math.floor(Date.now() / 1000).toString();
+                const verifyNonce = generateNonce();
+
+                const verifyParams: Record<string, string> = {
+                    oauth_consumer_key: X_API_KEY,
+                    oauth_nonce: verifyNonce,
+                    oauth_signature_method: 'HMAC-SHA1',
+                    oauth_timestamp: verifyTimestamp,
+                    oauth_token: accessToken,
+                    oauth_version: '1.0',
+                };
+
+                const verifySignature = generateOAuthSignature(
+                    'GET',
+                    verifyUrl,
+                    verifyParams,
+                    X_API_SECRET,
+                    accessTokenSecret
+                );
+
+                verifyParams.oauth_signature = verifySignature;
+
+                // Step 3: Fetch user profile via verify_credentials (REQUIRED - fail closed)
+                const verifyResponse = await fetch(verifyUrl, {
+                    method: 'GET',
                     headers: {
-                        'Authorization': `Bearer ${accessToken}`,
+                        'Authorization': buildOAuthHeader(verifyParams),
                     },
                 });
 
-                if (!userResponse.ok) {
-                    const errorBody = await userResponse.text();
-                    console.error(`[X OAuth] User fetch failed: ${userResponse.status} ${errorBody}`);
-                    return reply.status(400).send({
-                        error: 'Failed to fetch X user profile',
-                        code: 'X_OAUTH_USER_FETCH_FAILED',
-                    });
+                // FAIL CLOSED: verify_credentials MUST succeed for oracle integrity
+                if (!verifyResponse.ok) {
+                    const errorText = await verifyResponse.text();
+                    console.error(`[X OAUTH VERIFY] FAILED status=${verifyResponse.status}`);
+                    console.error(`[X OAUTH VERIFY] token=${accessToken.substring(0, 10)}...`);
+                    console.error(`[X OAUTH VERIFY] nonce=${verifyNonce}`);
+                    console.error(`[X OAUTH VERIFY] timestamp=${verifyTimestamp}`);
+                    console.error(`[X OAUTH VERIFY] response=${errorText}`);
+
+                    const frontendUrl = process.env.FRONTEND_URL || 'http://localhost:5173';
+                    return reply.redirect(`${frontendUrl}/x/callback?error=verification_failed`);
                 }
 
-                const userData = await userResponse.json() as {
-                    data: {
-                        id: string;
-                        username: string;
-                        created_at?: string;
-                        protected?: boolean;
-                        public_metrics?: {
-                            followers_count: number;
-                            following_count: number;
-                            tweet_count: number;
-                        };
-                    };
+                const userData = await verifyResponse.json() as {
+                    id_str: string;
+                    screen_name: string;
+                    followers_count: number;
+                    created_at: string;
+                    protected: boolean;
                 };
 
-                const xUser = userData.data;
+                const followersCount = userData.followers_count;
+                const isProtected = userData.protected;
 
-                // Eligibility checks
-                if (xUser.protected) {
-                    return reply.status(400).send({
-                        error: 'Protected (private) accounts cannot be used for contracts',
-                        code: 'X_ACCOUNT_PROTECTED',
-                    });
-                }
+                // Normalize created_at from Twitter legacy format: "Wed Aug 27 13:08:45 +0000 2008"
+                const xAccountCreatedAt = new Date(userData.created_at);
 
-                // Check account age (6 months minimum)
-                if (xUser.created_at) {
-                    const createdDate = new Date(xUser.created_at);
-                    const sixMonthsAgo = new Date();
-                    sixMonthsAgo.setMonth(sixMonthsAgo.getMonth() - 6);
-                    if (createdDate > sixMonthsAgo) {
-                        return reply.status(400).send({
-                            error: 'Account must be at least 6 months old',
-                            code: 'X_ACCOUNT_TOO_NEW',
-                        });
-                    }
+                console.log(`[X OAUTH VERIFY] SUCCESS @${userData.screen_name}`);
+                console.log(`[X OAUTH VERIFY] followers=${followersCount}`);
+                console.log(`[X OAUTH VERIFY] created_at=${xAccountCreatedAt.toISOString()}`);
+                console.log(`[X OAUTH VERIFY] protected=${isProtected}`);
+
+                // Eligibility check: protected accounts cannot be used
+                if (isProtected) {
+                    console.warn(`[X OAuth 1.0a] Rejected protected account @${userData.screen_name}`);
+                    const frontendUrl = process.env.FRONTEND_URL || 'http://localhost:5173';
+                    return reply.redirect(`${frontendUrl}/x/callback?error=protected`);
                 }
 
                 // Check if X account already bound to another user
                 const [existingBinding] = await db
                     .select({ id: users.id })
                     .from(users)
-                    .where(eq(users.xUserId, xUser.id))
+                    .where(eq(users.xUserId, xUserId))
                     .limit(1);
 
                 if (existingBinding && existingBinding.id !== userId) {
-                    return reply.status(400).send({
-                        error: 'This X account is already connected to another user',
-                        code: 'X_ACCOUNT_ALREADY_BOUND',
-                    });
+                    console.warn(`[X OAuth 1.0a] Account @${xUsername} already bound to user ${existingBinding.id}`);
+                    const frontendUrl = process.env.FRONTEND_URL || 'http://localhost:5173';
+                    return reply.redirect(`${frontendUrl}/x/callback?error=already_bound`);
                 }
 
-                // Bind X account to user
+                // Bind X account to user - store tokens SEPARATELY
                 const connectNow = new Date();
                 await db
                     .update(users)
                     .set({
-                        xUserId: xUser.id,
-                        xUsername: xUser.username,
+                        xUserId: xUserId,
+                        xUsername: xUsername,
                         xConnectedAt: connectNow,
-                        xRefreshToken: refreshToken ?? null,
-                        xTokenExpiresAt: tokenExpiresAt ?? null,
+                        xAccessToken: accessToken,           // Stored separately
+                        xAccessTokenSecret: accessTokenSecret, // Stored separately
+                        xAccountCreatedAt: xAccountCreatedAt,  // Normalized to TIMESTAMPTZ
                     })
                     .where(eq(users.id, userId));
 
-                console.log(`[X OAuth] Successfully connected @${xUser.username} to user ${userId}`);
+                console.log(`[X OAuth 1.0a] Successfully connected @${xUsername} to user ${userId}`);
 
-                // Redirect to frontend success page (URL encode username for safety)
+                // Redirect to frontend success page
                 const frontendUrl = process.env.FRONTEND_URL || 'http://localhost:5173';
-                return reply.redirect(`${frontendUrl}/x/callback?success=true&username=${encodeURIComponent(xUser.username)}`);
+                return reply.redirect(`${frontendUrl}/x/callback?success=true&username=${encodeURIComponent(xUsername || '')}`);
 
             } catch (err) {
-                console.error('[X OAuth] Callback error:', err);
+                console.error('[X OAuth 1.0a] Callback error:', err);
                 return reply.status(500).send({
                     error: 'Internal error during OAuth callback',
                     code: 'X_OAUTH_INTERNAL_ERROR',
@@ -363,7 +495,6 @@ async function xOAuthRoutes(fastify: FastifyInstance) {
      * POST /v1/connect/x/disconnect
      * 
      * Disconnect X account from user.
-     * Only allowed if no active contracts depend on it.
      */
     fastify.post(
         '/v1/connect/x/disconnect',
@@ -377,20 +508,19 @@ async function xOAuthRoutes(fastify: FastifyInstance) {
         async (request: FastifyRequest, reply: FastifyReply) => {
             const userId = request.userId!;
 
-            // TODO: Check for active contracts before allowing disconnect
-
             await db
                 .update(users)
                 .set({
                     xUserId: null,
                     xUsername: null,
                     xConnectedAt: null,
-                    xRefreshToken: null,
-                    xTokenExpiresAt: null,
+                    xAccessToken: null,
+                    xAccessTokenSecret: null,
+                    xAccountCreatedAt: null,
                 })
                 .where(eq(users.id, userId));
 
-            console.log(`[X OAuth] Disconnected X account for user ${userId}`);
+            console.log(`[X OAuth 1.0a] Disconnected X account for user ${userId}`);
 
             return reply.status(200).send({
                 success: true,

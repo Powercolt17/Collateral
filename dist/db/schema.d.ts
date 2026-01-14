@@ -136,8 +136,8 @@ export declare const users: import("drizzle-orm/pg-core").PgTableWithColumns<{
             identity: undefined;
             generated: undefined;
         }, {}, {}>;
-        xRefreshToken: import("drizzle-orm/pg-core").PgColumn<{
-            name: "x_refresh_token";
+        xAccessToken: import("drizzle-orm/pg-core").PgColumn<{
+            name: "x_access_token";
             tableName: "users";
             dataType: "string";
             columnType: "PgText";
@@ -153,8 +153,25 @@ export declare const users: import("drizzle-orm/pg-core").PgTableWithColumns<{
             identity: undefined;
             generated: undefined;
         }, {}, {}>;
-        xTokenExpiresAt: import("drizzle-orm/pg-core").PgColumn<{
-            name: "x_token_expires_at";
+        xAccessTokenSecret: import("drizzle-orm/pg-core").PgColumn<{
+            name: "x_access_token_secret";
+            tableName: "users";
+            dataType: "string";
+            columnType: "PgText";
+            data: string;
+            driverParam: string;
+            notNull: false;
+            hasDefault: false;
+            isPrimaryKey: false;
+            isAutoincrement: false;
+            hasRuntimeDefault: false;
+            enumValues: [string, ...string[]];
+            baseColumn: never;
+            identity: undefined;
+            generated: undefined;
+        }, {}, {}>;
+        xAccountCreatedAt: import("drizzle-orm/pg-core").PgColumn<{
+            name: "x_account_created_at";
             tableName: "users";
             dataType: "date";
             columnType: "PgTimestamp";

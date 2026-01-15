@@ -8,22 +8,207 @@ import {
     bindIdentity,
     type IdentityProvider
 } from '../services/identity-bindings.js';
+import bcrypt from 'bcrypt';
+
+const SALT_ROUNDS = 12;
 
 /**
  * Auth Routes
  * 
- * JWT-based authentication with proper token signing
+ * JWT-based authentication with bcrypt password hashing
  * Identity binding management with append-only audit trail
  */
 const authRoutes: FastifyPluginAsync = async (fastify) => {
     /**
-     * POST /auth/login
-     * Login with email or passkey
-     * Returns JWT access token
+     * POST /v1/auth/signup
+     * Create new account with email, password, username
+     * Returns JWT access token + user + identity
+     */
+    fastify.post<{
+        Body: { email: string; password: string; username: string; displayName?: string };
+    }>('/v1/auth/signup', async (request, reply) => {
+        const { email, password, username, displayName } = request.body;
+
+        // Validation
+        if (!email || !password || !username) {
+            reply.status(400);
+            return { ok: false, error: 'Email, password, and username required' };
+        }
+
+        // Validate email format
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailRegex.test(email)) {
+            reply.status(400);
+            return { ok: false, error: 'Invalid email format' };
+        }
+
+        // Validate password length
+        if (password.length < 8) {
+            reply.status(400);
+            return { ok: false, error: 'Password must be at least 8 characters' };
+        }
+
+        // Validate username (alphanumeric, underscores, 3-20 chars)
+        const usernameRegex = /^[a-zA-Z0-9_]{3,20}$/;
+        if (!usernameRegex.test(username)) {
+            reply.status(400);
+            return { ok: false, error: 'Username must be 3-20 characters, alphanumeric and underscores only' };
+        }
+
+        // Check if email already exists
+        const [existingUser] = await db
+            .select()
+            .from(users)
+            .where(eq(users.email, email.toLowerCase()))
+            .limit(1);
+
+        if (existingUser) {
+            reply.status(409);
+            return { ok: false, error: 'Email already registered' };
+        }
+
+        // Check if username already exists
+        const [existingUsername] = await db
+            .select()
+            .from(identities)
+            .where(eq(identities.username, username.toLowerCase()))
+            .limit(1);
+
+        if (existingUsername) {
+            reply.status(409);
+            return { ok: false, error: 'Username already taken' };
+        }
+
+        // Hash password
+        const passwordHash = await bcrypt.hash(password, SALT_ROUNDS);
+
+        // Create user with password hash
+        const [user] = await db
+            .insert(users)
+            .values({
+                email: email.toLowerCase(),
+                passwordHash,
+            })
+            .returning();
+
+        // Create identity
+        const [identity] = await db
+            .insert(identities)
+            .values({
+                userId: user.id,
+                username: username.toLowerCase(),
+                displayName: displayName || username,
+                status: 'ACTIVE' as const,
+            })
+            .returning();
+
+        console.log(`✅ Created user ${user.id} with identity @${identity.username} (${identity.displayName})`);
+
+        // Sign JWT access token
+        const accessToken = signAccessToken(user.id);
+
+        return {
+            ok: true,
+            user: {
+                id: user.id,
+                email: user.email,
+                createdAt: user.createdAt.toISOString(),
+            },
+            identity: {
+                username: identity.username,
+                displayName: identity.displayName,
+                status: identity.status,
+            },
+            accessToken,
+        };
+    });
+
+    /**
+     * POST /v1/auth/login
+     * Login with email + password
+     * Returns JWT access token + user + identity
+     * DOES NOT create user - returns 401 if not found
+     */
+    fastify.post<{
+        Body: { email: string; password: string };
+    }>('/v1/auth/login', async (request, reply) => {
+        const { email, password } = request.body;
+
+        // Validation
+        if (!email || !password) {
+            reply.status(400);
+            return { ok: false, error: 'Email and password required' };
+        }
+
+        // Find user by email
+        const [user] = await db
+            .select()
+            .from(users)
+            .where(eq(users.email, email.toLowerCase()))
+            .limit(1);
+
+        if (!user) {
+            reply.status(401);
+            return { ok: false, error: 'Invalid email or password' };
+        }
+
+        // Check if user has password (might be a legacy passwordless account)
+        if (!user.passwordHash) {
+            reply.status(401);
+            return { ok: false, error: 'Please use the signup flow to create a password' };
+        }
+
+        // Verify password
+        const passwordValid = await bcrypt.compare(password, user.passwordHash);
+        if (!passwordValid) {
+            reply.status(401);
+            return { ok: false, error: 'Invalid email or password' };
+        }
+
+        // Load identity
+        const [identity] = await db
+            .select()
+            .from(identities)
+            .where(eq(identities.userId, user.id))
+            .limit(1);
+
+        console.log(`✅ User ${user.id} logged in (identity: ${identity?.displayName || 'none'})`);
+
+        // Sign JWT access token
+        const accessToken = signAccessToken(user.id);
+
+        return {
+            ok: true,
+            user: {
+                id: user.id,
+                email: user.email,
+                createdAt: user.createdAt.toISOString(),
+            },
+            identity: identity
+                ? {
+                    username: identity.username,
+                    displayName: identity.displayName,
+                    status: identity.status,
+                }
+                : null,
+            accessToken,
+        };
+    });
+
+    /**
+     * POST /auth/login (DEPRECATED - Dev only)
+     * Legacy passwordless login - will be removed
+     * Only works in development mode
      */
     fastify.post<{
         Body: { email?: string; passkeyId?: string; displayName?: string };
     }>('/auth/login', async (request, reply) => {
+        // Guard: Only allow in development
+        if (process.env.NODE_ENV === 'production') {
+            reply.status(410);
+            return { ok: false, error: 'This endpoint is deprecated. Use /v1/auth/login' };
+        }
+
         const { email, passkeyId, displayName } = request.body;
 
         if (!email && !passkeyId) {
@@ -32,10 +217,9 @@ const authRoutes: FastifyPluginAsync = async (fastify) => {
         }
 
         let user;
-        let isNewUser = false;
 
         if (email) {
-            // Find or create user by email
+            // Find or create user by email (dev mode only)
             const [existing] = await db
                 .select()
                 .from(users)
@@ -50,10 +234,8 @@ const authRoutes: FastifyPluginAsync = async (fastify) => {
                     .values({ email })
                     .returning();
                 user = created;
-                isNewUser = true;
             }
         } else if (passkeyId) {
-            // Find user by passkey
             const [existing] = await db
                 .select()
                 .from(users)
@@ -79,9 +261,7 @@ const authRoutes: FastifyPluginAsync = async (fastify) => {
             .where(eq(identities.userId, user.id))
             .limit(1);
 
-        // Create identity if new user with displayName, or update existing if displayName provided
         if (!identity && displayName) {
-            // Create new identity with displayName as username (normalized)
             const username = displayName.toLowerCase().replace(/[^a-z0-9_]/g, '');
             const [created] = await db
                 .insert(identities)
@@ -93,22 +273,12 @@ const authRoutes: FastifyPluginAsync = async (fastify) => {
                 })
                 .returning();
             identity = created;
-            console.log(`✅ Created identity for user ${user.id}: @${username} (${displayName})`);
-        } else if (identity && displayName && identity.displayName !== displayName) {
-            // Update existing identity if displayName changed
-            const [updated] = await db
-                .update(identities)
-                .set({ displayName })
-                .where(eq(identities.userId, user.id))
-                .returning();
-            identity = updated;
-            console.log(`✅ Updated identity displayName for user ${user.id}: ${displayName}`);
         }
 
-        // Sign JWT access token
         const accessToken = signAccessToken(user.id);
 
         return {
+            ok: true,
             user: {
                 id: user.id,
                 email: user.email,

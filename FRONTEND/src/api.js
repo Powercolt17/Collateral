@@ -90,8 +90,78 @@ async function handleResponse(response) {
 
 // --- AUTH ---
 
+/**
+ * Login with email + password
+ * Calls /v1/auth/login - does NOT create user
+ */
+export async function login(email, password) {
+    console.log('[API] login called with email:', email);
+
+    const response = await fetch(`${API_BASE_URL}/v1/auth/login`, {
+        method: 'POST',
+        headers: getHeaders(false),
+        body: JSON.stringify({ email, password }),
+    });
+
+    const data = await handleResponse(response);
+    console.log('[API] login response:', data);
+
+    if (data.accessToken) {
+        setAuthToken(data.accessToken);
+        // Store user with identity info for persistence
+        setStoredUser({
+            email: data.user?.email || email,
+            userId: data.user?.id,
+            displayName: data.identity?.displayName || null,
+            username: data.identity?.username || null,
+        });
+        console.log('[API] ✅ Login complete, identity:', data.identity?.displayName);
+    }
+
+    return data;
+}
+
+/**
+ * Signup with email, password, username
+ * Creates user + identity in one call
+ */
+export async function signup(email, password, username, displayName = null) {
+    console.log('[API] signup called:', { email, username, displayName });
+
+    const response = await fetch(`${API_BASE_URL}/v1/auth/signup`, {
+        method: 'POST',
+        headers: getHeaders(false),
+        body: JSON.stringify({
+            email,
+            password,
+            username,
+            displayName: displayName || username
+        }),
+    });
+
+    const data = await handleResponse(response);
+    console.log('[API] signup response:', data);
+
+    if (data.accessToken) {
+        setAuthToken(data.accessToken);
+        // Store user with identity info for persistence
+        setStoredUser({
+            email: data.user?.email || email,
+            userId: data.user?.id,
+            displayName: data.identity?.displayName,
+            username: data.identity?.username,
+        });
+        console.log('[API] ✅ Signup complete, identity:', data.identity?.displayName);
+    }
+
+    return data;
+}
+
+/**
+ * Dev login (DEPRECATED - dev mode only)
+ */
 export async function devLogin(email, displayName = null) {
-    console.log('[API] devLogin called with email:', email, 'displayName:', displayName);
+    console.log('[API] devLogin (deprecated) called');
 
     const response = await fetch(`${API_BASE_URL}/auth/login`, {
         method: 'POST',
@@ -100,28 +170,16 @@ export async function devLogin(email, displayName = null) {
     });
 
     const data = await handleResponse(response);
-    console.log('[API] devLogin response:', data);
-    console.log('[API] accessToken in response:', !!data.accessToken);
-
     if (data.accessToken) {
         setAuthToken(data.accessToken);
-        // Store user with identity info
         setStoredUser({
             email,
             userId: data.user?.id,
             displayName: data.identity?.displayName || displayName || null,
             username: data.identity?.username || null,
         });
-        console.log('[API] Token stored! Identity:', data.identity?.displayName);
-    } else {
-        console.warn('[API] No accessToken in response!');
     }
-
     return data;
-}
-    }
-
-return data;
 }
 
 export async function logout() {
@@ -352,12 +410,15 @@ export async function checkHealth() {
 
 export default {
     // Auth
+    login,
+    signup,
     devLogin,
     logout,
     getAuthToken,
     hasAuthToken,
     clearAuthToken,
     getStoredUser,
+    setStoredUser,
 
     // X (OAuth - recommended)
     startXOAuth,

@@ -118,6 +118,7 @@ export const ledgerEventTypeEnum = pgEnum('ledger_event_type', [
 export const users = pgTable('users', {
     id: uuid('id').primaryKey().defaultRandom(),
     email: varchar('email', { length: 255 }),
+    passwordHash: text('password_hash'), // For real password auth (bcrypt hash)
     passkeyId: varchar('passkey_id', { length: 255 }),
     // Stripe Connect: required for payouts
     stripeConnectedAccountId: varchar('stripe_connected_account_id', { length: 255 }),

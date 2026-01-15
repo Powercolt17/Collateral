@@ -260,40 +260,30 @@ export async function initProfile() {
             return;
         }
 
-        // Update display name - identity from DATABASE is CANONICAL
+        // Update display name - identity from DATABASE is CANONICAL (NO email fallbacks)
         const displayNameEl = document.getElementById('profile-display-name');
         if (displayNameEl) {
-            // Priority: database identity > appState displayName > email prefix
-            const identityName = profile.identity?.displayName || profile.identity?.username || null;
-            console.log('[Profile] identityName from DB:', identityName);
-
-            if (identityName) {
-                displayNameEl.textContent = identityName;
-                console.log('[Profile] ✅ Using identity displayName:', identityName);
-            } else if (window.appState?.displayName) {
-                displayNameEl.textContent = window.appState.displayName;
-                console.log('[Profile] ⚠️ Fallback to appState.displayName:', window.appState.displayName);
-            } else if (profile.user?.email) {
-                displayNameEl.textContent = profile.user.email.split('@')[0];
-                console.log('[Profile] ⚠️ Fallback to email prefix');
+            if (profile.identity?.displayName) {
+                displayNameEl.textContent = profile.identity.displayName;
+                console.log('[Profile] ✅ Using identity displayName:', profile.identity.displayName);
+            } else if (profile.identity?.username) {
+                displayNameEl.textContent = profile.identity.username;
+                console.log('[Profile] ✅ Using identity username as displayName:', profile.identity.username);
+            } else {
+                displayNameEl.textContent = 'UNCLAIMED IDENTITY';
+                console.log('[Profile] ⚠️ No identity found');
             }
         }
 
-        // Update handle - identity is CANONICAL, appState (email) is fallback, X is last resort  
+        // Update handle - identity.username is CANONICAL (NO email fallbacks)
         const handleEl = document.getElementById('profile-handle');
         if (handleEl) {
-            const identityHandle = profile.identity?.username || null;
-            // Use same source as header dropdown
-            const emailDerivedHandle = window.appState?.displayName || profile.user?.email?.split('@')[0] || null;
-
-            if (identityHandle) {
-                handleEl.textContent = '@' + identityHandle;
-            } else if (emailDerivedHandle) {
-                handleEl.textContent = '@' + emailDerivedHandle;
-            } else if (profile.xConnection?.connected && profile.xConnection.xUsername) {
-                handleEl.textContent = '@' + profile.xConnection.xUsername;
+            if (profile.identity?.username) {
+                handleEl.textContent = '@' + profile.identity.username;
+                console.log('[Profile] ✅ Using identity handle:', profile.identity.username);
             } else {
-                handleEl.textContent = profile.user?.email || '';
+                handleEl.textContent = '@—';
+                console.log('[Profile] ⚠️ No identity handle');
             }
         }
 

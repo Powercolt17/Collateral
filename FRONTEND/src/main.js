@@ -16,13 +16,13 @@ import { renderXCallback, initXCallback } from './views/XCallback.js';
 // API Client for backend integration
 import api from './api.js';
 
-// App state - initialized from localStorage if available
+// App state - initialized from localStorage (NO email derivation ever)
 const storedUser = api.getStoredUser();
 const appState = {
     isLoggedIn: api.hasAuthToken(),
-    // Use stored identity displayName from database, fallback to email prefix
-    displayName: storedUser?.displayName || storedUser?.email?.split('@')[0] || null,
-    username: storedUser?.username ? '@' + storedUser.username : (storedUser?.displayName ? '@' + storedUser.displayName.toLowerCase().replace(/[^a-z0-9_]/g, '') : null),
+    // ONLY use stored identity values - NO email prefix fallbacks
+    displayName: storedUser?.displayName || null,
+    username: storedUser?.username || null, // stored WITHOUT @ prefix
     userId: storedUser?.userId || null,
     connectedSources: {
         twitter: false,
@@ -34,6 +34,65 @@ const appState = {
 // Expose appState and api globally for views to access
 window.appState = appState;
 window.api = api;
+
+/**
+ * Hydrate session from backend - canonical source of truth
+ * Called on app init to ensure identity matches database
+ */
+async function hydrateSession() {
+    if (!api.hasAuthToken()) {
+        console.log('[Session] No token, skipping hydration');
+        return;
+    }
+
+    try {
+        console.log('[Session] Hydrating from /v1/me/profile...');
+        const profile = await api.getProfile();
+
+        if (profile.error) {
+            console.warn('[Session] Profile fetch failed:', profile.error);
+            // 401 = invalid token, clear everything
+            api.clearAuthToken();
+            appState.isLoggedIn = false;
+            appState.displayName = null;
+            appState.username = null;
+            appState.userId = null;
+            updateAuthUI();
+            return;
+        }
+
+        // Overwrite appState with canonical identity from DB
+        appState.userId = profile.user?.id;
+        appState.displayName = profile.identity?.displayName || null;
+        appState.username = profile.identity?.username || null;
+
+        // Update localStorage with canonical values
+        api.setStoredUser({
+            email: profile.user?.email,
+            userId: profile.user?.id,
+            displayName: profile.identity?.displayName || null,
+            username: profile.identity?.username || null,
+        });
+
+        console.log('[Session] ✅ Hydrated from DB:', {
+            username: appState.username,
+            displayName: appState.displayName
+        });
+
+        updateAuthUI();
+    } catch (error) {
+        console.error('[Session] Hydration failed:', error);
+        // On error, clear auth state
+        if (error.status === 401) {
+            api.clearAuthToken();
+            appState.isLoggedIn = false;
+            appState.displayName = null;
+            appState.username = null;
+            appState.userId = null;
+            updateAuthUI();
+        }
+    }
+}
 
 // Routes configuration
 const routes = [
@@ -96,20 +155,34 @@ window.app = {
     handleLoginSubmit: async function () {
         const btn = document.getElementById('btn-login-submit');
         const emailInput = document.getElementById('login-email');
-        const email = emailInput?.value || 'demo@collateral.market';
+        const passwordInput = document.getElementById('login-password');
+        const email = emailInput?.value?.trim();
+        const password = passwordInput?.value;
+
+        if (!email || !password) {
+            alert('Please enter email and password');
+            return;
+        }
+
         const originalText = btn.innerText;
         btn.innerHTML = `<div class="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin mx-auto"></div>`;
         btn.disabled = true;
 
         try {
-            const result = await api.devLogin(email);
+            console.log('[App] Logging in with email:', email);
+            const result = await api.login(email, password);
+
+            if (!result.ok) {
+                throw new Error(result.error || 'Login failed');
+            }
+
+            // Set appState from identity (CANONICAL source, NO email fallbacks)
             appState.isLoggedIn = true;
-            // Use identity displayName from database if exists, fallback to email prefix
-            appState.displayName = result.identity?.displayName || email.split('@')[0];
-            appState.username = result.identity?.username
-                ? '@' + result.identity.username
-                : '@' + email.split('@')[0];
+            appState.displayName = result.identity?.displayName || null;
+            appState.username = result.identity?.username || null; // stored WITHOUT @ prefix
             appState.userId = result.user?.id;
+
+            console.log('[App] ✅ Logged in as:', appState.displayName, '@' + appState.username);
 
             window.app.closeAccessModal();
             updateAuthUI();
@@ -152,23 +225,59 @@ window.app = {
     handleCreateAccount: async function () {
         const btn = document.getElementById('btn-create-submit');
         const emailInput = document.getElementById('create-email');
-        const displayName = document.getElementById('create-displayname').value;
-        const email = emailInput?.value || (displayName + '@collateral.market');
+        const passwordInput = document.getElementById('create-password');
+        const usernameInput = document.getElementById('create-username'); // Username/handle input
+
+        const email = emailInput?.value?.trim();
+        const password = passwordInput?.value;
+        const username = usernameInput?.value?.trim();
+
+        // Validation
+        if (!email) {
+            alert('Please enter your email');
+            return;
+        }
+        if (!password || password.length < 8) {
+            alert('Password must be at least 8 characters');
+            return;
+        }
+        if (!username) {
+            alert('Please enter a username');
+            return;
+        }
+        // Validate username format: 3-20 chars, alphanumeric + underscores
+        const usernameRegex = /^[a-zA-Z0-9_]{3,20}$/;
+        if (!usernameRegex.test(username)) {
+            alert('Username must be 3-20 characters, letters/numbers/underscores only');
+            return;
+        }
+
         const originalText = btn.innerText;
         btn.innerHTML = `<div class="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin mx-auto"></div>`;
         btn.disabled = true;
 
         try {
-            console.log('[App] Creating account with email:', email, 'displayName:', displayName);
-            // Pass displayName to backend to create identity record
-            const result = await api.devLogin(email, displayName);
-            console.log('[App] Account created, identity:', result.identity);
+            // username = handle (e.g. powercolt)
+            // displayName = pretty name (defaults to username if not separate input)
+            const displayName = username; // Same for now, can add separate input later
 
+            console.log('[App] Creating account:', { email, username, displayName });
+
+            // Call signup with username as handle, displayName as pretty name
+            const result = await api.signup(email, password, username, displayName);
+            console.log('[App] Signup result:', result);
+
+            if (!result.ok) {
+                throw new Error(result.error || 'Signup failed');
+            }
+
+            // Set appState from identity (CANONICAL source, NO @ prefix stored)
             appState.isLoggedIn = true;
-            // Use identity displayName from backend response (canonical)
-            appState.displayName = result.identity?.displayName || displayName || email.split('@')[0];
-            appState.username = '@' + (result.identity?.username || appState.displayName.toLowerCase().replace(/[^a-z0-9_]/g, ''));
-            appState.userId = result.userId;
+            appState.displayName = result.identity.displayName;
+            appState.username = result.identity.username; // stored WITHOUT @ prefix
+            appState.userId = result.user.id;
+
+            console.log('[App] ✅ Signed up as:', appState.displayName, '@' + appState.username);
 
             window.app.closeCreateModal();
             updateAuthUI();
@@ -184,6 +293,7 @@ window.app = {
         api.logout();
         appState.isLoggedIn = false;
         appState.username = null;
+        appState.displayName = null;
         appState.userId = null;
         updateAuthUI();
         window.router.navigate('/overview');
@@ -463,11 +573,16 @@ window.app = {
 function updateAuthUI() {
     const btnAuth = document.getElementById('btn-auth');
     const userMenu = document.getElementById('user-menu');
+    const menuUsername = document.getElementById('menu-username');
 
     if (appState.isLoggedIn && btnAuth && userMenu) {
         btnAuth.classList.add('hidden');
         userMenu.classList.remove('hidden');
-        document.getElementById('menu-username').innerText = appState.username;
+        // Show @username ONLY - NO fallback to displayName or email
+        if (menuUsername) {
+            menuUsername.innerText = appState.username ? '@' + appState.username : '@—';
+        }
+        console.log('[Auth] UI updated, showing:', appState.username);
     } else if (btnAuth && userMenu) {
         btnAuth.classList.remove('hidden');
         userMenu.classList.add('hidden');
@@ -516,3 +631,7 @@ router.onRouteChange = function (route, path) {
 if (!window.location.hash) {
     window.location.hash = '/overview';
 }
+
+// Hydrate session from backend on app init
+// This ensures identity is always canonical from DB, even if localStorage is stale
+hydrateSession();

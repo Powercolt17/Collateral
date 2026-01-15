@@ -20,8 +20,9 @@ import api from './api.js';
 const storedUser = api.getStoredUser();
 const appState = {
     isLoggedIn: api.hasAuthToken(),
-    username: storedUser?.email ? '@' + storedUser.email.split('@')[0] : null,
-    displayName: storedUser?.email?.split('@')[0] || null,
+    // Use stored identity displayName from database, fallback to email prefix
+    displayName: storedUser?.displayName || storedUser?.email?.split('@')[0] || null,
+    username: storedUser?.username ? '@' + storedUser.username : (storedUser?.displayName ? '@' + storedUser.displayName.toLowerCase().replace(/[^a-z0-9_]/g, '') : null),
     userId: storedUser?.userId || null,
     connectedSources: {
         twitter: false,
@@ -154,12 +155,15 @@ window.app = {
         btn.disabled = true;
 
         try {
-            console.log('[App] Creating account with email:', email);
-            const result = await api.devLogin(email);
-            console.log('[App] Account created, token stored:', !!api.getAuthToken());
+            console.log('[App] Creating account with email:', email, 'displayName:', displayName);
+            // Pass displayName to backend to create identity record
+            const result = await api.devLogin(email, displayName);
+            console.log('[App] Account created, identity:', result.identity);
 
             appState.isLoggedIn = true;
-            appState.username = '@' + (displayName || email.split('@')[0]);
+            // Use identity displayName from backend response (canonical)
+            appState.displayName = result.identity?.displayName || displayName || email.split('@')[0];
+            appState.username = '@' + (result.identity?.username || appState.displayName.toLowerCase().replace(/[^a-z0-9_]/g, ''));
             appState.userId = result.userId;
 
             window.app.closeCreateModal();

@@ -22,9 +22,9 @@ const authRoutes: FastifyPluginAsync = async (fastify) => {
      * Returns JWT access token
      */
     fastify.post<{
-        Body: { email?: string; passkeyId?: string };
+        Body: { email?: string; passkeyId?: string; displayName?: string };
     }>('/auth/login', async (request, reply) => {
-        const { email, passkeyId } = request.body;
+        const { email, passkeyId, displayName } = request.body;
 
         if (!email && !passkeyId) {
             reply.status(400);
@@ -32,6 +32,7 @@ const authRoutes: FastifyPluginAsync = async (fastify) => {
         }
 
         let user;
+        let isNewUser = false;
 
         if (email) {
             // Find or create user by email
@@ -49,6 +50,7 @@ const authRoutes: FastifyPluginAsync = async (fastify) => {
                     .values({ email })
                     .returning();
                 user = created;
+                isNewUser = true;
             }
         } else if (passkeyId) {
             // Find user by passkey
@@ -70,12 +72,38 @@ const authRoutes: FastifyPluginAsync = async (fastify) => {
             return { error: 'Failed to authenticate' };
         }
 
-        // Get identity if exists
-        const [identity] = await db
+        // Get or create identity
+        let [identity] = await db
             .select()
             .from(identities)
             .where(eq(identities.userId, user.id))
             .limit(1);
+
+        // Create identity if new user with displayName, or update existing if displayName provided
+        if (!identity && displayName) {
+            // Create new identity with displayName as username (normalized)
+            const username = displayName.toLowerCase().replace(/[^a-z0-9_]/g, '');
+            const [created] = await db
+                .insert(identities)
+                .values({
+                    userId: user.id,
+                    username,
+                    displayName,
+                    status: 'ACTIVE' as const,
+                })
+                .returning();
+            identity = created;
+            console.log(`✅ Created identity for user ${user.id}: @${username} (${displayName})`);
+        } else if (identity && displayName && identity.displayName !== displayName) {
+            // Update existing identity if displayName changed
+            const [updated] = await db
+                .update(identities)
+                .set({ displayName })
+                .where(eq(identities.userId, user.id))
+                .returning();
+            identity = updated;
+            console.log(`✅ Updated identity displayName for user ${user.id}: ${displayName}`);
+        }
 
         // Sign JWT access token
         const accessToken = signAccessToken(user.id);

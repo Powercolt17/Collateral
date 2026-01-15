@@ -90,13 +90,13 @@ async function handleResponse(response) {
 
 // --- AUTH ---
 
-export async function devLogin(email) {
-    console.log('[API] devLogin called with email:', email);
+export async function devLogin(email, displayName = null) {
+    console.log('[API] devLogin called with email:', email, 'displayName:', displayName);
 
     const response = await fetch(`${API_BASE_URL}/auth/login`, {
         method: 'POST',
         headers: getHeaders(false),
-        body: JSON.stringify({ email }),
+        body: JSON.stringify({ email, displayName }),
     });
 
     const data = await handleResponse(response);
@@ -105,13 +105,23 @@ export async function devLogin(email) {
 
     if (data.accessToken) {
         setAuthToken(data.accessToken);
-        setStoredUser({ email, userId: data.user?.id });
-        console.log('[API] Token stored! Verifying:', !!getAuthToken());
+        // Store user with identity info
+        setStoredUser({
+            email,
+            userId: data.user?.id,
+            displayName: data.identity?.displayName || displayName || null,
+            username: data.identity?.username || null,
+        });
+        console.log('[API] Token stored! Identity:', data.identity?.displayName);
     } else {
         console.warn('[API] No accessToken in response!');
     }
 
     return data;
+}
+    }
+
+return data;
 }
 
 export async function logout() {

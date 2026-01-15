@@ -250,26 +250,32 @@ export async function initProfile() {
     // Fetch live profile data
     try {
         const profile = await window.api.getProfile();
-        console.log('[Profile] Loaded profile data:', profile);
+        console.log('[Profile] Full API response:', JSON.stringify(profile, null, 2));
+        console.log('[Profile] Identity from API:', profile.identity);
+        console.log('[Profile] appState.displayName:', window.appState?.displayName);
 
-        if (!profile.ok) {
+        // Check for error response (API returns raw data, not wrapped with ok field)
+        if (profile.error) {
             console.error('[Profile] Failed to load profile:', profile.error);
             return;
         }
 
-        // Update display name - identity is CANONICAL, appState (email-derived) is fallback, X is last resort
+        // Update display name - identity from DATABASE is CANONICAL
         const displayNameEl = document.getElementById('profile-display-name');
         if (displayNameEl) {
+            // Priority: database identity > appState displayName > email prefix
             const identityName = profile.identity?.displayName || profile.identity?.username || null;
-            // Use same source as header dropdown (email-derived displayName)
-            const emailDerivedName = window.appState?.displayName || profile.user?.email?.split('@')[0] || null;
+            console.log('[Profile] identityName from DB:', identityName);
 
             if (identityName) {
                 displayNameEl.textContent = identityName;
-            } else if (emailDerivedName) {
-                displayNameEl.textContent = emailDerivedName;
-            } else if (profile.xConnection?.connected && profile.xConnection.xUsername) {
-                displayNameEl.textContent = profile.xConnection.xUsername;
+                console.log('[Profile] ✅ Using identity displayName:', identityName);
+            } else if (window.appState?.displayName) {
+                displayNameEl.textContent = window.appState.displayName;
+                console.log('[Profile] ⚠️ Fallback to appState.displayName:', window.appState.displayName);
+            } else if (profile.user?.email) {
+                displayNameEl.textContent = profile.user.email.split('@')[0];
+                console.log('[Profile] ⚠️ Fallback to email prefix');
             }
         }
 

@@ -257,25 +257,29 @@ export async function initProfile() {
             return;
         }
 
-        // Update display name - prefer X username, fallback to identity/email
+        // Update display name - identity is CANONICAL, X is fallback
         const displayNameEl = document.getElementById('profile-display-name');
         if (displayNameEl) {
-            if (profile.xConnection?.connected && profile.xConnection.xUsername) {
+            const identityName = profile.identity?.displayName || profile.identity?.username || null;
+
+            if (identityName) {
+                displayNameEl.textContent = identityName;
+            } else if (profile.xConnection?.connected && profile.xConnection.xUsername) {
                 displayNameEl.textContent = profile.xConnection.xUsername;
-            } else if (profile.identity?.displayName) {
-                displayNameEl.textContent = profile.identity.displayName;
             } else if (profile.user?.email) {
                 displayNameEl.textContent = profile.user.email.split('@')[0];
             }
         }
 
-        // Update handle
+        // Update handle - identity is CANONICAL, X is fallback
         const handleEl = document.getElementById('profile-handle');
         if (handleEl) {
-            if (profile.xConnection?.connected && profile.xConnection.xUsername) {
+            const identityHandle = profile.identity?.username || null;
+
+            if (identityHandle) {
+                handleEl.textContent = '@' + identityHandle;
+            } else if (profile.xConnection?.connected && profile.xConnection.xUsername) {
                 handleEl.textContent = '@' + profile.xConnection.xUsername;
-            } else if (profile.identity?.username) {
-                handleEl.textContent = '@' + profile.identity.username;
             } else {
                 handleEl.textContent = profile.user?.email || '';
             }

@@ -257,27 +257,33 @@ export async function initProfile() {
             return;
         }
 
-        // Update display name - identity is CANONICAL, X is fallback
+        // Update display name - identity is CANONICAL, appState (email-derived) is fallback, X is last resort
         const displayNameEl = document.getElementById('profile-display-name');
         if (displayNameEl) {
             const identityName = profile.identity?.displayName || profile.identity?.username || null;
+            // Use same source as header dropdown (email-derived displayName)
+            const emailDerivedName = window.appState?.displayName || profile.user?.email?.split('@')[0] || null;
 
             if (identityName) {
                 displayNameEl.textContent = identityName;
+            } else if (emailDerivedName) {
+                displayNameEl.textContent = emailDerivedName;
             } else if (profile.xConnection?.connected && profile.xConnection.xUsername) {
                 displayNameEl.textContent = profile.xConnection.xUsername;
-            } else if (profile.user?.email) {
-                displayNameEl.textContent = profile.user.email.split('@')[0];
             }
         }
 
-        // Update handle - identity is CANONICAL, X is fallback
+        // Update handle - identity is CANONICAL, appState (email) is fallback, X is last resort  
         const handleEl = document.getElementById('profile-handle');
         if (handleEl) {
             const identityHandle = profile.identity?.username || null;
+            // Use same source as header dropdown
+            const emailDerivedHandle = window.appState?.displayName || profile.user?.email?.split('@')[0] || null;
 
             if (identityHandle) {
                 handleEl.textContent = '@' + identityHandle;
+            } else if (emailDerivedHandle) {
+                handleEl.textContent = '@' + emailDerivedHandle;
             } else if (profile.xConnection?.connected && profile.xConnection.xUsername) {
                 handleEl.textContent = '@' + profile.xConnection.xUsername;
             } else {

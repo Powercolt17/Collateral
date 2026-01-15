@@ -104,8 +104,12 @@ window.app = {
         try {
             const result = await api.devLogin(email);
             appState.isLoggedIn = true;
-            appState.username = '@' + email.split('@')[0];
-            appState.userId = result.userId;
+            // Use identity displayName from database if exists, fallback to email prefix
+            appState.displayName = result.identity?.displayName || email.split('@')[0];
+            appState.username = result.identity?.username
+                ? '@' + result.identity.username
+                : '@' + email.split('@')[0];
+            appState.userId = result.user?.id;
 
             window.app.closeAccessModal();
             updateAuthUI();

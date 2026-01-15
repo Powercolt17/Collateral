@@ -1,6 +1,6 @@
 import { FastifyPluginAsync } from 'fastify';
 import { db } from '../db/client.js';
-import { users, identities, contracts } from '../db/schema.js';
+import { users, identities, contracts, connectedAccounts } from '../db/schema.js';
 import { eq } from 'drizzle-orm';
 import { getEventsForContract } from '../services/ledger.js';
 import { deriveState } from '../services/state-derivation.js';
@@ -159,6 +159,149 @@ const usersRoutes: FastifyPluginAsync = async (fastify) => {
                 connectedAt: a.connectedAt.toISOString(),
             })),
             platforms,
+        };
+    });
+
+    /**
+     * GET /v1/me/profile
+     * Get complete profile with stats for profile page
+     * Returns: user, identity, connection info (from canonical connected_accounts), contract stats
+     */
+    fastify.get('/v1/me/profile', async (request, reply) => {
+        const userId = (request as any).userId;
+
+        if (!userId) {
+            reply.status(401);
+            return { error: 'Authentication required' };
+        }
+
+        // Get user
+        const [user] = await db
+            .select()
+            .from(users)
+            .where(eq(users.id, userId))
+            .limit(1);
+
+        if (!user) {
+            reply.status(404);
+            return { error: 'User not found' };
+        }
+
+        // Get identity
+        const [identity] = await db
+            .select()
+            .from(identities)
+            .where(eq(identities.userId, userId))
+            .limit(1);
+
+        // Get connected accounts (CANONICAL source for connection status)
+        const accounts = await db
+            .select()
+            .from(connectedAccounts)
+            .where(eq(connectedAccounts.userId, userId));
+
+        // Build X connection from connected_accounts (canonical)
+        const xAccount = accounts.find(a => a.platform === 'X');
+        // Parse metadataJson safely (could be null, string, or object)
+        let xMeta: any = null;
+        if (xAccount?.metadataJson) {
+            try {
+                xMeta = typeof xAccount.metadataJson === 'string'
+                    ? JSON.parse(xAccount.metadataJson)
+                    : xAccount.metadataJson;
+            } catch (e) {
+                xMeta = null;
+            }
+        }
+        const xConnection = xAccount ? {
+            connected: xAccount.status === 'ACTIVE',
+            verified: xAccount.verificationStatus === 'VERIFIED',
+            xUserId: xAccount.externalAccountId,
+            xUsername: xMeta?.resolvedUsername || null,
+            connectedAt: xAccount.connectedAt?.toISOString() || null,
+        } : {
+            connected: false,
+            verified: false,
+        };
+
+        // Build Stripe connection from connected_accounts (canonical)
+        const stripeAccount = accounts.find(a => a.platform === 'STRIPE');
+        const stripeConnection = stripeAccount ? {
+            connected: stripeAccount.status === 'ACTIVE',
+            verified: stripeAccount.verificationStatus === 'VERIFIED',
+            accountId: stripeAccount.externalAccountId,
+            connectedAt: stripeAccount.connectedAt?.toISOString() || null,
+        } : {
+            connected: false,
+            verified: false,
+        };
+
+        // Get all contracts for stats
+        const userContracts = await db
+            .select()
+            .from(contracts)
+            .where(eq(contracts.principalUserId, userId));
+
+        // Derive state for each contract
+        const contractsWithState = await Promise.all(
+            userContracts.map(async (c) => {
+                const events = await getEventsForContract(c.id);
+                const state = deriveState(events);
+                return { ...c, state };
+            })
+        );
+
+        // Calculate stats
+        // Terminal states where contract is complete
+        const TERMINAL = new Set(['SETTLED', 'FORFEITED']);
+
+        const totalContracts = contractsWithState.length;
+        // Active = non-terminal and has a state (excludes drafts/null)
+        const activeContracts = contractsWithState.filter(c =>
+            c.state && !TERMINAL.has(c.state)
+        ).length;
+        const settledContracts = contractsWithState.filter(c =>
+            c.state === 'SETTLED'
+        ).length;
+        const forfeitedContracts = contractsWithState.filter(c =>
+            c.state === 'FORFEITED'
+        ).length;
+
+        // TVL = sum of locked amounts for settled contracts
+        const tvlSettledCents = contractsWithState
+            .filter(c => c.state === 'SETTLED')
+            .reduce((sum, c) => sum + c.lockAmountUsdCents, 0);
+
+        // Settlement rate = settled / (settled + forfeited) OR null if no completed contracts
+        const completedContracts = settledContracts + forfeitedContracts;
+        const settlementRate = completedContracts > 0
+            ? Math.round((settledContracts / completedContracts) * 1000) / 10 // One decimal place
+            : null; // null = "—" in UI
+
+        return {
+            ok: true,
+            user: {
+                id: user.id,
+                email: user.email,
+                createdAt: user.createdAt.toISOString(),
+            },
+            identity: identity ? {
+                username: identity.username,
+                displayName: identity.displayName,
+                bio: identity.bio,
+                photoUrl: identity.photoUrl,
+                status: identity.status,
+            } : null,
+            xConnection,
+            stripeConnection,
+            stats: {
+                settlementRate, // null for new users, number for others
+                totalContracts,
+                activeContracts,
+                settledContracts,
+                forfeitedContracts,
+                tvlSettledUsd: tvlSettledCents / 100,
+            },
         };
     });
 

@@ -297,6 +297,15 @@ export async function getConnectionStatus() {
     return handleResponse(response);
 }
 
+export async function getProfile() {
+    const response = await fetch(`${API_BASE_URL}/v1/me/profile`, {
+        method: 'GET',
+        headers: getHeaders(),
+    });
+
+    return handleResponse(response);
+}
+
 // --- LEDGER ---
 
 export async function getLedgerEvents(contractId) {
@@ -367,6 +376,7 @@ export default {
     // Connected Accounts
     getConnectedAccounts,
     getConnectionStatus,
+    getProfile,
 
     // Ledger
     getLedgerEvents,

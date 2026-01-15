@@ -36,27 +36,27 @@ export function renderProfile() {
             <div class="grid grid-cols-2 md:grid-cols-4 gap-px bg-neutral-200 border border-neutral-200 mb-10">
                 <div class="bg-white p-6">
                     <span class="font-mono text-[10px] text-neutral-400 uppercase tracking-widest block mb-2">Settlement Rate</span>
-                    <span class="font-display text-3xl font-medium text-neutral-900">98.5%</span>
+                    <span class="font-display text-3xl font-medium text-neutral-900" id="stat-settlement-rate">—</span>
                     <p class="font-mono text-[9px] text-neutral-400 mt-1">Derived from settled vs forfeited contracts</p>
                 </div>
                 <div class="bg-white p-6">
                     <span class="font-mono text-[10px] text-neutral-400 uppercase tracking-widest block mb-2">Total Contracts</span>
-                    <span class="font-display text-3xl font-medium text-neutral-900">42</span>
+                    <span class="font-display text-3xl font-medium text-neutral-900" id="stat-total-contracts">—</span>
                 </div>
                 <div class="bg-white p-6">
                     <span class="font-mono text-[10px] text-neutral-400 uppercase tracking-widest block mb-2">TVL (Settled)</span>
-                    <span class="font-display text-3xl font-medium text-neutral-900">$12,450</span>
+                    <span class="font-display text-3xl font-medium text-neutral-900" id="stat-tvl">—</span>
                 </div>
                 <div class="bg-white p-6">
                     <span class="font-mono text-[10px] text-neutral-400 uppercase tracking-widest block mb-2">Forfeited</span>
-                    <span class="font-display text-3xl font-medium text-[#921818]">1</span>
+                    <span class="font-display text-3xl font-medium text-[#921818]" id="stat-forfeited">—</span>
                 </div>
             </div>
 
             <!-- Tabs -->
             <div class="flex gap-0 border-b border-neutral-200 mb-8 overflow-x-auto">
                 <button class="profile-tab px-4 py-3 font-mono text-[11px] uppercase tracking-widest border-b-2 border-neutral-900 text-neutral-900 font-medium whitespace-nowrap" data-tab="overview">Overview</button>
-                <button class="profile-tab px-4 py-3 font-mono text-[11px] uppercase tracking-widest border-b-2 border-transparent text-neutral-400 hover:text-neutral-600 whitespace-nowrap" data-tab="contracts">Active Contracts <span class="text-[10px] bg-neutral-100 px-1.5 py-0.5 rounded ml-1">3</span></button>
+                <button class="profile-tab px-4 py-3 font-mono text-[11px] uppercase tracking-widest border-b-2 border-transparent text-neutral-400 hover:text-neutral-600 whitespace-nowrap" data-tab="contracts">Active Contracts <span class="text-[10px] bg-neutral-100 px-1.5 py-0.5 rounded ml-1">—</span></button>
                 <button class="profile-tab px-4 py-3 font-mono text-[11px] uppercase tracking-widest border-b-2 border-transparent text-neutral-400 hover:text-neutral-600 whitespace-nowrap" data-tab="history">Settlement History</button>
                 <button class="profile-tab px-4 py-3 font-mono text-[11px] uppercase tracking-widest border-b-2 border-transparent text-neutral-400 hover:text-neutral-600 whitespace-nowrap" data-tab="sources">Connected Sources</button>
                 <button class="profile-tab px-4 py-3 font-mono text-[11px] uppercase tracking-widest border-b-2 border-transparent text-neutral-400 hover:text-neutral-600 whitespace-nowrap" data-tab="timeline">Identity Timeline</button>
@@ -97,85 +97,32 @@ export function renderProfile() {
 
                 <!-- Active Contracts Tab -->
                 <div id="tab-contracts" class="tab-panel hidden">
-                    <div class="border border-neutral-200 bg-white overflow-hidden">
-                        <table class="w-full">
-                            <thead class="bg-neutral-50 border-b border-neutral-200">
-                                <tr>
-                                    <th class="text-left py-3 px-4 font-mono text-[10px] text-neutral-400 uppercase tracking-widest">Contract</th>
-                                    <th class="text-left py-3 px-4 font-mono text-[10px] text-neutral-400 uppercase tracking-widest">Source</th>
-                                    <th class="text-left py-3 px-4 font-mono text-[10px] text-neutral-400 uppercase tracking-widest">Locked</th>
-                                    <th class="text-left py-3 px-4 font-mono text-[10px] text-neutral-400 uppercase tracking-widest">Deadline (UTC)</th>
-                                    <th class="text-left py-3 px-4 font-mono text-[10px] text-neutral-400 uppercase tracking-widest">Status</th>
-                                    <th class="text-right py-3 px-4 font-mono text-[10px] text-neutral-400 uppercase tracking-widest"></th>
-                                </tr>
-                            </thead>
-                            <tbody class="divide-y divide-neutral-100">
-                                <tr class="hover:bg-neutral-50">
-                                    <td class="py-4 px-4 font-sans text-sm font-medium text-neutral-900">Ship v2.1 to Production</td>
-                                    <td class="py-4 px-4 font-mono text-[11px] text-neutral-500">GitHub</td>
-                                    <td class="py-4 px-4 font-mono text-sm text-neutral-900">$500.00</td>
-                                    <td class="py-4 px-4 font-mono text-[11px] text-neutral-500">Oct 25, 12:00</td>
-                                    <td class="py-4 px-4"><span class="font-mono text-[10px] font-medium text-white bg-[#1F7A4D] px-2 py-1 uppercase tracking-wider">Active</span></td>
-                                    <td class="py-4 px-4 text-right"><button class="font-mono text-[11px] text-neutral-400 hover:text-neutral-900">View</button></td>
-                                </tr>
-                                <tr class="hover:bg-neutral-50">
-                                    <td class="py-4 px-4 font-sans text-sm font-medium text-neutral-900">Maintain 99.9% Uptime</td>
-                                    <td class="py-4 px-4 font-mono text-[11px] text-neutral-500">PingDOM</td>
-                                    <td class="py-4 px-4 font-mono text-sm text-neutral-900">$5,000.00</td>
-                                    <td class="py-4 px-4 font-mono text-[11px] text-neutral-500">Nov 01, 00:00</td>
-                                    <td class="py-4 px-4"><span class="font-mono text-[10px] font-medium text-white bg-[#1F7A4D] px-2 py-1 uppercase tracking-wider">Active</span></td>
-                                    <td class="py-4 px-4 text-right"><button class="font-mono text-[11px] text-neutral-400 hover:text-neutral-900">View</button></td>
-                                </tr>
-                                <tr class="hover:bg-neutral-50">
-                                    <td class="py-4 px-4 font-sans text-sm font-medium text-neutral-900">Weekly Fitness Goal</td>
-                                    <td class="py-4 px-4 font-mono text-[11px] text-neutral-500">Strava</td>
-                                    <td class="py-4 px-4 font-mono text-sm text-neutral-900">$100.00</td>
-                                    <td class="py-4 px-4 font-mono text-[11px] text-neutral-500">Oct 27, 08:00</td>
-                                    <td class="py-4 px-4"><span class="font-mono text-[10px] font-medium text-neutral-600 bg-neutral-200 px-2 py-1 uppercase tracking-wider">Pending</span></td>
-                                    <td class="py-4 px-4 text-right"><button class="font-mono text-[11px] text-neutral-400 hover:text-neutral-900">View</button></td>
-                                </tr>
-                            </tbody>
-                        </table>
+                    <div id="contracts-list" class="border border-neutral-200 bg-white overflow-hidden">
+                        <!-- Empty State -->
+                        <div class="flex flex-col items-center justify-center py-16 px-6 text-center">
+                            <div class="w-12 h-12 bg-neutral-100 rounded-full flex items-center justify-center mb-4">
+                                <i data-lucide="file-text" class="w-6 h-6 text-neutral-400"></i>
+                            </div>
+                            <h4 class="font-sans text-sm font-medium text-neutral-700 mb-1">No Active Contracts</h4>
+                            <p class="font-mono text-[11px] text-neutral-400 max-w-xs">Create your first performance contract to start building your accountability record.</p>
+                            <button onclick="window.router.navigate('/contracts')" class="mt-4 px-4 py-2 bg-neutral-900 text-white text-[11px] font-mono uppercase tracking-wide hover:bg-neutral-800 transition-colors">
+                                Create Contract
+                            </button>
+                        </div>
                     </div>
                 </div>
 
                 <!-- Settlement History Tab -->
                 <div id="tab-history" class="tab-panel hidden">
-                    <div class="border border-neutral-200 bg-white overflow-hidden">
-                        <table class="w-full">
-                            <thead class="bg-neutral-50 border-b border-neutral-200">
-                                <tr>
-                                    <th class="text-left py-3 px-4 font-mono text-[10px] text-neutral-400 uppercase tracking-widest">Contract</th>
-                                    <th class="text-left py-3 px-4 font-mono text-[10px] text-neutral-400 uppercase tracking-widest">Source</th>
-                                    <th class="text-left py-3 px-4 font-mono text-[10px] text-neutral-400 uppercase tracking-widest">Value</th>
-                                    <th class="text-left py-3 px-4 font-mono text-[10px] text-neutral-400 uppercase tracking-widest">Settled</th>
-                                    <th class="text-left py-3 px-4 font-mono text-[10px] text-neutral-400 uppercase tracking-widest">Outcome</th>
-                                </tr>
-                            </thead>
-                            <tbody class="divide-y divide-neutral-100">
-                                <tr class="hover:bg-neutral-50">
-                                    <td class="py-4 px-4 font-sans text-sm font-medium text-neutral-900">Launch MVP by Q3</td>
-                                    <td class="py-4 px-4 font-mono text-[11px] text-neutral-500">GitHub</td>
-                                    <td class="py-4 px-4 font-mono text-sm text-neutral-900">$2,000.00</td>
-                                    <td class="py-4 px-4 font-mono text-[11px] text-neutral-500">Sep 30, 2024</td>
-                                    <td class="py-4 px-4"><span class="font-mono text-[10px] font-medium text-[#1F7A4D]">+$800 RETURNED</span></td>
-                                </tr>
-                                <tr class="hover:bg-neutral-50">
-                                    <td class="py-4 px-4 font-sans text-sm font-medium text-neutral-900">10K Twitter Followers</td>
-                                    <td class="py-4 px-4 font-mono text-[11px] text-neutral-500">X/Twitter</td>
-                                    <td class="py-4 px-4 font-mono text-sm text-neutral-900">$500.00</td>
-                                    <td class="py-4 px-4 font-mono text-[11px] text-neutral-500">Aug 15, 2024</td>
-                                    <td class="py-4 px-4"><span class="font-mono text-[10px] font-medium text-[#921818]">FORFEITED</span></td>
-                                </tr>
-                                <tr class="hover:bg-neutral-50">
-                                    <td class="py-4 px-4 font-sans text-sm font-medium text-neutral-900">$5K MRR Milestone</td>
-                                    <td class="py-4 px-4 font-mono text-[11px] text-neutral-500">Stripe</td>
-                                    <td class="py-4 px-4 font-mono text-sm text-neutral-900">$1,000.00</td>
-                                    <td class="py-4 px-4 font-mono text-[11px] text-neutral-500">Jul 01, 2024</td>
-                                    <td class="py-4 px-4"><span class="font-mono text-[10px] font-medium text-[#1F7A4D]">+$1,500 RETURNED</span></td>
-                                </tr>
-                            </tbody>
-                        </table>
+                    <div id="history-list" class="border border-neutral-200 bg-white overflow-hidden">
+                        <!-- Empty State -->
+                        <div class="flex flex-col items-center justify-center py-16 px-6 text-center">
+                            <div class="w-12 h-12 bg-neutral-100 rounded-full flex items-center justify-center mb-4">
+                                <i data-lucide="history" class="w-6 h-6 text-neutral-400"></i>
+                            </div>
+                            <h4 class="font-sans text-sm font-medium text-neutral-700 mb-1">No Settlement History</h4>
+                            <p class="font-mono text-[11px] text-neutral-400 max-w-xs">Completed contracts and their outcomes will appear here.</p>
+                        </div>
                     </div>
                 </div>
 
@@ -248,48 +195,14 @@ export function renderProfile() {
 
                 <!-- Identity Timeline Tab -->
                 <div id="tab-timeline" class="tab-panel hidden">
-                    <div class="border border-neutral-200 bg-white p-6">
-                        <div class="relative pl-6 space-y-8 before:absolute before:left-[7px] before:top-2 before:bottom-2 before:w-px before:bg-neutral-200">
-                            <div class="relative">
-                                <div class="absolute -left-6 top-1 w-3 h-3 rounded-full bg-[#1F7A4D] border-2 border-white"></div>
-                                <div class="flex justify-between items-baseline mb-1">
-                                    <span class="font-mono text-[11px] font-medium text-neutral-900 uppercase">Identity Created</span>
-                                    <span class="font-mono text-[10px] text-neutral-400">Jan 15, 2024</span>
-                                </div>
-                                <p class="text-sm text-neutral-500">Account registered and email verified.</p>
+                    <div id="timeline-list" class="border border-neutral-200 bg-white overflow-hidden">
+                        <!-- Empty State -->
+                        <div class="flex flex-col items-center justify-center py-16 px-6 text-center">
+                            <div class="w-12 h-12 bg-neutral-100 rounded-full flex items-center justify-center mb-4">
+                                <i data-lucide="clock" class="w-6 h-6 text-neutral-400"></i>
                             </div>
-                            <div class="relative">
-                                <div class="absolute -left-6 top-1 w-3 h-3 rounded-full bg-neutral-300 border-2 border-white"></div>
-                                <div class="flex justify-between items-baseline mb-1">
-                                    <span class="font-mono text-[11px] font-medium text-neutral-900 uppercase">X/Twitter Connected</span>
-                                    <span class="font-mono text-[10px] text-neutral-400">Jan 16, 2024</span>
-                                </div>
-                                <p class="text-sm text-neutral-500">Linked @alex_dev for public signal verification.</p>
-                            </div>
-                            <div class="relative">
-                                <div class="absolute -left-6 top-1 w-3 h-3 rounded-full bg-neutral-300 border-2 border-white"></div>
-                                <div class="flex justify-between items-baseline mb-1">
-                                    <span class="font-mono text-[11px] font-medium text-neutral-900 uppercase">First Contract Executed</span>
-                                    <span class="font-mono text-[10px] text-neutral-400">Feb 01, 2024</span>
-                                </div>
-                                <p class="text-sm text-neutral-500">Locked $500 against shipping MVP milestone.</p>
-                            </div>
-                            <div class="relative">
-                                <div class="absolute -left-6 top-1 w-3 h-3 rounded-full bg-neutral-300 border-2 border-white"></div>
-                                <div class="flex justify-between items-baseline mb-1">
-                                    <span class="font-mono text-[11px] font-medium text-neutral-900 uppercase">GitHub Connected</span>
-                                    <span class="font-mono text-[10px] text-neutral-400">Mar 10, 2024</span>
-                                </div>
-                                <p class="text-sm text-neutral-500">Linked alex-dev for code verification.</p>
-                            </div>
-                            <div class="relative">
-                                <div class="absolute -left-6 top-1 w-3 h-3 rounded-full bg-neutral-300 border-2 border-white"></div>
-                                <div class="flex justify-between items-baseline mb-1">
-                                    <span class="font-mono text-[11px] font-medium text-neutral-900 uppercase">Stripe Connected</span>
-                                    <span class="font-mono text-[10px] text-neutral-400">Apr 22, 2024</span>
-                                </div>
-                                <p class="text-sm text-neutral-500">Linked Stripe for revenue verification.</p>
-                            </div>
+                            <h4 class="font-sans text-sm font-medium text-neutral-700 mb-1">Identity Timeline</h4>
+                            <p class="font-mono text-[11px] text-neutral-400 max-w-xs">Your account activity and connection events will appear here as they happen.</p>
                         </div>
                     </div>
                 </div>
@@ -298,7 +211,7 @@ export function renderProfile() {
     `;
 }
 
-export function initProfile() {
+export async function initProfile() {
     const tabs = document.querySelectorAll('.profile-tab');
     const panels = document.querySelectorAll('.tab-panel');
 
@@ -332,5 +245,117 @@ export function initProfile() {
 
     if (window.lucide) {
         window.lucide.createIcons();
+    }
+
+    // Fetch live profile data
+    try {
+        const profile = await window.api.getProfile();
+        console.log('[Profile] Loaded profile data:', profile);
+
+        if (!profile.ok) {
+            console.error('[Profile] Failed to load profile:', profile.error);
+            return;
+        }
+
+        // Update display name - prefer X username, fallback to identity/email
+        const displayNameEl = document.getElementById('profile-display-name');
+        if (displayNameEl) {
+            if (profile.xConnection?.connected && profile.xConnection.xUsername) {
+                displayNameEl.textContent = profile.xConnection.xUsername;
+            } else if (profile.identity?.displayName) {
+                displayNameEl.textContent = profile.identity.displayName;
+            } else if (profile.user?.email) {
+                displayNameEl.textContent = profile.user.email.split('@')[0];
+            }
+        }
+
+        // Update handle
+        const handleEl = document.getElementById('profile-handle');
+        if (handleEl) {
+            if (profile.xConnection?.connected && profile.xConnection.xUsername) {
+                handleEl.textContent = '@' + profile.xConnection.xUsername;
+            } else if (profile.identity?.username) {
+                handleEl.textContent = '@' + profile.identity.username;
+            } else {
+                handleEl.textContent = profile.user?.email || '';
+            }
+        }
+
+        // Update stats
+        const settlementRateEl = document.getElementById('stat-settlement-rate');
+        if (settlementRateEl) {
+            // null = new user with no completed contracts
+            settlementRateEl.textContent = profile.stats.settlementRate !== null
+                ? profile.stats.settlementRate + '%'
+                : '—';
+        }
+
+        const totalContractsEl = document.getElementById('stat-total-contracts');
+        if (totalContractsEl) {
+            totalContractsEl.textContent = profile.stats.totalContracts.toString();
+        }
+
+        const tvlEl = document.getElementById('stat-tvl');
+        if (tvlEl) {
+            tvlEl.textContent = '$' + profile.stats.tvlSettledUsd.toLocaleString('en-US', { minimumFractionDigits: 0, maximumFractionDigits: 0 });
+        }
+
+        const forfeitedEl = document.getElementById('stat-forfeited');
+        if (forfeitedEl) {
+            forfeitedEl.textContent = profile.stats.forfeitedContracts.toString();
+        }
+
+        // Update active contracts badge
+        const activeContractsBadge = document.querySelector('.profile-tab[data-tab="contracts"] span');
+        if (activeContractsBadge) {
+            activeContractsBadge.textContent = profile.stats.activeContracts.toString();
+        }
+
+        // Update X connection status
+        const twitterStatusEl = document.getElementById('twitter-status');
+        const twitterBtnEl = document.getElementById('twitter-btn');
+        if (profile.xConnection?.connected) {
+            if (twitterStatusEl) {
+                twitterStatusEl.textContent = '@' + (profile.xConnection.xUsername || 'connected') + ' • Connected';
+                twitterStatusEl.classList.remove('text-neutral-400');
+                twitterStatusEl.classList.add('text-[#1F7A4D]');
+            }
+            if (twitterBtnEl) {
+                // Show "Connected" and disable (we don't support disconnect yet)
+                twitterBtnEl.textContent = 'Connected';
+                twitterBtnEl.disabled = true;
+                twitterBtnEl.removeAttribute('onclick');
+                twitterBtnEl.classList.add('opacity-50', 'cursor-not-allowed');
+                twitterBtnEl.classList.remove('hover:border-neutral-400', 'hover:text-neutral-900');
+            }
+        }
+
+        // Update Stripe connection status
+        const stripeStatusEl = document.getElementById('stripe-status');
+        const stripeBtnEl = document.getElementById('stripe-btn');
+        if (profile.stripeConnection?.connected) {
+            if (stripeStatusEl) {
+                stripeStatusEl.textContent = (profile.stripeConnection.accountId || 'acct_xxx') + ' • Connected';
+                stripeStatusEl.classList.remove('text-neutral-400');
+                stripeStatusEl.classList.add('text-[#1F7A4D]');
+            }
+            if (stripeBtnEl) {
+                stripeBtnEl.textContent = 'Connected';
+                stripeBtnEl.disabled = true;
+                stripeBtnEl.removeAttribute('onclick');
+                stripeBtnEl.classList.add('opacity-50', 'cursor-not-allowed');
+                stripeBtnEl.classList.remove('hover:border-neutral-400', 'hover:text-neutral-900');
+            }
+        }
+
+        // Hide "Connect verification sources" alert when any platform is connected
+        const alertEl = document.getElementById('sources-alert');
+        const anyConnected = profile.xConnection?.connected || profile.stripeConnection?.connected;
+        if (alertEl && anyConnected) {
+            alertEl.classList.add('hidden');
+        }
+
+    } catch (err) {
+        console.error('[Profile] Error loading profile:', err);
     }
 }

@@ -82,7 +82,7 @@ async function hydrateSession() {
         });
     } catch (error) {
         console.error('[Session] Hydration failed:', error);
-        // On 401 error, clear auth state
+        // On 401 error, clear auth state and redirect off protected routes
         if (error.status === 401) {
             api.clearAuthToken();
             appState.isLoggedIn = false;
@@ -90,6 +90,15 @@ async function hydrateSession() {
             appState.username = null;
             appState.userId = null;
             appState.connectedSources = { twitter: false, stripe: false, github: false };
+
+            // Force redirect off protected route if on one
+            const protectedPaths = ['/contracts', '/my-contracts', '/profile', '/funding'];
+            const hashPath = (window.location.hash || '').replace(/^#/, '');
+            if (protectedPaths.some(pr => hashPath === pr || hashPath.startsWith(pr + '/'))) {
+                window.location.hash = '/overview';
+                // Show login modal after redirect
+                setTimeout(() => window.app.openAccessModal(), 100);
+            }
         }
     } finally {
         appState.sessionHydrated = true;
@@ -164,6 +173,16 @@ window.app = {
             backdrop.classList.add('hidden');
             modal.classList.add('hidden');
         }, 300);
+    },
+    handleSignOut: function () {
+        api.logout();
+        appState.isLoggedIn = false;
+        appState.username = null;
+        appState.displayName = null;
+        appState.userId = null;
+        appState.connectedSources = { twitter: false, stripe: false, github: false };
+        updateAuthUI();
+        window.router.navigate('/overview');
     },
     handleAuthClick: function () {
         if (appState.isLoggedIn) {
@@ -315,15 +334,6 @@ window.app = {
             btn.innerText = originalText;
             btn.disabled = false;
         }
-    },
-    handleSignOut: function () {
-        api.logout();
-        appState.isLoggedIn = false;
-        appState.username = null;
-        appState.displayName = null;
-        appState.userId = null;
-        updateAuthUI();
-        window.router.navigate('/overview');
     },
     toggleMenuPersistence: function (e) {
         e.stopPropagation();
@@ -593,6 +603,7 @@ window.app = {
     },
     disconnectSource: async function (source) {
         const btn = document.querySelector(`button[data-source-btn="${source}"]`);
+        const originalLabel = btn?.innerHTML; // Save original label
 
         // Show loading state
         if (btn) {
@@ -615,7 +626,7 @@ window.app = {
             // Only restore button on failure (no re-render happened)
             if (btn) {
                 btn.disabled = false;
-                btn.innerHTML = 'Disconnect';
+                btn.innerHTML = originalLabel || 'Disconnect';
             }
         }
     }

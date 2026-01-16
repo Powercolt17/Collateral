@@ -20,6 +20,7 @@ import api from './api.js';
 const storedUser = api.getStoredUser();
 const appState = {
     isLoggedIn: api.hasAuthToken(),
+    sessionHydrated: false, // Prevents UI flicker until hydration completes
     // ONLY use stored identity values - NO email prefix fallbacks
     displayName: storedUser?.displayName || null,
     username: storedUser?.username || null, // stored WITHOUT @ prefix
@@ -42,6 +43,8 @@ window.api = api;
 async function hydrateSession() {
     if (!api.hasAuthToken()) {
         console.log('[Session] No token, skipping hydration');
+        appState.sessionHydrated = true;
+        updateAuthUI();
         return;
     }
 
@@ -49,48 +52,48 @@ async function hydrateSession() {
         console.log('[Session] Hydrating from /v1/me/profile...');
         const profile = await api.getProfile();
 
-        if (profile.error) {
-            console.warn('[Session] Profile fetch failed:', profile.error);
-            // 401 = invalid token, clear everything
-            api.clearAuthToken();
-            appState.isLoggedIn = false;
-            appState.displayName = null;
-            appState.username = null;
-            appState.userId = null;
-            updateAuthUI();
-            return;
-        }
+        // Token is valid if we got here
+        appState.isLoggedIn = true;
 
         // Overwrite appState with canonical identity from DB
-        appState.userId = profile.user?.id;
-        appState.displayName = profile.identity?.displayName || null;
-        appState.username = profile.identity?.username || null;
+        appState.userId = profile.user?.id ?? null;
+        appState.displayName = profile.identity?.displayName ?? null;
+        appState.username = profile.identity?.username ?? null;
+
+        // Hydrate connected sources from profile (canonical)
+        appState.connectedSources = {
+            twitter: !!(profile.xConnection?.connected && profile.xConnection?.verified),
+            stripe: !!(profile.stripeConnection?.connected && profile.stripeConnection?.verified),
+            github: false, // TODO: add when GitHub OAuth is implemented
+        };
 
         // Update localStorage with canonical values
         api.setStoredUser({
             email: profile.user?.email,
             userId: profile.user?.id,
-            displayName: profile.identity?.displayName || null,
-            username: profile.identity?.username || null,
+            displayName: appState.displayName,
+            username: appState.username,
         });
 
         console.log('[Session] ✅ Hydrated from DB:', {
             username: appState.username,
-            displayName: appState.displayName
+            displayName: appState.displayName,
+            connectedSources: appState.connectedSources
         });
-
-        updateAuthUI();
     } catch (error) {
         console.error('[Session] Hydration failed:', error);
-        // On error, clear auth state
+        // On 401 error, clear auth state
         if (error.status === 401) {
             api.clearAuthToken();
             appState.isLoggedIn = false;
             appState.displayName = null;
             appState.username = null;
             appState.userId = null;
-            updateAuthUI();
+            appState.connectedSources = { twitter: false, stripe: false, github: false };
         }
+    } finally {
+        appState.sessionHydrated = true;
+        updateAuthUI();
     }
 }
 
@@ -109,6 +112,30 @@ const routes = [
     { path: '/stripe/callback', render: renderStripeCallback, init: initStripeCallback },
     { path: '/x/callback', render: renderXCallback, init: initXCallback }
 ];
+
+// ================================================================================
+// OAUTH CALLBACK PATH-TO-HASH REDIRECT
+// ================================================================================
+// OAuth flows redirect to path-based URLs (/x/callback, /stripe/callback)
+// but our router is hash-based (#/path). Intercept and redirect before router init.
+(function handleOAuthPathRedirect() {
+    // Skip if already hash-routed (prevents loops)
+    if (window.location.hash) return;
+
+    const { pathname, search, origin } = window.location;
+
+    // Map of path-based OAuth callbacks to hash routes
+    const map = {
+        '/x/callback': '/#/x/callback',
+        '/stripe/callback': '/#/stripe/callback',
+    };
+
+    const dest = map[pathname];
+    if (dest) {
+        console.log('[OAuth] Intercepting', pathname, ', redirecting to hash route');
+        window.location.replace(origin + dest + search);
+    }
+})();
 
 // Initialize router
 const router = new Router(routes);
@@ -556,7 +583,7 @@ window.app = {
                         </p>
                     </div>
                 </div>
-                <button onclick="window.app.${s.connected ? 'disconnect' : 'connect'}Source('${s.id}')" class="px-3 py-1.5 border border-neutral-200 text-[11px] font-mono uppercase tracking-wide text-neutral-600 hover:border-neutral-400 transition-colors">
+                <button data-source-btn="${s.id}" onclick="window.app.${s.connected ? 'disconnect' : 'connect'}Source('${s.id}')" class="px-3 py-1.5 border border-neutral-200 text-[11px] font-mono uppercase tracking-wide text-neutral-600 hover:border-neutral-400 transition-colors disabled:opacity-50 disabled:cursor-not-allowed">
                     ${s.connected ? 'Disconnect' : 'Connect'}
                 </button>
             </div>
@@ -564,13 +591,40 @@ window.app = {
 
         if (window.lucide) window.lucide.createIcons();
     },
-    disconnectSource: function (source) {
-        appState.connectedSources[source] = false;
-        window.app.populateSettingsSources();
+    disconnectSource: async function (source) {
+        const btn = document.querySelector(`button[data-source-btn="${source}"]`);
+
+        // Show loading state
+        if (btn) {
+            btn.disabled = true;
+            btn.innerHTML = '...';
+        }
+
+        try {
+            if (source === 'twitter') {
+                await window.api.disconnectX();
+                appState.connectedSources.twitter = false;
+                window.app.populateSettingsSources(); // Re-renders, creates new button
+                return; // Exit - old btn reference is stale after re-render
+            }
+
+            alert('Not implemented yet.');
+        } catch (err) {
+            console.error('[App] disconnectSource error:', err);
+            alert('Failed to disconnect: ' + (err.message || 'Unknown error'));
+            // Only restore button on failure (no re-render happened)
+            if (btn) {
+                btn.disabled = false;
+                btn.innerHTML = 'Disconnect';
+            }
+        }
     }
 };
 
 function updateAuthUI() {
+    // Don't render until session hydration completes (prevents flicker)
+    if (!appState.sessionHydrated) return;
+
     const btnAuth = document.getElementById('btn-auth');
     const userMenu = document.getElementById('user-menu');
     const menuUsername = document.getElementById('menu-username');

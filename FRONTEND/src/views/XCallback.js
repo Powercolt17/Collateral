@@ -78,6 +78,11 @@ export async function initXCallback() {
                     usernameDisplayEl.textContent = 'Account Connected';
                 }
 
+                // Re-hydrate session to sync connected sources
+                if (window.hydrateSession) {
+                    await window.hydrateSession();
+                }
+
                 // Redirect to Contracts wizard Step 2 (Source) after 2 seconds
                 setTimeout(() => {
                     window.router.navigate('/contracts?step=source&connected=x');

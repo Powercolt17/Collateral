@@ -17,8 +17,8 @@
 
 import { FastifyInstance, FastifyRequest, FastifyReply } from 'fastify';
 import { db } from '../db/client.js';
-import { users } from '../db/schema.js';
-import { eq } from 'drizzle-orm';
+import { users, connectedAccounts } from '../db/schema.js';
+import { eq, and } from 'drizzle-orm';
 import { randomBytes, createHmac } from 'crypto';
 
 // =============================================================================
@@ -31,11 +31,12 @@ const X_API_KEY = process.env.X_API_KEY;
 const X_API_SECRET = process.env.X_API_SECRET;
 const X_OAUTH_REDIRECT_URI = process.env.X_OAUTH_REDIRECT_URI;
 
-// Validate on startup - fail fast if missing
+// Validate on startup - HARD FAIL if missing (prevents half-configured deployment)
 if (!X_API_KEY || !X_API_SECRET || !X_OAUTH_REDIRECT_URI) {
-    console.error('[X OAuth 1.0a] FATAL: Missing required environment variables');
-    console.error('[X OAuth 1.0a] Required: X_API_KEY, X_API_SECRET, X_OAUTH_REDIRECT_URI');
-    console.error('[X OAuth 1.0a] DO NOT use X_OAUTH_CLIENT_ID or X_OAUTH_CLIENT_SECRET - those are OAuth 2.0');
+    throw new Error(
+        '[X OAuth 1.0a] FATAL: Missing required environment variables: X_API_KEY, X_API_SECRET, X_OAUTH_REDIRECT_URI. ' +
+        'DO NOT use X_OAUTH_CLIENT_ID or X_OAUTH_CLIENT_SECRET - those are OAuth 2.0.'
+    );
 }
 
 // Request tokens expire after 10 minutes
@@ -125,27 +126,31 @@ async function xOAuthRoutes(fastify: FastifyInstance) {
         async (request: FastifyRequest, reply: FastifyReply) => {
             const userId = request.userId!;
 
-            // Check if OAuth is configured
-            if (!X_API_KEY || !X_API_SECRET || !X_OAUTH_REDIRECT_URI) {
-                console.error('[X OAuth 1.0a] Missing X_API_KEY, X_API_SECRET, or X_OAUTH_REDIRECT_URI');
-                return reply.status(500).send({
-                    error: 'X OAuth not configured',
-                    code: 'X_OAUTH_NOT_CONFIGURED',
-                });
-            }
-
-            // Check if user already has X connected
-            const [user] = await db
-                .select({ xUserId: users.xUserId, xUsername: users.xUsername })
-                .from(users)
-                .where(eq(users.id, userId))
+            // Check if user already has X connected (connected_accounts is CANONICAL)
+            const [xConn] = await db
+                .select({
+                    externalAccountId: connectedAccounts.externalAccountId,
+                    verificationStatus: connectedAccounts.verificationStatus,
+                    status: connectedAccounts.status,
+                    metadataJson: connectedAccounts.metadataJson,
+                })
+                .from(connectedAccounts)
+                .where(
+                    and(
+                        eq(connectedAccounts.userId, userId),
+                        eq(connectedAccounts.platform, 'X')
+                    )
+                )
                 .limit(1);
 
-            if (user?.xUserId) {
+            // If already connected AND verified in connected_accounts, return early
+            if (xConn?.externalAccountId && xConn.status === 'ACTIVE' && xConn.verificationStatus === 'VERIFIED') {
+                const meta = xConn.metadataJson as { resolvedUsername?: string } | null;
                 return reply.status(200).send({
                     connected: true,
-                    xUserId: user.xUserId,
-                    xUsername: user.xUsername,
+                    platform: 'X',
+                    xUserId: xConn.externalAccountId,
+                    xUsername: meta?.resolvedUsername ?? null,
                     message: 'X account already connected',
                 });
             }
@@ -440,7 +445,40 @@ async function xOAuthRoutes(fastify: FastifyInstance) {
                     })
                     .where(eq(users.id, userId));
 
-                console.log(`[X OAuth 1.0a] Successfully connected @${xUsername} to user ${userId}`);
+                // CRITICAL: Also upsert to connected_accounts for contract creation compatibility
+                // OAuth 1.0a = proof of ownership = VERIFIED status (no bio challenge needed)
+                const xMetadata = {
+                    resolvedUsername: xUsername,
+                    followersCount: followersCount,
+                    accountCreatedAt: xAccountCreatedAt?.toISOString() || null,
+                };
+
+                // Atomic upsert - single statement prevents race conditions
+                await db
+                    .insert(connectedAccounts)
+                    .values({
+                        userId,
+                        platform: 'X',
+                        externalAccountId: xUserId,
+                        status: 'ACTIVE' as const,
+                        verificationStatus: 'VERIFIED' as const,
+                        connectedAt: connectNow,
+                        verifiedAt: connectNow,
+                        metadataJson: xMetadata,
+                    })
+                    .onConflictDoUpdate({
+                        target: [connectedAccounts.userId, connectedAccounts.platform],
+                        set: {
+                            externalAccountId: xUserId,
+                            status: 'ACTIVE' as const,
+                            verificationStatus: 'VERIFIED' as const,
+                            connectedAt: connectNow,
+                            verifiedAt: connectNow,
+                            metadataJson: xMetadata,
+                        },
+                    });
+
+                console.log(`[X OAuth 1.0a] Successfully connected @${xUsername} to user ${userId} (connected_accounts synced)`);
 
                 // Redirect to frontend success page
                 const frontendUrl = process.env.FRONTEND_URL || 'http://localhost:5173';
@@ -460,6 +498,7 @@ async function xOAuthRoutes(fastify: FastifyInstance) {
      * GET /v1/connect/x/status
      * 
      * Get current X connection status for authenticated user.
+     * Reads from connected_accounts (CANONICAL source).
      */
     fastify.get(
         '/v1/connect/x/status',
@@ -473,28 +512,40 @@ async function xOAuthRoutes(fastify: FastifyInstance) {
         async (request: FastifyRequest, reply: FastifyReply) => {
             const userId = request.userId!;
 
-            const [user] = await db
+            // Read from connected_accounts (CANONICAL source)
+            const [xConn] = await db
                 .select({
-                    xUserId: users.xUserId,
-                    xUsername: users.xUsername,
-                    xConnectedAt: users.xConnectedAt,
+                    externalAccountId: connectedAccounts.externalAccountId,
+                    status: connectedAccounts.status,
+                    verificationStatus: connectedAccounts.verificationStatus,
+                    connectedAt: connectedAccounts.connectedAt,
+                    verifiedAt: connectedAccounts.verifiedAt,
+                    metadataJson: connectedAccounts.metadataJson,
                 })
-                .from(users)
-                .where(eq(users.id, userId))
+                .from(connectedAccounts)
+                .where(
+                    and(
+                        eq(connectedAccounts.userId, userId),
+                        eq(connectedAccounts.platform, 'X')
+                    )
+                )
                 .limit(1);
 
-            if (!user || !user.xUserId) {
-                return reply.status(200).send({
-                    connected: false,
-                });
+            if (!xConn || !xConn.externalAccountId || xConn.status !== 'ACTIVE') {
+                return reply.status(200).send({ connected: false });
             }
+
+            const meta = (xConn.metadataJson ?? null) as { resolvedUsername?: string } | null;
 
             return reply.status(200).send({
                 connected: true,
                 platform: 'X',
-                xUserId: user.xUserId,
-                xUsername: user.xUsername,
-                connectedAt: user.xConnectedAt?.toISOString(),
+                xUserId: xConn.externalAccountId,
+                xUsername: meta?.resolvedUsername ?? null,
+                status: xConn.status,
+                verificationStatus: xConn.verificationStatus,
+                connectedAt: xConn.connectedAt?.toISOString?.() ?? null,
+                verifiedAt: xConn.verifiedAt?.toISOString?.() ?? null,
             });
         }
     );
@@ -516,6 +567,7 @@ async function xOAuthRoutes(fastify: FastifyInstance) {
         async (request: FastifyRequest, reply: FastifyReply) => {
             const userId = request.userId!;
 
+            // Clear legacy users table columns
             await db
                 .update(users)
                 .set({
@@ -528,7 +580,24 @@ async function xOAuthRoutes(fastify: FastifyInstance) {
                 })
                 .where(eq(users.id, userId));
 
-            console.log(`[X OAuth 1.0a] Disconnected X account for user ${userId}`);
+            // CRITICAL: Also revoke in connected_accounts (canonical source for contract creation)
+            // Clear metadataJson to remove stale username data (externalAccountId is NOT NULL in schema)
+            await db
+                .update(connectedAccounts)
+                .set({
+                    status: 'REVOKED' as const,
+                    verificationStatus: 'PENDING' as const, // Reset verification
+                    verifiedAt: null,
+                    metadataJson: null,  // Clear stale metadata
+                })
+                .where(
+                    and(
+                        eq(connectedAccounts.userId, userId),
+                        eq(connectedAccounts.platform, 'X')
+                    )
+                );
+
+            console.log(`[X OAuth 1.0a] Disconnected X account for user ${userId} (connected_accounts synced)`);
 
             return reply.status(200).send({
                 success: true,

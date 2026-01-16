@@ -16,6 +16,10 @@ import { renderXCallback, initXCallback } from './views/XCallback.js';
 // API Client for backend integration
 import api from './api.js';
 
+// Global error handlers for debugging
+window.addEventListener('error', (e) => console.error('[GlobalError]', e.error || e.message));
+window.addEventListener('unhandledrejection', (e) => console.error('[UnhandledPromise]', e.reason));
+
 // App state - initialized from localStorage (NO email derivation ever)
 const storedUser = api.getStoredUser();
 const appState = {
@@ -105,6 +109,9 @@ async function hydrateSession() {
         updateAuthUI();
     }
 }
+
+// Expose hydrateSession globally for use in disconnectSource
+window.hydrateSession = hydrateSession;
 
 // Routes configuration
 const routes = [
@@ -603,7 +610,7 @@ window.app = {
     },
     disconnectSource: async function (source) {
         const btn = document.querySelector(`button[data-source-btn="${source}"]`);
-        const originalLabel = btn?.innerHTML; // Save original label
+        const originalLabel = btn?.innerHTML;
 
         // Show loading state
         if (btn) {
@@ -614,9 +621,18 @@ window.app = {
         try {
             if (source === 'twitter') {
                 await window.api.disconnectX();
-                appState.connectedSources.twitter = false;
-                window.app.populateSettingsSources(); // Re-renders, creates new button
-                return; // Exit - old btn reference is stale after re-render
+
+                // 1) Re-hydrate canonical state from backend (identity + connections)
+                if (window.hydrateSession) await window.hydrateSession();
+
+                // 2) Refresh settings UI
+                window.app.populateSettingsSources();
+
+                // 3) Force router to re-render current page (prevents blank view)
+                const current = (window.location.hash || '#/overview').replace(/^#/, '');
+                window.router.navigate(current);
+
+                return;
             }
 
             alert('Not implemented yet.');

@@ -1,0 +1,16 @@
+{
+    "rewrites": [
+        {
+            "source": "/x/callback",
+            "destination": "/"
+        },
+        {
+            "source": "/stripe/callback",
+            "destination": "/"
+        },
+        {
+            "source": "/(.*)",
+            "destination": "/"
+        }
+    ]
+}

@@ -71,7 +71,9 @@ function getHeaders(includeAuth = true) {
 }
 
 async function handleResponse(response) {
-    const data = await response.json().catch(() => ({}));
+    // Handle 204 No Content without trying to parse
+    const isNoContent = response.status === 204;
+    const data = isNoContent ? {} : await response.json().catch(() => ({}));
 
     if (!response.ok) {
         const error = new Error(data.message || data.error || `HTTP ${response.status}`);
@@ -82,6 +84,62 @@ async function handleResponse(response) {
     }
 
     return data;
+}
+
+// Bulletproof POST helper
+// - undefined: sends {} (default, prevents empty body errors)
+// - null: sends NO body (escape hatch for strict APIs)
+// - object: sends JSON body
+async function post(path, body) {
+    const init = {
+        method: 'POST',
+        headers: getHeaders(),
+    };
+
+    if (body === undefined) {
+        init.body = JSON.stringify({});
+    } else if (body !== null) {
+        init.body = JSON.stringify(body);
+    }
+    // body === null means no body at all
+
+    const response = await fetch(`${API_BASE_URL}${path}`, init);
+    return handleResponse(response);
+}
+
+// POST helper for unauthenticated endpoints (login, signup)
+async function postPublic(path, body) {
+    const init = {
+        method: 'POST',
+        headers: getHeaders(false),
+    };
+
+    if (body === undefined) {
+        init.body = JSON.stringify({});
+    } else if (body !== null) {
+        init.body = JSON.stringify(body);
+    }
+
+    const response = await fetch(`${API_BASE_URL}${path}`, init);
+    return handleResponse(response);
+}
+
+// GET helper for consistency
+async function get(path) {
+    const response = await fetch(`${API_BASE_URL}${path}`, {
+        method: 'GET',
+        headers: getHeaders(),
+    });
+    return handleResponse(response);
+}
+
+// GET helper for unauthenticated endpoints
+async function getPublic(path) {
+    const response = await fetch(`${API_BASE_URL}${path}`, {
+        method: 'GET',
+        headers: getHeaders(false),
+    });
+    return handleResponse(response);
 }
 
 // =============================================================================
@@ -97,18 +155,11 @@ async function handleResponse(response) {
 export async function login(email, password) {
     console.log('[API] login called with email:', email);
 
-    const response = await fetch(`${API_BASE_URL}/v1/auth/login`, {
-        method: 'POST',
-        headers: getHeaders(false),
-        body: JSON.stringify({ email, password }),
-    });
-
-    const data = await handleResponse(response);
+    const data = await postPublic('/v1/auth/login', { email, password });
     console.log('[API] login response:', data);
 
     if (data.accessToken) {
         setAuthToken(data.accessToken);
-        // Store user with identity info for persistence
         setStoredUser({
             email: data.user?.email || email,
             userId: data.user?.id,
@@ -128,23 +179,16 @@ export async function login(email, password) {
 export async function signup(email, password, username, displayName = null) {
     console.log('[API] signup called:', { email, username, displayName });
 
-    const response = await fetch(`${API_BASE_URL}/v1/auth/signup`, {
-        method: 'POST',
-        headers: getHeaders(false),
-        body: JSON.stringify({
-            email,
-            password,
-            username,
-            displayName: displayName || username
-        }),
+    const data = await postPublic('/v1/auth/signup', {
+        email,
+        password,
+        username,
+        displayName: displayName || username
     });
-
-    const data = await handleResponse(response);
     console.log('[API] signup response:', data);
 
     if (data.accessToken) {
         setAuthToken(data.accessToken);
-        // Store user with identity info for persistence
         setStoredUser({
             email: data.user?.email || email,
             userId: data.user?.id,
@@ -159,17 +203,17 @@ export async function signup(email, password, username, displayName = null) {
 
 /**
  * Dev login (DEPRECATED - dev mode only)
+ * Blocked in production for security
  */
 export async function devLogin(email, displayName = null) {
+    // Block in production
+    if (import.meta.env.PROD) {
+        throw new Error('devLogin is disabled in production. Use login() instead.');
+    }
+
     console.log('[API] devLogin (deprecated) called');
 
-    const response = await fetch(`${API_BASE_URL}/auth/login`, {
-        method: 'POST',
-        headers: getHeaders(false),
-        body: JSON.stringify({ email, displayName }),
-    });
-
-    const data = await handleResponse(response);
+    const data = await postPublic('/auth/login', { email, displayName });
     if (data.accessToken) {
         setAuthToken(data.accessToken);
         setStoredUser({
@@ -190,31 +234,15 @@ export async function logout() {
 
 export async function startXOAuth() {
     console.log('[API] startXOAuth called');
-
-    const response = await fetch(`${API_BASE_URL}/v1/connect/x/oauth/start`, {
-        method: 'GET',
-        headers: getHeaders(),
-    });
-
-    return handleResponse(response);
+    return get('/v1/connect/x/oauth/start');
 }
 
 export async function getXStatus() {
-    const response = await fetch(`${API_BASE_URL}/v1/connect/x/status`, {
-        method: 'GET',
-        headers: getHeaders(),
-    });
-
-    return handleResponse(response);
+    return get('/v1/connect/x/status');
 }
 
 export async function disconnectX() {
-    const response = await fetch(`${API_BASE_URL}/v1/connect/x/disconnect`, {
-        method: 'POST',
-        headers: getHeaders(),
-    });
-
-    return handleResponse(response);
+    return post('/v1/connect/x/disconnect');
 }
 
 // --- DEPRECATED: X VERIFICATION (bio challenge) ---
@@ -222,29 +250,12 @@ export async function disconnectX() {
 
 export async function startXVerification(xUsername) {
     console.warn('[API] startXVerification is DEPRECATED. Use startXOAuth instead.');
-    console.log('[API] startXVerification called with username:', xUsername);
-
-    const response = await fetch(`${API_BASE_URL}/v1/connect/x/start`, {
-        method: 'POST',
-        headers: getHeaders(),
-        body: JSON.stringify({ username: xUsername }),
-    });
-
-    return handleResponse(response);
+    return post('/v1/connect/x/start', { username: xUsername });
 }
 
 export async function verifyX() {
     console.warn('[API] verifyX is DEPRECATED. Use startXOAuth instead.');
-    const headers = getHeaders();
-    console.log('[API] verifyX called');
-
-    const response = await fetch(`${API_BASE_URL}/v1/connect/x/verify`, {
-        method: 'POST',
-        headers: headers,
-        body: JSON.stringify({}),
-    });
-
-    return handleResponse(response);
+    return post('/v1/connect/x/verify');
 }
 
 // --- STRIPE CONNECT ---
@@ -252,146 +263,74 @@ export async function verifyX() {
 export async function startStripeConnect() {
     const token = getAuthToken();
     console.log('[API] startStripeConnect called');
-    console.log('[API] 🔐 Token present:', !!token);
-    console.log('[API] 🔗 API Base URL:', API_BASE_URL);
 
     // If no token, throw immediately with clear error
     if (!token) {
         throw new Error('Login required to connect Stripe. Please log in first.');
     }
 
-    const response = await fetch(`${API_BASE_URL}/v1/connect/stripe/start`, {
-        method: 'GET',
-        headers: getHeaders(),
-    });
-
-    return handleResponse(response);
+    return get('/v1/connect/stripe/start');
 }
 
 export async function completeStripeConnect(code, state) {
     console.log('[API] completeStripeConnect called');
-
-    const response = await fetch(`${API_BASE_URL}/v1/connect/stripe/callback`, {
-        method: 'POST',
-        headers: getHeaders(),
-        body: JSON.stringify({ code, state }),
-    });
-
-    return handleResponse(response);
+    return post('/v1/connect/stripe/callback', { code, state });
 }
 
 export async function getStripeStatus() {
-    const response = await fetch(`${API_BASE_URL}/v1/connect/stripe/status`, {
-        method: 'GET',
-        headers: getHeaders(),
-    });
-
-    return handleResponse(response);
+    return get('/v1/connect/stripe/status');
 }
 
 // --- CONTRACTS ---
 
 export async function createContract(params) {
-    const response = await fetch(`${API_BASE_URL}/v1/contracts`, {
-        method: 'POST',
-        headers: getHeaders(),
-        body: JSON.stringify(params),
-    });
-
-    return handleResponse(response);
+    return post('/v1/contracts', params);
 }
 
 export async function getContracts() {
-    const response = await fetch(`${API_BASE_URL}/v1/contracts`, {
-        method: 'GET',
-        headers: getHeaders(),
-    });
-
-    return handleResponse(response);
+    return get('/v1/contracts');
 }
 
 export async function getContract(contractId) {
-    const response = await fetch(`${API_BASE_URL}/v1/contracts/${contractId}`, {
-        method: 'GET',
-        headers: getHeaders(),
-    });
-
-    return handleResponse(response);
+    return get(`/v1/contracts/${contractId}`);
 }
 
 // --- FUNDING ---
 
 export async function createFundingIntent(contractId) {
-    const response = await fetch(`${API_BASE_URL}/v1/contracts/${contractId}/funding-intent`, {
-        method: 'POST',
-        headers: getHeaders(),
-    });
-
-    return handleResponse(response);
+    return post(`/v1/contracts/${contractId}/funding-intent`);
 }
 
 // --- EXECUTE ---
 
 export async function executeContract(contractId) {
     console.log('[API] executeContract called for:', contractId);
-
-    const response = await fetch(`${API_BASE_URL}/v1/contracts/${contractId}/execute`, {
-        method: 'POST',
-        headers: getHeaders(),
-        body: JSON.stringify({}),
-    });
-
-    return handleResponse(response);
+    return post(`/v1/contracts/${contractId}/execute`);
 }
 
 
 // --- CONNECTED ACCOUNTS ---
 
 export async function getConnectedAccounts() {
-    const response = await fetch(`${API_BASE_URL}/v1/me/connected-accounts`, {
-        method: 'GET',
-        headers: getHeaders(),
-    });
-
-    return handleResponse(response);
+    return get('/v1/me/connected-accounts');
 }
 
 export async function getConnectionStatus() {
-    const response = await fetch(`${API_BASE_URL}/v1/connect/status`, {
-        method: 'GET',
-        headers: getHeaders(),
-    });
-
-    return handleResponse(response);
+    return get('/v1/connect/status');
 }
 
 export async function getProfile() {
-    const response = await fetch(`${API_BASE_URL}/v1/me/profile`, {
-        method: 'GET',
-        headers: getHeaders(),
-    });
-
-    return handleResponse(response);
+    return get('/v1/me/profile');
 }
 
 // --- LEDGER ---
 
 export async function getLedgerEvents(contractId) {
-    const response = await fetch(`${API_BASE_URL}/v1/contracts/${contractId}/events`, {
-        method: 'GET',
-        headers: getHeaders(),
-    });
-
-    return handleResponse(response);
+    return get(`/v1/contracts/${contractId}/events`);
 }
 
 export async function getPublicLedger() {
-    const response = await fetch(`${API_BASE_URL}/v1/ledger`, {
-        method: 'GET',
-        headers: getHeaders(false), // Public endpoint
-    });
-
-    return handleResponse(response);
+    return getPublic('/v1/ledger');
 }
 
 // --- HEALTH ---

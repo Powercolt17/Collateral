@@ -134,11 +134,21 @@ const routes = [
 // ================================================================================
 // OAuth flows redirect to path-based URLs (/x/callback, /stripe/callback)
 // but our router is hash-based (#/path). Intercept and redirect before router init.
+// Also handles Vercel rewrite case where callback lands at /?success=true
 (function handleOAuthPathRedirect() {
     // Skip if already hash-routed (prevents loops)
     if (window.location.hash) return;
 
     const { pathname, search, origin } = window.location;
+
+    // Handle Vercel rewrite case: /?success=true or /?code= lands at root
+    // This happens when vercel.json rewrites /x/callback to /
+    const isXCallbackQuery = pathname === '/' && (search.includes('success=') || search.includes('code='));
+    if (isXCallbackQuery) {
+        console.log('[OAuth] Intercepting root path with callback params, redirecting to hash route');
+        window.location.replace(origin + '/#/x/callback' + search);
+        return;
+    }
 
     // Map of path-based OAuth callbacks to hash routes
     const map = {

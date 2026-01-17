@@ -718,8 +718,13 @@ router.onRouteChange = function (route, path) {
     updateAuthUI();
 };
 
-// Handle default route
-if (!window.location.hash) {
+// Handle default route (but NEVER override OAuth callback queries)
+const { pathname: defaultPathname, search: defaultSearch } = window.location;
+const isOAuthLanding =
+    defaultPathname === '/' &&
+    (defaultSearch.includes('success=') || defaultSearch.includes('code=') || defaultSearch.includes('state='));
+
+if (!window.location.hash && !isOAuthLanding) {
     window.location.hash = '/overview';
 }
 

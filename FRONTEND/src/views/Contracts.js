@@ -2055,6 +2055,10 @@ export function initContracts() {
                 }
 
                 // Store state for callback handling
+                localStorage.setItem('stripe_oauth_flow', JSON.stringify({
+                    state: result.state,
+                    startedAt: Date.now(),
+                }));
                 localStorage.setItem('stripe_oauth_state', result.state);
 
                 // Open Stripe Connect in a popup
@@ -2064,27 +2068,79 @@ export function initContracts() {
                     'width=600,height=700,scrollbars=yes'
                 );
 
-                // Listen for OAuth callback completion
-                const checkPopup = setInterval(async () => {
-                    if (popup.closed) {
-                        clearInterval(checkPopup);
-                        btn.textContent = 'Connect with Stripe';
-                        btn.disabled = false;
-                        // Refresh canonical status after popup closes
-                        await refreshConnectionStatus();
-
-                        // If verified, show connected UI
-                        if (stripeVerified) {
-                            document.getElementById('stripe-connect-step1').classList.add('hidden');
-                            document.getElementById('stripe-connect-success').classList.remove('hidden');
-                            document.getElementById('stripe-account-id').textContent = (stripeAccountId || 'acct_xxx') + ' • Connected';
-                            document.getElementById('stripe-verify-status').textContent = 'Connected';
-                            document.getElementById('stripe-verify-status').classList.remove('text-neutral-400');
-                            document.getElementById('stripe-verify-status').classList.add('text-[#1F7A4D]');
-                            if (window.lucide) window.lucide.createIcons();
+                // Poll for connection status WHILE popup is open (every 2 seconds)
+                const pollInterval = setInterval(async () => {
+                    try {
+                        // Check if popup was closed by user
+                        if (popup && popup.closed) {
+                            clearInterval(pollInterval);
+                            // Final check for connection
+                            await refreshConnectionStatus();
+                            if (stripeVerified) {
+                                console.log('[Contracts] Stripe connected after popup closed');
+                                showStripeConnectedUI();
+                            } else {
+                                // User closed without completing
+                                btn.textContent = 'Connect with Stripe';
+                                btn.disabled = false;
+                            }
+                            localStorage.removeItem('stripe_oauth_flow');
+                            localStorage.removeItem('stripe_oauth_state');
+                            return;
                         }
+
+                        // Poll backend for connection status while popup is open
+                        const status = await window.api.getStripeStatus();
+                        console.log('[Contracts] Stripe status poll:', status);
+
+                        if (status.connected) {
+                            console.log('[Contracts] Stripe connected during poll!');
+                            clearInterval(pollInterval);
+
+                            // Close popup
+                            if (popup && !popup.closed) popup.close();
+
+                            // Update local state
+                            stripeVerified = true;
+                            stripeAccountId = status.stripeAccountId || null;
+                            window.appState.connectedSources.stripe = true;
+
+                            // Re-hydrate session
+                            if (window.hydrateSession) await window.hydrateSession();
+
+                            // Show connected UI
+                            showStripeConnectedUI();
+
+                            // Clean up
+                            localStorage.removeItem('stripe_oauth_flow');
+                            localStorage.removeItem('stripe_oauth_state');
+                        }
+                    } catch (pollErr) {
+                        console.warn('[Contracts] Stripe poll error:', pollErr);
                     }
-                }, 500);
+                }, 2000); // Poll every 2 seconds
+
+                // Timeout after 10 minutes
+                setTimeout(() => {
+                    clearInterval(pollInterval);
+                    if (btn.innerHTML.includes('spin')) {
+                        btn.innerHTML = '<svg class="w-4 h-4" viewBox="0 0 24 24" fill="currentColor"><path d="M13.976 9.15c-2.172-.806-3.356-1.426-3.356-2.409 0-.831.683-1.305 1.901-1.305 2.227 0 4.515.858 6.09 1.631l.89-5.494C18.252.975 15.697 0 12.165 0 9.667 0 7.589.654 6.104 1.872 4.56 3.147 3.757 4.992 3.757 7.218c0 4.039 2.467 5.76 6.476 7.219 2.585.92 3.445 1.574 3.445 2.583 0 .98-.84 1.545-2.354 1.545-1.875 0-4.965-.921-6.99-2.109l-.9 5.555C5.175 22.99 8.385 24 11.714 24c2.641 0 4.843-.624 6.328-1.813 1.664-1.305 2.525-3.236 2.525-5.732 0-4.128-2.524-5.851-6.591-7.305z"/></svg> Connect with Stripe';
+                        btn.disabled = false;
+                    }
+                    localStorage.removeItem('stripe_oauth_flow');
+                    localStorage.removeItem('stripe_oauth_state');
+                }, 10 * 60 * 1000);
+
+                // Helper to show connected UI
+                function showStripeConnectedUI() {
+                    document.getElementById('stripe-connect-step1').classList.add('hidden');
+                    document.getElementById('stripe-connect-success').classList.remove('hidden');
+                    document.getElementById('stripe-account-id').textContent = (stripeAccountId || 'acct_xxx') + ' • Connected';
+                    document.getElementById('stripe-verify-status').textContent = 'Connected';
+                    document.getElementById('stripe-verify-status').classList.remove('text-neutral-400');
+                    document.getElementById('stripe-verify-status').classList.add('text-[#1F7A4D]');
+                    if (window.lucide) window.lucide.createIcons();
+                }
 
             } catch (error) {
                 console.error('[Contracts] startStripeConnect error:', error);

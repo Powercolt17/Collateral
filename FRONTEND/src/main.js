@@ -430,9 +430,65 @@ window.app = {
                         state: result.state,
                         startedAt: Date.now(),
                     }));
-                    // Also store legacy key for backward compatibility
                     localStorage.setItem('stripe_oauth_state', result.state);
-                    window.location.href = result.oauthUrl;
+
+                    // Open Stripe OAuth in popup window
+                    const popup = window.open(result.oauthUrl, 'StripeConnect', 'width=600,height=700');
+
+                    // Poll for connection status while popup is open
+                    const pollInterval = setInterval(async () => {
+                        try {
+                            // Check if popup was closed
+                            if (popup && popup.closed) {
+                                clearInterval(pollInterval);
+                                // Final check for connection
+                                const status = await window.api.getStripeStatus();
+                                if (status.connected) {
+                                    console.log('[Stripe] Connected via popup!');
+                                    if (window.hydrateSession) await window.hydrateSession();
+                                    btn.innerHTML = '✓ Connected';
+                                    btn.disabled = true;
+                                    // Refresh the current view
+                                    const current = (window.location.hash || '#/contracts').replace(/^#/, '');
+                                    window.router.navigate(current);
+                                } else {
+                                    btn.innerHTML = 'Connect';
+                                    btn.disabled = false;
+                                }
+                                // Clean up OAuth state
+                                localStorage.removeItem('stripe_oauth_flow');
+                                localStorage.removeItem('stripe_oauth_state');
+                                return;
+                            }
+
+                            // Periodic poll while popup is open
+                            const status = await window.api.getStripeStatus();
+                            if (status.connected) {
+                                console.log('[Stripe] Detected connection during poll');
+                                clearInterval(pollInterval);
+                                if (popup && !popup.closed) popup.close();
+                                if (window.hydrateSession) await window.hydrateSession();
+                                btn.innerHTML = '✓ Connected';
+                                btn.disabled = true;
+                                localStorage.removeItem('stripe_oauth_flow');
+                                localStorage.removeItem('stripe_oauth_state');
+                                const current = (window.location.hash || '#/contracts').replace(/^#/, '');
+                                window.router.navigate(current);
+                            }
+                        } catch (pollErr) {
+                            console.warn('[Stripe] Poll error:', pollErr);
+                        }
+                    }, 2000); // Poll every 2 seconds
+
+                    // Timeout after 10 minutes
+                    setTimeout(() => {
+                        clearInterval(pollInterval);
+                        if (btn.innerHTML.includes('spin')) {
+                            btn.innerHTML = 'Connect';
+                            btn.disabled = false;
+                        }
+                    }, 10 * 60 * 1000);
+
                     return;
                 }
             } else if (source === 'github') {

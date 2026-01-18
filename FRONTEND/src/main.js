@@ -65,10 +65,18 @@ async function hydrateSession() {
         appState.username = profile.identity?.username ?? null;
 
         // Hydrate connected sources from profile (canonical)
+        // Show connected even if not yet verified (verified shown separately in UI)
         appState.connectedSources = {
-            twitter: !!(profile.xConnection?.connected && profile.xConnection?.verified),
-            stripe: !!(profile.stripeConnection?.connected && profile.stripeConnection?.verified),
+            twitter: !!profile.xConnection?.connected,
+            stripe: !!profile.stripeConnection?.connected,
             github: false, // TODO: add when GitHub OAuth is implemented
+        };
+
+        // Store verification status separately for UI display
+        appState.verificationStatus = {
+            twitter: profile.xConnection?.verified ?? false,
+            stripe: profile.stripeConnection?.verified ?? false,
+            github: false,
         };
 
         // Update localStorage with canonical values
@@ -134,20 +142,62 @@ const routes = [
 // ================================================================================
 // OAuth flows redirect to path-based URLs (/x/callback, /stripe/callback)
 // but our router is hash-based (#/path). Intercept and redirect before router init.
-// Also handles Vercel rewrite case where callback lands at /?success=true
+// Also handles Vercel rewrite case where callback lands at /?...
 (function handleOAuthPathRedirect() {
     // Skip if already hash-routed (prevents loops)
     if (window.location.hash) return;
 
     const { pathname, search, origin } = window.location;
 
-    // Handle Vercel rewrite case: /?success=true or /?code= lands at root
-    // This happens when vercel.json rewrites /x/callback to /
-    const isXCallbackQuery = pathname === '/' && (search.includes('success=') || search.includes('code='));
-    if (isXCallbackQuery) {
-        console.log('[OAuth] Intercepting root path with callback params, redirecting to hash route');
-        window.location.replace(origin + '/#/x/callback' + search);
-        return;
+    // Handle Vercel rewrite case: callbacks land at root "/" with query params
+    if (pathname === '/') {
+        const params = new URLSearchParams(search);
+
+        // X callback: has success= param (from our backend redirect)
+        if (params.has('success') || params.has('username')) {
+            console.log('[OAuth] Intercepting X callback at root, redirecting to hash route');
+            window.location.replace(origin + '/#/x/callback' + search);
+            return;
+        }
+
+        // Stripe callback: has code= AND state= params AND stored state MATCHES incoming
+        const hasCode = params.has('code');
+        const hasState = params.has('state');
+        const incomingState = params.get('state');
+
+        // Parse stored flow object (includes state + timestamp)
+        let storedFlow = null;
+        try {
+            storedFlow = JSON.parse(localStorage.getItem('stripe_oauth_flow') || 'null');
+        } catch (e) {
+            // Fall back to legacy simple state storage
+            const legacyState = localStorage.getItem('stripe_oauth_state');
+            if (legacyState) storedFlow = { state: legacyState, startedAt: 0 };
+        }
+
+        if (hasCode && hasState && storedFlow && incomingState) {
+            const isStateMatch = storedFlow.state === incomingState;
+            const isRecent = !storedFlow.startedAt || (Date.now() - storedFlow.startedAt) < 10 * 60 * 1000; // 10 min
+
+            if (isStateMatch && isRecent) {
+                console.log('[OAuth] Intercepting Stripe callback at root, redirecting to hash route');
+                window.location.replace(origin + '/#/stripe/callback' + search);
+                return;
+            }
+
+            // State mismatch or expired: route to error page (not silent fallthrough)
+            if (!isStateMatch) {
+                console.warn('[OAuth] Stripe state mismatch.', { stored: storedFlow.state, incoming: incomingState });
+                window.location.replace(origin + '/#/stripe/callback?error=state_mismatch');
+                return;
+            }
+
+            if (!isRecent) {
+                console.warn('[OAuth] Stripe OAuth flow expired.');
+                window.location.replace(origin + '/#/stripe/callback?error=session_expired');
+                return;
+            }
+        }
     }
 
     // Map of path-based OAuth callbacks to hash routes
@@ -375,7 +425,12 @@ window.app = {
             } else if (source === 'stripe') {
                 const result = await window.api.startStripeConnect();
                 if (result.oauthUrl) {
-                    // Store state for CSRF protection
+                    // Store flow object with state + timestamp for CSRF protection and expiry
+                    localStorage.setItem('stripe_oauth_flow', JSON.stringify({
+                        state: result.state,
+                        startedAt: Date.now(),
+                    }));
+                    // Also store legacy key for backward compatibility
                     localStorage.setItem('stripe_oauth_state', result.state);
                     window.location.href = result.oauthUrl;
                     return;

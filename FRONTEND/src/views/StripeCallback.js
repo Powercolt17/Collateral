@@ -56,11 +56,22 @@ export async function initStripeCallback() {
     const errorMessageEl = document.getElementById('stripe-error-message');
     const accountDisplayEl = document.getElementById('stripe-account-display');
 
-    // Handle OAuth error from Stripe
+    // Handle OAuth error from Stripe or our own error params
     if (error) {
         loadingEl.classList.add('hidden');
         errorEl.classList.remove('hidden');
-        errorMessageEl.textContent = errorDescription || error || 'Unknown error from Stripe';
+
+        // Map our custom error codes to user-friendly messages
+        const errorMessages = {
+            'state_mismatch': 'Session mismatch detected. This can happen if you opened the login in a different tab. Please try again.',
+            'session_expired': 'Your Stripe connection session has expired (10 minute limit). Please try again.',
+        };
+
+        errorMessageEl.textContent = errorMessages[error] || errorDescription || error || 'Unknown error from Stripe';
+
+        // Clear any stale OAuth state
+        localStorage.removeItem('stripe_oauth_flow');
+        localStorage.removeItem('stripe_oauth_state');
         return;
     }
 
@@ -82,12 +93,16 @@ export async function initStripeCallback() {
     }
 
     try {
+        console.log('[StripeCallback] Completing Stripe connect...');
         // Exchange code for connected account
         const result = await window.api.completeStripeConnect(code, state);
         console.log('[StripeCallback] Complete result:', result);
 
-        // Clear stored state
-        localStorage.removeItem('stripe_oauth_state');
+        // Re-hydrate session to sync connected sources (critical!)
+        if (window.hydrateSession) {
+            console.log('[StripeCallback] Hydrating session...');
+            await window.hydrateSession();
+        }
 
         // Show success
         loadingEl.classList.add('hidden');
@@ -109,10 +124,13 @@ export async function initStripeCallback() {
 
     } catch (err) {
         console.error('[StripeCallback] Error:', err);
-        localStorage.removeItem('stripe_oauth_state');
 
         loadingEl.classList.add('hidden');
         errorEl.classList.remove('hidden');
         errorMessageEl.textContent = err.message || 'Failed to complete Stripe connection';
+    } finally {
+        // Always clear stored state (prevents stale state issues)
+        localStorage.removeItem('stripe_oauth_flow');
+        localStorage.removeItem('stripe_oauth_state');
     }
 }

@@ -122,7 +122,8 @@ async function stripeConnectRoutes(fastify: FastifyInstance) {
             });
 
             // Build Stripe Connect OAuth URL
-            const redirectUri = `${FRONTEND_URL}/stripe/callback`;
+            // Redirect to BACKEND (not frontend) - more reliable for OAuth callback handling
+            const redirectUri = `${API_BASE_URL}/v1/connect/stripe/oauth-callback`;
             const oauthUrl = new URL('https://connect.stripe.com/oauth/authorize');
             oauthUrl.searchParams.set('response_type', 'code');
             oauthUrl.searchParams.set('client_id', STRIPE_CLIENT_ID);
@@ -134,6 +135,121 @@ async function stripeConnectRoutes(fastify: FastifyInstance) {
                 oauthUrl: oauthUrl.toString(),
                 state,
             });
+        }
+    );
+
+    /**
+     * GET /v1/connect/stripe/oauth-callback
+     * 
+     * Handle OAuth callback from Stripe DIRECTLY (no frontend intermediate)
+     * Stripe redirects here → backend exchanges code → redirect to frontend with success flag
+     * This is more reliable than having the popup handle the callback
+     */
+    fastify.get<{ Querystring: { code?: string; state?: string; error?: string; error_description?: string } }>(
+        '/v1/connect/stripe/oauth-callback',
+        async (request, reply) => {
+            const { code, state, error, error_description } = request.query;
+
+            // Handle Stripe error
+            if (error) {
+                console.error('[Stripe Connect] OAuth error:', error, error_description);
+                return reply.redirect(`${FRONTEND_URL}/#/stripe/callback?error=${encodeURIComponent(error)}`);
+            }
+
+            // Validate params
+            if (!code || !state) {
+                return reply.redirect(`${FRONTEND_URL}/#/stripe/callback?error=missing_params`);
+            }
+
+            // Verify state token and get user ID
+            const stateData = oauthStates.get(state);
+            if (!stateData) {
+                return reply.redirect(`${FRONTEND_URL}/#/stripe/callback?error=invalid_state`);
+            }
+
+            if (Date.now() > stateData.expiresAt) {
+                oauthStates.delete(state);
+                return reply.redirect(`${FRONTEND_URL}/#/stripe/callback?error=state_expired`);
+            }
+
+            const userId = stateData.userId;
+            oauthStates.delete(state);
+
+            // Exchange code for connected account ID
+            if (!STRIPE_SECRET_KEY) {
+                return reply.redirect(`${FRONTEND_URL}/#/stripe/callback?error=config_error`);
+            }
+
+            try {
+                const tokenResponse = await fetch('https://connect.stripe.com/oauth/token', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded',
+                    },
+                    body: new URLSearchParams({
+                        grant_type: 'authorization_code',
+                        code,
+                        client_secret: STRIPE_SECRET_KEY,
+                    }),
+                });
+
+                const tokenData = await tokenResponse.json() as {
+                    stripe_user_id?: string;
+                    error?: string;
+                    error_description?: string;
+                };
+
+                if (!tokenResponse.ok || tokenData.error) {
+                    console.error('[Stripe Connect] Token exchange failed:', tokenData);
+                    return reply.redirect(`${FRONTEND_URL}/#/stripe/callback?error=${encodeURIComponent(tokenData.error || 'exchange_failed')}`);
+                }
+
+                const stripeAccountId = tokenData.stripe_user_id;
+                if (!stripeAccountId) {
+                    return reply.redirect(`${FRONTEND_URL}/#/stripe/callback?error=no_account_id`);
+                }
+
+                const now = new Date();
+
+                // Upsert connected account
+                await db
+                    .insert(connectedAccounts)
+                    .values({
+                        userId,
+                        platform: 'STRIPE',
+                        externalAccountId: stripeAccountId,
+                        status: 'ACTIVE',
+                        verificationStatus: 'VERIFIED', // OAuth = verified
+                        verifiedAt: now,
+                        connectedAt: now,
+                        metadataJson: {
+                            connectedVia: 'oauth',
+                            connectedAt: now.toISOString(),
+                        },
+                    })
+                    .onConflictDoUpdate({
+                        target: [connectedAccounts.userId, connectedAccounts.platform],
+                        set: {
+                            externalAccountId: stripeAccountId,
+                            status: 'ACTIVE',
+                            verificationStatus: 'VERIFIED',
+                            verifiedAt: now,
+                            metadataJson: {
+                                connectedVia: 'oauth',
+                                connectedAt: now.toISOString(),
+                            },
+                        },
+                    });
+
+                console.log(`[Stripe Connect] User ${userId} connected account ${stripeAccountId} via GET callback`);
+
+                // Redirect to frontend with success
+                return reply.redirect(`${FRONTEND_URL}/#/stripe/callback?success=true&account=${encodeURIComponent(stripeAccountId)}`);
+
+            } catch (err: any) {
+                console.error('[Stripe Connect] Callback error:', err);
+                return reply.redirect(`${FRONTEND_URL}/#/stripe/callback?error=server_error`);
+            }
         }
     );
 

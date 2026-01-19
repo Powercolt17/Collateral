@@ -1,5 +1,6 @@
 // Stripe OAuth Callback Handler
-// Handles: /stripe/callback?code=...&state=...
+// Handles: /stripe/callback?success=true&account=xxx OR ?error=xxx
+// Backend has already exchanged the code - we just display the result
 
 export function renderStripeCallback() {
     return `
@@ -43,12 +44,10 @@ export function renderStripeCallback() {
 }
 
 export async function initStripeCallback() {
-    // Get code and state from URL
     const urlParams = new URLSearchParams(window.location.search);
-    const code = urlParams.get('code');
-    const state = urlParams.get('state');
+    const success = urlParams.get('success');
+    const account = urlParams.get('account');
     const error = urlParams.get('error');
-    const errorDescription = urlParams.get('error_description');
 
     const loadingEl = document.getElementById('stripe-callback-loading');
     const successEl = document.getElementById('stripe-callback-success');
@@ -56,81 +55,77 @@ export async function initStripeCallback() {
     const errorMessageEl = document.getElementById('stripe-error-message');
     const accountDisplayEl = document.getElementById('stripe-account-display');
 
-    // Handle OAuth error from Stripe or our own error params
+    // Clean up stored OAuth state
+    localStorage.removeItem('stripe_oauth_flow');
+    localStorage.removeItem('stripe_oauth_state');
+
+    // Handle error from backend
     if (error) {
+        console.log('[StripeCallback] Error from backend:', error);
         loadingEl.classList.add('hidden');
         errorEl.classList.remove('hidden');
 
-        // Map our custom error codes to user-friendly messages
+        // Map error codes to user-friendly messages
         const errorMessages = {
-            'state_mismatch': 'Session mismatch detected. This can happen if you opened the login in a different tab. Please try again.',
-            'session_expired': 'Your Stripe connection session has expired (10 minute limit). Please try again.',
+            'missing_params': 'Missing authorization code or state. Please try again.',
+            'invalid_state': 'Session expired or invalid. Please try again.',
+            'state_expired': 'Your session has expired. Please try again.',
+            'state_mismatch': 'Session mismatch detected. Please try again.',
+            'config_error': 'Stripe is not properly configured. Please contact support.',
+            'exchange_failed': 'Failed to connect Stripe account. Please try again.',
+            'no_account_id': 'No account ID returned from Stripe. Please try again.',
+            'server_error': 'Server error occurred. Please try again.',
+            'access_denied': 'Access was denied. Please try again.',
         };
 
-        errorMessageEl.textContent = errorMessages[error] || errorDescription || error || 'Unknown error from Stripe';
+        errorMessageEl.textContent = errorMessages[error] || `Connection failed: ${error}`;
 
-        // Clear any stale OAuth state
-        localStorage.removeItem('stripe_oauth_flow');
-        localStorage.removeItem('stripe_oauth_state');
+        // If popup, still close it after showing error briefly
+        if (window.opener) {
+            setTimeout(() => window.close(), 3000);
+        }
         return;
     }
 
-    // Validate required params
-    if (!code || !state) {
-        loadingEl.classList.add('hidden');
-        errorEl.classList.remove('hidden');
-        errorMessageEl.textContent = 'Missing authorization code or state. Please try again.';
-        return;
-    }
+    // Handle success from backend
+    if (success === 'true') {
+        console.log('[StripeCallback] Success! Account:', account);
 
-    // Verify state matches what we stored
-    const storedState = localStorage.getItem('stripe_oauth_state');
-    if (state !== storedState) {
-        loadingEl.classList.add('hidden');
-        errorEl.classList.remove('hidden');
-        errorMessageEl.textContent = 'Invalid state token. This may be a CSRF attack.';
-        return;
-    }
-
-    try {
-        console.log('[StripeCallback] Completing Stripe connect...');
-        // Exchange code for connected account
-        const result = await window.api.completeStripeConnect(code, state);
-        console.log('[StripeCallback] Complete result:', result);
-
-        // Re-hydrate session to sync connected sources (critical!)
+        // Re-hydrate session to sync connected sources
         if (window.hydrateSession) {
             console.log('[StripeCallback] Hydrating session...');
             await window.hydrateSession();
         }
 
-        // Show success
+        // If popup, close immediately - parent window is polling
+        if (window.opener) {
+            console.log('[StripeCallback] Popup detected, closing...');
+            window.close();
+            return;
+        }
+
+        // Show success UI in main window
         loadingEl.classList.add('hidden');
         successEl.classList.remove('hidden');
 
-        if (result.stripeAccountId) {
-            accountDisplayEl.textContent = `Account: ${result.stripeAccountId}`;
+        if (account) {
+            accountDisplayEl.textContent = `Account: ${account}`;
         }
 
-        // Auto-redirect to Contracts wizard Step 2 (Source) after 2 seconds
+        // Auto-redirect after 2 seconds
         setTimeout(() => {
             window.router.navigate('/contracts?step=source&connected=stripe');
         }, 2000);
 
-        // If opened in popup, close it and let parent refresh
-        if (window.opener) {
-            window.close();
-        }
+        return;
+    }
 
-    } catch (err) {
-        console.error('[StripeCallback] Error:', err);
+    // Neither success nor error - show error state
+    loadingEl.classList.add('hidden');
+    errorEl.classList.remove('hidden');
+    errorMessageEl.textContent = 'Invalid callback. Please try connecting again.';
 
-        loadingEl.classList.add('hidden');
-        errorEl.classList.remove('hidden');
-        errorMessageEl.textContent = err.message || 'Failed to complete Stripe connection';
-    } finally {
-        // Always clear stored state (prevents stale state issues)
-        localStorage.removeItem('stripe_oauth_flow');
-        localStorage.removeItem('stripe_oauth_state');
+    if (window.opener) {
+        setTimeout(() => window.close(), 3000);
     }
 }

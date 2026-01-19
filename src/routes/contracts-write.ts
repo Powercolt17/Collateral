@@ -770,8 +770,9 @@ const contractWriteRoutes: FastifyPluginAsync = async (fastify) => {
             if (!hasFundsAuthorized) {
                 await appendEvent({
                     contractId,
+                    actor: 'SYSTEM',
                     eventType: 'FUNDS_AUTHORIZED' as any,
-                    payload: {
+                    metadata: {
                         dev: true,
                         simulatedAt: now,
                         amountUsdCents: contract.lockAmountUsdCents,
@@ -786,8 +787,9 @@ const contractWriteRoutes: FastifyPluginAsync = async (fastify) => {
             if (!hasFundsLocked) {
                 await appendEvent({
                     contractId,
+                    actor: 'SYSTEM',
                     eventType: 'FUNDS_LOCKED' as any,
-                    payload: {
+                    metadata: {
                         dev: true,
                         simulatedAt: now,
                         amountUsdCents: contract.lockAmountUsdCents,
@@ -802,8 +804,9 @@ const contractWriteRoutes: FastifyPluginAsync = async (fastify) => {
             if (!hasExecutionRequested) {
                 await appendEvent({
                     contractId,
+                    actor: 'SYSTEM',
                     eventType: 'EXECUTION_REQUESTED' as any,
-                    payload: {
+                    metadata: {
                         dev: true,
                         simulatedAt: now,
                     },
@@ -816,8 +819,9 @@ const contractWriteRoutes: FastifyPluginAsync = async (fastify) => {
             if (!hasExecutionConfirmed) {
                 await appendEvent({
                     contractId,
+                    actor: 'SYSTEM',
                     eventType: 'EXECUTION_CONFIRMED' as any,
-                    payload: {
+                    metadata: {
                         dev: true,
                         simulatedAt: now,
                         deadline: contract.deadlineUtc?.toISOString() || now,

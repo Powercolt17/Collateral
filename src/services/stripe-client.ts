@@ -83,24 +83,43 @@ export class MockStripeClient implements StripeClient {
 // const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!);
 
 export class ProductionStripeClient implements StripeClient {
-    private stripe: any; // Using 'any' to avoid direct import issues
+    private stripe: any = null;
+    private stripeSecretKey: string;
+    private initPromise: Promise<void> | null = null;
 
     constructor() {
         const secretKey = process.env.STRIPE_SECRET_KEY;
         if (!secretKey) {
             throw new Error('STRIPE_SECRET_KEY not configured');
         }
-        // Dynamic import of Stripe to avoid bundling issues
-        // In production, you'd use: import Stripe from 'stripe';
-        // eslint-disable-next-line @typescript-eslint/no-var-requires
-        const Stripe = require('stripe').default || require('stripe');
-        this.stripe = new Stripe(secretKey, {
-            apiVersion: '2023-10-16',
-        });
+        this.stripeSecretKey = secretKey;
+        // Defer initialization to async method (ESM-compatible)
+    }
+
+    /**
+     * Lazy initialization of Stripe client (ESM-compatible)
+     */
+    private async ensureStripe(): Promise<any> {
+        if (this.stripe) return this.stripe;
+
+        if (!this.initPromise) {
+            this.initPromise = (async () => {
+                const StripeModule = await import('stripe');
+                const Stripe = StripeModule.default;
+                this.stripe = new Stripe(this.stripeSecretKey, {
+                    apiVersion: '2023-10-16',
+                });
+            })();
+        }
+
+        await this.initPromise;
+        return this.stripe;
     }
 
     async createPaymentIntent(params: CreatePaymentIntentParams): Promise<PaymentIntentResult> {
-        const paymentIntent = await this.stripe.paymentIntents.create({
+        const stripe = await this.ensureStripe();
+
+        const paymentIntent = await stripe.paymentIntents.create({
             amount: params.amountUsdCents,
             currency: 'usd',
             capture_method: params.captureMethod || 'automatic',
@@ -122,7 +141,9 @@ export class ProductionStripeClient implements StripeClient {
     }
 
     async capturePaymentIntent(paymentIntentId: string, idempotencyKey: string): Promise<{ success: boolean; chargeId?: string }> {
-        const paymentIntent = await this.stripe.paymentIntents.capture(paymentIntentId, {}, {
+        const stripe = await this.ensureStripe();
+
+        const paymentIntent = await stripe.paymentIntents.capture(paymentIntentId, {}, {
             idempotencyKey,
         });
         return {
@@ -132,8 +153,10 @@ export class ProductionStripeClient implements StripeClient {
     }
 
     async createTransfer(params: CreateTransferParams): Promise<TransferResult> {
+        const stripe = await this.ensureStripe();
+
         try {
-            const transfer = await this.stripe.transfers.create({
+            const transfer = await stripe.transfers.create({
                 amount: params.amountUsdCents,
                 currency: 'usd',
                 destination: params.destinationAccountId,

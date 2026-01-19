@@ -188,12 +188,11 @@ export async function initReceipts() {
         const response = await window.api.getContracts();
         const contracts = response?.contracts || [];
 
-        // Filter to only show executed contracts (those with terminal success states or active)
-        const executedContracts = contracts.filter(c =>
-            ['LOCKED', 'ACTIVE', 'EXECUTION_CONFIRMED', 'SETTLED_SUCCESS', 'SETTLED_FAILURE', 'SETTLED', 'FORFEITED', 'VERIFIED', 'VERIFYING'].includes(c.state)
-        );
+        // Show ALL contracts as receipts (regardless of state)
+        // These are permanent records of contract creation and execution attempts
+        const executedContracts = contracts;
 
-        console.log('[Receipts] Loaded', { total: contracts.length, executed: executedContracts.length });
+        console.log('[Receipts] Loaded', { total: contracts.length });
 
         // If no executed contracts → show empty state
         if (executedContracts.length === 0) {
@@ -234,6 +233,9 @@ export async function initReceipts() {
 
         function getStatusText(state) {
             const statusMap = {
+                'CREATED': 'Created',
+                'FUNDS_AUTHORIZED': 'Pending',
+                'FUNDS_LOCKED': 'Funded',
                 'LOCKED': 'Active',
                 'ACTIVE': 'Active',
                 'EXECUTION_CONFIRMED': 'Executed',

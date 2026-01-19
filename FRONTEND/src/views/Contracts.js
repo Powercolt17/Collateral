@@ -1750,8 +1750,9 @@ export function initContracts() {
                     // Jump to finalize
                     btnText.textContent = "Already executed";
                     releaseFlowLock();
+                    console.log('[Contracts] Redirecting to receipt', { contractId });
                     setTimeout(() => {
-                        window.router.navigate('/contracts/' + contractId);
+                        window.router.navigate('/receipts/' + contractId);
                     }, 1000);
                     return;
                 }
@@ -1769,8 +1770,9 @@ export function initContracts() {
                         console.log('[Contracts] Already LOCKED, skipping execute...');
                         btnText.textContent = "Already executed";
                         releaseFlowLock();
+                        console.log('[Contracts] Redirecting to receipt', { contractId });
                         setTimeout(() => {
-                            window.router.navigate('/contracts/' + contractId);
+                            window.router.navigate('/receipts/' + contractId);
                         }, 1000);
                         return;
                     }
@@ -1856,9 +1858,10 @@ export function initContracts() {
 
                 updateProgressBar(3, true);
 
-                // Navigate to contract detail
+                // Navigate to receipt page
+                console.log('[Contracts] Redirecting to receipt', { contractId });
                 setTimeout(() => {
-                    window.router.navigate('/contracts/' + contractId);
+                    window.router.navigate('/receipts/' + contractId);
                 }, 1500);
 
             } catch (error) {

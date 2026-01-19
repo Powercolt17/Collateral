@@ -1,6 +1,6 @@
 // Receipt Detail Page - Immutable Record View
 // Route: /receipts/:id
-// Aesthetic: Financial trade confirmation + legal receipt + public record
+// Fetches real contract data from API, not mock data
 
 export function renderReceiptDetail() {
     return `
@@ -13,6 +13,26 @@ export function renderReceiptDetail() {
                 font-family: ui-sans-serif, system-ui, sans-serif;
             }
             
+            .receipt-loading {
+                text-align: center;
+                padding: 4rem;
+                color: #6B6E76;
+            }
+            
+            .receipt-loading .spinner {
+                width: 40px;
+                height: 40px;
+                border: 3px solid #E5E5E5;
+                border-top-color: #0E0E11;
+                border-radius: 50%;
+                animation: spin 1s linear infinite;
+                margin: 0 auto 1rem;
+            }
+            
+            @keyframes spin {
+                to { transform: rotate(360deg); }
+            }
+            
             .receipt-header {
                 border-bottom: 2px solid #0E0E11;
                 padding-bottom: 2rem;
@@ -20,12 +40,16 @@ export function renderReceiptDetail() {
             }
             
             .receipt-title {
-                font-size: 2.5rem;
+                font-size: 2rem;
                 font-weight: 700;
                 letter-spacing: -0.02em;
                 color: #0E0E11;
                 margin-bottom: 0.5rem;
             }
+            
+            .receipt-title.success { color: #1F7A4D; }
+            .receipt-title.pending { color: #0E0E11; }
+            .receipt-title.failure { color: #8B1E1E; }
             
             .receipt-subtitle {
                 font-size: 0.875rem;
@@ -52,6 +76,10 @@ export function renderReceiptDetail() {
                 border: 1px solid #E5E5E5;
             }
             
+            @media (max-width: 600px) {
+                .receipt-meta { grid-template-columns: 1fr; }
+            }
+            
             .receipt-meta-item {
                 display: flex;
                 flex-direction: column;
@@ -76,6 +104,11 @@ export function renderReceiptDetail() {
             .receipt-meta-value.hash {
                 font-size: 11px;
                 color: #4D5057;
+                cursor: pointer;
+            }
+            
+            .receipt-meta-value.hash:hover {
+                text-decoration: underline;
             }
             
             .receipt-section {
@@ -156,86 +189,58 @@ export function renderReceiptDetail() {
                 color: #0E0E11;
             }
             
-            .snapshot-box {
-                background: #FAFAFA;
-                border: 1px solid #E5E5E5;
-                padding: 1.25rem;
-            }
-            
-            .snapshot-source {
-                display: inline-flex;
-                align-items: center;
-                gap: 0.5rem;
-                font-family: ui-monospace, monospace;
-                font-size: 10px;
-                letter-spacing: 0.05em;
-                text-transform: uppercase;
-                color: #6B6E76;
-                background: #FFFFFF;
-                border: 1px solid #E5E5E5;
-                padding: 0.25rem 0.5rem;
-                margin-bottom: 1rem;
-            }
-            
-            .snapshot-value {
-                font-family: ui-monospace, monospace;
-                font-size: 1.75rem;
-                font-weight: 600;
-                color: #0E0E11;
-                margin-bottom: 0.5rem;
-            }
-            
-            .snapshot-timestamp {
-                font-size: 11px;
-                color: #6B6E76;
-            }
-            
-            .snapshot-note {
-                margin-top: 1rem;
-                padding-top: 1rem;
-                border-top: 1px solid #E5E5E5;
-                font-size: 11px;
-                color: #6B6E76;
-                font-style: italic;
-            }
-            
-            .ledger-box {
+            .event-timeline {
                 background: #0E0E11;
-                color: #FFFFFF;
                 padding: 1.5rem;
             }
             
-            .ledger-row {
+            .event-item {
                 display: flex;
-                justify-content: space-between;
-                padding: 0.5rem 0;
+                gap: 1rem;
+                padding: 0.75rem 0;
                 border-bottom: 1px solid rgba(255,255,255,0.1);
             }
             
-            .ledger-row:last-child {
+            .event-item:last-child {
                 border-bottom: none;
             }
             
-            .ledger-label {
-                font-family: ui-monospace, monospace;
-                font-size: 10px;
-                letter-spacing: 0.1em;
-                text-transform: uppercase;
-                color: rgba(255,255,255,0.5);
+            .event-item.terminal {
+                background: rgba(31, 122, 77, 0.1);
+                margin: 0 -1.5rem;
+                padding: 0.75rem 1.5rem;
             }
             
-            .ledger-value {
+            .event-dot {
+                width: 8px;
+                height: 8px;
+                border-radius: 50%;
+                background: rgba(255,255,255,0.3);
+                margin-top: 6px;
+                flex-shrink: 0;
+            }
+            
+            .event-item.terminal .event-dot {
+                background: #1F7A4D;
+            }
+            
+            .event-content {
+                flex: 1;
+            }
+            
+            .event-type {
                 font-family: ui-monospace, monospace;
                 font-size: 11px;
+                font-weight: 600;
+                letter-spacing: 0.05em;
                 color: rgba(255,255,255,0.9);
             }
             
-            .ledger-note {
-                margin-top: 1rem;
-                padding-top: 1rem;
-                border-top: 1px solid rgba(255,255,255,0.1);
+            .event-time {
+                font-family: ui-monospace, monospace;
                 font-size: 10px;
                 color: rgba(255,255,255,0.4);
+                margin-top: 0.25rem;
             }
             
             .status-block {
@@ -248,8 +253,8 @@ export function renderReceiptDetail() {
             }
             
             .status-block.active { border-color: #0E0E11; }
-            .status-block.success { border-color: #1F7A4D; }
-            .status-block.failure { border-color: #8B1E1E; }
+            .status-block.success { border-color: #1F7A4D; background: rgba(31,122,77,0.05); }
+            .status-block.failure { border-color: #8B1E1E; background: rgba(139,30,30,0.05); }
             
             .status-label {
                 font-family: ui-monospace, monospace;
@@ -268,7 +273,6 @@ export function renderReceiptDetail() {
                 font-size: 11px;
                 color: #6B6E76;
                 margin-top: 0.5rem;
-                letter-spacing: 0.02em;
             }
             
             .status-timestamp {
@@ -302,6 +306,7 @@ export function renderReceiptDetail() {
                 gap: 1rem;
                 margin-top: 1.5rem;
                 justify-content: center;
+                flex-wrap: wrap;
             }
             
             .receipt-btn {
@@ -315,11 +320,22 @@ export function renderReceiptDetail() {
                 background: #FFFFFF;
                 color: #4D5057;
                 cursor: pointer;
+                transition: all 0.15s ease;
             }
             
             .receipt-btn:hover {
                 border-color: #0E0E11;
                 color: #0E0E11;
+            }
+            
+            .receipt-btn.primary {
+                background: #0E0E11;
+                color: #FFFFFF;
+                border-color: #0E0E11;
+            }
+            
+            .receipt-btn.primary:hover {
+                background: #2A2A2F;
             }
             
             .receipt-not-found {
@@ -347,56 +363,23 @@ export function renderReceiptDetail() {
         </style>
         
         <div class="receipt-page" id="receipt-container">
-            <!-- Content populated by JS -->
+            <div class="receipt-loading">
+                <div class="spinner"></div>
+                <p>Loading receipt...</p>
+            </div>
         </div>
     `;
 }
 
-export function initReceiptDetail(params) {
+export async function initReceiptDetail(params) {
     const container = document.getElementById('receipt-container');
-    const receiptId = params?.id;
+    const contractId = params?.id;
 
-    // Mock receipts database
-    const mockReceipts = {
-        'RCP-001': {
-            receiptId: 'RCP-0x8a72390f1d2b4c5e6f7a8b9cd',
-            contractId: 'CTR-0x7A3F9E2B1C4D5E6F7A8B9CD4D1',
-            executionTimestamp: '2026-01-04T19:43:22Z',
-            status: 'ACTIVE',
-            terms: {
-                authority: 'X (Twitter)',
-                metric: 'Followers',
-                baseline: 3842,
-                target: 10000,
-                timeWindow: 30,
-                capitalLocked: 5000,
-                multiplier: 2.0,
-                failureCondition: 'Capital forfeiture'
-            },
-            snapshot: {
-                source: 'X API v2',
-                value: 3842,
-                unit: 'followers',
-                capturedAt: '2026-01-04T19:43:22Z'
-            },
-            ledger: {
-                eventId: 'EVT-0x9f3d2a1b4c5e6f7e8',
-                eventType: 'CONTRACT_EXECUTED',
-                hashChain: '0xa8b3c9d4e5f67890abcdef12345672a1',
-                prevHash: '0x7c2d1e0f8a9b3c4d5e6f70819b3',
-                appendTimestamp: '2026-01-04T19:43:22.847Z'
-            },
-            deadline: '2026-02-03T19:43:22Z'
-        }
-    };
-
-    const receipt = mockReceipts[receiptId];
-
-    if (!receipt) {
+    if (!contractId) {
         container.innerHTML = `
             <div class="receipt-not-found">
                 <h1>Record Not Found</h1>
-                <p>The requested receipt does not exist or is not accessible.</p>
+                <p>No contract ID provided.</p>
             </div>
         `;
         return;
@@ -404,129 +387,228 @@ export function initReceiptDetail(params) {
 
     // Format helpers
     function formatNumber(num) {
-        return num.toLocaleString('en-US');
+        return num?.toLocaleString('en-US') ?? '-';
     }
 
-    function formatCurrency(num) {
-        return '$' + num.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+    function formatCurrency(cents) {
+        if (cents === null || cents === undefined) return '-';
+        return '$' + (cents / 100).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
     }
 
     function formatDate(isoString) {
+        if (!isoString) return '-';
         const date = new Date(isoString);
         return date.toISOString().replace('T', ' ').slice(0, 19) + ' UTC';
     }
 
-    function truncateHash(hash, startLen = 12, endLen = 3) {
-        if (hash.length <= startLen + endLen + 3) return hash;
-        return hash.slice(0, startLen) + '...' + hash.slice(-endLen);
+    function formatShortDate(isoString) {
+        if (!isoString) return '-';
+        const date = new Date(isoString);
+        return date.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
     }
 
-    // Render receipt
-    const statusClass = receipt.status === 'SETTLED_SUCCESS' ? 'success' :
-        receipt.status === 'SETTLED_FAILURE' ? 'failure' : 'active';
-    const statusText = receipt.status === 'SETTLED_SUCCESS' ? 'SETTLED — SUCCESS' :
-        receipt.status === 'SETTLED_FAILURE' ? 'SETTLED — FAILURE' : 'ACTIVE';
-    const statusDetail = receipt.status === 'ACTIVE' ? 'Settlement will occur automatically at deadline.' :
-        receipt.status === 'SETTLED_SUCCESS' ? `Target achieved. Payout: ${formatCurrency(receipt.terms.capitalLocked * receipt.terms.multiplier)}` :
-            `Target not achieved. Capital forfeited: ${formatCurrency(receipt.terms.capitalLocked)}`;
+    function truncateId(id, startLen = 8, endLen = 4) {
+        if (!id) return '-';
+        if (id.length <= startLen + endLen + 3) return id;
+        return id.slice(0, startLen) + '...' + id.slice(-endLen);
+    }
 
-    container.innerHTML = `
-        <header class="receipt-header">
-            <h1 class="receipt-title">Contract Receipt</h1>
-            <p class="receipt-subtitle">This document certifies the execution of an immutable performance contract.</p>
-            <p class="finality-notice">This record cannot be altered.</p>
+    function getEventDescription(eventType) {
+        const descriptions = {
+            'CONTRACT_CREATED': 'Contract created',
+            'BASELINE_SNAPSHOTTED': 'Baseline snapshot captured',
+            'FUNDS_AUTHORIZED': 'Payment authorized',
+            'FUNDS_LOCKED': 'Funds locked in escrow',
+            'EXECUTION_REQUESTED': 'Execution requested',
+            'EXECUTION_CONFIRMED': 'Execution confirmed',
+            'SETTLEMENT_INITIATED': 'Settlement initiated',
+            'SETTLED_SUCCESS': 'Contract settled - SUCCESS',
+            'SETTLED_FAILURE': 'Contract settled - FAILURE',
+            'EXPIRED': 'Contract expired',
+            'CANCELLED': 'Contract cancelled'
+        };
+        return descriptions[eventType] || eventType;
+    }
+
+    function isTerminalEvent(eventType) {
+        return ['EXECUTION_CONFIRMED', 'SETTLED_SUCCESS', 'SETTLED_FAILURE', 'EXPIRED', 'CANCELLED', 'LOCKED'].includes(eventType);
+    }
+
+    try {
+        // Fetch contract data from API
+        console.log('[Receipt] Fetching contract:', contractId);
+        const response = await window.api.getContract(contractId);
+
+        if (!response?.contract) {
+            throw new Error('Contract not found');
+        }
+
+        const contract = response.contract;
+        const events = response.events || [];
+
+        // Determine status
+        const state = contract.state || 'UNKNOWN';
+        const isSuccess = ['LOCKED', 'ACTIVE', 'EXECUTION_CONFIRMED', 'SETTLED_SUCCESS'].includes(state);
+        const isFailure = ['SETTLED_FAILURE', 'EXPIRED', 'CANCELLED'].includes(state);
+        const statusClass = isSuccess ? 'success' : isFailure ? 'failure' : 'active';
+
+        // Get status text
+        const statusTexts = {
+            'LOCKED': 'EXECUTION CONFIRMED',
+            'ACTIVE': 'ACTIVE',
+            'EXECUTION_CONFIRMED': 'EXECUTION CONFIRMED',
+            'SETTLED_SUCCESS': 'SETTLED — SUCCESS',
+            'SETTLED_FAILURE': 'SETTLED — FAILURE',
+            'EXPIRED': 'EXPIRED',
+            'CANCELLED': 'CANCELLED'
+        };
+        const statusText = statusTexts[state] || state;
+
+        // Title based on state
+        const titleTexts = {
+            'LOCKED': 'Execution Confirmed',
+            'ACTIVE': 'Contract Active',
+            'EXECUTION_CONFIRMED': 'Execution Confirmed',
+            'SETTLED_SUCCESS': 'Contract Settled — Success',
+            'SETTLED_FAILURE': 'Contract Settled — Failure'
+        };
+        const pageTitle = titleTexts[state] || 'Contract Receipt';
+
+        // Platform info
+        const platform = contract.platform || 'UNKNOWN';
+        const platformDisplay = platform === 'X' ? 'X (Twitter)' : platform === 'STRIPE' ? 'Stripe' : platform;
+        const metricType = contract.metricType || 'UNKNOWN';
+        const metricDisplay = metricType === 'FOLLOWERS' ? 'Followers' : metricType === 'REVENUE' ? 'Revenue' : metricType;
+
+        // Baseline info (from baseline JSON if available)
+        const baseline = contract.baseline || {};
+        const baselineValue = platform === 'STRIPE'
+            ? formatCurrency(baseline.baselineNetRevenueCents || baseline.lifetimeRevenue)
+            : formatNumber(baseline.followerCount || baseline.value);
+
+        // Condition/target
+        const condition = contract.conditionJson || {};
+        const targetValue = platform === 'STRIPE'
+            ? formatCurrency(condition.threshold)
+            : formatNumber(condition.threshold);
+
+        // Render timeline
+        let timelineHtml = '';
+        if (events.length > 0) {
+            const sortedEvents = [...events].sort((a, b) =>
+                new Date(a.timestampUtc || a.createdAt).getTime() - new Date(b.timestampUtc || b.createdAt).getTime()
+            );
+
+            timelineHtml = sortedEvents.map(evt => {
+                const isTerminal = isTerminalEvent(evt.eventType);
+                return `
+                    <div class="event-item ${isTerminal ? 'terminal' : ''}">
+                        <div class="event-dot"></div>
+                        <div class="event-content">
+                            <div class="event-type">${getEventDescription(evt.eventType)}</div>
+                            <div class="event-time">${formatDate(evt.timestampUtc || evt.createdAt)}</div>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        } else {
+            timelineHtml = `
+                <div class="event-item">
+                    <div class="event-dot"></div>
+                    <div class="event-content">
+                        <div class="event-type">No events recorded</div>
+                    </div>
+                </div>
+            `;
+        }
+
+        // Render page
+        container.innerHTML = `
+            <header class="receipt-header">
+                <h1 class="receipt-title ${statusClass}">${pageTitle}</h1>
+                <p class="receipt-subtitle">This document certifies the execution of an immutable performance contract on the Collateral platform.</p>
+                <p class="finality-notice">This record cannot be altered.</p>
+                
+                <div class="receipt-meta">
+                    <div class="receipt-meta-item">
+                        <span class="receipt-meta-label">Contract ID</span>
+                        <span class="receipt-meta-value hash" onclick="navigator.clipboard.writeText('${contractId}')" title="Click to copy">${truncateId(contractId)}</span>
+                    </div>
+                    <div class="receipt-meta-item">
+                        <span class="receipt-meta-label">Status</span>
+                        <span class="receipt-meta-value">${statusText}</span>
+                    </div>
+                    <div class="receipt-meta-item">
+                        <span class="receipt-meta-label">Created</span>
+                        <span class="receipt-meta-value">${formatDate(contract.createdAt)}</span>
+                    </div>
+                    <div class="receipt-meta-item">
+                        <span class="receipt-meta-label">Deadline</span>
+                        <span class="receipt-meta-value">${formatShortDate(contract.deadlineUtc || condition.deadline)}</span>
+                    </div>
+                </div>
+            </header>
             
-            <div class="receipt-meta">
-                <div class="receipt-meta-item">
-                    <span class="receipt-meta-label">Receipt ID</span>
-                    <span class="receipt-meta-value hash">${truncateHash(receipt.receiptId)}</span>
-                </div>
-                <div class="receipt-meta-item">
-                    <span class="receipt-meta-label">Contract ID</span>
-                    <span class="receipt-meta-value hash">${truncateHash(receipt.contractId)}</span>
-                </div>
-                <div class="receipt-meta-item">
-                    <span class="receipt-meta-label">Execution Timestamp</span>
-                    <span class="receipt-meta-value">${formatDate(receipt.executionTimestamp)}</span>
-                </div>
-                <div class="receipt-meta-item">
-                    <span class="receipt-meta-label">Status</span>
-                    <span class="receipt-meta-value">${receipt.status}</span>
-                </div>
-            </div>
-        </header>
-        
-        <section class="receipt-section">
-            <h2 class="receipt-section-title">Contract Terms</h2>
-            <table class="receipt-table">
-                <tr><td>Authority</td><td>${receipt.terms.authority}</td></tr>
-                <tr><td>Metric</td><td>${receipt.terms.metric}</td></tr>
-                <tr><td>Baseline Snapshot</td><td>${formatNumber(receipt.terms.baseline)} ${receipt.snapshot.unit}</td></tr>
-                <tr><td>Target</td><td>${formatNumber(receipt.terms.target)} ${receipt.snapshot.unit}</td></tr>
-                <tr><td>Time Window</td><td>${receipt.terms.timeWindow} days</td></tr>
-                <tr class="capital-row"><td>Capital Locked</td><td>${formatCurrency(receipt.terms.capitalLocked)}</td></tr>
-                <tr><td>Payout Multiplier</td><td class="value-gold">${receipt.terms.multiplier}×</td></tr>
-                <tr><td>Failure Condition</td><td class="value-red">${receipt.terms.failureCondition}</td></tr>
-            </table>
-        </section>
-        
-        <section class="receipt-section">
-            <h2 class="receipt-section-title">Verified Baseline Snapshot</h2>
-            <div class="snapshot-box">
-                <span class="snapshot-source">Pulled from ${receipt.snapshot.source}</span>
-                <div class="snapshot-value">${formatNumber(receipt.snapshot.value)} ${receipt.snapshot.unit}</div>
-                <div class="snapshot-timestamp">Captured: ${formatDate(receipt.snapshot.capturedAt)}</div>
-                <p class="snapshot-note">This value is immutable and used as the baseline for settlement.</p>
-            </div>
-        </section>
-        
-        <section class="receipt-section">
-            <h2 class="receipt-section-title">Ledger Record</h2>
-            <div class="ledger-box">
-                <div class="ledger-row">
-                    <span class="ledger-label">Ledger Event ID</span>
-                    <span class="ledger-value">${truncateHash(receipt.ledger.eventId)}</span>
-                </div>
-                <div class="ledger-row">
-                    <span class="ledger-label">Event Type</span>
-                    <span class="ledger-value">CONTRACT_EXECUTED</span>
-                </div>
-                <div class="ledger-row">
-                    <span class="ledger-label">Hash Chain Reference</span>
-                    <span class="ledger-value">${truncateHash(receipt.ledger.hashChain)}</span>
-                </div>
-                <div class="ledger-row">
-                    <span class="ledger-label">Previous Event Hash</span>
-                    <span class="ledger-value">${truncateHash(receipt.ledger.prevHash)}</span>
-                </div>
-                <div class="ledger-row">
-                    <span class="ledger-label">Append Timestamp</span>
-                    <span class="ledger-value">${formatDate(receipt.ledger.appendTimestamp)}</span>
-                </div>
-                <p class="ledger-note">This receipt is backed by an append-only ledger. Records cannot be altered or removed.</p>
-            </div>
-        </section>
-        
-        <section class="receipt-section">
-            <h2 class="receipt-section-title">Contract Status</h2>
-            <div class="status-block ${statusClass}">
-                <div>
-                    <div class="status-label ${statusClass}">${statusText}</div>
-                    <div class="status-detail">${statusDetail}</div>
-                </div>
-                <div class="status-timestamp">Deadline: ${formatDate(receipt.deadline)}</div>
-            </div>
-        </section>
-        
-        <footer class="receipt-footer">
-            <p>All contracts settle publicly.<br>Outcomes are permanent.<br>No appeals. No overrides.</p>
-            <p class="legal">This receipt may be used for personal records or verification purposes.</p>
+            <section class="receipt-section">
+                <h2 class="receipt-section-title">Contract Terms</h2>
+                <table class="receipt-table">
+                    <tr><td>Platform</td><td>${platformDisplay}</td></tr>
+                    <tr><td>Metric</td><td>${metricDisplay}</td></tr>
+                    <tr><td>Baseline Snapshot</td><td>${baselineValue}</td></tr>
+                    <tr><td>Target</td><td>${targetValue}</td></tr>
+                    <tr><td>Time Window</td><td>30 days</td></tr>
+                    <tr class="capital-row"><td>Capital Locked</td><td>${formatCurrency(contract.lockAmountUsdCents)}</td></tr>
+                    <tr><td>Payout Amount</td><td class="value-gold">${formatCurrency(contract.payoutAmountUsdCents)}</td></tr>
+                    <tr><td>Verification</td><td>API Verified</td></tr>
+                </table>
+            </section>
             
-            <div class="receipt-actions">
-                <button class="receipt-btn" onclick="navigator.clipboard.writeText('${receipt.receiptId}')">
-                    Copy Receipt ID
-                </button>
+            <section class="receipt-section">
+                <h2 class="receipt-section-title">Event Timeline</h2>
+                <div class="event-timeline">
+                    ${timelineHtml}
+                </div>
+            </section>
+            
+            <section class="receipt-section">
+                <h2 class="receipt-section-title">Contract Status</h2>
+                <div class="status-block ${statusClass}">
+                    <div>
+                        <div class="status-label ${statusClass}">${statusText}</div>
+                        <div class="status-detail">${isSuccess ? 'Contract is active. Settlement will occur at deadline.' : isFailure ? 'This contract has been settled.' : 'Awaiting execution.'}</div>
+                    </div>
+                    <div class="status-timestamp">Deadline: ${formatShortDate(contract.deadlineUtc || condition.deadline)}</div>
+                </div>
+            </section>
+            
+            <footer class="receipt-footer">
+                <p>All contracts settle publicly.<br>Outcomes are permanent.<br>No appeals. No overrides.</p>
+                <p class="legal">This receipt may be used for personal records or verification purposes.</p>
+                
+                <div class="receipt-actions">
+                    <button class="receipt-btn" onclick="navigator.clipboard.writeText('${contractId}')">
+                        Copy Contract ID
+                    </button>
+                    <button class="receipt-btn" onclick="window.router.navigate('/ledger')">
+                        View Ledger
+                    </button>
+                    <button class="receipt-btn primary" onclick="window.router.navigate('/contracts')">
+                        Create Another Contract
+                    </button>
+                </div>
+            </footer>
+        `;
+
+    } catch (error) {
+        console.error('[Receipt] Error loading contract:', error);
+        container.innerHTML = `
+            <div class="receipt-not-found">
+                <h1>Record Not Found</h1>
+                <p>${error.message || 'The requested receipt does not exist or is not accessible.'}</p>
+                <div style="margin-top: 1.5rem;">
+                    <button class="receipt-btn" onclick="window.router.navigate('/my-contracts')">View My Contracts</button>
+                </div>
             </div>
-        </footer>
-    `;
+        `;
+    }
 }

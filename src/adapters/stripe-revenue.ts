@@ -590,16 +590,35 @@ export class MockStripeRevenueClient implements StripeRevenueClient {
  * Implements retry logic for 429/5xx, fail-closed for auth errors.
  */
 export class RealStripeRevenueClient implements StripeRevenueClient {
-    private stripe: import('stripe').default;
+    private stripe: import('stripe').default | null = null;
+    private stripeSecretKey: string;
     private maxRetries = 3;
     private retryDelayMs = 1000;
+    private initPromise: Promise<void> | null = null;
 
     constructor(stripeSecretKey: string) {
-        // Dynamic import to avoid requiring stripe in all environments
-        const Stripe = require('stripe').default;
-        this.stripe = new Stripe(stripeSecretKey, {
-            apiVersion: '2023-10-16',
-        });
+        this.stripeSecretKey = stripeSecretKey;
+        // Defer initialization to async method
+    }
+
+    /**
+     * Lazy initialization of Stripe client (ESM-compatible)
+     */
+    private async ensureStripe(): Promise<import('stripe').default> {
+        if (this.stripe) return this.stripe;
+
+        if (!this.initPromise) {
+            this.initPromise = (async () => {
+                const StripeModule = await import('stripe');
+                const Stripe = StripeModule.default;
+                this.stripe = new Stripe(this.stripeSecretKey, {
+                    apiVersion: '2023-10-16',
+                });
+            })();
+        }
+
+        await this.initPromise;
+        return this.stripe!;
     }
 
     /**
@@ -658,6 +677,9 @@ export class RealStripeRevenueClient implements StripeRevenueClient {
         currency: string
     ): Promise<StripeNetRevenueResult> {
         return this.withRetry(async () => {
+            // Ensure Stripe is initialized (ESM-compatible lazy init)
+            const stripe = await this.ensureStripe();
+
             let grossCharges = 0;
             let refunds = 0;
             let disputes = 0;
@@ -689,7 +711,7 @@ export class RealStripeRevenueClient implements StripeRevenueClient {
                     params.starting_after = startingAfter;
                 }
 
-                const response = await this.stripe.balanceTransactions.list(params, {
+                const response = await stripe.balanceTransactions.list(params, {
                     stripeAccount: connectedAccountId,
                 });
 
@@ -783,6 +805,9 @@ export class RealStripeRevenueClient implements StripeRevenueClient {
         // For historical baseline, we need to sum all balance transactions
         // This is expensive so we limit to recent history
         return this.withRetry(async () => {
+            // Ensure Stripe is initialized (ESM-compatible lazy init)
+            const stripe = await this.ensureStripe();
+
             let total = 0;
             let hasMore = true;
             let startingAfter: string | undefined;
@@ -791,7 +816,7 @@ export class RealStripeRevenueClient implements StripeRevenueClient {
                 const params: any = { limit: 100 };
                 if (startingAfter) params.starting_after = startingAfter;
 
-                const response = await this.stripe.balanceTransactions.list(params, {
+                const response = await stripe.balanceTransactions.list(params, {
                     stripeAccount: connectedAccountId,
                 });
 

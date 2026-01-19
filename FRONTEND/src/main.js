@@ -815,9 +815,9 @@ router.onRouteChange = function (route, path) {
     const appMount = document.getElementById('app');
     appMount.innerHTML = route.render(route.params);
 
-    // Initialize view
+    // Initialize view (pass route params for parameterized routes like /receipts/:id)
     if (route.init) {
-        setTimeout(() => route.init(), 0);
+        setTimeout(() => route.init(route.params), 0);
     }
 
     // Reinitialize Lucide icons

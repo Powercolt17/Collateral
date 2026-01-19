@@ -840,6 +840,65 @@ export function initContracts() {
     let stripeAccountId = null;
 
     // =========================================================
+    // FLOW LOCK UTILITIES - Prevent stale locks
+    // =========================================================
+    const FLOW_LOCK_KEY = 'collateral_flow_lock';
+    const FLOW_LOCK_EXPIRY_MS = 5 * 60 * 1000; // 5 minutes
+
+    /**
+     * Check if a valid (non-expired) flow lock exists
+     */
+    function hasActiveFlowLock() {
+        const lockData = localStorage.getItem(FLOW_LOCK_KEY);
+        if (!lockData) return false;
+
+        try {
+            const lock = JSON.parse(lockData);
+            const age = Date.now() - lock.startedAt;
+
+            if (age >= FLOW_LOCK_EXPIRY_MS) {
+                // Lock is stale - auto-clear it
+                console.warn('[FLOW LOCK] Cleared stale execution lock (age: ' + Math.round(age / 1000) + 's)');
+                localStorage.removeItem(FLOW_LOCK_KEY);
+                return false;
+            }
+
+            return true;
+        } catch (e) {
+            // Invalid lock data - clear it
+            localStorage.removeItem(FLOW_LOCK_KEY);
+            return false;
+        }
+    }
+
+    /**
+     * Acquire the flow lock (returns false if already locked)
+     */
+    function acquireFlowLock() {
+        if (hasActiveFlowLock()) {
+            return false;
+        }
+        localStorage.setItem(FLOW_LOCK_KEY, JSON.stringify({
+            startedAt: Date.now(),
+            contractId: null // Will be set after contract creation
+        }));
+        return true;
+    }
+
+    /**
+     * Release the flow lock
+     */
+    function releaseFlowLock() {
+        localStorage.removeItem(FLOW_LOCK_KEY);
+        console.log('[FLOW LOCK] Released');
+    }
+
+    // Clear any stale locks on page load
+    if (hasActiveFlowLock()) {
+        console.log('[FLOW LOCK] Active lock detected on page load');
+    }
+
+    // =========================================================
     // QUERY PARAM HANDLING + STATUS REFRESH
     // =========================================================
 
@@ -1498,44 +1557,57 @@ export function initContracts() {
 
             // ==================================================
             // FLOW LOCK - Prevent multi-click / multi-tab double runs
-            // Uses localStorage for cross-tab visibility
+            // Uses centralized lock utilities with auto-expiry
             // ==================================================
-            const FLOW_LOCK_KEY = `collateral_flow_lock:v1:${location.pathname}`;
-            const flowLockData = localStorage.getItem(FLOW_LOCK_KEY);
-            if (flowLockData) {
-                try {
-                    const lock = JSON.parse(flowLockData);
-                    if (Date.now() - lock.startedAt < 300000) { // 5 min lock
-                        showErrorModal('A contract execution is already in progress. Please wait for it to complete or close the other browser tab.', {
-                            code: 'FLOW_LOCKED',
-                            title: 'Flow In Progress'
-                        });
-                        return;
-                    }
-                } catch (e) { /* Invalid lock data, proceed */ }
+            if (!acquireFlowLock()) {
+                showErrorModal('A contract execution is already in progress. Please wait for it to complete or close the other browser tab.', {
+                    code: 'FLOW_LOCKED',
+                    title: 'Flow In Progress'
+                });
+                return;
             }
-            localStorage.setItem(FLOW_LOCK_KEY, JSON.stringify({ startedAt: Date.now() }));
-            const releaseLock = () => localStorage.removeItem(FLOW_LOCK_KEY);
 
             holdComplete = true;
             btn.disabled = true;
 
             // Helper: poll until state matches (with timeout return)
+            // SAFETY: Abort if contractId missing or state undefined
             const pollUntilState = async (contractId, acceptStates, timeoutMs = 90000) => {
+                if (!contractId) {
+                    console.error('[Contracts] pollUntilState: contractId missing!');
+                    return { timeout: true, lastState: undefined, aborted: true };
+                }
+
                 const start = Date.now();
                 let delay = 750;
                 const maxDelay = 4000;
                 let lastState = null;
+                let consecutiveUndefined = 0;
 
                 while (true) {
-                    const res = await window.api.getContract(contractId);
-                    lastState = res.contract?.state;
-                    console.log(`[Contracts] Polling state: ${lastState}`);
+                    try {
+                        const res = await window.api.getContract(contractId);
+                        lastState = res.contract?.state;
+                        console.log(`[Contracts] Polling state: ${lastState}`);
 
-                    if (acceptStates.includes(lastState)) return res;
+                        // Safety: if state is consistently undefined, abort polling
+                        if (lastState === undefined) {
+                            consecutiveUndefined++;
+                            if (consecutiveUndefined >= 3) {
+                                console.error('[Contracts] Polling aborted: state undefined 3 times');
+                                return { timeout: true, lastState: undefined, aborted: true, contract: res.contract, events: res.events };
+                            }
+                        } else {
+                            consecutiveUndefined = 0;
+                        }
+
+                        if (acceptStates.includes(lastState)) return res;
+                    } catch (pollErr) {
+                        console.warn('[Contracts] Poll error:', pollErr.message);
+                    }
 
                     if (Date.now() - start > timeoutMs) {
-                        return { timeout: true, lastState, contract: res.contract, events: res.events };
+                        return { timeout: true, lastState, contract: null, events: [] };
                     }
 
                     await new Promise(r => setTimeout(r, delay));
@@ -1677,7 +1749,7 @@ export function initContracts() {
                     console.log('[Contracts] Already LOCKED, skipping execute...');
                     // Jump to finalize
                     btnText.textContent = "Already executed";
-                    releaseLock();
+                    releaseFlowLock();
                     setTimeout(() => {
                         window.router.navigate('/contracts/' + contractId);
                     }, 1000);
@@ -1696,7 +1768,7 @@ export function initContracts() {
                     if (lockedRes.contract?.state === 'LOCKED') {
                         console.log('[Contracts] Already LOCKED, skipping execute...');
                         btnText.textContent = "Already executed";
-                        releaseLock();
+                        releaseFlowLock();
                         setTimeout(() => {
                             window.router.navigate('/contracts/' + contractId);
                         }, 1000);
@@ -1773,7 +1845,7 @@ export function initContracts() {
                 // ==================================================
                 // SUCCESS - Update UI
                 // ==================================================
-                releaseLock(); // Release flow lock on success
+                releaseFlowLock(); // Release flow lock on success
                 this.markCompleted(3);
                 btnText.textContent = "Contract Executed";
                 btn.classList.remove('bg-neutral-900');
@@ -1791,7 +1863,7 @@ export function initContracts() {
 
             } catch (error) {
                 console.error('[Contracts] completeHold error:', error);
-                releaseLock(); // Release lock on failure
+                releaseFlowLock(); // Release lock on failure
                 holdComplete = false;
                 btnText.textContent = "Hold to Execute";
                 btn.disabled = false;

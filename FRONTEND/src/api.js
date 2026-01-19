@@ -308,6 +308,12 @@ export async function executeContract(contractId) {
     return post(`/v1/contracts/${contractId}/execute`);
 }
 
+// --- DEV-ONLY: Simulate Success ---
+export async function devSimulateSuccess(contractId) {
+    console.warn('[API][DEV] Simulating contract success:', contractId);
+    return post(`/v1/contracts/${contractId}/dev/simulate-success`);
+}
+
 
 // --- CONNECTED ACCOUNTS ---
 
@@ -382,6 +388,9 @@ export default {
 
     // Execute
     executeContract,
+
+    // DEV-only
+    devSimulateSuccess,
 
     // Connected Accounts
     getConnectedAccounts,

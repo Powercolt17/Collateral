@@ -698,6 +698,150 @@ const contractWriteRoutes: FastifyPluginAsync = async (fastify) => {
             return { ok: false, code: 'INTERNAL_ERROR', error: err.message };
         }
     });
+
+    // =======================================================================
+    // DEV-ONLY: SIMULATE SUCCESS ENDPOINT
+    // =======================================================================
+    // Allows testing receipt page without Stripe funds locking
+    // HARD-FAILS in production - no exceptions
+    // =======================================================================
+    fastify.post<{
+        Params: { id: string };
+    }>('/v1/contracts/:id/dev/simulate-success', async (request, reply) => {
+        // ==========================================
+        // PRODUCTION GUARD - HARD FAIL
+        // ==========================================
+        if (process.env.NODE_ENV === 'production') {
+            console.error('[DEV SIMULATE] BLOCKED - Production environment detected!');
+            reply.status(403);
+            return {
+                ok: false,
+                code: 'PRODUCTION_BLOCKED',
+                error: 'DEV endpoints are disabled in production'
+            };
+        }
+
+        const contractId = request.params.id;
+        const userId = request.userId!;
+
+        console.warn('[DEV] Simulating contract success', { contractId, userId });
+
+        try {
+            // Get contract
+            const contract = await getContract(contractId);
+            if (!contract) {
+                reply.status(404);
+                return { ok: false, code: 'NOT_FOUND', error: 'Contract not found' };
+            }
+
+            // Verify ownership
+            if (contract.userId !== userId) {
+                reply.status(403);
+                return { ok: false, code: 'FORBIDDEN', error: 'Not your contract' };
+            }
+
+            // Get current events
+            const events = await getEventsForContract(contractId);
+            const currentState = deriveState(events);
+
+            // Idempotent: if already in terminal success state, return success
+            if (['LOCKED', 'ACTIVE', 'EXECUTION_CONFIRMED'].includes(currentState)) {
+                console.log('[DEV] Contract already in success state:', currentState);
+                return {
+                    ok: true,
+                    code: 'ALREADY_SUCCESS',
+                    state: currentState,
+                    message: 'Contract is already in terminal success state'
+                };
+            }
+
+            // Append missing events to reach LOCKED state
+            const now = new Date().toISOString();
+
+            // If no FUNDS_AUTHORIZED, add it
+            const hasFundsAuthorized = events.some(e => e.eventType === 'FUNDS_AUTHORIZED');
+            if (!hasFundsAuthorized) {
+                await appendEvent({
+                    contractId,
+                    eventType: 'FUNDS_AUTHORIZED' as any,
+                    payload: {
+                        dev: true,
+                        simulatedAt: now,
+                        amountUsdCents: contract.lockAmountUsdCents,
+                        paymentIntentId: 'pi_dev_simulated_' + contractId.slice(0, 8),
+                    },
+                });
+                console.log('[DEV] Appended FUNDS_AUTHORIZED');
+            }
+
+            // If no FUNDS_LOCKED, add it
+            const hasFundsLocked = events.some(e => e.eventType === 'FUNDS_LOCKED');
+            if (!hasFundsLocked) {
+                await appendEvent({
+                    contractId,
+                    eventType: 'FUNDS_LOCKED' as any,
+                    payload: {
+                        dev: true,
+                        simulatedAt: now,
+                        amountUsdCents: contract.lockAmountUsdCents,
+                        chargeId: 'ch_dev_simulated_' + contractId.slice(0, 8),
+                    },
+                });
+                console.log('[DEV] Appended FUNDS_LOCKED');
+            }
+
+            // If no EXECUTION_REQUESTED, add it
+            const hasExecutionRequested = events.some(e => e.eventType === 'EXECUTION_REQUESTED');
+            if (!hasExecutionRequested) {
+                await appendEvent({
+                    contractId,
+                    eventType: 'EXECUTION_REQUESTED' as any,
+                    payload: {
+                        dev: true,
+                        simulatedAt: now,
+                    },
+                });
+                console.log('[DEV] Appended EXECUTION_REQUESTED');
+            }
+
+            // If no EXECUTION_CONFIRMED, add it
+            const hasExecutionConfirmed = events.some(e => e.eventType === 'EXECUTION_CONFIRMED');
+            if (!hasExecutionConfirmed) {
+                await appendEvent({
+                    contractId,
+                    eventType: 'EXECUTION_CONFIRMED' as any,
+                    payload: {
+                        dev: true,
+                        simulatedAt: now,
+                        deadline: contract.deadlineUtc?.toISOString() || now,
+                        lockAmountUsdCents: contract.lockAmountUsdCents,
+                        message: '[DEV] Simulated execution confirmation',
+                    },
+                });
+                console.log('[DEV] Appended EXECUTION_CONFIRMED');
+            }
+
+            // Get final state
+            const updatedEvents = await getEventsForContract(contractId);
+            const finalState = deriveState(updatedEvents);
+
+            console.warn('[DEV] Simulated contract success', { contractId, finalState });
+
+            return {
+                ok: true,
+                code: 'DEV_SIMULATED',
+                state: finalState,
+                message: 'Contract simulated to success state (DEV ONLY)',
+                eventsAdded: updatedEvents.length - events.length,
+            };
+
+        } catch (err: any) {
+            console.error('[DEV] Simulate error:', err);
+            reply.status(500);
+            return { ok: false, code: 'INTERNAL_ERROR', error: err.message };
+        }
+    });
 };
 
 export default contractWriteRoutes;
+

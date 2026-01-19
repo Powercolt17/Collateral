@@ -586,18 +586,73 @@ export async function initReceiptDetail(params) {
                 <p class="legal">This receipt may be used for personal records or verification purposes.</p>
                 
                 <div class="receipt-actions">
-                    <button class="receipt-btn" onclick="navigator.clipboard.writeText('${contractId}')">
+                    <button class="receipt-btn" id="btn-copy-id">
                         Copy Contract ID
                     </button>
-                    <button class="receipt-btn" onclick="window.router.navigate('/ledger')">
+                    <button class="receipt-btn" id="btn-view-ledger">
                         View Ledger
                     </button>
-                    <button class="receipt-btn primary" onclick="window.router.navigate('/contracts')">
+                    <button class="receipt-btn primary" id="btn-create-another">
                         Create Another Contract
                     </button>
                 </div>
+                
+                ${!isSuccess ? `
+                    <div style="margin-top: 2rem; padding-top: 1rem; border-top: 1px dashed #E5E5E5;">
+                        <p style="font-size: 10px; color: #999; margin-bottom: 0.75rem; font-family: ui-monospace, monospace; letter-spacing: 0.1em; text-transform: uppercase;">⚠️ DEV TOOLS</p>
+                        <button class="receipt-btn" id="btn-dev-simulate" style="border-color: #f59e0b; color: #f59e0b;">
+                            Simulate Successful Execution (DEV)
+                        </button>
+                    </div>
+                ` : ''}
             </footer>
         `;
+
+        // Bind button events
+        document.getElementById('btn-copy-id')?.addEventListener('click', () => {
+            navigator.clipboard.writeText(contractId);
+            alert('Contract ID copied!');
+        });
+
+        document.getElementById('btn-view-ledger')?.addEventListener('click', () => {
+            window.router.navigate('/ledger');
+        });
+
+        document.getElementById('btn-create-another')?.addEventListener('click', () => {
+            window.router.navigate('/contracts');
+        });
+
+        // DEV: Simulate success button
+        const devSimBtn = document.getElementById('btn-dev-simulate');
+        if (devSimBtn) {
+            devSimBtn.addEventListener('click', async () => {
+                devSimBtn.disabled = true;
+                devSimBtn.textContent = 'Simulating...';
+
+                try {
+                    const result = await window.api.devSimulateSuccess(contractId);
+                    console.warn('[DEV] Simulated contract success', result);
+
+                    if (result.ok) {
+                        // Refresh the page to show updated state
+                        alert('✅ Success simulated! Refreshing...');
+                        window.location.reload();
+                    } else {
+                        alert('❌ Simulation failed: ' + (result.error || 'Unknown error'));
+                        devSimBtn.disabled = false;
+                        devSimBtn.textContent = 'Simulate Successful Execution (DEV)';
+                    }
+                } catch (err) {
+                    console.error('[DEV] Simulate error:', err);
+                    alert('❌ Error: ' + err.message);
+                    devSimBtn.disabled = false;
+                    devSimBtn.textContent = 'Simulate Successful Execution (DEV)';
+                }
+            });
+        }
+
+        // Log receipt load
+        console.log('[Receipt] Loaded', { contractId, state });
 
     } catch (error) {
         console.error('[Receipt] Error loading contract:', error);
@@ -612,3 +667,4 @@ export async function initReceiptDetail(params) {
         `;
     }
 }
+

@@ -735,6 +735,15 @@ const contractWriteRoutes: FastifyPluginAsync = async (fastify) => {
             }
 
             // Verify ownership
+            // DEBUG: Log both userId values to diagnose mismatch
+            console.log('[DEV] Ownership check:', {
+                contractUserId: contract.userId,
+                authUserId: userId,
+                match: contract.userId === userId,
+                contractUserIdType: typeof contract.userId,
+                authUserIdType: typeof userId
+            });
+
             if (contract.userId !== userId) {
                 reply.status(403);
                 return { ok: false, code: 'FORBIDDEN', error: 'Not your contract' };

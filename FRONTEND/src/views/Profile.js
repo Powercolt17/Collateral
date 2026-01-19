@@ -361,6 +361,69 @@ export async function initProfile() {
             alertEl.classList.add('hidden');
         }
 
+        // Fetch and render contracts
+        try {
+            const contractsResponse = await window.api.getContracts();
+            const contracts = contractsResponse?.contracts || [];
+            const contractsList = document.getElementById('contracts-list');
+
+            console.log('[Profile] Loaded contracts:', contracts.length);
+
+            if (contracts.length > 0 && contractsList) {
+                // Helper functions
+                function formatCurrency(cents) {
+                    if (!cents) return '-';
+                    return '$' + (cents / 100).toLocaleString('en-US', { minimumFractionDigits: 2 });
+                }
+
+                function formatDate(isoString) {
+                    if (!isoString) return '-';
+                    const date = new Date(isoString);
+                    return date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+                }
+
+                function getStatusText(state) {
+                    const map = {
+                        'CREATED': 'Created', 'FUNDS_AUTHORIZED': 'Pending', 'FUNDS_LOCKED': 'Funded',
+                        'LOCKED': 'Active', 'ACTIVE': 'Active', 'EXECUTION_CONFIRMED': 'Executed',
+                        'VERIFIED': 'Verified', 'SETTLED_SUCCESS': 'Settled', 'SETTLED_FAILURE': 'Forfeited'
+                    };
+                    return map[state] || state;
+                }
+
+                function getStatusClass(state) {
+                    if (['SETTLED_SUCCESS', 'SETTLED'].includes(state)) return 'bg-green-100 text-green-800';
+                    if (['SETTLED_FAILURE', 'FORFEITED'].includes(state)) return 'bg-red-100 text-red-800';
+                    if (['LOCKED', 'ACTIVE', 'EXECUTION_CONFIRMED'].includes(state)) return 'bg-neutral-900 text-white';
+                    return 'bg-neutral-100 text-neutral-800';
+                }
+
+                let html = '';
+                contracts.forEach(c => {
+                    html += `
+                        <div class="flex items-center justify-between p-4 border-b border-neutral-100 hover:bg-neutral-50 cursor-pointer" onclick="window.router.navigate('/receipts/${c.id}')">
+                            <div class="flex items-center gap-4">
+                                <div>
+                                    <div class="font-mono text-xs text-neutral-500">${c.id.slice(0, 8)}...</div>
+                                    <div class="font-sans text-sm font-medium">${formatCurrency(c.lockAmountUsdCents)}</div>
+                                </div>
+                            </div>
+                            <div class="flex items-center gap-4">
+                                <div class="text-right">
+                                    <div class="font-mono text-[10px] text-neutral-400 uppercase">${formatDate(c.createdAt)}</div>
+                                </div>
+                                <span class="px-2 py-1 text-[10px] font-mono uppercase ${getStatusClass(c.state)}">${getStatusText(c.state)}</span>
+                            </div>
+                        </div>
+                    `;
+                });
+
+                contractsList.innerHTML = html;
+            }
+        } catch (contractsErr) {
+            console.error('[Profile] Error loading contracts:', contractsErr);
+        }
+
     } catch (err) {
         console.error('[Profile] Error loading profile:', err);
     }

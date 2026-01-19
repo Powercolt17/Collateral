@@ -2140,6 +2140,9 @@ export function initContracts() {
                     document.getElementById('stripe-verify-status').classList.remove('text-neutral-400');
                     document.getElementById('stripe-verify-status').classList.add('text-[#1F7A4D]');
                     if (window.lucide) window.lucide.createIcons();
+
+                    // CRITICAL: Enable the BIND AUTHORITY button now that Stripe is connected
+                    updateAuthorityGatingUI();
                 }
 
             } catch (error) {

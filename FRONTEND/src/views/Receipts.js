@@ -173,55 +173,118 @@ export function renderReceipts() {
     `;
 }
 
-export function initReceipts() {
+export async function initReceipts() {
     const container = document.getElementById('receipts-content');
 
-    // Mock: Empty receipts array (simulating user with no executed contracts)
-    const userReceipts = [];
-
-    // If receipts.length === 0 → show empty state
-    if (userReceipts.length === 0) {
-        container.innerHTML = `
-            <div class="receipts-empty">
-                <h2 class="receipts-empty-title">No execution records exist for this identity.</h2>
-                <p class="receipts-empty-text">
-                    Receipts are created when a contract is executed.<br>
-                    This ledger contains no entries.
-                </p>
-            </div>
-        `;
-        return;
-    }
-
-    // If receipts.length > 0 → show receipt list
-    let listHTML = `
-        <div class="receipts-list">
-            <div class="receipt-row receipt-row-header">
-                <div class="receipt-cell receipt-cell-header">Receipt ID</div>
-                <div class="receipt-cell receipt-cell-header">Capital</div>
-                <div class="receipt-cell receipt-cell-header">Executed</div>
-                <div class="receipt-cell receipt-cell-header">Status</div>
-            </div>
+    // Show loading state
+    container.innerHTML = `
+        <div style="text-align: center; padding: 3rem; color: #6B6E76;">
+            <p>Loading receipts...</p>
+        </div>
     `;
 
-    userReceipts.forEach(receipt => {
-        const statusClass = receipt.status === 'SETTLED_SUCCESS' ? 'success' :
-            receipt.status === 'SETTLED_FAILURE' ? 'failure' : 'active';
-        const statusText = receipt.status === 'SETTLED_SUCCESS' ? 'Settled' :
-            receipt.status === 'SETTLED_FAILURE' ? 'Forfeited' : 'Active';
+    try {
+        // Fetch user's contracts from API
+        const response = await window.api.getContracts();
+        const contracts = response?.contracts || [];
 
-        listHTML += `
-            <div class="receipt-row" onclick="window.router.navigate('/receipts/${receipt.id}')">
-                <div class="receipt-cell receipt-cell-id">${receipt.receiptId}</div>
-                <div class="receipt-cell">${receipt.capital}</div>
-                <div class="receipt-cell">${receipt.executedDate}</div>
-                <div class="receipt-cell">
-                    <span class="receipt-status ${statusClass}">${statusText}</span>
+        // Filter to only show executed contracts (those with terminal success states or active)
+        const executedContracts = contracts.filter(c =>
+            ['LOCKED', 'ACTIVE', 'EXECUTION_CONFIRMED', 'SETTLED_SUCCESS', 'SETTLED_FAILURE', 'SETTLED', 'FORFEITED', 'VERIFIED', 'VERIFYING'].includes(c.state)
+        );
+
+        console.log('[Receipts] Loaded', { total: contracts.length, executed: executedContracts.length });
+
+        // If no executed contracts → show empty state
+        if (executedContracts.length === 0) {
+            container.innerHTML = `
+                <div class="receipts-empty">
+                    <h2 class="receipts-empty-title">No execution records exist for this identity.</h2>
+                    <p class="receipts-empty-text">
+                        Receipts are created when a contract is executed.<br>
+                        This ledger contains no entries.
+                    </p>
                 </div>
+            `;
+            return;
+        }
+
+        // Format helpers
+        function formatCurrency(cents) {
+            if (!cents) return '-';
+            return '$' + (cents / 100).toLocaleString('en-US', { minimumFractionDigits: 2 });
+        }
+
+        function formatDate(isoString) {
+            if (!isoString) return '-';
+            const date = new Date(isoString);
+            return date.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+        }
+
+        function truncateId(id) {
+            if (!id) return '-';
+            return id.slice(0, 8) + '...' + id.slice(-4);
+        }
+
+        function getStatusClass(state) {
+            if (['SETTLED_SUCCESS', 'SETTLED'].includes(state)) return 'success';
+            if (['SETTLED_FAILURE', 'FORFEITED'].includes(state)) return 'failure';
+            return 'active';
+        }
+
+        function getStatusText(state) {
+            const statusMap = {
+                'LOCKED': 'Active',
+                'ACTIVE': 'Active',
+                'EXECUTION_CONFIRMED': 'Executed',
+                'VERIFIED': 'Verified',
+                'VERIFYING': 'Verifying',
+                'SETTLED_SUCCESS': 'Settled',
+                'SETTLED': 'Settled',
+                'SETTLED_FAILURE': 'Forfeited',
+                'FORFEITED': 'Forfeited',
+            };
+            return statusMap[state] || state;
+        }
+
+        // Build list HTML
+        let listHTML = `
+            <div class="receipts-list">
+                <div class="receipt-row receipt-row-header">
+                    <div class="receipt-cell receipt-cell-header">Contract ID</div>
+                    <div class="receipt-cell receipt-cell-header">Capital</div>
+                    <div class="receipt-cell receipt-cell-header">Executed</div>
+                    <div class="receipt-cell receipt-cell-header">Status</div>
+                </div>
+        `;
+
+        executedContracts.forEach(contract => {
+            const statusClass = getStatusClass(contract.state);
+            const statusText = getStatusText(contract.state);
+
+            listHTML += `
+                <div class="receipt-row" onclick="window.router.navigate('/receipts/${contract.id}')">
+                    <div class="receipt-cell receipt-cell-id">${truncateId(contract.id)}</div>
+                    <div class="receipt-cell">${formatCurrency(contract.lockAmountUsdCents)}</div>
+                    <div class="receipt-cell">${formatDate(contract.createdAt)}</div>
+                    <div class="receipt-cell">
+                        <span class="receipt-status ${statusClass}">${statusText}</span>
+                    </div>
+                </div>
+            `;
+        });
+
+        listHTML += '</div>';
+        container.innerHTML = listHTML;
+
+    } catch (error) {
+        console.error('[Receipts] Error loading contracts:', error);
+        container.innerHTML = `
+            <div class="receipts-empty">
+                <h2 class="receipts-empty-title">Error loading receipts</h2>
+                <p class="receipts-empty-text">${error.message || 'Please try again later.'}</p>
             </div>
         `;
-    });
-
-    listHTML += '</div>';
-    container.innerHTML = listHTML;
+    }
 }
+

@@ -94,8 +94,89 @@ export function renderFunding() {
     `;
 }
 
-export function initFunding() {
+export async function initFunding() {
     if (window.lucide) {
         window.lucide.createIcons();
     }
+
+    // Check if we're on production
+    const isProduction = window.location.hostname === 'collateral.market';
+
+    // Gate fake payment buttons on production
+    const addCardBtn = document.getElementById('add-card-btn');
+    const setupPayoutBtn = document.getElementById('setup-payout-btn');
+    const cardStatus = document.getElementById('card-status');
+    const payoutStatus = document.getElementById('payout-status');
+
+    if (isProduction) {
+        // Production: Disable buttons, show proper messaging
+        if (addCardBtn) {
+            addCardBtn.textContent = 'Via Stripe';
+            addCardBtn.disabled = true;
+            addCardBtn.removeAttribute('onclick');
+            addCardBtn.classList.add('opacity-50', 'cursor-not-allowed');
+        }
+        if (cardStatus) {
+            cardStatus.textContent = 'Payment methods added during contract execution';
+        }
+        if (setupPayoutBtn) {
+            setupPayoutBtn.textContent = 'Via Stripe Connect';
+            setupPayoutBtn.disabled = true;
+            setupPayoutBtn.removeAttribute('onclick');
+            setupPayoutBtn.classList.add('opacity-50', 'cursor-not-allowed');
+        }
+        if (payoutStatus) {
+            payoutStatus.textContent = 'Payouts configured through Stripe Connect';
+        }
+    }
+
+    try {
+        // Fetch user's contracts to calculate locked balance
+        const response = await window.api.getContracts();
+        const contracts = response?.contracts || [];
+
+        // Calculate locked balance (contracts in active states)
+        const activeStates = ['LOCKED', 'ACTIVE', 'EXECUTION_CONFIRMED', 'FUNDS_LOCKED', 'VERIFIED', 'VERIFYING'];
+        const lockedCents = contracts
+            .filter(c => activeStates.includes(c.state))
+            .reduce((sum, c) => sum + (c.lockAmountUsdCents || 0), 0);
+
+        // Update locked balance display
+        const lockedEl = document.getElementById('locked-balance');
+        if (lockedEl) {
+            lockedEl.textContent = '$' + (lockedCents / 100).toLocaleString('en-US', { minimumFractionDigits: 2 });
+        }
+
+        // Only log in non-production
+        if (!isProduction) {
+            console.log('[Funding] Calculated locked balance:', lockedCents / 100);
+        }
+
+        // Fetch Stripe connection status (if not already gated by production check)
+        if (!isProduction) {
+            try {
+                const stripeStatus = await window.api.getStripeStatus();
+
+                if (stripeStatus?.connected && cardStatus) {
+                    cardStatus.textContent = 'Connected via Stripe';
+                    cardStatus.classList.remove('text-neutral-400');
+                    cardStatus.classList.add('text-[#1F7A4D]');
+                    if (addCardBtn) {
+                        addCardBtn.textContent = 'Connected';
+                        addCardBtn.disabled = true;
+                        addCardBtn.classList.add('opacity-50', 'cursor-not-allowed');
+                    }
+                }
+            } catch (stripeErr) {
+                console.log('[Funding] Stripe status not available:', stripeErr.message);
+            }
+        }
+
+    } catch (error) {
+        if (!isProduction) {
+            console.error('[Funding] Error loading funding data:', error);
+        }
+    }
 }
+
+

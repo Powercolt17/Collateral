@@ -115,137 +115,126 @@ export function renderLedger() {
     `;
 }
 
-export function initLedger() {
-    const principals = ['@jason_ship', '@alice_dev', '@sarah_builds', '@founder_01', '@yield_hunter', '@anon_cap', '@vector_vc', '@protocol_labs', '@sol_wizard'];
-    const outcomes = [
-        { type: 'Contract Settled', status: 'Settled', outcome: 'Success', color: 'emerald-700', flash: 'flash-success', weight: 4 },
-        { type: 'Contract Forfeited', status: 'Forfeited', outcome: 'Failure', color: '[#921818]', flash: 'flash-failure', weight: 1 },
-        { type: 'Contract Executed', status: 'Locked', outcome: '—', color: 'neutral-900', flash: '', weight: 3 },
-        { type: 'Identity Confirmed', status: 'Confirmed', outcome: '—', color: 'neutral-500', flash: '', weight: 2 }
-    ];
-
-    const multipliers = ['2.5x', '1.8x', '+$7,500', '3.1x', '+$12,400', '1.5x', '+$1,200', '10.0x', '+$500', '4.2x'];
-
-    const initialData = [
-        { ts: '14:02:11', type: 'Contract Settled', hash: '0x8a7...2b91', user: '@jason_ship', val: '5,000.00', mult: '2.5x', status: 'Settled', outcome: 'Success', color: 'emerald-700' },
-        { ts: '14:02:05', type: 'Identity Confirmed', hash: '0x8a7...2b91', user: '@jason_ship', val: '—', mult: '—', status: 'Confirmed', outcome: '—', color: 'neutral-500' },
-        { ts: '14:01:44', type: 'Contract Forfeited', hash: '0x3c2...9f44', user: '@demo_user', val: '1,200.00', mult: '—', status: 'Forfeited', outcome: 'Failure', color: '[#921818]' },
-        { ts: '14:00:12', type: 'Contract Executed', hash: '0xe11...5a02', user: '@alice_dev', val: '10,000.00', mult: '—', status: 'Locked', outcome: '—', color: 'neutral-900' },
-        { ts: '13:58:30', type: 'Contract Settled', hash: '0xf33...1b99', user: '@sarah_builds', val: '500.00', mult: '+$240', status: 'Settled', outcome: 'Success', color: 'emerald-700' }
-    ];
-
+export async function initLedger() {
     const tbody = document.getElementById('ledger-body');
     if (!tbody) return;
 
-    const MAX_LEDGER_ITEMS = 15;
+    // Show loading state
+    tbody.innerHTML = `<tr><td colspan="8" class="py-8 text-center font-mono text-sm text-neutral-400">Loading ledger events...</td></tr>`;
 
-    function getRandomItem(arr, weightProp) {
-        if (!weightProp) return arr[Math.floor(Math.random() * arr.length)];
-        const totalWeight = arr.reduce((sum, item) => sum + item.weight, 0);
-        let random = Math.random() * totalWeight;
-        for (const item of arr) {
-            if (random < item.weight) return item;
-            random -= item.weight;
-        }
-        return arr[0];
-    }
+    try {
+        // Fetch real ledger events from API
+        const response = await window.api.getPublicLedger();
+        const events = response?.events || [];
 
-    function generateHash() {
-        return '0x' + Math.floor(Math.random() * 16777215).toString(16) + '...' + Math.floor(Math.random() * 65535).toString(16);
-    }
+        console.log('[Ledger] Loaded', events.length, 'events');
 
-    function generateValue() {
-        return (Math.random() * 15000 + 100).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
-    }
-
-    function getTimestamp() {
-        const now = new Date();
-        return now.toISOString().split('T')[1].split('.')[0] + ' UTC';
-    }
-
-    function createRowHTML(data, isNew = false) {
-        const row = document.createElement('tr');
-        row.className = `group hover:bg-neutral-50/50 transition-colors ${isNew ? 'animate-new-row ' + (data.flash || '') : ''}`;
-        const multColor = data.status === 'Settled' ? 'text-emerald-700 font-semibold' : 'text-neutral-400';
-
-        row.innerHTML = `
-            <td class="py-3 pr-4 font-mono text-[11px] text-neutral-500 align-top whitespace-nowrap">${data.ts}</td>
-            <td class="py-3 px-4 font-mono text-[10px] text-${data.color} font-medium uppercase tracking-wide align-top">${data.type}</td>
-            <td class="py-3 px-4 font-mono text-[11px] text-neutral-500 truncate align-top select-all cursor-text">${data.hash}</td>
-            <td class="py-3 px-4 font-mono text-[11px] text-neutral-600 align-top cursor-pointer hover:text-neutral-900 transition-colors">${data.user}</td>
-            <td class="py-3 px-4 font-mono text-[11px] ${data.type.includes('Settled') || data.type.includes('Forfeited') ? 'text-' + data.color : 'text-neutral-900'} text-right align-top">${data.val}</td>
-            <td class="py-3 px-4 font-mono text-[11px] ${multColor} text-right align-top tracking-tight">${data.mult}</td>
-            <td class="py-3 px-4 font-mono text-[10px] text-${data.color} font-semibold text-right uppercase tracking-widest align-top">${data.status}</td>
-            <td class="py-3 pl-4 font-mono text-[10px] text-${data.color} ${data.status === 'Locked' || data.status === 'Confirmed' ? 'text-neutral-400' : 'font-semibold'} text-right uppercase tracking-widest align-top">${data.outcome}</td>
-        `;
-        return row;
-    }
-
-    // Initialize with seed data
-    initialData.forEach(d => {
-        const eventTypeObj = outcomes.find(o => o.status === d.status);
-        if (eventTypeObj) d.flash = eventTypeObj.flash;
-        tbody.appendChild(createRowHTML(d));
-    });
-
-    // Live feed generator
-    function addNewEvent() {
-        const eventConfig = getRandomItem(outcomes, 'weight');
-        const user = getRandomItem(principals);
-        const val = eventConfig.status === 'Confirmed' ? '—' : generateValue();
-
-        let mult = '—';
-        if (eventConfig.status === 'Settled') {
-            mult = getRandomItem(multipliers);
+        if (events.length === 0) {
+            tbody.innerHTML = `
+                <tr>
+                    <td colspan="8" class="py-12 text-center">
+                        <div class="font-mono text-[10px] text-neutral-400 uppercase tracking-widest mb-2">No Events Recorded</div>
+                        <div class="font-sans text-sm text-neutral-500">The public ledger is empty. Contracts will appear here when executed.</div>
+                    </td>
+                </tr>
+            `;
+            return;
         }
 
-        const data = {
-            ts: getTimestamp(),
-            type: eventConfig.type,
-            hash: generateHash(),
-            user: user,
-            val: val,
-            mult: mult,
-            status: eventConfig.status,
-            outcome: eventConfig.outcome,
-            color: eventConfig.color,
-            flash: eventConfig.flash
-        };
-
-        const newRow = createRowHTML(data, true);
-
-        if (tbody.firstChild) {
-            tbody.insertBefore(newRow, tbody.firstChild);
-        } else {
-            tbody.appendChild(newRow);
+        // Helper functions
+        function formatTimestamp(isoString) {
+            if (!isoString) return '-';
+            const date = new Date(isoString);
+            return date.toISOString().split('T')[1].split('.')[0] + ' UTC';
         }
 
-        while (tbody.children.length > MAX_LEDGER_ITEMS) {
-            tbody.removeChild(tbody.lastChild);
+        function formatEventType(type) {
+            const map = {
+                'CONTRACT_CREATED': 'Contract Authored',
+                'FUNDS_AUTHORIZED': 'Payment Authorized',
+                'FUNDS_LOCKED': 'Contract Executed',
+                'EXECUTION_CONFIRMED': 'Execution Confirmed',
+                'VERIFICATION_STARTED': 'Verification Started',
+                'VERIFICATION_SUCCEEDED': 'Verification Passed',
+                'VERIFICATION_FAILED': 'Verification Failed',
+                'SETTLED_SUCCESS': 'Contract Settled',
+                'SETTLED_FAILURE': 'Contract Forfeited',
+            };
+            return map[type] || type;
         }
 
+        function getEventColor(type) {
+            if (type.includes('SETTLED_SUCCESS') || type.includes('VERIFIED')) return 'emerald-700';
+            if (type.includes('SETTLED_FAILURE') || type.includes('FORFEITED')) return '[#921818]';
+            if (type.includes('LOCKED') || type.includes('EXECUTED')) return 'neutral-900';
+            return 'neutral-500';
+        }
+
+        function getStatus(type) {
+            if (type.includes('SETTLED_SUCCESS')) return { status: 'Settled', outcome: 'Success' };
+            if (type.includes('SETTLED_FAILURE')) return { status: 'Forfeited', outcome: 'Failure' };
+            if (type.includes('LOCKED') || type.includes('EXECUTION_CONFIRMED')) return { status: 'Locked', outcome: '—' };
+            if (type.includes('FUNDS_AUTHORIZED')) return { status: 'Pending', outcome: '—' };
+            return { status: 'Created', outcome: '—' };
+        }
+
+        function formatCurrency(cents) {
+            if (!cents) return '—';
+            return (cents / 100).toLocaleString('en-US', { minimumFractionDigits: 2 });
+        }
+
+        function truncateHash(hash) {
+            if (!hash) return '—';
+            if (hash.length > 12) return hash.slice(0, 6) + '...' + hash.slice(-4);
+            return hash;
+        }
+
+        // Render events
+        let html = '';
+        events.forEach(event => {
+            const color = getEventColor(event.eventType);
+            const { status, outcome } = getStatus(event.eventType);
+            const contractIdShort = event.contractId ? event.contractId.slice(0, 8) + '...' : '—';
+
+            html += `
+                <tr class="group hover:bg-neutral-50/50 transition-colors">
+                    <td class="py-3 pr-4 font-mono text-[11px] text-neutral-500 align-top whitespace-nowrap">${formatTimestamp(event.timestamp)}</td>
+                    <td class="py-3 px-4 font-mono text-[10px] text-${color} font-medium uppercase tracking-wide align-top">${formatEventType(event.eventType)}</td>
+                    <td class="py-3 px-4 font-mono text-[11px] text-neutral-500 truncate align-top select-all cursor-text">${truncateHash(event.eventHash)}</td>
+                    <td class="py-3 px-4 font-mono text-[11px] text-neutral-600 align-top cursor-pointer hover:text-neutral-900 transition-colors">${contractIdShort}</td>
+                    <td class="py-3 px-4 font-mono text-[11px] text-neutral-900 text-right align-top">${formatCurrency(event.amountUsdCents)}</td>
+                    <td class="py-3 px-4 font-mono text-[11px] text-neutral-400 text-right align-top tracking-tight">—</td>
+                    <td class="py-3 px-4 font-mono text-[10px] text-${color} font-semibold text-right uppercase tracking-widest align-top">${status}</td>
+                    <td class="py-3 pl-4 font-mono text-[10px] text-${color} text-right uppercase tracking-widest align-top">${outcome}</td>
+                </tr>
+            `;
+        });
+
+        tbody.innerHTML = html;
+
+        // Update TVL display
         const tvlEl = document.getElementById('global-tvl');
         if (tvlEl) {
-            let currentTVL = parseInt(tvlEl.innerText.replace(/,/g, '').replace(' USD', ''));
-            if (Math.random() > 0.5) currentTVL += Math.floor(Math.random() * 5000);
-            else currentTVL -= Math.floor(Math.random() * 2000);
-            tvlEl.innerText = currentTVL.toLocaleString() + " USD";
+            // Calculate total from settled events (approximate TVL)
+            const totalCents = events
+                .filter(e => e.amountUsdCents)
+                .reduce((sum, e) => sum + (e.amountUsdCents || 0), 0);
+            tvlEl.textContent = (totalCents / 100).toLocaleString() + ' USD';
         }
-    }
 
-    function scheduleNextEvent() {
-        const delay = Math.random() * 4000 + 2000;
-        window.ledgerInterval = setTimeout(() => {
-            if (document.getElementById('ledger-body')) {
-                addNewEvent();
-                scheduleNextEvent();
-            }
-        }, delay);
+    } catch (error) {
+        console.error('[Ledger] Error loading events:', error);
+        tbody.innerHTML = `
+            <tr>
+                <td colspan="8" class="py-8 text-center font-mono text-sm text-red-500">
+                    Error loading ledger: ${error.message || 'Unknown error'}
+                </td>
+            </tr>
+        `;
     }
-
-    scheduleNextEvent();
 
     if (window.lucide) {
         window.lucide.createIcons();
     }
 }
+

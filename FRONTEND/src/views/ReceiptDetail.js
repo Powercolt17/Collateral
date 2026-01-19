@@ -597,7 +597,7 @@ export async function initReceiptDetail(params) {
                     </button>
                 </div>
                 
-                ${!isSuccess ? `
+                ${(!isSuccess && window.location.hostname !== 'collateral.market') ? `
                     <div style="margin-top: 2rem; padding-top: 1rem; border-top: 1px dashed #E5E5E5;">
                         <p style="font-size: 10px; color: #999; margin-bottom: 0.75rem; font-family: ui-monospace, monospace; letter-spacing: 0.1em; text-transform: uppercase;">⚠️ DEV TOOLS</p>
                         <button class="receipt-btn" id="btn-dev-simulate" style="border-color: #f59e0b; color: #f59e0b;">

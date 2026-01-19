@@ -8,8 +8,8 @@ export function renderOverview() {
                     
                     <div class="relative">
                         <h1 class="font-display font-normal text-5xl md:text-7xl leading-[0.9] tracking-tight text-[#0E0E11] mb-6 max-w-3xl">
-                            YOU ARE BETTING <br>
-                            <span class="text-[#921818] font-medium tracking-tighter">ON YOURSELF.</span>
+                            LOCKING CAPITAL <br>
+                            <span class="text-[#921818] font-medium tracking-tighter">ON YOUR PERFORMANCE.</span>
                         </h1>
                     </div>
 

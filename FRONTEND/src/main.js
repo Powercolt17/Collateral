@@ -128,6 +128,7 @@ const routes = [
     { path: '/contracts', render: renderContracts, init: initContracts },
     { path: '/contracts/:id', render: renderContractDetail, init: initContractDetail },
     { path: '/profile', render: renderProfile, init: initProfile },
+    { path: '/settings', render: renderProfile, init: initProfile }, // Redirect settings to profile
     { path: '/my-contracts', render: renderMyContracts, init: initMyContracts },
     { path: '/docs', render: renderDocs, init: initDocs },
     { path: '/funding', render: renderFunding, init: initFunding },

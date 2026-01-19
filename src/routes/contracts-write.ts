@@ -734,17 +734,15 @@ const contractWriteRoutes: FastifyPluginAsync = async (fastify) => {
                 return { ok: false, code: 'NOT_FOUND', error: 'Contract not found' };
             }
 
-            // Verify ownership
+            // Verify ownership - contracts use principalUserId field
             // DEBUG: Log both userId values to diagnose mismatch
             console.log('[DEV] Ownership check:', {
-                contractUserId: contract.userId,
+                contractUserId: contract.principalUserId,
                 authUserId: userId,
-                match: contract.userId === userId,
-                contractUserIdType: typeof contract.userId,
-                authUserIdType: typeof userId
+                match: contract.principalUserId === userId,
             });
 
-            if (contract.userId !== userId) {
+            if (contract.principalUserId !== userId) {
                 reply.status(403);
                 return { ok: false, code: 'FORBIDDEN', error: 'Not your contract' };
             }

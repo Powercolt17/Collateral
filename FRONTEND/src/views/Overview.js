@@ -1,38 +1,32 @@
 // Overview View - Institutional Homepage
 export function renderOverview() {
     return `
-        <div class="pb-32 w-full max-w-5xl mx-auto px-6 relative z-10 min-h-screen flex flex-col">
+        <div class="pb-24 w-full max-w-5xl mx-auto px-6 relative z-10 min-h-screen flex flex-col">
             <main id="view-landing" class="view-section flex flex-col items-start opacity-0 animate-activate">
                 
-                <!-- MARKET STATUS BAR -->
-                <div class="w-full mt-8 border border-[#D9DBE1] bg-white">
-                    <div class="flex flex-col md:flex-row md:items-center justify-between py-3 px-4 gap-3">
-                        <div class="flex items-center gap-3">
-                            <div class="flex items-center gap-2">
-                                <div class="w-2 h-2 bg-[#1F7A4D] rounded-full"></div>
-                                <span class="font-mono text-[10px] uppercase tracking-widest text-[#0E0E11] font-medium">LIVE</span>
-                            </div>
-                            <div class="h-3 w-px bg-[#D9DBE1]"></div>
-                            <span class="font-mono text-[10px] uppercase tracking-widest text-[#6B6E76]"><span class="text-[#0E0E11]">127</span> Active Contracts</span>
-                            <div class="h-3 w-px bg-[#D9DBE1] hidden md:block"></div>
-                            <span class="font-mono text-[10px] uppercase tracking-widest text-[#6B6E76] hidden md:inline"><span class="text-[#0E0E11]">$412,000</span> TVL</span>
-                        </div>
-                        <div class="flex items-center gap-2">
-                            <span class="font-mono text-[10px] uppercase tracking-widest text-[#6B6E76]">Last Settlement:</span>
-                            <div id="ticker-track" class="font-mono text-[10px] text-[#1F7A4D]"></div>
-                        </div>
-                    </div>
-                </div>
-
                 <!-- HERO -->
-                <div class="w-full mt-12">
-                    <h1 class="font-display font-medium text-4xl md:text-6xl leading-[0.95] tracking-tight text-[#0E0E11] mb-4">
-                        CAPITAL LOCKED.<br>
-                        <span class="text-[#921818]">OUTCOMES VERIFIED.</span>
+                <div class="w-full mt-16">
+                    <h1 class="font-display font-medium text-4xl md:text-5xl leading-[0.95] tracking-tight text-[#0E0E11] mb-4">
+                        PERFORMANCE-BACKED<br>
+                        <span class="text-[#921818]">CAPITAL COMMITMENT.</span>
                     </h1>
-                    <p class="font-mono text-[11px] text-[#6B6E76] uppercase tracking-widest max-w-md mb-8">
-                        Performance-backed commitment infrastructure. Capital is inaccessible until verification settles.
+                    <p class="font-mono text-[11px] text-[#6B6E76] uppercase tracking-widest max-w-lg mb-6">
+                        Capital is locked at execution. Released only upon objective verification.
                     </p>
+                    
+                    <!-- INLINE STATS -->
+                    <div class="flex items-center gap-3 mb-8 flex-wrap">
+                        <div class="flex items-center gap-2">
+                            <div class="w-1.5 h-1.5 bg-[#1F7A4D] rounded-full"></div>
+                            <span class="font-mono text-[10px] uppercase tracking-widest text-[#0E0E11] font-medium">LIVE</span>
+                        </div>
+                        <span class="font-mono text-[10px] text-[#6B6E76]">•</span>
+                        <span class="font-mono text-[10px] uppercase tracking-widest text-[#6B6E76]"><span class="text-[#0E0E11] font-medium">127</span> ACTIVE CONTRACTS</span>
+                        <span class="font-mono text-[10px] text-[#6B6E76]">•</span>
+                        <span class="font-mono text-[10px] uppercase tracking-widest text-[#6B6E76]"><span class="text-[#0E0E11] font-medium">$412,888</span> TVL</span>
+                        <span class="font-mono text-[10px] text-[#6B6E76] hidden md:inline">•</span>
+                        <span class="font-mono text-[10px] uppercase tracking-widest text-[#1F7A4D] hidden md:inline">MAINNET OPERATIONAL</span>
+                    </div>
                     
                     <div class="flex items-center gap-3">
                         <button onclick="window.app.handleInitiate()" class="h-11 px-6 bg-[#921818] hover:bg-[#751212] text-white text-[11px] font-medium uppercase tracking-widest flex items-center justify-center gap-2 transition-colors">
@@ -45,83 +39,82 @@ export function renderOverview() {
                     </div>
                 </div>
 
+                <!-- HAIRLINE -->
+                <div class="w-full h-px bg-[#0E0E11]/5 mt-14"></div>
+
                 <!-- CONTRACT CLASS -->
-                <div class="w-full mt-16">
-                    <div class="flex items-center justify-between mb-6">
-                        <h2 class="font-mono text-[11px] text-[#0E0E11] uppercase tracking-widest font-medium">Contract Class</h2>
-                        <span class="font-mono text-[10px] text-[#6B6E76] uppercase tracking-widest">Risk / Reward Structure</span>
-                    </div>
+                <div class="w-full mt-10">
+                    <h2 class="font-mono text-[10px] text-[#0E0E11] uppercase tracking-widest font-medium mb-5">Contract Class</h2>
                     
                     <div class="grid grid-cols-1 md:grid-cols-3 gap-px bg-[#D9DBE1] border border-[#D9DBE1]">
                         <div class="p-5 bg-white">
-                            <div class="flex justify-between items-start mb-3">
-                                <span class="font-mono text-[10px] font-medium uppercase tracking-widest text-[#0E0E11]">Class A</span>
+                            <div class="flex justify-between items-start mb-2">
+                                <span class="font-mono text-[10px] font-medium uppercase tracking-widest text-[#0E0E11]">Class A — Conservative</span>
                                 <span class="font-mono text-[10px] text-[#6B6E76]">≤1.6X</span>
                             </div>
-                            <p class="font-mono text-[10px] text-[#6B6E76] uppercase tracking-widest mb-3">Conservative</p>
-                            <p class="text-xs text-[#6B6E76] leading-relaxed">High completion rate. Lower multiplier.</p>
+                            <p class="font-mono text-[9px] text-[#6B6E76] leading-relaxed">High completion probability.<br>Lower return multiple.<br>Designed for capital preservation.</p>
                         </div>
                         
                         <div class="p-5 bg-[#FAFAFA] border-l border-r border-[#0E0E11]">
-                            <div class="flex justify-between items-start mb-3">
-                                <span class="font-mono text-[10px] font-medium uppercase tracking-widest text-[#0E0E11]">Class B</span>
+                            <div class="flex justify-between items-start mb-2">
+                                <span class="font-mono text-[10px] font-medium uppercase tracking-widest text-[#0E0E11]">Class B — Standard</span>
                                 <span class="font-mono text-[10px] text-[#0E0E11] font-medium">≤2.0X</span>
                             </div>
-                            <p class="font-mono text-[10px] text-[#0E0E11] uppercase tracking-widest mb-3">Standard</p>
-                            <p class="text-xs text-[#0E0E11] leading-relaxed">Balanced risk. Default selection.</p>
+                            <p class="font-mono text-[9px] text-[#0E0E11] leading-relaxed">Balanced risk profile.<br>Default execution class.<br>Expected variance.</p>
                         </div>
                         
                         <div class="p-5 bg-white">
-                            <div class="flex justify-between items-start mb-3">
-                                <span class="font-mono text-[10px] font-medium uppercase tracking-widest text-[#0E0E11]">Class C</span>
+                            <div class="flex justify-between items-start mb-2">
+                                <span class="font-mono text-[10px] font-medium uppercase tracking-widest text-[#0E0E11]">Class C — Aggressive</span>
                                 <span class="font-mono text-[10px] text-[#A18239] font-medium">2.5X+</span>
                             </div>
-                            <p class="font-mono text-[10px] text-[#A18239] uppercase tracking-widest mb-3">Aggressive</p>
-                            <p class="text-xs text-[#6B6E76] leading-relaxed">Low completion rate. High forfeiture.</p>
+                            <p class="font-mono text-[9px] text-[#6B6E76] leading-relaxed">Low completion probability.<br>Maximum forfeiture exposure.<br>Designed for asymmetric outcomes.</p>
                         </div>
                     </div>
                 </div>
 
-                <!-- VERIFICATION SOURCES -->
-                <div class="w-full mt-12">
-                    <div class="flex items-center justify-between mb-4">
-                        <h2 class="font-mono text-[11px] text-[#0E0E11] uppercase tracking-widest font-medium">Verification Sources</h2>
-                    </div>
+                <!-- HAIRLINE -->
+                <div class="w-full h-px bg-[#0E0E11]/5 mt-10"></div>
+
+                <!-- DETERMINISTIC VERIFICATION SOURCES -->
+                <div class="w-full mt-10">
+                    <h2 class="font-mono text-[10px] text-[#0E0E11] uppercase tracking-widest font-medium mb-5">Deterministic Verification Sources</h2>
                     
                     <div class="grid grid-cols-2 md:grid-cols-4 gap-px bg-[#D9DBE1] border border-[#D9DBE1]">
                         <div class="p-4 bg-white">
-                            <span class="font-mono text-[10px] text-[#0E0E11] uppercase tracking-widest">X / Twitter</span>
-                            <p class="font-mono text-[9px] text-[#6B6E76] mt-1">Public posts</p>
+                            <span class="font-mono text-[10px] text-[#0E0E11] uppercase tracking-widest font-medium">X / Twitter</span>
+                            <p class="font-mono text-[9px] text-[#6B6E76] mt-1.5 leading-relaxed">Public metrics only.<br>No private data.</p>
                         </div>
                         <div class="p-4 bg-white">
-                            <span class="font-mono text-[10px] text-[#0E0E11] uppercase tracking-widest">GitHub</span>
-                            <p class="font-mono text-[9px] text-[#6B6E76] mt-1">Commits, releases</p>
+                            <span class="font-mono text-[10px] text-[#0E0E11] uppercase tracking-widest font-medium">GitHub</span>
+                            <p class="font-mono text-[9px] text-[#6B6E76] mt-1.5 leading-relaxed">Commits and releases.<br>No subjective review.</p>
                         </div>
                         <div class="p-4 bg-white">
-                            <span class="font-mono text-[10px] text-[#0E0E11] uppercase tracking-widest">Stripe</span>
-                            <p class="font-mono text-[9px] text-[#6B6E76] mt-1">Revenue thresholds</p>
+                            <span class="font-mono text-[10px] text-[#0E0E11] uppercase tracking-widest font-medium">Stripe</span>
+                            <p class="font-mono text-[9px] text-[#6B6E76] mt-1.5 leading-relaxed">Net revenue thresholds.<br>Gross manipulation excluded.</p>
                         </div>
                         <div class="p-4 bg-white">
-                            <span class="font-mono text-[10px] text-[#6B6E76] uppercase tracking-widest">More</span>
-                            <p class="font-mono text-[9px] text-[#6B6E76] mt-1">Coming</p>
+                            <span class="font-mono text-[10px] text-[#6B6E76] uppercase tracking-widest">Additional</span>
+                            <p class="font-mono text-[9px] text-[#6B6E76] mt-1.5">Coming soon.</p>
                         </div>
                     </div>
                 </div>
 
-                <!-- SETTLEMENT MODEL -->
-                <div class="w-full mt-12">
-                    <div class="flex items-center justify-between mb-4">
-                        <h2 class="font-mono text-[11px] text-[#0E0E11] uppercase tracking-widest font-medium">Settlement</h2>
-                    </div>
+                <!-- HAIRLINE -->
+                <div class="w-full h-px bg-[#0E0E11]/5 mt-10"></div>
+
+                <!-- SETTLEMENT IS FINAL -->
+                <div class="w-full mt-10">
+                    <h2 class="font-mono text-[10px] text-[#0E0E11] uppercase tracking-widest font-medium mb-5">Settlement Is Final</h2>
                     
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-px bg-[#D9DBE1] border border-[#D9DBE1]">
                         <div class="p-5 bg-white">
                             <span class="font-mono text-[10px] text-[#1F7A4D] uppercase tracking-widest font-medium">On Success</span>
-                            <p class="text-xs text-[#6B6E76] leading-relaxed mt-2">Capital released. Incentive paid.</p>
+                            <p class="font-mono text-[9px] text-[#6B6E76] leading-relaxed mt-2">Capital released.<br>Incentives paid automatically.<br>No discretionary approval.</p>
                         </div>
                         <div class="p-5 bg-white border-l-2 border-[#921818]">
                             <span class="font-mono text-[10px] text-[#921818] uppercase tracking-widest font-medium">On Failure</span>
-                            <p class="text-xs text-[#6B6E76] leading-relaxed mt-2">Capital forfeited. No recovery.</p>
+                            <p class="font-mono text-[9px] text-[#6B6E76] leading-relaxed mt-2">Capital forfeited.<br>No recovery.<br>No appeals.</p>
                         </div>
                     </div>
                     
@@ -131,7 +124,7 @@ export function renderOverview() {
                 </div>
 
                 <!-- FOOTER -->
-                <div class="w-full mt-16 pt-8 border-t border-[#D9DBE1]">
+                <div class="w-full mt-14 pt-6 border-t border-[#D9DBE1]/50">
                     <p class="font-mono text-[9px] text-[#6B6E76] uppercase tracking-widest text-center">
                         All contracts settle publicly. Records are immutable.
                     </p>

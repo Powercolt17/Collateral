@@ -1,141 +1,155 @@
 // Overview View - Institutional Homepage
 export function renderOverview() {
     return `
-        <div class="pb-16 md:pb-24 w-full max-w-7xl mx-auto px-4 md:px-8 lg:px-12 relative z-10 min-h-screen flex flex-col">
-            <main id="view-landing" class="view-section flex flex-col items-start opacity-0 animate-activate">
+        <div class="w-full max-w-6xl mx-auto px-4 md:px-8 relative z-10 min-h-screen">
+            <main id="view-landing" class="view-section flex flex-col opacity-0 animate-activate">
                 
-                <!-- HERO -->
-                <div class="w-full mt-10 md:mt-20 flex">
-                    <div class="w-[3px] md:w-[4px] bg-[#921818] mr-4 md:mr-8 flex-shrink-0"></div>
-                    <div class="flex-1">
-                        <h1 class="font-display font-medium text-3xl md:text-6xl lg:text-7xl leading-[0.92] tracking-tight text-[#0E0E11] mb-3 md:mb-6">
-                            CAPITAL<br>
-                            <span class="text-[#921818]">LOCKED.</span>
+                <!-- 1. HERO SECTION -->
+                <section class="py-16 md:py-24 border-b border-[#E5E7EB]">
+                    <div class="max-w-3xl">
+                        <h1 class="font-display font-semibold text-3xl md:text-5xl lg:text-6xl leading-[1.1] tracking-tight text-[#0A0A0A] mb-6">
+                            Lock Capital.<br>
+                            Verify Performance.<br>
+                            <span class="text-[#B91C1C]">Settle Outcomes.</span>
                         </h1>
-                        <p class="font-mono text-[10px] md:text-[13px] text-[#6B6E76] uppercase tracking-widest max-w-xl mb-4 md:mb-8">
-                            Lock capital. Verify outcome. Settle.
+                        <p class="font-sans text-base md:text-lg text-[#4B5563] max-w-xl mb-8 leading-relaxed">
+                            Performance contracts with economic enforcement. Capital is locked until verified outcomes determine settlement.
                         </p>
-                        
-                        <!-- SYSTEM STATUS -->
-                        <div class="flex items-center gap-2 md:gap-4 mb-6 md:mb-10 flex-wrap">
-                            <div class="flex items-center gap-2">
-                                <div class="w-2 h-2 bg-[#1F7A4D] rounded-full"></div>
-                                <span class="font-mono text-[9px] md:text-[11px] uppercase tracking-widest text-[#0E0E11]">OPERATIONAL</span>
-                            </div>
-                            <span class="font-mono text-[9px] md:text-[11px] text-[#6B6E76]">•</span>
-                            <span class="font-mono text-[9px] md:text-[11px] uppercase tracking-widest text-[#6B6E76]"><span class="text-[#0E0E11]">127</span> ACTIVE</span>
-                            <span class="font-mono text-[9px] md:text-[11px] text-[#6B6E76]">•</span>
-                            <span class="font-mono text-[9px] md:text-[11px] uppercase tracking-widest text-[#6B6E76]"><span class="text-[#0E0E11]">$412,888</span> TVL</span>
-                        </div>
-                        
-                        <!-- CTA -->
-                        <div class="flex flex-col items-start gap-2">
-                            <button onclick="window.app.handleInitiate()" class="h-11 md:h-14 px-6 md:px-10 bg-[#921818] hover:bg-[#751212] text-white text-[11px] md:text-[13px] font-medium uppercase tracking-widest flex items-center justify-center gap-2 transition-colors">
-                                <span>Execute</span>
-                                <i data-lucide="arrow-right" class="w-3.5 h-3.5 md:w-4 md:h-4"></i>
+                        <div class="flex flex-col sm:flex-row items-start gap-3">
+                            <button onclick="window.app.handleInitiate()" class="h-12 px-8 bg-[#0A0A0A] hover:bg-[#1A1A1A] text-white text-sm font-medium flex items-center justify-center gap-2 transition-colors">
+                                <span>Commit Capital</span>
+                                <i data-lucide="arrow-right" class="w-4 h-4"></i>
                             </button>
-                            <p class="font-mono text-[8px] md:text-[10px] text-[#6B6E76] uppercase tracking-widest">
-                                Binding. Final.
-                            </p>
+                            <a href="#" onclick="window.router.navigate('/ledger'); return false;" class="h-12 px-8 border border-[#E5E7EB] bg-white text-[#0A0A0A] text-sm font-medium flex items-center justify-center hover:border-[#0A0A0A] transition-colors">
+                                View Public Ledger
+                            </a>
                         </div>
                     </div>
-                </div>
+                </section>
 
-                <!-- I. CLASSIFICATION -->
-                <div class="w-full mt-12 md:mt-20">
-                    <div class="flex items-center gap-3 mb-4 md:mb-6">
-                        <span class="font-mono text-[11px] md:text-[13px] text-[#921818] font-medium">I.</span>
-                        <h2 class="font-mono text-[11px] md:text-[13px] text-[#0E0E11] uppercase tracking-widest font-medium">Classification</h2>
-                    </div>
-                    
-                    <div class="grid grid-cols-1 md:grid-cols-3 gap-px bg-[#D9DBE1] border border-[#D9DBE1]">
-                        <div class="p-4 md:p-6 lg:p-8 bg-white">
-                            <div class="flex justify-between items-start mb-2">
-                                <span class="font-mono text-[10px] md:text-[12px] font-medium uppercase tracking-widest text-[#0E0E11]">Conservative</span>
-                                <span class="font-mono text-[10px] md:text-[12px] text-[#6B6E76]">≤1.6X</span>
-                            </div>
-                            <p class="font-mono text-[9px] md:text-[11px] text-[#6B6E76]">High completion.<br>Capital preservation.</p>
+                <!-- 2. HOW IT WORKS -->
+                <section class="py-16 md:py-20 border-b border-[#E5E7EB]">
+                    <h2 class="font-display font-semibold text-xl md:text-2xl text-[#0A0A0A] mb-10">Mechanism</h2>
+                    <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
+                        <div class="p-6 border border-[#E5E7EB] bg-[#FAFAFA]">
+                            <span class="font-mono text-xs text-[#6B7280] mb-3 block">01</span>
+                            <p class="font-sans text-sm text-[#0A0A0A] font-medium">Set baseline metrics</p>
+                            <p class="font-mono text-xs text-[#6B7280] mt-2">Revenue, commits, followers</p>
                         </div>
-                        
-                        <div class="p-4 md:p-6 lg:p-8 bg-[#FAFAFA] border-l border-r border-[#0E0E11]">
-                            <div class="flex justify-between items-start mb-2">
-                                <span class="font-mono text-[10px] md:text-[12px] font-medium uppercase tracking-widest text-[#0E0E11]">Standard</span>
-                                <span class="font-mono text-[10px] md:text-[12px] text-[#0E0E11] font-medium">≤2.0X</span>
-                            </div>
-                            <p class="font-mono text-[9px] md:text-[11px] text-[#0E0E11]">Default class.<br>Expected variance.</p>
+                        <div class="p-6 border border-[#E5E7EB] bg-[#FAFAFA]">
+                            <span class="font-mono text-xs text-[#6B7280] mb-3 block">02</span>
+                            <p class="font-sans text-sm text-[#0A0A0A] font-medium">Lock capital against target</p>
+                            <p class="font-mono text-xs text-[#6B7280] mt-2">$100 – $10,000</p>
                         </div>
-                        
-                        <div class="p-4 md:p-6 lg:p-8 bg-white">
-                            <div class="flex justify-between items-start mb-2">
-                                <span class="font-mono text-[10px] md:text-[12px] font-medium uppercase tracking-widest text-[#0E0E11]">Aggressive</span>
-                                <span class="font-mono text-[10px] md:text-[12px] text-[#A18239] font-medium">2.5X+</span>
-                            </div>
-                            <p class="font-mono text-[9px] md:text-[11px] text-[#6B6E76]">Low completion.<br>Maximum forfeiture.</p>
+                        <div class="p-6 border border-[#E5E7EB] bg-[#FAFAFA]">
+                            <span class="font-mono text-xs text-[#6B7280] mb-3 block">03</span>
+                            <p class="font-sans text-sm text-[#0A0A0A] font-medium">Performance verified</p>
+                            <p class="font-mono text-xs text-[#6B7280] mt-2">Via platform integration</p>
+                        </div>
+                        <div class="p-6 border border-[#E5E7EB] bg-[#FAFAFA]">
+                            <span class="font-mono text-xs text-[#6B7280] mb-3 block">04</span>
+                            <p class="font-sans text-sm text-[#0A0A0A] font-medium">Contract settles</p>
+                            <p class="font-mono text-xs text-[#6B7280] mt-2">Paid or forfeited</p>
                         </div>
                     </div>
-                </div>
+                </section>
 
-                <!-- II. VERIFICATION -->
-                <div class="w-full mt-10 md:mt-16">
-                    <div class="flex items-center gap-3 mb-4 md:mb-6">
-                        <span class="font-mono text-[11px] md:text-[13px] text-[#921818] font-medium">II.</span>
-                        <h2 class="font-mono text-[11px] md:text-[13px] text-[#0E0E11] uppercase tracking-widest font-medium">Verification</h2>
-                    </div>
-                    
-                    <div class="grid grid-cols-2 md:grid-cols-4 gap-px bg-[#D9DBE1] border border-[#D9DBE1]">
-                        <div class="p-3 md:p-5 lg:p-6 bg-white">
-                            <span class="font-mono text-[10px] md:text-[12px] text-[#0E0E11] uppercase tracking-widest font-medium">X</span>
-                            <p class="font-mono text-[9px] md:text-[11px] text-[#6B6E76] mt-1.5">Public metrics.</p>
+                <!-- 3. WHY COLLATERAL EXISTS -->
+                <section class="py-16 md:py-20 border-b border-[#E5E7EB]">
+                    <h2 class="font-display font-semibold text-xl md:text-2xl text-[#0A0A0A] mb-10">Economic Reality</h2>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                        <div>
+                            <p class="font-sans text-sm text-[#0A0A0A] font-medium mb-2">Promises have no cost</p>
+                            <p class="font-sans text-sm text-[#6B7280]">Without capital at risk, commitments are noise. Markets price information; Collateral prices commitment.</p>
                         </div>
-                        <div class="p-3 md:p-5 lg:p-6 bg-white">
-                            <span class="font-mono text-[10px] md:text-[12px] text-[#0E0E11] uppercase tracking-widest font-medium">GitHub</span>
-                            <p class="font-mono text-[9px] md:text-[11px] text-[#6B6E76] mt-1.5">Commits. Releases.</p>
+                        <div>
+                            <p class="font-sans text-sm text-[#0A0A0A] font-medium mb-2">Consequences enforce follow-through</p>
+                            <p class="font-sans text-sm text-[#6B7280]">Loss aversion is a stronger motivator than potential gain. Forfeiture is real.</p>
                         </div>
-                        <div class="p-3 md:p-5 lg:p-6 bg-white">
-                            <span class="font-mono text-[10px] md:text-[12px] text-[#0E0E11] uppercase tracking-widest font-medium">Stripe</span>
-                            <p class="font-mono text-[9px] md:text-[11px] text-[#6B6E76] mt-1.5">Revenue thresholds.</p>
-                        </div>
-                        <div class="p-3 md:p-5 lg:p-6 bg-white">
-                            <span class="font-mono text-[10px] md:text-[12px] text-[#6B6E76] uppercase tracking-widest">+</span>
-                            <p class="font-mono text-[9px] md:text-[11px] text-[#6B6E76] mt-1.5">Pending.</p>
+                        <div>
+                            <p class="font-sans text-sm text-[#0A0A0A] font-medium mb-2">A market that clears</p>
+                            <p class="font-sans text-sm text-[#6B7280]">Winners are paid from losers. No external subsidy. The pool is zero-sum by design.</p>
                         </div>
                     </div>
-                    
-                    <p class="font-mono text-[8px] md:text-[10px] text-[#6B6E76] uppercase tracking-widest mt-3">
-                        No discretion.
+                </section>
+
+                <!-- 4. VERIFICATION & TRUST LAYER -->
+                <section class="py-16 md:py-20 border-b border-[#E5E7EB]">
+                    <h2 class="font-display font-semibold text-xl md:text-2xl text-[#0A0A0A] mb-10">Verification Layer</h2>
+                    <div class="grid grid-cols-2 md:grid-cols-4 gap-px bg-[#E5E7EB] border border-[#E5E7EB]">
+                        <div class="p-5 bg-white">
+                            <span class="font-mono text-xs text-[#0A0A0A] font-medium block mb-1">STRIPE</span>
+                            <span class="font-mono text-[10px] text-[#6B7280]">Revenue verification</span>
+                        </div>
+                        <div class="p-5 bg-white">
+                            <span class="font-mono text-xs text-[#0A0A0A] font-medium block mb-1">GITHUB</span>
+                            <span class="font-mono text-[10px] text-[#6B7280]">Commit verification</span>
+                        </div>
+                        <div class="p-5 bg-white">
+                            <span class="font-mono text-xs text-[#0A0A0A] font-medium block mb-1">X / TWITTER</span>
+                            <span class="font-mono text-[10px] text-[#6B7280]">Metric verification</span>
+                        </div>
+                        <div class="p-5 bg-white">
+                            <span class="font-mono text-xs text-[#6B7280] font-medium block mb-1">MORE</span>
+                            <span class="font-mono text-[10px] text-[#6B7280]">Pending</span>
+                        </div>
+                    </div>
+                    <div class="mt-6 flex flex-wrap gap-6">
+                        <p class="font-mono text-xs text-[#6B7280]">Objective verification only</p>
+                        <p class="font-mono text-xs text-[#6B7280]">Immutable ledger records</p>
+                        <p class="font-mono text-xs text-[#6B7280]">No social layer</p>
+                    </div>
+                </section>
+
+                <!-- 5. PAYOUT STRUCTURE -->
+                <section class="py-16 md:py-20 border-b border-[#E5E7EB]">
+                    <h2 class="font-display font-semibold text-xl md:text-2xl text-[#0A0A0A] mb-10">Payout Structure</h2>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div class="p-6 border-l-2 border-[#059669] bg-[#FAFAFA]">
+                            <span class="font-mono text-xs text-[#059669] font-medium block mb-3">ON SUCCESS</span>
+                            <p class="font-sans text-sm text-[#0A0A0A] mb-2">Capital returned + share of forfeited pool</p>
+                            <p class="font-mono text-xs text-[#6B7280]">Multiplier scales with difficulty: 1.2x – 2.5x+</p>
+                        </div>
+                        <div class="p-6 border-l-2 border-[#B91C1C] bg-[#FAFAFA]">
+                            <span class="font-mono text-xs text-[#B91C1C] font-medium block mb-3">ON FAILURE</span>
+                            <p class="font-sans text-sm text-[#0A0A0A] mb-2">Capital forfeited to winner pool</p>
+                            <p class="font-mono text-xs text-[#6B7280]">No partial returns. No appeals. Settlement is final.</p>
+                        </div>
+                    </div>
+                    <p class="font-sans text-xs text-[#6B7280] mt-6 max-w-xl">
+                        Winners are paid from losers' forfeited capital. Risk is explicit, opt-in, and enforced. This is not a savings account.
                     </p>
-                </div>
+                </section>
 
-                <!-- III. SETTLEMENT -->
-                <div class="w-full mt-10 md:mt-16">
-                    <div class="flex items-center gap-3 mb-4 md:mb-6">
-                        <span class="font-mono text-[11px] md:text-[13px] text-[#921818] font-medium">III.</span>
-                        <h2 class="font-mono text-[11px] md:text-[13px] text-[#0E0E11] uppercase tracking-widest font-medium">Settlement</h2>
+                <!-- 6. FINAL CTA -->
+                <section class="py-16 md:py-24">
+                    <div class="max-w-xl">
+                        <h2 class="font-display font-semibold text-2xl md:text-3xl text-[#0A0A0A] mb-4">
+                            Capital at risk.<br>
+                            <span class="text-[#B91C1C]">Outcomes enforced.</span>
+                        </h2>
+                        <p class="font-sans text-sm text-[#6B7280] mb-8">
+                            Collateral is infrastructure for performance commitment. Serious users only.
+                        </p>
+                        <button onclick="window.app.handleInitiate()" class="h-12 px-8 bg-[#B91C1C] hover:bg-[#991B1B] text-white text-sm font-medium flex items-center justify-center gap-2 transition-colors">
+                            <span>Lock Position</span>
+                            <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                        </button>
                     </div>
-                    
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-px bg-[#D9DBE1] border border-[#D9DBE1]">
-                        <div class="p-4 md:p-6 lg:p-8 bg-white border-l-2 border-[#1F7A4D]">
-                            <span class="font-mono text-[10px] md:text-[12px] text-[#1F7A4D] uppercase tracking-widest font-medium">Success</span>
-                            <p class="font-mono text-[9px] md:text-[11px] text-[#6B6E76] mt-2">Capital released.<br>Incentives paid.</p>
-                        </div>
-                        <div class="p-4 md:p-6 lg:p-8 bg-white border-l-2 border-[#921818]">
-                            <span class="font-mono text-[10px] md:text-[12px] text-[#921818] uppercase tracking-widest font-medium">Failure</span>
-                            <p class="font-mono text-[9px] md:text-[11px] text-[#6B6E76] mt-2">Capital forfeited.<br>No appeals.</p>
-                        </div>
-                    </div>
-                </div>
+                </section>
 
                 <!-- FOOTER -->
-                <div class="w-full mt-12 md:mt-20 pt-6 border-t border-[#D9DBE1]">
+                <footer class="py-8 border-t border-[#E5E7EB]">
                     <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
-                        <p class="font-mono text-[8px] md:text-[10px] text-[#6B6E76] uppercase tracking-widest">
-                            Public settlement. Permanent record.
-                        </p>
-                        <a href="#" onclick="window.router.navigate('/ledger'); return false;" class="font-mono text-[8px] md:text-[10px] text-[#0E0E11] uppercase tracking-widest hover:text-[#921818] transition-colors">
-                            Ledger →
+                        <div class="flex items-center gap-2">
+                            <div class="w-2 h-2 bg-[#059669] rounded-full"></div>
+                            <span class="font-mono text-xs text-[#6B7280]">SYSTEM OPERATIONAL</span>
+                        </div>
+                        <a href="#" onclick="window.router.navigate('/ledger'); return false;" class="font-mono text-xs text-[#0A0A0A] hover:text-[#B91C1C] transition-colors">
+                            Public Ledger →
                         </a>
                     </div>
-                </div>
+                </footer>
             </main>
         </div>
     `;

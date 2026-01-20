@@ -9,8 +9,8 @@ export function renderProfile() {
                     <div class="flex items-end justify-between">
                         <div>
                             <!-- Primary Identifier -->
-                            <h1 class="text-4xl font-semibold tracking-tight text-neutral-900 mb-3" id="identity-title" style="font-family: 'IBM Plex Sans', sans-serif; letter-spacing: -0.02em;">
-                                <span id="identity-name">powercolt</span>
+                            <h1 class="text-4xl font-semibold tracking-tight mb-3" id="identity-title" style="font-family: 'IBM Plex Sans', sans-serif; letter-spacing: -0.02em; color: #751212;">
+                                <span id="identity-name">Powercolt</span>
                             </h1>
                             <!-- Record Subtitle -->
                             <div class="flex items-center gap-2 font-mono text-[11px] tracking-widest uppercase text-neutral-400">

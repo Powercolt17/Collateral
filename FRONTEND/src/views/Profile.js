@@ -2,23 +2,23 @@
 export function renderProfile() {
     return `
         <div class="min-h-screen bg-white" style="font-family: 'Inter', sans-serif;">
-            <!-- Dark Header Section -->
-            <div class="bg-neutral-900 text-white px-8 py-6">
+            <!-- Header Section -->
+            <div class="bg-white border-b border-neutral-200 px-8 py-6">
                 <div class="max-w-7xl mx-auto">
                     <!-- Identity Title -->
                     <div class="flex items-start justify-between">
                         <div>
-                            <h1 class="text-3xl font-medium tracking-tight mb-2" id="identity-title" style="font-family: 'IBM Plex Sans', sans-serif;">
-                                <span id="identity-name">mercury</span><span class="text-neutral-500">.collateral</span>
+                            <h1 class="text-3xl font-medium tracking-tight mb-2 text-neutral-900" id="identity-title" style="font-family: 'IBM Plex Sans', sans-serif;">
+                                <span id="identity-name">Powercolt</span>
                             </h1>
-                            <div class="flex items-center gap-3 font-mono text-[10px] tracking-widest uppercase text-neutral-400">
+                            <div class="flex items-center gap-3 font-mono text-[10px] tracking-widest uppercase text-neutral-500">
                                 <span>IDENTITY RECORD</span>
-                                <span class="text-neutral-600">·</span>
+                                <span class="text-neutral-400">·</span>
                                 <span id="identity-hash">USR-00742-8F3A</span>
                             </div>
                         </div>
                         <div class="flex items-center gap-3">
-                            <button class="flex items-center gap-2 px-4 py-2 border border-neutral-700 text-neutral-300 text-[11px] font-medium uppercase tracking-wide hover:border-neutral-500 transition-colors">
+                            <button class="flex items-center gap-2 px-4 py-2 border border-neutral-900 bg-neutral-900 text-white text-[11px] font-medium uppercase tracking-wide hover:bg-neutral-800 transition-colors">
                                 <i data-lucide="copy" class="w-3.5 h-3.5"></i>
                                 Copy Record Link
                             </button>

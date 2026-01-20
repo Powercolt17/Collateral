@@ -1,4 +1,4 @@
-// Profile View - Identity Record (Exact Replica)
+// Profile View - USD/Stripe-Backed Identity Record (Public)
 export function renderProfile() {
     return `
         <div class="min-h-screen bg-white" style="font-family: 'Inter', sans-serif;">
@@ -14,7 +14,7 @@ export function renderProfile() {
                             <div class="flex items-center gap-3 font-mono text-[10px] tracking-widest uppercase text-neutral-400">
                                 <span>IDENTITY RECORD</span>
                                 <span class="text-neutral-600">·</span>
-                                <span id="identity-hash">0x742d35Cc6634C0532925a3b8448c454ebf39f3a</span>
+                                <span id="identity-hash">USR-00742-8F3A</span>
                             </div>
                         </div>
                         <div class="flex items-center gap-3">
@@ -75,10 +75,10 @@ export function renderProfile() {
                                 <h3 class="font-mono text-[11px] text-neutral-900 uppercase tracking-widest mb-5 font-medium">Record Summary</h3>
                                 <div class="text-sm text-neutral-600 leading-relaxed space-y-4 mb-8">
                                     <p>
-                                        This record aggregates all executed performance contracts and settlement outcomes linked to this identity. Data reflects on-chain commitments and cryptographically verified results.
+                                        This record aggregates all executed USD performance contracts and settlement outcomes linked to this identity. Results are verified via connected platforms and processed through Stripe.
                                     </p>
                                     <p>
-                                        All settlement outcomes are immutable. Forfeiture events represent locked value transferred due to contract non-performance.
+                                        All outcomes are permanent and publicly visible. Forfeiture events represent USD capital transferred due to non-performance.
                                     </p>
                                 </div>
                                 <div class="grid grid-cols-2 gap-8 pt-6 border-t border-neutral-100">
@@ -106,26 +106,26 @@ export function renderProfile() {
                                 <h3 class="font-mono text-[11px] text-neutral-900 uppercase tracking-widest mb-5 font-medium">Verification Metadata</h3>
                                 <div class="space-y-5">
                                     <div class="flex justify-between items-start">
-                                        <span class="font-mono text-[10px] text-neutral-400 uppercase tracking-widest">Primary Wallet</span>
-                                        <span class="text-sm text-neutral-900 flex items-center gap-1.5" id="meta-wallet">
-                                            0x742d...8f3a
+                                        <span class="font-mono text-[10px] text-neutral-400 uppercase tracking-widest">Account ID</span>
+                                        <span class="text-sm text-neutral-900 flex items-center gap-1.5" id="meta-account-id">
+                                            USR-00742
                                             <i data-lucide="copy" class="w-3 h-3 text-neutral-400 cursor-pointer hover:text-neutral-600"></i>
                                         </span>
                                     </div>
                                     <div class="flex justify-between items-start">
-                                        <span class="font-mono text-[10px] text-neutral-400 uppercase tracking-widest">ENS Record</span>
-                                        <span class="text-sm text-neutral-900 flex items-center gap-1.5" id="meta-ens">
-                                            collateral-id.eth
+                                        <span class="font-mono text-[10px] text-neutral-400 uppercase tracking-widest">Stripe Account</span>
+                                        <span class="text-sm text-neutral-900 flex items-center gap-1.5" id="meta-stripe">
+                                            acct_•••8f3a
                                             <i data-lucide="external-link" class="w-3 h-3 text-neutral-400 cursor-pointer hover:text-neutral-600"></i>
                                         </span>
                                     </div>
                                     <div class="flex justify-between items-start">
-                                        <span class="font-mono text-[10px] text-neutral-400 uppercase tracking-widest">Verification Source</span>
-                                        <span class="text-sm text-neutral-900" id="meta-verification-source">Ethereum Mainnet</span>
+                                        <span class="font-mono text-[10px] text-neutral-400 uppercase tracking-widest">Funding Provider</span>
+                                        <span class="text-sm text-neutral-900" id="meta-funding-provider">Stripe Connect</span>
                                     </div>
                                     <div class="flex justify-between items-start">
-                                        <span class="font-mono text-[10px] text-neutral-400 uppercase tracking-widest">Contract Standard</span>
-                                        <span class="text-sm text-neutral-900" id="meta-contract-standard">ERC-5732</span>
+                                        <span class="font-mono text-[10px] text-neutral-400 uppercase tracking-widest">Currency</span>
+                                        <span class="text-sm text-neutral-900" id="meta-currency">USD</span>
                                     </div>
                                     <div class="flex justify-between items-start">
                                         <span class="font-mono text-[10px] text-neutral-400 uppercase tracking-widest">Record Status</span>
@@ -270,26 +270,26 @@ export function renderProfile() {
                                 <h3 class="font-mono text-[11px] text-neutral-900 uppercase tracking-widest mb-5 font-medium">Verification Metadata</h3>
                                 <div class="space-y-5">
                                     <div class="flex justify-between items-start">
-                                        <span class="font-mono text-[10px] text-neutral-400 uppercase tracking-widest">Primary Wallet</span>
+                                        <span class="font-mono text-[10px] text-neutral-400 uppercase tracking-widest">Account ID</span>
                                         <span class="text-sm text-neutral-900 flex items-center gap-1.5">
-                                            0x742d...8f3a
+                                            USR-00742
                                             <i data-lucide="copy" class="w-3 h-3 text-neutral-400 cursor-pointer hover:text-neutral-600"></i>
                                         </span>
                                     </div>
                                     <div class="flex justify-between items-start">
-                                        <span class="font-mono text-[10px] text-neutral-400 uppercase tracking-widest">ENS Record</span>
+                                        <span class="font-mono text-[10px] text-neutral-400 uppercase tracking-widest">Stripe Account</span>
                                         <span class="text-sm text-neutral-900 flex items-center gap-1.5">
-                                            collateral-id.eth
+                                            acct_•••8f3a
                                             <i data-lucide="external-link" class="w-3 h-3 text-neutral-400 cursor-pointer hover:text-neutral-600"></i>
                                         </span>
                                     </div>
                                     <div class="flex justify-between items-start">
-                                        <span class="font-mono text-[10px] text-neutral-400 uppercase tracking-widest">Verification Source</span>
-                                        <span class="text-sm text-neutral-900">Ethereum Mainnet</span>
+                                        <span class="font-mono text-[10px] text-neutral-400 uppercase tracking-widest">Funding Provider</span>
+                                        <span class="text-sm text-neutral-900">Stripe Connect</span>
                                     </div>
                                     <div class="flex justify-between items-start">
-                                        <span class="font-mono text-[10px] text-neutral-400 uppercase tracking-widest">Contract Standard</span>
-                                        <span class="text-sm text-neutral-900">ERC-5732</span>
+                                        <span class="font-mono text-[10px] text-neutral-400 uppercase tracking-widest">Currency</span>
+                                        <span class="text-sm text-neutral-900">USD</span>
                                     </div>
                                     <div class="flex justify-between items-start">
                                         <span class="font-mono text-[10px] text-neutral-400 uppercase tracking-widest">Record Status</span>
@@ -355,22 +355,22 @@ export function renderProfile() {
                                     <span class="font-mono text-[10px] uppercase tracking-wide text-emerald-600">Verified</span>
                                 </div>
                                 
-                                <!-- Ethereum Wallet -->
-                                <div id="source-wallet" class="px-6 py-5 flex items-center justify-between">
+                                <!-- Stripe -->
+                                <div id="source-stripe" class="px-6 py-5 flex items-center justify-between">
                                     <div class="flex items-center gap-4">
-                                        <div class="w-10 h-10 bg-neutral-700 rounded flex items-center justify-center">
-                                            <span class="text-white font-bold text-sm">◆</span>
+                                        <div class="w-10 h-10 bg-[#635BFF] rounded flex items-center justify-center">
+                                            <span class="text-white font-bold text-sm">S</span>
                                         </div>
                                         <div>
-                                            <h4 class="font-sans text-sm font-medium text-neutral-900">Ethereum Wallet</h4>
-                                            <p class="font-mono text-[11px] text-neutral-500" id="wallet-status">0x742d...8f3a</p>
+                                            <h4 class="font-sans text-sm font-medium text-neutral-900">Stripe</h4>
+                                            <p class="font-mono text-[11px] text-neutral-500" id="stripe-status">acct_•••8f3a</p>
                                         </div>
                                     </div>
                                     <span class="font-mono text-[10px] uppercase tracking-wide text-emerald-600">Verified</span>
                                 </div>
                             </div>
                         </div>
-                        <p class="font-mono text-[10px] text-neutral-400 mt-4">Verification sources are linked to this identity record and cannot be modified.</p>
+                        <p class="font-mono text-[10px] text-neutral-400 mt-4">Verification sources are bound to this identity and cannot be modified after execution.</p>
                     </div>
 
                     <!-- Identity Timeline Tab -->
@@ -380,7 +380,7 @@ export function renderProfile() {
                             <div class="col-span-2 border border-neutral-200 bg-white">
                                 <div class="px-6 py-4 border-b border-neutral-200 flex justify-between items-center">
                                     <h3 class="font-mono text-[11px] text-neutral-900 uppercase tracking-widest font-medium">Immutable Event Record</h3>
-                                    <span class="font-mono text-[10px] text-neutral-400 uppercase">All Events (Permanent)</span>
+                                    <span class="font-mono text-[10px] text-neutral-400 uppercase">All Events Are Final</span>
                                 </div>
                                 <div id="timeline-list" class="relative">
                                     <!-- Timeline line -->
@@ -440,7 +440,7 @@ export function renderProfile() {
                                         <div class="flex justify-between items-start">
                                             <div>
                                                 <h4 class="text-sm font-medium" style="color: #751212;">Contract Forfeited</h4>
-                                                <p class="text-xs text-neutral-500 mt-1">Non-performance event; locked value transferred</p>
+                                                <p class="text-xs text-neutral-500 mt-1">Non-performance event; USD capital transferred via Stripe</p>
                                                 <div class="flex gap-4 mt-3">
                                                     <span class="font-mono text-[10px] text-neutral-400 uppercase">VALUE: <span style="color: #751212;" class="font-medium">$125,000.00</span></span>
                                                     <span class="font-mono text-[10px] text-neutral-400 uppercase">REFERENCE: <span class="text-neutral-600">CTR-00609</span></span>
@@ -473,26 +473,26 @@ export function renderProfile() {
                                 <h3 class="font-mono text-[11px] text-neutral-900 uppercase tracking-widest mb-5 font-medium">Verification Metadata</h3>
                                 <div class="space-y-5">
                                     <div class="flex justify-between items-start">
-                                        <span class="font-mono text-[10px] text-neutral-400 uppercase tracking-widest">Primary Wallet</span>
+                                        <span class="font-mono text-[10px] text-neutral-400 uppercase tracking-widest">Account ID</span>
                                         <span class="text-sm text-neutral-900 flex items-center gap-1.5">
-                                            0x742d...8f3a
+                                            USR-00742
                                             <i data-lucide="copy" class="w-3 h-3 text-neutral-400 cursor-pointer hover:text-neutral-600"></i>
                                         </span>
                                     </div>
                                     <div class="flex justify-between items-start">
-                                        <span class="font-mono text-[10px] text-neutral-400 uppercase tracking-widest">ENS Record</span>
+                                        <span class="font-mono text-[10px] text-neutral-400 uppercase tracking-widest">Stripe Account</span>
                                         <span class="text-sm text-neutral-900 flex items-center gap-1.5">
-                                            collateral-id.eth
+                                            acct_•••8f3a
                                             <i data-lucide="external-link" class="w-3 h-3 text-neutral-400 cursor-pointer hover:text-neutral-600"></i>
                                         </span>
                                     </div>
                                     <div class="flex justify-between items-start">
-                                        <span class="font-mono text-[10px] text-neutral-400 uppercase tracking-widest">Verification Source</span>
-                                        <span class="text-sm text-neutral-900">Ethereum Mainnet</span>
+                                        <span class="font-mono text-[10px] text-neutral-400 uppercase tracking-widest">Funding Provider</span>
+                                        <span class="text-sm text-neutral-900">Stripe Connect</span>
                                     </div>
                                     <div class="flex justify-between items-start">
-                                        <span class="font-mono text-[10px] text-neutral-400 uppercase tracking-widest">Contract Standard</span>
-                                        <span class="text-sm text-neutral-900">ERC-5732</span>
+                                        <span class="font-mono text-[10px] text-neutral-400 uppercase tracking-widest">Currency</span>
+                                        <span class="text-sm text-neutral-900">USD</span>
                                     </div>
                                     <div class="flex justify-between items-start">
                                         <span class="font-mono text-[10px] text-neutral-400 uppercase tracking-widest">Record Status</span>

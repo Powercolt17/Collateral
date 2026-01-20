@@ -80,7 +80,7 @@ export function renderLedger() {
                         </div>
                         
                         <div class="relative">
-                            <select class="h-10 pl-2 pr-8 w-full sm:w-40 bg-white border-b border-neutral-200 font-mono text-[11px] focus:outline-none focus:border-neutral-900 transition-colors text-neutral-500 cursor-pointer appearance-none rounded-none uppercase tracking-wide">
+                            <select class="h-10 pl-2 pr-8 w-full sm:w-40 bg-white border-b border-gray-300 font-mono text-[11px] focus:outline-none focus:border-gray-900 transition-colors text-gray-600 cursor-pointer appearance-none rounded-none uppercase tracking-wide">
                                 <option value="" selected>All Events</option>
                                 <option value="created">Contract Authored</option>
                                 <option value="locked">Contract Executed</option>
@@ -89,6 +89,11 @@ export function renderLedger() {
                             </select>
                         </div>
                     </div>
+                    
+                    <!-- Read-Only Authority Cue -->
+                    <div class="font-mono text-[10px] uppercase tracking-widest text-gray-400">
+                        READ-ONLY PUBLIC LEDGER
+                    </div>
                 </div>
 
                 <!-- Table -->
@@ -96,15 +101,15 @@ export function renderLedger() {
                     <div class="overflow-x-auto">
                         <table class="w-full text-left border-collapse table-fixed">
                             <thead>
-                                <tr class="border-b border-neutral-200">
-                                    <th class="py-3 pr-4 font-mono text-[10px] uppercase font-medium text-neutral-400 tracking-widest w-[150px]">Timestamp</th>
-                                    <th class="py-3 px-4 font-mono text-[10px] uppercase font-medium text-neutral-400 tracking-widest w-[180px]">Event Type</th>
-                                    <th class="py-3 px-4 font-mono text-[10px] uppercase font-medium text-neutral-400 tracking-widest w-[120px]">Tx Hash</th>
-                                    <th class="py-3 px-4 font-mono text-[10px] uppercase font-medium text-neutral-400 tracking-widest w-[160px]">Principal</th>
-                                    <th class="py-3 px-4 font-mono text-[10px] uppercase font-medium text-neutral-400 tracking-widest text-right w-[110px]">Value (USD)</th>
-                                    <th class="py-3 px-4 font-mono text-[10px] uppercase font-medium text-neutral-400 tracking-widest text-right w-[110px]">Multiplier</th>
-                                    <th class="py-3 px-4 font-mono text-[10px] uppercase font-medium text-neutral-400 tracking-widest text-right w-[100px]">Status</th>
-                                    <th class="py-3 pl-4 font-mono text-[10px] uppercase font-medium text-neutral-400 tracking-widest text-right w-[100px]">Outcome</th>
+                                <tr class="border-b border-gray-300">
+                                    <th class="py-3 pr-4 font-mono text-[10px] uppercase font-semibold text-gray-700 tracking-widest w-[150px]">Timestamp</th>
+                                    <th class="py-3 px-4 font-mono text-[10px] uppercase font-semibold text-gray-700 tracking-widest w-[180px]">Event Type</th>
+                                    <th class="py-3 px-4 font-mono text-[10px] uppercase font-semibold text-gray-700 tracking-widest w-[120px]">Tx Hash</th>
+                                    <th class="py-3 px-4 font-mono text-[10px] uppercase font-semibold text-gray-700 tracking-widest w-[160px]">Principal</th>
+                                    <th class="py-3 px-4 font-mono text-[10px] uppercase font-semibold text-gray-700 tracking-widest text-right w-[110px]">Value (USD)</th>
+                                    <th class="py-3 px-4 font-mono text-[10px] uppercase font-semibold text-gray-700 tracking-widest text-right w-[110px]">Multiplier</th>
+                                    <th class="py-3 px-4 font-mono text-[10px] uppercase font-semibold text-gray-700 tracking-widest text-right w-[100px]">Status</th>
+                                    <th class="py-3 pl-4 font-mono text-[10px] uppercase font-semibold text-gray-700 tracking-widest text-right w-[100px]">Outcome</th>
                                 </tr>
                             </thead>
                             <tbody id="ledger-body" class="divide-y divide-neutral-100">
@@ -114,9 +119,9 @@ export function renderLedger() {
                 </div>
 
                 <!-- Footer Authority Line -->
-                <div class="mt-20 border-t border-neutral-200 pt-8">
-                    <p class="font-mono text-[10px] text-neutral-400 uppercase tracking-widest text-center select-none">
-                        Records are immutable. Outcomes cannot be appealed.
+                <div class="mt-20 border-t border-gray-300 pt-8">
+                    <p class="font-mono text-xs text-gray-600 uppercase tracking-widest text-center select-none font-medium">
+                        RECORDS ARE IMMUTABLE. OUTCOMES CANNOT BE APPEALED.
                     </p>
                 </div>
             </main>
@@ -141,9 +146,12 @@ export async function initLedger() {
         if (events.length === 0) {
             tbody.innerHTML = `
                 <tr>
-                    <td colspan="8" class="py-12 text-center">
-                        <div class="font-mono text-[10px] text-neutral-400 uppercase tracking-widest mb-2">No Events Recorded</div>
-                        <div class="font-sans text-sm text-neutral-500">The public ledger is empty. Contracts will appear here when executed.</div>
+                    <td colspan="8" class="py-16 text-center">
+                        <div class="font-mono text-sm text-gray-500 uppercase tracking-widest mb-3">NO SETTLED RECORDS AVAILABLE</div>
+                        <div class="font-mono text-xs text-gray-400 leading-relaxed max-w-md mx-auto">
+                            The public ledger displays finalized contract settlements only.<br>
+                            Records appear once outcomes are verified.
+                        </div>
                     </td>
                 </tr>
             `;
@@ -174,9 +182,9 @@ export async function initLedger() {
 
         function getEventColor(type) {
             if (type.includes('SETTLED_SUCCESS') || type.includes('VERIFIED')) return 'emerald-700';
-            if (type.includes('SETTLED_FAILURE') || type.includes('FORFEITED')) return '[#921818]';
-            if (type.includes('LOCKED') || type.includes('EXECUTED')) return 'neutral-900';
-            return 'neutral-500';
+            if (type.includes('SETTLED_FAILURE') || type.includes('FORFEITED')) return '[#751212]';
+            if (type.includes('LOCKED') || type.includes('EXECUTED')) return 'gray-900';
+            return 'gray-600';
         }
 
         function getStatus(type) {
@@ -235,8 +243,12 @@ export async function initLedger() {
         console.error('[Ledger] Error loading events:', error);
         tbody.innerHTML = `
             <tr>
-                <td colspan="8" class="py-8 text-center font-mono text-sm text-red-500">
-                    Error loading ledger: ${error.message || 'Unknown error'}
+                <td colspan="8" class="py-16 text-center">
+                    <div class="font-mono text-sm text-gray-500 uppercase tracking-widest mb-3">LEDGER TEMPORARILY UNAVAILABLE</div>
+                    <div class="font-mono text-xs text-gray-400 leading-relaxed max-w-md mx-auto">
+                        The system is synchronizing records.<br>
+                        Please check back shortly.
+                    </div>
                 </td>
             </tr>
         `;

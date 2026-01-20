@@ -464,26 +464,19 @@ export function renderContracts() {
 
         <div class="h-[calc(100vh-64px)] flex flex-col bg-white font-sans text-black overflow-hidden relative no-radius">
             
-            <!-- Step Header -->
-            <header class="step-header shrink-0" data-current-step="1">
+            <!-- Step Header (Hidden labels, just tracking) -->
+            <header class="step-header shrink-0 hidden" data-current-step="1">
                 <nav class="step-nav">
-                    <div class="step-item active" data-step="1" onclick="window.wizard.goToStep(1)">
-                        <span class="step-number">01</span>
-                        <span class="step-label">Profile</span>
+                    <div class="step-item active" data-step="1">
                         <span class="step-check">✓</span>
                     </div>
-                    <div class="step-item" data-step="2" onclick="window.wizard.goToStep(2)">
-                        <span class="step-number">02</span>
-                        <span class="step-label">Source</span>
+                    <div class="step-item" data-step="2">
                         <span class="step-check">✓</span>
                     </div>
-                    <div class="step-item" data-step="3" onclick="window.wizard.goToStep(3)">
-                        <span class="step-number">03</span>
-                        <span class="step-label">Lock</span>
+                    <div class="step-item" data-step="3">
                         <span class="step-check">✓</span>
                     </div>
                 </nav>
-                <div class="step-status">S: Ready</div>
             </header>
             
             <!-- Progress Bar -->
@@ -1523,9 +1516,20 @@ export function initContracts() {
 
         selectRisk: function (risk, el) {
             selectedRisk = risk;
-            document.querySelectorAll('#step-1 button').forEach(c => c.classList.remove('card-selected'));
-            el.classList.add('card-selected');
-            document.getElementById('btn-step-1').disabled = false;
+            // Remove selection from all tier cards
+            document.querySelectorAll('#step-1 .grid button').forEach(c => {
+                c.classList.remove('border-gray-900');
+                c.style.borderColor = '';
+            });
+            // Add selection to clicked card
+            el.classList.add('border-gray-900');
+            el.style.borderColor = '#0a0a0a';
+
+            // Enable and style the confirm button
+            const btn = document.getElementById('btn-step-1');
+            btn.disabled = false;
+            btn.classList.remove('border-gray-200', 'bg-gray-100', 'text-gray-400', 'cursor-not-allowed');
+            btn.classList.add('border-gray-900', 'bg-gray-900', 'text-white', 'cursor-pointer', 'hover:bg-gray-800');
         },
 
         selectSource: function (source, el) {

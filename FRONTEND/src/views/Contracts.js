@@ -777,110 +777,135 @@ export function renderContracts() {
                 </section>
 
 
-                <!-- STEP 3: FINAL LOCK -->
-                <section id="step-3" class="hidden max-w-5xl mx-auto w-full flex flex-col h-full">
-                    <div class="mb-10">
-                        <h1 class="text-display-lg headline-accent">Execute Contract</h1>
-                        <p class="text-body-mono text-neutral-500 uppercase mt-6">Ref: <span class="text-black">0x7A...9F</span></p>
+                <!-- STEP 3: EXECUTE CONTRACT -->
+                <section id="step-3" class="hidden max-w-7xl mx-auto w-full flex flex-col" style="font-family: 'IBM Plex Mono', monospace;">
+                    <!-- System Metadata Header -->
+                    <div class="pb-5 mb-10 border-b border-black/10">
+                        <div class="text-[10px] tracking-widest uppercase text-black/40 space-y-0.5 leading-tight">
+                            <div>STEP 03 OF 03 — TERMINAL EXECUTION</div>
+                            <div>CAPITAL WILL BE LOCKED. THIS ACTION IS BINDING.</div>
+                        </div>
                     </div>
-                    
-                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 mb-8">
-                        <!-- LEFT: Contract Definition -->
-                        <div class="space-y-6">
-                            <div class="section-box space-y-4">
-                                <div class="flex justify-between border-b border-black/5 pb-2">
-                                    <span class="text-body-mono text-neutral-500 uppercase">Authority</span>
-                                    <span id="final-oracle" class="font-mono text-sm font-semibold">--</span>
-                                </div>
-                                <div class="flex justify-between border-b border-black/5 pb-2">
-                                    <span class="text-body-mono text-neutral-500 uppercase">Condition</span>
-                                    <span class="font-mono text-sm">Target > Baseline + 15%</span>
-                                </div>
-                                <div class="flex justify-between border-b border-black/5 pb-2">
-                                    <span class="text-body-mono text-neutral-500 uppercase">Time Window</span>
-                                    <span class="font-mono text-sm">30 Days</span>
-                                </div>
-                                <div class="flex justify-between border-b border-black/5 pb-2">
-                                    <span class="text-body-mono text-neutral-500 uppercase">Payout</span>
-                                    <span id="final-mult" class="font-mono text-sm font-semibold text-accent-gold">--</span>
-                                </div>
-                                <div class="flex justify-between pt-2">
-                                    <span class="text-body-mono text-neutral-500 uppercase">Failure Outcome</span>
-                                    <span class="font-mono text-sm text-accent-red font-semibold">Forfeiture on failure</span>
-                                </div>
-                            </div>
+
+                    <!-- Page Header -->
+                    <div class="mb-12">
+                        <h1 class="text-3xl font-semibold tracking-tight mb-2 leading-none" style="font-family: 'IBM Plex Sans', sans-serif;">EXECUTE CONTRACT</h1>
+                        <div class="h-[2px] w-48 mb-3" style="background-color: #B91C1C;"></div>
+                        <div class="text-[11px] tracking-wider uppercase text-black/40 leading-tight">REF: <span id="contract-ref">0x7A2B4C8D9E1F3G5H</span></div>
+                    </div>
+
+                    <!-- Two Column Layout -->
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-10">
+                        <!-- Contract Summary Panel -->
+                        <div class="border border-black p-6">
+                            <div class="text-[11px] tracking-widest uppercase text-black/40 mb-5 leading-tight">CONTRACT TERMS</div>
                             
-                            <!-- Metric Status Card -->
-                            <div id="metric-status-card" class="metric-status-card">
-                                <div class="card-header">
-                                    <div>
-                                        <div class="card-title">Metric Status</div>
-                                        <div class="card-subtext">Snapshot is taken at execution and becomes your baseline.</div>
+                            <div class="space-y-5">
+                                <div class="flex justify-between items-start pb-3 border-b border-black/10">
+                                    <div class="text-[11px] tracking-wider uppercase text-black/50 leading-tight">Authority</div>
+                                    <div id="final-oracle" class="text-[13px] font-medium leading-tight">--</div>
+                                </div>
+
+                                <div class="flex justify-between items-start pb-3 border-b border-black/10">
+                                    <div class="text-[11px] tracking-wider uppercase text-black/50 leading-tight">Condition</div>
+                                    <div class="text-[13px] font-medium text-right leading-tight">Target > Baseline + 15%</div>
+                                </div>
+
+                                <div class="flex justify-between items-start pb-3 border-b border-black/10">
+                                    <div class="text-[11px] tracking-wider uppercase text-black/50 leading-tight">Time Window</div>
+                                    <div class="text-[13px] font-medium leading-tight">30 Days</div>
+                                </div>
+
+                                <div class="flex justify-between items-start pb-3 border-b border-black/10">
+                                    <div class="text-[11px] tracking-wider uppercase text-black/50 leading-tight">Payout</div>
+                                    <div id="final-mult" class="text-[13px] font-semibold leading-tight">
+                                        <span class="text-[15px]">--</span>×
                                     </div>
-                                    <span id="metric-authority-badge" class="authority-badge">Authority Verified</span>
                                 </div>
-                                
-                                <div class="metric-row">
-                                    <div class="metric-col">
-                                        <label>Current (Baseline)</label>
-                                        <div id="metric-current" class="metric-value">--</div>
-                                        <div id="metric-recorded" class="metric-meta">Recorded: --</div>
-                                    </div>
-                                    <div class="metric-col">
-                                        <label>Goal</label>
-                                        <div id="metric-goal" class="metric-value">--</div>
-                                        <div id="metric-deadline" class="metric-meta">Due in -- days</div>
-                                    </div>
+
+                                <div class="flex justify-between items-start">
+                                    <div class="text-[11px] tracking-wider uppercase text-black/50 leading-tight">Failure Outcome</div>
+                                    <div class="text-[13px] font-medium leading-tight" style="color: #B91C1C;">Capital Forfeited</div>
                                 </div>
-                                
-                                <div class="metric-delta">
-                                    <label>Required</label>
-                                    <span id="metric-required" class="delta-value">--</span>
-                                </div>
-                                
-                                <div class="metric-progress-container">
-                                    <div id="metric-progress-fill" class="metric-progress-fill" style="width: 0%"></div>
-                                </div>
-                                
-                                <p class="metric-microcopy">Outcome evaluated at deadline.</p>
-                                <p id="metric-source-note" class="metric-microcopy" style="margin-top: 6px; font-style: italic;">--</p>
                             </div>
                         </div>
 
-                        <!-- RIGHT: Execution -->
-                        <div class="flex flex-col">
-                            <!-- Capital Allocation -->
-                            <div class="section-box mb-6">
-                                <label class="text-body-mono text-neutral-400 mb-4 block uppercase">Capital Allocation</label>
-                                <div class="flex items-baseline border-b-2 border-neutral-200 focus-within:border-black transition-colors pb-3">
-                                    <span class="text-3xl text-neutral-400 mr-2 font-normal">$</span>
-                                    <input type="number" value="5000" class="w-full text-4xl font-medium text-neutral-900 bg-transparent border-none outline-none p-0 placeholder-neutral-200" placeholder="0">
-                                </div>
-                                <p class="text-legal mt-3">This amount will be <span class="text-accent-red">unavailable</span> until resolution.</p>
-                            </div>
+                        <!-- Capital Allocation Panel -->
+                        <div class="border border-black p-6 flex flex-col">
+                            <div class="text-[11px] tracking-widest uppercase text-black/40 mb-5 leading-tight">CAPITAL ALLOCATION</div>
                             
-                            <!-- Execute Button -->
-                            <div class="relative select-none">
-                                <button id="btn-execute" class="w-full bg-neutral-900 text-white text-body-mono uppercase py-5 relative overflow-hidden transition-colors group hover:bg-black"
-                                    onmousedown="window.wizard.startHold()" 
-                                    onmouseup="window.wizard.endHold()" 
-                                    onmouseleave="window.wizard.endHold()"
-                                    ontouchstart="window.wizard.startHold()"
-                                    ontouchend="window.wizard.endHold()">
-                                    <div id="hold-bar" class="hold-progress absolute top-0 left-0 h-full bg-white/20 z-0"></div>
-                                    <span class="relative z-10 flex items-center justify-center gap-2">
-                                        <span id="btn-text">Hold to Execute</span>
-                                    </span>
-                                </button>
-                                <p class="text-legal text-center mt-3">Execution finalizes the contract and records the baseline.</p>
+                            <div class="flex-1 flex flex-col justify-center items-center py-8">
+                                <div class="flex items-baseline">
+                                    <span class="text-3xl text-gray-400 mr-2">$</span>
+                                    <input type="number" id="capital-input" value="5000" 
+                                        class="text-5xl font-semibold tracking-tight bg-transparent border-none outline-none w-40 text-center"
+                                        style="font-family: 'IBM Plex Mono', monospace;">
+                                </div>
+                                <div class="text-[11px] tracking-wide uppercase text-black/40 mt-4 text-center max-w-xs leading-tight">
+                                    Funds locked until contract resolution
+                                </div>
                             </div>
                         </div>
                     </div>
-                    
-                    <!-- Quote (below grid) -->
-                    <div class="border-t border-neutral-100 pt-6 mt-auto">
-                        <p class="font-serif italic text-neutral-600 text-base">"This contract will execute exactly as written."</p>
-                        <p class="text-legal mt-1">No manual review. <span class="text-accent-red">No overrides.</span></p>
+
+                    <!-- Metric Snapshot Panel -->
+                    <div class="border border-black p-6 mb-10">
+                        <div class="text-[11px] tracking-widest uppercase text-black/40 mb-5 leading-tight">METRIC SNAPSHOT — SYSTEM RECORD</div>
+                        
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                            <div>
+                                <div class="text-[11px] tracking-wider uppercase text-black/50 mb-2 leading-tight">Authority Source</div>
+                                <div id="metric-authority-source" class="text-[13px] font-medium leading-tight">--</div>
+                                <div class="text-[10px] text-black/40 mt-1 leading-tight">Verified • Public</div>
+                            </div>
+
+                            <div>
+                                <div class="text-[11px] tracking-wider uppercase text-black/50 mb-2 leading-tight">Current (Baseline)</div>
+                                <div id="metric-current" class="text-2xl font-semibold leading-none">--</div>
+                                <div id="metric-recorded" class="text-[10px] text-black/40 mt-1 leading-tight">Recorded: --</div>
+                            </div>
+
+                            <div>
+                                <div class="text-[11px] tracking-wider uppercase text-black/50 mb-2 leading-tight">Target Value</div>
+                                <div id="metric-goal" class="text-2xl font-semibold leading-none">--</div>
+                                <div id="metric-required" class="text-[10px] mt-1 leading-tight flex items-center gap-1" style="color: #B91C1C;">
+                                    <span>+-- Required</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Execution Control -->
+                    <div class="mb-10">
+                        <div class="text-center text-[11px] text-black/50 mb-3 tracking-widest uppercase leading-tight">
+                            This action is irreversible
+                        </div>
+                        <button id="btn-execute" 
+                            class="w-full py-6 text-[15px] tracking-widest uppercase font-medium relative overflow-hidden transition-opacity select-none"
+                            style="background-color: #030213; color: white;"
+                            onmousedown="window.wizard.startHold()" 
+                            onmouseup="window.wizard.endHold()" 
+                            onmouseleave="window.wizard.endHold()"
+                            ontouchstart="window.wizard.startHold()"
+                            ontouchend="window.wizard.endHold()">
+                            <div id="hold-bar" class="absolute left-0 top-0 h-full transition-all" style="width: 0%; background-color: #B91C1C;"></div>
+                            <span class="relative z-10">
+                                <span id="btn-text">HOLD TO EXECUTE</span>
+                            </span>
+                        </button>
+                        <div class="text-center text-[11px] text-black/40 mt-3 tracking-wide leading-tight">
+                            Execution locks capital and records baseline. Withdrawal prohibited until settlement.
+                        </div>
+                    </div>
+
+                    <!-- Settlement Disclaimer -->
+                    <div class="border-t border-black/10 pt-6 pb-8">
+                        <div class="text-[10px] tracking-widest uppercase text-black/40 space-y-2 leading-tight">
+                            <div>ALL CONTRACTS SETTLE PUBLICLY. OUTCOMES ARE PERMANENT.</div>
+                            <div class="text-black/30">
+                                Outcomes evaluated at deadline • Verification via public API snapshots • Settlement is final and on-chain
+                            </div>
+                        </div>
                     </div>
                 </section>
                 
@@ -1626,14 +1651,32 @@ export function initContracts() {
         startHold: function () {
             if (holdComplete) return;
             const btn = document.getElementById('btn-execute');
+            const holdBar = document.getElementById('hold-bar');
+            const btnText = document.getElementById('btn-text');
+
             btn.classList.add('holding');
+            btnText.textContent = 'EXECUTING...';
+
+            // Animate the red progress bar inside button
+            holdBar.style.transition = 'width 2s linear';
+            holdBar.style.width = '100%';
+
             holdTimer = setTimeout(() => { this.completeHold(); }, 2000);
         },
 
         endHold: function () {
             if (holdComplete) return;
             const btn = document.getElementById('btn-execute');
+            const holdBar = document.getElementById('hold-bar');
+            const btnText = document.getElementById('btn-text');
+
             btn.classList.remove('holding');
+            btnText.textContent = 'HOLD TO EXECUTE';
+
+            // Reset the progress bar
+            holdBar.style.transition = 'none';
+            holdBar.style.width = '0%';
+
             clearTimeout(holdTimer);
         },
 
@@ -1655,6 +1698,12 @@ export function initContracts() {
 
             holdComplete = true;
             btn.disabled = true;
+
+            // Fill the top progress bar to 100%
+            const topProgressBar = document.getElementById('progress-fill');
+            if (topProgressBar) {
+                topProgressBar.style.width = '100%';
+            }
 
             // Helper: poll until state matches (with timeout return)
             // SAFETY: Abort if contractId missing or state undefined

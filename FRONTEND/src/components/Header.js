@@ -43,7 +43,7 @@ export function renderHeader(currentRoute) {
                             class="text-xs tracking-widest uppercase leading-none"
                             style="font-family: 'JetBrains Mono', monospace; font-weight: 600; color: #751212;"
                         >
-                            .MARKET
+                            MARKET
                         </span>
                     </a>
 

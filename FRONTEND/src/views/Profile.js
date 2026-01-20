@@ -2,24 +2,27 @@
 export function renderProfile() {
     return `
         <div class="min-h-screen bg-white" style="font-family: 'Inter', sans-serif;">
-            <!-- Header Section -->
-            <div class="bg-white border-b border-neutral-200 px-8 py-6">
+            <!-- Identity Header -->
+            <div class="bg-neutral-50 px-8 pt-10 pb-8">
                 <div class="max-w-7xl mx-auto">
-                    <!-- Identity Title -->
-                    <div class="flex items-start justify-between">
+                    <!-- Identity Block -->
+                    <div class="flex items-end justify-between">
                         <div>
-                            <h1 class="text-3xl font-medium tracking-tight mb-2 text-neutral-900" id="identity-title" style="font-family: 'IBM Plex Sans', sans-serif;">
-                                <span id="identity-name">Powercolt</span>
+                            <!-- Primary Identifier -->
+                            <h1 class="text-4xl font-semibold tracking-tight text-neutral-900 mb-3" id="identity-title" style="font-family: 'IBM Plex Sans', sans-serif; letter-spacing: -0.02em;">
+                                <span id="identity-name">powercolt</span>
                             </h1>
-                            <div class="flex items-center gap-3 font-mono text-[10px] tracking-widest uppercase text-neutral-500">
-                                <span>IDENTITY RECORD</span>
-                                <span class="text-neutral-400">·</span>
-                                <span id="identity-hash">USR-00742-8F3A</span>
+                            <!-- Record Subtitle -->
+                            <div class="flex items-center gap-2 font-mono text-[11px] tracking-widest uppercase text-neutral-400">
+                                <span>Identity Record</span>
+                                <span class="text-neutral-300">·</span>
+                                <span id="identity-hash" class="text-neutral-500">USR-08742-8F3A</span>
                             </div>
                         </div>
-                        <div class="flex items-center gap-3">
-                            <button class="flex items-center gap-2 px-4 py-2 border border-neutral-900 bg-neutral-900 text-white text-[11px] font-medium uppercase tracking-wide hover:bg-neutral-800 transition-colors">
-                                <i data-lucide="copy" class="w-3.5 h-3.5"></i>
+                        <!-- Primary Action -->
+                        <div>
+                            <button class="flex items-center gap-2 px-5 py-2.5 border border-neutral-300 bg-white text-neutral-700 text-[11px] font-medium uppercase tracking-wider hover:border-neutral-400 hover:bg-neutral-50 transition-colors">
+                                <i data-lucide="link" class="w-3.5 h-3.5"></i>
                                 Copy Record Link
                             </button>
                         </div>
@@ -30,12 +33,12 @@ export function renderProfile() {
             <!-- Navigation Tabs -->
             <div class="border-b border-neutral-200 bg-white sticky top-16 z-40">
                 <div class="max-w-7xl mx-auto px-8">
-                    <div class="flex gap-0">
-                        <button class="profile-tab px-6 py-4 font-mono text-[11px] uppercase tracking-widest border-b-2 border-neutral-900 text-neutral-900 font-medium" data-tab="overview">Overview</button>
-                        <button class="profile-tab px-6 py-4 font-mono text-[11px] uppercase tracking-widest border-b-2 border-transparent text-neutral-400 hover:text-neutral-600" data-tab="contracts">Active Contracts</button>
-                        <button class="profile-tab px-6 py-4 font-mono text-[11px] uppercase tracking-widest border-b-2 border-transparent text-neutral-400 hover:text-neutral-600" data-tab="history">Settlement History</button>
-                        <button class="profile-tab px-6 py-4 font-mono text-[11px] uppercase tracking-widest border-b-2 border-transparent text-neutral-400 hover:text-neutral-600" data-tab="sources">Connected Sources</button>
-                        <button class="profile-tab px-6 py-4 font-mono text-[11px] uppercase tracking-widest border-b-2 border-transparent text-neutral-400 hover:text-neutral-600" data-tab="timeline">Identity Timeline</button>
+                    <div class="flex gap-0 -mb-px">
+                        <button class="profile-tab px-5 py-3.5 font-mono text-[10px] uppercase tracking-widest border-b-2 border-neutral-900 text-neutral-900 font-medium" data-tab="overview">Overview</button>
+                        <button class="profile-tab px-5 py-3.5 font-mono text-[10px] uppercase tracking-widest border-b-2 border-transparent text-neutral-400 hover:text-neutral-600 hover:border-neutral-300" data-tab="contracts">Active Contracts</button>
+                        <button class="profile-tab px-5 py-3.5 font-mono text-[10px] uppercase tracking-widest border-b-2 border-transparent text-neutral-400 hover:text-neutral-600 hover:border-neutral-300" data-tab="history">Settlement History</button>
+                        <button class="profile-tab px-5 py-3.5 font-mono text-[10px] uppercase tracking-widest border-b-2 border-transparent text-neutral-400 hover:text-neutral-600 hover:border-neutral-300" data-tab="sources">Connected Sources</button>
+                        <button class="profile-tab px-5 py-3.5 font-mono text-[10px] uppercase tracking-widest border-b-2 border-transparent text-neutral-400 hover:text-neutral-600 hover:border-neutral-300" data-tab="timeline">Identity Timeline</button>
                     </div>
                 </div>
             </div>

@@ -495,57 +495,118 @@ export function renderContracts() {
             <main class="flex-1 relative overflow-y-auto flex flex-col px-6 md:px-12 py-8 md:py-16">
                 
                 <!-- STEP 1: RISK PROFILE -->
-                <section id="step-1" class="max-w-5xl mx-auto w-full flex flex-col h-full">
-                    <div class="mb-16">
-                        <h1 class="text-display-lg headline-accent">Select Exposure</h1>
-                        <p class="text-body-serif max-w-xl mt-6">Choose an enforcement profile. This determines your verification threshold and potential multiplier.</p>
+                <section id="step-1" class="max-w-5xl mx-auto w-full flex flex-col">
+                    <!-- Top System Context Bar -->
+                    <div class="border-b border-gray-200 mb-12 pb-4">
+                        <div class="font-mono text-[11px] tracking-wider text-gray-500 uppercase">
+                            STEP 01 OF 03 — EXPOSURE SELECTION
+                        </div>
+                        <div class="font-mono text-[11px] tracking-wider text-gray-500 uppercase mt-1">
+                            THIS DECISION AFFECTS CAPITAL FORFEITURE
+                        </div>
+                    </div>
+
+                    <!-- Primary Heading -->
+                    <div class="mb-12">
+                        <h1 class="text-3xl font-medium tracking-tight mb-4" style="font-family: 'IBM Plex Sans', sans-serif;">
+                            SELECT ENFORCEMENT PROFILE
+                        </h1>
+                        <p class="text-base text-gray-600 max-w-2xl leading-relaxed" style="font-family: 'Inter', sans-serif;">
+                            This selection defines your risk of capital forfeiture and maximum payout.
+                            Once confirmed, exposure cannot be reduced.
+                        </p>
                     </div>
                     
-                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-16">
-                        <!-- Steady -->
-                        <button class="card-standard p-8 text-left flex flex-col justify-between h-64"
+                    <!-- Tier Cards Grid -->
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
+                        <!-- TIER I: CONTROLLED -->
+                        <button class="border-2 border-gray-200 p-8 text-left flex flex-col justify-between h-72 hover:border-gray-900 transition-colors bg-white"
                              onclick="window.wizard.selectRisk('STEADY', this)">
-                            <div class="flex justify-between items-start">
-                                <span class="text-body-mono text-neutral-500 uppercase">Tier 1</span>
-                                <span class="reward-chip">1.5x</span>
+                            <div class="flex justify-between items-start mb-6">
+                                <span class="font-mono text-[10px] text-gray-400 uppercase tracking-widest">TIER I</span>
+                                <span class="font-mono text-xs bg-gray-100 px-2 py-1 font-medium">1.5×</span>
                             </div>
-                            <div>
-                                <h2 class="text-display-md mb-2">Steady</h2>
-                                <p class="text-sm text-neutral-500 leading-relaxed">Consistent baseline performance. Low variance expected.</p>
+                            <div class="flex-1">
+                                <h2 class="text-xl font-semibold mb-4" style="font-family: 'IBM Plex Sans', sans-serif;">CONTROLLED</h2>
+                                <div class="space-y-2 font-mono text-[11px] text-gray-500">
+                                    <div class="flex justify-between">
+                                        <span>Capital Risk</span>
+                                        <span class="text-gray-700">Partial forfeiture</span>
+                                    </div>
+                                    <div class="flex justify-between">
+                                        <span>Verification</span>
+                                        <span class="text-gray-700">Baseline thresholds</span>
+                                    </div>
+                                    <div class="flex justify-between">
+                                        <span>Variance</span>
+                                        <span class="text-gray-700">Low</span>
+                                    </div>
+                                </div>
                             </div>
                         </button>
 
-                        <!-- Bold -->
-                        <button class="card-standard p-8 text-left flex flex-col justify-between h-64"
+                        <!-- TIER II: ELEVATED -->
+                        <button class="border-2 border-gray-200 p-8 text-left flex flex-col justify-between h-72 hover:border-gray-900 transition-colors bg-white"
                              onclick="window.wizard.selectRisk('BOLD', this)">
-                            <div class="flex justify-between items-start">
-                                <span class="text-body-mono text-neutral-500 uppercase">Tier 2</span>
-                                <span class="reward-chip">2.0x</span>
+                            <div class="flex justify-between items-start mb-6">
+                                <span class="font-mono text-[10px] text-gray-400 uppercase tracking-widest">TIER II</span>
+                                <span class="font-mono text-xs bg-gray-100 px-2 py-1 font-medium">2.5×</span>
                             </div>
-                            <div>
-                                <h2 class="text-display-md mb-2">Bold</h2>
-                                <p class="text-sm text-neutral-500 leading-relaxed">Significant deviation from baseline. Requires strict discipline.</p>
+                            <div class="flex-1">
+                                <h2 class="text-xl font-semibold mb-4" style="font-family: 'IBM Plex Sans', sans-serif;">ELEVATED</h2>
+                                <div class="space-y-2 font-mono text-[11px] text-gray-500">
+                                    <div class="flex justify-between">
+                                        <span>Capital Risk</span>
+                                        <span class="text-gray-700">Majority forfeiture</span>
+                                    </div>
+                                    <div class="flex justify-between">
+                                        <span>Verification</span>
+                                        <span class="text-gray-700">Strict thresholds</span>
+                                    </div>
+                                    <div class="flex justify-between">
+                                        <span>Variance</span>
+                                        <span class="text-gray-700">Moderate</span>
+                                    </div>
+                                </div>
                             </div>
                         </button>
 
-                        <!-- All-In -->
-                        <button class="card-standard p-8 text-left flex flex-col justify-between h-64"
-                             onclick="window.wizard.selectRisk('ALL_IN', this)">
-                            <div class="flex justify-between items-start">
-                                <span class="text-body-mono text-neutral-500 uppercase">Tier 3</span>
-                                <span class="reward-chip">4.0x</span>
+                        <!-- TIER III: MAXIMUM -->
+                        <button class="border-2 border-gray-200 p-8 text-left flex flex-col justify-between h-72 hover:border-gray-900 transition-colors bg-white"
+                             onclick="window.wizard.selectRisk('ALL_IN', this)"
+                             style="border-color: rgba(117, 18, 18, 0.3);">
+                            <div class="flex justify-between items-start mb-6">
+                                <span class="font-mono text-[10px] text-gray-400 uppercase tracking-widest">TIER III</span>
+                                <span class="font-mono text-xs px-2 py-1 font-medium" style="background-color: #fef2f2; color: #751212;">4.0×</span>
                             </div>
-                            <div>
-                                <h2 class="text-display-md mb-2">All-In</h2>
-                                <p class="text-sm text-neutral-500 leading-relaxed">Maximum exposure. Failure results in immediate <span class="text-accent-red">total forfeiture</span>.</p>
+                            <div class="flex-1">
+                                <h2 class="text-xl font-semibold mb-4" style="font-family: 'IBM Plex Sans', sans-serif;">MAXIMUM</h2>
+                                <div class="space-y-2 font-mono text-[11px] text-gray-500">
+                                    <div class="flex justify-between">
+                                        <span>Capital Risk</span>
+                                        <span style="color: #751212;">Total forfeiture</span>
+                                    </div>
+                                    <div class="flex justify-between">
+                                        <span>Verification</span>
+                                        <span class="text-gray-700">Highest strictness</span>
+                                    </div>
+                                    <div class="flex justify-between">
+                                        <span>Variance</span>
+                                        <span class="text-gray-700">High</span>
+                                    </div>
+                                </div>
                             </div>
                         </button>
                     </div>
 
-                    <div class="flex justify-end">
-                         <button id="btn-step-1" class="bg-black text-white text-body-mono uppercase px-8 py-4 hover:bg-neutral-800 disabled:bg-neutral-100 disabled:text-neutral-400 disabled:cursor-not-allowed transition-colors" disabled onclick="window.wizard.nextStep()">
-                            Confirm Profile →
+                    <!-- Confirmation Area -->
+                    <div class="border-t border-gray-200 pt-8">
+                         <button id="btn-step-1" class="w-full md:w-auto px-12 py-4 border-2 font-medium tracking-wide transition-all border-gray-200 bg-gray-100 text-gray-400 cursor-not-allowed" disabled onclick="window.wizard.nextStep()" style="font-family: 'Inter', sans-serif;">
+                            CONFIRM EXPOSURE
                         </button>
+                        <div class="font-mono text-[11px] tracking-wider text-gray-400 mt-4">
+                            This decision is irreversible after execution.
+                        </div>
                     </div>
                 </section>
 

@@ -208,17 +208,17 @@ export function renderOverview() {
             </section>
 
             <!-- Final CTA -->
-            <section class="text-white" style="background-color: #751212;">
+            <section class="bg-gray-50 border-t border-gray-200">
                 <div class="max-w-7xl mx-auto px-6 py-24 md:py-32">
                     <div class="max-w-3xl">
-                        <h2 class="text-4xl md:text-5xl font-bold mb-6 leading-tight" style="font-family: 'IBM Plex Sans', sans-serif;">Outcomes Enforced.</h2>
-                        <p class="text-lg md:text-xl text-gray-300 mb-10 leading-relaxed" style="font-family: 'Inter', sans-serif;">This platform is for users who understand that capital at stake changes behavior. If you're looking for encouragement, look elsewhere.</p>
+                        <h2 class="text-4xl md:text-5xl font-bold mb-6 leading-tight text-gray-950" style="font-family: 'IBM Plex Sans', sans-serif;">Outcomes Enforced.</h2>
+                        <p class="text-lg md:text-xl text-gray-600 mb-10 leading-relaxed" style="font-family: 'Inter', sans-serif;">This platform is for users who understand that capital at stake changes behavior. If you're looking for encouragement, look elsewhere.</p>
                         <div class="flex flex-col sm:flex-row gap-4">
-                            <button onclick="window.app.handleInitiate()" class="px-8 py-4 bg-white text-gray-950 font-semibold hover:bg-gray-100 transition-colors flex items-center justify-center gap-2" style="font-family: 'Inter', sans-serif;">
+                            <button onclick="window.app.handleInitiate()" class="px-8 py-4 bg-gray-950 text-white font-semibold hover:bg-gray-800 transition-colors flex items-center justify-center gap-2" style="font-family: 'Inter', sans-serif;">
                                 <span>Create Contract</span>
                                 <i data-lucide="arrow-right" class="w-5 h-5"></i>
                             </button>
-                            <a href="#" onclick="window.router.navigate('/docs'); return false;" class="px-8 py-4 border border-gray-600 text-white font-medium hover:border-gray-400 transition-colors text-center" style="font-family: 'Inter', sans-serif;">
+                            <a href="#" onclick="window.router.navigate('/docs'); return false;" class="px-8 py-4 border border-gray-950 text-gray-950 font-medium hover:bg-gray-950 hover:text-white transition-colors text-center" style="font-family: 'Inter', sans-serif;">
                                 Read Terms
                             </a>
                         </div>

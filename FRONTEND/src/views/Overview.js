@@ -9,7 +9,8 @@ export function renderOverview() {
                     <div class="max-w-4xl">
                         <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 text-gray-950 leading-tight"
     style="font-family: 'IBM Plex Sans', sans-serif;">
-  Intentions Fail Without <span style="color: #751212;">Stakes.</span></h1>
+  Intentions Fail<br />
+  <span style="color: #751212;">Without</span> Stakes.</h1>
                         </h1>
                         <p class="text-lg md:text-xl text-gray-600 mb-10 leading-relaxed" style="font-family: 'Inter', sans-serif; font-weight: 400;">
                             Performance contracts with on-chain enforcement. Capital at stake. Outcomes verified via platform integrations. Winners paid from forfeited funds.

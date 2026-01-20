@@ -41,7 +41,7 @@ export function renderHeader(currentRoute) {
                         </h1>
                         <span 
                             class="text-xs tracking-widest uppercase leading-none"
-                            style="font-family: 'JetBrains Mono', monospace; font-weight: 400; color: #751212;"
+                            style="font-family: 'JetBrains Mono', monospace; font-weight: 600; color: #751212;"
                         >
                             MARKET
                         </span>

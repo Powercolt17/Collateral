@@ -589,160 +589,189 @@ export function renderContracts() {
                 </section>
 
 
-                <!-- STEP 2: METRIC SOURCE -->
-                <section id="step-2" class="hidden max-w-5xl mx-auto w-full flex flex-col h-full">
-                    <div class="mb-16">
-                        <h1 class="text-display-lg headline-accent">Select Authority</h1>
-                        <p class="text-body-serif max-w-xl mt-6">Designate the external source of truth. The selected authority will be the sole arbiter of the contract outcome.</p>
+                <!-- STEP 2: SELECT AUTHORITY -->
+                <section id="step-2" class="hidden max-w-6xl mx-auto w-full flex flex-col">
+                    <!-- Page Header -->
+                    <div class="mb-12 pb-8 border-b border-gray-200">
+                        <h1 class="uppercase tracking-tight mb-3 text-2xl font-medium" style="font-family: 'IBM Plex Sans', sans-serif; letter-spacing: -0.01em;">
+                            SELECT AUTHORITY
+                        </h1>
+                        <p class="text-sm text-gray-600 leading-relaxed max-w-3xl" style="font-weight: 300;">
+                            The selected authority will serve as the sole arbiter of contract settlement. 
+                            All outcomes are determined exclusively by data provided through this authority's verified endpoints.
+                        </p>
                     </div>
-                    
-                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8 border-t border-neutral-100 pt-8">
-                        <!-- X (Twitter) -->
-                        <button class="card-standard p-8 text-left h-52 flex flex-col justify-between group"
-                             onclick="window.wizard.selectSource('TWITTER', this)">
-                            <div class="flex justify-between items-start">
-                                <span class="text-body-mono text-neutral-400 uppercase">Oracle_01</span>
-                                <span class="text-body-mono text-neutral-400 uppercase text-[10px]">Integrity: High</span>
-                            </div>
-                            <div>
-                                <h3 class="text-lg font-semibold mb-2">X (Twitter)</h3>
-                                <p class="text-legal">Public, immutable follower snapshots.</p>
-                            </div>
-                        </button>
 
-                        <!-- Stripe -->
-                        <button class="card-standard p-8 text-left h-52 flex flex-col justify-between group"
-                             onclick="window.wizard.selectSource('STRIPE', this)">
-                            <div class="flex justify-between items-start">
-                                <span class="text-body-mono text-neutral-400 uppercase">Oracle_02</span>
-                                <span class="text-body-mono text-neutral-400 uppercase text-[10px]">Integrity: Proven</span>
-                            </div>
-                            <div>
-                                <h3 class="text-lg font-semibold mb-2">Stripe</h3>
-                                <p class="text-legal">Verified gross revenue from Stripe Connect.</p>
-                            </div>
-                        </button>
+                    <!-- Authority Cards -->
+                    <div class="mb-12">
+                        <h4 class="text-xs tracking-wider text-gray-500 mb-4 uppercase font-mono">AVAILABLE AUTHORITIES</h4>
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                            <!-- X Authority Card -->
+                            <button class="border-2 border-gray-200 p-6 text-left flex flex-col h-48 hover:border-gray-900 transition-colors bg-white authority-card"
+                                 onclick="window.wizard.selectSource('TWITTER', this)">
+                                <div class="flex justify-between items-start mb-4">
+                                    <span class="font-mono text-[10px] text-gray-400 uppercase tracking-widest">ORACLE_01</span>
+                                    <span class="font-mono text-[10px] text-emerald-600 uppercase tracking-wide">PROVEN</span>
+                                </div>
+                                <div class="flex-1 flex flex-col justify-between">
+                                    <div>
+                                        <h3 class="text-lg font-semibold mb-2" style="font-family: 'IBM Plex Sans', sans-serif;">X</h3>
+                                        <p class="text-xs text-gray-500 leading-relaxed">Measures public engagement metrics via verified X API endpoints</p>
+                                    </div>
+                                    <div id="x-card-connected" class="hidden">
+                                        <span class="font-mono text-[10px] text-emerald-600">Connected</span>
+                                    </div>
+                                </div>
+                            </button>
 
-                        <!-- GitHub (Coming Soon) -->
-                        <div class="card-standard card-disabled p-8 text-left h-52 flex flex-col justify-between">
-                            <div class="flex justify-between items-start">
-                                <span class="text-body-mono text-neutral-400 uppercase">Oracle_03</span>
-                                <span class="text-body-mono text-neutral-300 uppercase text-[10px]">Coming Soon</span>
-                            </div>
-                            <div>
-                                <h3 class="text-lg font-semibold mb-2 text-neutral-400">GitHub</h3>
-                                <p class="text-legal">Commit history from GitHub API.</p>
+                            <!-- Stripe Authority Card -->
+                            <button class="border-2 border-gray-200 p-6 text-left flex flex-col h-48 hover:border-gray-900 transition-colors bg-white authority-card"
+                                 onclick="window.wizard.selectSource('STRIPE', this)">
+                                <div class="flex justify-between items-start mb-4">
+                                    <span class="font-mono text-[10px] text-gray-400 uppercase tracking-widest">ORACLE_02</span>
+                                    <span class="font-mono text-[10px] text-blue-600 uppercase tracking-wide">HIGH</span>
+                                </div>
+                                <div class="flex-1 flex flex-col justify-between">
+                                    <div>
+                                        <h3 class="text-lg font-semibold mb-2" style="font-family: 'IBM Plex Sans', sans-serif;">Stripe</h3>
+                                        <p class="text-xs text-gray-500 leading-relaxed">Tracks transaction volume and revenue through Stripe Connect</p>
+                                    </div>
+                                    <div id="stripe-card-connected" class="hidden">
+                                        <span class="font-mono text-[10px] text-emerald-600">Connected</span>
+                                    </div>
+                                </div>
+                            </button>
+
+                            <!-- GitHub Authority Card (Coming Soon) -->
+                            <div class="border-2 border-gray-100 p-6 text-left flex flex-col h-48 bg-gray-50 opacity-60 cursor-not-allowed">
+                                <div class="flex justify-between items-start mb-4">
+                                    <span class="font-mono text-[10px] text-gray-300 uppercase tracking-widest">ORACLE_03</span>
+                                    <span class="font-mono text-[10px] text-gray-400 uppercase tracking-wide">COMING SOON</span>
+                                </div>
+                                <div class="flex-1">
+                                    <h3 class="text-lg font-semibold mb-2 text-gray-400" style="font-family: 'IBM Plex Sans', sans-serif;">GitHub</h3>
+                                    <p class="text-xs text-gray-400 leading-relaxed">Monitors repository activity and contribution metrics</p>
+                                </div>
                             </div>
                         </div>
                     </div>
-                    
-                    <!-- Authority Details Panel (Hidden by Default) -->
-                    <div id="authority-panel" class="authority-panel p-6 mb-8">
-                        <div class="flex justify-between items-start mb-4">
-                            <h4 id="panel-title" class="font-medium text-base"></h4>
-                            <span id="panel-integrity" class="text-body-mono text-neutral-500 uppercase text-[10px]"></span>
+
+                    <!-- Authority Detail Panel -->
+                    <div id="authority-panel" class="mb-12 border border-gray-200 bg-gray-50 p-6" style="display: none;">
+                        <div class="flex justify-between items-start mb-6">
+                            <h4 id="panel-title" class="font-medium text-base uppercase tracking-wide" style="font-family: 'IBM Plex Sans', sans-serif;"></h4>
+                            <span id="panel-integrity" class="font-mono text-[10px] text-gray-500 uppercase tracking-widest"></span>
                         </div>
-                        <ul class="space-y-2 text-sm text-neutral-600 mb-4">
-                            <li><span class="text-neutral-400 mr-2">•</span><strong>Measured:</strong> <span id="panel-measured"></span></li>
-                            <li><span class="text-neutral-400 mr-2">•</span><strong>Verified:</strong> <span id="panel-verified"></span></li>
-                            <li><span class="text-neutral-400 mr-2">•</span><strong>Fail Cases:</strong> <span id="panel-failcases"></span></li>
-                        </ul>
-                        <p class="text-xs text-neutral-500">Binding is <span class="text-accent-red font-medium">irreversible</span> after confirmation.</p>
+                        <div class="space-y-4 text-sm text-gray-600">
+                            <div>
+                                <h5 class="font-mono text-[10px] text-gray-400 uppercase tracking-widest mb-2">MEASURED</h5>
+                                <p id="panel-measured" class="leading-relaxed"></p>
+                            </div>
+                            <div>
+                                <h5 class="font-mono text-[10px] text-gray-400 uppercase tracking-widest mb-2">VERIFICATION</h5>
+                                <p id="panel-verified" class="leading-relaxed"></p>
+                            </div>
+                            <div>
+                                <h5 class="font-mono text-[10px] text-gray-400 uppercase tracking-widest mb-2">FAILURE HANDLING</h5>
+                                <p id="panel-failcases" class="leading-relaxed"></p>
+                            </div>
+                        </div>
                     </div>
-                    
-                    <!-- X AUTHORITY BINDING PANEL (OAuth) -->
-                    <div id="x-verify-panel" class="border border-neutral-200 bg-white p-6 mb-8" style="display: none;">
+
+                    <!-- Binding Section - X -->
+                    <div id="x-verify-panel" class="mb-12 border border-gray-200 bg-white p-6" style="display: none;">
                         <div class="flex items-center justify-between mb-4">
-                            <h4 class="font-medium text-base">Authority Binding — X (Twitter)</h4>
-                            <span id="x-verify-status" class="text-body-mono text-neutral-400 uppercase text-[10px]">Not Connected</span>
+                            <h4 class="font-medium text-base" style="font-family: 'IBM Plex Sans', sans-serif;">Authority Binding — X</h4>
+                            <span id="x-verify-status" class="font-mono text-[10px] text-gray-400 uppercase tracking-widest">Not Connected</span>
                         </div>
-                        
-                        <p class="text-sm text-neutral-600 mb-4">
-                            Read-only OAuth connection. Used to snapshot follower counts at execution and settlement.
-                            Binding is <span class="text-accent-red font-medium">irreversible</span> after confirmation.
+                        <p class="text-sm text-gray-600 mb-6 leading-relaxed">
+                            Read-only OAuth connection. Binding is <span style="color: #751212; font-weight: 500;">irreversible</span> after confirmation.
                         </p>
                         
                         <!-- Not Connected State -->
                         <div id="x-connect-section">
                             <button onclick="window.wizard.connectXOAuth()" id="x-connect-btn"
-                                class="w-full flex items-center justify-center gap-3 px-4 py-4 bg-neutral-900 text-white text-[12px] font-medium uppercase tracking-wide hover:bg-black transition-colors">
+                                class="w-full flex items-center justify-center gap-3 px-4 py-4 bg-gray-900 text-white text-xs font-medium uppercase tracking-wide hover:bg-black transition-colors">
                                 <svg class="w-5 h-5" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
                                 Connect X Account
                             </button>
                         </div>
                         
-                        <!-- Connected State (Hidden initially, shown via JS) -->
+                        <!-- Connected State -->
                         <div id="x-connected-state" class="hidden">
-                            <div class="flex items-center justify-between p-4 bg-[#E8F4ED] border border-[#1F7A4D]/20">
+                            <div class="flex items-center justify-between p-4 bg-emerald-50 border border-emerald-200">
                                 <div class="flex items-center gap-3">
-                                    <div class="w-10 h-10 bg-[#1F7A4D] rounded-full flex items-center justify-center">
+                                    <div class="w-10 h-10 bg-emerald-600 rounded-full flex items-center justify-center">
                                         <svg class="w-5 h-5 text-white" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
                                     </div>
                                     <div>
-                                        <p id="x-connected-handle" class="font-mono text-sm font-medium text-[#1F7A4D]">@username</p>
-                                        <p class="text-[10px] text-neutral-500 uppercase tracking-wider">Connected</p>
+                                        <p id="x-connected-handle" class="font-mono text-sm font-medium text-emerald-700">@username</p>
+                                        <p class="text-[10px] text-gray-500 uppercase tracking-wider">Connected</p>
                                     </div>
                                 </div>
-                                <button onclick="window.wizard.disconnectX()" class="text-[10px] text-neutral-400 hover:text-neutral-600 uppercase tracking-wider transition-colors">
+                                <button onclick="window.wizard.disconnectX()" class="text-[10px] text-gray-400 hover:text-gray-600 uppercase tracking-wider transition-colors">
                                     Disconnect
                                 </button>
                             </div>
                         </div>
                     </div>
-                    
-                    <!-- STRIPE CONNECT PANEL (Shows when Stripe is selected) -->
-                    <div id="stripe-verify-panel" class="border border-neutral-200 bg-white p-6 mb-8" style="display: none;">
+
+                    <!-- Binding Section - Stripe -->
+                    <div id="stripe-verify-panel" class="mb-12 border border-gray-200 bg-white p-6" style="display: none;">
                         <div class="flex items-center justify-between mb-4">
-                            <h4 class="font-medium text-base">Connect Stripe Account</h4>
-                            <span id="stripe-verify-status" class="text-body-mono text-neutral-400 uppercase text-[10px]">Not Connected</span>
+                            <h4 class="font-medium text-base" style="font-family: 'IBM Plex Sans', sans-serif;">Authority Binding — Stripe</h4>
+                            <span id="stripe-verify-status" class="font-mono text-[10px] text-gray-400 uppercase tracking-widest">Not Connected</span>
                         </div>
                         
-                        <!-- Step 1: Connect Button -->
+                        <!-- Connect Button -->
                         <div id="stripe-connect-step1">
-                            <p class="text-sm text-neutral-600 mb-4">Connect your Stripe account to enable revenue verification. We'll use read-only access to verify your revenue metrics.</p>
+                            <p class="text-sm text-gray-600 mb-6 leading-relaxed">
+                                Connect your Stripe account to enable revenue verification. Binding is <span style="color: #751212; font-weight: 500;">irreversible</span> after confirmation.
+                            </p>
                             <button onclick="window.wizard.startStripeConnect()" id="stripe-connect-btn"
-                                class="w-full flex items-center justify-center gap-2 px-4 py-3 bg-[#635bff] text-white text-[11px] font-medium uppercase tracking-wide hover:bg-[#5851eb] transition-colors">
+                                class="w-full flex items-center justify-center gap-2 px-4 py-4 bg-[#635bff] text-white text-xs font-medium uppercase tracking-wide hover:bg-[#5851eb] transition-colors">
                                 <svg class="w-4 h-4" viewBox="0 0 24 24" fill="currentColor"><path d="M13.976 9.15c-2.172-.806-3.356-1.426-3.356-2.409 0-.831.683-1.305 1.901-1.305 2.227 0 4.515.858 6.09 1.631l.89-5.494C18.252.975 15.697 0 12.165 0 9.667 0 7.589.654 6.104 1.872 4.56 3.147 3.757 4.992 3.757 7.218c0 4.039 2.467 5.76 6.476 7.219 2.585.92 3.445 1.574 3.445 2.583 0 .98-.84 1.545-2.354 1.545-1.875 0-4.965-.921-6.99-2.109l-.9 5.555C5.175 22.99 8.385 24 11.714 24c2.641 0 4.843-.624 6.328-1.813 1.664-1.305 2.525-3.236 2.525-5.732 0-4.128-2.524-5.851-6.591-7.305z"/></svg>
                                 Connect with Stripe
                             </button>
                         </div>
                         
-                        <!-- Connected State (Hidden initially) -->
+                        <!-- Connected State -->
                         <div id="stripe-connect-success" class="hidden">
-                            <div class="flex items-center gap-3 p-4 bg-[#E8F4ED] border border-[#1F7A4D]/20">
-                                <div class="w-8 h-8 bg-[#1F7A4D] rounded-full flex items-center justify-center">
+                            <div class="flex items-center gap-3 p-4 bg-emerald-50 border border-emerald-200">
+                                <div class="w-8 h-8 bg-emerald-600 rounded-full flex items-center justify-center">
                                     <i data-lucide="check" class="w-4 h-4 text-white"></i>
                                 </div>
                                 <div>
-                                    <p class="font-sans text-sm font-medium text-[#1F7A4D]">Stripe Connected</p>
-                                    <p id="stripe-account-id" class="font-mono text-[11px] text-neutral-500">acct_xxx • Connected</p>
+                                    <p class="font-sans text-sm font-medium text-emerald-700">Stripe Connected</p>
+                                    <p id="stripe-account-id" class="font-mono text-[11px] text-gray-500">acct_xxx • Connected</p>
                                 </div>
                             </div>
                         </div>
                     </div>
                     
-                    <!-- Metric Preview (Light - Current only) -->
-                    <div id="metric-preview" class="metric-status-card mb-8" style="display: none;">
-                        <div class="card-header" style="border-bottom: none; margin-bottom: 0; padding-bottom: 0;">
+                    <!-- Metric Preview -->
+                    <div id="metric-preview" class="mb-12 border border-gray-200 bg-white p-6" style="display: none;">
+                        <div class="flex justify-between items-start mb-4">
                             <div>
-                                <div class="card-title">Current Signal</div>
+                                <h4 class="font-mono text-[10px] text-gray-400 uppercase tracking-widest mb-1">Current Signal</h4>
                             </div>
-                            <span id="preview-authority-badge" class="authority-badge">--</span>
+                            <span id="preview-authority-badge" class="font-mono text-[10px] text-gray-500 uppercase">--</span>
                         </div>
-                        <div style="padding-top: 0.75rem;">
-                            <div id="preview-current" class="metric-value" style="font-size: 1.5rem;">--</div>
-                            <p class="metric-microcopy" style="margin-top: 8px;">This will be snapshotted at execution.</p>
-                        </div>
-                    </div>
-                    
-                    <!-- Status Row (Shown when no selection) -->
-                    <div id="status-row" class="border-t border-neutral-100 pt-4 mb-16">
-                        <p class="text-body-mono text-neutral-400 uppercase">Status: Awaiting selection</p>
+                        <div id="preview-current" class="text-2xl font-semibold font-mono">--</div>
+                        <p class="text-xs text-gray-500 mt-2">This will be snapshotted at execution.</p>
                     </div>
 
-                    <div class="flex justify-end pb-40">
-                         <button id="btn-step-2" class="bg-black text-white text-body-mono uppercase px-8 py-4 hover:bg-neutral-800 disabled:bg-neutral-100 disabled:text-neutral-400 disabled:cursor-not-allowed transition-colors" disabled onclick="window.wizard.nextStep()">
-                            Bind Authority →
+                    <!-- Primary Action -->
+                    <div class="flex items-center justify-between pt-8 border-t border-gray-200 pb-16">
+                        <div class="font-mono text-[10px] text-gray-400" style="font-weight: 300;">
+                            Contract ID: <span id="step2-contract-id">--</span>
+                        </div>
+                        <button id="btn-step-2" 
+                            class="px-8 py-3 flex items-center gap-2 transition-colors uppercase tracking-wide bg-gray-200 text-gray-400 cursor-not-allowed text-xs font-medium" 
+                            disabled 
+                            onclick="window.wizard.nextStep()">
+                            <span>Bind Authority</span>
+                            <i data-lucide="arrow-right" class="w-4 h-4"></i>
                         </button>
                     </div>
                 </section>
@@ -1093,9 +1122,11 @@ export function initContracts() {
 
         // Update button appearance
         if (satisfied) {
-            bindBtn.classList.remove('opacity-50', 'cursor-not-allowed');
+            bindBtn.classList.remove('bg-gray-200', 'text-gray-400', 'cursor-not-allowed');
+            bindBtn.classList.add('bg-gray-900', 'text-white', 'cursor-pointer', 'hover:bg-gray-800');
         } else {
-            bindBtn.classList.add('opacity-50', 'cursor-not-allowed');
+            bindBtn.classList.remove('bg-gray-900', 'text-white', 'cursor-pointer', 'hover:bg-gray-800');
+            bindBtn.classList.add('bg-gray-200', 'text-gray-400', 'cursor-not-allowed');
         }
 
         // Also update metric preview visibility (only show if authority satisfied)
@@ -1519,8 +1550,14 @@ export function initContracts() {
 
         selectSource: function (source, el) {
             selectedSource = source;
-            document.querySelectorAll('#step-2 button').forEach(c => c.classList.remove('card-selected'));
-            el.classList.add('card-selected');
+            // Remove selection from all authority cards
+            document.querySelectorAll('#step-2 .authority-card').forEach(c => {
+                c.classList.remove('border-gray-900');
+                c.style.borderColor = '';
+            });
+            // Add selection to clicked card
+            el.classList.add('border-gray-900');
+            el.style.borderColor = '#0a0a0a';
 
             // Show authority panel with correct content
             const panel = document.getElementById('authority-panel');
@@ -1532,8 +1569,7 @@ export function initContracts() {
                 document.getElementById('panel-measured').textContent = data.measured;
                 document.getElementById('panel-verified').textContent = data.verified;
                 document.getElementById('panel-failcases').textContent = data.failcases;
-                panel.classList.add('visible');
-                document.getElementById('status-row').classList.add('hidden');
+                panel.style.display = 'block';
             }
 
             // Show/hide X verification panel based on source

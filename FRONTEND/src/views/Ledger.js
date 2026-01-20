@@ -37,29 +37,38 @@ export function renderLedger() {
             <main id="view-ledger" class="view-section flex flex-col gap-0 w-full animate-activate">
                 
                 <!-- Page Header -->
-                <div class="w-full mb-12 flex flex-col md:flex-row md:items-end justify-between gap-8 border-b border-neutral-200 pb-8 mt-12">
-                    <div>
-                        <div class="flex flex-col gap-1 mb-4">
-                            <div class="flex items-center gap-2">
-                                <span class="font-mono text-[10px] uppercase tracking-widest text-neutral-500">Network: Mainnet</span>
-                                <span class="text-neutral-300">|</span>
-                                <div class="flex items-center gap-1.5">
-                                    <div class="w-1.5 h-1.5 rounded-full bg-emerald-500 live-dot"></div>
-                                    <span class="font-mono text-[10px] uppercase tracking-widest text-emerald-600 font-medium">Live Feed</span>
-                                </div>
+                <div class="w-full border-b border-gray-300 pb-8 mb-12 mt-12">
+                    <!-- Top metadata row -->
+                    <div class="flex items-start justify-between mb-8">
+                        <!-- Left: System metadata -->
+                        <div class="flex flex-col gap-1 font-mono text-[11px] uppercase tracking-wider text-gray-500">
+                            <div>NETWORK: MAINNET</div>
+                            <div class="flex items-center gap-1.5">
+                                <div class="w-1.5 h-1.5 rounded-full bg-emerald-500 live-dot"></div>
+                                <span>LIVE FEED</span>
                             </div>
-                            <span class="font-mono text-[10px] uppercase tracking-widest text-neutral-500">System Status: Operational</span>
+                            <div>SYSTEM STATUS: OPERATIONAL</div>
                         </div>
-                        <h1 class="font-display font-bold text-3xl tracking-tight text-[#921818] uppercase">Public Record</h1>
-                        <p class="font-mono text-[10px] text-neutral-400 mt-3 uppercase tracking-widest">Every contract settles. Outcomes are permanent.</p>
+
+                        <!-- Right: Total Value Locked -->
+                        <div class="text-right">
+                            <div class="font-mono text-[11px] uppercase tracking-wider text-gray-500 mb-1">
+                                TOTAL VALUE LOCKED
+                            </div>
+                            <div class="font-mono text-2xl" id="global-tvl">
+                                $24,567,890
+                            </div>
+                        </div>
                     </div>
 
-                    <!-- Global Stats -->
-                    <div class="flex gap-12">
-                        <div class="flex flex-col gap-1">
-                            <span class="font-mono text-[10px] text-neutral-400 uppercase tracking-widest">Total Value Locked</span>
-                            <span class="font-mono text-xs text-neutral-500" id="global-tvl">2,840,500 USD</span>
-                        </div>
+                    <!-- Center: Primary heading -->
+                    <div class="text-center">
+                        <h1 class="text-5xl tracking-tight mb-3" style="color: #751212; font-family: 'IBM Plex Sans', sans-serif; font-weight: 700;">
+                            PUBLIC RECORD
+                        </h1>
+                        <p class="font-mono text-xs uppercase tracking-wider text-gray-500">
+                            EVERY CONTRACT SETTLES. OUTCOMES ARE PERMANENT.
+                        </p>
                     </div>
                 </div>
 

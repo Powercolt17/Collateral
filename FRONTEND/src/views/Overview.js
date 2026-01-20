@@ -8,13 +8,13 @@ export function renderOverview() {
                 <div class="max-w-7xl mx-auto px-6 py-24 md:py-32">
                     <div class="max-w-4xl">
                         <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 text-gray-950 leading-tight" style="font-family: 'IBM Plex Sans', sans-serif;">
-                            Lock Capital. Verify Performance. Settle Outcomes.
+                            Lock Capital. Verify Performance. <span style="color: #751212;">Settle Outcomes.</span>
                         </h1>
                         <p class="text-lg md:text-xl text-gray-600 mb-10 leading-relaxed" style="font-family: 'Inter', sans-serif; font-weight: 400;">
                             Performance contracts with on-chain enforcement. Capital at stake. Outcomes verified via platform integrations. Winners paid from forfeited funds.
                         </p>
                         <div class="flex flex-col sm:flex-row items-start gap-4">
-                            <button onclick="window.app.handleInitiate()" class="px-8 py-4 bg-black text-white font-semibold hover:bg-gray-900 transition-colors flex items-center gap-2" style="font-family: 'Inter', sans-serif;">
+                            <button onclick="window.app.handleInitiate()" class="px-8 py-4 text-white font-semibold transition-colors flex items-center gap-2" style="font-family: 'Inter', sans-serif; background-color: #751212;" onmouseover="this.style.backgroundColor='#5a0e0e'" onmouseout="this.style.backgroundColor='#751212'">
                                 <span>Commit Capital</span>
                                 <i data-lucide="arrow-right" class="w-5 h-5"></i>
                             </button>
@@ -32,22 +32,22 @@ export function renderOverview() {
                     <h2 class="text-sm font-semibold text-gray-500 mb-12 tracking-wider" style="font-family: 'IBM Plex Sans', sans-serif;">MECHANISM</h2>
                     <div class="grid grid-cols-1 md:grid-cols-4 gap-6 md:gap-8">
                         <div class="border border-gray-200 p-6 md:p-8">
-                            <div class="text-4xl md:text-5xl font-bold text-gray-300 mb-4" style="font-family: 'JetBrains Mono', monospace;">01</div>
+                            <div class="text-4xl md:text-5xl font-bold mb-4" style="font-family: 'JetBrains Mono', monospace; color: #751212;">01</div>
                             <h3 class="text-lg font-semibold mb-3 text-gray-950" style="font-family: 'IBM Plex Sans', sans-serif;">Set Baseline</h3>
                             <p class="text-gray-600 text-sm leading-relaxed" style="font-family: 'Inter', sans-serif;">Define measurable target: revenue threshold, commit frequency, post cadence.</p>
                         </div>
                         <div class="border border-gray-200 p-6 md:p-8">
-                            <div class="text-4xl md:text-5xl font-bold text-gray-300 mb-4" style="font-family: 'JetBrains Mono', monospace;">02</div>
+                            <div class="text-4xl md:text-5xl font-bold mb-4" style="font-family: 'JetBrains Mono', monospace; color: #751212;">02</div>
                             <h3 class="text-lg font-semibold mb-3 text-gray-950" style="font-family: 'IBM Plex Sans', sans-serif;">Lock Capital</h3>
                             <p class="text-gray-600 text-sm leading-relaxed" style="font-family: 'Inter', sans-serif;">Capital deposited into smart contract. Non-reversible until settlement.</p>
                         </div>
                         <div class="border border-gray-200 p-6 md:p-8">
-                            <div class="text-4xl md:text-5xl font-bold text-gray-300 mb-4" style="font-family: 'JetBrains Mono', monospace;">03</div>
+                            <div class="text-4xl md:text-5xl font-bold mb-4" style="font-family: 'JetBrains Mono', monospace; color: #751212;">03</div>
                             <h3 class="text-lg font-semibold mb-3 text-gray-950" style="font-family: 'IBM Plex Sans', sans-serif;">Verify Performance</h3>
                             <p class="text-gray-600 text-sm leading-relaxed" style="font-family: 'Inter', sans-serif;">Outcome validated via OAuth integration. Zero subjective assessment.</p>
                         </div>
                         <div class="border border-gray-200 p-6 md:p-8">
-                            <div class="text-4xl md:text-5xl font-bold text-gray-300 mb-4" style="font-family: 'JetBrains Mono', monospace;">04</div>
+                            <div class="text-4xl md:text-5xl font-bold mb-4" style="font-family: 'JetBrains Mono', monospace; color: #751212;">04</div>
                             <h3 class="text-lg font-semibold mb-3 text-gray-950" style="font-family: 'IBM Plex Sans', sans-serif;">Contract Settles</h3>
                             <p class="text-gray-600 text-sm leading-relaxed" style="font-family: 'Inter', sans-serif;">Target met: capital returned + payout. Target missed: forfeiture.</p>
                         </div>
@@ -127,57 +127,88 @@ export function renderOverview() {
                 </div>
             </section>
 
-            <!-- Payout Structure -->
+            <!-- Contract Economics -->
             <section class="border-b border-gray-200">
                 <div class="max-w-7xl mx-auto px-6 py-20 md:py-24">
-                    <h2 class="text-sm font-semibold text-gray-500 mb-12 tracking-wider" style="font-family: 'IBM Plex Sans', sans-serif;">PAYOUT STRUCTURE</h2>
+                    <h2 class="text-sm font-semibold text-gray-500 mb-12 tracking-wider" style="font-family: 'IBM Plex Sans', sans-serif;">CONTRACT ECONOMICS</h2>
                     <div class="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8">
                         <div class="border-2 border-gray-950 p-6 md:p-8">
-                            <h3 class="text-xl font-bold mb-4 text-gray-950" style="font-family: 'IBM Plex Sans', sans-serif;">Pool Mechanics</h3>
-                            <p class="text-gray-600 leading-relaxed mb-4" style="font-family: 'Inter', sans-serif;">All locked capital aggregates into a shared pool. Winners are paid from losers' forfeited funds.</p>
-                            <p class="text-sm text-gray-500" style="font-family: 'Inter', sans-serif;">No external subsidy. Zero house edge. Pure redistribution.</p>
+                            <h3 class="text-xl font-bold mb-4 text-gray-950" style="font-family: 'IBM Plex Sans', sans-serif;">Contract Terms</h3>
+                            <p class="text-gray-600 leading-relaxed mb-4" style="font-family: 'Inter', sans-serif;">Capital is locked per contract. Terms are defined upfront. Payout multiplier is known before execution.</p>
+                            <p class="text-sm text-gray-500" style="font-family: 'Inter', sans-serif;">No post-hoc adjustment. Terms are immutable once executed.</p>
                         </div>
                         <div class="border-2 border-gray-950 p-6 md:p-8">
-                            <h3 class="text-xl font-bold mb-4 text-gray-950" style="font-family: 'IBM Plex Sans', sans-serif;">Multiplier Scaling</h3>
-                            <p class="text-gray-600 leading-relaxed mb-4" style="font-family: 'Inter', sans-serif;">Payout scales with contract difficulty and risk level. Higher stakes, higher returns.</p>
-                            <div class="text-sm text-gray-500 space-y-1" style="font-family: 'JetBrains Mono', monospace;">
-                                <div>Low risk: 1.2x–1.5x</div>
-                                <div>Medium risk: 1.5x–2.5x</div>
-                                <div>High risk: 2.5x–5.0x</div>
-                            </div>
+                            <h3 class="text-xl font-bold mb-4 text-gray-950" style="font-family: 'IBM Plex Sans', sans-serif;">Outcome Settlement</h3>
+                            <p class="text-gray-600 leading-relaxed mb-4" style="font-family: 'Inter', sans-serif;">Binary settlement: success or failure. Success returns capital + predefined multiplier. Failure forfeits capital in full.</p>
+                            <p class="text-sm text-gray-500" style="font-family: 'Inter', sans-serif;">Settlement does not depend on other users' outcomes.</p>
                         </div>
-                        <div class="border-2 border-red-700 bg-red-50 p-6 md:p-8">
-                            <h3 class="text-xl font-bold mb-4 text-gray-950" style="font-family: 'IBM Plex Sans', sans-serif;">Capital at Risk</h3>
-                            <p class="text-gray-950 leading-relaxed mb-4 font-medium" style="font-family: 'Inter', sans-serif;">Failure results in complete capital forfeiture. No refunds. No appeals.</p>
-                            <p class="text-sm text-red-900 font-semibold" style="font-family: 'Inter', sans-serif;">Risk is explicit, opt-in, and enforced.</p>
+                        <div class="border-2 p-6 md:p-8" style="border-color: #751212; background-color: #fef2f2;">
+                            <h3 class="text-xl font-bold mb-4 text-gray-950" style="font-family: 'IBM Plex Sans', sans-serif;">Risk Model</h3>
+                            <p class="text-gray-950 leading-relaxed mb-4 font-medium" style="font-family: 'Inter', sans-serif;">Risk level determines multiplier. Difficulty and verification scope determine tier.</p>
+                            <div class="text-sm space-y-1 mb-4" style="font-family: 'JetBrains Mono', monospace; color: #751212;">
+                                <div>Conservative: 1.2x–1.5x</div>
+                                <div>Standard: 1.5x–2.5x</div>
+                                <div>Aggressive: 2.5x–5.0x</div>
+                            </div>
+                            <p class="text-sm font-semibold" style="font-family: 'Inter', sans-serif; color: #751212;">Risk is opt-in and explicit.</p>
                         </div>
                     </div>
 
                     <div class="mt-12 md:mt-16 p-6 md:p-8 bg-gray-50 border border-gray-200">
-                        <h3 class="text-lg font-semibold mb-4 text-gray-950" style="font-family: 'IBM Plex Sans', sans-serif;">Example Settlement</h3>
-                        <div class="grid grid-cols-1 md:grid-cols-3 gap-8 text-sm" style="font-family: 'JetBrains Mono', monospace;">
-                            <div>
-                                <div class="text-gray-500 mb-2">Initial Pool</div>
-                                <div class="text-2xl font-bold text-gray-950">$100,000</div>
-                                <div class="text-xs text-gray-500 mt-1">200 participants × $500 each</div>
+                        <h3 class="text-lg font-semibold mb-6 text-gray-950" style="font-family: 'IBM Plex Sans', sans-serif;">Example Settlement</h3>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                            <!-- Success Case -->
+                            <div class="p-6 border-l-4 border-green-600 bg-white">
+                                <div class="text-xs font-semibold text-green-700 mb-4 uppercase tracking-wider" style="font-family: 'IBM Plex Sans', sans-serif;">Success Case</div>
+                                <div class="space-y-3" style="font-family: 'JetBrains Mono', monospace;">
+                                    <div class="flex justify-between">
+                                        <span class="text-gray-500 text-sm">Contract Stake</span>
+                                        <span class="text-gray-950 font-medium">$500</span>
+                                    </div>
+                                    <div class="flex justify-between">
+                                        <span class="text-gray-500 text-sm">Multiplier</span>
+                                        <span class="text-gray-950 font-medium">2.5x</span>
+                                    </div>
+                                    <div class="flex justify-between">
+                                        <span class="text-gray-500 text-sm">Outcome</span>
+                                        <span class="text-green-700 font-medium">Verified success</span>
+                                    </div>
+                                    <div class="flex justify-between pt-3 border-t border-gray-200">
+                                        <span class="text-gray-950 font-semibold">Settlement</span>
+                                        <span class="text-green-700 font-bold text-lg">$1,250 returned</span>
+                                    </div>
+                                </div>
                             </div>
-                            <div>
-                                <div class="text-gray-500 mb-2">Completion Rate</div>
-                                <div class="text-2xl font-bold text-gray-950">35%</div>
-                                <div class="text-xs text-gray-500 mt-1">70 succeeded, 130 forfeited</div>
-                            </div>
-                            <div>
-                                <div class="text-gray-500 mb-2">Winner Payout</div>
-                                <div class="text-2xl font-bold text-green-700">$1,429</div>
-                                <div class="text-xs text-gray-500 mt-1">2.86x multiplier on capital</div>
+                            <!-- Failure Case -->
+                            <div class="p-6 border-l-4 bg-white" style="border-color: #751212;">
+                                <div class="text-xs font-semibold mb-4 uppercase tracking-wider" style="font-family: 'IBM Plex Sans', sans-serif; color: #751212;">Failure Case</div>
+                                <div class="space-y-3" style="font-family: 'JetBrains Mono', monospace;">
+                                    <div class="flex justify-between">
+                                        <span class="text-gray-500 text-sm">Contract Stake</span>
+                                        <span class="text-gray-950 font-medium">$500</span>
+                                    </div>
+                                    <div class="flex justify-between">
+                                        <span class="text-gray-500 text-sm">Multiplier</span>
+                                        <span class="text-gray-950 font-medium">2.5x</span>
+                                    </div>
+                                    <div class="flex justify-between">
+                                        <span class="text-gray-500 text-sm">Outcome</span>
+                                        <span class="font-medium" style="color: #751212;">Not met</span>
+                                    </div>
+                                    <div class="flex justify-between pt-3 border-t border-gray-200">
+                                        <span class="text-gray-950 font-semibold">Settlement</span>
+                                        <span class="font-bold text-lg" style="color: #751212;">$0 returned</span>
+                                    </div>
+                                </div>
                             </div>
                         </div>
+                        <p class="text-xs text-gray-500 mt-6" style="font-family: 'Inter', sans-serif;">Settlement is automatic and final once verification completes. No appeals. No partial returns.</p>
                     </div>
                 </div>
             </section>
 
             <!-- Final CTA -->
-            <section class="bg-gray-950 text-white">
+            <section class="text-white" style="background-color: #751212;">
                 <div class="max-w-7xl mx-auto px-6 py-24 md:py-32">
                     <div class="max-w-3xl">
                         <h2 class="text-4xl md:text-5xl font-bold mb-6 leading-tight" style="font-family: 'IBM Plex Sans', sans-serif;">Outcomes Enforced.</h2>

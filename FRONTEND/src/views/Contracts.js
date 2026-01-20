@@ -464,33 +464,18 @@ export function renderContracts() {
 
         <div class="h-[calc(100vh-64px)] flex flex-col bg-white font-sans text-black overflow-hidden relative no-radius">
             
-            <!-- Step Header (Hidden labels, just tracking) -->
-            <header class="step-header shrink-0 hidden" data-current-step="1">
-                <nav class="step-nav">
-                    <div class="step-item active" data-step="1">
-                        <span class="step-check">✓</span>
-                    </div>
-                    <div class="step-item" data-step="2">
-                        <span class="step-check">✓</span>
-                    </div>
-                    <div class="step-item" data-step="3">
-                        <span class="step-check">✓</span>
-                    </div>
-                </nav>
-            </header>
-            
-            <!-- Progress Bar -->
-            <div class="progress-container">
+            <!-- Progress Bar - Right below header -->
+            <div class="progress-container shrink-0">
                 <div class="progress-fill" id="progress-fill" style="width: 33%;"></div>
             </div>
 
             <!-- Main Content Area -->
-            <main class="flex-1 relative overflow-y-auto flex flex-col px-6 md:px-12 py-8 md:py-16">
+            <main class="flex-1 relative overflow-y-auto flex flex-col px-6 md:px-12 py-6 md:py-8">
                 
                 <!-- STEP 1: RISK PROFILE -->
                 <section id="step-1" class="max-w-5xl mx-auto w-full flex flex-col">
                     <!-- Top System Context Bar -->
-                    <div class="border-b border-gray-200 mb-12 pb-4">
+                    <div class="border-b border-gray-200 mb-8 pb-4">
                         <div class="font-mono text-[11px] tracking-wider text-gray-500 uppercase">
                             STEP 01 OF 03 — EXPOSURE SELECTION
                         </div>

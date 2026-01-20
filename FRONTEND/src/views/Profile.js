@@ -22,10 +22,6 @@ export function renderProfile() {
                                 <i data-lucide="copy" class="w-3.5 h-3.5"></i>
                                 Copy Record Link
                             </button>
-                            <button onclick="window.app.openSettingsModal()" class="flex items-center gap-2 px-4 py-2 border border-neutral-700 text-neutral-300 text-[11px] font-medium uppercase tracking-wide hover:border-neutral-500 transition-colors">
-                                <i data-lucide="settings" class="w-3.5 h-3.5"></i>
-                                Settings
-                            </button>
                         </div>
                     </div>
                 </div>
@@ -65,7 +61,7 @@ export function renderProfile() {
                     <div class="bg-white p-6">
                         <span class="font-mono text-[10px] text-neutral-400 uppercase tracking-widest block mb-3">Forfeiture Events</span>
                         <span class="text-3xl font-semibold block" style="color: #751212;" id="stat-forfeited">$445K</span>
-                        <p class="font-mono text-[10px] text-neutral-400 mt-2" id="stat-forfeiture-detail">4 non-performance outcomes</p>
+                        <p class="font-mono text-[10px] text-neutral-400 mt-2" id="stat-forfeiture-detail">4 forfeiture events</p>
                     </div>
                 </div>
 
@@ -110,26 +106,26 @@ export function renderProfile() {
                                 <h3 class="font-mono text-[11px] text-neutral-900 uppercase tracking-widest mb-5 font-medium">Verification Metadata</h3>
                                 <div class="space-y-5">
                                     <div class="flex justify-between items-start">
-                                        <span class="font-mono text-[10px] text-neutral-400 uppercase tracking-widest">Account ID</span>
-                                        <span class="text-sm text-neutral-900 flex items-center gap-1.5" id="meta-account-id">
-                                            USR-00742
+                                        <span class="font-mono text-[10px] text-neutral-400 uppercase tracking-widest">Primary Wallet</span>
+                                        <span class="text-sm text-neutral-900 flex items-center gap-1.5" id="meta-wallet">
+                                            0x742d...8f3a
                                             <i data-lucide="copy" class="w-3 h-3 text-neutral-400 cursor-pointer hover:text-neutral-600"></i>
                                         </span>
                                     </div>
                                     <div class="flex justify-between items-start">
-                                        <span class="font-mono text-[10px] text-neutral-400 uppercase tracking-widest">Stripe Account</span>
-                                        <span class="text-sm text-neutral-900 flex items-center gap-1.5" id="meta-stripe">
-                                            acct_...8f3a
+                                        <span class="font-mono text-[10px] text-neutral-400 uppercase tracking-widest">ENS Record</span>
+                                        <span class="text-sm text-neutral-900 flex items-center gap-1.5" id="meta-ens">
+                                            collateral-id.eth
                                             <i data-lucide="external-link" class="w-3 h-3 text-neutral-400 cursor-pointer hover:text-neutral-600"></i>
                                         </span>
                                     </div>
                                     <div class="flex justify-between items-start">
-                                        <span class="font-mono text-[10px] text-neutral-400 uppercase tracking-widest">Funding Source</span>
-                                        <span class="text-sm text-neutral-900" id="meta-funding-source">Stripe Connect</span>
+                                        <span class="font-mono text-[10px] text-neutral-400 uppercase tracking-widest">Verification Source</span>
+                                        <span class="text-sm text-neutral-900" id="meta-verification-source">Ethereum Mainnet</span>
                                     </div>
                                     <div class="flex justify-between items-start">
-                                        <span class="font-mono text-[10px] text-neutral-400 uppercase tracking-widest">Currency</span>
-                                        <span class="text-sm text-neutral-900" id="meta-currency">USD</span>
+                                        <span class="font-mono text-[10px] text-neutral-400 uppercase tracking-widest">Contract Standard</span>
+                                        <span class="text-sm text-neutral-900" id="meta-contract-standard">ERC-5732</span>
                                     </div>
                                     <div class="flex justify-between items-start">
                                         <span class="font-mono text-[10px] text-neutral-400 uppercase tracking-widest">Record Status</span>
@@ -274,26 +270,26 @@ export function renderProfile() {
                                 <h3 class="font-mono text-[11px] text-neutral-900 uppercase tracking-widest mb-5 font-medium">Verification Metadata</h3>
                                 <div class="space-y-5">
                                     <div class="flex justify-between items-start">
-                                        <span class="font-mono text-[10px] text-neutral-400 uppercase tracking-widest">Account ID</span>
+                                        <span class="font-mono text-[10px] text-neutral-400 uppercase tracking-widest">Primary Wallet</span>
                                         <span class="text-sm text-neutral-900 flex items-center gap-1.5">
-                                            USR-00742
+                                            0x742d...8f3a
                                             <i data-lucide="copy" class="w-3 h-3 text-neutral-400 cursor-pointer hover:text-neutral-600"></i>
                                         </span>
                                     </div>
                                     <div class="flex justify-between items-start">
-                                        <span class="font-mono text-[10px] text-neutral-400 uppercase tracking-widest">Stripe Account</span>
+                                        <span class="font-mono text-[10px] text-neutral-400 uppercase tracking-widest">ENS Record</span>
                                         <span class="text-sm text-neutral-900 flex items-center gap-1.5">
-                                            acct_...8f3a
+                                            collateral-id.eth
                                             <i data-lucide="external-link" class="w-3 h-3 text-neutral-400 cursor-pointer hover:text-neutral-600"></i>
                                         </span>
                                     </div>
                                     <div class="flex justify-between items-start">
-                                        <span class="font-mono text-[10px] text-neutral-400 uppercase tracking-widest">Funding Source</span>
-                                        <span class="text-sm text-neutral-900">Stripe Connect</span>
+                                        <span class="font-mono text-[10px] text-neutral-400 uppercase tracking-widest">Verification Source</span>
+                                        <span class="text-sm text-neutral-900">Ethereum Mainnet</span>
                                     </div>
                                     <div class="flex justify-between items-start">
-                                        <span class="font-mono text-[10px] text-neutral-400 uppercase tracking-widest">Currency</span>
-                                        <span class="text-sm text-neutral-900">USD</span>
+                                        <span class="font-mono text-[10px] text-neutral-400 uppercase tracking-widest">Contract Standard</span>
+                                        <span class="text-sm text-neutral-900">ERC-5732</span>
                                     </div>
                                     <div class="flex justify-between items-start">
                                         <span class="font-mono text-[10px] text-neutral-400 uppercase tracking-widest">Record Status</span>
@@ -326,69 +322,55 @@ export function renderProfile() {
 
                     <!-- Connected Sources Tab -->
                     <div id="tab-sources" class="tab-panel hidden">
-                        <!-- Alert for new users -->
-                        <div id="sources-alert" class="bg-[rgba(161,130,57,0.06)] border border-[#A18239]/30 p-4 mb-6">
-                            <p class="font-sans text-sm text-[#A18239] font-medium mb-1">Connect verification sources to create contracts</p>
-                            <p class="font-mono text-[10px] text-[#A18239]/70 uppercase tracking-widest">At least one source required for contract execution.</p>
-                        </div>
-                        
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                            <!-- X / Twitter -->
-                            <div id="source-twitter" class="border border-neutral-200 bg-white p-6 flex items-center justify-between">
-                                <div class="flex items-center gap-4">
-                                    <div class="w-10 h-10 bg-neutral-900 rounded flex items-center justify-center">
-                                        <span class="text-white font-bold text-lg">X</span>
-                                    </div>
-                                    <div>
-                                        <h4 class="font-sans text-sm font-medium text-neutral-900">X / Twitter</h4>
-                                        <p class="font-mono text-[11px] text-neutral-400" id="twitter-status">Not connected</p>
-                                    </div>
-                                </div>
-                                <button onclick="window.app.connectSource('twitter')" id="twitter-btn" class="flex items-center gap-1.5 px-3 py-1.5 border border-neutral-200 text-[11px] font-mono uppercase tracking-wide text-neutral-600 hover:border-neutral-400 hover:text-neutral-900 transition-colors">
-                                    Connect
-                                </button>
+                        <div class="border border-neutral-200 bg-white">
+                            <div class="px-6 py-4 border-b border-neutral-200">
+                                <h3 class="font-mono text-[11px] text-neutral-900 uppercase tracking-widest font-medium">Verification Sources</h3>
                             </div>
-                            
-                            <!-- GitHub -->
-                            <div id="source-github" class="border border-neutral-200 bg-white p-6 flex items-center justify-between">
-                                <div class="flex items-center gap-4">
-                                    <div class="w-10 h-10 bg-neutral-800 rounded flex items-center justify-center">
-                                        <i data-lucide="github" class="w-5 h-5 text-white"></i>
+                            <div class="divide-y divide-neutral-100">
+                                <!-- X / Twitter -->
+                                <div id="source-twitter" class="px-6 py-5 flex items-center justify-between">
+                                    <div class="flex items-center gap-4">
+                                        <div class="w-10 h-10 bg-neutral-900 rounded flex items-center justify-center">
+                                            <span class="text-white font-bold text-lg">X</span>
+                                        </div>
+                                        <div>
+                                            <h4 class="font-sans text-sm font-medium text-neutral-900">X / Twitter</h4>
+                                            <p class="font-mono text-[11px] text-neutral-500" id="twitter-status">@mercury_dev</p>
+                                        </div>
                                     </div>
-                                    <div>
-                                        <h4 class="font-sans text-sm font-medium text-neutral-900">GitHub</h4>
-                                        <p class="font-mono text-[11px] text-neutral-400" id="github-status">Not connected</p>
-                                    </div>
+                                    <span class="font-mono text-[10px] uppercase tracking-wide text-emerald-600">Verified</span>
                                 </div>
-                                <button onclick="window.app.connectSource('github')" id="github-btn" class="flex items-center gap-1.5 px-3 py-1.5 border border-neutral-200 text-[11px] font-mono uppercase tracking-wide text-neutral-600 hover:border-neutral-400 hover:text-neutral-900 transition-colors">
-                                    Connect
-                                </button>
-                            </div>
-                            
-                            <!-- Stripe -->
-                            <div id="source-stripe" class="border border-neutral-200 bg-white p-6 flex items-center justify-between">
-                                <div class="flex items-center gap-4">
-                                    <div class="w-10 h-10 bg-[#635BFF] rounded flex items-center justify-center">
-                                        <span class="text-white font-bold text-sm">S</span>
+                                
+                                <!-- GitHub -->
+                                <div id="source-github" class="px-6 py-5 flex items-center justify-between">
+                                    <div class="flex items-center gap-4">
+                                        <div class="w-10 h-10 bg-neutral-800 rounded flex items-center justify-center">
+                                            <i data-lucide="github" class="w-5 h-5 text-white"></i>
+                                        </div>
+                                        <div>
+                                            <h4 class="font-sans text-sm font-medium text-neutral-900">GitHub</h4>
+                                            <p class="font-mono text-[11px] text-neutral-500" id="github-status">mercury-labs</p>
+                                        </div>
                                     </div>
-                                    <div>
-                                        <h4 class="font-sans text-sm font-medium text-neutral-900">Stripe</h4>
-                                        <p class="font-mono text-[11px] text-neutral-400" id="stripe-status">Not connected</p>
-                                    </div>
+                                    <span class="font-mono text-[10px] uppercase tracking-wide text-emerald-600">Verified</span>
                                 </div>
-                                <button onclick="window.app.connectSource('stripe')" id="stripe-btn" class="flex items-center gap-1.5 px-3 py-1.5 border border-neutral-200 text-[11px] font-mono uppercase tracking-wide text-neutral-600 hover:border-neutral-400 hover:text-neutral-900 transition-colors">
-                                    Connect
-                                </button>
-                            </div>
-                            
-                            <!-- Add More -->
-                            <div class="border border-dashed border-neutral-300 bg-neutral-50 p-6 flex items-center justify-center cursor-pointer hover:border-neutral-400 transition-colors">
-                                <div class="flex items-center gap-2 text-neutral-400">
-                                    <i data-lucide="plus" class="w-4 h-4"></i>
-                                    <span class="font-mono text-[11px] uppercase tracking-wide">More Sources Coming</span>
+                                
+                                <!-- Ethereum Wallet -->
+                                <div id="source-wallet" class="px-6 py-5 flex items-center justify-between">
+                                    <div class="flex items-center gap-4">
+                                        <div class="w-10 h-10 bg-neutral-700 rounded flex items-center justify-center">
+                                            <span class="text-white font-bold text-sm">◆</span>
+                                        </div>
+                                        <div>
+                                            <h4 class="font-sans text-sm font-medium text-neutral-900">Ethereum Wallet</h4>
+                                            <p class="font-mono text-[11px] text-neutral-500" id="wallet-status">0x742d...8f3a</p>
+                                        </div>
+                                    </div>
+                                    <span class="font-mono text-[10px] uppercase tracking-wide text-emerald-600">Verified</span>
                                 </div>
                             </div>
                         </div>
+                        <p class="font-mono text-[10px] text-neutral-400 mt-4">Verification sources are linked to this identity record and cannot be modified.</p>
                     </div>
 
                     <!-- Identity Timeline Tab -->
@@ -643,50 +625,18 @@ export async function initProfile() {
 
         const forfeitureDetailEl = document.getElementById('stat-forfeiture-detail');
         if (forfeitureDetailEl) {
-            forfeitureDetailEl.textContent = `${profile.stats.forfeitedContracts || 0} non-performance outcomes`;
+            forfeitureDetailEl.textContent = `${profile.stats.forfeitedContracts || 0} forfeiture events`;
         }
 
-        // Update X connection status
+        // Update verification sources display (public view - read only)
         const twitterStatusEl = document.getElementById('twitter-status');
-        const twitterBtnEl = document.getElementById('twitter-btn');
-        if (profile.xConnection?.connected) {
-            if (twitterStatusEl) {
-                twitterStatusEl.textContent = '@' + (profile.xConnection.xUsername || 'connected') + ' • Connected';
-                twitterStatusEl.classList.remove('text-neutral-400');
-                twitterStatusEl.classList.add('text-[#1F7A4D]');
-            }
-            if (twitterBtnEl) {
-                twitterBtnEl.textContent = 'Connected';
-                twitterBtnEl.disabled = true;
-                twitterBtnEl.removeAttribute('onclick');
-                twitterBtnEl.classList.add('opacity-50', 'cursor-not-allowed');
-                twitterBtnEl.classList.remove('hover:border-neutral-400', 'hover:text-neutral-900');
-            }
+        if (twitterStatusEl && profile.xConnection?.connected) {
+            twitterStatusEl.textContent = '@' + (profile.xConnection.xUsername || 'verified');
         }
 
-        // Update Stripe connection status
-        const stripeStatusEl = document.getElementById('stripe-status');
-        const stripeBtnEl = document.getElementById('stripe-btn');
-        if (profile.stripeConnection?.connected) {
-            if (stripeStatusEl) {
-                stripeStatusEl.textContent = (profile.stripeConnection.accountId || 'acct_xxx') + ' • Connected';
-                stripeStatusEl.classList.remove('text-neutral-400');
-                stripeStatusEl.classList.add('text-[#1F7A4D]');
-            }
-            if (stripeBtnEl) {
-                stripeBtnEl.textContent = 'Connected';
-                stripeBtnEl.disabled = true;
-                stripeBtnEl.removeAttribute('onclick');
-                stripeBtnEl.classList.add('opacity-50', 'cursor-not-allowed');
-                stripeBtnEl.classList.remove('hover:border-neutral-400', 'hover:text-neutral-900');
-            }
-        }
-
-        // Hide alert when any platform is connected
-        const alertEl = document.getElementById('sources-alert');
-        const anyConnected = profile.xConnection?.connected || profile.stripeConnection?.connected;
-        if (alertEl && anyConnected) {
-            alertEl.classList.add('hidden');
+        const githubStatusEl = document.getElementById('github-status');
+        if (githubStatusEl && profile.githubConnection?.connected) {
+            githubStatusEl.textContent = profile.githubConnection.username || 'verified';
         }
 
     } catch (err) {

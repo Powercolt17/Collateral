@@ -329,8 +329,8 @@ export function renderContracts() {
             /* === PROGRESS BAR === */
             .progress-container {
                 position: relative;
-                height: 3px;
-                background: #f0f0f0;
+                height: 4px;
+                background: #e5e5e5;
                 overflow: hidden;
             }
             

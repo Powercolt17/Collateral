@@ -1,174 +1,46 @@
-// Receipt Index Page - List or Empty State
+// Execution Records Page - List or Empty State
 // Route: /receipts
-// Shows list of receipts if any exist, otherwise empty state
+// Shows list of execution receipts from the append-only ledger
 
 export function renderReceipts() {
     return `
-        <style>
-            .receipts-page {
-                max-width: 900px;
-                margin: 0 auto;
-                padding: 3rem 1.5rem;
-                font-family: ui-sans-serif, system-ui, sans-serif;
-                min-height: 70vh;
-            }
-            
-            .receipts-header {
-                margin-bottom: 3rem;
-            }
-            
-            .receipts-title {
-                font-size: 2rem;
-                font-weight: 700;
-                letter-spacing: -0.02em;
-                color: #0E0E11;
-                margin-bottom: 0.5rem;
-            }
-            
-            .receipts-subtitle {
-                font-family: ui-monospace, monospace;
-                font-size: 11px;
-                letter-spacing: 0.05em;
-                color: #6B6E76;
-            }
-            
-            .receipts-divider {
-                height: 1px;
-                background: #E5E5E5;
-                margin: 2rem 0;
-            }
-            
-            /* Empty State */
-            .receipts-empty {
-                padding: 5rem 2rem;
-                text-align: center;
-                border: 1px solid #D9DBE1;
-                background: #FAFAFA;
-            }
-            
-            .receipts-empty-title {
-                font-family: ui-monospace, monospace;
-                font-size: 13px;
-                font-weight: 600;
-                letter-spacing: 0.12em;
-                text-transform: uppercase;
-                color: #0E0E11;
-                margin-bottom: 1.25rem;
-            }
-            
-            .receipts-empty-text {
-                font-family: ui-monospace, monospace;
-                font-size: 11px;
-                color: #6B6E76;
-                line-height: 1.8;
-                letter-spacing: 0.02em;
-            }
-            
-            /* Receipt List */
-            .receipts-list {
-                display: flex;
-                flex-direction: column;
-                gap: 1px;
-                background: #E5E5E5;
-                border: 1px solid #E5E5E5;
-            }
-            
-            .receipt-row {
-                display: grid;
-                grid-template-columns: 2fr 1fr 1fr 1fr;
-                gap: 1rem;
-                padding: 1rem 1.25rem;
-                background: #FFFFFF;
-                cursor: pointer;
-            }
-            
-            .receipt-row:hover {
-                background: #FAFAFA;
-            }
-            
-            .receipt-row-header {
-                background: #FAFAFA;
-                cursor: default;
-            }
-            
-            .receipt-row-header:hover {
-                background: #FAFAFA;
-            }
-            
-            .receipt-cell {
-                font-family: ui-monospace, monospace;
-                font-size: 12px;
-                color: #0E0E11;
-                display: flex;
-                align-items: center;
-            }
-            
-            .receipt-cell-header {
-                font-size: 10px;
-                font-weight: 600;
-                letter-spacing: 0.1em;
-                text-transform: uppercase;
-                color: #6B6E76;
-            }
-            
-            .receipt-cell-id {
-                font-size: 11px;
-                color: #4D5057;
-            }
-            
-            .receipt-status {
-                font-size: 10px;
-                font-weight: 600;
-                letter-spacing: 0.05em;
-                text-transform: uppercase;
-                padding: 0.25rem 0.5rem;
-                display: inline-block;
-            }
-            
-            .receipt-status.active {
-                background: #0E0E11;
-                color: #FFFFFF;
-            }
-            
-            .receipt-status.success {
-                background: #1F7A4D;
-                color: #FFFFFF;
-            }
-            
-            .receipt-status.failure {
-                background: #8B1E1E;
-                color: #FFFFFF;
-            }
-            
-            .receipts-footer {
-                text-align: center;
-            }
-            
-            .receipts-footer p {
-                font-family: ui-monospace, monospace;
-                font-size: 10px;
-                letter-spacing: 0.05em;
-                color: #9CA0A8;
-            }
-        </style>
-        
-        <div class="receipts-page">
-            <header class="receipts-header">
-                <h1 class="receipts-title">Execution Receipts</h1>
-                <p class="receipts-subtitle">Permanent records. Append-only ledger.</p>
-            </header>
-            
-            <div class="receipts-divider"></div>
-            
-            <div id="receipts-content">
-                <!-- Populated by JS -->
+        <div class="min-h-screen bg-white">
+            <!-- Header -->
+            <div class="border-b border-neutral-300">
+                <div class="max-w-5xl mx-auto px-8 py-8">
+                    <div class="mb-2 text-xs tracking-wider text-neutral-500 font-mono uppercase">
+                        SYSTEM STATUS: OPERATIONAL
+                    </div>
+                    <div class="mb-6 text-xs tracking-wider text-neutral-500 font-mono uppercase">
+                        RECORD TYPE: EXECUTION RECEIPTS
+                    </div>
+                    <h1 class="text-2xl font-normal tracking-tight text-neutral-900 mb-2">
+                        EXECUTION RECORDS
+                    </h1>
+                    <p class="text-sm font-mono text-neutral-600">
+                        Permanent records. Append-only ledger.
+                    </p>
+                </div>
             </div>
-            
-            <div class="receipts-divider"></div>
-            
-            <footer class="receipts-footer">
-                <p>Receipts are generated at contract execution. Records cannot be modified or removed.</p>
-            </footer>
+
+            <!-- Table Container -->
+            <div class="max-w-5xl mx-auto px-8 py-12">
+                <div id="receipts-content">
+                    <!-- Populated by JS -->
+                    <div class="py-12 text-center">
+                        <p class="text-sm font-mono text-neutral-500">Loading records...</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Footer Notice -->
+            <div class="border-t border-neutral-300 mt-12">
+                <div class="max-w-5xl mx-auto px-8 py-6">
+                    <p class="text-xs font-mono text-neutral-600 text-center">
+                        Records are immutable. Outcomes cannot be altered or removed.
+                    </p>
+                </div>
+            </div>
         </div>
     `;
 }
@@ -176,32 +48,25 @@ export function renderReceipts() {
 export async function initReceipts() {
     const container = document.getElementById('receipts-content');
 
-    // Show loading state
-    container.innerHTML = `
-        <div style="text-align: center; padding: 3rem; color: #6B6E76;">
-            <p>Loading receipts...</p>
-        </div>
-    `;
-
     try {
         // Fetch user's contracts from API
         const response = await window.api.getContracts();
         const contracts = response?.contracts || [];
 
-        // Show ALL contracts as receipts (regardless of state)
-        // These are permanent records of contract creation and execution attempts
-        const executedContracts = contracts;
-
         console.log('[Receipts] Loaded', { total: contracts.length });
 
-        // If no executed contracts → show empty state
-        if (executedContracts.length === 0) {
+        // If no contracts → show empty state
+        if (contracts.length === 0) {
             container.innerHTML = `
-                <div class="receipts-empty">
-                    <h2 class="receipts-empty-title">No execution records exist for this identity.</h2>
-                    <p class="receipts-empty-text">
-                        Receipts are created when a contract is executed.<br>
-                        This ledger contains no entries.
+                <div class="py-24 text-center">
+                    <p class="text-sm font-mono text-neutral-600 mb-2">
+                        NO EXECUTION RECORDS AVAILABLE
+                    </p>
+                    <p class="text-xs font-mono text-neutral-500">
+                        Execution receipts are generated at contract execution.
+                    </p>
+                    <p class="text-xs font-mono text-neutral-500">
+                        Records cannot be modified or removed.
                     </p>
                 </div>
             `;
@@ -210,83 +75,114 @@ export async function initReceipts() {
 
         // Format helpers
         function formatCurrency(cents) {
-            if (!cents) return '-';
+            if (!cents) return '$0.00';
             return '$' + (cents / 100).toLocaleString('en-US', { minimumFractionDigits: 2 });
         }
 
-        function formatDate(isoString) {
+        function formatDateTime(isoString) {
             if (!isoString) return '-';
             const date = new Date(isoString);
-            return date.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+            return date.toISOString().replace('T', ' ').slice(0, 19) + ' UTC';
         }
 
-        function truncateId(id) {
+        function formatContractId(id) {
             if (!id) return '-';
-            return id.slice(0, 8) + '...' + id.slice(-4);
-        }
-
-        function getStatusClass(state) {
-            if (['SETTLED_SUCCESS', 'SETTLED'].includes(state)) return 'success';
-            if (['SETTLED_FAILURE', 'FORFEITED'].includes(state)) return 'failure';
-            return 'active';
+            // Format as CTX-YYYY-XXXX-HASH
+            const year = new Date().getFullYear();
+            const shortId = id.slice(0, 4).toUpperCase();
+            const hash = id.slice(-4).toUpperCase();
+            return \`CTX-\${year}-\${shortId}-\${hash}\`;
         }
 
         function getStatusText(state) {
             const statusMap = {
-                'CREATED': 'Created',
-                'FUNDS_AUTHORIZED': 'Pending',
-                'FUNDS_LOCKED': 'Funded',
-                'LOCKED': 'Active',
-                'ACTIVE': 'Active',
-                'EXECUTION_CONFIRMED': 'Executed',
-                'VERIFIED': 'Verified',
-                'VERIFYING': 'Verifying',
-                'SETTLED_SUCCESS': 'Settled',
-                'SETTLED': 'Settled',
-                'SETTLED_FAILURE': 'Forfeited',
-                'FORFEITED': 'Forfeited',
+                'CREATED': 'PENDING',
+                'FUNDS_AUTHORIZED': 'PENDING',
+                'FUNDS_LOCKED': 'EXECUTED',
+                'LOCKED': 'EXECUTED',
+                'ACTIVE': 'EXECUTED',
+                'EXECUTION_CONFIRMED': 'EXECUTED',
+                'VERIFIED': 'EXECUTED',
+                'VERIFYING': 'EXECUTED',
+                'SETTLED_SUCCESS': 'SETTLED',
+                'SETTLED': 'SETTLED',
+                'SETTLED_FAILURE': 'SETTLED',
+                'FORFEITED': 'SETTLED',
+                'PAYOUT_COMPLETE': 'SETTLED',
+                'COMPLETED': 'SETTLED',
             };
             return statusMap[state] || state;
         }
 
-        // Build list HTML
-        let listHTML = `
-            <div class="receipts-list">
-                <div class="receipt-row receipt-row-header">
-                    <div class="receipt-cell receipt-cell-header">Contract ID</div>
-                    <div class="receipt-cell receipt-cell-header">Capital</div>
-                    <div class="receipt-cell receipt-cell-header">Executed</div>
-                    <div class="receipt-cell receipt-cell-header">Status</div>
-                </div>
+        // Build table HTML
+        let tableHTML = `
+                < table class="w-full border-collapse" >
+                <thead>
+                    <tr class="border-b border-neutral-300">
+                        <th class="text-left py-3 px-4 text-xs font-mono tracking-wider text-neutral-700 uppercase">
+                            Contract ID
+                        </th>
+                        <th class="text-left py-3 px-4 text-xs font-mono tracking-wider text-neutral-700 uppercase">
+                            Capital Locked
+                        </th>
+                        <th class="text-left py-3 px-4 text-xs font-mono tracking-wider text-neutral-700 uppercase">
+                            Executed
+                        </th>
+                        <th class="text-left py-3 px-4 text-xs font-mono tracking-wider text-neutral-700 uppercase">
+                            Status
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
         `;
 
-        executedContracts.forEach(contract => {
-            const statusClass = getStatusClass(contract.state);
-            const statusText = getStatusText(contract.state);
+        contracts.forEach(contract => {
+            const contractId = formatContractId(contract.id);
+            const capital = formatCurrency(contract.lockAmountUsdCents);
+            const executed = formatDateTime(contract.createdAt);
+            const status = getStatusText(contract.state);
 
-            listHTML += `
-                <div class="receipt-row" onclick="window.router.navigate('/receipts/${contract.id}')">
-                    <div class="receipt-cell receipt-cell-id">${truncateId(contract.id)}</div>
-                    <div class="receipt-cell">${formatCurrency(contract.lockAmountUsdCents)}</div>
-                    <div class="receipt-cell">${formatDate(contract.createdAt)}</div>
-                    <div class="receipt-cell">
-                        <span class="receipt-status ${statusClass}">${statusText}</span>
-                    </div>
-                </div>
+            tableHTML += `
+                <tr class="border-b border-neutral-200 cursor-pointer hover:bg-neutral-50" 
+                    onclick="window.router.navigate('/receipts/${contract.id}')">
+                    <td class="py-4 px-4">
+                        <span class="font-mono text-sm text-neutral-900 underline decoration-1 underline-offset-2">
+                            ${contractId}
+                        </span>
+                    </td>
+                    <td class="py-4 px-4 font-mono text-sm text-neutral-900">
+                        ${capital}
+                    </td>
+                    <td class="py-4 px-4 font-mono text-sm text-neutral-600">
+                        ${executed}
+                    </td>
+                    <td class="py-4 px-4">
+                        <span class="font-mono text-xs tracking-wider text-neutral-900 uppercase">
+                            ${status}
+                        </span>
+                    </td>
+                </tr>
             `;
         });
 
-        listHTML += '</div>';
-        container.innerHTML = listHTML;
+        tableHTML += `
+                </tbody>
+            </table >
+                `;
+
+        container.innerHTML = tableHTML;
 
     } catch (error) {
         console.error('[Receipts] Error loading contracts:', error);
         container.innerHTML = `
-            <div class="receipts-empty">
-                <h2 class="receipts-empty-title">Error loading receipts</h2>
-                <p class="receipts-empty-text">${error.message || 'Please try again later.'}</p>
-            </div>
-        `;
+                < div class="py-24 text-center" >
+                <p class="text-sm font-mono text-neutral-600 mb-2">
+                    ERROR LOADING RECORDS
+                </p>
+                <p class="text-xs font-mono text-neutral-500">
+                    ${error.message || 'Please try again later.'}
+                </p>
+            </div >
+                `;
     }
 }
-

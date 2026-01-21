@@ -1,371 +1,13 @@
-// Receipt Detail Page - Immutable Record View
+// Contract Receipt Detail Page - Immutable Record View
 // Route: /receipts/:id
-// Fetches real contract data from API, not mock data
+// Fetches real contract data from API
 
 export function renderReceiptDetail() {
     return `
-        <style>
-            /* Receipt Page Styles */
-            .receipt-page {
-                max-width: 900px;
-                margin: 0 auto;
-                padding: 3rem 1.5rem;
-                font-family: ui-sans-serif, system-ui, sans-serif;
-            }
-            
-            .receipt-loading {
-                text-align: center;
-                padding: 4rem;
-                color: #6B6E76;
-            }
-            
-            .receipt-loading .spinner {
-                width: 40px;
-                height: 40px;
-                border: 3px solid #E5E5E5;
-                border-top-color: #0E0E11;
-                border-radius: 50%;
-                animation: spin 1s linear infinite;
-                margin: 0 auto 1rem;
-            }
-            
-            @keyframes spin {
-                to { transform: rotate(360deg); }
-            }
-            
-            .receipt-header {
-                border-bottom: 2px solid #0E0E11;
-                padding-bottom: 2rem;
-                margin-bottom: 2rem;
-            }
-            
-            .receipt-title {
-                font-size: 2rem;
-                font-weight: 700;
-                letter-spacing: -0.02em;
-                color: #0E0E11;
-                margin-bottom: 0.5rem;
-            }
-            
-            .receipt-title.success { color: #1F7A4D; }
-            .receipt-title.pending { color: #0E0E11; }
-            .receipt-title.failure { color: #8B1E1E; }
-            
-            .receipt-subtitle {
-                font-size: 0.875rem;
-                color: #6B6E76;
-                max-width: 500px;
-            }
-            
-            .finality-notice {
-                font-family: ui-monospace, monospace;
-                font-size: 10px;
-                letter-spacing: 0.1em;
-                text-transform: uppercase;
-                color: #8B1E1E;
-                margin-top: 1rem;
-            }
-            
-            .receipt-meta {
-                display: grid;
-                grid-template-columns: repeat(2, 1fr);
-                gap: 1rem;
-                margin-top: 1.5rem;
-                padding: 1rem;
-                background: #FAFAFA;
-                border: 1px solid #E5E5E5;
-            }
-            
-            @media (max-width: 600px) {
-                .receipt-meta { grid-template-columns: 1fr; }
-            }
-            
-            .receipt-meta-item {
-                display: flex;
-                flex-direction: column;
-                gap: 0.25rem;
-            }
-            
-            .receipt-meta-label {
-                font-family: ui-monospace, monospace;
-                font-size: 10px;
-                font-weight: 600;
-                letter-spacing: 0.1em;
-                text-transform: uppercase;
-                color: #6B6E76;
-            }
-            
-            .receipt-meta-value {
-                font-family: ui-monospace, monospace;
-                font-size: 13px;
-                color: #0E0E11;
-            }
-            
-            .receipt-meta-value.hash {
-                font-size: 11px;
-                color: #4D5057;
-                cursor: pointer;
-            }
-            
-            .receipt-meta-value.hash:hover {
-                text-decoration: underline;
-            }
-            
-            .receipt-section {
-                margin-bottom: 2rem;
-            }
-            
-            .receipt-section-title {
-                font-family: ui-monospace, monospace;
-                font-size: 11px;
-                font-weight: 600;
-                letter-spacing: 0.15em;
-                text-transform: uppercase;
-                color: #0E0E11;
-                padding-bottom: 0.75rem;
-                border-bottom: 1px solid #E5E5E5;
-                margin-bottom: 1rem;
-            }
-            
-            .receipt-table {
-                width: 100%;
-                border-collapse: collapse;
-            }
-            
-            .receipt-table tr {
-                border-bottom: 1px solid #F0F0F0;
-            }
-            
-            .receipt-table tr:last-child {
-                border-bottom: none;
-            }
-            
-            .receipt-table td {
-                padding: 0.75rem 0;
-                font-size: 14px;
-            }
-            
-            .receipt-table td:first-child {
-                font-family: ui-monospace, monospace;
-                font-size: 11px;
-                font-weight: 500;
-                letter-spacing: 0.05em;
-                text-transform: uppercase;
-                color: #6B6E76;
-                width: 40%;
-            }
-            
-            .receipt-table td:last-child {
-                font-family: ui-monospace, monospace;
-                font-size: 13px;
-                color: #0E0E11;
-                text-align: right;
-            }
-            
-            .receipt-table .value-gold {
-                color: #C9A227;
-                font-weight: 600;
-            }
-            
-            .receipt-table .value-red {
-                color: #8B1E1E;
-                font-weight: 600;
-            }
-            
-            .receipt-table tr.capital-row {
-                background: #FAFAFA;
-                border-top: 1px solid #E5E5E5;
-                border-bottom: 1px solid #E5E5E5;
-            }
-            
-            .receipt-table tr.capital-row td:first-child {
-                font-weight: 700;
-                color: #0E0E11;
-            }
-            
-            .receipt-table tr.capital-row td:last-child {
-                font-size: 1rem;
-                font-weight: 700;
-                color: #0E0E11;
-            }
-            
-            .event-timeline {
-                background: #0E0E11;
-                padding: 1.5rem;
-            }
-            
-            .event-item {
-                display: flex;
-                gap: 1rem;
-                padding: 0.75rem 0;
-                border-bottom: 1px solid rgba(255,255,255,0.1);
-            }
-            
-            .event-item:last-child {
-                border-bottom: none;
-            }
-            
-            .event-item.terminal {
-                background: rgba(31, 122, 77, 0.1);
-                margin: 0 -1.5rem;
-                padding: 0.75rem 1.5rem;
-            }
-            
-            .event-dot {
-                width: 8px;
-                height: 8px;
-                border-radius: 50%;
-                background: rgba(255,255,255,0.3);
-                margin-top: 6px;
-                flex-shrink: 0;
-            }
-            
-            .event-item.terminal .event-dot {
-                background: #1F7A4D;
-            }
-            
-            .event-content {
-                flex: 1;
-            }
-            
-            .event-type {
-                font-family: ui-monospace, monospace;
-                font-size: 11px;
-                font-weight: 600;
-                letter-spacing: 0.05em;
-                color: rgba(255,255,255,0.9);
-            }
-            
-            .event-time {
-                font-family: ui-monospace, monospace;
-                font-size: 10px;
-                color: rgba(255,255,255,0.4);
-                margin-top: 0.25rem;
-            }
-            
-            .status-block {
-                padding: 1.5rem;
-                border: 2px solid #0E0E11;
-                display: flex;
-                justify-content: space-between;
-                align-items: center;
-                background: #FAFAFA;
-            }
-            
-            .status-block.active { border-color: #0E0E11; }
-            .status-block.success { border-color: #1F7A4D; background: rgba(31,122,77,0.05); }
-            .status-block.failure { border-color: #8B1E1E; background: rgba(139,30,30,0.05); }
-            
-            .status-label {
-                font-family: ui-monospace, monospace;
-                font-size: 14px;
-                font-weight: 700;
-                letter-spacing: 0.15em;
-                text-transform: uppercase;
-            }
-            
-            .status-label.active { color: #0E0E11; }
-            .status-label.success { color: #1F7A4D; }
-            .status-label.failure { color: #8B1E1E; }
-            
-            .status-detail {
-                font-family: ui-monospace, monospace;
-                font-size: 11px;
-                color: #6B6E76;
-                margin-top: 0.5rem;
-            }
-            
-            .status-timestamp {
-                font-family: ui-monospace, monospace;
-                font-size: 11px;
-                color: #6B6E76;
-                text-align: right;
-            }
-            
-            .receipt-footer {
-                margin-top: 3rem;
-                padding-top: 1.5rem;
-                border-top: 1px solid #E5E5E5;
-                text-align: center;
-            }
-            
-            .receipt-footer p {
-                font-size: 11px;
-                color: #6B6E76;
-                line-height: 1.6;
-            }
-            
-            .receipt-footer .legal {
-                margin-top: 1rem;
-                font-size: 10px;
-                color: #B0B2B8;
-            }
-            
-            .receipt-actions {
-                display: flex;
-                gap: 1rem;
-                margin-top: 1.5rem;
-                justify-content: center;
-                flex-wrap: wrap;
-            }
-            
-            .receipt-btn {
-                font-family: ui-monospace, monospace;
-                font-size: 10px;
-                font-weight: 500;
-                letter-spacing: 0.1em;
-                text-transform: uppercase;
-                padding: 0.75rem 1.5rem;
-                border: 1px solid #D9DBE1;
-                background: #FFFFFF;
-                color: #4D5057;
-                cursor: pointer;
-                transition: all 0.15s ease;
-            }
-            
-            .receipt-btn:hover {
-                border-color: #0E0E11;
-                color: #0E0E11;
-            }
-            
-            .receipt-btn.primary {
-                background: #0E0E11;
-                color: #FFFFFF;
-                border-color: #0E0E11;
-            }
-            
-            .receipt-btn.primary:hover {
-                background: #2A2A2F;
-            }
-            
-            .receipt-not-found {
-                max-width: 600px;
-                margin: 6rem auto;
-                text-align: center;
-                padding: 3rem;
-                border: 1px solid #E5E5E5;
-            }
-            
-            .receipt-not-found h1 {
-                font-family: ui-monospace, monospace;
-                font-size: 14px;
-                font-weight: 600;
-                letter-spacing: 0.15em;
-                text-transform: uppercase;
-                color: #0E0E11;
-                margin-bottom: 1rem;
-            }
-            
-            .receipt-not-found p {
-                font-size: 13px;
-                color: #6B6E76;
-            }
-        </style>
-        
-        <div class="receipt-page" id="receipt-container">
-            <div class="receipt-loading">
-                <div class="spinner"></div>
-                <p>Loading receipt...</p>
+        <div class="min-h-screen bg-white" id="receipt-container">
+            <!-- Loading state -->
+            <div class="flex items-center justify-center min-h-screen">
+                <p class="text-sm font-mono text-neutral-500">Loading receipt...</p>
             </div>
         </div>
     `;
@@ -377,61 +19,61 @@ export async function initReceiptDetail(params) {
 
     if (!contractId) {
         container.innerHTML = `
-            <div class="receipt-not-found">
-                <h1>Record Not Found</h1>
-                <p>No contract ID provided.</p>
+            <div class="min-h-screen bg-white flex items-center justify-center">
+                <div class="text-center">
+                    <p class="font-mono text-sm text-neutral-600 mb-4">
+                        CONTRACT NOT FOUND
+                    </p>
+                    <a href="javascript:window.router.navigate('/receipts')" 
+                       class="font-mono text-xs text-neutral-900 underline decoration-1 underline-offset-2">
+                        Return to Records
+                    </a>
+                </div>
             </div>
         `;
         return;
     }
 
     // Format helpers
-    function formatNumber(num) {
-        return num?.toLocaleString('en-US') ?? '-';
-    }
-
     function formatCurrency(cents) {
-        if (cents === null || cents === undefined) return '-';
+        if (cents === null || cents === undefined) return '$0.00';
         return '$' + (cents / 100).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
     }
 
-    function formatDate(isoString) {
+    function formatDateTime(isoString) {
         if (!isoString) return '-';
         const date = new Date(isoString);
         return date.toISOString().replace('T', ' ').slice(0, 19) + ' UTC';
     }
 
-    function formatShortDate(isoString) {
-        if (!isoString) return '-';
-        const date = new Date(isoString);
-        return date.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+    function formatContractId(id) {
+        if (!id) return '-';
+        const year = new Date().getFullYear();
+        const shortId = id.slice(0, 4).toUpperCase();
+        const hash = id.slice(-4).toUpperCase();
+        return `CTX-${year}-${shortId}-${hash}`;
     }
 
-    function truncateId(id, startLen = 8, endLen = 4) {
-        if (!id) return '-';
-        if (id.length <= startLen + endLen + 3) return id;
-        return id.slice(0, startLen) + '...' + id.slice(-endLen);
+    function formatNumber(num) {
+        return num?.toLocaleString('en-US') ?? '-';
     }
 
     function getEventDescription(eventType) {
         const descriptions = {
-            'CONTRACT_CREATED': 'Contract created',
-            'BASELINE_SNAPSHOTTED': 'Baseline snapshot captured',
+            'CONTRACT_CREATED': 'Contract created and capital locked',
+            'BASELINE_SNAPSHOTTED': 'Baseline snapshot recorded',
             'FUNDS_AUTHORIZED': 'Payment authorized',
             'FUNDS_LOCKED': 'Funds locked in escrow',
             'EXECUTION_REQUESTED': 'Execution requested',
             'EXECUTION_CONFIRMED': 'Execution confirmed',
+            'LOCKED': 'Capital locked',
             'SETTLEMENT_INITIATED': 'Settlement initiated',
-            'SETTLED_SUCCESS': 'Contract settled - SUCCESS',
-            'SETTLED_FAILURE': 'Contract settled - FAILURE',
+            'SETTLED_SUCCESS': 'Contract settled: SUCCESS',
+            'SETTLED_FAILURE': 'Contract settled: FORFEITED',
             'EXPIRED': 'Contract expired',
             'CANCELLED': 'Contract cancelled'
         };
         return descriptions[eventType] || eventType;
-    }
-
-    function isTerminalEvent(eventType) {
-        return ['EXECUTION_CONFIRMED', 'SETTLED_SUCCESS', 'SETTLED_FAILURE', 'EXPIRED', 'CANCELLED', 'LOCKED'].includes(eventType);
     }
 
     try {
@@ -448,223 +90,375 @@ export async function initReceiptDetail(params) {
 
         // Determine status
         const state = contract.state || 'UNKNOWN';
-        const isSuccess = ['LOCKED', 'ACTIVE', 'EXECUTION_CONFIRMED', 'SETTLED_SUCCESS'].includes(state);
-        const isFailure = ['SETTLED_FAILURE', 'EXPIRED', 'CANCELLED'].includes(state);
-        const statusClass = isSuccess ? 'success' : isFailure ? 'failure' : 'active';
+        const isSuccess = ['LOCKED', 'ACTIVE', 'EXECUTION_CONFIRMED', 'SETTLED_SUCCESS', 'PAYOUT_COMPLETE', 'COMPLETED'].includes(state);
+        const isForfeited = ['SETTLED_FAILURE', 'FORFEITED', 'EXPIRED', 'CANCELLED'].includes(state);
 
-        // Get status text
-        const statusTexts = {
-            'LOCKED': 'EXECUTION CONFIRMED',
+        // Status display
+        const statusMap = {
+            'CREATED': 'AWAITING_EXECUTION',
+            'FUNDS_AUTHORIZED': 'AWAITING_EXECUTION',
+            'FUNDS_LOCKED': 'ACTIVE',
+            'LOCKED': 'ACTIVE',
             'ACTIVE': 'ACTIVE',
-            'EXECUTION_CONFIRMED': 'EXECUTION CONFIRMED',
-            'SETTLED_SUCCESS': 'SETTLED — SUCCESS',
-            'SETTLED_FAILURE': 'SETTLED — FAILURE',
-            'EXPIRED': 'EXPIRED',
-            'CANCELLED': 'CANCELLED'
+            'EXECUTION_CONFIRMED': 'ACTIVE',
+            'VERIFIED': 'ACTIVE',
+            'VERIFYING': 'ACTIVE',
+            'SETTLED_SUCCESS': 'SETTLED_SUCCESS',
+            'SETTLED': 'SETTLED_SUCCESS',
+            'SETTLED_FAILURE': 'SETTLED_FORFEITED',
+            'FORFEITED': 'SETTLED_FORFEITED',
+            'PAYOUT_COMPLETE': 'SETTLED_SUCCESS',
+            'COMPLETED': 'SETTLED_SUCCESS',
         };
-        const statusText = statusTexts[state] || state;
-
-        // Title based on state
-        const titleTexts = {
-            'LOCKED': 'Execution Confirmed',
-            'ACTIVE': 'Contract Active',
-            'EXECUTION_CONFIRMED': 'Execution Confirmed',
-            'SETTLED_SUCCESS': 'Contract Settled — Success',
-            'SETTLED_FAILURE': 'Contract Settled — Failure'
-        };
-        const pageTitle = titleTexts[state] || 'Contract Receipt';
+        const statusDisplay = statusMap[state] || state;
 
         // Platform info
-        const platform = contract.platform || 'UNKNOWN';
-        const platformDisplay = platform === 'X' ? 'X (Twitter)' : platform === 'STRIPE' ? 'Stripe' : platform;
-        const metricType = contract.metricType || 'UNKNOWN';
-        const metricDisplay = metricType === 'FOLLOWERS' ? 'Followers' : metricType === 'REVENUE' ? 'Revenue' : metricType;
+        const platform = contract.platform || 'Unknown';
+        const platformDisplay = platform === 'X' ? 'Twitter' : platform === 'STRIPE' ? 'Stripe Revenue' : platform;
+        const metricType = contract.metricType || 'Unknown';
+        const metricDisplay = metricType === 'FOLLOWERS' ? 'Follower Count' : metricType === 'REVENUE' ? 'Net Revenue' : metricType;
 
-        // Baseline info (from baseline JSON if available)
+        // Baseline info
         const baseline = contract.baseline || {};
         const baselineValue = platform === 'STRIPE'
             ? formatCurrency(baseline.baselineNetRevenueCents || baseline.lifetimeRevenue)
-            : formatNumber(baseline.followerCount || baseline.value);
+            : formatNumber(baseline.followerCount || baseline.value) + (platform === 'X' ? ' followers' : '');
 
         // Condition/target
         const condition = contract.conditionJson || {};
         const targetValue = platform === 'STRIPE'
             ? formatCurrency(condition.threshold)
-            : formatNumber(condition.threshold);
+            : formatNumber(condition.threshold) + (platform === 'X' ? ' followers' : '');
 
-        // Render timeline
+        // Payout amount (0 if forfeited)
+        const payoutAmount = isForfeited ? 0 : (contract.payoutAmountUsdCents || contract.lockAmountUsdCents);
+
+        // Build timeline
         let timelineHtml = '';
         if (events.length > 0) {
             const sortedEvents = [...events].sort((a, b) =>
                 new Date(a.timestampUtc || a.createdAt).getTime() - new Date(b.timestampUtc || b.createdAt).getTime()
             );
 
-            timelineHtml = sortedEvents.map(evt => {
-                const isTerminal = isTerminalEvent(evt.eventType);
-                return `
-                    <div class="event-item ${isTerminal ? 'terminal' : ''}">
-                        <div class="event-dot"></div>
-                        <div class="event-content">
-                            <div class="event-type">${getEventDescription(evt.eventType)}</div>
-                            <div class="event-time">${formatDate(evt.timestampUtc || evt.createdAt)}</div>
+            timelineHtml = sortedEvents.map(evt => `
+                <div class="flex gap-4 mb-3 last:mb-0">
+                    <div class="flex-shrink-0 mt-1">
+                        <div class="w-2 h-2 bg-neutral-500 rounded-full"></div>
+                    </div>
+                    <div class="flex-1">
+                        <div class="font-mono text-xs text-neutral-400 mb-1">
+                            ${formatDateTime(evt.timestampUtc || evt.createdAt)}
+                        </div>
+                        <div class="font-mono text-sm text-neutral-100">
+                            ${getEventDescription(evt.eventType)}
                         </div>
                     </div>
-                `;
-            }).join('');
+                </div>
+            `).join('');
         } else {
+            // Show contract creation as default event
             timelineHtml = `
-                <div class="event-item">
-                    <div class="event-dot"></div>
-                    <div class="event-content">
-                        <div class="event-type">No events recorded</div>
+                <div class="flex gap-4 mb-3">
+                    <div class="flex-shrink-0 mt-1">
+                        <div class="w-2 h-2 bg-neutral-500 rounded-full"></div>
+                    </div>
+                    <div class="flex-1">
+                        <div class="font-mono text-xs text-neutral-400 mb-1">
+                            ${formatDateTime(contract.createdAt)}
+                        </div>
+                        <div class="font-mono text-sm text-neutral-100">
+                            Contract created and capital locked
+                        </div>
                     </div>
                 </div>
             `;
         }
 
-        // Render page
+        // Status message
+        const statusMessages = {
+            'ACTIVE': 'Capital is locked. Outcome will be verified at deadline.',
+            'AWAITING_EXECUTION': 'Contract created. Awaiting capital lock.',
+            'SETTLED_SUCCESS': 'Target achieved. Capital released to beneficiary.',
+            'SETTLED_FORFEITED': 'Target not achieved. Capital forfeited.',
+        };
+        const statusMessage = statusMessages[statusDisplay] || 'Status pending.';
+
+        // Render the receipt
         container.innerHTML = `
-            <header class="receipt-header">
-                <h1 class="receipt-title ${statusClass}">${pageTitle}</h1>
-                <p class="receipt-subtitle">This document certifies the execution of an immutable performance contract on the Collateral platform.</p>
-                <p class="finality-notice">This record cannot be altered.</p>
-                
-                <div class="receipt-meta">
-                    <div class="receipt-meta-item">
-                        <span class="receipt-meta-label">Contract ID</span>
-                        <span class="receipt-meta-value hash" onclick="navigator.clipboard.writeText('${contractId}')" title="Click to copy">${truncateId(contractId)}</span>
-                    </div>
-                    <div class="receipt-meta-item">
-                        <span class="receipt-meta-label">Status</span>
-                        <span class="receipt-meta-value">${statusText}</span>
-                    </div>
-                    <div class="receipt-meta-item">
-                        <span class="receipt-meta-label">Created</span>
-                        <span class="receipt-meta-value">${formatDate(contract.createdAt)}</span>
-                    </div>
-                    <div class="receipt-meta-item">
-                        <span class="receipt-meta-label">Deadline</span>
-                        <span class="receipt-meta-value">${formatShortDate(contract.deadlineUtc || condition.deadline)}</span>
+            <!-- Header -->
+            <div class="border-b border-neutral-300">
+                <div class="max-w-4xl mx-auto px-8 py-8">
+                    <h1 class="text-2xl font-normal tracking-tight text-neutral-900 mb-2">
+                        CONTRACT EXECUTION RECEIPT
+                    </h1>
+                    <p class="text-sm text-neutral-700 mb-4">
+                        This document certifies the execution of an immutable performance contract on the Collateral platform.
+                    </p>
+                    <p class="text-xs font-mono tracking-wider uppercase" style="color: #B22222;">
+                        THIS RECORD CANNOT BE ALTERED.
+                    </p>
+                </div>
+            </div>
+
+            <!-- Metadata Block -->
+            <div class="max-w-4xl mx-auto px-8 py-8">
+                <div class="border border-neutral-300 p-6 mb-8">
+                    <div class="grid grid-cols-2 gap-4">
+                        <div>
+                            <div class="text-xs font-mono tracking-wider text-neutral-500 uppercase mb-1">
+                                Contract ID
+                            </div>
+                            <div class="flex items-center gap-2">
+                                <span class="font-mono text-sm text-neutral-900">
+                                    ${formatContractId(contractId)}
+                                </span>
+                                <button onclick="navigator.clipboard.writeText('${contractId}')" 
+                                        class="p-1 hover:bg-neutral-100 transition-colors"
+                                        aria-label="Copy Contract ID">
+                                    <i data-lucide="copy" class="w-3 h-3 text-neutral-600"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="text-xs font-mono tracking-wider text-neutral-500 uppercase mb-1">
+                                Status
+                            </div>
+                            <div class="font-mono text-sm text-neutral-900">
+                                ${statusDisplay.replace(/_/g, ' — ')}
+                            </div>
+                        </div>
+                        <div>
+                            <div class="text-xs font-mono tracking-wider text-neutral-500 uppercase mb-1">
+                                Created (UTC)
+                            </div>
+                            <div class="font-mono text-sm text-neutral-900">
+                                ${formatDateTime(contract.createdAt)}
+                            </div>
+                        </div>
+                        <div>
+                            <div class="text-xs font-mono tracking-wider text-neutral-500 uppercase mb-1">
+                                Deadline
+                            </div>
+                            <div class="font-mono text-sm text-neutral-900">
+                                ${formatDateTime(contract.deadlineUtc || condition.deadline)}
+                            </div>
+                        </div>
                     </div>
                 </div>
-            </header>
-            
-            <section class="receipt-section">
-                <h2 class="receipt-section-title">Contract Terms</h2>
-                <table class="receipt-table">
-                    <tr><td>Platform</td><td>${platformDisplay}</td></tr>
-                    <tr><td>Metric</td><td>${metricDisplay}</td></tr>
-                    <tr><td>Baseline Snapshot</td><td>${baselineValue}</td></tr>
-                    <tr><td>Target</td><td>${targetValue}</td></tr>
-                    <tr><td>Time Window</td><td>30 days</td></tr>
-                    <tr class="capital-row"><td>Capital Locked</td><td>${formatCurrency(contract.lockAmountUsdCents)}</td></tr>
-                    <tr><td>Payout Amount</td><td class="value-gold">${formatCurrency(contract.payoutAmountUsdCents)}</td></tr>
-                    <tr><td>Verification</td><td>API Verified</td></tr>
-                </table>
-            </section>
-            
-            <section class="receipt-section">
-                <h2 class="receipt-section-title">Event Timeline</h2>
-                <div class="event-timeline">
-                    ${timelineHtml}
-                </div>
-            </section>
-            
-            <section class="receipt-section">
-                <h2 class="receipt-section-title">Contract Status</h2>
-                <div class="status-block ${statusClass}">
-                    <div>
-                        <div class="status-label ${statusClass}">${statusText}</div>
-                        <div class="status-detail">${isSuccess ? 'Contract is active. Settlement will occur at deadline.' : isFailure ? 'This contract has been settled.' : 'Awaiting execution.'}</div>
+
+                <!-- Contract Terms -->
+                <div class="mb-8">
+                    <h2 class="text-lg font-normal text-neutral-900 mb-4 border-b border-neutral-300 pb-2">
+                        CONTRACT TERMS
+                    </h2>
+                    <div class="space-y-0">
+                        <div class="flex justify-between py-2 border-b border-neutral-200">
+                            <span class="text-xs font-mono tracking-wider text-neutral-500 uppercase">
+                                Platform
+                            </span>
+                            <span class="font-mono text-sm text-neutral-900">
+                                ${platformDisplay}
+                            </span>
+                        </div>
+                        <div class="flex justify-between py-2 border-b border-neutral-200">
+                            <span class="text-xs font-mono tracking-wider text-neutral-500 uppercase">
+                                Metric
+                            </span>
+                            <span class="font-mono text-sm text-neutral-900">
+                                ${metricDisplay}
+                            </span>
+                        </div>
+                        <div class="flex justify-between py-2 border-b border-neutral-200">
+                            <span class="text-xs font-mono tracking-wider text-neutral-500 uppercase">
+                                Baseline Snapshot
+                            </span>
+                            <span class="font-mono text-sm text-neutral-900">
+                                ${baselineValue}
+                            </span>
+                        </div>
+                        <div class="flex justify-between py-2 border-b border-neutral-200">
+                            <span class="text-xs font-mono tracking-wider text-neutral-500 uppercase">
+                                Target
+                            </span>
+                            <span class="font-mono text-sm text-neutral-900">
+                                ${targetValue}
+                            </span>
+                        </div>
+                        <div class="flex justify-between py-2 border-b border-neutral-200">
+                            <span class="text-xs font-mono tracking-wider text-neutral-500 uppercase">
+                                Time Window
+                            </span>
+                            <span class="font-mono text-sm text-neutral-900">
+                                30 days
+                            </span>
+                        </div>
+                        <div class="flex justify-between py-2 border-b border-neutral-200 bg-neutral-50 -mx-2 px-2">
+                            <span class="text-xs font-mono tracking-wider text-neutral-900 uppercase font-medium">
+                                Capital Locked
+                            </span>
+                            <span class="font-mono text-sm font-medium text-neutral-900">
+                                ${formatCurrency(contract.lockAmountUsdCents)}
+                            </span>
+                        </div>
+                        <div class="flex justify-between py-2 border-b border-neutral-200">
+                            <span class="text-xs font-mono tracking-wider text-neutral-500 uppercase">
+                                Payout Amount
+                            </span>
+                            <span class="font-mono text-sm text-neutral-900">
+                                ${formatCurrency(payoutAmount)}
+                            </span>
+                        </div>
+                        <div class="flex justify-between py-2 border-b border-neutral-200">
+                            <span class="text-xs font-mono tracking-wider text-neutral-500 uppercase">
+                                Verification Method
+                            </span>
+                            <span class="font-mono text-sm text-neutral-900">
+                                ${platform} API
+                            </span>
+                        </div>
                     </div>
-                    <div class="status-timestamp">Deadline: ${formatShortDate(contract.deadlineUtc || condition.deadline)}</div>
                 </div>
-            </section>
-            
-            <footer class="receipt-footer">
-                <p>All contracts settle publicly.<br>Outcomes are permanent.<br>No appeals. No overrides.</p>
-                <p class="legal">This receipt may be used for personal records or verification purposes.</p>
-                
-                <div class="receipt-actions">
-                    <button class="receipt-btn" id="btn-copy-id">
-                        Copy Contract ID
-                    </button>
-                    <button class="receipt-btn" id="btn-view-ledger">
-                        View Ledger
-                    </button>
-                    <button class="receipt-btn primary" id="btn-create-another">
-                        Create Another Contract
-                    </button>
+
+                <!-- Execution Timeline -->
+                <div class="mb-8">
+                    <h2 class="text-lg font-normal text-neutral-900 mb-4 border-b border-neutral-300 pb-2">
+                        EXECUTION TIMELINE
+                    </h2>
+                    <div class="bg-neutral-900 p-6">
+                        ${timelineHtml}
+                    </div>
                 </div>
-                
-                ${(!isSuccess && window.location.hostname !== 'collateral.market') ? `
-                    <div style="margin-top: 2rem; padding-top: 1rem; border-top: 1px dashed #E5E5E5;">
-                        <p style="font-size: 10px; color: #999; margin-bottom: 0.75rem; font-family: ui-monospace, monospace; letter-spacing: 0.1em; text-transform: uppercase;">⚠️ DEV TOOLS</p>
-                        <button class="receipt-btn" id="btn-dev-simulate" style="border-color: #f59e0b; color: #f59e0b;">
-                            Simulate Successful Execution (DEV)
+
+                <!-- Contract Status -->
+                <div class="mb-8">
+                    <div class="border p-6 ${isForfeited ? 'border-red-800 bg-red-50' : 'border-neutral-300'}">
+                        <div class="text-xs font-mono tracking-wider text-neutral-500 uppercase mb-2">
+                            STATUS: ${statusDisplay.replace(/_/g, ' — ')}
+                        </div>
+                        <div class="font-mono text-sm text-neutral-900">
+                            ${statusMessage}
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Actions -->
+                <div class="mb-8">
+                    <div class="flex gap-4 flex-wrap">
+                        <button id="btn-copy-id"
+                                class="px-4 py-2 border border-neutral-300 font-mono text-xs text-neutral-900 hover:bg-neutral-50 transition-colors">
+                            Copy Contract ID
+                        </button>
+                        <button id="btn-view-ledger"
+                                class="px-4 py-2 border border-neutral-300 font-mono text-xs text-neutral-900 hover:bg-neutral-50 transition-colors">
+                            View Ledger
+                        </button>
+                        <button id="btn-create-another"
+                                class="px-4 py-2 border border-neutral-300 font-mono text-xs text-neutral-900 hover:bg-neutral-50 transition-colors">
+                            Create Another Contract
                         </button>
                     </div>
+                </div>
+
+                <!-- Dev Tools (non-production only) -->
+                ${window.location.hostname !== 'collateral.market' ? `
+                    <div class="border border-neutral-200 bg-neutral-50 p-4 mb-8">
+                        <div class="text-xs font-mono text-neutral-500 uppercase tracking-wider mb-2">
+                            DEVELOPMENT UTILITIES
+                        </div>
+                        <div class="flex gap-2">
+                            <button id="btn-export-json" class="px-3 py-1 bg-neutral-200 font-mono text-xs text-neutral-600 rounded hover:bg-neutral-300">
+                                Export JSON
+                            </button>
+                            <button id="btn-dev-simulate" class="px-3 py-1 bg-neutral-200 font-mono text-xs text-neutral-600 rounded hover:bg-neutral-300">
+                                Simulate Success
+                            </button>
+                        </div>
+                    </div>
                 ` : ''}
-            </footer>
+            </div>
+
+            <!-- Footer Finality Statement -->
+            <div class="border-t border-neutral-300 mt-12">
+                <div class="max-w-4xl mx-auto px-8 py-8">
+                    <p class="text-xs font-mono text-neutral-600 text-center">
+                        All contracts settle publicly. Outcomes are permanent. No appeals. No overrides.
+                    </p>
+                </div>
+            </div>
         `;
+
+        // Initialize lucide icons
+        if (window.lucide) {
+            window.lucide.createIcons();
+        }
 
         // Bind button events
         document.getElementById('btn-copy-id')?.addEventListener('click', () => {
             navigator.clipboard.writeText(contractId);
-            alert('Contract ID copied!');
+            const btn = document.getElementById('btn-copy-id');
+            btn.textContent = 'Copied!';
+            setTimeout(() => btn.textContent = 'Copy Contract ID', 2000);
         });
 
         document.getElementById('btn-view-ledger')?.addEventListener('click', () => {
-            window.router.navigate('/ledger');
+            window.router.navigate('/receipts');
         });
 
         document.getElementById('btn-create-another')?.addEventListener('click', () => {
             window.router.navigate('/contracts');
         });
 
-        // DEV: Simulate success button
-        const devSimBtn = document.getElementById('btn-dev-simulate');
-        if (devSimBtn) {
-            devSimBtn.addEventListener('click', async () => {
-                devSimBtn.disabled = true;
-                devSimBtn.textContent = 'Simulating...';
+        document.getElementById('btn-export-json')?.addEventListener('click', () => {
+            const data = JSON.stringify({ contract, events }, null, 2);
+            const blob = new Blob([data], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `contract-${formatContractId(contractId)}.json`;
+            a.click();
+        });
 
-                try {
-                    const result = await window.api.devSimulateSuccess(contractId);
-                    console.warn('[DEV] Simulated contract success', result);
+        document.getElementById('btn-dev-simulate')?.addEventListener('click', async () => {
+            const btn = document.getElementById('btn-dev-simulate');
+            btn.disabled = true;
+            btn.textContent = 'Simulating...';
 
-                    if (result.ok) {
-                        // Refresh the page to show updated state
-                        alert('✅ Success simulated! Refreshing...');
-                        window.location.reload();
-                    } else {
-                        alert('❌ Simulation failed: ' + (result.error || 'Unknown error'));
-                        devSimBtn.disabled = false;
-                        devSimBtn.textContent = 'Simulate Successful Execution (DEV)';
-                    }
-                } catch (err) {
-                    console.error('[DEV] Simulate error:', err);
-                    alert('❌ Error: ' + err.message);
-                    devSimBtn.disabled = false;
-                    devSimBtn.textContent = 'Simulate Successful Execution (DEV)';
+            try {
+                const result = await window.api.devSimulateSuccess(contractId);
+                if (result.ok) {
+                    alert('✅ Success simulated! Refreshing...');
+                    window.location.reload();
+                } else {
+                    alert('❌ Simulation failed: ' + (result.error || 'Unknown error'));
+                    btn.disabled = false;
+                    btn.textContent = 'Simulate Success';
                 }
-            });
-        }
+            } catch (err) {
+                alert('❌ Error: ' + err.message);
+                btn.disabled = false;
+                btn.textContent = 'Simulate Success';
+            }
+        });
 
-        // Log receipt load
         console.log('[Receipt] Loaded', { contractId, state });
 
     } catch (error) {
         console.error('[Receipt] Error loading contract:', error);
         container.innerHTML = `
-            <div class="receipt-not-found">
-                <h1>Record Not Found</h1>
-                <p>${error.message || 'The requested receipt does not exist or is not accessible.'}</p>
-                <div style="margin-top: 1.5rem;">
-                    <button class="receipt-btn" onclick="window.router.navigate('/my-contracts')">View My Contracts</button>
+            <div class="min-h-screen bg-white flex items-center justify-center">
+                <div class="text-center">
+                    <p class="font-mono text-sm text-neutral-600 mb-4">
+                        CONTRACT NOT FOUND
+                    </p>
+                    <p class="font-mono text-xs text-neutral-500 mb-4">
+                        ${error.message || 'The requested receipt does not exist.'}
+                    </p>
+                    <a href="javascript:window.router.navigate('/receipts')" 
+                       class="font-mono text-xs text-neutral-900 underline decoration-1 underline-offset-2">
+                        Return to Records
+                    </a>
                 </div>
             </div>
         `;
     }
 }
-

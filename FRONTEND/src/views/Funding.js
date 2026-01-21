@@ -30,7 +30,7 @@ export function renderFunding() {
                                         <span class="text-sm text-gray-900">Card</span>
                                         <span class="text-xs text-gray-400">via Stripe</span>
                                     </div>
-                                    <span class="text-xs text-gray-500 mt-0.5" id="card-status">Configured</span>
+                                    <span class="text-xs text-gray-400 mt-0.5" id="card-status">Loading...</span>
                                 </div>
                                 <button id="manage-card-btn" onclick="window.app.addCard()" class="flex items-center gap-1.5 border border-gray-200 bg-white px-3 py-1.5 text-xs text-gray-600 hover:bg-gray-50 rounded">
                                     <i data-lucide="settings" class="w-3 h-3"></i>
@@ -44,7 +44,7 @@ export function renderFunding() {
                                         <span class="text-sm text-gray-900">Bank Account</span>
                                         <span class="text-xs text-gray-400">via Stripe Connect</span>
                                     </div>
-                                    <span class="text-xs text-gray-500 mt-0.5" id="bank-status">Configured</span>
+                                    <span class="text-xs text-gray-400 mt-0.5" id="bank-status">Loading...</span>
                                 </div>
                                 <button id="manage-bank-btn" onclick="window.app.setupPayout()" class="flex items-center gap-1.5 border border-gray-200 bg-white px-3 py-1.5 text-xs text-gray-600 hover:bg-gray-50 rounded">
                                     <i data-lucide="settings" class="w-3 h-3"></i>
@@ -74,7 +74,7 @@ export function renderFunding() {
                                     Available Balance
                                 </div>
                                 <div class="text-2xl tabular-nums text-gray-900 mb-1" id="available-balance">
-                                    $42,750.00
+                                    $0.00
                                 </div>
                                 <div class="text-xs text-gray-400">
                                     Capital not currently locked
@@ -86,7 +86,7 @@ export function renderFunding() {
                                     Locked in Contracts
                                 </div>
                                 <div class="text-2xl tabular-nums mb-1" style="color: #b45309;" id="locked-balance">
-                                    $18,500.00
+                                    $0.00
                                 </div>
                                 <div class="text-xs text-gray-400">
                                     Capital actively committed and at risk
@@ -98,7 +98,7 @@ export function renderFunding() {
                                     Pending Payout
                                 </div>
                                 <div class="text-2xl tabular-nums mb-1" style="color: #1e40af;" id="pending-payout">
-                                    $3,200.00
+                                    $0.00
                                 </div>
                                 <div class="text-xs text-gray-400">
                                     Capital released but not yet transferred
@@ -121,11 +121,11 @@ export function renderFunding() {
                                     <div class="flex items-center gap-2">
                                         <span class="text-sm text-gray-900">
                                             Bank Account
-                                            <span class="text-gray-400" id="payout-last-four">•••• 4242</span>
+                                            <span class="text-gray-400" id="payout-last-four"></span>
                                         </span>
                                         <span class="text-xs text-gray-400">via Stripe Connect</span>
                                     </div>
-                                    <span class="text-xs text-gray-500 mt-0.5" id="payout-status">Configured</span>
+                                    <span class="text-xs text-gray-400 mt-0.5" id="payout-status">Loading...</span>
                                 </div>
                                 <button id="manage-payout-btn" onclick="window.app.setupPayout()" class="flex items-center gap-1.5 border border-gray-200 bg-white px-3 py-1.5 text-xs text-gray-600 hover:bg-gray-50 rounded">
                                     <i data-lucide="settings" class="w-3 h-3"></i>
@@ -151,6 +151,12 @@ export function renderFunding() {
     `;
 }
 
+// Helper to format USD amounts
+function formatUSD(cents) {
+    const dollars = cents / 100;
+    return '$' + dollars.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+}
+
 export async function initFunding() {
     if (window.lucide) {
         window.lucide.createIcons();
@@ -164,27 +170,78 @@ export async function initFunding() {
     const bankStatus = document.getElementById('bank-status');
     const payoutStatus = document.getElementById('payout-status');
     const payoutLastFour = document.getElementById('payout-last-four');
+    const availableBalanceEl = document.getElementById('available-balance');
+    const lockedBalanceEl = document.getElementById('locked-balance');
+    const pendingPayoutEl = document.getElementById('pending-payout');
 
     try {
-        // Fetch user's contracts to calculate locked balance
+        // Fetch all contracts to calculate balances
         const response = await window.api.getContracts();
         const contracts = response?.contracts || [];
 
-        // Calculate locked balance (contracts in active states)
-        const activeStates = ['LOCKED', 'ACTIVE', 'EXECUTION_CONFIRMED', 'FUNDS_LOCKED', 'VERIFIED', 'VERIFYING'];
-        const lockedCents = contracts
-            .filter(c => activeStates.includes(c.state))
-            .reduce((sum, c) => sum + (c.lockAmountUsdCents || 0), 0);
-
-        // Update locked balance display
-        const lockedEl = document.getElementById('locked-balance');
-        if (lockedEl && lockedCents > 0) {
-            lockedEl.textContent = '$' + (lockedCents / 100).toLocaleString('en-US', { minimumFractionDigits: 2 });
+        if (!isProduction) {
+            console.log('[Funding] Loaded contracts:', contracts.length);
         }
 
-        // Only log in non-production
+        // Contract state categories
+        const lockedStates = ['LOCKED', 'ACTIVE', 'EXECUTION_CONFIRMED', 'FUNDS_LOCKED', 'VERIFIED', 'VERIFYING'];
+        const pendingPayoutStates = ['SETTLED', 'PAYOUT_PENDING'];
+        const completedStates = ['PAYOUT_COMPLETE', 'COMPLETED'];
+
+        // Calculate LOCKED balance (contracts actively at risk)
+        const lockedCents = contracts
+            .filter(c => lockedStates.includes(c.state))
+            .reduce((sum, c) => sum + (c.lockAmountUsdCents || 0), 0);
+
+        // Calculate PENDING PAYOUT (settled but not yet transferred)
+        const pendingCents = contracts
+            .filter(c => pendingPayoutStates.includes(c.state))
+            .reduce((sum, c) => sum + (c.lockAmountUsdCents || 0), 0);
+
+        // Calculate total ever locked (for available balance context)
+        const totalLockedEver = contracts
+            .reduce((sum, c) => sum + (c.lockAmountUsdCents || 0), 0);
+
+        // Calculate total completed payouts
+        const completedCents = contracts
+            .filter(c => completedStates.includes(c.state))
+            .reduce((sum, c) => sum + (c.lockAmountUsdCents || 0), 0);
+
+        // Update LOCKED balance
+        if (lockedBalanceEl) {
+            lockedBalanceEl.textContent = formatUSD(lockedCents);
+        }
+
+        // Update PENDING PAYOUT
+        if (pendingPayoutEl) {
+            pendingPayoutEl.textContent = formatUSD(pendingCents);
+        }
+
+        // For Available Balance, try to get from profile or calculate
+        // Available = deposited funds not currently locked
+        // Since we don't have a deposit tracking system yet, show $0 or estimate
+        if (availableBalanceEl) {
+            // Try to fetch from profile stats if available
+            try {
+                const profile = await window.api.getProfile();
+                if (profile?.stats?.availableBalanceUsdCents !== undefined) {
+                    availableBalanceEl.textContent = formatUSD(profile.stats.availableBalanceUsdCents);
+                } else {
+                    // Show $0.00 if no available balance data
+                    availableBalanceEl.textContent = formatUSD(0);
+                }
+            } catch (profileErr) {
+                // No profile data available
+                availableBalanceEl.textContent = formatUSD(0);
+            }
+        }
+
         if (!isProduction) {
-            console.log('[Funding] Calculated locked balance:', lockedCents / 100);
+            console.log('[Funding] Balance state:', {
+                locked: lockedCents / 100,
+                pending: pendingCents / 100,
+                completed: completedCents / 100
+            });
         }
 
         // Fetch Stripe connection status
@@ -192,14 +249,21 @@ export async function initFunding() {
             const stripeStatus = await window.api.getStripeStatus();
 
             if (stripeStatus?.connected) {
+                // Connected
                 if (cardStatus) {
                     cardStatus.textContent = 'Configured';
+                    cardStatus.classList.remove('text-gray-400');
+                    cardStatus.classList.add('text-gray-600');
                 }
                 if (bankStatus) {
                     bankStatus.textContent = 'Configured';
+                    bankStatus.classList.remove('text-gray-400');
+                    bankStatus.classList.add('text-gray-600');
                 }
                 if (payoutStatus) {
                     payoutStatus.textContent = 'Configured';
+                    payoutStatus.classList.remove('text-gray-400');
+                    payoutStatus.classList.add('text-gray-600');
                 }
                 if (payoutLastFour && stripeStatus.lastFour) {
                     payoutLastFour.textContent = '•••• ' + stripeStatus.lastFour;
@@ -212,12 +276,22 @@ export async function initFunding() {
                 if (payoutLastFour) payoutLastFour.textContent = '';
             }
         } catch (stripeErr) {
+            // Stripe status not available
+            if (cardStatus) cardStatus.textContent = 'Not configured';
+            if (bankStatus) bankStatus.textContent = 'Not configured';
+            if (payoutStatus) payoutStatus.textContent = 'Not configured';
+
             if (!isProduction) {
                 console.log('[Funding] Stripe status not available:', stripeErr.message);
             }
         }
 
     } catch (error) {
+        // Handle contract fetch error
+        if (cardStatus) cardStatus.textContent = 'Error loading';
+        if (bankStatus) bankStatus.textContent = 'Error loading';
+        if (payoutStatus) payoutStatus.textContent = 'Error loading';
+
         if (!isProduction) {
             console.error('[Funding] Error loading funding data:', error);
         }

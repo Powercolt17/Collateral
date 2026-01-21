@@ -1,94 +1,176 @@
 // Funding & Payouts View
 export function renderFunding() {
     return `
-        <div class="pb-32 w-full max-w-3xl mx-auto px-6 relative z-10 min-h-screen">
-            <!-- Page Header -->
-            <div class="mt-12 mb-10">
-                <h1 class="font-display font-bold text-2xl tracking-tight text-[#0E0E11] uppercase mb-2">Funding & Payouts</h1>
-                <p class="font-sans text-sm text-neutral-500">Manage payment methods and view your balance.</p>
-                <div class="h-px w-full bg-neutral-200 mt-6"></div>
-            </div>
+        <div class="min-h-screen bg-gray-50">
+            <div class="mx-auto max-w-6xl px-6 py-12">
+                <!-- Page Header -->
+                <div class="mb-12">
+                    <h1 class="mb-2 text-2xl tracking-tight text-gray-900">
+                        Funding & Payouts
+                    </h1>
+                    <p class="text-sm text-gray-500">
+                        Manage capital custody and settlement flows.
+                    </p>
+                </div>
 
-            <!-- Funding Methods Section -->
-            <section class="mb-10">
-                <h2 class="font-mono text-[10px] text-neutral-400 uppercase tracking-widest mb-4">Funding Methods</h2>
-                
-                <div class="border border-neutral-200 bg-white">
-                    <!-- Card Row -->
-                    <div id="funding-card-row" class="p-5 flex items-center justify-between border-b border-neutral-100">
-                        <div class="flex items-center gap-4">
-                            <div class="w-12 h-8 bg-gradient-to-r from-[#635BFF] to-[#8B85FF] rounded flex items-center justify-center">
-                                <span class="text-white font-bold text-[10px]">VISA</span>
+                <!-- Main Content -->
+                <div class="space-y-8">
+                    <!-- Funding Sources -->
+                    <div class="border border-gray-200 bg-white">
+                        <div class="border-b border-gray-200 px-6 py-4">
+                            <h2 class="text-xs uppercase tracking-wider text-gray-500">
+                                Funding Sources
+                            </h2>
+                        </div>
+                        <div class="divide-y divide-gray-200" id="funding-sources-list">
+                            <!-- Card -->
+                            <div class="flex items-center justify-between px-6 py-4" id="source-card">
+                                <div class="flex flex-col gap-1">
+                                    <div class="flex items-center gap-3">
+                                        <span class="text-sm text-gray-900">Card</span>
+                                        <span class="text-xs text-gray-400">via Stripe</span>
+                                    </div>
+                                    <div class="flex items-center gap-2">
+                                        <span class="text-xs text-gray-400" id="card-status">Not configured</span>
+                                    </div>
+                                </div>
+                                <button id="manage-card-btn" onclick="window.app.addCard()" class="flex items-center gap-2 border border-gray-300 bg-white px-4 py-2 text-xs text-gray-700 hover:bg-gray-50">
+                                    <i data-lucide="settings" class="w-3.5 h-3.5"></i>
+                                    Manage
+                                </button>
                             </div>
-                            <div>
-                                <h4 class="font-sans text-sm font-medium text-neutral-900">Credit / Debit Card (Stripe)</h4>
-                                <p class="font-mono text-[11px] text-neutral-400" id="card-status">No card on file</p>
+                            <!-- Bank Account -->
+                            <div class="flex items-center justify-between px-6 py-4" id="source-bank">
+                                <div class="flex flex-col gap-1">
+                                    <div class="flex items-center gap-3">
+                                        <span class="text-sm text-gray-900">Bank Account</span>
+                                        <span class="text-xs text-gray-400">via Stripe Connect</span>
+                                    </div>
+                                    <div class="flex items-center gap-2">
+                                        <span class="text-xs text-gray-400" id="bank-status">Not configured</span>
+                                    </div>
+                                </div>
+                                <button id="manage-bank-btn" onclick="window.app.setupPayout()" class="flex items-center gap-2 border border-gray-300 bg-white px-4 py-2 text-xs text-gray-700 hover:bg-gray-50">
+                                    <i data-lucide="settings" class="w-3.5 h-3.5"></i>
+                                    Manage
+                                </button>
                             </div>
                         </div>
-                        <button onclick="window.app.addCard()" id="add-card-btn" class="flex items-center gap-1.5 px-3 py-1.5 border border-neutral-200 text-[11px] font-mono uppercase tracking-wide text-neutral-600 hover:border-neutral-400 hover:text-neutral-900 transition-colors">
-                            Add Card
-                        </button>
+                        <div class="border-t border-gray-200 px-6 py-4">
+                            <button id="add-source-btn" class="flex items-center gap-2 text-xs text-gray-600 hover:text-gray-900">
+                                <i data-lucide="plus" class="w-3.5 h-3.5"></i>
+                                Add Source
+                            </button>
+                        </div>
                     </div>
-                    
-                    <!-- Info -->
-                    <div class="p-4 bg-neutral-50">
-                        <p class="font-mono text-[10px] text-neutral-400 uppercase tracking-widest">Secure payments processed by Stripe</p>
-                    </div>
-                </div>
-            </section>
 
-            <!-- Balance State Section -->
-            <section class="mb-10">
-                <h2 class="font-mono text-[10px] text-neutral-400 uppercase tracking-widest mb-4">Balance State</h2>
-                
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-px bg-neutral-200 border border-neutral-200">
-                    <div class="bg-white p-5">
-                        <span class="font-mono text-[10px] text-neutral-400 uppercase tracking-widest block mb-2">Available Balance</span>
-                        <span class="font-display text-2xl font-medium text-neutral-900" id="available-balance">$0.00</span>
-                    </div>
-                    <div class="bg-white p-5">
-                        <span class="font-mono text-[10px] text-neutral-400 uppercase tracking-widest block mb-2">Locked in Contracts</span>
-                        <span class="font-display text-2xl font-medium text-[#A18239]" id="locked-balance">$0.00</span>
-                    </div>
-                    <div class="bg-white p-5">
-                        <span class="font-mono text-[10px] text-neutral-400 uppercase tracking-widest block mb-2">Pending Payout</span>
-                        <span class="font-display text-2xl font-medium text-[#1F7A4D]" id="pending-payout">$0.00</span>
-                    </div>
-                </div>
-            </section>
-
-            <!-- Payout Method Section -->
-            <section class="mb-10">
-                <h2 class="font-mono text-[10px] text-neutral-400 uppercase tracking-widest mb-4">Payout Method</h2>
-                
-                <div class="border border-neutral-200 bg-white">
-                    <div class="p-5 flex items-center justify-between border-b border-neutral-100">
-                        <div class="flex items-center gap-4">
-                            <div class="w-10 h-10 bg-neutral-100 rounded flex items-center justify-center">
-                                <i data-lucide="building-2" class="w-5 h-5 text-neutral-500"></i>
+                    <!-- Balance State -->
+                    <div class="border border-gray-200 bg-white">
+                        <div class="border-b border-gray-200 px-6 py-4">
+                            <h2 class="text-xs uppercase tracking-wider text-gray-500">
+                                Balance State
+                            </h2>
+                        </div>
+                        <div class="grid grid-cols-1 divide-y divide-gray-200 md:grid-cols-3 md:divide-x md:divide-y-0">
+                            <!-- Available Balance -->
+                            <div class="px-6 py-6">
+                                <div class="flex flex-col gap-3">
+                                    <div class="text-xs uppercase tracking-wider text-gray-400">
+                                        Available Balance
+                                    </div>
+                                    <div class="text-2xl tabular-nums text-gray-900" id="available-balance">
+                                        $0.00
+                                    </div>
+                                    <div class="text-xs text-gray-500">
+                                        Capital not currently locked
+                                    </div>
+                                </div>
                             </div>
-                            <div>
-                                <h4 class="font-sans text-sm font-medium text-neutral-900">Default Payout Destination</h4>
-                                <p class="font-mono text-[11px] text-neutral-400" id="payout-status">No payout method configured</p>
+                            <!-- Locked in Contracts -->
+                            <div class="px-6 py-6">
+                                <div class="flex flex-col gap-3">
+                                    <div class="text-xs uppercase tracking-wider text-gray-400">
+                                        Locked in Contracts
+                                    </div>
+                                    <div class="text-2xl tabular-nums text-amber-900" id="locked-balance">
+                                        $0.00
+                                    </div>
+                                    <div class="text-xs text-gray-500">
+                                        Capital actively committed and at risk
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Pending Payout -->
+                            <div class="px-6 py-6">
+                                <div class="flex flex-col gap-3">
+                                    <div class="text-xs uppercase tracking-wider text-gray-400">
+                                        Pending Payout
+                                    </div>
+                                    <div class="text-2xl tabular-nums text-blue-900" id="pending-payout">
+                                        $0.00
+                                    </div>
+                                    <div class="text-xs text-gray-500">
+                                        Capital released but not yet transferred
+                                    </div>
+                                </div>
                             </div>
                         </div>
-                        <button onclick="window.app.setupPayout()" id="setup-payout-btn" class="flex items-center gap-1.5 px-3 py-1.5 border border-neutral-200 text-[11px] font-mono uppercase tracking-wide text-neutral-600 hover:border-neutral-400 hover:text-neutral-900 transition-colors">
-                            Setup
-                        </button>
                     </div>
-                    
-                    <div class="p-4 bg-neutral-50">
-                        <p class="font-mono text-[10px] text-neutral-400 uppercase tracking-widest">Bank transfers via Stripe Connect (coming soon)</p>
+
+                    <!-- Payout Destinations -->
+                    <div class="border border-gray-200 bg-white">
+                        <div class="border-b border-gray-200 px-6 py-4">
+                            <h2 class="text-xs uppercase tracking-wider text-gray-500">
+                                Payout Destinations
+                            </h2>
+                        </div>
+                        <div class="divide-y divide-gray-200" id="payout-destinations-list">
+                            <!-- Bank Account Destination -->
+                            <div class="flex items-center justify-between px-6 py-4" id="destination-bank">
+                                <div class="flex flex-col gap-1">
+                                    <div class="flex items-center gap-3">
+                                        <span class="text-sm text-gray-900">
+                                            Bank Account
+                                            <span class="ml-2 text-gray-400" id="payout-last-four"></span>
+                                        </span>
+                                        <span class="text-xs text-gray-400">via Stripe Connect</span>
+                                    </div>
+                                    <div class="flex items-center gap-2">
+                                        <span class="text-xs text-gray-400" id="payout-status">Not configured</span>
+                                    </div>
+                                </div>
+                                <button id="manage-payout-btn" onclick="window.app.setupPayout()" class="flex items-center gap-2 border border-gray-300 bg-white px-4 py-2 text-xs text-gray-700 hover:bg-gray-50">
+                                    <i data-lucide="settings" class="w-3.5 h-3.5"></i>
+                                    Manage
+                                </button>
+                            </div>
+                        </div>
+                        <div class="border-t border-gray-200 px-6 py-4">
+                            <button id="add-destination-btn" class="flex items-center gap-2 text-xs text-gray-600 hover:text-gray-900">
+                                <i data-lucide="plus" class="w-3.5 h-3.5"></i>
+                                Add Destination
+                            </button>
+                        </div>
+                        <div class="border-t border-gray-200 bg-gray-50 px-6 py-4">
+                            <div class="space-y-1 text-xs text-gray-600">
+                                <p>Payouts occur only after contract settlement.</p>
+                                <p>Timing depends on settlement and provider processing.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- System Notice -->
+                    <div class="border border-gray-300 bg-gray-50 p-6">
+                        <div class="flex gap-4">
+                            <i data-lucide="info" class="w-5 h-5 flex-shrink-0 text-gray-500"></i>
+                            <p class="text-sm leading-relaxed text-gray-700">
+                                Funding sources are used exclusively to lock and release capital
+                                for performance contracts. Verification sources and identity
+                                attestations are managed separately.
+                            </p>
+                        </div>
                     </div>
                 </div>
-            </section>
-
-            <!-- Important Notice -->
-            <div class="bg-neutral-50 border border-neutral-200 p-5">
-                <p class="font-mono text-[10px] text-neutral-500 uppercase tracking-widest leading-relaxed">
-                    <span class="text-neutral-900 font-medium">Important:</span> Funding methods are used only to lock and release capital. 
-                    Verification sources are managed separately in your profile.
-                </p>
             </div>
         </div>
     `;
@@ -102,31 +184,25 @@ export async function initFunding() {
     // Check if we're on production
     const isProduction = window.location.hostname === 'collateral.market';
 
-    // Gate fake payment buttons on production
-    const addCardBtn = document.getElementById('add-card-btn');
-    const setupPayoutBtn = document.getElementById('setup-payout-btn');
+    // Get UI elements
     const cardStatus = document.getElementById('card-status');
+    const bankStatus = document.getElementById('bank-status');
     const payoutStatus = document.getElementById('payout-status');
+    const payoutLastFour = document.getElementById('payout-last-four');
+    const manageCardBtn = document.getElementById('manage-card-btn');
+    const manageBankBtn = document.getElementById('manage-bank-btn');
+    const managePayoutBtn = document.getElementById('manage-payout-btn');
 
     if (isProduction) {
-        // Production: Disable buttons, show proper messaging
-        if (addCardBtn) {
-            addCardBtn.textContent = 'Via Stripe';
-            addCardBtn.disabled = true;
-            addCardBtn.removeAttribute('onclick');
-            addCardBtn.classList.add('opacity-50', 'cursor-not-allowed');
-        }
+        // Production: Update messaging for Stripe flow
         if (cardStatus) {
-            cardStatus.textContent = 'Payment methods added during contract execution';
+            cardStatus.textContent = 'Configured during contract execution';
         }
-        if (setupPayoutBtn) {
-            setupPayoutBtn.textContent = 'Via Stripe Connect';
-            setupPayoutBtn.disabled = true;
-            setupPayoutBtn.removeAttribute('onclick');
-            setupPayoutBtn.classList.add('opacity-50', 'cursor-not-allowed');
+        if (bankStatus) {
+            bankStatus.textContent = 'Via Stripe Connect';
         }
         if (payoutStatus) {
-            payoutStatus.textContent = 'Payouts configured through Stripe Connect';
+            payoutStatus.textContent = 'Via Stripe Connect';
         }
     }
 
@@ -152,22 +228,32 @@ export async function initFunding() {
             console.log('[Funding] Calculated locked balance:', lockedCents / 100);
         }
 
-        // Fetch Stripe connection status (if not already gated by production check)
-        if (!isProduction) {
-            try {
-                const stripeStatus = await window.api.getStripeStatus();
+        // Fetch Stripe connection status
+        try {
+            const stripeStatus = await window.api.getStripeStatus();
 
-                if (stripeStatus?.connected && cardStatus) {
-                    cardStatus.textContent = 'Connected via Stripe';
-                    cardStatus.classList.remove('text-neutral-400');
-                    cardStatus.classList.add('text-[#1F7A4D]');
-                    if (addCardBtn) {
-                        addCardBtn.textContent = 'Connected';
-                        addCardBtn.disabled = true;
-                        addCardBtn.classList.add('opacity-50', 'cursor-not-allowed');
-                    }
+            if (stripeStatus?.connected) {
+                if (cardStatus) {
+                    cardStatus.textContent = 'Configured';
+                    cardStatus.classList.remove('text-gray-400');
+                    cardStatus.classList.add('text-gray-600');
                 }
-            } catch (stripeErr) {
+                if (bankStatus) {
+                    bankStatus.textContent = 'Configured';
+                    bankStatus.classList.remove('text-gray-400');
+                    bankStatus.classList.add('text-gray-600');
+                }
+                if (payoutStatus) {
+                    payoutStatus.textContent = 'Configured';
+                    payoutStatus.classList.remove('text-gray-400');
+                    payoutStatus.classList.add('text-gray-600');
+                }
+                if (payoutLastFour && stripeStatus.lastFour) {
+                    payoutLastFour.textContent = '•••• ' + stripeStatus.lastFour;
+                }
+            }
+        } catch (stripeErr) {
+            if (!isProduction) {
                 console.log('[Funding] Stripe status not available:', stripeErr.message);
             }
         }
@@ -178,5 +264,3 @@ export async function initFunding() {
         }
     }
 }
-
-

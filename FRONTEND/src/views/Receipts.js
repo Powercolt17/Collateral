@@ -6,18 +6,18 @@ export function renderReceipts() {
     return `
         <div class="min-h-screen bg-white">
             <!-- Header -->
-            <div class="border-b border-neutral-300">
+            <div class="border-b border-neutral-200">
                 <div class="max-w-5xl mx-auto px-8 py-8">
-                    <div class="mb-2 text-xs tracking-wider text-neutral-500 font-mono uppercase">
+                    <div class="mb-1 text-[11px] tracking-widest text-neutral-400 font-mono uppercase">
                         SYSTEM STATUS: OPERATIONAL
                     </div>
-                    <div class="mb-6 text-xs tracking-wider text-neutral-500 font-mono uppercase">
+                    <div class="mb-6 text-[11px] tracking-widest text-neutral-400 font-mono uppercase">
                         RECORD TYPE: EXECUTION RECEIPTS
                     </div>
-                    <h1 class="text-2xl font-normal tracking-tight text-neutral-900 mb-2">
+                    <h1 class="text-2xl font-semibold tracking-tight text-neutral-900 mb-2" style="font-family: 'IBM Plex Sans', sans-serif;">
                         EXECUTION RECORDS
                     </h1>
-                    <p class="text-sm font-mono text-neutral-600">
+                    <p class="text-sm font-mono text-neutral-500">
                         Permanent records. Append-only ledger.
                     </p>
                 </div>
@@ -28,15 +28,15 @@ export function renderReceipts() {
                 <div id="receipts-content">
                     <!-- Populated by JS -->
                     <div class="py-12 text-center">
-                        <p class="text-sm font-mono text-neutral-500">Loading records...</p>
+                        <p class="text-sm font-mono text-neutral-400">Loading records...</p>
                     </div>
                 </div>
             </div>
 
             <!-- Footer Notice -->
-            <div class="border-t border-neutral-300 mt-12">
+            <div class="border-t border-neutral-200">
                 <div class="max-w-5xl mx-auto px-8 py-6">
-                    <p class="text-xs font-mono text-neutral-600 text-center">
+                    <p class="text-xs font-mono text-neutral-500 text-center">
                         Records are immutable. Outcomes cannot be altered or removed.
                     </p>
                 </div>
@@ -62,10 +62,10 @@ export async function initReceipts() {
                     <p class="text-sm font-mono text-neutral-600 mb-2">
                         NO EXECUTION RECORDS AVAILABLE
                     </p>
-                    <p class="text-xs font-mono text-neutral-500">
+                    <p class="text-xs font-mono text-neutral-400">
                         Execution receipts are generated at contract execution.
                     </p>
-                    <p class="text-xs font-mono text-neutral-500">
+                    <p class="text-xs font-mono text-neutral-400">
                         Records cannot be modified or removed.
                     </p>
                 </div>
@@ -74,9 +74,10 @@ export async function initReceipts() {
         }
 
         // Format helpers
-        function formatCurrency(cents) {
-            if (!cents) return '$0.00';
-            return '$' + (cents / 100).toLocaleString('en-US', { minimumFractionDigits: 2 });
+        function formatUSDC(cents) {
+            if (!cents) return '0 USDC';
+            const amount = (cents / 100).toLocaleString('en-US', { minimumFractionDigits: 0, maximumFractionDigits: 0 });
+            return amount + ' USDC';
         }
 
         function formatDateTime(isoString) {
@@ -87,11 +88,10 @@ export async function initReceipts() {
 
         function formatContractId(id) {
             if (!id) return '-';
-            // Format as CTX-YYYY-XXXX-HASH
             const year = new Date().getFullYear();
             const shortId = id.slice(0, 4).toUpperCase();
             const hash = id.slice(-4).toUpperCase();
-            return \`CTX-\${year}-\${shortId}-\${hash}\`;
+            return `CTX-${year}-${shortId}-${hash}`;
         }
 
         function getStatusText(state) {
@@ -116,19 +116,19 @@ export async function initReceipts() {
 
         // Build table HTML
         let tableHTML = `
-                < table class="w-full border-collapse" >
+            <table class="w-full">
                 <thead>
-                    <tr class="border-b border-neutral-300">
-                        <th class="text-left py-3 px-4 text-xs font-mono tracking-wider text-neutral-700 uppercase">
+                    <tr class="border-b border-neutral-200">
+                        <th class="text-left py-4 pr-8 text-[11px] font-mono font-semibold tracking-widest text-neutral-900 uppercase">
                             Contract ID
                         </th>
-                        <th class="text-left py-3 px-4 text-xs font-mono tracking-wider text-neutral-700 uppercase">
+                        <th class="text-left py-4 pr-8 text-[11px] font-mono font-semibold tracking-widest text-neutral-900 uppercase">
                             Capital Locked
                         </th>
-                        <th class="text-left py-3 px-4 text-xs font-mono tracking-wider text-neutral-700 uppercase">
+                        <th class="text-left py-4 pr-8 text-[11px] font-mono font-semibold tracking-widest text-neutral-900 uppercase">
                             Executed
                         </th>
-                        <th class="text-left py-3 px-4 text-xs font-mono tracking-wider text-neutral-700 uppercase">
+                        <th class="text-left py-4 text-[11px] font-mono font-semibold tracking-widest text-neutral-900 uppercase">
                             Status
                         </th>
                     </tr>
@@ -138,26 +138,26 @@ export async function initReceipts() {
 
         contracts.forEach(contract => {
             const contractId = formatContractId(contract.id);
-            const capital = formatCurrency(contract.lockAmountUsdCents);
+            const capital = formatUSDC(contract.lockAmountUsdCents);
             const executed = formatDateTime(contract.createdAt);
             const status = getStatusText(contract.state);
 
             tableHTML += `
-                <tr class="border-b border-neutral-200 cursor-pointer hover:bg-neutral-50" 
+                <tr class="border-b border-neutral-100 cursor-pointer hover:bg-neutral-50" 
                     onclick="window.router.navigate('/receipts/${contract.id}')">
-                    <td class="py-4 px-4">
-                        <span class="font-mono text-sm text-neutral-900 underline decoration-1 underline-offset-2">
+                    <td class="py-4 pr-8">
+                        <span class="font-mono text-sm text-neutral-900 underline underline-offset-2 decoration-1">
                             ${contractId}
                         </span>
                     </td>
-                    <td class="py-4 px-4 font-mono text-sm text-neutral-900">
+                    <td class="py-4 pr-8 font-mono text-sm text-neutral-700">
                         ${capital}
                     </td>
-                    <td class="py-4 px-4 font-mono text-sm text-neutral-600">
+                    <td class="py-4 pr-8 font-mono text-sm text-neutral-500">
                         ${executed}
                     </td>
-                    <td class="py-4 px-4">
-                        <span class="font-mono text-xs tracking-wider text-neutral-900 uppercase">
+                    <td class="py-4">
+                        <span class="font-mono text-xs tracking-wider text-neutral-700 uppercase">
                             ${status}
                         </span>
                     </td>
@@ -167,22 +167,22 @@ export async function initReceipts() {
 
         tableHTML += `
                 </tbody>
-            </table >
-                `;
+            </table>
+        `;
 
         container.innerHTML = tableHTML;
 
     } catch (error) {
         console.error('[Receipts] Error loading contracts:', error);
         container.innerHTML = `
-                < div class="py-24 text-center" >
+            <div class="py-24 text-center">
                 <p class="text-sm font-mono text-neutral-600 mb-2">
                     ERROR LOADING RECORDS
                 </p>
-                <p class="text-xs font-mono text-neutral-500">
+                <p class="text-xs font-mono text-neutral-400">
                     ${error.message || 'Please try again later.'}
                 </p>
-            </div >
-                `;
+            </div>
+        `;
     }
 }

@@ -7,8 +7,10 @@ export function renderOverview() {
             <section class="border-b border-gray-200">
                 <div class="max-w-7xl mx-auto px-6 py-24 md:py-32">
                     <div class="max-w-4xl">
-                        <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 text-gray-950 leading-tight" style="font-family: 'IBM Plex Sans', sans-serif;">
-                            Lock Capital. Verify Performance. <span style="color: #751212;">Settle Outcomes.</span>
+                        <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 text-gray-950 leading-tight"
+    style="font-family: 'IBM Plex Sans', sans-serif;">
+  Intentions Fail<br />
+  <span style="color: #751212;">Without</span> Stakes.</h1>
                         </h1>
                         <p class="text-lg md:text-xl text-gray-600 mb-10 leading-relaxed" style="font-family: 'Inter', sans-serif; font-weight: 400;">
                             Performance contracts with on-chain enforcement. Capital at stake. Outcomes verified via platform integrations. Winners paid from forfeited funds.

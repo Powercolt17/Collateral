@@ -18,6 +18,7 @@ import xOAuthRoutes from './routes/x-oauth.js';  // X OAuth (replaces bio challe
 import stripeConnectRoutes from './routes/stripe-connect.js';
 import quoteRoutes from './routes/quote.js';
 import opsRoutes from './routes/ops.js';
+import billingRoutes from './routes/billing.js';
 
 const PORT = parseInt(process.env.PORT || '3000', 10);
 
@@ -140,6 +141,9 @@ async function main() {
     // V1 Contract endpoints (CANONICAL)
     await fastify.register(contractReadRoutes);   // GET /v1/contracts, GET /v1/contracts/:id
     await fastify.register(contractWriteRoutes);  // POST /v1/contracts, /funding-intent, /execute
+
+    // Billing (Card verification)
+    await fastify.register(billingRoutes);        // /v1/billing/*
 
     // Webhooks
     await fastify.register(webhookRoutes);        // POST /v1/stripe/webhook

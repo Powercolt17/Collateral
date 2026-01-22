@@ -1,4 +1,4 @@
-// Funding & Payouts View
+// Funding & Payouts View with Live Stripe Card Verification
 export function renderFunding() {
     return `
         <div class="min-h-screen bg-gray-50">
@@ -30,9 +30,9 @@ export function renderFunding() {
                                         <span class="text-sm text-gray-900">Card</span>
                                         <span class="text-xs text-gray-400">via Stripe</span>
                                     </div>
-                                    <span class="text-xs text-gray-400 mt-0.5" id="card-status">Loading...</span>
+                                    <span class="text-xs mt-0.5" id="card-status">Loading...</span>
                                 </div>
-                                <button id="manage-card-btn" onclick="window.app.addCard()" class="flex items-center gap-1.5 border border-gray-200 bg-white px-3 py-1.5 text-xs text-gray-600 hover:bg-gray-50 rounded">
+                                <button id="manage-card-btn" class="flex items-center gap-1.5 border border-gray-200 bg-white px-3 py-1.5 text-xs text-gray-600 hover:bg-gray-50 rounded">
                                     <i data-lucide="settings" class="w-3 h-3"></i>
                                     Manage
                                 </button>
@@ -46,17 +46,11 @@ export function renderFunding() {
                                     </div>
                                     <span class="text-xs text-gray-400 mt-0.5" id="bank-status">Loading...</span>
                                 </div>
-                                <button id="manage-bank-btn" onclick="window.app.setupPayout()" class="flex items-center gap-1.5 border border-gray-200 bg-white px-3 py-1.5 text-xs text-gray-600 hover:bg-gray-50 rounded">
+                                <button id="manage-bank-btn" class="flex items-center gap-1.5 border border-gray-200 bg-white px-3 py-1.5 text-xs text-gray-600 hover:bg-gray-50 rounded">
                                     <i data-lucide="settings" class="w-3 h-3"></i>
                                     Manage
                                 </button>
                             </div>
-                        </div>
-                        <div class="px-5 py-3 border-t border-gray-100">
-                            <button id="add-source-btn" class="flex items-center gap-1.5 text-xs text-gray-500 hover:text-gray-700">
-                                <i data-lucide="plus" class="w-3 h-3"></i>
-                                Add Source
-                            </button>
                         </div>
                     </div>
 
@@ -127,23 +121,70 @@ export function renderFunding() {
                                     </div>
                                     <span class="text-xs text-gray-400 mt-0.5" id="payout-status">Loading...</span>
                                 </div>
-                                <button id="manage-payout-btn" onclick="window.app.setupPayout()" class="flex items-center gap-1.5 border border-gray-200 bg-white px-3 py-1.5 text-xs text-gray-600 hover:bg-gray-50 rounded">
+                                <button id="manage-payout-btn" class="flex items-center gap-1.5 border border-gray-200 bg-white px-3 py-1.5 text-xs text-gray-600 hover:bg-gray-50 rounded">
                                     <i data-lucide="settings" class="w-3 h-3"></i>
                                     Manage
                                 </button>
                             </div>
-                        </div>
-                        <div class="px-5 py-3 border-t border-gray-100">
-                            <button id="add-destination-btn" class="flex items-center gap-1.5 text-xs text-gray-500 hover:text-gray-700">
-                                <i data-lucide="plus" class="w-3 h-3"></i>
-                                Add Destination
-                            </button>
                         </div>
                         <div class="px-5 py-3 bg-gray-50 border-t border-gray-100 rounded-b">
                             <p class="text-xs text-gray-500">
                                 Payouts occur only after contract settlement.
                             </p>
                         </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Card Modal -->
+        <div id="card-modal" class="fixed inset-0 bg-black/50 hidden items-center justify-center z-50">
+            <div class="bg-white rounded-lg w-full max-w-md mx-4 shadow-xl">
+                <div class="px-6 py-4 border-b border-gray-200">
+                    <div class="flex items-center justify-between">
+                        <h3 class="text-lg font-semibold text-gray-900">Add Card</h3>
+                        <button id="close-card-modal" class="text-gray-400 hover:text-gray-600">
+                            <i data-lucide="x" class="w-5 h-5"></i>
+                        </button>
+                    </div>
+                    <p class="text-sm text-gray-500 mt-1">
+                        Verify a card to use as your funding source
+                    </p>
+                </div>
+                <div class="px-6 py-6">
+                    <div id="card-element-container" class="border border-gray-300 rounded px-3 py-3 mb-4">
+                        <!-- Stripe Card Element mounted here -->
+                    </div>
+                    <div id="card-error" class="text-sm text-red-600 mb-4 hidden"></div>
+                    <button id="submit-card-btn" class="w-full py-2.5 bg-gray-900 text-white text-sm font-medium rounded hover:bg-gray-800 disabled:opacity-50 disabled:cursor-not-allowed">
+                        Verify & Save Card
+                    </button>
+                </div>
+                <div class="px-6 py-3 bg-gray-50 border-t border-gray-200 rounded-b-lg">
+                    <p class="text-xs text-gray-500 text-center">
+                        Your card will be verified but not charged until you lock capital.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Remove Card Confirmation Modal -->
+        <div id="remove-card-modal" class="fixed inset-0 bg-black/50 hidden items-center justify-center z-50">
+            <div class="bg-white rounded-lg w-full max-w-sm mx-4 shadow-xl">
+                <div class="px-6 py-4 border-b border-gray-200">
+                    <h3 class="text-lg font-semibold text-gray-900">Remove Card</h3>
+                </div>
+                <div class="px-6 py-6">
+                    <p class="text-sm text-gray-600 mb-4">
+                        Are you sure you want to remove this card? You'll need to add a new card before locking capital.
+                    </p>
+                    <div class="flex gap-3">
+                        <button id="cancel-remove-btn" class="flex-1 py-2 border border-gray-300 text-sm text-gray-700 rounded hover:bg-gray-50">
+                            Cancel
+                        </button>
+                        <button id="confirm-remove-btn" class="flex-1 py-2 bg-red-600 text-white text-sm rounded hover:bg-red-700">
+                            Remove Card
+                        </button>
                     </div>
                 </div>
             </div>
@@ -157,143 +198,279 @@ function formatUSD(cents) {
     return '$' + dollars.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
 }
 
+// Stripe.js instance
+let stripe = null;
+let cardElement = null;
+
 export async function initFunding() {
     if (window.lucide) {
         window.lucide.createIcons();
     }
 
-    // Check if we're on production
-    const isProduction = window.location.hostname === 'collateral.market';
+    // Initialize Stripe.js
+    const STRIPE_PUBLISHABLE_KEY = import.meta.env.VITE_STRIPE_PUBLISHABLE_KEY || 'pk_test_placeholder';
+    if (window.Stripe && STRIPE_PUBLISHABLE_KEY !== 'pk_test_placeholder') {
+        stripe = window.Stripe(STRIPE_PUBLISHABLE_KEY);
+    }
 
     // Get UI elements
-    const cardStatus = document.getElementById('card-status');
-    const bankStatus = document.getElementById('bank-status');
-    const payoutStatus = document.getElementById('payout-status');
-    const payoutLastFour = document.getElementById('payout-last-four');
+    const cardStatusEl = document.getElementById('card-status');
+    const bankStatusEl = document.getElementById('bank-status');
+    const payoutStatusEl = document.getElementById('payout-status');
+    const payoutLastFourEl = document.getElementById('payout-last-four');
     const availableBalanceEl = document.getElementById('available-balance');
     const lockedBalanceEl = document.getElementById('locked-balance');
     const pendingPayoutEl = document.getElementById('pending-payout');
+    const manageCardBtn = document.getElementById('manage-card-btn');
+    const manageBankBtn = document.getElementById('manage-bank-btn');
+    const managePayoutBtn = document.getElementById('manage-payout-btn');
 
-    try {
-        // Fetch all contracts to calculate balances
-        const response = await window.api.getContracts();
-        const contracts = response?.contracts || [];
+    // Modal elements
+    const cardModal = document.getElementById('card-modal');
+    const closeCardModalBtn = document.getElementById('close-card-modal');
+    const submitCardBtn = document.getElementById('submit-card-btn');
+    const cardErrorEl = document.getElementById('card-error');
+    const removeCardModal = document.getElementById('remove-card-modal');
+    const cancelRemoveBtn = document.getElementById('cancel-remove-btn');
+    const confirmRemoveBtn = document.getElementById('confirm-remove-btn');
 
-        if (!isProduction) {
-            console.log('[Funding] Loaded contracts:', contracts.length);
-        }
+    // Current card state
+    let currentCardStatus = null;
 
-        // Contract state categories
-        const lockedStates = ['LOCKED', 'ACTIVE', 'EXECUTION_CONFIRMED', 'FUNDS_LOCKED', 'VERIFIED', 'VERIFYING'];
-        const pendingPayoutStates = ['SETTLED', 'PAYOUT_PENDING'];
-        const completedStates = ['PAYOUT_COMPLETE', 'COMPLETED'];
+    // ====================
+    // Fetch & Display Data
+    // ====================
+    async function loadBillingStatus() {
+        try {
+            // Fetch billing status
+            const billingStatus = await window.api.getBillingStatus();
 
-        // Calculate LOCKED balance (contracts actively at risk)
-        const lockedCents = contracts
-            .filter(c => lockedStates.includes(c.state))
-            .reduce((sum, c) => sum + (c.lockAmountUsdCents || 0), 0);
+            if (billingStatus?.fundingSource) {
+                const fs = billingStatus.fundingSource;
+                currentCardStatus = fs.status;
 
-        // Calculate PENDING PAYOUT (settled but not yet transferred)
-        const pendingCents = contracts
-            .filter(c => pendingPayoutStates.includes(c.state))
-            .reduce((sum, c) => sum + (c.lockAmountUsdCents || 0), 0);
+                if (fs.status === 'verified') {
+                    const brand = fs.brand || 'CARD';
+                    const last4 = fs.last4 || '****';
+                    const exp = fs.expMonth && fs.expYear ? `${String(fs.expMonth).padStart(2, '0')}/${String(fs.expYear).slice(-2)}` : '';
 
-        // Calculate total ever locked (for available balance context)
-        const totalLockedEver = contracts
-            .reduce((sum, c) => sum + (c.lockAmountUsdCents || 0), 0);
-
-        // Calculate total completed payouts
-        const completedCents = contracts
-            .filter(c => completedStates.includes(c.state))
-            .reduce((sum, c) => sum + (c.lockAmountUsdCents || 0), 0);
-
-        // Update LOCKED balance
-        if (lockedBalanceEl) {
-            lockedBalanceEl.textContent = formatUSD(lockedCents);
-        }
-
-        // Update PENDING PAYOUT
-        if (pendingPayoutEl) {
-            pendingPayoutEl.textContent = formatUSD(pendingCents);
-        }
-
-        // For Available Balance, try to get from profile or calculate
-        // Available = deposited funds not currently locked
-        // Since we don't have a deposit tracking system yet, show $0 or estimate
-        if (availableBalanceEl) {
-            // Try to fetch from profile stats if available
-            try {
-                const profile = await window.api.getProfile();
-                if (profile?.stats?.availableBalanceUsdCents !== undefined) {
-                    availableBalanceEl.textContent = formatUSD(profile.stats.availableBalanceUsdCents);
+                    cardStatusEl.innerHTML = `
+                        <span class="text-gray-700">${brand} •••• ${last4}</span>
+                        ${exp ? `<span class="text-gray-400 ml-2">exp ${exp}</span>` : ''}
+                        <span class="inline-flex items-center ml-2 px-1.5 py-0.5 rounded text-[10px] font-medium bg-green-100 text-green-800">Verified</span>
+                    `;
+                    manageCardBtn.textContent = 'Manage';
+                } else if (fs.status === 'pending_verification') {
+                    cardStatusEl.textContent = 'Verification pending...';
+                    cardStatusEl.classList.add('text-amber-600');
                 } else {
-                    // Show $0.00 if no available balance data
-                    availableBalanceEl.textContent = formatUSD(0);
+                    cardStatusEl.textContent = 'Not configured';
+                    cardStatusEl.classList.add('text-gray-400');
                 }
-            } catch (profileErr) {
-                // No profile data available
-                availableBalanceEl.textContent = formatUSD(0);
+            } else {
+                cardStatusEl.textContent = 'Not configured';
+                cardStatusEl.classList.add('text-gray-400');
             }
-        }
 
-        if (!isProduction) {
-            console.log('[Funding] Balance state:', {
-                locked: lockedCents / 100,
-                pending: pendingCents / 100,
-                completed: completedCents / 100
+            if (billingStatus?.payoutDestination?.connected) {
+                bankStatusEl.textContent = 'Configured';
+                bankStatusEl.classList.remove('text-gray-400');
+                bankStatusEl.classList.add('text-gray-600');
+                payoutStatusEl.textContent = 'Configured';
+                payoutStatusEl.classList.remove('text-gray-400');
+                payoutStatusEl.classList.add('text-gray-600');
+            } else {
+                bankStatusEl.textContent = 'Not configured';
+                payoutStatusEl.textContent = 'Not configured';
+            }
+
+            // Update balances
+            if (billingStatus?.balances) {
+                availableBalanceEl.textContent = formatUSD(billingStatus.balances.availableBalanceUsdCents || 0);
+                lockedBalanceEl.textContent = formatUSD(billingStatus.balances.lockedBalanceUsdCents || 0);
+                pendingPayoutEl.textContent = formatUSD(billingStatus.balances.pendingPayoutUsdCents || 0);
+            }
+
+        } catch (err) {
+            console.error('[Funding] Error loading billing status:', err);
+            cardStatusEl.textContent = 'Error loading';
+        }
+    }
+
+    async function loadContractBalances() {
+        try {
+            const response = await window.api.getContracts();
+            const contracts = response?.contracts || [];
+
+            const lockedStates = ['LOCKED', 'ACTIVE', 'EXECUTION_CONFIRMED', 'FUNDS_LOCKED', 'VERIFIED', 'VERIFYING'];
+            const pendingPayoutStates = ['SETTLED', 'PAYOUT_PENDING'];
+
+            const lockedCents = contracts
+                .filter(c => lockedStates.includes(c.state))
+                .reduce((sum, c) => sum + (c.lockAmountUsdCents || 0), 0);
+
+            const pendingCents = contracts
+                .filter(c => pendingPayoutStates.includes(c.state))
+                .reduce((sum, c) => sum + (c.lockAmountUsdCents || 0), 0);
+
+            lockedBalanceEl.textContent = formatUSD(lockedCents);
+            pendingPayoutEl.textContent = formatUSD(pendingCents);
+
+        } catch (err) {
+            console.error('[Funding] Error loading contracts:', err);
+        }
+    }
+
+    // ====================
+    // Card Modal Logic
+    // ====================
+    function showCardModal() {
+        cardModal.classList.remove('hidden');
+        cardModal.classList.add('flex');
+
+        // Mount Stripe Card Element if not already mounted
+        if (stripe && !cardElement) {
+            const elements = stripe.elements();
+            cardElement = elements.create('card', {
+                style: {
+                    base: {
+                        fontSize: '16px',
+                        color: '#374151',
+                        fontFamily: 'ui-sans-serif, system-ui, sans-serif',
+                        '::placeholder': { color: '#9CA3AF' },
+                    },
+                    invalid: { color: '#DC2626' },
+                },
+            });
+            cardElement.mount('#card-element-container');
+            cardElement.on('change', (event) => {
+                if (event.error) {
+                    cardErrorEl.textContent = event.error.message;
+                    cardErrorEl.classList.remove('hidden');
+                } else {
+                    cardErrorEl.classList.add('hidden');
+                }
             });
         }
 
-        // Fetch Stripe connection status
-        try {
-            const stripeStatus = await window.api.getStripeStatus();
+        if (window.lucide) window.lucide.createIcons();
+    }
 
-            if (stripeStatus?.connected) {
-                // Connected
-                if (cardStatus) {
-                    cardStatus.textContent = 'Configured';
-                    cardStatus.classList.remove('text-gray-400');
-                    cardStatus.classList.add('text-gray-600');
-                }
-                if (bankStatus) {
-                    bankStatus.textContent = 'Configured';
-                    bankStatus.classList.remove('text-gray-400');
-                    bankStatus.classList.add('text-gray-600');
-                }
-                if (payoutStatus) {
-                    payoutStatus.textContent = 'Configured';
-                    payoutStatus.classList.remove('text-gray-400');
-                    payoutStatus.classList.add('text-gray-600');
-                }
-                if (payoutLastFour && stripeStatus.lastFour) {
-                    payoutLastFour.textContent = '•••• ' + stripeStatus.lastFour;
-                }
-            } else {
-                // Not connected
-                if (cardStatus) cardStatus.textContent = 'Not configured';
-                if (bankStatus) bankStatus.textContent = 'Not configured';
-                if (payoutStatus) payoutStatus.textContent = 'Not configured';
-                if (payoutLastFour) payoutLastFour.textContent = '';
-            }
-        } catch (stripeErr) {
-            // Stripe status not available
-            if (cardStatus) cardStatus.textContent = 'Not configured';
-            if (bankStatus) bankStatus.textContent = 'Not configured';
-            if (payoutStatus) payoutStatus.textContent = 'Not configured';
+    function hideCardModal() {
+        cardModal.classList.add('hidden');
+        cardModal.classList.remove('flex');
+    }
 
-            if (!isProduction) {
-                console.log('[Funding] Stripe status not available:', stripeErr.message);
-            }
+    function showRemoveModal() {
+        removeCardModal.classList.remove('hidden');
+        removeCardModal.classList.add('flex');
+    }
+
+    function hideRemoveModal() {
+        removeCardModal.classList.add('hidden');
+        removeCardModal.classList.remove('flex');
+    }
+
+    async function submitCard() {
+        if (!stripe || !cardElement) {
+            cardErrorEl.textContent = 'Stripe not initialized. Please refresh the page.';
+            cardErrorEl.classList.remove('hidden');
+            return;
         }
 
-    } catch (error) {
-        // Handle contract fetch error
-        if (cardStatus) cardStatus.textContent = 'Error loading';
-        if (bankStatus) bankStatus.textContent = 'Error loading';
-        if (payoutStatus) payoutStatus.textContent = 'Error loading';
+        submitCardBtn.disabled = true;
+        submitCardBtn.textContent = 'Verifying...';
+        cardErrorEl.classList.add('hidden');
 
-        if (!isProduction) {
-            console.error('[Funding] Error loading funding data:', error);
+        try {
+            // Create SetupIntent
+            const siResponse = await window.api.createCardSetupIntent();
+            if (!siResponse?.clientSecret) {
+                throw new Error('Failed to create setup intent');
+            }
+
+            // Confirm with Stripe
+            const { setupIntent, error } = await stripe.confirmCardSetup(siResponse.clientSecret, {
+                payment_method: { card: cardElement },
+            });
+
+            if (error) {
+                throw new Error(error.message);
+            }
+
+            if (setupIntent.status === 'succeeded') {
+                // Confirm with backend
+                await window.api.confirmCard(setupIntent.id, setupIntent.payment_method);
+
+                hideCardModal();
+                await loadBillingStatus();
+            } else if (setupIntent.status === 'requires_action') {
+                // SCA challenge may have been presented
+                cardErrorEl.textContent = 'Additional verification required. Please complete the authentication.';
+                cardErrorEl.classList.remove('hidden');
+            }
+
+        } catch (err) {
+            cardErrorEl.textContent = err.message || 'Card verification failed. Please try again.';
+            cardErrorEl.classList.remove('hidden');
+        } finally {
+            submitCardBtn.disabled = false;
+            submitCardBtn.textContent = 'Verify & Save Card';
         }
     }
+
+    async function removeCard() {
+        confirmRemoveBtn.disabled = true;
+        confirmRemoveBtn.textContent = 'Removing...';
+
+        try {
+            await window.api.removeCard();
+            hideRemoveModal();
+            await loadBillingStatus();
+        } catch (err) {
+            alert('Failed to remove card: ' + (err.message || 'Unknown error'));
+        } finally {
+            confirmRemoveBtn.disabled = false;
+            confirmRemoveBtn.textContent = 'Remove Card';
+        }
+    }
+
+    // ====================
+    // Event Listeners
+    // ====================
+    manageCardBtn?.addEventListener('click', () => {
+        if (currentCardStatus === 'verified') {
+            // Show options menu (for now, show remove modal)
+            showRemoveModal();
+        } else {
+            showCardModal();
+        }
+    });
+
+    manageBankBtn?.addEventListener('click', () => {
+        window.app?.setupPayout?.();
+    });
+
+    managePayoutBtn?.addEventListener('click', () => {
+        window.app?.setupPayout?.();
+    });
+
+    closeCardModalBtn?.addEventListener('click', hideCardModal);
+    cardModal?.addEventListener('click', (e) => {
+        if (e.target === cardModal) hideCardModal();
+    });
+
+    submitCardBtn?.addEventListener('click', submitCard);
+
+    cancelRemoveBtn?.addEventListener('click', hideRemoveModal);
+    confirmRemoveBtn?.addEventListener('click', removeCard);
+    removeCardModal?.addEventListener('click', (e) => {
+        if (e.target === removeCardModal) hideRemoveModal();
+    });
+
+    // ====================
+    // Initial Load
+    // ====================
+    await loadBillingStatus();
+    await loadContractBalances();
 }

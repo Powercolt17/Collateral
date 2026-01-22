@@ -81,6 +81,14 @@ export const identityProviderEnum = pgEnum('identity_provider', [
 
 export const ledgerActorEnum = pgEnum('ledger_actor', ['SYSTEM', 'USER']);
 
+// Funding source status for card verification
+export const fundingSourceStatusEnum = pgEnum('funding_source_status', [
+    'unconfigured',
+    'pending_verification',
+    'verified',
+    'disabled'
+]);
+
 export const ledgerEventTypeEnum = pgEnum('ledger_event_type', [
     'CONTRACT_CREATED',
     'BASELINE_SNAPSHOTTED',
@@ -164,6 +172,30 @@ export const connectedAccounts = pgTable('connected_accounts', {
     challengeIssuedAt: timestamp('challenge_issued_at', { withTimezone: true }),
     verifiedAt: timestamp('verified_at', { withTimezone: true }),
 });
+
+// =============================================================================
+// FUNDING SOURCES TABLE (Stripe Card Verification)
+// =============================================================================
+// Stores verified payment methods for capital lock operations
+export const fundingSources = pgTable('funding_sources', {
+    id: uuid('id').primaryKey().defaultRandom(),
+    userId: uuid('user_id').references(() => users.id).notNull(),
+    stripeCustomerId: varchar('stripe_customer_id', { length: 255 }).notNull(),
+    stripePaymentMethodId: varchar('stripe_payment_method_id', { length: 255 }),
+    stripeSetupIntentId: varchar('stripe_setup_intent_id', { length: 255 }),
+    brand: varchar('brand', { length: 20 }),
+    last4: varchar('last4', { length: 4 }),
+    expMonth: integer('exp_month'),
+    expYear: integer('exp_year'),
+    status: fundingSourceStatusEnum('status').default('unconfigured').notNull(),
+    verifiedAt: timestamp('verified_at', { withTimezone: true }),
+    createdAt: timestamp('created_at', { withTimezone: true }).defaultNow().notNull(),
+    updatedAt: timestamp('updated_at', { withTimezone: true }).defaultNow().notNull(),
+}, (table) => ({
+    userIdUnique: uniqueIndex('idx_funding_sources_user_id').on(table.userId),
+    stripeCustomerIdx: index('idx_funding_sources_stripe_customer').on(table.stripeCustomerId),
+    setupIntentIdx: index('idx_funding_sources_setup_intent').on(table.stripeSetupIntentId),
+}));
 
 // =============================================================================
 // IDENTITY BINDINGS TABLE (Immutable, Append-Only)
@@ -289,6 +321,9 @@ export type NewContract = typeof contracts.$inferInsert;
 
 export type LedgerEvent = typeof ledgerEvents.$inferSelect;
 export type NewLedgerEvent = typeof ledgerEvents.$inferInsert;
+
+export type FundingSource = typeof fundingSources.$inferSelect;
+export type NewFundingSource = typeof fundingSources.$inferInsert;
 
 // Contract status enum values for state machine (derived from ledger events)
 export const ContractStatus = {

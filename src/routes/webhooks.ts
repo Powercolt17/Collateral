@@ -1,7 +1,10 @@
 import { FastifyPluginAsync } from 'fastify';
+import { eq } from 'drizzle-orm';
 import { handlePaymentSuccess, handlePaymentFailure, handlePaymentDisputed } from '../services/funding.js';
 import { getContractIdByPaymentIntent, getContractIdByChargeId } from '../services/ledger.js';
 import { getContract } from '../services/contracts.js';
+import { db } from '../db/client.js';
+import { fundingSources } from '../db/schema.js';
 
 /**
  * Webhook Routes
@@ -272,6 +275,74 @@ const webhookRoutes: FastifyPluginAsync = async (fastify) => {
                     });
                     console.log(`${ctx} 🔒 Dispute recorded - contract may be forfeited`);
                     break;
+
+                case 'setup_intent.succeeded': {
+                    // Card verification succeeded
+                    const siId = eventObject.id;
+                    const paymentMethodId = eventObject.payment_method;
+                    const customerId = eventObject.customer;
+                    const userId = eventObject.metadata?.userId;
+
+                    console.log(`${ctx} 💳 SetupIntent succeeded: ${siId}`);
+
+                    if (!paymentMethodId || !customerId) {
+                        console.log(`${ctx} ⏩ Ignored (missing PM or customer)`);
+                        return { received: true };
+                    }
+
+                    // Fetch payment method details
+                    const stripeClient = getStripe();
+                    if (stripeClient) {
+                        try {
+                            const pm = await stripeClient.paymentMethods.retrieve(paymentMethodId);
+                            const card = pm.card;
+
+                            // Update funding source by setup intent ID
+                            await db.update(fundingSources)
+                                .set({
+                                    stripePaymentMethodId: paymentMethodId,
+                                    brand: card?.brand?.toUpperCase() || null,
+                                    last4: card?.last4 || null,
+                                    expMonth: card?.exp_month || null,
+                                    expYear: card?.exp_year || null,
+                                    status: 'verified',
+                                    verifiedAt: new Date(),
+                                    updatedAt: new Date(),
+                                })
+                                .where(eq(fundingSources.stripeSetupIntentId, siId));
+
+                            // Set as default payment method
+                            await stripeClient.customers.update(customerId, {
+                                invoice_settings: {
+                                    default_payment_method: paymentMethodId,
+                                },
+                            });
+
+                            console.log(`${ctx} ✅ Card verified: ${card?.brand} •••• ${card?.last4}`);
+                        } catch (pmErr: any) {
+                            console.error(`${ctx} ⚠️ Failed to process PM: ${pmErr.message}`);
+                        }
+                    }
+                    break;
+                }
+
+                case 'setup_intent.setup_failed': {
+                    // Card verification failed
+                    const siId = eventObject.id;
+                    const failureCode = eventObject.last_setup_error?.code;
+                    const failureMessage = eventObject.last_setup_error?.message;
+
+                    console.log(`${ctx} ❌ SetupIntent failed: ${siId} - ${failureCode}: ${failureMessage}`);
+
+                    // Update status to unconfigured (allow retry)
+                    await db.update(fundingSources)
+                        .set({
+                            status: 'unconfigured',
+                            updatedAt: new Date(),
+                        })
+                        .where(eq(fundingSources.stripeSetupIntentId, siId));
+                    break;
+                }
 
                 default:
                     console.log(`${ctx} ⏩ Unhandled event type`);

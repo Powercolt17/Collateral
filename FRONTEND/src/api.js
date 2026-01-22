@@ -301,6 +301,24 @@ export async function createFundingIntent(contractId) {
     return post(`/v1/contracts/${contractId}/funding-intent`);
 }
 
+// --- BILLING (Card Verification) ---
+
+export async function createCardSetupIntent() {
+    return post('/v1/billing/card/setup_intent');
+}
+
+export async function getBillingStatus() {
+    return get('/v1/billing/status');
+}
+
+export async function confirmCard(setupIntentId, paymentMethodId) {
+    return post('/v1/billing/card/confirm', { setupIntentId, paymentMethodId });
+}
+
+export async function removeCard() {
+    return post('/v1/billing/card/remove');
+}
+
 // --- EXECUTE ---
 
 export async function executeContract(contractId) {
@@ -385,6 +403,12 @@ export default {
 
     // Funding
     createFundingIntent,
+
+    // Billing (Card Verification)
+    createCardSetupIntent,
+    getBillingStatus,
+    confirmCard,
+    removeCard,
 
     // Execute
     executeContract,

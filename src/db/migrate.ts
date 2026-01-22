@@ -11,6 +11,8 @@ import 'dotenv/config';
 import { drizzle } from 'drizzle-orm/postgres-js';
 import { migrate } from 'drizzle-orm/postgres-js/migrator';
 import { migrationClient } from './client.js';
+import { fileURLToPath } from 'url';
+import { dirname, resolve } from 'path';
 
 // Fail-closed if DATABASE_URL is missing after dotenv loads
 if (!process.env.DATABASE_URL) {
@@ -25,7 +27,15 @@ async function main() {
 
     const db = drizzle(migrationClient);
 
-    await migrate(db, { migrationsFolder: './src/db/migrations' });
+    // Resolve migrations folder relative to project root (works from both src/ and dist/)
+    const __filename = fileURLToPath(import.meta.url);
+    const __dirname = dirname(__filename);
+    // Go up from dist/db or src/db to project root, then to src/db/migrations
+    const migrationsFolder = resolve(__dirname, '../../src/db/migrations');
+
+    console.log(`   Migrations folder: ${migrationsFolder}`);
+
+    await migrate(db, { migrationsFolder });
 
     console.log('✅ Migrations complete!');
     process.exit(0);

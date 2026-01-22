@@ -10,7 +10,7 @@
  * - POST /v1/billing/card/remove - Remove/disable card
  */
 
-import { FastifyPluginAsync } from 'fastify';
+import { FastifyPluginAsync, FastifyRequest, FastifyReply } from 'fastify';
 import { eq } from 'drizzle-orm';
 import { db } from '../db/client.js';
 import { users, fundingSources } from '../db/schema.js';
@@ -36,13 +36,13 @@ const billingRoutes: FastifyPluginAsync = async (fastify) => {
      * Returns: { clientSecret, setupIntentId }
      */
     fastify.post('/v1/billing/card/setup_intent', {
-        preHandler: [fastify.authenticate],
+        preHandler: async (request: FastifyRequest, reply: FastifyReply) => {
+            if (!request.userId) {
+                return reply.status(401).send({ error: 'Authentication required' });
+            }
+        },
     }, async (request, reply) => {
-        const userId = (request as any).user?.userId;
-        if (!userId) {
-            reply.status(401);
-            return { error: 'Authentication required' };
-        }
+        const userId = request.userId!;
 
         const stripe = await getStripe();
         if (!stripe) {
@@ -120,13 +120,13 @@ const billingRoutes: FastifyPluginAsync = async (fastify) => {
      * Returns funding sources, payout destinations, balances
      */
     fastify.get('/v1/billing/status', {
-        preHandler: [fastify.authenticate],
+        preHandler: async (request: FastifyRequest, reply: FastifyReply) => {
+            if (!request.userId) {
+                return reply.status(401).send({ error: 'Authentication required' });
+            }
+        },
     }, async (request, reply) => {
-        const userId = (request as any).user?.userId;
-        if (!userId) {
-            reply.status(401);
-            return { error: 'Authentication required' };
-        }
+        const userId = request.userId!;
 
         try {
             // Get funding source
@@ -174,13 +174,13 @@ const billingRoutes: FastifyPluginAsync = async (fastify) => {
      * Remove/disable the user's card
      */
     fastify.post('/v1/billing/card/remove', {
-        preHandler: [fastify.authenticate],
+        preHandler: async (request: FastifyRequest, reply: FastifyReply) => {
+            if (!request.userId) {
+                return reply.status(401).send({ error: 'Authentication required' });
+            }
+        },
     }, async (request, reply) => {
-        const userId = (request as any).user?.userId;
-        if (!userId) {
-            reply.status(401);
-            return { error: 'Authentication required' };
-        }
+        const userId = request.userId!;
 
         try {
             const [fundingSource] = await db.select().from(fundingSources).where(eq(fundingSources.userId, userId));
@@ -236,15 +236,14 @@ const billingRoutes: FastifyPluginAsync = async (fastify) => {
     fastify.post<{
         Body: { setupIntentId: string; paymentMethodId: string };
     }>('/v1/billing/card/confirm', {
-        preHandler: [fastify.authenticate],
+        preHandler: async (request: FastifyRequest, reply: FastifyReply) => {
+            if (!request.userId) {
+                return reply.status(401).send({ error: 'Authentication required' });
+            }
+        },
     }, async (request, reply) => {
-        const userId = (request as any).user?.userId;
+        const userId = request.userId!;
         const { setupIntentId, paymentMethodId } = request.body || {};
-
-        if (!userId) {
-            reply.status(401);
-            return { error: 'Authentication required' };
-        }
 
         if (!setupIntentId || !paymentMethodId) {
             reply.status(400);

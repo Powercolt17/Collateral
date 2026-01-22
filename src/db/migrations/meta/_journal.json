@@ -50,6 +50,48 @@
       "when": 1767577285000,
       "tag": "0007_add_verification_status",
       "breakpoints": true
+    },
+    {
+      "idx": 7,
+      "version": "7",
+      "when": 1767577286000,
+      "tag": "0008_add_x_verified_unique_index",
+      "breakpoints": true
+    },
+    {
+      "idx": 8,
+      "version": "7",
+      "when": 1767577287000,
+      "tag": "0009_add_x_oauth_fields",
+      "breakpoints": true
+    },
+    {
+      "idx": 9,
+      "version": "7",
+      "when": 1767577288000,
+      "tag": "0010_add_password_hash",
+      "breakpoints": true
+    },
+    {
+      "idx": 10,
+      "version": "7",
+      "when": 1767577289000,
+      "tag": "0010_add_x_oauth_token_columns",
+      "breakpoints": true
+    },
+    {
+      "idx": 11,
+      "version": "7",
+      "when": 1767577290000,
+      "tag": "0011_normalize_twitter_to_x",
+      "breakpoints": true
+    },
+    {
+      "idx": 12,
+      "version": "7",
+      "when": 1769046000000,
+      "tag": "0012_funding_sources",
+      "breakpoints": true
     }
   ]
 }

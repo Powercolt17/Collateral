@@ -129,8 +129,21 @@ const billingRoutes: FastifyPluginAsync = async (fastify) => {
         const userId = request.userId!;
 
         try {
-            // Get funding source
-            const [fundingSource] = await db.select().from(fundingSources).where(eq(fundingSources.userId, userId));
+            // Get funding source - with fallback if table doesn't exist
+            let fundingSource = null;
+            try {
+                const rows = await db.select().from(fundingSources).where(eq(fundingSources.userId, userId));
+                fundingSource = rows[0] || null;
+            } catch (dbErr: any) {
+                // Table might not exist yet - log but don't fail
+                console.warn('[Billing] funding_sources query failed:', dbErr.message);
+                // If the error is about the relation not existing, continue with null
+                if (dbErr.message?.includes('does not exist')) {
+                    console.warn('[Billing] funding_sources table not found - returning empty state');
+                } else {
+                    throw dbErr; // Re-throw other errors
+                }
+            }
 
             // Get user for Stripe Connect status
             const [user] = await db.select().from(users).where(eq(users.id, userId));
@@ -163,9 +176,19 @@ const billingRoutes: FastifyPluginAsync = async (fastify) => {
                 },
             };
         } catch (err: any) {
-            console.error('[Billing] Status error:', err.message);
+            console.error('[Billing] Status error:', {
+                userId,
+                message: err?.message,
+                stack: err?.stack,
+                name: err?.name,
+            });
             reply.status(500);
-            return { error: 'Failed to get billing status' };
+            return {
+                ok: false,
+                error: 'billing_status_failed',
+                message: err?.message ?? 'unknown',
+                detail: err?.name,
+            };
         }
     });
 

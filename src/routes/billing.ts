@@ -24,6 +24,10 @@ async function getStripe() {
         const StripeModule = await import('stripe');
         const Stripe = StripeModule.default;
         stripeInstance = new Stripe(STRIPE_SECRET_KEY, { apiVersion: '2023-10-16' });
+
+        // Log key info for debugging (safe - only shows prefix)
+        const keyPrefix = STRIPE_SECRET_KEY.substring(0, 12);
+        console.log(`[Billing] Stripe initialized with key: ${keyPrefix}...`);
     }
     return stripeInstance;
 }

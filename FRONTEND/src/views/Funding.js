@@ -208,9 +208,26 @@ export async function initFunding() {
     }
 
     // Initialize Stripe.js
-    const STRIPE_PUBLISHABLE_KEY = import.meta.env.VITE_STRIPE_PUBLISHABLE_KEY || 'pk_test_placeholder';
-    if (window.Stripe && STRIPE_PUBLISHABLE_KEY !== 'pk_test_placeholder') {
-        stripe = window.Stripe(STRIPE_PUBLISHABLE_KEY);
+    const STRIPE_PUBLISHABLE_KEY = import.meta.env.VITE_STRIPE_PUBLISHABLE_KEY;
+    const isProduction = window.location.hostname === 'collateral.market';
+
+    if (!isProduction) {
+        console.log('[Funding] Stripe key:', STRIPE_PUBLISHABLE_KEY ? 'present' : 'MISSING');
+    }
+
+    if (window.Stripe && STRIPE_PUBLISHABLE_KEY && !STRIPE_PUBLISHABLE_KEY.includes('placeholder')) {
+        try {
+            stripe = window.Stripe(STRIPE_PUBLISHABLE_KEY);
+            if (!isProduction) {
+                console.log('[Funding] Stripe initialized successfully');
+            }
+        } catch (stripeErr) {
+            console.error('[Funding] Failed to initialize Stripe:', stripeErr);
+        }
+    } else if (!window.Stripe) {
+        console.warn('[Funding] Stripe.js not loaded - check index.html for <script src="https://js.stripe.com/v3/">');
+    } else if (!STRIPE_PUBLISHABLE_KEY) {
+        console.warn('[Funding] VITE_STRIPE_PUBLISHABLE_KEY not set in environment');
     }
 
     // Get UI elements
@@ -373,8 +390,14 @@ export async function initFunding() {
 
     async function submitCard() {
         if (!stripe || !cardElement) {
-            cardErrorEl.textContent = 'Stripe not initialized. Please refresh the page.';
+            const reason = !window.Stripe
+                ? 'Stripe.js failed to load'
+                : !stripe
+                    ? 'VITE_STRIPE_PUBLISHABLE_KEY not set in Vercel environment'
+                    : 'Card element not ready';
+            cardErrorEl.textContent = `${reason}. Please contact support.`;
             cardErrorEl.classList.remove('hidden');
+            console.error('[Funding] Submit failed:', { stripe: !!stripe, cardElement: !!cardElement, stripeGlobal: !!window.Stripe });
             return;
         }
 

@@ -105,6 +105,14 @@ const billingRoutes: FastifyPluginAsync = async (fastify) => {
             }
 
             console.log(`[Billing] Created SetupIntent ${setupIntent.id} for user ${userId}`);
+            console.log(`[Billing] SetupIntent details:`, {
+                id: setupIntent.id,
+                hasClientSecret: !!setupIntent.client_secret,
+                clientSecretPrefix: setupIntent.client_secret?.substring(0, 25),
+                clientSecretContainsSecret: setupIntent.client_secret?.includes('_secret_'),
+                customer: setupIntent.customer,
+                status: setupIntent.status,
+            });
 
             return {
                 clientSecret: setupIntent.client_secret,

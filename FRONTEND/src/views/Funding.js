@@ -213,6 +213,10 @@ export async function initFunding() {
 
     if (!isProduction) {
         console.log('[Funding] Stripe key:', STRIPE_PUBLISHABLE_KEY ? 'present' : 'MISSING');
+        if (STRIPE_PUBLISHABLE_KEY) {
+            // Log key prefix (first 15 chars safe to show - helps verify account match)
+            console.log('[Funding] Stripe key prefix:', STRIPE_PUBLISHABLE_KEY.substring(0, 15) + '...');
+        }
     }
 
     if (window.Stripe && STRIPE_PUBLISHABLE_KEY && !STRIPE_PUBLISHABLE_KEY.includes('placeholder')) {
@@ -407,12 +411,26 @@ export async function initFunding() {
 
         try {
             // Create SetupIntent
+            console.log('[Funding] Creating SetupIntent...');
             const siResponse = await window.api.createCardSetupIntent();
+            console.log('[Funding] SetupIntent response:', {
+                hasClientSecret: !!siResponse?.clientSecret,
+                clientSecretPrefix: siResponse?.clientSecret?.substring(0, 20),
+                setupIntentId: siResponse?.setupIntentId,
+            });
+
             if (!siResponse?.clientSecret) {
-                throw new Error('Failed to create setup intent');
+                throw new Error('Failed to create setup intent - no clientSecret in response');
+            }
+
+            // Verify client_secret format (must contain _secret_)
+            if (!siResponse.clientSecret.includes('_secret_')) {
+                console.error('[Funding] Invalid clientSecret format - missing _secret_:', siResponse.clientSecret.substring(0, 30));
+                throw new Error('Invalid setup intent format from server');
             }
 
             // Confirm with Stripe
+            console.log('[Funding] Confirming with Stripe.js...');
             const { setupIntent, error } = await stripe.confirmCardSetup(siResponse.clientSecret, {
                 payment_method: { card: cardElement },
             });

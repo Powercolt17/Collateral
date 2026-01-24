@@ -16,6 +16,9 @@ export interface CreatePaymentIntentParams {
     amountUsdCents: number;
     contractId: string;
     captureMethod?: 'automatic' | 'manual';
+    // For using a saved card (off-session payment)
+    customerId?: string;
+    paymentMethodId?: string;
 }
 
 export interface PaymentIntentResult {
@@ -51,6 +54,18 @@ export interface StripeClient {
 export class MockStripeClient implements StripeClient {
     async createPaymentIntent(params: CreatePaymentIntentParams): Promise<PaymentIntentResult> {
         const id = `pi_mock_${params.contractId.slice(0, 8)}`;
+
+        // If saved card is provided (off-session), simulate immediate success
+        if (params.customerId && params.paymentMethodId) {
+            console.log(`[MockStripe] Off-session payment simulated for customer ${params.customerId}`);
+            return {
+                id,
+                clientSecret: `${id}_secret_mock`,
+                status: 'succeeded',
+            };
+        }
+
+        // Otherwise, return requires_payment_method for UI-based flow
         return {
             id,
             clientSecret: `${id}_secret_mock`,
@@ -119,19 +134,34 @@ export class ProductionStripeClient implements StripeClient {
     async createPaymentIntent(params: CreatePaymentIntentParams): Promise<PaymentIntentResult> {
         const stripe = await this.ensureStripe();
 
-        const paymentIntent = await stripe.paymentIntents.create({
+        // Build PaymentIntent options
+        const piOptions: any = {
             amount: params.amountUsdCents,
             currency: 'usd',
             capture_method: params.captureMethod || 'automatic',
-            // Enable all payment methods configured in Stripe Dashboard
-            automatic_payment_methods: { enabled: true },
             metadata: {
                 contractId: params.contractId,
                 platform: 'collateral',
             },
-        }, {
+        };
+
+        // If we have a saved card (customerId + paymentMethodId), use off_session payment
+        if (params.customerId && params.paymentMethodId) {
+            piOptions.customer = params.customerId;
+            piOptions.payment_method = params.paymentMethodId;
+            piOptions.off_session = true;
+            piOptions.confirm = true; // Charge immediately
+            console.log(`[Stripe] Creating off-session PaymentIntent for customer ${params.customerId}`);
+        } else {
+            // No saved card - enable UI-based payment method selection
+            piOptions.automatic_payment_methods = { enabled: true };
+        }
+
+        const paymentIntent = await stripe.paymentIntents.create(piOptions, {
             idempotencyKey: `pi_create_${params.contractId}`,
         });
+
+        console.log(`[Stripe] PaymentIntent ${paymentIntent.id} created with status: ${paymentIntent.status}`);
 
         return {
             id: paymentIntent.id,

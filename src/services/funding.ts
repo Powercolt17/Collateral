@@ -27,6 +27,7 @@ export interface CreateFundingIntentResult {
     clientSecret: string;
     paymentIntentId: string;
     amountUsdCents: number;
+    status: string;
 }
 
 /**
@@ -62,28 +63,44 @@ export async function createFundingIntent(
     // 3. Validate from-state (must be CREATED)
     validateFromState(currentState, [ContractStatus.CREATED], 'funding-intent');
 
-    // 4. Create Stripe PaymentIntent with AUTOMATIC capture
-    // V1: Simple flow - payment_intent.succeeded = funds captured
+    // 4. Get user's saved funding source (card)
+    const { fundingSources } = await import('../db/schema.js');
+    const [fundingSource] = await db.select().from(fundingSources).where(eq(fundingSources.userId, userId));
+
+    if (!fundingSource?.stripePaymentMethodId || !fundingSource?.stripeCustomerId) {
+        throw new Error('No verified funding source. Please add a card first.');
+    }
+
+    if (fundingSource.status !== 'verified') {
+        throw new Error('Funding source not verified. Please verify your card first.');
+    }
+
+    console.log(`[Funding] Using saved card PM:${fundingSource.stripePaymentMethodId} for user ${userId}`);
+
+    // 5. Create Stripe PaymentIntent with saved card (off-session)
     const stripeClient = getStripeClient();
     const paymentIntent = await stripeClient.createPaymentIntent({
         amountUsdCents: contract.lockAmountUsdCents,
         contractId,
-        captureMethod: 'automatic', // V1: Capture immediately on confirmation
+        captureMethod: 'automatic',
+        customerId: fundingSource.stripeCustomerId,
+        paymentMethodId: fundingSource.stripePaymentMethodId,
     });
 
-    // 5. Append FUNDS_AUTHORIZED event
-    // NOTE: Semantically this is "funding intent created" - user has not paid yet
-    // The name persists for backward compatibility with existing state machine
+    // 6. Append FUNDS_AUTHORIZED event
     await appendEvent({
         contractId,
         actor: 'SYSTEM',
         eventType: EventType.FUNDS_AUTHORIZED,
         amountUsdCents: contract.lockAmountUsdCents,
-        externalRef: paymentIntent.id, // Dedupe key
+        externalRef: paymentIntent.id,
         metadata: {
             paymentIntentId: paymentIntent.id,
             clientSecret: paymentIntent.clientSecret,
-            semanticNote: 'funding_intent_created', // Truth marker
+            paymentStatus: paymentIntent.status,
+            semanticNote: paymentIntent.status === 'succeeded'
+                ? 'off_session_payment_succeeded'
+                : 'funding_intent_created',
         },
     });
 
@@ -91,6 +108,7 @@ export async function createFundingIntent(
         clientSecret: paymentIntent.clientSecret,
         paymentIntentId: paymentIntent.id,
         amountUsdCents: contract.lockAmountUsdCents,
+        status: paymentIntent.status,
     };
 }
 

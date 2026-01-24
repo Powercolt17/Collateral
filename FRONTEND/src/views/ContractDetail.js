@@ -407,18 +407,44 @@ async function handleFund(contractId) {
     btn.innerHTML = '<div class="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin mx-auto"></div>';
 
     try {
-        // 1. Initialize Stripe
-        const stripeInstance = await initializeStripe();
-
-        // 2. Create PaymentIntent on backend
+        // Create PaymentIntent on backend (will use saved card if available)
+        console.log('[ContractDetail] Creating funding intent...');
         const result = await window.api.createFundingIntent(contractId);
-        console.log('[ContractDetail] FundingIntent:', result);
+        console.log('[ContractDetail] FundingIntent result:', result);
 
-        if (!result.clientSecret) {
-            throw new Error('No client secret received from backend');
+        if (result.error) {
+            throw new Error(result.error);
         }
 
-        // 3. Mount Payment Element
+        // Check if payment already succeeded (off-session with saved card)
+        if (result.status === 'succeeded') {
+            // Payment already complete! Show success and wait for webhook
+            container.innerHTML = `
+                <div class="flex items-center gap-3 mb-4">
+                    <div class="w-5 h-5 rounded-full bg-green-100 flex items-center justify-center">
+                        <svg class="w-3 h-3 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                        </svg>
+                    </div>
+                    <p class="text-sm text-green-700 font-medium">Payment successful!</p>
+                </div>
+                <p class="text-xs text-neutral-500">Locking funds... This page will update automatically.</p>
+            `;
+
+            // Start polling for FUNDS_LOCKED
+            startPolling(contractId);
+            return;
+        }
+
+        // If we need to show Payment Element (no saved card case)
+        if (!result.clientSecret) {
+            throw new Error('No client secret received - please add a card first on the Funding page.');
+        }
+
+        // Initialize Stripe for Payment Element
+        const stripeInstance = await initializeStripe();
+
+        // Mount Payment Element
         const appearance = { theme: 'stripe' };
         elements = stripeInstance.elements({
             appearance,
@@ -442,7 +468,7 @@ async function handleFund(contractId) {
         const paymentElement = elements.create('payment');
         paymentElement.mount('#payment-element');
 
-        // 4. Handle Submit
+        // Handle Submit
         document.getElementById('btn-submit-payment').addEventListener('click', async () => {
             const submitBtn = document.getElementById('btn-submit-payment');
             const messageEl = document.getElementById('payment-message');
@@ -455,10 +481,8 @@ async function handleFund(contractId) {
                 const { error } = await stripeInstance.confirmPayment({
                     elements,
                     confirmParams: {
-                        // Return to the same page
                         return_url: window.location.href,
                     },
-                    // We handle the redirect manually if needed, or Stripe handles it
                     redirect: 'if_required'
                 });
 
@@ -489,9 +513,13 @@ async function handleFund(contractId) {
 
     } catch (err) {
         console.error('[ContractDetail] Fund error:', err);
-        alert('Failed to initialize payment: ' + err.message);
-        // Reset view
-        window.router.navigate(`/contracts/${contractId}`);
+        container.innerHTML = `
+            <div class="text-red-600 text-sm mb-4">${err.message}</div>
+            <button id="btn-fund-retry" class="px-6 py-3 bg-neutral-900 text-white text-sm font-medium uppercase tracking-wide hover:bg-neutral-800 transition-colors">
+                Try Again
+            </button>
+        `;
+        document.getElementById('btn-fund-retry').addEventListener('click', () => handleFund(contractId));
     }
 }
 

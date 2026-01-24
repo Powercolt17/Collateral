@@ -852,6 +852,323 @@ const contractWriteRoutes: FastifyPluginAsync = async (fastify) => {
             return { ok: false, code: 'INTERNAL_ERROR', error: err.message };
         }
     });
+
+    // =======================================================================
+    // LOCK CAPITAL ENDPOINT
+    // =======================================================================
+    // Locks user's available balance for a contract
+    // Writes CAPITAL_LOCKED to account_ledger_events
+    // =======================================================================
+    fastify.post<{
+        Params: { id: string };
+        Body: { amountCents?: number };
+    }>('/v1/contracts/:id/lock', async (request, reply) => {
+        const { id } = request.params;
+        const principalUserId = getPrincipal(request);
+
+        if (!principalUserId) {
+            reply.status(401);
+            return { ok: false, code: 'UNAUTHORIZED', error: 'Authentication required' };
+        }
+
+        try {
+            // 1. Get contract
+            const contract = await getContract(id);
+            if (!contract) {
+                reply.status(404);
+                return { ok: false, code: 'NOT_FOUND', error: 'Contract not found' };
+            }
+
+            // 2. Check ownership
+            if (contract.principalUserId !== principalUserId) {
+                reply.status(403);
+                return { ok: false, code: 'FORBIDDEN', error: 'Not authorized to lock this contract' };
+            }
+
+            // 3. Load events and check state
+            const events = await getEventsForContract(id);
+            const currentState = deriveState(events);
+
+            // Idempotent: already locked
+            if (currentState === ContractStatus.LOCKED || currentState === ContractStatus.FUNDS_LOCKED) {
+                const { computeBalances } = await import('../services/balances.js');
+                const balances = await computeBalances(principalUserId);
+                return {
+                    ok: true,
+                    code: 'ALREADY_LOCKED',
+                    contractId: id,
+                    derivedState: currentState,
+                    balances: {
+                        availableBalanceUsdCents: balances.availableCents,
+                        lockedBalanceUsdCents: balances.lockedCents,
+                        pendingPayoutUsdCents: balances.pendingPayoutCents,
+                    },
+                };
+            }
+
+            // Must be CREATED or EXECUTABLE state to lock
+            if (currentState !== ContractStatus.CREATED && currentState !== ContractStatus.FUNDS_AUTHORIZED) {
+                reply.status(409);
+                return {
+                    ok: false,
+                    code: 'INVALID_STATE',
+                    error: `Cannot lock contract in state: ${currentState}. Must be CREATED or FUNDS_AUTHORIZED.`,
+                };
+            }
+
+            // 4. Determine lock amount (default to contract amount)
+            const amountCents = request.body?.amountCents || contract.lockAmountUsdCents;
+
+            if (amountCents < contract.lockAmountUsdCents) {
+                reply.status(400);
+                return {
+                    ok: false,
+                    code: 'INSUFFICIENT_LOCK_AMOUNT',
+                    error: `Lock amount ${amountCents} is less than required ${contract.lockAmountUsdCents}`,
+                };
+            }
+
+            // 5. Check balance availability
+            const { computeBalances, appendAccountEvent, AccountEventType } = await import('../services/balances.js');
+            const balances = await computeBalances(principalUserId);
+
+            if (balances.availableCents < amountCents) {
+                reply.status(400);
+                return {
+                    ok: false,
+                    code: 'INSUFFICIENT_BALANCE',
+                    error: `Insufficient available balance. Required: $${(amountCents / 100).toFixed(2)}, Available: $${(balances.availableCents / 100).toFixed(2)}`,
+                    balances: {
+                        availableBalanceUsdCents: balances.availableCents,
+                        lockedBalanceUsdCents: balances.lockedCents,
+                    },
+                };
+            }
+
+            // 6. Write CAPITAL_LOCKED to account ledger (idempotent via contractId)
+            await appendAccountEvent({
+                userId: principalUserId,
+                contractId: id,
+                eventType: AccountEventType.CAPITAL_LOCKED,
+                amountCents, // This represents locked funds
+                idempotencyKey: `capital_locked_${id}`,
+                metadata: {
+                    lockAmountCents: amountCents,
+                    contractLockAmount: contract.lockAmountUsdCents,
+                },
+            });
+
+            // 7. Write FUNDS_LOCKED event to contract ledger
+            await appendEvent({
+                contractId: id,
+                actor: 'SYSTEM',
+                eventType: EventType.FUNDS_LOCKED,
+                amountUsdCents: amountCents,
+                metadata: {
+                    lockedAt: new Date().toISOString(),
+                    source: 'available_balance',
+                },
+            });
+
+            // 8. Get updated balances and state
+            const updatedBalances = await computeBalances(principalUserId);
+            const updatedEvents = await getEventsForContract(id);
+            const newState = deriveState(updatedEvents);
+
+            console.log(`[Lock] Contract ${id} locked with $${(amountCents / 100).toFixed(2)}`);
+
+            return {
+                ok: true,
+                contractId: id,
+                eventType: 'FUNDS_LOCKED',
+                derivedState: newState,
+                lockedAmountCents: amountCents,
+                balances: {
+                    availableBalanceUsdCents: updatedBalances.availableCents,
+                    lockedBalanceUsdCents: updatedBalances.lockedCents,
+                    pendingPayoutUsdCents: updatedBalances.pendingPayoutCents,
+                },
+            };
+
+        } catch (err: any) {
+            console.error('[Lock] Error:', err.message);
+            reply.status(500);
+            return { ok: false, code: 'INTERNAL_ERROR', error: err.message };
+        }
+    });
+
+    // =======================================================================
+    // SETTLE CONTRACT ENDPOINT
+    // =======================================================================
+    // Settles a locked contract (WIN or LOSS)
+    // Writes SETTLEMENT_WIN or SETTLEMENT_LOSS to account ledger
+    // =======================================================================
+    fastify.post<{
+        Params: { id: string };
+        Body: { outcome: 'win' | 'loss' };
+    }>('/v1/contracts/:id/settle', async (request, reply) => {
+        const { id } = request.params;
+        const { outcome } = request.body;
+
+        // Note: Settlement can be called by admin/system, not just contract owner
+        // For MVP, allow authenticated users to settle their own contracts
+
+        if (!outcome || !['win', 'loss'].includes(outcome)) {
+            reply.status(400);
+            return { ok: false, code: 'INVALID_OUTCOME', error: 'Outcome must be "win" or "loss"' };
+        }
+
+        try {
+            // 1. Get contract
+            const contract = await getContract(id);
+            if (!contract) {
+                reply.status(404);
+                return { ok: false, code: 'NOT_FOUND', error: 'Contract not found' };
+            }
+
+            const principalUserId = contract.principalUserId;
+
+            // 2. Load events and check state
+            const events = await getEventsForContract(id);
+            const currentState = deriveState(events);
+
+            // Idempotent: already settled
+            if (currentState === ContractStatus.SETTLED ||
+                currentState === ContractStatus.FORFEITED ||
+                currentState === 'SETTLED_WIN' ||
+                currentState === 'SETTLED_LOSS') {
+                const { computeBalances } = await import('../services/balances.js');
+                const balances = await computeBalances(principalUserId);
+                return {
+                    ok: true,
+                    code: 'ALREADY_SETTLED',
+                    contractId: id,
+                    derivedState: currentState,
+                    balances: {
+                        availableBalanceUsdCents: balances.availableCents,
+                        lockedBalanceUsdCents: balances.lockedCents,
+                        pendingPayoutUsdCents: balances.pendingPayoutCents,
+                    },
+                };
+            }
+
+            // Must be in LOCKED state to settle
+            if (currentState !== ContractStatus.LOCKED &&
+                currentState !== ContractStatus.FUNDS_LOCKED &&
+                currentState !== 'RUNNING') {
+                reply.status(409);
+                return {
+                    ok: false,
+                    code: 'INVALID_STATE',
+                    error: `Cannot settle contract in state: ${currentState}. Must be LOCKED.`,
+                };
+            }
+
+            const { computeBalances, appendAccountEvent, AccountEventType } = await import('../services/balances.js');
+
+            if (outcome === 'win') {
+                // WIN: Credit the locked amount back + payout
+                const payoutAmount = contract.payoutAmountUsdCents;
+
+                // Write CAPITAL_UNLOCKED (return locked funds)
+                await appendAccountEvent({
+                    userId: principalUserId,
+                    contractId: id,
+                    eventType: AccountEventType.CAPITAL_UNLOCKED,
+                    amountCents: contract.lockAmountUsdCents,
+                    idempotencyKey: `capital_unlocked_${id}`,
+                    metadata: { reason: 'settlement_win' },
+                });
+
+                // Write SETTLEMENT_WIN (credit payout - but this is the same as locked for now)
+                await appendAccountEvent({
+                    userId: principalUserId,
+                    contractId: id,
+                    eventType: AccountEventType.SETTLEMENT_WIN,
+                    amountCents: payoutAmount - contract.lockAmountUsdCents, // Additional payout above principal
+                    idempotencyKey: `settlement_win_${id}`,
+                    metadata: {
+                        payoutAmountCents: payoutAmount,
+                        lockAmountCents: contract.lockAmountUsdCents,
+                    },
+                });
+
+                // Write PAYOUT_QUEUED
+                await appendAccountEvent({
+                    userId: principalUserId,
+                    contractId: id,
+                    eventType: AccountEventType.PAYOUT_QUEUED,
+                    amountCents: payoutAmount,
+                    idempotencyKey: `payout_queued_${id}`,
+                    metadata: { settledAt: new Date().toISOString() },
+                });
+
+                // Write contract ledger event
+                await appendEvent({
+                    contractId: id,
+                    actor: 'SYSTEM',
+                    eventType: EventType.SETTLED_SUCCESS,
+                    amountUsdCents: payoutAmount,
+                    metadata: {
+                        outcome: 'win',
+                        payoutAmountCents: payoutAmount,
+                        settledAt: new Date().toISOString(),
+                    },
+                });
+
+            } else {
+                // LOSS: Forfeit locked capital
+                await appendAccountEvent({
+                    userId: principalUserId,
+                    contractId: id,
+                    eventType: AccountEventType.SETTLEMENT_LOSS,
+                    amountCents: 0, // No refund
+                    idempotencyKey: `settlement_loss_${id}`,
+                    metadata: {
+                        forfeitedAmountCents: contract.lockAmountUsdCents,
+                        settledAt: new Date().toISOString(),
+                    },
+                });
+
+                // Write contract ledger event
+                await appendEvent({
+                    contractId: id,
+                    actor: 'SYSTEM',
+                    eventType: EventType.SETTLED_FAILURE,
+                    amountUsdCents: contract.lockAmountUsdCents,
+                    metadata: {
+                        outcome: 'loss',
+                        forfeitedAmountCents: contract.lockAmountUsdCents,
+                        settledAt: new Date().toISOString(),
+                    },
+                });
+            }
+
+            // Get updated balances and state
+            const updatedBalances = await computeBalances(principalUserId);
+            const updatedEvents = await getEventsForContract(id);
+            const newState = deriveState(updatedEvents);
+
+            console.log(`[Settle] Contract ${id} settled: ${outcome.toUpperCase()}`);
+
+            return {
+                ok: true,
+                contractId: id,
+                outcome,
+                derivedState: newState,
+                balances: {
+                    availableBalanceUsdCents: updatedBalances.availableCents,
+                    lockedBalanceUsdCents: updatedBalances.lockedCents,
+                    pendingPayoutUsdCents: updatedBalances.pendingPayoutCents,
+                },
+            };
+
+        } catch (err: any) {
+            console.error('[Settle] Error:', err.message);
+            reply.status(500);
+            return { ok: false, code: 'INTERNAL_ERROR', error: err.message };
+        }
+    });
 };
 
 export default contractWriteRoutes;

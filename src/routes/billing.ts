@@ -14,6 +14,7 @@ import { FastifyPluginAsync, FastifyRequest, FastifyReply } from 'fastify';
 import { eq } from 'drizzle-orm';
 import { db } from '../db/client.js';
 import { users, fundingSources } from '../db/schema.js';
+import { computeBalances, appendAccountEvent, AccountEventType } from '../services/balances.js';
 
 const STRIPE_SECRET_KEY = process.env.STRIPE_SECRET_KEY;
 
@@ -160,12 +161,12 @@ const billingRoutes: FastifyPluginAsync = async (fastify) => {
             // Get user for Stripe Connect status
             const [user] = await db.select().from(users).where(eq(users.id, userId));
 
-            // Calculate balances from contracts (reuse existing logic)
-            // For now, return basic structure - can be enhanced
+            // Compute derived balances from account ledger events
+            const derivedBalances = await computeBalances(userId);
             const balances = {
-                availableBalanceUsdCents: fundingSource?.availableBalanceUsdCents || 0,
-                lockedBalanceUsdCents: 0,
-                pendingPayoutUsdCents: 0,
+                availableBalanceUsdCents: derivedBalances.availableCents,
+                lockedBalanceUsdCents: derivedBalances.lockedCents,
+                pendingPayoutUsdCents: derivedBalances.pendingPayoutCents,
             };
 
             return {
@@ -405,21 +406,31 @@ const billingRoutes: FastifyPluginAsync = async (fastify) => {
             console.log(`[Billing] Add funds PaymentIntent ${paymentIntent.id} status: ${paymentIntent.status}`);
 
             if (paymentIntent.status === 'succeeded') {
-                // Update available balance in funding source
-                const currentBalance = fundingSource.availableBalanceUsdCents || 0;
-                await db.update(fundingSources)
-                    .set({
-                        availableBalanceUsdCents: currentBalance + amountCents,
-                        updatedAt: new Date(),
-                    })
-                    .where(eq(fundingSources.userId, userId));
+                // Write FUNDS_ADDED ledger event (idempotent via payment_intent.id)
+                await appendAccountEvent({
+                    userId,
+                    eventType: AccountEventType.FUNDS_ADDED,
+                    amountCents,
+                    idempotencyKey: `funds_added_${paymentIntent.id}`,
+                    metadata: {
+                        paymentIntentId: paymentIntent.id,
+                        source: 'card_topup',
+                    },
+                });
+
+                // Get updated balances
+                const newBalances = await computeBalances(userId);
 
                 console.log(`[Billing] Added $${(amountCents / 100).toFixed(2)} to user ${userId}'s balance`);
 
                 return {
                     success: true,
                     amountCents,
-                    newBalance: currentBalance + amountCents,
+                    balances: {
+                        availableBalanceUsdCents: newBalances.availableCents,
+                        lockedBalanceUsdCents: newBalances.lockedCents,
+                        pendingPayoutUsdCents: newBalances.pendingPayoutCents,
+                    },
                     paymentIntentId: paymentIntent.id,
                 };
             } else if (paymentIntent.status === 'requires_action') {

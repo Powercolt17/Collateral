@@ -19,6 +19,7 @@ import stripeConnectRoutes from './routes/stripe-connect.js';
 import quoteRoutes from './routes/quote.js';
 import opsRoutes from './routes/ops.js';
 import billingRoutes from './routes/billing.js';
+import payoutRoutes from './routes/payouts.js';
 
 const PORT = parseInt(process.env.PORT || '3000', 10);
 
@@ -144,6 +145,9 @@ async function main() {
 
     // Billing (Card verification)
     await fastify.register(billingRoutes);        // /v1/billing/*
+
+    // Payouts (Stripe Connect)
+    await fastify.register(payoutRoutes);         // /v1/payouts/*
 
     // Webhooks
     await fastify.register(webhookRoutes);        // POST /v1/stripe/webhook

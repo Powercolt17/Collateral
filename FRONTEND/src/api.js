@@ -361,6 +361,30 @@ export async function getPublicLedger() {
     return getPublic('/v1/ledger');
 }
 
+// --- PAYOUTS (Stripe Connect) ---
+
+export async function createConnectAccount() {
+    return post('/v1/payouts/connect/create');
+}
+
+export async function getConnectStatus() {
+    return get('/v1/payouts/connect/status');
+}
+
+export async function runPayouts() {
+    return post('/v1/payouts/run');
+}
+
+// --- LOCK & SETTLE ---
+
+export async function lockContract(contractId, amountCents) {
+    return post(`/v1/contracts/${contractId}/lock`, { amountCents });
+}
+
+export async function settleContract(contractId, outcome) {
+    return post(`/v1/contracts/${contractId}/settle`, { outcome });
+}
+
 // --- HEALTH ---
 
 export async function checkHealth() {
@@ -429,6 +453,15 @@ export default {
     // Ledger
     getLedgerEvents,
     getPublicLedger,
+
+    // Payouts (Stripe Connect)
+    createConnectAccount,
+    getConnectStatus,
+    runPayouts,
+
+    // Lock & Settle
+    lockContract,
+    settleContract,
 
     // Health
     checkHealth,

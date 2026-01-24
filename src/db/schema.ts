@@ -188,6 +188,7 @@ export const fundingSources = pgTable('funding_sources', {
     expMonth: integer('exp_month'),
     expYear: integer('exp_year'),
     status: fundingSourceStatusEnum('status').default('unconfigured').notNull(),
+    availableBalanceUsdCents: integer('available_balance_usd_cents').default(0).notNull(),
     verifiedAt: timestamp('verified_at', { withTimezone: true }),
     createdAt: timestamp('created_at', { withTimezone: true }).defaultNow().notNull(),
     updatedAt: timestamp('updated_at', { withTimezone: true }).defaultNow().notNull(),

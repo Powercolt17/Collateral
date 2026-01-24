@@ -319,6 +319,10 @@ export async function removeCard() {
     return post('/v1/billing/card/remove');
 }
 
+export async function addFunds(amountCents) {
+    return post('/v1/billing/add-funds', { amountCents });
+}
+
 // --- EXECUTE ---
 
 export async function executeContract(contractId) {
@@ -409,6 +413,7 @@ export default {
     getBillingStatus,
     confirmCard,
     removeCard,
+    addFunds,
 
     // Execute
     executeContract,

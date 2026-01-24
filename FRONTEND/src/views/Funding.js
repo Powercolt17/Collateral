@@ -56,10 +56,14 @@ export function renderFunding() {
 
                     <!-- Balance State -->
                     <div class="border border-gray-200 bg-white rounded">
-                        <div class="px-5 py-3 border-b border-gray-100">
+                        <div class="px-5 py-3 border-b border-gray-100 flex items-center justify-between">
                             <h2 class="text-[11px] uppercase tracking-wider text-gray-400 font-medium">
                                 Balance State
                             </h2>
+                            <button id="add-funds-btn" class="hidden items-center gap-1.5 bg-neutral-900 text-white px-4 py-1.5 text-xs font-medium hover:bg-neutral-800 rounded transition-colors">
+                                <i data-lucide="plus" class="w-3 h-3"></i>
+                                Add Funds
+                            </button>
                         </div>
                         <div class="grid grid-cols-3 divide-x divide-gray-100">
                             <!-- Available Balance -->
@@ -189,6 +193,43 @@ export function renderFunding() {
                 </div>
             </div>
         </div>
+
+        <!-- Add Funds Modal -->
+        <div id="add-funds-modal" class="fixed inset-0 bg-black/50 hidden items-center justify-center z-50">
+            <div class="bg-white rounded-lg w-full max-w-md mx-4 shadow-xl">
+                <div class="px-6 py-4 border-b border-gray-200">
+                    <div class="flex items-center justify-between">
+                        <h3 class="text-lg font-semibold text-gray-900">Add Funds</h3>
+                        <button id="close-add-funds-modal" class="text-gray-400 hover:text-gray-600">
+                            <i data-lucide="x" class="w-5 h-5"></i>
+                        </button>
+                    </div>
+                    <p class="text-sm text-gray-500 mt-1">
+                        Add capital to your available balance
+                    </p>
+                </div>
+                <div class="px-6 py-6">
+                    <div class="mb-4">
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Amount (USD)</label>
+                        <div class="relative">
+                            <span class="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500">$</span>
+                            <input id="add-funds-amount" type="number" min="1" step="1" placeholder="100" 
+                                class="w-full pl-8 pr-4 py-2.5 border border-gray-300 rounded text-lg focus:ring-2 focus:ring-neutral-900 focus:border-neutral-900 outline-none">
+                        </div>
+                        <p class="text-xs text-gray-400 mt-1">Minimum: $1.00</p>
+                    </div>
+                    <div id="add-funds-error" class="text-sm text-red-600 mb-4 hidden"></div>
+                    <button id="submit-add-funds-btn" class="w-full py-2.5 bg-neutral-900 text-white text-sm font-medium rounded hover:bg-neutral-800 disabled:opacity-50 disabled:cursor-not-allowed">
+                        Add Funds
+                    </button>
+                </div>
+                <div class="px-6 py-3 bg-gray-50 border-t border-gray-200 rounded-b-lg">
+                    <p class="text-xs text-gray-500 text-center">
+                        Funds will be charged to your verified card immediately.
+                    </p>
+                </div>
+            </div>
+        </div>
     `;
 }
 
@@ -255,6 +296,14 @@ export async function initFunding() {
     const cancelRemoveBtn = document.getElementById('cancel-remove-btn');
     const confirmRemoveBtn = document.getElementById('confirm-remove-btn');
 
+    // Add Funds modal elements
+    const addFundsModal = document.getElementById('add-funds-modal');
+    const closeAddFundsModalBtn = document.getElementById('close-add-funds-modal');
+    const addFundsAmountInput = document.getElementById('add-funds-amount');
+    const addFundsErrorEl = document.getElementById('add-funds-error');
+    const submitAddFundsBtn = document.getElementById('submit-add-funds-btn');
+    const addFundsBtn = document.getElementById('add-funds-btn');
+
     // Current card state
     let currentCardStatus = null;
 
@@ -281,6 +330,13 @@ export async function initFunding() {
                         <span class="inline-flex items-center ml-2 px-1.5 py-0.5 rounded text-[10px] font-medium bg-green-100 text-green-800">Verified</span>
                     `;
                     manageCardBtn.textContent = 'Manage';
+
+                    // Show Add Funds button when card is verified
+                    const addFundsBtn = document.getElementById('add-funds-btn');
+                    if (addFundsBtn) {
+                        addFundsBtn.classList.remove('hidden');
+                        addFundsBtn.classList.add('flex');
+                    }
                 } else if (fs.status === 'pending_verification') {
                     cardStatusEl.textContent = 'Verification pending...';
                     cardStatusEl.classList.add('text-amber-600');
@@ -477,6 +533,61 @@ export async function initFunding() {
     }
 
     // ====================
+    // Add Funds Modal Logic
+    // ====================
+    function showAddFundsModal() {
+        addFundsModal.classList.remove('hidden');
+        addFundsModal.classList.add('flex');
+        addFundsAmountInput.value = '';
+        addFundsErrorEl.classList.add('hidden');
+        if (window.lucide) window.lucide.createIcons();
+    }
+
+    function hideAddFundsModal() {
+        addFundsModal.classList.add('hidden');
+        addFundsModal.classList.remove('flex');
+    }
+
+    async function submitAddFunds() {
+        const amount = parseFloat(addFundsAmountInput.value);
+
+        if (!amount || amount < 1) {
+            addFundsErrorEl.textContent = 'Please enter an amount of at least $1.00';
+            addFundsErrorEl.classList.remove('hidden');
+            return;
+        }
+
+        submitAddFundsBtn.disabled = true;
+        submitAddFundsBtn.textContent = 'Processing...';
+        addFundsErrorEl.classList.add('hidden');
+
+        try {
+            const amountCents = Math.round(amount * 100);
+
+            // Call backend to create a direct charge to available balance
+            const result = await window.api.addFunds(amountCents);
+
+            if (result.error) {
+                throw new Error(result.error);
+            }
+
+            // Success!
+            hideAddFundsModal();
+            await loadBillingStatus();
+
+            // Show success message
+            alert(`Successfully added $${amount.toFixed(2)} to your available balance!`);
+
+        } catch (err) {
+            addFundsErrorEl.textContent = err.message || 'Failed to add funds. Please try again.';
+            addFundsErrorEl.classList.remove('hidden');
+        } finally {
+            submitAddFundsBtn.disabled = false;
+            submitAddFundsBtn.textContent = 'Add Funds';
+        }
+    }
+
+    // ====================
     // Event Listeners
     // ====================
     manageCardBtn?.addEventListener('click', () => {
@@ -507,6 +618,17 @@ export async function initFunding() {
     confirmRemoveBtn?.addEventListener('click', removeCard);
     removeCardModal?.addEventListener('click', (e) => {
         if (e.target === removeCardModal) hideRemoveModal();
+    });
+
+    // Add Funds modal event listeners
+    addFundsBtn?.addEventListener('click', showAddFundsModal);
+    closeAddFundsModalBtn?.addEventListener('click', hideAddFundsModal);
+    submitAddFundsBtn?.addEventListener('click', submitAddFunds);
+    addFundsModal?.addEventListener('click', (e) => {
+        if (e.target === addFundsModal) hideAddFundsModal();
+    });
+    addFundsAmountInput?.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter') submitAddFunds();
     });
 
     // ====================

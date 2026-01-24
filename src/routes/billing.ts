@@ -163,7 +163,7 @@ const billingRoutes: FastifyPluginAsync = async (fastify) => {
             // Calculate balances from contracts (reuse existing logic)
             // For now, return basic structure - can be enhanced
             const balances = {
-                availableBalanceUsdCents: 0,
+                availableBalanceUsdCents: fundingSource?.availableBalanceUsdCents || 0,
                 lockedBalanceUsdCents: 0,
                 pendingPayoutUsdCents: 0,
             };
@@ -343,6 +343,101 @@ const billingRoutes: FastifyPluginAsync = async (fastify) => {
             console.error('[Billing] Confirm error:', err.message);
             reply.status(500);
             return { error: 'Failed to confirm card', details: err.message };
+        }
+    });
+
+    /**
+     * POST /v1/billing/add-funds
+     * Charge user's saved card and add to available balance
+     */
+    fastify.post<{
+        Body: { amountCents: number };
+    }>('/v1/billing/add-funds', {
+        preHandler: async (request: FastifyRequest, reply: FastifyReply) => {
+            if (!request.userId) {
+                return reply.status(401).send({ error: 'Authentication required' });
+            }
+        },
+    }, async (request, reply) => {
+        const userId = request.userId!;
+        const { amountCents } = request.body || {};
+
+        if (!amountCents || amountCents < 100) {
+            reply.status(400);
+            return { error: 'Minimum amount is $1.00 (100 cents)' };
+        }
+
+        try {
+            // Get user's saved funding source
+            const [fundingSource] = await db.select().from(fundingSources).where(eq(fundingSources.userId, userId));
+
+            if (!fundingSource?.stripePaymentMethodId || !fundingSource?.stripeCustomerId) {
+                reply.status(400);
+                return { error: 'No verified funding source. Please add a card first.' };
+            }
+
+            if (fundingSource.status !== 'verified') {
+                reply.status(400);
+                return { error: 'Funding source not verified.' };
+            }
+
+            const stripe = await getStripe();
+            if (!stripe) {
+                reply.status(500);
+                return { error: 'Stripe not configured' };
+            }
+
+            // Create PaymentIntent with saved card (off-session)
+            const paymentIntent = await stripe.paymentIntents.create({
+                amount: amountCents,
+                currency: 'usd',
+                customer: fundingSource.stripeCustomerId,
+                payment_method: fundingSource.stripePaymentMethodId,
+                off_session: true,
+                confirm: true,
+                metadata: {
+                    userId,
+                    type: 'add_funds',
+                    platform: 'collateral',
+                },
+            });
+
+            console.log(`[Billing] Add funds PaymentIntent ${paymentIntent.id} status: ${paymentIntent.status}`);
+
+            if (paymentIntent.status === 'succeeded') {
+                // Update available balance in funding source
+                const currentBalance = fundingSource.availableBalanceUsdCents || 0;
+                await db.update(fundingSources)
+                    .set({
+                        availableBalanceUsdCents: currentBalance + amountCents,
+                        updatedAt: new Date(),
+                    })
+                    .where(eq(fundingSources.userId, userId));
+
+                console.log(`[Billing] Added $${(amountCents / 100).toFixed(2)} to user ${userId}'s balance`);
+
+                return {
+                    success: true,
+                    amountCents,
+                    newBalance: currentBalance + amountCents,
+                    paymentIntentId: paymentIntent.id,
+                };
+            } else if (paymentIntent.status === 'requires_action') {
+                // SCA required - return client secret for frontend to handle
+                return {
+                    requiresAction: true,
+                    clientSecret: paymentIntent.client_secret,
+                    paymentIntentId: paymentIntent.id,
+                };
+            } else {
+                reply.status(400);
+                return { error: `Payment failed with status: ${paymentIntent.status}` };
+            }
+
+        } catch (err: any) {
+            console.error('[Billing] Add funds error:', err.message);
+            reply.status(500);
+            return { error: err.message || 'Failed to add funds' };
         }
     });
 };

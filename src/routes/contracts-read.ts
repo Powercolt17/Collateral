@@ -131,6 +131,7 @@ const contractReadRoutes: FastifyPluginAsync = async (fastify) => {
         }
 
         const { contract, state } = result;
+        console.log(`[Contracts] GET /:id - contractId=${id} derivedState=${state} events=...`);
 
         // Auth: must be contract owner
         if (contract.principalUserId !== userId) {
@@ -139,6 +140,7 @@ const contractReadRoutes: FastifyPluginAsync = async (fastify) => {
         }
 
         const events = await getEventsForContract(id);
+        console.log(`[Contracts] GET /:id - ${events.length} events found, types: ${events.map(e => e.eventType).join(', ')}`);
 
         // Check for receipt
         const receiptEvent = events.find(e => e.eventType === EventType.RECEIPT_ISSUED);

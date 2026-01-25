@@ -13,6 +13,7 @@ import { contracts, ContractStatus, EventType } from '../db/schema.js';
 import { getContract, getContractWithState, appendContractEvent } from './contracts.js';
 import { appendEvent, getEventsForContract, eventExistsForExternalRef } from './ledger.js';
 import { deriveState, validateFromState, InvalidTransitionError } from './state-derivation.js';
+import { appendAccountEvent, computeBalances, AccountEventType } from './balances.js';
 import { eq } from 'drizzle-orm';
 
 import { getStripeClient } from './stripe-client.js';
@@ -187,7 +188,7 @@ export async function handlePaymentSuccess(
     // 6. Validate from-state (must be FUNDS_AUTHORIZED)
     validateFromState(currentState, [ContractStatus.FUNDS_AUTHORIZED], 'payment-success');
 
-    // 7. Append FUNDS_LOCKED event
+    // 7. Append FUNDS_LOCKED event to contract ledger
     // V1: With automatic capture, payment_intent.succeeded means funds are captured
     // No capture API call needed
     await appendEvent({
@@ -201,6 +202,21 @@ export async function handlePaymentSuccess(
             chargeId,  // CRITICAL: Required for dispute correlation
             paymentConfirmed: true,
             lockedAt: new Date().toISOString()
+        },
+    });
+
+    // 8. Append CAPITAL_LOCKED event to account ledger
+    // This deducts from available balance and adds to locked balance
+    await appendAccountEvent({
+        userId: contract.principalUserId,
+        contractId,
+        eventType: AccountEventType.CAPITAL_LOCKED,
+        amountCents: contract.lockAmountUsdCents,
+        idempotencyKey: `capital_locked_${contractId}_${paymentIntentId}`,
+        metadata: {
+            paymentIntentId,
+            chargeId,
+            lockedAt: new Date().toISOString(),
         },
     });
 

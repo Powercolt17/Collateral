@@ -171,22 +171,24 @@ export async function initContractDetail(params) {
         loadingEl.classList.add('hidden');
         detailEl.classList.remove('hidden');
 
-        // Populate contract info
+        // Populate contract info (API returns { contract: {...}, events: [...] })
+        const contractData = contract.contract || contract;
         document.getElementById('contract-full-id').textContent = contractId.substring(0, 8).toUpperCase();
-        document.getElementById('contract-platform').textContent = contract.platform;
-        document.getElementById('contract-tier').textContent = contract.riskTier || 'STANDARD';
-        document.getElementById('contract-deadline').textContent = formatDate(contract.deadline || contract.deadlineUtc);
-        document.getElementById('contract-lock-amount').textContent = formatCurrency(contract.lockAmountUsdCents);
-        document.getElementById('contract-payout-amount').textContent = formatCurrency(contract.payoutAmountUsdCents);
-        document.getElementById('contract-created-at').textContent = formatDate(contract.createdAt);
-        document.getElementById('contract-updated-at').textContent = formatDate(contract.updatedAt);
+        document.getElementById('contract-platform').textContent = contractData.platform;
+        document.getElementById('contract-tier').textContent = contractData.riskTier || 'STANDARD';
+        document.getElementById('contract-deadline').textContent = formatDate(contractData.deadline || contractData.deadlineUtc);
+        document.getElementById('contract-lock-amount').textContent = formatCurrency(contractData.lockAmountUsdCents);
+        document.getElementById('contract-payout-amount').textContent = formatCurrency(contractData.payoutAmountUsdCents);
+        document.getElementById('contract-created-at').textContent = formatDate(contractData.createdAt);
+        document.getElementById('contract-updated-at').textContent = formatDate(contractData.updatedAt);
 
-        // Set status badge
-        const state = contract.state || 'CREATED';
+        // Set status badge - use derivedState from API
+        const state = contractData.derivedState || contractData.state || 'CREATED';
+        console.log('[ContractDetail] Derived state:', state);
         setStatusBadge(state);
 
         // Render action panel based on state
-        renderActionPanel(contract, state);
+        renderActionPanel(contractData, state);
 
         // Render event log
         renderEventLog(events);
@@ -553,12 +555,43 @@ let pollingInterval = null;
 
 function startPolling(contractId) {
     // Poll every 3 seconds for state changes
+    let attempts = 0;
+    const maxAttempts = 40; // 2 minutes max
+
     pollingInterval = setInterval(async () => {
+        attempts++;
         try {
-            const contract = await window.api.getContract(contractId);
-            if (contract.state !== 'FUNDS_AUTHORIZED') {
+            const response = await window.api.getContract(contractId);
+            const contractData = response.contract || response;
+            const state = contractData.derivedState || contractData.state;
+            console.log(`[Contracts] Polling status: ${state} (attempt ${attempts})`)
+
+            // Stop if we've moved past FUNDS_AUTHORIZED or hit max attempts
+            if (state !== 'FUNDS_AUTHORIZED' || attempts >= maxAttempts) {
                 clearInterval(pollingInterval);
-                window.router.navigate(`/contracts/${contractId}`);
+
+                if (state === 'FUNDS_AUTHORIZED' && attempts >= maxAttempts) {
+                    console.warn('[Contracts] Timeout waiting for funds lock');
+                    // Show a message to the user
+                    const container = document.getElementById('action-content');
+                    if (container) {
+                        container.innerHTML = `
+                            <div class="bg-amber-50 border border-amber-200 p-4 rounded mb-4">
+                                <p class="text-sm text-amber-800 font-medium">⚠️ Funds not locked</p>
+                                <p class="text-xs text-amber-600 mt-1">The payment was authorized, but funds have not fully locked yet. Please wait a moment and try again.</p>
+                                <p class="text-xs text-neutral-500 mt-2">ACFR_FUNDS_LOCK_TIMEOUT</p>
+                            </div>
+                            <button id="btn-refresh" class="px-4 py-2 bg-neutral-900 text-white text-sm rounded">
+                                Dismiss
+                            </button>
+                        `;
+                        document.getElementById('btn-refresh')?.addEventListener('click', () => {
+                            window.router.navigate(`/contracts/${contractId}`);
+                        });
+                    }
+                } else {
+                    window.router.navigate(`/contracts/${contractId}`);
+                }
             }
         } catch (err) {
             console.error('[ContractDetail] Polling error:', err);

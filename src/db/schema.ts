@@ -222,44 +222,6 @@ export const fundingSources = pgTable('funding_sources', {
 }));
 
 // =============================================================================
-// ACCOUNT LEDGER EVENTS (User-level balance tracking)
-// =============================================================================
-// Append-only ledger for all balance changes (funds added, locked, payouts)
-export const accountLedgerEvents = pgTable('account_ledger_events', {
-    id: uuid('id').primaryKey().defaultRandom(),
-    userId: uuid('user_id').references(() => users.id).notNull(),
-    contractId: uuid('contract_id').references(() => contracts.id),
-    eventType: accountLedgerEventTypeEnum('event_type').notNull(),
-    amountCents: integer('amount_cents').notNull(),
-    currency: varchar('currency', { length: 3 }).default('usd').notNull(),
-    idempotencyKey: varchar('idempotency_key', { length: 255 }).notNull().unique(),
-    metadata: jsonb('metadata'),
-    createdAt: timestamp('created_at', { withTimezone: true }).defaultNow().notNull(),
-}, (table) => ({
-    userIdIdx: index('idx_account_ledger_user_id').on(table.userId),
-    contractIdIdx: index('idx_account_ledger_contract_id').on(table.contractId),
-    eventTypeIdx: index('idx_account_ledger_event_type').on(table.eventType),
-}));
-
-// =============================================================================
-// CONNECT ACCOUNTS (Stripe Connect for payouts)
-// =============================================================================
-export const connectAccounts = pgTable('connect_accounts', {
-    id: uuid('id').primaryKey().defaultRandom(),
-    userId: uuid('user_id').references(() => users.id).notNull().unique(),
-    stripeConnectAccountId: varchar('stripe_connect_account_id', { length: 255 }).notNull(),
-    onboardingStatus: connectOnboardingStatusEnum('onboarding_status').default('not_configured').notNull(),
-    chargesEnabled: integer('charges_enabled').default(0).notNull(), // boolean as int
-    payoutsEnabled: integer('payouts_enabled').default(0).notNull(),
-    detailsSubmitted: integer('details_submitted').default(0).notNull(),
-    accountType: varchar('account_type', { length: 50 }).default('express'),
-    createdAt: timestamp('created_at', { withTimezone: true }).defaultNow().notNull(),
-    updatedAt: timestamp('updated_at', { withTimezone: true }).defaultNow().notNull(),
-}, (table) => ({
-    stripeIdIdx: index('idx_connect_accounts_stripe_id').on(table.stripeConnectAccountId),
-}));
-
-// =============================================================================
 // IDENTITY BINDINGS TABLE (Immutable, Append-Only)
 // =============================================================================
 // Each binding is append-only: to switch, revoke old + insert new.

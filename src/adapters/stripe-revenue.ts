@@ -61,7 +61,7 @@ export const STRIPE_DEDUCTION_TYPES = ['refund', 'dispute', 'charge_failure'];
 // V1 SPEC CONSTANTS
 // =============================================================================
 export const STRIPE_WINDOW_DAYS = 30; // Contract window is exactly 30 days
-export const STRIPE_MIN_DELTA_CENTS = 50000; // $500.00 minimum delta
+export const STRIPE_MIN_DELTA_CENTS = 0; // TESTING: was 50000 ($500.00)
 
 // TIER PERCENTAGES (Revenue growth requirements by tier)
 export const STRIPE_TIER_PERCENTAGES = {

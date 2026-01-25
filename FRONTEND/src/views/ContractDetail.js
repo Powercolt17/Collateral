@@ -562,12 +562,14 @@ function startPolling(contractId) {
         attempts++;
         try {
             const response = await window.api.getContract(contractId);
+            console.log('[Contracts] Polling raw response:', JSON.stringify(response, null, 2).substring(0, 500));
+
             const contractData = response.contract || response;
             const state = contractData.derivedState || contractData.state;
-            console.log(`[Contracts] Polling status: ${state} (attempt ${attempts})`)
+            console.log(`[Contracts] Polling status: ${state} (attempt ${attempts}), keys: ${Object.keys(contractData).join(', ')}`)
 
             // Stop if we've moved past FUNDS_AUTHORIZED or hit max attempts
-            if (state !== 'FUNDS_AUTHORIZED' || attempts >= maxAttempts) {
+            if (state && state !== 'FUNDS_AUTHORIZED' || attempts >= maxAttempts) {
                 clearInterval(pollingInterval);
 
                 if (state === 'FUNDS_AUTHORIZED' && attempts >= maxAttempts) {

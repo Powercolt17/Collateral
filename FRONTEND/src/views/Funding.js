@@ -383,11 +383,11 @@ export async function initFunding() {
             const pendingPayoutStates = ['SETTLED', 'PAYOUT_PENDING'];
 
             const lockedCents = contracts
-                .filter(c => lockedStates.includes(c.state))
+                .filter(c => lockedStates.includes(c.derivedState))
                 .reduce((sum, c) => sum + (c.lockAmountUsdCents || 0), 0);
 
             const pendingCents = contracts
-                .filter(c => pendingPayoutStates.includes(c.state))
+                .filter(c => pendingPayoutStates.includes(c.derivedState))
                 .reduce((sum, c) => sum + (c.lockAmountUsdCents || 0), 0);
 
             lockedBalanceEl.textContent = formatUSD(lockedCents);

@@ -77,9 +77,9 @@ export const STRIPE_DELTA_FLOOR_PERCENTAGE = STRIPE_TIER_PERCENTAGES.STEADY; // 
 // TIER ELIGIBILITY FLOORS (Minimum baseline to qualify for tier)
 // =============================================================================
 export const STRIPE_TIER_MINIMUM_BASELINE = {
-    STEADY: 100000,    // $1,000 minimum baseline
-    BROAD: 500000,     // $5,000 minimum baseline
-    ALL_IN: 1000000,   // $10,000 minimum baseline
+    STEADY: 0,      // TESTING: was 100000 ($1,000)
+    BROAD: 0,       // TESTING: was 500000 ($5,000)
+    ALL_IN: 0,      // TESTING: was 1000000 ($10,000)
 } as const;
 
 // =============================================================================

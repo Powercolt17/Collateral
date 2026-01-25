@@ -105,6 +105,47 @@ export async function createFundingIntent(
         },
     });
 
+    // 7. If off-session payment succeeded immediately, also append FUNDS_LOCKED
+    // This happens when using a saved card that doesn't require 3D Secure
+    if (paymentIntent.status === 'succeeded') {
+        console.log(`[Funding] Off-session payment succeeded immediately for ${contractId}`);
+
+        // Get chargeId from the PaymentIntent (needed for dispute correlation)
+        const chargeId = paymentIntent.chargeId || `ch_simulated_${paymentIntent.id}`;
+
+        // Append FUNDS_LOCKED event to contract ledger
+        await appendEvent({
+            contractId,
+            actor: 'SYSTEM',
+            eventType: EventType.FUNDS_LOCKED,
+            amountUsdCents: contract.lockAmountUsdCents,
+            externalRef: paymentIntent.id,
+            metadata: {
+                paymentIntentId: paymentIntent.id,
+                chargeId,
+                paymentConfirmed: true,
+                lockedAt: new Date().toISOString(),
+                source: 'immediate_off_session',
+            },
+        });
+
+        // Append CAPITAL_LOCKED event to account ledger
+        await appendAccountEvent({
+            userId,
+            contractId,
+            eventType: AccountEventType.CAPITAL_LOCKED,
+            amountCents: contract.lockAmountUsdCents,
+            idempotencyKey: `capital_locked_${contractId}_${paymentIntent.id}`,
+            metadata: {
+                paymentIntentId: paymentIntent.id,
+                chargeId,
+                lockedAt: new Date().toISOString(),
+            },
+        });
+
+        console.log(`[Funding] ✅ Funds locked immediately for ${contractId}`);
+    }
+
     return {
         clientSecret: paymentIntent.clientSecret,
         paymentIntentId: paymentIntent.id,

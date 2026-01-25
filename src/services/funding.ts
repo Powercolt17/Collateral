@@ -114,12 +114,13 @@ export async function createFundingIntent(
         const chargeId = paymentIntent.chargeId || `ch_simulated_${paymentIntent.id}`;
 
         // Append FUNDS_LOCKED event to contract ledger
+        // Use different externalRef suffix to avoid conflict with FUNDS_AUTHORIZED
         await appendEvent({
             contractId,
             actor: 'SYSTEM',
             eventType: EventType.FUNDS_LOCKED,
             amountUsdCents: contract.lockAmountUsdCents,
-            externalRef: paymentIntent.id,
+            externalRef: `${paymentIntent.id}_locked`,
             metadata: {
                 paymentIntentId: paymentIntent.id,
                 chargeId,

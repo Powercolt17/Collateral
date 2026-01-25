@@ -451,6 +451,53 @@ const billingRoutes: FastifyPluginAsync = async (fastify) => {
             return { error: err.message || 'Failed to add funds' };
         }
     });
+
+    /**
+     * DEV-ONLY: Debug endpoint to test balance ledger
+     * POST /v1/billing/debug/add-balance
+     */
+    const IS_DEV = process.env.NODE_ENV !== 'production';
+    if (IS_DEV) {
+        fastify.post<{
+            Body: { amountCents?: number };
+        }>('/v1/billing/debug/add-balance', {
+            preHandler: async (request: FastifyRequest, reply: FastifyReply) => {
+                if (!request.userId) {
+                    return reply.status(401).send({ error: 'Authentication required' });
+                }
+            },
+        }, async (request, reply) => {
+            const userId = request.userId!;
+            const amountCents = (request.body as any)?.amountCents || 100000; // Default $1000
+
+            console.log(`[DEBUG] Adding ${amountCents} cents to user ${userId}`);
+
+            try {
+                const result = await appendAccountEvent({
+                    userId,
+                    eventType: AccountEventType.FUNDS_ADDED,
+                    amountCents,
+                    idempotencyKey: `debug_${Date.now()}_${Math.random().toString(36).substring(7)}`,
+                    metadata: { source: 'debug_endpoint' },
+                });
+
+                const balances = await computeBalances(userId);
+
+                return {
+                    success: true,
+                    insertResult: result,
+                    balances,
+                };
+            } catch (err: any) {
+                console.error('[DEBUG] Error:', err.message, err.stack);
+                return {
+                    success: false,
+                    error: err.message,
+                    code: err.code,
+                };
+            }
+        });
+    }
 };
 
 export default billingRoutes;

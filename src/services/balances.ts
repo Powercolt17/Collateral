@@ -40,6 +40,7 @@ export type AccountEventTypeType = typeof AccountEventType[keyof typeof AccountE
  * - Pending Payout = PAYOUT_QUEUED - PAYOUT_SENT
  */
 export async function computeBalances(userId: string): Promise<Balances> {
+    console.log(`[Balances] Computing balances for user ${userId}`);
     try {
         // Get all events for user in a single query with aggregation
         const result = await db.execute(sql`
@@ -55,7 +56,23 @@ export async function computeBalances(userId: string): Promise<Balances> {
             WHERE user_id = ${userId}
         `);
 
-        const row = result.rows[0] as any || {};
+        // Handle different result structures from db.execute()
+        // Drizzle can return { rows: [...] } or just an array directly
+        let row: any = {};
+        if (Array.isArray(result)) {
+            row = result[0] || {};
+        } else if (result && typeof result === 'object') {
+            const rows = (result as any).rows;
+            if (Array.isArray(rows)) {
+                row = rows[0] || {};
+            } else {
+                // Maybe result itself is the row
+                row = result;
+            }
+        }
+
+        console.log(`[Balances] Raw query result type: ${typeof result}, isArray: ${Array.isArray(result)}`);
+        console.log(`[Balances] Row data:`, row);
 
         const fundsAdded = Number(row.funds_added) || 0;
         const capitalLocked = Number(row.capital_locked) || 0;
@@ -69,14 +86,16 @@ export async function computeBalances(userId: string): Promise<Balances> {
         const lockedCents = capitalLocked - capitalUnlocked; // Net locked amount
         const pendingPayoutCents = payoutQueued - payoutSent;
 
-        return {
+        const balances = {
             availableCents: Math.max(0, availableCents),
             lockedCents: Math.max(0, lockedCents),
             pendingPayoutCents: Math.max(0, pendingPayoutCents),
         };
+        console.log(`[Balances] Computed balances:`, balances);
+        return balances;
 
     } catch (err: any) {
-        console.error('[Balances] Error computing balances:', err.message);
+        console.error('[Balances] Error computing balances:', err.message, err.stack);
         // Return zeros on error (graceful degradation)
         return {
             availableCents: 0,
@@ -98,6 +117,13 @@ export async function appendAccountEvent(params: {
     idempotencyKey: string;
     metadata?: Record<string, any>;
 }): Promise<{ id: string } | null> {
+    console.log(`[AccountLedger] Attempting to append event:`, {
+        userId: params.userId,
+        eventType: params.eventType,
+        amountCents: params.amountCents,
+        idempotencyKey: params.idempotencyKey,
+    });
+
     try {
         const [inserted] = await db.insert(accountLedgerEvents).values({
             userId: params.userId,
@@ -108,7 +134,7 @@ export async function appendAccountEvent(params: {
             metadata: params.metadata,
         }).returning({ id: accountLedgerEvents.id });
 
-        console.log(`[AccountLedger] Appended ${params.eventType}: ${params.amountCents} cents for user ${params.userId}`);
+        console.log(`[AccountLedger] ✅ SUCCESS - Appended ${params.eventType}: ${params.amountCents} cents for user ${params.userId}, id=${inserted?.id}`);
         return inserted;
 
     } catch (err: any) {
@@ -117,6 +143,7 @@ export async function appendAccountEvent(params: {
             console.log(`[AccountLedger] Idempotent skip: ${params.idempotencyKey}`);
             return null;
         }
+        console.error(`[AccountLedger] ❌ FAILED to append event:`, err.message, err.code, err.stack);
         throw err;
     }
 }

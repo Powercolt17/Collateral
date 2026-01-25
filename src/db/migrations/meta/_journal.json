@@ -113,6 +113,13 @@
       "when": 1769246000000,
       "tag": "0015_connect_accounts",
       "breakpoints": true
+    },
+    {
+      "idx": 16,
+      "version": "7",
+      "when": 1769326000000,
+      "tag": "0016_fix_account_ledger_event_type",
+      "breakpoints": true
     }
   ]
 }

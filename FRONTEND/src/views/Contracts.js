@@ -1722,7 +1722,7 @@ export function initContracts() {
                 while (true) {
                     try {
                         const res = await window.api.getContract(contractId);
-                        lastState = res.contract?.state;
+                        lastState = res.contract?.derivedState || res.contract?.state;
                         console.log(`[Contracts] Polling state: ${lastState}`);
 
                         // Safety: if state is consistently undefined, abort polling
@@ -1880,7 +1880,7 @@ export function initContracts() {
                 }
 
                 // Skip execute if already LOCKED (idempotent)
-                if (lockRes.contract?.state === 'LOCKED') {
+                if (lockRes.contract?.derivedState === 'LOCKED') {
                     console.log('[Contracts] Already LOCKED, skipping execute...');
                     // Jump to finalize
                     btnText.textContent = "Already executed";
@@ -1893,7 +1893,7 @@ export function initContracts() {
                 }
 
                 // Wait for FUNDS_LOCKED if still FUNDS_AUTHORIZED
-                if (lockRes.contract?.state === 'FUNDS_AUTHORIZED') {
+                if (lockRes.contract?.derivedState === 'FUNDS_AUTHORIZED') {
                     console.log('[Contracts] FUNDS_AUTHORIZED, waiting for FUNDS_LOCKED...');
                     const lockedRes = await pollUntilState(contractId, ['FUNDS_LOCKED', 'LOCKED'], 60000);
                     if (lockedRes.timeout) {
@@ -1901,7 +1901,7 @@ export function initContracts() {
                         e.code = 'FUNDS_LOCK_TIMEOUT';
                         throw e;
                     }
-                    if (lockedRes.contract?.state === 'LOCKED') {
+                    if (lockedRes.contract?.derivedState === 'LOCKED') {
                         console.log('[Contracts] Already LOCKED, skipping execute...');
                         btnText.textContent = "Already executed";
                         releaseFlowLock();

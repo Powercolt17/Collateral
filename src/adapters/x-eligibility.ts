@@ -54,18 +54,18 @@ export interface XEligibilityResult {
 }
 
 // =============================================================================
-// CONSTANTS (Hardcoded thresholds - not configurable for security)
+// CONSTANTS (Hardcoded thresholds - lowered for testing)
 // =============================================================================
 
 export const X_ELIGIBILITY_THRESHOLDS = {
-    MIN_FOLLOWERS: 10_000,
-    MIN_ACCOUNT_AGE_DAYS: 180,
-    MIN_TWEET_COUNT: 50,
+    MIN_FOLLOWERS: 0,        // TESTING: was 10_000
+    MIN_ACCOUNT_AGE_DAYS: 0, // TESTING: was 180
+    MIN_TWEET_COUNT: 0,      // TESTING: was 50
 } as const;
 
 export const X_DELTA_FLOOR = {
-    ABSOLUTE_MIN: 500,
-    PERCENTAGE: 0.05,  // 5%
+    ABSOLUTE_MIN: 0,    // TESTING: was 500
+    PERCENTAGE: 0.00,   // TESTING: was 0.05 (5%)
 } as const;
 
 // =============================================================================

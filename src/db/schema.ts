@@ -365,6 +365,45 @@ export const contractIndex = pgTable('contract_index', {
     chainHeadHash: varchar('chain_head_hash', { length: 64 }),
 });
 
+// =============================================================================
+// ACCOUNT LEDGER EVENTS (Balance derivation - single source of truth)
+// =============================================================================
+// All user balance changes are append-only events in this ledger.
+// Balances are derived by summing events, NOT stored directly.
+export const accountLedgerEvents = pgTable('account_ledger_events', {
+    id: uuid('id').defaultRandom().primaryKey(),
+    userId: uuid('user_id').notNull().references(() => users.id),
+    contractId: uuid('contract_id').references(() => contracts.id),
+    eventType: varchar('event_type', { length: 50 }).notNull(),
+    amountCents: integer('amount_cents').notNull(),
+    idempotencyKey: varchar('idempotency_key', { length: 255 }).notNull().unique(),
+    metadata: jsonb('metadata'),
+    createdAt: timestamp('created_at', { withTimezone: true }).defaultNow().notNull(),
+}, (table) => ({
+    userIdx: index('account_ledger_user_idx').on(table.userId),
+    contractIdx: index('account_ledger_contract_idx').on(table.contractId),
+    idempotencyIdx: uniqueIndex('account_ledger_idempotency_idx').on(table.idempotencyKey),
+}));
+
+// =============================================================================
+// CONNECT ACCOUNTS (Stripe Connect onboarding status)
+// =============================================================================
+export const connectAccounts = pgTable('connect_accounts', {
+    id: uuid('id').defaultRandom().primaryKey(),
+    userId: uuid('user_id').notNull().references(() => users.id).unique(),
+    stripeConnectAccountId: varchar('stripe_connect_account_id', { length: 255 }).notNull(),
+    accountType: varchar('account_type', { length: 20 }).default('express').notNull(),
+    onboardingStatus: varchar('onboarding_status', { length: 30 }).default('pending').notNull(),
+    payoutsEnabled: integer('payouts_enabled').default(0),
+    chargesEnabled: integer('charges_enabled').default(0),
+    detailsSubmitted: integer('details_submitted').default(0),
+    createdAt: timestamp('created_at', { withTimezone: true }).defaultNow().notNull(),
+    updatedAt: timestamp('updated_at', { withTimezone: true }).defaultNow().notNull(),
+}, (table) => ({
+    userIdx: uniqueIndex('connect_accounts_user_idx').on(table.userId),
+    stripeAccountIdx: index('connect_accounts_stripe_idx').on(table.stripeConnectAccountId),
+}));
+
 // =====================
 // TYPE EXPORTS
 // =====================
@@ -386,6 +425,12 @@ export type NewLedgerEvent = typeof ledgerEvents.$inferInsert;
 
 export type FundingSource = typeof fundingSources.$inferSelect;
 export type NewFundingSource = typeof fundingSources.$inferInsert;
+
+export type AccountLedgerEvent = typeof accountLedgerEvents.$inferSelect;
+export type NewAccountLedgerEvent = typeof accountLedgerEvents.$inferInsert;
+
+export type ConnectAccount = typeof connectAccounts.$inferSelect;
+export type NewConnectAccount = typeof connectAccounts.$inferInsert;
 
 // Contract status enum values for state machine (derived from ledger events)
 export const ContractStatus = {

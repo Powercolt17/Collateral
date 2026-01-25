@@ -561,10 +561,25 @@ export async function initProfile() {
         window.lucide.createIcons();
     }
 
+    // Helper to format currency
+    const formatUSD = (cents) => {
+        return '$' + (cents / 100).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+    };
+
+    // Helper to format date
+    const formatDate = (dateStr) => {
+        if (!dateStr) return '—';
+        return new Date(dateStr).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+    };
+
     // Fetch live profile data
     try {
-        const profile = await window.api.getProfile();
-        console.log('[Profile] Full API response:', JSON.stringify(profile, null, 2));
+        const [profile, contractsResponse] = await Promise.all([
+            window.api.getProfile(),
+            window.api.getContracts()
+        ]);
+
+        console.log('[Profile] Loaded data:', { profile, contracts: contractsResponse?.contracts?.length });
 
         // Check for error response
         if (profile.error) {
@@ -572,7 +587,13 @@ export async function initProfile() {
             return;
         }
 
-        // Update identity title
+        const contracts = contractsResponse?.contracts || [];
+
+        // Filter contracts
+        const activeContracts = contracts.filter(c => !c.isTerminal);
+        const settledContracts = contracts.filter(c => c.isTerminal);
+
+        // --- UPDATE HEADER ---
         const identityNameEl = document.getElementById('identity-name');
         if (identityNameEl) {
             if (profile.identity?.displayName) {
@@ -584,22 +605,40 @@ export async function initProfile() {
             }
         }
 
-        // Update stats
+        const identityHashEl = document.getElementById('identity-hash');
+        if (identityHashEl && profile.user?.id) {
+            identityHashEl.textContent = `USR-${profile.user.id.substring(0, 8).toUpperCase()}`;
+        }
+
+        // --- UPDATE STATS ---
         const settlementRateEl = document.getElementById('stat-settlement-rate');
         if (settlementRateEl) {
-            settlementRateEl.textContent = profile.stats.settlementRate !== null
-                ? profile.stats.settlementRate + '%'
-                : '—';
+            // Calculate local if API stats are stale or null
+            const total = settledContracts.length;
+            const wins = settledContracts.filter(c => c.derivedState === 'SETTLED').length; // Assuming SETTLED is success
+            const rate = total > 0 ? ((wins / total) * 100).toFixed(1) : '—';
+
+            // Prefer API stats if available and non-null
+            settlementRateEl.textContent = profile.stats.settlementRate !== null ? profile.stats.settlementRate + '%' : (rate === '—' ? '—' : rate + '%');
         }
 
         const settlementDetailEl = document.getElementById('stat-settlement-detail');
-        if (settlementDetailEl && profile.stats.settledContracts !== undefined) {
-            settlementDetailEl.textContent = `${profile.stats.settledContracts} of ${profile.stats.totalContracts} contracts settled`;
+        if (settlementDetailEl) {
+            const settledCount = settledContracts.length;
+            const totalCount = contracts.length;
+            settlementDetailEl.textContent = `${settledCount} of ${totalCount} contracts settled`;
         }
 
         const totalContractsEl = document.getElementById('stat-total-contracts');
         if (totalContractsEl) {
-            totalContractsEl.textContent = profile.stats.totalContracts.toString();
+            totalContractsEl.textContent = contracts.length.toString();
+        }
+
+        const sinceDateEl = document.getElementById('stat-since-date');
+        if (sinceDateEl && contracts.length > 0) {
+            // Find earliest contract
+            const earliest = contracts.reduce((min, c) => c.createdAt < min ? c.createdAt : min, contracts[0].createdAt);
+            sinceDateEl.textContent = `Since ${formatDate(earliest)}`;
         }
 
         const tvlEl = document.getElementById('stat-tvl');
@@ -631,15 +670,259 @@ export async function initProfile() {
             forfeitureDetailEl.textContent = `${profile.stats.forfeitedContracts || 0} forfeiture events`;
         }
 
-        // Update verification sources display (public view - read only)
-        const twitterStatusEl = document.getElementById('twitter-status');
-        if (twitterStatusEl && profile.xConnection?.connected) {
-            twitterStatusEl.textContent = '@' + (profile.xConnection.xUsername || 'verified');
+        // --- UPDATE METADATA PANELS ---
+        const updateMetadata = (prefix) => {
+            const accountIdEl = document.getElementById(`meta-account-id${prefix || ''}`);
+            if (accountIdEl && profile.user?.id) accountIdEl.innerHTML = `USR-${profile.user.id.substring(0, 5)} <i data-lucide="copy" class="w-3 h-3 text-neutral-400 cursor-pointer"></i>`;
+
+            const stripeEl = document.getElementById(`meta-stripe${prefix || ''}`);
+            if (stripeEl) {
+                if (profile.stripeConnection?.connected) {
+                    stripeEl.innerHTML = `Connected <i data-lucide="external-link" class="w-3 h-3 text-neutral-400"></i>`;
+                } else {
+                    stripeEl.textContent = 'Not connected';
+                }
+            }
+
+            const createdEl = document.getElementById(`meta-identity-created${prefix || ''}`);
+            if (createdEl && profile.user?.createdAt) createdEl.textContent = formatDate(profile.user.createdAt);
+
+            // First/Last dates for Overview panel specific
+            if (!prefix) {
+                const firstContractEl = document.getElementById('meta-first-contract');
+                if (firstContractEl && contracts.length > 0) {
+                    const earliest = contracts.reduce((min, c) => c.createdAt < min ? c.createdAt : min, contracts[0].createdAt);
+                    firstContractEl.textContent = formatDate(earliest);
+                }
+
+                const lastSettlementEl = document.getElementById('meta-last-settlement');
+                if (lastSettlementEl && settledContracts.length > 0) {
+                    // contracts sorted by createdAt desc usually, but verify?
+                    // Just take the most recent settled
+                    const latest = settledContracts[0].createdAt; // Approximation if sorted
+                    lastSettlementEl.textContent = formatDate(latest);
+                } else if (lastSettlementEl) {
+                    lastSettlementEl.textContent = '—';
+                }
+
+                const totalLockedEl = document.getElementById('meta-total-locked');
+                if (totalLockedEl) {
+                    const totalCents = contracts.reduce((sum, c) => sum + (c.lockAmountUsdCents || 0), 0);
+                    totalLockedEl.textContent = formatUSD(totalCents) + ' USD';
+                }
+
+                const activeCountEl = document.getElementById('meta-active-contracts');
+                if (activeCountEl) {
+                    activeCountEl.textContent = `${activeContracts.length} Outstanding`;
+                }
+            }
+        };
+        updateMetadata('');
+
+
+        // --- RENDER LISTS ---
+
+        // 1. RECENT OUTCOMES (Overview) & TIMELINE
+        const recentOutcomesList = document.getElementById('recent-outcomes-list');
+        const timelineList = document.getElementById('timeline-list');
+
+        if (recentOutcomesList) recentOutcomesList.innerHTML = '';
+        if (timelineList) {
+            timelineList.innerHTML = '<div class="absolute left-6 top-0 bottom-0 w-px bg-neutral-200"></div>';
         }
 
-        const githubStatusEl = document.getElementById('github-status');
-        if (githubStatusEl && profile.githubConnection?.connected) {
-            githubStatusEl.textContent = profile.githubConnection.username || 'verified';
+        if (contracts.length === 0) {
+            if (recentOutcomesList) recentOutcomesList.innerHTML = `<div class="px-6 py-6 text-center text-xs text-neutral-500 font-mono">No contracts found.</div>`;
+        } else {
+            // Take top 5 for recent
+            contracts.slice(0, 5).forEach(c => {
+                const isSettled = c.isTerminal;
+                const stateColor = c.derivedState === 'FORFEITED' ? 'text-red-700' : (isSettled ? 'text-neutral-600' : 'text-emerald-600');
+
+                // Add to Recent Outcomes
+                if (recentOutcomesList) {
+                    recentOutcomesList.innerHTML += `
+                        <div class="flex items-center justify-between px-6 py-4 border-b border-neutral-100 hover:bg-neutral-50">
+                            <div class="flex items-center gap-6">
+                                <span class="font-mono text-xs text-neutral-900 font-medium">CTR-${c.id.substring(0, 5).toUpperCase()}</span>
+                                <span class="font-mono text-xs text-neutral-400">ID: ${c.id.substring(0, 8)}...</span>
+                            </div>
+                            <div class="flex items-center gap-6">
+                                <span class="font-mono text-[10px] text-neutral-400">${formatDate(c.createdAt)}</span>
+                                <span class="font-mono text-[10px] uppercase ${stateColor}">${c.derivedState?.replace('_', ' ') || c.state}</span>
+                                <span class="font-mono text-sm font-medium text-neutral-900 w-32 text-right">${formatUSD(c.lockAmountUsdCents)}</span>
+                            </div>
+                        </div>
+                      `;
+                }
+
+                // Add to Timeline
+                if (timelineList) {
+                    const isForfeited = c.derivedState === 'FORFEITED';
+                    const bgClass = isForfeited ? 'bg-red-50 border-l-2' : '';
+                    const borderStyle = isForfeited ? 'border-left-color: #751212;' : '';
+                    const dotColor = isForfeited ? 'bg-[#751212]' : 'bg-neutral-400';
+
+                    timelineList.innerHTML += `
+                        <div class="relative px-6 py-5 border-b border-neutral-100 ml-4 ${bgClass}" style="${borderStyle}">
+                            <div class="absolute left-2 top-6 w-2 h-2 ${dotColor} rounded-full"></div>
+                            <div class="flex justify-between items-start">
+                                <div>
+                                    <h4 class="text-sm font-medium ${isForfeited ? 'text-[#751212]' : 'text-neutral-900'}">${isSettled ? 'Contract Settled' : 'Contract Created'}</h4>
+                                    <p class="text-xs text-neutral-500 mt-1">${c.description || 'Performance contract execution'}</p>
+                                    <div class="flex gap-4 mt-3">
+                                        <span class="font-mono text-[10px] text-neutral-400 uppercase">VALUE: <span class="${isForfeited ? 'text-[#751212]' : 'text-neutral-900'} font-medium">${formatUSD(c.lockAmountUsdCents)}</span></span>
+                                        <span class="font-mono text-[10px] text-neutral-400 uppercase">REFERENCE: <span class="text-neutral-600">CTR-${c.id.substring(0, 5).toUpperCase()}</span></span>
+                                        <span class="font-mono text-[10px] text-neutral-400 uppercase">STATE: <span class="${stateColor}">${c.derivedState}</span></span>
+                                    </div>
+                                </div>
+                                <span class="font-mono text-[10px] text-neutral-400">${formatDate(c.createdAt)}</span>
+                            </div>
+                        </div>
+                      `;
+                }
+            });
+        }
+
+        // 2. ACTIVE CONTRACTS
+        const activeContractsList = document.getElementById('active-contracts-list');
+        const activeCountLabel = document.getElementById('active-count');
+
+        if (activeCountLabel) activeCountLabel.textContent = `${activeContracts.length} Outstanding`;
+
+        if (activeContractsList) {
+            activeContractsList.innerHTML = '';
+            if (activeContracts.length === 0) {
+                activeContractsList.innerHTML = `<div class="px-6 py-8 text-center text-sm text-neutral-500">No active contracts.</div>`;
+            } else {
+                activeContracts.forEach(c => {
+                    activeContractsList.innerHTML += `
+                        <div class="px-6 py-5 border-b border-neutral-100">
+                            <div class="flex justify-between items-start mb-4">
+                                <div>
+                                    <span class="font-mono text-sm font-medium text-neutral-900">CTR-${c.id.substring(0, 5).toUpperCase()}</span>
+                                    <div class="font-mono text-[10px] text-neutral-400 mt-1">PLATFORM: ${c.platform}</div>
+                                </div>
+                                <div class="text-right">
+                                    <span class="font-mono text-sm font-medium text-neutral-900">${formatUSD(c.lockAmountUsdCents)}</span>
+                                    <div class="font-mono text-[10px] uppercase mt-1 text-[#751212]">${c.derivedState?.replace('_', ' ') || 'ACTIVE'}</div>
+                                </div>
+                            </div>
+                            <div class="grid grid-cols-2 gap-4 pt-4 border-t border-neutral-100">
+                                <div>
+                                    <span class="font-mono text-[10px] text-neutral-400 uppercase block mb-1">Locked Value</span>
+                                    <span class="font-mono text-sm font-medium text-neutral-900">${formatUSD(c.lockAmountUsdCents)}</span>
+                                </div>
+                                <div>
+                                    <span class="font-mono text-[10px] text-neutral-400 uppercase block mb-1">Deadline</span>
+                                    <span class="font-mono text-sm text-neutral-700">${formatDate(c.deadlineUtc)}</span>
+                                </div>
+                            </div>
+                        </div>
+                      `;
+                });
+            }
+        }
+
+        // 3. SETTLEMENT HISTORY
+        const historyList = document.getElementById('history-list');
+        if (historyList) {
+            historyList.innerHTML = '';
+            if (settledContracts.length === 0) {
+                historyList.innerHTML = `
+                    <div class="flex flex-col items-center justify-center py-16 px-6 text-center">
+                        <h4 class="font-sans text-sm font-medium text-neutral-700 mb-1">No Settlement History</h4>
+                        <p class="font-mono text-[11px] text-neutral-400 max-w-xs">Completed contracts and their outcomes will appear here.</p>
+                    </div>`;
+            } else {
+                settledContracts.forEach(c => {
+                    const isForfeited = c.derivedState === 'FORFEITED';
+                    const statusColor = isForfeited ? 'text-[#751212]' : 'text-emerald-600';
+                    historyList.innerHTML += `
+                        <div class="px-6 py-5 border-b border-neutral-100 flex items-center justify-between hover:bg-neutral-50">
+                            <div class="flex items-center gap-6">
+                                <div>
+                                    <span class="font-mono text-sm font-medium text-neutral-900">CTR-${c.id.substring(0, 5).toUpperCase()}</span>
+                                    <div class="font-mono text-[10px] text-neutral-400 mt-1">ended ${formatDate(c.deadlineUtc)}</div>
+                                </div>
+                                <div class="hidden md:block">
+                                    <span class="font-mono text-[10px] uppercase tracking-wide px-2 py-1 bg-neutral-100 rounded text-neutral-600">${c.metricType}</span>
+                                </div>
+                            </div>
+                            <div class="text-right flex items-center gap-6">
+                                <span class="font-mono text-[10px] uppercase tracking-wide font-medium ${statusColor}">${c.derivedState}</span>
+                                <span class="font-mono text-sm font-medium text-neutral-900 w-24">${formatUSD(c.lockAmountUsdCents)}</span>
+                            </div>
+                        </div>
+                     `;
+                });
+            }
+        }
+
+        // 4. CONNECTED SOURCES (Dynamic)
+        // Find existing hardcoded elements and update state or remove if not present?
+        // Better to regenerate the list to be safe.
+        const sourcesTab = document.getElementById('tab-sources');
+        const sourcesListContainer = sourcesTab?.querySelector('.divide-y');
+
+        if (sourcesListContainer) {
+            sourcesListContainer.innerHTML = '';
+
+            // X / Twitter
+            const xConnected = profile.xConnection?.connected;
+            sourcesListContainer.innerHTML += `
+                <div class="px-6 py-5 flex items-center justify-between ${xConnected ? '' : 'opacity-60 bg-neutral-50'}">
+                    <div class="flex items-center gap-4">
+                        <div class="w-10 h-10 bg-neutral-900 rounded flex items-center justify-center">
+                            <span class="text-white font-bold text-lg">X</span>
+                        </div>
+                        <div>
+                            <h4 class="font-sans text-sm font-medium text-neutral-900">X / Twitter</h4>
+                            <p class="font-mono text-[11px] text-neutral-500">${xConnected ? '@' + profile.xConnection.xUsername : 'Not connected'}</p>
+                        </div>
+                    </div>
+                    <span class="font-mono text-[10px] uppercase tracking-wide ${xConnected ? 'text-emerald-600' : 'text-neutral-400'}">${xConnected ? 'Verified' : 'Unverified'}</span>
+                </div>
+             `;
+
+            // Stripe
+            const stripeConnected = profile.stripeConnection?.connected;
+            sourcesListContainer.innerHTML += `
+                <div class="px-6 py-5 flex items-center justify-between ${stripeConnected ? '' : 'opacity-60 bg-neutral-50'}">
+                    <div class="flex items-center gap-4">
+                        <div class="w-10 h-10 bg-[#635BFF] rounded flex items-center justify-center">
+                            <span class="text-white font-bold text-sm">S</span>
+                        </div>
+                        <div>
+                            <h4 class="font-sans text-sm font-medium text-neutral-900">Stripe</h4>
+                            <p class="font-mono text-[11px] text-neutral-500">${stripeConnected ? 'Connected' : 'Not setup'}</p>
+                        </div>
+                    </div>
+                    <span class="font-mono text-[10px] uppercase tracking-wide ${stripeConnected ? 'text-emerald-600' : 'text-neutral-400'}">${stripeConnected ? 'Verified' : 'Unverified'}</span>
+                </div>
+             `;
+
+            // GitHub (Placeholder for now but dynamic state)
+            const githubConnected = profile.githubConnection?.connected;
+            sourcesListContainer.innerHTML += `
+                <div class="px-6 py-5 flex items-center justify-between ${githubConnected ? '' : 'opacity-60 bg-neutral-50'}">
+                    <div class="flex items-center gap-4">
+                        <div class="w-10 h-10 bg-neutral-800 rounded flex items-center justify-center">
+                            <i data-lucide="github" class="w-5 h-5 text-white"></i>
+                        </div>
+                        <div>
+                            <h4 class="font-sans text-sm font-medium text-neutral-900">GitHub</h4>
+                            <p class="font-mono text-[11px] text-neutral-500">${githubConnected ? profile.githubConnection.username : 'Not connected'}</p>
+                        </div>
+                    </div>
+                    <span class="font-mono text-[10px] uppercase tracking-wide ${githubConnected ? 'text-emerald-600' : 'text-neutral-400'}">${githubConnected ? 'Verified' : 'Unverified'}</span>
+                </div>
+             `;
+        }
+
+        // Re-init icons for injected content
+        if (window.lucide) {
+            window.lucide.createIcons();
         }
 
     } catch (err) {

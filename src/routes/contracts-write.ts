@@ -720,7 +720,8 @@ const contractWriteRoutes: FastifyPluginAsync = async (fastify) => {
     }>('/v1/contracts/:id/settle', async (request, reply) => {
         const { id } = request.params;
         const { outcome } = request.body || {};
-        const principalUserId = getPrincipal(request);
+        // Use direct access or default to 'admin' (getPrincipal throws if missing, blocking admin bypass)
+        const principalUserId = request.principalUserId || 'admin';
 
         // ADMIN AUTH CHECK
         const adminKey = request.headers['x-admin-key'];

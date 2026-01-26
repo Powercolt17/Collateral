@@ -131,6 +131,9 @@ export async function writeRouteGuard(
         (!process.env.ADMIN_API_KEY && process.env.NODE_ENV !== 'production')
     );
 
+    console.log(`[AuthGuard] Admin Bypass Check: received=${!!adminKey}, match=${isAdmin}, env=${!!process.env.ADMIN_API_KEY}`);
+
+
     if (!isAdmin) {
         // Step 1: Require authentication (if not admin)
         await requireAuth(request, reply);

@@ -242,6 +242,37 @@ const payoutRoutes: FastifyPluginAsync = async (fastify) => {
             // 2. Not Suspended (identities.status != 'SUSPENDED')
             // 3. Not Already Sent (NOT EXISTS PAYOUT_SENT with origin_event_id = queued.id)
 
+            // DEBUG: Check how many are queued TOTAL (ignoring enable flag) to diagnose issues
+            const debugCount = await db.execute(sql`
+                SELECT count(*) as count 
+                FROM account_ledger_events e
+                JOIN connect_accounts c ON e.user_id = c.user_id
+                WHERE e.event_type = 'PAYOUT_QUEUED'
+                AND NOT EXISTS (
+                    SELECT 1 FROM account_ledger_events s
+                    WHERE s.origin_event_id = e.id
+                )
+            `);
+            const totalQueued = Number((debugCount as any)[0]?.count || 0);
+
+            // DEBUG: Check how many are waiting on payouts_enabled
+            const disabledCount = await db.execute(sql`
+                SELECT count(*) as count 
+                FROM account_ledger_events e
+                JOIN connect_accounts c ON e.user_id = c.user_id
+                WHERE e.event_type = 'PAYOUT_QUEUED'
+                AND (c.payouts_enabled IS NOT TRUE)
+                AND NOT EXISTS (
+                    SELECT 1 FROM account_ledger_events s
+                    WHERE s.origin_event_id = e.id
+                )
+            `);
+            const blockedByFlag = Number((disabledCount as any)[0]?.count || 0);
+
+            if (totalQueued > 0) {
+                console.log(`[Payouts] DEBUG: ${totalQueued} total pending payouts. ${blockedByFlag} are blocked because payouts_enabled is FALSE.`);
+            }
+
             const pendingQuery = sql`
                 SELECT 
                     e.id as event_id,

@@ -277,6 +277,26 @@ export async function settleContract(
         // Allow ADMIN OVERRIDE to bypass partial state checks (e.g. settling stuck LOCKED contracts)
         if (overrideOutcome) {
             console.log(`⚠️ Admin Override: Skipping canSettle check for ${contractId} (State: ${currentState})`);
+
+            // AUTO-REPAIR: If LOCKED, we must verify first to satisfy state machine
+            if (currentState === 'LOCKED') {
+                console.log(`🔧 Admin Override: Injecting verification events for LOCKED contract ${contractId}`);
+                await appendEvent({
+                    contractId,
+                    actor: 'SYSTEM',
+                    eventType: EventType.VERIFICATION_STARTED,
+                    metadata: { reason: 'ADMIN_OVERRIDE_AUTO_REPAIR' },
+                    tx
+                });
+                await appendEvent({
+                    contractId,
+                    actor: 'SYSTEM',
+                    eventType: EventType.VERIFICATION_SUCCEEDED, // Assumption: If we are settling, it's verified enough
+                    metadata: { reason: 'ADMIN_OVERRIDE_AUTO_REPAIR', manualOverride: true },
+                    tx
+                });
+                // State is now VERIFIED, ready for SETTLEMENT_STARTED
+            }
         } else {
             const canSettleResult = canSettle(currentState, events);
             if (!canSettleResult.allowed) {

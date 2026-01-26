@@ -133,11 +133,22 @@ export async function writeRouteGuard(
 
     console.log(`[AuthGuard] Admin Bypass Check: received=${!!adminKey}, match=${isAdmin}, env=${!!process.env.ADMIN_API_KEY}`);
 
-
-    if (!isAdmin) {
-        // Step 1: Require authentication (if not admin)
-        await requireAuth(request, reply);
+    if (isAdmin) {
+        return; // ✅ Admin authenticated, skip JWT check
     }
+
+    // Explicit Allowlist for Admin-Only Routes
+    // These routes MUST use x-admin-key and MUST NOT fall back to JWT
+    const isPayoutRun = request.url === '/v1/payouts/run';
+    const isSettle = request.url.match(/\/v1\/contracts\/[^/]+\/settle/);
+    const isTestAttach = request.url === '/v1/admin/test/attach-card' && process.env.ALLOW_TEST_HELPERS === 'true';
+
+    if (isPayoutRun || isSettle || isTestAttach) {
+        throw new AuthError('Admin access required', 'FORBIDDEN');
+    }
+
+    // Step 1: Require authentication (if not admin and not allowlisted)
+    await requireAuth(request, reply);
 
     // Step 2: Reject any userId fields in body (including nested)
     try {

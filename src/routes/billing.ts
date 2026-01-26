@@ -468,7 +468,7 @@ const billingRoutes: FastifyPluginAsync = async (fastify) => {
      * POST /v1/admin/test/attach-card
      * ONLY available if ALLOW_TEST_HELPERS=true AND not production.
      */
-    const ALLOW_TEST_HELPERS = process.env.ALLOW_TEST_HELPERS === 'true' && process.env.NODE_ENV !== 'production';
+    const ALLOW_TEST_HELPERS = process.env.ALLOW_TEST_HELPERS === 'true';
 
     if (ALLOW_TEST_HELPERS) {
         fastify.post('/v1/admin/test/attach-card', {

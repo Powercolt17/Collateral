@@ -100,6 +100,9 @@ const payoutRoutes: FastifyPluginAsync = async (fastify) => {
                     stripeConnectAccountId: stripeAccountId,
                     onboardingStatus: 'pending',
                     accountType: 'express',
+                    payoutsEnabled: false,
+                    chargesEnabled: false,
+                    detailsSubmitted: false,
                 });
 
                 console.log(`[Payouts] Created Connect account ${stripeAccountId} for user ${userId}`);
@@ -180,9 +183,9 @@ const payoutRoutes: FastifyPluginAsync = async (fastify) => {
             await db.update(connectAccounts)
                 .set({
                     onboardingStatus: newStatus,
-                    payoutsEnabled: stripeAccount.payouts_enabled ? 1 : 0,
-                    chargesEnabled: stripeAccount.charges_enabled ? 1 : 0,
-                    detailsSubmitted: stripeAccount.details_submitted ? 1 : 0,
+                    payoutsEnabled: stripeAccount.payouts_enabled,
+                    chargesEnabled: stripeAccount.charges_enabled,
+                    detailsSubmitted: stripeAccount.details_submitted,
                     updatedAt: new Date(),
                 })
                 .where(eq(connectAccounts.userId, userId));
@@ -250,7 +253,7 @@ const payoutRoutes: FastifyPluginAsync = async (fastify) => {
                 JOIN connect_accounts c ON e.user_id = c.user_id
                 LEFT JOIN identities i ON e.user_id = i.user_id
                 WHERE e.event_type = 'PAYOUT_QUEUED'
-                  AND c.payouts_enabled = 1
+                  AND c.payouts_enabled IS TRUE
                   AND (i.status IS NULL OR i.status != 'SUSPENDED')
                   AND NOT EXISTS (
                       SELECT 1 FROM account_ledger_events s

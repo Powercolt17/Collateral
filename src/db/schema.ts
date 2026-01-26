@@ -10,6 +10,7 @@ import {
     uniqueIndex,
     unique,
     index,
+    boolean
 } from 'drizzle-orm/pg-core';
 import { sql } from 'drizzle-orm';
 
@@ -361,9 +362,9 @@ export const connectAccounts = pgTable('connect_accounts', {
     stripeConnectAccountId: varchar('stripe_connect_account_id', { length: 255 }).notNull(),
     accountType: varchar('account_type', { length: 20 }).default('express').notNull(),
     onboardingStatus: varchar('onboarding_status', { length: 30 }).default('pending').notNull(),
-    payoutsEnabled: integer('payouts_enabled').default(0),
-    chargesEnabled: integer('charges_enabled').default(0),
-    detailsSubmitted: integer('details_submitted').default(0),
+    payoutsEnabled: boolean('payouts_enabled').default(false),
+    chargesEnabled: boolean('charges_enabled').default(false),
+    detailsSubmitted: boolean('details_submitted').default(false),
     createdAt: timestamp('created_at', { withTimezone: true }).defaultNow().notNull(),
     updatedAt: timestamp('updated_at', { withTimezone: true }).defaultNow().notNull(),
 }, (table) => ({

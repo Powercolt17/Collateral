@@ -123,8 +123,18 @@ export async function writeRouteGuard(
     request: FastifyRequest,
     reply: FastifyReply
 ): Promise<void> {
-    // Step 1: Require authentication
-    await requireAuth(request, reply);
+    // ADMIN BYPASS: If valid Admin Key provided, skip user JWT auth
+    // This allows admin-only endpoints (like settlement) to run without a user token
+    const adminKey = request.headers['x-admin-key'];
+    const isAdmin = adminKey && (
+        adminKey === process.env.ADMIN_API_KEY ||
+        (!process.env.ADMIN_API_KEY && process.env.NODE_ENV !== 'production')
+    );
+
+    if (!isAdmin) {
+        // Step 1: Require authentication (if not admin)
+        await requireAuth(request, reply);
+    }
 
     // Step 2: Reject any userId fields in body (including nested)
     try {

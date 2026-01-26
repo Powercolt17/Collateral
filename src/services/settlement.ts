@@ -274,15 +274,20 @@ export async function settleContract(
 
     // 4. Validate state and verification outcome
     if (!hasSettlementStarted) {
-        const canSettleResult = canSettle(currentState, events);
-        if (!canSettleResult.allowed) {
-            return {
-                success: false,
-                outcome: null,
-                amountUsdCents: 0,
-                stripeRefs: {},
-                error: canSettleResult.reason,
-            };
+        // Allow ADMIN OVERRIDE to bypass partial state checks (e.g. settling stuck LOCKED contracts)
+        if (overrideOutcome) {
+            console.log(`⚠️ Admin Override: Skipping canSettle check for ${contractId} (State: ${currentState})`);
+        } else {
+            const canSettleResult = canSettle(currentState, events);
+            if (!canSettleResult.allowed) {
+                return {
+                    success: false,
+                    outcome: null,
+                    amountUsdCents: 0,
+                    stripeRefs: {},
+                    error: canSettleResult.reason,
+                };
+            }
         }
     } else {
         console.log(`📋 Retrying settlement for ${contractId} (SETTLEMENT_STARTED exists, no terminal event)`);

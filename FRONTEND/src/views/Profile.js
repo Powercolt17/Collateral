@@ -48,23 +48,23 @@ export function renderProfile() {
                 <div class="grid grid-cols-4 gap-px bg-neutral-200 border border-neutral-200 mb-10">
                     <div class="bg-white p-6">
                         <span class="font-mono text-[10px] text-neutral-400 uppercase tracking-widest block mb-3">Settlement Rate (Lifetime)</span>
-                        <span class="text-3xl font-semibold text-neutral-900 block" id="stat-settlement-rate">94.7%</span>
-                        <p class="font-mono text-[10px] text-neutral-400 mt-2" id="stat-settlement-detail">67 of 71 contracts settled</p>
+                        <span class="text-3xl font-semibold text-neutral-900 block" id="stat-settlement-rate">—</span>
+                        <p class="font-mono text-[10px] text-neutral-400 mt-2" id="stat-settlement-detail">Loading...</p>
                     </div>
                     <div class="bg-white p-6">
                         <span class="font-mono text-[10px] text-neutral-400 uppercase tracking-widest block mb-3">Executed Contracts</span>
-                        <span class="text-3xl font-semibold text-neutral-900 block" id="stat-total-contracts">71</span>
-                        <p class="font-mono text-[10px] text-neutral-400 mt-2" id="stat-since-date">Since Jan 12, 2025</p>
+                        <span class="text-3xl font-semibold text-neutral-900 block" id="stat-total-contracts">—</span>
+                        <p class="font-mono text-[10px] text-neutral-400 mt-2" id="stat-since-date">Loading...</p>
                     </div>
                     <div class="bg-white p-6">
                         <span class="font-mono text-[10px] text-neutral-400 uppercase tracking-widest block mb-3">Total Value Settled</span>
-                        <span class="text-3xl font-semibold text-neutral-900 block" id="stat-tvl">$8.2M</span>
+                        <span class="text-3xl font-semibold text-neutral-900 block" id="stat-tvl">—</span>
                         <p class="font-mono text-[10px] text-neutral-400 mt-2">Cumulative</p>
                     </div>
                     <div class="bg-white p-6">
                         <span class="font-mono text-[10px] text-neutral-400 uppercase tracking-widest block mb-3">Forfeiture Events</span>
-                        <span class="text-3xl font-semibold block" style="color: #751212;" id="stat-forfeited">$445K</span>
-                        <p class="font-mono text-[10px] text-neutral-400 mt-2" id="stat-forfeiture-detail">4 forfeiture events</p>
+                        <span class="text-3xl font-semibold block" style="color: #751212;" id="stat-forfeited">—</span>
+                        <p class="font-mono text-[10px] text-neutral-400 mt-2" id="stat-forfeiture-detail">Loading...</p>
                     </div>
                 </div>
 
@@ -148,40 +148,7 @@ export function renderProfile() {
                                 <h3 class="font-mono text-[11px] text-neutral-900 uppercase tracking-widest font-medium">Recent Contract Outcomes</h3>
                             </div>
                             <div id="recent-outcomes-list">
-                                <!-- Outcome rows rendered by JS -->
-                                <div class="flex items-center justify-between px-6 py-4 border-b border-neutral-100 hover:bg-neutral-50">
-                                    <div class="flex items-center gap-6">
-                                        <span class="font-mono text-xs text-neutral-900 font-medium">CTR-00647</span>
-                                        <span class="font-mono text-xs text-neutral-400">0x8F42...2d91</span>
-                                    </div>
-                                    <div class="flex items-center gap-6">
-                                        <span class="font-mono text-[10px] text-neutral-400">Jan 18, 2026</span>
-                                        <span class="font-mono text-[10px] uppercase text-neutral-600">SETTLED</span>
-                                        <span class="font-mono text-sm font-medium text-neutral-900 w-32 text-right">$485,000.00</span>
-                                    </div>
-                                </div>
-                                <div class="flex items-center justify-between px-6 py-4 border-b border-neutral-100 hover:bg-neutral-50">
-                                    <div class="flex items-center gap-6">
-                                        <span class="font-mono text-xs text-neutral-900 font-medium">CTR-00621</span>
-                                        <span class="font-mono text-xs text-neutral-400">0x3c19...7e84</span>
-                                    </div>
-                                    <div class="flex items-center gap-6">
-                                        <span class="font-mono text-[10px] text-neutral-400">Jan 15, 2026</span>
-                                        <span class="font-mono text-[10px] uppercase text-neutral-600">ACTIVE</span>
-                                        <span class="font-mono text-sm font-medium text-neutral-900 w-32 text-right">$720,000.00</span>
-                                    </div>
-                                </div>
-                                <div class="flex items-center justify-between px-6 py-4 border-b border-neutral-100 hover:bg-neutral-50">
-                                    <div class="flex items-center gap-6">
-                                        <span class="font-mono text-xs text-neutral-900 font-medium">CTR-00609</span>
-                                        <span class="font-mono text-xs text-neutral-400">0x9a27...4f82</span>
-                                    </div>
-                                    <div class="flex items-center gap-6">
-                                        <span class="font-mono text-[10px] text-neutral-400">Jan 10, 2026</span>
-                                        <span class="font-mono text-[10px] uppercase text-neutral-600">SETTLED</span>
-                                        <span class="font-mono text-sm font-medium text-neutral-900 w-32 text-right">$125,000.00</span>
-                                    </div>
-                                </div>
+                                <div class="px-6 py-8 text-center text-xs text-neutral-500 font-mono">Loading records...</div>
                             </div>
                         </div>
                     </div>
@@ -193,78 +160,10 @@ export function renderProfile() {
                             <div class="col-span-2 border border-neutral-200 bg-white">
                                 <div class="px-6 py-4 border-b border-neutral-200 flex justify-between items-center">
                                     <h3 class="font-mono text-[11px] text-neutral-900 uppercase tracking-widest font-medium">Active Performance Contracts</h3>
-                                    <span class="font-mono text-[10px] text-neutral-400 uppercase" id="active-count">3 Outstanding</span>
+                                    <span class="font-mono text-[10px] text-neutral-400 uppercase" id="active-count">Loading...</span>
                                 </div>
                                 <div id="active-contracts-list">
-                                    <!-- Contract CTR-00851 -->
-                                    <div class="px-6 py-5 border-b border-neutral-100">
-                                        <div class="flex justify-between items-start mb-4">
-                                            <div>
-                                                <span class="font-mono text-sm font-medium text-neutral-900">CTR-00851</span>
-                                                <div class="font-mono text-[10px] text-neutral-400 mt-1">COUNTERPARTY: 0x5c19...7e44</div>
-                                            </div>
-                                            <div class="text-right">
-                                                <span class="font-mono text-sm font-medium text-neutral-900">$720,000.00</span>
-                                                <div class="font-mono text-[10px] uppercase mt-1" style="color: #751212;">PENDING EXECUTION</div>
-                                            </div>
-                                        </div>
-                                        <div class="grid grid-cols-2 gap-4 pt-4 border-t border-neutral-100">
-                                            <div>
-                                                <span class="font-mono text-[10px] text-neutral-400 uppercase block mb-1">Locked Value</span>
-                                                <span class="font-mono text-sm font-medium text-neutral-900">$720,000.00</span>
-                                            </div>
-                                            <div>
-                                                <span class="font-mono text-[10px] text-neutral-400 uppercase block mb-1">Execution Date</span>
-                                                <span class="font-mono text-sm text-neutral-700">Feb 15, 2026</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <!-- Contract CTR-00849 -->
-                                    <div class="px-6 py-5 border-b border-neutral-100">
-                                        <div class="flex justify-between items-start mb-4">
-                                            <div>
-                                                <span class="font-mono text-sm font-medium text-neutral-900">CTR-00849</span>
-                                                <div class="font-mono text-[10px] text-neutral-400 mt-1">COUNTERPARTY: 0xF28...5b12</div>
-                                            </div>
-                                            <div class="text-right">
-                                                <span class="font-mono text-sm font-medium text-neutral-900">$540,000.00</span>
-                                                <div class="font-mono text-[10px] uppercase mt-1" style="color: #751212;">PENDING EXECUTION</div>
-                                            </div>
-                                        </div>
-                                        <div class="grid grid-cols-2 gap-4 pt-4 border-t border-neutral-100">
-                                            <div>
-                                                <span class="font-mono text-[10px] text-neutral-400 uppercase block mb-1">Locked Value</span>
-                                                <span class="font-mono text-sm font-medium text-neutral-900">$540,000.00</span>
-                                            </div>
-                                            <div>
-                                                <span class="font-mono text-[10px] text-neutral-400 uppercase block mb-1">Execution Date</span>
-                                                <span class="font-mono text-sm text-neutral-700">Feb 10, 2026</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <!-- Contract CTR-00848 -->
-                                    <div class="px-6 py-5">
-                                        <div class="flex justify-between items-start mb-4">
-                                            <div>
-                                                <span class="font-mono text-sm font-medium text-neutral-900">CTR-00848</span>
-                                                <div class="font-mono text-[10px] text-neutral-400 mt-1">COUNTERPARTY: 0x5a04...5c77</div>
-                                            </div>
-                                            <div class="text-right">
-                                                <span class="font-mono text-sm font-medium text-neutral-900">$385,000.00</span>
-                                                <div class="font-mono text-[10px] uppercase mt-1" style="color: #751212;">PENDING EXECUTION</div>
-                                            </div>
-                                        </div>
-                                        <div class="grid grid-cols-2 gap-4 pt-4 border-t border-neutral-100">
-                                            <div>
-                                                <span class="font-mono text-[10px] text-neutral-400 uppercase block mb-1">Locked Value</span>
-                                                <span class="font-mono text-sm font-medium text-neutral-900">$385,000.00</span>
-                                            </div>
-                                            <div>
-                                                <span class="font-mono text-[10px] text-neutral-400 uppercase block mb-1">Execution Date</span>
-                                                <span class="font-mono text-sm text-neutral-700">Feb 5, 2026</span>
-                                            </div>
-                                        </div>
-                                    </div>
+                                    <div class="px-6 py-12 text-center text-sm text-neutral-500">Loading active contracts...</div>
                                 </div>
                             </div>
 
@@ -274,33 +173,31 @@ export function renderProfile() {
                                 <div class="space-y-5">
                                     <div class="flex justify-between items-start">
                                         <span class="font-mono text-[10px] text-neutral-400 uppercase tracking-widest">Account ID</span>
-                                        <span class="text-sm text-neutral-900 flex items-center gap-1.5">
-                                            USR-00742
-                                            <i data-lucide="copy" class="w-3 h-3 text-neutral-400 cursor-pointer hover:text-neutral-600"></i>
+                                        <span class="text-sm text-neutral-900 flex items-center gap-1.5" id="meta-account-id">
+                                            Loading...
                                         </span>
                                     </div>
                                     <div class="flex justify-between items-start">
                                         <span class="font-mono text-[10px] text-neutral-400 uppercase tracking-widest">Stripe Account</span>
-                                        <span class="text-sm text-neutral-900 flex items-center gap-1.5">
-                                            acct_•••8f3a
-                                            <i data-lucide="external-link" class="w-3 h-3 text-neutral-400 cursor-pointer hover:text-neutral-600"></i>
+                                        <span class="text-sm text-neutral-900 flex items-center gap-1.5" id="meta-stripe">
+                                            Loading...
                                         </span>
                                     </div>
                                     <div class="flex justify-between items-start">
                                         <span class="font-mono text-[10px] text-neutral-400 uppercase tracking-widest">Funding Provider</span>
-                                        <span class="text-sm text-neutral-900">Stripe Connect</span>
+                                        <span class="text-sm text-neutral-900" id="meta-funding-provider">Stripe Connect</span>
                                     </div>
                                     <div class="flex justify-between items-start">
                                         <span class="font-mono text-[10px] text-neutral-400 uppercase tracking-widest">Currency</span>
-                                        <span class="text-sm text-neutral-900">USD</span>
+                                        <span class="text-sm text-neutral-900" id="meta-currency">USD</span>
                                     </div>
                                     <div class="flex justify-between items-start">
                                         <span class="font-mono text-[10px] text-neutral-400 uppercase tracking-widest">Record Status</span>
-                                        <span class="text-sm text-neutral-900 font-medium">Active</span>
+                                        <span class="text-sm text-neutral-900 font-medium" id="meta-record-status">Active</span>
                                     </div>
                                     <div class="flex justify-between items-start">
                                         <span class="font-mono text-[10px] text-neutral-400 uppercase tracking-widest">Identity Created</span>
-                                        <span class="text-sm text-neutral-900">Jan 12, 2025</span>
+                                        <span class="text-sm text-neutral-900" id="meta-identity-created">Loading...</span>
                                     </div>
                                 </div>
                             </div>
@@ -314,11 +211,7 @@ export function renderProfile() {
                                 <h3 class="font-mono text-[11px] text-neutral-900 uppercase tracking-widest font-medium">Settlement History</h3>
                             </div>
                             <div id="history-list">
-                                <!-- Empty State -->
-                                <div class="flex flex-col items-center justify-center py-16 px-6 text-center">
-                                    <h4 class="font-sans text-sm font-medium text-neutral-700 mb-1">No Settlement History</h4>
-                                    <p class="font-mono text-[11px] text-neutral-400 max-w-xs">Completed contracts and their outcomes will appear here.</p>
-                                </div>
+                                <div class="px-6 py-12 text-center text-sm text-neutral-500">Loading history...</div>
                             </div>
                         </div>
                     </div>
@@ -330,47 +223,7 @@ export function renderProfile() {
                                 <h3 class="font-mono text-[11px] text-neutral-900 uppercase tracking-widest font-medium">Verification Sources</h3>
                             </div>
                             <div class="divide-y divide-neutral-100">
-                                <!-- X / Twitter -->
-                                <div id="source-twitter" class="px-6 py-5 flex items-center justify-between">
-                                    <div class="flex items-center gap-4">
-                                        <div class="w-10 h-10 bg-neutral-900 rounded flex items-center justify-center">
-                                            <span class="text-white font-bold text-lg">X</span>
-                                        </div>
-                                        <div>
-                                            <h4 class="font-sans text-sm font-medium text-neutral-900">X / Twitter</h4>
-                                            <p class="font-mono text-[11px] text-neutral-500" id="twitter-status">@mercury_dev</p>
-                                        </div>
-                                    </div>
-                                    <span class="font-mono text-[10px] uppercase tracking-wide text-emerald-600">Verified</span>
-                                </div>
-                                
-                                <!-- GitHub -->
-                                <div id="source-github" class="px-6 py-5 flex items-center justify-between">
-                                    <div class="flex items-center gap-4">
-                                        <div class="w-10 h-10 bg-neutral-800 rounded flex items-center justify-center">
-                                            <i data-lucide="github" class="w-5 h-5 text-white"></i>
-                                        </div>
-                                        <div>
-                                            <h4 class="font-sans text-sm font-medium text-neutral-900">GitHub</h4>
-                                            <p class="font-mono text-[11px] text-neutral-500" id="github-status">mercury-labs</p>
-                                        </div>
-                                    </div>
-                                    <span class="font-mono text-[10px] uppercase tracking-wide text-emerald-600">Verified</span>
-                                </div>
-                                
-                                <!-- Stripe -->
-                                <div id="source-stripe" class="px-6 py-5 flex items-center justify-between">
-                                    <div class="flex items-center gap-4">
-                                        <div class="w-10 h-10 bg-[#635BFF] rounded flex items-center justify-center">
-                                            <span class="text-white font-bold text-sm">S</span>
-                                        </div>
-                                        <div>
-                                            <h4 class="font-sans text-sm font-medium text-neutral-900">Stripe</h4>
-                                            <p class="font-mono text-[11px] text-neutral-500" id="stripe-status">acct_•••8f3a</p>
-                                        </div>
-                                    </div>
-                                    <span class="font-mono text-[10px] uppercase tracking-wide text-emerald-600">Verified</span>
-                                </div>
+                                <div class="px-6 py-12 text-center text-sm text-neutral-500 font-mono">Loading verification sources...</div>
                             </div>
                         </div>
                         <p class="font-mono text-[10px] text-neutral-400 mt-4">Verification sources are bound to this identity and cannot be modified after execution.</p>
@@ -388,88 +241,10 @@ export function renderProfile() {
                                 <div id="timeline-list" class="relative">
                                     <!-- Timeline line -->
                                     <div class="absolute left-6 top-0 bottom-0 w-px bg-neutral-200"></div>
-                                    
-                                    <!-- Event: Contract Settled -->
-                                    <div class="relative px-6 py-5 border-b border-neutral-100 ml-4">
-                                        <div class="absolute left-2 top-6 w-2 h-2 bg-neutral-400 rounded-full"></div>
-                                        <div class="flex justify-between items-start">
-                                            <div>
-                                                <h4 class="text-sm font-medium text-neutral-900">Contract Settled</h4>
-                                                <p class="text-xs text-neutral-500 mt-1">Performance contract executed successfully</p>
-                                                <div class="flex gap-4 mt-3">
-                                                    <span class="font-mono text-[10px] text-neutral-400 uppercase">VALUE: <span class="text-neutral-900 font-medium">$485,000.00</span></span>
-                                                    <span class="font-mono text-[10px] text-neutral-400 uppercase">REFERENCE: <span class="text-neutral-600">CTR-00647</span></span>
-                                                </div>
-                                            </div>
-                                            <span class="font-mono text-[10px] text-neutral-400">Jan 18, 2026</span>
-                                        </div>
-                                    </div>
-
-                                    <!-- Event: Contract Settled -->
-                                    <div class="relative px-6 py-5 border-b border-neutral-100 ml-4">
-                                        <div class="absolute left-2 top-6 w-2 h-2 bg-neutral-400 rounded-full"></div>
-                                        <div class="flex justify-between items-start">
-                                            <div>
-                                                <h4 class="text-sm font-medium text-neutral-900">Contract Settled</h4>
-                                                <p class="text-xs text-neutral-500 mt-1">Performance contract executed successfully</p>
-                                                <div class="flex gap-4 mt-3">
-                                                    <span class="font-mono text-[10px] text-neutral-400 uppercase">VALUE: <span class="text-neutral-900 font-medium">$620,000.00</span></span>
-                                                    <span class="font-mono text-[10px] text-neutral-400 uppercase">REFERENCE: <span class="text-neutral-600">CTR-00643</span></span>
-                                                </div>
-                                            </div>
-                                            <span class="font-mono text-[10px] text-neutral-400">Jan 18, 2026</span>
-                                        </div>
-                                    </div>
-
-                                    <!-- Event: New Contract Executed -->
-                                    <div class="relative px-6 py-5 border-b border-neutral-100 ml-4">
-                                        <div class="absolute left-2 top-6 w-2 h-2 bg-neutral-400 rounded-full"></div>
-                                        <div class="flex justify-between items-start">
-                                            <div>
-                                                <h4 class="text-sm font-medium text-neutral-900">New Contract Executed</h4>
-                                                <p class="text-xs text-neutral-500 mt-1">Performance contract initiated with counterparty</p>
-                                                <div class="flex gap-4 mt-3">
-                                                    <span class="font-mono text-[10px] text-neutral-400 uppercase">VALUE: <span class="text-neutral-900 font-medium">$720,000.00</span></span>
-                                                    <span class="font-mono text-[10px] text-neutral-400 uppercase">REFERENCE: <span class="text-neutral-600">CTR-00621</span></span>
-                                                </div>
-                                            </div>
-                                            <span class="font-mono text-[10px] text-neutral-400">Jan 15, 2026</span>
-                                        </div>
-                                    </div>
-
-                                    <!-- Event: Contract Forfeited (VISUALLY DISTINCT) -->
-                                    <div class="relative px-6 py-5 border-b border-neutral-100 ml-4 bg-red-50 border-l-2" style="border-left-color: #751212;">
-                                        <div class="absolute left-2 top-6 w-2 h-2 rounded-full" style="background-color: #751212;"></div>
-                                        <div class="flex justify-between items-start">
-                                            <div>
-                                                <h4 class="text-sm font-medium" style="color: #751212;">Contract Forfeited</h4>
-                                                <p class="text-xs text-neutral-500 mt-1">Non-performance event; USD capital transferred via Stripe</p>
-                                                <div class="flex gap-4 mt-3">
-                                                    <span class="font-mono text-[10px] text-neutral-400 uppercase">VALUE: <span style="color: #751212;" class="font-medium">$125,000.00</span></span>
-                                                    <span class="font-mono text-[10px] text-neutral-400 uppercase">REFERENCE: <span class="text-neutral-600">CTR-00609</span></span>
-                                                </div>
-                                            </div>
-                                            <span class="font-mono text-[10px] text-neutral-400">Jan 10, 2026</span>
-                                        </div>
-                                    </div>
-
-                                    <!-- Event: Contract Settled -->
-                                    <div class="relative px-6 py-5 ml-4">
-                                        <div class="absolute left-2 top-6 w-2 h-2 bg-neutral-400 rounded-full"></div>
-                                        <div class="flex justify-between items-start">
-                                            <div>
-                                                <h4 class="text-sm font-medium text-neutral-900">Contract Settled</h4>
-                                                <p class="text-xs text-neutral-500 mt-1">Performance contract executed successfully</p>
-                                                <div class="flex gap-4 mt-3">
-                                                    <span class="font-mono text-[10px] text-neutral-400 uppercase">VALUE: <span class="text-neutral-900 font-medium">$340,000.00</span></span>
-                                                    <span class="font-mono text-[10px] text-neutral-400 uppercase">REFERENCE: <span class="text-neutral-600">CTR-00598</span></span>
-                                                </div>
-                                            </div>
-                                            <span class="font-mono text-[10px] text-neutral-400">Jan 8, 2026</span>
-                                        </div>
-                                    </div>
+                                    <div class="px-6 py-12 text-center text-sm text-neutral-500 ml-4">Loading event history...</div>
                                 </div>
                             </div>
+
 
                             <!-- Verification Metadata Panel (Right - 1 col) -->
                             <div class="border border-neutral-200 bg-neutral-50 p-6">

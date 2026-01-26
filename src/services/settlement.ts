@@ -16,6 +16,7 @@ import { getStripeClient } from './stripe-client.js';
 import { tryAcquireLock, getNextRetryTime, scheduleRetry } from './job-lock.js';
 import { classifyError } from './error-classification.js';
 import { eq, and, or, isNull, lte } from 'drizzle-orm';
+import { appendAccountEvent, AccountEventType } from './balances.js';
 
 // =====================================================
 // SETTLEMENT EVENT TYPES
@@ -178,8 +179,13 @@ export function canSettle(
  * 
  * @param contractId - Contract ID to settle
  * @param tx - Optional transaction client (for lock-pinned writes from withContractLock)
+ * @param overrideOutcome - Optional manual outcome override (admin/internal use)
  */
-export async function settleContract(contractId: string, tx?: DbLike): Promise<SettlementResult> {
+export async function settleContract(
+    contractId: string,
+    tx?: DbLike,
+    overrideOutcome?: 'SUCCESS' | 'FAILURE'
+): Promise<SettlementResult> {
     // 1. Get contract
     const contract = await getContract(contractId, tx);
     if (!contract) {
@@ -301,115 +307,88 @@ export async function settleContract(contractId: string, tx?: DbLike): Promise<S
             });
         }
 
-        // 6. Execute Stripe money move
+        // 6. PIPELINE: Handle Fund Movement via Account Ledger
+        // CRITICAL UPDATE: Decouple settlement from payout execution
+        // 1. Release Lock (CAPITAL_UNLOCKED)
+        // 2. If WIN -> Queue Payout (PAYOUT_QUEUED)
+        // 3. If LOSS -> Forfeit (SETTLEMENT_LOSS)
+
+        // DETERMINE OUTCOME: Override takes precedence, otherwise use verification
+        const isSuccess = overrideOutcome ? overrideOutcome === 'SUCCESS' : verificationSucceeded;
+        const finalOutcome = isSuccess ? 'SUCCESS' : 'FAILURE';
+
+        console.log(`⚖️  Settling ${contractId} as ${finalOutcome} (Override: ${overrideOutcome || 'none'}, Verification: ${verificationSucceeded})`);
+
+        // 6a. UNLOCK CAPITAL (Always happen on settlement)
+        // This clears the "Locked" balance and credits "Available" so it can be moved
+        await appendAccountEvent({
+            userId: contract.principalUserId,
+            contractId,
+            eventType: AccountEventType.CAPITAL_UNLOCKED,
+            amountCents: contract.lockAmountUsdCents, // Unlock the internal hold
+            idempotencyKey: `unlock_${contractId}_${settlementStartedEvent.id}`,
+            metadata: {
+                reason: 'SETTLEMENT',
+                outcome: finalOutcome
+            }
+        });
+
         let stripeRefs: { transferId?: string; payoutId?: string } = {};
 
-        if (verificationSucceeded) {
-            // SUCCESS: Payout to user using PRECOMMITTED payoutAmountUsdCents
+        if (isSuccess) {
+            // SUCCESS: Queue Payout (Funds move from Available -> Pending Payout)
+            // User gets their principal + winnings (payoutAmountUsdCents)
 
-            // Fetch user to get Stripe Connect Account ID
-            const [user] = await (tx ?? db)
-                .select()
-                .from(users)
-                .where(eq(users.id, contract.principalUserId))
-                .limit(1);
-
-            if (!user) {
-                throw new Error(`Principal user ${contract.principalUserId} not found`);
-            }
-
-            if (!user.stripeConnectedAccountId) {
-                // DEFERRED: No Connect Account linked
-                // CRITICAL FIX: Still append terminal SETTLED_SUCCESS with payoutDeferred=true
-                // This ensures the contract reaches terminal state + receipt is issued
-                console.log(`⚠️ Contract ${contractId} payout deferred: No Stripe Connect account for user ${user.id}`);
-
-                // 1. Append PAYOUT_DEFERRED for operational tracking
-                await appendEvent({
-                    contractId,
-                    actor: 'SYSTEM',
-                    eventType: EventType.PAYOUT_DEFERRED,
-                    amountUsdCents: contract.payoutAmountUsdCents,
-                    metadata: {
-                        reason: 'MISSING_STRIPE_CONNECT_ID',
-                        owedAmountUsdCents: contract.payoutAmountUsdCents,
-                        deferredAt: new Date().toISOString(),
-                    },
-                    tx,
-                });
-
-                // 2. TERMINAL: Append SETTLED_SUCCESS with payoutDeferred=true
-                const terminalEvent = await appendEvent({
-                    contractId,
-                    actor: 'SYSTEM',
-                    eventType: EventType.SETTLED_SUCCESS,
-                    amountUsdCents: contract.payoutAmountUsdCents,
-                    metadata: {
-                        outcome: 'SUCCESS',
-                        payoutDeferred: true,
-                        owedAmountUsdCents: contract.payoutAmountUsdCents,
-                        reason: 'MISSING_STRIPE_CONNECT_ID',
-                        settledAt: new Date().toISOString(),
-                    },
-                    tx,
-                });
-
-                // 3. Issue receipt for terminal event
-                await issueReceiptForContract(contractId, contract, terminalEvent, tx);
-
-                return {
-                    success: true,
-                    outcome: 'SUCCESS',
-                    amountUsdCents: contract.payoutAmountUsdCents,
-                    stripeRefs: {},
-                };
-            }
-
-            // Execute Real Stripe Transfer
-            const idempotencyKey = `tr_${contractId}_${settlementStartedEvent.id}`;
-            const stripeClient = getStripeClient();
-
-            console.log(`💸 Attempting Stripe Transfer for ${contractId} to ${user.stripeConnectedAccountId} (Idempotency: ${idempotencyKey})`);
-
-            const transferResult = await stripeClient.createTransfer({
-                amountUsdCents: contract.payoutAmountUsdCents,
-                destinationAccountId: user.stripeConnectedAccountId,
+            // 6b. QUEUE PAYOUT
+            await appendAccountEvent({
+                userId: contract.principalUserId,
                 contractId,
-                idempotencyKey,
+                eventType: AccountEventType.PAYOUT_QUEUED,
+                amountCents: contract.payoutAmountUsdCents,
+                idempotencyKey: `payout_queue_${contractId}_${settlementStartedEvent.id}`,
+                metadata: {
+                    outcome: 'SUCCESS',
+                    queuedAt: new Date().toISOString()
+                }
             });
 
-            if (!transferResult.success) {
-                throw new Error(`Stripe Transfer failed: ${transferResult.error}`);
-            }
+            console.log(`✅ Payout QUEUED for ${contractId}: ${contract.payoutAmountUsdCents} cents`);
 
-            stripeRefs = { transferId: transferResult.id };
-
-            // 7. Append SETTLED_SUCCESS with real transfer ID
+            // 7. Append SETTLED_SUCCESS
+            // Note: We do NOT transfer funds here anymore. The Payout Job will pick up PAYOUT_QUEUED events.
             await appendEvent({
                 contractId,
                 actor: 'SYSTEM',
                 eventType: EventType.SETTLED_SUCCESS,
                 amountUsdCents: contract.payoutAmountUsdCents,
-                externalRef: transferResult.id, // Ledger dedupe key
                 metadata: {
                     outcome: 'SUCCESS',
-                    stripeTransferId: transferResult.id,
-                    stripeConnectedAccountId: user.stripeConnectedAccountId,
+                    payoutQueued: true,
+                    stripeConnectedAccountId: (contract as any)?.stripeConnectedAccountId || null, // Will be resolved by payout job
                     settledAt: new Date().toISOString(),
                     payoutToUser: true,
-                    // Evidence of terms used
                     lockAmountUsdCents: contract.lockAmountUsdCents,
                     payoutAmountUsdCents: contract.payoutAmountUsdCents,
+                    // If manually overridden
+                    ...(overrideOutcome && { manualOverride: true })
                 },
                 tx,
             });
 
-            console.log(`✅ Contract ${contractId} settled SUCCESS - payout ${contract.payoutAmountUsdCents} cents (Transfer: ${transferResult.id})`);
-
         } else {
             // FAILURE: Forfeit to house
-            // Funds already captured to platform balance - no user payout
-            // In production: Log the forfeiture, no Stripe action needed
+            // 6c. RECORD LOSS (Funds move from Available -> House/Forfeited)
+            await appendAccountEvent({
+                userId: contract.principalUserId,
+                contractId,
+                eventType: AccountEventType.SETTLEMENT_LOSS,
+                amountCents: contract.lockAmountUsdCents, // You lose the locked amount
+                idempotencyKey: `loss_${contractId}_${settlementStartedEvent.id}`,
+                metadata: {
+                    outcome: 'FAILURE',
+                    forfeitedAt: new Date().toISOString()
+                }
+            });
 
             // 7. Append SETTLED_FAILURE
             await appendEvent({
@@ -422,6 +401,7 @@ export async function settleContract(contractId: string, tx?: DbLike): Promise<S
                     forfeitedToHouse: true,
                     settledAt: new Date().toISOString(),
                     noUserPayout: true,
+                    ...(overrideOutcome && { manualOverride: true })
                 },
                 tx,
             });
@@ -447,9 +427,9 @@ export async function settleContract(contractId: string, tx?: DbLike): Promise<S
 
         return {
             success: true,
-            outcome: verificationSucceeded ? 'SUCCESS' : 'FAILURE',
+            outcome: isSuccess ? 'SUCCESS' : 'FAILURE',
             // SUCCESS uses payoutAmountUsdCents, FAILURE uses lockAmountUsdCents
-            amountUsdCents: verificationSucceeded ? contract.payoutAmountUsdCents : contract.lockAmountUsdCents,
+            amountUsdCents: isSuccess ? contract.payoutAmountUsdCents : contract.lockAmountUsdCents,
             stripeRefs,
         };
 

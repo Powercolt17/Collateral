@@ -19,6 +19,7 @@
 import { FastifyPluginAsync } from 'fastify';
 import { createFundingIntent } from '../services/funding.js';
 import { createContract, getContract, updateContractBaseline } from '../services/contracts.js';
+import { settleContract } from '../services/settlement.js';
 import { appendEvent, getEventsForContract } from '../services/ledger.js';
 import { deriveState, validateFromState, InvalidTransitionError } from '../services/state-derivation.js';
 import { ContractStatus, EventType, connectedAccounts } from '../db/schema.js';
@@ -101,6 +102,14 @@ const contractWriteRoutes: FastifyPluginAsync = async (fastify) => {
             // userId fields in body are rejected by global assertNoUserIdFieldsDeep()
             const principalUserId = getPrincipal(request);
             console.log('[contracts-write] principalUserId:', principalUserId);
+
+            // 0. ACCOUNT STATUS GUARD (Dispute Defense)
+            // Block new contracts if identity is suspended (e.g. chargeback)
+            const [identity] = await db.select().from(identities).where(eq(identities.userId, principalUserId));
+            if (identity?.status === 'SUSPENDED') {
+                reply.status(403);
+                return { error: 'Account restricted due to dispute. Please contact support.' };
+            }
 
             const {
                 username: bodyUsername,
@@ -334,6 +343,7 @@ const contractWriteRoutes: FastifyPluginAsync = async (fastify) => {
                 clientSecret: result.clientSecret,
                 paymentIntentId: result.paymentIntentId,
                 amountUsdCents: result.amountUsdCents,
+                status: result.status, // EXPOSE STATUS for frontend 3DS handling
             };
         } catch (err: any) {
             if (err instanceof InvalidTransitionError) {
@@ -699,6 +709,56 @@ const contractWriteRoutes: FastifyPluginAsync = async (fastify) => {
         }
     });
 
+    /**
+     * POST /contracts/:id/settle
+     * Admin/Internal settlement trigger (manual intervention)
+     * Maps WIN/LOSS to internal SUCCESS/FAILURE outcomes.
+     */
+    fastify.post<{
+        Params: { id: string };
+        Body: { outcome: 'WIN' | 'LOSS' };
+    }>('/v1/contracts/:id/settle', async (request, reply) => {
+        const { id } = request.params;
+        const { outcome } = request.body || {};
+        const principalUserId = getPrincipal(request);
+
+        // ADMIN AUTH CHECK
+        const adminKey = request.headers['x-admin-key'];
+        // Allow if matches env var OR if in dev mode with no env var set (for testing)
+        const isValid = adminKey === process.env.ADMIN_API_KEY || (!process.env.ADMIN_API_KEY && process.env.NODE_ENV !== 'production');
+
+        if (!isValid) {
+            reply.status(403);
+            return { error: 'Unauthorized: Admin access required' };
+        }
+
+        console.log(`[Settlement] Manual trigger for ${id} by ${principalUserId}, outcome: ${outcome}`);
+
+        const mappedOutcome = outcome === 'WIN' ? 'SUCCESS' : (outcome === 'LOSS' ? 'FAILURE' : undefined);
+
+        if (!mappedOutcome) {
+            reply.status(400);
+            return { ok: false, error: 'Invalid outcome. Must be WIN or LOSS.' };
+        }
+
+        try {
+            // Call settlement service with override
+            const result = await settleContract(id, undefined, mappedOutcome);
+
+            if (!result.success) {
+                // Return 400 if logic prevented settlement (e.g. wrong state)
+                reply.status(400);
+                return { ok: false, ...result };
+            }
+
+            return { ok: true, ...result };
+        } catch (err: any) {
+            console.error('[Settlement] Endpoint error:', err);
+            reply.status(500);
+            return { ok: false, error: err.message };
+        }
+    });
+
     // =======================================================================
     // DEV-ONLY: SIMULATE SUCCESS ENDPOINT
     // =======================================================================
@@ -997,178 +1057,182 @@ const contractWriteRoutes: FastifyPluginAsync = async (fastify) => {
         }
     });
 
-    // =======================================================================
-    // SETTLE CONTRACT ENDPOINT
-    // =======================================================================
-    // Settles a locked contract (WIN or LOSS)
-    // Writes SETTLEMENT_WIN or SETTLEMENT_LOSS to account ledger
-    // =======================================================================
-    fastify.post<{
-        Params: { id: string };
-        Body: { outcome: 'win' | 'loss' };
-    }>('/v1/contracts/:id/settle', async (request, reply) => {
-        const { id } = request.params;
-        const { outcome } = request.body;
-
-        // Note: Settlement can be called by admin/system, not just contract owner
-        // For MVP, allow authenticated users to settle their own contracts
-
-        if (!outcome || !['win', 'loss'].includes(outcome)) {
-            reply.status(400);
-            return { ok: false, code: 'INVALID_OUTCOME', error: 'Outcome must be "win" or "loss"' };
+    // (Duplicate Settle Route Removed)
+    /* Params: { id: string };
+    Body: { outcome: 'win' | 'loss' };
+    }> ('/v1/contracts/:id/settle', async (request, reply) => {
+    const { id } = request.params;
+    const { outcome } = request.body;
+    
+    // Note: Settlement can be called by admin/system, not just contract owner
+    // For MVP, allow authenticated users to settle their own contracts
+    
+    // ADMIN AUTH CHECK
+    const adminKey = request.headers['x-admin-key'];
+    // Allow if matches env var OR if in dev mode with no env var set (for testing)
+    const isValid = adminKey === process.env.ADMIN_API_KEY || (!process.env.ADMIN_API_KEY && process.env.NODE_ENV !== 'production');
+    
+    if (!isValid) {
+        reply.status(403);
+        return { error: 'Unauthorized: Admin access required' };
+    }
+    
+    if (!outcome || !['win', 'loss'].includes(outcome)) {
+        reply.status(400);
+        return { ok: false, code: 'INVALID_OUTCOME', error: 'Outcome must be "win" or "loss"' };
+    }
+    
+    try {
+        // 1. Get contract
+        const contract = await getContract(id);
+        if (!contract) {
+            reply.status(404);
+            return { ok: false, code: 'NOT_FOUND', error: 'Contract not found' };
         }
-
-        try {
-            // 1. Get contract
-            const contract = await getContract(id);
-            if (!contract) {
-                reply.status(404);
-                return { ok: false, code: 'NOT_FOUND', error: 'Contract not found' };
-            }
-
-            const principalUserId = contract.principalUserId;
-
-            // 2. Load events and check state
-            const events = await getEventsForContract(id);
-            const currentState = deriveState(events);
-
-            // Idempotent: already settled
-            if (currentState === ContractStatus.SETTLED ||
-                currentState === ContractStatus.FORFEITED ||
-                currentState === 'SETTLED_WIN' ||
-                currentState === 'SETTLED_LOSS') {
-                const { computeBalances } = await import('../services/balances.js');
-                const balances = await computeBalances(principalUserId);
-                return {
-                    ok: true,
-                    code: 'ALREADY_SETTLED',
-                    contractId: id,
-                    derivedState: currentState,
-                    balances: {
-                        availableBalanceUsdCents: balances.availableCents,
-                        lockedBalanceUsdCents: balances.lockedCents,
-                        pendingPayoutUsdCents: balances.pendingPayoutCents,
-                    },
-                };
-            }
-
-            // Must be in LOCKED state to settle
-            if (currentState !== ContractStatus.LOCKED &&
-                currentState !== ContractStatus.FUNDS_LOCKED &&
-                currentState !== 'RUNNING') {
-                reply.status(409);
-                return {
-                    ok: false,
-                    code: 'INVALID_STATE',
-                    error: `Cannot settle contract in state: ${currentState}. Must be LOCKED.`,
-                };
-            }
-
-            const { computeBalances, appendAccountEvent, AccountEventType } = await import('../services/balances.js');
-
-            if (outcome === 'win') {
-                // WIN: Credit the locked amount back + payout
-                const payoutAmount = contract.payoutAmountUsdCents;
-
-                // Write CAPITAL_UNLOCKED (return locked funds)
-                await appendAccountEvent({
-                    userId: principalUserId,
-                    contractId: id,
-                    eventType: AccountEventType.CAPITAL_UNLOCKED,
-                    amountCents: contract.lockAmountUsdCents,
-                    idempotencyKey: `capital_unlocked_${id}`,
-                    metadata: { reason: 'settlement_win' },
-                });
-
-                // Write SETTLEMENT_WIN (credit payout - but this is the same as locked for now)
-                await appendAccountEvent({
-                    userId: principalUserId,
-                    contractId: id,
-                    eventType: AccountEventType.SETTLEMENT_WIN,
-                    amountCents: payoutAmount - contract.lockAmountUsdCents, // Additional payout above principal
-                    idempotencyKey: `settlement_win_${id}`,
-                    metadata: {
-                        payoutAmountCents: payoutAmount,
-                        lockAmountCents: contract.lockAmountUsdCents,
-                    },
-                });
-
-                // Write PAYOUT_QUEUED
-                await appendAccountEvent({
-                    userId: principalUserId,
-                    contractId: id,
-                    eventType: AccountEventType.PAYOUT_QUEUED,
-                    amountCents: payoutAmount,
-                    idempotencyKey: `payout_queued_${id}`,
-                    metadata: { settledAt: new Date().toISOString() },
-                });
-
-                // Write contract ledger event
-                await appendEvent({
-                    contractId: id,
-                    actor: 'SYSTEM',
-                    eventType: EventType.SETTLED_SUCCESS,
-                    amountUsdCents: payoutAmount,
-                    metadata: {
-                        outcome: 'win',
-                        payoutAmountCents: payoutAmount,
-                        settledAt: new Date().toISOString(),
-                    },
-                });
-
-            } else {
-                // LOSS: Forfeit locked capital
-                await appendAccountEvent({
-                    userId: principalUserId,
-                    contractId: id,
-                    eventType: AccountEventType.SETTLEMENT_LOSS,
-                    amountCents: 0, // No refund
-                    idempotencyKey: `settlement_loss_${id}`,
-                    metadata: {
-                        forfeitedAmountCents: contract.lockAmountUsdCents,
-                        settledAt: new Date().toISOString(),
-                    },
-                });
-
-                // Write contract ledger event
-                await appendEvent({
-                    contractId: id,
-                    actor: 'SYSTEM',
-                    eventType: EventType.SETTLED_FAILURE,
-                    amountUsdCents: contract.lockAmountUsdCents,
-                    metadata: {
-                        outcome: 'loss',
-                        forfeitedAmountCents: contract.lockAmountUsdCents,
-                        settledAt: new Date().toISOString(),
-                    },
-                });
-            }
-
-            // Get updated balances and state
-            const updatedBalances = await computeBalances(principalUserId);
-            const updatedEvents = await getEventsForContract(id);
-            const newState = deriveState(updatedEvents);
-
-            console.log(`[Settle] Contract ${id} settled: ${outcome.toUpperCase()}`);
-
+    
+        const principalUserId = contract.principalUserId;
+    
+        // 2. Load events and check state
+        const events = await getEventsForContract(id);
+        const currentState = deriveState(events);
+    
+        // Idempotent: already settled
+        if (currentState === ContractStatus.SETTLED ||
+            currentState === ContractStatus.FORFEITED ||
+            currentState === 'SETTLED_WIN' ||
+            currentState === 'SETTLED_LOSS') {
+            const { computeBalances } = await import('../services/balances.js');
+            const balances = await computeBalances(principalUserId);
             return {
                 ok: true,
+                code: 'ALREADY_SETTLED',
                 contractId: id,
-                outcome,
-                derivedState: newState,
+                derivedState: currentState,
                 balances: {
-                    availableBalanceUsdCents: updatedBalances.availableCents,
-                    lockedBalanceUsdCents: updatedBalances.lockedCents,
-                    pendingPayoutUsdCents: updatedBalances.pendingPayoutCents,
+                    availableBalanceUsdCents: balances.availableCents,
+                    lockedBalanceUsdCents: balances.lockedCents,
+                    pendingPayoutUsdCents: balances.pendingPayoutCents,
                 },
             };
-
-        } catch (err: any) {
-            console.error('[Settle] Error:', err.message);
-            reply.status(500);
-            return { ok: false, code: 'INTERNAL_ERROR', error: err.message };
         }
-    });
+    
+        // Must be in LOCKED state to settle
+        if (currentState !== ContractStatus.LOCKED &&
+            currentState !== ContractStatus.FUNDS_LOCKED &&
+            currentState !== 'RUNNING') {
+            reply.status(409);
+            return {
+                ok: false,
+                code: 'INVALID_STATE',
+                error: `Cannot settle contract in state: ${currentState}. Must be LOCKED.`,
+            };
+        }
+    
+        const { computeBalances, appendAccountEvent, AccountEventType } = await import('../services/balances.js');
+    
+        if (outcome === 'win') {
+            // WIN: Credit the locked amount back + payout
+            const payoutAmount = contract.payoutAmountUsdCents;
+    
+            // Write CAPITAL_UNLOCKED (return locked funds)
+            await appendAccountEvent({
+                userId: principalUserId,
+                contractId: id,
+                eventType: AccountEventType.CAPITAL_UNLOCKED,
+                amountCents: contract.lockAmountUsdCents,
+                idempotencyKey: `capital_unlocked_${id}`,
+                metadata: { reason: 'settlement_win' },
+            });
+    
+            // Write SETTLEMENT_WIN (credit payout - but this is the same as locked for now)
+            await appendAccountEvent({
+                userId: principalUserId,
+                contractId: id,
+                eventType: AccountEventType.SETTLEMENT_WIN,
+                amountCents: payoutAmount - contract.lockAmountUsdCents, // Additional payout above principal
+                idempotencyKey: `settlement_win_${id}`,
+                metadata: {
+                    payoutAmountCents: payoutAmount,
+                    lockAmountCents: contract.lockAmountUsdCents,
+                },
+            });
+    
+            // Write PAYOUT_QUEUED
+            await appendAccountEvent({
+                userId: principalUserId,
+                contractId: id,
+                eventType: AccountEventType.PAYOUT_QUEUED,
+                amountCents: payoutAmount,
+                idempotencyKey: `payout_queued_${id}`,
+                metadata: { settledAt: new Date().toISOString() },
+            });
+    
+            // Write contract ledger event
+            await appendEvent({
+                contractId: id,
+                actor: 'SYSTEM',
+                eventType: EventType.SETTLED_SUCCESS,
+                amountUsdCents: payoutAmount,
+                metadata: {
+                    outcome: 'win',
+                    payoutAmountCents: payoutAmount,
+                    settledAt: new Date().toISOString(),
+                },
+            });
+    
+        } else {
+            // LOSS: Forfeit locked capital
+            await appendAccountEvent({
+                userId: principalUserId,
+                contractId: id,
+                eventType: AccountEventType.SETTLEMENT_LOSS,
+                amountCents: 0, // No refund
+                idempotencyKey: `settlement_loss_${id}`,
+                metadata: {
+                    forfeitedAmountCents: contract.lockAmountUsdCents,
+                    settledAt: new Date().toISOString(),
+                },
+            });
+    
+            // Write contract ledger event
+            await appendEvent({
+                contractId: id,
+                actor: 'SYSTEM',
+                eventType: EventType.SETTLED_FAILURE,
+                amountUsdCents: contract.lockAmountUsdCents,
+                metadata: {
+                    outcome: 'loss',
+                    forfeitedAmountCents: contract.lockAmountUsdCents,
+                    settledAt: new Date().toISOString(),
+                },
+            });
+        }
+    
+        // Get updated balances and state
+        const updatedBalances = await computeBalances(principalUserId);
+        const updatedEvents = await getEventsForContract(id);
+        const newState = deriveState(updatedEvents);
+    
+        console.log(`[Settle] Contract ${id} settled: ${outcome.toUpperCase()}`);
+    
+        return {
+            ok: true,
+            contractId: id,
+            outcome,
+            derivedState: newState,
+            balances: {
+                availableBalanceUsdCents: updatedBalances.availableCents,
+                lockedBalanceUsdCents: updatedBalances.lockedCents,
+                pendingPayoutUsdCents: updatedBalances.pendingPayoutCents,
+            },
+        };
+    
+    } catch (err: any) {
+        console.error('[Settle] Error:', err.message);
+        reply.status(500);
+        return { ok: false, code: 'INTERNAL_ERROR', error: err.message };
+    }
+    }); */
 };
 
 export default contractWriteRoutes;

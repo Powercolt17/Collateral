@@ -9,8 +9,9 @@ import {
     pgEnum,
     uniqueIndex,
     unique,
-    index
+    index,
 } from 'drizzle-orm/pg-core';
+import { sql } from 'drizzle-orm';
 
 // =====================
 // ENUMS
@@ -340,11 +341,15 @@ export const accountLedgerEvents = pgTable('account_ledger_events', {
     amountCents: integer('amount_cents').notNull(),
     idempotencyKey: varchar('idempotency_key', { length: 255 }).notNull().unique(),
     metadata: jsonb('metadata'),
+    // For idempotency referencing (e.g. tracking Payout -> Queued Event)
+    originEventId: uuid('origin_event_id'),
     createdAt: timestamp('created_at', { withTimezone: true }).defaultNow().notNull(),
 }, (table) => ({
     userIdx: index('account_ledger_user_idx').on(table.userId),
     contractIdx: index('account_ledger_contract_idx').on(table.contractId),
     idempotencyIdx: uniqueIndex('account_ledger_idempotency_idx').on(table.idempotencyKey),
+    // Partial unique index to enforce exactly one terminal payout event per queued event
+    payoutOriginIdx: uniqueIndex('uq_payout_origin_once').on(table.originEventId).where(sql`event_type IN ('PAYOUT_SENT', 'PAYOUT_FAILED')`),
 }));
 
 // =============================================================================

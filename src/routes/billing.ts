@@ -13,7 +13,7 @@
 import { FastifyPluginAsync, FastifyRequest, FastifyReply } from 'fastify';
 import { eq } from 'drizzle-orm';
 import { db } from '../db/client.js';
-import { users, fundingSources } from '../db/schema.js';
+import { users, fundingSources, identities } from '../db/schema.js';
 import { computeBalances, appendAccountEvent, AccountEventType } from '../services/balances.js';
 
 const STRIPE_SECRET_KEY = process.env.STRIPE_SECRET_KEY;
@@ -158,8 +158,11 @@ const billingRoutes: FastifyPluginAsync = async (fastify) => {
                 }
             }
 
-            // Get user for Stripe Connect status
-            const [user] = await db.select().from(users).where(eq(users.id, userId));
+            // Get user info and connect status
+            // Funding page must reflect connect_accounts table, not users table
+            const [connectAccount] = await db.select().from(connectAccounts).where(eq(connectAccounts.userId, userId));
+            // Get identity status (for potential freeze)
+            const [identity] = await db.select().from(identities).where(eq(identities.userId, userId));
 
             // Compute derived balances from account ledger events
             const derivedBalances = await computeBalances(userId);
@@ -170,6 +173,7 @@ const billingRoutes: FastifyPluginAsync = async (fastify) => {
             };
 
             return {
+                identityStatus: identity?.status || 'ACTIVE',
                 fundingSource: fundingSource ? {
                     status: fundingSource.status,
                     brand: fundingSource.brand,
@@ -178,14 +182,16 @@ const billingRoutes: FastifyPluginAsync = async (fastify) => {
                     expYear: fundingSource.expYear,
                     verifiedAt: fundingSource.verifiedAt,
                 } : null,
-                payoutDestination: user?.stripeConnectedAccountId ? {
-                    connected: true,
-                    accountId: user.stripeConnectedAccountId,
+                payoutDestination: (connectAccount?.stripeConnectAccountId) ? {
+                    connected: connectAccount.onboardingStatus === 'connected', // Status check
+                    accountId: connectAccount.stripeConnectAccountId,
+                    status: connectAccount.onboardingStatus,
+                    payoutsEnabled: !!connectAccount.payoutsEnabled,
                 } : null,
                 balances,
                 flags: {
                     canAddCard: !fundingSource || fundingSource.status !== 'verified',
-                    canPayout: !!user?.stripeConnectedAccountId,
+                    canPayout: !!(connectAccount?.payoutsEnabled),
                 },
             };
         } catch (err: any) {
@@ -394,7 +400,9 @@ const billingRoutes: FastifyPluginAsync = async (fastify) => {
                 currency: 'usd',
                 customer: fundingSource.stripeCustomerId,
                 payment_method: fundingSource.stripePaymentMethodId,
-                off_session: true,
+                payment_method: fundingSource.stripePaymentMethodId,
+                // off_session: true, // REMOVED: User is likely in-session (on frontend). 
+                // Setting off_session: true increases decline rate for SCA cards during manual top-up.
                 confirm: true,
                 metadata: {
                     userId,
@@ -451,6 +459,100 @@ const billingRoutes: FastifyPluginAsync = async (fastify) => {
             return { error: err.message || 'Failed to add funds' };
         }
     });
+
+    /**
+     * ADMIN TEST HELPER: Attach Test Card
+     * POST /v1/admin/test/attach-card
+     * ONLY available if ALLOW_TEST_HELPERS=true AND not production.
+     */
+    const ALLOW_TEST_HELPERS = process.env.ALLOW_TEST_HELPERS === 'true' && process.env.NODE_ENV !== 'production';
+
+    if (ALLOW_TEST_HELPERS) {
+        fastify.post('/v1/admin/test/attach-card', {
+            preHandler: async (request: FastifyRequest, reply: FastifyReply) => {
+                // 1. Auth User
+                if (!request.userId) {
+                    return reply.status(401).send({ error: 'Authentication required' });
+                }
+
+                // 2. Admin Check (Strict)
+                const adminKey = request.headers['x-admin-key'];
+                if (!process.env.ADMIN_API_KEY) {
+                    // This route shouldn't even be registered if not safe, but double check
+                    if (process.env.NODE_ENV === 'production') return reply.status(500).send({ error: 'Misconfigured' });
+                }
+                if (!adminKey || adminKey !== process.env.ADMIN_API_KEY) {
+                    return reply.status(403).send({ error: 'Unauthorized' });
+                }
+            },
+        }, async (request, reply) => {
+            const userId = request.userId!;
+
+            try {
+                const stripe = await getStripe();
+                if (!stripe) return { error: 'Stripe not configured' };
+
+                // 1. Get/Create Customer
+                let stripeCustomerId: string;
+                const [existing] = await db.select().from(fundingSources).where(eq(fundingSources.userId, userId));
+
+                if (existing?.stripeCustomerId) {
+                    stripeCustomerId = existing.stripeCustomerId;
+                } else {
+                    const [user] = await db.select().from(users).where(eq(users.id, userId));
+                    const customer = await stripe.customers.create({ email: user?.email, metadata: { userId } });
+                    stripeCustomerId = customer.id;
+                }
+
+                // 2. Create Payment Method (from Token)
+                // In test mode, 'tok_visa' creates a verified card PM
+                const pm = await stripe.paymentMethods.create({ type: 'card', card: { token: 'tok_visa' } });
+
+                // 3. Attach to Customer
+                await stripe.paymentMethods.attach(pm.id, { customer: stripeCustomerId });
+
+                // 4. Set Default
+                await stripe.customers.update(stripeCustomerId, {
+                    invoice_settings: { default_payment_method: pm.id }
+                });
+
+                // 5. Update DB
+                const card = pm.card;
+                if (existing) {
+                    await db.update(fundingSources).set({
+                        stripeCustomerId,
+                        stripePaymentMethodId: pm.id,
+                        status: 'verified',
+                        brand: card?.brand?.toUpperCase(),
+                        last4: card?.last4,
+                        expMonth: card?.exp_month,
+                        expYear: card?.exp_year,
+                        verifiedAt: new Date(),
+                        updatedAt: new Date()
+                    }).where(eq(fundingSources.userId, userId));
+                } else {
+                    await db.insert(fundingSources).values({
+                        userId,
+                        stripeCustomerId,
+                        stripePaymentMethodId: pm.id,
+                        status: 'verified',
+                        brand: card?.brand?.toUpperCase(),
+                        last4: card?.last4,
+                        expMonth: card?.exp_month,
+                        expYear: card?.exp_year,
+                        verifiedAt: new Date()
+                    });
+                }
+
+                return { success: true, message: 'Test card attached', paymentMethodId: pm.id };
+
+            } catch (err: any) {
+                console.error('[Billing] Admin Attach Error:', err);
+                reply.status(500);
+                return { error: err.message };
+            }
+        });
+    }
 
     /**
      * DEV-ONLY: Debug endpoint to test balance ledger

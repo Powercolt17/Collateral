@@ -9,7 +9,7 @@
 
 import { FastifyInstance, FastifyRequest, FastifyReply } from 'fastify';
 import { db } from '../db/client.js';
-import { connectedAccounts } from '../db/schema.js';
+import { connectedAccounts, users } from '../db/schema.js';
 import { eq, and } from 'drizzle-orm';
 import { randomBytes } from 'crypto';
 
@@ -241,6 +241,11 @@ async function stripeConnectRoutes(fastify: FastifyInstance) {
                         },
                     });
 
+                // Sync to users table for backward compatibility
+                await db.update(users)
+                    .set({ stripeConnectedAccountId: stripeAccountId })
+                    .where(eq(users.id, userId));
+
                 console.log(`[Stripe Connect] User ${userId} connected account ${stripeAccountId} via GET callback`);
 
                 // Redirect to frontend with success
@@ -359,6 +364,11 @@ async function stripeConnectRoutes(fastify: FastifyInstance) {
                             },
                         },
                     });
+
+                // Sync to users table for backward compatibility
+                await db.update(users)
+                    .set({ stripeConnectedAccountId: stripeAccountId })
+                    .where(eq(users.id, userId));
 
                 console.log(`[Stripe Connect] User ${userId} connected account ${stripeAccountId}`);
 

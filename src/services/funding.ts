@@ -9,7 +9,7 @@
  */
 
 import { db } from '../db/client.js';
-import { contracts, ContractStatus, EventType } from '../db/schema.js';
+import { contracts, ContractStatus, EventType, identities, identityStatusEnum } from '../db/schema.js';
 import { getContract, getContractWithState, appendContractEvent } from './contracts.js';
 import { appendEvent, getEventsForContract, eventExistsForExternalRef } from './ledger.js';
 import { deriveState, validateFromState, InvalidTransitionError } from './state-derivation.js';
@@ -356,7 +356,7 @@ export async function handlePaymentDisputed(params: DisputeParams): Promise<void
         await appendEvent({
             contractId,
             actor: 'SYSTEM',
-            eventType: EventType.SETTLED,
+            eventType: EventType.CONTRACT_FORFEITED,
             amountUsdCents: amountCents,
             metadata: {
                 settlementType: 'FORFEITED',
@@ -375,5 +375,14 @@ export async function handlePaymentDisputed(params: DisputeParams): Promise<void
         });
 
         console.log(`🔒 CONTRACT_FORFEITED for ${contractId} due to funding reversal`);
+    }
+
+    // 6. SUSPEND IDENTITY (Account Freeze)
+    if (contract.principalUserId) {
+        await db.update(identities)
+            .set({ status: 'SUSPENDED' })
+            .where(eq(identities.userId, contract.principalUserId));
+
+        console.log(`⛔ SUSPENDED identity for user ${contract.principalUserId} due to dispute`);
     }
 }

@@ -602,24 +602,33 @@ window.app = {
         btn.innerHTML = 'Add Card';
         btn.onclick = () => window.app.addCard();
     },
-    setupPayout: function () {
-        const btn = document.getElementById('setup-payout-btn');
-        const status = document.getElementById('payout-status');
+    setupPayout: async function () {
+        console.log('Initiating Stripe Connect for payout...');
+        const btn = document.getElementById('manage-bank-btn') || document.getElementById('setup-payout-btn') || document.getElementById('manage-payout-btn');
+        let originalText = '';
 
-        if (!btn) return;
+        if (btn) {
+            originalText = btn.innerHTML;
+            btn.innerHTML = `<div class="w-3 h-3 border-2 border-neutral-300 border-t-neutral-600 rounded-full animate-spin"></div>`;
+            btn.disabled = true;
+        }
 
-        btn.innerHTML = `<div class="w-3 h-3 border-2 border-neutral-300 border-t-neutral-600 rounded-full animate-spin"></div>`;
-        btn.disabled = true;
-
-        // Simulate Stripe Connect
-        setTimeout(() => {
-            status.textContent = 'Bank account ••••6789 • Active';
-            status.classList.remove('text-neutral-400');
-            status.classList.add('text-neutral-500');
-
-            btn.innerHTML = 'Update';
-            btn.disabled = false;
-        }, 2000);
+        try {
+            const response = await window.api.startStripeConnect();
+            if (response.oauthUrl) {
+                window.location.href = response.oauthUrl;
+            } else if (response.alreadyConnected) {
+                alert('You are already connected!');
+                window.location.reload();
+            }
+        } catch (err) {
+            console.error('Failed to start Stripe Connect:', err);
+            alert('Error connecting Stripe: ' + err.message);
+            if (btn) {
+                btn.innerHTML = originalText || 'Manage';
+                btn.disabled = false;
+            }
+        }
     },
     // Settings Modal Functions
     openSettingsModal: function () {

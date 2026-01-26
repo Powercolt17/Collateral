@@ -15,6 +15,20 @@ export function renderFunding() {
 
                 <!-- Main Content -->
                 <div class="space-y-6">
+                    <!-- RESTRICTION BANNER -->
+                    <div id="restriction-banner" class="hidden bg-l-4 p-4 mb-4" style="background-color: #fef2f2; border-left: 4px solid #ef4444;">
+                        <div class="flex">
+                            <div class="flex-shrink-0">
+                                <i data-lucide="alert-circle" class="h-5 w-5 text-red-500"></i>
+                            </div>
+                            <div class="ml-3">
+                                <p class="text-sm text-red-700">
+                                    Your account is currently restricted due to a payment dispute. Payouts and new contracts are disabled.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
                     <!-- Funding Sources -->
                     <div class="border border-gray-200 bg-white rounded">
                         <div class="px-5 py-3 border-b border-gray-100">
@@ -318,6 +332,18 @@ export async function initFunding() {
             if (billingStatus?.fundingSource) {
                 const fs = billingStatus.fundingSource;
                 currentCardStatus = fs.status;
+
+                // Handle Restricted Status
+                if (billingStatus?.identityStatus === 'SUSPENDED') {
+                    const banner = document.getElementById('restriction-banner');
+                    if (banner) banner.classList.remove('hidden');
+
+                    // Disable buttons
+                    if (manageCardBtn) { manageCardBtn.disabled = true; manageCardBtn.classList.add('opacity-50'); }
+                    if (manageBankBtn) { manageBankBtn.disabled = true; manageBankBtn.classList.add('opacity-50'); }
+                    const addFundsBtn = document.getElementById('add-funds-btn');
+                    if (addFundsBtn) { addFundsBtn.disabled = true; addFundsBtn.classList.add('opacity-50'); }
+                }
 
                 if (fs.status === 'verified') {
                     const brand = fs.brand || 'CARD';

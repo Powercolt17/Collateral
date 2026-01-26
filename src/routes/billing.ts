@@ -400,7 +400,10 @@ const billingRoutes: FastifyPluginAsync = async (fastify) => {
                 currency: 'usd',
                 customer: fundingSource.stripeCustomerId,
                 payment_method: fundingSource.stripePaymentMethodId,
-                payment_method: fundingSource.stripePaymentMethodId,
+                automatic_payment_methods: {
+                    enabled: true,
+                    allow_redirects: 'never',
+                },
                 // off_session: true, // REMOVED: User is likely in-session (on frontend). 
                 // Setting off_session: true increases decline rate for SCA cards during manual top-up.
                 confirm: true,

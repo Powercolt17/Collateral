@@ -13,7 +13,7 @@
 import { FastifyPluginAsync, FastifyRequest, FastifyReply } from 'fastify';
 import { eq } from 'drizzle-orm';
 import { db } from '../db/client.js';
-import { users, fundingSources, identities } from '../db/schema.js';
+import { users, fundingSources, identities, connectAccounts } from '../db/schema.js';
 import { computeBalances, appendAccountEvent, AccountEventType } from '../services/balances.js';
 
 const STRIPE_SECRET_KEY = process.env.STRIPE_SECRET_KEY;

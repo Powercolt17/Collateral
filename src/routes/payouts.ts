@@ -298,7 +298,15 @@ const payoutRoutes: FastifyPluginAsync = async (fastify) => {
             const pendingEvents: any[] = Array.isArray(rawRes) ? rawRes : ((rawRes as any).rows ?? []);
 
             if (pendingEvents.length === 0) {
-                return { ok: true, processed: 0, message: 'No pending payouts found' };
+                return {
+                    ok: true,
+                    processed: 0,
+                    message: 'No pending payouts found',
+                    debug: {
+                        totalQueued,
+                        blockedByFlag
+                    }
+                };
             }
 
             console.log(`[Payouts] Found ${pendingEvents.length} pending payouts`);

@@ -35,6 +35,104 @@ async function getStripe() {
 const payoutRoutes: FastifyPluginAsync = async (fastify) => {
 
     /**
+     * POST /v1/payouts/onboard
+     * Alias for /v1/payouts/connect/create - matches frontend API call
+     * Create a Stripe Connect Express account and return onboarding URL
+     */
+    fastify.post('/v1/payouts/onboard', {
+        preHandler: async (request: FastifyRequest, reply: FastifyReply) => {
+            if (!request.userId) {
+                return reply.status(401).send({ error: 'Authentication required' });
+            }
+        },
+    }, async (request, reply) => {
+        const userId = request.userId!;
+
+        try {
+            const stripe = await getStripe();
+            if (!stripe) {
+                reply.status(500);
+                return { error: 'Stripe not configured' };
+            }
+
+            // Check if user already has a Connect account
+            let [existingAccount] = await db
+                .select()
+                .from(connectAccounts)
+                .where(eq(connectAccounts.userId, userId));
+
+            let stripeAccountId: string;
+
+            if (existingAccount) {
+                stripeAccountId = existingAccount.stripeConnectAccountId;
+
+                // If already connected, just return the status
+                if (existingAccount.onboardingStatus === 'connected') {
+                    return {
+                        ok: true,
+                        alreadyConnected: true,
+                        accountId: stripeAccountId,
+                        status: 'connected',
+                        message: 'Connect account already configured',
+                    };
+                }
+            } else {
+                // Get user email for the account
+                const [user] = await db.select().from(users).where(eq(users.id, userId));
+
+                // Create new Express account
+                const account = await stripe.accounts.create({
+                    type: 'express',
+                    country: 'US',
+                    email: user?.email || undefined,
+                    capabilities: {
+                        transfers: { requested: true },
+                    },
+                    metadata: {
+                        userId,
+                        platform: 'collateral',
+                    },
+                });
+
+                stripeAccountId = account.id;
+
+                // Save to database
+                await db.insert(connectAccounts).values({
+                    userId,
+                    stripeConnectAccountId: stripeAccountId,
+                    onboardingStatus: 'pending',
+                    accountType: 'express',
+                    payoutsEnabled: false,
+                    chargesEnabled: false,
+                    detailsSubmitted: false,
+                });
+
+                console.log(`[Payouts] Created Connect account ${stripeAccountId} for user ${userId}`);
+            }
+
+            // Create onboarding link
+            const accountLink = await stripe.accountLinks.create({
+                account: stripeAccountId,
+                refresh_url: `${APP_PUBLIC_URL}/#/funding?connect_refresh=true`,
+                return_url: `${APP_PUBLIC_URL}/#/funding?connect_return=true`,
+                type: 'account_onboarding',
+            });
+
+            return {
+                ok: true,
+                accountId: stripeAccountId,
+                onboardingUrl: accountLink.url,
+                expiresAt: new Date(accountLink.expires_at * 1000).toISOString(),
+            };
+
+        } catch (err: any) {
+            console.error('[Payouts] Onboard error:', err.message);
+            reply.status(500);
+            return { error: err.message || 'Failed to create Connect account' };
+        }
+    });
+
+    /**
      * POST /v1/payouts/connect/create
      * Create a Stripe Connect Express account and return onboarding URL
      */

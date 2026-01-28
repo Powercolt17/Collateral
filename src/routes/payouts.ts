@@ -304,7 +304,8 @@ const payoutRoutes: FastifyPluginAsync = async (fastify) => {
                     message: 'No pending payouts found',
                     debug: {
                         totalQueued,
-                        blockedByFlag
+                        blockedByFlag,
+                        payoutsEnabledQuery: 'c.payouts_enabled IS TRUE'
                     }
                 };
             }

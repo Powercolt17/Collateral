@@ -66,6 +66,10 @@ export async function requireVerifiedConnection(
 export async function requireVerifiedConnection(
     userId: string,
     platform: 'X' | 'STRIPE'
+): Promise<VerifiedConnection<XVerifiedMetadata | StripeVerifiedMetadata>>;
+export async function requireVerifiedConnection(
+    userId: string,
+    platform: 'X' | 'STRIPE'
 ): Promise<VerifiedConnection<XVerifiedMetadata | StripeVerifiedMetadata>> {
     const [account] = await db
         .select({

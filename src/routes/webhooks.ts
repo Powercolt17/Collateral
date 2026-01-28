@@ -4,7 +4,7 @@ import { handlePaymentSuccess, handlePaymentFailure, handlePaymentDisputed } fro
 import { getContractIdByPaymentIntent, getContractIdByChargeId } from '../services/ledger.js';
 import { getContract } from '../services/contracts.js';
 import { db } from '../db/client.js';
-import { fundingSources } from '../db/schema.js';
+import { fundingSources, connectAccounts } from '../db/schema.js';
 
 /**
  * Webhook Routes
@@ -341,6 +341,37 @@ const webhookRoutes: FastifyPluginAsync = async (fastify) => {
                             updatedAt: new Date(),
                         })
                         .where(eq(fundingSources.stripeSetupIntentId, siId));
+                    break;
+                }
+
+                case 'account.updated': {
+                    const account = eventObject;
+                    const stripeAccountId = account.id;
+                    const payoutsEnabled = account.payouts_enabled;
+                    const chargesEnabled = account.charges_enabled;
+                    const detailsSubmitted = account.details_submitted;
+
+                    console.log(`${ctx} 👤 Account updated: ${stripeAccountId}`);
+
+                    // Map status
+                    // If payouts enabled -> connected
+                    // If details submitted but no payouts -> pending
+                    // If disabled reason -> restricted
+                    const newStatus = payoutsEnabled ? 'connected' :
+                        detailsSubmitted ? 'pending' :
+                            account.requirements?.disabled_reason ? 'restricted' : 'pending';
+
+                    const result = await db.update(connectAccounts)
+                        .set({
+                            onboardingStatus: newStatus,
+                            payoutsEnabled: payoutsEnabled,
+                            chargesEnabled: chargesEnabled,
+                            detailsSubmitted: detailsSubmitted,
+                            updatedAt: new Date(),
+                        })
+                        .where(eq(connectAccounts.stripeConnectAccountId, stripeAccountId));
+
+                    console.log(`${ctx} ✅ Synced Connect Status: ${newStatus} (Payouts: ${payoutsEnabled})`);
                     break;
                 }
 

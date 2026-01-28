@@ -229,8 +229,10 @@ export async function settleContract(
                   AND event_type = 'PAYOUT_QUEUED'
                 LIMIT 1
             `);
+            console.log(`🔍 [DEBUG] existingPayoutQueued result:`, JSON.stringify(existingPayoutQueued));
             const hasPayoutQueued = ((existingPayoutQueued as any).rows?.length > 0) ||
                 (Array.isArray(existingPayoutQueued) && existingPayoutQueued.length > 0);
+            console.log(`🔍 [DEBUG] hasPayoutQueued=${hasPayoutQueued}`);
 
             if (!hasPayoutQueued) {
                 console.log(`⚠️ RECOVERY: Terminal SUCCESS exists for ${contractId} but PAYOUT_QUEUED missing - writing now`);

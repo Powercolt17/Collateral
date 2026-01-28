@@ -603,7 +603,7 @@ window.app = {
         btn.onclick = () => window.app.addCard();
     },
     setupPayout: async function () {
-        console.log('Initiating Stripe Connect for payout...');
+        console.log('Initiating Stripe Connect Express for payout...');
         const btn = document.getElementById('manage-bank-btn') || document.getElementById('setup-payout-btn') || document.getElementById('manage-payout-btn');
         let originalText = '';
 
@@ -614,16 +614,20 @@ window.app = {
         }
 
         try {
-            const response = await window.api.startStripeConnect();
-            if (response.oauthUrl) {
-                window.location.href = response.oauthUrl;
+            // Call the payout onboarding endpoint (creates Stripe Express account)
+            const response = await window.api.startPayoutOnboard();
+            if (response.onboardingUrl) {
+                // Redirect to Stripe's Express onboarding flow
+                window.location.href = response.onboardingUrl;
             } else if (response.alreadyConnected) {
-                alert('You are already connected!');
+                alert('Your payout account is already connected!');
                 window.location.reload();
+            } else {
+                throw new Error('No onboarding URL returned');
             }
         } catch (err) {
-            console.error('Failed to start Stripe Connect:', err);
-            alert('Error connecting Stripe: ' + err.message);
+            console.error('Failed to start payout onboarding:', err);
+            alert('Error setting up payout: ' + err.message);
             if (btn) {
                 btn.innerHTML = originalText || 'Manage';
                 btn.disabled = false;

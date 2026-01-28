@@ -361,7 +361,14 @@ export async function getPublicLedger() {
     return getPublic('/v1/ledger');
 }
 
-// --- PAYOUTS (Stripe Connect) ---
+// --- PAYOUTS (Stripe Connect Express for Payouts) ---
+
+// Start Stripe Connect Express onboarding for payouts
+// Creates a Stripe Express account and returns onboarding URL
+export async function startPayoutOnboard() {
+    console.log('[API] startPayoutOnboard called');
+    return post('/v1/payouts/onboard');
+}
 
 export async function createConnectAccount() {
     return post('/v1/payouts/connect/create');
@@ -454,7 +461,8 @@ export default {
     getLedgerEvents,
     getPublicLedger,
 
-    // Payouts (Stripe Connect)
+    // Payouts (Stripe Connect Express)
+    startPayoutOnboard,
     createConnectAccount,
     getConnectStatus,
     runPayouts,

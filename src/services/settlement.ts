@@ -15,7 +15,7 @@ import { deriveState } from './state-derivation.js';
 import { getStripeClient } from './stripe-client.js';
 import { tryAcquireLock, getNextRetryTime, scheduleRetry } from './job-lock.js';
 import { classifyError } from './error-classification.js';
-import { eq, and, or, isNull, lte } from 'drizzle-orm';
+import { eq, and, or, isNull, lte, sql } from 'drizzle-orm';
 import { appendAccountEvent, AccountEventType } from './balances.js';
 
 // =====================================================
@@ -218,6 +218,37 @@ export async function settleContract(
             await issueReceiptForContract(contractId, contract, terminalSettlementEvent);
         }
 
+        // RECOVERY: Check if PAYOUT_QUEUED is missing for SUCCESS settlements
+        // This handles crash/partial-write scenarios where terminal was written but payout wasn't queued
+        if (terminalSettlementEvent.eventType === EventType.SETTLED_SUCCESS) {
+            // Check account_ledger_events for PAYOUT_QUEUED
+            const existingPayoutQueued = await db.execute(sql`
+                SELECT id FROM account_ledger_events 
+                WHERE contract_id = ${contractId} 
+                  AND event_type = 'PAYOUT_QUEUED'
+                LIMIT 1
+            `);
+            const hasPayoutQueued = ((existingPayoutQueued as any).rows?.length > 0) ||
+                (Array.isArray(existingPayoutQueued) && existingPayoutQueued.length > 0);
+
+            if (!hasPayoutQueued) {
+                console.log(`⚠️ RECOVERY: Terminal SUCCESS exists for ${contractId} but PAYOUT_QUEUED missing - writing now`);
+                await appendAccountEvent({
+                    userId: contract.principalUserId,
+                    contractId,
+                    eventType: AccountEventType.PAYOUT_QUEUED,
+                    amountCents: contract.payoutAmountUsdCents,
+                    idempotencyKey: `payout_queue_recovery_${contractId}`,
+                    metadata: {
+                        outcome: 'SUCCESS',
+                        queuedAt: new Date().toISOString(),
+                        recoveryReason: 'TERMINAL_EXISTS_BUT_PAYOUT_MISSING'
+                    }
+                });
+                console.log(`✅ RECOVERY: Payout QUEUED for ${contractId}: ${contract.payoutAmountUsdCents} cents`);
+            }
+        }
+
         // Now return cached result
         const metadata = terminalSettlementEvent.metadataJson as Record<string, any>;
         return {
@@ -230,6 +261,7 @@ export async function settleContract(
             },
         };
     }
+
 
     // 3a. Check if retry is scheduled for the future (before lock)
     // Skip this check when tx is provided - caller already holds invariant lock

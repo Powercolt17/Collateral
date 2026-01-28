@@ -208,6 +208,7 @@ export async function settleContract(
     );
 
     if (terminalSettlementEvent) {
+        console.log(`🔍 [DEPLOY CHECK v2] Terminal event found for ${contractId}: ${terminalSettlementEvent.eventType}`);
         // Terminal event exists - but we MUST check if receipt was issued
         // If receipt missing (crash between settlement and receipt), issue it now
         const existingReceipt = events.find(e => e.eventType === EventType.RECEIPT_ISSUED);

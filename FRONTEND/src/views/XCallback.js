@@ -44,8 +44,18 @@ export function renderXCallback() {
 }
 
 export async function initXCallback() {
-    // Parse URL params
-    const urlParams = new URLSearchParams(window.location.search);
+    // Parse URL params - for hash routing, params are in the hash (e.g. #/x/callback?error=...)
+    // First try window.location.search (path-based), then fall back to parsing from hash
+    let urlParams;
+    if (window.location.search) {
+        urlParams = new URLSearchParams(window.location.search);
+    } else {
+        // Hash routing: extract query string from hash (e.g. "#/x/callback?error=already_bound")
+        const hash = window.location.hash;
+        const queryIndex = hash.indexOf('?');
+        const queryString = queryIndex !== -1 ? hash.substring(queryIndex) : '';
+        urlParams = new URLSearchParams(queryString);
+    }
     const success = urlParams.get('success');
     const username = urlParams.get('username');
     const error = urlParams.get('error');
@@ -131,8 +141,8 @@ export async function initXCallback() {
                 hint: 'Collateral requires public follower counts for verification. Please use a public account.'
             },
             'already_bound': {
-                message: 'This X account is already connected',
-                hint: 'This X account is linked to another Collateral user. Each X account can only be bound once.'
+                message: 'X Account Already Linked',
+                hint: 'This X account is already connected to a different Collateral identity. Each X account can only be bound to one user. If you own both accounts, contact support to transfer the binding.'
             },
             'verification_failed': {
                 message: 'Could not verify X account',

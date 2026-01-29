@@ -13,6 +13,8 @@ import { renderReceipts, initReceipts } from './views/Receipts.js';
 import { renderReceiptDetail, initReceiptDetail } from './views/ReceiptDetail.js';
 import { renderStripeCallback, initStripeCallback } from './views/StripeCallback.js';
 import { renderXCallback, initXCallback } from './views/XCallback.js';
+import { renderPreLaunch, initPreLaunch } from './views/PreLaunch.js';
+import './views/PreLaunch.css';
 // API Client for backend integration
 import api from './api.js';
 
@@ -121,8 +123,30 @@ async function hydrateSession() {
 // Expose hydrateSession globally for use in disconnectSource
 window.hydrateSession = hydrateSession;
 
+// ================================================================================
+// PRE-LAUNCH MODE
+// ================================================================================
+// Set VITE_PRE_LAUNCH_MODE=true in Vercel to enable pre-launch landing page
+const PRE_LAUNCH_MODE = import.meta.env.VITE_PRE_LAUNCH_MODE === 'true';
+console.log(`[App] Pre-launch mode: ${PRE_LAUNCH_MODE ? 'ENABLED' : 'disabled'}`);
+
 // Routes configuration
-const routes = [
+const routes = PRE_LAUNCH_MODE ? [
+    // Pre-launch: only show the waitlist page
+    { path: '/', render: renderPreLaunch, init: initPreLaunch },
+    { path: '/overview', render: renderPreLaunch, init: initPreLaunch },
+    { path: '/ledger', render: renderPreLaunch, init: initPreLaunch },
+    { path: '/contracts', render: renderPreLaunch, init: initPreLaunch },
+    { path: '/contracts/:id', render: renderPreLaunch, init: initPreLaunch },
+    { path: '/profile', render: renderPreLaunch, init: initPreLaunch },
+    { path: '/settings', render: renderPreLaunch, init: initPreLaunch },
+    { path: '/my-contracts', render: renderPreLaunch, init: initPreLaunch },
+    { path: '/docs', render: renderPreLaunch, init: initPreLaunch },
+    { path: '/funding', render: renderPreLaunch, init: initPreLaunch },
+    { path: '/receipts', render: renderPreLaunch, init: initPreLaunch },
+    { path: '/receipts/:id', render: renderPreLaunch, init: initPreLaunch },
+] : [
+    // Normal mode: full app
     { path: '/overview', render: renderOverview, init: initOverview },
     { path: '/ledger', render: renderLedger, init: initLedger },
     { path: '/contracts', render: renderContracts, init: initContracts },
@@ -810,6 +834,25 @@ const protectedRoutes = ['/contracts', '/my-contracts', '/profile', '/funding'];
 
 // Route change handler
 router.onRouteChange = function (route, path) {
+    // Pre-launch mode: hide header, footer, and status bar
+    if (PRE_LAUNCH_MODE) {
+        const headerMount = document.getElementById('header-mount');
+        const statusBar = document.querySelector('.fixed.bottom-0');
+        const appMount = document.getElementById('app');
+
+        if (headerMount) headerMount.innerHTML = '';
+        if (statusBar) statusBar.style.display = 'none';
+        if (appMount) {
+            appMount.classList.remove('pt-16');
+            appMount.innerHTML = route.render(route.params);
+        }
+
+        if (route.init) {
+            setTimeout(() => route.init(route.params), 0);
+        }
+        return;
+    }
+
     // Check if route requires authentication
     const isProtected = protectedRoutes.some(pr => path === pr || path.startsWith(pr + '/'));
 

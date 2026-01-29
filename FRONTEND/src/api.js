@@ -473,4 +473,8 @@ export default {
 
     // Health
     checkHealth,
+
+    // Waitlist (pre-launch)
+    joinWaitlist: (email, intendedUse) => post('/v1/waitlist/join', { email, intendedUse }),
+    getWaitlistCount: () => get('/v1/waitlist/count'),
 };

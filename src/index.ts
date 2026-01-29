@@ -20,6 +20,7 @@ import quoteRoutes from './routes/quote.js';
 import opsRoutes from './routes/ops.js';
 import billingRoutes from './routes/billing.js';
 import payoutRoutes from './routes/payouts.js';
+import waitlistRoutes from './routes/waitlist.js';
 
 const PORT = parseInt(process.env.PORT || '3000', 10);
 
@@ -154,6 +155,9 @@ async function main() {
 
     // Ops/Admin routes (no prefix, token-protected)
     await fastify.register(opsRoutes);            // POST /ops/run-verification, etc.
+
+    // Waitlist (pre-launch email capture)
+    await fastify.register(waitlistRoutes);       // /v1/waitlist/*
 
     // Start server
     try {

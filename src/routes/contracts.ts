@@ -9,6 +9,9 @@ import { FastifyPluginAsync } from 'fastify';
 import { getContract, getContractWithState, getContractsForUser } from '../services/contracts.js';
 import { getEventsForContract } from '../services/ledger.js';
 import { deriveState } from '../services/state-derivation.js';
+import { db } from '../db/client.js';
+import { ledgerEvents, contracts, EventType } from '../db/schema.js';
+import { desc, inArray, sql } from 'drizzle-orm';
 
 const contractRoutes: FastifyPluginAsync = async (fastify) => {
     /**
@@ -124,6 +127,64 @@ const contractRoutes: FastifyPluginAsync = async (fastify) => {
                 createdAt: contract.createdAt.toISOString(),
             })),
         };
+    });
+
+    /**
+     * GET /v1/ledger
+     * Public ledger of executed contract events
+     * Powers: Public Record page (/ledger) in Aura
+     * 
+     * Returns events from all executed contracts (FUNDS_LOCKED and beyond).
+     * No authentication required - this is a public transparency feed.
+     */
+    fastify.get('/v1/ledger', async (request, reply) => {
+        try {
+            // Fetch recent events from contracts that have been executed (FUNDS_LOCKED or beyond)
+            // We'll get events that indicate execution or settlement
+            const publicEventTypes = [
+                EventType.FUNDS_LOCKED,
+                EventType.EXECUTION_CONFIRMED,
+                EventType.VERIFICATION_STARTED,
+                EventType.VERIFICATION_SUCCEEDED,
+                EventType.VERIFICATION_FAILED,
+                EventType.SETTLED_SUCCESS,
+                EventType.SETTLED_FAILURE,
+                EventType.SETTLEMENT_STARTED,
+                EventType.RECEIPT_ISSUED,
+            ];
+
+            // Get recent public events (last 100)
+            const events = await db
+                .select({
+                    id: ledgerEvents.id,
+                    contractId: ledgerEvents.contractId,
+                    eventType: ledgerEvents.eventType,
+                    timestampUtc: ledgerEvents.timestampUtc,
+                    amountUsdCents: ledgerEvents.amountUsdCents,
+                    eventHash: ledgerEvents.eventHash,
+                    actor: ledgerEvents.actor,
+                })
+                .from(ledgerEvents)
+                .where(inArray(ledgerEvents.eventType, publicEventTypes))
+                .orderBy(desc(ledgerEvents.timestampUtc))
+                .limit(100);
+
+            return {
+                events: events.map(event => ({
+                    id: event.id,
+                    contractId: event.contractId,
+                    eventType: event.eventType,
+                    timestamp: event.timestampUtc.toISOString(),
+                    amountUsdCents: event.amountUsdCents,
+                    eventHash: event.eventHash,
+                    actor: event.actor,
+                })),
+            };
+        } catch (error) {
+            console.error('[Ledger] Error fetching public ledger:', error);
+            reply.status(500);
+            return { error: 'Failed to fetch ledger events' };
+        }
     });
 };
 

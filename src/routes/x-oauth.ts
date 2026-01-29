@@ -252,7 +252,7 @@ async function xOAuthRoutes(fastify: FastifyInstance) {
             if (denied) {
                 console.log('[X OAuth 1.0a] User denied access');
                 const frontendUrl = process.env.FRONTEND_URL || 'http://localhost:5173';
-                return reply.redirect(`${frontendUrl}/x/callback?error=denied`);
+                return reply.redirect(`${frontendUrl}/#/x/callback?error=denied`);
             }
 
             if (!oauth_token || !oauth_verifier) {
@@ -389,7 +389,7 @@ async function xOAuthRoutes(fastify: FastifyInstance) {
                     console.error(`[X OAUTH VERIFY] response=${errorText}`);
 
                     const frontendUrl = process.env.FRONTEND_URL || 'http://localhost:5173';
-                    return reply.redirect(`${frontendUrl}/x/callback?error=verification_failed`);
+                    return reply.redirect(`${frontendUrl}/#/x/callback?error=verification_failed`);
                 }
 
                 const userData = await verifyResponse.json() as {
@@ -415,7 +415,7 @@ async function xOAuthRoutes(fastify: FastifyInstance) {
                 if (isProtected) {
                     console.warn(`[X OAuth 1.0a] Rejected protected account @${userData.screen_name}`);
                     const frontendUrl = process.env.FRONTEND_URL || 'http://localhost:5173';
-                    return reply.redirect(`${frontendUrl}/x/callback?error=protected`);
+                    return reply.redirect(`${frontendUrl}/#/x/callback?error=protected`);
                 }
 
                 // Check if X account already bound to another user
@@ -428,7 +428,7 @@ async function xOAuthRoutes(fastify: FastifyInstance) {
                 if (existingBinding && existingBinding.id !== userId) {
                     console.warn(`[X OAuth 1.0a] Account @${xUsername} already bound to user ${existingBinding.id}`);
                     const frontendUrl = process.env.FRONTEND_URL || 'http://localhost:5173';
-                    return reply.redirect(`${frontendUrl}/x/callback?error=already_bound`);
+                    return reply.redirect(`${frontendUrl}/#/x/callback?error=already_bound`);
                 }
 
                 // Bind X account to user - store tokens SEPARATELY
@@ -482,7 +482,7 @@ async function xOAuthRoutes(fastify: FastifyInstance) {
 
                 // Redirect to frontend success page
                 const frontendUrl = process.env.FRONTEND_URL || 'http://localhost:5173';
-                return reply.redirect(`${frontendUrl}/x/callback?success=true&username=${encodeURIComponent(xUsername || '')}`);
+                return reply.redirect(`${frontendUrl}/#/x/callback?success=true&username=${encodeURIComponent(xUsername || '')}`);
 
             } catch (err) {
                 console.error('[X OAuth 1.0a] Callback error:', err);

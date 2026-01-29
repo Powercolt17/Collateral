@@ -83,10 +83,17 @@ export async function initXCallback() {
                     await window.hydrateSession();
                 }
 
-                // Redirect to Contracts wizard Step 2 (Source) after 2 seconds
+                // If opened as popup, close window after brief success message
+                // Parent window is polling and will detect the connection
                 setTimeout(() => {
-                    window.router.navigate('/contracts?step=source&connected=x');
-                }, 2000);
+                    if (window.opener) {
+                        // We're in a popup - close it
+                        window.close();
+                    } else {
+                        // We're in main window (fallback) - redirect to contracts
+                        window.router.navigate('/contracts?step=source&connected=x');
+                    }
+                }, 1500);
 
                 return;
             } else {

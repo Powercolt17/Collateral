@@ -444,7 +444,58 @@ window.app = {
             if (source === 'twitter') {
                 const result = await window.api.startXOAuth();
                 if (result.oauthUrl) {
-                    window.location.href = result.oauthUrl;
+                    // Open X OAuth in popup window (like Stripe) to preserve page context
+                    const popup = window.open(result.oauthUrl, 'XConnect', 'width=600,height=700');
+
+                    // Poll for connection status while popup is open
+                    const pollInterval = setInterval(async () => {
+                        try {
+                            // Check if popup was closed
+                            if (popup && popup.closed) {
+                                clearInterval(pollInterval);
+                                // Final check for connection
+                                const status = await window.api.getXStatus();
+                                if (status.connected) {
+                                    console.log('[X] Connected via popup!');
+                                    if (window.hydrateSession) await window.hydrateSession();
+                                    btn.innerHTML = '✓ Connected';
+                                    btn.disabled = true;
+                                    // Refresh the current view
+                                    const current = (window.location.hash || '#/contracts').replace(/^#/, '');
+                                    window.router.navigate(current);
+                                } else {
+                                    btn.innerHTML = 'Connect';
+                                    btn.disabled = false;
+                                }
+                                return;
+                            }
+
+                            // Periodic poll while popup is open
+                            const status = await window.api.getXStatus();
+                            if (status.connected) {
+                                console.log('[X] Detected connection during poll');
+                                clearInterval(pollInterval);
+                                if (popup && !popup.closed) popup.close();
+                                if (window.hydrateSession) await window.hydrateSession();
+                                btn.innerHTML = '✓ Connected';
+                                btn.disabled = true;
+                                const current = (window.location.hash || '#/contracts').replace(/^#/, '');
+                                window.router.navigate(current);
+                            }
+                        } catch (pollErr) {
+                            console.warn('[X] Poll error:', pollErr);
+                        }
+                    }, 2000); // Poll every 2 seconds
+
+                    // Timeout after 10 minutes
+                    setTimeout(() => {
+                        clearInterval(pollInterval);
+                        if (btn.innerHTML.includes('spin')) {
+                            btn.innerHTML = 'Connect';
+                            btn.disabled = false;
+                        }
+                    }, 10 * 60 * 1000);
+
                     return;
                 }
             } else if (source === 'stripe') {

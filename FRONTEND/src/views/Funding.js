@@ -244,6 +244,42 @@ export function renderFunding() {
                 </div>
             </div>
         </div>
+
+        <!-- Success Notification Modal -->
+        <div id="success-modal" class="fixed inset-0 bg-black/60 backdrop-blur-sm hidden items-center justify-center z-[100]">
+            <div id="success-modal-content" class="bg-white rounded-xl w-full max-w-sm mx-4 shadow-2xl transform scale-95 opacity-0 transition-all duration-300">
+                <div class="px-8 py-10 text-center">
+                    <!-- Animated Success Icon -->
+                    <div class="relative mx-auto w-20 h-20 mb-6">
+                        <div class="absolute inset-0 bg-emerald-100 rounded-full animate-ping opacity-20"></div>
+                        <div class="absolute inset-0 bg-gradient-to-br from-emerald-400 to-emerald-600 rounded-full flex items-center justify-center shadow-lg shadow-emerald-200">
+                            <svg class="w-10 h-10 text-white" fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"></path>
+                            </svg>
+                        </div>
+                    </div>
+                    
+                    <!-- Title -->
+                    <h3 class="text-xl font-semibold text-gray-900 mb-2">Funds Added Successfully</h3>
+                    
+                    <!-- Amount Display -->
+                    <div class="bg-emerald-50 border border-emerald-200 rounded-lg px-4 py-3 mb-4">
+                        <span class="text-3xl font-bold text-emerald-600" id="success-amount">$0.00</span>
+                        <p class="text-xs text-emerald-700 mt-1">Added to your available balance</p>
+                    </div>
+                    
+                    <!-- Subtitle -->
+                    <p class="text-sm text-gray-500 mb-6">
+                        Your capital is ready to lock into contracts.
+                    </p>
+                    
+                    <!-- Action Button -->
+                    <button id="success-modal-close" class="w-full py-3 bg-gray-900 text-white text-sm font-medium rounded-lg hover:bg-gray-800 transition-colors">
+                        Continue
+                    </button>
+                </div>
+            </div>
+        </div>
     `;
 }
 
@@ -318,8 +354,48 @@ export async function initFunding() {
     const submitAddFundsBtn = document.getElementById('submit-add-funds-btn');
     const addFundsBtn = document.getElementById('add-funds-btn');
 
+    // Success modal elements
+    const successModal = document.getElementById('success-modal');
+    const successModalContent = document.getElementById('success-modal-content');
+    const successAmountEl = document.getElementById('success-amount');
+    const successModalCloseBtn = document.getElementById('success-modal-close');
+
     // Current card state
     let currentCardStatus = null;
+
+    // ====================
+    // Success Modal Logic
+    // ====================
+    function showSuccessModal(amount) {
+        // Set the amount
+        successAmountEl.textContent = `$${amount.toFixed(2)}`;
+
+        // Show modal
+        successModal.classList.remove('hidden');
+        successModal.classList.add('flex');
+
+        // Trigger animation after a frame
+        requestAnimationFrame(() => {
+            successModalContent.classList.remove('scale-95', 'opacity-0');
+            successModalContent.classList.add('scale-100', 'opacity-100');
+        });
+    }
+
+    function hideSuccessModal() {
+        successModalContent.classList.remove('scale-100', 'opacity-100');
+        successModalContent.classList.add('scale-95', 'opacity-0');
+
+        setTimeout(() => {
+            successModal.classList.add('hidden');
+            successModal.classList.remove('flex');
+        }, 300);
+    }
+
+    // Success modal event listeners
+    successModalCloseBtn?.addEventListener('click', hideSuccessModal);
+    successModal?.addEventListener('click', (e) => {
+        if (e.target === successModal) hideSuccessModal();
+    });
 
     // ====================
     // Fetch & Display Data
@@ -601,8 +677,8 @@ export async function initFunding() {
             hideAddFundsModal();
             await loadBillingStatus();
 
-            // Show success message
-            alert(`Successfully added $${amount.toFixed(2)} to your available balance!`);
+            // Show premium success notification
+            showSuccessModal(amount);
 
         } catch (err) {
             addFundsErrorEl.textContent = err.message || 'Failed to add funds. Please try again.';

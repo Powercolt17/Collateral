@@ -48,14 +48,14 @@ export function renderHeader(currentRoute) {
                     </a>
 
                     <!-- CENTER: PRIMARY NAVIGATION -->
-                    <nav class="hidden md:flex items-center gap-8">
+                    <nav class="flex items-center gap-8">
                         ${navItems}
                     </nav>
 
                     <!-- RIGHT: SYSTEM ZONE -->
                     <div class="flex items-center gap-6">
                         <!-- System Status Indicator -->
-                        <div class="hidden sm:flex items-center gap-2 px-3 py-1.5 border border-black/10">
+                        <div class="flex items-center gap-2 px-3 py-1.5 border border-black/10">
                             <div class="w-1.5 h-1.5 bg-green-500 rounded-full animate-pulse"></div>
                             <span 
                                 class="text-[10px] tracking-widest uppercase leading-none"

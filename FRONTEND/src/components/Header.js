@@ -31,9 +31,20 @@ export function renderHeader(currentRoute) {
         <header class="w-full border-b border-black/10 bg-white fixed top-0 z-50">
             <div class="mx-auto max-w-[1600px] px-8 py-4">
                 <div class="flex items-center justify-between">
-                    <!-- LEFT: LOGO -->
-                    <a href="#" onclick="window.router.navigate('/overview'); return false;" class="flex items-center cursor-pointer hover:opacity-80 transition-opacity">
-                        <img src="/logo.png" alt="Collateral" class="h-12" />
+                    <!-- LEFT: WORDMARK -->
+                    <a href="#" onclick="window.router.navigate('/overview'); return false;" class="flex flex-col gap-0.5 items-center cursor-pointer hover:opacity-80 transition-opacity">
+                        <h1 
+                            class="text-xl tracking-tight m-0 p-0 leading-none"
+                            style="font-family: 'IBM Plex Sans', sans-serif; font-weight: 600;"
+                        >
+                            COLLATERAL
+                        </h1>
+                        <span 
+                            class="text-xs tracking-widest uppercase leading-none"
+                            style="font-family: 'JetBrains Mono', monospace; font-weight: 600; color: #751212;"
+                        >
+                            MARKET
+                        </span>
                     </a>
 
                     <!-- CENTER: PRIMARY NAVIGATION -->

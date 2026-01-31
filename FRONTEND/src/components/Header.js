@@ -35,7 +35,7 @@ export function renderHeader(currentRoute) {
                     <a href="#" onclick="window.router.navigate('/overview'); return false;" class="flex flex-col gap-0.5 items-center cursor-pointer hover:opacity-80 transition-opacity">
                         <h1 
                             class="text-xl tracking-tight m-0 p-0 leading-none"
-                            style="font-family: 'IBM Plex Sans', sans-serif; font-weight: 800;"
+                            style="font-family: 'IBM Plex Sans', sans-serif; font-weight: 750;"
                         >
                             COLLATERAL
                         </h1>

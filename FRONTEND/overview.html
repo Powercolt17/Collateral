@@ -101,14 +101,18 @@ activate: {
     <nav id="main-nav" class="fixed top-0 w-full z-50 border-b border-[#D9DBE1] bg-[#F7F7F6]/95 backdrop-blur-sm">
         <div class="max-w-5xl mx-auto px-6 h-16 flex justify-between items-center">
             <!-- Left: Brand -->
-            <a href="#" onclick="switchView('landing')" class="flex items-center gap-2.5 group cursor-pointer">
-                <div class="w-4 h-4 bg-[#0E0E11] flex items-center justify-center rounded-[1px]">
-                    <div class="w-1.5 h-1.5 bg-white rounded-[0.5px]"></div>
-                </div>
-                <span class="font-mono text-xs font-medium tracking-wider uppercase text-[#0E0E11]">
-                    Collateral<span class="text-[#921818]">market</span>
-                </span>
-            </a>
+           <a
+  href="#"
+  onclick="switchView('landing')"
+  class="flex items-center cursor-pointer"
+>
+  <img
+    src="/logo/collateral-logo.svg"
+    alt="Collateral Market"
+    class="h-[28px] w-auto select-none"
+    draggable="false"
+  />
+</a>
 
             <!-- Center: Links -->
             <div class="hidden md:flex items-center bg-white border border-[#D9DBE1] rounded-full px-1 py-1">

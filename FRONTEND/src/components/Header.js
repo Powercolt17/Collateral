@@ -33,7 +33,7 @@ export function renderHeader(currentRoute) {
                 <div class="flex items-center justify-between">
                     <!-- LEFT: LOGO -->
                     <a href="#" onclick="window.router.navigate('/overview'); return false;" class="flex items-center cursor-pointer hover:opacity-80 transition-opacity">
-                        <img src="/logo.png" alt="Collateral" class="h-8" />
+                        <img src="/logo.png" alt="Collateral" class="h-14" />
                     </a>
 
                     <!-- CENTER: PRIMARY NAVIGATION -->

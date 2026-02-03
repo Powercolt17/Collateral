@@ -936,19 +936,40 @@ function updateAuthUI() {
 
     const btnAuth = document.getElementById('btn-auth');
     const userMenu = document.getElementById('user-menu');
+    const userMenuBtn = document.getElementById('user-menu-btn');
     const menuUsername = document.getElementById('menu-username');
+    const menuInitial = document.getElementById('menu-initial');
 
     if (appState.isLoggedIn && btnAuth && userMenu) {
+        // Hide Sign In button - remove desktop-auth class to prevent CSS !important override
         btnAuth.classList.add('hidden');
+        btnAuth.classList.remove('desktop-auth');
+
+        // Show user menu
         userMenu.classList.remove('hidden');
+        if (userMenuBtn) userMenuBtn.classList.add('desktop-auth');
+
         // Show @username ONLY - NO fallback to displayName or email
         if (menuUsername) {
             menuUsername.innerText = appState.username ? '@' + appState.username : '@—';
         }
+        if (menuInitial && appState.displayName) {
+            menuInitial.textContent = appState.displayName.charAt(0).toUpperCase();
+        }
         console.log('[Auth] UI updated, showing:', appState.username);
     } else if (btnAuth && userMenu) {
+        // Show Sign In button
         btnAuth.classList.remove('hidden');
+        btnAuth.classList.add('desktop-auth');
+
+        // Hide user menu
         userMenu.classList.add('hidden');
+        if (userMenuBtn) userMenuBtn.classList.remove('desktop-auth');
+    }
+
+    // Also update mobile auth UI
+    if (window.app && window.app.updateMobileAuthUI) {
+        window.app.updateMobileAuthUI();
     }
 }
 

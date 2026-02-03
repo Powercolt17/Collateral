@@ -48,37 +48,32 @@ export function renderHeader(currentRoute) {
 
     return `
         <header class="w-full border-b border-black/10 bg-white fixed top-0 z-50">
-            <div class="mx-auto max-w-[1600px] px-4 md:px-8 py-3 md:py-4">
+            <div class="mx-auto max-w-[1600px] px-4 md:px-8 py-4">
                 <div class="flex items-center justify-between">
                     <!-- LEFT: WORDMARK -->
                     <a href="#" onclick="window.router.navigate('/overview'); return false;" class="flex flex-col gap-0.5 items-center cursor-pointer hover:opacity-80 transition-opacity shrink-0">
                         <h1 
-<<<<<<< HEAD
-                            class="text-lg md:text-xl tracking-tight m-0 p-0 leading-none"
-                            style="font-family: 'IBM Plex Sans', sans-serif; font-weight: 600;"
-=======
                             class="text-xl tracking-tight m-0 p-0 leading-none"
-                            style="font-family: 'IBM Plex Sans', sans-serif; font-weight: 775;"
->>>>>>> 3a95e4c75f38415a00b79238a9ad12bdb8934822
+                            style="font-family: 'IBM Plex Sans', sans-serif; font-weight: 600;"
                         >
                             COLLATERAL
                         </h1>
                         <span 
-                            class="text-[10px] md:text-xs tracking-widest uppercase leading-none"
+                            class="text-xs tracking-widest uppercase leading-none"
                             style="font-family: 'JetBrains Mono', monospace; font-weight: 600; color: #751212;"
                         >
                             MARKET
                         </span>
                     </a>
 
-                    <!-- CENTER: PRIMARY NAVIGATION (Hidden on mobile) -->
+                    <!-- CENTER: PRIMARY NAVIGATION - visible on md+ screens -->
                     <nav class="hidden md:flex items-center gap-8">
                         ${navItems}
                     </nav>
 
-                    <!-- RIGHT: SYSTEM ZONE (Hidden on mobile) + Mobile Menu Button -->
-                    <div class="flex items-center gap-4 md:gap-6">
-                        <!-- System Status Indicator (Hidden on mobile) -->
+                    <!-- RIGHT: SYSTEM ZONE -->
+                    <div class="flex items-center gap-6">
+                        <!-- System Status Indicator - hidden on small screens -->
                         <div class="hidden lg:flex items-center gap-2 px-3 py-1.5 border border-black/10">
                             <div class="w-1.5 h-1.5 bg-green-500 rounded-full animate-pulse"></div>
                             <span 
@@ -89,7 +84,7 @@ export function renderHeader(currentRoute) {
                             </span>
                         </div>
 
-                        <!-- Guest State (Hidden on mobile) -->
+                        <!-- Guest State - hidden on mobile -->
                         <button onclick="window.app.handleAuthClick()" id="btn-auth" class="hidden md:flex bg-black hover:bg-gray-800 text-white text-xs font-medium px-5 py-2.5 transition-all items-center gap-2 uppercase tracking-wide" style="font-family: 'Inter', sans-serif;">
                             <span>Sign In</span>
                         </button>
@@ -154,7 +149,7 @@ export function renderHeader(currentRoute) {
                             </div>
                         </div>
 
-                        <!-- Mobile Hamburger Menu Button -->
+                        <!-- Mobile Hamburger Menu Button - only visible on mobile -->
                         <button 
                             id="mobile-menu-btn" 
                             onclick="window.app.toggleMobileMenu()" 
@@ -223,4 +218,3 @@ export function renderHeader(currentRoute) {
         </div>
     `;
 }
-

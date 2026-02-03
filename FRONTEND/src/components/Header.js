@@ -66,8 +66,8 @@ export function renderHeader(currentRoute) {
                         </span>
                     </a>
 
-                    <!-- CENTER: PRIMARY NAVIGATION - visible on md+ screens -->
-                    <nav class="hidden md:flex items-center gap-8">
+                    <!-- CENTER: PRIMARY NAVIGATION - visible on sm+ screens -->
+                    <nav class="hidden sm:flex items-center gap-8">
                         ${navItems}
                     </nav>
 
@@ -85,13 +85,13 @@ export function renderHeader(currentRoute) {
                         </div>
 
                         <!-- Guest State - hidden on mobile -->
-                        <button onclick="window.app.handleAuthClick()" id="btn-auth" class="hidden md:flex bg-black hover:bg-gray-800 text-white text-xs font-medium px-5 py-2.5 transition-all items-center gap-2 uppercase tracking-wide" style="font-family: 'Inter', sans-serif;">
+                        <button onclick="window.app.handleAuthClick()" id="btn-auth" class="hidden sm:flex bg-black hover:bg-gray-800 text-white text-xs font-medium px-5 py-2.5 transition-all items-center gap-2 uppercase tracking-wide" style="font-family: 'Inter', sans-serif;">
                             <span>Sign In</span>
                         </button>
 
                         <!-- Authenticated State (Dropdown) - Hidden by default -->
                         <div id="user-menu" class="relative group hidden">
-                            <button id="user-menu-btn" onclick="window.app.toggleMenuPersistence(event)" class="hidden md:flex items-center gap-2 hover:opacity-70 transition-opacity duration-150">
+                            <button id="user-menu-btn" onclick="window.app.toggleMenuPersistence(event)" class="hidden sm:flex items-center gap-2 hover:opacity-70 transition-opacity duration-150">
                                 <div class="w-6 h-6 border border-black/20 flex items-center justify-center">
                                     <span 
                                         class="text-[10px] leading-none"
@@ -153,7 +153,7 @@ export function renderHeader(currentRoute) {
                         <button 
                             id="mobile-menu-btn" 
                             onclick="window.app.toggleMobileMenu()" 
-                            class="md:hidden flex flex-col items-center justify-center w-10 h-10 gap-1.5"
+                            class="sm:hidden flex flex-col items-center justify-center w-10 h-10 gap-1.5"
                             aria-label="Toggle menu"
                         >
                             <span id="hamburger-line-1" class="block w-6 h-0.5 bg-black transition-all duration-300"></span>
@@ -166,10 +166,10 @@ export function renderHeader(currentRoute) {
         </header>
 
         <!-- Mobile Menu Overlay -->
-        <div id="mobile-menu-overlay" class="fixed inset-0 bg-black/50 z-40 hidden md:hidden" onclick="window.app.closeMobileMenu()"></div>
+        <div id="mobile-menu-overlay" class="fixed inset-0 bg-black/50 z-40 hidden sm:hidden" onclick="window.app.closeMobileMenu()"></div>
 
         <!-- Mobile Menu Drawer -->
-        <div id="mobile-menu" class="fixed top-0 right-0 h-full w-72 bg-white z-50 transform translate-x-full transition-transform duration-300 ease-out md:hidden shadow-xl">
+        <div id="mobile-menu" class="fixed top-0 right-0 h-full w-72 bg-white z-50 transform translate-x-full transition-transform duration-300 ease-out sm:hidden shadow-xl">
             <!-- Mobile Menu Header -->
             <div class="flex items-center justify-between px-6 py-4 border-b border-black/10">
                 <span class="text-sm font-semibold tracking-wide uppercase" style="font-family: 'Inter', sans-serif;">Menu</span>

@@ -677,6 +677,78 @@ window.app = {
         btn.innerHTML = 'Add Card';
         btn.onclick = () => window.app.addCard();
     },
+    // Mobile Menu Functions
+    toggleMobileMenu: function () {
+        const menu = document.getElementById('mobile-menu');
+        const overlay = document.getElementById('mobile-menu-overlay');
+        const line1 = document.getElementById('hamburger-line-1');
+        const line2 = document.getElementById('hamburger-line-2');
+        const line3 = document.getElementById('hamburger-line-3');
+
+        if (!menu || !overlay) return;
+
+        const isOpen = menu.classList.contains('translate-x-0');
+
+        if (isOpen) {
+            window.app.closeMobileMenu();
+        } else {
+            // Open menu
+            menu.classList.remove('translate-x-full');
+            menu.classList.add('translate-x-0');
+            overlay.classList.remove('hidden');
+            document.body.style.overflow = 'hidden';
+
+            // Animate hamburger to X
+            if (line1 && line2 && line3) {
+                line1.classList.add('rotate-45', 'translate-y-2');
+                line2.classList.add('opacity-0');
+                line3.classList.add('-rotate-45', '-translate-y-2');
+            }
+        }
+    },
+    closeMobileMenu: function () {
+        const menu = document.getElementById('mobile-menu');
+        const overlay = document.getElementById('mobile-menu-overlay');
+        const line1 = document.getElementById('hamburger-line-1');
+        const line2 = document.getElementById('hamburger-line-2');
+        const line3 = document.getElementById('hamburger-line-3');
+
+        if (!menu || !overlay) return;
+
+        menu.classList.add('translate-x-full');
+        menu.classList.remove('translate-x-0');
+        overlay.classList.add('hidden');
+        document.body.style.overflow = '';
+
+        // Reset hamburger icon
+        if (line1 && line2 && line3) {
+            line1.classList.remove('rotate-45', 'translate-y-2');
+            line2.classList.remove('opacity-0');
+            line3.classList.remove('-rotate-45', '-translate-y-2');
+        }
+    },
+    updateMobileAuthUI: function () {
+        const mobileAuthBtn = document.getElementById('btn-auth-mobile');
+        const mobileUserSection = document.getElementById('mobile-user-section');
+        const mobileInitial = document.getElementById('mobile-menu-initial');
+        const mobileUsername = document.getElementById('mobile-menu-username');
+
+        if (appState.isLoggedIn) {
+            if (mobileAuthBtn) mobileAuthBtn.classList.add('hidden');
+            if (mobileUserSection) {
+                mobileUserSection.classList.remove('hidden');
+                if (mobileInitial && appState.displayName) {
+                    mobileInitial.textContent = appState.displayName.charAt(0).toUpperCase();
+                }
+                if (mobileUsername && appState.username) {
+                    mobileUsername.textContent = '@' + appState.username;
+                }
+            }
+        } else {
+            if (mobileAuthBtn) mobileAuthBtn.classList.remove('hidden');
+            if (mobileUserSection) mobileUserSection.classList.add('hidden');
+        }
+    },
     setupPayout: async function () {
         console.log('Initiating Stripe Connect Express for payout...');
         const btn = document.getElementById('manage-bank-btn') || document.getElementById('setup-payout-btn') || document.getElementById('manage-payout-btn');

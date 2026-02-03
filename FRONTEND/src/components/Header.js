@@ -27,35 +27,54 @@ export function renderHeader(currentRoute) {
         `;
     }).join('');
 
+    // Generate mobile navigation items
+    const mobileNavItems = routes.map(route => {
+        const isActive = currentRoute === route.path ||
+            (route.path === '/contracts' && currentRoute.startsWith('/contracts')) ||
+            (route.path === '/overview' && currentRoute === '/');
+
+        return `
+            <a href="#" 
+                onclick="window.app.closeMobileMenu(); window.router.navigate('${route.path}'); return false;" 
+                class="block w-full px-6 py-4 text-base tracking-wide border-b border-black/10 ${isActive
+                ? 'text-black bg-black/5 border-l-4 border-l-[#751212]'
+                : 'text-black/70 hover:text-black hover:bg-black/5'
+            }"
+                style="font-family: 'Inter', sans-serif; font-weight: 500;">
+                ${route.label}
+            </a>
+        `;
+    }).join('');
+
     return `
         <header class="w-full border-b border-black/10 bg-white fixed top-0 z-50">
-            <div class="mx-auto max-w-[1600px] px-8 py-4">
+            <div class="mx-auto max-w-[1600px] px-4 md:px-8 py-3 md:py-4">
                 <div class="flex items-center justify-between">
                     <!-- LEFT: WORDMARK -->
-                    <a href="#" onclick="window.router.navigate('/overview'); return false;" class="flex flex-col gap-0.5 items-center cursor-pointer hover:opacity-80 transition-opacity">
+                    <a href="#" onclick="window.router.navigate('/overview'); return false;" class="flex flex-col gap-0.5 items-center cursor-pointer hover:opacity-80 transition-opacity shrink-0">
                         <h1 
-                            class="text-xl tracking-tight m-0 p-0 leading-none"
+                            class="text-lg md:text-xl tracking-tight m-0 p-0 leading-none"
                             style="font-family: 'IBM Plex Sans', sans-serif; font-weight: 600;"
                         >
                             COLLATERAL
                         </h1>
                         <span 
-                            class="text-xs tracking-widest uppercase leading-none"
+                            class="text-[10px] md:text-xs tracking-widest uppercase leading-none"
                             style="font-family: 'JetBrains Mono', monospace; font-weight: 600; color: #751212;"
                         >
                             MARKET
                         </span>
                     </a>
 
-                    <!-- CENTER: PRIMARY NAVIGATION -->
-                    <nav class="flex items-center gap-8">
+                    <!-- CENTER: PRIMARY NAVIGATION (Hidden on mobile) -->
+                    <nav class="hidden md:flex items-center gap-8">
                         ${navItems}
                     </nav>
 
-                    <!-- RIGHT: SYSTEM ZONE -->
-                    <div class="flex items-center gap-6">
-                        <!-- System Status Indicator -->
-                        <div class="flex items-center gap-2 px-3 py-1.5 border border-black/10">
+                    <!-- RIGHT: SYSTEM ZONE (Hidden on mobile) + Mobile Menu Button -->
+                    <div class="flex items-center gap-4 md:gap-6">
+                        <!-- System Status Indicator (Hidden on mobile) -->
+                        <div class="hidden lg:flex items-center gap-2 px-3 py-1.5 border border-black/10">
                             <div class="w-1.5 h-1.5 bg-green-500 rounded-full animate-pulse"></div>
                             <span 
                                 class="text-[10px] tracking-widest uppercase leading-none"
@@ -65,14 +84,14 @@ export function renderHeader(currentRoute) {
                             </span>
                         </div>
 
-                        <!-- Guest State -->
-                        <button onclick="window.app.handleAuthClick()" id="btn-auth" class="bg-black hover:bg-gray-800 text-white text-xs font-medium px-5 py-2.5 transition-all flex items-center gap-2 uppercase tracking-wide" style="font-family: 'Inter', sans-serif;">
+                        <!-- Guest State (Hidden on mobile) -->
+                        <button onclick="window.app.handleAuthClick()" id="btn-auth" class="hidden md:flex bg-black hover:bg-gray-800 text-white text-xs font-medium px-5 py-2.5 transition-all items-center gap-2 uppercase tracking-wide" style="font-family: 'Inter', sans-serif;">
                             <span>Sign In</span>
                         </button>
 
                         <!-- Authenticated State (Dropdown) - Hidden by default -->
                         <div id="user-menu" class="relative group hidden">
-                            <button id="user-menu-btn" onclick="window.app.toggleMenuPersistence(event)" class="flex items-center gap-2 hover:opacity-70 transition-opacity duration-150">
+                            <button id="user-menu-btn" onclick="window.app.toggleMenuPersistence(event)" class="hidden md:flex items-center gap-2 hover:opacity-70 transition-opacity duration-150">
                                 <div class="w-6 h-6 border border-black/20 flex items-center justify-center">
                                     <span 
                                         class="text-[10px] leading-none"
@@ -129,10 +148,74 @@ export function renderHeader(currentRoute) {
                                 </div>
                             </div>
                         </div>
+
+                        <!-- Mobile Hamburger Menu Button -->
+                        <button 
+                            id="mobile-menu-btn" 
+                            onclick="window.app.toggleMobileMenu()" 
+                            class="md:hidden flex flex-col items-center justify-center w-10 h-10 gap-1.5"
+                            aria-label="Toggle menu"
+                        >
+                            <span id="hamburger-line-1" class="block w-6 h-0.5 bg-black transition-all duration-300"></span>
+                            <span id="hamburger-line-2" class="block w-6 h-0.5 bg-black transition-all duration-300"></span>
+                            <span id="hamburger-line-3" class="block w-6 h-0.5 bg-black transition-all duration-300"></span>
+                        </button>
                     </div>
                 </div>
             </div>
         </header>
+
+        <!-- Mobile Menu Overlay -->
+        <div id="mobile-menu-overlay" class="fixed inset-0 bg-black/50 z-40 hidden md:hidden" onclick="window.app.closeMobileMenu()"></div>
+
+        <!-- Mobile Menu Drawer -->
+        <div id="mobile-menu" class="fixed top-0 right-0 h-full w-72 bg-white z-50 transform translate-x-full transition-transform duration-300 ease-out md:hidden shadow-xl">
+            <!-- Mobile Menu Header -->
+            <div class="flex items-center justify-between px-6 py-4 border-b border-black/10">
+                <span class="text-sm font-semibold tracking-wide uppercase" style="font-family: 'Inter', sans-serif;">Menu</span>
+                <button onclick="window.app.closeMobileMenu()" class="w-8 h-8 flex items-center justify-center">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M18 6L6 18M6 6l12 12"/>
+                    </svg>
+                </button>
+            </div>
+
+            <!-- Mobile Navigation Links -->
+            <nav class="flex flex-col">
+                ${mobileNavItems}
+            </nav>
+
+            <!-- Mobile Auth Section -->
+            <div class="px-6 py-4 border-t border-black/10 mt-auto">
+                <button onclick="window.app.closeMobileMenu(); window.app.handleAuthClick()" id="btn-auth-mobile" class="w-full bg-black hover:bg-gray-800 text-white text-sm font-medium px-5 py-3 transition-all flex items-center justify-center gap-2 uppercase tracking-wide" style="font-family: 'Inter', sans-serif;">
+                    <span>Sign In</span>
+                </button>
+            </div>
+
+            <!-- Mobile User Menu (Hidden when not authenticated) -->
+            <div id="mobile-user-section" class="hidden px-6 py-4 border-t border-black/10">
+                <div class="flex items-center gap-3 mb-4">
+                    <div class="w-8 h-8 border border-black/20 flex items-center justify-center">
+                        <span class="text-xs" style="font-family: 'JetBrains Mono', monospace;" id="mobile-menu-initial">U</span>
+                    </div>
+                    <span class="text-sm" style="font-family: 'JetBrains Mono', monospace;" id="mobile-menu-username">@username</span>
+                </div>
+                <div class="space-y-1">
+                    <button onclick="window.app.closeMobileMenu(); window.router.navigate('/profile')" class="w-full px-3 py-2 text-left text-xs tracking-wide hover:bg-black/5 uppercase" style="font-family: 'JetBrains Mono', monospace;">
+                        MY IDENTITY
+                    </button>
+                    <button onclick="window.app.closeMobileMenu(); window.router.navigate('/my-contracts')" class="w-full px-3 py-2 text-left text-xs tracking-wide hover:bg-black/5 uppercase" style="font-family: 'JetBrains Mono', monospace;">
+                        MY CONTRACTS
+                    </button>
+                    <button onclick="window.app.closeMobileMenu(); window.router.navigate('/funding')" class="w-full px-3 py-2 text-left text-xs tracking-wide hover:bg-black/5 uppercase" style="font-family: 'JetBrains Mono', monospace;">
+                        FUNDING
+                    </button>
+                    <button onclick="window.app.closeMobileMenu(); window.app.handleSignOut()" class="w-full px-3 py-2 text-left text-xs tracking-wide hover:bg-black/5 uppercase" style="font-family: 'JetBrains Mono', monospace; color: #751212;">
+                        SIGN OUT
+                    </button>
+                </div>
+            </div>
+        </div>
     `;
 }
 

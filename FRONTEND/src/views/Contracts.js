@@ -612,9 +612,12 @@ export function renderContracts() {
                                 <h3 class="text-sm font-semibold uppercase tracking-wide" style="font-family: 'IBM Plex Sans', sans-serif;">Sales</h3>
                                 <span class="font-mono text-[9px] px-2 py-0.5 uppercase tracking-wider bg-blue-50 text-blue-700 border border-blue-200">Primary</span>
                             </div>
-                            <p class="text-xs text-gray-500 mb-4 ml-4 leading-relaxed max-w-xl">
+                            <p class="text-xs text-gray-500 mb-1 ml-4 leading-relaxed max-w-xl">
                                 Tracks verified net revenue collected through connected payment processors. 
                                 Only settled funds count. Refunds and chargebacks are excluded.
+                            </p>
+                            <p class="text-xs text-gray-400 mb-4 ml-4 italic">
+                                Recommended for insurance agents, brokers, and commission-based sales.
                             </p>
                             
                             <div class="ml-4 space-y-2">
@@ -628,9 +631,9 @@ export function renderContracts() {
                                             <div class="flex items-center gap-2">
                                                 <span class="text-sm font-medium text-gray-400">Authorize.net</span>
                                                 <span class="font-mono text-[8px] px-1.5 py-0.5 uppercase tracking-wider bg-amber-50 text-amber-600 border border-amber-200">Recommended</span>
-                                                <span class="font-mono text-[8px] px-1.5 py-0.5 uppercase tracking-wider bg-gray-100 text-gray-500">Coming Soon</span>
+                                                <span class="font-mono text-[8px] px-1.5 py-0.5 uppercase tracking-wider bg-blue-50 text-blue-600 border border-blue-200">Priority Integration</span>
                                             </div>
-                                            <p class="text-[10px] text-gray-400 mt-0.5">Ideal for insurance agents and agencies</p>
+                                            <p class="text-[10px] text-gray-500 mt-0.5">Early access opening shortly • Ideal for insurance agents</p>
                                         </div>
                                     </div>
                                 </div>

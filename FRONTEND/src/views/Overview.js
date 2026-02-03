@@ -388,28 +388,35 @@ export function renderOverview() {
 
 export function initOverview() {
     // === INTERSECTION OBSERVER FOR SCROLL REVEALS ===
-    const revealObserver = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                entry.target.classList.add('is-visible');
-                // Only reveal once
-                revealObserver.unobserve(entry.target);
-            }
+    // Use requestAnimationFrame to ensure DOM is fully painted before observing
+    requestAnimationFrame(() => {
+        const revealObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    // Add small delay for staggered feel
+                    requestAnimationFrame(() => {
+                        entry.target.classList.add('is-visible');
+                    });
+                    // Only reveal once
+                    revealObserver.unobserve(entry.target);
+                }
+            });
+        }, {
+            threshold: 0.05,  // Lower threshold for earlier trigger
+            rootMargin: '0px 0px 0px 0px'  // No negative margin to ensure visibility
         });
-    }, {
-        threshold: 0.1,
-        rootMargin: '0px 0px -50px 0px'
+
+        // Observe all reveal elements
+        document.querySelectorAll('[data-reveal]').forEach(el => {
+            revealObserver.observe(el);
+        });
+
+        // Observe divider elements
+        document.querySelectorAll('.divider-draw').forEach(el => {
+            revealObserver.observe(el);
+        });
     });
 
-    // Observe all reveal elements
-    document.querySelectorAll('[data-reveal]').forEach(el => {
-        revealObserver.observe(el);
-    });
-
-    // Observe divider elements
-    document.querySelectorAll('.divider-draw').forEach(el => {
-        revealObserver.observe(el);
-    });
 
     // === TICKER ANIMATION ===
     const track = document.getElementById('ticker-track');

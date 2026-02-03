@@ -447,55 +447,62 @@ export function initOverview() {
         console.log('[Overview] Motion CSS injected into head');
     }
 
-    // === REVEAL ANIMATIONS ===
-    // Immediately reveal hero elements (above the fold) with staggered timing
-    const heroSection = document.querySelector('section.border-b');
-    if (heroSection) {
-        const heroReveals = heroSection.querySelectorAll('[data-reveal]');
-        heroReveals.forEach((el, index) => {
-            setTimeout(() => {
-                el.classList.add('is-visible');
-            }, index * 80); // 80ms stagger
-        });
+    // Force reflow to ensure CSS is applied, then trigger animations
+    // Double rAF ensures browser has painted with new styles
+    requestAnimationFrame(() => {
+        requestAnimationFrame(() => {
+            console.log('[Overview] Starting reveal animations');
 
-        // Reveal divider after hero content
-        const divider = heroSection.querySelector('.divider-draw');
-        if (divider) {
-            setTimeout(() => {
-                divider.classList.add('is-visible');
-            }, heroReveals.length * 80 + 200);
-        }
-    }
+            // Immediately reveal hero elements (above the fold) with staggered timing
+            const heroSection = document.querySelector('section.border-b');
+            if (heroSection) {
+                const heroReveals = heroSection.querySelectorAll('[data-reveal]');
+                console.log('[Overview] Found', heroReveals.length, 'hero elements');
+                heroReveals.forEach((el, index) => {
+                    setTimeout(() => {
+                        el.classList.add('is-visible');
+                    }, index * 80); // 80ms stagger
+                });
 
-    // Use IntersectionObserver for below-fold content
-    const revealObserver = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                entry.target.classList.add('is-visible');
-                revealObserver.unobserve(entry.target);
+                // Reveal divider after hero content
+                const divider = heroSection.querySelector('.divider-draw');
+                if (divider) {
+                    setTimeout(() => {
+                        divider.classList.add('is-visible');
+                    }, heroReveals.length * 80 + 200);
+                }
             }
+
+            // Use IntersectionObserver for below-fold content
+            const revealObserver = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('is-visible');
+                        revealObserver.unobserve(entry.target);
+                    }
+                });
+            }, {
+                threshold: 0.1,
+                rootMargin: '0px'
+            });
+
+            // Observe all reveal elements EXCEPT those in hero
+            document.querySelectorAll('[data-reveal]').forEach(el => {
+                if (!el.classList.contains('is-visible')) {
+                    revealObserver.observe(el);
+                }
+            });
+
+            // Observe remaining dividers
+            document.querySelectorAll('.divider-draw').forEach(el => {
+                if (!el.classList.contains('is-visible')) {
+                    revealObserver.observe(el);
+                }
+            });
         });
-    }, {
-        threshold: 0.1,
-        rootMargin: '0px'
     });
 
-    // Observe all reveal elements EXCEPT those in hero
-    document.querySelectorAll('[data-reveal]').forEach(el => {
-        // Skip if already visible (hero elements)
-        if (!el.classList.contains('is-visible')) {
-            revealObserver.observe(el);
-        }
-    });
-
-    // Observe remaining dividers
-    document.querySelectorAll('.divider-draw').forEach(el => {
-        if (!el.classList.contains('is-visible')) {
-            revealObserver.observe(el);
-        }
-    });
-
-    // Fallback: reveal everything after 2 seconds if somehow still hidden
+    // Fallback: reveal everything after 2 seconds
     setTimeout(() => {
         document.querySelectorAll('[data-reveal]:not(.is-visible)').forEach(el => {
             el.classList.add('is-visible');
@@ -504,6 +511,7 @@ export function initOverview() {
             el.classList.add('is-visible');
         });
     }, 2000);
+
     // === TICKER ANIMATION ===
     const track = document.getElementById('ticker-track');
     if (!track) {

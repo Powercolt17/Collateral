@@ -389,6 +389,64 @@ export function renderOverview() {
 export function initOverview() {
     console.log('[Overview] initOverview called');
 
+    // === INJECT MOTION CSS INTO HEAD (ensures CSS applies before animations) ===
+    if (!document.getElementById('motion-system-css')) {
+        const styleEl = document.createElement('style');
+        styleEl.id = 'motion-system-css';
+        styleEl.textContent = `
+            [data-reveal] {
+                opacity: 0;
+                transform: translateY(10px);
+                transition: opacity 600ms cubic-bezier(0.2, 0.8, 0.2, 1), transform 600ms cubic-bezier(0.2, 0.8, 0.2, 1);
+            }
+            [data-reveal].is-visible {
+                opacity: 1;
+                transform: translateY(0);
+            }
+            [data-reveal-delay="1"] { transition-delay: 80ms; }
+            [data-reveal-delay="2"] { transition-delay: 160ms; }
+            [data-reveal-delay="3"] { transition-delay: 240ms; }
+            [data-reveal-delay="4"] { transition-delay: 320ms; }
+            [data-reveal-delay="5"] { transition-delay: 400ms; }
+            .divider-draw {
+                transform: scaleX(0);
+                transform-origin: left;
+                transition: transform 800ms cubic-bezier(0.2, 0.8, 0.2, 1);
+            }
+            .divider-draw.is-visible {
+                transform: scaleX(1);
+            }
+            .btn-institutional {
+                transition: background-color 200ms, transform 200ms, box-shadow 200ms;
+                box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+            }
+            .btn-institutional:hover {
+                transform: translateY(-2px);
+                box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            }
+            .btn-institutional:active {
+                transform: translateY(1px);
+                box-shadow: none;
+            }
+            .card-hover {
+                transition: transform 200ms, border-color 200ms, box-shadow 200ms;
+            }
+            .card-hover:hover {
+                transform: translateY(-2px);
+                border-color: #999;
+                box-shadow: 0 4px 12px rgba(0,0,0,0.06);
+            }
+            @media (prefers-reduced-motion: reduce) {
+                [data-reveal] { opacity: 1 !important; transform: none !important; transition: none !important; }
+                .divider-draw { transform: scaleX(1) !important; transition: none !important; }
+                .btn-institutional, .card-hover { transition: none !important; }
+                .btn-institutional:hover, .btn-institutional:active, .card-hover:hover { transform: none !important; }
+            }
+        `;
+        document.head.appendChild(styleEl);
+        console.log('[Overview] Motion CSS injected into head');
+    }
+
     // === REVEAL ANIMATIONS ===
     // Immediately reveal hero elements (above the fold) with staggered timing
     const heroSection = document.querySelector('section.border-b');

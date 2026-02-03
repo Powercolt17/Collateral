@@ -589,75 +589,214 @@ export function renderContracts() {
                 </section>
 
 
-                <!-- STEP 2: SELECT AUTHORITY -->
-                <section id="step-2" class="hidden max-w-6xl mx-auto w-full flex flex-col">
+                <!-- STEP 2: SELECT PERFORMANCE DOMAIN -->
+                <section id="step-2" class="hidden max-w-5xl mx-auto w-full flex flex-col">
                     <!-- Page Header -->
-                    <div class="mb-12 pb-8 border-b border-gray-200">
+                    <div class="mb-10 pb-6 border-b border-gray-200">
                         <h1 class="uppercase tracking-tight mb-3 text-2xl font-medium" style="font-family: 'IBM Plex Sans', sans-serif; letter-spacing: -0.01em;">
-                            SELECT AUTHORITY
+                            SELECT PERFORMANCE DOMAIN
                         </h1>
                         <p class="text-sm text-gray-600 leading-relaxed max-w-3xl" style="font-weight: 300;">
-                            The selected authority will serve as the sole arbiter of contract settlement. 
-                            All outcomes are determined exclusively by data provided through this authority's verified endpoints.
+                            Choose your performance verification domain. Each domain uses verified data sources 
+                            to measure outcomes. The selected authority will serve as the sole arbiter of contract settlement.
                         </p>
                     </div>
 
-                    <!-- Authority Cards -->
-                    <div class="mb-12">
-                        <h4 class="text-xs tracking-wider text-gray-500 mb-4 uppercase font-mono">AVAILABLE AUTHORITIES</h4>
-                        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-                            <!-- X Authority Card -->
-                            <button class="border-2 border-gray-200 p-6 text-left flex flex-col h-48 hover:border-gray-900 transition-colors bg-white authority-card"
-                                 onclick="window.wizard.selectSource('TWITTER', this)">
-                                <div class="flex justify-between items-start mb-4">
-                                    <span class="font-mono text-[10px] text-gray-400 uppercase tracking-widest">ORACLE_01</span>
-                                    <span class="font-mono text-[10px] text-emerald-600 uppercase tracking-wide">PROVEN</span>
+                    <!-- Domain Sections -->
+                    <div class="space-y-8 mb-12">
+                        
+                        <!-- 🟦 SALES DOMAIN -->
+                        <div class="domain-section">
+                            <div class="flex items-center gap-3 mb-3">
+                                <div class="w-1 h-6 rounded-full" style="background: #2563eb;"></div>
+                                <h3 class="text-sm font-semibold uppercase tracking-wide" style="font-family: 'IBM Plex Sans', sans-serif;">Sales</h3>
+                                <span class="font-mono text-[9px] px-2 py-0.5 uppercase tracking-wider bg-blue-50 text-blue-700 border border-blue-200">Primary</span>
+                            </div>
+                            <p class="text-xs text-gray-500 mb-4 ml-4 leading-relaxed max-w-xl">
+                                Tracks verified net revenue collected through connected payment processors. 
+                                Only settled funds count. Refunds and chargebacks are excluded.
+                            </p>
+                            
+                            <div class="ml-4 space-y-2">
+                                <!-- Authorize.net (Coming Soon) -->
+                                <div class="border border-gray-100 bg-gray-50/50 p-4 flex items-center justify-between opacity-50 cursor-not-allowed">
+                                    <div class="flex items-center gap-3">
+                                        <div class="w-8 h-8 bg-gray-200 rounded flex items-center justify-center">
+                                            <svg class="w-4 h-4 text-gray-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z"/></svg>
+                                        </div>
+                                        <div>
+                                            <div class="flex items-center gap-2">
+                                                <span class="text-sm font-medium text-gray-400">Authorize.net</span>
+                                                <span class="font-mono text-[8px] px-1.5 py-0.5 uppercase tracking-wider bg-amber-50 text-amber-600 border border-amber-200">Recommended</span>
+                                                <span class="font-mono text-[8px] px-1.5 py-0.5 uppercase tracking-wider bg-gray-100 text-gray-500">Coming Soon</span>
+                                            </div>
+                                            <p class="text-[10px] text-gray-400 mt-0.5">Ideal for insurance agents and agencies</p>
+                                        </div>
+                                    </div>
                                 </div>
-                                <div class="flex-1 flex flex-col justify-between">
-                                    <div>
-                                        <h3 class="text-lg font-semibold mb-2" style="font-family: 'IBM Plex Sans', sans-serif;">X</h3>
-                                        <p class="text-xs text-gray-500 leading-relaxed">Measures public engagement metrics via verified X API endpoints</p>
+                                
+                                <!-- Stripe (Active) -->
+                                <button class="w-full border-2 border-gray-200 bg-white p-4 flex items-center justify-between hover:border-gray-400 transition-colors authority-card text-left"
+                                     onclick="window.wizard.selectSource('STRIPE', this)" data-domain="sales">
+                                    <div class="flex items-center gap-3">
+                                        <div class="w-8 h-8 bg-[#635bff]/10 rounded flex items-center justify-center">
+                                            <svg class="w-4 h-4" viewBox="0 0 24 24" fill="#635bff"><path d="M13.976 9.15c-2.172-.806-3.356-1.426-3.356-2.409 0-.831.683-1.305 1.901-1.305 2.227 0 4.515.858 6.09 1.631l.89-5.494C18.252.975 15.697 0 12.165 0 9.667 0 7.589.654 6.104 1.872 4.56 3.147 3.757 4.992 3.757 7.218c0 4.039 2.467 5.76 6.476 7.219 2.585.92 3.445 1.574 3.445 2.583 0 .98-.84 1.545-2.354 1.545-1.875 0-4.965-.921-6.99-2.109l-.9 5.555C5.175 22.99 8.385 24 11.714 24c2.641 0 4.843-.624 6.328-1.813 1.664-1.305 2.525-3.236 2.525-5.732 0-4.128-2.524-5.851-6.591-7.305z"/></svg>
+                                        </div>
+                                        <div>
+                                            <div class="flex items-center gap-2">
+                                                <span class="text-sm font-medium text-gray-900">Stripe</span>
+                                                <span class="font-mono text-[8px] px-1.5 py-0.5 uppercase tracking-wider bg-emerald-50 text-emerald-600 border border-emerald-200">Payment-Verified</span>
+                                            </div>
+                                            <p class="text-[10px] text-gray-500 mt-0.5">Digital sales, SaaS, and online transactions</p>
+                                        </div>
+                                    </div>
+                                    <div id="stripe-card-connected-sales" class="hidden">
+                                        <span class="font-mono text-[10px] text-emerald-600 flex items-center gap-1">
+                                            <span class="w-1.5 h-1.5 bg-emerald-500 rounded-full"></span>
+                                            Connected
+                                        </span>
+                                    </div>
+                                </button>
+                                
+                                <!-- PayPal (Coming Soon) -->
+                                <div class="border border-gray-100 bg-gray-50/50 p-4 flex items-center justify-between opacity-50 cursor-not-allowed">
+                                    <div class="flex items-center gap-3">
+                                        <div class="w-8 h-8 bg-gray-200 rounded flex items-center justify-center">
+                                            <svg class="w-4 h-4 text-gray-400" viewBox="0 0 24 24" fill="currentColor"><path d="M7.076 21.337H2.47a.641.641 0 0 1-.633-.74L4.944.901C5.026.382 5.474 0 5.998 0h7.46c2.57 0 4.578.543 5.69 1.81 1.01 1.15 1.304 2.42 1.012 4.287-.023.143-.047.288-.077.437-.983 5.05-4.349 6.797-8.647 6.797h-2.19c-.524 0-.968.382-1.05.9l-1.12 7.106z"/></svg>
+                                        </div>
+                                        <div>
+                                            <div class="flex items-center gap-2">
+                                                <span class="text-sm font-medium text-gray-400">PayPal Business</span>
+                                                <span class="font-mono text-[8px] px-1.5 py-0.5 uppercase tracking-wider bg-gray-100 text-gray-500">Coming Soon</span>
+                                            </div>
+                                            <p class="text-[10px] text-gray-400 mt-0.5">E-commerce and marketplace transactions</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 🟨 SOCIAL MEDIA DOMAIN -->
+                        <div class="domain-section">
+                            <div class="flex items-center gap-3 mb-3">
+                                <div class="w-1 h-6 rounded-full" style="background: #eab308;"></div>
+                                <h3 class="text-sm font-semibold uppercase tracking-wide" style="font-family: 'IBM Plex Sans', sans-serif;">Social Media / Audience</h3>
+                            </div>
+                            <p class="text-xs text-gray-500 mb-4 ml-4 leading-relaxed max-w-xl">
+                                Tracks public engagement metrics through verified platform APIs.
+                            </p>
+                            
+                            <div class="ml-4 space-y-2">
+                                <!-- X (Active) -->
+                                <button class="w-full border-2 border-gray-200 bg-white p-4 flex items-center justify-between hover:border-gray-400 transition-colors authority-card text-left"
+                                     onclick="window.wizard.selectSource('TWITTER', this)" data-domain="social">
+                                    <div class="flex items-center gap-3">
+                                        <div class="w-8 h-8 bg-black/5 rounded flex items-center justify-center">
+                                            <svg class="w-4 h-4" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+                                        </div>
+                                        <div>
+                                            <div class="flex items-center gap-2">
+                                                <span class="text-sm font-medium text-gray-900">X (Twitter)</span>
+                                                <span class="font-mono text-[8px] px-1.5 py-0.5 uppercase tracking-wider bg-yellow-50 text-yellow-700 border border-yellow-200">Public Data</span>
+                                                <span class="font-mono text-[8px] px-1.5 py-0.5 uppercase tracking-wider bg-gray-100 text-gray-500 border border-gray-200">Non-Financial</span>
+                                            </div>
+                                            <p class="text-[10px] text-gray-500 mt-0.5">Follower growth, engagement, and impressions</p>
+                                        </div>
                                     </div>
                                     <div id="x-card-connected" class="hidden">
-                                        <span class="font-mono text-[10px] text-emerald-600">Connected</span>
+                                        <span class="font-mono text-[10px] text-emerald-600 flex items-center gap-1">
+                                            <span class="w-1.5 h-1.5 bg-emerald-500 rounded-full"></span>
+                                            Connected
+                                        </span>
+                                    </div>
+                                </button>
+                                
+                                <!-- YouTube (Coming Soon) -->
+                                <div class="border border-gray-100 bg-gray-50/50 p-4 flex items-center justify-between opacity-50 cursor-not-allowed">
+                                    <div class="flex items-center gap-3">
+                                        <div class="w-8 h-8 bg-gray-200 rounded flex items-center justify-center">
+                                            <svg class="w-4 h-4 text-gray-400" viewBox="0 0 24 24" fill="currentColor"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
+                                        </div>
+                                        <div>
+                                            <div class="flex items-center gap-2">
+                                                <span class="text-sm font-medium text-gray-400">YouTube</span>
+                                                <span class="font-mono text-[8px] px-1.5 py-0.5 uppercase tracking-wider bg-gray-100 text-gray-500">Coming Soon</span>
+                                            </div>
+                                            <p class="text-[10px] text-gray-400 mt-0.5">Subscriber growth and video performance</p>
+                                        </div>
                                     </div>
                                 </div>
-                            </button>
+                            </div>
+                        </div>
 
-                            <!-- Stripe Authority Card -->
-                            <button class="border-2 border-gray-200 p-6 text-left flex flex-col h-48 hover:border-gray-900 transition-colors bg-white authority-card"
-                                 onclick="window.wizard.selectSource('STRIPE', this)">
-                                <div class="flex justify-between items-start mb-4">
-                                    <span class="font-mono text-[10px] text-gray-400 uppercase tracking-widest">ORACLE_02</span>
-                                    <span class="font-mono text-[10px] text-blue-600 uppercase tracking-wide">HIGH</span>
-                                </div>
-                                <div class="flex-1 flex flex-col justify-between">
-                                    <div>
-                                        <h3 class="text-lg font-semibold mb-2" style="font-family: 'IBM Plex Sans', sans-serif;">Stripe</h3>
-                                        <p class="text-xs text-gray-500 leading-relaxed">Tracks transaction volume and revenue through Stripe Connect</p>
+                        <!-- 🟩 FINANCE DOMAIN -->
+                        <div class="domain-section">
+                            <div class="flex items-center gap-3 mb-3">
+                                <div class="w-1 h-6 rounded-full" style="background: #16a34a;"></div>
+                                <h3 class="text-sm font-semibold uppercase tracking-wide" style="font-family: 'IBM Plex Sans', sans-serif;">Finance / Business Performance</h3>
+                            </div>
+                            <p class="text-xs text-gray-500 mb-4 ml-4 leading-relaxed max-w-xl">
+                                Measures business performance through verified financial inflows.
+                            </p>
+                            
+                            <div class="ml-4 space-y-2">
+                                <!-- Stripe (Active) -->
+                                <button class="w-full border-2 border-gray-200 bg-white p-4 flex items-center justify-between hover:border-gray-400 transition-colors authority-card text-left"
+                                     onclick="window.wizard.selectSource('STRIPE', this)" data-domain="finance">
+                                    <div class="flex items-center gap-3">
+                                        <div class="w-8 h-8 bg-[#635bff]/10 rounded flex items-center justify-center">
+                                            <svg class="w-4 h-4" viewBox="0 0 24 24" fill="#635bff"><path d="M13.976 9.15c-2.172-.806-3.356-1.426-3.356-2.409 0-.831.683-1.305 1.901-1.305 2.227 0 4.515.858 6.09 1.631l.89-5.494C18.252.975 15.697 0 12.165 0 9.667 0 7.589.654 6.104 1.872 4.56 3.147 3.757 4.992 3.757 7.218c0 4.039 2.467 5.76 6.476 7.219 2.585.92 3.445 1.574 3.445 2.583 0 .98-.84 1.545-2.354 1.545-1.875 0-4.965-.921-6.99-2.109l-.9 5.555C5.175 22.99 8.385 24 11.714 24c2.641 0 4.843-.624 6.328-1.813 1.664-1.305 2.525-3.236 2.525-5.732 0-4.128-2.524-5.851-6.591-7.305z"/></svg>
+                                        </div>
+                                        <div>
+                                            <div class="flex items-center gap-2">
+                                                <span class="text-sm font-medium text-gray-900">Stripe</span>
+                                                <span class="font-mono text-[8px] px-1.5 py-0.5 uppercase tracking-wider bg-emerald-50 text-emerald-600 border border-emerald-200">Revenue-Verified</span>
+                                            </div>
+                                            <p class="text-[10px] text-gray-500 mt-0.5">Revenue growth and financial metrics</p>
+                                        </div>
                                     </div>
-                                    <div id="stripe-card-connected" class="hidden">
-                                        <span class="font-mono text-[10px] text-emerald-600">Connected</span>
+                                    <div id="stripe-card-connected-finance" class="hidden">
+                                        <span class="font-mono text-[10px] text-emerald-600 flex items-center gap-1">
+                                            <span class="w-1.5 h-1.5 bg-emerald-500 rounded-full"></span>
+                                            Connected
+                                        </span>
                                     </div>
-                                </div>
-                            </button>
+                                </button>
+                            </div>
+                        </div>
 
-                            <!-- GitHub Authority Card (Coming Soon) -->
-                            <div class="border-2 border-gray-100 p-6 text-left flex flex-col h-48 bg-gray-50 opacity-60 cursor-not-allowed">
-                                <div class="flex justify-between items-start mb-4">
-                                    <span class="font-mono text-[10px] text-gray-300 uppercase tracking-widest">ORACLE_03</span>
-                                    <span class="font-mono text-[10px] text-gray-400 uppercase tracking-wide">COMING SOON</span>
-                                </div>
-                                <div class="flex-1">
-                                    <h3 class="text-lg font-semibold mb-2 text-gray-400" style="font-family: 'IBM Plex Sans', sans-serif;">GitHub</h3>
-                                    <p class="text-xs text-gray-400 leading-relaxed">Monitors repository activity and contribution metrics</p>
+                        <!-- 🟥 DEVELOPER DOMAIN -->
+                        <div class="domain-section">
+                            <div class="flex items-center gap-3 mb-3">
+                                <div class="w-1 h-6 rounded-full" style="background: #991b1b;"></div>
+                                <h3 class="text-sm font-semibold uppercase tracking-wide" style="font-family: 'IBM Plex Sans', sans-serif;">Developer / Productivity</h3>
+                            </div>
+                            <p class="text-xs text-gray-500 mb-4 ml-4 leading-relaxed max-w-xl">
+                                Monitors repository activity and contribution metrics.
+                            </p>
+                            
+                            <div class="ml-4 space-y-2">
+                                <!-- GitHub (Coming Soon) -->
+                                <div class="border border-gray-100 bg-gray-50/50 p-4 flex items-center justify-between opacity-50 cursor-not-allowed">
+                                    <div class="flex items-center gap-3">
+                                        <div class="w-8 h-8 bg-gray-200 rounded flex items-center justify-center">
+                                            <svg class="w-4 h-4 text-gray-400" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
+                                        </div>
+                                        <div>
+                                            <div class="flex items-center gap-2">
+                                                <span class="text-sm font-medium text-gray-400">GitHub</span>
+                                                <span class="font-mono text-[8px] px-1.5 py-0.5 uppercase tracking-wider bg-gray-100 text-gray-500">Coming Soon</span>
+                                            </div>
+                                            <p class="text-[10px] text-gray-400 mt-0.5">Commits, PRs, and contribution streaks</p>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
 
                     <!-- Authority Detail Panel -->
-                    <div id="authority-panel" class="mb-12 border border-gray-200 bg-gray-50 p-6" style="display: none;">
+                    <div id="authority-panel" class="mb-8 border border-gray-200 bg-gray-50 p-6" style="display: none;">
                         <div class="flex justify-between items-start mb-6">
                             <h4 id="panel-title" class="font-medium text-base uppercase tracking-wide" style="font-family: 'IBM Plex Sans', sans-serif;"></h4>
                             <span id="panel-integrity" class="font-mono text-[10px] text-gray-500 uppercase tracking-widest"></span>
@@ -679,7 +818,7 @@ export function renderContracts() {
                     </div>
 
                     <!-- Binding Section - X -->
-                    <div id="x-verify-panel" class="mb-12 border border-gray-200 bg-white p-6" style="display: none;">
+                    <div id="x-verify-panel" class="mb-8 border border-gray-200 bg-white p-6" style="display: none;">
                         <div class="flex items-center justify-between mb-4">
                             <h4 class="font-medium text-base" style="font-family: 'IBM Plex Sans', sans-serif;">Authority Binding — X</h4>
                             <span id="x-verify-status" class="font-mono text-[10px] text-gray-400 uppercase tracking-widest">Not Connected</span>
@@ -717,7 +856,7 @@ export function renderContracts() {
                     </div>
 
                     <!-- Binding Section - Stripe -->
-                    <div id="stripe-verify-panel" class="mb-12 border border-gray-200 bg-white p-6" style="display: none;">
+                    <div id="stripe-verify-panel" class="mb-8 border border-gray-200 bg-white p-6" style="display: none;">
                         <div class="flex items-center justify-between mb-4">
                             <h4 class="font-medium text-base" style="font-family: 'IBM Plex Sans', sans-serif;">Authority Binding — Stripe</h4>
                             <span id="stripe-verify-status" class="font-mono text-[10px] text-gray-400 uppercase tracking-widest">Not Connected</span>
@@ -750,7 +889,7 @@ export function renderContracts() {
                     </div>
                     
                     <!-- Metric Preview -->
-                    <div id="metric-preview" class="mb-12 border border-gray-200 bg-white p-6" style="display: none;">
+                    <div id="metric-preview" class="mb-8 border border-gray-200 bg-white p-6" style="display: none;">
                         <div class="flex justify-between items-start mb-4">
                             <div>
                                 <h4 class="font-mono text-[10px] text-gray-400 uppercase tracking-widest mb-1">Current Signal</h4>
@@ -775,6 +914,7 @@ export function renderContracts() {
                         </button>
                     </div>
                 </section>
+
 
 
                 <!-- STEP 3: EXECUTE CONTRACT -->

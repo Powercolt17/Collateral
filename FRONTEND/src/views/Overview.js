@@ -1,54 +1,169 @@
 // Overview View - Institutional Homepage
 export function renderOverview() {
     return `
+        <!-- Institutional Motion System CSS -->
+        <style>
+            /* === MOTION TOKENS === */
+            :root {
+                --motion-duration-micro: 200ms;
+                --motion-duration-reveal: 600ms;
+                --motion-duration-divider: 800ms;
+                --motion-easing: cubic-bezier(0.2, 0.8, 0.2, 1);
+                --motion-distance: 10px;
+                --motion-stagger: 80ms;
+            }
+
+            /* === REVEAL SYSTEM === */
+            [data-reveal] {
+                opacity: 0;
+                transform: translateY(var(--motion-distance));
+                transition: 
+                    opacity var(--motion-duration-reveal) var(--motion-easing),
+                    transform var(--motion-duration-reveal) var(--motion-easing);
+            }
+            
+            [data-reveal].is-visible {
+                opacity: 1;
+                transform: translateY(0);
+            }
+            
+            /* Stagger delays */
+            [data-reveal-delay="1"] { transition-delay: calc(var(--motion-stagger) * 1); }
+            [data-reveal-delay="2"] { transition-delay: calc(var(--motion-stagger) * 2); }
+            [data-reveal-delay="3"] { transition-delay: calc(var(--motion-stagger) * 3); }
+            [data-reveal-delay="4"] { transition-delay: calc(var(--motion-stagger) * 4); }
+            [data-reveal-delay="5"] { transition-delay: calc(var(--motion-stagger) * 5); }
+            
+            /* === DIVIDER DRAW ANIMATION === */
+            .divider-draw {
+                transform: scaleX(0);
+                transform-origin: left;
+                transition: transform var(--motion-duration-divider) var(--motion-easing);
+            }
+            .divider-draw.is-visible {
+                transform: scaleX(1);
+            }
+            
+            /* === BUTTON INTERACTIONS (Hardware Feel) === */
+            .btn-institutional {
+                transition: 
+                    background-color var(--motion-duration-micro) var(--motion-easing),
+                    transform var(--motion-duration-micro) var(--motion-easing),
+                    box-shadow var(--motion-duration-micro) var(--motion-easing);
+                box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+            }
+            .btn-institutional:hover {
+                transform: translateY(-2px);
+                box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            }
+            .btn-institutional:active {
+                transform: translateY(1px);
+                box-shadow: 0 0 0 rgba(0,0,0,0);
+            }
+            
+            /* === CARD HOVER (Mechanism Cards) === */
+            .card-hover {
+                transition: 
+                    transform var(--motion-duration-micro) var(--motion-easing),
+                    border-color var(--motion-duration-micro) var(--motion-easing),
+                    box-shadow var(--motion-duration-micro) var(--motion-easing);
+            }
+            .card-hover:hover {
+                transform: translateY(-2px);
+                border-color: #999;
+                box-shadow: 0 4px 12px rgba(0,0,0,0.06);
+            }
+            
+            /* === SYSTEM STATUS PULSE === */
+            .status-pulse {
+                animation: statusPulse 2.5s ease-in-out infinite;
+            }
+            @keyframes statusPulse {
+                0%, 100% { 
+                    box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.4);
+                }
+                50% { 
+                    box-shadow: 0 0 0 4px rgba(34, 197, 94, 0);
+                }
+            }
+            
+            /* === REDUCED MOTION === */
+            @media (prefers-reduced-motion: reduce) {
+                [data-reveal] {
+                    opacity: 1;
+                    transform: none;
+                    transition: none;
+                }
+                .divider-draw {
+                    transform: scaleX(1);
+                    transition: none;
+                }
+                .btn-institutional,
+                .card-hover {
+                    transition: none;
+                    transform: none !important;
+                }
+                .btn-institutional:hover,
+                .btn-institutional:active,
+                .card-hover:hover {
+                    transform: none !important;
+                }
+                .status-pulse {
+                    animation: none;
+                }
+            }
+        </style>
+
         <div class="w-full relative z-10 min-h-screen bg-white">
             
             <!-- Hero Section -->
             <section class="border-b border-gray-200">
                 <div class="max-w-7xl mx-auto px-6 py-24 md:py-32">
                     <div class="max-w-4xl">
-                        <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 text-gray-950 leading-tight"
+                        <h1 data-reveal class="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 text-gray-950 leading-tight"
     style="font-family: 'IBM Plex Sans', sans-serif;">
   Intentions Fail<br />
-  <span style="color: #751212;">Without</span> Stakes.</h1>
+  <span data-reveal data-reveal-delay="1" style="color: #751212; display: inline-block;">Without</span> Stakes.</h1>
                         </h1>
-                        <p class="text-lg md:text-xl text-gray-600 mb-10 leading-relaxed" style="font-family: 'Inter', sans-serif; font-weight: 400;">
+                        <p data-reveal data-reveal-delay="2" class="text-lg md:text-xl text-gray-600 mb-10 leading-relaxed" style="font-family: 'Inter', sans-serif; font-weight: 400;">
                             Performance contracts with on-chain enforcement. Capital at stake. Outcomes verified via platform integrations. Winners paid from forfeited funds.
                         </p>
-                        <div class="flex flex-col sm:flex-row items-start gap-4">
-                            <button onclick="window.app.handleInitiate()" class="px-8 py-4 text-white font-semibold transition-colors flex items-center gap-2" style="font-family: 'Inter', sans-serif; background-color: #751212;" onmouseover="this.style.backgroundColor='#5a0e0e'" onmouseout="this.style.backgroundColor='#751212'">
+                        <div data-reveal data-reveal-delay="3" class="flex flex-col sm:flex-row items-start gap-4">
+                            <button onclick="window.app.handleInitiate()" class="btn-institutional px-8 py-4 text-white font-semibold flex items-center gap-2" style="font-family: 'Inter', sans-serif; background-color: #751212;">
                                 <span>Commit Capital</span>
                                 <i data-lucide="arrow-right" class="w-5 h-5"></i>
                             </button>
-                            <a href="#" onclick="window.router.navigate('/docs'); return false;" class="px-8 py-4 border border-gray-300 text-gray-950 font-medium hover:border-gray-400 transition-colors" style="font-family: 'Inter', sans-serif;">
+                            <a href="#" onclick="window.router.navigate('/docs'); return false;" class="btn-institutional px-8 py-4 border border-gray-300 text-gray-950 font-medium" style="font-family: 'Inter', sans-serif;">
                                 View Documentation
                             </a>
                         </div>
                     </div>
                 </div>
+                <!-- Hero Divider -->
+                <div class="divider-draw h-px bg-gray-300" style="margin-top: -1px;"></div>
             </section>
 
             <!-- How It Works -->
             <section class="border-b border-gray-200">
                 <div class="max-w-7xl mx-auto px-6 py-20 md:py-24">
-                    <h2 class="text-sm font-semibold text-gray-500 mb-12 tracking-wider" style="font-family: 'IBM Plex Sans', sans-serif;">MECHANISM</h2>
+                    <h2 data-reveal class="text-sm font-semibold text-gray-500 mb-12 tracking-wider" style="font-family: 'IBM Plex Sans', sans-serif;">MECHANISM</h2>
                     <div class="grid grid-cols-1 md:grid-cols-4 gap-6 md:gap-8">
-                        <div class="border border-gray-200 p-6 md:p-8">
+                        <div data-reveal data-reveal-delay="1" class="card-hover border border-gray-200 p-6 md:p-8">
                             <div class="text-4xl md:text-5xl font-bold mb-4" style="font-family: 'JetBrains Mono', monospace; color: #751212;">01</div>
                             <h3 class="text-lg font-semibold mb-3 text-gray-950" style="font-family: 'IBM Plex Sans', sans-serif;">Set Baseline</h3>
                             <p class="text-gray-600 text-sm leading-relaxed" style="font-family: 'Inter', sans-serif;">Define measurable target: revenue threshold, commit frequency, post cadence.</p>
                         </div>
-                        <div class="border border-gray-200 p-6 md:p-8">
+                        <div data-reveal data-reveal-delay="2" class="card-hover border border-gray-200 p-6 md:p-8">
                             <div class="text-4xl md:text-5xl font-bold mb-4" style="font-family: 'JetBrains Mono', monospace; color: #751212;">02</div>
                             <h3 class="text-lg font-semibold mb-3 text-gray-950" style="font-family: 'IBM Plex Sans', sans-serif;">Lock Capital</h3>
                             <p class="text-gray-600 text-sm leading-relaxed" style="font-family: 'Inter', sans-serif;">Capital deposited into smart contract. Non-reversible until settlement.</p>
                         </div>
-                        <div class="border border-gray-200 p-6 md:p-8">
+                        <div data-reveal data-reveal-delay="3" class="card-hover border border-gray-200 p-6 md:p-8">
                             <div class="text-4xl md:text-5xl font-bold mb-4" style="font-family: 'JetBrains Mono', monospace; color: #751212;">03</div>
                             <h3 class="text-lg font-semibold mb-3 text-gray-950" style="font-family: 'IBM Plex Sans', sans-serif;">Verify Performance</h3>
                             <p class="text-gray-600 text-sm leading-relaxed" style="font-family: 'Inter', sans-serif;">Outcome validated via OAuth integration. Zero subjective assessment.</p>
                         </div>
-                        <div class="border border-gray-200 p-6 md:p-8">
+                        <div data-reveal data-reveal-delay="4" class="card-hover border border-gray-200 p-6 md:p-8">
                             <div class="text-4xl md:text-5xl font-bold mb-4" style="font-family: 'JetBrains Mono', monospace; color: #751212;">04</div>
                             <h3 class="text-lg font-semibold mb-3 text-gray-950" style="font-family: 'IBM Plex Sans', sans-serif;">Contract Settles</h3>
                             <p class="text-gray-600 text-sm leading-relaxed" style="font-family: 'Inter', sans-serif;">Target met: capital returned + payout. Target missed: forfeiture.</p>
@@ -61,15 +176,15 @@ export function renderOverview() {
             <section class="border-b border-gray-200 bg-gray-50">
                 <div class="max-w-7xl mx-auto px-6 py-20 md:py-24">
                     <div class="max-w-3xl">
-                        <h2 class="text-sm font-semibold text-gray-500 mb-8 tracking-wider" style="font-family: 'IBM Plex Sans', sans-serif;">RATIONALE</h2>
+                        <h2 data-reveal class="text-sm font-semibold text-gray-500 mb-8 tracking-wider" style="font-family: 'IBM Plex Sans', sans-serif;">RATIONALE</h2>
                         <div class="space-y-6">
-                            <p class="text-xl md:text-2xl text-gray-950 leading-relaxed" style="font-family: 'Inter', sans-serif; font-weight: 500;">
+                            <p data-reveal data-reveal-delay="1" class="text-xl md:text-2xl text-gray-950 leading-relaxed" style="font-family: 'Inter', sans-serif; font-weight: 500;">
                                 Commitments without cost are noise. Intentions fade when stakes are zero.
                             </p>
-                            <p class="text-xl md:text-2xl text-gray-950 leading-relaxed" style="font-family: 'Inter', sans-serif; font-weight: 500;">
+                            <p data-reveal data-reveal-delay="2" class="text-xl md:text-2xl text-gray-950 leading-relaxed" style="font-family: 'Inter', sans-serif; font-weight: 500;">
                                 Capital enforces follow-through. Markets price risk. Outcomes become inevitable when failure has real consequence.
                             </p>
-                            <p class="text-xl md:text-2xl text-gray-950 leading-relaxed" style="font-family: 'Inter', sans-serif; font-weight: 500;">
+                            <p data-reveal data-reveal-delay="3" class="text-xl md:text-2xl text-gray-950 leading-relaxed" style="font-family: 'Inter', sans-serif; font-weight: 500;">
                                 This is not motivation. This is mechanism.
                             </p>
                         </div>
@@ -80,26 +195,26 @@ export function renderOverview() {
             <!-- Verification & Trust Layer -->
             <section class="border-b border-gray-200">
                 <div class="max-w-7xl mx-auto px-6 py-20 md:py-24">
-                    <h2 class="text-sm font-semibold text-gray-500 mb-12 tracking-wider" style="font-family: 'IBM Plex Sans', sans-serif;">VERIFICATION LAYER</h2>
+                    <h2 data-reveal class="text-sm font-semibold text-gray-500 mb-12 tracking-wider" style="font-family: 'IBM Plex Sans', sans-serif;">VERIFICATION LAYER</h2>
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
-                        <div>
+                        <div data-reveal data-reveal-delay="1">
                             <h3 class="text-xl font-semibold mb-6 text-gray-950" style="font-family: 'IBM Plex Sans', sans-serif;">Platform Integrations</h3>
                             <div class="space-y-4">
-                                <div class="flex items-center justify-between border border-gray-200 px-6 py-4">
+                                <div class="card-hover flex items-center justify-between border border-gray-200 px-6 py-4">
                                     <span class="font-medium text-gray-950" style="font-family: 'JetBrains Mono', monospace;">Stripe</span>
                                     <span class="text-xs text-gray-500" style="font-family: 'Inter', sans-serif;">Revenue metrics</span>
                                 </div>
-                                <div class="flex items-center justify-between border border-gray-200 px-6 py-4">
+                                <div class="card-hover flex items-center justify-between border border-gray-200 px-6 py-4">
                                     <span class="font-medium text-gray-950" style="font-family: 'JetBrains Mono', monospace;">GitHub</span>
                                     <span class="text-xs text-gray-500" style="font-family: 'Inter', sans-serif;">Commit frequency</span>
                                 </div>
-                                <div class="flex items-center justify-between border border-gray-200 px-6 py-4">
+                                <div class="card-hover flex items-center justify-between border border-gray-200 px-6 py-4">
                                     <span class="font-medium text-gray-950" style="font-family: 'JetBrains Mono', monospace;">X (Twitter)</span>
                                     <span class="text-xs text-gray-500" style="font-family: 'Inter', sans-serif;">Post cadence</span>
                                 </div>
                             </div>
                         </div>
-                        <div>
+                        <div data-reveal data-reveal-delay="2">
                             <h3 class="text-xl font-semibold mb-6 text-gray-950" style="font-family: 'IBM Plex Sans', sans-serif;">Enforcement Guarantees</h3>
                             <div class="space-y-6">
                                 <div class="flex gap-4">
@@ -132,19 +247,19 @@ export function renderOverview() {
             <!-- Contract Economics -->
             <section class="border-b border-gray-200">
                 <div class="max-w-7xl mx-auto px-6 py-20 md:py-24">
-                    <h2 class="text-sm font-semibold text-gray-500 mb-12 tracking-wider" style="font-family: 'IBM Plex Sans', sans-serif;">CONTRACT ECONOMICS</h2>
+                    <h2 data-reveal class="text-sm font-semibold text-gray-500 mb-12 tracking-wider" style="font-family: 'IBM Plex Sans', sans-serif;">CONTRACT ECONOMICS</h2>
                     <div class="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8">
-                        <div class="border-2 border-gray-950 p-6 md:p-8">
+                        <div data-reveal data-reveal-delay="1" class="card-hover border-2 border-gray-950 p-6 md:p-8">
                             <h3 class="text-xl font-bold mb-4 text-gray-950" style="font-family: 'IBM Plex Sans', sans-serif;">Contract Terms</h3>
                             <p class="text-gray-600 leading-relaxed mb-4" style="font-family: 'Inter', sans-serif;">Capital is locked per contract. Terms are defined upfront. Payout multiplier is known before execution.</p>
                             <p class="text-sm text-gray-500" style="font-family: 'Inter', sans-serif;">No post-hoc adjustment. Terms are immutable once executed.</p>
                         </div>
-                        <div class="border-2 border-gray-950 p-6 md:p-8">
+                        <div data-reveal data-reveal-delay="2" class="card-hover border-2 border-gray-950 p-6 md:p-8">
                             <h3 class="text-xl font-bold mb-4 text-gray-950" style="font-family: 'IBM Plex Sans', sans-serif;">Outcome Settlement</h3>
                             <p class="text-gray-600 leading-relaxed mb-4" style="font-family: 'Inter', sans-serif;">Binary settlement: success or failure. Success returns capital + predefined multiplier. Failure forfeits capital in full.</p>
                             <p class="text-sm text-gray-500" style="font-family: 'Inter', sans-serif;">Settlement does not depend on other users' outcomes.</p>
                         </div>
-                        <div class="border-2 p-6 md:p-8" style="border-color: #751212; background-color: #fef2f2;">
+                        <div data-reveal data-reveal-delay="3" class="card-hover border-2 p-6 md:p-8" style="border-color: #751212; background-color: #fef2f2;">
                             <h3 class="text-xl font-bold mb-4 text-gray-950" style="font-family: 'IBM Plex Sans', sans-serif;">Risk Model</h3>
                             <p class="text-gray-950 leading-relaxed mb-4 font-medium" style="font-family: 'Inter', sans-serif;">Risk level determines multiplier. Difficulty and verification scope determine tier.</p>
                             <div class="text-sm space-y-1 mb-4" style="font-family: 'JetBrains Mono', monospace; color: #751212;">
@@ -156,7 +271,7 @@ export function renderOverview() {
                         </div>
                     </div>
 
-                    <div class="mt-12 md:mt-16 p-6 md:p-8 bg-gray-50 border border-gray-200">
+                    <div data-reveal class="mt-12 md:mt-16 p-6 md:p-8 bg-gray-50 border border-gray-200">
                         <h3 class="text-lg font-semibold mb-6 text-gray-950" style="font-family: 'IBM Plex Sans', sans-serif;">Example Settlement</h3>
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
                             <!-- Success Case -->
@@ -213,18 +328,18 @@ export function renderOverview() {
             <section class="bg-gray-50 border-t border-gray-200">
                 <div class="max-w-7xl mx-auto px-6 py-24 md:py-32">
                     <div class="max-w-3xl">
-                        <h2 class="text-4xl md:text-5xl font-bold mb-6 leading-tight text-gray-950" style="font-family: 'IBM Plex Sans', sans-serif;">Outcomes Enforced.</h2>
-                        <p class="text-lg md:text-xl text-gray-600 mb-10 leading-relaxed" style="font-family: 'Inter', sans-serif;">This platform is for users who understand that capital at stake changes behavior. If you're looking for encouragement, look elsewhere.</p>
-                        <div class="flex flex-col sm:flex-row gap-4">
-                            <button onclick="window.app.handleInitiate()" class="px-8 py-4 bg-gray-950 text-white font-semibold hover:bg-gray-800 transition-colors flex items-center justify-center gap-2" style="font-family: 'Inter', sans-serif;">
+                        <h2 data-reveal class="text-4xl md:text-5xl font-bold mb-6 leading-tight text-gray-950" style="font-family: 'IBM Plex Sans', sans-serif;">Outcomes Enforced.</h2>
+                        <p data-reveal data-reveal-delay="1" class="text-lg md:text-xl text-gray-600 mb-10 leading-relaxed" style="font-family: 'Inter', sans-serif;">This platform is for users who understand that capital at stake changes behavior. If you're looking for encouragement, look elsewhere.</p>
+                        <div data-reveal data-reveal-delay="2" class="flex flex-col sm:flex-row gap-4">
+                            <button onclick="window.app.handleInitiate()" class="btn-institutional px-8 py-4 bg-gray-950 text-white font-semibold flex items-center justify-center gap-2" style="font-family: 'Inter', sans-serif;">
                                 <span>Create Contract</span>
                                 <i data-lucide="arrow-right" class="w-5 h-5"></i>
                             </button>
-                            <a href="#" onclick="window.router.navigate('/docs'); return false;" class="px-8 py-4 border border-gray-950 text-gray-950 font-medium hover:bg-gray-950 hover:text-white transition-colors text-center" style="font-family: 'Inter', sans-serif;">
+                            <a href="#" onclick="window.router.navigate('/docs'); return false;" class="btn-institutional px-8 py-4 border border-gray-950 text-gray-950 font-medium text-center" style="font-family: 'Inter', sans-serif;">
                                 Read Terms
                             </a>
                         </div>
-                        <p class="text-xs text-gray-500 mt-8" style="font-family: 'Inter', sans-serif;">Capital at risk. Verify you understand the mechanism before committing funds.</p>
+                        <p data-reveal data-reveal-delay="3" class="text-xs text-gray-500 mt-8" style="font-family: 'Inter', sans-serif;">Capital at risk. Verify you understand the mechanism before committing funds.</p>
                     </div>
                 </div>
             </section>
@@ -270,10 +385,39 @@ export function renderOverview() {
     `;
 }
 
+
 export function initOverview() {
-    // Initialize ticker
+    // === INTERSECTION OBSERVER FOR SCROLL REVEALS ===
+    const revealObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('is-visible');
+                // Only reveal once
+                revealObserver.unobserve(entry.target);
+            }
+        });
+    }, {
+        threshold: 0.1,
+        rootMargin: '0px 0px -50px 0px'
+    });
+
+    // Observe all reveal elements
+    document.querySelectorAll('[data-reveal]').forEach(el => {
+        revealObserver.observe(el);
+    });
+
+    // Observe divider elements
+    document.querySelectorAll('.divider-draw').forEach(el => {
+        revealObserver.observe(el);
+    });
+
+    // === TICKER ANIMATION ===
     const track = document.getElementById('ticker-track');
-    if (!track) return;
+    if (!track) {
+        // Initialize Lucide icons and exit
+        if (window.lucide) window.lucide.createIcons();
+        return;
+    }
 
     const winners = [
         { user: "@alex_ship", val1: "$1K", val2: "$2.5K" },
@@ -322,3 +466,4 @@ export function initOverview() {
         window.lucide.createIcons();
     }
 }
+

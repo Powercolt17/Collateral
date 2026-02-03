@@ -1,72 +1,104 @@
 // Overview View - Institutional Homepage
 export function renderOverview() {
     return `
-        <!-- Institutional Motion System CSS -->
+        <!-- Hero Authority Animation CSS -->
         <style>
-            /* === MOTION TOKENS === */
-            :root {
-                --motion-duration-micro: 200ms;
-                --motion-duration-reveal: 600ms;
-                --motion-duration-divider: 800ms;
-                --motion-easing: cubic-bezier(0.2, 0.8, 0.2, 1);
-                --motion-distance: 10px;
-                --motion-stagger: 80ms;
-            }
-
-            /* === REVEAL SYSTEM === */
-            [data-reveal] {
+            /* === HERO ANIMATION SYSTEM === */
+            /* All hero elements start hidden, JS triggers animation */
+            .hero-anim {
                 opacity: 0;
-                transform: translateY(var(--motion-distance));
-                transition: 
-                    opacity var(--motion-duration-reveal) var(--motion-easing),
-                    transform var(--motion-duration-reveal) var(--motion-easing);
+                transform: translateY(12px);
             }
             
-            [data-reveal].is-visible {
-                opacity: 1;
-                transform: translateY(0);
-            }
-            
-            /* Stagger delays */
-            [data-reveal-delay="1"] { transition-delay: calc(var(--motion-stagger) * 1); }
-            [data-reveal-delay="2"] { transition-delay: calc(var(--motion-stagger) * 2); }
-            [data-reveal-delay="3"] { transition-delay: calc(var(--motion-stagger) * 3); }
-            [data-reveal-delay="4"] { transition-delay: calc(var(--motion-stagger) * 4); }
-            [data-reveal-delay="5"] { transition-delay: calc(var(--motion-stagger) * 5); }
-            
-            /* === DIVIDER DRAW ANIMATION === */
-            .divider-draw {
+            .hero-divider {
                 transform: scaleX(0);
                 transform-origin: left;
-                transition: transform var(--motion-duration-divider) var(--motion-easing);
-            }
-            .divider-draw.is-visible {
-                transform: scaleX(1);
             }
             
-            /* === BUTTON INTERACTIONS (Hardware Feel) === */
-            .btn-institutional {
-                transition: 
-                    background-color var(--motion-duration-micro) var(--motion-easing),
-                    transform var(--motion-duration-micro) var(--motion-easing),
-                    box-shadow var(--motion-duration-micro) var(--motion-easing);
-                box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+            /* Animation keyframes - weighted easing for institutional feel */
+            @keyframes heroReveal {
+                from {
+                    opacity: 0;
+                    transform: translateY(12px);
+                }
+                to {
+                    opacity: 1;
+                    transform: translateY(0);
+                }
             }
-            .btn-institutional:hover {
+            
+            @keyframes heroFadeOnly {
+                from { opacity: 0; }
+                to { opacity: 1; }
+            }
+            
+            @keyframes heroCtaReveal {
+                from {
+                    opacity: 0;
+                    transform: translateY(6px);
+                }
+                to {
+                    opacity: 1;
+                    transform: translateY(0);
+                }
+            }
+            
+            @keyframes dividerDraw {
+                from { transform: scaleX(0); }
+                to { transform: scaleX(1); }
+            }
+            
+            /* Animation classes triggered by JS */
+            .hero-anim.animate-in {
+                animation: heroReveal 800ms cubic-bezier(0.22, 0.61, 0.36, 1) forwards;
+            }
+            
+            #hero-subhead.animate-in {
+                animation: heroFadeOnly 550ms cubic-bezier(0.22, 0.61, 0.36, 1) forwards;
+            }
+            
+            .hero-cta-primary.animate-in {
+                animation: heroCtaReveal 400ms cubic-bezier(0.22, 0.61, 0.36, 1) forwards;
+            }
+            
+            .hero-cta-secondary.animate-in {
+                animation: heroFadeOnly 400ms cubic-bezier(0.22, 0.61, 0.36, 1) forwards;
+            }
+            
+            .hero-divider.animate-in {
+                animation: dividerDraw 900ms cubic-bezier(0.22, 0.61, 0.36, 1) forwards;
+            }
+            
+            /* === CTA BUTTON HOVER/PRESS (Hardware Feel) === */
+            .hero-cta-primary {
+                transition: background-color 150ms ease, transform 150ms ease, box-shadow 150ms ease;
+            }
+            .hero-cta-primary:hover {
+                background-color: #5a0e0e !important;
                 transform: translateY(-2px);
-                box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+                box-shadow: 0 4px 12px rgba(117, 18, 18, 0.25);
             }
-            .btn-institutional:active {
+            .hero-cta-primary:active {
                 transform: translateY(1px);
-                box-shadow: 0 0 0 rgba(0,0,0,0);
+                box-shadow: none;
+            }
+            
+            .hero-cta-secondary {
+                transition: background-color 150ms ease, transform 150ms ease, border-color 150ms ease;
+            }
+            .hero-cta-secondary:hover {
+                background-color: #f9fafb;
+                border-color: #9ca3af;
+            }
+            .hero-cta-secondary:active {
+                transform: translateY(1px);
             }
             
             /* === CARD HOVER (Mechanism Cards) === */
             .card-hover {
-                transition: 
-                    transform var(--motion-duration-micro) var(--motion-easing),
-                    border-color var(--motion-duration-micro) var(--motion-easing),
-                    box-shadow var(--motion-duration-micro) var(--motion-easing);
+                transition: transform 200ms cubic-bezier(0.22, 0.61, 0.36, 1), 
+                            border-color 200ms ease, 
+                            box-shadow 200ms ease;
             }
             .card-hover:hover {
                 transform: translateY(-2px);
@@ -74,74 +106,65 @@ export function renderOverview() {
                 box-shadow: 0 4px 12px rgba(0,0,0,0.06);
             }
             
-            /* === SYSTEM STATUS PULSE === */
-            .status-pulse {
-                animation: statusPulse 2.5s ease-in-out infinite;
-            }
-            @keyframes statusPulse {
-                0%, 100% { 
-                    box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.4);
-                }
-                50% { 
-                    box-shadow: 0 0 0 4px rgba(34, 197, 94, 0);
-                }
-            }
-            
             /* === REDUCED MOTION === */
             @media (prefers-reduced-motion: reduce) {
-                [data-reveal] {
-                    opacity: 1;
-                    transform: none;
-                    transition: none;
-                }
-                .divider-draw {
-                    transform: scaleX(1);
-                    transition: none;
-                }
-                .btn-institutional,
-                .card-hover {
-                    transition: none;
+                .hero-anim,
+                .hero-divider {
+                    opacity: 1 !important;
                     transform: none !important;
                 }
-                .btn-institutional:hover,
-                .btn-institutional:active,
+                .hero-anim.animate-in,
+                .hero-divider.animate-in {
+                    animation: none !important;
+                    opacity: 1 !important;
+                    transform: none !important;
+                }
+                .hero-cta-primary,
+                .hero-cta-secondary,
+                .card-hover {
+                    transition: none !important;
+                }
+                .hero-cta-primary:hover,
+                .hero-cta-secondary:hover,
                 .card-hover:hover {
                     transform: none !important;
-                }
-                .status-pulse {
-                    animation: none;
                 }
             }
         </style>
 
+
         <div class="w-full relative z-10 min-h-screen bg-white">
             
             <!-- Hero Section -->
-            <section class="border-b border-gray-200">
+            <section id="hero-section" class="border-b border-gray-200">
                 <div class="max-w-7xl mx-auto px-6 py-24 md:py-32">
                     <div class="max-w-4xl">
-                        <h1 data-reveal class="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 text-gray-950 leading-tight"
-    style="font-family: 'IBM Plex Sans', sans-serif;">
-  Intentions Fail<br />
-  <span data-reveal data-reveal-delay="1" style="color: #751212; display: inline-block;">Without</span> Stakes.</h1>
+                        <!-- Headline: Split for staged animation -->
+                        <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 text-gray-950 leading-tight"
+                            style="font-family: 'IBM Plex Sans', sans-serif;">
+                            <span id="hero-line1" class="hero-anim block">Intentions Fail</span>
+                            <span id="hero-line2" class="hero-anim"><span style="color: #751212;">Without</span> Stakes.</span>
                         </h1>
-                        <p data-reveal data-reveal-delay="2" class="text-lg md:text-xl text-gray-600 mb-10 leading-relaxed" style="font-family: 'Inter', sans-serif; font-weight: 400;">
+                        <!-- Subheadline -->
+                        <p id="hero-subhead" class="hero-anim text-lg md:text-xl text-gray-600 mb-10 leading-relaxed" style="font-family: 'Inter', sans-serif; font-weight: 400;">
                             Performance contracts with on-chain enforcement. Capital at stake. Outcomes verified via platform integrations. Winners paid from forfeited funds.
                         </p>
-                        <div data-reveal data-reveal-delay="3" class="flex flex-col sm:flex-row items-start gap-4">
-                            <button onclick="window.app.handleInitiate()" class="btn-institutional px-8 py-4 text-white font-semibold flex items-center gap-2" style="font-family: 'Inter', sans-serif; background-color: #751212;">
+                        <!-- CTAs -->
+                        <div class="flex flex-col sm:flex-row items-start gap-4">
+                            <button id="hero-cta-primary" onclick="window.app.handleInitiate()" class="hero-anim hero-cta-primary px-8 py-4 text-white font-semibold flex items-center gap-2" style="font-family: 'Inter', sans-serif; background-color: #751212;">
                                 <span>Commit Capital</span>
                                 <i data-lucide="arrow-right" class="w-5 h-5"></i>
                             </button>
-                            <a href="#" onclick="window.router.navigate('/docs'); return false;" class="btn-institutional px-8 py-4 border border-gray-300 text-gray-950 font-medium" style="font-family: 'Inter', sans-serif;">
+                            <a id="hero-cta-secondary" href="#" onclick="window.router.navigate('/docs'); return false;" class="hero-anim hero-cta-secondary px-8 py-4 border border-gray-300 text-gray-950 font-medium" style="font-family: 'Inter', sans-serif;">
                                 View Documentation
                             </a>
                         </div>
                     </div>
                 </div>
-                <!-- Hero Divider -->
-                <div class="divider-draw h-px bg-gray-300" style="margin-top: -1px;"></div>
+                <!-- Hero Divider: Settlement Bar -->
+                <div id="hero-divider" class="hero-divider h-px bg-gray-300" style="margin-top: -1px;"></div>
             </section>
+
 
             <!-- How It Works -->
             <section class="border-b border-gray-200">
@@ -389,155 +412,104 @@ export function renderOverview() {
 export function initOverview() {
     console.log('[Overview] initOverview called');
 
-    // === INJECT MOTION CSS INTO HEAD (ensures CSS applies before animations) ===
-    if (!document.getElementById('motion-system-css')) {
-        const styleEl = document.createElement('style');
-        styleEl.id = 'motion-system-css';
-        styleEl.textContent = `
-            /* Elements start visible by default, then get hidden class, then animate */
-            [data-reveal].reveal-ready {
-                opacity: 0;
-                transform: translateY(10px);
-            }
-            [data-reveal].reveal-ready.is-visible {
-                animation: revealUp 600ms cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
-            }
-            @keyframes revealUp {
-                from {
-                    opacity: 0;
-                    transform: translateY(10px);
-                }
-                to {
-                    opacity: 1;
-                    transform: translateY(0);
-                }
-            }
-            
-            /* Stagger delays via animation-delay */
-            [data-reveal-delay="1"].is-visible { animation-delay: 80ms; }
-            [data-reveal-delay="2"].is-visible { animation-delay: 160ms; }
-            [data-reveal-delay="3"].is-visible { animation-delay: 240ms; }
-            [data-reveal-delay="4"].is-visible { animation-delay: 320ms; }
-            [data-reveal-delay="5"].is-visible { animation-delay: 400ms; }
-            
-            .divider-draw.reveal-ready {
-                transform: scaleX(0);
-                transform-origin: left;
-            }
-            .divider-draw.reveal-ready.is-visible {
-                animation: drawLine 800ms cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
-            }
-            @keyframes drawLine {
-                from { transform: scaleX(0); }
-                to { transform: scaleX(1); }
-            }
-            
-            .btn-institutional {
-                transition: background-color 200ms, transform 200ms, box-shadow 200ms;
-                box-shadow: 0 1px 2px rgba(0,0,0,0.05);
-            }
-            .btn-institutional:hover {
-                transform: translateY(-2px);
-                box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-            }
-            .btn-institutional:active {
-                transform: translateY(1px);
-                box-shadow: none;
-            }
-            .card-hover {
-                transition: transform 200ms, border-color 200ms, box-shadow 200ms;
-            }
-            .card-hover:hover {
-                transform: translateY(-2px);
-                border-color: #999;
-                box-shadow: 0 4px 12px rgba(0,0,0,0.06);
-            }
-            @media (prefers-reduced-motion: reduce) {
-                [data-reveal].reveal-ready { opacity: 1 !important; transform: none !important; }
-                [data-reveal].reveal-ready.is-visible { animation: none !important; opacity: 1 !important; transform: none !important; }
-                .divider-draw.reveal-ready { transform: scaleX(1) !important; }
-                .divider-draw.reveal-ready.is-visible { animation: none !important; transform: scaleX(1) !important; }
-                .btn-institutional, .card-hover { transition: none !important; }
-                .btn-institutional:hover, .btn-institutional:active, .card-hover:hover { transform: none !important; }
-            }
-        `;
-        document.head.appendChild(styleEl);
-        console.log('[Overview] Motion CSS injected into head');
+    // === HERO ANIMATION SEQUENCE ===
+    // Exact timing per specification:
+    // 1. 150ms silence (weight/seriousness)
+    // 2. "Intentions Fail" reveals (800ms)
+    // 3. +120ms: "Without Stakes." reveals (feels like a verdict)
+    // 4. +200ms after headline: subheadline fades (no vertical motion)
+    // 5. Divider draws left→right (900ms)
+    // 6. +150ms after divider: Primary CTA (fade + 6px rise)
+    // 7. +80ms after primary: Secondary CTA (fade only)
+
+    const TIMING = {
+        INITIAL_SILENCE: 150,
+        LINE1_DURATION: 800,
+        LINE2_DELAY: 120,
+        SUBHEAD_DELAY: 200,  // after headline complete
+        DIVIDER_DURATION: 900,
+        CTA_PRIMARY_DELAY: 150,  // after divider starts
+        CTA_SECONDARY_DELAY: 80  // after primary
+    };
+
+    // Calculate cumulative delays
+    const line1Start = TIMING.INITIAL_SILENCE;
+    const line2Start = line1Start + TIMING.LINE2_DELAY;
+    const headlineComplete = line2Start + TIMING.LINE1_DURATION;
+    const subheadStart = headlineComplete + TIMING.SUBHEAD_DELAY;
+    const dividerStart = subheadStart + 100; // slight overlap
+    const ctaPrimaryStart = dividerStart + TIMING.CTA_PRIMARY_DELAY;
+    const ctaSecondaryStart = ctaPrimaryStart + TIMING.CTA_SECONDARY_DELAY;
+
+    // Get hero elements
+    const heroLine1 = document.getElementById('hero-line1');
+    const heroLine2 = document.getElementById('hero-line2');
+    const heroSubhead = document.getElementById('hero-subhead');
+    const heroDivider = document.getElementById('hero-divider');
+    const heroCtaPrimary = document.getElementById('hero-cta-primary');
+    const heroCtaSecondary = document.getElementById('hero-cta-secondary');
+
+    console.log('[Overview] Hero elements:', {
+        line1: !!heroLine1,
+        line2: !!heroLine2,
+        subhead: !!heroSubhead,
+        divider: !!heroDivider,
+        ctaPrimary: !!heroCtaPrimary,
+        ctaSecondary: !!heroCtaSecondary
+    });
+
+    // Execute animation sequence
+    if (heroLine1) {
+        setTimeout(() => {
+            heroLine1.classList.add('animate-in');
+            console.log('[Overview] Line 1 animate-in');
+        }, line1Start);
     }
 
-    // Force reflow to ensure CSS is applied, then trigger animations
-    // Step 1: Add reveal-ready class to hide all animated elements
-    document.querySelectorAll('[data-reveal]').forEach(el => {
-        el.classList.add('reveal-ready');
-    });
-    document.querySelectorAll('.divider-draw').forEach(el => {
-        el.classList.add('reveal-ready');
-    });
-    console.log('[Overview] Added reveal-ready classes');
+    if (heroLine2) {
+        setTimeout(() => {
+            heroLine2.classList.add('animate-in');
+            console.log('[Overview] Line 2 animate-in (verdict)');
+        }, line2Start);
+    }
 
-    // Step 2: Wait for browser to paint hidden state, then trigger reveals
-    requestAnimationFrame(() => {
-        requestAnimationFrame(() => {
-            console.log('[Overview] Starting reveal animations');
+    if (heroSubhead) {
+        setTimeout(() => {
+            heroSubhead.classList.add('animate-in');
+            console.log('[Overview] Subhead animate-in');
+        }, subheadStart);
+    }
 
-            // Immediately reveal hero elements (above the fold) with staggered timing
-            const heroSection = document.querySelector('section.border-b');
-            if (heroSection) {
-                const heroReveals = heroSection.querySelectorAll('[data-reveal]');
-                console.log('[Overview] Found', heroReveals.length, 'hero elements');
-                heroReveals.forEach((el, index) => {
-                    setTimeout(() => {
-                        el.classList.add('is-visible');
-                    }, 100 + index * 80); // 100ms initial delay + 80ms stagger
-                });
+    if (heroDivider) {
+        setTimeout(() => {
+            heroDivider.classList.add('animate-in');
+            console.log('[Overview] Divider draw');
+        }, dividerStart);
+    }
 
-                // Reveal divider after hero content
-                const divider = heroSection.querySelector('.divider-draw');
-                if (divider) {
-                    setTimeout(() => {
-                        divider.classList.add('is-visible');
-                    }, 100 + heroReveals.length * 80 + 200);
-                }
-            }
+    if (heroCtaPrimary) {
+        setTimeout(() => {
+            heroCtaPrimary.classList.add('animate-in');
+            console.log('[Overview] CTA Primary animate-in');
+        }, ctaPrimaryStart);
+    }
 
-            // Use IntersectionObserver for below-fold content
-            const revealObserver = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        entry.target.classList.add('is-visible');
-                        revealObserver.unobserve(entry.target);
-                    }
-                });
-            }, {
-                threshold: 0.1,
-                rootMargin: '0px'
-            });
+    if (heroCtaSecondary) {
+        setTimeout(() => {
+            heroCtaSecondary.classList.add('animate-in');
+            console.log('[Overview] CTA Secondary animate-in');
+        }, ctaSecondaryStart);
+    }
 
-            // Observe all reveal elements EXCEPT those in hero
-            document.querySelectorAll('[data-reveal]').forEach(el => {
-                if (!el.classList.contains('is-visible')) {
-                    revealObserver.observe(el);
-                }
-            });
-
-            // Observe remaining dividers
-            document.querySelectorAll('.divider-draw').forEach(el => {
-                if (!el.classList.contains('is-visible')) {
-                    revealObserver.observe(el);
-                }
-            });
-        });
-    });
-
-    // Fallback: reveal everything after 2 seconds
+    // Fallback: ensure everything is visible after 3 seconds
     setTimeout(() => {
-        document.querySelectorAll('[data-reveal]:not(.is-visible)').forEach(el => {
-            el.classList.add('is-visible');
+        document.querySelectorAll('.hero-anim:not(.animate-in)').forEach(el => {
+            el.classList.add('animate-in');
         });
-        document.querySelectorAll('.divider-draw:not(.is-visible)').forEach(el => {
-            el.classList.add('is-visible');
-        });
-    }, 2000);
+        const div = document.querySelector('.hero-divider:not(.animate-in)');
+        if (div) div.classList.add('animate-in');
+    }, 3000);
+
 
     // === TICKER ANIMATION ===
     const track = document.getElementById('ticker-track');

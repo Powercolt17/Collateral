@@ -387,37 +387,65 @@ export function renderOverview() {
 
 
 export function initOverview() {
-    // === INTERSECTION OBSERVER FOR SCROLL REVEALS ===
-    // Use requestAnimationFrame to ensure DOM is fully painted before observing
-    requestAnimationFrame(() => {
-        const revealObserver = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    // Add small delay for staggered feel
-                    requestAnimationFrame(() => {
-                        entry.target.classList.add('is-visible');
-                    });
-                    // Only reveal once
-                    revealObserver.unobserve(entry.target);
-                }
-            });
-        }, {
-            threshold: 0.05,  // Lower threshold for earlier trigger
-            rootMargin: '0px 0px 0px 0px'  // No negative margin to ensure visibility
+    console.log('[Overview] initOverview called');
+
+    // === REVEAL ANIMATIONS ===
+    // Immediately reveal hero elements (above the fold) with staggered timing
+    const heroSection = document.querySelector('section.border-b');
+    if (heroSection) {
+        const heroReveals = heroSection.querySelectorAll('[data-reveal]');
+        heroReveals.forEach((el, index) => {
+            setTimeout(() => {
+                el.classList.add('is-visible');
+            }, index * 80); // 80ms stagger
         });
 
-        // Observe all reveal elements
-        document.querySelectorAll('[data-reveal]').forEach(el => {
-            revealObserver.observe(el);
-        });
+        // Reveal divider after hero content
+        const divider = heroSection.querySelector('.divider-draw');
+        if (divider) {
+            setTimeout(() => {
+                divider.classList.add('is-visible');
+            }, heroReveals.length * 80 + 200);
+        }
+    }
 
-        // Observe divider elements
-        document.querySelectorAll('.divider-draw').forEach(el => {
-            revealObserver.observe(el);
+    // Use IntersectionObserver for below-fold content
+    const revealObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('is-visible');
+                revealObserver.unobserve(entry.target);
+            }
         });
+    }, {
+        threshold: 0.1,
+        rootMargin: '0px'
     });
 
+    // Observe all reveal elements EXCEPT those in hero
+    document.querySelectorAll('[data-reveal]').forEach(el => {
+        // Skip if already visible (hero elements)
+        if (!el.classList.contains('is-visible')) {
+            revealObserver.observe(el);
+        }
+    });
 
+    // Observe remaining dividers
+    document.querySelectorAll('.divider-draw').forEach(el => {
+        if (!el.classList.contains('is-visible')) {
+            revealObserver.observe(el);
+        }
+    });
+
+    // Fallback: reveal everything after 2 seconds if somehow still hidden
+    setTimeout(() => {
+        document.querySelectorAll('[data-reveal]:not(.is-visible)').forEach(el => {
+            el.classList.add('is-visible');
+        });
+        document.querySelectorAll('.divider-draw:not(.is-visible)').forEach(el => {
+            el.classList.add('is-visible');
+        });
+    }, 2000);
     // === TICKER ANIMATION ===
     const track = document.getElementById('ticker-track');
     if (!track) {

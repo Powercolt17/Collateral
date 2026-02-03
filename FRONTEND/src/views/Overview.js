@@ -394,28 +394,44 @@ export function initOverview() {
         const styleEl = document.createElement('style');
         styleEl.id = 'motion-system-css';
         styleEl.textContent = `
-            [data-reveal] {
+            /* Elements start visible by default, then get hidden class, then animate */
+            [data-reveal].reveal-ready {
                 opacity: 0;
                 transform: translateY(10px);
-                transition: opacity 600ms cubic-bezier(0.2, 0.8, 0.2, 1), transform 600ms cubic-bezier(0.2, 0.8, 0.2, 1);
             }
-            [data-reveal].is-visible {
-                opacity: 1;
-                transform: translateY(0);
+            [data-reveal].reveal-ready.is-visible {
+                animation: revealUp 600ms cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
             }
-            [data-reveal-delay="1"] { transition-delay: 80ms; }
-            [data-reveal-delay="2"] { transition-delay: 160ms; }
-            [data-reveal-delay="3"] { transition-delay: 240ms; }
-            [data-reveal-delay="4"] { transition-delay: 320ms; }
-            [data-reveal-delay="5"] { transition-delay: 400ms; }
-            .divider-draw {
+            @keyframes revealUp {
+                from {
+                    opacity: 0;
+                    transform: translateY(10px);
+                }
+                to {
+                    opacity: 1;
+                    transform: translateY(0);
+                }
+            }
+            
+            /* Stagger delays via animation-delay */
+            [data-reveal-delay="1"].is-visible { animation-delay: 80ms; }
+            [data-reveal-delay="2"].is-visible { animation-delay: 160ms; }
+            [data-reveal-delay="3"].is-visible { animation-delay: 240ms; }
+            [data-reveal-delay="4"].is-visible { animation-delay: 320ms; }
+            [data-reveal-delay="5"].is-visible { animation-delay: 400ms; }
+            
+            .divider-draw.reveal-ready {
                 transform: scaleX(0);
                 transform-origin: left;
-                transition: transform 800ms cubic-bezier(0.2, 0.8, 0.2, 1);
             }
-            .divider-draw.is-visible {
-                transform: scaleX(1);
+            .divider-draw.reveal-ready.is-visible {
+                animation: drawLine 800ms cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
             }
+            @keyframes drawLine {
+                from { transform: scaleX(0); }
+                to { transform: scaleX(1); }
+            }
+            
             .btn-institutional {
                 transition: background-color 200ms, transform 200ms, box-shadow 200ms;
                 box-shadow: 0 1px 2px rgba(0,0,0,0.05);
@@ -437,8 +453,10 @@ export function initOverview() {
                 box-shadow: 0 4px 12px rgba(0,0,0,0.06);
             }
             @media (prefers-reduced-motion: reduce) {
-                [data-reveal] { opacity: 1 !important; transform: none !important; transition: none !important; }
-                .divider-draw { transform: scaleX(1) !important; transition: none !important; }
+                [data-reveal].reveal-ready { opacity: 1 !important; transform: none !important; }
+                [data-reveal].reveal-ready.is-visible { animation: none !important; opacity: 1 !important; transform: none !important; }
+                .divider-draw.reveal-ready { transform: scaleX(1) !important; }
+                .divider-draw.reveal-ready.is-visible { animation: none !important; transform: scaleX(1) !important; }
                 .btn-institutional, .card-hover { transition: none !important; }
                 .btn-institutional:hover, .btn-institutional:active, .card-hover:hover { transform: none !important; }
             }
@@ -448,7 +466,16 @@ export function initOverview() {
     }
 
     // Force reflow to ensure CSS is applied, then trigger animations
-    // Double rAF ensures browser has painted with new styles
+    // Step 1: Add reveal-ready class to hide all animated elements
+    document.querySelectorAll('[data-reveal]').forEach(el => {
+        el.classList.add('reveal-ready');
+    });
+    document.querySelectorAll('.divider-draw').forEach(el => {
+        el.classList.add('reveal-ready');
+    });
+    console.log('[Overview] Added reveal-ready classes');
+
+    // Step 2: Wait for browser to paint hidden state, then trigger reveals
     requestAnimationFrame(() => {
         requestAnimationFrame(() => {
             console.log('[Overview] Starting reveal animations');
@@ -461,7 +488,7 @@ export function initOverview() {
                 heroReveals.forEach((el, index) => {
                     setTimeout(() => {
                         el.classList.add('is-visible');
-                    }, index * 80); // 80ms stagger
+                    }, 100 + index * 80); // 100ms initial delay + 80ms stagger
                 });
 
                 // Reveal divider after hero content
@@ -469,7 +496,7 @@ export function initOverview() {
                 if (divider) {
                     setTimeout(() => {
                         divider.classList.add('is-visible');
-                    }, heroReveals.length * 80 + 200);
+                    }, 100 + heroReveals.length * 80 + 200);
                 }
             }
 

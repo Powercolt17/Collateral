@@ -715,6 +715,88 @@ export function renderContracts() {
                             </div>
                         </div>
 
+                        <!-- 🟥 COMMERCE PERFORMANCE DOMAIN -->
+                        <div class="domain-section">
+                            <div class="flex items-center gap-3 mb-3">
+                                <div class="w-1 h-6 rounded-full" style="background: #B22222;"></div>
+                                <h3 class="text-sm font-semibold uppercase tracking-wide" style="font-family: 'IBM Plex Sans', sans-serif;">Commerce Performance</h3>
+                                <span class="font-mono text-[9px] px-2 py-0.5 uppercase tracking-wider bg-red-50 text-red-700 border border-red-200">Marketplace Revenue</span>
+                            </div>
+                            <p class="text-xs text-gray-500 mb-1 ml-4 leading-relaxed max-w-xl">
+                                Verified marketplace revenue contracts. Tracks net sales through connected 
+                                e-commerce platforms. Only verified net sales qualify. Refunded or reversed orders do not count.
+                            </p>
+                            <p class="text-xs text-gray-400 mb-4 ml-4 italic">
+                                Capital-backed execution for e-commerce operators and marketplace sellers.
+                            </p>
+                            
+                            <div class="ml-4 space-y-2">
+                                <!-- Shopify (Coming Soon) -->
+                                <div class="border border-gray-100 bg-gray-50/50 p-4 flex items-center justify-between opacity-60 cursor-not-allowed">
+                                    <div class="flex items-center gap-3">
+                                        <div class="w-8 h-8 bg-[#96bf48]/10 rounded flex items-center justify-center">
+                                            <svg class="w-4 h-4" viewBox="0 0 24 24" fill="#96bf48"><path d="M15.337 23.979l7.216-1.561s-2.604-17.613-2.625-17.741a.376.376 0 0 0-.341-.333c-.145-.009-2.908-.209-2.908-.209s-1.929-1.871-2.139-2.082c-.21-.21-.617-.147-.773-.098l-1.076.331c-.162-.481-.442-.929-.82-1.283-.632-.593-1.462-.89-2.469-.89-.073 0-.146.002-.219.006-.107-.133-.236-.249-.384-.345C10.251.284 9.606.002 8.84.002c-1.499 0-3.063 1.19-4.4 3.347-1.075 1.732-1.873 4.134-2.106 5.918l-2.054.636a1.295 1.295 0 0 0-.837.826c-.03.097-.044.198-.041.298L.88 23.979l14.457-.001z"/></svg>
+                                        </div>
+                                        <div>
+                                            <div class="flex items-center gap-2">
+                                                <span class="text-sm font-medium text-gray-700">Shopify</span>
+                                                <span class="font-mono text-[8px] px-1.5 py-0.5 uppercase tracking-wider bg-gray-100 text-gray-500">Coming Soon</span>
+                                            </div>
+                                            <p class="text-[10px] text-gray-500 mt-0.5">Store sales, order volume, and revenue growth</p>
+                                        </div>
+                                    </div>
+                                    <div class="text-right">
+                                        <p class="font-mono text-[9px] text-gray-400 uppercase tracking-wider">Verification Pending</p>
+                                    </div>
+                                </div>
+                                
+                                <!-- Amazon Seller (Coming Soon) -->
+                                <div class="border border-gray-100 bg-gray-50/50 p-4 flex items-center justify-between opacity-60 cursor-not-allowed">
+                                    <div class="flex items-center gap-3">
+                                        <div class="w-8 h-8 bg-[#FF9900]/10 rounded flex items-center justify-center">
+                                            <svg class="w-4 h-4" viewBox="0 0 24 24" fill="#FF9900"><path d="M.045 18.02c.072-.116.187-.124.348-.022 3.636 2.11 7.594 3.166 11.87 3.166 2.852 0 5.668-.533 8.447-1.595l.315-.14c.138-.06.234-.1.293-.065.138.065.17.197.095.398-.138.308-.367.483-.693.526C17.353 21.518 13.987 22 10.69 22c-4.32 0-8.165-1.048-11.53-3.14-.202-.135-.264-.279-.115-.84zM23.349 21.33c-.197.296-.515.485-.88.548-.54.087-1.126.147-1.76.183-.29.016-.562.038-.82.05-.26.006-.52.022-.782.03-.545.015-1.088.013-1.626 0-.514-.012-1.023-.035-1.53-.07-.12-.008-.24-.025-.367-.04.02-.126.08-.197.18-.215.1-.02.195-.04.24-.05.134-.03.26-.055.38-.082.108-.025.215-.057.323-.09 1.37-.416 2.63-1.065 3.782-1.94.16-.125.27-.142.368.04a3.08 3.08 0 0 0 .48.62c.196.212.465.305.77.277.316-.028.663-.213.97-.542.4-.425.713-1.244.84-2.23.066-.512.097-1.302.093-2.06-.003-.76-.043-1.512-.122-2.138-.04-.308-.088-.568-.148-.78-.06-.22-.12-.384-.195-.49-.12-.163-.28-.114-.385.132-.28.67-.65 1.18-1.13 1.53-.3.22-.62.35-.94.38-.15.01-.3-.01-.45-.04-.74-.18-1.24-.67-1.5-1.47-.28-.83-.4-1.82-.4-2.98 0-1.13.11-2.08.34-2.84.23-.79.56-1.37.97-1.76.2-.2.43-.35.66-.46.24-.12.49-.19.75-.22.25-.03.5.01.75.1.25.1.48.26.7.5.43.46.78 1.16 1.01 2.1.23.93.35 1.99.35 3.17 0 1.03-.09 1.98-.27 2.86-.08.38-.18.75-.3 1.1-.14.4-.23.7-.29.88-.12.4-.08.65.12.75.2.1.47.08.8-.07.59-.26 1.04-.72 1.35-1.37.31-.65.47-1.41.47-2.28 0-1.28-.22-2.46-.67-3.54-.44-1.08-1.08-1.96-1.9-2.64-1.54-1.27-3.58-1.9-6.12-1.9-1.18 0-2.27.18-3.28.56-1.01.38-1.88.92-2.6 1.62-.73.7-1.29 1.54-1.7 2.52-.4.98-.6 2.05-.6 3.22 0 1.4.24 2.62.73 3.65.49 1.04 1.16 1.9 2.03 2.56.86.67 1.87 1.16 3.03 1.47 1.15.32 2.4.47 3.73.47.44 0 .89-.02 1.36-.06.14-.01.27-.04.39-.06l.26-.05c.106-.02.22-.04.35-.06.13-.02.27-.04.43-.05.08 0 .17.01.26.03.1.02.18.05.26.1.16.1.25.23.26.4.02.16-.04.34-.17.52-.15.2-.34.36-.55.48-.22.12-.47.2-.73.24z"/></svg>
+                                        </div>
+                                        <div>
+                                            <div class="flex items-center gap-2">
+                                                <span class="text-sm font-medium text-gray-700">Amazon Seller</span>
+                                                <span class="font-mono text-[8px] px-1.5 py-0.5 uppercase tracking-wider bg-gray-100 text-gray-500">Coming Soon</span>
+                                            </div>
+                                            <p class="text-[10px] text-gray-500 mt-0.5">Marketplace revenue, unit sales, and seller metrics</p>
+                                        </div>
+                                    </div>
+                                    <div class="text-right">
+                                        <p class="font-mono text-[9px] text-gray-400 uppercase tracking-wider">Verification Pending</p>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Commerce Contract Types Preview -->
+                            <div class="ml-4 mt-4 p-4 border border-dashed border-gray-200 bg-white/50">
+                                <p class="font-mono text-[9px] text-gray-400 uppercase tracking-widest mb-3">Available Contract Types (Coming Soon)</p>
+                                <div class="grid grid-cols-2 gap-3 text-[11px] text-gray-600">
+                                    <div>
+                                        <p class="font-medium text-gray-700 mb-1">Shopify Contracts</p>
+                                        <ul class="space-y-1 text-gray-500">
+                                            <li>• Revenue Growth (+$X in N days)</li>
+                                            <li>• Order Volume (+Y fulfilled orders)</li>
+                                            <li>• Store Expansion (+Z% vs baseline)</li>
+                                        </ul>
+                                    </div>
+                                    <div>
+                                        <p class="font-medium text-gray-700 mb-1">Amazon Contracts</p>
+                                        <ul class="space-y-1 text-gray-500">
+                                            <li>• Revenue Target (+$X gross revenue)</li>
+                                            <li>• Unit Sales (+Y units sold)</li>
+                                            <li>• Launch Contract (50+ orders in 14d)</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <p class="mt-3 text-[10px] text-gray-400 italic border-t border-gray-100 pt-3">
+                                    Commerce verification requires store binding before execution. Bind Account → Lock Capital → Settle Outcomes.
+                                </p>
+                            </div>
+                        </div>
+
                         <!-- 🟩 FINANCE DOMAIN -->
                         <div class="domain-section">
                             <div class="flex items-center gap-3 mb-3">

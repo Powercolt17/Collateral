@@ -621,23 +621,6 @@ export function renderContracts() {
                             </p>
                             
                             <div class="ml-4 space-y-2">
-                                <!-- Authorize.net (Coming Soon) -->
-                                <div class="border border-gray-100 bg-gray-50/50 p-4 flex items-center justify-between opacity-50 cursor-not-allowed">
-                                    <div class="flex items-center gap-3">
-                                        <div class="w-8 h-8 bg-gray-200 rounded flex items-center justify-center">
-                                            <svg class="w-4 h-4 text-gray-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z"/></svg>
-                                        </div>
-                                        <div>
-                                            <div class="flex items-center gap-2">
-                                                <span class="text-sm font-medium text-gray-400">Authorize.net</span>
-                                                <span class="font-mono text-[8px] px-1.5 py-0.5 uppercase tracking-wider bg-amber-50 text-amber-600 border border-amber-200">Recommended</span>
-                                                <span class="font-mono text-[8px] px-1.5 py-0.5 uppercase tracking-wider bg-blue-50 text-blue-600 border border-blue-200">Priority Integration</span>
-                                            </div>
-                                            <p class="text-[10px] text-gray-500 mt-0.5">Early access opening shortly • Ideal for insurance agents</p>
-                                        </div>
-                                    </div>
-                                </div>
-                                
                                 <!-- Stripe (Active) -->
                                 <button class="w-full border-2 border-gray-200 bg-white p-4 flex items-center justify-between hover:border-gray-400 transition-colors authority-card text-left"
                                      onclick="window.wizard.selectSource('STRIPE', this)" data-domain="sales">

@@ -21,6 +21,7 @@ import opsRoutes from './routes/ops.js';
 import billingRoutes from './routes/billing.js';
 import payoutRoutes from './routes/payouts.js';
 import waitlistRoutes from './routes/waitlist.js';
+import salesRoutes from './routes/sales.js';
 
 const PORT = parseInt(process.env.PORT || '3000', 10);
 
@@ -158,6 +159,9 @@ async function main() {
 
     // Waitlist (pre-launch email capture)
     await fastify.register(waitlistRoutes);       // /v1/waitlist/*
+
+    // Sales Integration (Stripe Revenue)
+    await fastify.register(salesRoutes);          // /v1/sales/*
 
     // Start server
     try {

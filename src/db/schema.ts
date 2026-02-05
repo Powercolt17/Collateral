@@ -141,7 +141,11 @@ export const ledgerEventTypeEnum = pgEnum('ledger_event_type', [
     'IDENTITY_REVOKED',
     // Dispute/Chargeback events
     'PAYMENT_DISPUTED',
-    'SETTLED'
+    'SETTLED',
+    // Sales revenue tracking events\n    'SALES_BASELINE_SNAPSHOTTED',
+    'SALES_TERMS_ATTACHED',
+    'SALES_VERIFICATION_QUEUED',
+    'SALES_VERIFICATION_COMPUTED'
 ]);
 
 // =====================
@@ -372,6 +376,71 @@ export const connectAccounts = pgTable('connect_accounts', {
     stripeAccountIdx: index('connect_accounts_stripe_idx').on(table.stripeConnectAccountId),
 }));
 
+// =============================================================================
+// SALES INTEGRATION TABLES (Stripe Revenue)
+// =============================================================================
+
+// Sales provider enum - currently Stripe only
+export const salesProviderEnum = pgEnum('sales_provider', ['stripe']);
+
+// Sales baseline snapshots - immutable baseline captures using Stripe revenue
+export const salesBaselineSnapshots = pgTable('sales_baseline_snapshots', {
+    id: uuid('id').primaryKey().defaultRandom(),
+    userId: uuid('user_id').references(() => users.id).notNull(),
+    provider: salesProviderEnum('provider').default('stripe').notNull(),
+    windowDays: integer('window_days').default(30).notNull(),
+    windowStartAt: timestamp('window_start_at', { withTimezone: true }).notNull(),
+    windowEndAt: timestamp('window_end_at', { withTimezone: true }).notNull(),
+    // Computed metrics + raw summary (immutable)
+    baselineJson: jsonb('baseline_json').notNull(),
+    createdAt: timestamp('created_at', { withTimezone: true }).defaultNow().notNull(),
+}, (table) => ({
+    userWindowUnique: unique().on(table.userId, table.windowStartAt, table.windowEndAt),
+    userIdx: index('idx_sales_baseline_snapshots_user_id').on(table.userId),
+}));
+
+// Sales metric enum
+export const salesMetricEnum = pgEnum('sales_metric', ['net_settled_amount', 'closed_won_count']);
+
+// Sales verification status enum
+export const salesVerificationStatusEnum = pgEnum('sales_verification_status', ['queued', 'running', 'ok', 'error']);
+
+// Sales contract terms - immutable terms captured at execution time
+export const salesContractTerms = pgTable('sales_contract_terms', {
+    contractId: uuid('contract_id').references(() => contracts.id).primaryKey(),
+    provider: salesProviderEnum('provider').default('stripe').notNull(),
+    metric: salesMetricEnum('metric').notNull(),
+    windowDays: integer('window_days').notNull(),
+    baselineSnapshotId: uuid('baseline_snapshot_id').references(() => salesBaselineSnapshots.id).notNull(),
+    // All money in BIGINT cents
+    baselineValueCents: integer('baseline_value_cents').notNull(),
+    targetDeltaCents: integer('target_delta_cents').notNull(),
+    targetTotalCents: integer('target_total_cents').notNull(),
+    // Qualification rules (refunds/chargebacks exclusion etc.)
+    qualifiedRulesJson: jsonb('qualified_rules_json'),
+    executedAt: timestamp('executed_at', { withTimezone: true }).notNull(),
+    createdAt: timestamp('created_at', { withTimezone: true }).defaultNow().notNull(),
+});
+
+// Sales verification runs - audit trail of verification attempts
+export const salesVerificationRuns = pgTable('sales_verification_runs', {
+    id: uuid('id').primaryKey().defaultRandom(),
+    contractId: uuid('contract_id').references(() => contracts.id).notNull(),
+    provider: salesProviderEnum('provider').notNull(),
+    status: salesVerificationStatusEnum('status').default('queued').notNull(),
+    attempt: integer('attempt').default(1).notNull(),
+    startedAt: timestamp('started_at', { withTimezone: true }),
+    finishedAt: timestamp('finished_at', { withTimezone: true }),
+    // Computed totals, counts, etc.
+    resultJson: jsonb('result_json'),
+    errorMessage: text('error_message'),
+    createdAt: timestamp('created_at', { withTimezone: true }).defaultNow().notNull(),
+}, (table) => ({
+    contractIdx: index('idx_sales_verification_runs_contract_id').on(table.contractId),
+    statusIdx: index('idx_sales_verification_runs_status').on(table.status),
+    contractCreatedIdx: index('idx_sales_verification_runs_contract_created').on(table.contractId, table.createdAt),
+}));
+
 // =====================
 // TYPE EXPORTS
 // =====================
@@ -399,6 +468,19 @@ export type NewAccountLedgerEvent = typeof accountLedgerEvents.$inferInsert;
 
 export type ConnectAccount = typeof connectAccounts.$inferSelect;
 export type NewConnectAccount = typeof connectAccounts.$inferInsert;
+
+// Sales integration types
+export type SalesIntegration = typeof salesIntegrations.$inferSelect;
+export type NewSalesIntegration = typeof salesIntegrations.$inferInsert;
+
+export type SalesBaselineSnapshot = typeof salesBaselineSnapshots.$inferSelect;
+export type NewSalesBaselineSnapshot = typeof salesBaselineSnapshots.$inferInsert;
+
+export type SalesContractTerms = typeof salesContractTerms.$inferSelect;
+export type NewSalesContractTerms = typeof salesContractTerms.$inferInsert;
+
+export type SalesVerificationRun = typeof salesVerificationRuns.$inferSelect;
+export type NewSalesVerificationRun = typeof salesVerificationRuns.$inferInsert;
 
 // Contract status enum values for state machine (derived from ledger events)
 export const ContractStatus = {
@@ -445,6 +527,14 @@ export const EventType = {
     // Dispute/Chargeback events
     PAYMENT_DISPUTED: 'PAYMENT_DISPUTED',
     SETTLED: 'SETTLED',
+    // Sales integration events
+    SALES_INTEGRATION_CONNECTED: 'SALES_INTEGRATION_CONNECTED',
+    SALES_INTEGRATION_VERIFIED: 'SALES_INTEGRATION_VERIFIED',
+    SALES_INTEGRATION_ERROR: 'SALES_INTEGRATION_ERROR',
+    SALES_BASELINE_SNAPSHOTTED: 'SALES_BASELINE_SNAPSHOTTED',
+    SALES_TERMS_ATTACHED: 'SALES_TERMS_ATTACHED',
+    SALES_VERIFICATION_QUEUED: 'SALES_VERIFICATION_QUEUED',
+    SALES_VERIFICATION_COMPUTED: 'SALES_VERIFICATION_COMPUTED',
 } as const;
 
 export type EventTypeType = typeof EventType[keyof typeof EventType];

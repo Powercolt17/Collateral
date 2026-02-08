@@ -14,6 +14,7 @@
  */
 
 import { type FastifyInstance, type FastifyRequest, type FastifyReply } from 'fastify';
+import { requireAuth } from '../services/auth.js';
 import {
     createCommerceBaseline,
     getCommerceBaseline,
@@ -90,7 +91,7 @@ export default async function commerceRoutes(fastify: FastifyInstance) {
                 },
             },
         },
-        preHandler: [fastify.authenticate],
+        preHandler: requireAuth,
     }, async (request, reply) => {
         const userId = request.user?.id;
         if (!userId) {
@@ -140,7 +141,7 @@ export default async function commerceRoutes(fastify: FastifyInstance) {
                 },
             },
         },
-        preHandler: [fastify.authenticate],
+        preHandler: requireAuth,
     }, async (request, reply) => {
         const userId = request.user?.id;
         if (!userId) {
@@ -215,7 +216,7 @@ export default async function commerceRoutes(fastify: FastifyInstance) {
                 },
             },
         },
-        preHandler: [fastify.authenticate],
+        preHandler: requireAuth,
     }, async (request, reply) => {
         const userId = request.user?.id;
         if (!userId) {
@@ -275,7 +276,7 @@ export default async function commerceRoutes(fastify: FastifyInstance) {
                 },
             },
         },
-        preHandler: [fastify.authenticate],
+        preHandler: requireAuth,
     }, async (request, reply) => {
         const userId = request.user?.id;
         if (!userId) {
@@ -325,7 +326,7 @@ export default async function commerceRoutes(fastify: FastifyInstance) {
                 required: ['contractId'],
             },
         },
-        preHandler: [fastify.authenticate],
+        preHandler: requireAuth,
     }, async (request, reply) => {
         const { contractId } = request.params;
 
@@ -377,7 +378,7 @@ export default async function commerceRoutes(fastify: FastifyInstance) {
                 },
             },
         },
-        preHandler: [fastify.authenticate],
+        preHandler: requireAuth,
     }, async (request, reply) => {
         const { contractId } = request.params;
 
@@ -411,7 +412,7 @@ export default async function commerceRoutes(fastify: FastifyInstance) {
                 required: ['contractId'],
             },
         },
-        preHandler: [fastify.authenticate],
+        preHandler: requireAuth,
     }, async (request, reply) => {
         const { contractId } = request.params;
 
@@ -448,7 +449,7 @@ export default async function commerceRoutes(fastify: FastifyInstance) {
                 required: ['runId'],
             },
         },
-        preHandler: [fastify.authenticate],
+        preHandler: requireAuth,
     }, async (request, reply) => {
         const { runId } = request.params;
 

@@ -1,406 +1,538 @@
-// Overview View - Institutional Homepage
+// Overview View - Capital Enforcement Terminal
+// Bloomberg-grade financial infrastructure - NOT a landing page template
+
 export function renderOverview() {
     return `
-        <!-- Hero Authority Animation CSS -->
         <style>
-            /* === HERO ANIMATION SYSTEM === */
-            /* All hero elements start hidden, JS triggers animation */
-            .hero-anim {
-                opacity: 0;
-                transform: translateY(12px);
+            /* === CAPITAL ENFORCEMENT TERMINAL === */
+            :root {
+                --terminal-bg: #0a0a0c;
+                --terminal-surface: #111114;
+                --terminal-border: #1e1e24;
+                --terminal-text: #e8e8ec;
+                --terminal-muted: #6b6b78;
+                --terminal-red: #921818;
+                --terminal-red-dim: #5a1010;
+                --terminal-green: #1a5c3a;
+                --terminal-gold: #8b7028;
             }
-            
-            .hero-divider {
-                transform: scaleX(0);
-                transform-origin: left;
+
+            .enforcement-terminal {
+                background: var(--terminal-bg);
+                color: var(--terminal-text);
+                min-height: 100vh;
             }
-            
-            /* Animation keyframes - weighted easing for institutional feel */
-            @keyframes heroReveal {
-                from {
-                    opacity: 0;
-                    transform: translateY(12px);
-                }
-                to {
-                    opacity: 1;
-                    transform: translateY(0);
-                }
+
+            /* Grid overlay for texture */
+            .grid-overlay {
+                position: fixed;
+                inset: 0;
+                pointer-events: none;
+                opacity: 0.03;
+                background-image: 
+                    linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
+                    linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
+                background-size: 40px 40px;
             }
-            
-            @keyframes heroFadeOnly {
-                from { opacity: 0; }
-                to { opacity: 1; }
+
+            /* Saturn ring watermark */
+            .saturn-watermark {
+                position: fixed;
+                bottom: -200px;
+                right: -200px;
+                width: 600px;
+                height: 600px;
+                border: 1px solid rgba(146, 24, 24, 0.08);
+                border-radius: 50%;
+                pointer-events: none;
             }
-            
-            @keyframes heroCtaReveal {
-                from {
-                    opacity: 0;
-                    transform: translateY(6px);
-                }
-                to {
-                    opacity: 1;
-                    transform: translateY(0);
-                }
+            .saturn-watermark::before {
+                content: '';
+                position: absolute;
+                top: 50%;
+                left: -30%;
+                right: -30%;
+                height: 3px;
+                background: linear-gradient(90deg, transparent, rgba(146, 24, 24, 0.06), transparent);
+                transform: rotate(-15deg);
             }
-            
-            @keyframes dividerDraw {
-                from { transform: scaleX(0); }
-                to { transform: scaleX(1); }
+
+            /* Receipt panel styling */
+            .receipt-panel {
+                background: var(--terminal-surface);
+                border: 1px solid var(--terminal-border);
+                font-family: 'JetBrains Mono', monospace;
             }
-            
-            /* Animation classes triggered by JS */
-            .hero-anim.animate-in {
-                animation: heroReveal 800ms cubic-bezier(0.22, 0.61, 0.36, 1) forwards;
+
+            .receipt-row {
+                display: flex;
+                justify-content: space-between;
+                padding: 8px 0;
+                border-bottom: 1px solid var(--terminal-border);
             }
-            
-            #hero-subhead.animate-in {
-                animation: heroFadeOnly 550ms cubic-bezier(0.22, 0.61, 0.36, 1) forwards;
+            .receipt-row:last-child { border-bottom: none; }
+            .receipt-label { color: var(--terminal-muted); font-size: 11px; }
+            .receipt-value { color: var(--terminal-text); font-size: 11px; font-weight: 500; }
+            .receipt-value.highlight { color: var(--terminal-red); }
+            .receipt-value.success { color: #22c55e; }
+
+            /* Pipeline styling */
+            .pipeline-step {
+                background: var(--terminal-surface);
+                border: 1px solid var(--terminal-border);
+                padding: 20px 24px;
+                position: relative;
             }
-            
-            .hero-cta-primary.animate-in {
-                animation: heroCtaReveal 400ms cubic-bezier(0.22, 0.61, 0.36, 1) forwards;
+            .pipeline-step::after {
+                content: '→';
+                position: absolute;
+                right: -20px;
+                top: 50%;
+                transform: translateY(-50%);
+                color: var(--terminal-muted);
+                font-size: 18px;
             }
-            
-            .hero-cta-secondary.animate-in {
-                animation: heroFadeOnly 400ms cubic-bezier(0.22, 0.61, 0.36, 1) forwards;
+            .pipeline-step:last-child::after { display: none; }
+
+            /* Live feed styling */
+            .feed-row {
+                display: flex;
+                gap: 16px;
+                padding: 10px 16px;
+                border-bottom: 1px solid var(--terminal-border);
+                font-family: 'JetBrains Mono', monospace;
+                font-size: 11px;
             }
-            
-            .hero-divider.animate-in {
-                animation: dividerDraw 900ms cubic-bezier(0.22, 0.61, 0.36, 1) forwards;
+            .feed-timestamp { color: var(--terminal-muted); min-width: 80px; }
+            .feed-event { color: var(--terminal-text); }
+            .feed-event.executed { color: #22c55e; }
+            .feed-event.pending { color: #f59e0b; }
+            .feed-event.locked { color: var(--terminal-red); }
+
+            /* CTA buttons - hardware feel */
+            .cta-execute {
+                background: var(--terminal-red);
+                color: white;
+                padding: 14px 28px;
+                font-family: 'JetBrains Mono', monospace;
+                font-size: 12px;
+                font-weight: 600;
+                letter-spacing: 0.5px;
+                border: none;
+                cursor: pointer;
+                transition: all 150ms ease;
             }
-            
-            /* === CTA BUTTON HOVER/PRESS (Hardware Feel) === */
-            .hero-cta-primary {
-                transition: background-color 150ms ease, transform 150ms ease, box-shadow 150ms ease;
+            .cta-execute:hover {
+                background: #751212;
+                transform: translateY(-1px);
             }
-            .hero-cta-primary:hover {
-                background-color: #5a0e0e !important;
-                transform: translateY(-2px);
-                box-shadow: 0 4px 12px rgba(117, 18, 18, 0.25);
-            }
-            .hero-cta-primary:active {
+            .cta-execute:active {
                 transform: translateY(1px);
-                box-shadow: none;
             }
-            
-            .hero-cta-secondary {
-                transition: background-color 150ms ease, transform 150ms ease, border-color 150ms ease;
+
+            .cta-secondary {
+                background: transparent;
+                color: var(--terminal-muted);
+                padding: 14px 28px;
+                font-family: 'JetBrains Mono', monospace;
+                font-size: 12px;
+                letter-spacing: 0.5px;
+                border: 1px solid var(--terminal-border);
+                cursor: pointer;
+                transition: all 150ms ease;
             }
-            .hero-cta-secondary:hover {
-                background-color: #f9fafb;
-                border-color: #9ca3af;
+            .cta-secondary:hover {
+                color: var(--terminal-text);
+                border-color: var(--terminal-muted);
             }
-            .hero-cta-secondary:active {
-                transform: translateY(1px);
+
+            /* Section dividers */
+            .section-divider {
+                height: 1px;
+                background: var(--terminal-border);
+                margin: 0;
             }
-            
-            /* === CARD HOVER (Mechanism Cards) === */
-            .card-hover {
-                transition: transform 200ms cubic-bezier(0.22, 0.61, 0.36, 1), 
-                            border-color 200ms ease, 
-                            box-shadow 200ms ease;
+
+            /* Terminal header tags */
+            .terminal-tag {
+                font-family: 'JetBrains Mono', monospace;
+                font-size: 10px;
+                letter-spacing: 1.5px;
+                color: var(--terminal-muted);
+                text-transform: uppercase;
             }
-            .card-hover:hover {
-                transform: translateY(-2px);
-                border-color: #999;
-                box-shadow: 0 4px 12px rgba(0,0,0,0.06);
+
+            /* Animations */
+            @keyframes feedPulse {
+                0%, 100% { opacity: 1; }
+                50% { opacity: 0.6; }
             }
-            
-            /* === REDUCED MOTION === */
+            .feed-live-indicator {
+                animation: feedPulse 2s ease-in-out infinite;
+            }
+
+            @keyframes terminalReveal {
+                from { opacity: 0; transform: translateY(8px); }
+                to { opacity: 1; transform: translateY(0); }
+            }
+            .terminal-reveal {
+                animation: terminalReveal 600ms cubic-bezier(0.22, 0.61, 0.36, 1) forwards;
+            }
+            .terminal-reveal-delay-1 { animation-delay: 100ms; opacity: 0; }
+            .terminal-reveal-delay-2 { animation-delay: 200ms; opacity: 0; }
+            .terminal-reveal-delay-3 { animation-delay: 300ms; opacity: 0; }
+            .terminal-reveal-delay-4 { animation-delay: 400ms; opacity: 0; }
+
             @media (prefers-reduced-motion: reduce) {
-                .hero-anim,
-                .hero-divider {
-                    opacity: 1 !important;
-                    transform: none !important;
-                }
-                .hero-anim.animate-in,
-                .hero-divider.animate-in {
+                .terminal-reveal, .feed-live-indicator {
                     animation: none !important;
                     opacity: 1 !important;
-                    transform: none !important;
-                }
-                .hero-cta-primary,
-                .hero-cta-secondary,
-                .card-hover {
-                    transition: none !important;
-                }
-                .hero-cta-primary:hover,
-                .hero-cta-secondary:hover,
-                .card-hover:hover {
-                    transform: none !important;
                 }
             }
         </style>
 
+        <div class="enforcement-terminal">
+            <div class="grid-overlay"></div>
+            <div class="saturn-watermark"></div>
 
-        <div class="w-full relative z-10 min-h-screen bg-white">
-            
-            <!-- Hero Section -->
-            <section id="hero-section" class="border-b border-gray-200">
-                <div class="max-w-7xl mx-auto px-6 py-24 md:py-32">
-                    <div class="max-w-4xl">
-                        <!-- Headline: Split for staged animation -->
-                        <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 text-gray-950 leading-tight"
-                            style="font-family: 'IBM Plex Sans', sans-serif;">
-                            <span id="hero-line1" class="hero-anim block">Intentions Fail</span>
-                            <span id="hero-line2" class="hero-anim"><span style="color: #751212;">Without</span> Stakes.</span>
-                        </h1>
-                        <!-- Subheadline -->
-                        <p id="hero-subhead" class="hero-anim text-lg md:text-xl text-gray-600 mb-10 leading-relaxed" style="font-family: 'Inter', sans-serif; font-weight: 400;">
-                            Performance contracts with on-chain enforcement. Capital at stake. Outcomes verified via platform integrations. Winners paid from forfeited funds.
+            <!-- ═══════════════════════════════════════════════════════════════ -->
+            <!-- PROTOCOL HEADER - NOT MARKETING HERO -->
+            <!-- ═══════════════════════════════════════════════════════════════ -->
+            <section class="border-b border-[#1e1e24] py-16 md:py-24">
+                <div class="max-w-7xl mx-auto px-6">
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20">
+                        
+                        <!-- LEFT: Protocol Statement -->
+                        <div class="terminal-reveal">
+                            <span class="terminal-tag mb-6 block">COLLATERAL.MARKET // ENFORCEMENT PROTOCOL</span>
+                            
+                            <h1 class="text-3xl md:text-4xl lg:text-5xl font-bold mb-6 leading-tight" 
+                                style="font-family: 'IBM Plex Sans', sans-serif; color: #e8e8ec;">
+                                <span class="block">Intentions Fail</span>
+                                <span><span class="text-[#921818]">Without</span> Stakes.</span>
+                            </h1>
+                            
+                            <p class="text-[#6b6b78] text-sm md:text-base leading-relaxed mb-10 max-w-lg"
+                               style="font-family: 'JetBrains Mono', monospace;">
+                                Performance contracts with capital enforcement. 
+                                Baselines captured at execution. Verification via API. 
+                                Settlement is automatic and irreversible.
+                            </p>
+                            
+                            <div class="flex flex-wrap gap-4">
+                                <button onclick="window.app.handleInitiate()" class="cta-execute">
+                                    EXECUTE CONTRACT
+                                </button>
+                                <button onclick="window.router.navigate('/ledger'); return false;" class="cta-secondary">
+                                    VIEW LEDGER
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- RIGHT: Contract Receipt Panel -->
+                        <div class="terminal-reveal terminal-reveal-delay-2">
+                            <div class="receipt-panel p-6">
+                                <div class="flex items-center justify-between mb-4 pb-4 border-b border-[#1e1e24]">
+                                    <span class="terminal-tag">CONTRACT RECEIPT</span>
+                                    <span class="text-[10px] font-mono text-[#22c55e] flex items-center gap-1.5">
+                                        <span class="w-1.5 h-1.5 bg-[#22c55e] rounded-full feed-live-indicator"></span>
+                                        EXECUTION_READY
+                                    </span>
+                                </div>
+                                
+                                <div class="space-y-0">
+                                    <div class="receipt-row">
+                                        <span class="receipt-label">CONTRACT</span>
+                                        <span class="receipt-value">REVENUE_COMMITMENT</span>
+                                    </div>
+                                    <div class="receipt-row">
+                                        <span class="receipt-label">BASELINE</span>
+                                        <span class="receipt-value">$4,221 (30D)</span>
+                                    </div>
+                                    <div class="receipt-row">
+                                        <span class="receipt-label">TARGET</span>
+                                        <span class="receipt-value highlight">+18%</span>
+                                    </div>
+                                    <div class="receipt-row">
+                                        <span class="receipt-label">WINDOW</span>
+                                        <span class="receipt-value">14 DAYS</span>
+                                    </div>
+                                    <div class="receipt-row">
+                                        <span class="receipt-label">TIER</span>
+                                        <span class="receipt-value">STANDARD (1.6x)</span>
+                                    </div>
+                                    <div class="receipt-row">
+                                        <span class="receipt-label">VERIFICATION</span>
+                                        <span class="receipt-value">API-ONLY</span>
+                                    </div>
+                                    <div class="receipt-row">
+                                        <span class="receipt-label">STAKE</span>
+                                        <span class="receipt-value highlight">$500.00 LOCKED</span>
+                                    </div>
+                                </div>
+                                
+                                <div class="mt-4 pt-4 border-t border-[#1e1e24]">
+                                    <div class="text-[9px] font-mono text-[#6b6b78]">
+                                        SETTLEMENT: TARGET MET → $800 RETURNED // NOT MET → $0
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+
+            <!-- ═══════════════════════════════════════════════════════════════ -->
+            <!-- ENFORCEMENT PIPELINE - NOT FEATURE CARDS -->
+            <!-- ═══════════════════════════════════════════════════════════════ -->
+            <section class="border-b border-[#1e1e24] py-16 md:py-20">
+                <div class="max-w-7xl mx-auto px-6">
+                    <span class="terminal-tag mb-10 block">ENFORCEMENT PIPELINE</span>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-4 gap-4 md:gap-0">
+                        <!-- Step 1 -->
+                        <div class="pipeline-step terminal-reveal terminal-reveal-delay-1">
+                            <div class="text-[#921818] font-mono text-[10px] mb-3">EVENT_001</div>
+                            <div class="text-[#e8e8ec] font-semibold text-sm mb-2" style="font-family: 'JetBrains Mono', monospace;">
+                                BASELINE_CAPTURED
+                            </div>
+                            <div class="text-[#6b6b78] text-xs leading-relaxed font-mono">
+                                Captured at execution.<br/>
+                                Cannot be modified.
+                            </div>
+                        </div>
+
+                        <!-- Step 2 -->
+                        <div class="pipeline-step terminal-reveal terminal-reveal-delay-2">
+                            <div class="text-[#921818] font-mono text-[10px] mb-3">EVENT_002</div>
+                            <div class="text-[#e8e8ec] font-semibold text-sm mb-2" style="font-family: 'JetBrains Mono', monospace;">
+                                CAPITAL_LOCKED
+                            </div>
+                            <div class="text-[#6b6b78] text-xs leading-relaxed font-mono">
+                                Non-reversible deposit.<br/>
+                                Held until settlement.
+                            </div>
+                        </div>
+
+                        <!-- Step 3 -->
+                        <div class="pipeline-step terminal-reveal terminal-reveal-delay-3">
+                            <div class="text-[#921818] font-mono text-[10px] mb-3">EVENT_003</div>
+                            <div class="text-[#e8e8ec] font-semibold text-sm mb-2" style="font-family: 'JetBrains Mono', monospace;">
+                                VERIFICATION_PASS
+                            </div>
+                            <div class="text-[#6b6b78] text-xs leading-relaxed font-mono">
+                                API response only.<br/>
+                                Zero subjective layer.
+                            </div>
+                        </div>
+
+                        <!-- Step 4 -->
+                        <div class="pipeline-step terminal-reveal terminal-reveal-delay-4">
+                            <div class="text-[#921818] font-mono text-[10px] mb-3">EVENT_004</div>
+                            <div class="text-[#e8e8ec] font-semibold text-sm mb-2" style="font-family: 'JetBrains Mono', monospace;">
+                                SETTLEMENT_FINAL
+                            </div>
+                            <div class="text-[#6b6b78] text-xs leading-relaxed font-mono">
+                                Immutable record.<br/>
+                                Receipt-grade finality.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+
+            <!-- ═══════════════════════════════════════════════════════════════ -->
+            <!-- LIVE SYSTEM FEED - ANTI-SQUARESPACE TEXTURE -->
+            <!-- ═══════════════════════════════════════════════════════════════ -->
+            <section class="border-b border-[#1e1e24] py-16 md:py-20">
+                <div class="max-w-7xl mx-auto px-6">
+                    <div class="flex items-center justify-between mb-6">
+                        <span class="terminal-tag">LIVE SYSTEM EVENTS</span>
+                        <span class="text-[10px] font-mono text-[#22c55e] flex items-center gap-1.5">
+                            <span class="w-1.5 h-1.5 bg-[#22c55e] rounded-full feed-live-indicator"></span>
+                            STREAMING
+                        </span>
+                    </div>
+                    
+                    <div class="receipt-panel overflow-hidden" id="system-feed">
+                        <div class="feed-row">
+                            <span class="feed-timestamp">14:36:44</span>
+                            <span class="feed-event pending">VERIFICATION_PENDING</span>
+                            <span class="text-[#6b6b78] ml-auto">CONTRACT #0187 — AWAITING API RESPONSE</span>
+                        </div>
+                        <div class="feed-row">
+                            <span class="feed-timestamp">14:22:09</span>
+                            <span class="feed-event executed">BASELINE_SNAPSHOT</span>
+                            <span class="text-[#6b6b78] ml-auto">STRIPE CONNECTION — $8,442 (30D)</span>
+                        </div>
+                        <div class="feed-row">
+                            <span class="feed-timestamp">14:22:01</span>
+                            <span class="feed-event locked">CONTRACT_EXECUTED</span>
+                            <span class="text-[#6b6b78] ml-auto">CONTRACT #0184 — $1,000 LOCKED</span>
+                        </div>
+                        <div class="feed-row">
+                            <span class="feed-timestamp">14:18:33</span>
+                            <span class="feed-event executed">SETTLEMENT_COMPLETE</span>
+                            <span class="text-[#6b6b78] ml-auto">CONTRACT #0179 — $2,400 RETURNED</span>
+                        </div>
+                        <div class="feed-row">
+                            <span class="feed-timestamp">14:12:07</span>
+                            <span class="feed-event locked">FORFEITURE_FINAL</span>
+                            <span class="text-[#6b6b78] ml-auto">CONTRACT #0176 — TARGET NOT MET</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+
+            <!-- ═══════════════════════════════════════════════════════════════ -->
+            <!-- PROTOCOL SPECIFICATIONS - LEDGER TABLE FORMAT -->
+            <!-- ═══════════════════════════════════════════════════════════════ -->
+            <section class="border-b border-[#1e1e24] py-16 md:py-20">
+                <div class="max-w-7xl mx-auto px-6">
+                    <span class="terminal-tag mb-10 block">CONTRACT SPECIFICATIONS</span>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                        <!-- Tier Table -->
+                        <div class="receipt-panel p-6">
+                            <div class="terminal-tag mb-4">SETTLEMENT TIERS</div>
+                            <table class="w-full font-mono text-xs">
+                                <thead class="text-[#6b6b78] border-b border-[#1e1e24]">
+                                    <tr>
+                                        <th class="text-left py-2">TIER</th>
+                                        <th class="text-right py-2">MULTIPLIER</th>
+                                        <th class="text-right py-2">RISK</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="text-[#e8e8ec]">
+                                    <tr class="border-b border-[#1e1e24]">
+                                        <td class="py-3">CONSERVATIVE</td>
+                                        <td class="text-right">1.2x–1.5x</td>
+                                        <td class="text-right text-[#22c55e]">LOW</td>
+                                    </tr>
+                                    <tr class="border-b border-[#1e1e24]">
+                                        <td class="py-3">STANDARD</td>
+                                        <td class="text-right">1.5x–2.5x</td>
+                                        <td class="text-right text-[#f59e0b]">MEDIUM</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="py-3">AGGRESSIVE</td>
+                                        <td class="text-right">2.5x–5.0x</td>
+                                        <td class="text-right text-[#921818]">HIGH</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <!-- Verification Sources -->
+                        <div class="receipt-panel p-6">
+                            <div class="terminal-tag mb-4">VERIFICATION LAYER</div>
+                            <div class="space-y-0">
+                                <div class="receipt-row">
+                                    <span class="receipt-label">STRIPE</span>
+                                    <span class="receipt-value">Revenue metrics, MRR</span>
+                                </div>
+                                <div class="receipt-row">
+                                    <span class="receipt-label">SHOPIFY</span>
+                                    <span class="receipt-value">Store revenue, orders</span>
+                                </div>
+                                <div class="receipt-row">
+                                    <span class="receipt-label">AMAZON</span>
+                                    <span class="receipt-value">Seller revenue, net</span>
+                                </div>
+                                <div class="receipt-row">
+                                    <span class="receipt-label">X (TWITTER)</span>
+                                    <span class="receipt-value">Post cadence, engagement</span>
+                                </div>
+                                <div class="receipt-row">
+                                    <span class="receipt-label">GITHUB</span>
+                                    <span class="receipt-value">Commit frequency</span>
+                                </div>
+                            </div>
+                            <div class="mt-4 pt-4 border-t border-[#1e1e24] text-[9px] font-mono text-[#6b6b78]">
+                                ALL VERIFICATION: OAUTH API ONLY. NO MANUAL REVIEW.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+
+            <!-- ═══════════════════════════════════════════════════════════════ -->
+            <!-- PROTOCOL STATEMENT - INSTITUTIONAL CLOSE -->
+            <!-- ═══════════════════════════════════════════════════════════════ -->
+            <section class="py-20 md:py-28">
+                <div class="max-w-7xl mx-auto px-6">
+                    <div class="max-w-2xl">
+                        <span class="terminal-tag mb-8 block">PROTOCOL RATIONALE</span>
+                        
+                        <div class="space-y-6 mb-12">
+                            <p class="text-lg md:text-xl text-[#e8e8ec] leading-relaxed" 
+                               style="font-family: 'IBM Plex Sans', sans-serif; font-weight: 500;">
+                                Commitments without cost are noise.<br/>
+                                Intentions fade when stakes are zero.
+                            </p>
+                            <p class="text-base text-[#6b6b78] leading-relaxed font-mono">
+                                Capital enforces follow-through. Markets price risk. 
+                                Outcomes become inevitable when failure has real consequence.
+                            </p>
+                            <p class="text-sm text-[#921818] font-mono font-semibold">
+                                THIS IS NOT MOTIVATION. THIS IS MECHANISM.
+                            </p>
+                        </div>
+                        
+                        <div class="flex flex-wrap gap-4">
+                            <button onclick="window.app.handleInitiate()" class="cta-execute">
+                                COMMIT CAPITAL
+                            </button>
+                            <button onclick="window.router.navigate('/docs'); return false;" class="cta-secondary">
+                                READ TERMS
+                            </button>
+                        </div>
+                        
+                        <p class="text-[10px] text-[#6b6b78] mt-8 font-mono">
+                            CAPITAL AT RISK. VERIFY MECHANISM BEFORE COMMITTING FUNDS.
                         </p>
-                        <!-- CTAs -->
-                        <div class="flex flex-col sm:flex-row items-start gap-4">
-                            <button id="hero-cta-primary" onclick="window.app.handleInitiate()" class="hero-anim hero-cta-primary px-8 py-4 text-white font-semibold flex items-center gap-2" style="font-family: 'Inter', sans-serif; background-color: #751212;">
-                                <span>Commit Capital</span>
-                                <i data-lucide="arrow-right" class="w-5 h-5"></i>
-                            </button>
-                            <a id="hero-cta-secondary" href="#" onclick="window.router.navigate('/docs'); return false;" class="hero-anim hero-cta-secondary px-8 py-4 border border-gray-300 text-gray-950 font-medium" style="font-family: 'Inter', sans-serif;">
-                                View Documentation
+                    </div>
+                </div>
+            </section>
+
+
+            <!-- ═══════════════════════════════════════════════════════════════ -->
+            <!-- FOOTER - MINIMAL INSTITUTIONAL -->
+            <!-- ═══════════════════════════════════════════════════════════════ -->
+            <footer class="border-t border-[#1e1e24] py-12">
+                <div class="max-w-7xl mx-auto px-6">
+                    <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-6">
+                        <div>
+                            <div class="font-bold text-lg mb-1 text-[#e8e8ec]" style="font-family: 'IBM Plex Sans', sans-serif;">
+                                COLLATERAL
+                            </div>
+                            <div class="text-[10px] font-mono text-[#6b6b78]">
+                                ENFORCEMENT PROTOCOL // v1.0
+                            </div>
+                        </div>
+                        
+                        <div class="flex flex-wrap gap-6 text-xs font-mono text-[#6b6b78]">
+                            <a href="#" onclick="window.router.navigate('/docs'); return false;" class="hover:text-[#e8e8ec] transition-colors">
+                                DOCUMENTATION
+                            </a>
+                            <a href="#" onclick="window.router.navigate('/ledger'); return false;" class="hover:text-[#e8e8ec] transition-colors">
+                                PUBLIC LEDGER
+                            </a>
+                            <a href="#" class="hover:text-[#e8e8ec] transition-colors">
+                                TERMS
+                            </a>
+                            <a href="#" class="hover:text-[#e8e8ec] transition-colors">
+                                RISK DISCLOSURE
                             </a>
                         </div>
                     </div>
-                </div>
-                <!-- Hero Divider: Settlement Bar -->
-                <div id="hero-divider" class="hero-divider h-px bg-gray-300" style="margin-top: -1px;"></div>
-            </section>
-
-
-            <!-- How It Works -->
-            <section class="border-b border-gray-200">
-                <div class="max-w-7xl mx-auto px-6 py-20 md:py-24">
-                    <h2 data-reveal class="text-sm font-semibold text-gray-500 mb-12 tracking-wider" style="font-family: 'IBM Plex Sans', sans-serif;">MECHANISM</h2>
-                    <div class="grid grid-cols-1 md:grid-cols-4 gap-6 md:gap-8">
-                        <div data-reveal data-reveal-delay="1" class="card-hover border border-gray-200 p-6 md:p-8">
-                            <div class="text-4xl md:text-5xl font-bold mb-4" style="font-family: 'JetBrains Mono', monospace; color: #751212;">01</div>
-                            <h3 class="text-lg font-semibold mb-3 text-gray-950" style="font-family: 'IBM Plex Sans', sans-serif;">Set Baseline</h3>
-                            <p class="text-gray-600 text-sm leading-relaxed" style="font-family: 'Inter', sans-serif;">Define measurable target: revenue threshold, commit frequency, post cadence.</p>
-                        </div>
-                        <div data-reveal data-reveal-delay="2" class="card-hover border border-gray-200 p-6 md:p-8">
-                            <div class="text-4xl md:text-5xl font-bold mb-4" style="font-family: 'JetBrains Mono', monospace; color: #751212;">02</div>
-                            <h3 class="text-lg font-semibold mb-3 text-gray-950" style="font-family: 'IBM Plex Sans', sans-serif;">Lock Capital</h3>
-                            <p class="text-gray-600 text-sm leading-relaxed" style="font-family: 'Inter', sans-serif;">Capital deposited into smart contract. Non-reversible until settlement.</p>
-                        </div>
-                        <div data-reveal data-reveal-delay="3" class="card-hover border border-gray-200 p-6 md:p-8">
-                            <div class="text-4xl md:text-5xl font-bold mb-4" style="font-family: 'JetBrains Mono', monospace; color: #751212;">03</div>
-                            <h3 class="text-lg font-semibold mb-3 text-gray-950" style="font-family: 'IBM Plex Sans', sans-serif;">Verify Performance</h3>
-                            <p class="text-gray-600 text-sm leading-relaxed" style="font-family: 'Inter', sans-serif;">Outcome validated via OAuth integration. Zero subjective assessment.</p>
-                        </div>
-                        <div data-reveal data-reveal-delay="4" class="card-hover border border-gray-200 p-6 md:p-8">
-                            <div class="text-4xl md:text-5xl font-bold mb-4" style="font-family: 'JetBrains Mono', monospace; color: #751212;">04</div>
-                            <h3 class="text-lg font-semibold mb-3 text-gray-950" style="font-family: 'IBM Plex Sans', sans-serif;">Contract Settles</h3>
-                            <p class="text-gray-600 text-sm leading-relaxed" style="font-family: 'Inter', sans-serif;">Target met: capital returned + payout. Target missed: forfeiture.</p>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-            <!-- Why Collateral Exists -->
-            <section class="border-b border-gray-200 bg-gray-50">
-                <div class="max-w-7xl mx-auto px-6 py-20 md:py-24">
-                    <div class="max-w-3xl">
-                        <h2 data-reveal class="text-sm font-semibold text-gray-500 mb-8 tracking-wider" style="font-family: 'IBM Plex Sans', sans-serif;">RATIONALE</h2>
-                        <div class="space-y-6">
-                            <p data-reveal data-reveal-delay="1" class="text-xl md:text-2xl text-gray-950 leading-relaxed" style="font-family: 'Inter', sans-serif; font-weight: 500;">
-                                Commitments without cost are noise. Intentions fade when stakes are zero.
-                            </p>
-                            <p data-reveal data-reveal-delay="2" class="text-xl md:text-2xl text-gray-950 leading-relaxed" style="font-family: 'Inter', sans-serif; font-weight: 500;">
-                                Capital enforces follow-through. Markets price risk. Outcomes become inevitable when failure has real consequence.
-                            </p>
-                            <p data-reveal data-reveal-delay="3" class="text-xl md:text-2xl text-gray-950 leading-relaxed" style="font-family: 'Inter', sans-serif; font-weight: 500;">
-                                This is not motivation. This is mechanism.
-                            </p>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-            <!-- Verification & Trust Layer -->
-            <section class="border-b border-gray-200">
-                <div class="max-w-7xl mx-auto px-6 py-20 md:py-24">
-                    <h2 data-reveal class="text-sm font-semibold text-gray-500 mb-12 tracking-wider" style="font-family: 'IBM Plex Sans', sans-serif;">VERIFICATION LAYER</h2>
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
-                        <div data-reveal data-reveal-delay="1">
-                            <h3 class="text-xl font-semibold mb-6 text-gray-950" style="font-family: 'IBM Plex Sans', sans-serif;">Platform Integrations</h3>
-                            <div class="space-y-4">
-                                <div class="card-hover flex items-center justify-between border border-gray-200 px-6 py-4">
-                                    <span class="font-medium text-gray-950" style="font-family: 'JetBrains Mono', monospace;">Stripe</span>
-                                    <span class="text-xs text-gray-500" style="font-family: 'Inter', sans-serif;">Revenue metrics</span>
-                                </div>
-                                <div class="card-hover flex items-center justify-between border border-gray-200 px-6 py-4">
-                                    <span class="font-medium text-gray-950" style="font-family: 'JetBrains Mono', monospace;">GitHub</span>
-                                    <span class="text-xs text-gray-500" style="font-family: 'Inter', sans-serif;">Commit frequency</span>
-                                </div>
-                                <div class="card-hover flex items-center justify-between border border-gray-200 px-6 py-4">
-                                    <span class="font-medium text-gray-950" style="font-family: 'JetBrains Mono', monospace;">X (Twitter)</span>
-                                    <span class="text-xs text-gray-500" style="font-family: 'Inter', sans-serif;">Post cadence</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div data-reveal data-reveal-delay="2">
-                            <h3 class="text-xl font-semibold mb-6 text-gray-950" style="font-family: 'IBM Plex Sans', sans-serif;">Enforcement Guarantees</h3>
-                            <div class="space-y-6">
-                                <div class="flex gap-4">
-                                    <i data-lucide="check-circle-2" class="w-6 h-6 text-gray-950 flex-shrink-0 mt-1"></i>
-                                    <div>
-                                        <h4 class="font-semibold mb-1 text-gray-950" style="font-family: 'Inter', sans-serif;">Objective verification only</h4>
-                                        <p class="text-sm text-gray-600 leading-relaxed" style="font-family: 'Inter', sans-serif;">No manual review. No subjective judgment. Outcome validated via API response.</p>
-                                    </div>
-                                </div>
-                                <div class="flex gap-4">
-                                    <i data-lucide="check-circle-2" class="w-6 h-6 text-gray-950 flex-shrink-0 mt-1"></i>
-                                    <div>
-                                        <h4 class="font-semibold mb-1 text-gray-950" style="font-family: 'Inter', sans-serif;">Immutable settlement</h4>
-                                        <p class="text-sm text-gray-600 leading-relaxed" style="font-family: 'Inter', sans-serif;">Smart contract execution. Once verified, settlement is automatic and final.</p>
-                                    </div>
-                                </div>
-                                <div class="flex gap-4">
-                                    <i data-lucide="check-circle-2" class="w-6 h-6 text-gray-950 flex-shrink-0 mt-1"></i>
-                                    <div>
-                                        <h4 class="font-semibold mb-1 text-gray-950" style="font-family: 'Inter', sans-serif;">Zero social layer</h4>
-                                        <p class="text-sm text-gray-600 leading-relaxed" style="font-family: 'Inter', sans-serif;">No feeds, likes, or comments. Performance data only. Capital speaks.</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-            <!-- Contract Economics -->
-            <section class="border-b border-gray-200">
-                <div class="max-w-7xl mx-auto px-6 py-20 md:py-24">
-                    <h2 data-reveal class="text-sm font-semibold text-gray-500 mb-12 tracking-wider" style="font-family: 'IBM Plex Sans', sans-serif;">CONTRACT ECONOMICS</h2>
-                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8">
-                        <div data-reveal data-reveal-delay="1" class="card-hover border-2 border-gray-950 p-6 md:p-8">
-                            <h3 class="text-xl font-bold mb-4 text-gray-950" style="font-family: 'IBM Plex Sans', sans-serif;">Contract Terms</h3>
-                            <p class="text-gray-600 leading-relaxed mb-4" style="font-family: 'Inter', sans-serif;">Capital is locked per contract. Terms are defined upfront. Payout multiplier is known before execution.</p>
-                            <p class="text-sm text-gray-500" style="font-family: 'Inter', sans-serif;">No post-hoc adjustment. Terms are immutable once executed.</p>
-                        </div>
-                        <div data-reveal data-reveal-delay="2" class="card-hover border-2 border-gray-950 p-6 md:p-8">
-                            <h3 class="text-xl font-bold mb-4 text-gray-950" style="font-family: 'IBM Plex Sans', sans-serif;">Outcome Settlement</h3>
-                            <p class="text-gray-600 leading-relaxed mb-4" style="font-family: 'Inter', sans-serif;">Binary settlement: success or failure. Success returns capital + predefined multiplier. Failure forfeits capital in full.</p>
-                            <p class="text-sm text-gray-500" style="font-family: 'Inter', sans-serif;">Settlement does not depend on other users' outcomes.</p>
-                        </div>
-                        <div data-reveal data-reveal-delay="3" class="card-hover border-2 p-6 md:p-8" style="border-color: #751212; background-color: #fef2f2;">
-                            <h3 class="text-xl font-bold mb-4 text-gray-950" style="font-family: 'IBM Plex Sans', sans-serif;">Risk Model</h3>
-                            <p class="text-gray-950 leading-relaxed mb-4 font-medium" style="font-family: 'Inter', sans-serif;">Risk level determines multiplier. Difficulty and verification scope determine tier.</p>
-                            <div class="text-sm space-y-1 mb-4" style="font-family: 'JetBrains Mono', monospace; color: #751212;">
-                                <div>Conservative: 1.2x–1.5x</div>
-                                <div>Standard: 1.5x–2.5x</div>
-                                <div>Aggressive: 2.5x–5.0x</div>
-                            </div>
-                            <p class="text-sm font-semibold" style="font-family: 'Inter', sans-serif; color: #751212;">Risk is opt-in and explicit.</p>
-                        </div>
-                    </div>
-
-                    <div data-reveal class="mt-12 md:mt-16 p-6 md:p-8 bg-gray-50 border border-gray-200">
-                        <h3 class="text-lg font-semibold mb-6 text-gray-950" style="font-family: 'IBM Plex Sans', sans-serif;">Example Settlement</h3>
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                            <!-- Success Case -->
-                            <div class="p-6 border-l-4 border-green-600 bg-white">
-                                <div class="text-xs font-semibold text-green-700 mb-4 uppercase tracking-wider" style="font-family: 'IBM Plex Sans', sans-serif;">Success Case</div>
-                                <div class="space-y-3" style="font-family: 'JetBrains Mono', monospace;">
-                                    <div class="flex justify-between">
-                                        <span class="text-gray-500 text-sm">Contract Stake</span>
-                                        <span class="text-gray-950 font-medium">$500</span>
-                                    </div>
-                                    <div class="flex justify-between">
-                                        <span class="text-gray-500 text-sm">Multiplier</span>
-                                        <span class="text-gray-950 font-medium">2.5x</span>
-                                    </div>
-                                    <div class="flex justify-between">
-                                        <span class="text-gray-500 text-sm">Outcome</span>
-                                        <span class="text-green-700 font-medium">Verified success</span>
-                                    </div>
-                                    <div class="flex justify-between pt-3 border-t border-gray-200">
-                                        <span class="text-gray-950 font-semibold">Settlement</span>
-                                        <span class="text-green-700 font-bold text-lg">$1,250 returned</span>
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- Failure Case -->
-                            <div class="p-6 border-l-4 bg-white" style="border-color: #751212;">
-                                <div class="text-xs font-semibold mb-4 uppercase tracking-wider" style="font-family: 'IBM Plex Sans', sans-serif; color: #751212;">Failure Case</div>
-                                <div class="space-y-3" style="font-family: 'JetBrains Mono', monospace;">
-                                    <div class="flex justify-between">
-                                        <span class="text-gray-500 text-sm">Contract Stake</span>
-                                        <span class="text-gray-950 font-medium">$500</span>
-                                    </div>
-                                    <div class="flex justify-between">
-                                        <span class="text-gray-500 text-sm">Multiplier</span>
-                                        <span class="text-gray-950 font-medium">2.5x</span>
-                                    </div>
-                                    <div class="flex justify-between">
-                                        <span class="text-gray-500 text-sm">Outcome</span>
-                                        <span class="font-medium" style="color: #751212;">Not met</span>
-                                    </div>
-                                    <div class="flex justify-between pt-3 border-t border-gray-200">
-                                        <span class="text-gray-950 font-semibold">Settlement</span>
-                                        <span class="font-bold text-lg" style="color: #751212;">$0 returned</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <p class="text-xs text-gray-500 mt-6" style="font-family: 'Inter', sans-serif;">Settlement is automatic and final once verification completes. No appeals. No partial returns.</p>
-                    </div>
-                </div>
-            </section>
-
-            <!-- Final CTA -->
-            <section class="bg-gray-50 border-t border-gray-200">
-                <div class="max-w-7xl mx-auto px-6 py-24 md:py-32">
-                    <div class="max-w-3xl">
-                        <h2 data-reveal class="text-4xl md:text-5xl font-bold mb-6 leading-tight text-gray-950" style="font-family: 'IBM Plex Sans', sans-serif;">Outcomes Enforced.</h2>
-                        <p data-reveal data-reveal-delay="1" class="text-lg md:text-xl text-gray-600 mb-10 leading-relaxed" style="font-family: 'Inter', sans-serif;">This platform is for users who understand that capital at stake changes behavior. If you're looking for encouragement, look elsewhere.</p>
-                        <div data-reveal data-reveal-delay="2" class="flex flex-col sm:flex-row gap-4">
-                            <button onclick="window.app.handleInitiate()" class="btn-institutional px-8 py-4 bg-gray-950 text-white font-semibold flex items-center justify-center gap-2" style="font-family: 'Inter', sans-serif;">
-                                <span>Create Contract</span>
-                                <i data-lucide="arrow-right" class="w-5 h-5"></i>
-                            </button>
-                            <a href="#" onclick="window.router.navigate('/docs'); return false;" class="btn-institutional px-8 py-4 border border-gray-950 text-gray-950 font-medium text-center" style="font-family: 'Inter', sans-serif;">
-                                Read Terms
-                            </a>
-                        </div>
-                        <p data-reveal data-reveal-delay="3" class="text-xs text-gray-500 mt-8" style="font-family: 'Inter', sans-serif;">Capital at risk. Verify you understand the mechanism before committing funds.</p>
-                    </div>
-                </div>
-            </section>
-
-            <!-- Footer -->
-            <footer class="border-t border-gray-200 bg-white">
-                <div class="max-w-7xl mx-auto px-6 py-12">
-                    <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
-                        <div>
-                            <div class="font-bold text-lg mb-4" style="font-family: 'IBM Plex Sans', sans-serif;">COLLATERAL</div>
-                            <p class="text-sm text-gray-600" style="font-family: 'Inter', sans-serif;">Performance contracts with economic enforcement.</p>
-                        </div>
-                        <div>
-                            <h4 class="text-xs font-semibold text-gray-500 mb-4 tracking-wider" style="font-family: 'IBM Plex Sans', sans-serif;">PLATFORM</h4>
-                            <ul class="space-y-2 text-sm text-gray-600" style="font-family: 'Inter', sans-serif;">
-                                <li><a href="#" class="hover:text-gray-950">How It Works</a></li>
-                                <li><a href="#" class="hover:text-gray-950">Integrations</a></li>
-                                <li><a href="#" class="hover:text-gray-950">Contract Types</a></li>
-                            </ul>
-                        </div>
-                        <div>
-                            <h4 class="text-xs font-semibold text-gray-500 mb-4 tracking-wider" style="font-family: 'IBM Plex Sans', sans-serif;">RESOURCES</h4>
-                            <ul class="space-y-2 text-sm text-gray-600" style="font-family: 'Inter', sans-serif;">
-                                <li><a href="#" onclick="window.router.navigate('/docs'); return false;" class="hover:text-gray-950">Documentation</a></li>
-                                <li><a href="#" onclick="window.router.navigate('/ledger'); return false;" class="hover:text-gray-950">Public Ledger</a></li>
-                            </ul>
-                        </div>
-                        <div>
-                            <h4 class="text-xs font-semibold text-gray-500 mb-4 tracking-wider" style="font-family: 'IBM Plex Sans', sans-serif;">LEGAL</h4>
-                            <ul class="space-y-2 text-sm text-gray-600" style="font-family: 'Inter', sans-serif;">
-                                <li><a href="#" class="hover:text-gray-950">Terms of Service</a></li>
-                                <li><a href="#" class="hover:text-gray-950">Risk Disclosure</a></li>
-                                <li><a href="#" class="hover:text-gray-950">Privacy Policy</a></li>
-                            </ul>
-                        </div>
-                    </div>
-                    <div class="mt-12 pt-8 border-t border-gray-200 text-xs text-gray-500" style="font-family: 'JetBrains Mono', monospace;">
-                        © 2026 Collateral. All capital at risk. No guarantees of return.
+                    
+                    <div class="mt-8 pt-6 border-t border-[#1e1e24] text-[10px] font-mono text-[#6b6b78]">
+                        © 2026 COLLATERAL. ALL CAPITAL AT RISK. NO GUARANTEES OF RETURN. IMMUTABLE SETTLEMENT.
                     </div>
                 </div>
             </footer>
@@ -410,160 +542,71 @@ export function renderOverview() {
 
 
 export function initOverview() {
-    console.log('[Overview] initOverview called');
-
-    // === HERO ANIMATION SEQUENCE ===
-    // Exact timing per specification:
-    // 1. 150ms silence (weight/seriousness)
-    // 2. "Intentions Fail" reveals (800ms)
-    // 3. +120ms: "Without Stakes." reveals (feels like a verdict)
-    // 4. +200ms after headline: subheadline fades (no vertical motion)
-    // 5. Divider draws left→right (900ms)
-    // 6. +150ms after divider: Primary CTA (fade + 6px rise)
-    // 7. +80ms after primary: Secondary CTA (fade only)
-
-    const TIMING = {
-        INITIAL_SILENCE: 150,
-        LINE1_DURATION: 800,
-        LINE2_DELAY: 120,
-        SUBHEAD_DELAY: 200,  // after headline complete
-        DIVIDER_DURATION: 900,
-        CTA_PRIMARY_DELAY: 150,  // after divider starts
-        CTA_SECONDARY_DELAY: 80  // after primary
-    };
-
-    // Calculate cumulative delays
-    const line1Start = TIMING.INITIAL_SILENCE;
-    const line2Start = line1Start + TIMING.LINE2_DELAY;
-    const headlineComplete = line2Start + TIMING.LINE1_DURATION;
-    const subheadStart = headlineComplete + TIMING.SUBHEAD_DELAY;
-    const dividerStart = subheadStart + 100; // slight overlap
-    const ctaPrimaryStart = dividerStart + TIMING.CTA_PRIMARY_DELAY;
-    const ctaSecondaryStart = ctaPrimaryStart + TIMING.CTA_SECONDARY_DELAY;
-
-    // Get hero elements
-    const heroLine1 = document.getElementById('hero-line1');
-    const heroLine2 = document.getElementById('hero-line2');
-    const heroSubhead = document.getElementById('hero-subhead');
-    const heroDivider = document.getElementById('hero-divider');
-    const heroCtaPrimary = document.getElementById('hero-cta-primary');
-    const heroCtaSecondary = document.getElementById('hero-cta-secondary');
-
-    console.log('[Overview] Hero elements:', {
-        line1: !!heroLine1,
-        line2: !!heroLine2,
-        subhead: !!heroSubhead,
-        divider: !!heroDivider,
-        ctaPrimary: !!heroCtaPrimary,
-        ctaSecondary: !!heroCtaSecondary
-    });
-
-    // Execute animation sequence
-    if (heroLine1) {
-        setTimeout(() => {
-            heroLine1.classList.add('animate-in');
-            console.log('[Overview] Line 1 animate-in');
-        }, line1Start);
-    }
-
-    if (heroLine2) {
-        setTimeout(() => {
-            heroLine2.classList.add('animate-in');
-            console.log('[Overview] Line 2 animate-in (verdict)');
-        }, line2Start);
-    }
-
-    if (heroSubhead) {
-        setTimeout(() => {
-            heroSubhead.classList.add('animate-in');
-            console.log('[Overview] Subhead animate-in');
-        }, subheadStart);
-    }
-
-    if (heroDivider) {
-        setTimeout(() => {
-            heroDivider.classList.add('animate-in');
-            console.log('[Overview] Divider draw');
-        }, dividerStart);
-    }
-
-    if (heroCtaPrimary) {
-        setTimeout(() => {
-            heroCtaPrimary.classList.add('animate-in');
-            console.log('[Overview] CTA Primary animate-in');
-        }, ctaPrimaryStart);
-    }
-
-    if (heroCtaSecondary) {
-        setTimeout(() => {
-            heroCtaSecondary.classList.add('animate-in');
-            console.log('[Overview] CTA Secondary animate-in');
-        }, ctaSecondaryStart);
-    }
-
-    // Fallback: ensure everything is visible after 3 seconds
-    setTimeout(() => {
-        document.querySelectorAll('.hero-anim:not(.animate-in)').forEach(el => {
-            el.classList.add('animate-in');
-        });
-        const div = document.querySelector('.hero-divider:not(.animate-in)');
-        if (div) div.classList.add('animate-in');
-    }, 3000);
-
-
-    // === TICKER ANIMATION ===
-    const track = document.getElementById('ticker-track');
-    if (!track) {
-        // Initialize Lucide icons and exit
-        if (window.lucide) window.lucide.createIcons();
-        return;
-    }
-
-    const winners = [
-        { user: "@alex_ship", val1: "$1K", val2: "$2.5K" },
-        { user: "@sarah_dev", val1: "$500", val2: "$1.2K" },
-        { user: "@david_builds", val1: "$2K", val2: "$5.2K" },
-        { user: "@jason_v1", val1: "$100", val2: "$250" },
-        { user: "@emma_scale", val1: "$5K", val2: "$12.5K" }
-    ];
-
-    const createItem = (w) => `
-        <span class="font-mono text-[10px] text-[#2A523E] bg-[#F4F5F4] px-2 py-0.5 rounded-[1px] h-5 flex items-center w-fit whitespace-nowrap">
-            ${w.user} turned ${w.val1} → ${w.val2}
-        </span>`;
-
-    track.innerHTML = "";
-    winners.forEach(w => track.innerHTML += createItem(w));
-
-    setInterval(() => {
-        const itemHeight = 20;
-        track.style.transition = 'transform 500ms cubic-bezier(0.4, 0, 0.2, 1)';
-        track.style.transform = `translateY(-${itemHeight}px)`;
-
-        setTimeout(() => {
-            track.style.transition = 'none';
-            track.appendChild(track.firstElementChild);
-            track.style.transform = 'translateY(0)';
-
-            if (Math.random() > 0.7) {
-                const newAmount = Math.floor(Math.random() * 50) * 100;
-                const multiplier = (1.5 + Math.random()).toFixed(1);
-                const newWin = {
-                    user: `@user_${Math.floor(Math.random() * 900) + 100}`,
-                    val1: `$${newAmount}`,
-                    val2: `$${Math.floor(newAmount * multiplier)}`
-                };
-                const div = document.createElement('div');
-                div.innerHTML = createItem(newWin);
-                track.appendChild(div.firstElementChild);
-            }
-        }, 500);
-
-    }, 3000);
+    console.log('[Overview] Initializing terminal interface');
 
     // Initialize Lucide icons
     if (window.lucide) {
         window.lucide.createIcons();
     }
+
+    // Animate feed entries
+    animateFeed();
 }
 
+
+function animateFeed() {
+    const feed = document.getElementById('system-feed');
+    if (!feed) return;
+
+    const events = [
+        { time: getRandomTime(), type: 'executed', event: 'CONTRACT_EXECUTED', detail: `CONTRACT #${getRandomId()} — $${getRandomAmount()} LOCKED` },
+        { time: getRandomTime(), type: 'pending', event: 'VERIFICATION_PENDING', detail: `CONTRACT #${getRandomId()} — AWAITING API RESPONSE` },
+        { time: getRandomTime(), type: 'executed', event: 'SETTLEMENT_COMPLETE', detail: `CONTRACT #${getRandomId()} — $${getRandomAmount()} RETURNED` },
+        { time: getRandomTime(), type: 'locked', event: 'FORFEITURE_FINAL', detail: `CONTRACT #${getRandomId()} — TARGET NOT MET` },
+        { time: getRandomTime(), type: 'executed', event: 'BASELINE_SNAPSHOT', detail: `STRIPE CONNECTION — $${getRandomAmount()} (30D)` },
+    ];
+
+    setInterval(() => {
+        if (Math.random() > 0.6) {
+            const event = events[Math.floor(Math.random() * events.length)];
+            const now = new Date();
+            const time = \`\${now.getHours().toString().padStart(2, '0')}:\${now.getMinutes().toString().padStart(2, '0')}:\${now.getSeconds().toString().padStart(2, '0')}\`;
+            
+            const newRow = document.createElement('div');
+            newRow.className = 'feed-row';
+            newRow.innerHTML = \`
+                <span class="feed-timestamp">\${time}</span>
+                <span class="feed-event \${event.type}">\${event.event}</span>
+                <span class="text-[#6b6b78] ml-auto">\${event.detail}</span>
+            \`;
+            
+            // Add to top with animation
+            newRow.style.opacity = '0';
+            newRow.style.transform = 'translateY(-10px)';
+            feed.insertBefore(newRow, feed.firstChild);
+            
+            requestAnimationFrame(() => {
+                newRow.style.transition = 'all 300ms ease';
+                newRow.style.opacity = '1';
+                newRow.style.transform = 'translateY(0)';
+            });
+
+            // Remove last if too many
+            if (feed.children.length > 8) {
+                feed.removeChild(feed.lastChild);
+            }
+        }
+    }, 5000);
+}
+
+function getRandomTime() {
+    return \`\${Math.floor(Math.random() * 24).toString().padStart(2, '0')}:\${Math.floor(Math.random() * 60).toString().padStart(2, '0')}:\${Math.floor(Math.random() * 60).toString().padStart(2, '0')}\`;
+}
+
+function getRandomId() {
+    return (Math.floor(Math.random() * 200) + 100).toString().padStart(4, '0');
+}
+
+function getRandomAmount() {
+    return (Math.floor(Math.random() * 50) * 100 + 500).toLocaleString();
+}

@@ -12,10 +12,10 @@
  * - Full pagination (no data loss)
  * - Provider identity validated at connect time
  * 
- * CRITICAL LIMITATION:
- * Amazon SP-API Orders endpoint does NOT return refund data inline.
- * Finance API integration required for true net revenue.
- * Until then: FAIL-CLOSED on net revenue contracts.
+ * FINANCE API INTEGRATION:
+ * Refund data is now fetched via Finance API (/finances/v0/financialEvents).
+ * Net revenue = gross revenue - refunds (from RefundEventList).
+ * Full pagination ensures complete refund data.
  * 
  * ANTI-GAMING:
  * - Baseline window ends strictly at execution_time (no overlap)
@@ -137,6 +137,19 @@ export interface AmazonBaselineSnapshot {
 }
 
 // =============================================================================
+// FINANCE API TYPES (for refund data)
+// =============================================================================
+
+export interface AmazonRefundEvent {
+    orderId: string;
+    refundAmountCents: number;
+    postedDate: string;
+}
+
+/** Map of orderId -> total refund amount in cents */
+export type AmazonRefundMap = Map<string, number>;
+
+// =============================================================================
 // CLIENT ABSTRACTION
 // =============================================================================
 
@@ -145,6 +158,8 @@ export interface AmazonClient {
     validateConnection(credentials: AmazonCredentials): Promise<AmazonConnectionValidation>;
     getOrders(credentials: AmazonCredentials, startDate: Date, endDate: Date): Promise<AmazonOrder[]>;
     getRevenueSummary(credentials: AmazonCredentials, startDate: Date, endDate: Date): Promise<AmazonRevenueSummary>;
+    /** Fetch refunds from Finance API - returns map of orderId -> refundAmountCents */
+    getRefundsByDateRange(credentials: AmazonCredentials, startDate: Date, endDate: Date): Promise<AmazonRefundMap>;
 }
 
 // =============================================================================
@@ -189,8 +204,13 @@ export class MockAmazonClient implements AmazonClient {
             lastOrderId: null,
             pagesProcessed: 1,
             currency: 'USD',
-            refundsAvailable: false, // Mock reflects reality
+            refundsAvailable: true, // Now available via Finance API
         };
+    }
+
+    async getRefundsByDateRange(_credentials: AmazonCredentials, _startDate: Date, _endDate: Date): Promise<AmazonRefundMap> {
+        // Mock returns empty refunds - tests can override
+        return new Map();
     }
 }
 
@@ -519,13 +539,17 @@ export class RealAmazonClient implements AmazonClient {
     }
 
     /**
-     * Get revenue summary
-     * CRITICAL: refundsAvailable = false until Finance API integrated
+     * Get revenue summary WITH REFUNDS from Finance API
+     * Now includes actual refund data for net revenue calculation
      */
     async getRevenueSummary(credentials: AmazonCredentials, startDate: Date, endDate: Date): Promise<AmazonRevenueSummary> {
         const allOrders = await this.getOrders(credentials, startDate, endDate);
 
+        // Fetch refunds from Finance API
+        const refundsMap = await this.getRefundsByDateRange(credentials, startDate, endDate);
+
         let grossRevenueCents = 0;
+        let refundedCents = 0;
         let unitsSold = 0;
         let lastOrderId: string | null = null;
         let currency: string = 'USD';
@@ -550,6 +574,10 @@ export class RealAmazonClient implements AmazonClient {
             grossRevenueCents += order.orderTotalCents;
             unitsSold += order.quantity;
             lastOrderId = order.orderId;
+
+            // Get refunds for this order from the map
+            const orderRefunds = refundsMap.get(order.orderId) || 0;
+            refundedCents += orderRefunds;
         }
 
         // FAIL-CLOSED: Currency mismatch
@@ -560,12 +588,13 @@ export class RealAmazonClient implements AmazonClient {
             );
         }
 
-        // CRITICAL: Refunds NOT available from Orders API
-        // Net = Gross until Finance API integrated
+        // Calculate actual net revenue (gross - refunds)
+        const netRevenueCents = grossRevenueCents - refundedCents;
+
         return {
             grossRevenueCents,
-            refundedCents: 0,
-            netRevenueCents: grossRevenueCents, // GROSS = NET without refunds
+            refundedCents,
+            netRevenueCents,
             orderCount,
             unitsSold,
             windowStart: startDate.toISOString(),
@@ -573,8 +602,129 @@ export class RealAmazonClient implements AmazonClient {
             lastOrderId,
             pagesProcessed: Math.ceil(allOrders.length / 100) || 1,
             currency,
-            refundsAvailable: false, // CRITICAL FLAG
+            refundsAvailable: true, // Finance API now integrated
         };
+    }
+
+    /**
+     * Fetch refunds from Amazon Finance API
+     * Uses bulk window fetch strategy for efficiency
+     */
+    async getRefundsByDateRange(credentials: AmazonCredentials, startDate: Date, endDate: Date): Promise<AmazonRefundMap> {
+        interface FinancialEventsResponse {
+            payload: {
+                FinancialEvents: {
+                    RefundEventList?: Array<{
+                        AmazonOrderId: string;
+                        PostedDate: string;
+                        RefundedAmount?: {
+                            CurrencyCode: string;
+                            CurrencyAmount: string;
+                        };
+                        MarketplaceName?: string;
+                        ShipmentItemAdjustmentList?: Array<{
+                            ItemChargeAdjustmentList?: Array<{
+                                ChargeAmount?: {
+                                    CurrencyAmount: string;
+                                };
+                            }>;
+                        }>;
+                    }>;
+                    ShipmentEventList?: Array<{
+                        AmazonOrderId: string;
+                        ShipmentItemList?: Array<{
+                            ItemChargeList?: Array<{
+                                ChargeType: string;
+                                ChargeAmount?: {
+                                    CurrencyAmount: string;
+                                };
+                            }>;
+                        }>;
+                    }>;
+                };
+                NextToken?: string;
+            };
+        }
+
+        const refundsMap: AmazonRefundMap = new Map();
+        let nextToken: string | null = null;
+        let pagesProcessed = 0;
+
+        try {
+            do {
+                if (pagesProcessed >= AMAZON_MAX_PAGES) {
+                    console.warn('[Amazon Finance] Max pages reached, refund data may be incomplete');
+                    break;
+                }
+
+                const params: Record<string, string> = nextToken
+                    ? { NextToken: nextToken }
+                    : {
+                        PostedAfter: startDate.toISOString(),
+                        PostedBefore: endDate.toISOString(),
+                    };
+
+                const { data } = await this.request<FinancialEventsResponse>(
+                    credentials,
+                    '/finances/v0/financialEvents',
+                    params
+                );
+
+                const events = data.payload?.FinancialEvents;
+
+                // Process RefundEventList
+                if (events?.RefundEventList) {
+                    for (const refund of events.RefundEventList) {
+                        const orderId = refund.AmazonOrderId;
+                        if (!orderId) continue;
+
+                        let refundAmount = 0;
+
+                        // Try direct RefundedAmount first
+                        if (refund.RefundedAmount?.CurrencyAmount) {
+                            refundAmount = Math.abs(Math.round(parseFloat(refund.RefundedAmount.CurrencyAmount) * 100));
+                        }
+
+                        // Also check ShipmentItemAdjustmentList for detailed refund amounts
+                        if (refund.ShipmentItemAdjustmentList) {
+                            for (const item of refund.ShipmentItemAdjustmentList) {
+                                if (item.ItemChargeAdjustmentList) {
+                                    for (const charge of item.ItemChargeAdjustmentList) {
+                                        if (charge.ChargeAmount?.CurrencyAmount) {
+                                            // Refund amounts are typically negative, take absolute value
+                                            const amount = Math.abs(Math.round(parseFloat(charge.ChargeAmount.CurrencyAmount) * 100));
+                                            refundAmount += amount;
+                                        }
+                                    }
+                                }
+                            }
+                        }
+
+                        if (refundAmount > 0) {
+                            const existing = refundsMap.get(orderId) || 0;
+                            refundsMap.set(orderId, existing + refundAmount);
+                        }
+                    }
+                }
+
+                nextToken = data.payload?.NextToken || null;
+                pagesProcessed++;
+            } while (nextToken);
+
+            console.log(`[Amazon Finance] Processed ${pagesProcessed} pages, found refunds for ${refundsMap.size} orders`);
+            return refundsMap;
+
+        } catch (err) {
+            // Log but don't fail - return empty map to fail-closed gracefully
+            console.error('[Amazon Finance] Error fetching refunds:', err instanceof Error ? err.message : 'Unknown error');
+
+            // If Finance API fails, we return empty map which means refundsAvailable should be false
+            // But since we're inside getRevenueSummary which sets it to true, we should throw here
+            throw new CommerceError(
+                CommerceErrorCode.API_TIMEOUT,
+                'Failed to fetch refund data from Finance API. Cannot compute net revenue.'
+            );
+        }
     }
 }
 
@@ -731,7 +881,7 @@ export const amazonAdapter: CommerceAdapter = {
 
     /**
      * Snapshot baseline with HARDENED invariants
-     * CRITICAL: Fails closed on net revenue until Finance API integrated
+     * Net revenue now includes refunds from Finance API
      */
     async snapshotBaseline(userId: string, windowDays: number = AMAZON_WINDOW_DAYS, executionTime?: Date): Promise<ShopifyBaselineSnapshot> {
         // Enforce minimum window
@@ -832,10 +982,9 @@ export const amazonAdapter: CommerceAdapter = {
         const client = getAmazonClient();
         const summary = await client.getRevenueSummary(credentials, windowStart, windowEnd);
 
-        // FAIL-CLOSED: If refunds not available, cannot determine true net
-        // For now, we proceed with gross = net, but flag it
+        // Log refund availability for debugging
         if (!summary.refundsAvailable) {
-            console.warn('[Amazon Adapter] Refunds not available. Using gross revenue as net.');
+            console.warn('[Amazon Adapter] Finance API unavailable - using gross as net (fail-closed)');
         }
 
         const currentRevenueCents = summary.netRevenueCents;

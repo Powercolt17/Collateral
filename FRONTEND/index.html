@@ -2,7 +2,7 @@
 <html lang="en">
 
 <head>
-   <link rel="icon" href="/favicon.ico" />
+    <link rel="icon" href="/favicon.ico" />
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" href="/favicon.ico" />
@@ -57,18 +57,18 @@
     </script>
     <style>
         :root {
-            --bg-grid: #F7F7F6;
-            --panel: #FFFFFF;
-            --text-primary: #0E0E11;
-            --text-secondary: #6B6E76;
-            --divider: #D9DBE1;
+            --bg-grid: #0a0a0c;
+            --panel: #111114;
+            --text-primary: #e8e8ec;
+            --text-secondary: #6b6b78;
+            --divider: #1e1e24;
             --red: #921818;
             --red-hover: #751212;
-            --gold: #A18239;
-            --gold-subtle: #947C43;
-            --gold-wash: rgba(161, 130, 57, 0.06);
-            --green: #1F7A4D;
-            --green-dim: #E8F4ED;
+            --gold: #8b7028;
+            --gold-subtle: #6d5a24;
+            --gold-wash: rgba(139, 112, 40, 0.08);
+            --green: #1a5c3a;
+            --green-dim: #0f2f1f;
         }
 
         .no-scrollbar::-webkit-scrollbar {
@@ -87,10 +87,10 @@
     </style>
 </head>
 
-<body class="min-h-screen flex flex-col font-sans relative text-[#0E0E11] bg-[#F7F7F6] antialiased overflow-x-hidden">
-    <!-- Background Grid Removed -->
-    <div class="fixed inset-0 pointer-events-none z-0 opacity-[0.02]"
-        style="background-image: url('data:image/svg+xml,%3Csvg viewBox=%220 0 200 200%22 xmlns=%22http://www.w3.org/2000/svg%22%3E%3Cfilter id=%22noise%22%3E%3CfeTurbulence type=%22fractalNoise%22 baseFrequency=%220.65%22 numOctaves=%223%22 stitchTiles=%22stitch%22/%3E%3C/filter%3E%3Crect width=%22100%25%22 height=%22100%25%22 filter=%22url(%23noise)%22/%3E%3C/svg%3E');">
+<body class="min-h-screen flex flex-col font-sans relative text-[#e8e8ec] bg-[#0a0a0c] antialiased overflow-x-hidden">
+    <!-- Terminal Grid Overlay -->
+    <div class="fixed inset-0 pointer-events-none z-0 opacity-[0.015]"
+        style="background-image: linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px); background-size: 40px 40px;">
     </div>
 
     <!-- Header (injected by JS) -->
@@ -99,28 +99,44 @@
     <!-- Main Content (injected by router) -->
     <div id="app" class="pt-16 relative z-10 min-h-screen flex flex-col"></div>
 
-    <!-- Status Bar (Fixed Bottom) -->
+    <!-- Status Bar (Fixed Bottom) - Terminal Style -->
     <div
-        class="fixed bottom-0 w-full bg-[#F7F7F6] border-t border-[#D9DBE1] py-2 px-6 flex justify-between items-center z-40 text-[10px] font-mono uppercase tracking-widest text-[#6B6E76]">
+        class="fixed bottom-0 w-full bg-[#0a0a0c] border-t border-[#1e1e24] py-2 px-6 flex justify-between items-center z-40 text-[10px] font-mono uppercase tracking-widest text-[#6b6b78]">
         <div class="flex items-center gap-4">
-            <span class="text-[#0E0E11] font-medium">System Status</span>
-            <span class="flex items-center gap-1.5 text-[#1F7A4D]"><span
-                    class="w-1.5 h-1.5 bg-[#1F7A4D] rounded-full"></span> Operational</span>
+            <span class="text-[#e8e8ec] font-medium">SYSTEM</span>
+            <span class="flex items-center gap-1.5 text-[#22c55e]"><span class="w-1.5 h-1.5 bg-[#22c55e] rounded-full"
+                    style="animation: pulse 2s ease-in-out infinite;"></span> OPERATIONAL</span>
         </div>
-        <div class="hidden md:block absolute left-1/2 -translate-x-1/2 text-[#6B6E76]/80">
-            All contracts settle publicly. Outcomes are permanent.
+        <div class="hidden md:block absolute left-1/2 -translate-x-1/2 text-[#6b6b78]">
+            IMMUTABLE SETTLEMENT // RECEIPT-GRADE FINALITY
         </div>
         <div class="flex items-center gap-4">
-            <span class="hover:text-[#0E0E11] cursor-pointer transition-colors">Docs</span>
+            <a href="#" onclick="window.router.navigate('/docs'); return false;"
+                class="hover:text-[#e8e8ec] cursor-pointer transition-colors">DOCS</a>
+            <a href="#" onclick="window.router.navigate('/ledger'); return false;"
+                class="hover:text-[#e8e8ec] cursor-pointer transition-colors">LEDGER</a>
         </div>
     </div>
+    <style>
+        @keyframes pulse {
+
+            0%,
+            100% {
+                opacity: 1;
+            }
+
+            50% {
+                opacity: 0.5;
+            }
+        }
+    </style>
 
     <!-- Sign In Modal (Access Control) -->
     <div id="modal-access-backdrop"
-        class="fixed inset-0 bg-white/80 backdrop-blur-sm z-[60] hidden transition-opacity duration-300 opacity-0"
+        class="fixed inset-0 bg-black/80 backdrop-blur-sm z-[60] hidden transition-opacity duration-300 opacity-0"
         onclick="window.app.closeAccessModal()"></div>
     <div id="modal-access"
-        class="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full max-w-[440px] bg-white border border-[#D9DBE1] shadow-[0_10px_40px_rgba(0,0,0,0.04)] z-[70] hidden transition-all duration-300 scale-95 opacity-0 flex">
+        class="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full max-w-[440px] bg-[#111114] border border-[#1e1e24] shadow-[0_10px_40px_rgba(0,0,0,0.4)] z-[70] hidden transition-all duration-300 scale-95 opacity-0 flex">
 
         <!-- Vertical Red Line (Structural Detail) -->
         <div class="w-1 bg-[#921818] shrink-0"></div>
@@ -129,43 +145,43 @@
 
             <!-- Header -->
             <div class="mb-8">
-                <h3 class="font-display font-semibold text-2xl text-[#0E0E11] tracking-tight mb-1">ACCESS CONTROL</h3>
-                <p class="font-sans text-xs text-[#6B6E76]">Authorize identity access.</p>
+                <h3 class="font-display font-semibold text-2xl text-[#e8e8ec] tracking-tight mb-1">ACCESS CONTROL</h3>
+                <p class="font-sans text-xs text-[#6b6b78]">Authorize identity access.</p>
                 <div class="h-px w-full bg-[#921818]/30 mt-4"></div>
             </div>
 
             <!-- Inputs -->
             <div class="flex flex-col gap-5">
                 <div class="flex flex-col gap-2">
-                    <label class="font-mono text-[10px] font-medium text-[#6B6E76] uppercase tracking-widest">Email
+                    <label class="font-mono text-[10px] font-medium text-[#6b6b78] uppercase tracking-widest">Email
                         Address</label>
                     <input type="email" id="login-email"
-                        class="w-full bg-white border border-[#D9DBE1] rounded-[2px] px-4 py-3 h-12 text-sm font-normal text-[#0E0E11] focus:outline-none focus:border-[#0E0E11] transition-colors">
+                        class="w-full bg-[#0a0a0c] border border-[#1e1e24] rounded-[2px] px-4 py-3 h-12 text-sm font-normal text-[#e8e8ec] focus:outline-none focus:border-[#921818] transition-colors">
                 </div>
                 <div class="flex flex-col gap-2">
                     <label
-                        class="font-mono text-[10px] font-medium text-[#6B6E76] uppercase tracking-widest">Password</label>
+                        class="font-mono text-[10px] font-medium text-[#6b6b78] uppercase tracking-widest">Password</label>
                     <input type="password" id="login-password"
-                        class="w-full bg-white border border-[#D9DBE1] rounded-[2px] px-4 py-3 h-12 text-sm font-normal text-[#0E0E11] focus:outline-none focus:border-[#0E0E11] transition-colors">
+                        class="w-full bg-[#0a0a0c] border border-[#1e1e24] rounded-[2px] px-4 py-3 h-12 text-sm font-normal text-[#e8e8ec] focus:outline-none focus:border-[#921818] transition-colors">
                 </div>
             </div>
 
-            <!-- CTA (Black/Neutral) -->
+            <!-- CTA -->
             <button onclick="window.app.handleLoginSubmit()" id="btn-login-submit"
-                class="w-full h-14 mt-8 bg-[#0E0E11] text-white text-[11px] font-semibold uppercase tracking-widest rounded-none hover:bg-black transition-all shadow-sm">
-                Authorize Access
+                class="w-full h-14 mt-8 bg-[#921818] hover:bg-[#751212] text-white text-[11px] font-semibold uppercase tracking-widest rounded-none transition-all shadow-sm">
+                AUTHORIZE ACCESS
             </button>
 
             <!-- Secondary -->
             <div class="mt-4 text-center">
                 <button type="button" onclick="window.app.goToCreateIdentity()"
-                    class="font-sans text-xs text-[#6B6E76] hover:text-[#0E0E11] hover:decoration-[#B0B2B8] no-underline hover:underline hover:underline-offset-4 transition-all bg-transparent border-none p-0 cursor-pointer">No
+                    class="font-sans text-xs text-[#6b6b78] hover:text-[#e8e8ec] hover:underline hover:underline-offset-4 transition-all bg-transparent border-none p-0 cursor-pointer">No
                     identity on record? Create Identity</button>
             </div>
 
             <!-- Footer Microcopy -->
-            <div class="mt-8 pt-4 border-t border-[#D9DBE1]">
-                <p class="font-mono text-[10px] text-[#6B6E76] leading-relaxed text-center uppercase tracking-wider">
+            <div class="mt-8 pt-4 border-t border-[#1e1e24]">
+                <p class="font-mono text-[10px] text-[#6b6b78] leading-relaxed text-center uppercase tracking-wider">
                     Access authorizes identity only. Execution requires explicit confirmation.
                 </p>
             </div>
@@ -174,54 +190,55 @@
 
     <!-- Create Identity Modal -->
     <div id="modal-create-backdrop"
-        class="fixed inset-0 bg-white/80 backdrop-blur-sm z-[60] hidden transition-opacity duration-300 opacity-0"
+        class="fixed inset-0 bg-black/80 backdrop-blur-sm z-[60] hidden transition-opacity duration-300 opacity-0"
         onclick="window.app.closeCreateModal()"></div>
     <div id="modal-create"
-        class="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full max-w-[480px] bg-white border border-[#D9DBE1] shadow-[0_10px_40px_rgba(0,0,0,0.04)] z-[70] hidden transition-all duration-300 scale-95 opacity-0">
+        class="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full max-w-[480px] bg-[#111114] border border-[#1e1e24] shadow-[0_10px_40px_rgba(0,0,0,0.4)] z-[70] hidden transition-all duration-300 scale-95 opacity-0">
 
         <div class="p-10 w-full flex flex-col">
 
             <!-- Header -->
             <div class="mb-8">
-                <h3 class="font-display font-bold text-2xl text-[#0E0E11] tracking-tight mb-1">CLAIM IDENTITY</h3>
-                <p class="font-sans text-xs text-[#6B6E76]">Public identifier required for ledger attribution.</p>
-                <div class="h-px w-full bg-[#D9DBE1] mt-4"></div>
+                <h3 class="font-display font-bold text-2xl text-[#e8e8ec] tracking-tight mb-1">CLAIM IDENTITY</h3>
+                <p class="font-sans text-xs text-[#6b6b78]">Public identifier required for ledger attribution.</p>
+                <div class="h-px w-full bg-[#1e1e24] mt-4"></div>
             </div>
 
             <!-- Inputs -->
             <div class="flex flex-col gap-5">
                 <div class="flex flex-col gap-2">
-                    <label class="font-mono text-[10px] font-medium text-[#6B6E76] uppercase tracking-widest">Email
+                    <label class="font-mono text-[10px] font-medium text-[#6b6b78] uppercase tracking-widest">Email
                         Address <span class="text-[#921818]">*</span></label>
                     <input type="email" id="create-email"
-                        class="w-full bg-white border border-[#D9DBE1] rounded-[2px] px-4 py-3 h-12 text-sm font-normal text-[#0E0E11] focus:outline-none focus:border-[#0E0E11] transition-colors"
+                        class="w-full bg-[#0a0a0c] border border-[#1e1e24] rounded-[2px] px-4 py-3 h-12 text-sm font-normal text-[#e8e8ec] focus:outline-none focus:border-[#921818] transition-colors"
                         placeholder="">
                 </div>
                 <div class="flex flex-col gap-2">
-                    <label class="font-mono text-[10px] font-medium text-[#6B6E76] uppercase tracking-widest">Username
+                    <label class="font-mono text-[10px] font-medium text-[#6b6b78] uppercase tracking-widest">Username
                         <span class="text-[#921818]">*</span></label>
                     <input type="text" id="create-username"
-                        class="w-full bg-white border border-[#D9DBE1] rounded-[2px] px-4 py-3 h-12 text-sm font-normal text-[#0E0E11] focus:outline-none focus:border-[#0E0E11] transition-colors"
+                        class="w-full bg-[#0a0a0c] border border-[#1e1e24] rounded-[2px] px-4 py-3 h-12 text-sm font-normal text-[#e8e8ec] focus:outline-none focus:border-[#921818] transition-colors"
                         placeholder="powercolt">
-                    <p class="font-mono text-[10px] text-[#6B6E76]/70">3-20 characters: letters, numbers, underscores only. This is your permanent handle.</p>
+                    <p class="font-mono text-[10px] text-[#6b6b78]/70">3-20 characters: letters, numbers, underscores
+                        only. This is your permanent handle.</p>
                 </div>
                 <div class="flex flex-col gap-2">
-                    <label class="font-mono text-[10px] font-medium text-[#6B6E76] uppercase tracking-widest">Password
+                    <label class="font-mono text-[10px] font-medium text-[#6b6b78] uppercase tracking-widest">Password
                         <span class="text-[#921818]">*</span></label>
                     <input type="password" id="create-password"
-                        class="w-full bg-white border border-[#D9DBE1] rounded-[2px] px-4 py-3 h-12 text-sm font-normal text-[#0E0E11] focus:outline-none focus:border-[#0E0E11] transition-colors"
+                        class="w-full bg-[#0a0a0c] border border-[#1e1e24] rounded-[2px] px-4 py-3 h-12 text-sm font-normal text-[#e8e8ec] focus:outline-none focus:border-[#921818] transition-colors"
                         placeholder="">
                 </div>
             </div>
 
             <!-- CTA -->
             <button onclick="window.app.handleCreateAccount()" id="btn-create-submit"
-                class="w-full h-14 mt-8 bg-[#0E0E11] text-white text-[11px] font-semibold uppercase tracking-widest rounded-none hover:bg-black transition-all shadow-sm">
-                Confirm Identity
+                class="w-full h-14 mt-8 bg-[#921818] hover:bg-[#751212] text-white text-[11px] font-semibold uppercase tracking-widest rounded-none transition-all shadow-sm">
+                CONFIRM IDENTITY
             </button>
 
             <!-- Footer Warning -->
-            <div class="mt-6 pt-4 border-t border-[#D9DBE1]">
+            <div class="mt-6 pt-4 border-t border-[#1e1e24]">
                 <p class="font-mono text-[10px] text-[#921818] leading-relaxed text-center uppercase tracking-wider">
                     Identity changes are restricted.<br>Abuse results in suspension.
                 </p>

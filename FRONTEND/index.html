@@ -57,18 +57,19 @@
     </script>
     <style>
         :root {
-            --bg-grid: #0a0a0c;
-            --panel: #111114;
-            --text-primary: #e8e8ec;
-            --text-secondary: #6b6b78;
-            --divider: #1e1e24;
-            --red: #921818;
-            --red-hover: #751212;
-            --gold: #8b7028;
-            --gold-subtle: #6d5a24;
-            --gold-wash: rgba(139, 112, 40, 0.08);
-            --green: #1a5c3a;
-            --green-dim: #0f2f1f;
+            /* Institutional Light Theme */
+            --bg-page: #F8F7F5;
+            --bg-panel: #FFFFFF;
+            --text-primary: #1A1A1A;
+            --text-secondary: #6B6B6B;
+            --text-muted: #9CA3AF;
+            --divider: #E8E6E3;
+            --divider-subtle: #EFEDE9;
+            --red: #8B1818;
+            --red-hover: #6B1212;
+            --red-light: #FEF2F2;
+            --green: #166534;
+            --green-light: #F0FDF4;
         }
 
         .no-scrollbar::-webkit-scrollbar {
@@ -81,17 +82,13 @@
         }
 
         ::selection {
-            background-color: var(--text-primary);
+            background-color: var(--red);
             color: #ffffff;
         }
     </style>
 </head>
 
-<body class="min-h-screen flex flex-col font-sans relative text-[#e8e8ec] bg-[#0a0a0c] antialiased overflow-x-hidden">
-    <!-- Terminal Grid Overlay -->
-    <div class="fixed inset-0 pointer-events-none z-0 opacity-[0.015]"
-        style="background-image: linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px); background-size: 40px 40px;">
-    </div>
+<body class="min-h-screen flex flex-col font-sans relative text-[#1A1A1A] bg-[#F8F7F5] antialiased overflow-x-hidden">
 
     <!-- Header (injected by JS) -->
     <div id="header-mount"></div>
@@ -99,22 +96,23 @@
     <!-- Main Content (injected by router) -->
     <div id="app" class="pt-16 relative z-10 min-h-screen flex flex-col"></div>
 
-    <!-- Status Bar (Fixed Bottom) - Terminal Style -->
+    <!-- Status Bar (Fixed Bottom) - Institutional Style -->
     <div
-        class="fixed bottom-0 w-full bg-[#0a0a0c] border-t border-[#1e1e24] py-2 px-6 flex justify-between items-center z-40 text-[10px] font-mono uppercase tracking-widest text-[#6b6b78]">
+        class="fixed bottom-0 w-full bg-white border-t border-[#E8E6E3] py-2.5 px-6 flex justify-between items-center z-40 text-[11px] tracking-wide text-[#6B6B6B]">
         <div class="flex items-center gap-4">
-            <span class="text-[#e8e8ec] font-medium">SYSTEM</span>
-            <span class="flex items-center gap-1.5 text-[#22c55e]"><span class="w-1.5 h-1.5 bg-[#22c55e] rounded-full"
-                    style="animation: pulse 2s ease-in-out infinite;"></span> OPERATIONAL</span>
+            <span class="font-medium text-[#1A1A1A]">Collateral</span>
+            <span class="text-[#9CA3AF]">•</span>
+            <span class="flex items-center gap-1.5 text-[#166534]"><span
+                    class="w-1.5 h-1.5 bg-[#166534] rounded-full"></span> Operational</span>
         </div>
-        <div class="hidden md:block absolute left-1/2 -translate-x-1/2 text-[#6b6b78]">
-            IMMUTABLE SETTLEMENT // RECEIPT-GRADE FINALITY
+        <div class="hidden md:block absolute left-1/2 -translate-x-1/2 text-[#9CA3AF]">
+            Immutable Settlement Protocol
         </div>
         <div class="flex items-center gap-4">
             <a href="#" onclick="window.router.navigate('/docs'); return false;"
-                class="hover:text-[#e8e8ec] cursor-pointer transition-colors">DOCS</a>
+                class="hover:text-[#1A1A1A] cursor-pointer transition-colors">Docs</a>
             <a href="#" onclick="window.router.navigate('/ledger'); return false;"
-                class="hover:text-[#e8e8ec] cursor-pointer transition-colors">LEDGER</a>
+                class="hover:text-[#1A1A1A] cursor-pointer transition-colors">Ledger</a>
         </div>
     </div>
     <style>

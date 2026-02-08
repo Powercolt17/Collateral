@@ -1,323 +1,163 @@
-// Overview View - Collateral Signature Homepage
-// Capital Enforcement Protocol — Not a SaaS landing page
-
+// Overview View - Original Dark Terminal Aesthetic
 export function renderOverview() {
     return `
         <style>
-            /* === COLLATERAL SIGNATURE === */
-            .collateral-home {
-                background: #FFFFFF;
-                color: #1A1A1A;
-                min-height: 100vh;
+            /* === ENFORCEMENT TERMINAL === */
+            .enforcement-terminal {
+                background: #0a0a0c;
+                color: #e8e8ec;
+                position: relative;
                 font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-                position: relative;
             }
 
-            /* Ledger spine - subtle vertical line with tick marks */
-            .ledger-spine {
-                position: fixed;
-                left: 40px;
-                top: 80px;
-                bottom: 60px;
-                width: 1px;
-                background: #E8E8E8;
+            /* Grid overlay */
+            .grid-overlay {
+                position: absolute;
+                inset: 0;
+                background-image: 
+                    linear-gradient(rgba(255,255,255,0.02) 1px, transparent 1px),
+                    linear-gradient(90deg, rgba(255,255,255,0.02) 1px, transparent 1px);
+                background-size: 40px 40px;
                 pointer-events: none;
-                z-index: 1;
-            }
-            .ledger-spine::before {
-                content: '';
-                position: absolute;
-                left: -2px;
-                top: 0;
-                width: 5px;
-                height: 100%;
-                background: repeating-linear-gradient(
-                    180deg,
-                    transparent 0px,
-                    transparent 79px,
-                    #1A1A1A 79px,
-                    #1A1A1A 80px
-                );
-                opacity: 0.12;
             }
 
-            /* Execution receipt panel */
-            .receipt-panel {
-                background: #FAFAFA;
-                border: 1px solid #E5E5E5;
-                font-family: 'JetBrains Mono', 'SF Mono', monospace;
-                font-size: 12px;
-                position: relative;
-            }
-            .receipt-panel::before {
-                content: '';
+            /* Terminal glow effect */
+            .terminal-glow {
                 position: absolute;
                 top: 0;
-                left: 0;
-                right: 0;
-                height: 3px;
-                background: linear-gradient(90deg, #8B1818 0%, #6B1212 100%);
-            }
-            .receipt-row {
-                display: flex;
-                justify-content: space-between;
-                padding: 10px 0;
-                border-bottom: 1px solid #EEEEEE;
-            }
-            .receipt-row:last-child { border-bottom: none; }
-            .receipt-label { 
-                color: #888888;
-                font-size: 10px;
-                letter-spacing: 0.5px;
-            }
-            .receipt-value { 
-                color: #1A1A1A;
-                font-weight: 500;
-            }
-            .receipt-value.red { color: #8B1818; }
-
-            /* State machine */
-            .state-machine {
-                display: flex;
-                align-items: center;
-                flex-wrap: wrap;
-                gap: 0;
-                font-family: 'JetBrains Mono', monospace;
-                font-size: 11px;
-            }
-            .state {
-                padding: 8px 14px;
-                background: #F5F5F5;
-                border: 1px solid #E5E5E5;
-                color: #6B6B6B;
-            }
-            .state.current {
-                background: #1A1A1A;
-                border-color: #1A1A1A;
-                color: #FFFFFF;
-            }
-            .state.terminal-success {
-                background: #1A1A1A;
-                border-color: #1A1A1A;
-                color: #FFFFFF;
-            }
-            .state.terminal-fail {
-                background: #8B1818;
-                border-color: #8B1818;
-                color: #FFFFFF;
-            }
-            .state-arrow {
-                padding: 0 4px;
-                color: #CCCCCC;
-                font-size: 14px;
-            }
-            .state-divider {
-                padding: 0 6px;
-                color: #CCCCCC;
+                left: 50%;
+                transform: translateX(-50%);
+                width: 600px;
+                height: 400px;
+                background: radial-gradient(ellipse at center, rgba(146, 24, 24, 0.08) 0%, transparent 70%);
+                pointer-events: none;
             }
 
-            /* Clearinghouse ledger */
-            .ledger-header {
-                display: grid;
-                grid-template-columns: 110px 1fr 100px 100px;
-                padding: 12px 20px;
-                background: #FAFAFA;
-                border-bottom: 2px solid #1A1A1A;
-                font-size: 10px;
-                font-weight: 600;
-                color: #888888;
-                letter-spacing: 0.5px;
-                text-transform: uppercase;
-            }
-            .ledger-entry {
-                display: grid;
-                grid-template-columns: 110px 1fr 100px 100px;
-                padding: 14px 20px;
-                border-bottom: 1px solid #F0F0F0;
-                font-size: 13px;
-                align-items: center;
-            }
-            .ledger-entry:last-child { border-bottom: none; }
-            .ledger-rcpt { 
-                font-family: 'JetBrains Mono', monospace; 
-                font-size: 12px;
-                color: #6B6B6B;
-            }
-            .ledger-stake { 
-                font-weight: 600; 
-                color: #1A1A1A;
-            }
-            .ledger-state {
-                font-family: 'JetBrains Mono', monospace;
-                font-size: 11px;
-                color: #6B6B6B;
-            }
-            .ledger-outcome {
-                font-family: 'JetBrains Mono', monospace;
-                font-size: 11px;
-                font-weight: 600;
-                text-align: right;
-            }
-            .outcome-verifying { color: #1A1A1A; }
-            .outcome-settled { color: #1A1A1A; }
-            .outcome-forfeited { color: #8B1818; }
-
-            /* Protocol stats */
-            .protocol-stat {
-                text-align: center;
-            }
-            .protocol-stat-value {
-                font-size: 28px;
-                font-weight: 700;
-                color: #1A1A1A;
-                letter-spacing: -0.02em;
-                line-height: 1;
-            }
-            .protocol-stat-label {
-                font-size: 12px;
-                color: #888888;
-                margin-top: 6px;
+            /* Panel styles */
+            .terminal-panel {
+                background: #111114;
+                border: 1px solid #1e1e24;
             }
 
-            /* Primary CTA */
-            .cta-execute {
-                background: linear-gradient(180deg, #9B2020 0%, #7A1818 100%);
-                color: #FFFFFF;
-                padding: 16px 40px;
-                font-size: 13px;
-                font-weight: 600;
-                letter-spacing: 0.3px;
-                border: none;
-                cursor: pointer;
-                transition: all 0.15s ease;
-                box-shadow: 0 2px 8px rgba(139, 24, 24, 0.3);
+            /* Status indicator */
+            .status-pulse {
+                animation: pulse 2s ease-in-out infinite;
             }
-            .cta-execute:hover {
-                background: linear-gradient(180deg, #8B1818 0%, #6B1212 100%);
-                box-shadow: 0 4px 16px rgba(139, 24, 24, 0.4);
-                transform: translateY(-1px);
+            @keyframes pulse {
+                0%, 100% { opacity: 1; }
+                50% { opacity: 0.5; }
             }
 
-            /* Text link */
-            .text-link {
-                font-size: 13px;
-                color: #6B6B6B;
-                text-decoration: none;
-                transition: color 0.15s ease;
+            /* Feed entry animation */
+            @keyframes feedSlide {
+                from { 
+                    opacity: 0; 
+                    transform: translateY(-10px); 
+                }
+                to { 
+                    opacity: 1; 
+                    transform: translateY(0); 
+                }
             }
-            .text-link:hover { color: #1A1A1A; }
+            .feed-entry {
+                animation: feedSlide 0.3s ease forwards;
+            }
 
-            /* Animations */
-            @keyframes fadeUp {
-                from { opacity: 0; transform: translateY(12px); }
+            /* Terminal reveal */
+            @keyframes terminalReveal {
+                from { opacity: 0; transform: translateY(20px); }
                 to { opacity: 1; transform: translateY(0); }
             }
-            .fade-up { animation: fadeUp 0.5s ease forwards; }
-            .fade-up-1 { animation-delay: 0.1s; opacity: 0; }
-            .fade-up-2 { animation-delay: 0.2s; opacity: 0; }
-            .fade-up-3 { animation-delay: 0.3s; opacity: 0; }
-
-            @media (max-width: 900px) {
-                .ledger-spine { display: none; }
-                .hero-grid { grid-template-columns: 1fr !important; }
-                .ledger-header, .ledger-entry { 
-                    grid-template-columns: 100px 1fr 90px; 
-                }
-                .ledger-state { display: none; }
+            .terminal-reveal {
+                animation: terminalReveal 0.6s ease forwards;
             }
+            .terminal-reveal-delay-1 { animation-delay: 0.1s; opacity: 0; }
+            .terminal-reveal-delay-2 { animation-delay: 0.2s; opacity: 0; }
+            .terminal-reveal-delay-3 { animation-delay: 0.3s; opacity: 0; }
         </style>
 
-        <div class="collateral-home">
-            <div class="ledger-spine"></div>
+        <div class="enforcement-terminal min-h-screen pb-16">
+            <div class="grid-overlay"></div>
+            <div class="terminal-glow"></div>
 
             <!-- ═══════════════════════════════════════════════════════════════ -->
-            <!-- HERO -->
+            <!-- HERO SECTION -->
             <!-- ═══════════════════════════════════════════════════════════════ -->
-            <section class="pt-24 pb-20 md:pt-32 md:pb-28">
-                <div class="max-w-5xl mx-auto px-6 md:px-8">
-                    <div class="hero-grid grid md:grid-cols-2 gap-12 md:gap-16 items-start">
+            <section class="relative pt-20 pb-16 md:pt-28 md:pb-24">
+                <div class="max-w-[1200px] mx-auto px-6 md:px-8">
+                    <div class="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
                         
-                        <!-- Left: Copy -->
-                        <div class="fade-up">
-                            <h1 class="text-3xl md:text-5xl font-bold tracking-tight text-[#1A1A1A] mb-6" 
-                                style="line-height: 1.1;">
-                                Intentions Fail<br/>Without Stakes.
+                        <!-- Left Column: Copy -->
+                        <div class="terminal-reveal">
+                            <div class="flex items-center gap-3 mb-6">
+                                <div class="w-2 h-2 bg-[#22c55e] rounded-full status-pulse"></div>
+                                <span class="text-[10px] font-mono uppercase tracking-widest text-[#6b6b78]">
+                                    SYSTEM OPERATIONAL
+                                </span>
+                            </div>
+                            
+                            <h1 class="text-3xl md:text-5xl font-bold tracking-tight text-[#e8e8ec] mb-6" 
+                                style="font-family: 'IBM Plex Sans', sans-serif; line-height: 1.1;">
+                                CAPITAL-BACKED<br/>
+                                <span class="text-[#921818]">COMMITMENT</span><br/>
+                                PROTOCOL
                             </h1>
                             
-                            <p class="text-lg text-[#6B6B6B] mb-4" style="line-height: 1.6;">
-                                Lock capital against measurable outcomes. 
-                                Hit the target — stake returned. 
-                                Miss it — forfeited.
-                            </p>
-                            
-                            <p class="text-sm text-[#888888] mb-10">
-                                Miss the target. Capital is forfeited. No appeals.
+                            <p class="text-base md:text-lg text-[#6b6b78] mb-8 max-w-lg" style="line-height: 1.6;">
+                                Lock stake against measurable outcomes. Verified by API. 
+                                Settled automatically. No appeals.
                             </p>
 
-                            <div class="flex flex-col sm:flex-row items-start gap-4 mb-12">
-                                <button onclick="window.app.handleInitiate()" class="cta-execute">
-                                    Execute Contract
+                            <div class="flex flex-col sm:flex-row gap-4">
+                                <button onclick="window.app.handleInitiate()" 
+                                    class="bg-[#921818] hover:bg-[#751212] text-white text-xs font-semibold uppercase tracking-widest px-8 py-4 transition-all">
+                                    INITIATE CONTRACT
                                 </button>
-                                <a href="#" onclick="window.router.navigate('/docs'); return false;" class="text-link py-4">
-                                    View Protocol Terms →
+                                <a href="#" onclick="window.router.navigate('/docs'); return false;" 
+                                   class="text-[#6b6b78] hover:text-[#e8e8ec] text-xs font-mono uppercase tracking-widest px-8 py-4 border border-[#1e1e24] hover:border-[#921818] transition-all text-center">
+                                    VIEW PROTOCOL
                                 </a>
                             </div>
-
-                            <!-- Protocol Stats -->
-                            <div class="grid grid-cols-3 gap-6 pt-8 border-t border-[#E5E5E5]">
-                                <div class="protocol-stat">
-                                    <div class="protocol-stat-value">$2.4M</div>
-                                    <div class="protocol-stat-label">Capital Locked</div>
-                                </div>
-                                <div class="protocol-stat">
-                                    <div class="protocol-stat-value">2,847</div>
-                                    <div class="protocol-stat-label">Contracts Executed</div>
-                                </div>
-                                <div class="protocol-stat">
-                                    <div class="protocol-stat-value">~30%</div>
-                                    <div class="protocol-stat-label">Tier 1 Win Rate</div>
-                                </div>
-                            </div>
                         </div>
 
-                        <!-- Right: Execution Receipt -->
-                        <div class="receipt-panel p-6 fade-up fade-up-1">
-                            <div class="text-[10px] font-semibold tracking-widest text-[#888888] mb-4 uppercase">
-                                Execution Receipt
+                        <!-- Right Column: Stats Panel -->
+                        <div class="terminal-panel p-6 terminal-reveal terminal-reveal-delay-1">
+                            <div class="text-[10px] font-mono uppercase tracking-widest text-[#6b6b78] mb-4">
+                                PROTOCOL METRICS
                             </div>
                             
-                            <div class="receipt-row">
-                                <span class="receipt-label">INSTRUMENT</span>
-                                <span class="receipt-value">REVENUE_COMMITMENT</span>
-                            </div>
-                            <div class="receipt-row">
-                                <span class="receipt-label">BASELINE</span>
-                                <span class="receipt-value">$4,221 (30D)</span>
-                            </div>
-                            <div class="receipt-row">
-                                <span class="receipt-label">TARGET</span>
-                                <span class="receipt-value">+18%</span>
-                            </div>
-                            <div class="receipt-row">
-                                <span class="receipt-label">WINDOW</span>
-                                <span class="receipt-value">14 DAYS</span>
-                            </div>
-                            <div class="receipt-row">
-                                <span class="receipt-label">STAKE</span>
-                                <span class="receipt-value red">$500 LOCKED</span>
-                            </div>
-                            <div class="receipt-row">
-                                <span class="receipt-label">OUTCOME</span>
-                                <span class="receipt-value">SETTLED <span class="text-[#CCCCCC]">/</span> <span class="red">FORFEITED</span></span>
-                            </div>
-                            <div class="receipt-row">
-                                <span class="receipt-label">RCPT</span>
-                                <span class="receipt-value">0184-9F2A</span>
-                            </div>
-
-                            <div class="mt-6 pt-4 border-t border-[#E5E5E5]">
-                                <div class="text-[9px] text-[#AAAAAA] tracking-wide uppercase">
-                                    Settlement: Binary · Verification: API-Only · Appeals: None
+                            <div class="grid grid-cols-2 gap-6">
+                                <div class="border-l-2 border-[#921818] pl-4">
+                                    <div class="text-2xl md:text-3xl font-bold text-[#e8e8ec]" style="font-family: 'JetBrains Mono', monospace;">
+                                        $2.4M
+                                    </div>
+                                    <div class="text-[10px] font-mono uppercase tracking-widest text-[#6b6b78] mt-1">
+                                        CAPITAL LOCKED
+                                    </div>
+                                </div>
+                                <div class="border-l-2 border-[#1e1e24] pl-4">
+                                    <div class="text-2xl md:text-3xl font-bold text-[#e8e8ec]" style="font-family: 'JetBrains Mono', monospace;">
+                                        2,847
+                                    </div>
+                                    <div class="text-[10px] font-mono uppercase tracking-widest text-[#6b6b78] mt-1">
+                                        CONTRACTS EXECUTED
+                                    </div>
+                                </div>
+                                <div class="border-l-2 border-[#1e1e24] pl-4">
+                                    <div class="text-2xl md:text-3xl font-bold text-[#e8e8ec]" style="font-family: 'JetBrains Mono', monospace;">
+                                        14D
+                                    </div>
+                                    <div class="text-[10px] font-mono uppercase tracking-widest text-[#6b6b78] mt-1">
+                                        AVG WINDOW
+                                    </div>
+                                </div>
+                                <div class="border-l-2 border-[#1e1e24] pl-4">
+                                    <div class="text-2xl md:text-3xl font-bold text-[#921818]" style="font-family: 'JetBrains Mono', monospace;">
+                                        68%
+                                    </div>
+                                    <div class="text-[10px] font-mono uppercase tracking-widest text-[#6b6b78] mt-1">
+                                        FORFEITURE RATE
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -327,139 +167,147 @@ export function renderOverview() {
 
 
             <!-- ═══════════════════════════════════════════════════════════════ -->
-            <!-- ENFORCEMENT LIFECYCLE -->
+            <!-- LIVE SYSTEM FEED -->
             <!-- ═══════════════════════════════════════════════════════════════ -->
-            <section class="py-16 md:py-24 bg-[#FAFAFA] border-y border-[#E5E5E5]">
-                <div class="max-w-5xl mx-auto px-6 md:px-8">
-                    <div class="text-[10px] font-semibold tracking-widest text-[#888888] mb-6 uppercase">
-                        Enforcement Lifecycle
-                    </div>
-                    
-                    <div class="state-machine mb-8">
-                        <span class="state current">BASELINE_CAPTURED</span>
-                        <span class="state-arrow">→</span>
-                        <span class="state">CAPITAL_LOCKED</span>
-                        <span class="state-arrow">→</span>
-                        <span class="state">VERIFYING</span>
-                        <span class="state-arrow">→</span>
-                        <span class="state terminal-success">SETTLED</span>
-                        <span class="state-divider">/</span>
-                        <span class="state terminal-fail">FORFEITED</span>
-                    </div>
-
-                    <div class="grid md:grid-cols-4 gap-8 text-sm">
-                        <div>
-                            <div class="font-medium text-[#1A1A1A] mb-1">Baseline Captured</div>
-                            <div class="text-[#888888]">Current metrics pulled via OAuth. Immutable once recorded.</div>
-                        </div>
-                        <div>
-                            <div class="font-medium text-[#1A1A1A] mb-1">Capital Locked</div>
-                            <div class="text-[#888888]">Stake held in escrow. Non-reversible until settlement.</div>
-                        </div>
-                        <div>
-                            <div class="font-medium text-[#1A1A1A] mb-1">Verifying</div>
-                            <div class="text-[#888888]">Window expires. API queried for final state. Zero subjectivity.</div>
-                        </div>
-                        <div>
-                            <div class="font-medium text-[#1A1A1A] mb-1">Settlement</div>
-                            <div class="text-[#888888]">Target met = stake returned. Target missed = forfeited.</div>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-
-            <!-- ═══════════════════════════════════════════════════════════════ -->
-            <!-- CLEARINGHOUSE LEDGER -->
-            <!-- ═══════════════════════════════════════════════════════════════ -->
-            <section class="py-16 md:py-24">
-                <div class="max-w-5xl mx-auto px-6 md:px-8">
+            <section class="py-12 md:py-16 relative">
+                <div class="max-w-[1200px] mx-auto px-6 md:px-8">
                     <div class="flex items-center justify-between mb-6">
-                        <div class="text-[10px] font-semibold tracking-widest text-[#888888] uppercase">
-                            Recent Executions
+                        <div class="flex items-center gap-3">
+                            <div class="w-2 h-2 bg-[#921818] rounded-full status-pulse"></div>
+                            <span class="text-[10px] font-mono uppercase tracking-widest text-[#6b6b78]">
+                                LIVE SYSTEM FEED
+                            </span>
                         </div>
-                        <a href="#" onclick="window.router.navigate('/ledger'); return false;" class="text-link text-sm">
-                            Full Ledger →
+                        <a href="#" onclick="window.router.navigate('/ledger'); return false;" 
+                           class="text-[10px] font-mono uppercase tracking-widest text-[#6b6b78] hover:text-[#e8e8ec] transition-colors">
+                            FULL LEDGER →
                         </a>
                     </div>
 
-                    <div class="border border-[#E5E5E5] overflow-hidden">
-                        <div class="ledger-header">
-                            <div>RCPT</div>
+                    <div class="terminal-panel overflow-hidden">
+                        <div class="border-b border-[#1e1e24] px-4 py-3 grid grid-cols-4 gap-4 text-[10px] font-mono uppercase tracking-widest text-[#6b6b78]">
+                            <div>CONTRACT</div>
                             <div>STAKE</div>
-                            <div>STATE</div>
-                            <div class="text-right">OUTCOME</div>
+                            <div>WINDOW</div>
+                            <div class="text-right">STATUS</div>
                         </div>
                         
-                        <div class="ledger-entry">
-                            <div class="ledger-rcpt">RCPT-0847</div>
-                            <div class="ledger-stake">$2,500 LOCKED</div>
-                            <div class="ledger-state">VERIFYING</div>
-                            <div class="ledger-outcome outcome-verifying">PENDING</div>
+                        <div id="feed-container">
+                            <div class="feed-entry border-b border-[#1e1e24] px-4 py-4 grid grid-cols-4 gap-4 text-sm">
+                                <div class="font-mono text-[#6b6b78]">#CTR-2847</div>
+                                <div class="text-[#e8e8ec] font-medium">$2,500</div>
+                                <div class="text-[#6b6b78]">14D</div>
+                                <div class="text-right">
+                                    <span class="text-[10px] font-mono uppercase tracking-widest px-2 py-1 bg-[#921818]/20 text-[#921818]">
+                                        LOCKED
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="feed-entry border-b border-[#1e1e24] px-4 py-4 grid grid-cols-4 gap-4 text-sm">
+                                <div class="font-mono text-[#6b6b78]">#CTR-2846</div>
+                                <div class="text-[#e8e8ec] font-medium">$1,000</div>
+                                <div class="text-[#6b6b78]">7D</div>
+                                <div class="text-right">
+                                    <span class="text-[10px] font-mono uppercase tracking-widest px-2 py-1 bg-[#1a5c3a]/20 text-[#22c55e]">
+                                        VERIFIED
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="feed-entry border-b border-[#1e1e24] px-4 py-4 grid grid-cols-4 gap-4 text-sm">
+                                <div class="font-mono text-[#6b6b78]">#CTR-2845</div>
+                                <div class="text-[#e8e8ec] font-medium">$5,000</div>
+                                <div class="text-[#6b6b78]">30D</div>
+                                <div class="text-right">
+                                    <span class="text-[10px] font-mono uppercase tracking-widest px-2 py-1 bg-[#921818]/20 text-[#921818]">
+                                        FORFEITED
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="feed-entry px-4 py-4 grid grid-cols-4 gap-4 text-sm">
+                                <div class="font-mono text-[#6b6b78]">#CTR-2844</div>
+                                <div class="text-[#e8e8ec] font-medium">$750</div>
+                                <div class="text-[#6b6b78]">14D</div>
+                                <div class="text-right">
+                                    <span class="text-[10px] font-mono uppercase tracking-widest px-2 py-1 bg-[#1a5c3a]/20 text-[#22c55e]">
+                                        SETTLED
+                                    </span>
+                                </div>
+                            </div>
                         </div>
-                        <div class="ledger-entry">
-                            <div class="ledger-rcpt">RCPT-0846</div>
-                            <div class="ledger-stake">$1,000 LOCKED</div>
-                            <div class="ledger-state">VERIFYING</div>
-                            <div class="ledger-outcome outcome-verifying">PENDING</div>
-                        </div>
-                        <div class="ledger-entry">
-                            <div class="ledger-rcpt">RCPT-0845</div>
-                            <div class="ledger-stake">$5,000 LOCKED</div>
-                            <div class="ledger-state">COMPLETE</div>
-                            <div class="ledger-outcome outcome-settled">SETTLED</div>
-                        </div>
-                        <div class="ledger-entry">
-                            <div class="ledger-rcpt">RCPT-0844</div>
-                            <div class="ledger-stake">$750 LOCKED</div>
-                            <div class="ledger-state">COMPLETE</div>
-                            <div class="ledger-outcome outcome-forfeited">FORFEITED</div>
-                        </div>
-                        <div class="ledger-entry">
-                            <div class="ledger-rcpt">RCPT-0843</div>
-                            <div class="ledger-stake">$10,000 LOCKED</div>
-                            <div class="ledger-state">COMPLETE</div>
-                            <div class="ledger-outcome outcome-settled">SETTLED</div>
-                        </div>
-                    </div>
-
-                    <div class="mt-4 text-xs text-[#AAAAAA]">
-                        Binary Settlement — No Appeals
                     </div>
                 </div>
             </section>
 
 
             <!-- ═══════════════════════════════════════════════════════════════ -->
-            <!-- VERIFICATION LAYER -->
+            <!-- ENFORCEMENT PIPELINE -->
             <!-- ═══════════════════════════════════════════════════════════════ -->
-            <section class="py-16 md:py-24 bg-[#FAFAFA] border-y border-[#E5E5E5]">
-                <div class="max-w-5xl mx-auto px-6 md:px-8">
-                    <div class="text-[10px] font-semibold tracking-widest text-[#888888] mb-6 uppercase">
-                        Verification Sources
-                    </div>
-                    
-                    <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
-                        <div class="bg-white border border-[#E5E5E5] p-5">
-                            <div class="font-semibold text-[#1A1A1A] mb-1">Stripe</div>
-                            <div class="text-sm text-[#888888]">Revenue, MRR, volume</div>
-                        </div>
-                        <div class="bg-white border border-[#E5E5E5] p-5">
-                            <div class="font-semibold text-[#1A1A1A] mb-1">Shopify</div>
-                            <div class="text-sm text-[#888888]">Store revenue, orders</div>
-                        </div>
-                        <div class="bg-white border border-[#E5E5E5] p-5">
-                            <div class="font-semibold text-[#1A1A1A] mb-1">X / Twitter</div>
-                            <div class="text-sm text-[#888888]">Followers, engagement</div>
-                        </div>
-                        <div class="bg-white border border-[#E5E5E5] p-5">
-                            <div class="font-semibold text-[#1A1A1A] mb-1">GitHub</div>
-                            <div class="text-sm text-[#888888]">Commits, contributions</div>
-                        </div>
+            <section class="py-12 md:py-16 relative">
+                <div class="max-w-[1200px] mx-auto px-6 md:px-8">
+                    <div class="text-[10px] font-mono uppercase tracking-widest text-[#6b6b78] mb-8">
+                        ENFORCEMENT PIPELINE
                     </div>
 
-                    <div class="mt-6 text-sm text-[#888888]">
-                        All verification via OAuth API response. No manual review. No exceptions.
+                    <div class="grid md:grid-cols-4 gap-6">
+                        <div class="terminal-panel p-6 terminal-reveal">
+                            <div class="text-[#921818] text-xs font-mono uppercase tracking-widest mb-3">01</div>
+                            <div class="text-[#e8e8ec] font-semibold mb-2">BASELINE LOCK</div>
+                            <div class="text-sm text-[#6b6b78]">
+                                Connect data source. Snapshot current metrics. Immutable baseline recorded.
+                            </div>
+                        </div>
+                        <div class="terminal-panel p-6 terminal-reveal terminal-reveal-delay-1">
+                            <div class="text-[#921818] text-xs font-mono uppercase tracking-widest mb-3">02</div>
+                            <div class="text-[#e8e8ec] font-semibold mb-2">CAPITAL STAKE</div>
+                            <div class="text-sm text-[#6b6b78]">
+                                Lock capital against target. Funds held in escrow until settlement.
+                            </div>
+                        </div>
+                        <div class="terminal-panel p-6 terminal-reveal terminal-reveal-delay-2">
+                            <div class="text-[#921818] text-xs font-mono uppercase tracking-widest mb-3">03</div>
+                            <div class="text-[#e8e8ec] font-semibold mb-2">VERIFICATION</div>
+                            <div class="text-sm text-[#6b6b78]">
+                                Window expires. API queried. Delta calculated against baseline.
+                            </div>
+                        </div>
+                        <div class="terminal-panel p-6 terminal-reveal terminal-reveal-delay-3">
+                            <div class="text-[#921818] text-xs font-mono uppercase tracking-widest mb-3">04</div>
+                            <div class="text-[#e8e8ec] font-semibold mb-2">SETTLEMENT</div>
+                            <div class="text-sm text-[#6b6b78]">
+                                Target met = stake returned. Target missed = forfeited. Automatic. Final.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+
+            <!-- ═══════════════════════════════════════════════════════════════ -->
+            <!-- VERIFICATION SOURCES -->
+            <!-- ═══════════════════════════════════════════════════════════════ -->
+            <section class="py-12 md:py-16 relative">
+                <div class="max-w-[1200px] mx-auto px-6 md:px-8">
+                    <div class="text-[10px] font-mono uppercase tracking-widest text-[#6b6b78] mb-8">
+                        VERIFICATION ORACLES
+                    </div>
+
+                    <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                        <div class="terminal-panel p-5 flex flex-col items-center justify-center text-center">
+                            <div class="text-[#e8e8ec] font-semibold mb-1">Stripe</div>
+                            <div class="text-[10px] font-mono text-[#6b6b78]">REVENUE</div>
+                        </div>
+                        <div class="terminal-panel p-5 flex flex-col items-center justify-center text-center">
+                            <div class="text-[#e8e8ec] font-semibold mb-1">Shopify</div>
+                            <div class="text-[10px] font-mono text-[#6b6b78]">COMMERCE</div>
+                        </div>
+                        <div class="terminal-panel p-5 flex flex-col items-center justify-center text-center">
+                            <div class="text-[#e8e8ec] font-semibold mb-1">X / Twitter</div>
+                            <div class="text-[10px] font-mono text-[#6b6b78]">ENGAGEMENT</div>
+                        </div>
+                        <div class="terminal-panel p-5 flex flex-col items-center justify-center text-center">
+                            <div class="text-[#e8e8ec] font-semibold mb-1">GitHub</div>
+                            <div class="text-[10px] font-mono text-[#6b6b78]">COMMITS</div>
+                        </div>
                     </div>
                 </div>
             </section>
@@ -468,20 +316,19 @@ export function renderOverview() {
             <!-- ═══════════════════════════════════════════════════════════════ -->
             <!-- FINAL CTA -->
             <!-- ═══════════════════════════════════════════════════════════════ -->
-            <section class="py-20 md:py-28">
+            <section class="py-16 md:py-24 relative">
                 <div class="max-w-3xl mx-auto px-6 md:px-8 text-center">
-                    <h2 class="text-2xl md:text-3xl font-bold text-[#1A1A1A] mb-4" style="line-height: 1.2;">
-                        Capital Enforces Follow-Through.
+                    <h2 class="text-2xl md:text-3xl font-bold text-[#e8e8ec] mb-4" 
+                        style="font-family: 'IBM Plex Sans', sans-serif;">
+                        READY TO EXECUTE?
                     </h2>
-                    <p class="text-[#6B6B6B] mb-10 max-w-lg mx-auto">
-                        Create a contract. Lock your stake. Let the numbers decide.
+                    <p class="text-[#6b6b78] mb-8 max-w-lg mx-auto">
+                        Create an immutable commitment. Lock capital. Let the data decide.
                     </p>
-                    <button onclick="window.app.handleInitiate()" class="cta-execute">
-                        Execute Contract
+                    <button onclick="window.app.handleInitiate()" 
+                        class="bg-[#921818] hover:bg-[#751212] text-white text-xs font-semibold uppercase tracking-widest px-10 py-4 transition-all">
+                        INITIATE CONTRACT
                     </button>
-                    <p class="text-xs text-[#AAAAAA] mt-6">
-                        Minimum stake: $100 · Maximum: $50,000
-                    </p>
                 </div>
             </section>
 
@@ -489,17 +336,18 @@ export function renderOverview() {
             <!-- ═══════════════════════════════════════════════════════════════ -->
             <!-- FOOTER -->
             <!-- ═══════════════════════════════════════════════════════════════ -->
-            <footer class="border-t border-[#E5E5E5] py-10">
-                <div class="max-w-5xl mx-auto px-6 md:px-8">
-                    <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-6">
+            <footer class="border-t border-[#1e1e24] py-8">
+                <div class="max-w-[1200px] mx-auto px-6 md:px-8">
+                    <div class="flex flex-col md:flex-row justify-between items-center gap-4 text-[10px] font-mono uppercase tracking-widest text-[#6b6b78]">
                         <div>
-                            <div class="font-semibold text-[#1A1A1A] mb-1">Collateral</div>
-                            <div class="text-sm text-[#888888]">Capital-backed commitment enforcement</div>
+                            <span class="text-[#e8e8ec]">COLLATERAL</span>
+                            <span class="mx-2">·</span>
+                            <span>ENFORCEMENT PROTOCOL</span>
                         </div>
-                        <div class="flex gap-8 text-sm text-[#888888]">
-                            <a href="#" onclick="window.router.navigate('/ledger'); return false;" class="hover:text-[#1A1A1A] transition-colors">Ledger</a>
-                            <a href="#" onclick="window.router.navigate('/docs'); return false;" class="hover:text-[#1A1A1A] transition-colors">Terms</a>
-                            <a href="#" class="hover:text-[#1A1A1A] transition-colors">Risk</a>
+                        <div class="flex gap-6">
+                            <a href="#" onclick="window.router.navigate('/ledger'); return false;" class="hover:text-[#e8e8ec] transition-colors">LEDGER</a>
+                            <a href="#" onclick="window.router.navigate('/docs'); return false;" class="hover:text-[#e8e8ec] transition-colors">DOCS</a>
+                            <a href="#" class="hover:text-[#e8e8ec] transition-colors">TERMS</a>
                         </div>
                     </div>
                 </div>
@@ -510,7 +358,7 @@ export function renderOverview() {
 
 
 export function initOverview() {
-    console.log('[Overview] Collateral signature homepage initialized');
+    console.log('[Overview] Terminal interface initialized');
 
     if (window.lucide) {
         window.lucide.createIcons();

@@ -57,19 +57,18 @@
     </script>
     <style>
         :root {
-            /* Institutional Light Theme */
-            --bg-page: #F8F7F5;
-            --bg-panel: #FFFFFF;
-            --text-primary: #1A1A1A;
-            --text-secondary: #6B6B6B;
-            --text-muted: #9CA3AF;
-            --divider: #E8E6E3;
-            --divider-subtle: #EFEDE9;
-            --red: #8B1818;
-            --red-hover: #6B1212;
-            --red-light: #FEF2F2;
-            --green: #166534;
-            --green-light: #F0FDF4;
+            --bg-grid: #0a0a0c;
+            --panel: #111114;
+            --text-primary: #e8e8ec;
+            --text-secondary: #6b6b78;
+            --divider: #1e1e24;
+            --red: #921818;
+            --red-hover: #751212;
+            --gold: #8b7028;
+            --gold-subtle: #6d5a24;
+            --gold-wash: rgba(139, 112, 40, 0.08);
+            --green: #1a5c3a;
+            --green-dim: #0f2f1f;
         }
 
         .no-scrollbar::-webkit-scrollbar {
@@ -82,13 +81,17 @@
         }
 
         ::selection {
-            background-color: var(--red);
+            background-color: var(--text-primary);
             color: #ffffff;
         }
     </style>
 </head>
 
-<body class="min-h-screen flex flex-col font-sans relative text-[#0A0A0A] bg-white antialiased overflow-x-hidden">
+<body class="min-h-screen flex flex-col font-sans relative text-[#e8e8ec] bg-[#0a0a0c] antialiased overflow-x-hidden">
+    <!-- Terminal Grid Overlay -->
+    <div class="fixed inset-0 pointer-events-none z-0 opacity-[0.015]"
+        style="background-image: linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px); background-size: 40px 40px;">
+    </div>
 
     <!-- Header (injected by JS) -->
     <div id="header-mount"></div>
@@ -96,19 +99,22 @@
     <!-- Main Content (injected by router) -->
     <div id="app" class="pt-16 relative z-10 min-h-screen flex flex-col"></div>
 
-    <!-- Status Bar (Fixed Bottom) -->
+    <!-- Status Bar (Fixed Bottom) - Terminal Style -->
     <div
-        class="fixed bottom-0 w-full bg-white border-t border-[#E5E5E5] py-2.5 px-6 flex justify-between items-center z-40 text-[11px] text-[#6B6B6B]">
-        <div class="flex items-center gap-3">
-            <span class="font-medium text-[#0A0A0A]">COLLATERAL</span>
-            <span class="text-[#E5E5E5]">|</span>
-            <span>Enforcement Protocol</span>
+        class="fixed bottom-0 w-full bg-[#0a0a0c] border-t border-[#1e1e24] py-2 px-6 flex justify-between items-center z-40 text-[10px] font-mono uppercase tracking-widest text-[#6b6b78]">
+        <div class="flex items-center gap-4">
+            <span class="text-[#e8e8ec] font-medium">SYSTEM</span>
+            <span class="flex items-center gap-1.5 text-[#22c55e]"><span class="w-1.5 h-1.5 bg-[#22c55e] rounded-full"
+                    style="animation: pulse 2s ease-in-out infinite;"></span> OPERATIONAL</span>
+        </div>
+        <div class="hidden md:block absolute left-1/2 -translate-x-1/2 text-[#6b6b78]">
+            IMMUTABLE SETTLEMENT // RECEIPT-GRADE FINALITY
         </div>
         <div class="flex items-center gap-4">
-            <a href="#" onclick="window.router.navigate('/ledger'); return false;"
-                class="hover:text-[#0A0A0A] cursor-pointer transition-colors">Ledger</a>
             <a href="#" onclick="window.router.navigate('/docs'); return false;"
-                class="hover:text-[#0A0A0A] cursor-pointer transition-colors">Terms</a>
+                class="hover:text-[#e8e8ec] cursor-pointer transition-colors">DOCS</a>
+            <a href="#" onclick="window.router.navigate('/ledger'); return false;"
+                class="hover:text-[#e8e8ec] cursor-pointer transition-colors">LEDGER</a>
         </div>
     </div>
     <style>
@@ -127,53 +133,55 @@
 
     <!-- Sign In Modal (Access Control) -->
     <div id="modal-access-backdrop"
-        class="fixed inset-0 bg-black/40 backdrop-blur-sm z-[60] hidden transition-opacity duration-300 opacity-0"
+        class="fixed inset-0 bg-black/60 backdrop-blur-sm z-[60] hidden transition-opacity duration-300 opacity-0"
         onclick="window.app.closeAccessModal()"></div>
     <div id="modal-access"
-        class="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full max-w-[440px] bg-white border border-[#E8E6E3] shadow-[0_25px_50px_-12px_rgba(0,0,0,0.25)] rounded z-[70] hidden transition-all duration-300 scale-95 opacity-0 flex">
+        class="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full max-w-[440px] bg-[#111114] border border-[#1e1e24] shadow-[0_25px_50px_-12px_rgba(0,0,0,0.8)] z-[70] hidden transition-all duration-300 scale-95 opacity-0 flex">
 
         <!-- Vertical Red Line (Structural Detail) -->
-        <div class="w-1 bg-[#8B1818] shrink-0 rounded-l"></div>
+        <div class="w-1 bg-[#921818] shrink-0"></div>
 
         <div class="p-10 w-full flex flex-col">
 
             <!-- Header -->
             <div class="mb-8">
-                <h3 class="font-display font-semibold text-2xl text-[#1A1A1A] tracking-tight mb-1">Sign In</h3>
-                <p class="font-sans text-sm text-[#6B6B6B]">Access your Collateral account.</p>
+                <h3 class="font-semibold text-xl text-[#e8e8ec] tracking-tight mb-1"
+                    style="font-family: 'IBM Plex Sans', sans-serif;">ACCESS TERMINAL</h3>
+                <p class="font-mono text-xs text-[#6b6b78] uppercase tracking-wide">Authenticate to continue</p>
             </div>
 
             <!-- Inputs -->
             <div class="flex flex-col gap-5">
                 <div class="flex flex-col gap-2">
-                    <label class="text-xs font-medium text-[#6B6B6B]">Email Address</label>
+                    <label class="text-[10px] font-mono uppercase tracking-widest text-[#6b6b78]">Email Address</label>
                     <input type="email" id="login-email"
-                        class="w-full bg-white border border-[#E8E6E3] rounded px-4 py-3 h-12 text-sm font-normal text-[#1A1A1A] focus:outline-none focus:border-[#8B1818] focus:ring-1 focus:ring-[#8B1818]/20 transition-colors">
+                        class="w-full bg-[#0a0a0c] border border-[#1e1e24] px-4 py-3 h-12 text-sm font-normal text-[#e8e8ec] focus:outline-none focus:border-[#921818] transition-colors">
                 </div>
                 <div class="flex flex-col gap-2">
-                    <label class="text-xs font-medium text-[#6B6B6B]">Password</label>
+                    <label class="text-[10px] font-mono uppercase tracking-widest text-[#6b6b78]">Password</label>
                     <input type="password" id="login-password"
-                        class="w-full bg-white border border-[#E8E6E3] rounded px-4 py-3 h-12 text-sm font-normal text-[#1A1A1A] focus:outline-none focus:border-[#8B1818] focus:ring-1 focus:ring-[#8B1818]/20 transition-colors">
+                        class="w-full bg-[#0a0a0c] border border-[#1e1e24] px-4 py-3 h-12 text-sm font-normal text-[#e8e8ec] focus:outline-none focus:border-[#921818] transition-colors">
                 </div>
             </div>
 
             <!-- CTA -->
             <button onclick="window.app.handleLoginSubmit()" id="btn-login-submit"
-                class="w-full h-12 mt-8 bg-[#8B1818] hover:bg-[#6B1212] text-white text-sm font-semibold rounded transition-all shadow-sm">
-                Sign In
+                class="w-full h-12 mt-8 bg-[#921818] hover:bg-[#751212] text-white text-xs font-semibold uppercase tracking-widest transition-all"
+                style="font-family: 'JetBrains Mono', monospace;">
+                ACCESS
             </button>
 
             <!-- Secondary -->
             <div class="mt-4 text-center">
                 <button type="button" onclick="window.app.goToCreateIdentity()"
-                    class="font-sans text-sm text-[#6B6B6B] hover:text-[#1A1A1A] hover:underline hover:underline-offset-4 transition-all bg-transparent border-none p-0 cursor-pointer">Don't
-                    have an account? Create one</button>
+                    class="font-mono text-xs text-[#6b6b78] hover:text-[#e8e8ec] transition-all bg-transparent border-none p-0 cursor-pointer uppercase tracking-wide">Create
+                    New Identity</button>
             </div>
 
             <!-- Footer Microcopy -->
-            <div class="mt-8 pt-4 border-t border-[#E8E6E3]">
-                <p class="text-xs text-[#9CA3AF] leading-relaxed text-center">
-                    By signing in, you agree to our terms of service.
+            <div class="mt-8 pt-4 border-t border-[#1e1e24]">
+                <p class="text-[10px] text-[#6b6b78] leading-relaxed text-center font-mono uppercase tracking-wide">
+                    By accessing, you accept protocol terms.
                 </p>
             </div>
         </div>
@@ -181,55 +189,58 @@
 
     <!-- Create Identity Modal -->
     <div id="modal-create-backdrop"
-        class="fixed inset-0 bg-black/40 backdrop-blur-sm z-[60] hidden transition-opacity duration-300 opacity-0"
+        class="fixed inset-0 bg-black/60 backdrop-blur-sm z-[60] hidden transition-opacity duration-300 opacity-0"
         onclick="window.app.closeCreateModal()"></div>
     <div id="modal-create"
-        class="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full max-w-[480px] bg-white border border-[#E8E6E3] shadow-[0_25px_50px_-12px_rgba(0,0,0,0.25)] rounded z-[70] hidden transition-all duration-300 scale-95 opacity-0">
+        class="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full max-w-[480px] bg-[#111114] border border-[#1e1e24] shadow-[0_25px_50px_-12px_rgba(0,0,0,0.8)] z-[70] hidden transition-all duration-300 scale-95 opacity-0">
 
         <div class="p-10 w-full flex flex-col">
 
             <!-- Header -->
             <div class="mb-8">
-                <h3 class="font-display font-bold text-2xl text-[#1A1A1A] tracking-tight mb-1">Create Account</h3>
-                <p class="font-sans text-sm text-[#6B6B6B]">Set up your Collateral identity.</p>
+                <h3 class="font-semibold text-xl text-[#e8e8ec] tracking-tight mb-1"
+                    style="font-family: 'IBM Plex Sans', sans-serif;">CREATE IDENTITY</h3>
+                <p class="font-mono text-xs text-[#6b6b78] uppercase tracking-wide">Initialize new protocol identity</p>
             </div>
 
             <!-- Inputs -->
             <div class="flex flex-col gap-5">
                 <div class="flex flex-col gap-2">
-                    <label class="text-xs font-medium text-[#6B6B6B]">Email Address <span
-                            class="text-[#8B1818]">*</span></label>
+                    <label class="text-[10px] font-mono uppercase tracking-widest text-[#6b6b78]">Email Address <span
+                            class="text-[#921818]">*</span></label>
                     <input type="email" id="create-email"
-                        class="w-full bg-white border border-[#E8E6E3] rounded px-4 py-3 h-12 text-sm font-normal text-[#1A1A1A] focus:outline-none focus:border-[#8B1818] focus:ring-1 focus:ring-[#8B1818]/20 transition-colors"
+                        class="w-full bg-[#0a0a0c] border border-[#1e1e24] px-4 py-3 h-12 text-sm font-normal text-[#e8e8ec] focus:outline-none focus:border-[#921818] transition-colors"
                         placeholder="">
                 </div>
                 <div class="flex flex-col gap-2">
-                    <label class="text-xs font-medium text-[#6B6B6B]">Username <span
-                            class="text-[#8B1818]">*</span></label>
+                    <label class="text-[10px] font-mono uppercase tracking-widest text-[#6b6b78]">Username <span
+                            class="text-[#921818]">*</span></label>
                     <input type="text" id="create-username"
-                        class="w-full bg-white border border-[#E8E6E3] rounded px-4 py-3 h-12 text-sm font-normal text-[#1A1A1A] focus:outline-none focus:border-[#8B1818] focus:ring-1 focus:ring-[#8B1818]/20 transition-colors"
+                        class="w-full bg-[#0a0a0c] border border-[#1e1e24] px-4 py-3 h-12 text-sm font-normal text-[#e8e8ec] focus:outline-none focus:border-[#921818] transition-colors"
                         placeholder="yourhandle">
-                    <p class="text-xs text-[#9CA3AF]">3-20 characters: letters, numbers, underscores only.</p>
+                    <p class="text-[10px] text-[#6b6b78] font-mono">3-20 characters: letters, numbers, underscores only.
+                    </p>
                 </div>
                 <div class="flex flex-col gap-2">
-                    <label class="text-xs font-medium text-[#6B6B6B]">Password <span
-                            class="text-[#8B1818]">*</span></label>
+                    <label class="text-[10px] font-mono uppercase tracking-widest text-[#6b6b78]">Password <span
+                            class="text-[#921818]">*</span></label>
                     <input type="password" id="create-password"
-                        class="w-full bg-white border border-[#E8E6E3] rounded px-4 py-3 h-12 text-sm font-normal text-[#1A1A1A] focus:outline-none focus:border-[#8B1818] focus:ring-1 focus:ring-[#8B1818]/20 transition-colors"
+                        class="w-full bg-[#0a0a0c] border border-[#1e1e24] px-4 py-3 h-12 text-sm font-normal text-[#e8e8ec] focus:outline-none focus:border-[#921818] transition-colors"
                         placeholder="">
                 </div>
             </div>
 
             <!-- CTA -->
             <button onclick="window.app.handleCreateAccount()" id="btn-create-submit"
-                class="w-full h-12 mt-8 bg-[#8B1818] hover:bg-[#6B1212] text-white text-sm font-semibold rounded transition-all shadow-sm">
-                Create Account
+                class="w-full h-12 mt-8 bg-[#921818] hover:bg-[#751212] text-white text-xs font-semibold uppercase tracking-widest transition-all"
+                style="font-family: 'JetBrains Mono', monospace;">
+                CREATE IDENTITY
             </button>
 
             <!-- Footer Warning -->
-            <div class="mt-6 pt-4 border-t border-[#E8E6E3]">
-                <p class="text-xs text-[#9CA3AF] leading-relaxed text-center">
-                    By creating an account, you agree to our terms of service and privacy policy.
+            <div class="mt-6 pt-4 border-t border-[#1e1e24]">
+                <p class="text-[10px] text-[#6b6b78] leading-relaxed text-center font-mono uppercase tracking-wide">
+                    By creating an identity, you accept protocol terms.
                 </p>
             </div>
         </div>

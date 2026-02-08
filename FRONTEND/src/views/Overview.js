@@ -559,32 +559,30 @@ function animateFeed() {
     if (!feed) return;
 
     const events = [
-        { time: getRandomTime(), type: 'executed', event: 'CONTRACT_EXECUTED', detail: `CONTRACT #${getRandomId()} — $${getRandomAmount()} LOCKED` },
-        { time: getRandomTime(), type: 'pending', event: 'VERIFICATION_PENDING', detail: `CONTRACT #${getRandomId()} — AWAITING API RESPONSE` },
-        { time: getRandomTime(), type: 'executed', event: 'SETTLEMENT_COMPLETE', detail: `CONTRACT #${getRandomId()} — $${getRandomAmount()} RETURNED` },
-        { time: getRandomTime(), type: 'locked', event: 'FORFEITURE_FINAL', detail: `CONTRACT #${getRandomId()} — TARGET NOT MET` },
-        { time: getRandomTime(), type: 'executed', event: 'BASELINE_SNAPSHOT', detail: `STRIPE CONNECTION — $${getRandomAmount()} (30D)` },
+        { time: getRandomTime(), type: 'executed', event: 'CONTRACT_EXECUTED', detail: 'CONTRACT #' + getRandomId() + ' — $' + getRandomAmount() + ' LOCKED' },
+        { time: getRandomTime(), type: 'pending', event: 'VERIFICATION_PENDING', detail: 'CONTRACT #' + getRandomId() + ' — AWAITING API RESPONSE' },
+        { time: getRandomTime(), type: 'executed', event: 'SETTLEMENT_COMPLETE', detail: 'CONTRACT #' + getRandomId() + ' — $' + getRandomAmount() + ' RETURNED' },
+        { time: getRandomTime(), type: 'locked', event: 'FORFEITURE_FINAL', detail: 'CONTRACT #' + getRandomId() + ' — TARGET NOT MET' },
+        { time: getRandomTime(), type: 'executed', event: 'BASELINE_SNAPSHOT', detail: 'STRIPE CONNECTION — $' + getRandomAmount() + ' (30D)' },
     ];
 
     setInterval(() => {
         if (Math.random() > 0.6) {
             const event = events[Math.floor(Math.random() * events.length)];
             const now = new Date();
-            const time = \`\${now.getHours().toString().padStart(2, '0')}:\${now.getMinutes().toString().padStart(2, '0')}:\${now.getSeconds().toString().padStart(2, '0')}\`;
-            
+            const time = now.getHours().toString().padStart(2, '0') + ':' + now.getMinutes().toString().padStart(2, '0') + ':' + now.getSeconds().toString().padStart(2, '0');
+
             const newRow = document.createElement('div');
             newRow.className = 'feed-row';
-            newRow.innerHTML = \`
-                <span class="feed-timestamp">\${time}</span>
-                <span class="feed-event \${event.type}">\${event.event}</span>
-                <span class="text-[#6b6b78] ml-auto">\${event.detail}</span>
-            \`;
-            
+            newRow.innerHTML = '<span class="feed-timestamp">' + time + '</span>' +
+                '<span class="feed-event ' + event.type + '">' + event.event + '</span>' +
+                '<span class="text-[#6b6b78] ml-auto">' + event.detail + '</span>';
+
             // Add to top with animation
             newRow.style.opacity = '0';
             newRow.style.transform = 'translateY(-10px)';
             feed.insertBefore(newRow, feed.firstChild);
-            
+
             requestAnimationFrame(() => {
                 newRow.style.transition = 'all 300ms ease';
                 newRow.style.opacity = '1';
@@ -600,7 +598,7 @@ function animateFeed() {
 }
 
 function getRandomTime() {
-    return \`\${Math.floor(Math.random() * 24).toString().padStart(2, '0')}:\${Math.floor(Math.random() * 60).toString().padStart(2, '0')}:\${Math.floor(Math.random() * 60).toString().padStart(2, '0')}\`;
+    return Math.floor(Math.random() * 24).toString().padStart(2, '0') + ':' + Math.floor(Math.random() * 60).toString().padStart(2, '0') + ':' + Math.floor(Math.random() * 60).toString().padStart(2, '0');
 }
 
 function getRandomId() {
@@ -610,3 +608,4 @@ function getRandomId() {
 function getRandomAmount() {
     return (Math.floor(Math.random() * 50) * 100 + 500).toLocaleString();
 }
+

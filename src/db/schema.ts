@@ -30,6 +30,7 @@ export const platformEnum = pgEnum('platform', [
     'YOUTUBE',
     'TIKTOK',
     'SHOPIFY',
+    'AMAZON',
     // Tier 3 - Add Later
     'SUBSTACK',
     'APP_STORE',
@@ -78,7 +79,8 @@ export const identityProviderEnum = pgEnum('identity_provider', [
     'google',
     'youtube',
     'tiktok',
-    'shopify'
+    'shopify',
+    'amazon'
 ]);
 
 export const ledgerActorEnum = pgEnum('ledger_actor', ['SYSTEM', 'USER']);

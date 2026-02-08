@@ -22,6 +22,7 @@ import billingRoutes from './routes/billing.js';
 import payoutRoutes from './routes/payouts.js';
 import waitlistRoutes from './routes/waitlist.js';
 import salesRoutes from './routes/sales.js';
+import commerceRoutes from './routes/commerce.js';
 
 const PORT = parseInt(process.env.PORT || '3000', 10);
 
@@ -162,6 +163,9 @@ async function main() {
 
     // Sales Integration (Stripe Revenue)
     await fastify.register(salesRoutes);          // /v1/sales/*
+
+    // Commerce Performance (Shopify + Amazon)
+    await fastify.register(commerceRoutes);       // /v1/commerce/*
 
     // Start server
     try {

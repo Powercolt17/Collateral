@@ -1,502 +1,273 @@
-// Overview View - Collateral Enforcement Protocol
-// Stripe/BlackRock institutional aesthetic - Premium finance documentation
+// Overview View - Capital Enforcement Instrument
+// NOT a landing page. An execution terminal.
 
 export function renderOverview() {
     return `
         <style>
-            /* === INSTITUTIONAL ENFORCEMENT PROTOCOL === */
-            :root {
-                --inst-bg: #F8F7F5;
-                --inst-surface: #FFFFFF;
-                --inst-panel: #FAF9F8;
-                --inst-border: #E8E6E3;
-                --inst-border-subtle: #EFEDE9;
-                --inst-text: #1A1A1A;
-                --inst-text-secondary: #6B6B6B;
-                --inst-text-muted: #9CA3AF;
-                --inst-red: #8B1818;
-                --inst-red-light: #FEF2F2;
-                --inst-green: #166534;
-                --inst-green-light: #F0FDF4;
-            }
-
-            .institutional-protocol {
-                background: var(--inst-bg);
-                color: var(--inst-text);
+            /* === EXECUTION TERMINAL === */
+            .execution-terminal {
+                background: #FFFFFF;
+                color: #0A0A0A;
                 min-height: 100vh;
                 font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
             }
 
-            /* Subtle ledger spine - institutional motif */
+            /* Ledger spine - vertical tick marks */
             .ledger-spine {
                 position: fixed;
-                left: 48px;
-                top: 0;
-                bottom: 0;
+                left: 32px;
+                top: 80px;
+                bottom: 40px;
                 width: 1px;
-                background: linear-gradient(
-                    180deg,
-                    transparent 0%,
-                    var(--inst-border) 10%,
-                    var(--inst-border) 90%,
-                    transparent 100%
-                );
+                background: #E5E5E5;
                 pointer-events: none;
                 z-index: 1;
             }
             .ledger-spine::before {
                 content: '';
                 position: absolute;
-                left: -2px;
-                top: 20%;
-                width: 5px;
-                height: 60%;
+                left: -1px;
+                top: 0;
+                width: 3px;
+                height: 100%;
                 background: repeating-linear-gradient(
                     180deg,
-                    transparent,
-                    transparent 40px,
-                    var(--inst-red) 40px,
-                    var(--inst-red) 41px
+                    transparent 0px,
+                    transparent 48px,
+                    #0A0A0A 48px,
+                    #0A0A0A 49px
                 );
-                opacity: 0.15;
+                opacity: 0.08;
             }
 
-            /* Saturn ring watermark - subtle institutional */
-            .saturn-watermark-light {
-                position: fixed;
-                top: 50%;
-                right: -300px;
-                width: 800px;
-                height: 800px;
-                transform: translateY(-50%);
-                pointer-events: none;
-                z-index: 0;
-                opacity: 0.04;
-            }
-            .saturn-watermark-light::before {
-                content: '';
-                position: absolute;
-                inset: 0;
-                border: 2px solid var(--inst-red);
-                border-radius: 50%;
-            }
-            .saturn-watermark-light::after {
-                content: '';
-                position: absolute;
-                top: 50%;
-                left: -20%;
-                right: -20%;
-                height: 4px;
-                background: linear-gradient(90deg, transparent, var(--inst-red), transparent);
-                transform: rotate(-12deg);
-            }
-
-            /* Document panel styling */
-            .doc-panel {
-                background: var(--inst-surface);
-                border: 1px solid var(--inst-border);
-                box-shadow: 0 1px 3px rgba(0,0,0,0.04);
-            }
-
-            /* Receipt/table row styling */
-            .ledger-row {
+            /* Contract field rows */
+            .field-row {
                 display: flex;
                 justify-content: space-between;
-                align-items: center;
-                padding: 14px 0;
-                border-bottom: 1px solid var(--inst-border-subtle);
+                align-items: baseline;
+                padding: 10px 0;
+                border-bottom: 1px solid #E5E5E5;
             }
-            .ledger-row:last-child { border-bottom: none; }
-            .ledger-label { 
-                color: var(--inst-text-secondary); 
-                font-size: 13px; 
+            .field-row:last-child { border-bottom: none; }
+            .field-label { 
+                font-size: 11px;
                 font-weight: 500;
+                color: #6B6B6B;
                 text-transform: uppercase;
                 letter-spacing: 0.5px;
             }
-            .ledger-value { 
-                color: var(--inst-text); 
-                font-size: 14px; 
-                font-weight: 600; 
+            .field-value { 
+                font-size: 13px;
+                font-weight: 600;
+                color: #0A0A0A;
             }
-            .ledger-value.accent { color: var(--inst-red); }
-            .ledger-value.success { color: var(--inst-green); }
-            .ledger-value code {
+            .field-value.mono {
                 font-family: 'JetBrains Mono', monospace;
                 font-size: 12px;
-                background: var(--inst-panel);
-                padding: 2px 6px;
-                border-radius: 3px;
             }
+            .field-value.red { color: #8B1818; }
 
-            /* Section header - document filing style */
-            .section-header {
+            /* State machine */
+            .state-machine {
+                display: flex;
+                align-items: center;
+                gap: 4px;
+                font-family: 'JetBrains Mono', monospace;
                 font-size: 11px;
-                font-weight: 600;
-                letter-spacing: 1.5px;
-                text-transform: uppercase;
-                color: var(--inst-text-secondary);
-                padding-bottom: 12px;
-                border-bottom: 2px solid var(--inst-text);
-                margin-bottom: 24px;
-                display: inline-block;
+                color: #0A0A0A;
+            }
+            .state-machine .arrow {
+                color: #CCCCCC;
+            }
+            .state-machine .state {
+                padding: 4px 8px;
+                background: #F5F5F5;
+                border: 1px solid #E5E5E5;
+            }
+            .state-machine .state.active {
+                background: #0A0A0A;
+                color: #FFFFFF;
+                border-color: #0A0A0A;
+            }
+            .state-machine .state.forfeited {
+                background: #8B1818;
+                color: #FFFFFF;
+                border-color: #8B1818;
             }
 
-            /* CTA buttons - institutional */
-            .cta-primary {
-                background: var(--inst-red);
-                color: white;
-                padding: 14px 32px;
-                font-size: 13px;
+            /* Ledger table */
+            .ledger-table {
+                width: 100%;
+                font-family: 'JetBrains Mono', monospace;
+                font-size: 12px;
+                border-collapse: collapse;
+            }
+            .ledger-table th {
+                text-align: left;
+                font-size: 10px;
+                font-weight: 500;
+                color: #6B6B6B;
+                text-transform: uppercase;
+                letter-spacing: 0.5px;
+                padding: 8px 0;
+                border-bottom: 2px solid #0A0A0A;
+            }
+            .ledger-table td {
+                padding: 12px 0;
+                border-bottom: 1px solid #E5E5E5;
+                color: #0A0A0A;
+            }
+            .ledger-table .status {
                 font-weight: 600;
-                letter-spacing: 0.3px;
+            }
+            .ledger-table .status.verifying { color: #0A0A0A; }
+            .ledger-table .status.settled { color: #0A0A0A; }
+            .ledger-table .status.forfeited { color: #8B1818; }
+
+            /* Execute button */
+            .btn-execute {
+                background: #8B1818;
+                color: #FFFFFF;
+                padding: 14px 32px;
+                font-size: 12px;
+                font-weight: 600;
+                letter-spacing: 0.5px;
                 border: none;
                 cursor: pointer;
-                transition: all 150ms ease;
+                transition: background 150ms ease;
             }
-            .cta-primary:hover {
+            .btn-execute:hover {
                 background: #6B1212;
-                transform: translateY(-1px);
-                box-shadow: 0 4px 12px rgba(139, 24, 24, 0.2);
             }
 
-            .cta-secondary {
-                background: transparent;
-                color: var(--inst-text);
-                padding: 14px 32px;
-                font-size: 13px;
-                font-weight: 500;
-                border: 1px solid var(--inst-border);
-                cursor: pointer;
-                transition: all 150ms ease;
+            /* Text link */
+            .text-link {
+                font-size: 12px;
+                color: #6B6B6B;
+                text-decoration: none;
+                transition: color 150ms ease;
             }
-            .cta-secondary:hover {
-                border-color: var(--inst-text);
-                background: var(--inst-panel);
+            .text-link:hover {
+                color: #0A0A0A;
             }
 
-            /* Verification stamp motif */
-            .verification-stamp {
-                position: relative;
-                display: inline-flex;
-                align-items: center;
-                gap: 8px;
-                padding: 6px 12px;
-                border: 2px solid var(--inst-green);
-                color: var(--inst-green);
-                font-size: 11px;
-                font-weight: 600;
-                letter-spacing: 0.5px;
-                text-transform: uppercase;
-                transform: rotate(-2deg);
-            }
-            .verification-stamp::before {
-                content: '✓';
-                font-size: 14px;
+            /* Section divider */
+            .section-divider {
+                height: 1px;
+                background: #0A0A0A;
+                margin: 48px 0;
             }
 
-            /* Execution table - settlement record style */
-            .execution-table {
-                width: 100%;
-                border-collapse: collapse;
-                font-size: 13px;
+            /* Minimal animations */
+            @keyframes fadeIn {
+                from { opacity: 0; }
+                to { opacity: 1; }
             }
-            .execution-table thead {
-                background: var(--inst-panel);
-                border-bottom: 2px solid var(--inst-border);
-            }
-            .execution-table th {
-                padding: 12px 16px;
-                text-align: left;
-                font-weight: 600;
-                color: var(--inst-text-secondary);
-                font-size: 11px;
-                text-transform: uppercase;
-                letter-spacing: 0.5px;
-            }
-            .execution-table td {
-                padding: 14px 16px;
-                border-bottom: 1px solid var(--inst-border-subtle);
-                color: var(--inst-text);
-            }
-            .execution-table tbody tr:hover {
-                background: var(--inst-panel);
-            }
-
-            /* Status badges */
-            .status-settled {
-                display: inline-flex;
-                align-items: center;
-                gap: 6px;
-                padding: 4px 10px;
-                background: var(--inst-green-light);
-                color: var(--inst-green);
-                font-size: 11px;
-                font-weight: 600;
-                text-transform: uppercase;
-                letter-spacing: 0.3px;
-            }
-            .status-settled::before {
-                content: '';
-                width: 6px;
-                height: 6px;
-                background: var(--inst-green);
-                border-radius: 50%;
-            }
-            .status-active {
-                display: inline-flex;
-                align-items: center;
-                gap: 6px;
-                padding: 4px 10px;
-                background: #FEF3C7;
-                color: #92400E;
-                font-size: 11px;
-                font-weight: 600;
-                text-transform: uppercase;
-                letter-spacing: 0.3px;
-            }
-            .status-active::before {
-                content: '';
-                width: 6px;
-                height: 6px;
-                background: #F59E0B;
-                border-radius: 50%;
-            }
-            .status-forfeited {
-                display: inline-flex;
-                align-items: center;
-                gap: 6px;
-                padding: 4px 10px;
-                background: var(--inst-red-light);
-                color: var(--inst-red);
-                font-size: 11px;
-                font-weight: 600;
-                text-transform: uppercase;
-                letter-spacing: 0.3px;
-            }
-
-            /* Animations - subtle and professional */
-            @keyframes fadeUp {
-                from { opacity: 0; transform: translateY(12px); }
-                to { opacity: 1; transform: translateY(0); }
-            }
-            .animate-in {
-                animation: fadeUp 500ms cubic-bezier(0.22, 0.61, 0.36, 1) forwards;
-            }
-            .delay-1 { animation-delay: 100ms; opacity: 0; }
-            .delay-2 { animation-delay: 200ms; opacity: 0; }
-            .delay-3 { animation-delay: 300ms; opacity: 0; }
-
-            @media (prefers-reduced-motion: reduce) {
-                .animate-in { animation: none !important; opacity: 1 !important; }
+            .fade-in {
+                animation: fadeIn 400ms ease forwards;
             }
 
             @media (max-width: 768px) {
                 .ledger-spine { display: none; }
+                .state-machine { flex-wrap: wrap; }
             }
         </style>
 
-        <div class="institutional-protocol">
+        <div class="execution-terminal">
             <div class="ledger-spine"></div>
-            <div class="saturn-watermark-light"></div>
 
             <!-- ═══════════════════════════════════════════════════════════════ -->
-            <!-- HERO - INSTITUTIONAL PROTOCOL STATEMENT -->
+            <!-- EXECUTION HEADER -->
             <!-- ═══════════════════════════════════════════════════════════════ -->
-            <section class="py-20 md:py-28 relative z-10">
-                <div class="max-w-6xl mx-auto px-6 md:px-12">
-                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-24">
-                        
-                        <!-- LEFT: Protocol Statement -->
-                        <div class="animate-in">
-                            <div class="section-header mb-8">Enforcement Protocol</div>
-                            
-                            <h1 class="text-4xl md:text-5xl font-bold mb-6 leading-tight tracking-tight" 
-                                style="color: #1A1A1A;">
-                                Commitments<br/>
-                                <span style="color: #8B1818;">Require</span> Capital.
-                            </h1>
-                            
-                            <p class="text-lg text-[#6B6B6B] leading-relaxed mb-10 max-w-md">
-                                Performance contracts backed by locked capital. 
-                                Baselines captured at execution. Settlement is automatic and final.
-                            </p>
-                            
-                            <div class="flex flex-wrap gap-4 mb-10">
-                                <button onclick="window.app.handleInitiate()" class="cta-primary">
-                                    Execute Contract
-                                </button>
-                                <button onclick="window.router.navigate('/docs'); return false;" class="cta-secondary">
-                                    View Documentation
-                                </button>
-                            </div>
-
-                            <div class="verification-stamp">
-                                Regulated Settlement Protocol
-                            </div>
-                        </div>
-
-                        <!-- RIGHT: Baseline Snapshot Panel -->
-                        <div class="animate-in delay-2">
-                            <div class="doc-panel p-8">
-                                <div class="flex items-center justify-between mb-6 pb-4 border-b border-[#E8E6E3]">
-                                    <span class="text-xs font-semibold text-[#6B6B6B] uppercase tracking-wider">Baseline Snapshot</span>
-                                    <span class="text-xs text-[#166534] font-medium">Immutable at execution</span>
-                                </div>
-                                
-                                <div class="mb-6">
-                                    <div class="text-3xl font-bold text-[#1A1A1A] mb-1">$4,221</div>
-                                    <div class="text-sm text-[#6B6B6B]">30-Day Revenue Baseline</div>
-                                </div>
-
-                                <div class="space-y-0">
-                                    <div class="ledger-row">
-                                        <span class="ledger-label">Contract</span>
-                                        <span class="ledger-value">Revenue Commitment</span>
-                                    </div>
-                                    <div class="ledger-row">
-                                        <span class="ledger-label">Target</span>
-                                        <span class="ledger-value accent">+18% Growth</span>
-                                    </div>
-                                    <div class="ledger-row">
-                                        <span class="ledger-label">Window</span>
-                                        <span class="ledger-value">14 Days</span>
-                                    </div>
-                                    <div class="ledger-row">
-                                        <span class="ledger-label">Stake</span>
-                                        <span class="ledger-value accent">$500.00 Locked</span>
-                                    </div>
-                                    <div class="ledger-row">
-                                        <span class="ledger-label">Settlement</span>
-                                        <span class="ledger-value success">$800.00 Return</span>
-                                    </div>
-                                </div>
-                                
-                                <div class="mt-6 pt-4 border-t border-[#E8E6E3]">
-                                    <div class="text-xs text-[#9CA3AF]">
-                                        This record cannot be altered after execution.
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-
-            <!-- ═══════════════════════════════════════════════════════════════ -->
-            <!-- ENFORCEMENT PIPELINE - DOCUMENT LAYOUT -->
-            <!-- ═══════════════════════════════════════════════════════════════ -->
-            <section class="py-16 md:py-20 bg-white border-y border-[#E8E6E3] relative z-10">
-                <div class="max-w-6xl mx-auto px-6 md:px-12">
-                    <div class="section-header mb-12">Settlement Process</div>
+            <section class="py-16 md:py-20 border-b border-[#E5E5E5]">
+                <div class="max-w-3xl mx-auto px-6 md:px-8">
                     
-                    <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
-                        <!-- Step 1 -->
-                        <div class="animate-in delay-1">
-                            <div class="text-sm font-bold text-[#8B1818] mb-3">01</div>
-                            <div class="text-lg font-semibold text-[#1A1A1A] mb-2">
-                                Baseline Captured
-                            </div>
-                            <div class="text-sm text-[#6B6B6B] leading-relaxed">
-                                Current metrics recorded at contract execution. Immutable reference point.
-                            </div>
+                    <!-- System Status -->
+                    <div class="mb-12 fade-in">
+                        <div class="inline-block px-3 py-1.5 border border-[#0A0A0A] mb-8">
+                            <span class="text-[10px] font-semibold tracking-widest text-[#0A0A0A]">
+                                EXECUTION STATUS: READY
+                            </span>
                         </div>
 
-                        <!-- Step 2 -->
-                        <div class="animate-in delay-2">
-                            <div class="text-sm font-bold text-[#8B1818] mb-3">02</div>
-                            <div class="text-lg font-semibold text-[#1A1A1A] mb-2">
-                                Capital Locked
-                            </div>
-                            <div class="text-sm text-[#6B6B6B] leading-relaxed">
-                                Stake held in escrow. Non-reversible until settlement window closes.
-                            </div>
-                        </div>
-
-                        <!-- Step 3 -->
-                        <div class="animate-in delay-3">
-                            <div class="text-sm font-bold text-[#8B1818] mb-3">03</div>
-                            <div class="text-lg font-semibold text-[#1A1A1A] mb-2">
-                                Verification
-                            </div>
-                            <div class="text-sm text-[#6B6B6B] leading-relaxed">
-                                API-based outcome verification. No manual review or appeals.
-                            </div>
-                        </div>
-
-                        <!-- Step 4 -->
-                        <div class="animate-in delay-3">
-                            <div class="text-sm font-bold text-[#8B1818] mb-3">04</div>
-                            <div class="text-lg font-semibold text-[#1A1A1A] mb-2">
-                                Settlement
-                            </div>
-                            <div class="text-sm text-[#6B6B6B] leading-relaxed">
-                                Automatic funds release. Receipt-grade finality recorded to ledger.
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-
-            <!-- ═══════════════════════════════════════════════════════════════ -->
-            <!-- RECENT EXECUTIONS - TABLE FORMAT (NOT LIVE FEED) -->
-            <!-- ═══════════════════════════════════════════════════════════════ -->
-            <section class="py-16 md:py-20 relative z-10">
-                <div class="max-w-6xl mx-auto px-6 md:px-12">
-                    <div class="section-header mb-8">Recent Executions</div>
-                    
-                    <div class="doc-panel overflow-hidden">
-                        <table class="execution-table">
-                            <thead>
-                                <tr>
-                                    <th>Time</th>
-                                    <th>Contract</th>
-                                    <th>Stake</th>
-                                    <th>Status</th>
-                                </tr>
-                            </thead>
-                            <tbody id="executions-table">
-                                <tr>
-                                    <td class="font-mono text-xs text-[#6B6B6B]">Feb 08, 14:22</td>
-                                    <td>Revenue Growth +15%</td>
-                                    <td class="font-medium">$1,000</td>
-                                    <td><span class="status-settled">Settled</span></td>
-                                </tr>
-                                <tr>
-                                    <td class="font-mono text-xs text-[#6B6B6B]">Feb 08, 12:18</td>
-                                    <td>Commit Cadence 5/wk</td>
-                                    <td class="font-medium">$500</td>
-                                    <td><span class="status-active">Active</span></td>
-                                </tr>
-                                <tr>
-                                    <td class="font-mono text-xs text-[#6B6B6B]">Feb 07, 09:44</td>
-                                    <td>MRR Target $8,000</td>
-                                    <td class="font-medium">$750</td>
-                                    <td><span class="status-settled">Settled</span></td>
-                                </tr>
-                                <tr>
-                                    <td class="font-mono text-xs text-[#6B6B6B]">Feb 06, 16:03</td>
-                                    <td>Revenue Growth +20%</td>
-                                    <td class="font-medium">$2,000</td>
-                                    <td><span class="status-forfeited">Forfeited</span></td>
-                                </tr>
-                                <tr>
-                                    <td class="font-mono text-xs text-[#6B6B6B]">Feb 06, 11:29</td>
-                                    <td>Engagement +25%</td>
-                                    <td class="font-medium">$400</td>
-                                    <td><span class="status-settled">Settled</span></td>
-                                </tr>
-                            </tbody>
-                        </table>
+                        <h1 class="text-3xl md:text-4xl font-bold tracking-tight text-[#0A0A0A] mb-4" 
+                            style="font-family: 'IBM Plex Sans', 'Inter', sans-serif; line-height: 1.1;">
+                            Intentions Fail<br/>Without Stakes.
+                        </h1>
                     </div>
 
-                    <div class="mt-4 text-right">
-                        <a href="#" onclick="window.router.navigate('/ledger'); return false;" 
-                           class="text-sm text-[#8B1818] hover:underline font-medium">
-                            View Complete Ledger →
+                    <!-- Contract Terms -->
+                    <div class="border border-[#E5E5E5] p-6 mb-8 fade-in" style="animation-delay: 100ms;">
+                        <div class="field-row">
+                            <span class="field-label">Instrument</span>
+                            <span class="field-value mono">REVENUE_COMMITMENT</span>
+                        </div>
+                        <div class="field-row">
+                            <span class="field-label">Baseline Snapshot</span>
+                            <span class="field-value">$4,221 (30D)</span>
+                        </div>
+                        <div class="field-row">
+                            <span class="field-label">Target Delta</span>
+                            <span class="field-value red">+18%</span>
+                        </div>
+                        <div class="field-row">
+                            <span class="field-label">Window</span>
+                            <span class="field-value">14 DAYS</span>
+                        </div>
+                        <div class="field-row">
+                            <span class="field-label">Settlement</span>
+                            <span class="field-value">BINARY</span>
+                        </div>
+                        <div class="field-row">
+                            <span class="field-label">Stake</span>
+                            <span class="field-value red">$500 LOCKED</span>
+                        </div>
+                        <div class="field-row">
+                            <span class="field-label">Failure</span>
+                            <span class="field-value red">FORFEITURE</span>
+                        </div>
+                        <div class="field-row">
+                            <span class="field-label">Verification</span>
+                            <span class="field-value mono">API-ONLY</span>
+                        </div>
+                        <div class="field-row">
+                            <span class="field-label">Receipt ID</span>
+                            <span class="field-value mono">RCPT_0184_9F2A</span>
+                        </div>
+                    </div>
+
+                    <!-- Actions -->
+                    <div class="flex items-center gap-6 fade-in" style="animation-delay: 200ms;">
+                        <button onclick="window.app.handleInitiate()" class="btn-execute">
+                            EXECUTE CONTRACT
+                        </button>
+                        <a href="#" onclick="window.router.navigate('/ledger'); return false;" class="text-link">
+                            View Ledger Record →
                         </a>
+                    </div>
+                </div>
+            </section>
+
+
+            <!-- ═══════════════════════════════════════════════════════════════ -->
+            <!-- ENFORCEMENT LIFECYCLE -->
+            <!-- ═══════════════════════════════════════════════════════════════ -->
+            <section class="py-12 md:py-16 border-b border-[#E5E5E5]">
+                <div class="max-w-3xl mx-auto px-6 md:px-8">
+                    <div class="text-[10px] font-semibold tracking-widest text-[#6B6B6B] mb-6 uppercase">
+                        Enforcement Lifecycle
+                    </div>
+                    
+                    <div class="state-machine">
+                        <span class="state active">BASELINE_CAPTURED</span>
+                        <span class="arrow">→</span>
+                        <span class="state">CAPITAL_LOCKED</span>
+                        <span class="arrow">→</span>
+                        <span class="state">VERIFYING</span>
+                        <span class="arrow">→</span>
+                        <span class="state">SETTLED</span>
+                        <span class="text-[#CCCCCC] mx-1">/</span>
+                        <span class="state forfeited">FORFEITED</span>
                     </div>
                 </div>
             </section>
@@ -505,142 +276,170 @@ export function renderOverview() {
             <!-- ═══════════════════════════════════════════════════════════════ -->
             <!-- CONTRACT SPECIFICATIONS -->
             <!-- ═══════════════════════════════════════════════════════════════ -->
-            <section class="py-16 md:py-20 bg-white border-y border-[#E8E6E3] relative z-10">
-                <div class="max-w-6xl mx-auto px-6 md:px-12">
-                    <div class="section-header mb-12">Contract Terms</div>
+            <section class="py-12 md:py-16 border-b border-[#E5E5E5]">
+                <div class="max-w-3xl mx-auto px-6 md:px-8">
+                    <div class="text-[10px] font-semibold tracking-widest text-[#6B6B6B] mb-6 uppercase">
+                        Contract Terms
+                    </div>
                     
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                        <!-- Settlement Tiers -->
-                        <div class="doc-panel p-6">
-                            <div class="text-sm font-semibold text-[#1A1A1A] mb-4 uppercase tracking-wide">Settlement Tiers</div>
-                            <table class="w-full text-sm">
-                                <thead class="text-[#6B6B6B] border-b border-[#E8E6E3]">
-                                    <tr>
-                                        <th class="text-left py-3 font-medium">Tier</th>
-                                        <th class="text-right py-3 font-medium">Return</th>
-                                        <th class="text-right py-3 font-medium">Risk</th>
-                                    </tr>
-                                </thead>
-                                <tbody class="text-[#1A1A1A]">
-                                    <tr class="border-b border-[#EFEDE9]">
-                                        <td class="py-3 font-medium">Conservative</td>
-                                        <td class="text-right">1.2x – 1.5x</td>
-                                        <td class="text-right text-[#166534]">Low</td>
-                                    </tr>
-                                    <tr class="border-b border-[#EFEDE9]">
-                                        <td class="py-3 font-medium">Standard</td>
-                                        <td class="text-right">1.5x – 2.5x</td>
-                                        <td class="text-right text-[#92400E]">Medium</td>
-                                    </tr>
-                                    <tr>
-                                        <td class="py-3 font-medium">Aggressive</td>
-                                        <td class="text-right">2.5x – 5.0x</td>
-                                        <td class="text-right text-[#8B1818]">High</td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
+                    <table class="w-full text-sm border-collapse">
+                        <tbody>
+                            <tr class="border-b border-[#E5E5E5]">
+                                <td class="py-3 text-[#6B6B6B] w-1/3">Baseline</td>
+                                <td class="py-3 text-[#0A0A0A] font-medium">Captured at execution. Immutable.</td>
+                            </tr>
+                            <tr class="border-b border-[#E5E5E5]">
+                                <td class="py-3 text-[#6B6B6B]">Capital</td>
+                                <td class="py-3 text-[#0A0A0A] font-medium">Locked until settlement. Non-reversible.</td>
+                            </tr>
+                            <tr class="border-b border-[#E5E5E5]">
+                                <td class="py-3 text-[#6B6B6B]">Verification</td>
+                                <td class="py-3 text-[#0A0A0A] font-medium">API response only. Zero subjective layer.</td>
+                            </tr>
+                            <tr class="border-b border-[#E5E5E5]">
+                                <td class="py-3 text-[#6B6B6B]">Settlement</td>
+                                <td class="py-3 text-[#0A0A0A] font-medium">Automatic. Receipt-grade finality.</td>
+                            </tr>
+                            <tr>
+                                <td class="py-3 text-[#6B6B6B]">Outcome</td>
+                                <td class="py-3 font-medium"><span class="text-[#0A0A0A]">Paid</span> <span class="text-[#CCCCCC]">or</span> <span class="text-[#8B1818]">Forfeited</span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
 
-                        <!-- Verification Sources -->
-                        <div class="doc-panel p-6">
-                            <div class="text-sm font-semibold text-[#1A1A1A] mb-4 uppercase tracking-wide">Verification Sources</div>
-                            <div class="space-y-0">
-                                <div class="ledger-row">
-                                    <span class="ledger-label text-sm normal-case font-normal">Stripe</span>
-                                    <span class="text-sm text-[#1A1A1A]">Revenue, MRR</span>
-                                </div>
-                                <div class="ledger-row">
-                                    <span class="ledger-label text-sm normal-case font-normal">Shopify</span>
-                                    <span class="text-sm text-[#1A1A1A]">Store revenue</span>
-                                </div>
-                                <div class="ledger-row">
-                                    <span class="ledger-label text-sm normal-case font-normal">X (Twitter)</span>
-                                    <span class="text-sm text-[#1A1A1A]">Engagement metrics</span>
-                                </div>
-                                <div class="ledger-row">
-                                    <span class="ledger-label text-sm normal-case font-normal">GitHub</span>
-                                    <span class="text-sm text-[#1A1A1A]">Commit frequency</span>
-                                </div>
-                            </div>
-                            <div class="mt-4 pt-4 border-t border-[#E8E6E3] text-xs text-[#9CA3AF]">
-                                All verification via OAuth API. No manual review.
-                            </div>
-                        </div>
+
+            <!-- ═══════════════════════════════════════════════════════════════ -->
+            <!-- CLEARING LEDGER -->
+            <!-- ═══════════════════════════════════════════════════════════════ -->
+            <section class="py-12 md:py-16 border-b border-[#E5E5E5]">
+                <div class="max-w-3xl mx-auto px-6 md:px-8">
+                    <div class="text-[10px] font-semibold tracking-widest text-[#6B6B6B] mb-6 uppercase">
+                        Recent Executions
+                    </div>
+                    
+                    <table class="ledger-table">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Stake</th>
+                                <th class="text-right">Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>#0187</td>
+                                <td>$1,200 LOCKED</td>
+                                <td class="text-right status verifying">VERIFYING</td>
+                            </tr>
+                            <tr>
+                                <td>#0186</td>
+                                <td>$500 LOCKED</td>
+                                <td class="text-right status verifying">VERIFYING</td>
+                            </tr>
+                            <tr>
+                                <td>#0185</td>
+                                <td>$1,000 LOCKED</td>
+                                <td class="text-right status settled">SETTLED</td>
+                            </tr>
+                            <tr>
+                                <td>#0184</td>
+                                <td>$750 LOCKED</td>
+                                <td class="text-right status forfeited">FORFEITED</td>
+                            </tr>
+                            <tr>
+                                <td>#0183</td>
+                                <td>$2,000 LOCKED</td>
+                                <td class="text-right status settled">SETTLED</td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <div class="mt-6 text-right">
+                        <a href="#" onclick="window.router.navigate('/ledger'); return false;" class="text-link">
+                            View Full Ledger →
+                        </a>
                     </div>
                 </div>
             </section>
 
 
             <!-- ═══════════════════════════════════════════════════════════════ -->
-            <!-- PROTOCOL STATEMENT - INSTITUTIONAL CLOSE -->
+            <!-- VERIFICATION SOURCES -->
             <!-- ═══════════════════════════════════════════════════════════════ -->
-            <section class="py-20 md:py-28 relative z-10">
-                <div class="max-w-6xl mx-auto px-6 md:px-12">
-                    <div class="max-w-xl">
-                        <div class="section-header mb-8">Protocol</div>
-                        
-                        <div class="space-y-6 mb-12">
-                            <p class="text-2xl md:text-3xl text-[#1A1A1A] leading-snug font-medium tracking-tight">
-                                Intentions without stakes<br/>
-                                produce nothing.
-                            </p>
-                            <p class="text-base text-[#6B6B6B] leading-relaxed">
-                                Capital enforcement creates accountability. 
-                                Markets price commitment. Outcomes become inevitable 
-                                when failure carries real consequence.
-                            </p>
-                        </div>
-                        
-                        <div class="flex flex-wrap gap-4 mb-8">
-                            <button onclick="window.app.handleInitiate()" class="cta-primary">
-                                Execute Contract
-                            </button>
-                            <button onclick="window.router.navigate('/docs'); return false;" class="cta-secondary">
-                                Read Terms
-                            </button>
-                        </div>
-                        
-                        <p class="text-xs text-[#9CA3AF]">
-                            Capital at risk. Review contract terms before committing funds.
-                        </p>
+            <section class="py-12 md:py-16 border-b border-[#E5E5E5]">
+                <div class="max-w-3xl mx-auto px-6 md:px-8">
+                    <div class="text-[10px] font-semibold tracking-widest text-[#6B6B6B] mb-6 uppercase">
+                        Verification Layer
                     </div>
-                </div>
-            </section>
-
-
-            <!-- ═══════════════════════════════════════════════════════════════ -->
-            <!-- FOOTER - MINIMAL INSTITUTIONAL -->
-            <!-- ═══════════════════════════════════════════════════════════════ -->
-            <footer class="border-t border-[#E8E6E3] py-12 bg-white relative z-10">
-                <div class="max-w-6xl mx-auto px-6 md:px-12">
-                    <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-6">
+                    
+                    <div class="grid grid-cols-2 md:grid-cols-4 gap-6 text-sm">
                         <div>
-                            <div class="font-bold text-lg mb-1 text-[#1A1A1A]">
-                                Collateral
-                            </div>
-                            <div class="text-xs text-[#9CA3AF]">
-                                Enforcement Protocol • v1.0
-                            </div>
+                            <div class="font-medium text-[#0A0A0A] mb-1">Stripe</div>
+                            <div class="text-[#6B6B6B]">Revenue, MRR</div>
                         </div>
-                        
-                        <div class="flex flex-wrap gap-6 text-sm text-[#6B6B6B]">
-                            <a href="#" onclick="window.router.navigate('/docs'); return false;" class="hover:text-[#1A1A1A] transition-colors">
-                                Documentation
-                            </a>
-                            <a href="#" onclick="window.router.navigate('/ledger'); return false;" class="hover:text-[#1A1A1A] transition-colors">
-                                Ledger
-                            </a>
-                            <a href="#" class="hover:text-[#1A1A1A] transition-colors">
-                                Terms
-                            </a>
-                            <a href="#" class="hover:text-[#1A1A1A] transition-colors">
-                                Risk Disclosure
-                            </a>
+                        <div>
+                            <div class="font-medium text-[#0A0A0A] mb-1">Shopify</div>
+                            <div class="text-[#6B6B6B]">Store revenue</div>
+                        </div>
+                        <div>
+                            <div class="font-medium text-[#0A0A0A] mb-1">X</div>
+                            <div class="text-[#6B6B6B]">Engagement</div>
+                        </div>
+                        <div>
+                            <div class="font-medium text-[#0A0A0A] mb-1">GitHub</div>
+                            <div class="text-[#6B6B6B]">Commits</div>
                         </div>
                     </div>
-                    
-                    <div class="mt-8 pt-6 border-t border-[#E8E6E3] text-xs text-[#9CA3AF]">
-                        © 2026 Collateral. Capital at risk. Settlement is final and irreversible.
+
+                    <div class="mt-6 text-xs text-[#6B6B6B]">
+                        All verification via OAuth API. No manual review. No appeals.
+                    </div>
+                </div>
+            </section>
+
+
+            <!-- ═══════════════════════════════════════════════════════════════ -->
+            <!-- EXECUTE -->
+            <!-- ═══════════════════════════════════════════════════════════════ -->
+            <section class="py-16 md:py-20">
+                <div class="max-w-3xl mx-auto px-6 md:px-8">
+                    <div class="border-t-2 border-[#0A0A0A] pt-8">
+                        <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-6">
+                            <div>
+                                <div class="text-lg font-semibold text-[#0A0A0A] mb-1">
+                                    Capital at risk.
+                                </div>
+                                <div class="text-sm text-[#6B6B6B]">
+                                    Execution is irreversible. Settlement is final.
+                                </div>
+                            </div>
+                            <button onclick="window.app.handleInitiate()" class="btn-execute">
+                                EXECUTE CONTRACT
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+
+            <!-- ═══════════════════════════════════════════════════════════════ -->
+            <!-- FOOTER -->
+            <!-- ═══════════════════════════════════════════════════════════════ -->
+            <footer class="border-t border-[#E5E5E5] py-8">
+                <div class="max-w-3xl mx-auto px-6 md:px-8">
+                    <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 text-xs text-[#6B6B6B]">
+                        <div>
+                            <span class="font-medium text-[#0A0A0A]">Collateral</span>
+                            <span class="mx-2">·</span>
+                            <span>Enforcement Protocol</span>
+                        </div>
+                        <div class="flex gap-6">
+                            <a href="#" onclick="window.router.navigate('/ledger'); return false;" class="hover:text-[#0A0A0A] transition-colors">Ledger</a>
+                            <a href="#" onclick="window.router.navigate('/docs'); return false;" class="hover:text-[#0A0A0A] transition-colors">Terms</a>
+                            <a href="#" class="hover:text-[#0A0A0A] transition-colors">Risk</a>
+                        </div>
                     </div>
                 </div>
             </footer>
@@ -650,9 +449,9 @@ export function renderOverview() {
 
 
 export function initOverview() {
-    console.log('[Overview] Initializing institutional protocol interface');
+    console.log('[Overview] Execution terminal initialized');
 
-    // Initialize Lucide icons
+    // Initialize Lucide icons if present
     if (window.lucide) {
         window.lucide.createIcons();
     }

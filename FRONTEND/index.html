@@ -88,7 +88,7 @@
     </style>
 </head>
 
-<body class="min-h-screen flex flex-col font-sans relative text-[#1A1A1A] bg-[#F8F7F5] antialiased overflow-x-hidden">
+<body class="min-h-screen flex flex-col font-sans relative text-[#0A0A0A] bg-white antialiased overflow-x-hidden">
 
     <!-- Header (injected by JS) -->
     <div id="header-mount"></div>
@@ -96,23 +96,19 @@
     <!-- Main Content (injected by router) -->
     <div id="app" class="pt-16 relative z-10 min-h-screen flex flex-col"></div>
 
-    <!-- Status Bar (Fixed Bottom) - Institutional Style -->
+    <!-- Status Bar (Fixed Bottom) -->
     <div
-        class="fixed bottom-0 w-full bg-white border-t border-[#E8E6E3] py-2.5 px-6 flex justify-between items-center z-40 text-[11px] tracking-wide text-[#6B6B6B]">
-        <div class="flex items-center gap-4">
-            <span class="font-medium text-[#1A1A1A]">Collateral</span>
-            <span class="text-[#9CA3AF]">•</span>
-            <span class="flex items-center gap-1.5 text-[#166534]"><span
-                    class="w-1.5 h-1.5 bg-[#166534] rounded-full"></span> Operational</span>
-        </div>
-        <div class="hidden md:block absolute left-1/2 -translate-x-1/2 text-[#9CA3AF]">
-            Immutable Settlement Protocol
+        class="fixed bottom-0 w-full bg-white border-t border-[#E5E5E5] py-2.5 px-6 flex justify-between items-center z-40 text-[11px] text-[#6B6B6B]">
+        <div class="flex items-center gap-3">
+            <span class="font-medium text-[#0A0A0A]">COLLATERAL</span>
+            <span class="text-[#E5E5E5]">|</span>
+            <span>Enforcement Protocol</span>
         </div>
         <div class="flex items-center gap-4">
-            <a href="#" onclick="window.router.navigate('/docs'); return false;"
-                class="hover:text-[#1A1A1A] cursor-pointer transition-colors">Docs</a>
             <a href="#" onclick="window.router.navigate('/ledger'); return false;"
-                class="hover:text-[#1A1A1A] cursor-pointer transition-colors">Ledger</a>
+                class="hover:text-[#0A0A0A] cursor-pointer transition-colors">Ledger</a>
+            <a href="#" onclick="window.router.navigate('/docs'); return false;"
+                class="hover:text-[#0A0A0A] cursor-pointer transition-colors">Terms</a>
         </div>
     </div>
     <style>

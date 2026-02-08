@@ -120,6 +120,48 @@
       "when": 1769326000000,
       "tag": "0016_fix_account_ledger_event_type",
       "breakpoints": true
+    },
+    {
+      "idx": 17,
+      "version": "7",
+      "when": 1769327000000,
+      "tag": "0016_add_origin_event_id",
+      "breakpoints": true
+    },
+    {
+      "idx": 18,
+      "version": "7",
+      "when": 1769400000000,
+      "tag": "0017_payout_idempotency_index",
+      "breakpoints": true
+    },
+    {
+      "idx": 19,
+      "version": "7",
+      "when": 1769500000000,
+      "tag": "0018_waitlist",
+      "breakpoints": true
+    },
+    {
+      "idx": 20,
+      "version": "7",
+      "when": 1769600000000,
+      "tag": "0019_sales_integrations",
+      "breakpoints": true
+    },
+    {
+      "idx": 21,
+      "version": "7",
+      "when": 1769700000000,
+      "tag": "0020_commerce_events",
+      "breakpoints": true
+    },
+    {
+      "idx": 22,
+      "version": "7",
+      "when": 1769800000000,
+      "tag": "0021_commerce_hardening",
+      "breakpoints": true
     }
   ]
 }

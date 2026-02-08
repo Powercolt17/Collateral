@@ -100,6 +100,9 @@ const MAX_VERIFICATION_ATTEMPTS = 5;
 /** Base backoff for retries */
 const RETRY_BACKOFF_BASE_MS = 60 * 1000; // 1 minute
 
+/** Max backoff delay cap */
+const MAX_BACKOFF_MS = 10 * 60 * 1000; // 10 minutes max
+
 /** Worker ID for lock acquisition */
 const WORKER_ID = process.env.WORKER_ID || `worker-${process.pid}`;
 
@@ -152,11 +155,13 @@ function computeIdempotencyKey(
 
 /**
  * Calculate next retry time with exponential backoff
+ * Capped at MAX_BACKOFF_MS with jitter
  */
 function calculateNextRetryTime(attempt: number): Date {
-    const backoffMs = RETRY_BACKOFF_BASE_MS * Math.pow(2, attempt - 1);
+    const rawBackoffMs = RETRY_BACKOFF_BASE_MS * Math.pow(2, attempt - 1);
+    const cappedBackoffMs = Math.min(rawBackoffMs, MAX_BACKOFF_MS);
     const jitterMs = Math.random() * 10000; // 0-10s jitter
-    return new Date(Date.now() + backoffMs + jitterMs);
+    return new Date(Date.now() + cappedBackoffMs + jitterMs);
 }
 
 // =============================================================================

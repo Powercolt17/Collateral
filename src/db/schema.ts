@@ -144,7 +144,8 @@ export const ledgerEventTypeEnum = pgEnum('ledger_event_type', [
     // Dispute/Chargeback events
     'PAYMENT_DISPUTED',
     'SETTLED',
-    // Sales revenue tracking events\n    'SALES_BASELINE_SNAPSHOTTED',
+    // Sales revenue tracking events
+    'SALES_BASELINE_SNAPSHOTTED',
     'SALES_TERMS_ATTACHED',
     'SALES_VERIFICATION_QUEUED',
     'SALES_VERIFICATION_COMPUTED',
@@ -152,7 +153,18 @@ export const ledgerEventTypeEnum = pgEnum('ledger_event_type', [
     'COMMERCE_BASELINE_CAPTURED',
     'COMMERCE_TARGET_LOCKED',
     'COMMERCE_VERIFIED_SUCCESS',
-    'COMMERCE_VERIFIED_FAIL'
+    'COMMERCE_VERIFIED_FAIL',
+    // Commerce hardening events
+    'COMMERCE_PROVIDER_CONNECTED',
+    'COMMERCE_PROVIDER_DISCONNECTED',
+    'COMMERCE_PROVIDER_VALIDATED',
+    'COMMERCE_ELIGIBILITY_CHECKED',
+    'COMMERCE_ELIGIBILITY_FAILED',
+    'COMMERCE_VERIFICATION_RETRY',
+    'COMMERCE_VERIFICATION_UNVERIFIABLE',
+    'COMMERCE_JOB_LOCK_ACQUIRED',
+    'COMMERCE_JOB_LOCK_CONTENTION',
+    'COMMERCE_JOB_LOCK_RELEASED'
 ]);
 
 // =====================
@@ -207,6 +219,31 @@ export const connectedAccounts = pgTable('connected_accounts', {
     challengeCode: text('challenge_code'),
     challengeIssuedAt: timestamp('challenge_issued_at', { withTimezone: true }),
     verifiedAt: timestamp('verified_at', { withTimezone: true }),
+    // Commerce hardening columns (provider validation)
+    providerShopId: varchar('provider_shop_id', { length: 255 }),
+    providerCurrency: varchar('provider_currency', { length: 10 }),
+    providerTimezone: varchar('provider_timezone', { length: 64 }),
+    scopesHash: varchar('scopes_hash', { length: 64 }),
+    scopesGranted: jsonb('scopes_granted'),
+    lastValidatedAt: timestamp('last_validated_at', { withTimezone: true }),
+    validationErrorCode: varchar('validation_error_code', { length: 50 }),
+});
+
+// =============================================================================
+// VERIFICATION JOB LOCKS TABLE (Idempotency + Single Writer)
+// =============================================================================
+// Ensures only one worker processes a verification job at a time
+export const verificationJobLocks = pgTable('verification_job_locks', {
+    idempotencyKey: varchar('idempotency_key', { length: 255 }).primaryKey(),
+    contractId: uuid('contract_id').notNull(),
+    jobType: varchar('job_type', { length: 50 }).notNull(),
+    provider: varchar('provider', { length: 20 }).notNull(),
+    windowStart: timestamp('window_start', { withTimezone: true }).notNull(),
+    windowEnd: timestamp('window_end', { withTimezone: true }).notNull(),
+    lockedAt: timestamp('locked_at', { withTimezone: true }).defaultNow().notNull(),
+    expiresAt: timestamp('expires_at', { withTimezone: true }).notNull(),
+    lockedBy: varchar('locked_by', { length: 255 }).notNull(),
+    attemptCount: integer('attempt_count').default(1).notNull(),
 });
 
 // =============================================================================
@@ -476,9 +513,7 @@ export type NewAccountLedgerEvent = typeof accountLedgerEvents.$inferInsert;
 export type ConnectAccount = typeof connectAccounts.$inferSelect;
 export type NewConnectAccount = typeof connectAccounts.$inferInsert;
 
-// Sales integration types
-export type SalesIntegration = typeof salesIntegrations.$inferSelect;
-export type NewSalesIntegration = typeof salesIntegrations.$inferInsert;
+// Sales baseline/terms/verification types
 
 export type SalesBaselineSnapshot = typeof salesBaselineSnapshots.$inferSelect;
 export type NewSalesBaselineSnapshot = typeof salesBaselineSnapshots.$inferInsert;
@@ -488,6 +523,9 @@ export type NewSalesContractTerms = typeof salesContractTerms.$inferInsert;
 
 export type SalesVerificationRun = typeof salesVerificationRuns.$inferSelect;
 export type NewSalesVerificationRun = typeof salesVerificationRuns.$inferInsert;
+
+export type VerificationJobLock = typeof verificationJobLocks.$inferSelect;
+export type NewVerificationJobLock = typeof verificationJobLocks.$inferInsert;
 
 // Contract status enum values for state machine (derived from ledger events)
 export const ContractStatus = {
@@ -544,6 +582,17 @@ export const EventType = {
     COMMERCE_TARGET_LOCKED: 'COMMERCE_TARGET_LOCKED',
     COMMERCE_VERIFIED_SUCCESS: 'COMMERCE_VERIFIED_SUCCESS',
     COMMERCE_VERIFIED_FAIL: 'COMMERCE_VERIFIED_FAIL',
+    // Commerce hardening events
+    COMMERCE_PROVIDER_CONNECTED: 'COMMERCE_PROVIDER_CONNECTED',
+    COMMERCE_PROVIDER_DISCONNECTED: 'COMMERCE_PROVIDER_DISCONNECTED',
+    COMMERCE_PROVIDER_VALIDATED: 'COMMERCE_PROVIDER_VALIDATED',
+    COMMERCE_ELIGIBILITY_CHECKED: 'COMMERCE_ELIGIBILITY_CHECKED',
+    COMMERCE_ELIGIBILITY_FAILED: 'COMMERCE_ELIGIBILITY_FAILED',
+    COMMERCE_VERIFICATION_RETRY: 'COMMERCE_VERIFICATION_RETRY',
+    COMMERCE_VERIFICATION_UNVERIFIABLE: 'COMMERCE_VERIFICATION_UNVERIFIABLE',
+    COMMERCE_JOB_LOCK_ACQUIRED: 'COMMERCE_JOB_LOCK_ACQUIRED',
+    COMMERCE_JOB_LOCK_CONTENTION: 'COMMERCE_JOB_LOCK_CONTENTION',
+    COMMERCE_JOB_LOCK_RELEASED: 'COMMERCE_JOB_LOCK_RELEASED',
 } as const;
 
 export type EventTypeType = typeof EventType[keyof typeof EventType];

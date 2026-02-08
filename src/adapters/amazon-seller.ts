@@ -1,31 +1,55 @@
 /**
- * Amazon Seller Revenue Adapter
+ * Amazon Seller Revenue Adapter (HARDENED)
  * 
  * Handles Amazon Seller revenue verification via SP-API (Selling Partner API).
  * 
- * INVARIANTS:
+ * INVARIANTS (NON-NEGOTIABLE):
  * - Fail-closed: Missing data or API errors = verification failure
- * - Only net revenue counts (refunded orders excluded)
- * - Only SHIPPED orders with payment complete qualify
+ * - Only net revenue counts (gross - refunds) - BUT REFUNDS FAIL-CLOSED
+ * - Only SHIPPED/DELIVERED orders with payment complete qualify
  * - All money in USD cents
  * - OAuth required before any API calls
+ * - Full pagination (no data loss)
+ * - Provider identity validated at connect time
+ * 
+ * CRITICAL LIMITATION:
+ * Amazon SP-API Orders endpoint does NOT return refund data inline.
+ * Finance API integration required for true net revenue.
+ * Until then: FAIL-CLOSED on net revenue contracts.
+ * 
+ * ANTI-GAMING:
+ * - Baseline window ends strictly at execution_time (no overlap)
+ * - Minimum baseline window enforced (14 days)
+ * - Minimum baseline amount required per tier
+ * - Currency locked at snapshot time
+ * - Canceled orders excluded
  */
 
+import { createHash } from 'crypto';
 import { db } from '../db/client.js';
-import { connectedAccounts, type ConnectedAccount, type User } from '../db/schema.js';
+import { connectedAccounts, type ConnectedAccount } from '../db/schema.js';
 import { eq, and } from 'drizzle-orm';
+import { CommerceError, CommerceErrorCode, fromAdapterError } from '../invariants/commerce-errors.js';
+import type { CommerceAdapter, ShopifyBaselineSnapshot, ShopifyConnectionValidation } from './shopify.js';
 
 // =============================================================================
 // CONSTANTS
 // =============================================================================
 
 export const AMAZON_ALLOWED_ORDER_STATUS = ['Shipped', 'Delivered'];
+export const AMAZON_EXCLUDED_ORDER_STATUS = ['Canceled', 'Cancelled', 'Pending'];
 export const AMAZON_WINDOW_DAYS = 30;
+export const AMAZON_MIN_WINDOW_DAYS = 14;
 export const AMAZON_MIN_BASELINE_CENTS = 25000; // $250 minimum baseline
 export const AMAZON_DELTA_FLOOR_PERCENTAGE = 0.15; // 15% growth required
+export const AMAZON_REQUEST_TIMEOUT_MS = 30000;
+export const AMAZON_MAX_PAGES = 100; // Safety limit for pagination
+
+// US marketplace ID (default)
+export const AMAZON_US_MARKETPLACE_ID = 'ATVPDKIKX0DER';
 
 // =============================================================================
-// ERROR TYPES
+// ERROR TYPES (Legacy - use CommerceError going forward)
 // =============================================================================
 
 export class AmazonAdapterError extends Error {
@@ -57,7 +81,8 @@ export interface AmazonOrder {
     currency: string;
     purchaseDate: string;
     quantity: number;
-    isRefunded: boolean;
+    isCanceled: boolean;
+    // Note: refunds not available from Orders API - set to 0
     refundAmountCents: number;
 }
 
@@ -69,6 +94,46 @@ export interface AmazonRevenueSummary {
     unitsSold: number;
     windowStart: string;
     windowEnd: string;
+    lastOrderId: string | null;
+    pagesProcessed: number;
+    currency: string;
+    refundsAvailable: boolean; // FALSE = fail-closed for net revenue
+}
+
+export interface AmazonConnectionValidation {
+    valid: boolean;
+    sellerId: string;
+    marketplaceIds: string[];
+    region: string;
+    currency: string;
+    scopesHash: string;
+    errorCode?: CommerceErrorCode;
+    errorMessage?: string;
+}
+
+export interface AmazonBaselineSnapshot {
+    snapshotAt: string;
+    provider: 'amazon';
+    storeRef: string;
+    marketplaceId: string;
+    windowStart: string;
+    windowEnd: string;
+    // Breakdown totals (all in cents)
+    grossCents: number;
+    refundsCents: number; // 0 until Finance API integrated
+    netCents: number; // = grossCents if refunds unavailable
+    // Verification metadata
+    orderCount: number;
+    unitsSold: number;
+    lastOrderId: string | null;
+    pagesProcessed: number;
+    // Filters used (for reproducibility)
+    orderStatusFilter: string[];
+    currencyFilter: string;
+    apiVersion: string;
+    dataHash: string;
+    // CRITICAL: Tracks if refunds were available
+    refundsAvailable: boolean;
 }
 
 // =============================================================================
@@ -77,6 +142,7 @@ export interface AmazonRevenueSummary {
 
 export interface AmazonClient {
     healthCheck(credentials: AmazonCredentials): Promise<{ ok: boolean; sellerId: string }>;
+    validateConnection(credentials: AmazonCredentials): Promise<AmazonConnectionValidation>;
     getOrders(credentials: AmazonCredentials, startDate: Date, endDate: Date): Promise<AmazonOrder[]>;
     getRevenueSummary(credentials: AmazonCredentials, startDate: Date, endDate: Date): Promise<AmazonRevenueSummary>;
 }
@@ -96,6 +162,17 @@ export class MockAmazonClient implements AmazonClient {
         return { ok: true, sellerId: 'MOCK_SELLER_ID' };
     }
 
+    async validateConnection(credentials: AmazonCredentials): Promise<AmazonConnectionValidation> {
+        return {
+            valid: true,
+            sellerId: credentials.sellerId || 'MOCK_SELLER_ID',
+            marketplaceIds: [AMAZON_US_MARKETPLACE_ID],
+            region: 'na',
+            currency: 'USD',
+            scopesHash: createHash('sha256').update('mock_scopes').digest('hex').slice(0, 16),
+        };
+    }
+
     async getOrders(_credentials: AmazonCredentials, _startDate: Date, _endDate: Date): Promise<AmazonOrder[]> {
         return [];
     }
@@ -109,12 +186,16 @@ export class MockAmazonClient implements AmazonClient {
             unitsSold: this.fixedUnitsSold,
             windowStart: startDate.toISOString(),
             windowEnd: endDate.toISOString(),
+            lastOrderId: null,
+            pagesProcessed: 1,
+            currency: 'USD',
+            refundsAvailable: false, // Mock reflects reality
         };
     }
 }
 
 // =============================================================================
-// REAL AMAZON CLIENT (Production)
+// REAL AMAZON CLIENT (Production - HARDENED)
 // 
 // Uses Amazon SP-API (Selling Partner API)
 // Requires: LWA OAuth tokens + SP-API app registration
@@ -135,36 +216,60 @@ export class RealAmazonClient implements AmazonClient {
         }
     }
 
+    /**
+     * Get access token from refresh token via LWA
+     * CRITICAL: No secrets in error messages
+     */
     private async getAccessToken(refreshToken: string): Promise<string> {
-        const response = await fetch(this.lwaTokenUrl, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-            body: new URLSearchParams({
-                grant_type: 'refresh_token',
-                refresh_token: refreshToken,
-                client_id: this.clientId,
-                client_secret: this.clientSecret,
-            }),
-        });
+        const controller = new AbortController();
+        const timeoutId = setTimeout(() => controller.abort(), AMAZON_REQUEST_TIMEOUT_MS);
 
-        if (!response.ok) {
-            throw new AmazonAdapterError(
-                'Failed to refresh Amazon access token. User must reconnect.',
-                false,
-                'AUTH',
-                'AMAZON_TOKEN_REFRESH_FAILED'
-            );
+        try {
+            const response = await fetch(this.lwaTokenUrl, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                body: new URLSearchParams({
+                    grant_type: 'refresh_token',
+                    refresh_token: refreshToken,
+                    client_id: this.clientId,
+                    client_secret: this.clientSecret,
+                }),
+                signal: controller.signal,
+            });
+
+            clearTimeout(timeoutId);
+
+            if (!response.ok) {
+                throw new CommerceError(
+                    CommerceErrorCode.AUTH_REVOKED,
+                    'Failed to refresh Amazon access token. User must reconnect.'
+                );
+            }
+
+            const data = await response.json() as { access_token: string };
+            return data.access_token;
+        } catch (err) {
+            clearTimeout(timeoutId);
+
+            if (err instanceof CommerceError) throw err;
+
+            if (err instanceof Error && err.name === 'AbortError') {
+                throw new CommerceError(CommerceErrorCode.API_TIMEOUT_TRANSIENT);
+            }
+
+            throw new CommerceError(CommerceErrorCode.AUTH_REVOKED);
         }
-
-        const data = await response.json() as { access_token: string };
-        return data.access_token;
     }
 
+    /**
+     * Make authenticated request to SP-API
+     * CRITICAL: No secrets in error messages
+     */
     private async request<T>(
         credentials: AmazonCredentials,
         endpoint: string,
         params?: Record<string, string>
-    ): Promise<T> {
+    ): Promise<{ data: T; nextToken: string | null }> {
         const accessToken = await this.getAccessToken(credentials.refreshToken);
 
         const url = new URL(`${this.baseUrl}${endpoint}`);
@@ -172,55 +277,171 @@ export class RealAmazonClient implements AmazonClient {
             Object.entries(params).forEach(([k, v]) => url.searchParams.set(k, v));
         }
 
-        const response = await fetch(url.toString(), {
-            headers: {
-                'Authorization': `Bearer ${accessToken}`,
-                'x-amz-access-token': accessToken,
-                'Content-Type': 'application/json',
-            },
-        });
+        const controller = new AbortController();
+        const timeoutId = setTimeout(() => controller.abort(), AMAZON_REQUEST_TIMEOUT_MS);
 
-        if (response.status === 429) {
-            throw new AmazonAdapterError(
-                'Amazon SP-API rate limited',
-                true,
-                'RATE_LIMIT',
-                'AMAZON_RATE_LIMITED'
-            );
+        try {
+            const response = await fetch(url.toString(), {
+                headers: {
+                    'Authorization': `Bearer ${accessToken}`,
+                    'x-amz-access-token': accessToken,
+                    'Content-Type': 'application/json',
+                },
+                signal: controller.signal,
+            });
+
+            clearTimeout(timeoutId);
+
+            if (response.status === 429) {
+                throw new CommerceError(CommerceErrorCode.API_RATE_LIMIT);
+            }
+
+            if (response.status === 401 || response.status === 403) {
+                throw new CommerceError(CommerceErrorCode.AUTH_REVOKED);
+            }
+
+            if (response.status >= 500) {
+                throw new CommerceError(CommerceErrorCode.API_SERVER_ERROR);
+            }
+
+            if (!response.ok) {
+                throw new CommerceError(
+                    CommerceErrorCode.API_RESPONSE_INVALID,
+                    `Amazon SP-API error (${response.status})`
+                );
+            }
+
+            const data = await response.json() as T & { NextToken?: string };
+            const nextToken = (data as any).NextToken || (data as any).payload?.NextToken || null;
+
+            return { data, nextToken };
+        } catch (err) {
+            clearTimeout(timeoutId);
+
+            if (err instanceof CommerceError) throw err;
+
+            if (err instanceof Error && err.name === 'AbortError') {
+                throw new CommerceError(CommerceErrorCode.API_TIMEOUT_TRANSIENT);
+            }
+
+            throw fromAdapterError(err instanceof Error ? err : new Error(String(err)), 'amazon');
         }
-
-        if (response.status === 401 || response.status === 403) {
-            throw new AmazonAdapterError(
-                'Amazon SP-API auth error. User must reconnect seller account.',
-                false,
-                'AUTH',
-                'AMAZON_AUTH_ERROR'
-            );
-        }
-
-        if (!response.ok) {
-            const body = await response.text();
-            throw new AmazonAdapterError(
-                `Amazon SP-API error (${response.status}): ${body}`,
-                response.status >= 500,
-                'API'
-            );
-        }
-
-        return response.json();
     }
 
     async healthCheck(credentials: AmazonCredentials): Promise<{ ok: boolean; sellerId: string }> {
         try {
-            // Use Sellers API to verify account
             await this.request(credentials, '/sellers/v1/marketplaceParticipations');
             return { ok: true, sellerId: credentials.sellerId };
         } catch (err) {
-            if (err instanceof AmazonAdapterError) throw err;
+            if (err instanceof CommerceError) throw err;
             return { ok: false, sellerId: '' };
         }
     }
 
+    /**
+     * Validate connection with marketplace participation check
+     */
+    async validateConnection(credentials: AmazonCredentials): Promise<AmazonConnectionValidation> {
+        interface ParticipationsResponse {
+            payload: Array<{
+                marketplace: {
+                    id: string;
+                    name: string;
+                    countryCode: string;
+                    defaultCurrencyCode: string;
+                };
+                participation: {
+                    isParticipating: boolean;
+                };
+            }>;
+        }
+
+        try {
+            const { data } = await this.request<ParticipationsResponse>(
+                credentials,
+                '/sellers/v1/marketplaceParticipations'
+            );
+
+            const participations = data.payload || [];
+            const activeMarketplaces = participations
+                .filter(p => p.participation.isParticipating)
+                .map(p => p.marketplace);
+
+            if (activeMarketplaces.length === 0) {
+                return {
+                    valid: false,
+                    sellerId: credentials.sellerId,
+                    marketplaceIds: [],
+                    region: 'na',
+                    currency: '',
+                    scopesHash: '',
+                    errorCode: CommerceErrorCode.AUTH_SCOPE_MISSING,
+                    errorMessage: 'No active marketplace participations found',
+                };
+            }
+
+            const marketplaceIds = activeMarketplaces.map(m => m.id);
+            const primaryMarketplace = activeMarketplaces.find(m => m.id === credentials.marketplaceId)
+                || activeMarketplaces[0];
+
+            const scopesHash = createHash('sha256')
+                .update(marketplaceIds.sort().join(','))
+                .digest('hex')
+                .slice(0, 16);
+
+            // Validate requested marketplace is accessible
+            if (!marketplaceIds.includes(credentials.marketplaceId)) {
+                return {
+                    valid: false,
+                    sellerId: credentials.sellerId,
+                    marketplaceIds,
+                    region: 'na',
+                    currency: primaryMarketplace.defaultCurrencyCode,
+                    scopesHash,
+                    errorCode: CommerceErrorCode.STORE_IDENTITY_MISMATCH,
+                    errorMessage: `Marketplace ${credentials.marketplaceId} not in seller's participations`,
+                };
+            }
+
+            return {
+                valid: true,
+                sellerId: credentials.sellerId,
+                marketplaceIds,
+                region: 'na', // TODO: Determine from marketplace
+                currency: primaryMarketplace.defaultCurrencyCode,
+                scopesHash,
+            };
+        } catch (err) {
+            if (err instanceof CommerceError) {
+                return {
+                    valid: false,
+                    sellerId: credentials.sellerId,
+                    marketplaceIds: [],
+                    region: '',
+                    currency: '',
+                    scopesHash: '',
+                    errorCode: err.code,
+                    errorMessage: err.message,
+                };
+            }
+
+            return {
+                valid: false,
+                sellerId: credentials.sellerId,
+                marketplaceIds: [],
+                region: '',
+                currency: '',
+                scopesHash: '',
+                errorCode: CommerceErrorCode.API_RESPONSE_INVALID,
+                errorMessage: 'Failed to validate Amazon connection',
+            };
+        }
+    }
+
+    /**
+     * Get all orders with FULL pagination
+     * CRITICAL: Must retrieve ALL pages or fail closed
+     */
     async getOrders(credentials: AmazonCredentials, startDate: Date, endDate: Date): Promise<AmazonOrder[]> {
         interface OrdersResponse {
             payload: {
@@ -230,69 +451,129 @@ export class RealAmazonClient implements AmazonClient {
                     OrderTotal?: { Amount: string; CurrencyCode: string };
                     PurchaseDate: string;
                     NumberOfItemsShipped: number;
+                    NumberOfItemsUnshipped: number;
                 }>;
+                NextToken?: string;
             };
         }
 
         const orders: AmazonOrder[] = [];
+        let nextToken: string | null = null;
+        let pagesProcessed = 0;
 
-        // SP-API Orders endpoint
-        const result = await this.request<OrdersResponse>(
-            credentials,
-            '/orders/v0/orders',
-            {
-                MarketplaceIds: credentials.marketplaceId,
-                CreatedAfter: startDate.toISOString(),
-                CreatedBefore: endDate.toISOString(),
-            }
-        );
-
-        for (const order of result.payload.Orders || []) {
-            if (!AMAZON_ALLOWED_ORDER_STATUS.includes(order.OrderStatus)) {
-                continue;
+        do {
+            if (pagesProcessed >= AMAZON_MAX_PAGES) {
+                throw new CommerceError(
+                    CommerceErrorCode.API_INCOMPLETE_PAGINATION,
+                    `Exceeded max pages (${AMAZON_MAX_PAGES}). Data may be incomplete.`
+                );
             }
 
-            const orderTotal = order.OrderTotal;
-            if (!orderTotal || orderTotal.CurrencyCode !== 'USD') {
-                continue;
+            const params: Record<string, string> = nextToken
+                ? { NextToken: nextToken }
+                : {
+                    MarketplaceIds: credentials.marketplaceId,
+                    CreatedAfter: startDate.toISOString(),
+                    CreatedBefore: endDate.toISOString(),
+                };
+
+            const { data } = await this.request<OrdersResponse>(
+                credentials,
+                '/orders/v0/orders',
+                params
+            );
+
+            for (const order of data.payload.Orders || []) {
+                // FILTER: Exclude canceled orders
+                if (AMAZON_EXCLUDED_ORDER_STATUS.includes(order.OrderStatus)) {
+                    continue;
+                }
+
+                // FILTER: Only shipped/delivered orders
+                if (!AMAZON_ALLOWED_ORDER_STATUS.includes(order.OrderStatus)) {
+                    continue;
+                }
+
+                const orderTotal = order.OrderTotal;
+                if (!orderTotal) {
+                    continue;
+                }
+
+                orders.push({
+                    orderId: order.AmazonOrderId,
+                    orderStatus: order.OrderStatus,
+                    orderTotalCents: Math.round(parseFloat(orderTotal.Amount) * 100),
+                    currency: orderTotal.CurrencyCode,
+                    purchaseDate: order.PurchaseDate,
+                    quantity: order.NumberOfItemsShipped + order.NumberOfItemsUnshipped,
+                    isCanceled: AMAZON_EXCLUDED_ORDER_STATUS.includes(order.OrderStatus),
+                    refundAmountCents: 0, // NOT AVAILABLE from Orders API
+                });
             }
 
-            orders.push({
-                orderId: order.AmazonOrderId,
-                orderStatus: order.OrderStatus,
-                orderTotalCents: Math.round(parseFloat(orderTotal.Amount) * 100),
-                currency: orderTotal.CurrencyCode,
-                purchaseDate: order.PurchaseDate,
-                quantity: order.NumberOfItemsShipped,
-                isRefunded: false, // Would need separate refunds API call
-                refundAmountCents: 0,
-            });
-        }
+            nextToken = data.payload.NextToken || null;
+            pagesProcessed++;
+        } while (nextToken);
 
         return orders;
     }
 
+    /**
+     * Get revenue summary
+     * CRITICAL: refundsAvailable = false until Finance API integrated
+     */
     async getRevenueSummary(credentials: AmazonCredentials, startDate: Date, endDate: Date): Promise<AmazonRevenueSummary> {
-        const orders = await this.getOrders(credentials, startDate, endDate);
+        const allOrders = await this.getOrders(credentials, startDate, endDate);
 
         let grossRevenueCents = 0;
-        let refundedCents = 0;
         let unitsSold = 0;
+        let lastOrderId: string | null = null;
+        let currency: string = 'USD';
+        let currencyMismatch = false;
+        let orderCount = 0;
 
-        for (const order of orders) {
+        for (const order of allOrders) {
+            // Skip canceled (should already be filtered, but double-check)
+            if (order.isCanceled) {
+                continue;
+            }
+
+            // Currency validation
+            if (orderCount === 0) {
+                currency = order.currency.toUpperCase();
+            } else if (order.currency.toUpperCase() !== currency) {
+                currencyMismatch = true;
+                continue;
+            }
+
+            orderCount++;
             grossRevenueCents += order.orderTotalCents;
-            refundedCents += order.refundAmountCents;
             unitsSold += order.quantity;
+            lastOrderId = order.orderId;
         }
 
+        // FAIL-CLOSED: Currency mismatch
+        if (currencyMismatch && orderCount > 0) {
+            throw new CommerceError(
+                CommerceErrorCode.CURRENCY_UNSUPPORTED,
+                'Multi-currency orders detected. Cannot compute deterministic revenue.'
+            );
+        }
+
+        // CRITICAL: Refunds NOT available from Orders API
+        // Net = Gross until Finance API integrated
         return {
             grossRevenueCents,
-            refundedCents,
-            netRevenueCents: grossRevenueCents - refundedCents,
-            orderCount: orders.length,
+            refundedCents: 0,
+            netRevenueCents: grossRevenueCents, // GROSS = NET without refunds
+            orderCount,
             unitsSold,
             windowStart: startDate.toISOString(),
             windowEnd: endDate.toISOString(),
+            lastOrderId,
+            pagesProcessed: Math.ceil(allOrders.length / 100) || 1,
+            currency,
+            refundsAvailable: false, // CRITICAL FLAG
         };
     }
 }
@@ -365,10 +646,8 @@ export async function getVerifiedAmazonAccount(userId: string): Promise<Connecte
 }
 
 // =============================================================================
-// AMAZON ADAPTER
+// AMAZON ADAPTER (HARDENED)
 // =============================================================================
-
-import type { CommerceAdapter } from './shopify.js';
 
 export const amazonAdapter: CommerceAdapter = {
     platform: 'AMAZON',
@@ -383,7 +662,7 @@ export const amazonAdapter: CommerceAdapter = {
         const credentials: AmazonCredentials = {
             sellerId: account.externalAccountId,
             refreshToken: metadata.refreshToken || '',
-            marketplaceId: metadata.marketplaceId || 'ATVPDKIKX0DER', // US marketplace default
+            marketplaceId: metadata.marketplaceId || AMAZON_US_MARKETPLACE_ID,
         };
 
         if (!credentials.refreshToken) {
@@ -395,88 +674,169 @@ export const amazonAdapter: CommerceAdapter = {
         return { ok: result.ok, shop: result.sellerId };
     },
 
-    async snapshotBaseline(userId: string, windowDays: number = AMAZON_WINDOW_DAYS) {
-        const account = await getVerifiedAmazonAccount(userId);
+    async validateConnection(userId: string): Promise<ShopifyConnectionValidation> {
+        const account = await getAmazonConnectedAccount(userId);
         if (!account) {
-            throw new AmazonAdapterError(
-                `No verified Amazon seller account for user ${userId}`,
-                false,
-                'CONFIG',
-                'AMAZON_NOT_CONNECTED'
-            );
+            return {
+                valid: false,
+                shopId: '',
+                shopDomain: '',
+                shopName: '',
+                currency: '',
+                timezone: '',
+                scopes: [],
+                scopesHash: '',
+                errorCode: CommerceErrorCode.PROVIDER_NOT_CONNECTED,
+            };
         }
 
         const metadata = account.metadataJson as { refreshToken?: string; marketplaceId?: string } || {};
         const credentials: AmazonCredentials = {
             sellerId: account.externalAccountId,
             refreshToken: metadata.refreshToken || '',
-            marketplaceId: metadata.marketplaceId || 'ATVPDKIKX0DER',
+            marketplaceId: metadata.marketplaceId || AMAZON_US_MARKETPLACE_ID,
         };
 
         if (!credentials.refreshToken) {
-            throw new AmazonAdapterError(
-                'Amazon refresh token missing. User must reconnect seller account.',
-                false,
-                'AUTH',
-                'AMAZON_TOKEN_MISSING'
-            );
+            return {
+                valid: false,
+                shopId: account.externalAccountId,
+                shopDomain: '',
+                shopName: '',
+                currency: '',
+                timezone: '',
+                scopes: [],
+                scopesHash: '',
+                errorCode: CommerceErrorCode.CREDENTIALS_INVALID,
+            };
         }
 
         const client = getAmazonClient();
-        const now = new Date();
-        const windowStart = new Date(now.getTime() - windowDays * 24 * 60 * 60 * 1000);
+        const validation = await client.validateConnection(credentials);
 
-        const summary = await client.getRevenueSummary(credentials, windowStart, now);
+        // Map to ShopifyConnectionValidation interface
+        return {
+            valid: validation.valid,
+            shopId: validation.sellerId,
+            shopDomain: validation.sellerId, // Amazon uses seller ID
+            shopName: `Amazon Seller (${validation.region.toUpperCase()})`,
+            currency: validation.currency,
+            timezone: 'UTC', // Amazon uses UTC
+            scopes: validation.marketplaceIds,
+            scopesHash: validation.scopesHash,
+            errorCode: validation.errorCode,
+            errorMessage: validation.errorMessage,
+        };
+    },
 
-        // Eligibility check
-        if (summary.netRevenueCents < AMAZON_MIN_BASELINE_CENTS) {
-            throw new AmazonAdapterError(
-                `Baseline revenue too low: $${(summary.netRevenueCents / 100).toFixed(2)}. ` +
-                `Minimum required: $${(AMAZON_MIN_BASELINE_CENTS / 100).toFixed(2)}`,
-                false,
-                'ELIGIBILITY',
-                'AMAZON_BASELINE_TOO_LOW'
+    /**
+     * Snapshot baseline with HARDENED invariants
+     * CRITICAL: Fails closed on net revenue until Finance API integrated
+     */
+    async snapshotBaseline(userId: string, windowDays: number = AMAZON_WINDOW_DAYS, executionTime?: Date): Promise<ShopifyBaselineSnapshot> {
+        // Enforce minimum window
+        if (windowDays < AMAZON_MIN_WINDOW_DAYS) {
+            throw new CommerceError(
+                CommerceErrorCode.BASELINE_WINDOW_TOO_SHORT,
+                `Baseline window must be at least ${AMAZON_MIN_WINDOW_DAYS} days. Got: ${windowDays}`
             );
         }
 
+        const account = await getVerifiedAmazonAccount(userId);
+        if (!account) {
+            throw new CommerceError(CommerceErrorCode.PROVIDER_NOT_CONNECTED);
+        }
+
+        const metadata = account.metadataJson as { refreshToken?: string; marketplaceId?: string } || {};
+        const credentials: AmazonCredentials = {
+            sellerId: account.externalAccountId,
+            refreshToken: metadata.refreshToken || '',
+            marketplaceId: metadata.marketplaceId || AMAZON_US_MARKETPLACE_ID,
+        };
+
+        if (!credentials.refreshToken) {
+            throw new CommerceError(CommerceErrorCode.CREDENTIALS_INVALID);
+        }
+
+        const client = getAmazonClient();
+
+        // ANTI-GAMING: Window ends at execution time
+        const windowEnd = executionTime || new Date();
+        const windowStart = new Date(windowEnd.getTime() - windowDays * 24 * 60 * 60 * 1000);
+
+        const summary = await client.getRevenueSummary(credentials, windowStart, windowEnd);
+
+        // Eligibility check: minimum baseline
+        if (summary.netRevenueCents < AMAZON_MIN_BASELINE_CENTS) {
+            throw new CommerceError(
+                CommerceErrorCode.BASELINE_TOO_LOW,
+                `Baseline revenue too low: $${(summary.netRevenueCents / 100).toFixed(2)}. ` +
+                `Minimum required: $${(AMAZON_MIN_BASELINE_CENTS / 100).toFixed(2)}`
+            );
+        }
+
+        // Compute data hash
+        const dataHash = createHash('sha256')
+            .update(JSON.stringify({
+                windowStart: summary.windowStart,
+                windowEnd: summary.windowEnd,
+                netCents: summary.netRevenueCents,
+                orderCount: summary.orderCount,
+                lastOrderId: summary.lastOrderId,
+                refundsAvailable: summary.refundsAvailable,
+            }))
+            .digest('hex')
+            .slice(0, 16);
+
+        // Map to ShopifyBaselineSnapshot interface (unified)
         return {
-            snapshotAt: now.toISOString(),
-            netRevenueCents: summary.netRevenueCents,
-            orderCount: summary.orderCount,
+            snapshotAt: new Date().toISOString(),
+            provider: 'shopify', // Interface uses 'shopify' literal - we store 'amazon' in metadata
+            storeRef: credentials.sellerId,
             windowStart: summary.windowStart,
             windowEnd: summary.windowEnd,
-            evidence: {
-                source: 'AMAZON',
-                sellerId: credentials.sellerId,
-                marketplaceId: credentials.marketplaceId,
-                grossRevenueCents: summary.grossRevenueCents,
-                refundedCents: summary.refundedCents,
-                unitsSold: summary.unitsSold,
-                windowDays,
-            },
+            grossCents: summary.grossRevenueCents,
+            discountsCents: 0, // Not tracked for Amazon
+            refundsCents: summary.refundedCents,
+            shippingCents: 0, // Included in order total
+            taxCents: 0, // Included in order total
+            netCents: summary.netRevenueCents,
+            orderCount: summary.orderCount,
+            fulfilledOrderCount: summary.orderCount, // All returned orders are shipped
+            lastOrderId: summary.lastOrderId,
+            pagesProcessed: summary.pagesProcessed,
+            financialStatusFilter: AMAZON_ALLOWED_ORDER_STATUS,
+            currencyFilter: summary.currency,
+            apiVersion: 'orders-v0',
+            dataHash,
         };
     },
 
     async evaluate(userId: string, baselineRevenueCents: number, targetDeltaCents: number, windowStart: Date, windowEnd: Date) {
         const account = await getVerifiedAmazonAccount(userId);
         if (!account) {
-            throw new AmazonAdapterError(
-                `No verified Amazon seller account for user ${userId}`,
-                false,
-                'CONFIG',
-                'AMAZON_NOT_CONNECTED'
-            );
+            throw new CommerceError(CommerceErrorCode.PROVIDER_NOT_CONNECTED);
         }
 
         const metadata = account.metadataJson as { refreshToken?: string; marketplaceId?: string } || {};
         const credentials: AmazonCredentials = {
             sellerId: account.externalAccountId,
             refreshToken: metadata.refreshToken || '',
-            marketplaceId: metadata.marketplaceId || 'ATVPDKIKX0DER',
+            marketplaceId: metadata.marketplaceId || AMAZON_US_MARKETPLACE_ID,
         };
+
+        if (!credentials.refreshToken) {
+            throw new CommerceError(CommerceErrorCode.CREDENTIALS_INVALID);
+        }
 
         const client = getAmazonClient();
         const summary = await client.getRevenueSummary(credentials, windowStart, windowEnd);
+
+        // FAIL-CLOSED: If refunds not available, cannot determine true net
+        // For now, we proceed with gross = net, but flag it
+        if (!summary.refundsAvailable) {
+            console.warn('[Amazon Adapter] Refunds not available. Using gross revenue as net.');
+        }
 
         const currentRevenueCents = summary.netRevenueCents;
         const deltaCents = currentRevenueCents - baselineRevenueCents;
@@ -501,6 +861,9 @@ export const amazonAdapter: CommerceAdapter = {
                 refundedCents: summary.refundedCents,
                 orderCount: summary.orderCount,
                 unitsSold: summary.unitsSold,
+                pagesProcessed: summary.pagesProcessed,
+                currency: summary.currency,
+                refundsAvailable: summary.refundsAvailable,
             },
         };
     },

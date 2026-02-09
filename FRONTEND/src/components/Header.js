@@ -1,11 +1,9 @@
-// Shared Header Component - EXACT copy from screenshot
-// COLLATERAL with MARKET in red, OVERVIEW/LEDGER/CONTRACTS/DOCS nav
-
+// Header Component - Clearinghouse Terminal Nav
 export function renderHeader(currentRoute) {
     const routes = [
         { path: '/overview', label: 'OVERVIEW' },
         { path: '/ledger', label: 'LEDGER' },
-        { path: '/contracts', label: 'CONTRACTS' },
+        { path: '/contracts', label: 'COMMITMENTS' },
         { path: '/docs', label: 'DOCS' }
     ];
 
@@ -17,15 +15,15 @@ export function renderHeader(currentRoute) {
         return `
             <a href="#" 
                 onclick="window.router.navigate('${route.path}'); return false;" 
-                class="text-xs tracking-wide transition-all duration-150 ${isActive
-                ? 'text-[#1A1A1A] border-b border-[#1A1A1A] pb-0.5'
-                : 'text-[#6B6B6B] hover:text-[#1A1A1A]'
-            }">
+                class="nav-link ${isActive ? 'active' : ''}"
+                data-target="${route.path}" 
+                data-active="${isActive}">
                 ${route.label}
             </a>
         `;
     }).join('');
 
+    // Generate mobile navigation items
     const mobileNavItems = routes.map(route => {
         const isActive = currentRoute === route.path ||
             (route.path === '/contracts' && currentRoute.startsWith('/contracts')) ||
@@ -34,10 +32,7 @@ export function renderHeader(currentRoute) {
         return `
             <a href="#" 
                 onclick="window.app.closeMobileMenu(); window.router.navigate('${route.path}'); return false;" 
-                class="block w-full px-6 py-4 text-sm tracking-wide border-b border-[#F0F0F0] ${isActive
-                ? 'text-[#1A1A1A] font-medium bg-[#FAFAFA]'
-                : 'text-[#6B6B6B] hover:text-[#1A1A1A] hover:bg-[#FAFAFA]'
-            }">
+                class="mobile-nav-link ${isActive ? 'active' : ''}">
                 ${route.label}
             </a>
         `;
@@ -45,90 +40,380 @@ export function renderHeader(currentRoute) {
 
     return `
         <style>
-            .desktop-nav { display: none; }
-            .desktop-auth { display: none; }
-            .mobile-menu-btn { display: flex; }
-            @media (min-width: 640px) {
-                .desktop-nav { display: flex !important; }
-                .desktop-auth { display: flex !important; }
-                .mobile-menu-btn { display: none !important; }
+            /* Clearinghouse Header */
+            .ch-header {
+                width: 100%;
+                border-bottom: 1px solid #e5e5e5;
+                background: #fff;
+                position: fixed;
+                top: 0;
+                z-index: 50;
             }
+            .ch-header-inner {
+                max-width: 1800px;
+                margin: 0 auto;
+                padding: 0 24px;
+                height: 56px;
+                display: flex;
+                align-items: center;
+                gap: 24px;
+            }
+
+            /* Logo */
+            .ch-logo {
+                display: flex;
+                align-items: center;
+                gap: 8px;
+                text-decoration: none;
+                flex-shrink: 0;
+            }
+            .ch-logo-icon {
+                width: 24px;
+                height: 24px;
+                background: #921818;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+            .ch-logo-icon span {
+                color: #fff;
+                font-size: 14px;
+                font-weight: 700;
+            }
+            .ch-logo-text {
+                font-size: 15px;
+                font-weight: 700;
+                color: #0a0a0a;
+                letter-spacing: 0.5px;
+                font-family: 'IBM Plex Sans', sans-serif;
+            }
+
+            /* Nav links */
+            .ch-nav {
+                display: none;
+                align-items: center;
+                gap: 4px;
+            }
+            @media (min-width: 768px) {
+                .ch-nav { display: flex; }
+            }
+            .nav-link {
+                padding: 8px 12px;
+                font-size: 12px;
+                font-weight: 500;
+                color: #666;
+                text-decoration: none;
+                font-family: 'JetBrains Mono', monospace;
+                letter-spacing: 0.3px;
+                transition: color 0.15s;
+            }
+            .nav-link:hover { color: #0a0a0a; }
+            .nav-link.active { 
+                color: #0a0a0a; 
+                font-weight: 600;
+            }
+
+            /* Search bar */
+            .ch-search {
+                flex: 1;
+                max-width: 400px;
+                position: relative;
+                display: none;
+            }
+            @media (min-width: 1024px) {
+                .ch-search { display: block; }
+            }
+            .ch-search input {
+                width: 100%;
+                height: 36px;
+                padding: 0 12px 0 36px;
+                font-size: 13px;
+                border: 1px solid #e5e5e5;
+                background: #fafafa;
+                font-family: 'Inter', sans-serif;
+                color: #333;
+            }
+            .ch-search input::placeholder {
+                color: #999;
+            }
+            .ch-search input:focus {
+                outline: none;
+                border-color: #ccc;
+                background: #fff;
+            }
+            .ch-search-icon {
+                position: absolute;
+                left: 10px;
+                top: 50%;
+                transform: translateY(-50%);
+                color: #999;
+            }
+
+            /* Dropdowns */
+            .ch-dropdown {
+                display: none;
+                align-items: center;
+                gap: 4px;
+                padding: 6px 10px;
+                font-size: 11px;
+                font-weight: 500;
+                color: #666;
+                border: 1px solid #e5e5e5;
+                background: #fff;
+                cursor: pointer;
+                font-family: 'JetBrains Mono', monospace;
+            }
+            @media (min-width: 768px) {
+                .ch-dropdown { display: flex; }
+            }
+            .ch-dropdown:hover { border-color: #ccc; }
+            .ch-dropdown-label { color: #999; font-weight: 400; }
+
+            /* Right section */
+            .ch-right {
+                display: flex;
+                align-items: center;
+                gap: 12px;
+                margin-left: auto;
+            }
+
+            /* User icons */
+            .ch-icon-btn {
+                width: 36px;
+                height: 36px;
+                display: none;
+                align-items: center;
+                justify-content: center;
+                color: #666;
+                background: transparent;
+                border: none;
+                cursor: pointer;
+                transition: color 0.15s;
+            }
+            @media (min-width: 768px) {
+                .ch-icon-btn { display: flex; }
+            }
+            .ch-icon-btn:hover { color: #0a0a0a; }
+
+            /* Connect button */
+            .ch-connect {
+                padding: 8px 16px;
+                font-size: 11px;
+                font-weight: 600;
+                color: #fff;
+                background: #921818;
+                border: none;
+                cursor: pointer;
+                font-family: 'JetBrains Mono', monospace;
+                letter-spacing: 0.5px;
+                transition: background 0.15s;
+            }
+            .ch-connect:hover { background: #751212; }
+
+            /* User menu (authenticated) */
+            .ch-user-menu {
+                position: relative;
+            }
+            .ch-user-btn {
+                display: flex;
+                align-items: center;
+                gap: 8px;
+                padding: 4px 10px;
+                background: transparent;
+                border: 1px solid #e5e5e5;
+                cursor: pointer;
+                font-family: 'JetBrains Mono', monospace;
+            }
+            .ch-user-btn:hover { border-color: #ccc; }
+            .ch-user-avatar {
+                width: 24px;
+                height: 24px;
+                background: #f0f0f0;
+                border-radius: 50%;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                font-size: 10px;
+                font-weight: 600;
+                color: #666;
+            }
+            .ch-user-name {
+                font-size: 12px;
+                color: #333;
+            }
+            .ch-user-dropdown {
+                position: absolute;
+                right: 0;
+                top: 100%;
+                margin-top: 4px;
+                width: 200px;
+                background: #fff;
+                border: 1px solid #e5e5e5;
+                box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+                display: none;
+                z-index: 100;
+            }
+            .ch-user-menu:hover .ch-user-dropdown,
+            .ch-user-menu.open .ch-user-dropdown { display: block; }
+            .ch-user-dropdown button {
+                width: 100%;
+                padding: 10px 14px;
+                font-size: 11px;
+                text-align: left;
+                color: #333;
+                background: transparent;
+                border: none;
+                cursor: pointer;
+                font-family: 'JetBrains Mono', monospace;
+            }
+            .ch-user-dropdown button:hover { background: #f5f5f5; }
+            .ch-user-dropdown .signout { color: #921818; }
+
+            /* Mobile menu button */
+            .ch-mobile-btn {
+                display: flex;
+                flex-direction: column;
+                gap: 4px;
+                padding: 8px;
+                background: transparent;
+                border: none;
+                cursor: pointer;
+            }
+            @media (min-width: 768px) {
+                .ch-mobile-btn { display: none; }
+            }
+            .ch-mobile-btn span {
+                width: 20px;
+                height: 2px;
+                background: #333;
+                transition: all 0.2s;
+            }
+
+            /* Mobile menu */
+            .ch-mobile-overlay {
+                position: fixed;
+                inset: 0;
+                background: rgba(0,0,0,0.5);
+                z-index: 40;
+                display: none;
+            }
+            .ch-mobile-menu {
+                position: fixed;
+                top: 0;
+                right: 0;
+                width: 280px;
+                height: 100%;
+                background: #fff;
+                z-index: 50;
+                transform: translateX(100%);
+                transition: transform 0.3s;
+                padding: 20px;
+            }
+            .ch-mobile-menu.open { transform: translateX(0); }
+            .mobile-nav-link {
+                display: block;
+                padding: 12px 0;
+                font-size: 14px;
+                color: #333;
+                text-decoration: none;
+                border-bottom: 1px solid #f0f0f0;
+                font-family: 'JetBrains Mono', monospace;
+            }
+            .mobile-nav-link.active { color: #921818; font-weight: 600; }
         </style>
-        <header class="w-full border-b border-[#E5E5E5] bg-white fixed top-0 z-50">
-            <div class="mx-auto max-w-[900px] px-6 md:px-8 py-3">
-                <div class="flex items-center justify-between">
-                    
-                    <!-- LEFT: COLLATERAL / MARKET wordmark -->
-                    <a href="#" onclick="window.router.navigate('/overview'); return false;" class="cursor-pointer hover:opacity-80 transition-opacity shrink-0 flex flex-col leading-none">
-                        <span class="text-sm font-semibold tracking-wide text-[#1A1A1A]">COLLATERAL</span>
-                        <span class="text-[10px] font-semibold tracking-widest text-[#8B1818]">MARKET</span>
-                    </a>
 
-                    <!-- CENTER: Navigation -->
-                    <nav class="desktop-nav items-center gap-8">
-                        ${navItems}
-                    </nav>
+        <header class="ch-header">
+            <div class="ch-header-inner">
+                <!-- Logo -->
+                <a href="#" onclick="window.router.navigate('/overview'); return false;" class="ch-logo">
+                    <div class="ch-logo-icon"><span>■</span></div>
+                    <span class="ch-logo-text">COLLATERAL</span>
+                </a>
 
-                    <!-- RIGHT: Auth -->
-                    <div class="flex items-center gap-4">
-                        <button onclick="window.app.handleAuthClick()" id="btn-auth" class="desktop-auth text-xs text-[#6B6B6B] hover:text-[#1A1A1A] transition-colors items-center gap-2">
-                            <span>Sign In</span>
+                <!-- Nav Links -->
+                <nav class="ch-nav">
+                    ${navItems}
+                </nav>
+
+                <!-- Search Bar -->
+                <div class="ch-search">
+                    <i data-lucide="search" class="ch-search-icon" style="width: 16px; height: 16px;"></i>
+                    <input type="text" placeholder="Search RCPT or Provider...">
+                </div>
+
+                <!-- Right Section -->
+                <div class="ch-right">
+                    <!-- Status Dropdown -->
+                    <button class="ch-dropdown">
+                        <span class="ch-dropdown-label">STATUS:</span>
+                        <span>ALL</span>
+                        <i data-lucide="chevron-down" style="width: 12px; height: 12px;"></i>
+                    </button>
+
+                    <!-- Sort Dropdown -->
+                    <button class="ch-dropdown">
+                        <span class="ch-dropdown-label">SORT:</span>
+                        <span>CAPITAL</span>
+                        <i data-lucide="chevron-down" style="width: 12px; height: 12px;"></i>
+                    </button>
+
+                    <!-- Icon Buttons -->
+                    <button class="ch-icon-btn">
+                        <i data-lucide="bell" style="width: 18px; height: 18px;"></i>
+                    </button>
+                    <button class="ch-icon-btn">
+                        <i data-lucide="user" style="width: 18px; height: 18px;"></i>
+                    </button>
+
+                    <!-- Connect / User Button -->
+                    <button onclick="window.app.handleAuthClick()" id="btn-auth" class="ch-connect">
+                        CONNECT
+                    </button>
+
+                    <!-- Authenticated User Menu (hidden by default) -->
+                    <div id="user-menu" class="ch-user-menu hidden">
+                        <button id="user-menu-btn" onclick="window.app.toggleMenuPersistence(event)" class="ch-user-btn">
+                            <span class="ch-user-avatar" id="menu-initial">U</span>
+                            <span class="ch-user-name" id="menu-username">@username</span>
+                            <i data-lucide="chevron-down" style="width: 12px; height: 12px; color: #999;"></i>
                         </button>
-
-                        <div id="user-menu" class="relative group hidden">
-                            <button id="user-menu-btn" onclick="window.app.toggleMenuPersistence(event)" class="desktop-auth items-center gap-1 hover:opacity-80 transition-opacity duration-150">
-                                <span class="text-xs text-[#6B6B6B]">•</span>
-                                <span class="text-xs text-[#1A1A1A]" id="menu-username">@username</span>
-                                <svg width="10" height="6" viewBox="0 0 10 6" fill="none" class="text-[#6B6B6B] ml-1">
-                                    <path d="M1 1L5 5L9 1" stroke="currentColor" stroke-width="1.5" stroke-linecap="square"/>
-                                </svg>
-                            </button>
-
-                            <div id="user-dropdown-content" class="absolute right-0 top-full mt-2 w-48 bg-white border border-[#E5E5E5] shadow-lg hidden group-hover:block z-50">
-                                <div class="py-1">
-                                    <button onclick="window.router.navigate('/profile')" class="w-full px-4 py-2.5 text-left text-xs text-[#6B6B6B] hover:text-[#1A1A1A] hover:bg-[#FAFAFA]">Profile</button>
-                                    <button onclick="window.router.navigate('/my-contracts')" class="w-full px-4 py-2.5 text-left text-xs text-[#6B6B6B] hover:text-[#1A1A1A] hover:bg-[#FAFAFA]">My Contracts</button>
-                                    <button onclick="window.router.navigate('/funding')" class="w-full px-4 py-2.5 text-left text-xs text-[#6B6B6B] hover:text-[#1A1A1A] hover:bg-[#FAFAFA]">Funding</button>
-                                    <div class="my-1 border-t border-[#F0F0F0]"></div>
-                                    <button onclick="window.app.handleSignOut()" class="w-full px-4 py-2.5 text-left text-xs text-[#8B1818] hover:bg-[#FEF2F2]">Sign Out</button>
-                                </div>
-                            </div>
+                        <div id="user-dropdown-content" class="ch-user-dropdown">
+                            <button onclick="window.router.navigate('/profile')">MY IDENTITY</button>
+                            <button onclick="window.router.navigate('/my-contracts')">MY CONTRACTS</button>
+                            <button onclick="window.router.navigate('/receipts')">RECEIPTS</button>
+                            <button onclick="window.router.navigate('/funding')">FUNDING</button>
+                            <button onclick="window.app.handleSignOut()" class="signout">SIGN OUT</button>
                         </div>
-
-                        <button id="mobile-menu-btn" onclick="window.app.toggleMobileMenu()" class="mobile-menu-btn flex-col items-center justify-center w-10 h-10 gap-1.5" aria-label="Toggle menu">
-                            <span id="hamburger-line-1" class="block w-5 h-0.5 bg-[#1A1A1A] transition-all duration-300"></span>
-                            <span id="hamburger-line-2" class="block w-5 h-0.5 bg-[#1A1A1A] transition-all duration-300"></span>
-                            <span id="hamburger-line-3" class="block w-5 h-0.5 bg-[#1A1A1A] transition-all duration-300"></span>
-                        </button>
                     </div>
+
+                    <!-- Mobile Menu Button -->
+                    <button id="mobile-menu-btn" onclick="window.app.toggleMobileMenu()" class="ch-mobile-btn" aria-label="Menu">
+                        <span id="hamburger-line-1"></span>
+                        <span id="hamburger-line-2"></span>
+                        <span id="hamburger-line-3"></span>
+                    </button>
                 </div>
             </div>
         </header>
 
-        <div id="mobile-menu-overlay" class="fixed inset-0 bg-black/30 z-40 hidden sm:hidden" onclick="window.app.closeMobileMenu()"></div>
+        <!-- Mobile Menu Overlay -->
+        <div id="mobile-menu-overlay" class="ch-mobile-overlay" onclick="window.app.closeMobileMenu()"></div>
 
-        <div id="mobile-menu" class="fixed top-0 right-0 h-full w-72 bg-white z-50 transform translate-x-full transition-transform duration-300 ease-out sm:hidden shadow-xl">
-            <div class="flex items-center justify-between px-6 py-4 border-b border-[#F0F0F0]">
-                <span class="text-sm font-medium text-[#1A1A1A]">Menu</span>
-                <button onclick="window.app.closeMobileMenu()" class="w-8 h-8 flex items-center justify-center text-[#6B6B6B] hover:text-[#1A1A1A]">
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <path d="M18 6L6 18M6 6l12 12"/>
-                    </svg>
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="ch-mobile-menu">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                <span style="font-size: 14px; font-weight: 600; font-family: 'JetBrains Mono', monospace;">MENU</span>
+                <button onclick="window.app.closeMobileMenu()" style="background: none; border: none; cursor: pointer;">
+                    <i data-lucide="x" style="width: 20px; height: 20px;"></i>
                 </button>
             </div>
-            <nav class="flex flex-col">${mobileNavItems}</nav>
-            <div class="px-6 py-4">
-                <button onclick="window.app.closeMobileMenu(); window.app.handleAuthClick()" id="btn-auth-mobile" class="w-full bg-[#8B1818] hover:bg-[#6B1212] text-white text-xs font-medium py-3 rounded transition-colors">Sign In</button>
-            </div>
-            <div id="mobile-user-section" class="hidden px-6 py-4 border-t border-[#F0F0F0]">
-                <div class="flex items-center gap-3 mb-4">
-                    <span class="text-xs text-[#6B6B6B]" id="mobile-menu-username">@username</span>
-                </div>
-                <div class="space-y-1">
-                    <button onclick="window.app.closeMobileMenu(); window.router.navigate('/profile')" class="w-full py-2.5 text-left text-xs text-[#6B6B6B] hover:text-[#1A1A1A]">Profile</button>
-                    <button onclick="window.app.closeMobileMenu(); window.router.navigate('/my-contracts')" class="w-full py-2.5 text-left text-xs text-[#6B6B6B] hover:text-[#1A1A1A]">My Contracts</button>
-                    <button onclick="window.app.closeMobileMenu(); window.app.handleSignOut()" class="w-full py-2.5 text-left text-xs text-[#8B1818]">Sign Out</button>
-                </div>
+            <nav>
+                ${mobileNavItems}
+            </nav>
+            <div style="margin-top: 20px;">
+                <button onclick="window.app.closeMobileMenu(); window.app.handleAuthClick()" id="btn-auth-mobile" class="ch-connect" style="width: 100%;">
+                    CONNECT
+                </button>
             </div>
         </div>
     `;

@@ -96,14 +96,15 @@
     <div id="app" class="pt-16 relative z-10 min-h-screen flex flex-col"></div>
 
     <!-- Status Bar (Fixed Bottom) -->
-    <div
-        class="fixed bottom-0 w-full bg-white border-t border-[#E5E5E5] py-2 px-6 flex justify-between items-center z-40 text-[10px] uppercase tracking-widest text-[#6B6B6B]">
+    <div class="fixed bottom-0 w-full bg-white border-t border-[#E5E5E5] py-2 px-6 flex justify-between items-center z-40 text-[10px] uppercase tracking-widest text-[#6B6B6B]"
+        style="font-family: 'JetBrains Mono', monospace;">
         <div class="flex items-center gap-2">
             <span class="font-medium text-[#1A1A1A]">SYSTEM STATUS</span>
             <span class="text-[#D0D0D0]">•</span>
-            <span class="flex items-center gap-1.5 text-[#8B1818]"><span class="w-1.5 h-1.5 bg-[#8B1818] rounded-full"
+            <span class="flex items-center gap-1.5 text-[#166534]"><span class="w-1.5 h-1.5 bg-[#22c55e] rounded-full"
                     style="animation: pulse 2s ease-in-out infinite;"></span>OPERATIONAL</span>
         </div>
+        <div class="hidden md:block text-[#999]">SETTLEMENT IS FINAL. NO APPEALS.</div>
         <div class="flex items-center gap-4">
             <a href="#" onclick="window.router.navigate('/docs'); return false;"
                 class="hover:text-[#1A1A1A] cursor-pointer transition-colors">DOCS</a>

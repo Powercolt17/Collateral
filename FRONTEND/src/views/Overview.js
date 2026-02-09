@@ -1,623 +1,960 @@
-// Overview View - 10/10 Institutional Protocol Homepage
-// Surgical upgrades: tighter spacing, receipt artifact, ledger mechanism, branded motifs
+// Overview View - Collateral Clearinghouse Terminal
+// Institutional settlement engine - NOT a prediction market
 
 export function renderOverview() {
     return `
         <style>
-            /* === 10/10 INSTITUTIONAL PROTOCOL === */
-            .homepage {
-                background: #FFFFFF;
-                color: #1A1A1A;
+            /* === CLEARINGHOUSE TERMINAL === */
+            .clearinghouse {
+                background: #fafafa;
                 min-height: 100vh;
-                font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-                padding-bottom: 60px;
-                position: relative;
+                font-family: 'Inter', -apple-system, sans-serif;
             }
-
-            /* Subtle ledger spine motif - left side */
-            .homepage::before {
+            
+            /* Subtle grid watermark */
+            .clearinghouse::before {
                 content: '';
                 position: fixed;
-                left: 40px;
-                top: 80px;
-                bottom: 60px;
-                width: 1px;
-                background: linear-gradient(
-                    to bottom,
-                    transparent 0%,
-                    #E5E5E5 10%,
-                    #E5E5E5 90%,
-                    transparent 100%
-                );
-                opacity: 0.6;
+                inset: 0;
                 pointer-events: none;
-                z-index: 1;
-            }
-            .homepage::after {
-                content: '';
-                position: fixed;
-                left: 36px;
-                top: 120px;
-                width: 9px;
-                height: 1px;
-                background: #8B1818;
-                opacity: 0.4;
-                pointer-events: none;
-                z-index: 1;
-            }
-            @media (max-width: 1200px) {
-                .homepage::before, .homepage::after { display: none; }
+                background-image: 
+                    linear-gradient(rgba(0,0,0,0.015) 1px, transparent 1px),
+                    linear-gradient(90deg, rgba(0,0,0,0.015) 1px, transparent 1px);
+                background-size: 24px 24px;
+                z-index: 0;
             }
 
-            /* Mechanism pipeline steps */
-            .mechanism-pipeline {
-                display: grid;
-                grid-template-columns: repeat(4, 1fr);
-                position: relative;
+            /* Tabs row */
+            .ch-tabs {
+                display: flex;
+                gap: 8px;
+                padding: 12px 24px;
+                border-bottom: 1px solid #e5e5e5;
+                background: #fff;
+                overflow-x: auto;
             }
-            @media (max-width: 768px) {
-                .mechanism-pipeline { grid-template-columns: 1fr; }
+            .ch-tab {
+                display: flex;
+                align-items: center;
+                gap: 6px;
+                padding: 8px 16px;
+                font-size: 12px;
+                font-weight: 500;
+                color: #666;
+                background: transparent;
+                border: none;
+                cursor: pointer;
+                white-space: nowrap;
+                transition: all 0.15s;
+                font-family: 'JetBrains Mono', monospace;
+                text-transform: uppercase;
+                letter-spacing: 0.5px;
             }
-            .mechanism-step {
-                padding: 24px 20px;
-                border-left: 1px solid #E5E5E5;
-                position: relative;
+            .ch-tab:hover { color: #333; }
+            .ch-tab.active { 
+                color: #0a0a0a; 
+                border-bottom: 2px solid #921818;
+                margin-bottom: -13px;
+                padding-bottom: 19px;
             }
-            .mechanism-step:first-child {
-                border-left: none;
+            .ch-tab i { width: 14px; height: 14px; }
+
+            /* Filters row */
+            .ch-filters {
+                display: flex;
+                flex-wrap: wrap;
+                gap: 8px;
+                padding: 12px 24px;
+                border-bottom: 1px solid #e5e5e5;
+                background: #fff;
+                align-items: center;
             }
-            @media (max-width: 768px) {
-                .mechanism-step { 
-                    border-left: 2px solid #E5E5E5; 
-                    border-top: none;
-                    margin-left: 12px;
-                    padding-left: 24px;
-                }
-                .mechanism-step:first-child { border-left: 2px solid #E5E5E5; }
+            .ch-filter-group {
+                display: flex;
+                align-items: center;
+                gap: 8px;
             }
-            .mechanism-step::before {
-                content: '';
-                position: absolute;
-                left: -5px;
-                top: 28px;
-                width: 9px;
-                height: 9px;
-                background: #FFFFFF;
-                border: 2px solid #8B1818;
-                border-radius: 50%;
-            }
-            @media (min-width: 769px) {
-                .mechanism-step::before { display: none; }
-            }
-            .step-event {
-                font-family: 'JetBrains Mono', 'SF Mono', monospace;
+            .ch-filter-label {
                 font-size: 10px;
-                color: #9CA3AF;
-                letter-spacing: 0.05em;
+                font-weight: 600;
+                color: #666;
+                text-transform: uppercase;
+                letter-spacing: 0.5px;
+                font-family: 'JetBrains Mono', monospace;
+            }
+            .ch-pill {
+                padding: 6px 12px;
+                font-size: 11px;
+                font-weight: 500;
+                color: #333;
+                background: #f5f5f5;
+                border: 1px solid #e0e0e0;
+                border-radius: 2px;
+                cursor: pointer;
+                transition: all 0.15s;
+                font-family: 'Inter', sans-serif;
+            }
+            .ch-pill:hover { background: #eee; border-color: #ccc; }
+            .ch-pill.active { background: #0a0a0a; color: #fff; border-color: #0a0a0a; }
+
+            .ch-integration {
+                display: flex;
+                align-items: center;
+                gap: 4px;
+                padding: 4px 10px;
+                font-size: 11px;
+                color: #666;
+                transition: all 0.15s;
+                cursor: pointer;
+                font-family: 'JetBrains Mono', monospace;
+            }
+            .ch-integration:hover { color: #333; }
+            .ch-integration.verified { color: #1a5c3a; font-weight: 600; }
+            .ch-integration i { width: 14px; height: 14px; }
+
+            /* Main layout */
+            .ch-main {
+                display: flex;
+                gap: 0;
+                position: relative;
+                z-index: 1;
+            }
+
+            /* Sidebar */
+            .ch-sidebar {
+                width: 260px;
+                min-width: 260px;
+                padding: 20px;
+                border-right: 1px solid #e5e5e5;
+                background: #fff;
+                min-height: calc(100vh - 200px);
+            }
+            .ch-sidebar-title {
+                font-size: 11px;
+                font-weight: 600;
+                color: #666;
+                text-transform: uppercase;
+                letter-spacing: 0.5px;
+                margin-bottom: 16px;
+                font-family: 'JetBrains Mono', monospace;
+                display: flex;
+                align-items: center;
+                gap: 6px;
+            }
+            .ch-sidebar-title i { width: 14px; height: 14px; }
+
+            .ch-checkbox-group {
+                display: flex;
+                flex-direction: column;
+                gap: 10px;
+                margin-bottom: 24px;
+            }
+            .ch-checkbox {
+                display: flex;
+                align-items: center;
+                gap: 10px;
+                cursor: pointer;
+            }
+            .ch-checkbox input {
+                width: 16px;
+                height: 16px;
+                accent-color: #921818;
+            }
+            .ch-checkbox span {
+                font-size: 12px;
+                color: #333;
+            }
+
+            .ch-slider-group {
+                margin-bottom: 20px;
+            }
+            .ch-slider-header {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
                 margin-bottom: 8px;
             }
-            .step-num {
-                font-size: 36px;
-                font-weight: 700;
-                color: #8B1818;
-                letter-spacing: -0.03em;
-                line-height: 1;
-                margin-bottom: 12px;
-            }
-            .step-title {
-                font-size: 13px;
-                font-weight: 600;
-                color: #1A1A1A;
-                margin-bottom: 6px;
+            .ch-slider-label {
+                font-size: 11px;
+                color: #666;
                 text-transform: uppercase;
-                letter-spacing: 0.02em;
+                font-family: 'JetBrains Mono', monospace;
             }
-            .step-desc {
+            .ch-slider-value {
                 font-size: 12px;
-                color: #6B6B6B;
-                line-height: 1.5;
+                font-weight: 600;
+                color: #0a0a0a;
+                font-family: 'JetBrains Mono', monospace;
+            }
+            .ch-slider {
+                width: 100%;
+                height: 4px;
+                background: #e5e5e5;
+                border-radius: 2px;
+                appearance: none;
+                cursor: pointer;
+            }
+            .ch-slider::-webkit-slider-thumb {
+                appearance: none;
+                width: 14px;
+                height: 14px;
+                background: #921818;
+                border-radius: 50%;
+                cursor: pointer;
+            }
+
+            /* Content area */
+            .ch-content {
+                flex: 1;
+                padding: 20px 24px;
+                min-width: 0;
+            }
+
+            /* Clearinghouse header banner */
+            .ch-banner {
+                background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 100%);
+                color: #fff;
+                padding: 16px 24px;
+                margin-bottom: 20px;
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                border-left: 4px solid #921818;
+            }
+            .ch-banner-title {
+                font-size: 12px;
+                font-weight: 600;
+                letter-spacing: 1px;
+                font-family: 'JetBrains Mono', monospace;
+                display: flex;
+                align-items: center;
+                gap: 8px;
+            }
+            .ch-banner-title::before {
+                content: '■';
+                color: #921818;
+            }
+            .ch-banner-status {
+                font-size: 11px;
+                color: #888;
+                font-family: 'JetBrains Mono', monospace;
+            }
+            .ch-banner-status span {
+                color: #22c55e;
+            }
+
+            /* Stats row */
+            .ch-stats {
+                display: grid;
+                grid-template-columns: repeat(3, 1fr);
+                gap: 16px;
+                margin-bottom: 24px;
+            }
+            .ch-stat {
+                background: #fff;
+                border: 1px solid #e5e5e5;
+                padding: 16px 20px;
+            }
+            .ch-stat-label {
+                font-size: 10px;
+                color: #666;
+                text-transform: uppercase;
+                letter-spacing: 0.5px;
+                margin-bottom: 6px;
+                font-family: 'JetBrains Mono', monospace;
+            }
+            .ch-stat-value {
+                font-size: 28px;
+                font-weight: 600;
+                color: #0a0a0a;
+                font-family: 'IBM Plex Sans', sans-serif;
             }
 
             /* Section header */
-            .section-header {
-                font-size: 10px;
+            .ch-section-header {
+                font-size: 11px;
                 font-weight: 600;
-                letter-spacing: 0.12em;
-                color: #8B1818;
+                color: #333;
                 text-transform: uppercase;
+                letter-spacing: 0.5px;
                 margin-bottom: 16px;
-            }
-
-            /* Contract Receipt Panel */
-            .receipt-panel {
-                border: 1px solid #E5E5E5;
-                background: #FAFAFA;
-                padding: 20px 24px;
-                font-family: 'JetBrains Mono', 'SF Mono', monospace;
-                position: relative;
-            }
-            .receipt-header {
-                font-size: 9px;
-                letter-spacing: 0.1em;
-                color: #9CA3AF;
-                margin-bottom: 12px;
-                padding-bottom: 10px;
-                border-bottom: 1px solid #E5E5E5;
-            }
-            .receipt-baseline {
-                margin-bottom: 16px;
-            }
-            .receipt-baseline-label {
-                font-size: 9px;
-                color: #6B6B6B;
-                letter-spacing: 0.05em;
-                margin-bottom: 4px;
-            }
-            .receipt-baseline-value {
-                font-size: 28px;
-                font-weight: 600;
-                color: #1A1A1A;
-                letter-spacing: -0.02em;
-                font-family: 'Inter', sans-serif;
-            }
-            .receipt-baseline-period {
-                font-size: 12px;
-                color: #9CA3AF;
-                margin-left: 4px;
-            }
-            .receipt-row {
-                display: flex;
-                justify-content: space-between;
-                font-size: 10px;
-                padding: 6px 0;
-                border-bottom: 1px solid #F0F0F0;
-            }
-            .receipt-row:last-child { border-bottom: none; }
-            .receipt-key {
-                color: #6B6B6B;
-            }
-            .receipt-val {
-                color: #1A1A1A;
-                font-weight: 500;
-            }
-            .receipt-val.stake { color: #8B1818; }
-            .receipt-stamp {
-                position: absolute;
-                top: 16px;
-                right: 16px;
-                font-size: 8px;
-                letter-spacing: 0.08em;
-                color: #D0D0D0;
-                border: 1px solid #E5E5E5;
-                padding: 3px 6px;
-                transform: rotate(2deg);
-            }
-
-            /* Integration list */
-            .integration-row {
-                display: flex;
-                justify-content: space-between;
-                align-items: center;
-                padding: 12px 0;
-                border-bottom: 1px solid #F0F0F0;
-            }
-            .integration-row:last-child { border-bottom: none; }
-            .integration-left {
-                display: flex;
-                flex-direction: column;
-            }
-            .integration-name {
-                font-size: 14px;
-                font-weight: 500;
-                color: #1A1A1A;
-                margin-bottom: 2px;
-            }
-            .integration-type {
-                font-size: 11px;
-                color: #9CA3AF;
-            }
-            .integration-status {
-                font-family: 'JetBrains Mono', 'SF Mono', monospace;
-                font-size: 9px;
-                letter-spacing: 0.08em;
-                color: #6B6B6B;
-                text-transform: uppercase;
-            }
-
-            /* Guarantee check items */
-            .guarantee-row {
-                display: flex;
-                gap: 12px;
-                margin-bottom: 16px;
-            }
-            .guarantee-row:last-child { margin-bottom: 0; }
-            .guarantee-check {
-                width: 18px;
-                height: 18px;
-                border: 1px solid #E5E5E5;
-                border-radius: 50%;
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                flex-shrink: 0;
-                margin-top: 2px;
-            }
-            .guarantee-check svg {
-                width: 10px;
-                height: 10px;
-                stroke: #6B6B6B;
-            }
-            .guarantee-title {
-                font-size: 13px;
-                font-weight: 600;
-                color: #1A1A1A;
-                margin-bottom: 2px;
-            }
-            .guarantee-desc {
-                font-size: 12px;
-                color: #6B6B6B;
-                line-height: 1.45;
-            }
-
-            /* Economics cards */
-            .econ-card {
-                border: 1px solid #E5E5E5;
-                border-left: none;
-                padding: 22px;
-                background: #FFFFFF;
-            }
-            .econ-card:first-child { border-left: 1px solid #E5E5E5; }
-            @media (max-width: 768px) {
-                .econ-card { border-left: 1px solid #E5E5E5; border-top: none; }
-                .econ-card:first-child { border-top: 1px solid #E5E5E5; }
-            }
-            .econ-card h4 {
-                font-size: 14px;
-                font-weight: 600;
-                color: #1A1A1A;
-                margin-bottom: 8px;
-            }
-            .econ-card p {
-                font-size: 12px;
-                color: #6B6B6B;
-                line-height: 1.5;
-                margin-bottom: 8px;
-            }
-            .econ-card .small {
-                font-size: 11px;
-                color: #9CA3AF;
-            }
-
-            /* Risk tiers */
-            .risk-box {
-                background: #FEF2F2;
-                padding: 10px 12px;
-                margin-top: 10px;
-            }
-            .risk-tier {
-                font-size: 11px;
-                color: #8B1818;
-                margin-bottom: 2px;
-                font-family: 'JetBrains Mono', 'SF Mono', monospace;
-            }
-            .risk-tier:last-child { margin-bottom: 0; }
-
-            /* Rationale with ledger anchor */
-            .rationale-block {
-                position: relative;
-                padding-left: 20px;
-                border-left: 2px solid #E5E5E5;
-            }
-            .rationale-stamp {
-                font-family: 'JetBrains Mono', 'SF Mono', monospace;
-                font-size: 9px;
-                letter-spacing: 0.08em;
-                color: #9CA3AF;
-                margin-bottom: 16px;
+                font-family: 'JetBrains Mono', monospace;
                 display: flex;
                 align-items: center;
                 gap: 8px;
             }
-            .rationale-stamp::before {
-                content: '';
-                width: 6px;
-                height: 6px;
-                background: #8B1818;
-                border-radius: 50%;
-                opacity: 0.6;
+            .ch-section-header::before {
+                content: '■';
+                color: #921818;
             }
 
-            /* CTAs */
-            .btn-primary {
-                background: #8B1818;
-                color: #FFFFFF;
-                padding: 11px 22px;
-                font-size: 13px;
-                font-weight: 500;
-                border: none;
-                cursor: pointer;
-                display: inline-flex;
-                align-items: center;
-                gap: 8px;
-                transition: background 0.15s;
+            /* Receipt cards grid */
+            .ch-cards {
+                display: grid;
+                grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+                gap: 16px;
+                margin-bottom: 32px;
             }
-            .btn-primary:hover { background: #6B1212; }
-            .btn-secondary {
-                background: transparent;
-                color: #1A1A1A;
-                padding: 11px 22px;
-                font-size: 13px;
-                font-weight: 500;
-                border: 1px solid #E5E5E5;
-                cursor: pointer;
+
+            /* Receipt card */
+            .ch-card {
+                background: #fff;
+                border: 1px solid #e5e5e5;
+                padding: 20px;
                 transition: all 0.15s;
             }
-            .btn-secondary:hover {
-                border-color: #D0D0D0;
-                background: #FAFAFA;
+            .ch-card:hover {
+                border-color: #ccc;
+                box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+            }
+
+            .ch-card-header {
+                display: flex;
+                justify-content: space-between;
+                align-items: flex-start;
+                margin-bottom: 4px;
+            }
+            .ch-card-id {
+                font-size: 11px;
+                font-weight: 600;
+                color: #666;
+                font-family: 'JetBrains Mono', monospace;
+            }
+            .ch-card-indicator {
+                width: 8px;
+                height: 8px;
+                border-radius: 50%;
+                background: #22c55e;
+            }
+            .ch-card-indicator.pending { background: #f59e0b; }
+            .ch-card-indicator.locked { background: #921818; }
+
+            .ch-card-type {
+                font-size: 10px;
+                color: #888;
+                text-transform: uppercase;
+                letter-spacing: 0.5px;
+                margin-bottom: 8px;
+                font-family: 'JetBrains Mono', monospace;
+            }
+
+            .ch-card-title {
+                font-size: 15px;
+                font-weight: 600;
+                color: #0a0a0a;
+                margin-bottom: 16px;
+                font-family: 'IBM Plex Sans', sans-serif;
+            }
+
+            .ch-card-row {
+                display: flex;
+                justify-content: space-between;
+                padding: 6px 0;
+                border-bottom: 1px solid #f0f0f0;
+            }
+            .ch-card-row:last-of-type { border-bottom: none; }
+            .ch-card-label {
+                font-size: 10px;
+                color: #888;
+                text-transform: uppercase;
+                font-family: 'JetBrains Mono', monospace;
+            }
+            .ch-card-value {
+                font-size: 11px;
+                font-weight: 500;
+                color: #333;
+                font-family: 'JetBrains Mono', monospace;
+                text-align: right;
+            }
+            .ch-card-value.highlight { color: #1a5c3a; }
+            .ch-card-value.danger { color: #921818; }
+
+            .ch-card-warning {
+                font-size: 10px;
+                color: #921818;
+                font-weight: 600;
+                text-transform: uppercase;
+                margin-top: 12px;
+                margin-bottom: 12px;
+                font-family: 'JetBrains Mono', monospace;
+            }
+
+            .ch-card-cta {
+                width: 100%;
+                padding: 10px 16px;
+                font-size: 11px;
+                font-weight: 600;
+                text-transform: uppercase;
+                letter-spacing: 0.5px;
+                border: 1px solid #e5e5e5;
+                background: #fff;
+                color: #333;
+                cursor: pointer;
+                transition: all 0.15s;
+                font-family: 'JetBrains Mono', monospace;
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+            }
+            .ch-card-cta:hover { background: #f5f5f5; }
+            .ch-card-cta.execute {
+                background: #921818;
+                color: #fff;
+                border-color: #921818;
+            }
+            .ch-card-cta.execute:hover { background: #751212; }
+
+            .ch-card-micro {
+                font-size: 9px;
+                color: #999;
+                text-align: center;
+                margin-top: 8px;
+                font-family: 'JetBrains Mono', monospace;
+            }
+
+            /* Settlement ledger feed */
+            .ch-feed {
+                background: #0a0a0a;
+                border: 1px solid #222;
+                padding: 16px 20px;
+            }
+            .ch-feed-header {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                margin-bottom: 12px;
+            }
+            .ch-feed-title {
+                font-size: 11px;
+                font-weight: 600;
+                color: #888;
+                text-transform: uppercase;
+                letter-spacing: 0.5px;
+                font-family: 'JetBrains Mono', monospace;
+            }
+            .ch-feed-status {
+                font-size: 10px;
+                color: #22c55e;
+                font-family: 'JetBrains Mono', monospace;
+            }
+
+            .ch-feed-row {
+                display: flex;
+                gap: 16px;
+                padding: 6px 0;
+                font-size: 11px;
+                font-family: 'JetBrains Mono', monospace;
+                color: #888;
+            }
+            .ch-feed-time { color: #555; min-width: 70px; }
+            .ch-feed-event { color: #fff; min-width: 180px; }
+            .ch-feed-event.baseline { color: #3b82f6; }
+            .ch-feed-event.locked { color: #f59e0b; }
+            .ch-feed-event.pending { color: #a855f7; }
+            .ch-feed-event.settled { color: #22c55e; }
+            .ch-feed-event.forfeited { color: #ef4444; }
+            .ch-feed-detail { color: #666; flex: 1; }
+
+            /* Action required badge */
+            .ch-action-badge {
+                font-size: 10px;
+                font-weight: 600;
+                color: #921818;
+                text-transform: uppercase;
+                letter-spacing: 0.5px;
+                font-family: 'JetBrains Mono', monospace;
+                text-align: right;
+            }
+
+            /* Responsive */
+            @media (max-width: 1024px) {
+                .ch-sidebar { display: none; }
+                .ch-stats { grid-template-columns: 1fr; }
+            }
+            @media (max-width: 768px) {
+                .ch-tabs { padding: 8px 12px; }
+                .ch-filters { padding: 8px 12px; }
+                .ch-content { padding: 12px; }
+                .ch-cards { grid-template-columns: 1fr; }
             }
         </style>
 
-        <div class="homepage">
-            
-            <!-- ═══════════════════════════════════════════════════════════════ -->
-            <!-- HERO SECTION (tighter spacing + receipt artifact) -->
-            <!-- ═══════════════════════════════════════════════════════════════ -->
-            <section class="pt-14 pb-10">
-                <div class="max-w-[900px] mx-auto px-6 md:px-8">
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-10 items-start">
-                        
-                        <!-- Left: Headline + CTAs -->
-                        <div>
-                            <h1 class="text-3xl md:text-4xl font-bold tracking-tight mb-4" style="line-height: 1.15;">
-                                <span class="italic">Intentions Fail</span><br/>
-                                <span class="text-[#8B1818] italic">Without</span><span class="italic"> Stakes.</span>
-                            </h1>
-                            
-                            <p class="text-sm text-[#6B6B6B] max-w-md mb-6" style="line-height: 1.6;">
-                                Performance contracts with on-chain enforcement. Capital at stake. Outcomes verified via platform integrations. Winners paid from forfeited funds.
-                            </p>
+        <div class="clearinghouse">
+            <!-- Tabs Row -->
+            <div class="ch-tabs">
+                <button class="ch-tab">
+                    <i data-lucide="sparkles"></i> NEW
+                </button>
+                <button class="ch-tab active">
+                    <i data-lucide="zap"></i> EXECUTION QUEUE
+                </button>
+                <button class="ch-tab">
+                    <i data-lucide="trending-up"></i> HIGH EXPOSURE
+                </button>
+                <button class="ch-tab">
+                    <i data-lucide="clock"></i> OPEN WINDOWS
+                </button>
+                <button class="ch-tab">
+                    <i data-lucide="timer"></i> CLOSING SETTLEMENT
+                </button>
+                <button class="ch-tab">
+                    <i data-lucide="shield-check"></i> VERIFICATION PRIORITY
+                </button>
+            </div>
 
-                            <div class="flex flex-wrap gap-3">
-                                <button onclick="window.app.handleInitiate()" class="btn-primary">
-                                    Commit Capital
-                                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
-                                        <path d="M5 12h14M12 5l7 7-7 7"/>
-                                    </svg>
-                                </button>
-                                <button onclick="window.router.navigate('/docs')" class="btn-secondary">
-                                    View Documentation
-                                </button>
-                            </div>
-                        </div>
-
-                        <!-- Right: Contract Receipt Panel -->
-                        <div class="receipt-panel">
-                            <div class="receipt-stamp">IMMUTABLE</div>
-                            <div class="receipt-header">BASELINE SNAPSHOT — EXECUTION RECORD</div>
-                            
-                            <div class="receipt-baseline">
-                                <div class="receipt-baseline-label">VERIFIED BASELINE</div>
-                                <div>
-                                    <span class="receipt-baseline-value">$4,221</span>
-                                    <span class="receipt-baseline-period">(30D)</span>
-                                </div>
-                            </div>
-
-                            <div class="receipt-row">
-                                <span class="receipt-key">INSTRUMENT</span>
-                                <span class="receipt-val">REVENUE_COMMITMENT</span>
-                            </div>
-                            <div class="receipt-row">
-                                <span class="receipt-key">TARGET</span>
-                                <span class="receipt-val">+18%</span>
-                            </div>
-                            <div class="receipt-row">
-                                <span class="receipt-key">WINDOW</span>
-                                <span class="receipt-val">14 DAYS</span>
-                            </div>
-                            <div class="receipt-row">
-                                <span class="receipt-key">STAKE</span>
-                                <span class="receipt-val stake">$500 LOCKED</span>
-                            </div>
-                            <div class="receipt-row">
-                                <span class="receipt-key">OUTCOME</span>
-                                <span class="receipt-val">PENDING</span>
-                            </div>
-                            <div class="receipt-row">
-                                <span class="receipt-key">RCPT</span>
-                                <span class="receipt-val">0184-9F2A</span>
-                            </div>
-                        </div>
-                    </div>
+            <!-- Filters Row -->
+            <div class="ch-filters">
+                <div class="ch-filter-group">
+                    <span class="ch-filter-label">INSTRUMENTS</span>
+                    <button class="ch-pill active">REVENUE</button>
+                    <button class="ch-pill">SALES</button>
+                    <button class="ch-pill">SOCIAL</button>
+                    <button class="ch-pill">DEV</button>
+                    <button class="ch-pill">FITNESS</button>
+                    <button class="ch-pill">CUSTOM</button>
                 </div>
-            </section>
+                <div style="flex: 1;"></div>
+                <div class="ch-filter-group">
+                    <span class="ch-filter-label">INTEGRATIONS</span>
+                    <span class="ch-integration verified">
+                        <i data-lucide="check-circle"></i> VERIFIED
+                    </span>
+                    <span class="ch-integration">
+                        <i data-lucide="check"></i> Stripe
+                    </span>
+                    <span class="ch-integration">
+                        <i data-lucide="check"></i> Shopify
+                    </span>
+                    <span class="ch-integration">
+                        <i data-lucide="check"></i> Amazon
+                    </span>
+                    <span class="ch-integration">
+                        <i data-lucide="check"></i> GitHub
+                    </span>
+                    <span class="ch-integration">
+                        <i data-lucide="check"></i> X
+                    </span>
+                </div>
+            </div>
 
-
-            <!-- ═══════════════════════════════════════════════════════════════ -->
-            <!-- MECHANISM SECTION (pipeline style) -->
-            <!-- ═══════════════════════════════════════════════════════════════ -->
-            <section class="py-10 border-t border-[#F0F0F0]">
-                <div class="max-w-[900px] mx-auto px-6 md:px-8">
-                    <div class="section-header">MECHANISM</div>
+            <!-- Main Layout -->
+            <div class="ch-main">
+                <!-- Left Sidebar -->
+                <aside class="ch-sidebar">
+                    <div class="ch-sidebar-title">
+                        <i data-lucide="sliders"></i> EXECUTION CONSTRAINTS
+                    </div>
                     
-                    <div class="mechanism-pipeline">
-                        <div class="mechanism-step">
-                            <div class="step-event">EVENT_001</div>
-                            <div class="step-num">01</div>
-                            <div class="step-title">Baseline Captured</div>
-                            <div class="step-desc">Define measurable target: revenue threshold, commit frequency, post cadence.</div>
+                    <div class="ch-checkbox-group">
+                        <label class="ch-checkbox">
+                            <input type="checkbox" checked>
+                            <span>VERIFIED ONLY (FAIL-CLOSED)</span>
+                        </label>
+                        <label class="ch-checkbox">
+                            <input type="checkbox" checked>
+                            <span>IMMUTABLE TERMS</span>
+                        </label>
+                        <label class="ch-checkbox">
+                            <input type="checkbox" checked>
+                            <span>NO APPEALS</span>
+                        </label>
+                        <label class="ch-checkbox">
+                            <input type="checkbox">
+                            <span>BUYOUT AVAILABLE</span>
+                        </label>
+                    </div>
+
+                    <div class="ch-slider-group">
+                        <div class="ch-slider-header">
+                            <span class="ch-slider-label">MIN CAPITAL</span>
+                            <span class="ch-slider-value" id="min-capital-value">$100</span>
                         </div>
-                        <div class="mechanism-step">
-                            <div class="step-event">EVENT_002</div>
-                            <div class="step-num">02</div>
-                            <div class="step-title">Capital Locked</div>
-                            <div class="step-desc">Capital deposited into smart contract. Non-reversible until settlement.</div>
+                        <input type="range" class="ch-slider" id="min-capital" min="100" max="5000" value="100" step="100">
+                    </div>
+
+                    <div class="ch-slider-group">
+                        <div class="ch-slider-header">
+                            <span class="ch-slider-label">WINDOW LENGTH</span>
+                            <span class="ch-slider-value" id="window-length-value">30D</span>
                         </div>
-                        <div class="mechanism-step">
-                            <div class="step-event">EVENT_003</div>
-                            <div class="step-num">03</div>
-                            <div class="step-title">Performance Verified</div>
-                            <div class="step-desc">Outcome validated via OAuth integration. Zero subjective assessment.</div>
+                        <input type="range" class="ch-slider" id="window-length" min="1" max="365" value="30">
+                    </div>
+                </aside>
+
+                <!-- Main Content -->
+                <main class="ch-content">
+                    <!-- Clearinghouse Banner -->
+                    <div class="ch-banner">
+                        <div class="ch-banner-title">
+                            COLLATERAL CLEARINGHOUSE — SETTLEMENT ENGINE ONLINE
                         </div>
-                        <div class="mechanism-step">
-                            <div class="step-event">EVENT_004</div>
-                            <div class="step-num">04</div>
-                            <div class="step-title">Contract Settled</div>
-                            <div class="step-desc">Target met: capital returned + payout. Target missed: forfeiture.</div>
+                        <div class="ch-banner-status">
+                            SYSTEM STATUS: <span>OPERATIONAL</span>
                         </div>
                     </div>
-                </div>
-            </section>
 
-
-            <!-- ═══════════════════════════════════════════════════════════════ -->
-            <!-- RATIONALE SECTION (with ledger anchor) -->
-            <!-- ═══════════════════════════════════════════════════════════════ -->
-            <section class="py-10 bg-[#FAFAFA]">
-                <div class="max-w-[900px] mx-auto px-6 md:px-8">
-                    <div class="section-header">RATIONALE</div>
-                    
-                    <div class="rationale-block max-w-lg">
-                        <div class="rationale-stamp">EXECUTION LOGIC // REV.01</div>
-                        
-                        <p class="text-base text-[#1A1A1A] mb-4" style="line-height: 1.55;">
-                            Commitments without cost are noise. Intentions fade when stakes are zero.
-                        </p>
-                        <p class="text-base text-[#1A1A1A] mb-4" style="line-height: 1.55;">
-                            Capital enforces follow-through. Markets price risk. Outcomes become inevitable when failure has real consequence.
-                        </p>
-                        <p class="text-base text-[#1A1A1A] font-medium" style="line-height: 1.55;">
-                            This is not motivation. This is mechanism.
-                        </p>
-                    </div>
-                </div>
-            </section>
-
-
-            <!-- ═══════════════════════════════════════════════════════════════ -->
-            <!-- VERIFICATION LAYER SECTION -->
-            <!-- ═══════════════════════════════════════════════════════════════ -->
-            <section class="py-10">
-                <div class="max-w-[900px] mx-auto px-6 md:px-8">
-                    <div class="section-header">VERIFICATION LAYER</div>
-                    
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-10">
-                        
-                        <!-- Platform Integrations -->
-                        <div>
-                            <h3 class="text-base font-semibold text-[#1A1A1A] mb-3">Platform Integrations</h3>
-                            
-                            <div class="integration-row">
-                                <div class="integration-left">
-                                    <span class="integration-name">Stripe</span>
-                                    <span class="integration-type">Revenue Metrics</span>
-                                </div>
-                                <span class="integration-status">VERIFIED</span>
-                            </div>
-                            <div class="integration-row">
-                                <div class="integration-left">
-                                    <span class="integration-name">GitHub</span>
-                                    <span class="integration-type">Commit Frequency</span>
-                                </div>
-                                <span class="integration-status">BOUND</span>
-                            </div>
-                            <div class="integration-row">
-                                <div class="integration-left">
-                                    <span class="integration-name">X (Twitter)</span>
-                                    <span class="integration-type">Post Cadence</span>
-                                </div>
-                                <span class="integration-status">CONNECTED</span>
-                            </div>
+                    <!-- Stats Row -->
+                    <div class="ch-stats">
+                        <div class="ch-stat">
+                            <div class="ch-stat-label">CAPITAL LOCKED TODAY</div>
+                            <div class="ch-stat-value">$4.2M</div>
                         </div>
-
-                        <!-- Enforcement Guarantees -->
-                        <div>
-                            <h3 class="text-base font-semibold text-[#1A1A1A] mb-3">Enforcement Guarantees</h3>
-                            
-                            <div class="guarantee-row">
-                                <div class="guarantee-check">
-                                    <svg viewBox="0 0 24 24" fill="none" stroke-width="2.5">
-                                        <polyline points="20 6 9 17 4 12"></polyline>
-                                    </svg>
-                                </div>
-                                <div>
-                                    <div class="guarantee-title">Objective verification only</div>
-                                    <div class="guarantee-desc">No manual review. No subjective judgment. Outcome validated via API response.</div>
-                                </div>
-                            </div>
-                            
-                            <div class="guarantee-row">
-                                <div class="guarantee-check">
-                                    <svg viewBox="0 0 24 24" fill="none" stroke-width="2.5">
-                                        <polyline points="20 6 9 17 4 12"></polyline>
-                                    </svg>
-                                </div>
-                                <div>
-                                    <div class="guarantee-title">Immutable settlement</div>
-                                    <div class="guarantee-desc">Smart contract execution. Once verified, settlement is automatic and final.</div>
-                                </div>
-                            </div>
-                            
-                            <div class="guarantee-row">
-                                <div class="guarantee-check">
-                                    <svg viewBox="0 0 24 24" fill="none" stroke-width="2.5">
-                                        <polyline points="20 6 9 17 4 12"></polyline>
-                                    </svg>
-                                </div>
-                                <div>
-                                    <div class="guarantee-title">Zero social layer</div>
-                                    <div class="guarantee-desc">No feeds, likes, or comments. Performance data only. Capital speaks.</div>
-                                </div>
-                            </div>
+                        <div class="ch-stat">
+                            <div class="ch-stat-label">CONTRACTS AWAITING VERIFICATION</div>
+                            <div class="ch-stat-value">142</div>
+                        </div>
+                        <div class="ch-stat">
+                            <div class="ch-stat-label">FORFEITURE POOL BALANCE</div>
+                            <div class="ch-stat-value">$892k</div>
                         </div>
                     </div>
-                </div>
-            </section>
 
+                    <!-- Execution Queue Section -->
+                    <div class="ch-section-header">EXECUTION QUEUE</div>
 
-            <!-- ═══════════════════════════════════════════════════════════════ -->
-            <!-- CONTRACT ECONOMICS SECTION -->
-            <!-- ═══════════════════════════════════════════════════════════════ -->
-            <section class="py-10 bg-[#FAFAFA]">
-                <div class="max-w-[900px] mx-auto px-6 md:px-8">
-                    <div class="section-header">CONTRACT ECONOMICS</div>
-                    
-                    <div class="grid grid-cols-1 md:grid-cols-3">
-                        
-                        <div class="econ-card">
-                            <h4>Contract Terms</h4>
-                            <p>Capital is locked per contract. Terms are defined upfront. Payout multiplier is known before execution.</p>
-                            <p class="small">No post-hoc adjustment. Terms are immutable once executed.</p>
+                    <div class="ch-cards">
+                        <!-- Card 1 -->
+                        <div class="ch-card">
+                            <div class="ch-card-header">
+                                <span class="ch-card-id">RCPT-0184</span>
+                                <span class="ch-card-indicator"></span>
+                            </div>
+                            <div class="ch-card-type">REVENUE COMMITMENT</div>
+                            <div class="ch-card-title">Revenue Growth +18% (14D)</div>
+                            
+                            <div class="ch-card-row">
+                                <span class="ch-card-label">BASELINE SNAPSHOT</span>
+                                <span class="ch-card-value">MRR $12k</span>
+                            </div>
+                            <div class="ch-card-row">
+                                <span class="ch-card-label">TARGET DELTA</span>
+                                <span class="ch-card-value highlight">+18% ($2.1k)</span>
+                            </div>
+                            <div class="ch-card-row">
+                                <span class="ch-card-label">STAKE LOCKED</span>
+                                <span class="ch-card-value">$5,000 Locked</span>
+                            </div>
+                            <div class="ch-card-row">
+                                <span class="ch-card-label">EXIT BUYOUT</span>
+                                <span class="ch-card-value">$312</span>
+                            </div>
+                            <div class="ch-card-row">
+                                <span class="ch-card-label">WINDOW ENDS</span>
+                                <span class="ch-card-value">ENDS FEB 28</span>
+                            </div>
+
+                            <div class="ch-card-warning">FAILURE = FORFEIT</div>
+
+                            <button class="ch-card-cta">
+                                VIEW RECEIPT <span>→</span>
+                            </button>
                         </div>
-                        
-                        <div class="econ-card">
-                            <h4>Outcome Settlement</h4>
-                            <p>Binary settlement: success or failure. Success returns capital + predefined multiplier. Failure forfeits capital in full.</p>
-                            <p class="small">Settlement does not depend on other users' outcomes.</p>
+
+                        <!-- Card 2 -->
+                        <div class="ch-card">
+                            <div class="ch-card-header">
+                                <span class="ch-card-id">RCPT-0182</span>
+                                <span class="ch-card-indicator pending"></span>
+                            </div>
+                            <div class="ch-card-type">DEV COMMITMENT</div>
+                            <div class="ch-card-title">Commit Cadence 5/wk</div>
+                            
+                            <div class="ch-card-row">
+                                <span class="ch-card-label">BASELINE SNAPSHOT</span>
+                                <span class="ch-card-value">avg 2/wk</span>
+                            </div>
+                            <div class="ch-card-row">
+                                <span class="ch-card-label">TARGET DELTA</span>
+                                <span class="ch-card-value highlight">min 5/wk</span>
+                            </div>
+                            <div class="ch-card-row">
+                                <span class="ch-card-label">STAKE LOCKED</span>
+                                <span class="ch-card-value">$1,200 Locked</span>
+                            </div>
+                            <div class="ch-card-row">
+                                <span class="ch-card-label">WINDOW ENDS</span>
+                                <span class="ch-card-value">ENDS FEB 15</span>
+                            </div>
+
+                            <div class="ch-card-warning">EXECUTION_REQUIRED</div>
+
+                            <button class="ch-card-cta execute">
+                                LOCK CAPITAL <span>→</span>
+                            </button>
+                            <div class="ch-card-micro">IRREVOCABLE. SETTLEMENT IS FINAL.</div>
                         </div>
-                        
-                        <div class="econ-card">
-                            <h4>Risk Model</h4>
-                            <p>Risk level determines multiplier. Difficulty and verification scope determine tier.</p>
-                            <div class="risk-box">
-                                <div class="risk-tier">CONSERVATIVE: 1.2x-1.5x</div>
-                                <div class="risk-tier">STANDARD: 1.5x-2.5x</div>
-                                <div class="risk-tier">AGGRESSIVE: 2.5x-5.0x</div>
+
+                        <!-- Card 3 -->
+                        <div class="ch-card">
+                            <div class="ch-card-header">
+                                <span class="ch-card-id">RCPT-0185</span>
+                                <span class="ch-card-indicator pending"></span>
+                            </div>
+                            <div class="ch-card-type">SOCIAL COMMITMENT</div>
+                            <div class="ch-card-title">Post Cadence 2/day</div>
+                            
+                            <div class="ch-card-row">
+                                <span class="ch-card-label">BASELINE SNAPSHOT</span>
+                                <span class="ch-card-value">0 posts</span>
+                            </div>
+                            <div class="ch-card-row">
+                                <span class="ch-card-label">TARGET DELTA</span>
+                                <span class="ch-card-value highlight">2 posts</span>
+                            </div>
+                            <div class="ch-card-row">
+                                <span class="ch-card-label">STAKE LOCKED</span>
+                                <span class="ch-card-value">$500 Locked</span>
+                            </div>
+                            <div class="ch-card-row">
+                                <span class="ch-card-label">WINDOW ENDS</span>
+                                <span class="ch-card-value">DAILY CYCLE</span>
+                            </div>
+
+                            <div class="ch-card-warning">VERIFICATION_PENDING</div>
+
+                            <button class="ch-card-cta">
+                                VIEW RECEIPT <span>→</span>
+                            </button>
+                        </div>
+
+                        <!-- Card 4 -->
+                        <div class="ch-card">
+                            <div class="ch-card-header">
+                                <span class="ch-card-id">RCPT-0181</span>
+                                <span class="ch-card-indicator"></span>
+                            </div>
+                            <div class="ch-card-type">SALES COMMITMENT</div>
+                            <div class="ch-card-title">Sales Calls 50/wk</div>
+                            
+                            <div class="ch-card-row">
+                                <span class="ch-card-label">BASELINE SNAPSHOT</span>
+                                <span class="ch-card-value">20 calls</span>
+                            </div>
+                            <div class="ch-card-row">
+                                <span class="ch-card-label">TARGET DELTA</span>
+                                <span class="ch-card-value highlight">50 calls</span>
+                            </div>
+                            <div class="ch-card-row">
+                                <span class="ch-card-label">STAKE LOCKED</span>
+                                <span class="ch-card-value">$2,500 Locked</span>
+                            </div>
+                            <div class="ch-card-row">
+                                <span class="ch-card-label">EXIT BUYOUT</span>
+                                <span class="ch-card-value">$188</span>
+                            </div>
+                            <div class="ch-card-row">
+                                <span class="ch-card-label">WINDOW ENDS</span>
+                                <span class="ch-card-value">ENDS FRIDAY</span>
+                            </div>
+
+                            <div class="ch-card-warning">FAILURE = FORFEIT</div>
+
+                            <button class="ch-card-cta">
+                                VIEW RECEIPT <span>→</span>
+                            </button>
+                        </div>
+
+                        <!-- Card 5 -->
+                        <div class="ch-card">
+                            <div class="ch-card-header">
+                                <span class="ch-card-id">RCPT-0178</span>
+                                <span class="ch-card-indicator locked"></span>
+                            </div>
+                            <div class="ch-card-type">REVENUE COMMITMENT</div>
+                            <div class="ch-card-title">Shopify GMV > $1k/day</div>
+                            
+                            <div class="ch-card-row">
+                                <span class="ch-card-label">BASELINE SNAPSHOT</span>
+                                <span class="ch-card-value">$800 avg</span>
+                            </div>
+                            <div class="ch-card-row">
+                                <span class="ch-card-label">TARGET DELTA</span>
+                                <span class="ch-card-value highlight">$1k min</span>
+                            </div>
+                            <div class="ch-card-row">
+                                <span class="ch-card-label">STAKE LOCKED</span>
+                                <span class="ch-card-value">$10,000 Locked</span>
+                            </div>
+                            <div class="ch-card-row">
+                                <span class="ch-card-label">EXIT BUYOUT</span>
+                                <span class="ch-card-value">$850</span>
+                            </div>
+                            <div class="ch-card-row">
+                                <span class="ch-card-label">WINDOW ENDS</span>
+                                <span class="ch-card-value">ENDS MAR 1</span>
+                            </div>
+
+                            <div class="ch-card-warning">FAILURE = FORFEIT</div>
+
+                            <button class="ch-card-cta">
+                                VIEW RECEIPT <span>→</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Verification Priority Section -->
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+                        <div class="ch-section-header" style="margin-bottom: 0;">VERIFICATION PRIORITY</div>
+                        <div class="ch-action-badge">ACTION REQUIRED</div>
+                    </div>
+
+                    <div class="ch-cards" style="margin-bottom: 24px;">
+                        <!-- Verification Card 1 -->
+                        <div class="ch-card">
+                            <div class="ch-card-header">
+                                <span class="ch-card-id">RCPT-0162</span>
+                                <span class="ch-card-indicator pending"></span>
+                            </div>
+                            <div class="ch-card-type">DEV COMMITMENT</div>
+                            <div class="ch-card-title">Commit Cadence 5/wk</div>
+                            
+                            <div class="ch-card-row">
+                                <span class="ch-card-label">BASELINE SNAPSHOT</span>
+                                <span class="ch-card-value">avg 2/wk</span>
+                            </div>
+                        </div>
+
+                        <!-- Verification Card 2 -->
+                        <div class="ch-card">
+                            <div class="ch-card-header">
+                                <span class="ch-card-id">RCPT-0158</span>
+                                <span class="ch-card-indicator pending"></span>
+                            </div>
+                            <div class="ch-card-type">FITNESS COMMITMENT</div>
+                            <div class="ch-card-title">Run 5km</div>
+                            
+                            <div class="ch-card-row">
+                                <span class="ch-card-label">BASELINE SNAPSHOT</span>
+                                <span class="ch-card-value">—</span>
                             </div>
                         </div>
                     </div>
-                </div>
-            </section>
 
+                    <!-- Settlement Ledger Feed -->
+                    <div class="ch-feed" id="settlement-feed">
+                        <div class="ch-feed-header">
+                            <span class="ch-feed-title">SETTLEMENT LEDGER</span>
+                            <span class="ch-feed-status">● STREAMING</span>
+                        </div>
+                        
+                        <div class="ch-feed-row">
+                            <span class="ch-feed-time">14:32:18</span>
+                            <span class="ch-feed-event baseline">BASELINE_CAPTURED</span>
+                            <span class="ch-feed-detail">CONTRACT #0184 — MRR SNAPSHOT: $12,450</span>
+                        </div>
+                        <div class="ch-feed-row">
+                            <span class="ch-feed-time">14:31:05</span>
+                            <span class="ch-feed-event locked">CAPITAL_LOCKED</span>
+                            <span class="ch-feed-detail">CONTRACT #0183 — $2,500 ESCROWED</span>
+                        </div>
+                        <div class="ch-feed-row">
+                            <span class="ch-feed-time">14:28:44</span>
+                            <span class="ch-feed-event pending">VERIFICATION_PENDING</span>
+                            <span class="ch-feed-detail">CONTRACT #0182 — AWAITING API RESPONSE</span>
+                        </div>
+                        <div class="ch-feed-row">
+                            <span class="ch-feed-time">14:25:12</span>
+                            <span class="ch-feed-event settled">SETTLEMENT_FINAL</span>
+                            <span class="ch-feed-detail">CONTRACT #0180 — $1,800 RETURNED TO PROVIDER</span>
+                        </div>
+                        <div class="ch-feed-row">
+                            <span class="ch-feed-time">14:18:33</span>
+                            <span class="ch-feed-event forfeited">FORFEITURE_POSTED</span>
+                            <span class="ch-feed-detail">CONTRACT #0177 — $3,200 TRANSFERRED TO POOL</span>
+                        </div>
+                    </div>
+                </main>
+            </div>
         </div>
     `;
 }
 
-
 export function initOverview() {
-    console.log('[Overview] 10/10 Institutional homepage initialized');
-    if (window.lucide) {
-        window.lucide.createIcons();
+    // Initialize Lucide icons
+    if (typeof lucide !== 'undefined') {
+        lucide.createIcons();
     }
+
+    // Slider value updates
+    const minCapital = document.getElementById('min-capital');
+    const minCapitalValue = document.getElementById('min-capital-value');
+    if (minCapital && minCapitalValue) {
+        minCapital.addEventListener('input', () => {
+            minCapitalValue.textContent = '$' + parseInt(minCapital.value).toLocaleString();
+        });
+    }
+
+    const windowLength = document.getElementById('window-length');
+    const windowLengthValue = document.getElementById('window-length-value');
+    if (windowLength && windowLengthValue) {
+        windowLength.addEventListener('input', () => {
+            windowLengthValue.textContent = windowLength.value + 'D';
+        });
+    }
+
+    // Animate settlement feed
+    animateFeed();
+}
+
+function animateFeed() {
+    const feed = document.getElementById('settlement-feed');
+    if (!feed) return;
+
+    const events = [
+        { type: 'baseline', event: 'BASELINE_CAPTURED', detail: 'CONTRACT #' + getRandomId() + ' — MRR SNAPSHOT: $' + getRandomAmount() },
+        { type: 'locked', event: 'CAPITAL_LOCKED', detail: 'CONTRACT #' + getRandomId() + ' — $' + getRandomAmount() + ' ESCROWED' },
+        { type: 'pending', event: 'VERIFICATION_PENDING', detail: 'CONTRACT #' + getRandomId() + ' — AWAITING API RESPONSE' },
+        { type: 'settled', event: 'SETTLEMENT_FINAL', detail: 'CONTRACT #' + getRandomId() + ' — $' + getRandomAmount() + ' RETURNED' },
+        { type: 'forfeited', event: 'FORFEITURE_POSTED', detail: 'CONTRACT #' + getRandomId() + ' — $' + getRandomAmount() + ' TO POOL' },
+    ];
+
+    setInterval(() => {
+        if (Math.random() > 0.5) {
+            const event = events[Math.floor(Math.random() * events.length)];
+            const now = new Date();
+            const time = now.getHours().toString().padStart(2, '0') + ':' +
+                now.getMinutes().toString().padStart(2, '0') + ':' +
+                now.getSeconds().toString().padStart(2, '0');
+
+            const feedRows = feed.querySelectorAll('.ch-feed-row');
+            const header = feed.querySelector('.ch-feed-header');
+
+            const newRow = document.createElement('div');
+            newRow.className = 'ch-feed-row';
+            newRow.innerHTML = '<span class="ch-feed-time">' + time + '</span>' +
+                '<span class="ch-feed-event ' + event.type + '">' + event.event + '</span>' +
+                '<span class="ch-feed-detail">' + event.detail + '</span>';
+
+            newRow.style.opacity = '0';
+            newRow.style.transform = 'translateY(-10px)';
+
+            if (header && header.nextSibling) {
+                feed.insertBefore(newRow, header.nextSibling);
+            } else if (feedRows.length > 0) {
+                feed.insertBefore(newRow, feedRows[0]);
+            } else {
+                feed.appendChild(newRow);
+            }
+
+            requestAnimationFrame(() => {
+                newRow.style.transition = 'all 300ms ease';
+                newRow.style.opacity = '1';
+                newRow.style.transform = 'translateY(0)';
+            });
+
+            // Remove last if too many
+            const allRows = feed.querySelectorAll('.ch-feed-row');
+            if (allRows.length > 8) {
+                feed.removeChild(allRows[allRows.length - 1]);
+            }
+        }
+    }, 4000);
+}
+
+function getRandomId() {
+    return (Math.floor(Math.random() * 200) + 100).toString().padStart(4, '0');
+}
+
+function getRandomAmount() {
+    return (Math.floor(Math.random() * 50) * 100 + 500).toLocaleString();
 }

@@ -1,11 +1,11 @@
-// Overview View - Contract Execution Terminal
-// Exact replica from screenshots
+// Overview View - EXACT copy from screenshots
+// DO NOT MODIFY - pixel-perfect replica
 
 export function renderOverview() {
     return `
         <style>
-            /* === CONTRACT TERMINAL === */
-            .contract-terminal {
+            /* === EXACT SCREENSHOT STYLES === */
+            .homepage {
                 background: #FFFFFF;
                 color: #1A1A1A;
                 min-height: 100vh;
@@ -13,366 +13,379 @@ export function renderOverview() {
                 padding-bottom: 60px;
             }
 
-            /* Field row table */
-            .field-table {
-                width: 100%;
-                max-width: 500px;
+            /* Mechanism numbered boxes */
+            .mechanism-box {
                 border: 1px solid #E5E5E5;
+                padding: 28px 24px;
             }
-            .field-row {
+            .mechanism-box:hover {
+                border-color: #D0D0D0;
+            }
+            .mechanism-num {
+                font-size: 42px;
+                font-weight: 700;
+                color: #8B1818;
+                letter-spacing: -0.03em;
+                line-height: 1;
+                margin-bottom: 16px;
+            }
+            .mechanism-title {
+                font-size: 14px;
+                font-weight: 600;
+                color: #1A1A1A;
+                margin-bottom: 8px;
+            }
+            .mechanism-text {
+                font-size: 13px;
+                color: #6B6B6B;
+                line-height: 1.5;
+            }
+
+            /* Section header */
+            .section-header {
+                font-size: 10px;
+                font-weight: 600;
+                letter-spacing: 0.12em;
+                color: #8B1818;
+                text-transform: uppercase;
+                margin-bottom: 20px;
+            }
+
+            /* Integration list */
+            .integration-item {
                 display: flex;
                 justify-content: space-between;
                 align-items: center;
-                padding: 14px 20px;
+                padding: 14px 0;
                 border-bottom: 1px solid #F0F0F0;
-                font-size: 13px;
             }
-            .field-row:last-child {
+            .integration-item:last-child {
                 border-bottom: none;
             }
-            .field-label {
-                color: #6B6B6B;
-                text-transform: uppercase;
-                font-size: 11px;
-                letter-spacing: 0.05em;
-            }
-            .field-value {
+            .integration-name {
+                font-size: 14px;
+                font-weight: 500;
                 color: #1A1A1A;
-                font-weight: 500;
-                text-align: right;
             }
-            .field-value.red {
+            .integration-type {
+                font-size: 12px;
+                color: #9CA3AF;
+                font-style: italic;
+            }
+
+            /* Guarantee check items */
+            .guarantee-row {
+                display: flex;
+                gap: 12px;
+                margin-bottom: 18px;
+            }
+            .guarantee-row:last-child {
+                margin-bottom: 0;
+            }
+            .guarantee-check {
+                width: 20px;
+                height: 20px;
+                border: 1px solid #E5E5E5;
+                border-radius: 50%;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                flex-shrink: 0;
+                margin-top: 2px;
+            }
+            .guarantee-check svg {
+                width: 11px;
+                height: 11px;
+                stroke: #6B6B6B;
+            }
+            .guarantee-title {
+                font-size: 14px;
+                font-weight: 600;
+                color: #1A1A1A;
+                margin-bottom: 3px;
+            }
+            .guarantee-desc {
+                font-size: 13px;
+                color: #6B6B6B;
+                line-height: 1.5;
+            }
+
+            /* Economics cards */
+            .econ-card {
+                border: 1px solid #E5E5E5;
+                padding: 24px;
+                background: #FFFFFF;
+            }
+            .econ-card h4 {
+                font-size: 15px;
+                font-weight: 600;
+                color: #1A1A1A;
+                margin-bottom: 10px;
+            }
+            .econ-card p {
+                font-size: 13px;
+                color: #6B6B6B;
+                line-height: 1.55;
+                margin-bottom: 10px;
+            }
+            .econ-card .small {
+                font-size: 12px;
+                color: #9CA3AF;
+            }
+
+            /* Risk tiers box */
+            .risk-box {
+                background: #FEF2F2;
+                padding: 12px 14px;
+                margin-top: 12px;
+            }
+            .risk-tier {
+                font-size: 12px;
                 color: #8B1818;
+                margin-bottom: 2px;
+            }
+            .risk-tier:last-child {
+                margin-bottom: 0;
             }
 
-            /* Status badge */
-            .status-badge {
-                display: inline-block;
-                border: 1px solid #1A1A1A;
-                padding: 6px 14px;
-                font-size: 11px;
+            /* CTAs */
+            .btn-primary {
+                background: #8B1818;
+                color: #FFFFFF;
+                padding: 12px 24px;
+                font-size: 14px;
                 font-weight: 500;
-                text-transform: uppercase;
-                letter-spacing: 0.05em;
-            }
-
-            /* Lifecycle pills */
-            .lifecycle-pill {
+                border: none;
+                border-radius: 4px;
+                cursor: pointer;
                 display: inline-flex;
                 align-items: center;
-                padding: 6px 12px;
-                font-size: 10px;
-                font-weight: 500;
-                text-transform: uppercase;
-                letter-spacing: 0.03em;
-                border: 1px solid #E5E5E5;
-                background: white;
-                color: #6B6B6B;
+                gap: 8px;
+                transition: background 0.15s;
             }
-            .lifecycle-pill.active {
-                background: #1A1A1A;
-                color: white;
-                border-color: #1A1A1A;
-            }
-            .lifecycle-pill.forfeited {
-                background: #8B1818;
-                color: white;
-                border-color: #8B1818;
-            }
-            .lifecycle-arrow {
-                color: #D0D0D0;
-                margin: 0 4px;
-                font-size: 10px;
-            }
-
-            /* Contract terms list */
-            .terms-table {
-                width: 100%;
-                max-width: 600px;
-            }
-            .terms-row {
-                display: flex;
-                padding: 12px 0;
-                border-bottom: 1px solid #F5F5F5;
-                font-size: 13px;
-            }
-            .terms-row:last-child {
-                border-bottom: none;
-            }
-            .terms-label {
-                width: 140px;
-                flex-shrink: 0;
-                color: #6B6B6B;
-            }
-            .terms-value {
-                color: #1A1A1A;
-            }
-            .terms-value .red {
-                color: #8B1818;
-            }
-
-            /* CTA buttons */
-            .cta-execute {
-                background: #8B1818;
-                color: white;
-                padding: 12px 24px;
-                font-size: 11px;
-                font-weight: 600;
-                text-transform: uppercase;
-                letter-spacing: 0.08em;
-                border: none;
-                cursor: pointer;
-                transition: background 0.15s ease;
-            }
-            .cta-execute:hover {
+            .btn-primary:hover {
                 background: #6B1212;
             }
-            .cta-link {
-                color: #6B6B6B;
-                font-size: 13px;
-                margin-left: 20px;
-                text-decoration: none;
-                transition: color 0.15s;
-            }
-            .cta-link:hover {
+            .btn-secondary {
+                background: transparent;
                 color: #1A1A1A;
-            }
-
-            /* Section label */
-            .section-label {
-                font-size: 10px;
+                padding: 12px 24px;
+                font-size: 14px;
                 font-weight: 500;
-                letter-spacing: 0.1em;
-                color: #9CA3AF;
-                text-transform: uppercase;
-                margin-bottom: 16px;
+                border: 1px solid #E5E5E5;
+                border-radius: 4px;
+                cursor: pointer;
+                transition: all 0.15s;
             }
-
-            /* Recent executions table */
-            .executions-table {
-                width: 100%;
-                font-size: 12px;
-            }
-            .executions-header {
-                display: grid;
-                grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
-                gap: 16px;
-                padding: 12px 16px;
-                background: #FAFAFA;
-                border-bottom: 1px solid #E5E5E5;
-                font-weight: 500;
-                color: #6B6B6B;
-                text-transform: uppercase;
-                font-size: 10px;
-                letter-spacing: 0.05em;
-            }
-            .executions-row {
-                display: grid;
-                grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
-                gap: 16px;
-                padding: 14px 16px;
-                border-bottom: 1px solid #F5F5F5;
-                align-items: center;
-            }
-            .executions-row:hover {
+            .btn-secondary:hover {
+                border-color: #D0D0D0;
                 background: #FAFAFA;
             }
-            .execution-status {
-                font-size: 10px;
-                font-weight: 500;
-                text-transform: uppercase;
-                padding: 4px 8px;
-                display: inline-block;
-            }
-            .execution-status.paid { background: #F0FDF4; color: #166534; }
-            .execution-status.forfeited { background: #FEF2F2; color: #8B1818; }
         </style>
 
-        <div class="contract-terminal">
+        <div class="homepage">
             
             <!-- ═══════════════════════════════════════════════════════════════ -->
-            <!-- HERO + CONTRACT FORM -->
+            <!-- HERO SECTION -->
             <!-- ═══════════════════════════════════════════════════════════════ -->
-            <section class="pt-16 pb-12">
-                <div class="max-w-[800px] mx-auto px-6 md:px-8">
+            <section class="pt-20 pb-14">
+                <div class="max-w-[900px] mx-auto px-6 md:px-8">
                     
-                    <!-- Status Badge -->
-                    <div class="mb-8">
-                        <span class="status-badge">EXECUTION STATUS: READY</span>
-                    </div>
-
                     <!-- Headline -->
-                    <h1 class="text-3xl md:text-4xl font-bold tracking-tight mb-10 italic" style="line-height: 1.2;">
-                        Intentions Fail<br/>Without Stakes.
+                    <h1 class="text-4xl md:text-5xl font-bold tracking-tight mb-5" style="line-height: 1.15;">
+                        <span class="italic">Intentions Fail</span><br/>
+                        <span class="text-[#8B1818] italic">Without</span><span class="italic"> Stakes.</span>
                     </h1>
-
-                    <!-- Contract Field Table -->
-                    <div class="field-table mb-8">
-                        <div class="field-row">
-                            <span class="field-label">Instrument</span>
-                            <span class="field-value">REVENUE_COMMITMENT</span>
-                        </div>
-                        <div class="field-row">
-                            <span class="field-label">Baseline Snapshot</span>
-                            <span class="field-value">$4,221(30D)</span>
-                        </div>
-                        <div class="field-row">
-                            <span class="field-label">Target Delta</span>
-                            <span class="field-value red">+10%</span>
-                        </div>
-                        <div class="field-row">
-                            <span class="field-label">Window</span>
-                            <span class="field-value">14 DAYS</span>
-                        </div>
-                        <div class="field-row">
-                            <span class="field-label">Settlement</span>
-                            <span class="field-value">BINARY</span>
-                        </div>
-                        <div class="field-row">
-                            <span class="field-label">Stake</span>
-                            <span class="field-value red">$500 LOCKED</span>
-                        </div>
-                        <div class="field-row">
-                            <span class="field-label">Failure</span>
-                            <span class="field-value red">FORFEITURE</span>
-                        </div>
-                        <div class="field-row">
-                            <span class="field-label">Verification</span>
-                            <span class="field-value">API-ONLY</span>
-                        </div>
-                        <div class="field-row">
-                            <span class="field-label">Receipt ID</span>
-                            <span class="field-value">RCPT_0384_9F2A</span>
-                        </div>
-                    </div>
+                    
+                    <!-- Subtext -->
+                    <p class="text-base text-[#6B6B6B] max-w-lg mb-8" style="line-height: 1.6;">
+                        Performance contracts with on-chain enforcement. Capital at stake. Outcomes verified via platform integrations. Winners paid from forfeited funds.
+                    </p>
 
                     <!-- CTAs -->
-                    <div class="flex items-center">
-                        <button onclick="window.app.handleInitiate()" class="cta-execute">
-                            EXECUTE CONTRACT
+                    <div class="flex flex-wrap gap-3">
+                        <button onclick="window.app.handleInitiate()" class="btn-primary">
+                            Commit Capital
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                                <path d="M5 12h14M12 5l7 7-7 7"/>
+                            </svg>
                         </button>
-                        <a href="#" onclick="window.router.navigate('/ledger'); return false;" class="cta-link">
-                            View Ledger Record →
-                        </a>
+                        <button onclick="window.router.navigate('/docs')" class="btn-secondary">
+                            View Documentation
+                        </button>
                     </div>
                 </div>
             </section>
 
 
             <!-- ═══════════════════════════════════════════════════════════════ -->
-            <!-- ENFORCEMENT LIFECYCLE -->
+            <!-- MECHANISM SECTION -->
             <!-- ═══════════════════════════════════════════════════════════════ -->
-            <section class="py-12 border-t border-[#F0F0F0]">
-                <div class="max-w-[800px] mx-auto px-6 md:px-8">
-                    <div class="section-label">ENFORCEMENT LIFECYCLE</div>
+            <section class="py-14">
+                <div class="max-w-[900px] mx-auto px-6 md:px-8">
+                    <div class="section-header">MECHANISM</div>
                     
-                    <div class="flex flex-wrap items-center gap-1">
-                        <span class="lifecycle-pill active">BASELINE_CAPTURED</span>
-                        <span class="lifecycle-arrow">→</span>
-                        <span class="lifecycle-pill">CAPITAL_LOCKED</span>
-                        <span class="lifecycle-arrow">→</span>
-                        <span class="lifecycle-pill">VERIFYING</span>
-                        <span class="lifecycle-arrow">→</span>
-                        <span class="lifecycle-pill">SETTLED</span>
-                        <span class="lifecycle-arrow">→</span>
-                        <span class="lifecycle-pill forfeited">FORFEITED</span>
+                    <div class="grid grid-cols-1 md:grid-cols-4 gap-0">
+                        <div class="mechanism-box">
+                            <div class="mechanism-num">01</div>
+                            <div class="mechanism-title">Set Baseline</div>
+                            <div class="mechanism-text">Define measurable target: revenue threshold, commit frequency, post cadence.</div>
+                        </div>
+                        <div class="mechanism-box">
+                            <div class="mechanism-num">02</div>
+                            <div class="mechanism-title">Lock Capital</div>
+                            <div class="mechanism-text">Capital deposited into smart contract. Non-reversible until settlement.</div>
+                        </div>
+                        <div class="mechanism-box">
+                            <div class="mechanism-num">03</div>
+                            <div class="mechanism-title">Verify Performance</div>
+                            <div class="mechanism-text">Outcome validated via OAuth integration. Zero subjective assessment.</div>
+                        </div>
+                        <div class="mechanism-box">
+                            <div class="mechanism-num">04</div>
+                            <div class="mechanism-title">Contract Settles</div>
+                            <div class="mechanism-text">Target met: capital returned + payout. Target missed: forfeiture.</div>
+                        </div>
                     </div>
                 </div>
             </section>
 
 
             <!-- ═══════════════════════════════════════════════════════════════ -->
-            <!-- CONTRACT TERMS -->
+            <!-- RATIONALE SECTION -->
             <!-- ═══════════════════════════════════════════════════════════════ -->
-            <section class="py-12 border-t border-[#F0F0F0]">
-                <div class="max-w-[800px] mx-auto px-6 md:px-8">
-                    <div class="section-label">CONTRACT TERMS</div>
+            <section class="py-14 bg-[#FAFAFA]">
+                <div class="max-w-[900px] mx-auto px-6 md:px-8">
+                    <div class="section-header">RATIONALE</div>
                     
-                    <div class="terms-table">
-                        <div class="terms-row">
-                            <span class="terms-label">Baseline</span>
-                            <span class="terms-value">Captured at execution. Immutable.</span>
-                        </div>
-                        <div class="terms-row">
-                            <span class="terms-label">Capital</span>
-                            <span class="terms-value">Locked until settlement. Non-reversible.</span>
-                        </div>
-                        <div class="terms-row">
-                            <span class="terms-label">Verification</span>
-                            <span class="terms-value">API response only. Zero subjective layer.</span>
-                        </div>
-                        <div class="terms-row">
-                            <span class="terms-label">Settlement</span>
-                            <span class="terms-value">Automatic. Receipt-grade finality.</span>
-                        </div>
-                        <div class="terms-row">
-                            <span class="terms-label">Outcome</span>
-                            <span class="terms-value">Paid <span class="red">or Forfeited</span></span>
-                        </div>
+                    <div class="max-w-xl">
+                        <p class="text-lg text-[#1A1A1A] mb-5" style="line-height: 1.55;">
+                            Commitments without cost are noise. Intentions fade when stakes are zero.
+                        </p>
+                        <p class="text-lg text-[#1A1A1A] mb-5" style="line-height: 1.55;">
+                            Capital enforces follow-through. Markets price risk. Outcomes become inevitable when failure has real consequence.
+                        </p>
+                        <p class="text-lg text-[#1A1A1A] font-medium" style="line-height: 1.55;">
+                            This is not motivation. This is mechanism.
+                        </p>
                     </div>
                 </div>
             </section>
 
 
             <!-- ═══════════════════════════════════════════════════════════════ -->
-            <!-- RECENT EXECUTIONS -->
+            <!-- VERIFICATION LAYER SECTION -->
             <!-- ═══════════════════════════════════════════════════════════════ -->
-            <section class="py-12 border-t border-[#F0F0F0]">
-                <div class="max-w-[1000px] mx-auto px-6 md:px-8">
-                    <div class="section-label">RECENT EXECUTIONS</div>
+            <section class="py-14">
+                <div class="max-w-[900px] mx-auto px-6 md:px-8">
+                    <div class="section-header">VERIFICATION LAYER</div>
                     
-                    <div class="executions-table border border-[#E5E5E5]">
-                        <div class="executions-header">
-                            <span>USER</span>
-                            <span>STAKE</span>
-                            <span>INSTRUMENT</span>
-                            <span>TARGET</span>
-                            <span>WINDOW</span>
-                            <span>STATUS</span>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
+                        
+                        <!-- Platform Integrations -->
+                        <div>
+                            <h3 class="text-lg font-semibold text-[#1A1A1A] mb-4">Platform Integrations</h3>
+                            
+                            <div class="integration-item">
+                                <span class="integration-name">Stripe</span>
+                                <span class="integration-type">Revenue metrics</span>
+                            </div>
+                            <div class="integration-item">
+                                <span class="integration-name">GitHub</span>
+                                <span class="integration-type">Commit frequency</span>
+                            </div>
+                            <div class="integration-item">
+                                <span class="integration-name">X (Twitter)</span>
+                                <span class="integration-type">Post cadence</span>
+                            </div>
                         </div>
-                        <div class="executions-row">
-                            <span class="font-medium">@founder_x</span>
-                            <span>$1,000</span>
-                            <span>REVENUE</span>
-                            <span>+15%</span>
-                            <span>30D</span>
-                            <span class="execution-status paid">PAID</span>
-                        </div>
-                        <div class="executions-row">
-                            <span class="font-medium">@dev_studio</span>
-                            <span>$500</span>
-                            <span>COMMITS</span>
-                            <span>20/wk</span>
-                            <span>14D</span>
-                            <span class="execution-status forfeited">FORFEITED</span>
-                        </div>
-                        <div class="executions-row">
-                            <span class="font-medium">@creator_co</span>
-                            <span>$750</span>
-                            <span>POSTS</span>
-                            <span>5/wk</span>
-                            <span>7D</span>
-                            <span class="execution-status paid">PAID</span>
-                        </div>
-                        <div class="executions-row">
-                            <span class="font-medium">@saas_builder</span>
-                            <span>$2,000</span>
-                            <span>REVENUE</span>
-                            <span>+25%</span>
-                            <span>60D</span>
-                            <span class="execution-status forfeited">FORFEITED</span>
+
+                        <!-- Enforcement Guarantees -->
+                        <div>
+                            <h3 class="text-lg font-semibold text-[#1A1A1A] mb-4">Enforcement Guarantees</h3>
+                            
+                            <div class="guarantee-row">
+                                <div class="guarantee-check">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke-width="2.5">
+                                        <polyline points="20 6 9 17 4 12"></polyline>
+                                    </svg>
+                                </div>
+                                <div>
+                                    <div class="guarantee-title">Objective verification only</div>
+                                    <div class="guarantee-desc">No manual review. No subjective judgment. Outcome validated via API response.</div>
+                                </div>
+                            </div>
+                            
+                            <div class="guarantee-row">
+                                <div class="guarantee-check">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke-width="2.5">
+                                        <polyline points="20 6 9 17 4 12"></polyline>
+                                    </svg>
+                                </div>
+                                <div>
+                                    <div class="guarantee-title">Immutable settlement</div>
+                                    <div class="guarantee-desc">Smart contract execution. Once verified, settlement is automatic and final.</div>
+                                </div>
+                            </div>
+                            
+                            <div class="guarantee-row">
+                                <div class="guarantee-check">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke-width="2.5">
+                                        <polyline points="20 6 9 17 4 12"></polyline>
+                                    </svg>
+                                </div>
+                                <div>
+                                    <div class="guarantee-title">Zero social layer</div>
+                                    <div class="guarantee-desc">No feeds, likes, or comments. Performance data only. Capital speaks.</div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
             </section>
+
+
+            <!-- ═══════════════════════════════════════════════════════════════ -->
+            <!-- CONTRACT ECONOMICS SECTION -->
+            <!-- ═══════════════════════════════════════════════════════════════ -->
+            <section class="py-14 bg-[#FAFAFA]">
+                <div class="max-w-[900px] mx-auto px-6 md:px-8">
+                    <div class="section-header">CONTRACT ECONOMICS</div>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-0">
+                        
+                        <div class="econ-card">
+                            <h4>Contract Terms</h4>
+                            <p>Capital is locked per contract. Terms are defined upfront. Payout multiplier is known before execution.</p>
+                            <p class="small">No post-hoc adjustment. Terms are immutable once executed.</p>
+                        </div>
+                        
+                        <div class="econ-card">
+                            <h4>Outcome Settlement</h4>
+                            <p>Binary settlement: success or failure. Success returns capital + predefined multiplier. Failure forfeits capital in full.</p>
+                            <p class="small">Settlement does not depend on other users' outcomes.</p>
+                        </div>
+                        
+                        <div class="econ-card">
+                            <h4>Risk Model</h4>
+                            <p>Risk level determines multiplier. Difficulty and verification scope determine tier.</p>
+                            <div class="risk-box">
+                                <div class="risk-tier">Conservative: 1.2x-1.5x</div>
+                                <div class="risk-tier">Standard: 1.5x-2.5x</div>
+                                <div class="risk-tier">Aggressive: 2.5x-5.0x</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
         </div>
     `;
 }
 
 
 export function initOverview() {
-    console.log('[Overview] Contract terminal initialized');
-
+    console.log('[Overview] Homepage initialized');
     if (window.lucide) {
         window.lucide.createIcons();
     }

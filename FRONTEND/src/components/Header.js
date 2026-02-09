@@ -1,4 +1,4 @@
-// Shared Header Component - Original Dark Terminal
+// Shared Header Component - Original Institutional Design
 export function renderHeader(currentRoute) {
     const routes = [
         { path: '/overview', label: 'OVERVIEW' },
@@ -15,11 +15,10 @@ export function renderHeader(currentRoute) {
         return `
             <a href="#" 
                 onclick="window.router.navigate('${route.path}'); return false;" 
-                class="text-sm tracking-wide transition-all duration-150 pb-0.5 border-b-2 ${isActive
-                ? 'text-[#e8e8ec] border-[#921818]'
-                : 'text-[#6b6b78] border-transparent hover:text-[#e8e8ec] hover:border-[#921818]'
+                class="text-xs tracking-wide transition-all duration-150 ${isActive
+                ? 'text-[#1A1A1A] font-medium border-b-2 border-[#1A1A1A] pb-1'
+                : 'text-[#6B6B6B] hover:text-[#1A1A1A]'
             }"
-                style="font-family: 'JetBrains Mono', monospace; font-weight: 500;"
                 data-target="${route.path}" 
                 data-active="${isActive}">
                 ${route.label}
@@ -36,11 +35,10 @@ export function renderHeader(currentRoute) {
         return `
             <a href="#" 
                 onclick="window.app.closeMobileMenu(); window.router.navigate('${route.path}'); return false;" 
-                class="block w-full px-6 py-4 text-base tracking-wide border-b border-[#1e1e24] ${isActive
-                ? 'text-[#e8e8ec] bg-[#111114] border-l-4 border-l-[#921818]'
-                : 'text-[#6b6b78] hover:text-[#e8e8ec] hover:bg-[#111114]'
-            }"
-                style="font-family: 'JetBrains Mono', monospace; font-weight: 500;">
+                class="block w-full px-6 py-4 text-sm tracking-wide border-b border-[#F0F0F0] ${isActive
+                ? 'text-[#1A1A1A] font-medium bg-[#FAFAFA]'
+                : 'text-[#6B6B6B] hover:text-[#1A1A1A] hover:bg-[#FAFAFA]'
+            }">
                 ${route.label}
             </a>
         `;
@@ -58,23 +56,13 @@ export function renderHeader(currentRoute) {
                 .mobile-menu-btn { display: none !important; }
             }
         </style>
-        <header class="w-full border-b border-[#1e1e24] bg-[#0a0a0c] fixed top-0 z-50">
-            <div class="mx-auto max-w-[1600px] px-4 md:px-8 py-4">
+        <header class="w-full border-b border-[#E5E5E5] bg-white fixed top-0 z-50">
+            <div class="mx-auto max-w-[1000px] px-6 md:px-8 py-4">
                 <div class="flex items-center justify-between">
                     <!-- LEFT: WORDMARK -->
-                    <a href="#" onclick="window.router.navigate('/overview'); return false;" class="flex flex-col gap-0.5 items-center cursor-pointer hover:opacity-80 transition-opacity shrink-0">
-                        <h1 
-                            class="text-xl tracking-tight m-0 p-0 leading-none text-[#e8e8ec]"
-                            style="font-family: 'IBM Plex Sans', sans-serif; font-weight: 600;"
-                        >
-                            COLLATERAL
-                        </h1>
-                        <span 
-                            class="text-xs tracking-widest uppercase leading-none text-[#921818]"
-                            style="font-family: 'JetBrains Mono', monospace; font-weight: 600;"
-                        >
-                            MARKET
-                        </span>
+                    <a href="#" onclick="window.router.navigate('/overview'); return false;" class="flex flex-col gap-0 items-start cursor-pointer hover:opacity-80 transition-opacity shrink-0">
+                        <span class="text-base font-semibold tracking-tight text-[#1A1A1A]">COLLATERAL</span>
+                        <span class="text-[10px] tracking-widest text-[#8B1818] font-medium">MARKET</span>
                     </a>
 
                     <!-- CENTER: PRIMARY NAVIGATION -->
@@ -82,39 +70,26 @@ export function renderHeader(currentRoute) {
                         ${navItems}
                     </nav>
 
-                    <!-- RIGHT: SYSTEM ZONE -->
-                    <div class="flex items-center gap-6">
-                        <!-- System Status Indicator - hidden on small screens -->
-                        <div class="hidden lg:flex items-center gap-2 px-3 py-1.5 border border-[#1e1e24] bg-[#111114]">
-                            <div class="w-1.5 h-1.5 bg-[#22c55e] rounded-full" style="animation: pulse 2s ease-in-out infinite;"></div>
-                            <span 
-                                class="text-[10px] tracking-widest uppercase leading-none text-[#6b6b78]"
-                                style="font-family: 'JetBrains Mono', monospace; font-weight: 500;"
-                            >
-                                SYSTEM: OPERATIONAL
-                            </span>
-                        </div>
-
+                    <!-- RIGHT: AUTH -->
+                    <div class="flex items-center gap-4">
                         <!-- Guest State - hidden on mobile -->
-                        <button onclick="window.app.handleAuthClick()" id="btn-auth" class="desktop-auth bg-[#921818] hover:bg-[#751212] text-white text-xs font-medium px-5 py-2.5 transition-all items-center gap-2 uppercase tracking-wide" style="font-family: 'JetBrains Mono', monospace;">
-                            <span>ACCESS</span>
+                        <button onclick="window.app.handleAuthClick()" id="btn-auth" class="desktop-auth text-sm text-[#6B6B6B] hover:text-[#1A1A1A] transition-colors items-center gap-2">
+                            <span>Sign In</span>
                         </button>
 
                         <!-- Authenticated State (Dropdown) - Hidden by default -->
                         <div id="user-menu" class="relative group hidden">
-                            <button id="user-menu-btn" onclick="window.app.toggleMenuPersistence(event)" class="desktop-auth items-center gap-2 hover:opacity-70 transition-opacity duration-150">
-                                <div class="w-6 h-6 border border-black/20 flex items-center justify-center">
+                            <button id="user-menu-btn" onclick="window.app.toggleMenuPersistence(event)" class="desktop-auth items-center gap-2 hover:opacity-80 transition-opacity duration-150">
+                                <div class="w-6 h-6 border border-[#E5E5E5] rounded-full flex items-center justify-center bg-[#FAFAFA]">
                                     <span 
-                                        class="text-[10px] leading-none"
-                                        style="font-family: 'JetBrains Mono', monospace; font-weight: 500;"
+                                        class="text-[10px] font-medium text-[#1A1A1A]"
                                         id="menu-initial"
                                     >
                                         U
                                     </span>
                                 </div>
                                 <span 
-                                    class="text-xs tracking-wide leading-none"
-                                    style="font-family: 'JetBrains Mono', monospace; font-weight: 400;"
+                                    class="text-sm text-[#1A1A1A]"
                                     id="menu-username"
                                 >
                                     @username
@@ -124,52 +99,47 @@ export function renderHeader(currentRoute) {
                                     height="6" 
                                     viewBox="0 0 10 6" 
                                     fill="none"
-                                    class="transition-transform duration-200 group-hover:rotate-180"
+                                    class="text-[#6B6B6B] transition-transform duration-200 group-hover:rotate-180"
                                 >
                                     <path d="M1 1L5 5L9 1" stroke="currentColor" stroke-width="1.5" stroke-linecap="square" />
                                 </svg>
                             </button>
 
                             <!-- Dropdown Menu -->
-                            <div id="user-dropdown-content" class="absolute right-0 top-full mt-2 w-56 bg-[#111114] border border-[#1e1e24] shadow-lg hidden group-hover:block origin-top z-50">
+                            <div id="user-dropdown-content" class="absolute right-0 top-full mt-2 w-56 bg-white border border-[#E5E5E5] shadow-lg rounded-lg hidden group-hover:block origin-top z-50">
                                 <div class="py-2">
-                                    <button onclick="window.router.navigate('/profile')" class="w-full px-4 py-3 text-left text-xs tracking-wide text-[#6b6b78] hover:text-[#e8e8ec] hover:bg-[#1e1e24] transition-colors duration-100 uppercase" style="font-family: 'JetBrains Mono', monospace; font-weight: 400;">
-                                        MY IDENTITY RECORD
+                                    <button onclick="window.router.navigate('/profile')" class="w-full px-4 py-2.5 text-left text-sm text-[#6B6B6B] hover:text-[#1A1A1A] hover:bg-[#FAFAFA] transition-colors">
+                                        My Profile
                                     </button>
-                                    <button onclick="window.router.navigate('/my-contracts')" class="w-full px-4 py-3 text-left text-xs tracking-wide text-[#6b6b78] hover:text-[#e8e8ec] hover:bg-[#1e1e24] transition-colors duration-100 uppercase" style="font-family: 'JetBrains Mono', monospace; font-weight: 400;">
-                                        MY CONTRACTS
+                                    <button onclick="window.router.navigate('/my-contracts')" class="w-full px-4 py-2.5 text-left text-sm text-[#6B6B6B] hover:text-[#1A1A1A] hover:bg-[#FAFAFA] transition-colors">
+                                        My Contracts
                                     </button>
-                                    <button onclick="window.router.navigate('/receipts')" class="w-full px-4 py-3 text-left text-xs tracking-wide text-[#6b6b78] hover:text-[#e8e8ec] hover:bg-[#1e1e24] transition-colors duration-100 uppercase" style="font-family: 'JetBrains Mono', monospace; font-weight: 400;">
-                                        RECEIPTS
+                                    <button onclick="window.router.navigate('/receipts')" class="w-full px-4 py-2.5 text-left text-sm text-[#6B6B6B] hover:text-[#1A1A1A] hover:bg-[#FAFAFA] transition-colors">
+                                        Receipts
                                     </button>
-                                    <button onclick="window.router.navigate('/funding')" class="w-full px-4 py-3 text-left text-xs tracking-wide text-[#6b6b78] hover:text-[#e8e8ec] hover:bg-[#1e1e24] transition-colors duration-100 uppercase" style="font-family: 'JetBrains Mono', monospace; font-weight: 400;">
-                                        FUNDING & PAYOUTS
-                                    </button>
-                                    <button onclick="window.app.openSettingsModal()" class="w-full px-4 py-3 text-left text-xs tracking-wide text-[#6b6b78] hover:text-[#e8e8ec] hover:bg-[#1e1e24] transition-colors duration-100 uppercase" style="font-family: 'JetBrains Mono', monospace; font-weight: 400;">
-                                        SETTINGS
+                                    <button onclick="window.router.navigate('/funding')" class="w-full px-4 py-2.5 text-left text-sm text-[#6B6B6B] hover:text-[#1A1A1A] hover:bg-[#FAFAFA] transition-colors">
+                                        Funding & Payouts
                                     </button>
                                     
-                                    <!-- Separator -->
-                                    <div class="my-2 border-t border-[#1e1e24]"></div>
+                                    <div class="my-2 border-t border-[#F0F0F0]"></div>
                                     
-                                    <!-- Sign Out -->
-                                    <button onclick="window.app.handleSignOut()" class="w-full px-4 py-3 text-left text-xs tracking-wide text-[#921818] hover:bg-[#1e1e24] transition-colors duration-100 uppercase" style="font-family: 'JetBrains Mono', monospace; font-weight: 400;">
-                                        SIGN OUT
+                                    <button onclick="window.app.handleSignOut()" class="w-full px-4 py-2.5 text-left text-sm text-[#8B1818] hover:bg-[#FEF2F2] transition-colors">
+                                        Sign Out
                                     </button>
                                 </div>
                             </div>
                         </div>
 
-                        <!-- Mobile Hamburger Menu Button - only visible on mobile -->
+                        <!-- Mobile Hamburger -->
                         <button 
                             id="mobile-menu-btn" 
                             onclick="window.app.toggleMobileMenu()" 
                             class="mobile-menu-btn flex-col items-center justify-center w-10 h-10 gap-1.5"
                             aria-label="Toggle menu"
                         >
-                            <span id="hamburger-line-1" class="block w-6 h-0.5 bg-[#e8e8ec] transition-all duration-300"></span>
-                            <span id="hamburger-line-2" class="block w-6 h-0.5 bg-[#e8e8ec] transition-all duration-300"></span>
-                            <span id="hamburger-line-3" class="block w-6 h-0.5 bg-[#e8e8ec] transition-all duration-300"></span>
+                            <span id="hamburger-line-1" class="block w-5 h-0.5 bg-[#1A1A1A] transition-all duration-300"></span>
+                            <span id="hamburger-line-2" class="block w-5 h-0.5 bg-[#1A1A1A] transition-all duration-300"></span>
+                            <span id="hamburger-line-3" class="block w-5 h-0.5 bg-[#1A1A1A] transition-all duration-300"></span>
                         </button>
                     </div>
                 </div>
@@ -177,52 +147,48 @@ export function renderHeader(currentRoute) {
         </header>
 
         <!-- Mobile Menu Overlay -->
-        <div id="mobile-menu-overlay" class="fixed inset-0 bg-black/50 z-40 hidden sm:hidden" onclick="window.app.closeMobileMenu()"></div>
+        <div id="mobile-menu-overlay" class="fixed inset-0 bg-black/30 z-40 hidden sm:hidden" onclick="window.app.closeMobileMenu()"></div>
 
         <!-- Mobile Menu Drawer -->
-        <div id="mobile-menu" class="fixed top-0 right-0 h-full w-72 bg-[#0a0a0c] z-50 transform translate-x-full transition-transform duration-300 ease-out sm:hidden shadow-xl border-l border-[#1e1e24]">
-            <!-- Mobile Menu Header -->
-            <div class="flex items-center justify-between px-6 py-4 border-b border-[#1e1e24]">
-                <span class="text-sm font-semibold tracking-wide uppercase text-[#e8e8ec]" style="font-family: 'JetBrains Mono', monospace;">MENU</span>
-                <button onclick="window.app.closeMobileMenu()" class="w-8 h-8 flex items-center justify-center text-[#6b6b78] hover:text-[#e8e8ec]">
+        <div id="mobile-menu" class="fixed top-0 right-0 h-full w-72 bg-white z-50 transform translate-x-full transition-transform duration-300 ease-out sm:hidden shadow-xl">
+            <div class="flex items-center justify-between px-6 py-4 border-b border-[#F0F0F0]">
+                <span class="font-semibold text-[#1A1A1A]">Menu</span>
+                <button onclick="window.app.closeMobileMenu()" class="w-8 h-8 flex items-center justify-center text-[#6B6B6B] hover:text-[#1A1A1A]">
                     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                         <path d="M18 6L6 18M6 6l12 12"/>
                     </svg>
                 </button>
             </div>
 
-            <!-- Mobile Navigation Links -->
             <nav class="flex flex-col">
                 ${mobileNavItems}
             </nav>
 
-            <!-- Mobile Auth Section -->
-            <div class="px-6 py-4 border-t border-[#1e1e24] mt-auto">
-                <button onclick="window.app.closeMobileMenu(); window.app.handleAuthClick()" id="btn-auth-mobile" class="w-full bg-[#921818] hover:bg-[#751212] text-white text-sm font-medium px-5 py-3 transition-all flex items-center justify-center gap-2 uppercase tracking-wide" style="font-family: 'JetBrains Mono', monospace;">
-                    <span>ACCESS</span>
+            <div class="px-6 py-4">
+                <button onclick="window.app.closeMobileMenu(); window.app.handleAuthClick()" id="btn-auth-mobile" class="w-full bg-[#8B1818] hover:bg-[#6B1212] text-white text-sm font-medium py-3 transition-colors">
+                    Sign In
                 </button>
             </div>
 
-            <!-- Mobile User Menu (Hidden when not authenticated) -->
-            <div id="mobile-user-section" class="hidden px-6 py-4 border-t border-[#1e1e24]">
+            <div id="mobile-user-section" class="hidden px-6 py-4 border-t border-[#F0F0F0]">
                 <div class="flex items-center gap-3 mb-4">
-                    <div class="w-8 h-8 border border-[#1e1e24] flex items-center justify-center">
-                        <span class="text-xs text-[#e8e8ec]" style="font-family: 'JetBrains Mono', monospace;" id="mobile-menu-initial">U</span>
+                    <div class="w-10 h-10 bg-[#FAFAFA] border border-[#E5E5E5] rounded-full flex items-center justify-center">
+                        <span class="text-sm font-medium text-[#1A1A1A]" id="mobile-menu-initial">U</span>
                     </div>
-                    <span class="text-sm text-[#6b6b78]" style="font-family: 'JetBrains Mono', monospace;" id="mobile-menu-username">@username</span>
+                    <span class="text-sm text-[#1A1A1A] font-medium" id="mobile-menu-username">@user</span>
                 </div>
                 <div class="space-y-1">
-                    <button onclick="window.app.closeMobileMenu(); window.router.navigate('/profile')" class="w-full px-3 py-2 text-left text-xs tracking-wide text-[#6b6b78] hover:text-[#e8e8ec] hover:bg-[#111114] uppercase" style="font-family: 'JetBrains Mono', monospace;">
-                        MY IDENTITY
+                    <button onclick="window.app.closeMobileMenu(); window.router.navigate('/profile')" class="w-full py-2.5 text-left text-sm text-[#6B6B6B] hover:text-[#1A1A1A]">
+                        My Profile
                     </button>
-                    <button onclick="window.app.closeMobileMenu(); window.router.navigate('/my-contracts')" class="w-full px-3 py-2 text-left text-xs tracking-wide text-[#6b6b78] hover:text-[#e8e8ec] hover:bg-[#111114] uppercase" style="font-family: 'JetBrains Mono', monospace;">
-                        MY CONTRACTS
+                    <button onclick="window.app.closeMobileMenu(); window.router.navigate('/my-contracts')" class="w-full py-2.5 text-left text-sm text-[#6B6B6B] hover:text-[#1A1A1A]">
+                        My Contracts
                     </button>
-                    <button onclick="window.app.closeMobileMenu(); window.router.navigate('/funding')" class="w-full px-3 py-2 text-left text-xs tracking-wide text-[#6b6b78] hover:text-[#e8e8ec] hover:bg-[#111114] uppercase" style="font-family: 'JetBrains Mono', monospace;">
-                        FUNDING
+                    <button onclick="window.app.closeMobileMenu(); window.router.navigate('/funding')" class="w-full py-2.5 text-left text-sm text-[#6B6B6B] hover:text-[#1A1A1A]">
+                        Funding
                     </button>
-                    <button onclick="window.app.closeMobileMenu(); window.app.handleSignOut()" class="w-full px-3 py-2 text-left text-xs tracking-wide text-[#921818] hover:bg-[#111114] uppercase" style="font-family: 'JetBrains Mono', monospace;">
-                        SIGN OUT
+                    <button onclick="window.app.closeMobileMenu(); window.app.handleSignOut()" class="w-full py-2.5 text-left text-sm text-[#8B1818]">
+                        Sign Out
                     </button>
                 </div>
             </div>

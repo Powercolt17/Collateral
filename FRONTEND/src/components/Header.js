@@ -1,10 +1,10 @@
-// Shared Header Component - Original Institutional Design
+// Shared Header Component - Contract Terminal Style
 export function renderHeader(currentRoute) {
     const routes = [
-        { path: '/overview', label: 'OVERVIEW' },
+        { path: '/overview', label: 'TERMINAL' },
         { path: '/ledger', label: 'LEDGER' },
         { path: '/contracts', label: 'CONTRACTS' },
-        { path: '/docs', label: 'DOCS' }
+        { path: '/docs', label: 'TERMS' }
     ];
 
     const navItems = routes.map(route => {
@@ -16,7 +16,7 @@ export function renderHeader(currentRoute) {
             <a href="#" 
                 onclick="window.router.navigate('${route.path}'); return false;" 
                 class="text-xs tracking-wide transition-all duration-150 ${isActive
-                ? 'text-[#1A1A1A] font-medium border-b-2 border-[#1A1A1A] pb-1'
+                ? 'text-[#1A1A1A] border-b border-[#1A1A1A] pb-0.5'
                 : 'text-[#6B6B6B] hover:text-[#1A1A1A]'
             }"
                 data-target="${route.path}" 
@@ -60,9 +60,8 @@ export function renderHeader(currentRoute) {
             <div class="mx-auto max-w-[1000px] px-6 md:px-8 py-4">
                 <div class="flex items-center justify-between">
                     <!-- LEFT: WORDMARK -->
-                    <a href="#" onclick="window.router.navigate('/overview'); return false;" class="flex flex-col gap-0 items-start cursor-pointer hover:opacity-80 transition-opacity shrink-0">
-                        <span class="text-base font-semibold tracking-tight text-[#1A1A1A]">COLLATERAL</span>
-                        <span class="text-[10px] tracking-widest text-[#8B1818] font-medium">MARKET</span>
+                    <a href="#" onclick="window.router.navigate('/overview'); return false;" class="cursor-pointer hover:opacity-80 transition-opacity shrink-0">
+                        <span class="text-sm font-semibold tracking-wide text-[#1A1A1A]">COLLATERAL</span>
                     </a>
 
                     <!-- CENTER: PRIMARY NAVIGATION -->
@@ -73,23 +72,15 @@ export function renderHeader(currentRoute) {
                     <!-- RIGHT: AUTH -->
                     <div class="flex items-center gap-4">
                         <!-- Guest State - hidden on mobile -->
-                        <button onclick="window.app.handleAuthClick()" id="btn-auth" class="desktop-auth text-sm text-[#6B6B6B] hover:text-[#1A1A1A] transition-colors items-center gap-2">
+                        <button onclick="window.app.handleAuthClick()" id="btn-auth" class="desktop-auth text-xs text-[#6B6B6B] hover:text-[#1A1A1A] transition-colors items-center gap-2">
                             <span>Sign In</span>
                         </button>
 
                         <!-- Authenticated State (Dropdown) - Hidden by default -->
                         <div id="user-menu" class="relative group hidden">
                             <button id="user-menu-btn" onclick="window.app.toggleMenuPersistence(event)" class="desktop-auth items-center gap-2 hover:opacity-80 transition-opacity duration-150">
-                                <div class="w-6 h-6 border border-[#E5E5E5] rounded-full flex items-center justify-center bg-[#FAFAFA]">
-                                    <span 
-                                        class="text-[10px] font-medium text-[#1A1A1A]"
-                                        id="menu-initial"
-                                    >
-                                        U
-                                    </span>
-                                </div>
                                 <span 
-                                    class="text-sm text-[#1A1A1A]"
+                                    class="text-xs text-[#6B6B6B]"
                                     id="menu-username"
                                 >
                                     @username
@@ -106,24 +97,21 @@ export function renderHeader(currentRoute) {
                             </button>
 
                             <!-- Dropdown Menu -->
-                            <div id="user-dropdown-content" class="absolute right-0 top-full mt-2 w-56 bg-white border border-[#E5E5E5] shadow-lg rounded-lg hidden group-hover:block origin-top z-50">
-                                <div class="py-2">
-                                    <button onclick="window.router.navigate('/profile')" class="w-full px-4 py-2.5 text-left text-sm text-[#6B6B6B] hover:text-[#1A1A1A] hover:bg-[#FAFAFA] transition-colors">
-                                        My Profile
+                            <div id="user-dropdown-content" class="absolute right-0 top-full mt-2 w-48 bg-white border border-[#E5E5E5] shadow-lg hidden group-hover:block origin-top z-50">
+                                <div class="py-1">
+                                    <button onclick="window.router.navigate('/profile')" class="w-full px-4 py-2.5 text-left text-xs text-[#6B6B6B] hover:text-[#1A1A1A] hover:bg-[#FAFAFA] transition-colors">
+                                        Profile
                                     </button>
-                                    <button onclick="window.router.navigate('/my-contracts')" class="w-full px-4 py-2.5 text-left text-sm text-[#6B6B6B] hover:text-[#1A1A1A] hover:bg-[#FAFAFA] transition-colors">
+                                    <button onclick="window.router.navigate('/my-contracts')" class="w-full px-4 py-2.5 text-left text-xs text-[#6B6B6B] hover:text-[#1A1A1A] hover:bg-[#FAFAFA] transition-colors">
                                         My Contracts
                                     </button>
-                                    <button onclick="window.router.navigate('/receipts')" class="w-full px-4 py-2.5 text-left text-sm text-[#6B6B6B] hover:text-[#1A1A1A] hover:bg-[#FAFAFA] transition-colors">
-                                        Receipts
-                                    </button>
-                                    <button onclick="window.router.navigate('/funding')" class="w-full px-4 py-2.5 text-left text-sm text-[#6B6B6B] hover:text-[#1A1A1A] hover:bg-[#FAFAFA] transition-colors">
-                                        Funding & Payouts
+                                    <button onclick="window.router.navigate('/funding')" class="w-full px-4 py-2.5 text-left text-xs text-[#6B6B6B] hover:text-[#1A1A1A] hover:bg-[#FAFAFA] transition-colors">
+                                        Funding
                                     </button>
                                     
-                                    <div class="my-2 border-t border-[#F0F0F0]"></div>
+                                    <div class="my-1 border-t border-[#F0F0F0]"></div>
                                     
-                                    <button onclick="window.app.handleSignOut()" class="w-full px-4 py-2.5 text-left text-sm text-[#8B1818] hover:bg-[#FEF2F2] transition-colors">
+                                    <button onclick="window.app.handleSignOut()" class="w-full px-4 py-2.5 text-left text-xs text-[#8B1818] hover:bg-[#FEF2F2] transition-colors">
                                         Sign Out
                                     </button>
                                 </div>
@@ -152,7 +140,7 @@ export function renderHeader(currentRoute) {
         <!-- Mobile Menu Drawer -->
         <div id="mobile-menu" class="fixed top-0 right-0 h-full w-72 bg-white z-50 transform translate-x-full transition-transform duration-300 ease-out sm:hidden shadow-xl">
             <div class="flex items-center justify-between px-6 py-4 border-b border-[#F0F0F0]">
-                <span class="font-semibold text-[#1A1A1A]">Menu</span>
+                <span class="text-sm font-medium text-[#1A1A1A]">Menu</span>
                 <button onclick="window.app.closeMobileMenu()" class="w-8 h-8 flex items-center justify-center text-[#6B6B6B] hover:text-[#1A1A1A]">
                     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                         <path d="M18 6L6 18M6 6l12 12"/>
@@ -165,29 +153,23 @@ export function renderHeader(currentRoute) {
             </nav>
 
             <div class="px-6 py-4">
-                <button onclick="window.app.closeMobileMenu(); window.app.handleAuthClick()" id="btn-auth-mobile" class="w-full bg-[#8B1818] hover:bg-[#6B1212] text-white text-sm font-medium py-3 transition-colors">
+                <button onclick="window.app.closeMobileMenu(); window.app.handleAuthClick()" id="btn-auth-mobile" class="w-full bg-[#8B1818] hover:bg-[#6B1212] text-white text-xs font-medium py-3 transition-colors uppercase tracking-wide">
                     Sign In
                 </button>
             </div>
 
             <div id="mobile-user-section" class="hidden px-6 py-4 border-t border-[#F0F0F0]">
                 <div class="flex items-center gap-3 mb-4">
-                    <div class="w-10 h-10 bg-[#FAFAFA] border border-[#E5E5E5] rounded-full flex items-center justify-center">
-                        <span class="text-sm font-medium text-[#1A1A1A]" id="mobile-menu-initial">U</span>
-                    </div>
-                    <span class="text-sm text-[#1A1A1A] font-medium" id="mobile-menu-username">@user</span>
+                    <span class="text-xs text-[#6B6B6B]" id="mobile-menu-username">@username</span>
                 </div>
                 <div class="space-y-1">
-                    <button onclick="window.app.closeMobileMenu(); window.router.navigate('/profile')" class="w-full py-2.5 text-left text-sm text-[#6B6B6B] hover:text-[#1A1A1A]">
-                        My Profile
+                    <button onclick="window.app.closeMobileMenu(); window.router.navigate('/profile')" class="w-full py-2.5 text-left text-xs text-[#6B6B6B] hover:text-[#1A1A1A]">
+                        Profile
                     </button>
-                    <button onclick="window.app.closeMobileMenu(); window.router.navigate('/my-contracts')" class="w-full py-2.5 text-left text-sm text-[#6B6B6B] hover:text-[#1A1A1A]">
+                    <button onclick="window.app.closeMobileMenu(); window.router.navigate('/my-contracts')" class="w-full py-2.5 text-left text-xs text-[#6B6B6B] hover:text-[#1A1A1A]">
                         My Contracts
                     </button>
-                    <button onclick="window.app.closeMobileMenu(); window.router.navigate('/funding')" class="w-full py-2.5 text-left text-sm text-[#6B6B6B] hover:text-[#1A1A1A]">
-                        Funding
-                    </button>
-                    <button onclick="window.app.closeMobileMenu(); window.app.handleSignOut()" class="w-full py-2.5 text-left text-sm text-[#8B1818]">
+                    <button onclick="window.app.closeMobileMenu(); window.app.handleSignOut()" class="w-full py-2.5 text-left text-xs text-[#8B1818]">
                         Sign Out
                     </button>
                 </div>

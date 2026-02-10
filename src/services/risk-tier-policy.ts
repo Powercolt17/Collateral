@@ -159,7 +159,7 @@ export const DEFAULT_TIER_CONFIGS: Record<RiskTier, RiskTierConfig> = {
         timePressureCoefficient: 0.8,  // More time = slightly harder target
 
         minStakeUsdCents: 1000,        // $10 minimum
-        maxStakeUsdCents: 10000000,    // $100k maximum
+        maxStakeUsdCents: 250000,      // $2,500 max (see house-edge-policy.ts)
         stakeEscalationFactor: 1.0,    // No escalation at standard
     },
 
@@ -188,7 +188,7 @@ export const DEFAULT_TIER_CONFIGS: Record<RiskTier, RiskTierConfig> = {
         timePressureCoefficient: 1.0,  // Baseline time pressure
 
         minStakeUsdCents: 5000,        // $50 minimum
-        maxStakeUsdCents: 50000000,    // $500k maximum
+        maxStakeUsdCents: 500000,      // $5,000 max (see house-edge-policy.ts)
         stakeEscalationFactor: 1.25,   // 25% higher stakes
     },
 
@@ -217,7 +217,7 @@ export const DEFAULT_TIER_CONFIGS: Record<RiskTier, RiskTierConfig> = {
         timePressureCoefficient: 1.3,  // Aggressive time pressure
 
         minStakeUsdCents: 25000,       // $250 minimum
-        maxStakeUsdCents: 100000000,   // $1M maximum
+        maxStakeUsdCents: 1000000,     // $10,000 max (see house-edge-policy.ts)
         stakeEscalationFactor: 1.5,    // 50% higher stakes
     },
 };

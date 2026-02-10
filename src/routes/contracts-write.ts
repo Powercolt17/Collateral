@@ -51,6 +51,13 @@ import {
     requireVerifiedConnection,
     PlatformNotVerifiedError,
 } from '../services/require-verified-connection.js';
+import {
+    validateStake,
+    calculatePayout,
+    STAKE_CAPS,
+    SYSTEM_DURATIONS,
+    PAYOUT_MULTIPLIERS,
+} from '../services/house-edge-policy.js';
 
 // =====================================================
 // WRITE ENDPOINT EVENT TYPES (explicit canonical list)
@@ -91,7 +98,9 @@ const contractWriteRoutes: FastifyPluginAsync = async (fastify) => {
             };
             baseline?: Record<string, unknown>;
             lockAmountUsdCents: number;
-            payoutAmountUsdCents: number;
+            // DEPRECATED: payoutAmountUsdCents is now SYSTEM-CALCULATED
+            // Any user-provided value is IGNORED and overridden
+            payoutAmountUsdCents?: number;
             fundingMethod?: 'USD_CARD' | 'USD_ACH' | 'CRYPTO';
             riskTier?: 'STANDARD' | 'ADVANCED' | 'ELITE';
         };
@@ -186,26 +195,36 @@ const contractWriteRoutes: FastifyPluginAsync = async (fastify) => {
                 };
             }
 
-            // PRECOMMITTED PAYOUT VALIDATION
-            if (payoutAmountUsdCents === undefined || payoutAmountUsdCents === null) {
+            // =========================================================
+            // HOUSE EDGE: SYSTEM-CONTROLLED TERMS
+            // Users pick stake (within bounds). Everything else is system-set.
+            // payoutAmountUsdCents is CALCULATED, never user-specified.
+            // =========================================================
+            const tier = riskTier || 'STANDARD';
+
+            // 1. Validate stake against tier caps
+            const stakeError = validateStake(lockAmountUsdCents, tier);
+            if (stakeError) {
                 reply.status(400);
-                return { error: 'payoutAmountUsdCents is required' };
+                return {
+                    error: stakeError,
+                    code: 'STAKE_OUT_OF_BOUNDS',
+                    allowedRange: {
+                        min: STAKE_CAPS[tier].minUsdCents,
+                        max: STAKE_CAPS[tier].maxUsdCents,
+                        minDisplay: `$${(STAKE_CAPS[tier].minUsdCents / 100).toFixed(0)}`,
+                        maxDisplay: `$${(STAKE_CAPS[tier].maxUsdCents / 100).toFixed(0)}`,
+                    },
+                };
             }
 
-            if (!Number.isInteger(payoutAmountUsdCents)) {
-                reply.status(400);
-                return { error: 'payoutAmountUsdCents must be an integer' };
-            }
+            // 2. System-calculate payout (NEVER trust user input)
+            const systemPayoutUsdCents = calculatePayout(lockAmountUsdCents, tier);
+            console.log(`[contracts-write] SYSTEM TERMS: stake=$${(lockAmountUsdCents / 100).toFixed(0)}, payout=$${(systemPayoutUsdCents / 100).toFixed(0)}, multiplier=${PAYOUT_MULTIPLIERS[tier]}x, tier=${tier}`);
 
-            if (payoutAmountUsdCents <= 0) {
-                reply.status(400);
-                return { error: 'payoutAmountUsdCents must be greater than 0' };
-            }
-
-            // Payout must be at least equal to lock amount
-            if (payoutAmountUsdCents < lockAmountUsdCents) {
-                reply.status(400);
-                return { error: 'payoutAmountUsdCents must be >= lockAmountUsdCents' };
+            // 3. If user sent payoutAmountUsdCents, WARN and override
+            if (request.body.payoutAmountUsdCents && request.body.payoutAmountUsdCents !== systemPayoutUsdCents) {
+                console.warn(`[contracts-write] OVERRIDING user payout: $${(request.body.payoutAmountUsdCents / 100).toFixed(0)} → $${(systemPayoutUsdCents / 100).toFixed(0)} (system-calculated)`);
             }
 
             if (lockAmountUsdCents < 100) {
@@ -245,9 +264,9 @@ const contractWriteRoutes: FastifyPluginAsync = async (fastify) => {
                     condition,
                     baseline,
                     lockAmountUsdCents,
-                    payoutAmountUsdCents,
+                    payoutAmountUsdCents: systemPayoutUsdCents, // SYSTEM-CALCULATED
                     fundingMethod,
-                    riskTier,
+                    riskTier: tier,
                 });
 
                 // Derive state from events (should be CREATED)

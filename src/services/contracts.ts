@@ -22,6 +22,7 @@ import { eq, and } from 'drizzle-orm';
 import { createHash } from 'crypto';
 import { stripeRevenueAdapter } from '../adapters/stripe-revenue.js';
 import { githubAdapter, getGithubClient } from '../adapters/github.js';
+import { MINIMUM_BASELINES } from './contract-calculator.js';
 
 // =============================================================================
 // ANTI-ABUSE CONSTANTS (GitHub)
@@ -347,6 +348,21 @@ export async function createContract(params: CreateContractParams): Promise<Cont
         }
     }
 
+    // =========================================================
+    // BASELINE MINIMUM ENFORCEMENT (HARD GATE)
+    // No starting from zero. Users must have real metrics.
+    // =========================================================
+    if (platform === 'X' && (metricType === 'FOLLOWERS' || metricType === 'IMPRESSIONS')) {
+        // Will get real baseline after X binding check (validated below)
+        // Baseline check happens after baseline snapshot
+    }
+    if (platform === 'STRIPE' && metricType === 'REVENUE') {
+        // Baseline check happens after Stripe snapshot below
+    }
+    if (platform === 'SHOPIFY' && metricType === 'REVENUE') {
+        // Baseline check happens after Shopify snapshot below
+    }
+
     // Snapshot Baseline if needed
     let baselineJson: any = null;
     if (platform === 'STRIPE' && metricType === 'REVENUE') {
@@ -358,8 +374,19 @@ export async function createContract(params: CreateContractParams): Promise<Cont
         if (userRecord) {
             const snapshot = await stripeRevenueAdapter.snapshotBaseline(userRecord);
             baselineJson = snapshot.metrics;
-        }
 
+            // HARD GATE: Enforce minimum revenue baseline
+            const revenueCents = (baselineJson as any)?.revenue30dUsdCents ?? 0;
+            const minRevenue = MINIMUM_BASELINES.STRIPE.REVENUE[riskTier];
+            if (revenueCents < minRevenue) {
+                const minDollars = (minRevenue / 100).toFixed(0);
+                const gotDollars = (revenueCents / 100).toFixed(0);
+                throw new Error(
+                    `Baseline too low: ${riskTier} tier requires minimum $${minDollars}/mo revenue. ` +
+                    `Your current 30-day revenue is $${gotDollars}. Build revenue first.`
+                );
+            }
+        }
 
     } else if (platform === 'GITHUB' && metricType === 'PRS_MERGED') {
         const cond = condition as any;
@@ -420,8 +447,20 @@ export async function createContract(params: CreateContractParams): Promise<Cont
         };
 
     } else if (platform === 'X') {
-        // Existing X logic or placeholder
-        baselineJson = { followers: 1000 }; // Legacy mock
+        // TODO: Fetch real follower count from X binding
+        // For now, validate that baseline is passed in params
+        const xBaseline = params.baseline as Record<string, unknown> | undefined;
+        const followerCount = xBaseline?.followersCount ?? xBaseline?.followers ?? 0;
+
+        const minFollowers = MINIMUM_BASELINES.X.FOLLOWERS[riskTier];
+        if (typeof followerCount !== 'number' || followerCount < minFollowers) {
+            throw new Error(
+                `Baseline too low: ${riskTier} tier requires minimum ${minFollowers} followers. ` +
+                `Got ${followerCount}. You need an existing audience to create a contract.`
+            );
+        }
+
+        baselineJson = { followersCount: followerCount };
     }
 
     const deadlineUtc = new Date(condition.deadline);

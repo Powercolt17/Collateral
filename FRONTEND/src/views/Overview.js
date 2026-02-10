@@ -2,6 +2,7 @@
 // ALL contracts are percentage growth from baseline
 // Social (X) = Follower % growth, Sales/Commerce/Finance = Revenue % growth
 // Tiers: Controlled (~30% win), Elevated (~20% win), Maximum (~10% win)
+// HARD GATE: Minimum baseline required per tier — no starting from zero
 
 export function renderOverview() {
     return `
@@ -217,6 +218,12 @@ export function renderOverview() {
                 align-items: center;
             }
 
+            .eq-card-baseline {
+                font-size: 10px;
+                color: #999;
+                font-family: 'JetBrains Mono', monospace;
+            }
+
             .eq-card-meta {
                 display: flex;
                 justify-content: space-between;
@@ -274,10 +281,12 @@ export function renderOverview() {
             .eq-modal {
                 background: #fff;
                 border-radius: 16px;
-                width: 400px;
+                width: 440px;
                 max-width: 90vw;
                 padding: 28px;
                 box-shadow: 0 20px 60px rgba(0,0,0,0.15);
+                max-height: 85vh;
+                overflow-y: auto;
             }
             .eq-modal-header {
                 display: flex;
@@ -324,6 +333,32 @@ export function renderOverview() {
                 margin-top: 16px;
                 margin-bottom: 8px;
             }
+
+            .eq-threshold-table {
+                width: 100%;
+                border-collapse: collapse;
+                margin: 8px 0;
+                font-size: 11px;
+                font-family: 'JetBrains Mono', monospace;
+            }
+            .eq-threshold-table th {
+                text-align: left;
+                padding: 6px 8px;
+                font-size: 9px;
+                text-transform: uppercase;
+                color: #999;
+                border-bottom: 1px solid #eee;
+                font-weight: 500;
+            }
+            .eq-threshold-table td {
+                padding: 6px 8px;
+                color: #333;
+                border-bottom: 1px solid #f5f5f5;
+            }
+            .eq-threshold-table tr:last-child td { border-bottom: none; }
+            .eq-threshold-table .tier-controlled { color: #166534; font-weight: 600; }
+            .eq-threshold-table .tier-elevated { color: #92400e; font-weight: 600; }
+            .eq-threshold-table .tier-maximum { color: #8B1818; font-weight: 600; }
 
             @media (max-width: 768px) {
                 .eq-topbar { padding: 16px; flex-direction: column; gap: 12px; align-items: flex-start; }
@@ -377,10 +412,10 @@ export function renderOverview() {
                 <button class="eq-pill">Finance</button>
             </div>
 
-            <!-- Contract Cards — ALL % growth from baseline -->
+            <!-- Contract Cards — ALL % growth from verified baseline -->
             <div class="eq-grid">
 
-                <!-- STRIPE — Revenue +15% — CONTROLLED -->
+                <!-- STRIPE — Revenue +15% — CONTROLLED — Baseline $12k/mo -->
                 <div class="eq-card" onclick="window.router.navigate('/contracts/0184')">
                     <div class="eq-card-top">
                         <span class="eq-badge active">ACTIVE</span>
@@ -391,6 +426,7 @@ export function renderOverview() {
                         <span class="eq-card-integration"><span class="dot stripe"></span> Stripe · Revenue</span>
                         <span class="eq-tier controlled">CONTROLLED <span class="eq-tier-rate">~30%</span></span>
                     </div>
+                    <div class="eq-card-baseline">Baseline: $12,000/mo → Target: $13,800/mo</div>
                     <div class="eq-card-meta">
                         <div>
                             <div class="eq-card-stake">$5,000</div>
@@ -401,7 +437,7 @@ export function renderOverview() {
                     <button class="eq-card-cta secondary">View Receipt →</button>
                 </div>
 
-                <!-- X — Followers +35% — ELEVATED -->
+                <!-- X — Followers +35% — ELEVATED — Baseline 2,800 -->
                 <div class="eq-card" onclick="window.router.navigate('/contracts/0190')">
                     <div class="eq-card-top">
                         <span class="eq-badge action">ACTION REQUIRED</span>
@@ -412,6 +448,7 @@ export function renderOverview() {
                         <span class="eq-card-integration"><span class="dot x"></span> X · Followers</span>
                         <span class="eq-tier elevated">ELEVATED <span class="eq-tier-rate">~20%</span></span>
                     </div>
+                    <div class="eq-card-baseline">Baseline: 2,800 → Target: 3,780</div>
                     <div class="eq-card-meta">
                         <div>
                             <div class="eq-card-stake">$1,200</div>
@@ -422,7 +459,7 @@ export function renderOverview() {
                     <button class="eq-card-cta primary" onclick="event.stopPropagation()">Lock Capital →</button>
                 </div>
 
-                <!-- SHOPIFY — Revenue +20% — CONTROLLED -->
+                <!-- SHOPIFY — Revenue +20% — CONTROLLED — Baseline $8k/mo -->
                 <div class="eq-card" onclick="window.router.navigate('/contracts/0178')">
                     <div class="eq-card-top">
                         <span class="eq-badge active">ACTIVE</span>
@@ -433,6 +470,7 @@ export function renderOverview() {
                         <span class="eq-card-integration"><span class="dot shopify"></span> Shopify · Revenue</span>
                         <span class="eq-tier controlled">CONTROLLED <span class="eq-tier-rate">~30%</span></span>
                     </div>
+                    <div class="eq-card-baseline">Baseline: $8,200/mo → Target: $9,840/mo</div>
                     <div class="eq-card-meta">
                         <div>
                             <div class="eq-card-stake">$10,000</div>
@@ -443,7 +481,7 @@ export function renderOverview() {
                     <button class="eq-card-cta secondary">View Receipt →</button>
                 </div>
 
-                <!-- X — Followers +60% — MAXIMUM -->
+                <!-- X — Followers +60% — MAXIMUM — Baseline 1,200 -->
                 <div class="eq-card" onclick="window.router.navigate('/contracts/0185')">
                     <div class="eq-card-top">
                         <span class="eq-badge verifying">VERIFYING</span>
@@ -454,6 +492,7 @@ export function renderOverview() {
                         <span class="eq-card-integration"><span class="dot x"></span> X · Followers</span>
                         <span class="eq-tier maximum">MAXIMUM <span class="eq-tier-rate">~10%</span></span>
                     </div>
+                    <div class="eq-card-baseline">Baseline: 1,200 → Target: 1,920</div>
                     <div class="eq-card-meta">
                         <div>
                             <div class="eq-card-stake">$2,500</div>
@@ -464,7 +503,7 @@ export function renderOverview() {
                     <button class="eq-card-cta secondary">View Receipt →</button>
                 </div>
 
-                <!-- STRIPE — Revenue +60% — MAXIMUM -->
+                <!-- STRIPE — Revenue +60% — MAXIMUM — Baseline $32k/mo -->
                 <div class="eq-card" onclick="window.router.navigate('/contracts/0192')">
                     <div class="eq-card-top">
                         <span class="eq-badge active">ACTIVE</span>
@@ -475,6 +514,7 @@ export function renderOverview() {
                         <span class="eq-card-integration"><span class="dot stripe"></span> Stripe · Revenue</span>
                         <span class="eq-tier maximum">MAXIMUM <span class="eq-tier-rate">~10%</span></span>
                     </div>
+                    <div class="eq-card-baseline">Baseline: $32,000/mo → Target: $51,200/mo</div>
                     <div class="eq-card-meta">
                         <div>
                             <div class="eq-card-stake">$25,000</div>
@@ -485,7 +525,7 @@ export function renderOverview() {
                     <button class="eq-card-cta secondary">View Receipt →</button>
                 </div>
 
-                <!-- AMAZON — Revenue +35% — ELEVATED -->
+                <!-- AMAZON — Revenue +35% — ELEVATED — Baseline $6k/mo -->
                 <div class="eq-card" onclick="window.router.navigate('/contracts/0181')">
                     <div class="eq-card-top">
                         <span class="eq-badge action">ACTION REQUIRED</span>
@@ -496,6 +536,7 @@ export function renderOverview() {
                         <span class="eq-card-integration"><span class="dot amazon"></span> Amazon · Revenue</span>
                         <span class="eq-tier elevated">ELEVATED <span class="eq-tier-rate">~20%</span></span>
                     </div>
+                    <div class="eq-card-baseline">Baseline: $6,400/mo → Target: $8,640/mo</div>
                     <div class="eq-card-meta">
                         <div>
                             <div class="eq-card-stake">$3,000</div>
@@ -506,7 +547,7 @@ export function renderOverview() {
                     <button class="eq-card-cta primary" onclick="event.stopPropagation()">Lock Capital →</button>
                 </div>
 
-                <!-- X — Followers +15% — CONTROLLED -->
+                <!-- X — Followers +15% — CONTROLLED — Baseline 850 -->
                 <div class="eq-card" onclick="window.router.navigate('/contracts/0195')">
                     <div class="eq-card-top">
                         <span class="eq-badge active">ACTIVE</span>
@@ -517,6 +558,7 @@ export function renderOverview() {
                         <span class="eq-card-integration"><span class="dot x"></span> X · Followers</span>
                         <span class="eq-tier controlled">CONTROLLED <span class="eq-tier-rate">~30%</span></span>
                     </div>
+                    <div class="eq-card-baseline">Baseline: 850 → Target: 978</div>
                     <div class="eq-card-meta">
                         <div>
                             <div class="eq-card-stake">$500</div>
@@ -527,7 +569,7 @@ export function renderOverview() {
                     <button class="eq-card-cta secondary">View Receipt →</button>
                 </div>
 
-                <!-- SHOPIFY — Revenue +35% — ELEVATED (Settled) -->
+                <!-- SHOPIFY — Revenue +35% — ELEVATED (Settled/Won) -->
                 <div class="eq-card" onclick="window.router.navigate('/contracts/0162')">
                     <div class="eq-card-top">
                         <span class="eq-badge settled">SETTLED</span>
@@ -538,6 +580,7 @@ export function renderOverview() {
                         <span class="eq-card-integration"><span class="dot shopify"></span> Shopify · Revenue</span>
                         <span class="eq-tier elevated">ELEVATED <span class="eq-tier-rate">~20%</span></span>
                     </div>
+                    <div class="eq-card-baseline">Baseline: $4,500/mo → Target: $6,075/mo ✓</div>
                     <div class="eq-card-meta">
                         <div>
                             <div class="eq-card-stake">$4,000</div>
@@ -548,7 +591,7 @@ export function renderOverview() {
                     <button class="eq-card-cta secondary">View Receipt →</button>
                 </div>
 
-                <!-- STRIPE — Revenue +15% — CONTROLLED (Forfeited) -->
+                <!-- STRIPE — Revenue +15% — CONTROLLED (Settled/Forfeited) -->
                 <div class="eq-card" onclick="window.router.navigate('/contracts/0155')">
                     <div class="eq-card-top">
                         <span class="eq-badge settled">SETTLED</span>
@@ -559,6 +602,7 @@ export function renderOverview() {
                         <span class="eq-card-integration"><span class="dot stripe"></span> Stripe · Revenue</span>
                         <span class="eq-tier controlled">CONTROLLED <span class="eq-tier-rate">~30%</span></span>
                     </div>
+                    <div class="eq-card-baseline">Baseline: $9,200/mo → Target: $10,580/mo ✗</div>
                     <div class="eq-card-meta">
                         <div>
                             <div class="eq-card-stake">$3,000</div>
@@ -579,15 +623,50 @@ export function renderOverview() {
                     <span class="eq-modal-title">Execution Rules</span>
                     <button class="eq-modal-close" onclick="document.getElementById('rules-modal').classList.remove('open')">✕</button>
                 </div>
+
                 <div class="eq-rule-divider">Enforcement</div>
                 <div class="eq-rule-row"><input type="checkbox" checked><span>Verified Only (Fail-Closed)</span></div>
                 <div class="eq-rule-row"><input type="checkbox" checked><span>Immutable Terms</span></div>
                 <div class="eq-rule-row"><input type="checkbox" checked><span>No Appeals</span></div>
                 <div class="eq-rule-row"><input type="checkbox"><span>Buyout Available</span></div>
+
                 <div class="eq-rule-divider">Tier Filter</div>
                 <div class="eq-rule-row"><input type="checkbox" checked><span>Controlled — ~30% designed win rate</span></div>
                 <div class="eq-rule-row"><input type="checkbox" checked><span>Elevated — ~20% designed win rate</span></div>
                 <div class="eq-rule-row"><input type="checkbox" checked><span>Maximum — ~10% designed win rate</span></div>
+
+                <div class="eq-rule-divider">Minimum Baseline Thresholds</div>
+                <table class="eq-threshold-table">
+                    <thead>
+                        <tr>
+                            <th>Tier</th>
+                            <th>X Followers</th>
+                            <th>Revenue</th>
+                            <th>Win Rate</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="tier-controlled">Controlled</td>
+                            <td>≥ 100</td>
+                            <td>≥ $500/mo</td>
+                            <td>~30%</td>
+                        </tr>
+                        <tr>
+                            <td class="tier-elevated">Elevated</td>
+                            <td>≥ 250</td>
+                            <td>≥ $2,000/mo</td>
+                            <td>~20%</td>
+                        </tr>
+                        <tr>
+                            <td class="tier-maximum">Maximum</td>
+                            <td>≥ 500</td>
+                            <td>≥ $5,000/mo</td>
+                            <td>~10%</td>
+                        </tr>
+                    </tbody>
+                </table>
+
                 <div class="eq-rule-divider">Stake Range</div>
                 <div class="eq-rule-row">
                     <span style="font-size:12px;color:#888;">Min Capital</span>

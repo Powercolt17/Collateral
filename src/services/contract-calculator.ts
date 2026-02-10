@@ -112,6 +112,45 @@ export const X_FOLLOWERS_PARAMS = {
 };
 
 // =============================================================================
+// MINIMUM BASELINE THRESHOLDS (HARD GATE — cannot create contract below these)
+// Users MUST have real existing metrics. No starting from zero.
+// =============================================================================
+
+export const MINIMUM_BASELINES = {
+    X: {
+        FOLLOWERS: {
+            // Minimum followers required to create a contract at each tier
+            // Higher tiers require larger existing audience (more to risk)
+            STANDARD: 100,     // Controlled: need at least 100 followers
+            ADVANCED: 250,     // Elevated: need at least 250 followers  
+            ELITE: 500,        // Maximum: need at least 500 followers
+        } as Record<RiskTier, number>,
+    },
+    STRIPE: {
+        REVENUE: {
+            // Minimum 30-day revenue (in USD cents) required
+            STANDARD: 500_00,   // Controlled: $500/mo minimum
+            ADVANCED: 2_000_00, // Elevated: $2,000/mo minimum
+            ELITE: 5_000_00,    // Maximum: $5,000/mo minimum
+        } as Record<RiskTier, number>,
+    },
+    SHOPIFY: {
+        REVENUE: {
+            STANDARD: 500_00,   // Controlled: $500/mo minimum
+            ADVANCED: 2_000_00, // Elevated: $2,000/mo minimum
+            ELITE: 5_000_00,    // Maximum: $5,000/mo minimum
+        } as Record<RiskTier, number>,
+    },
+    AMAZON: {
+        REVENUE: {
+            STANDARD: 500_00,   // Controlled: $500/mo minimum
+            ADVANCED: 2_000_00, // Elevated: $2,000/mo minimum
+            ELITE: 5_000_00,    // Maximum: $5,000/mo minimum
+        } as Record<RiskTier, number>,
+    },
+} as const;
+
+// =============================================================================
 // STRIPE REVENUE PARAMETERS (windowDays=30, all values in cents)
 // =============================================================================
 
@@ -180,6 +219,39 @@ const QuoteInputSchema = z.object({
         return true;
     },
     { message: 'Missing required baseline field for platform.' }
+).refine(
+    (data) => {
+        // HARD GATE: Minimum baseline thresholds — no starting from zero
+        if (data.platform === 'X' && data.baseline.followersCount !== undefined) {
+            const minFollowers = MINIMUM_BASELINES.X.FOLLOWERS[data.tier];
+            if (data.baseline.followersCount < minFollowers) {
+                return false;
+            }
+        }
+        if (data.platform === 'STRIPE' && data.baseline.revenue30dUsdCents !== undefined) {
+            const minRevenue = MINIMUM_BASELINES.STRIPE.REVENUE[data.tier];
+            if (data.baseline.revenue30dUsdCents < minRevenue) {
+                return false;
+            }
+        }
+        return true;
+    },
+    (data) => {
+        if (data.platform === 'X') {
+            const min = MINIMUM_BASELINES.X.FOLLOWERS[data.tier];
+            return {
+                message: `Baseline too low: ${data.tier} tier requires minimum ${min} followers. Got ${data.baseline.followersCount}. You need an existing audience to create a contract.`,
+                path: ['baseline', 'followersCount'],
+            };
+        }
+        const minCents = MINIMUM_BASELINES.STRIPE.REVENUE[data.tier];
+        const minDollars = (minCents / 100).toFixed(0);
+        const gotDollars = ((data.baseline.revenue30dUsdCents ?? 0) / 100).toFixed(0);
+        return {
+            message: `Baseline too low: ${data.tier} tier requires minimum $${minDollars}/mo revenue. Got $${gotDollars}/mo. You need existing revenue to create a contract.`,
+            path: ['baseline', 'revenue30dUsdCents'],
+        };
+    }
 ).refine(
     (data) => {
         // Minimum window days to prevent trivialization
@@ -407,23 +479,14 @@ function calculateStripeRevenueDelta(
     const floorsApplied: Record<string, boolean> = {};
     const capsApplied: Record<string, boolean> = {};
 
-    // ZERO BASELINE: Use tier-specific fixed values (no tier multiplier on top)
+    // ZERO BASELINE: REJECT — users must have existing revenue
+    // This should be caught by Zod validation, but enforce here as defense-in-depth
     if (baseline === 0) {
-        const zeroFloor = params.zeroBaselineFloor[tier] * windowScale;
-        floorsApplied['zeroBaselineFloor'] = true;
-
-        return {
-            delta: zeroFloor,
-            floorsApplied,
-            capsApplied,
-            parameters: {
-                zeroBaselineFloor: params.zeroBaselineFloor[tier],
-                windowScale,
-                baseline,
-                // Note: tierMultiplier NOT applied for zero baseline
-            },
-            formula: 'delta = zeroBaselineFloor[tier] * windowScale (zero baseline, tier-specific constant)',
-        };
+        throw new Error(
+            `Cannot calculate threshold for $0 baseline. ` +
+            `${tier} tier requires minimum $${(MINIMUM_BASELINES.STRIPE.REVENUE[tier] / 100).toFixed(0)}/mo revenue. ` +
+            `Connect your Stripe account and build revenue first.`
+        );
     }
 
     // Log transform scale

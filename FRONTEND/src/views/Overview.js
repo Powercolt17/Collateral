@@ -1,5 +1,6 @@
 // Overview — Collateral Execution Queue
-// Contracts: Social (Followers), Sales/Commerce/Finance (Revenue)
+// ALL contracts are percentage growth from baseline
+// Social (X) = Follower % growth, Sales/Commerce/Finance = Revenue % growth
 // Tiers: Controlled (~30% win), Elevated (~20% win), Maximum (~10% win)
 
 export function renderOverview() {
@@ -196,22 +197,10 @@ export function renderOverview() {
                 letter-spacing: 0.3px;
                 text-transform: uppercase;
             }
-            .eq-tier.controlled {
-                background: #f0fdf4;
-                color: #166534;
-            }
-            .eq-tier.elevated {
-                background: #fffbeb;
-                color: #92400e;
-            }
-            .eq-tier.maximum {
-                background: #fef2f2;
-                color: #8B1818;
-            }
-            .eq-tier-rate {
-                font-weight: 400;
-                opacity: 0.7;
-            }
+            .eq-tier.controlled { background: #f0fdf4; color: #166534; }
+            .eq-tier.elevated { background: #fffbeb; color: #92400e; }
+            .eq-tier.maximum { background: #fef2f2; color: #8B1818; }
+            .eq-tier-rate { font-weight: 400; opacity: 0.7; }
 
             /* Card content */
             .eq-card-goal {
@@ -388,10 +377,10 @@ export function renderOverview() {
                 <button class="eq-pill">Finance</button>
             </div>
 
-            <!-- Contract Cards -->
+            <!-- Contract Cards — ALL % growth from baseline -->
             <div class="eq-grid">
 
-                <!-- STRIPE — Revenue Growth — CONTROLLED -->
+                <!-- STRIPE — Revenue +15% — CONTROLLED -->
                 <div class="eq-card" onclick="window.router.navigate('/contracts/0184')">
                     <div class="eq-card-top">
                         <span class="eq-badge active">ACTIVE</span>
@@ -412,13 +401,13 @@ export function renderOverview() {
                     <button class="eq-card-cta secondary">View Receipt →</button>
                 </div>
 
-                <!-- X — Follower Growth — ELEVATED -->
+                <!-- X — Followers +35% — ELEVATED -->
                 <div class="eq-card" onclick="window.router.navigate('/contracts/0190')">
                     <div class="eq-card-top">
                         <span class="eq-badge action">ACTION REQUIRED</span>
                         <span class="eq-card-id">RCPT-0190</span>
                     </div>
-                    <div class="eq-card-goal">Grow to 10k Followers in 21 Days</div>
+                    <div class="eq-card-goal">Follower Growth +35% in 21 Days</div>
                     <div class="eq-card-row">
                         <span class="eq-card-integration"><span class="dot x"></span> X · Followers</span>
                         <span class="eq-tier elevated">ELEVATED <span class="eq-tier-rate">~20%</span></span>
@@ -433,13 +422,13 @@ export function renderOverview() {
                     <button class="eq-card-cta primary" onclick="event.stopPropagation()">Lock Capital →</button>
                 </div>
 
-                <!-- SHOPIFY — Revenue Growth — CONTROLLED -->
+                <!-- SHOPIFY — Revenue +20% — CONTROLLED -->
                 <div class="eq-card" onclick="window.router.navigate('/contracts/0178')">
                     <div class="eq-card-top">
                         <span class="eq-badge active">ACTIVE</span>
                         <span class="eq-card-id">RCPT-0178</span>
                     </div>
-                    <div class="eq-card-goal">Shopify Revenue +20% in 30 Days</div>
+                    <div class="eq-card-goal">Revenue Growth +20% in 30 Days</div>
                     <div class="eq-card-row">
                         <span class="eq-card-integration"><span class="dot shopify"></span> Shopify · Revenue</span>
                         <span class="eq-tier controlled">CONTROLLED <span class="eq-tier-rate">~30%</span></span>
@@ -454,13 +443,13 @@ export function renderOverview() {
                     <button class="eq-card-cta secondary">View Receipt →</button>
                 </div>
 
-                <!-- X — Follower Growth — MAXIMUM -->
+                <!-- X — Followers +60% — MAXIMUM -->
                 <div class="eq-card" onclick="window.router.navigate('/contracts/0185')">
                     <div class="eq-card-top">
                         <span class="eq-badge verifying">VERIFYING</span>
                         <span class="eq-card-id">RCPT-0185</span>
                     </div>
-                    <div class="eq-card-goal">Gain 5,000 Followers in 14 Days</div>
+                    <div class="eq-card-goal">Follower Growth +60% in 14 Days</div>
                     <div class="eq-card-row">
                         <span class="eq-card-integration"><span class="dot x"></span> X · Followers</span>
                         <span class="eq-tier maximum">MAXIMUM <span class="eq-tier-rate">~10%</span></span>
@@ -475,13 +464,13 @@ export function renderOverview() {
                     <button class="eq-card-cta secondary">View Receipt →</button>
                 </div>
 
-                <!-- STRIPE — Revenue Target — MAXIMUM -->
+                <!-- STRIPE — Revenue +60% — MAXIMUM -->
                 <div class="eq-card" onclick="window.router.navigate('/contracts/0192')">
                     <div class="eq-card-top">
                         <span class="eq-badge active">ACTIVE</span>
                         <span class="eq-card-id">RCPT-0192</span>
                     </div>
-                    <div class="eq-card-goal">Hit $50k MRR in 14 Days</div>
+                    <div class="eq-card-goal">Revenue Growth +60% in 14 Days</div>
                     <div class="eq-card-row">
                         <span class="eq-card-integration"><span class="dot stripe"></span> Stripe · Revenue</span>
                         <span class="eq-tier maximum">MAXIMUM <span class="eq-tier-rate">~10%</span></span>
@@ -496,13 +485,13 @@ export function renderOverview() {
                     <button class="eq-card-cta secondary">View Receipt →</button>
                 </div>
 
-                <!-- AMAZON — Revenue Growth — ELEVATED -->
+                <!-- AMAZON — Revenue +35% — ELEVATED -->
                 <div class="eq-card" onclick="window.router.navigate('/contracts/0181')">
                     <div class="eq-card-top">
                         <span class="eq-badge action">ACTION REQUIRED</span>
                         <span class="eq-card-id">RCPT-0181</span>
                     </div>
-                    <div class="eq-card-goal">Amazon Revenue +35% in 21 Days</div>
+                    <div class="eq-card-goal">Revenue Growth +35% in 21 Days</div>
                     <div class="eq-card-row">
                         <span class="eq-card-integration"><span class="dot amazon"></span> Amazon · Revenue</span>
                         <span class="eq-tier elevated">ELEVATED <span class="eq-tier-rate">~20%</span></span>
@@ -517,13 +506,13 @@ export function renderOverview() {
                     <button class="eq-card-cta primary" onclick="event.stopPropagation()">Lock Capital →</button>
                 </div>
 
-                <!-- X — Follower Growth — CONTROLLED -->
+                <!-- X — Followers +15% — CONTROLLED -->
                 <div class="eq-card" onclick="window.router.navigate('/contracts/0195')">
                     <div class="eq-card-top">
                         <span class="eq-badge active">ACTIVE</span>
                         <span class="eq-card-id">RCPT-0195</span>
                     </div>
-                    <div class="eq-card-goal">Grow to 2,500 Followers in 30 Days</div>
+                    <div class="eq-card-goal">Follower Growth +15% in 30 Days</div>
                     <div class="eq-card-row">
                         <span class="eq-card-integration"><span class="dot x"></span> X · Followers</span>
                         <span class="eq-tier controlled">CONTROLLED <span class="eq-tier-rate">~30%</span></span>
@@ -538,13 +527,13 @@ export function renderOverview() {
                     <button class="eq-card-cta secondary">View Receipt →</button>
                 </div>
 
-                <!-- SHOPIFY — Revenue Growth — ELEVATED (Settled) -->
+                <!-- SHOPIFY — Revenue +35% — ELEVATED (Settled) -->
                 <div class="eq-card" onclick="window.router.navigate('/contracts/0162')">
                     <div class="eq-card-top">
                         <span class="eq-badge settled">SETTLED</span>
                         <span class="eq-card-id">RCPT-0162</span>
                     </div>
-                    <div class="eq-card-goal">Shopify Revenue +35% in 21 Days</div>
+                    <div class="eq-card-goal">Revenue Growth +35% in 21 Days</div>
                     <div class="eq-card-row">
                         <span class="eq-card-integration"><span class="dot shopify"></span> Shopify · Revenue</span>
                         <span class="eq-tier elevated">ELEVATED <span class="eq-tier-rate">~20%</span></span>
@@ -559,7 +548,7 @@ export function renderOverview() {
                     <button class="eq-card-cta secondary">View Receipt →</button>
                 </div>
 
-                <!-- STRIPE — Revenue — CONTROLLED (Settled / Forfeited) -->
+                <!-- STRIPE — Revenue +15% — CONTROLLED (Forfeited) -->
                 <div class="eq-card" onclick="window.router.navigate('/contracts/0155')">
                     <div class="eq-card-top">
                         <span class="eq-badge settled">SETTLED</span>

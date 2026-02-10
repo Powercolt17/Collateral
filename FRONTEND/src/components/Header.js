@@ -62,30 +62,26 @@ export function renderHeader(currentRoute) {
             /* Logo */
             .ch-logo {
                 display: flex;
+                flex-direction: column;
                 align-items: center;
-                gap: 8px;
                 text-decoration: none;
                 flex-shrink: 0;
+                line-height: 1;
             }
-            .ch-logo-icon {
-                width: 24px;
-                height: 24px;
-                background: #921818;
-                display: flex;
-                align-items: center;
-                justify-content: center;
-            }
-            .ch-logo-icon span {
-                color: #fff;
-                font-size: 14px;
-                font-weight: 700;
-            }
-            .ch-logo-text {
-                font-size: 15px;
-                font-weight: 700;
+            .ch-logo-main {
+                font-size: 17px;
+                font-weight: 800;
                 color: #0a0a0a;
-                letter-spacing: 0.5px;
-                font-family: 'IBM Plex Sans', sans-serif;
+                letter-spacing: 2px;
+                font-family: 'IBM Plex Sans', 'Inter', sans-serif;
+            }
+            .ch-logo-sub {
+                font-size: 10px;
+                font-weight: 600;
+                color: #8B1818;
+                letter-spacing: 3px;
+                font-family: 'IBM Plex Sans', 'Inter', sans-serif;
+                margin-top: 1px;
             }
 
             /* Nav links */
@@ -326,8 +322,8 @@ export function renderHeader(currentRoute) {
             <div class="ch-header-inner">
                 <!-- Logo -->
                 <a href="#" onclick="window.router.navigate('/overview'); return false;" class="ch-logo">
-                    <div class="ch-logo-icon"><span>■</span></div>
-                    <span class="ch-logo-text">COLLATERAL</span>
+                    <span class="ch-logo-main">COLLATERAL</span>
+                    <span class="ch-logo-sub">MARKET</span>
                 </a>
 
                 <!-- Nav Links -->

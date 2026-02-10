@@ -1,17 +1,17 @@
 // Overview — Collateral Execution Queue
-// Polymarket-simple: pick a contract, lock capital, done.
+// Contracts: Social (Followers), Sales/Commerce/Finance (Revenue)
+// Tiers: Controlled (~30% win), Elevated (~20% win), Maximum (~10% win)
 
 export function renderOverview() {
     return `
         <style>
-            /* === EXECUTION QUEUE === */
             .eq {
                 background: #fafafa;
                 min-height: 100vh;
                 font-family: 'Inter', -apple-system, sans-serif;
             }
 
-            /* Top bar: stats + controls */
+            /* Top bar */
             .eq-topbar {
                 display: flex;
                 justify-content: space-between;
@@ -20,10 +20,7 @@ export function renderOverview() {
                 border-bottom: 1px solid #e5e5e5;
                 background: #fff;
             }
-            .eq-stats {
-                display: flex;
-                gap: 32px;
-            }
+            .eq-stats { display: flex; gap: 32px; }
             .eq-stat-value {
                 font-size: 22px;
                 font-weight: 600;
@@ -38,11 +35,7 @@ export function renderOverview() {
                 margin-top: 2px;
                 font-family: 'JetBrains Mono', monospace;
             }
-            .eq-controls {
-                display: flex;
-                gap: 8px;
-                align-items: center;
-            }
+            .eq-controls { display: flex; gap: 8px; align-items: center; }
             .eq-rules-btn {
                 padding: 8px 14px;
                 font-size: 11px;
@@ -60,7 +53,6 @@ export function renderOverview() {
                 transition: all 0.15s;
             }
             .eq-rules-btn:hover { border-color: #ccc; color: #333; }
-            .eq-rules-btn i { width: 14px; height: 14px; }
 
             /* Tabs */
             .eq-tabs {
@@ -85,12 +77,9 @@ export function renderOverview() {
                 transition: color 0.15s;
             }
             .eq-tab:hover { color: #333; }
-            .eq-tab.active {
-                color: #0a0a0a;
-                border-bottom-color: #8B1818;
-            }
+            .eq-tab.active { color: #0a0a0a; border-bottom-color: #8B1818; }
 
-            /* Filter pills */
+            /* Filters */
             .eq-filters {
                 display: flex;
                 gap: 6px;
@@ -121,15 +110,36 @@ export function renderOverview() {
             .eq-pill:hover { border-color: #ccc; }
             .eq-pill.active { background: #0a0a0a; color: #fff; border-color: #0a0a0a; }
 
+            /* Integration indicator */
+            .eq-card-integration {
+                display: inline-flex;
+                align-items: center;
+                gap: 5px;
+                font-size: 10px;
+                color: #888;
+                font-family: 'JetBrains Mono', monospace;
+                text-transform: uppercase;
+                letter-spacing: 0.3px;
+            }
+            .eq-card-integration .dot {
+                width: 6px;
+                height: 6px;
+                border-radius: 50%;
+            }
+            .eq-card-integration .dot.stripe { background: #635bff; }
+            .eq-card-integration .dot.shopify { background: #96bf48; }
+            .eq-card-integration .dot.amazon { background: #ff9900; }
+            .eq-card-integration .dot.x { background: #0a0a0a; }
+
             /* Cards grid */
             .eq-grid {
                 display: grid;
-                grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+                grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
                 gap: 16px;
                 padding: 24px 32px 80px;
             }
 
-            /* Contract card — Polymarket simple */
+            /* Card */
             .eq-card {
                 background: #fff;
                 border: 1px solid #e5e5e5;
@@ -139,7 +149,7 @@ export function renderOverview() {
                 transition: all 0.15s;
                 display: flex;
                 flex-direction: column;
-                gap: 16px;
+                gap: 12px;
             }
             .eq-card:hover {
                 border-color: #ccc;
@@ -147,7 +157,6 @@ export function renderOverview() {
                 transform: translateY(-1px);
             }
 
-            /* Card top row: badge + ID */
             .eq-card-top {
                 display: flex;
                 justify-content: space-between;
@@ -157,7 +166,6 @@ export function renderOverview() {
                 font-size: 10px;
                 color: #aaa;
                 font-family: 'JetBrains Mono', monospace;
-                letter-spacing: 0.3px;
             }
 
             /* Status badge */
@@ -170,24 +178,42 @@ export function renderOverview() {
                 letter-spacing: 0.3px;
                 text-transform: uppercase;
             }
-            .eq-badge.active {
+            .eq-badge.active { background: #f0fdf4; color: #166534; }
+            .eq-badge.action { background: #fef2f2; color: #8B1818; }
+            .eq-badge.verifying { background: #eff6ff; color: #1e40af; }
+            .eq-badge.settled { background: #f5f5f5; color: #666; }
+
+            /* Tier badge */
+            .eq-tier {
+                display: inline-flex;
+                align-items: center;
+                gap: 4px;
+                font-size: 10px;
+                font-weight: 600;
+                padding: 3px 10px;
+                border-radius: 999px;
+                font-family: 'JetBrains Mono', monospace;
+                letter-spacing: 0.3px;
+                text-transform: uppercase;
+            }
+            .eq-tier.controlled {
                 background: #f0fdf4;
                 color: #166534;
             }
-            .eq-badge.action {
+            .eq-tier.elevated {
+                background: #fffbeb;
+                color: #92400e;
+            }
+            .eq-tier.maximum {
                 background: #fef2f2;
                 color: #8B1818;
             }
-            .eq-badge.verifying {
-                background: #eff6ff;
-                color: #1e40af;
-            }
-            .eq-badge.settled {
-                background: #f5f5f5;
-                color: #666;
+            .eq-tier-rate {
+                font-weight: 400;
+                opacity: 0.7;
             }
 
-            /* Contract goal — the headline */
+            /* Card content */
             .eq-card-goal {
                 font-size: 17px;
                 font-weight: 600;
@@ -196,7 +222,12 @@ export function renderOverview() {
                 font-family: 'IBM Plex Sans', sans-serif;
             }
 
-            /* Card meta row */
+            .eq-card-row {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+            }
+
             .eq-card-meta {
                 display: flex;
                 justify-content: space-between;
@@ -221,7 +252,6 @@ export function renderOverview() {
                 font-family: 'JetBrains Mono', monospace;
             }
 
-            /* CTA button */
             .eq-card-cta {
                 width: 100%;
                 padding: 12px;
@@ -235,16 +265,9 @@ export function renderOverview() {
                 border-radius: 8px;
                 transition: all 0.15s;
             }
-            .eq-card-cta.primary {
-                background: #8B1818;
-                color: #fff;
-            }
+            .eq-card-cta.primary { background: #8B1818; color: #fff; }
             .eq-card-cta.primary:hover { background: #6B1212; }
-            .eq-card-cta.secondary {
-                background: #f5f5f5;
-                color: #333;
-                border: 1px solid #e5e5e5;
-            }
+            .eq-card-cta.secondary { background: #f5f5f5; color: #333; border: 1px solid #e5e5e5; }
             .eq-card-cta.secondary:hover { background: #eee; }
 
             /* Rules Modal */
@@ -279,7 +302,6 @@ export function renderOverview() {
                 color: #0a0a0a;
                 font-family: 'JetBrains Mono', monospace;
                 text-transform: uppercase;
-                letter-spacing: 0.5px;
             }
             .eq-modal-close {
                 width: 28px;
@@ -303,15 +325,8 @@ export function renderOverview() {
                 border-bottom: 1px solid #f0f0f0;
             }
             .eq-rule-row:last-child { border-bottom: none; }
-            .eq-rule-row input[type="checkbox"] {
-                width: 16px;
-                height: 16px;
-                accent-color: #8B1818;
-            }
-            .eq-rule-row span {
-                font-size: 13px;
-                color: #333;
-            }
+            .eq-rule-row input[type="checkbox"] { width: 16px; height: 16px; accent-color: #8B1818; }
+            .eq-rule-row span { font-size: 13px; color: #333; }
             .eq-rule-divider {
                 font-size: 10px;
                 color: #999;
@@ -321,7 +336,6 @@ export function renderOverview() {
                 margin-bottom: 8px;
             }
 
-            /* Responsive */
             @media (max-width: 768px) {
                 .eq-topbar { padding: 16px; flex-direction: column; gap: 12px; align-items: flex-start; }
                 .eq-tabs { padding: 0 16px; overflow-x: auto; }
@@ -332,7 +346,7 @@ export function renderOverview() {
         </style>
 
         <div class="eq">
-            <!-- Top Bar: Stats + Controls -->
+            <!-- Top Bar -->
             <div class="eq-topbar">
                 <div class="eq-stats">
                     <div>
@@ -366,118 +380,206 @@ export function renderOverview() {
 
             <!-- Filters -->
             <div class="eq-filters">
-                <span class="eq-filter-label">TYPE</span>
+                <span class="eq-filter-label">DOMAIN</span>
                 <button class="eq-pill active">All</button>
-                <button class="eq-pill">Revenue</button>
                 <button class="eq-pill">Sales</button>
                 <button class="eq-pill">Social</button>
-                <button class="eq-pill">Dev</button>
-                <button class="eq-pill">Fitness</button>
+                <button class="eq-pill">Commerce</button>
+                <button class="eq-pill">Finance</button>
             </div>
 
-            <!-- Contract Cards Grid -->
+            <!-- Contract Cards -->
             <div class="eq-grid">
-                <!-- Card 1 -->
+
+                <!-- STRIPE — Revenue Growth — CONTROLLED -->
                 <div class="eq-card" onclick="window.router.navigate('/contracts/0184')">
                     <div class="eq-card-top">
                         <span class="eq-badge active">ACTIVE</span>
                         <span class="eq-card-id">RCPT-0184</span>
                     </div>
-                    <div class="eq-card-goal">Revenue Growth +18% in 14 Days</div>
+                    <div class="eq-card-goal">Revenue Growth +15% in 30 Days</div>
+                    <div class="eq-card-row">
+                        <span class="eq-card-integration"><span class="dot stripe"></span> Stripe · Revenue</span>
+                        <span class="eq-tier controlled">CONTROLLED <span class="eq-tier-rate">~30%</span></span>
+                    </div>
                     <div class="eq-card-meta">
                         <div>
                             <div class="eq-card-stake">$5,000</div>
                             <div class="eq-card-stake-label">Locked</div>
                         </div>
-                        <div class="eq-card-time">Ends Feb 28</div>
+                        <div class="eq-card-time">24d left</div>
                     </div>
                     <button class="eq-card-cta secondary">View Receipt →</button>
                 </div>
 
-                <!-- Card 2 -->
-                <div class="eq-card" onclick="window.router.navigate('/contracts/0182')">
+                <!-- X — Follower Growth — ELEVATED -->
+                <div class="eq-card" onclick="window.router.navigate('/contracts/0190')">
                     <div class="eq-card-top">
                         <span class="eq-badge action">ACTION REQUIRED</span>
-                        <span class="eq-card-id">RCPT-0182</span>
+                        <span class="eq-card-id">RCPT-0190</span>
                     </div>
-                    <div class="eq-card-goal">Commit Cadence 5/wk</div>
+                    <div class="eq-card-goal">Grow to 10k Followers in 21 Days</div>
+                    <div class="eq-card-row">
+                        <span class="eq-card-integration"><span class="dot x"></span> X · Followers</span>
+                        <span class="eq-tier elevated">ELEVATED <span class="eq-tier-rate">~20%</span></span>
+                    </div>
                     <div class="eq-card-meta">
                         <div>
                             <div class="eq-card-stake">$1,200</div>
                             <div class="eq-card-stake-label">Stake</div>
                         </div>
-                        <div class="eq-card-time">Ends Feb 15</div>
+                        <div class="eq-card-time">Ends Feb 28</div>
                     </div>
                     <button class="eq-card-cta primary" onclick="event.stopPropagation()">Lock Capital →</button>
                 </div>
 
-                <!-- Card 3 -->
+                <!-- SHOPIFY — Revenue Growth — CONTROLLED -->
+                <div class="eq-card" onclick="window.router.navigate('/contracts/0178')">
+                    <div class="eq-card-top">
+                        <span class="eq-badge active">ACTIVE</span>
+                        <span class="eq-card-id">RCPT-0178</span>
+                    </div>
+                    <div class="eq-card-goal">Shopify Revenue +20% in 30 Days</div>
+                    <div class="eq-card-row">
+                        <span class="eq-card-integration"><span class="dot shopify"></span> Shopify · Revenue</span>
+                        <span class="eq-tier controlled">CONTROLLED <span class="eq-tier-rate">~30%</span></span>
+                    </div>
+                    <div class="eq-card-meta">
+                        <div>
+                            <div class="eq-card-stake">$10,000</div>
+                            <div class="eq-card-stake-label">Locked</div>
+                        </div>
+                        <div class="eq-card-time">18d left</div>
+                    </div>
+                    <button class="eq-card-cta secondary">View Receipt →</button>
+                </div>
+
+                <!-- X — Follower Growth — MAXIMUM -->
                 <div class="eq-card" onclick="window.router.navigate('/contracts/0185')">
                     <div class="eq-card-top">
                         <span class="eq-badge verifying">VERIFYING</span>
                         <span class="eq-card-id">RCPT-0185</span>
                     </div>
-                    <div class="eq-card-goal">Post Cadence 2/day</div>
-                    <div class="eq-card-meta">
-                        <div>
-                            <div class="eq-card-stake">$500</div>
-                            <div class="eq-card-stake-label">Locked</div>
-                        </div>
-                        <div class="eq-card-time">Daily Cycle</div>
+                    <div class="eq-card-goal">Gain 5,000 Followers in 14 Days</div>
+                    <div class="eq-card-row">
+                        <span class="eq-card-integration"><span class="dot x"></span> X · Followers</span>
+                        <span class="eq-tier maximum">MAXIMUM <span class="eq-tier-rate">~10%</span></span>
                     </div>
-                    <button class="eq-card-cta secondary">View Receipt →</button>
-                </div>
-
-                <!-- Card 4 -->
-                <div class="eq-card" onclick="window.router.navigate('/contracts/0181')">
-                    <div class="eq-card-top">
-                        <span class="eq-badge active">ACTIVE</span>
-                        <span class="eq-card-id">RCPT-0181</span>
-                    </div>
-                    <div class="eq-card-goal">Sales Calls 50/wk</div>
                     <div class="eq-card-meta">
                         <div>
                             <div class="eq-card-stake">$2,500</div>
                             <div class="eq-card-stake-label">Locked</div>
                         </div>
-                        <div class="eq-card-time">Ends Friday</div>
+                        <div class="eq-card-time">Verifying</div>
                     </div>
                     <button class="eq-card-cta secondary">View Receipt →</button>
                 </div>
 
-                <!-- Card 5 -->
-                <div class="eq-card" onclick="window.router.navigate('/contracts/0178')">
+                <!-- STRIPE — Revenue Target — MAXIMUM -->
+                <div class="eq-card" onclick="window.router.navigate('/contracts/0192')">
                     <div class="eq-card-top">
-                        <span class="eq-badge action">ACTION REQUIRED</span>
-                        <span class="eq-card-id">RCPT-0178</span>
+                        <span class="eq-badge active">ACTIVE</span>
+                        <span class="eq-card-id">RCPT-0192</span>
                     </div>
-                    <div class="eq-card-goal">Shopify GMV > $1k/day</div>
+                    <div class="eq-card-goal">Hit $50k MRR in 14 Days</div>
+                    <div class="eq-card-row">
+                        <span class="eq-card-integration"><span class="dot stripe"></span> Stripe · Revenue</span>
+                        <span class="eq-tier maximum">MAXIMUM <span class="eq-tier-rate">~10%</span></span>
+                    </div>
                     <div class="eq-card-meta">
                         <div>
-                            <div class="eq-card-stake">$10,000</div>
+                            <div class="eq-card-stake">$25,000</div>
+                            <div class="eq-card-stake-label">Locked</div>
+                        </div>
+                        <div class="eq-card-time">9d left</div>
+                    </div>
+                    <button class="eq-card-cta secondary">View Receipt →</button>
+                </div>
+
+                <!-- AMAZON — Revenue Growth — ELEVATED -->
+                <div class="eq-card" onclick="window.router.navigate('/contracts/0181')">
+                    <div class="eq-card-top">
+                        <span class="eq-badge action">ACTION REQUIRED</span>
+                        <span class="eq-card-id">RCPT-0181</span>
+                    </div>
+                    <div class="eq-card-goal">Amazon Revenue +35% in 21 Days</div>
+                    <div class="eq-card-row">
+                        <span class="eq-card-integration"><span class="dot amazon"></span> Amazon · Revenue</span>
+                        <span class="eq-tier elevated">ELEVATED <span class="eq-tier-rate">~20%</span></span>
+                    </div>
+                    <div class="eq-card-meta">
+                        <div>
+                            <div class="eq-card-stake">$3,000</div>
                             <div class="eq-card-stake-label">Stake</div>
                         </div>
-                        <div class="eq-card-time">Ends Mar 1</div>
+                        <div class="eq-card-time">Ends Mar 2</div>
                     </div>
                     <button class="eq-card-cta primary" onclick="event.stopPropagation()">Lock Capital →</button>
                 </div>
 
-                <!-- Card 6 -->
+                <!-- X — Follower Growth — CONTROLLED -->
+                <div class="eq-card" onclick="window.router.navigate('/contracts/0195')">
+                    <div class="eq-card-top">
+                        <span class="eq-badge active">ACTIVE</span>
+                        <span class="eq-card-id">RCPT-0195</span>
+                    </div>
+                    <div class="eq-card-goal">Grow to 2,500 Followers in 30 Days</div>
+                    <div class="eq-card-row">
+                        <span class="eq-card-integration"><span class="dot x"></span> X · Followers</span>
+                        <span class="eq-tier controlled">CONTROLLED <span class="eq-tier-rate">~30%</span></span>
+                    </div>
+                    <div class="eq-card-meta">
+                        <div>
+                            <div class="eq-card-stake">$500</div>
+                            <div class="eq-card-stake-label">Locked</div>
+                        </div>
+                        <div class="eq-card-time">22d left</div>
+                    </div>
+                    <button class="eq-card-cta secondary">View Receipt →</button>
+                </div>
+
+                <!-- SHOPIFY — Revenue Growth — ELEVATED (Settled) -->
                 <div class="eq-card" onclick="window.router.navigate('/contracts/0162')">
                     <div class="eq-card-top">
                         <span class="eq-badge settled">SETTLED</span>
                         <span class="eq-card-id">RCPT-0162</span>
                     </div>
-                    <div class="eq-card-goal">Commit Cadence 5/wk</div>
+                    <div class="eq-card-goal">Shopify Revenue +35% in 21 Days</div>
+                    <div class="eq-card-row">
+                        <span class="eq-card-integration"><span class="dot shopify"></span> Shopify · Revenue</span>
+                        <span class="eq-tier elevated">ELEVATED <span class="eq-tier-rate">~20%</span></span>
+                    </div>
                     <div class="eq-card-meta">
                         <div>
-                            <div class="eq-card-stake">$3,000</div>
+                            <div class="eq-card-stake">$4,000</div>
                             <div class="eq-card-stake-label">Returned</div>
                         </div>
                         <div class="eq-card-time">Settled</div>
                     </div>
                     <button class="eq-card-cta secondary">View Receipt →</button>
                 </div>
+
+                <!-- STRIPE — Revenue — CONTROLLED (Settled / Forfeited) -->
+                <div class="eq-card" onclick="window.router.navigate('/contracts/0155')">
+                    <div class="eq-card-top">
+                        <span class="eq-badge settled">SETTLED</span>
+                        <span class="eq-card-id">RCPT-0155</span>
+                    </div>
+                    <div class="eq-card-goal">Revenue Growth +15% in 30 Days</div>
+                    <div class="eq-card-row">
+                        <span class="eq-card-integration"><span class="dot stripe"></span> Stripe · Revenue</span>
+                        <span class="eq-tier controlled">CONTROLLED <span class="eq-tier-rate">~30%</span></span>
+                    </div>
+                    <div class="eq-card-meta">
+                        <div>
+                            <div class="eq-card-stake">$3,000</div>
+                            <div class="eq-card-stake-label">Forfeited</div>
+                        </div>
+                        <div class="eq-card-time">Settled</div>
+                    </div>
+                    <button class="eq-card-cta secondary">View Receipt →</button>
+                </div>
+
             </div>
         </div>
 
@@ -488,35 +590,20 @@ export function renderOverview() {
                     <span class="eq-modal-title">Execution Rules</span>
                     <button class="eq-modal-close" onclick="document.getElementById('rules-modal').classList.remove('open')">✕</button>
                 </div>
-
                 <div class="eq-rule-divider">Enforcement</div>
+                <div class="eq-rule-row"><input type="checkbox" checked><span>Verified Only (Fail-Closed)</span></div>
+                <div class="eq-rule-row"><input type="checkbox" checked><span>Immutable Terms</span></div>
+                <div class="eq-rule-row"><input type="checkbox" checked><span>No Appeals</span></div>
+                <div class="eq-rule-row"><input type="checkbox"><span>Buyout Available</span></div>
+                <div class="eq-rule-divider">Tier Filter</div>
+                <div class="eq-rule-row"><input type="checkbox" checked><span>Controlled — ~30% designed win rate</span></div>
+                <div class="eq-rule-row"><input type="checkbox" checked><span>Elevated — ~20% designed win rate</span></div>
+                <div class="eq-rule-row"><input type="checkbox" checked><span>Maximum — ~10% designed win rate</span></div>
+                <div class="eq-rule-divider">Stake Range</div>
                 <div class="eq-rule-row">
-                    <input type="checkbox" checked>
-                    <span>Verified Only (Fail-Closed)</span>
-                </div>
-                <div class="eq-rule-row">
-                    <input type="checkbox" checked>
-                    <span>Immutable Terms</span>
-                </div>
-                <div class="eq-rule-row">
-                    <input type="checkbox" checked>
-                    <span>No Appeals</span>
-                </div>
-                <div class="eq-rule-row">
-                    <input type="checkbox">
-                    <span>Buyout Available</span>
-                </div>
-
-                <div class="eq-rule-divider">Filters</div>
-                <div class="eq-rule-row">
-                    <span style="font-size: 12px; color: #888;">Min Capital</span>
-                    <input type="range" min="100" max="5000" value="100" step="100" style="flex:1; accent-color: #8B1818;">
-                    <span style="font-size: 12px; font-weight: 600; min-width: 50px; text-align: right;">$100</span>
-                </div>
-                <div class="eq-rule-row">
-                    <span style="font-size: 12px; color: #888;">Window</span>
-                    <input type="range" min="1" max="365" value="30" style="flex:1; accent-color: #8B1818;">
-                    <span style="font-size: 12px; font-weight: 600; min-width: 50px; text-align: right;">30D</span>
+                    <span style="font-size:12px;color:#888;">Min Capital</span>
+                    <input type="range" min="100" max="5000" value="100" step="100" style="flex:1;accent-color:#8B1818;">
+                    <span style="font-size:12px;font-weight:600;min-width:50px;text-align:right;">$100</span>
                 </div>
             </div>
         </div>

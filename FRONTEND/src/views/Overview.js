@@ -412,48 +412,178 @@ export function renderOverview() {
                 font-family: 'JetBrains Mono', monospace;
             }
 
-            /* Settlement ledger feed */
+            /* ============================================
+               SETTLEMENT LEDGER — Institutional Audit Stream
+               ============================================ */
             .ch-feed {
-                background: #0a0a0a;
-                border: 1px solid #222;
-                padding: 16px 20px;
+                position: relative;
+                background: linear-gradient(160deg, #07090C 0%, #0B0F14 100%);
+                border: 1px solid rgba(255,255,255,0.06);
+                border-radius: 16px;
+                padding: 24px 28px;
+                overflow: hidden;
             }
+            /* Inner highlight frame */
+            .ch-feed::before {
+                content: '';
+                position: absolute;
+                inset: 1px;
+                border-radius: 15px;
+                border: 1px solid rgba(255,255,255,0.03);
+                pointer-events: none;
+                z-index: 1;
+            }
+            /* Noise texture overlay */
+            .ch-feed::after {
+                content: '';
+                position: absolute;
+                inset: 0;
+                border-radius: 16px;
+                opacity: 0.04;
+                background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+                pointer-events: none;
+                z-index: 2;
+            }
+
+            /* Scanline sweep */
+            .ch-feed-scanline {
+                position: absolute;
+                top: 0;
+                left: 0;
+                right: 0;
+                height: 2px;
+                background: linear-gradient(90deg, transparent, rgba(255,255,255,0.06), transparent);
+                animation: scanlineSweep 6s linear infinite;
+                pointer-events: none;
+                z-index: 3;
+            }
+            @keyframes scanlineSweep {
+                0% { top: 0; opacity: 0; }
+                5% { opacity: 1; }
+                95% { opacity: 1; }
+                100% { top: 100%; opacity: 0; }
+            }
+
             .ch-feed-header {
                 display: flex;
                 justify-content: space-between;
-                align-items: center;
-                margin-bottom: 12px;
+                align-items: flex-start;
+                margin-bottom: 16px;
+                padding-bottom: 14px;
+                border-bottom: 1px solid rgba(255,255,255,0.06);
+                position: relative;
+                z-index: 4;
+            }
+            .ch-feed-title-group {
+                display: flex;
+                flex-direction: column;
+                gap: 4px;
             }
             .ch-feed-title {
-                font-size: 11px;
+                font-size: 12px;
                 font-weight: 600;
-                color: #888;
+                color: rgba(255,255,255,0.72);
                 text-transform: uppercase;
-                letter-spacing: 0.5px;
-                font-family: 'JetBrains Mono', monospace;
+                letter-spacing: 0.06em;
+                font-family: 'IBM Plex Mono', 'JetBrains Mono', monospace;
+                display: flex;
+                align-items: center;
+                gap: 8px;
+            }
+            .ch-feed-title svg {
+                width: 13px;
+                height: 13px;
+                opacity: 0.5;
+            }
+            .ch-feed-subtitle {
+                font-size: 10px;
+                color: rgba(255,255,255,0.25);
+                letter-spacing: 0.04em;
+                font-family: 'IBM Plex Mono', 'JetBrains Mono', monospace;
             }
             .ch-feed-status {
                 font-size: 10px;
-                color: #22c55e;
-                font-family: 'JetBrains Mono', monospace;
+                color: rgba(255,255,255,0.40);
+                font-family: 'IBM Plex Mono', 'JetBrains Mono', monospace;
+                display: flex;
+                align-items: center;
+                gap: 6px;
+                letter-spacing: 0.06em;
+            }
+            .ch-feed-dot {
+                width: 6px;
+                height: 6px;
+                border-radius: 50%;
+                background: #3FA66A;
+                animation: softPulse 3s ease-in-out infinite;
+            }
+            @keyframes softPulse {
+                0%, 100% { opacity: 1; }
+                50% { opacity: 0.4; }
             }
 
+            /* Feed rows */
+            .ch-feed-rows {
+                position: relative;
+                z-index: 4;
+            }
             .ch-feed-row {
                 display: flex;
-                gap: 16px;
-                padding: 6px 0;
-                font-size: 11px;
-                font-family: 'JetBrains Mono', monospace;
-                color: #888;
+                align-items: center;
+                gap: 14px;
+                height: 30px;
+                padding: 0 0 0 0;
+                font-size: 12px;
+                font-family: 'IBM Plex Mono', 'JetBrains Mono', monospace;
+                letter-spacing: 0.06em;
+                color: rgba(255,255,255,0.40);
+                transition: opacity 150ms ease, transform 150ms ease;
             }
-            .ch-feed-time { color: #555; min-width: 70px; }
-            .ch-feed-event { color: #fff; min-width: 180px; }
-            .ch-feed-event.baseline { color: #3b82f6; }
-            .ch-feed-event.locked { color: #f59e0b; }
-            .ch-feed-event.pending { color: #a855f7; }
-            .ch-feed-event.settled { color: #22c55e; }
-            .ch-feed-event.forfeited { color: #ef4444; }
-            .ch-feed-detail { color: #666; flex: 1; }
+            .ch-feed-time {
+                color: rgba(255,255,255,0.25);
+                min-width: 68px;
+                font-size: 11px;
+            }
+
+            /* Event pill badges */
+            .ch-feed-badge {
+                display: inline-flex;
+                align-items: center;
+                padding: 3px 10px;
+                border-radius: 999px;
+                font-size: 10px;
+                font-weight: 600;
+                letter-spacing: 0.06em;
+                min-width: 150px;
+                justify-content: center;
+                font-family: 'IBM Plex Mono', 'JetBrains Mono', monospace;
+            }
+            .ch-feed-badge.baseline {
+                background: rgba(74,144,200,0.12);
+                color: #4A90C8;
+            }
+            .ch-feed-badge.locked {
+                background: rgba(200,169,74,0.12);
+                color: #C8A94A;
+            }
+            .ch-feed-badge.pending {
+                background: rgba(74,144,200,0.12);
+                color: #4A90C8;
+            }
+            .ch-feed-badge.settled {
+                background: rgba(63,166,106,0.12);
+                color: #3FA66A;
+            }
+            .ch-feed-badge.forfeited {
+                background: rgba(143,29,29,0.12);
+                color: #8F1D1D;
+            }
+
+            .ch-feed-detail {
+                color: rgba(255,255,255,0.40);
+                flex: 1;
+                font-size: 11px;
+            }
 
             /* Action required badge */
             .ch-action-badge {
@@ -832,35 +962,47 @@ export function renderOverview() {
 
                     <!-- Settlement Ledger Feed -->
                     <div class="ch-feed" id="settlement-feed">
+                        <div class="ch-feed-scanline"></div>
                         <div class="ch-feed-header">
-                            <span class="ch-feed-title">SETTLEMENT LEDGER</span>
-                            <span class="ch-feed-status">● STREAMING</span>
+                            <div class="ch-feed-title-group">
+                                <span class="ch-feed-title">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+                                    SETTLEMENT LEDGER
+                                </span>
+                                <span class="ch-feed-subtitle">Immutable Record · Clearinghouse Audit Stream</span>
+                            </div>
+                            <span class="ch-feed-status">
+                                <span class="ch-feed-dot"></span>
+                                STREAMING
+                            </span>
                         </div>
                         
-                        <div class="ch-feed-row">
-                            <span class="ch-feed-time">14:32:18</span>
-                            <span class="ch-feed-event baseline">BASELINE_CAPTURED</span>
-                            <span class="ch-feed-detail">CONTRACT #0184 — MRR SNAPSHOT: $12,450</span>
-                        </div>
-                        <div class="ch-feed-row">
-                            <span class="ch-feed-time">14:31:05</span>
-                            <span class="ch-feed-event locked">CAPITAL_LOCKED</span>
-                            <span class="ch-feed-detail">CONTRACT #0183 — $2,500 ESCROWED</span>
-                        </div>
-                        <div class="ch-feed-row">
-                            <span class="ch-feed-time">14:28:44</span>
-                            <span class="ch-feed-event pending">VERIFICATION_PENDING</span>
-                            <span class="ch-feed-detail">CONTRACT #0182 — AWAITING API RESPONSE</span>
-                        </div>
-                        <div class="ch-feed-row">
-                            <span class="ch-feed-time">14:25:12</span>
-                            <span class="ch-feed-event settled">SETTLEMENT_FINAL</span>
-                            <span class="ch-feed-detail">CONTRACT #0180 — $1,800 RETURNED TO PROVIDER</span>
-                        </div>
-                        <div class="ch-feed-row">
-                            <span class="ch-feed-time">14:18:33</span>
-                            <span class="ch-feed-event forfeited">FORFEITURE_POSTED</span>
-                            <span class="ch-feed-detail">CONTRACT #0177 — $3,200 TRANSFERRED TO POOL</span>
+                        <div class="ch-feed-rows" id="feed-rows">
+                            <div class="ch-feed-row">
+                                <span class="ch-feed-time">14:32:18</span>
+                                <span class="ch-feed-badge baseline">BASELINE_CAPTURED</span>
+                                <span class="ch-feed-detail">Contract #0184 — MRR Snapshot: $12,450</span>
+                            </div>
+                            <div class="ch-feed-row">
+                                <span class="ch-feed-time">14:31:05</span>
+                                <span class="ch-feed-badge locked">CAPITAL_LOCKED</span>
+                                <span class="ch-feed-detail">Contract #0183 — $2,500 Escrowed</span>
+                            </div>
+                            <div class="ch-feed-row">
+                                <span class="ch-feed-time">14:28:44</span>
+                                <span class="ch-feed-badge pending">VERIFICATION_PENDING</span>
+                                <span class="ch-feed-detail">Contract #0182 — Awaiting API Response</span>
+                            </div>
+                            <div class="ch-feed-row">
+                                <span class="ch-feed-time">14:25:12</span>
+                                <span class="ch-feed-badge settled">SETTLEMENT_FINAL</span>
+                                <span class="ch-feed-detail">Contract #0180 — $1,800 Returned to Provider</span>
+                            </div>
+                            <div class="ch-feed-row">
+                                <span class="ch-feed-time">14:18:33</span>
+                                <span class="ch-feed-badge forfeited">FORFEITURE_POSTED</span>
+                                <span class="ch-feed-detail">Contract #0177 — $3,200 Transferred to Pool</span>
+                            </div>
                         </div>
                     </div>
                 </main>
@@ -897,58 +1039,52 @@ export function initOverview() {
 }
 
 function animateFeed() {
-    const feed = document.getElementById('settlement-feed');
-    if (!feed) return;
+    const feedRows = document.getElementById('feed-rows');
+    if (!feedRows) return;
 
     const events = [
-        { type: 'baseline', event: 'BASELINE_CAPTURED', detail: 'CONTRACT #' + getRandomId() + ' — MRR SNAPSHOT: $' + getRandomAmount() },
-        { type: 'locked', event: 'CAPITAL_LOCKED', detail: 'CONTRACT #' + getRandomId() + ' — $' + getRandomAmount() + ' ESCROWED' },
-        { type: 'pending', event: 'VERIFICATION_PENDING', detail: 'CONTRACT #' + getRandomId() + ' — AWAITING API RESPONSE' },
-        { type: 'settled', event: 'SETTLEMENT_FINAL', detail: 'CONTRACT #' + getRandomId() + ' — $' + getRandomAmount() + ' RETURNED' },
-        { type: 'forfeited', event: 'FORFEITURE_POSTED', detail: 'CONTRACT #' + getRandomId() + ' — $' + getRandomAmount() + ' TO POOL' },
+        { type: 'baseline', event: 'BASELINE_CAPTURED', detail: 'Contract #' + getRandomId() + ' — MRR Snapshot: $' + getRandomAmount() },
+        { type: 'locked', event: 'CAPITAL_LOCKED', detail: 'Contract #' + getRandomId() + ' — $' + getRandomAmount() + ' Escrowed' },
+        { type: 'pending', event: 'VERIFICATION_PENDING', detail: 'Contract #' + getRandomId() + ' — Awaiting API Response' },
+        { type: 'settled', event: 'SETTLEMENT_FINAL', detail: 'Contract #' + getRandomId() + ' — $' + getRandomAmount() + ' Returned' },
+        { type: 'forfeited', event: 'FORFEITURE_POSTED', detail: 'Contract #' + getRandomId() + ' — $' + getRandomAmount() + ' to Pool' },
     ];
 
     setInterval(() => {
-        if (Math.random() > 0.5) {
+        if (Math.random() > 0.45) {
             const event = events[Math.floor(Math.random() * events.length)];
             const now = new Date();
             const time = now.getHours().toString().padStart(2, '0') + ':' +
                 now.getMinutes().toString().padStart(2, '0') + ':' +
                 now.getSeconds().toString().padStart(2, '0');
 
-            const feedRows = feed.querySelectorAll('.ch-feed-row');
-            const header = feed.querySelector('.ch-feed-header');
-
             const newRow = document.createElement('div');
             newRow.className = 'ch-feed-row';
             newRow.innerHTML = '<span class="ch-feed-time">' + time + '</span>' +
-                '<span class="ch-feed-event ' + event.type + '">' + event.event + '</span>' +
+                '<span class="ch-feed-badge ' + event.type + '">' + event.event + '</span>' +
                 '<span class="ch-feed-detail">' + event.detail + '</span>';
 
             newRow.style.opacity = '0';
-            newRow.style.transform = 'translateY(-10px)';
+            newRow.style.transform = 'translateY(-6px)';
 
-            if (header && header.nextSibling) {
-                feed.insertBefore(newRow, header.nextSibling);
-            } else if (feedRows.length > 0) {
-                feed.insertBefore(newRow, feedRows[0]);
-            } else {
-                feed.appendChild(newRow);
-            }
+            feedRows.insertBefore(newRow, feedRows.firstChild);
 
             requestAnimationFrame(() => {
-                newRow.style.transition = 'all 300ms ease';
+                newRow.style.transition = 'opacity 150ms ease, transform 150ms ease';
                 newRow.style.opacity = '1';
                 newRow.style.transform = 'translateY(0)';
             });
 
             // Remove last if too many
-            const allRows = feed.querySelectorAll('.ch-feed-row');
+            const allRows = feedRows.querySelectorAll('.ch-feed-row');
             if (allRows.length > 8) {
-                feed.removeChild(allRows[allRows.length - 1]);
+                const last = allRows[allRows.length - 1];
+                last.style.transition = 'opacity 150ms ease';
+                last.style.opacity = '0';
+                setTimeout(() => { if (last.parentNode) last.parentNode.removeChild(last); }, 150);
             }
         }
-    }, 4000);
+    }, 4500);
 }
 
 function getRandomId() {

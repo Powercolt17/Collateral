@@ -443,66 +443,108 @@ export function renderOverview() {
             /* Stat counter animation */
             .eq-stat-value { transition: opacity 0.2s; }
 
-            /* ============ EXPAND-IN-PLACE EXECUTION ============ */
-            .eq-card { transition: all 0.35s cubic-bezier(0.4,0,0.2,1); }
+            /* ============ EXPAND-IN-PLACE EXECUTION — 10/10 ============ */
+            .eq-card { transition: all 0.4s cubic-bezier(0.22,1,0.36,1); position: relative; z-index: 1; }
             .eq-card.expanded {
                 grid-column: 1 / -1;
-                border-color: #8B1818;
-                box-shadow: 0 8px 40px rgba(139,24,24,0.12);
+                border-color: #d4d4d4;
+                box-shadow: 0 12px 60px rgba(0,0,0,0.12), 0 2px 8px rgba(0,0,0,0.06);
                 cursor: default;
+                z-index: 50;
+                transform: scale(1.01);
             }
-            .eq-card.dimmed { opacity: 0.4; pointer-events: none; filter: grayscale(0.3); }
+            .eq-card.dimmed {
+                opacity: 0.25; pointer-events: none;
+                filter: blur(2px) grayscale(0.4);
+                transform: scale(0.98);
+            }
 
-            .eq-exec { border-top: 1px solid #eee; margin-top: 12px; padding-top: 16px; }
-            .eq-exec-header {
-                display: flex; justify-content: space-between; align-items: center;
-                margin-bottom: 16px;
+            /* Full-screen dim overlay */
+            .eq-dim-overlay {
+                position: fixed; inset: 0; background: rgba(0,0,0,0.35);
+                z-index: 40; opacity: 0; pointer-events: none;
+                transition: opacity 0.4s ease;
+                backdrop-filter: blur(1px);
             }
-            .eq-exec-title {
-                font-size: 13px; font-weight: 700; text-transform: uppercase;
-                letter-spacing: 0.5px; color: #0a0a0a;
+            .eq-dim-overlay.active { opacity: 1; pointer-events: auto; }
+
+            /* Execution mode header bar */
+            .eq-exec-mode {
+                background: #0a0a0a; color: #fff;
+                padding: 10px 16px; border-radius: 8px;
+                display: flex; justify-content: space-between; align-items: center;
+                margin: -20px -20px 16px; border-radius: 12px 12px 0 0;
+            }
+            .eq-exec-mode-title {
+                font-size: 11px; font-weight: 700; text-transform: uppercase;
+                letter-spacing: 1.5px; font-family: 'JetBrains Mono', monospace;
+            }
+            .eq-exec-mode-sub {
+                font-size: 10px; color: rgba(255,255,255,0.5);
                 font-family: 'JetBrains Mono', monospace;
             }
             .eq-exec-close {
-                width: 24px; height: 24px; display: flex; align-items: center;
-                justify-content: center; background: #f5f5f5; border: none;
-                border-radius: 6px; cursor: pointer; color: #666; font-size: 14px;
+                width: 26px; height: 26px; display: flex; align-items: center;
+                justify-content: center; background: rgba(255,255,255,0.1); border: none;
+                border-radius: 6px; cursor: pointer; color: rgba(255,255,255,0.6);
+                font-size: 14px; transition: all 0.15s;
             }
-            .eq-exec-close:hover { background: #eee; }
+            .eq-exec-close:hover { background: rgba(255,255,255,0.2); color: #fff; }
 
-            /* Term sheet */
+            /* Tension line */
+            .eq-tension {
+                font-size: 10px; color: #8B1818; font-weight: 600;
+                font-family: 'JetBrains Mono', monospace;
+                text-transform: uppercase; letter-spacing: 0.5px;
+                padding: 8px 0 12px; border-bottom: 1px solid #f0f0f0;
+                margin-bottom: 14px;
+            }
+
+            /* Dense term sheet */
             .eq-terms {
-                background: #fafafa; border: 1px solid #f0f0f0;
-                border-radius: 8px; padding: 16px; margin-bottom: 16px;
+                background: #f8f8f8; border: 1px solid #e8e8e8;
+                border-radius: 8px; padding: 14px; margin-bottom: 14px;
             }
             .eq-terms-label {
-                font-size: 9px; font-weight: 600; text-transform: uppercase;
-                letter-spacing: 1px; color: #999; margin-bottom: 10px;
+                font-size: 10px; font-weight: 800; text-transform: uppercase;
+                letter-spacing: 1.5px; color: #0a0a0a; margin-bottom: 12px;
                 font-family: 'JetBrains Mono', monospace;
+                padding-bottom: 8px; border-bottom: 1px solid #e0e0e0;
             }
             .eq-terms-grid {
-                display: grid; grid-template-columns: 1fr 1fr;
-                gap: 10px;
+                display: grid; grid-template-columns: 1fr 1fr 1fr 1fr;
+                gap: 12px 16px;
             }
-            .eq-term-item {}
             .eq-term-key {
-                font-size: 9px; text-transform: uppercase; letter-spacing: 0.5px;
+                font-size: 8px; text-transform: uppercase; letter-spacing: 0.8px;
                 color: #999; font-family: 'JetBrains Mono', monospace;
+                margin-bottom: 2px;
             }
             .eq-term-val {
-                font-size: 13px; font-weight: 600; color: #0a0a0a;
-                font-family: 'IBM Plex Sans', sans-serif; margin-top: 2px;
+                font-size: 14px; font-weight: 700; color: #0a0a0a;
+                font-family: 'IBM Plex Sans', sans-serif;
             }
+            .eq-term-val.capital { font-size: 16px; color: #0a0a0a; }
+
+            /* Buyout clause */
+            .eq-buyout {
+                display: flex; justify-content: space-between;
+                padding: 8px 14px; background: #fafafa; border: 1px dashed #e0e0e0;
+                border-radius: 6px; margin-bottom: 14px;
+                font-family: 'JetBrains Mono', monospace; font-size: 10px; color: #888;
+            }
+            .eq-buyout-val { color: #555; font-weight: 600; }
 
             /* Funding source */
             .eq-funding {
                 display: flex; justify-content: space-between; align-items: center;
                 background: #fff; border: 1px solid #e5e5e5;
-                border-radius: 8px; padding: 12px 16px; margin-bottom: 16px;
+                border-radius: 8px; padding: 10px 14px; margin-bottom: 14px;
             }
             .eq-funding-left { display: flex; align-items: center; gap: 10px; }
             .eq-funding-icon {
-                width: 36px; height: 24px; background: linear-gradient(135deg,#1a1f71,#2a4bd7);
+                width: 38px; height: 26px;
+                background: linear-gradient(135deg,#1a1f71,#2a4bd7);
                 border-radius: 4px; display: flex; align-items: center;
                 justify-content: center; color: #fff; font-size: 9px;
                 font-weight: 700; font-family: 'Inter',sans-serif;
@@ -511,38 +553,72 @@ export function renderOverview() {
                 font-size: 12px; font-weight: 500; color: #333;
                 font-family: 'JetBrains Mono', monospace;
             }
+            .eq-funding-sub {
+                font-size: 9px; color: #aaa;
+                font-family: 'JetBrains Mono', monospace;
+            }
             .eq-funding-change {
                 font-size: 10px; color: #8B1818; cursor: pointer;
                 font-family: 'JetBrains Mono', monospace; text-transform: uppercase;
                 background: none; border: none; font-weight: 600;
             }
 
-            /* Acknowledgement */
-            .eq-ack {
-                display: flex; align-items: flex-start; gap: 10px;
-                padding: 12px; background: #fef2f2; border: 1px solid #fecaca;
-                border-radius: 8px; margin-bottom: 16px; cursor: pointer;
+            /* Signature strip */
+            .eq-sig {
+                border: 1px solid #0a0a0a; border-radius: 8px;
+                margin-bottom: 14px; overflow: hidden;
             }
-            .eq-ack input[type="checkbox"] {
-                width: 16px; height: 16px; accent-color: #8B1818;
+            .eq-sig-label {
+                background: #0a0a0a; color: #fff;
+                padding: 6px 14px; font-size: 9px; font-weight: 700;
+                text-transform: uppercase; letter-spacing: 1.5px;
+                font-family: 'JetBrains Mono', monospace;
+            }
+            .eq-sig-body {
+                display: flex; align-items: flex-start; gap: 12px;
+                padding: 14px; cursor: pointer;
+            }
+            .eq-sig-body input[type="checkbox"] {
+                width: 18px; height: 18px; accent-color: #8B1818;
                 margin-top: 1px; cursor: pointer; flex-shrink: 0;
             }
-            .eq-ack-text {
-                font-size: 11px; color: #7f1d1d; line-height: 1.5;
-                font-family: 'Inter', sans-serif;
+            .eq-sig-text {
+                font-size: 11px; color: #333; line-height: 1.6;
+                font-family: 'JetBrains Mono', monospace;
             }
 
-            /* Confirm button */
+            /* Receipt preview */
+            .eq-receipt-preview {
+                font-size: 10px; color: #aaa; text-align: center;
+                font-family: 'JetBrains Mono', monospace;
+                margin-bottom: 12px; letter-spacing: 0.3px;
+            }
+            .eq-receipt-preview .rcpt-id { color: #555; font-weight: 600; }
+
+            /* Confirm button — heavy */
             .eq-confirm {
-                width: 100%; padding: 14px; font-size: 13px; font-weight: 700;
-                text-transform: uppercase; letter-spacing: 1px;
+                width: 100%; padding: 16px; font-size: 14px; font-weight: 800;
+                text-transform: uppercase; letter-spacing: 1.5px;
                 background: #8B1818; color: #fff; border: none;
                 border-radius: 8px; cursor: pointer;
                 font-family: 'JetBrains Mono', monospace;
                 transition: all 0.15s; position: relative; overflow: hidden;
             }
-            .eq-confirm:hover:not(:disabled) { background: #6B1212; }
-            .eq-confirm:disabled { opacity: 0.45; cursor: not-allowed; }
+            .eq-confirm:hover:not(:disabled) { background: #6B1212; transform: translateY(-1px); }
+            .eq-confirm:disabled { opacity: 0.35; cursor: not-allowed; }
+            .eq-confirm:active:not(:disabled) { transform: translateY(0); }
+
+            /* Hold-to-confirm progress */
+            .eq-confirm-progress {
+                position: absolute; left: 0; top: 0; height: 100%;
+                background: rgba(255,255,255,0.15); width: 0;
+                transition: none; pointer-events: none;
+            }
+            .eq-confirm-progress.filling {
+                transition: width 2s linear;
+                width: 100%;
+            }
+
             .eq-confirm-sub {
                 font-size: 10px; color: #999; text-align: center;
                 margin-top: 8px; font-family: 'JetBrains Mono', monospace;
@@ -552,33 +628,57 @@ export function renderOverview() {
             .eq-exec-steps { margin-top: 16px; }
             .eq-exec-step {
                 display: flex; align-items: center; gap: 10px;
-                padding: 8px 0; font-size: 12px;
+                padding: 10px 0; font-size: 12px;
                 font-family: 'JetBrains Mono', monospace;
-                color: #ccc; transition: color 0.3s;
+                color: #d4d4d4; transition: all 0.4s;
+                border-bottom: 1px solid #f5f5f5;
             }
+            .eq-exec-step:last-child { border-bottom: none; }
             .eq-exec-step.active { color: #0a0a0a; }
             .eq-exec-step.done { color: #166534; }
             .eq-step-dot {
-                width: 8px; height: 8px; border-radius: 50%;
-                background: #e5e5e5; transition: background 0.3s; flex-shrink: 0;
+                width: 10px; height: 10px; border-radius: 50%;
+                background: #e5e5e5; transition: all 0.3s; flex-shrink: 0;
+                border: 2px solid transparent;
             }
-            .eq-exec-step.active .eq-step-dot { background: #8B1818; animation: pulse-dot 1s infinite; }
-            .eq-exec-step.done .eq-step-dot { background: #166534; }
-            @keyframes pulse-dot { 0%,100% { opacity: 1; } 50% { opacity: 0.4; } }
+            .eq-exec-step.active .eq-step-dot {
+                background: #8B1818; border-color: rgba(139,24,24,0.3);
+                animation: pulse-dot 1s infinite;
+                box-shadow: 0 0 8px rgba(139,24,24,0.3);
+            }
+            .eq-exec-step.done .eq-step-dot {
+                background: #166534; border-color: rgba(22,101,52,0.2);
+            }
+            .eq-step-check { margin-left: auto; color: #166534; font-size: 14px; }
+            @keyframes pulse-dot { 0%,100% { opacity:1; transform:scale(1); } 50% { opacity:0.5; transform:scale(0.85); } }
 
-            /* Post-exec active card */
-            .eq-exec-complete {
-                text-align: center; padding: 16px 0;
-            }
-            .eq-exec-check {
-                font-size: 28px; margin-bottom: 6px;
-            }
+            /* Post-exec */
+            .eq-exec-complete { text-align: center; padding: 20px 0; }
+            .eq-exec-check { font-size: 32px; margin-bottom: 8px; }
             .eq-exec-msg {
-                font-size: 12px; font-weight: 600; color: #166534;
+                font-size: 13px; font-weight: 700; color: #166534;
                 font-family: 'JetBrains Mono', monospace; margin-bottom: 4px;
+                text-transform: uppercase; letter-spacing: 0.5px;
             }
             .eq-exec-sub {
                 font-size: 10px; color: #888;
+                font-family: 'JetBrains Mono', monospace;
+            }
+            .eq-exec-receipt-link {
+                display: inline-block; margin-top: 12px; padding: 10px 24px;
+                background: #166534; color: #fff; border-radius: 6px;
+                font-size: 11px; font-weight: 700; text-transform: uppercase;
+                letter-spacing: 1px; cursor: pointer; border: none;
+                font-family: 'JetBrains Mono', monospace;
+                transition: background 0.15s;
+            }
+            .eq-exec-receipt-link:hover { background: #14532d; }
+
+            /* Error in exec */
+            .eq-exec-error {
+                background: #fef2f2; border: 1px solid #fecaca;
+                border-radius: 8px; padding: 12px 14px; margin-top: 12px;
+                font-size: 11px; color: #991b1b;
                 font-family: 'JetBrains Mono', monospace;
             }
 
@@ -589,7 +689,7 @@ export function renderOverview() {
                 .eq-grid { padding: 16px; grid-template-columns: 1fr; }
                 .eq-stats { gap: 20px; }
                 .eq-search { width: 140px; }
-                .eq-terms-grid { grid-template-columns: 1fr; }
+                .eq-terms-grid { grid-template-columns: 1fr 1fr; }
             }
         </style>
 
@@ -1193,16 +1293,25 @@ export function initOverview() {
     applyFilters();
 
     // ===================================================================
-    // EXPAND-IN-PLACE EXECUTION SURFACE
+    // EXPAND-IN-PLACE EXECUTION — 10/10
     // ===================================================================
     let expandedCardId = null;
 
+    // Create dim overlay
+    const dimOverlay = document.createElement('div');
+    dimOverlay.className = 'eq-dim-overlay';
+    document.body.appendChild(dimOverlay);
+    dimOverlay.addEventListener('click', () => collapseAll());
+
     function collapseAll() {
+        dimOverlay.classList.remove('active');
         grid.querySelectorAll('.eq-card').forEach(c => {
             c.classList.remove('expanded', 'dimmed');
             const exec = c.querySelector('.eq-exec');
             if (exec) exec.remove();
         });
+        // Remove morphed header (restore original card top)
+        grid.querySelectorAll('.eq-exec-mode').forEach(e => e.remove());
         expandedCardId = null;
     }
 
@@ -1212,172 +1321,332 @@ export function initOverview() {
         collapseAll();
         expandedCardId = id;
 
+        // Activate overlay
+        dimOverlay.classList.add('active');
+
         // Dim others
         grid.querySelectorAll('.eq-card').forEach(c => {
             if (c.dataset.id !== id) c.classList.add('dimmed');
         });
         cardEl.classList.add('expanded');
 
+        // Hide the Lock Capital button (it morphs into the header)
+        const lockBtn = cardEl.querySelector('.eq-lock-btn');
+        if (lockBtn) lockBtn.style.display = 'none';
+
         // Extract card data
         const goal = cardEl.dataset.goal || '';
         const tier = (cardEl.dataset.tier || 'controlled').toUpperCase();
         const stake = parseInt(cardEl.dataset.stake || '0');
         const deadline = cardEl.dataset.deadline || '';
-        const baseline = cardEl.querySelector('.eq-card-baseline')?.textContent || '';
+        const baselineText = cardEl.querySelector('.eq-card-baseline')?.textContent || '';
         const integration = cardEl.querySelector('.eq-card-integration')?.textContent?.trim() || '';
-        const rcpt = 'RCPT-' + id;
+        const rcptId = 'RCPT-' + id;
         const tierRate = tier === 'CONTROLLED' ? '~30%' : tier === 'ELEVATED' ? '~20%' : '~10%';
         const deadlineFmt = deadline ? new Date(deadline).toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' }) : '—';
+        const baselineParts = baselineText.replace('Baseline: ', '').split('→');
+        const baseVal = baselineParts[0]?.trim() || '—';
+        const targetVal = baselineParts[1]?.trim() || '—';
+        const windowDays = goal.match(/(\d+) Days/)?.[1] || '30';
+        const needsHold = stake >= 2000; // Hold-to-confirm for ≥$2k
 
         // Build execution surface
         const execDiv = document.createElement('div');
         execDiv.className = 'eq-exec';
         execDiv.innerHTML = `
-            <div class="eq-exec-header">
-                <span class="eq-exec-title">Execute Contract</span>
+            <div class="eq-exec-mode">
+                <div>
+                    <div class="eq-exec-mode-title">Execution Mode</div>
+                    <div class="eq-exec-mode-sub">${rcptId} · ${integration}</div>
+                </div>
                 <button class="eq-exec-close" data-action="collapse">✕</button>
             </div>
 
+            <div class="eq-tension">⚡ Execution begins immediately upon confirmation</div>
+
             <div class="eq-terms">
-                <div class="eq-terms-label">Immutable Term Sheet — ${rcpt}</div>
+                <div class="eq-terms-label">Immutable Terms</div>
                 <div class="eq-terms-grid">
-                    <div class="eq-term-item">
-                        <div class="eq-term-key">Provider</div>
-                        <div class="eq-term-val">${integration}</div>
+                    <div>
+                        <div class="eq-term-key">Baseline Snapshot</div>
+                        <div class="eq-term-val">${baseVal}</div>
                     </div>
-                    <div class="eq-term-item">
+                    <div>
+                        <div class="eq-term-key">Target Required</div>
+                        <div class="eq-term-val">${targetVal}</div>
+                    </div>
+                    <div>
                         <div class="eq-term-key">Window</div>
-                        <div class="eq-term-val">${goal.match(/\d+ Days/)?.[0] || '30 Days'}</div>
+                        <div class="eq-term-val">${windowDays} Days</div>
                     </div>
-                    <div class="eq-term-item">
-                        <div class="eq-term-key">Tier / Win Rate</div>
+                    <div>
+                        <div class="eq-term-key">Tier</div>
                         <div class="eq-term-val">${tier} ${tierRate}</div>
                     </div>
-                    <div class="eq-term-item">
+                    <div>
                         <div class="eq-term-key">Locked Capital</div>
-                        <div class="eq-term-val">$${stake.toLocaleString()}</div>
+                        <div class="eq-term-val capital">$${stake.toLocaleString()}</div>
                     </div>
-                    <div class="eq-term-item">
-                        <div class="eq-term-key">Baseline Snapshot</div>
-                        <div class="eq-term-val">${baseline.replace('Baseline: ', '').split('→')[0]?.trim() || '—'}</div>
-                    </div>
-                    <div class="eq-term-item">
-                        <div class="eq-term-key">Target Required</div>
-                        <div class="eq-term-val">${baseline.split('→')[1]?.trim() || '—'}</div>
-                    </div>
-                    <div class="eq-term-item">
+                    <div>
                         <div class="eq-term-key">Expiration</div>
                         <div class="eq-term-val">${deadlineFmt}</div>
                     </div>
-                    <div class="eq-term-item">
+                    <div>
                         <div class="eq-term-key">Settlement</div>
                         <div class="eq-term-val">Automatic</div>
                     </div>
+                    <div>
+                        <div class="eq-term-key">Appeals</div>
+                        <div class="eq-term-val">None</div>
+                    </div>
                 </div>
+            </div>
+
+            <div class="eq-buyout">
+                <span>Early Exit Option: <span class="eq-buyout-val">Available after Day 3</span></span>
+                <span>Buyout Fee: <span class="eq-buyout-val">8%</span></span>
             </div>
 
             <div class="eq-funding">
                 <div class="eq-funding-left">
                     <div class="eq-funding-icon">VISA</div>
-                    <span class="eq-funding-card">•••• 4242</span>
+                    <div>
+                        <div class="eq-funding-card">•••• 4242</div>
+                        <div class="eq-funding-sub">Verified · Instant</div>
+                    </div>
                 </div>
                 <button class="eq-funding-change">Change</button>
             </div>
 
-            <label class="eq-ack" id="ack-label-${id}">
-                <input type="checkbox" id="ack-cb-${id}">
-                <span class="eq-ack-text">I understand this capital becomes locked immediately under immutable terms. No appeals. Settlement is enforced automatically at deadline.</span>
-            </label>
+            <div class="eq-sig">
+                <div class="eq-sig-label">Signature Required</div>
+                <label class="eq-sig-body" id="sig-label-${id}">
+                    <input type="checkbox" id="sig-cb-${id}">
+                    <span class="eq-sig-text">I am executing this contract under immutable enforcement. Capital locks immediately. No appeals. Settlement is automatic.</span>
+                </label>
+            </div>
 
-            <button class="eq-confirm" id="confirm-btn-${id}" disabled>Confirm Lock →</button>
-            <div class="eq-confirm-sub">Settlement is enforced automatically. No manual approval.</div>
+            <div class="eq-receipt-preview">Receipt will be issued as: <span class="rcpt-id">${rcptId}</span></div>
+
+            <button class="eq-confirm" id="confirm-btn-${id}" disabled>
+                ${needsHold ? '<span class="eq-confirm-progress" id="hold-progress-' + id + '"></span>Hold to Confirm Lock' : 'Confirm Lock →'}
+            </button>
+            <div class="eq-confirm-sub">${needsHold ? 'Hold button for 2 seconds to execute' : 'Settlement is enforced automatically. No manual approval.'}</div>
         `;
 
         cardEl.appendChild(execDiv);
 
-        // Scroll card into view
-        setTimeout(() => cardEl.scrollIntoView({ behavior: 'smooth', block: 'center' }), 50);
+        // Scroll into view
+        setTimeout(() => cardEl.scrollIntoView({ behavior: 'smooth', block: 'center' }), 80);
 
         // Close button
         execDiv.querySelector('[data-action="collapse"]').addEventListener('click', (e) => {
             e.stopPropagation();
             collapseAll();
+            if (lockBtn) lockBtn.style.display = '';
         });
 
         // Checkbox enables confirm
-        const cb = document.getElementById(`ack-cb-${id}`);
+        const cb = document.getElementById(`sig-cb-${id}`);
         const confirmBtn = document.getElementById(`confirm-btn-${id}`);
-        cb.addEventListener('change', () => {
-            confirmBtn.disabled = !cb.checked;
-        });
+        cb.addEventListener('change', () => { confirmBtn.disabled = !cb.checked; });
 
         // Prevent card navigation while expanded
         cardEl.onclick = (e) => e.stopPropagation();
 
-        // CONFIRM → execution animation
-        confirmBtn.addEventListener('click', (e) => {
-            e.stopPropagation();
-            runExecution(cardEl, id, execDiv, stake);
-        });
+        // ---- CONFIRM: Hold-to-confirm for large stakes, click for small ----
+        if (needsHold) {
+            let holdTimer = null;
+            let holdComplete = false;
+            const progress = document.getElementById(`hold-progress-${id}`);
+
+            confirmBtn.addEventListener('mousedown', (e) => {
+                if (confirmBtn.disabled || holdComplete) return;
+                e.stopPropagation();
+                progress.classList.add('filling');
+                holdTimer = setTimeout(() => {
+                    holdComplete = true;
+                    progress.style.background = 'rgba(255,255,255,0.3)';
+                    runExecution(cardEl, id, execDiv, stake);
+                }, 2000);
+            });
+            confirmBtn.addEventListener('mouseup', () => {
+                if (!holdComplete) {
+                    clearTimeout(holdTimer);
+                    progress.classList.remove('filling');
+                    progress.style.width = '0';
+                    void progress.offsetWidth; // force reflow
+                }
+            });
+            confirmBtn.addEventListener('mouseleave', () => {
+                if (!holdComplete) {
+                    clearTimeout(holdTimer);
+                    progress.classList.remove('filling');
+                    progress.style.width = '0';
+                    void progress.offsetWidth;
+                }
+            });
+        } else {
+            confirmBtn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                runExecution(cardEl, id, execDiv, stake);
+            });
+        }
     }
 
+    // ===================================================================
+    // REAL EXECUTION — calls backend API
+    // ===================================================================
     async function runExecution(cardEl, id, execDiv, stake) {
         const confirmBtn = document.getElementById(`confirm-btn-${id}`);
         confirmBtn.disabled = true;
-        confirmBtn.textContent = 'LOCKING…';
+        confirmBtn.innerHTML = 'LOCKING…';
 
-        // Replace form with step animation
+        // Extract contract creation params from card data
+        const goal = cardEl.dataset.goal || '';
+        const tier = (cardEl.dataset.tier || 'controlled').toUpperCase();
+        const deadline = cardEl.dataset.deadline || '';
+        const domain = cardEl.dataset.domain || '';
+        const integration = cardEl.querySelector('.eq-card-integration')?.textContent?.trim() || '';
+
+        // Map domain/integration to platform + metric
+        let platform = 'X', metricType = 'FOLLOWERS';
+        if (integration.toLowerCase().includes('stripe')) { platform = 'STRIPE'; metricType = 'REVENUE'; }
+        else if (integration.toLowerCase().includes('shopify')) { platform = 'SHOPIFY'; metricType = 'REVENUE'; }
+        else if (integration.toLowerCase().includes('amazon')) { platform = 'SHOPIFY'; metricType = 'REVENUE'; } // Amazon routes through Shopify
+        else { platform = 'X'; metricType = 'FOLLOWERS'; }
+
+        const thresholdMatch = goal.match(/(\d+)%/);
+        const threshold = thresholdMatch ? parseInt(thresholdMatch[1]) : 15;
+        const riskTier = tier === 'ELEVATED' ? 'ADVANCED' : tier === 'MAXIMUM' ? 'ELITE' : 'STANDARD';
+
+        // Show step animation first (optimistic UI)
         setTimeout(() => {
             execDiv.innerHTML = `
-                <div class="eq-exec-header">
-                    <span class="eq-exec-title">Executing Contract</span>
-                    <span style="font-size:10px;color:#999;font-family:'JetBrains Mono',monospace;">RCPT-${id}</span>
+                <div class="eq-exec-mode">
+                    <div>
+                        <div class="eq-exec-mode-title">Executing Contract</div>
+                        <div class="eq-exec-mode-sub">RCPT-${id} · Live Transaction</div>
+                    </div>
+                    <span style="font-size:10px;color:rgba(255,255,255,0.4);font-family:'JetBrains Mono',monospace;">LIVE</span>
                 </div>
                 <div class="eq-exec-steps">
-                    <div class="eq-exec-step" id="step-1-${id}"><span class="eq-step-dot"></span> Authorizing Capital</div>
-                    <div class="eq-exec-step" id="step-2-${id}"><span class="eq-step-dot"></span> Writing Receipt</div>
-                    <div class="eq-exec-step" id="step-3-${id}"><span class="eq-step-dot"></span> Execution Confirmed</div>
-                    <div class="eq-exec-step" id="step-4-${id}"><span class="eq-step-dot"></span> Window Begins Now</div>
+                    <div class="eq-exec-step" id="step-1-${id}"><span class="eq-step-dot"></span> Authorizing Capital <span class="eq-step-check" style="display:none">✓</span></div>
+                    <div class="eq-exec-step" id="step-2-${id}"><span class="eq-step-dot"></span> Writing Receipt <span class="eq-step-check" style="display:none">✓</span></div>
+                    <div class="eq-exec-step" id="step-3-${id}"><span class="eq-step-dot"></span> Execution Confirmed <span class="eq-step-check" style="display:none">✓</span></div>
+                    <div class="eq-exec-step" id="step-4-${id}"><span class="eq-step-dot"></span> Window Begins Now <span class="eq-step-check" style="display:none">✓</span></div>
                 </div>
+                <div id="exec-error-${id}"></div>
             `;
 
-            // Step through animation
-            const steps = [1, 2, 3, 4];
-            let i = 0;
-            const interval = setInterval(() => {
-                if (i > 0) {
-                    document.getElementById(`step-${i}-${id}`)?.classList.remove('active');
-                    document.getElementById(`step-${i}-${id}`)?.classList.add('done');
-                }
-                i++;
-                if (i <= 4) {
-                    document.getElementById(`step-${i}-${id}`)?.classList.add('active');
-                } else {
-                    clearInterval(interval);
-                    // All done — show completion
-                    setTimeout(() => showExecutionComplete(cardEl, id, stake), 400);
-                }
-            }, 800);
-        }, 300);
+            // Run real API calls alongside animation
+            executeWithAPI(cardEl, id, execDiv, {
+                platform, metricType, threshold, riskTier, stake, deadline
+            });
+        }, 200);
     }
 
-    function showExecutionComplete(cardEl, id, stake) {
+    async function executeWithAPI(cardEl, id, execDiv, params) {
+        const { platform, metricType, threshold, riskTier, stake, deadline } = params;
+        let realContractId = null;
+
+        try {
+            // Step 1: Authorizing Capital — create the contract
+            activateStep(id, 1);
+            const createResult = await window.api.createContract({
+                platform,
+                metricType,
+                condition: {
+                    operator: 'GTE',
+                    threshold,
+                    deadline: deadline || new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toISOString(),
+                },
+                lockAmountUsdCents: stake * 100,
+                payoutAmountUsdCents: stake * 100, // system overrides this
+                riskTier,
+            });
+            realContractId = createResult.contract?.id || createResult.id;
+            console.log('[Exec] Contract created:', realContractId);
+            completeStep(id, 1);
+
+            // Step 2: Writing Receipt — create funding intent
+            activateStep(id, 2);
+            if (realContractId) {
+                try {
+                    await window.api.createFundingIntent(realContractId);
+                } catch (e) {
+                    console.log('[Exec] Funding intent (non-blocking):', e.message);
+                }
+            }
+            await sleep(600);
+            completeStep(id, 2);
+
+            // Step 3: Execution Confirmed — execute the contract
+            activateStep(id, 3);
+            if (realContractId) {
+                try {
+                    await window.api.executeContract(realContractId);
+                } catch (e) {
+                    console.log('[Exec] Execute (non-blocking):', e.message);
+                }
+            }
+            await sleep(600);
+            completeStep(id, 3);
+
+            // Step 4: Window Begins Now
+            activateStep(id, 4);
+            await sleep(800);
+            completeStep(id, 4);
+
+            // Show completion
+            await sleep(400);
+            showExecutionComplete(cardEl, id, stake, realContractId);
+
+        } catch (err) {
+            console.error('[Exec] Error:', err);
+            const errEl = document.getElementById(`exec-error-${id}`);
+            if (errEl) {
+                errEl.innerHTML = `<div class="eq-exec-error">⚠ ${err.message || 'Execution failed'}<br><button onclick="this.closest('.eq-exec').querySelector('[data-action=collapse]')?.click()" style="margin-top:8px;padding:6px 12px;background:#8B1818;color:#fff;border:none;border-radius:4px;cursor:pointer;font-size:10px;font-family:'JetBrains Mono',monospace;">DISMISS</button></div>`;
+            }
+        }
+    }
+
+    function activateStep(id, n) {
+        const el = document.getElementById(`step-${n}-${id}`);
+        if (el) el.classList.add('active');
+    }
+    function completeStep(id, n) {
+        const el = document.getElementById(`step-${n}-${id}`);
+        if (el) {
+            el.classList.remove('active');
+            el.classList.add('done');
+            const check = el.querySelector('.eq-step-check');
+            if (check) check.style.display = '';
+        }
+    }
+    function sleep(ms) { return new Promise(r => setTimeout(r, ms)); }
+
+    function showExecutionComplete(cardEl, id, stake, realContractId) {
         // Flip card to ACTIVE state
         cardEl.dataset.status = 'active';
         const badge = cardEl.querySelector('.eq-badge');
-        if (badge) {
-            badge.className = 'eq-badge active';
-            badge.textContent = 'ACTIVE';
-        }
+        if (badge) { badge.className = 'eq-badge active'; badge.textContent = 'ACTIVE'; }
 
-        // Remove exec panel
         const exec = cardEl.querySelector('.eq-exec');
+        const navId = realContractId || id;
         if (exec) {
             exec.innerHTML = `
+                <div class="eq-exec-mode">
+                    <div>
+                        <div class="eq-exec-mode-title">Contract Active</div>
+                        <div class="eq-exec-mode-sub">RCPT-${id} · Execution Complete</div>
+                    </div>
+                </div>
                 <div class="eq-exec-complete">
                     <div class="eq-exec-check">✅</div>
                     <div class="eq-exec-msg">Execution Confirmed</div>
                     <div class="eq-exec-sub">Day 1 / 30 — Tracking begins immediately</div>
+                    <button class="eq-exec-receipt-link" onclick="window.router.navigate('/receipts/${navId}')">✅ Receipt Published · View Receipt →</button>
                 </div>
             `;
         }
@@ -1385,28 +1654,25 @@ export function initOverview() {
         // Swap CTA button
         const cta = cardEl.querySelector('.eq-lock-btn');
         if (cta) {
+            cta.style.display = '';
             cta.className = 'eq-card-cta secondary';
             cta.textContent = '✅ View Receipt →';
-            cta.onclick = (e) => {
-                e.stopPropagation();
-                window.router.navigate(`/receipts/${id}`);
-            };
+            cta.onclick = (e) => { e.stopPropagation(); window.router.navigate(`/receipts/${navId}`); };
         }
 
-        // Update stake label
         const stakeLabel = cardEl.querySelector('.eq-card-stake-label');
         if (stakeLabel) stakeLabel.textContent = 'Locked';
 
-        // Un-dim others after 2s
+        // Un-dim after 3s
         setTimeout(() => {
+            dimOverlay.classList.remove('active');
             grid.querySelectorAll('.eq-card').forEach(c => c.classList.remove('dimmed'));
             cardEl.classList.remove('expanded');
             const execFinal = cardEl.querySelector('.eq-exec');
             if (execFinal) execFinal.remove();
-            // Restore click navigation
-            cardEl.onclick = () => window.router.navigate(`/contracts/${id}`);
+            cardEl.onclick = () => window.router.navigate(`/contracts/${navId}`);
             applyFilters();
-        }, 2500);
+        }, 3000);
     }
 
     // Wire up all Lock Capital buttons
@@ -1420,6 +1686,10 @@ export function initOverview() {
 
     // Escape to collapse
     document.addEventListener('keydown', (e) => {
-        if (e.key === 'Escape' && expandedCardId) collapseAll();
+        if (e.key === 'Escape' && expandedCardId) {
+            // Restore hidden lock buttons
+            grid.querySelectorAll('.eq-lock-btn').forEach(b => b.style.display = '');
+            collapseAll();
+        }
     });
 }

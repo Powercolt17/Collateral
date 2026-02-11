@@ -205,15 +205,10 @@ export function renderOverview() {
                 transition: all 0.2s;
                 display: flex;
                 flex-direction: column;
-                border-radius: 12px;
-                padding: 20px;
-                cursor: pointer;
-                transition: all 0.2s;
-                display: flex;
-                flex-direction: column;
                 gap: 12px;
             }
-            .eq-card.expanded { gap: 0; } /* Remove gap so exec panel handles its own spacing */
+            .eq-card.expanded { gap: 0 !important; } /* Force remove gap */
+            .eq-card.expanded > *:nth-last-child(2) { padding-bottom: 20px; } /* Ensure spacing before black header */
             .eq-card:hover {
                 border-color: #ccc;
                 box-shadow: 0 2px 12px rgba(0,0,0,0.04);
@@ -494,6 +489,7 @@ export function renderOverview() {
                 background: #0a0a0a; color: #fff;
                 padding: 12px 20px;
                 display: flex; justify-content: space-between; align-items: center;
+                border-radius: 0; /* Square corners for true edge-to-edge look */
             }
             .eq-exec-mode-title {
                 font-size: 11px; font-weight: 700; text-transform: uppercase;

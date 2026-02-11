@@ -205,8 +205,15 @@ export function renderOverview() {
                 transition: all 0.2s;
                 display: flex;
                 flex-direction: column;
+                border-radius: 12px;
+                padding: 20px;
+                cursor: pointer;
+                transition: all 0.2s;
+                display: flex;
+                flex-direction: column;
                 gap: 12px;
             }
+            .eq-card.expanded { gap: 0; } /* Remove gap so exec panel handles its own spacing */
             .eq-card:hover {
                 border-color: #ccc;
                 box-shadow: 0 2px 12px rgba(0,0,0,0.04);
@@ -478,8 +485,9 @@ export function renderOverview() {
             }
             .eq-dim-overlay.active { opacity: 1; pointer-events: auto; }
 
-            /* Execution surface container */
-            .eq-exec { padding: 0 20px 20px; }
+            /* Execution surface container - ZERO padding so header touches edges */
+            .eq-exec { padding: 0; width: 100%; }
+            .eq-exec-body { padding: 0 20px 20px; }
 
             /* Execution mode header bar */
             .eq-exec-mode {
@@ -1376,76 +1384,78 @@ export function initOverview() {
                 <button class="eq-exec-close" data-action="collapse">✕</button>
             </div>
 
-            <div class="eq-tension">⚡ Execution begins immediately upon confirmation</div>
+            <div class="eq-exec-body">
+                <div class="eq-tension">⚡ Execution begins immediately upon confirmation</div>
 
-            <div class="eq-terms">
-                <div class="eq-terms-label">Immutable Terms</div>
-                <div class="eq-terms-grid">
-                    <div>
-                        <div class="eq-term-key">Baseline Snapshot</div>
-                        <div class="eq-term-val">${baseVal}</div>
-                    </div>
-                    <div>
-                        <div class="eq-term-key">Target Required</div>
-                        <div class="eq-term-val">${targetVal}</div>
-                    </div>
-                    <div>
-                        <div class="eq-term-key">Window</div>
-                        <div class="eq-term-val">${windowDays} Days</div>
-                    </div>
-                    <div>
-                        <div class="eq-term-key">Tier</div>
-                        <div class="eq-term-val">${tier} ${tierRate}</div>
-                    </div>
-                    <div>
-                        <div class="eq-term-key">Locked Capital</div>
-                        <div class="eq-term-val capital">$${stake.toLocaleString()}</div>
-                    </div>
-                    <div>
-                        <div class="eq-term-key">Expiration</div>
-                        <div class="eq-term-val">${deadlineFmt}</div>
-                    </div>
-                    <div>
-                        <div class="eq-term-key">Settlement</div>
-                        <div class="eq-term-val">Automatic</div>
-                    </div>
-                    <div>
-                        <div class="eq-term-key">Appeals</div>
-                        <div class="eq-term-val">None</div>
+                <div class="eq-terms">
+                    <div class="eq-terms-label">Immutable Terms</div>
+                    <div class="eq-terms-grid">
+                        <div>
+                            <div class="eq-term-key">Baseline Snapshot</div>
+                            <div class="eq-term-val">${baseVal}</div>
+                        </div>
+                        <div>
+                            <div class="eq-term-key">Target Required</div>
+                            <div class="eq-term-val">${targetVal}</div>
+                        </div>
+                        <div>
+                            <div class="eq-term-key">Window</div>
+                            <div class="eq-term-val">${windowDays} Days</div>
+                        </div>
+                        <div>
+                            <div class="eq-term-key">Tier</div>
+                            <div class="eq-term-val">${tier} ${tierRate}</div>
+                        </div>
+                        <div>
+                            <div class="eq-term-key">Locked Capital</div>
+                            <div class="eq-term-val capital">$${stake.toLocaleString()}</div>
+                        </div>
+                        <div>
+                            <div class="eq-term-key">Expiration</div>
+                            <div class="eq-term-val">${deadlineFmt}</div>
+                        </div>
+                        <div>
+                            <div class="eq-term-key">Settlement</div>
+                            <div class="eq-term-val">Automatic</div>
+                        </div>
+                        <div>
+                            <div class="eq-term-key">Appeals</div>
+                            <div class="eq-term-val">None</div>
+                        </div>
                     </div>
                 </div>
-            </div>
 
-            <div class="eq-buyout">
-                <span>Early Exit Option: <span class="eq-buyout-val">Available after Day 3</span></span>
-                <span>Buyout Fee: <span class="eq-buyout-val">8%</span></span>
-            </div>
-
-            <div class="eq-funding">
-                <div class="eq-funding-left">
-                    <div class="eq-funding-icon">VISA</div>
-                    <div>
-                        <div class="eq-funding-card">•••• 4242</div>
-                        <div class="eq-funding-sub">Verified · Instant</div>
-                    </div>
+                <div class="eq-buyout">
+                    <span>Early Exit Option: <span class="eq-buyout-val">Available after Day 3</span></span>
+                    <span>Buyout Fee: <span class="eq-buyout-val">8%</span></span>
                 </div>
-                <button class="eq-funding-change">Change</button>
+
+                <div class="eq-funding">
+                    <div class="eq-funding-left">
+                        <div class="eq-funding-icon">VISA</div>
+                        <div>
+                            <div class="eq-funding-card">•••• 4242</div>
+                            <div class="eq-funding-sub">Verified · Instant</div>
+                        </div>
+                    </div>
+                    <button class="eq-funding-change">Change</button>
+                </div>
+
+                <div class="eq-sig">
+                    <div class="eq-sig-label">Signature Required</div>
+                    <label class="eq-sig-body" id="sig-label-${id}">
+                        <input type="checkbox" id="sig-cb-${id}">
+                        <span class="eq-sig-text">I am executing this contract under immutable enforcement. Capital locks immediately. No appeals. Settlement is automatic.</span>
+                    </label>
+                </div>
+
+                <div class="eq-receipt-preview">Receipt will be issued as: <span class="rcpt-id">${rcptId}</span></div>
+
+                <button class="eq-confirm" id="confirm-btn-${id}" disabled>
+                    ${needsHold ? '<span class="eq-confirm-progress" id="hold-progress-' + id + '"></span>Hold to Confirm Lock' : 'Confirm Lock →'}
+                </button>
+                <div class="eq-confirm-sub">${needsHold ? 'Hold button for 2 seconds to execute' : 'Settlement is enforced automatically. No manual approval.'}</div>
             </div>
-
-            <div class="eq-sig">
-                <div class="eq-sig-label">Signature Required</div>
-                <label class="eq-sig-body" id="sig-label-${id}">
-                    <input type="checkbox" id="sig-cb-${id}">
-                    <span class="eq-sig-text">I am executing this contract under immutable enforcement. Capital locks immediately. No appeals. Settlement is automatic.</span>
-                </label>
-            </div>
-
-            <div class="eq-receipt-preview">Receipt will be issued as: <span class="rcpt-id">${rcptId}</span></div>
-
-            <button class="eq-confirm" id="confirm-btn-${id}" disabled>
-                ${needsHold ? '<span class="eq-confirm-progress" id="hold-progress-' + id + '"></span>Hold to Confirm Lock' : 'Confirm Lock →'}
-            </button>
-            <div class="eq-confirm-sub">${needsHold ? 'Hold button for 2 seconds to execute' : 'Settlement is enforced automatically. No manual approval.'}</div>
         `;
 
         cardEl.appendChild(execDiv);
@@ -1544,13 +1554,15 @@ export function initOverview() {
                     </div>
                     <span style="font-size:10px;color:rgba(255,255,255,0.4);font-family:'JetBrains Mono',monospace;">LIVE</span>
                 </div>
-                <div class="eq-exec-steps">
-                    <div class="eq-exec-step" id="step-1-${id}"><span class="eq-step-dot"></span> Authorizing Capital <span class="eq-step-check" style="display:none">✓</span></div>
-                    <div class="eq-exec-step" id="step-2-${id}"><span class="eq-step-dot"></span> Writing Receipt <span class="eq-step-check" style="display:none">✓</span></div>
-                    <div class="eq-exec-step" id="step-3-${id}"><span class="eq-step-dot"></span> Execution Confirmed <span class="eq-step-check" style="display:none">✓</span></div>
-                    <div class="eq-exec-step" id="step-4-${id}"><span class="eq-step-dot"></span> Window Begins Now <span class="eq-step-check" style="display:none">✓</span></div>
+                <div class="eq-exec-body">
+                    <div class="eq-exec-steps">
+                        <div class="eq-exec-step" id="step-1-${id}"><span class="eq-step-dot"></span> Authorizing Capital <span class="eq-step-check" style="display:none">✓</span></div>
+                        <div class="eq-exec-step" id="step-2-${id}"><span class="eq-step-dot"></span> Writing Receipt <span class="eq-step-check" style="display:none">✓</span></div>
+                        <div class="eq-exec-step" id="step-3-${id}"><span class="eq-step-dot"></span> Execution Confirmed <span class="eq-step-check" style="display:none">✓</span></div>
+                        <div class="eq-exec-step" id="step-4-${id}"><span class="eq-step-dot"></span> Window Begins Now <span class="eq-step-check" style="display:none">✓</span></div>
+                    </div>
+                    <div id="exec-error-${id}"></div>
                 </div>
-                <div id="exec-error-${id}"></div>
             `;
 
             // Run real API calls alongside animation
@@ -1656,11 +1668,13 @@ export function initOverview() {
                         <div class="eq-exec-mode-sub">RCPT-${id} · Execution Complete</div>
                     </div>
                 </div>
-                <div class="eq-exec-complete">
-                    <div class="eq-exec-check">✅</div>
-                    <div class="eq-exec-msg">Execution Confirmed</div>
-                    <div class="eq-exec-sub">Day 1 / 30 — Tracking begins immediately</div>
-                    <button class="eq-exec-receipt-link" onclick="window.router.navigate('/receipts/${navId}')">✅ Receipt Published · View Receipt →</button>
+                <div class="eq-exec-body">
+                    <div class="eq-exec-complete">
+                        <div class="eq-exec-check">✅</div>
+                        <div class="eq-exec-msg">Execution Confirmed</div>
+                        <div class="eq-exec-sub">Day 1 / 30 — Tracking begins immediately</div>
+                        <button class="eq-exec-receipt-link" onclick="window.router.navigate('/receipts/${navId}')">✅ Receipt Published · View Receipt →</button>
+                    </div>
                 </div>
             `;
         }

@@ -443,6 +443,145 @@ export function renderOverview() {
             /* Stat counter animation */
             .eq-stat-value { transition: opacity 0.2s; }
 
+            /* ============ EXPAND-IN-PLACE EXECUTION ============ */
+            .eq-card { transition: all 0.35s cubic-bezier(0.4,0,0.2,1); }
+            .eq-card.expanded {
+                grid-column: 1 / -1;
+                border-color: #8B1818;
+                box-shadow: 0 8px 40px rgba(139,24,24,0.12);
+                cursor: default;
+            }
+            .eq-card.dimmed { opacity: 0.4; pointer-events: none; filter: grayscale(0.3); }
+
+            .eq-exec { border-top: 1px solid #eee; margin-top: 12px; padding-top: 16px; }
+            .eq-exec-header {
+                display: flex; justify-content: space-between; align-items: center;
+                margin-bottom: 16px;
+            }
+            .eq-exec-title {
+                font-size: 13px; font-weight: 700; text-transform: uppercase;
+                letter-spacing: 0.5px; color: #0a0a0a;
+                font-family: 'JetBrains Mono', monospace;
+            }
+            .eq-exec-close {
+                width: 24px; height: 24px; display: flex; align-items: center;
+                justify-content: center; background: #f5f5f5; border: none;
+                border-radius: 6px; cursor: pointer; color: #666; font-size: 14px;
+            }
+            .eq-exec-close:hover { background: #eee; }
+
+            /* Term sheet */
+            .eq-terms {
+                background: #fafafa; border: 1px solid #f0f0f0;
+                border-radius: 8px; padding: 16px; margin-bottom: 16px;
+            }
+            .eq-terms-label {
+                font-size: 9px; font-weight: 600; text-transform: uppercase;
+                letter-spacing: 1px; color: #999; margin-bottom: 10px;
+                font-family: 'JetBrains Mono', monospace;
+            }
+            .eq-terms-grid {
+                display: grid; grid-template-columns: 1fr 1fr;
+                gap: 10px;
+            }
+            .eq-term-item {}
+            .eq-term-key {
+                font-size: 9px; text-transform: uppercase; letter-spacing: 0.5px;
+                color: #999; font-family: 'JetBrains Mono', monospace;
+            }
+            .eq-term-val {
+                font-size: 13px; font-weight: 600; color: #0a0a0a;
+                font-family: 'IBM Plex Sans', sans-serif; margin-top: 2px;
+            }
+
+            /* Funding source */
+            .eq-funding {
+                display: flex; justify-content: space-between; align-items: center;
+                background: #fff; border: 1px solid #e5e5e5;
+                border-radius: 8px; padding: 12px 16px; margin-bottom: 16px;
+            }
+            .eq-funding-left { display: flex; align-items: center; gap: 10px; }
+            .eq-funding-icon {
+                width: 36px; height: 24px; background: linear-gradient(135deg,#1a1f71,#2a4bd7);
+                border-radius: 4px; display: flex; align-items: center;
+                justify-content: center; color: #fff; font-size: 9px;
+                font-weight: 700; font-family: 'Inter',sans-serif;
+            }
+            .eq-funding-card {
+                font-size: 12px; font-weight: 500; color: #333;
+                font-family: 'JetBrains Mono', monospace;
+            }
+            .eq-funding-change {
+                font-size: 10px; color: #8B1818; cursor: pointer;
+                font-family: 'JetBrains Mono', monospace; text-transform: uppercase;
+                background: none; border: none; font-weight: 600;
+            }
+
+            /* Acknowledgement */
+            .eq-ack {
+                display: flex; align-items: flex-start; gap: 10px;
+                padding: 12px; background: #fef2f2; border: 1px solid #fecaca;
+                border-radius: 8px; margin-bottom: 16px; cursor: pointer;
+            }
+            .eq-ack input[type="checkbox"] {
+                width: 16px; height: 16px; accent-color: #8B1818;
+                margin-top: 1px; cursor: pointer; flex-shrink: 0;
+            }
+            .eq-ack-text {
+                font-size: 11px; color: #7f1d1d; line-height: 1.5;
+                font-family: 'Inter', sans-serif;
+            }
+
+            /* Confirm button */
+            .eq-confirm {
+                width: 100%; padding: 14px; font-size: 13px; font-weight: 700;
+                text-transform: uppercase; letter-spacing: 1px;
+                background: #8B1818; color: #fff; border: none;
+                border-radius: 8px; cursor: pointer;
+                font-family: 'JetBrains Mono', monospace;
+                transition: all 0.15s; position: relative; overflow: hidden;
+            }
+            .eq-confirm:hover:not(:disabled) { background: #6B1212; }
+            .eq-confirm:disabled { opacity: 0.45; cursor: not-allowed; }
+            .eq-confirm-sub {
+                font-size: 10px; color: #999; text-align: center;
+                margin-top: 8px; font-family: 'JetBrains Mono', monospace;
+            }
+
+            /* Execution steps */
+            .eq-exec-steps { margin-top: 16px; }
+            .eq-exec-step {
+                display: flex; align-items: center; gap: 10px;
+                padding: 8px 0; font-size: 12px;
+                font-family: 'JetBrains Mono', monospace;
+                color: #ccc; transition: color 0.3s;
+            }
+            .eq-exec-step.active { color: #0a0a0a; }
+            .eq-exec-step.done { color: #166534; }
+            .eq-step-dot {
+                width: 8px; height: 8px; border-radius: 50%;
+                background: #e5e5e5; transition: background 0.3s; flex-shrink: 0;
+            }
+            .eq-exec-step.active .eq-step-dot { background: #8B1818; animation: pulse-dot 1s infinite; }
+            .eq-exec-step.done .eq-step-dot { background: #166534; }
+            @keyframes pulse-dot { 0%,100% { opacity: 1; } 50% { opacity: 0.4; } }
+
+            /* Post-exec active card */
+            .eq-exec-complete {
+                text-align: center; padding: 16px 0;
+            }
+            .eq-exec-check {
+                font-size: 28px; margin-bottom: 6px;
+            }
+            .eq-exec-msg {
+                font-size: 12px; font-weight: 600; color: #166534;
+                font-family: 'JetBrains Mono', monospace; margin-bottom: 4px;
+            }
+            .eq-exec-sub {
+                font-size: 10px; color: #888;
+                font-family: 'JetBrains Mono', monospace;
+            }
+
             @media (max-width: 768px) {
                 .eq-topbar { padding: 16px; flex-direction: column; gap: 12px; align-items: flex-start; }
                 .eq-tabs { padding: 0 16px; overflow-x: auto; }
@@ -450,6 +589,7 @@ export function renderOverview() {
                 .eq-grid { padding: 16px; grid-template-columns: 1fr; }
                 .eq-stats { gap: 20px; }
                 .eq-search { width: 140px; }
+                .eq-terms-grid { grid-template-columns: 1fr; }
             }
         </style>
 
@@ -555,7 +695,7 @@ export function renderOverview() {
                         </div>
                         <div class="eq-card-time">Ends Feb 28</div>
                     </div>
-                    <button class="eq-card-cta primary" onclick="event.stopPropagation(); window.router.navigate('/funding?contract=0190')">Lock Capital →</button>
+                    <button class="eq-card-cta primary eq-lock-btn" data-contract="0190" onclick="event.stopPropagation();">Lock Capital →</button>
                 </div>
 
                 <!-- SHOPIFY — Revenue +20% — CONTROLLED — Baseline $8k/mo -->
@@ -659,7 +799,7 @@ export function renderOverview() {
                         </div>
                         <div class="eq-card-time">Ends Mar 2</div>
                     </div>
-                    <button class="eq-card-cta primary" onclick="event.stopPropagation(); window.router.navigate('/funding?contract=0181')">Lock Capital →</button>
+                    <button class="eq-card-cta primary eq-lock-btn" data-contract="0181" onclick="event.stopPropagation();">Lock Capital →</button>
                 </div>
 
                 <!-- X — Followers +15% — CONTROLLED — Baseline 850 -->
@@ -1051,4 +1191,235 @@ export function initOverview() {
 
     // Run initial filter to set counts
     applyFilters();
+
+    // ===================================================================
+    // EXPAND-IN-PLACE EXECUTION SURFACE
+    // ===================================================================
+    let expandedCardId = null;
+
+    function collapseAll() {
+        grid.querySelectorAll('.eq-card').forEach(c => {
+            c.classList.remove('expanded', 'dimmed');
+            const exec = c.querySelector('.eq-exec');
+            if (exec) exec.remove();
+        });
+        expandedCardId = null;
+    }
+
+    function expandCard(cardEl) {
+        const id = cardEl.dataset.id;
+        if (expandedCardId === id) { collapseAll(); return; }
+        collapseAll();
+        expandedCardId = id;
+
+        // Dim others
+        grid.querySelectorAll('.eq-card').forEach(c => {
+            if (c.dataset.id !== id) c.classList.add('dimmed');
+        });
+        cardEl.classList.add('expanded');
+
+        // Extract card data
+        const goal = cardEl.dataset.goal || '';
+        const tier = (cardEl.dataset.tier || 'controlled').toUpperCase();
+        const stake = parseInt(cardEl.dataset.stake || '0');
+        const deadline = cardEl.dataset.deadline || '';
+        const baseline = cardEl.querySelector('.eq-card-baseline')?.textContent || '';
+        const integration = cardEl.querySelector('.eq-card-integration')?.textContent?.trim() || '';
+        const rcpt = 'RCPT-' + id;
+        const tierRate = tier === 'CONTROLLED' ? '~30%' : tier === 'ELEVATED' ? '~20%' : '~10%';
+        const deadlineFmt = deadline ? new Date(deadline).toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' }) : '—';
+
+        // Build execution surface
+        const execDiv = document.createElement('div');
+        execDiv.className = 'eq-exec';
+        execDiv.innerHTML = `
+            <div class="eq-exec-header">
+                <span class="eq-exec-title">Execute Contract</span>
+                <button class="eq-exec-close" data-action="collapse">✕</button>
+            </div>
+
+            <div class="eq-terms">
+                <div class="eq-terms-label">Immutable Term Sheet — ${rcpt}</div>
+                <div class="eq-terms-grid">
+                    <div class="eq-term-item">
+                        <div class="eq-term-key">Provider</div>
+                        <div class="eq-term-val">${integration}</div>
+                    </div>
+                    <div class="eq-term-item">
+                        <div class="eq-term-key">Window</div>
+                        <div class="eq-term-val">${goal.match(/\d+ Days/)?.[0] || '30 Days'}</div>
+                    </div>
+                    <div class="eq-term-item">
+                        <div class="eq-term-key">Tier / Win Rate</div>
+                        <div class="eq-term-val">${tier} ${tierRate}</div>
+                    </div>
+                    <div class="eq-term-item">
+                        <div class="eq-term-key">Locked Capital</div>
+                        <div class="eq-term-val">$${stake.toLocaleString()}</div>
+                    </div>
+                    <div class="eq-term-item">
+                        <div class="eq-term-key">Baseline Snapshot</div>
+                        <div class="eq-term-val">${baseline.replace('Baseline: ', '').split('→')[0]?.trim() || '—'}</div>
+                    </div>
+                    <div class="eq-term-item">
+                        <div class="eq-term-key">Target Required</div>
+                        <div class="eq-term-val">${baseline.split('→')[1]?.trim() || '—'}</div>
+                    </div>
+                    <div class="eq-term-item">
+                        <div class="eq-term-key">Expiration</div>
+                        <div class="eq-term-val">${deadlineFmt}</div>
+                    </div>
+                    <div class="eq-term-item">
+                        <div class="eq-term-key">Settlement</div>
+                        <div class="eq-term-val">Automatic</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="eq-funding">
+                <div class="eq-funding-left">
+                    <div class="eq-funding-icon">VISA</div>
+                    <span class="eq-funding-card">•••• 4242</span>
+                </div>
+                <button class="eq-funding-change">Change</button>
+            </div>
+
+            <label class="eq-ack" id="ack-label-${id}">
+                <input type="checkbox" id="ack-cb-${id}">
+                <span class="eq-ack-text">I understand this capital becomes locked immediately under immutable terms. No appeals. Settlement is enforced automatically at deadline.</span>
+            </label>
+
+            <button class="eq-confirm" id="confirm-btn-${id}" disabled>Confirm Lock →</button>
+            <div class="eq-confirm-sub">Settlement is enforced automatically. No manual approval.</div>
+        `;
+
+        cardEl.appendChild(execDiv);
+
+        // Scroll card into view
+        setTimeout(() => cardEl.scrollIntoView({ behavior: 'smooth', block: 'center' }), 50);
+
+        // Close button
+        execDiv.querySelector('[data-action="collapse"]').addEventListener('click', (e) => {
+            e.stopPropagation();
+            collapseAll();
+        });
+
+        // Checkbox enables confirm
+        const cb = document.getElementById(`ack-cb-${id}`);
+        const confirmBtn = document.getElementById(`confirm-btn-${id}`);
+        cb.addEventListener('change', () => {
+            confirmBtn.disabled = !cb.checked;
+        });
+
+        // Prevent card navigation while expanded
+        cardEl.onclick = (e) => e.stopPropagation();
+
+        // CONFIRM → execution animation
+        confirmBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            runExecution(cardEl, id, execDiv, stake);
+        });
+    }
+
+    async function runExecution(cardEl, id, execDiv, stake) {
+        const confirmBtn = document.getElementById(`confirm-btn-${id}`);
+        confirmBtn.disabled = true;
+        confirmBtn.textContent = 'LOCKING…';
+
+        // Replace form with step animation
+        setTimeout(() => {
+            execDiv.innerHTML = `
+                <div class="eq-exec-header">
+                    <span class="eq-exec-title">Executing Contract</span>
+                    <span style="font-size:10px;color:#999;font-family:'JetBrains Mono',monospace;">RCPT-${id}</span>
+                </div>
+                <div class="eq-exec-steps">
+                    <div class="eq-exec-step" id="step-1-${id}"><span class="eq-step-dot"></span> Authorizing Capital</div>
+                    <div class="eq-exec-step" id="step-2-${id}"><span class="eq-step-dot"></span> Writing Receipt</div>
+                    <div class="eq-exec-step" id="step-3-${id}"><span class="eq-step-dot"></span> Execution Confirmed</div>
+                    <div class="eq-exec-step" id="step-4-${id}"><span class="eq-step-dot"></span> Window Begins Now</div>
+                </div>
+            `;
+
+            // Step through animation
+            const steps = [1, 2, 3, 4];
+            let i = 0;
+            const interval = setInterval(() => {
+                if (i > 0) {
+                    document.getElementById(`step-${i}-${id}`)?.classList.remove('active');
+                    document.getElementById(`step-${i}-${id}`)?.classList.add('done');
+                }
+                i++;
+                if (i <= 4) {
+                    document.getElementById(`step-${i}-${id}`)?.classList.add('active');
+                } else {
+                    clearInterval(interval);
+                    // All done — show completion
+                    setTimeout(() => showExecutionComplete(cardEl, id, stake), 400);
+                }
+            }, 800);
+        }, 300);
+    }
+
+    function showExecutionComplete(cardEl, id, stake) {
+        // Flip card to ACTIVE state
+        cardEl.dataset.status = 'active';
+        const badge = cardEl.querySelector('.eq-badge');
+        if (badge) {
+            badge.className = 'eq-badge active';
+            badge.textContent = 'ACTIVE';
+        }
+
+        // Remove exec panel
+        const exec = cardEl.querySelector('.eq-exec');
+        if (exec) {
+            exec.innerHTML = `
+                <div class="eq-exec-complete">
+                    <div class="eq-exec-check">✅</div>
+                    <div class="eq-exec-msg">Execution Confirmed</div>
+                    <div class="eq-exec-sub">Day 1 / 30 — Tracking begins immediately</div>
+                </div>
+            `;
+        }
+
+        // Swap CTA button
+        const cta = cardEl.querySelector('.eq-lock-btn');
+        if (cta) {
+            cta.className = 'eq-card-cta secondary';
+            cta.textContent = '✅ View Receipt →';
+            cta.onclick = (e) => {
+                e.stopPropagation();
+                window.router.navigate(`/receipts/${id}`);
+            };
+        }
+
+        // Update stake label
+        const stakeLabel = cardEl.querySelector('.eq-card-stake-label');
+        if (stakeLabel) stakeLabel.textContent = 'Locked';
+
+        // Un-dim others after 2s
+        setTimeout(() => {
+            grid.querySelectorAll('.eq-card').forEach(c => c.classList.remove('dimmed'));
+            cardEl.classList.remove('expanded');
+            const execFinal = cardEl.querySelector('.eq-exec');
+            if (execFinal) execFinal.remove();
+            // Restore click navigation
+            cardEl.onclick = () => window.router.navigate(`/contracts/${id}`);
+            applyFilters();
+        }, 2500);
+    }
+
+    // Wire up all Lock Capital buttons
+    grid.querySelectorAll('.eq-lock-btn').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            const card = btn.closest('.eq-card');
+            if (card) expandCard(card);
+        });
+    });
+
+    // Escape to collapse
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && expandedCardId) collapseAll();
+    });
 }

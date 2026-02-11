@@ -448,32 +448,44 @@ export function renderOverview() {
             .eq-card.expanded {
                 grid-column: 1 / -1;
                 border-color: #d4d4d4;
-                box-shadow: 0 12px 60px rgba(0,0,0,0.12), 0 2px 8px rgba(0,0,0,0.06);
+                box-shadow: 0 12px 60px rgba(0,0,0,0.15), 0 2px 8px rgba(0,0,0,0.08);
                 cursor: default;
                 z-index: 50;
-                transform: scale(1.01);
+                transform: none;
+                overflow: hidden;
+                padding: 0;
             }
+            .eq-card.expanded > *:not(.eq-exec) {
+                padding-left: 20px;
+                padding-right: 20px;
+            }
+            .eq-card.expanded > *:first-child { padding-top: 20px; }
             .eq-card.dimmed {
-                opacity: 0.25; pointer-events: none;
-                filter: blur(2px) grayscale(0.4);
-                transform: scale(0.98);
+                opacity: 0.15; pointer-events: none;
+                filter: blur(3px) grayscale(0.5);
+                transform: scale(0.97);
             }
+
+            /* Grid needs to participate in z stacking */
+            .eq-grid.has-expanded { position: relative; z-index: 45; }
 
             /* Full-screen dim overlay */
             .eq-dim-overlay {
-                position: fixed; inset: 0; background: rgba(0,0,0,0.35);
+                position: fixed; inset: 0; background: rgba(0,0,0,0.45);
                 z-index: 40; opacity: 0; pointer-events: none;
                 transition: opacity 0.4s ease;
-                backdrop-filter: blur(1px);
+                backdrop-filter: blur(2px);
             }
             .eq-dim-overlay.active { opacity: 1; pointer-events: auto; }
+
+            /* Execution surface container */
+            .eq-exec { padding: 0 20px 20px; }
 
             /* Execution mode header bar */
             .eq-exec-mode {
                 background: #0a0a0a; color: #fff;
-                padding: 10px 16px; border-radius: 8px;
+                padding: 12px 20px;
                 display: flex; justify-content: space-between; align-items: center;
-                margin: -20px -20px 16px; border-radius: 12px 12px 0 0;
             }
             .eq-exec-mode-title {
                 font-size: 11px; font-weight: 700; text-transform: uppercase;
@@ -1305,12 +1317,13 @@ export function initOverview() {
 
     function collapseAll() {
         dimOverlay.classList.remove('active');
+        grid.classList.remove('has-expanded');
         grid.querySelectorAll('.eq-card').forEach(c => {
             c.classList.remove('expanded', 'dimmed');
+            c.style.padding = '';
             const exec = c.querySelector('.eq-exec');
             if (exec) exec.remove();
         });
-        // Remove morphed header (restore original card top)
         grid.querySelectorAll('.eq-exec-mode').forEach(e => e.remove());
         expandedCardId = null;
     }
@@ -1329,6 +1342,7 @@ export function initOverview() {
             if (c.dataset.id !== id) c.classList.add('dimmed');
         });
         cardEl.classList.add('expanded');
+        grid.classList.add('has-expanded');
 
         // Hide the Lock Capital button (it morphs into the header)
         const lockBtn = cardEl.querySelector('.eq-lock-btn');
@@ -1346,7 +1360,7 @@ export function initOverview() {
         const deadlineFmt = deadline ? new Date(deadline).toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' }) : '—';
         const baselineParts = baselineText.replace('Baseline: ', '').split('→');
         const baseVal = baselineParts[0]?.trim() || '—';
-        const targetVal = baselineParts[1]?.trim() || '—';
+        const targetVal = (baselineParts[1]?.trim() || '—').replace(/^Target:\s*/i, '');
         const windowDays = goal.match(/(\d+) Days/)?.[1] || '30';
         const needsHold = stake >= 2000; // Hold-to-confirm for ≥$2k
 

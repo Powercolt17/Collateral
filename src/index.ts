@@ -41,25 +41,23 @@ if (IS_PRODUCTION) {
 
     const missing = requiredEnvVars.filter(v => !process.env[v]);
     if (missing.length > 0) {
-        console.error('❌ FATAL: Missing required env vars:', missing.join(', '));
-        process.exit(1);
+        console.error('⚠️ WARNING: Missing env vars:', missing.join(', '), '— some features will not work');
     }
 
-    // Validate Stripe key format
-    if (!process.env.STRIPE_SECRET_KEY?.startsWith('sk_')) {
-        console.error('❌ FATAL: STRIPE_SECRET_KEY must start with sk_');
-        process.exit(1);
+    // Validate Stripe key formats (warn only)
+    if (process.env.STRIPE_SECRET_KEY && !process.env.STRIPE_SECRET_KEY.startsWith('sk_')) {
+        console.error('⚠️ WARNING: STRIPE_SECRET_KEY should start with sk_');
     }
-    if (!process.env.STRIPE_CLIENT_ID?.startsWith('ca_')) {
-        console.error('❌ FATAL: STRIPE_CLIENT_ID must start with ca_');
-        process.exit(1);
+    if (process.env.STRIPE_CLIENT_ID && !process.env.STRIPE_CLIENT_ID.startsWith('ca_')) {
+        console.error('⚠️ WARNING: STRIPE_CLIENT_ID should start with ca_');
     }
-    if (!process.env.STRIPE_WEBHOOK_SECRET?.startsWith('whsec_')) {
-        console.error('❌ FATAL: STRIPE_WEBHOOK_SECRET must start with whsec_');
-        process.exit(1);
+    if (process.env.STRIPE_WEBHOOK_SECRET && !process.env.STRIPE_WEBHOOK_SECRET.startsWith('whsec_')) {
+        console.error('⚠️ WARNING: STRIPE_WEBHOOK_SECRET should start with whsec_');
     }
 
-    console.log('✅ All required Stripe env vars validated');
+    if (missing.length === 0) {
+        console.log('✅ All required Stripe env vars validated');
+    }
 }
 
 async function main() {

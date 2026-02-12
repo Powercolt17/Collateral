@@ -13,9 +13,10 @@ const connectionString = isTest
     : process.env.DATABASE_URL;
 
 if (!connectionString) {
-    throw new Error(
-        `Critical: Missing database connection string. ` +
-        `Set DATABASE_URL (or DATABASE_URL_TEST for tests) in .env file.`
+    console.error(
+        '⚠️ WARNING: Missing database connection string. ' +
+        'Set DATABASE_URL (or DATABASE_URL_TEST for tests) in .env file. ' +
+        'Database queries will fail until this is configured.'
     );
 }
 
@@ -28,11 +29,11 @@ if (isTest && process.env.DATABASE_URL && connectionString === process.env.DATAB
 }
 
 // For query purposes
-const queryClient = postgres(connectionString);
+const queryClient = postgres(connectionString || 'postgresql://localhost/placeholder');
 export const db = drizzle(queryClient, { schema });
 
 // For migrations
-export const migrationClient = postgres(connectionString, { max: 1 });
+export const migrationClient = postgres(connectionString || 'postgresql://localhost/placeholder', { max: 1 });
 
 // =============================================================================
 // DbLike TYPE (for transaction client compatibility)

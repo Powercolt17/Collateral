@@ -7,12 +7,12 @@
  * - Stop polling when terminal
  */
 
-import { get } from '../api/api.js';
-import { runAction } from '../api/run-action.js';
-import { startContractDetailPolling } from '../api/polling.js';
-import type { ContractListItem } from '../api/polling.js';
-import { isInFlight, isTerminal } from '../state/contract-states.js';
-import type { ContractDerivedStateType } from '../state/contract-states.js';
+import { get } from '../api/api.ts';
+import { runAction } from '../api/run-action.ts';
+import { startContractDetailPolling } from '../api/polling.ts';
+import type { ContractListItem } from '../api/polling.ts';
+import { isInFlight, isTerminal } from '../state/contract-states.ts';
+import type { ContractDerivedStateType } from '../state/contract-states.ts';
 
 // =============================================================================
 // FETCH CONTRACT DETAIL

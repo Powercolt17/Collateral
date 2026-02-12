@@ -12,9 +12,9 @@
  * - Polling tracks ledger truth, not simulated progress
  */
 
-import { get } from './api.js';
-import { isTerminal, isInFlight } from '../state/contract-states.js';
-import type { ContractDerivedStateType } from '../state/contract-states.js';
+import { get } from './api.ts';
+import { isTerminal, isInFlight } from '../state/contract-states.ts';
+import type { ContractDerivedStateType } from '../state/contract-states.ts';
 
 // =============================================================================
 // TYPES

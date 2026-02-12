@@ -10,7 +10,7 @@
  * - One mental model everywhere
  */
 
-import { ApiError } from './api.js';
+import { ApiError } from './api.ts';
 
 // =============================================================================
 // TYPES

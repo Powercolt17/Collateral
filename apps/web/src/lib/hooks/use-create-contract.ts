@@ -5,10 +5,10 @@
  * Only allowed when X is verified.
  */
 
-import { post } from '../api/api.js';
-import { runAction } from '../api/run-action.js';
-import { can, ContractAction } from '../state/contract-states.js';
-import type { ContractDerivedStateType } from '../state/contract-states.js';
+import { post } from '../api/api.ts';
+import { runAction } from '../api/run-action.ts';
+import { can, ContractAction } from '../state/contract-states.ts';
+import type { ContractDerivedStateType } from '../state/contract-states.ts';
 
 // =============================================================================
 // TYPES

@@ -12,14 +12,14 @@ export {
     type XStartResponse,
     type XVerifyResponse,
     type XConnectionStatus,
-} from './use-connect-x.js';
+} from './use-connect-x.ts';
 
 // Create Contract
 export {
     createContract,
     type CreateContractParams,
     type CreateContractResponse,
-} from './use-create-contract.js';
+} from './use-create-contract.ts';
 
 // Funding
 export {
@@ -27,14 +27,14 @@ export {
     waitForFundsLocked,
     type FundingIntentResponse,
     type FundingResult,
-} from './use-funding.js';
+} from './use-funding.ts';
 
 // Execute
 export {
     executeContract,
     watchUntilTerminal,
     type ExecuteResponse,
-} from './use-execute.js';
+} from './use-execute.ts';
 
 // Contract Detail
 export {
@@ -42,4 +42,5 @@ export {
     fetchContractList,
     startDetailPolling,
     startSmartPolling,
-} from './use-contract-detail.js';
+} from './use-contract-detail.ts';
+

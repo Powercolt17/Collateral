@@ -7,8 +7,8 @@
  * 3. Verify → account linked
  */
 
-import { get, post } from '../api/api.js';
-import { runAction } from '../api/run-action.js';
+import { get, post } from '../api/api.ts';
+import { runAction } from '../api/run-action.ts';
 
 // =============================================================================
 // TYPES

@@ -6,12 +6,12 @@
  * 2. Poll until terminal (SETTLED or FORFEITED)
  */
 
-import { post } from '../api/api.js';
-import { runAction } from '../api/run-action.js';
-import { pollUntilStable } from '../api/polling.js';
-import type { ContractDetailResponse } from '../api/polling.js';
-import { can, ContractAction, isTerminal } from '../state/contract-states.js';
-import type { ContractDerivedStateType } from '../state/contract-states.js';
+import { post } from '../api/api.ts';
+import { runAction } from '../api/run-action.ts';
+import { pollUntilStable } from '../api/polling.ts';
+import type { ContractDetailResponse } from '../api/polling.ts';
+import { can, ContractAction, isTerminal } from '../state/contract-states.ts';
+import type { ContractDerivedStateType } from '../state/contract-states.ts';
 
 // =============================================================================
 // TYPES

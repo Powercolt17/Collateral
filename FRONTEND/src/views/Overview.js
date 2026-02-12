@@ -452,7 +452,7 @@ export function renderOverview() {
                 border-color: #d4d4d4;
                 box-shadow: 0 12px 60px rgba(0,0,0,0.15), 0 2px 8px rgba(0,0,0,0.08);
                 cursor: default;
-                z-index: 50;
+                z-index: 100; /* Boost z-index to beat overlay */
                 transform: none;
                 overflow: hidden;
                 padding: 0;
@@ -1313,10 +1313,10 @@ export function initOverview() {
     // ===================================================================
     let expandedCardId = null;
 
-    // Create dim overlay
+    // Create dim overlay (inside view to share stacking context and auto-cleanup)
     const dimOverlay = document.createElement('div');
     dimOverlay.className = 'eq-dim-overlay';
-    document.body.appendChild(dimOverlay);
+    view.appendChild(dimOverlay); // Fix: Append to view, not body
     dimOverlay.addEventListener('click', () => collapseAll());
 
     function collapseAll() {

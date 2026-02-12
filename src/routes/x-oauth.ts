@@ -110,6 +110,23 @@ function buildOAuthHeader(params: Record<string, string>): string {
 // =============================================================================
 
 async function xOAuthRoutes(fastify: FastifyInstance) {
+    // If X OAuth is not configured, register stub routes that return 503
+    if (!X_OAUTH_CONFIGURED) {
+        fastify.get('/v1/connect/x/oauth/start', async (_req, reply) => {
+            return reply.status(503).send({ error: 'X OAuth not configured', code: 'X_OAUTH_NOT_CONFIGURED' });
+        });
+        fastify.get('/v1/connect/x/oauth/callback', async (_req, reply) => {
+            return reply.status(503).send({ error: 'X OAuth not configured', code: 'X_OAUTH_NOT_CONFIGURED' });
+        });
+        fastify.get('/v1/connect/x/status', async (_req, reply) => {
+            return reply.status(200).send({ connected: false });
+        });
+        fastify.post('/v1/connect/x/disconnect', async (_req, reply) => {
+            return reply.status(503).send({ error: 'X OAuth not configured', code: 'X_OAUTH_NOT_CONFIGURED' });
+        });
+        return;
+    }
+
     /**
      * GET /v1/connect/x/oauth/start
      * 

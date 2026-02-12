@@ -8,7 +8,7 @@ import {
     bindIdentity,
     type IdentityProvider
 } from '../services/identity-bindings.js';
-import bcrypt from 'bcrypt';
+import bcrypt from 'bcryptjs';
 
 const SALT_ROUNDS = 12;
 

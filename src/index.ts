@@ -84,15 +84,12 @@ async function main() {
     // Global Auth Hook - parse token and set userId on every request
     fastify.addHook('preHandler', async (request) => {
         const authHeader = request.headers.authorization;
-        console.log('[Auth Hook] Path:', request.url, 'Auth header:', authHeader ? 'present' : 'missing');
         if (authHeader && authHeader.startsWith('Bearer ')) {
             const token = authHeader.slice(7);
             try {
                 const { verifyAccessToken } = await import('./services/auth.js');
                 request.userId = verifyAccessToken(token);
-                console.log('[Auth Hook] Token valid, userId:', request.userId);
             } catch (err) {
-                console.log('[Auth Hook] Token invalid:', (err as Error).message);
                 request.userId = undefined;
             }
         }
@@ -123,79 +120,66 @@ async function main() {
         });
     });
 
-    // Health check (no auth)
-    await fastify.register(healthRoutes);
+    // =========================================================
+    // Route Registration — each wrapped to identify hangs/crashes
+    // =========================================================
+    async function safeRegister(name: string, plugin: any) {
+        const start = Date.now();
+        try {
+            await fastify.register(plugin);
+            console.log(`[startup] ✅ ${name} registered (${Date.now() - start}ms)`);
+        } catch (err) {
+            console.error(`[startup] ❌ ${name} FAILED (${Date.now() - start}ms):`, err);
+        }
+    }
 
-    // Legacy read-only endpoints (deprecated, kept for backward compat)
-    await fastify.register(ledgerRoutes);
-    await fastify.register(contractRoutes);
-    await fastify.register(profileRoutes);
-    await fastify.register(usersRoutes);
+    console.log('[startup] Registering routes...');
+
+    // Health check (no auth) — FIRST
+    await safeRegister('health', healthRoutes);
+
+    // Legacy read-only endpoints
+    await safeRegister('ledger', ledgerRoutes);
+    await safeRegister('contracts-legacy', contractRoutes);
+    await safeRegister('profiles', profileRoutes);
+    await safeRegister('users', usersRoutes);
 
     // Identity & Auth
-    await fastify.register(authRoutes);
-    await fastify.register(identityRoutes);
-    await fastify.register(connectRoutes);        // Legacy bio challenge (deprecated)
-    await fastify.register(xOAuthRoutes);         // X OAuth (NEW)
-    await fastify.register(stripeConnectRoutes);  // Stripe Connect OAuth
-    await fastify.register(quoteRoutes);
+    await safeRegister('auth', authRoutes);
+    await safeRegister('identity', identityRoutes);
+    await safeRegister('connect', connectRoutes);
+    await safeRegister('x-oauth', xOAuthRoutes);
+    await safeRegister('stripe-connect', stripeConnectRoutes);
+    await safeRegister('quote', quoteRoutes);
 
-    // V1 Contract endpoints (CANONICAL)
-    await fastify.register(contractReadRoutes);   // GET /v1/contracts, GET /v1/contracts/:id
-    await fastify.register(contractWriteRoutes);  // POST /v1/contracts, /funding-intent, /execute
+    // V1 Contract endpoints
+    await safeRegister('contracts-read', contractReadRoutes);
+    await safeRegister('contracts-write', contractWriteRoutes);
 
-    // Billing (Card verification)
-    await fastify.register(billingRoutes);        // /v1/billing/*
+    // Billing, Payouts, Webhooks
+    await safeRegister('billing', billingRoutes);
+    await safeRegister('payouts', payoutRoutes);
+    await safeRegister('webhooks', webhookRoutes);
 
-    // Payouts (Stripe Connect)
-    await fastify.register(payoutRoutes);         // /v1/payouts/*
+    // Ops, Waitlist, Sales, Commerce
+    await safeRegister('ops', opsRoutes);
+    await safeRegister('waitlist', waitlistRoutes);
+    await safeRegister('sales', salesRoutes);
+    await safeRegister('commerce', commerceRoutes);
 
-    // Webhooks
-    await fastify.register(webhookRoutes);        // POST /v1/stripe/webhook
-
-    // Ops/Admin routes (no prefix, token-protected)
-    await fastify.register(opsRoutes);            // POST /ops/run-verification, etc.
-
-    // Waitlist (pre-launch email capture)
-    await fastify.register(waitlistRoutes);       // /v1/waitlist/*
-
-    // Sales Integration (Stripe Revenue)
-    await fastify.register(salesRoutes);          // /v1/sales/*
-
-    // Commerce Performance (Shopify + Amazon)
-    await fastify.register(commerceRoutes);       // /v1/commerce/*
+    console.log('[startup] All route registration complete');
 
     // Start server
     try {
         await fastify.listen({ port: PORT, host: '0.0.0.0' });
-        console.log(`
-╔═══════════════════════════════════════════════════════════╗
-║                   COLLATERAL BACKEND                       ║
-║                   USD-first • Append-only                  ║
-╠═══════════════════════════════════════════════════════════╣
-║  Server running on http://localhost:${PORT}                   ║
-║                                                           ║
-║  V1 API (CANONICAL):                                      ║
-║    GET  /v1/contracts           User's contracts (auth)   ║
-║    GET  /v1/contracts/:id       Contract detail (auth)    ║
-║    POST /v1/contracts           Create contract           ║
-║    POST /v1/contracts/:id/funding-intent   Stripe intent  ║
-║    POST /v1/contracts/:id/execute          EXECUTE        ║
-║    POST /v1/stripe/webhook      Stripe events             ║
-║    POST /v1/connect/x/start     X proof-of-control        ║
-║    POST /v1/connect/x/verify    Verify X bio              ║
-║    POST /v1/contracts/quote     Get pricing quote         ║
-║                                                           ║
-║  Other endpoints:                                         ║
-║    GET  /health                 Health check              ║
-║    POST /auth/login             Email/passkey login       ║
-║    GET  /profiles/:username     Public profile            ║
-╚═══════════════════════════════════════════════════════════╝
-    `);
+        console.log(`[startup] ✅ Server listening on port ${PORT}`);
     } catch (err) {
         fastify.log.error(err);
         process.exit(1);
     }
 }
 
-main();
+main().catch((err) => {
+    console.error('[startup] FATAL:', err);
+    process.exit(1);
+});

@@ -1313,10 +1313,11 @@ export function initOverview() {
     // ===================================================================
     let expandedCardId = null;
 
-    // Create dim overlay (inside view to share stacking context and auto-cleanup)
+    // Create dim overlay (inside grid parent to share stacking context)
     const dimOverlay = document.createElement('div');
     dimOverlay.className = 'eq-dim-overlay';
-    view.appendChild(dimOverlay); // Fix: Append to view, not body
+    const eqContainer = grid.closest('.eq') || grid.parentElement || document.body;
+    eqContainer.appendChild(dimOverlay);
     dimOverlay.addEventListener('click', () => collapseAll());
 
     function collapseAll() {

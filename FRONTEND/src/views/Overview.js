@@ -500,12 +500,20 @@ export function renderOverview() {
                 font-family: 'JetBrains Mono', monospace;
             }
             .eq-exec-close {
-                width: 26px; height: 26px; display: flex; align-items: center;
-                justify-content: center; background: rgba(255,255,255,0.1); border: none;
-                border-radius: 6px; cursor: pointer; color: rgba(255,255,255,0.6);
-                font-size: 14px; transition: all 0.15s;
+                width: 34px; height: 34px; display: flex; align-items: center;
+                justify-content: center; background: rgba(255,255,255,0.15); border: 1px solid rgba(255,255,255,0.2);
+                border-radius: 8px; cursor: pointer; color: #fff;
+                font-size: 18px; font-weight: 600; transition: all 0.15s;
             }
-            .eq-exec-close:hover { background: rgba(255,255,255,0.2); color: #fff; }
+            .eq-exec-close:hover { background: rgba(255,255,255,0.3); transform: scale(1.05); }
+            .eq-cancel-link {
+                display: block; text-align: center; margin-top: 10px;
+                font-size: 12px; color: #999; cursor: pointer; border: none;
+                background: none; font-family: 'Inter', sans-serif;
+                text-decoration: underline; text-underline-offset: 2px;
+                transition: color 0.15s; padding: 6px;
+            }
+            .eq-cancel-link:hover { color: #333; }
 
             /* Tension line */
             .eq-tension {
@@ -1452,6 +1460,7 @@ export function initOverview() {
                     ${needsHold ? '<span class="eq-confirm-progress" id="hold-progress-' + id + '"></span>Hold to Confirm Lock' : 'Confirm Lock →'}
                 </button>
                 <div class="eq-confirm-sub">${needsHold ? 'Hold button for 2 seconds to execute' : 'Settlement is enforced automatically. No manual approval.'}</div>
+                <button class="eq-cancel-link" data-action="cancel">✕ Cancel & Return to Overview</button>
             </div>
         `;
 
@@ -1460,12 +1469,22 @@ export function initOverview() {
         // Scroll into view
         setTimeout(() => cardEl.scrollIntoView({ behavior: 'smooth', block: 'center' }), 80);
 
-        // Close button
+        // Close button (header X)
         execDiv.querySelector('[data-action="collapse"]').addEventListener('click', (e) => {
             e.stopPropagation();
             collapseAll();
             if (lockBtn) lockBtn.style.display = '';
         });
+
+        // Cancel & Return button (bottom)
+        const cancelBtn = execDiv.querySelector('[data-action="cancel"]');
+        if (cancelBtn) {
+            cancelBtn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                collapseAll();
+                if (lockBtn) lockBtn.style.display = '';
+            });
+        }
 
         // Checkbox enables confirm
         const cb = document.getElementById(`sig-cb-${id}`);

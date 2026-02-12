@@ -31,11 +31,12 @@ const X_API_KEY = process.env.X_API_KEY;
 const X_API_SECRET = process.env.X_API_SECRET;
 const X_OAUTH_REDIRECT_URI = process.env.X_OAUTH_REDIRECT_URI;
 
-// Validate on startup - HARD FAIL if missing (prevents half-configured deployment)
-if (!X_API_KEY || !X_API_SECRET || !X_OAUTH_REDIRECT_URI) {
-    throw new Error(
-        '[X OAuth 1.0a] FATAL: Missing required environment variables: X_API_KEY, X_API_SECRET, X_OAUTH_REDIRECT_URI. ' +
-        'DO NOT use X_OAUTH_CLIENT_ID or X_OAUTH_CLIENT_SECRET - those are OAuth 2.0.'
+// Graceful degradation: warn but don't crash the entire server
+const X_OAUTH_CONFIGURED = !!(X_API_KEY && X_API_SECRET && X_OAUTH_REDIRECT_URI);
+if (!X_OAUTH_CONFIGURED) {
+    console.warn(
+        '[X OAuth 1.0a] WARNING: Missing env vars (X_API_KEY, X_API_SECRET, X_OAUTH_REDIRECT_URI). ' +
+        'X OAuth routes will return 503. Server will continue to start.'
     );
 }
 

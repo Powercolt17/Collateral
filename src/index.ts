@@ -1,3 +1,4 @@
+import 'dotenv/config';
 import Fastify from 'fastify';
 import cors from '@fastify/cors';
 import rawBody from 'fastify-raw-body';
@@ -135,8 +136,20 @@ async function main() {
 
     console.log('[startup] Registering routes...');
 
-    // Health check (no auth) — FIRST
+    // Health check (no auth) — FIRST, then listen immediately
+    // so Railway healthcheck passes while remaining routes load
     await safeRegister('health', healthRoutes);
+
+    try {
+        await fastify.listen({ port: PORT, host: '0.0.0.0' });
+        console.log(`[startup] ✅ Server listening on 0.0.0.0:${PORT} — /health ready`);
+    } catch (err) {
+        fastify.log.error(err);
+        process.exit(1);
+    }
+
+    // Register remaining routes AFTER server is already listening
+    // (any single failure here won't prevent healthcheck from responding)
 
     // Legacy read-only endpoints
     await safeRegister('ledger', ledgerRoutes);
@@ -168,15 +181,6 @@ async function main() {
     await safeRegister('commerce', commerceRoutes);
 
     console.log('[startup] All route registration complete');
-
-    // Start server
-    try {
-        await fastify.listen({ port: PORT, host: '0.0.0.0' });
-        console.log(`[startup] ✅ Server listening on port ${PORT}`);
-    } catch (err) {
-        fastify.log.error(err);
-        process.exit(1);
-    }
 }
 
 main().catch((err) => {

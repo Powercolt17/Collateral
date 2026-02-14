@@ -226,7 +226,7 @@ async function stripeConnectRoutes(fastify: FastifyInstance) {
                             connectedVia: 'oauth',
                             connectedAt: now.toISOString(),
                         },
-                    })
+                    } as any)
                     .onConflictDoUpdate({
                         target: [connectedAccounts.userId, connectedAccounts.platform],
                         set: {
@@ -238,7 +238,7 @@ async function stripeConnectRoutes(fastify: FastifyInstance) {
                                 connectedVia: 'oauth',
                                 connectedAt: now.toISOString(),
                             },
-                        },
+                        } as any,
                     });
 
                 // Sync to users table for backward compatibility

@@ -205,7 +205,7 @@ async function acquireJobLock(
             expiresAt,
             lockedBy: WORKER_ID,
             attemptCount: 1,
-        });
+        } as any);
 
         return { acquired: true };
     } catch (err: any) {
@@ -368,7 +368,7 @@ export async function createCommerceBaseline(
             platform,
             ...baseline,
         },
-    }).returning();
+    } as any).returning();
 
     // Emit ledger event
     await appendEvent({
@@ -507,7 +507,7 @@ export async function attachCommerceTerms(
             requireFulfillment: true,
         },
         executedAt: new Date(),
-    }).returning();
+    } as any).returning();
 
     // Emit ledger event
     await appendEvent({
@@ -591,7 +591,7 @@ export async function enqueueCommerceVerification(
         provider: 'stripe', // Schema enum
         status: 'queued',
         attempt: 1,
-    }).returning();
+    } as any).returning();
 
     // Emit ledger event
     await appendEvent({
@@ -737,7 +737,7 @@ export async function processCommerceVerification(
 
     // Mark as running
     await db.update(salesVerificationRuns)
-        .set({ status: 'running', startedAt: new Date() })
+        .set({ status: 'running', startedAt: new Date() } as any)
         .where(eq(salesVerificationRuns.id, runId));
 
     try {
@@ -765,7 +765,7 @@ export async function processCommerceVerification(
                 status: finalStatus,
                 finishedAt: new Date(),
                 resultJson: result,
-            })
+            } as any)
             .where(eq(salesVerificationRuns.id, runId));
 
         // Emit appropriate ledger event

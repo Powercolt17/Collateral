@@ -167,6 +167,8 @@ export const ledgerEventTypeEnum = pgEnum('ledger_event_type', [
     'COMMERCE_JOB_LOCK_RELEASED'
 ]);
 
+
+
 // =====================
 // TABLES
 // =====================
@@ -437,6 +439,10 @@ export const salesBaselineSnapshots = pgTable('sales_baseline_snapshots', {
     windowEndAt: timestamp('window_end_at', { withTimezone: true }).notNull(),
     // Computed metrics + raw summary (immutable)
     baselineJson: jsonb('baseline_json').notNull(),
+    // Hardening columns
+    dataHash: varchar('data_hash', { length: 64 }),
+    lastOrderId: varchar('last_order_id', { length: 255 }),
+    apiVersion: varchar('api_version', { length: 20 }),
     createdAt: timestamp('created_at', { withTimezone: true }).defaultNow().notNull(),
 }, (table) => ({
     userWindowUnique: unique().on(table.userId, table.windowStartAt, table.windowEndAt),

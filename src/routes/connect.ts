@@ -320,7 +320,7 @@ async function connectRoutes(fastify: FastifyInstance) {
                     challengeIssuedAt: startNow,
                     connectedAt: startNow,
                     metadataJson: metadata,
-                })
+                } as any)
                 .where(
                     and(
                         eq(connectedAccounts.userId, userId),
@@ -350,7 +350,7 @@ async function connectRoutes(fastify: FastifyInstance) {
                         challengeIssuedAt: startNow,
                         connectedAt: startNow,
                         metadataJson: metadata,
-                    })
+                    } as any)
                     .onConflictDoNothing({
                         target: [connectedAccounts.userId, connectedAccounts.platform],
                     })

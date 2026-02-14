@@ -421,7 +421,7 @@ export async function processVerificationRun(
                 status: 'error',
                 finishedAt: new Date(),
                 errorMessage: error instanceof Error ? error.message : 'Unknown error',
-            })
+            } as any)
             .where(eq(salesVerificationRuns.id, runId));
 
         return {

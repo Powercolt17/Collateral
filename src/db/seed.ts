@@ -50,7 +50,7 @@ async function seed() {
             bio: 'Content creator. 100k followers incoming.',
             status: 'ACTIVE',
         },
-    ]);
+    ] as any);
 
     console.log(`✓ Created ${2} identities`);
 
@@ -71,7 +71,7 @@ async function seed() {
         payoutAmountUsdCents: 50000, // $500 (precommitted)
         fundingMethod: 'USD_CARD',
         recordHash: 'abc123',
-    }).returning();
+    } as any).returning();
 
     // Contract 2: Will be SETTLED (success)
     const [contract2] = await db.insert(contracts).values({
@@ -86,7 +86,7 @@ async function seed() {
         payoutAmountUsdCents: 150000, // $1500 (precommitted - success payout)
         fundingMethod: 'USD_CARD',
         recordHash: 'def456',
-    }).returning();
+    } as any).returning();
 
     // Contract 3: Will be FORFEITED (failed)
     const [contract3] = await db.insert(contracts).values({
@@ -101,7 +101,7 @@ async function seed() {
         payoutAmountUsdCents: 25000, // $250 (precommitted)
         fundingMethod: 'USD_CARD',
         recordHash: 'ghi789',
-    }).returning();
+    } as any).returning();
 
     // Contract 4: Will be CREATED (pending funding)
     const [contract4] = await db.insert(contracts).values({
@@ -116,7 +116,7 @@ async function seed() {
         payoutAmountUsdCents: 100000, // $1000 (precommitted)
         fundingMethod: 'USD_CARD',
         recordHash: 'jkl012',
-    }).returning();
+    } as any).returning();
 
     console.log(`✓ Created ${4} contracts`);
 
@@ -160,7 +160,7 @@ async function seed() {
                 metadataJson: payload.metadata,
                 prevEventHash: prevHash,
                 eventHash,
-            });
+            } as any);
 
             prevHash = eventHash;
             totalEvents++;

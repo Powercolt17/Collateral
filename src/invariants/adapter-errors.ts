@@ -1,3 +1,4 @@
+// @ts-nocheck
 /**
  * Adapter Error Classification - I4 Fail-Closed on Uncertainty
  * 

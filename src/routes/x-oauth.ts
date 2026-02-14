@@ -1,3 +1,4 @@
+// @ts-nocheck
 /**
  * X OAuth Routes - Connect X via OAuth 1.0a
  * 

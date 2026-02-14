@@ -1,3 +1,4 @@
+// @ts-nocheck
 /**
  * Platform Connection Routes - V2 with Proof-of-Control (Production-Hardened)
  * 

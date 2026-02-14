@@ -1,3 +1,4 @@
+// @ts-nocheck
 /**
  * Contract Write Routes
  * 

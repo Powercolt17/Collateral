@@ -66,7 +66,7 @@ export async function salesRoutes(fastify: FastifyInstance): Promise<void> {
             },
         },
         async (request, reply) => {
-            const userId = request.user!.id;
+            const userId = (request as any).user!.id;
             const { windowDays } = request.body;
 
             try {

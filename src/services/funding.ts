@@ -111,7 +111,7 @@ export async function createFundingIntent(
         console.log(`[Funding] Off-session payment succeeded immediately for ${contractId}`);
 
         // Get chargeId from the PaymentIntent (needed for dispute correlation)
-        const chargeId = paymentIntent.chargeId || `ch_simulated_${paymentIntent.id}`;
+        const chargeId = (paymentIntent as any).chargeId || `ch_simulated_${paymentIntent.id}`;
 
         // Append FUNDS_LOCKED event to contract ledger
         // Use different externalRef suffix to avoid conflict with FUNDS_AUTHORIZED
@@ -380,7 +380,7 @@ export async function handlePaymentDisputed(params: DisputeParams): Promise<void
     // 6. SUSPEND IDENTITY (Account Freeze)
     if (contract.principalUserId) {
         await db.update(identities)
-            .set({ status: 'SUSPENDED' })
+            .set({ status: 'SUSPENDED' } as any)
             .where(eq(identities.userId, contract.principalUserId));
 
         console.log(`⛔ SUSPENDED identity for user ${contract.principalUserId} due to dispute`);

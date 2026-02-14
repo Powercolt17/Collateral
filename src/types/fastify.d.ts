@@ -1,7 +1,11 @@
-import 'fastify';
+import { FastifyRequest } from 'fastify';
 
 declare module 'fastify' {
     interface FastifyRequest {
-        userId?: string | null;
+        userId?: string;
+        user?: {
+            id: string;
+            [key: string]: any;
+        };
     }
 }

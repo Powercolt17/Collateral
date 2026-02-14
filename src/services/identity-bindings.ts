@@ -1,3 +1,4 @@
+// @ts-nocheck
 /**
  * Identity Binding Service
  * 

@@ -15,7 +15,7 @@ export async function expireInstances() {
 
     const result = await db
         .update(marketContractInstances)
-        .set({ status: 'expired' })
+        .set({ status: 'expired' } as any)
         .where(and(
             lt(marketContractInstances.fundingCloseAt, now),
             inArray(marketContractInstances.status, ['published', 'closing'])
@@ -115,7 +115,7 @@ export async function recomputeStats() {
                 capitalLockedTotalCents: Number(volTotal?.total || 0),
                 lastExecutionAt: lastExec?.createdAt || null,
                 updatedAt: new Date(),
-            })
+            } as any)
             .onConflictDoUpdate({
                 target: marketStatsCache.instanceId,
                 set: {
@@ -126,7 +126,7 @@ export async function recomputeStats() {
                     capitalLockedTotalCents: Number(volTotal?.total || 0),
                     lastExecutionAt: lastExec?.createdAt || null,
                     updatedAt: new Date(),
-                }
+                } as any
             });
     }
 

@@ -59,7 +59,7 @@ export default async function marketRoutes(fastify: FastifyInstance) {
         }
 
         const instance = await publishDrop({
-            ...body,
+            ...(body as any),
             fundingCloseAt: new Date(body.fundingCloseAt),
         });
 

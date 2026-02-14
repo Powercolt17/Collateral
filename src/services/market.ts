@@ -200,7 +200,7 @@ export async function publishDrop(params: PublishDropParams) {
         minLockCents: params.overrides?.minLockCents,
         maxLockCents: params.overrides?.maxLockCents,
         instanceTermsJson: params.overrides?.tierOptions ? { tierOptions: params.overrides.tierOptions } : null,
-    }).returning();
+    } as any).returning();
 
     // 3. Initialize stats cache (empty)
     await db.insert(marketStatsCache).values({
@@ -213,6 +213,6 @@ export async function publishDrop(params: PublishDropParams) {
 export async function expireInstance(instanceId: string) {
     await db
         .update(marketContractInstances)
-        .set({ status: 'expired' })
+        .set({ status: 'expired' } as any)
         .where(eq(marketContractInstances.id, instanceId));
 }

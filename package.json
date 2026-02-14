@@ -9,7 +9,7 @@
   "main": "dist/index.js",
   "scripts": {
     "dev": "tsx watch src/index.ts",
-    "build": "node ./node_modules/typescript/bin/tsc -p tsconfig.json",
+    "build": "node ./node_modules/typescript/bin/tsc -p tsconfig.json && cp -r src/db/migrations dist/db/",
     "start": "node dist/index.js",
     "start:migrate": "node dist/db/migrate-prod.js && node dist/index.js",
     "worker": "node dist/worker/runner.js",

@@ -42,9 +42,19 @@ async function main() {
     const __filename = fileURLToPath(import.meta.url);
     const __dirname = dirname(__filename);
 
-    // Attempt to locate migrations in src (standard for this repo structure)
-    // If we were using a build tool that copies assets, we might look in dist/db/migrations
-    const migrationsFolder = resolve(__dirname, '../../src/db/migrations');
+    // Strategy:
+    // 1. Check relative ./migrations (Production behavior - when copied to dist/db/migrations)
+    // 2. Check ../../src/db/migrations (Dev/Fallback behavior)
+
+    let migrationsFolder = resolve(__dirname, 'migrations');
+
+    // Simple check: does directory exist? (Using fs is cleaner but we can try/catch/stat if needed)
+    // For now, let's assume if we are in dist/db, and we copied migrations, it's there.
+
+    // However, if we are running locally via tsx, __dirname is src/db, so ./migrations works there too!
+    // So actually, resolve(__dirname, 'migrations') works for BOTH if:
+    // - In src/db: ./migrations exists
+    // - In dist/db: ./migrations exists (IF COPIED)
 
     console.log(`   [migrate] Looking for migrations in: ${migrationsFolder}`);
 
@@ -60,8 +70,24 @@ async function main() {
 
     } catch (err) {
         console.error('❌ [migrate] Migration FAILED:', err);
-        await migrationClient.end();
-        process.exit(1);
+        // Fallback: Try the src path if the first one failed (maybe we didn't copy to dist)
+        if (migrationsFolder.includes('dist')) {
+            console.log('   [migrate] Retrying with source path fallback...');
+            const srcMigrationsFolder = resolve(__dirname, '../../src/db/migrations');
+            try {
+                await migrate(db, { migrationsFolder: srcMigrationsFolder });
+                console.log('✅ [migrate] Migrations applied successfully (fallback).');
+                await migrationClient.end();
+                process.exit(0);
+            } catch (err2) {
+                console.error('❌ [migrate] Fallback also FAILED:', err2);
+                await migrationClient.end();
+                process.exit(1);
+            }
+        } else {
+            await migrationClient.end();
+            process.exit(1);
+        }
     }
 }
 

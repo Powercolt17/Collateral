@@ -1,5 +1,5 @@
-import { FastifyInstance, FastifyRequest, FastifyReply } from 'fastify';
-import { getMarketFeed, publishDrop, expireInstance, PublishDropParams } from '../services/market.js';
+import { FastifyInstance } from 'fastify';
+import { getMarketFeed, getGlobalStats, publishDrop, expireInstance, PublishDropParams } from '../services/market.js';
 import { z } from 'zod';
 
 // Input Schemas
@@ -33,17 +33,21 @@ export default async function marketRoutes(fastify: FastifyInstance) {
     fastify.get('/v1/market/contracts', async (request, reply) => {
         const query = MarketFeedQuerySchema.parse(request.query);
 
-        const items = await getMarketFeed({
-            ...query,
-            limit: query.limit || 50,
-            offset: query.offset || 0,
-        });
+        const [contracts, stats] = await Promise.all([
+            getMarketFeed({
+                ...query,
+                limit: query.limit || 50,
+                offset: query.offset || 0,
+            }),
+            getGlobalStats(),
+        ]);
 
         return {
             ok: true,
             serverTime: new Date().toISOString(),
-            count: items.length,
-            items,
+            count: contracts.length,
+            contracts, // Rename items -> contracts for frontend comformity
+            stats,
         };
     });
 

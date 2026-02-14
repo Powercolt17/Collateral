@@ -71,14 +71,22 @@ if (IS_PRODUCTION) {
 
 let fastifyHandler: ((req: http.IncomingMessage, res: http.ServerResponse) => void) | null = null;
 
+// Phase 1 Request Handler
 const server = http.createServer((req, res) => {
-    // Once Fastify is ready, delegate ALL requests to it
+    // 1. Delegate to Fastify if ready
     if (fastifyHandler) {
-        return fastifyHandler(req, res);
+        fastifyHandler(req, res);
+        return;
     }
 
-    // Phase 1: Only /health works while Fastify boots
-    if (req.method === 'GET' && req.url === '/health') {
+    const url = (req.url || '').split('?')[0];
+
+    // Log incoming requests during boot (helps debug Railway healthchecks)
+    console.log(`[boot] Incoming request: ${req.method} ${url}`);
+
+    // 2. Handle Healthset (Phase 1)
+    // Accept /health, /health/, and root / as valid health checks
+    if (req.method === 'GET' && (url === '/' || url === '/health' || url === '/health/')) {
         res.writeHead(200, { 'Content-Type': 'application/json' });
         res.end(JSON.stringify({
             status: 'ok',
@@ -86,10 +94,12 @@ const server = http.createServer((req, res) => {
             service: 'collateral-backend',
             version: '1.0.0',
             phase: 'booting',
+            note: 'Fastify is initializing...'
         }));
         return;
     }
 
+    // 3. Reject everything else with 503 until booted
     res.writeHead(503, { 'Content-Type': 'application/json' });
     res.end(JSON.stringify({ ok: false, error: 'Service starting...' }));
 });

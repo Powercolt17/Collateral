@@ -162,6 +162,13 @@
       "when": 1769800000000,
       "tag": "0021_commerce_hardening",
       "breakpoints": true
+    },
+    {
+      "idx": 23,
+      "version": "7",
+      "when": 1771043161918,
+      "tag": "0023_sparkling_obadiah_stane",
+      "breakpoints": true
     }
   ]
 }

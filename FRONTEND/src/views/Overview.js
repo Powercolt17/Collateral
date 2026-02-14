@@ -1382,6 +1382,8 @@ export function initOverview() {
     }
 
     // Wire up Rule Modal Logic (preserved)
+    const rulesBtn = document.getElementById('btn-rules');
+    const rulesModal = document.getElementById('rules-modal');
     if (rulesBtn && rulesModal) {
         rulesBtn.addEventListener('click', () => rulesModal.classList.add('open'));
         document.addEventListener('keydown', (e) => {

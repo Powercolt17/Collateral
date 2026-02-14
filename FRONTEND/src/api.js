@@ -295,6 +295,11 @@ export async function getContract(contractId) {
     return get(`/v1/contracts/${contractId}`);
 }
 
+export async function getMarketFeed(params = {}) {
+    const query = new URLSearchParams(params).toString();
+    return getPublic(`/v1/market/contracts?${query}`);
+}
+
 // --- FUNDING ---
 
 export async function createFundingIntent(contractId) {
@@ -435,6 +440,7 @@ export default {
     createContract,
     getContracts,
     getContract,
+    getMarketFeed,
 
     // Funding
     createFundingIntent,

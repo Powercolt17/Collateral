@@ -25,6 +25,7 @@ import payoutRoutes from './routes/payouts.js';
 import waitlistRoutes from './routes/waitlist.js';
 import salesRoutes from './routes/sales.js';
 import commerceRoutes from './routes/commerce.js';
+import marketRoutes from './routes/market.js';
 
 const PORT = parseInt(process.env.PORT || '3000', 10);
 
@@ -212,6 +213,7 @@ async function bootFastify() {
         await safeRegister('waitlist', waitlistRoutes);
         await safeRegister('sales', salesRoutes);
         await safeRegister('commerce', commerceRoutes);
+        await safeRegister('market', marketRoutes);
 
         console.log('[startup] All routes queued, calling ready()...');
 

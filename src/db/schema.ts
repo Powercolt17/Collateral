@@ -319,6 +319,8 @@ export const contracts = pgTable('contracts', {
     // These reference the identity binding used at contract creation
     stripeBindingId: uuid('stripe_binding_id'),   // FK to identity_bindings deferred due to circular ref
     githubBindingId: uuid('github_binding_id'),   // FK to identity_bindings deferred
+    // LIVE MARKET LINKAGE
+    marketInstanceId: uuid('market_instance_id'), // FK to market_contract_instances deferred
     createdAt: timestamp('created_at', { withTimezone: true }).defaultNow().notNull(),
     updatedAt: timestamp('updated_at', { withTimezone: true }).defaultNow().notNull(),
 });
@@ -602,3 +604,82 @@ export const EventType = {
 } as const;
 
 export type EventTypeType = typeof EventType[keyof typeof EventType];
+
+// =============================================================================
+// LIVE MARKET TABLES (Phase 1)
+// =============================================================================
+
+export const marketInstanceStatusEnum = pgEnum('market_instance_status', [
+    'published',
+    'closing',
+    'expired',
+    'paused'
+]);
+
+// 1. Contract Templates - Logical definitions
+export const contractTemplates = pgTable('contract_templates', {
+    id: uuid('id').primaryKey().defaultRandom(),
+    slug: varchar('slug', { length: 100 }).notNull().unique(),
+    title: varchar('title', { length: 255 }).notNull(),
+    description: text('description').notNull(),
+    category: varchar('category', { length: 50 }).notNull(), // finance, sales, social, etc.
+    provider: platformEnum('provider').notNull(),
+    rulesJson: jsonb('rules_json').notNull(), // Verification rules, event filters
+    tierOptionsJson: jsonb('tier_options_json').notNull(), // Payouts for STANDARD/ADVANCED/ELITE
+    createdAt: timestamp('created_at', { withTimezone: true }).defaultNow().notNull(),
+    updatedAt: timestamp('updated_at', { withTimezone: true }).defaultNow().notNull(),
+}, (table) => ({
+    slugIdx: uniqueIndex('contract_templates_slug_idx').on(table.slug),
+    categoryIdx: index('contract_templates_category_idx').on(table.category),
+}));
+
+// 2. Market Contract Instances - Specific "drops" with time windows
+export const marketContractInstances = pgTable('market_contract_instances', {
+    id: uuid('id').primaryKey().defaultRandom(),
+    templateId: uuid('template_id').references(() => contractTemplates.id).notNull(),
+    status: marketInstanceStatusEnum('status').default('published').notNull(),
+    publishAt: timestamp('publish_at', { withTimezone: true }).defaultNow().notNull(),
+    fundingCloseAt: timestamp('funding_close_at', { withTimezone: true }).notNull(),
+    executionCloseAt: timestamp('execution_close_at', { withTimezone: true }), // Optional hard stop
+    capacityTotal: integer('capacity_total'), // Nullable = unlimited
+    capacityRemaining: integer('capacity_remaining'),
+    minLockCents: integer('min_lock_cents'),
+    maxLockCents: integer('max_lock_cents'),
+    // Overrides for this specific drop
+    termsVersion: integer('terms_version').default(1).notNull(),
+    instanceTermsJson: jsonb('instance_terms_json'),
+    createdAt: timestamp('created_at', { withTimezone: true }).defaultNow().notNull(),
+    updatedAt: timestamp('updated_at', { withTimezone: true }).defaultNow().notNull(),
+}, (table) => ({
+    templateIdx: index('market_instances_template_idx').on(table.templateId),
+    statusIdx: index('market_instances_status_idx').on(table.status),
+    publishTimeIdx: index('market_instances_publish_idx').on(table.publishAt),
+    closingTimeIdx: index('market_instances_closing_idx').on(table.fundingCloseAt),
+}));
+
+// 3. Market Stats Cache - High performance sorting
+export const marketStatsCache = pgTable('market_stats_cache', {
+    instanceId: uuid('instance_id').references(() => marketContractInstances.id).primaryKey(),
+    executions1h: integer('executions_1h').default(0).notNull(),
+    executions24h: integer('executions_24h').default(0).notNull(),
+    capitalLocked1hCents: integer('capital_locked_1h_cents').default(0).notNull(),
+    capitalLocked24hCents: integer('capital_locked_24h_cents').default(0).notNull(),
+    capitalLockedTotalCents: integer('capital_locked_total_cents').default(0).notNull(),
+    lastExecutionAt: timestamp('last_execution_at', { withTimezone: true }),
+    failRateRolling: integer('fail_rate_rolling').default(0), // 0-10000 basis points
+    updatedAt: timestamp('updated_at', { withTimezone: true }).defaultNow().notNull(),
+}, (table) => ({
+    trending1hIdx: index('market_stats_trending_1h_idx').on(table.executions1h),
+    trending24hIdx: index('market_stats_trending_24h_idx').on(table.executions24h),
+    volume24hIdx: index('market_stats_volume_24h_idx').on(table.capitalLocked24hCents),
+}));
+
+// Type Exports for New Tables
+export type ContractTemplate = typeof contractTemplates.$inferSelect;
+export type NewContractTemplate = typeof contractTemplates.$inferInsert;
+
+export type MarketContractInstance = typeof marketContractInstances.$inferSelect;
+export type NewMarketContractInstance = typeof marketContractInstances.$inferInsert;
+
+export type MarketStatsCache = typeof marketStatsCache.$inferSelect;
+export type NewMarketStatsCache = typeof marketStatsCache.$inferInsert;

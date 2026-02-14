@@ -15,11 +15,12 @@ import {
     EventType,
     type ContractStatusType,
     users,
-    connectedAccounts
+    connectedAccounts,
+    marketContractInstances
 } from '../db/schema.js';
 import { appendEvent, getEventsForContract } from './ledger.js';
 import { deriveState, canTransition, InvalidTransitionError } from './state-derivation.js';
-import { eq, and } from 'drizzle-orm';
+import { eq, and, sql, gt } from 'drizzle-orm';
 import { createHash } from 'crypto';
 import { stripeRevenueAdapter } from '../adapters/stripe-revenue.js';
 import { githubAdapter, getGithubClient } from '../adapters/github.js';
@@ -138,6 +139,7 @@ export interface CreateContractParams {
     payoutAmountUsdCents: number;
     fundingMethod?: 'USD_CARD' | 'USD_ACH' | 'CRYPTO';
     riskTier?: 'STANDARD' | 'ADVANCED' | 'ELITE';
+    marketInstanceId?: string; // Optional: Link to Live Market drop
 }
 
 /**
@@ -298,6 +300,50 @@ export async function createContract(params: CreateContractParams): Promise<Cont
     // ANTI-SYBIL VALIDATION (before any other checks)
     // =========================================================
     await validateAntiSybil(principalUserId, lockAmountUsdCents, platform);
+
+    // =========================================================
+    // LIVE MARKET VALIDATION & CAPACITY RESERVATION
+    // =========================================================
+    if (params.marketInstanceId) {
+        // 1. Fetch Instance
+        const [instance] = await db
+            .select()
+            .from(marketContractInstances)
+            .where(eq(marketContractInstances.id, params.marketInstanceId))
+            .limit(1);
+
+        if (!instance) {
+            throw new Error(`Market instance not found: ${params.marketInstanceId}`);
+        }
+
+        // 2. Validate Status & Time
+        /* Allow 'published' and 'closing'. Reject 'expired' or 'paused'. */
+        if (!['published', 'closing'].includes(instance.status)) {
+            throw new Error(`Market instance is not active (status: ${instance.status})`);
+        }
+
+        if (instance.fundingCloseAt < new Date()) {
+            throw new Error(`Market instance funding window closed at ${instance.fundingCloseAt.toISOString()}`);
+        }
+
+        // 3. Check & Reserve Capacity (Atomic Decrement)
+        if (instance.capacityRemaining !== null) {
+            const [reserved] = await db
+                .update(marketContractInstances)
+                .set({
+                    capacityRemaining: sql`${marketContractInstances.capacityRemaining} - 1`
+                })
+                .where(and(
+                    eq(marketContractInstances.id, params.marketInstanceId),
+                    gt(marketContractInstances.capacityRemaining, 0)
+                ))
+                .returning();
+
+            if (!reserved) {
+                throw new Error('Market instance cap reached (sold out)');
+            }
+        }
+    }
 
     // =========================================================
     // STRICT CONDITION VALIDATION (per platform/metric)
@@ -479,6 +525,7 @@ export async function createContract(params: CreateContractParams): Promise<Cont
         payoutAmountUsdCents,
         fundingMethod: fundingMethod || 'USD_CARD',
         riskTier,
+        marketInstanceId: params.marketInstanceId,
     };
 
     const [inserted] = await db.insert(contracts).values(newContract).returning();

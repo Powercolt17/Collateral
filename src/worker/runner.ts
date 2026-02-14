@@ -16,6 +16,7 @@
 
 import { runVerificationJob } from '../services/verification.js';
 import { runSettlementJob } from '../services/settlement.js';
+import { expireInstances, recomputeStats } from '../jobs/market-maintenance.js';
 
 // Configuration from environment
 const WORKER_CONCURRENCY = parseInt(process.env.WORKER_CONCURRENCY || '1', 10);
@@ -86,6 +87,16 @@ async function runJobIteration(): Promise<{
         durationMs: settlementDurationMs,
         ...settlementResult,
     });
+
+    // Run market maintenance (Feed updates)
+    // Runs every iteration (approx 15s) which satisfies the < 60s requirement
+    try {
+        await expireInstances();
+        await recomputeStats();
+        log('INFO', 'Market maintenance complete', { iterationId });
+    } catch (err: any) {
+        log('ERROR', 'Market maintenance failed', { error: err.message, iterationId });
+    }
 
     return {
         verification: verificationResult,

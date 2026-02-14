@@ -230,13 +230,65 @@ export const DEFAULT_TIER_CONFIGS: Record<RiskTier, RiskTierConfig> = {
  * Calculate target for a given tier and context
  * This is the core policy function - implementation deferred
  */
-export function calculateTarget(_input: TargetCalculationInput): TargetCalculationOutput {
-    // TODO: Implement when ready
-    // - Apply baseline multiplier curve
-    // - Apply size breakpoints
-    // - Apply time pressure
-    // - Apply stake adjustment
-    throw new Error('calculateTarget: Implementation deferred - architecture only');
+export function calculateTarget(input: TargetCalculationInput): TargetCalculationOutput {
+    const config = DEFAULT_TIER_CONFIGS[input.tier];
+    const curve = config.baselineMultiplierCurve;
+
+    // 1. Calculate Base Multiplier Logic
+    let multiplier = 0;
+    const baseline = Math.max(1, input.baseline); // Avoid log(0)
+
+    if (curve.type === 'logarithmic') {
+        // base + scale * log10(baseline)
+        multiplier = curve.coefficients.base + curve.coefficients.scale * Math.log10(baseline);
+    } else if (curve.type === 'exponential') {
+        // scaled log approach for exponential tier to keep numbers sane while aggressive
+        // base + scale * (log10(baseline) ^ exponent)
+        const logVal = Math.log10(baseline);
+        multiplier = curve.coefficients.base + curve.coefficients.scale * Math.pow(logVal, curve.coefficients.exponent);
+    } else {
+        // Fallback default
+        multiplier = curve.coefficients.base + curve.coefficients.scale * Math.log10(baseline);
+    }
+
+    const breakdown: string[] = [];
+    breakdown.push(`Base multiplier (Tier ${input.tier}): ${multiplier.toFixed(4)}`);
+
+    // 2. Apply Size Breakpoints
+    let sizeAdjustment = 1.0;
+    for (const bp of curve.breakpoints) {
+        if (baseline > bp.threshold && bp.metricTypes.includes(input.metricType)) {
+            sizeAdjustment *= bp.adjustmentFactor;
+            breakdown.push(`Size adjustment (> ${bp.threshold}): x${bp.adjustmentFactor}`);
+        }
+    }
+    multiplier *= sizeAdjustment;
+
+    // 3. Apply Time Pressure (Simplified: Tier coefficient)
+    // "More time = harder" -> We treat the coefficient as a base scalar for the tier's time expectations
+    const timeAdjustment = config.timePressureCoefficient;
+    multiplier *= timeAdjustment;
+    breakdown.push(`Time pressure coefficient: x${timeAdjustment}`);
+
+    // 4. Apply Ceiling
+    if (multiplier > curve.coefficients.ceiling) {
+        breakdown.push(`Capped at ceiling: ${curve.coefficients.ceiling} (was ${multiplier.toFixed(4)})`);
+        multiplier = curve.coefficients.ceiling;
+    }
+
+    // 5. Final Target
+    const target = Math.ceil(baseline * multiplier);
+
+    return {
+        target,
+        multiplier,
+        adjustments: {
+            sizeAdjustment,
+            timeAdjustment,
+            stakeAdjustment: 1.0
+        },
+        breakdown
+    };
 }
 
 /**
@@ -244,13 +296,36 @@ export function calculateTarget(_input: TargetCalculationInput): TargetCalculati
  * Ensures targets meet minimum difficulty for tier
  */
 export function validateTargetForTier(
-    _tier: RiskTier,
-    _baseline: number,
-    _target: number,
-    _metricType: MetricType
+    tier: RiskTier,
+    baseline: number,
+    target: number,
+    metricType: MetricType
 ): { valid: boolean; reason?: string } {
-    // TODO: Implement when ready
-    throw new Error('validateTargetForTier: Implementation deferred - architecture only');
+    const config = DEFAULT_TIER_CONFIGS[tier];
+
+    // Calculate the reference target for this tier
+    // We use generic parameters to establish the "floor" for this tier
+    const calculated = calculateTarget({
+        tier,
+        platform: 'X', // Placeholder, platform doesn't affect calculation yet
+        metricType,
+        baseline,
+        durationDays: config.minDurationDays,
+        stakeUsdCents: config.minStakeUsdCents
+    });
+
+    // In a "House Edge" model, user cannot choose a target easier than the system calculated one.
+    // If system calc is 1500 (1.5x), and user proposes 1200 (1.2x), it's invalid.
+    // If user proposes 2000 (2.0x), it's valid (harder is allowed, though usually system dictates exact).
+
+    if (target < calculated.target) {
+        return {
+            valid: false,
+            reason: `Target ${target} is below minimum allowed (${calculated.target}) for tier ${tier}`
+        };
+    }
+
+    return { valid: true };
 }
 
 /**

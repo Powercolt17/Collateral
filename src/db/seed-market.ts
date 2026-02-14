@@ -62,7 +62,7 @@ async function main() {
         fundingCloseAt: closeIn7Days,
         capacityTotal: 100,
         capacityRemaining: 85,
-    }).returning();
+    } as any).returning();
 
     const [inst2] = await db.insert(marketContractInstances).values({
         templateId: socialTemplate.id,
@@ -71,13 +71,27 @@ async function main() {
         fundingCloseAt: closeIn7Days,
         capacityTotal: 500,
         capacityRemaining: 492,
-    }).returning();
+    } as any).returning();
 
     // 4. Init Stats
-    await db.insert(marketStatsCache).values([
-        { instanceId: inst1.id, executions24h: 12, capitalLocked24hCents: 1250000 },
-        { instanceId: inst2.id, executions24h: 45, capitalLocked24hCents: 850000 }
-    ]);
+    // Insert individually to avoid array type inference issues
+    await db.insert(marketStatsCache).values({
+        instanceId: inst1.id,
+        executions1h: 0,
+        executions24h: 12,
+        capitalLocked1hCents: 0,
+        capitalLocked24hCents: 1250000,
+        capitalLockedTotalCents: 0
+    } as any);
+
+    await db.insert(marketStatsCache).values({
+        instanceId: inst2.id,
+        executions1h: 0,
+        executions24h: 45,
+        capitalLocked1hCents: 0,
+        capitalLocked24hCents: 850000,
+        capitalLockedTotalCents: 0
+    } as any);
 
     console.log('✅ [seed] Market seeded successfully.');
     process.exit(0);

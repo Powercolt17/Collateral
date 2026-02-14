@@ -97,7 +97,18 @@ const server = http.createServer((req, res) => {
 // Bind to PORT immediately — Railway healthcheck passes within seconds
 server.listen(PORT, '0.0.0.0', () => {
     console.log(`[startup] ✅ Phase 1: Health endpoint live on 0.0.0.0:${PORT}`);
-    bootFastify();
+
+    // Phase 1.5: Verify Schema (Async)
+    import('./db/guard.js')
+        .then(async ({ checkSchema }) => {
+            await checkSchema();
+            bootFastify();
+        })
+        .catch(err => {
+            console.error('[startup] ❌ Schema guard failed. App will NOT boot fully.', err);
+            // Fail fast so Railway restarts the container
+            process.exit(1);
+        });
 });
 
 // =========================================================

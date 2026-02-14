@@ -16,6 +16,7 @@
     "db:generate": "drizzle-kit generate",
     "db:migrate": "tsx src/db/migrate.ts",
     "db:seed": "tsx src/db/seed.ts",
+    "db:seed:market": "tsx src/db/seed-market.ts",
     "db:up": "docker-compose up -d && tsx src/db/wait-for-db.ts",
     "db:down": "docker-compose down",
     "db:logs": "docker logs -f collateral_postgres",

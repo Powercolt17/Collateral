@@ -62,14 +62,52 @@ export async function runMigrations() {
         await migrate(migrationDb, { migrationsFolder });
         console.log('[migrate] ✅ Migrations applied successfully.');
 
-        // VALIDATION: Specific check for the missing tables
+        // VALIDATION & FORCE FIX
         try {
+            // 1. Log tracking status
+            try {
+                const applied = await migrationDb.execute(sql`SELECT count(*) as count FROM drizzle.__drizzle_migrations`);
+                console.log(`[migrate] ℹ️ Drizzle tracking table has ${applied[0]?.count} rows.`);
+            } catch (e) {
+                console.log('[migrate] ℹ️ Could not query drizzle.__drizzle_migrations (might not exist yet).');
+            }
+
+            // 2. Check for missing tables
             const [mci] = await migrationDb.execute(sql`SELECT to_regclass('public.market_contract_instances') as exists`);
             const [ct] = await migrationDb.execute(sql`SELECT to_regclass('public.contract_templates') as exists`);
 
-            console.log(`[migrate] 🔍 Table Check: market_contract_instances=${!!mci?.exists}, contract_templates=${!!ct?.exists}`);
+            const mciExists = !!mci?.exists;
+            const ctExists = !!ct?.exists;
+
+            console.log(`[migrate] 🔍 Table Check: market_contract_instances=${mciExists}, contract_templates=${ctExists}`);
+
+            if (!mciExists || !ctExists) {
+                console.warn('[migrate] ⚠️ Critical tables missing despite migration success. FORCE APPLYING 0025...');
+
+                // Force read 0025 and execute
+                const forceFile = '0025_add_missing_market_tables_v2.sql';
+                const forcePath = resolve(migrationsFolder, forceFile);
+
+                if (fs.existsSync(forcePath)) {
+                    console.log(`[migrate] reading ${forceFile}...`);
+                    const sqlContent = fs.readFileSync(forcePath, 'utf-8');
+
+                    // Simple execute (assuming file is safe standard SQL)
+                    await migrationDb.execute(sql.raw(sqlContent));
+                    console.log('[migrate] ☢️ FORCE APPLY 0025 EXECUTED.');
+
+                    // Re-verify
+                    const [mci2] = await migrationDb.execute(sql`SELECT to_regclass('public.market_contract_instances') as exists`);
+                    console.log(`[migrate] 🔍 Re-Check: market_contract_instances=${!!mci2?.exists}`);
+                } else {
+                    console.error(`[migrate] ❌ Could not find ${forceFile} to force apply! Path checked: ${forcePath}`);
+                }
+            } else {
+                console.log('[migrate] ✅ Tables confirmed to exist.');
+            }
+
         } catch (valErr) {
-            console.warn('[migrate] ⚠️ Validation check failed (ignoring):', valErr);
+            console.error('[migrate] ⚠️ Validation/Force-Fix failed:', valErr);
         }
 
         await migrationClient.end();

@@ -2,6 +2,7 @@
 import 'dotenv/config';
 import { drizzle } from 'drizzle-orm/postgres-js';
 import { migrate } from 'drizzle-orm/postgres-js/migrator';
+import { sql } from 'drizzle-orm';
 import postgres from 'postgres';
 import { fileURLToPath } from 'url';
 import { dirname, resolve } from 'path';
@@ -60,6 +61,17 @@ export async function runMigrations() {
     try {
         await migrate(migrationDb, { migrationsFolder });
         console.log('[migrate] ✅ Migrations applied successfully.');
+
+        // VALIDATION: Specific check for the missing tables
+        try {
+            const [mci] = await migrationDb.execute(sql`SELECT to_regclass('public.market_contract_instances') as exists`);
+            const [ct] = await migrationDb.execute(sql`SELECT to_regclass('public.contract_templates') as exists`);
+
+            console.log(`[migrate] 🔍 Table Check: market_contract_instances=${!!mci?.exists}, contract_templates=${!!ct?.exists}`);
+        } catch (valErr) {
+            console.warn('[migrate] ⚠️ Validation check failed (ignoring):', valErr);
+        }
+
         await migrationClient.end();
         return true;
     } catch (err) {

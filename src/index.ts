@@ -108,14 +108,35 @@ const server = http.createServer((req, res) => {
 server.listen(PORT, '0.0.0.0', () => {
     console.log(`[startup] ✅ Phase 1: Health endpoint live on 0.0.0.0:${PORT}`);
 
-    // Phase 1.5: Verify Schema (Async)
-    import('./db/guard.js')
-        .then(async ({ checkSchema }) => {
+    // DIAGNOSTICS
+    const dbUrl = process.env.DATABASE_URL || '';
+    const maskedUrl = dbUrl.replace(/:([^:@]+)@/, ':****@');
+    console.log(`[startup] 🔍 Diagnostic: DB_URL=${maskedUrl} (Length: ${dbUrl.length})`);
+
+    // Phase 1.5: Run Migrations -> Verify Schema -> Boot
+    import('./db/migrate-prod.js')
+        .then(async ({ runMigrations }) => {
+            console.log('[startup] 🔄 Running migrations...');
+            await runMigrations();
+            console.log('[startup] ✅ Migrations up to date.');
+
+            // Seed Market Data (Safe/Idempotent)
+            try {
+                const { seedMarket } = await import('./db/seed-market.js');
+                await seedMarket();
+            } catch (err) {
+                console.error('[startup] ⚠️ Seed failed (continuing):', err);
+            }
+
+            // Now check schema
+            const { checkSchema } = await import('./db/guard.js');
             await checkSchema();
+
+            // Now boot app
             bootFastify();
         })
         .catch(err => {
-            console.error('[startup] ❌ Schema guard failed. App will NOT boot fully.', err);
+            console.error('[startup] ❌ Boot Sequence Failed (Migration/Schema).', err);
             // Fail fast so Railway restarts the container
             process.exit(1);
         });

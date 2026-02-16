@@ -2,6 +2,7 @@
 import 'dotenv/config';
 import { db } from './client.js';
 import { contractTemplates, marketContractInstances, marketStatsCache } from './schema.js';
+import { sql } from 'drizzle-orm';
 
 /**
  * Seed Market Data
@@ -11,6 +12,19 @@ import { contractTemplates, marketContractInstances, marketStatsCache } from './
  */
 export async function seedMarket() {
     console.log('🌱 [seed] Checking market data...');
+
+    // Safety check: Ensure tables exist before querying
+    // This prevents crash if migrations failed but app continued
+    try {
+        const [check] = await db.execute(sql`SELECT to_regclass('public.market_contract_instances') as exists`);
+        if (!check?.exists) {
+            console.warn('⚠️ [seed] "market_contract_instances" table missing. Skipping seed.');
+            return;
+        }
+    } catch (e) {
+        console.warn('⚠️ [seed] Failed to check table existence. Skipping seed.', e);
+        return;
+    }
 
     // check if any templates exist
     // Use try/catch to be robust against schema issues during boot

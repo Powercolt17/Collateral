@@ -46,6 +46,17 @@ export async function runMigrations() {
 
     console.log(`[migrate] Using migrations folder: ${migrationsFolder}`);
 
+    // DIAGNOSTIC: List files in the folder
+    try {
+        const files = fs.readdirSync(migrationsFolder);
+        console.log(`[migrate] Found ${files.length} files in migrations folder:`, files.slice(0, 5), '...');
+        if (files.length === 0) {
+            console.error('[migrate] ⚠️ Migrations folder is EMPTY!');
+        }
+    } catch (e) {
+        console.error('[migrate] ❌ Failed to list migrations folder:', e);
+    }
+
     try {
         await migrate(migrationDb, { migrationsFolder });
         console.log('[migrate] ✅ Migrations applied successfully.');

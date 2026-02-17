@@ -1004,8 +1004,14 @@ export function initOverview() {
         const shortId = rawId.split('-')[0] || rawId || '????';
 
         const tier = (c.tier || 'controlled').toLowerCase();
-        // Use min_stake from new API (already in dollars)
-        const stake = c.min_stake || 0;
+        // Use min_stake/max_stake from new API
+        const min = c.min_stake || 0;
+        const max = c.max_stake || 0;
+        const fee = c.fee_bps ? (c.fee_bps / 100) : 2; // default 2%
+
+        const stakeDisplay = (min === max)
+            ? `$${min.toLocaleString()}`
+            : `$${min.toLocaleString()} – $${max.toLocaleString()}`;
 
         const deadline = new Date(c.open_until || Date.now() + 86400000);
         const now = new Date();
@@ -1042,7 +1048,9 @@ export function initOverview() {
                  data-status="active" 
                  data-domain="${category}"
                  data-tier="${tier}" 
-                 data-stake="${stake}" 
+                 data-stake-min="${min}"
+                 data-stake-max="${max}"
+                 data-fee="${fee}"
                  data-deadline="${c.fundingCloseAt}"
                  data-goal="${goal}"
                  onclick="window.router.navigate('/contracts/${c.id}')">
@@ -1058,8 +1066,8 @@ export function initOverview() {
                 <div class="eq-card-baseline">${baseline}</div>
                 <div class="eq-card-meta">
                     <div>
-                        <div class="eq-card-stake">$${stake.toLocaleString()}</div>
-                        <div class="eq-card-stake-label">Stake</div>
+                        <div class="eq-card-stake">${stakeDisplay}</div>
+                        <div class="eq-card-stake-label">Stake Range</div>
                     </div>
                     <div class="eq-card-time">${timeLabel}</div>
                 </div>
@@ -1182,18 +1190,34 @@ export function initOverview() {
         const lockBtn = cardEl.querySelector('.eq-lock-btn');
         if (lockBtn) lockBtn.style.display = 'none';
 
-        // ... Execution UI Generation (simplified from original for brevity but functional) ...
-        // We will stick to the previous HTML structure for the execution panel
         const goal = cardEl.dataset.goal || '';
         const tier = (cardEl.dataset.tier || 'controlled').toUpperCase();
-        const stake = parseFloat(cardEl.dataset.stake || '0');
+
+        // Stake Ladder Logic
+        const minStake = parseFloat(cardEl.dataset.stakeMin || '0');
+        const maxStake = parseFloat(cardEl.dataset.stakeMax || '0');
+        const feeBps = parseFloat(cardEl.dataset.fee || '200'); // stored as 2.0 or 200? API sent 2.0 (fee/100) or feeBps. 
+        // Wait, renderCard set data-fee = fee_bps / 100. So 200 bps -> 2.
+        const feePercent = parseFloat(cardEl.dataset.fee || '2');
+
+        let currentStake = minStake > 0 ? minStake : 25;
+
         const deadline = cardEl.dataset.deadline || '';
         const shortId = id.split('-')[0];
         const rcptId = 'RCPT-' + shortId.slice(0, 4).toUpperCase();
 
         const execDiv = document.createElement('div');
         execDiv.className = 'eq-exec';
-        // Reuse HTML form logic
+
+        // Slider HTML if range exists
+        const hasRange = maxStake > minStake;
+        const sliderHtml = hasRange ? `
+            <div class="eq-slider-row" style="padding:0 0 12px; border-bottom:1px solid #eee; margin-bottom:12px;">
+                <span class="eq-slider-label" style="font-size:10px;text-transform:uppercase;letter-spacing:0.5px">Stake Amount</span>
+                <input type="range" class="eq-slider" id="exec-slider-${id}" min="${minStake}" max="${maxStake}" value="${minStake}" step="25">
+            </div>
+        ` : '';
+
         execDiv.innerHTML = `
             <div class="eq-exec-mode">
                 <div>
@@ -1204,10 +1228,20 @@ export function initOverview() {
             </div>
             <div class="eq-exec-body">
                 <div class="eq-tension">⚡ Execution begins immediately upon confirmation</div>
+                
                 <div class="eq-terms">
+                    ${sliderHtml}
                     <div class="eq-terms-grid">
-                         <div><div class="eq-term-key">Locked Capital</div><div class="eq-term-val">$${stake.toLocaleString()}</div></div>
+                         <div>
+                            <div class="eq-term-key">Locked Capital</div>
+                            <div class="eq-term-val" id="exec-val-${id}">$${currentStake.toLocaleString()}</div>
+                         </div>
+                         <div>
+                            <div class="eq-term-key">Est. Payout</div>
+                            <div class="eq-term-val" id="exec-payout-${id}">$${(currentStake * 1.5).toLocaleString()}</div> <!-- Placeholder mult, updated by JS -->
+                         </div>
                          <div><div class="eq-term-key">Goal</div><div class="eq-term-val" style="font-size:10px">${goal}</div></div>
+                         <div><div class="eq-term-key">Fee</div><div class="eq-term-val">${feePercent}%</div></div>
                     </div>
                 </div>
                 <div class="eq-sig">
@@ -1219,6 +1253,12 @@ export function initOverview() {
 
         cardEl.appendChild(execDiv);
 
+        // Multiplier lookup (approximate since we don't have it in data attrs yet, wait we do have tier)
+        // Controlled: 1.5x, Elevated: 2.5x, Maximum: 4.0x
+        let multiplier = 1.5;
+        if (tier === 'ELEVATED') multiplier = 2.5;
+        if (tier === 'MAXIMUM') multiplier = 4.0;
+
         // Listeners for this specific execution instance
         execDiv.querySelector('[data-action="collapse"]').addEventListener('click', (e) => { e.stopPropagation(); collapseAll(); });
 
@@ -1226,10 +1266,29 @@ export function initOverview() {
         const confirm = document.getElementById(`confirm-btn-${id}`);
         cb.addEventListener('change', () => confirm.disabled = !cb.checked);
 
+        // Slider Logic
+        if (hasRange) {
+            const slider = document.getElementById(`exec-slider-${id}`);
+            const valEl = document.getElementById(`exec-val-${id}`);
+            const payEl = document.getElementById(`exec-payout-${id}`);
+
+            slider.addEventListener('input', (e) => {
+                currentStake = parseFloat(e.target.value);
+                valEl.textContent = `$${currentStake.toLocaleString()}`;
+                payEl.textContent = `$${Math.round(currentStake * multiplier).toLocaleString()}`;
+            });
+        } else {
+            // Just update initial payout text
+            const payEl = document.getElementById(`exec-payout-${id}`);
+            if (payEl) payEl.textContent = `$${Math.round(currentStake * multiplier).toLocaleString()}`;
+        }
+
         confirm.addEventListener('click', (e) => {
             e.stopPropagation();
-            runExecution(cardEl, id, execDiv, stake);
+            // Use currentStake captured from closure scope
+            runExecution(cardEl, id, execDiv, currentStake);
         });
+
         const integration = cardEl.querySelector('.eq-card-integration')?.textContent?.trim() || '';
 
         // Map domain/integration to platform + metric
@@ -1243,8 +1302,9 @@ export function initOverview() {
         const threshold = thresholdMatch ? parseInt(thresholdMatch[1]) : 15;
         const riskTier = tier === 'ELEVATED' ? 'ADVANCED' : tier === 'MAXIMUM' ? 'ELITE' : 'STANDARD';
 
-        // Show step animation first (optimistic UI)
-        setTimeout(() => {
+        // Helper to run execution (renamed to avoid conflict with existing executeWithAPI, or just inline it)
+        function runExecution(cardEl, id, execDiv, finalStake) {
+            // Show step animation first (optimistic UI)
             execDiv.innerHTML = `
                 <div class="eq-exec-mode">
                     <div>
@@ -1266,9 +1326,9 @@ export function initOverview() {
 
             // Run real API calls alongside animation
             executeWithAPI(cardEl, id, execDiv, {
-                platform, metricType, threshold, riskTier, stake, deadline
+                platform, metricType, threshold, riskTier, stake: finalStake, deadline
             });
-        }, 200);
+        }
     }
 
     async function executeWithAPI(cardEl, id, execDiv, params) {

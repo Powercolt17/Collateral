@@ -117,8 +117,21 @@ server.listen(PORT, '0.0.0.0', () => {
     import('./db/migrate-prod.js')
         .then(async ({ runMigrations }) => {
             console.log('[startup] 🔄 Running migrations...');
-            await runMigrations();
-            console.log('[startup] ✅ Migrations up to date.');
+            try {
+                await runMigrations();
+                console.log('[startup] ✅ Migrations up to date.');
+            } catch (e) {
+                console.error('[startup] ⚠️ Migrations failed, attempting runtime fix...', e);
+            }
+
+            // RUNTIME SCHEMA FIX (Force Apply using raw SQL)
+            // This bypasses the migration table and ensures columns exist.
+            try {
+                const { fixSchemaDrift } = await import('./db/fix-schema-runtime.js');
+                await fixSchemaDrift();
+            } catch (err) {
+                console.error('[startup] ❌ Runtime Schema Fix Failed:', err);
+            }
 
             // Seed Market Data (Safe/Idempotent)
             try {

@@ -49,6 +49,7 @@ export interface MarketItem {
     displayTargetHint: string | null;
     // status: string; // Removed duplicate
     uiBadges: string[];
+    feeBps: number;
 }
 
 // =============================================================================
@@ -179,6 +180,7 @@ export async function getMarketFeed(options: MarketFeedOptions = {}): Promise<Ma
                 lastExecutionAt: stats?.lastExecutionAt?.toISOString() ?? null,
             },
             uiBadges: badges,
+            feeBps: (instance.instanceTermsJson as any)?.executionFeeBps || 200
         };
     });
 }
@@ -283,8 +285,11 @@ export async function getMarketListings(options: MarketFeedOptions = {}) {
             domain: i.template.category,
             provider: i.template.provider,
             slots_left: (i.capacityRemaining === null) ? 999 : i.capacityRemaining,
-            min_stake: Math.floor(i.costCents / 100), // cents -> dollars
-            max_stake: Math.floor(i.maxCostCents / 100), // cents -> dollars
+
+            // Stake Ladder
+            min_stake: Math.floor(i.costCents / 100),
+            max_stake: Math.floor(i.maxCostCents / 100),
+
             window_days: windowDays,
             tier_options: i.template.tierOptions, // Added for frontend calc
             open_until: i.fundingCloseAt, // Added
@@ -294,7 +299,11 @@ export async function getMarketListings(options: MarketFeedOptions = {}) {
             tier: i.tier,
             multiplier: i.multiplier,
             metric_key: i.metricKey,
-            target_hint: i.displayTargetHint
+            target_hint: i.displayTargetHint,
+
+            // Terms / Fees
+            fee_bps: i.feeBps,
+
         };
     });
 }

@@ -416,12 +416,38 @@ export async function seedCatalog() {
             const fundingClose = new Date();
             fundingClose.setDate(fundingClose.getDate() + 7);
 
-            // Tier Allocation
-            const tier = getTierFromRandom(Math.random());
+            // Tier Allocation (60% Controlled, 30% Elevated, 10% Maximum)
+            const rand = Math.random();
+            let tier = 'controlled';
+            if (rand > 0.6) tier = 'elevated';
+            if (rand > 0.9) tier = 'maximum';
+
             const rules = t.rulesJson as any;
-            // Safe access to tierOptions
             const tierOptions = t.tierOptionsJson as any;
-            const multiplier = tierOptions ? (tierOptions[tier] || 1.5) : 1.5;
+
+            // Smart Stake Ladder Configuration
+            let minStake = 2500;   // $25
+            let maxStake = 50000;  // $500
+            let multiplier = 1.5;
+            let feeBps = 200;      // 2%
+
+            if (tier === 'controlled') {
+                minStake = 2500;    // $25
+                maxStake = 50000;   // $500
+                multiplier = 1.5;
+                feeBps = 200;       // 2%
+            } else if (tier === 'elevated') {
+                minStake = 10000;   // $100
+                maxStake = 250000;  // $2,500
+                multiplier = 2.5;
+                feeBps = 300;       // 3%
+            } else if (tier === 'maximum') {
+                minStake = 50000;   // $500
+                maxStake = 2500000; // $25,000
+                multiplier = 4.0;
+                feeBps = 500;       // 5%
+            }
+
             const policy = getPolicyForTier(rules.metricKey, tier, rules.window_days);
             const hint = getHint(rules.metricKey, policy, rules.window_days);
 
@@ -434,9 +460,13 @@ export async function seedCatalog() {
                 fundingCloseAt: fundingClose,
                 capacityTotal: 500,
                 capacityRemaining: 500 - filled,
-                minLockCents: 2500,
-                maxLockCents: 200000,
+                minLockCents: minStake,
+                maxLockCents: maxStake,
                 termsVersion: 1,
+                instanceTermsJson: {
+                    executionFeeBps: feeBps,
+                    tier: tier // redundancy for terms verification
+                },
 
                 // Smart Tier Fields
                 tier: tier,

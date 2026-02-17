@@ -310,8 +310,8 @@ export async function seedCatalog() {
                     provider: t.provider as any,
                     description: t.description,
                     rulesJson: t.rules,
-                    tierOptionsJson: t.tierOptions,
-                    updatedAt: new Date()
+                    tierOptionsJson: t.tierOptions
+                    // updatedAt handled by DB or ignored
                 }
             });
     }
@@ -348,7 +348,7 @@ export async function seedCatalog() {
             // but Drizzle .values().returning() works standardly.
             const [newInstance] = await db.insert(marketContractInstances).values({
                 templateId: t.id,
-                status: 'published',
+                // status: 'published', // Use default
                 publishAt: new Date(),
                 fundingCloseAt: fundingClose,
                 capacityTotal: 500,
@@ -356,16 +356,13 @@ export async function seedCatalog() {
                 minLockCents: 2500,
                 maxLockCents: 200000,
                 termsVersion: 1,
-            }).returning();
+            } as any).returning();
 
             // Create stats cache
+            // Create stats cache
             await db.insert(marketStatsCache).values({
-                instanceId: newInstance.id,
-                executions1h: 0,
-                executions24h: 0,
-                capitalLocked1hCents: 0,
-                capitalLocked24hCents: 0,
-                capitalLockedTotalCents: 0
+                instanceId: newInstance.id
+                // All other fields have defaults (0)
             });
 
             createdCount++;

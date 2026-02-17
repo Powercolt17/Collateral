@@ -24,12 +24,15 @@ export interface MarketFeedOptions {
 
 export interface MarketItem {
     instanceId: string;
+    id: string; // Added for frontend compatibility
     status: string;
     publishAt: string;
     fundingCloseAt: string;
     capacityRemaining: number | null;
+    costCents: number; // Added for frontend compatibility
     template: {
         slug: string;
+        name: string; // Added for frontend compatibility
         title: string;
         description: string;
         category: string;
@@ -139,14 +142,20 @@ export async function getMarketFeed(options: MarketFeedOptions = {}): Promise<Ma
         const isNew = (now.getTime() - instance.publishAt.getTime()) < 24 * 60 * 60 * 1000; // < 24h
         if (isNew) badges.push('NEW');
 
+        const isNew = (now.getTime() - instance.publishAt.getTime()) < 24 * 60 * 60 * 1000; // < 24h
+        if (isNew) badges.push('NEW');
+
         return {
             instanceId: instance.id,
+            id: instance.id, // Frontend expects .id
             status: instance.status,
             publishAt: instance.publishAt.toISOString(),
             fundingCloseAt: instance.fundingCloseAt.toISOString(),
             capacityRemaining: instance.capacityRemaining,
+            costCents: instance.minLockCents || 0, // Frontend expects .costCents
             template: {
                 slug: template.slug,
+                name: template.title, // Frontend expects .name
                 title: template.title,
                 description: template.description,
                 category: template.category,

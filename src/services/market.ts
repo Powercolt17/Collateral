@@ -42,12 +42,12 @@ export interface MarketItem {
         tierOptions: any;
         rules: any; // Added for catalog (window_days)
     };
-    stats: {
-        executions1h: number;
-        executions24h: number;
-        capital24hCents: number;
-        lastExecutionAt: string | null;
-    };
+    // Smart Tier Fields
+    tier: string;
+    multiplier: number;
+    metricKey: string;
+    displayTargetHint: string | null;
+    // status: string; // Removed duplicate
     uiBadges: string[];
 }
 
@@ -166,6 +166,12 @@ export async function getMarketFeed(options: MarketFeedOptions = {}): Promise<Ma
                 tierOptions: template.tierOptionsJson,
                 rules: template.rulesJson,
             },
+            // Smart Tier Fields
+            tier: instance.tier,
+            multiplier: Number(instance.multiplier),
+            metricKey: instance.metricKey,
+            displayTargetHint: instance.displayTargetHint,
+
             stats: {
                 executions1h: stats?.executions1h ?? 0,
                 executions24h: stats?.executions24h ?? 0,
@@ -282,7 +288,13 @@ export async function getMarketListings(options: MarketFeedOptions = {}) {
             window_days: windowDays,
             tier_options: i.template.tierOptions, // Added for frontend calc
             open_until: i.fundingCloseAt, // Added
-            state: i.status === 'published' ? 'OPEN' : 'CLOSED'
+            state: i.status === 'published' ? 'OPEN' : 'CLOSED',
+
+            // Smart Tier Fields
+            tier: i.tier,
+            multiplier: i.multiplier,
+            metric_key: i.metricKey,
+            target_hint: i.displayTargetHint
         };
     });
 }

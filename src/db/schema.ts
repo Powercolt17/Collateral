@@ -613,7 +613,16 @@ export const marketInstanceStatusEnum = pgEnum('market_instance_status', [
     'published',
     'closing',
     'expired',
+    'published',
+    'closing',
+    'expired',
     'paused'
+]);
+
+export const contractTierEnum = pgEnum('contract_tier', [
+    'controlled',
+    'elevated',
+    'maximum'
 ]);
 
 // 1. Contract Templates - Logical definitions
@@ -648,6 +657,17 @@ export const marketContractInstances = pgTable('market_contract_instances', {
     // Overrides for this specific drop
     termsVersion: integer('terms_version').default(1).notNull(),
     instanceTermsJson: jsonb('instance_terms_json'),
+    // Smart Tier Fields
+    tier: contractTierEnum('tier').default('controlled').notNull(),
+    multiplier: varchar('multiplier', { length: 10 }).notNull().default('1.5'), // Using varchar to strict decimal parsing issues, or numeric
+    // actually, let's use proper numeric type if possible, or simple float. Drizzle 'decimal' stringifies.
+    // user said "multiplier numeric: 1.5 / 2.5 / 4.0". 
+    // I'll use doublePrecision/real or decimal.
+    // Let's us decimal(3,1)
+    metricKey: varchar('metric_key', { length: 50 }).notNull().default('generic'),
+    targetPolicyJson: jsonb('target_policy_json').notNull().default({}),
+    displayTargetHint: varchar('display_target_hint', { length: 100 }),
+
     createdAt: timestamp('created_at', { withTimezone: true }).defaultNow().notNull(),
     updatedAt: timestamp('updated_at', { withTimezone: true }).defaultNow().notNull(),
 }, (table) => ({

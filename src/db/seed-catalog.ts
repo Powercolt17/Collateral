@@ -306,6 +306,55 @@ const TEMPLATES = [
 // SEED LOGIC
 // =============================================================================
 
+function getTierFromRandom(rand: number) {
+    if (rand < 0.6) return 'controlled';
+    if (rand < 0.9) return 'elevated';
+    return 'maximum';
+}
+
+function getPolicyForTier(metricKey: string, tier: string, windowDays: number) {
+    const isStripe = metricKey.startsWith('stripe');
+    const isX = metricKey.startsWith('x');
+    const isShopifySales = metricKey === 'shopify_net_sales';
+    const isShopifyVolume = metricKey === 'shopify_order_volume';
+    const isAmazonRev = metricKey === 'amazon_revenue';
+    const isAmazonUnits = metricKey === 'amazon_units_sold';
+
+    let minPct = 0;
+    let maxPct = 0;
+    // let floorAbs = 0; // Simplified floor for seed visualization
+
+    if (tier === 'controlled') {
+        if (isStripe || isShopifySales || isAmazonRev) { minPct = 8; maxPct = 15; }
+        else if (isX) { minPct = 1; maxPct = 3; }
+        else { minPct = 5; maxPct = 12; } // Vol/Units
+    } else if (tier === 'elevated') {
+        if (isStripe || isShopifySales || isAmazonRev) { minPct = 18; maxPct = 30; }
+        else if (isX) { minPct = 4; maxPct = 7; }
+        else { minPct = 15; maxPct = 25; }
+    } else { // maximum
+        if (isStripe || isShopifySales || isAmazonRev) { minPct = 35; maxPct = 60; }
+        else if (isX) { minPct = 8; maxPct = 15; }
+        else { minPct = 30; maxPct = 50; }
+    }
+
+    // Generate specific target for this listing (simulated "policy" range)
+    return {
+        mode: 'percentage_delta',
+        min_pct: minPct,
+        max_pct: maxPct,
+        min_absolute_floor: 10 // heuristic
+    };
+}
+
+function getHint(metricKey: string, policy: any, windowDays: number) {
+    const noun = metricKey.includes('revenue') || metricKey.includes('sales') ? 'revenue' :
+        metricKey.includes('followers') ? 'followers' :
+            metricKey.includes('volume') ? 'orders' : 'units';
+
+    return `Target: +${policy.min_pct}–${policy.max_pct}% ${noun} (${windowDays}d)`;
+}
+
 export async function seedCatalog() {
     console.log('[Seed] 🌱 Starting Catalog Seed...');
 
@@ -367,6 +416,15 @@ export async function seedCatalog() {
             const fundingClose = new Date();
             fundingClose.setDate(fundingClose.getDate() + 7);
 
+            // Tier Allocation
+            const tier = getTierFromRandom(Math.random());
+            const rules = t.rulesJson as any;
+            // Safe access to tierOptions
+            const tierOptions = t.tierOptionsJson as any;
+            const multiplier = tierOptions ? (tierOptions[tier] || 1.5) : 1.5;
+            const policy = getPolicyForTier(rules.metricKey, tier, rules.window_days);
+            const hint = getHint(rules.metricKey, policy, rules.window_days);
+
             // We explicitly cast to 'any' to avoid strict type errors with Drizzle's inference
             // strictly matching the schema fields we know exist.
             const [newInstance] = await db.insert(marketContractInstances).values({
@@ -378,7 +436,14 @@ export async function seedCatalog() {
                 capacityRemaining: 500 - filled,
                 minLockCents: 2500,
                 maxLockCents: 200000,
-                termsVersion: 1
+                termsVersion: 1,
+
+                // Smart Tier Fields
+                tier: tier,
+                multiplier: multiplier.toString(),
+                metricKey: rules.metricKey,
+                targetPolicyJson: policy,
+                displayTargetHint: hint
             } as any).returning();
 
             // Init stats

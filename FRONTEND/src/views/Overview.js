@@ -5,7 +5,7 @@
 // HARD GATE: Minimum baseline required per tier — no starting from zero
 // EVERY BUTTON IS LIVE — tabs, pills, CTAs, modal, search, sort
 
-import { getMarketFeed } from '../api.js';
+import { getMarketListings, hasAuthToken } from '../api.js';
 
 export function renderOverview() {
     return `
@@ -937,11 +937,11 @@ export function initOverview() {
             const params = { sort: activeSort };
             if (activeCategory !== 'all') params.category = activeCategory;
 
-            const data = await getMarketFeed(params);
+            const data = await getMarketListings(params);
 
             if (isPoll) {
                 // If data changed (simple check: top contract ID or count)
-                const contracts = Array.isArray(data?.contracts) ? data.contracts : [];
+                const contracts = Array.isArray(data?.listings) ? data.listings : [];
                 const currentTopId = grid.querySelector('.eq-card')?.dataset.id;
                 const newTopId = contracts[0]?.id;
                 const hasChanges = currentTopId !== newTopId || contracts.length !== grid.querySelectorAll('.eq-card').length;
@@ -954,7 +954,7 @@ export function initOverview() {
                     lastFeedData = data;
                 }
             } else {
-                const contracts = Array.isArray(data?.contracts) ? data.contracts : [];
+                const contracts = Array.isArray(data?.listings) ? data.listings : [];
                 renderGrid(contracts);
                 updateStats(data?.stats || {});
                 lastFeedData = data;
@@ -1001,15 +1001,13 @@ export function initOverview() {
     function renderCard(c) {
         // map API data to UI
         const rawId = (c.id || '').toString();
-        const id = rawId.length > 4 ? rawId.slice(0, 4) + '...' : rawId;
-
-        // Use full ID for data attributes, short for display if needed. 
-        // DB uses UUIDs usually, let's use last 4 chars for "RCPT-XXXX" style or just keep it simple.
         const shortId = rawId.split('-')[0] || rawId || '????';
 
         const tier = (c.tier || 'controlled').toLowerCase();
-        const stake = c.costCents / 100;
-        const deadline = new Date(c.fundingCloseAt);
+        // Use min_stake from new API (already in dollars)
+        const stake = c.min_stake || 0;
+
+        const deadline = new Date(c.open_until || Date.now() + 86400000);
         const now = new Date();
         const timeLeftMs = deadline - now;
         const daysLeft = Math.ceil(timeLeftMs / (1000 * 60 * 60 * 24));
@@ -1019,9 +1017,9 @@ export function initOverview() {
         if (daysLeft <= 1) timeLabel = `<span class="eq-card-countdown">${hoursLeft}h left</span>`;
         if (timeLeftMs < 0) timeLabel = 'Ended';
 
-        const platform = (c.template?.provider || 'X').toString(); // x, stripe, shopify
-        const category = c.template?.category || 'social';
-        const goal = c.template?.name || 'Contract Goal';
+        const platform = (c.provider || 'X').toString();
+        const category = c.domain || 'social';
+        const goal = c.title || 'Contract Goal';
 
         // Integration Icon
         let dotClass = 'x';
@@ -1034,9 +1032,9 @@ export function initOverview() {
         if (c.scarcityScore > 80) badge = `<span class="eq-badge action">HIGH DEMAND</span>`;
         if (timeLeftMs < 1000 * 60 * 60 * 24) badge = `<span class="eq-badge action">CLOSING SOON</span>`;
 
-        // Baseline/Target formatting (simplified as API might return complex JSON)
-        // Assume template has text description or valid range
-        const baseline = `Baseline: — → Target: —`; // Placeholder till we have real template params
+        // Baseline/Target formatting
+        const isConnected = hasAuthToken();
+        const baseline = isConnected ? `Baseline: — → Target: —` : `Connect to compute baseline`;
 
         return `
             <div class="eq-card"
@@ -1055,7 +1053,7 @@ export function initOverview() {
                 <div class="eq-card-goal">${goal}</div>
                 <div class="eq-card-row">
                     <span class="eq-card-integration"><span class="dot ${dotClass}"></span> ${platform.charAt(0).toUpperCase() + platform.slice(1)}</span>
-                    <span class="eq-tier ${tier}">${tier.toUpperCase()} <span class="eq-card-capacity">${c.capacityRemaining}/${c.capacityTotal} left</span></span>
+                    <span class="eq-tier ${tier}">${tier.toUpperCase()} <span class="eq-card-capacity">${c.slots_left}/500 left</span></span>
                 </div>
                 <div class="eq-card-baseline">${baseline}</div>
                 <div class="eq-card-meta">

@@ -1,5 +1,5 @@
 import { FastifyInstance } from 'fastify';
-import { getMarketFeed, getGlobalStats, publishDrop, expireInstance, PublishDropParams } from '../services/market.js';
+import { getMarketFeed, getGlobalStats, publishDrop, expireInstance, getMarketListings, PublishDropParams } from '../services/market.js';
 import { z } from 'zod';
 
 // Input Schemas
@@ -48,6 +48,20 @@ export default async function marketRoutes(fastify: FastifyInstance) {
             count: contracts.length,
             contracts, // Rename items -> contracts for frontend comformity
             stats,
+        };
+    });
+
+    // Public Listings (Catalog)
+    fastify.get('/v1/market/listings', async (request, reply) => {
+        const query = MarketFeedQuerySchema.parse(request.query);
+        const [listings, stats] = await Promise.all([
+            getMarketListings(query),
+            getGlobalStats()
+        ]);
+
+        return {
+            listings,
+            stats
         };
     });
 

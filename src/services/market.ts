@@ -8,6 +8,7 @@ import {
     type MarketStatsCache,
 } from '../db/schema.js';
 import { eq, and, desc, asc, gt, gte, lte, inArray, sql } from 'drizzle-orm';
+import { seedCatalog } from '../db/seed-catalog.js';
 
 // =============================================================================
 // TYPES
@@ -28,16 +29,18 @@ export interface MarketItem {
     status: string;
     publishAt: string;
     fundingCloseAt: string;
-    capacityRemaining: number | null;
-    costCents: number; // Added for frontend compatibility
+    capacityRemaining: number | null; // Restored
+    costCents: number;
+    maxCostCents: number; // Added for catalog
     template: {
         slug: string;
-        name: string; // Added for frontend compatibility
+        name: string;
         title: string;
         description: string;
         category: string;
         provider: string;
         tierOptions: any;
+        rules: any; // Added for catalog (window_days)
     };
     stats: {
         executions1h: number;
@@ -151,15 +154,17 @@ export async function getMarketFeed(options: MarketFeedOptions = {}): Promise<Ma
             publishAt: instance.publishAt.toISOString(),
             fundingCloseAt: instance.fundingCloseAt.toISOString(),
             capacityRemaining: instance.capacityRemaining,
-            costCents: instance.minLockCents || 0, // Frontend expects .costCents
+            costCents: instance.minLockCents || 0,
+            maxCostCents: instance.maxLockCents || 200000,
             template: {
                 slug: template.slug,
-                name: template.title, // Frontend expects .name
+                name: template.title,
                 title: template.title,
                 description: template.description,
                 category: template.category,
                 provider: template.provider,
                 tierOptions: template.tierOptionsJson,
+                rules: template.rulesJson,
             },
             stats: {
                 executions1h: stats?.executions1h ?? 0,
@@ -249,4 +254,35 @@ export async function expireInstance(instanceId: string) {
         .update(marketContractInstances)
         .set({ status: 'expired' } as any)
         .where(eq(marketContractInstances.id, instanceId));
+}
+
+export async function getMarketListings(options: MarketFeedOptions = {}) {
+    // 1. Get all published instances (published/closing)
+    // Force status published, but allow other filters
+    const instances = await getMarketFeed({ ...options, status: 'published', limit: options.limit || 100 });
+
+    // Auto-spawn if low inventory (lazy worker)
+    if (instances.length < 20) {
+        seedCatalog().catch(e => console.error('[Market][AutoSeed] Failed:', e));
+    }
+
+    // 2. Transform to simplified "Listings" shape
+    return instances.map(i => {
+        const rules = i.template.rules || {};
+        const windowDays = Number(rules.window_days || 7);
+
+        return {
+            id: i.instanceId,
+            title: i.template.name,
+            domain: i.template.category,
+            provider: i.template.provider,
+            slots_left: (i.capacityRemaining === null) ? 999 : i.capacityRemaining,
+            min_stake: Math.floor(i.costCents / 100), // cents -> dollars
+            max_stake: Math.floor(i.maxCostCents / 100), // cents -> dollars
+            window_days: windowDays,
+            tier_options: i.template.tierOptions, // Added for frontend calc
+            open_until: i.fundingCloseAt, // Added
+            state: i.status === 'published' ? 'OPEN' : 'CLOSED'
+        };
+    });
 }

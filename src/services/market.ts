@@ -139,8 +139,7 @@ export async function getMarketFeed(options: MarketFeedOptions = {}): Promise<Ma
             badges.push('CLOSING_SOON');
         }
 
-        const isNew = (now.getTime() - instance.publishAt.getTime()) < 24 * 60 * 60 * 1000; // < 24h
-        if (isNew) badges.push('NEW');
+
 
         const isNew = (now.getTime() - instance.publishAt.getTime()) < 24 * 60 * 60 * 1000; // < 24h
         if (isNew) badges.push('NEW');

@@ -941,20 +941,22 @@ export function initOverview() {
 
             if (isPoll) {
                 // If data changed (simple check: top contract ID or count)
+                const contracts = Array.isArray(data?.contracts) ? data.contracts : [];
                 const currentTopId = grid.querySelector('.eq-card')?.dataset.id;
-                const newTopId = data.contracts[0]?.id;
-                const hasChanges = currentTopId !== newTopId || data.contracts.length !== grid.querySelectorAll('.eq-card').length;
+                const newTopId = contracts[0]?.id;
+                const hasChanges = currentTopId !== newTopId || contracts.length !== grid.querySelectorAll('.eq-card').length;
 
                 if (hasChanges) {
-                    const diff = Math.abs(data.contracts.length - grid.querySelectorAll('.eq-card').length) || 1;
+                    const diff = Math.abs(contracts.length - grid.querySelectorAll('.eq-card').length) || 1;
                     updateCount.textContent = diff;
                     updateChip.classList.add('visible');
                     // Store for refresh
                     lastFeedData = data;
                 }
             } else {
-                renderGrid(data.contracts);
-                updateStats(data.stats);
+                const contracts = Array.isArray(data?.contracts) ? data.contracts : [];
+                renderGrid(contracts);
+                updateStats(data?.stats || {});
                 lastFeedData = data;
                 updateTime();
             }
@@ -998,10 +1000,12 @@ export function initOverview() {
 
     function renderCard(c) {
         // map API data to UI
-        const id = c.id.slice(0, 4) + '...'; // Short ID or use DB ID if short
+        const rawId = (c.id || '').toString();
+        const id = rawId.length > 4 ? rawId.slice(0, 4) + '...' : rawId;
+
         // Use full ID for data attributes, short for display if needed. 
         // DB uses UUIDs usually, let's use last 4 chars for "RCPT-XXXX" style or just keep it simple.
-        const shortId = c.id.split('-')[0] || c.id;
+        const shortId = rawId.split('-')[0] || rawId || '????';
 
         const tier = (c.tier || 'controlled').toLowerCase();
         const stake = c.costCents / 100;
@@ -1015,7 +1019,7 @@ export function initOverview() {
         if (daysLeft <= 1) timeLabel = `<span class="eq-card-countdown">${hoursLeft}h left</span>`;
         if (timeLeftMs < 0) timeLabel = 'Ended';
 
-        const platform = c.template?.provider || 'X'; // x, stripe, shopify
+        const platform = (c.template?.provider || 'X').toString(); // x, stripe, shopify
         const category = c.template?.category || 'social';
         const goal = c.template?.name || 'Contract Goal';
 

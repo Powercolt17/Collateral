@@ -100,3 +100,24 @@ export function calculateQuote(input: QuoteInput) {
         }
     };
 }
+
+// =============================================================================
+// SHARED CONSTANTS
+// =============================================================================
+
+export const MINIMUM_BASELINES = {
+    STRIPE: {
+        REVENUE: {
+            STANDARD: 20000,   // $200/mo
+            ADVANCED: 50000,   // $500/mo
+            ELITE: 100000      // $1000/mo
+        }
+    },
+    X: {
+        FOLLOWERS: {
+            STANDARD: 100,
+            ADVANCED: 1000,
+            ELITE: 5000
+        }
+    }
+} as const;

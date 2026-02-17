@@ -5,280 +5,300 @@ import { contractTemplates, marketContractInstances, marketStatsCache } from './
 import { eq, and, gt } from 'drizzle-orm';
 
 // =============================================================================
-// TEMPLATE DEFINITIONS (30+)
+// STRICT TEMPLATE CATALOG (30 Items)
 // =============================================================================
+// Rules:
+// - Verified Providers Only: STRIPE, X, SHOPIFY, AMAZON
+// - Metrics: Revenue/Followers/Sales/Units only. No vanity metrics.
+// - Tiers: Controlled (1.5x), Elevated (2.5x), Maximum (4.0x)
+
+const TIER_OPTIONS = {
+    controlled: 1.5,
+    elevated: 2.5,
+    maximum: 4.0
+};
 
 const TEMPLATES = [
-    // --- FINANCE (Stripe) ---
+    // --- STRIPE (Finance) - 7 Templates ---
     {
         slug: 'stripe-revenue-growth-7d',
-        title: 'Revenue Growth (7d)',
+        title: 'Net Revenue Growth (7d)',
         category: 'finance',
         provider: 'STRIPE',
-        description: 'Increase your Stripe revenue over 7 days compared to baseline.',
-        rules: { metric: 'REVENUE', window_days: 7 },
-        tierOptions: { standard: 1.1, advanced: 1.2, elite: 1.5 }
+        description: 'Increase Stripe net revenue over 7 days compared to baseline.',
+        rules: { metricKey: 'stripe_net_revenue', window_days: 7 },
+        tierOptions: TIER_OPTIONS
+    },
+    {
+        slug: 'stripe-revenue-growth-14d',
+        title: 'Net Revenue Growth (14d)',
+        category: 'finance',
+        provider: 'STRIPE',
+        description: 'Increase Stripe net revenue over 14 days compared to baseline.',
+        rules: { metricKey: 'stripe_net_revenue', window_days: 14 },
+        tierOptions: TIER_OPTIONS
     },
     {
         slug: 'stripe-revenue-growth-30d',
-        title: 'Revenue Growth (30d)',
+        title: 'Net Revenue Growth (30d)',
         category: 'finance',
         provider: 'STRIPE',
-        description: 'Increase your Stripe revenue over 30 days compared to baseline.',
-        rules: { metric: 'REVENUE', window_days: 30 },
-        tierOptions: { standard: 1.2, advanced: 1.4, elite: 1.8 }
+        description: 'Increase Stripe net revenue over 30 days compared to baseline.',
+        rules: { metricKey: 'stripe_net_revenue', window_days: 30 },
+        tierOptions: TIER_OPTIONS
     },
     {
-        slug: 'stripe-reduce-disputes',
-        title: 'Reduce Disputes',
+        slug: 'stripe-revenue-growth-45d',
+        title: 'Net Revenue Growth (45d)',
         category: 'finance',
         provider: 'STRIPE',
-        description: 'Lower your dispute rate below 0.5% for 30 days.',
-        rules: { metric: 'DISPUTE_RATE', window_days: 30 },
-        tierOptions: { standard: 1.1, advanced: 1.3, elite: 1.5 }
+        description: 'Increase Stripe net revenue over 45 days compared to baseline.',
+        rules: { metricKey: 'stripe_net_revenue', window_days: 45 },
+        tierOptions: TIER_OPTIONS
     },
     {
-        slug: 'stripe-payment-success',
-        title: 'Increase Payment Success',
+        slug: 'stripe-revenue-growth-60d',
+        title: 'Net Revenue Growth (60d)',
         category: 'finance',
         provider: 'STRIPE',
-        description: 'Improve payment success rate by 5% over 14 days.',
-        rules: { metric: 'AUTH_RATE', window_days: 14 },
-        tierOptions: { standard: 1.1, advanced: 1.25, elite: 1.4 }
+        description: 'Increase Stripe net revenue over 60 days compared to baseline.',
+        rules: { metricKey: 'stripe_net_revenue', window_days: 60 },
+        tierOptions: TIER_OPTIONS
     },
     {
-        slug: 'stripe-mrr-growth',
-        title: 'MRR Growth Sprint',
+        slug: 'stripe-revenue-growth-90d',
+        title: 'Net Revenue Growth (90d)',
         category: 'finance',
         provider: 'STRIPE',
-        description: 'Grow Monthly Recurring Revenue by 10% in 30 days.',
-        rules: { metric: 'MRR', window_days: 30 },
-        tierOptions: { standard: 1.3, advanced: 1.6, elite: 2.0 }
+        description: 'Increase Stripe net revenue over 90 days compared to baseline.',
+        rules: { metricKey: 'stripe_net_revenue', window_days: 90 },
+        tierOptions: TIER_OPTIONS
     },
     {
-        slug: 'stripe-gross-volume-lift',
-        title: 'Gross Volume Lift',
+        slug: 'stripe-revenue-growth-180d',
+        title: 'Net Revenue Growth (180d)',
         category: 'finance',
         provider: 'STRIPE',
-        description: 'Increase total gross volume processed by 15% in 14 days.',
-        rules: { metric: 'GROSS_VOLUME', window_days: 14 },
-        tierOptions: { standard: 1.2, advanced: 1.4, elite: 1.7 }
-    },
-    {
-        slug: 'stripe-new-customers',
-        title: 'New Customer Acquisition',
-        category: 'finance',
-        provider: 'STRIPE',
-        description: 'Acquire 50+ new paying customers in 7 days.',
-        rules: { metric: 'NEW_CUSTOMERS', window_days: 7 },
-        tierOptions: { standard: 1.2, advanced: 1.5, elite: 1.8 }
-    },
-    {
-        slug: 'stripe-high-ticket-sales',
-        title: 'High Ticket Sales',
-        category: 'finance',
-        provider: 'STRIPE',
-        description: 'Process at least 5 transactions over $500 in 7 days.',
-        rules: { metric: 'HIGH_TICKET_COUNT', window_days: 7 },
-        tierOptions: { standard: 1.3, advanced: 1.6, elite: 2.0 }
+        description: 'Increase Stripe net revenue over 6 months compared to baseline.',
+        rules: { metricKey: 'stripe_net_revenue', window_days: 180 },
+        tierOptions: TIER_OPTIONS
     },
 
+    // --- X / TWITTER (Social) - 7 Templates ---
+    {
+        slug: 'x-follower-growth-7d',
+        title: 'Follower Growth (7d)',
+        category: 'social',
+        provider: 'X',
+        description: 'Grow your X audience count over 7 days.',
+        rules: { metricKey: 'x_followers', window_days: 7 },
+        tierOptions: TIER_OPTIONS
+    },
+    {
+        slug: 'x-follower-growth-14d',
+        title: 'Follower Growth (14d)',
+        category: 'social',
+        provider: 'X',
+        description: 'Grow your X audience count over 14 days.',
+        rules: { metricKey: 'x_followers', window_days: 14 },
+        tierOptions: TIER_OPTIONS
+    },
+    {
+        slug: 'x-follower-growth-21d',
+        title: 'Follower Growth (21d)',
+        category: 'social',
+        provider: 'X',
+        description: 'Grow your X audience count over 21 days.',
+        rules: { metricKey: 'x_followers', window_days: 21 },
+        tierOptions: TIER_OPTIONS
+    },
+    {
+        slug: 'x-follower-growth-30d',
+        title: 'Follower Growth (30d)',
+        category: 'social',
+        provider: 'X',
+        description: 'Grow your X audience count over 30 days.',
+        rules: { metricKey: 'x_followers', window_days: 30 },
+        tierOptions: TIER_OPTIONS
+    },
+    {
+        slug: 'x-follower-growth-45d',
+        title: 'Follower Growth (45d)',
+        category: 'social',
+        provider: 'X',
+        description: 'Grow your X audience count over 45 days.',
+        rules: { metricKey: 'x_followers', window_days: 45 },
+        tierOptions: TIER_OPTIONS
+    },
+    {
+        slug: 'x-follower-growth-60d',
+        title: 'Follower Growth (60d)',
+        category: 'social',
+        provider: 'X',
+        description: 'Grow your X audience count over 60 days.',
+        rules: { metricKey: 'x_followers', window_days: 60 },
+        tierOptions: TIER_OPTIONS
+    },
+    {
+        slug: 'x-follower-growth-90d',
+        title: 'Follower Growth (90d)',
+        category: 'social',
+        provider: 'X',
+        description: 'Grow your X audience count over 90 days.',
+        rules: { metricKey: 'x_followers', window_days: 90 },
+        tierOptions: TIER_OPTIONS
+    },
 
-    // --- SOCIAL (X) ---
+    // --- SHOPIFY (Commerce) - 9 Templates ---
+    // Net Sales
     {
-        slug: 'x-audience-builder-7d',
-        title: 'Audience Builder (7d)',
-        category: 'social',
-        provider: 'X',
-        description: 'Gain 100+ net new followers in 7 days.',
-        rules: { metric: 'FOLLOWERS', window_days: 7 },
-        tierOptions: { standard: 1.1, advanced: 1.3, elite: 1.5 }
-    },
-    {
-        slug: 'x-impressions-lift',
-        title: 'Impressions Lift',
-        category: 'social',
-        provider: 'X',
-        description: 'Achieve 50k+ impressions on your posts in 7 days.',
-        rules: { metric: 'IMPRESSIONS', window_days: 7 },
-        tierOptions: { standard: 1.1, advanced: 1.25, elite: 1.4 }
-    },
-    {
-        slug: 'x-engagement-lift',
-        title: 'Engagement Lift',
-        category: 'social',
-        provider: 'X',
-        description: 'Increase engagement rate by 20% over 7 days.',
-        rules: { metric: 'ENGAGEMENT_RATE', window_days: 7 },
-        tierOptions: { standard: 1.2, advanced: 1.4, elite: 1.6 }
-    },
-    {
-        slug: 'x-viral-thread',
-        title: 'Viral Thread Sprint',
-        category: 'social',
-        provider: 'X',
-        description: 'Publish a thread with 10k+ views in 48 hours.',
-        rules: { metric: 'THREAD_VIEWS', window_days: 2 },
-        tierOptions: { standard: 1.5, advanced: 2.0, elite: 3.0 }
-    },
-    {
-        slug: 'x-profile-visits',
-        title: 'Profile Traffic Surge',
-        category: 'social',
-        provider: 'X',
-        description: 'Drive 1,000 profile visits in 7 days.',
-        rules: { metric: 'PROFILE_VISITS', window_days: 7 },
-        tierOptions: { standard: 1.2, advanced: 1.4, elite: 1.7 }
-    },
-    {
-        slug: 'x-audience-builder-30d',
-        title: 'Audience Builder (30d)',
-        category: 'social',
-        provider: 'X',
-        description: 'Gain 500+ net new followers in 30 days.',
-        rules: { metric: 'FOLLOWERS', window_days: 30 },
-        tierOptions: { standard: 1.3, advanced: 1.6, elite: 2.0 }
-    },
-    {
-        slug: 'x-power-poster',
-        title: 'Power Poster Streak',
-        category: 'social',
-        provider: 'X',
-        description: 'Post at least 3 times daily for 7 days straight.',
-        rules: { metric: 'POST_FREQUENCY', window_days: 7 },
-        tierOptions: { standard: 1.1, advanced: 1.3, elite: 1.5 }
-    },
-
-
-    // --- COMMERCE (Shopify/Amazon) ---
-    {
-        slug: 'shopify-sales-lift-14d',
-        title: 'Sales Lift (14d)',
+        slug: 'shopify-net-sales-7d',
+        title: 'Store Net Sales (7d)',
         category: 'commerce',
         provider: 'SHOPIFY',
-        description: 'Increase Shopify store sales by 10% over 14 days.',
-        rules: { metric: 'SALES', window_days: 14 },
-        tierOptions: { standard: 1.2, advanced: 1.4, elite: 1.6 }
+        description: 'Increase Shopify Net Sales over 7 days.',
+        rules: { metricKey: 'shopify_net_sales', window_days: 7 },
+        tierOptions: TIER_OPTIONS
     },
     {
-        slug: 'shopify-order-volume',
-        title: 'Order Volume Growth',
+        slug: 'shopify-net-sales-14d',
+        title: 'Store Net Sales (14d)',
         category: 'commerce',
         provider: 'SHOPIFY',
-        description: 'Process 20% more orders than baseline in 14 days.',
-        rules: { metric: 'ORDER_COUNT', window_days: 14 },
-        tierOptions: { standard: 1.2, advanced: 1.4, elite: 1.7 }
+        description: 'Increase Shopify Net Sales over 14 days.',
+        rules: { metricKey: 'shopify_net_sales', window_days: 14 },
+        tierOptions: TIER_OPTIONS
     },
     {
-        slug: 'shopify-aov-boost',
-        title: 'AOV Boost',
+        slug: 'shopify-net-sales-30d',
+        title: 'Store Net Sales (30d)',
         category: 'commerce',
         provider: 'SHOPIFY',
-        description: 'Increase Average Order Value by $10 over 30 days.',
-        rules: { metric: 'AOV', window_days: 30 },
-        tierOptions: { standard: 1.3, advanced: 1.5, elite: 1.8 }
+        description: 'Increase Shopify Net Sales over 30 days.',
+        rules: { metricKey: 'shopify_net_sales', window_days: 30 },
+        tierOptions: TIER_OPTIONS
     },
     {
-        slug: 'amazon-rank-improvement',
-        title: 'Best Seller Rank',
+        slug: 'shopify-net-sales-60d',
+        title: 'Store Net Sales (60d)',
+        category: 'commerce',
+        provider: 'SHOPIFY',
+        description: 'Increase Shopify Net Sales over 60 days.',
+        rules: { metricKey: 'shopify_net_sales', window_days: 60 },
+        tierOptions: TIER_OPTIONS
+    },
+    {
+        slug: 'shopify-net-sales-90d',
+        title: 'Store Net Sales (90d)',
+        category: 'commerce',
+        provider: 'SHOPIFY',
+        description: 'Increase Shopify Net Sales over 90 days.',
+        rules: { metricKey: 'shopify_net_sales', window_days: 90 },
+        tierOptions: TIER_OPTIONS
+    },
+    // Order Volume (Allowed by user prompt)
+    {
+        slug: 'shopify-order-volume-14d',
+        title: 'Order Volume Growth (14d)',
+        category: 'commerce',
+        provider: 'SHOPIFY',
+        description: 'Increase total order count over 14 days.',
+        rules: { metricKey: 'shopify_order_volume', window_days: 14 },
+        tierOptions: TIER_OPTIONS
+    },
+    {
+        slug: 'shopify-order-volume-30d',
+        title: 'Order Volume Growth (30d)',
+        category: 'commerce',
+        provider: 'SHOPIFY',
+        description: 'Increase total order count over 30 days.',
+        rules: { metricKey: 'shopify_order_volume', window_days: 30 },
+        tierOptions: TIER_OPTIONS
+    },
+    {
+        slug: 'shopify-order-volume-60d',
+        title: 'Order Volume Growth (60d)',
+        category: 'commerce',
+        provider: 'SHOPIFY',
+        description: 'Increase total order count over 60 days.',
+        rules: { metricKey: 'shopify_order_volume', window_days: 60 },
+        tierOptions: TIER_OPTIONS
+    },
+    {
+        slug: 'shopify-order-volume-90d',
+        title: 'Order Volume Growth (90d)',
+        category: 'commerce',
+        provider: 'SHOPIFY',
+        description: 'Increase total order count over 90 days.',
+        rules: { metricKey: 'shopify_order_volume', window_days: 90 },
+        tierOptions: TIER_OPTIONS
+    },
+
+    // --- AMAZON (Commerce) - 7 Templates ---
+    // Revenue
+    {
+        slug: 'amazon-revenue-14d',
+        title: 'Amazon Revenue Growth (14d)',
         category: 'commerce',
         provider: 'AMAZON',
-        description: 'Improve BSR by 10% in main category over 7 days.',
-        rules: { metric: 'BSR', window_days: 7 },
-        tierOptions: { standard: 1.2, advanced: 1.5, elite: 2.0 }
+        description: 'Increase Amazon Marketplace revenue over 14 days.',
+        rules: { metricKey: 'amazon_revenue', window_days: 14 },
+        tierOptions: TIER_OPTIONS
     },
     {
-        slug: 'amazon-review-velocity',
-        title: 'Review Velocity',
+        slug: 'amazon-revenue-30d',
+        title: 'Amazon Revenue Growth (30d)',
         category: 'commerce',
         provider: 'AMAZON',
-        description: 'Obtain 5+ verified reviews in 14 days.',
-        rules: { metric: 'REVIEW_COUNT', window_days: 14 },
-        tierOptions: { standard: 1.4, advanced: 1.8, elite: 2.2 }
+        description: 'Increase Amazon Marketplace revenue over 30 days.',
+        rules: { metricKey: 'amazon_revenue', window_days: 30 },
+        tierOptions: TIER_OPTIONS
     },
     {
-        slug: 'shopify-conversion-rate',
-        title: 'Conversion Rate Opt',
-        category: 'commerce',
-        provider: 'SHOPIFY',
-        description: 'Improve store conversion rate to 2% over 7 days.',
-        rules: { metric: 'CONVERSION_RATE', window_days: 7 },
-        tierOptions: { standard: 1.3, advanced: 1.6, elite: 1.9 }
-    },
-    {
-        slug: 'amazon-fba-inventory',
-        title: 'Inventory Turnover',
+        slug: 'amazon-revenue-60d',
+        title: 'Amazon Revenue Growth (60d)',
         category: 'commerce',
         provider: 'AMAZON',
-        description: 'Sell through 100 units of FBA inventory in 7 days.',
-        rules: { metric: 'UNITS_SOLD', window_days: 7 },
-        tierOptions: { standard: 1.1, advanced: 1.3, elite: 1.5 }
-    },
-
-
-    // --- SALES (CRM/Salesforce/HubSpot - Placeholder) ---
-    {
-        slug: 'sales-appointments-7d',
-        title: 'Appointments Booked',
-        category: 'sales',
-        provider: 'SALES', // Generic/CRM
-        description: 'Book 10+ qualified appointments in 7 days.',
-        rules: { metric: 'APPOINTMENTS', window_days: 7 },
-        tierOptions: { standard: 1.2, advanced: 1.5, elite: 1.8 }
+        description: 'Increase Amazon Marketplace revenue over 60 days.',
+        rules: { metricKey: 'amazon_revenue', window_days: 60 },
+        tierOptions: TIER_OPTIONS
     },
     {
-        slug: 'sales-premium-volume-30d',
-        title: 'Premium Volume (30d)',
-        category: 'sales',
-        provider: 'SALES',
-        description: 'Close $50k+ in new premium volume in 30 days.',
-        rules: { metric: 'PREMIUM_VOLUME', window_days: 30 },
-        tierOptions: { standard: 1.3, advanced: 1.6, elite: 2.0 }
+        slug: 'amazon-revenue-90d',
+        title: 'Amazon Revenue Growth (90d)',
+        category: 'commerce',
+        provider: 'AMAZON',
+        description: 'Increase Amazon Marketplace revenue over 90 days.',
+        rules: { metricKey: 'amazon_revenue', window_days: 90 },
+        tierOptions: TIER_OPTIONS
+    },
+    // Units Sold (Allowed by user prompt)
+    {
+        slug: 'amazon-units-sold-14d',
+        title: 'Units Sold Growth (14d)',
+        category: 'commerce',
+        provider: 'AMAZON',
+        description: 'Increase Amazon FBA units sold over 14 days.',
+        rules: { metricKey: 'amazon_units_sold', window_days: 14 },
+        tierOptions: TIER_OPTIONS
     },
     {
-        slug: 'sales-clean-pipeline',
-        title: 'Pipeline Cleanliness',
-        category: 'sales',
-        provider: 'SALES',
-        description: 'Update 100% of open opportunities with next steps.',
-        rules: { metric: 'CRM_HYGIENE', window_days: 5 },
-        tierOptions: { standard: 1.1, advanced: 1.2, elite: 1.3 }
+        slug: 'amazon-units-sold-30d',
+        title: 'Units Sold Growth (30d)',
+        category: 'commerce',
+        provider: 'AMAZON',
+        description: 'Increase Amazon FBA units sold over 30 days.',
+        rules: { metricKey: 'amazon_units_sold', window_days: 30 },
+        tierOptions: TIER_OPTIONS
     },
     {
-        slug: 'sales-outbound-calls',
-        title: 'Outbound Warrior',
-        category: 'sales',
-        provider: 'SALES',
-        description: 'Make 500+ outbound calls/dials in 5 days.',
-        rules: { metric: 'CALL_VOLUME', window_days: 5 },
-        tierOptions: { standard: 1.2, advanced: 1.4, elite: 1.6 }
-    },
-    {
-        slug: 'sales-demo-conversion',
-        title: 'Demo Conversion',
-        category: 'sales',
-        provider: 'SALES',
-        description: 'Convert 30% of demos to closed-won deals (30d).',
-        rules: { metric: 'DEMO_CONVERSION', window_days: 30 },
-        tierOptions: { standard: 1.4, advanced: 1.7, elite: 2.1 }
-    },
-    {
-        slug: 'sales-referral-generation',
-        title: 'Referral Generation',
-        category: 'sales',
-        provider: 'SALES',
-        description: 'Generate 5+ active referrals from existing clients.',
-        rules: { metric: 'REFERRALS', window_days: 14 },
-        tierOptions: { standard: 1.3, advanced: 1.6, elite: 1.9 }
-    },
-    {
-        slug: 'sales-contract-value',
-        title: 'Contract Value Expansion',
-        category: 'sales',
-        provider: 'SALES',
-        description: 'Upsell distinct clients to increase ACV by 10%.',
-        rules: { metric: 'ACV_GROWTH', window_days: 30 },
-        tierOptions: { standard: 1.3, advanced: 1.6, elite: 2.0 }
+        slug: 'amazon-units-sold-60d',
+        title: 'Units Sold Growth (60d)',
+        category: 'commerce',
+        provider: 'AMAZON',
+        description: 'Increase Amazon FBA units sold over 60 days.',
+        rules: { metricKey: 'amazon_units_sold', window_days: 60 },
+        tierOptions: TIER_OPTIONS
     }
 ];
 
@@ -290,14 +310,15 @@ export async function seedCatalog() {
     console.log('[Seed] 🌱 Starting Catalog Seed...');
 
     // 1. Upsert Templates
+    // We ignore 'updatedAt' to satisfy strict Typescript checks on the update object
+    // Drizzle defaultNow() handles creation.
     for (const t of TEMPLATES) {
-        // Upsert based on slug
         await db.insert(contractTemplates)
             .values({
                 slug: t.slug,
                 title: t.title,
                 category: t.category,
-                provider: t.provider as any, // Cast to enum
+                provider: t.provider as any,
                 description: t.description,
                 rulesJson: t.rules,
                 tierOptionsJson: t.tierOptions
@@ -311,65 +332,66 @@ export async function seedCatalog() {
                     description: t.description,
                     rulesJson: t.rules,
                     tierOptionsJson: t.tierOptions
-                    // updatedAt handled by DB or ignored
                 }
             });
     }
-    console.log(`[Seed] ✅ Ensure ${TEMPLATES.length} templates.`);
+    console.log(`[Seed] ✅ Ensured ${TEMPLATES.length} templates.`);
 
-    // 2. Ensure Listings (Rotation Logic)
-    // For each template, ensure at least one 'published' instance exists that closes > 24h from now
+    // 2. Ensure Listings (20 Open)
+    // - slotsTotal = 500
+    // - slotsFilled = random(0-50)
+    // - minStake = 2500, maxStake = 200000
+    // - fundingCloseAt = 7 days from now
 
-    // Get all templates
+    // Get all templates to spawn from
     const allTemplates = await db.select().from(contractTemplates);
 
+    // Check current open listings
+    const currentOpen = await db.select().from(marketContractInstances)
+        .where(gt(marketContractInstances.fundingCloseAt, new Date()));
+
+    let activeCount = currentOpen.length;
     let createdCount = 0;
+    const TARGET_OPEN = 20;
 
-    for (const t of allTemplates) {
-        // Check for existing active instance
-        const existing = await db.select()
-            .from(marketContractInstances)
-            .where(and(
-                eq(marketContractInstances.templateId, t.id),
-                eq(marketContractInstances.status, 'published'),
-                gt(marketContractInstances.fundingCloseAt, new Date())
-            ))
-            .limit(1);
+    console.log(`[Seed] Found ${activeCount} active listings. Target ${TARGET_OPEN}.`);
 
-        if (existing.length === 0) {
-            // Create New Listing
-            const daysOpen = (t.rulesJson as any).window_days || 7;
+    if (activeCount < TARGET_OPEN) {
+        // Shuffle templates to pick random ones
+        const shuffled = [...allTemplates].sort(() => 0.5 - Math.random());
+
+        while (activeCount < TARGET_OPEN) {
+            const t = shuffled[activeCount % shuffled.length];
+
+            const filled = Math.floor(Math.random() * 51); // 0-50
             const fundingClose = new Date();
-            fundingClose.setDate(fundingClose.getDate() + 7); // Default 7 day window for joining
+            fundingClose.setDate(fundingClose.getDate() + 7);
 
-            // Init stats
-            // We need the ID we just inserted. Drizzle returning() is best.
-            // Re-inserting with returning() for simplicity in this loop logic is tricky if using raw SQL, 
-            // but Drizzle .values().returning() works standardly.
+            // We explicitly cast to 'any' to avoid strict type errors with Drizzle's inference
+            // strictly matching the schema fields we know exist.
             const [newInstance] = await db.insert(marketContractInstances).values({
                 templateId: t.id,
-                // status: 'published', // Use default
+                // status defaults to 'published'
                 publishAt: new Date(),
                 fundingCloseAt: fundingClose,
                 capacityTotal: 500,
-                capacityRemaining: 500,
+                capacityRemaining: 500 - filled,
                 minLockCents: 2500,
                 maxLockCents: 200000,
-                termsVersion: 1,
+                termsVersion: 1
             } as any).returning();
 
-            // Create stats cache
-            // Create stats cache
+            // Init stats
             await db.insert(marketStatsCache).values({
                 instanceId: newInstance.id
-                // All other fields have defaults (0)
-            });
+            } as any);
 
+            activeCount++;
             createdCount++;
         }
     }
 
-    console.log(`[Seed] 🚀 Rotated/Created ${createdCount} new listings.`);
+    console.log(`[Seed] 🚀 Created ${createdCount} new listings.`);
     console.log('[Seed] Done.');
 }
 

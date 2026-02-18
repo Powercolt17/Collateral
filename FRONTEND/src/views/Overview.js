@@ -1261,6 +1261,19 @@ export function initOverview() {
         const shortId = id.split('-')[0];
         const rcptId = 'RCPT-' + shortId.slice(0, 4).toUpperCase();
 
+        const integration = cardEl.querySelector('.eq-card-integration')?.textContent?.trim() || '';
+
+        // Map domain/integration to platform + metric
+        let platform = 'X', metricType = 'FOLLOWERS';
+        if (integration.toLowerCase().includes('stripe')) { platform = 'STRIPE'; metricType = 'REVENUE'; }
+        else if (integration.toLowerCase().includes('shopify')) { platform = 'SHOPIFY'; metricType = 'REVENUE'; }
+        else if (integration.toLowerCase().includes('amazon')) { platform = 'AMAZON'; metricType = 'REVENUE'; }
+        else { platform = 'X'; metricType = 'FOLLOWERS'; }
+
+        const thresholdMatch = goal.match(/(\d+)%/);
+        const threshold = thresholdMatch ? parseInt(thresholdMatch[1]) : 15;
+        const riskTier = tier === 'ELEVATED' ? 'ADVANCED' : tier === 'MAXIMUM' ? 'ELITE' : 'STANDARD';
+
         const execDiv = document.createElement('div');
         execDiv.className = 'eq-exec';
 
@@ -1363,18 +1376,7 @@ export function initOverview() {
             runExecution(cardEl, id, execDiv, currentStake);
         });
 
-        const integration = cardEl.querySelector('.eq-card-integration')?.textContent?.trim() || '';
 
-        // Map domain/integration to platform + metric
-        let platform = 'X', metricType = 'FOLLOWERS';
-        if (integration.toLowerCase().includes('stripe')) { platform = 'STRIPE'; metricType = 'REVENUE'; }
-        else if (integration.toLowerCase().includes('shopify')) { platform = 'SHOPIFY'; metricType = 'REVENUE'; }
-        else if (integration.toLowerCase().includes('amazon')) { platform = 'SHOPIFY'; metricType = 'REVENUE'; }
-        else { platform = 'X'; metricType = 'FOLLOWERS'; }
-
-        const thresholdMatch = goal.match(/(\d+)%/);
-        const threshold = thresholdMatch ? parseInt(thresholdMatch[1]) : 15;
-        const riskTier = tier === 'ELEVATED' ? 'ADVANCED' : tier === 'MAXIMUM' ? 'ELITE' : 'STANDARD';
 
         // Helper to run execution (renamed to avoid conflict with existing executeWithAPI, or just inline it)
         function runExecution(cardEl, id, execDiv, finalStake) {

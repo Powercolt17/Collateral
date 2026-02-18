@@ -506,98 +506,110 @@ export function renderOverview() {
             .eq-exec { padding: 0; width: 100%; }
             .eq-exec-body { padding: 0 20px 20px; }
 
-            /* Execution mode header bar */
+            /* Execution Mode - Institutional Receipt 10/10 */
             .eq-exec-mode {
-                background: #0a0a0a; color: #fff;
-                padding: 12px 20px;
+                background: #fff; 
+                padding: 16px 24px;
                 display: flex; justify-content: space-between; align-items: center;
-                border-radius: 0; /* Square corners for true edge-to-edge look */
+                border-bottom: 1px solid #e5e5e5;
             }
             .eq-exec-mode-title {
-                font-size: 11px; font-weight: 700; text-transform: uppercase;
-                letter-spacing: 1.5px; font-family: 'JetBrains Mono', monospace;
+                font-size: 12px; font-weight: 700; text-transform: uppercase;
+                letter-spacing: 0.5px; font-family: 'JetBrains Mono', monospace;
+                color: #0a0a0a; display: flex; align-items: center; gap: 8px;
             }
             .eq-exec-mode-sub {
-                font-size: 10px; color: rgba(255,255,255,0.5);
+                font-size: 11px; color: #666; font-weight: 500;
                 font-family: 'JetBrains Mono', monospace;
             }
             .eq-exec-close {
-                width: 34px; height: 34px; display: flex; align-items: center;
-                justify-content: center; background: rgba(255,255,255,0.15); border: 1px solid rgba(255,255,255,0.2);
-                border-radius: 8px; cursor: pointer; color: #fff;
-                font-size: 18px; font-weight: 600; transition: all 0.15s;
+                width: 24px; height: 24px; display: flex; align-items: center;
+                justify-content: center; background: transparent; border: none;
+                cursor: pointer; color: #999; transition: color 0.15s;
             }
-            .eq-exec-close:hover { background: rgba(255,255,255,0.3); transform: scale(1.05); }
-            .eq-cancel-link {
-                display: block; text-align: center; margin-top: 10px;
-                font-size: 12px; color: #999; cursor: pointer; border: none;
-                background: none; font-family: 'Inter', sans-serif;
-                text-decoration: underline; text-underline-offset: 2px;
-                transition: color 0.15s; padding: 6px;
-            }
-            .eq-cancel-link:hover { color: #333; }
+            .eq-exec-close:hover { color: #333; }
 
-            /* Tension line */
-            .eq-tension {
-                font-size: 10px; color: #8B1818; font-weight: 600;
-                font-family: 'JetBrains Mono', monospace;
-                text-transform: uppercase; letter-spacing: 0.5px;
-                padding: 8px 0 12px; border-bottom: 1px solid #f0f0f0;
-                margin-bottom: 14px;
-            }
+            .eq-exec-body { padding: 24px 24px 32px; }
 
-            /* Dense term sheet */
-            .eq-terms {
-                background: #f8f8f8; border: 1px solid #e8e8e8;
-                border-radius: 8px; padding: 14px; margin-bottom: 14px;
+            /* 3-Column Receipt Panel */
+            .eq-receipt-panel {
+                display: grid; grid-template-columns: 1fr 1fr 1fr;
+                border: 1px solid #e5e5e5; border-radius: 8px;
+                overflow: hidden; margin-bottom: 24px;
             }
-            .eq-terms-label {
-                font-size: 10px; font-weight: 800; text-transform: uppercase;
-                letter-spacing: 1.5px; color: #0a0a0a; margin-bottom: 12px;
-                font-family: 'JetBrains Mono', monospace;
-                padding-bottom: 8px; border-bottom: 1px solid #e0e0e0;
+            .eq-receipt-col {
+                padding: 16px; background: #fafafa;
+                border-right: 1px solid #e5e5e5;
+                text-align: center;
             }
-            .eq-terms-grid {
-                display: grid; grid-template-columns: 1fr 1fr 1fr 1fr;
-                gap: 12px 16px;
+            .eq-receipt-col:last-child { border-right: none; }
+            .eq-receipt-label {
+                font-size: 9px; text-transform: uppercase; letter-spacing: 1px;
+                color: #888; font-family: 'JetBrains Mono', monospace;
+                margin-bottom: 6px; display: block;
             }
-            .eq-term-key {
-                font-size: 8px; text-transform: uppercase; letter-spacing: 0.8px;
-                color: #999; font-family: 'JetBrains Mono', monospace;
-                margin-bottom: 2px;
-            }
-            .eq-term-val {
-                font-size: 14px; font-weight: 700; color: #0a0a0a;
+            .eq-receipt-value {
+                font-size: 16px; font-weight: 600; color: #0a0a0a;
                 font-family: 'IBM Plex Sans', sans-serif;
             }
-            .eq-term-val.capital { font-size: 16px; color: #0a0a0a; }
+            .eq-lock-micro {
+                text-align: center; font-size: 10px; color: #999;
+                margin: 8px 0 24px; font-family: 'Inter', sans-serif; font-style: italic;
+            }
 
-            /* Buyout clause */
-            .eq-buyout {
+            /* Tier Buttons */
+            .eq-tier-selector {
+                display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px;
+                margin-bottom: 24px;
+            }
+            .eq-tier-btn {
+                padding: 10px; border: 1px solid #e5e5e5; background: #fff;
+                border-radius: 6px; font-size: 12px; font-weight: 600;
+                color: #333; cursor: pointer; font-family: 'IBM Plex Sans', sans-serif;
+                transition: all 0.15s; text-align: center;
+            }
+            .eq-tier-btn:hover { border-color: #ccc; }
+            .eq-tier-btn.active {
+                border-color: #8B1818; background: #fff5f5; color: #8B1818;
+                box-shadow: 0 0 0 1px #8B1818;
+            }
+
+            /* Institutional Strip */
+            .eq-risk-strip {
                 display: flex; justify-content: space-between;
-                padding: 8px 14px; background: #fafafa; border: 1px dashed #e0e0e0;
-                border-radius: 6px; margin-bottom: 14px;
-                font-family: 'JetBrains Mono', monospace; font-size: 10px; color: #888;
+                padding: 10px 16px; background: #f8f8f8; border-radius: 4px;
+                margin-bottom: 24px; border: 1px solid #eee;
             }
-            .eq-buyout-val { color: #555; font-weight: 600; }
+            .eq-risk-item {
+                font-size: 10px; color: #555; font-family: 'JetBrains Mono', monospace;
+                display: flex; gap: 6px;
+            }
+            .eq-risk-val { font-weight: 600; color: #333; }
 
-            /* Funding source */
-            .eq-funding {
-                display: flex; justify-content: space-between; align-items: center;
-                background: #fff; border: 1px solid #e5e5e5;
-                border-radius: 8px; padding: 10px 14px; margin-bottom: 14px;
+            /* Confirmation Input */
+            .eq-confirm-row {
+                display: flex; gap: 12px; margin-bottom: 0;
             }
-            .eq-funding-left { display: flex; align-items: center; gap: 10px; }
-            .eq-funding-icon {
-                width: 38px; height: 26px;
-                background: linear-gradient(135deg,#1a1f71,#2a4bd7);
-                border-radius: 4px; display: flex; align-items: center;
-                justify-content: center; color: #fff; font-size: 9px;
-                font-weight: 700; font-family: 'Inter',sans-serif;
+            .eq-confirm-input {
+                flex: 1; padding: 0 16px; height: 44px;
+                border: 1px solid #e5e5e5; border-radius: 6px;
+                font-size: 13px; font-family: 'Inter', sans-serif;
+                outline: none; transition: border-color 0.15s;
             }
-            .eq-funding-card {
-                font-size: 12px; font-weight: 500; color: #333;
-                font-family: 'JetBrains Mono', monospace;
+            .eq-confirm-input:focus { border-color: #8B1818; }
+            .eq-confirm-input::placeholder { color: #aaa; text-transform: uppercase; font-size: 11px; letter-spacing: 0.5px; }
+
+            .eq-confirm {
+                background: #8B1818; color: #fff; border: none;
+                border-radius: 6px; height: 44px; padding: 0 24px;
+                font-size: 12px; font-weight: 600; letter-spacing: 0.5px;
+                cursor: pointer; font-family: 'JetBrains Mono', monospace;
+                text-transform: uppercase; transition: all 0.2s;
+                opacity: 0.5; pointer-events: none; min-width: 140px;
+                box-shadow: 0 4px 12px rgba(139, 24, 24, 0.2);
+            }
+            .eq-confirm.ready { opacity: 1; pointer-events: auto; transform: translateY(-1px); }
+            .eq-confirm.ready:hover { background: #751212; box-shadow: 0 6px 16px rgba(139, 24, 24, 0.3); }
             }
             .eq-funding-sub {
                 font-size: 9px; color: #aaa;
@@ -1253,83 +1265,102 @@ export function initOverview() {
         const execDiv = document.createElement('div');
         execDiv.className = 'eq-exec';
 
-        // Slider HTML if range exists
-        const hasRange = maxStake > minStake;
-        const sliderHtml = hasRange ? `
-            <div class="eq-slider-row" style="padding:0 0 12px; border-bottom:1px solid #eee; margin-bottom:12px;">
-                <span class="eq-slider-label" style="font-size:10px;text-transform:uppercase;letter-spacing:0.5px">Stake Amount</span>
-                <input type="range" class="eq-slider" id="exec-slider-${id}" min="${minStake}" max="${maxStake}" value="${minStake}" step="25">
-            </div>
-        ` : '';
+        // Multiplier lookup
+        let multiplier = 1.5;
+        if (tier === 'ELEVATED') multiplier = 2.5;
+        if (tier === 'MAXIMUM') multiplier = 4.0;
+
+        const winRate = tier === 'CONTROLLED' ? '~30%' : tier === 'ELEVATED' ? '~20%' : '~10%';
 
         execDiv.innerHTML = `
             <div class="eq-exec-mode">
-                <div>
-                     <div class="eq-exec-mode-title">Execution Mode</div>
-                     <div class="eq-exec-mode-sub">${rcptId}</div>
+                <div class="eq-exec-mode-title">
+                    <span>Execution Confirmation</span>
                 </div>
+                <div class="eq-exec-mode-sub">${rcptId}</div>
                 <button class="eq-exec-close" data-action="collapse">✕</button>
             </div>
             <div class="eq-exec-body">
-                <div class="eq-tension">⚡ Execution begins immediately upon confirmation</div>
+                <div class="eq-receipt-panel">
+                     <div class="eq-receipt-col">
+                        <span class="eq-receipt-label">Locked Capital</span>
+                        <div class="eq-receipt-value" id="exec-val-${id}">$${currentStake.toLocaleString()}</div>
+                     </div>
+                     <div class="eq-receipt-col">
+                        <span class="eq-receipt-label">Est. Payout</span>
+                        <div class="eq-receipt-value" id="exec-payout-${id}">$${(currentStake * multiplier).toLocaleString()}</div>
+                     </div>
+                     <div class="eq-receipt-col">
+                        <span class="eq-receipt-label">Fee</span>
+                        <div class="eq-receipt-value">${feePercent}%</div>
+                     </div>
+                </div>
                 
-                <div class="eq-terms">
-                    ${sliderHtml}
-                    <div class="eq-terms-grid">
-                         <div>
-                            <div class="eq-term-key">Locked Capital</div>
-                            <div class="eq-term-val" id="exec-val-${id}">$${currentStake.toLocaleString()}</div>
-                         </div>
-                         <div>
-                            <div class="eq-term-key">Est. Payout</div>
-                            <div class="eq-term-val" id="exec-payout-${id}">$${(currentStake * 1.5).toLocaleString()}</div> <!-- Placeholder mult, updated by JS -->
-                         </div>
-                         <div><div class="eq-term-key">Goal</div><div class="eq-term-val" style="font-size:10px">${goal}</div></div>
-                         <div><div class="eq-term-key">Fee</div><div class="eq-term-val">${feePercent}%</div></div>
-                    </div>
+                <div class="eq-lock-micro">Capital is locked until settlement.</div>
+
+                <div class="eq-tier-selector" id="tiers-${id}">
+                    <div class="eq-tier-btn" data-val="100">$100</div>
+                    <div class="eq-tier-btn" data-val="500">$500</div>
+                    <div class="eq-tier-btn" data-val="1000">$1,000</div>
+                    <div class="eq-tier-btn" data-val="2500">$2,500</div>
                 </div>
-                <div class="eq-sig">
-                    <label class="eq-sig-body"><input type="checkbox" id="sig-cb-${id}"><span class="eq-sig-text">I confirm immediate execution.</span></label>
+
+                <div class="eq-risk-strip">
+                    <div class="eq-risk-item">Win Probability: <span class="eq-risk-val">${winRate}</span></div>
+                    <div class="eq-risk-item">Window: <span class="eq-risk-val">30 Days</span></div>
+                    <div class="eq-risk-item">Verification: <span class="eq-risk-val">API</span></div>
                 </div>
-                <button class="eq-confirm" id="confirm-btn-${id}" disabled>Confirm Lock →</button>
+
+                <div class="eq-confirm-row">
+                    <input type="text" class="eq-confirm-input" id="confirm-input-${id}" placeholder="Type 'LOCK' to confirm">
+                    <button class="eq-confirm" id="confirm-btn-${id}">LOCK $${currentStake} CAPITAL →</button>
+                </div>
             </div>
         `;
 
         cardEl.appendChild(execDiv);
 
-        // Multiplier lookup (approximate since we don't have it in data attrs yet, wait we do have tier)
-        // Controlled: 1.5x, Elevated: 2.5x, Maximum: 4.0x
-        let multiplier = 1.5;
-        if (tier === 'ELEVATED') multiplier = 2.5;
-        if (tier === 'MAXIMUM') multiplier = 4.0;
-
         // Listeners for this specific execution instance
         execDiv.querySelector('[data-action="collapse"]').addEventListener('click', (e) => { e.stopPropagation(); collapseAll(); });
 
-        const cb = document.getElementById(`sig-cb-${id}`);
+        const input = document.getElementById(`confirm-input-${id}`);
         const confirm = document.getElementById(`confirm-btn-${id}`);
-        cb.addEventListener('change', () => confirm.disabled = !cb.checked);
+        const tierBtns = document.getElementById(`tiers-${id}`).querySelectorAll('.eq-tier-btn');
+        const valEl = document.getElementById(`exec-val-${id}`);
+        const payEl = document.getElementById(`exec-payout-${id}`);
 
-        // Slider Logic
-        if (hasRange) {
-            const slider = document.getElementById(`exec-slider-${id}`);
-            const valEl = document.getElementById(`exec-val-${id}`);
-            const payEl = document.getElementById(`exec-payout-${id}`);
+        // Set initial active tier if matches
+        tierBtns.forEach(btn => {
+            const val = parseFloat(btn.dataset.val);
+            if (val === currentStake) btn.classList.add('active');
 
-            slider.addEventListener('input', (e) => {
-                currentStake = parseFloat(e.target.value);
+            btn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                tierBtns.forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                currentStake = val;
+
+                // Update UI
                 valEl.textContent = `$${currentStake.toLocaleString()}`;
                 payEl.textContent = `$${Math.round(currentStake * multiplier).toLocaleString()}`;
+                confirm.textContent = `LOCK $${currentStake} CAPITAL →`;
             });
-        } else {
-            // Just update initial payout text
-            const payEl = document.getElementById(`exec-payout-${id}`);
-            if (payEl) payEl.textContent = `$${Math.round(currentStake * multiplier).toLocaleString()}`;
-        }
+        });
+
+        // Confirmation Logic
+        input.addEventListener('input', (e) => {
+            if (e.target.value.toUpperCase() === 'LOCK') {
+                confirm.classList.add('ready');
+            } else {
+                confirm.classList.remove('ready');
+            }
+        });
+
+        input.addEventListener('click', (e) => e.stopPropagation());
 
         confirm.addEventListener('click', (e) => {
             e.stopPropagation();
-            // Use currentStake captured from closure scope
+            if (!confirm.classList.contains('ready')) return;
             runExecution(cardEl, id, execDiv, currentStake);
         });
 

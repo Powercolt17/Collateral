@@ -52,11 +52,11 @@ export function renderHeader(currentRoute) {
             .ch-header-inner {
                 max-width: 1800px;
                 margin: 0 auto;
-                padding: 0 24px;
-                height: 56px;
+                padding: 0 32px;
+                height: 72px;
                 display: flex;
                 align-items: center;
-                gap: 24px;
+                gap: 32px;
             }
 
             /* Logo */
@@ -69,19 +69,20 @@ export function renderHeader(currentRoute) {
                 line-height: 1;
             }
             .ch-logo-main {
-                font-size: 17px;
-                font-weight: 800;
-                color: #0a0a0a;
-                letter-spacing: 2px;
-                font-family: 'IBM Plex Sans', 'Inter', sans-serif;
+                font-size: 20px;
+                font-weight: 700;
+                color: #111;
+                letter-spacing: -0.5px;
+                font-family: 'IBM Plex Sans', sans-serif;
             }
             .ch-logo-sub {
-                font-size: 10px;
-                font-weight: 600;
-                color: #8B1818;
-                letter-spacing: 3px;
-                font-family: 'IBM Plex Sans', 'Inter', sans-serif;
-                margin-top: 1px;
+                font-size: 11px;
+                font-weight: 700;
+                color: #b91c1c;
+                letter-spacing: 2px;
+                font-family: 'IBM Plex Sans', sans-serif;
+                margin-top: -2px;
+                text-transform: uppercase;
             }
 
             /* Nav links */
@@ -94,19 +95,22 @@ export function renderHeader(currentRoute) {
                 .ch-nav { display: flex; }
             }
             .nav-link {
-                padding: 8px 12px;
-                font-size: 12px;
+                padding: 24px 4px; /* Height of header to create clickable area */
+                font-size: 14px;
                 font-weight: 500;
-                color: #666;
+                color: #4b5563;
                 text-decoration: none;
-                font-family: 'JetBrains Mono', monospace;
-                letter-spacing: 0.3px;
-                transition: color 0.15s;
+                font-family: 'IBM Plex Sans', sans-serif;
+                letter-spacing: 0.2px;
+                transition: all 0.15s;
+                position: relative;
+                border-bottom: 2px solid transparent;
             }
-            .nav-link:hover { color: #0a0a0a; }
+            .nav-link:hover { color: #111; }
             .nav-link.active { 
-                color: #0a0a0a; 
+                color: #111; 
                 font-weight: 600;
+                border-bottom-color: #b91c1c;
             }
 
             /* Search bar */
@@ -213,30 +217,24 @@ export function renderHeader(currentRoute) {
             .ch-user-btn {
                 display: flex;
                 align-items: center;
-                gap: 8px;
-                padding: 4px 10px;
-                background: transparent;
+                justify-content: center;
+                width: 40px;
+                height: 40px;
+                padding: 0;
+                border-radius: 50%;
+                background: #fff;
                 border: 1px solid #e5e5e5;
                 cursor: pointer;
-                font-family: 'JetBrains Mono', monospace;
+                transition: all 0.15s;
             }
-            .ch-user-btn:hover { border-color: #ccc; }
+            .ch-user-btn:hover { border-color: #ccc; box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
             .ch-user-avatar {
-                width: 24px;
-                height: 24px;
-                background: #f0f0f0;
-                border-radius: 50%;
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                font-size: 10px;
+                font-size: 14px;
                 font-weight: 600;
-                color: #666;
+                color: #111;
+                font-family: 'IBM Plex Sans', sans-serif;
             }
-            .ch-user-name {
-                font-size: 12px;
-                color: #333;
-            }
+            .ch-user-name, .ch-user-btn i { display: none; } /* Hide name and chevron for clean circle look */
             .ch-user-dropdown {
                 position: absolute;
                 right: 0;

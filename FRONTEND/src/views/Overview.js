@@ -13,7 +13,8 @@ export function renderOverview() {
             .eq {
                 background: #fafafa;
                 min-height: 100vh;
-                font-family: 'Inter', -apple-system, sans-serif;
+                font-family: 'IBM Plex Sans', -apple-system, sans-serif;
+                color: #111;
             }
 
             /* Top bar */
@@ -27,30 +28,31 @@ export function renderOverview() {
             }
             .eq-stats { display: flex; gap: 32px; }
             .eq-stat-value {
-                font-size: 22px;
+                font-size: 20px;
                 font-weight: 600;
                 color: #0a0a0a;
                 font-family: 'IBM Plex Sans', sans-serif;
             }
             .eq-stat-label {
-                font-size: 10px;
-                color: #888;
+                font-size: 12px;
+                color: #555;
+                font-weight: 500;
                 text-transform: uppercase;
                 letter-spacing: 0.5px;
                 margin-top: 2px;
-                font-family: 'JetBrains Mono', monospace;
+                font-family: 'IBM Plex Mono', monospace;
             }
             .eq-controls { display: flex; gap: 8px; align-items: center; }
 
             /* Search */
             .eq-search {
-                padding: 7px 12px;
-                font-size: 12px;
+                padding: 8px 12px;
+                font-size: 13px;
                 border: 1px solid #e0e0e0;
                 border-radius: 6px;
                 outline: none;
-                width: 180px;
-                font-family: 'Inter', sans-serif;
+                width: 200px;
+                font-family: 'IBM Plex Sans', sans-serif;
                 color: #333;
                 transition: border-color 0.15s;
             }
@@ -59,13 +61,13 @@ export function renderOverview() {
 
             /* Sort */
             .eq-sort {
-                padding: 7px 12px;
-                font-size: 11px;
+                padding: 8px 12px;
+                font-size: 13px;
                 border: 1px solid #e0e0e0;
                 border-radius: 6px;
                 background: #fff;
                 cursor: pointer;
-                font-family: 'JetBrains Mono', monospace;
+                font-family: 'IBM Plex Mono', monospace;
                 color: #555;
                 outline: none;
             }
@@ -73,13 +75,13 @@ export function renderOverview() {
 
             .eq-rules-btn {
                 padding: 8px 14px;
-                font-size: 11px;
-                font-weight: 500;
-                color: #666;
+                font-size: 12px;
+                font-weight: 600;
+                color: #444;
                 background: #fff;
                 border: 1px solid #e0e0e0;
                 cursor: pointer;
-                font-family: 'JetBrains Mono', monospace;
+                font-family: 'IBM Plex Mono', monospace;
                 text-transform: uppercase;
                 letter-spacing: 0.3px;
                 display: flex;
@@ -100,14 +102,14 @@ export function renderOverview() {
             }
             .eq-tab {
                 padding: 14px 20px;
-                font-size: 12px;
-                font-weight: 500;
+                font-size: 13px;
+                font-weight: 600;
                 color: #888;
                 background: transparent;
                 border: none;
                 border-bottom: 2px solid transparent;
                 cursor: pointer;
-                font-family: 'JetBrains Mono', monospace;
+                font-family: 'IBM Plex Sans', sans-serif;
                 text-transform: uppercase;
                 letter-spacing: 0.3px;
                 transition: color 0.15s;
@@ -137,22 +139,24 @@ export function renderOverview() {
                 align-items: center;
             }
             .eq-filter-label {
-                font-size: 10px;
-                color: #999;
+                font-size: 12px;
+                color: #555;
                 text-transform: uppercase;
-                font-family: 'JetBrains Mono', monospace;
+                font-family: 'IBM Plex Mono', monospace;
                 margin-right: 4px;
+                font-weight: 500;
             }
             .eq-pill {
-                padding: 5px 12px;
-                font-size: 11px;
-                color: #555;
+                padding: 6px 14px;
+                font-size: 12px;
+                color: #444;
                 background: #f5f5f5;
+                font-weight: 500;
                 border: 1px solid #eee;
                 border-radius: 999px;
                 cursor: pointer;
                 transition: all 0.15s;
-                font-family: 'Inter', sans-serif;
+                font-family: 'IBM Plex Sans', sans-serif;
             }
             .eq-pill:hover { border-color: #ccc; }
             .eq-pill.active { background: #0a0a0a; color: #fff; border-color: #0a0a0a; }
@@ -162,9 +166,10 @@ export function renderOverview() {
                 display: inline-flex;
                 align-items: center;
                 gap: 5px;
-                font-size: 10px;
-                color: #888;
-                font-family: 'JetBrains Mono', monospace;
+                font-size: 12px;
+                color: #444;
+                font-weight: 500;
+                font-family: 'IBM Plex Sans', sans-serif;
                 text-transform: uppercase;
                 letter-spacing: 0.3px;
             }
@@ -224,18 +229,18 @@ export function renderOverview() {
                 align-items: center;
             }
             .eq-card-id {
-                font-size: 10px;
-                color: #aaa;
-                font-family: 'JetBrains Mono', monospace;
+                font-size: 12px;
+                color: #888;
+                font-family: 'IBM Plex Mono', monospace;
             }
 
             /* Status badge */
             .eq-badge {
-                font-size: 10px;
+                font-size: 12px;
                 font-weight: 600;
-                padding: 3px 10px;
-                border-radius: 999px;
-                font-family: 'JetBrains Mono', monospace;
+                padding: 4px 10px;
+                border-radius: 4px;
+                font-family: 'IBM Plex Mono', monospace;
                 letter-spacing: 0.3px;
                 text-transform: uppercase;
             }
@@ -249,11 +254,11 @@ export function renderOverview() {
                 display: inline-flex;
                 align-items: center;
                 gap: 4px;
-                font-size: 10px;
+                font-size: 12px;
                 font-weight: 600;
-                padding: 3px 10px;
-                border-radius: 999px;
-                font-family: 'JetBrains Mono', monospace;
+                padding: 4px 10px;
+                border-radius: 4px;
+                font-family: 'IBM Plex Mono', monospace;
                 letter-spacing: 0.3px;
                 text-transform: uppercase;
             }
@@ -264,10 +269,10 @@ export function renderOverview() {
 
             /* Card content */
             .eq-card-goal {
-                font-size: 17px;
+                font-size: 16px;
                 font-weight: 600;
-                color: #0a0a0a;
-                line-height: 1.3;
+                color: #111;
+                line-height: 1.4;
                 font-family: 'IBM Plex Sans', sans-serif;
             }
 
@@ -278,8 +283,9 @@ export function renderOverview() {
             }
 
             .eq-card-baseline {
-                font-size: 10px;
-                color: #999;
+                font-size: 12px;
+                color: #444;
+                font-weight: 500;
                 font-family: 'JetBrains Mono', monospace;
             }
 
@@ -295,11 +301,12 @@ export function renderOverview() {
                 font-family: 'IBM Plex Sans', sans-serif;
             }
             .eq-card-stake-label {
-                font-size: 10px;
-                color: #999;
-                font-weight: 400;
+                font-size: 12px;
+                color: #555;
+                font-weight: 500;
                 text-transform: uppercase;
                 font-family: 'JetBrains Mono', monospace;
+                letter-spacing: 0.5px;
             }
             .eq-card-time {
                 font-size: 12px;
@@ -310,13 +317,13 @@ export function renderOverview() {
             .eq-card-cta {
                 width: 100%;
                 padding: 12px;
-                font-size: 12px;
+                font-size: 14px;
                 font-weight: 600;
                 text-transform: uppercase;
                 letter-spacing: 0.5px;
                 border: none;
                 cursor: pointer;
-                font-family: 'JetBrains Mono', monospace;
+                font-family: 'IBM Plex Sans', sans-serif;
                 border-radius: 8px;
                 transition: all 0.15s;
             }
@@ -333,13 +340,14 @@ export function renderOverview() {
                 border-right: 2px solid #8B1818;
             }
             .eq-lock-micro {
-                font-size: 9px;
-                color: #888;
+                font-size: 12px;
+                color: #444;
                 text-align: center;
-                margin-top: 6px;
-                font-family: 'JetBrains Mono', monospace;
-                opacity: 0.8;
-                letter-spacing: -0.2px;
+                margin-top: 8px;
+                font-family: 'IBM Plex Sans', sans-serif;
+                font-weight: 400;
+                letter-spacing: normal;
+                opacity: 1;
             }
             .eq-card-cta.primary:hover { background: #6B1212; }
             .eq-card-cta.secondary { background: #f5f5f5; color: #333; border: 1px solid #e5e5e5; }
@@ -513,13 +521,13 @@ export function renderOverview() {
                 border-bottom: 1px solid #e5e5e5;
             }
             .eq-exec-mode-title {
-                font-size: 12px; font-weight: 700; text-transform: uppercase;
-                letter-spacing: 0.5px; font-family: 'JetBrains Mono', monospace;
-                color: #0a0a0a; display: flex; align-items: center; gap: 8px;
+                font-size: 18px; font-weight: 600; text-transform: capitalize;
+                letter-spacing: -0.5px; font-family: 'IBM Plex Sans', sans-serif;
+                color: #111; display: flex; align-items: center; gap: 8px;
             }
             .eq-exec-mode-sub {
-                font-size: 11px; color: #666; font-weight: 500;
-                font-family: 'JetBrains Mono', monospace;
+                font-size: 12px; color: #555; font-weight: 500;
+                font-family: 'IBM Plex Mono', monospace; text-transform: uppercase;
             }
             .eq-exec-close {
                 width: 24px; height: 24px; display: flex; align-items: center;
@@ -543,12 +551,12 @@ export function renderOverview() {
             }
             .eq-receipt-col:last-child { border-right: none; }
             .eq-receipt-label {
-                font-size: 9px; text-transform: uppercase; letter-spacing: 1px;
-                color: #888; font-family: 'JetBrains Mono', monospace;
-                margin-bottom: 6px; display: block;
+                font-size: 12px; text-transform: uppercase; letter-spacing: 0.5px;
+                color: #111; font-family: 'IBM Plex Mono', monospace; font-weight: 600;
+                margin-bottom: 8px; display: block;
             }
             .eq-receipt-value {
-                font-size: 16px; font-weight: 600; color: #0a0a0a;
+                font-size: 20px; font-weight: 600; color: #111;
                 font-family: 'IBM Plex Sans', sans-serif;
             }
             .eq-lock-micro {
@@ -562,9 +570,9 @@ export function renderOverview() {
                 margin-bottom: 24px;
             }
             .eq-tier-btn {
-                padding: 10px; border: 1px solid #e5e5e5; background: #fff;
-                border-radius: 6px; font-size: 12px; font-weight: 600;
-                color: #333; cursor: pointer; font-family: 'IBM Plex Sans', sans-serif;
+                padding: 12px; border: 1px solid #e0e0e0; background: #fff;
+                border-radius: 6px; font-size: 14px; font-weight: 600;
+                color: #111; cursor: pointer; font-family: 'IBM Plex Sans', sans-serif;
                 transition: all 0.15s; text-align: center;
             }
             .eq-tier-btn:hover { border-color: #ccc; }
@@ -580,29 +588,30 @@ export function renderOverview() {
                 margin-bottom: 24px; border: 1px solid #eee;
             }
             .eq-risk-item {
-                font-size: 10px; color: #555; font-family: 'JetBrains Mono', monospace;
-                display: flex; gap: 6px;
+                font-size: 12px; color: #444; font-family: 'IBM Plex Mono', monospace;
+                display: flex; gap: 6px; font-weight: 500;
             }
-            .eq-risk-val { font-weight: 600; color: #333; }
+            .eq-risk-val { font-weight: 600; color: #111; }
 
             /* Confirmation Input */
             .eq-confirm-row {
                 display: flex; gap: 12px; margin-bottom: 0;
             }
             .eq-confirm-input {
-                flex: 1; padding: 0 16px; height: 44px;
+                flex: 1; padding: 0 16px; height: 48px;
                 border: 1px solid #e5e5e5; border-radius: 6px;
-                font-size: 13px; font-family: 'Inter', sans-serif;
-                outline: none; transition: border-color 0.15s;
+                font-size: 14px; font-family: 'IBM Plex Sans', sans-serif; font-weight: 500;
+                outline: none; transition: border-color 0.15s; color: #111;
             }
             .eq-confirm-input:focus { border-color: #8B1818; }
-            .eq-confirm-input::placeholder { color: #aaa; text-transform: uppercase; font-size: 11px; letter-spacing: 0.5px; }
+            .eq-confirm-input::placeholder { color: #888; text-transform: uppercase; font-size: 12px; letter-spacing: 0.5px; font-weight: 500; }
 
             .eq-confirm {
                 background: #8B1818; color: #fff; border: none;
-                border-radius: 6px; height: 44px; padding: 0 24px;
-                font-size: 12px; font-weight: 600; letter-spacing: 0.5px;
-                cursor: pointer; font-family: 'JetBrains Mono', monospace;
+                border-radius: 6px; height: 48px; padding: 0 24px;
+                font-size: 14px; font-weight: 600; letter-spacing: 0.5px;
+                cursor: pointer; font-family: 'IBM Plex Sans', sans-serif;
+                text-transform: uppercase; transition: all 0.2s;
                 text-transform: uppercase; transition: all 0.2s;
                 opacity: 0.5; pointer-events: none; min-width: 140px;
                 box-shadow: 0 4px 12px rgba(139, 24, 24, 0.2);

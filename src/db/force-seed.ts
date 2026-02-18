@@ -2,7 +2,7 @@
 import 'dotenv/config';
 import { db } from './client.js';
 import { marketContractInstances, marketStatsCache } from './schema.js';
-import { eq } from 'drizzle-orm';
+import { eq, inArray } from 'drizzle-orm';
 import { seedCatalog } from './seed-catalog.js';
 
 async function forceSeed() {
@@ -21,11 +21,14 @@ async function forceSeed() {
     console.log(`[Force Seed] Found ${ids.length} published listings to remove.`);
 
     if (ids.length > 0) {
-        // Stats cache should cascade delete if FK is set up right, but if not:
-        // We'll just try deleting instances.
+        // 1. Delete stats cache first (FK constraint)
+        await db.delete(marketStatsCache)
+            .where(inArray(marketStatsCache.instanceId, ids));
+
+        // 2. Delete instances
         await db.delete(marketContractInstances)
             .where(eq(marketContractInstances.status, 'published'));
-        console.log('[Force Seed] 🗑️ Deleted published listings.');
+        console.log('[Force Seed] 🗑️ Deleted published listings and stats.');
     }
 
     // 2. Run Seed Catalog

@@ -196,7 +196,7 @@ const TEMPLATES = [
         rules: { metricKey: 'shopify_net_sales', window_days: 90 },
         tierOptions: TIER_OPTIONS
     },
-    // Order Volume (Allowed by user prompt)
+    // Order Volume
     {
         slug: 'shopify-order-volume-14d',
         title: 'Order Volume Growth (14d)',
@@ -272,7 +272,7 @@ const TEMPLATES = [
         rules: { metricKey: 'amazon_revenue', window_days: 90 },
         tierOptions: TIER_OPTIONS
     },
-    // Units Sold (Allowed by user prompt)
+    // Units Sold
     {
         slug: 'amazon-units-sold-14d',
         title: 'Units Sold Growth (14d)',
@@ -395,6 +395,13 @@ export async function seedCatalog() {
     // Get all templates to spawn from
     const allTemplates = await db.select().from(contractTemplates);
 
+    // Filter for valid templates (must have metricKey)
+    const validTemplates = allTemplates.filter(t => {
+        const r = t.rulesJson as any;
+        return r && typeof r.metricKey === 'string';
+    });
+    console.log(`[Seed] Found ${validTemplates.length} valid templates out of ${allTemplates.length} total.`);
+
     // Check current open listings
     const currentOpen = await db.select().from(marketContractInstances)
         .where(gt(marketContractInstances.fundingCloseAt, new Date()));
@@ -405,9 +412,9 @@ export async function seedCatalog() {
 
     console.log(`[Seed] Found ${activeCount} active listings. Target ${TARGET_OPEN}.`);
 
-    if (activeCount < TARGET_OPEN) {
+    if (activeCount < TARGET_OPEN && validTemplates.length > 0) {
         // Shuffle templates to pick random ones
-        const shuffled = [...allTemplates].sort(() => 0.5 - Math.random());
+        const shuffled = [...validTemplates].sort(() => 0.5 - Math.random());
 
         while (activeCount < TARGET_OPEN) {
             const t = shuffled[activeCount % shuffled.length];
@@ -416,11 +423,11 @@ export async function seedCatalog() {
             const fundingClose = new Date();
             fundingClose.setDate(fundingClose.getDate() + 7);
 
-            // Tier Allocation (60% Controlled, 30% Elevated, 10% Maximum)
+            // Tier Allocation (50% Controlled, 30% Elevated, 20% Maximum)
             const rand = Math.random();
             let tier = 'controlled';
-            if (rand > 0.6) tier = 'elevated';
-            if (rand > 0.9) tier = 'maximum';
+            if (rand > 0.5) tier = 'elevated';
+            if (rand > 0.8) tier = 'maximum';
 
             const rules = t.rulesJson as any;
             const tierOptions = t.tierOptionsJson as any;

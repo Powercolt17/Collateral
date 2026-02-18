@@ -480,10 +480,9 @@ export function renderOverview() {
                 padding: 0;
             }
             .eq-card.expanded > *:not(.eq-exec) {
-                padding-left: 20px;
-                padding-right: 20px;
+                display: none;
             }
-            .eq-card.expanded > *:first-child { padding-top: 20px; }
+            .eq-card.expanded > *:first-child { padding-top: 0; }
             .eq-card.dimmed {
                 opacity: 0.15; pointer-events: none;
                 filter: blur(3px) grayscale(0.5);
@@ -1277,7 +1276,7 @@ export function initOverview() {
                 <div class="eq-exec-mode-title">
                     <span>Execution Confirmation</span>
                 </div>
-                <div class="eq-exec-mode-sub">${rcptId}</div>
+                <div class="eq-exec-mode-sub">${goal} · ${platform} Verified</div>
                 <button class="eq-exec-close" data-action="collapse">✕</button>
             </div>
             <div class="eq-exec-body">

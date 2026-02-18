@@ -1077,8 +1077,7 @@ export function initOverview() {
                  data-stake-max="${max}"
                  data-fee="${fee}"
                  data-deadline="${c.fundingCloseAt}"
-                 data-goal="${goal}"
-                 onclick="window.router.navigate('/contracts/${c.id}')">
+                 data-goal="${goal}">
                 <div class="eq-card-top">
                     <div class="eq-card-corner"></div>
                     ${badge}
@@ -1097,7 +1096,7 @@ export function initOverview() {
                     </div>
                     <div class="eq-card-time">${timeLabel}</div>
                 </div>
-                <button class="eq-card-cta primary eq-lock-btn" onclick="event.stopPropagation();">Lock Capital →</button>
+                <button class="eq-card-cta primary eq-lock-btn">Lock Capital →</button>
                 <div class="eq-lock-micro">Capital is locked until settlement</div>
             </div>
         `;
@@ -1174,10 +1173,22 @@ export function initOverview() {
     // Since I'm running out of context window, I will simplify by adding the Event Delegation for 'eq-lock-btn'
 
     grid.addEventListener('click', (e) => {
+        // 1. Check for Lock/Expand Button
         const btn = e.target.closest('.eq-lock-btn');
         if (btn) {
             e.stopPropagation();
             expandCard(btn.closest('.eq-card'));
+            return;
+        }
+
+        // 2. Check for Card Navigation (if not clicking button/interactive elements)
+        const card = e.target.closest('.eq-card');
+        if (card) {
+            // Ensure we aren't clicking inside the execution area or other interactive elements
+            if (e.target.closest('.eq-exec') || e.target.closest('button') || e.target.closest('input')) return;
+
+            const id = card.dataset.id;
+            if (id) window.router.navigate('/contracts/' + id);
         }
     });
 

@@ -1,9 +1,9 @@
 // Header Component - Clearinghouse Terminal Nav
 export function renderHeader(currentRoute) {
     const routes = [
-        { path: '/overview', label: 'OVERVIEW' },
+        { path: '/overview', label: 'MARKET' },
         { path: '/ledger', label: 'LEDGER' },
-        { path: '/contracts', label: 'COMMITMENTS' },
+        { path: '/contracts', label: 'RECEIPTS' },
         { path: '/docs', label: 'DOCS' }
     ];
 

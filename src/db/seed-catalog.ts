@@ -423,11 +423,18 @@ export async function seedCatalog() {
             const fundingClose = new Date();
             fundingClose.setDate(fundingClose.getDate() + 7);
 
-            // Tier Allocation (50% Controlled, 30% Elevated, 20% Maximum)
-            const rand = Math.random();
+            // Tier Allocation (Fixed: 2 Maximum, 3 Elevated, 5 Controlled per 10 items)
+            // Indices 0,1 -> Maximum (20%)
+            // Indices 2,3,4 -> Elevated (30%)
+            // Indices 5-9 -> Controlled (50%)
+            const cyclicIndex = createdCount % 10;
             let tier = 'controlled';
-            if (rand > 0.5) tier = 'elevated';
-            if (rand > 0.8) tier = 'maximum';
+
+            if (cyclicIndex < 2) {
+                tier = 'maximum';
+            } else if (cyclicIndex < 5) {
+                tier = 'elevated';
+            }
 
             const rules = t.rulesJson as any;
             const tierOptions = t.tierOptionsJson as any;

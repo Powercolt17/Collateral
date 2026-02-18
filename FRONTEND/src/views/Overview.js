@@ -321,6 +321,26 @@ export function renderOverview() {
                 transition: all 0.15s;
             }
             .eq-card-cta.primary { background: #8B1818; color: #fff; }
+            .ch-connect:hover { background: #751212; }
+
+            .eq-card-corner {
+                position: absolute;
+                top: 0;
+                right: 0;
+                width: 8px;
+                height: 8px;
+                border-top: 2px solid #8B1818;
+                border-right: 2px solid #8B1818;
+            }
+            .eq-lock-micro {
+                font-size: 9px;
+                color: #888;
+                text-align: center;
+                margin-top: 6px;
+                font-family: 'JetBrains Mono', monospace;
+                opacity: 0.8;
+                letter-spacing: -0.2px;
+            }
             .eq-card-cta.primary:hover { background: #6B1212; }
             .eq-card-cta.secondary { background: #f5f5f5; color: #333; border: 1px solid #e5e5e5; }
             .eq-card-cta.secondary:hover { background: #eee; }
@@ -1040,7 +1060,12 @@ export function initOverview() {
 
         // Baseline/Target formatting
         const isConnected = hasAuthToken();
-        const baseline = isConnected ? `Baseline: — → Target: —` : `Connect to compute baseline`;
+        const displayPlatform = (platform === 'amazon') ? 'Amazon' : (platform.charAt(0).toUpperCase() + platform.slice(1));
+        const baseline = isConnected ? `Baseline: — → Target: —` : `Connect ${displayPlatform} to generate terms`;
+
+        const tierTitle = tier === 'controlled' ? '~30% Win Rate' :
+            tier === 'elevated' ? '~20% Win Rate' :
+                tier === 'maximum' ? '~10% Win Rate' : '';
 
         return `
             <div class="eq-card"
@@ -1055,29 +1080,37 @@ export function initOverview() {
                  data-goal="${goal}"
                  onclick="window.router.navigate('/contracts/${c.id}')">
                 <div class="eq-card-top">
+                    <div class="eq-card-corner"></div>
                     ${badge}
                     <span class="eq-card-id">RCPT-${shortId.slice(0, 4).toUpperCase()}</span>
                 </div>
                 <div class="eq-card-goal">${goal}</div>
                 <div class="eq-card-row">
                     <span class="eq-card-integration"><span class="dot ${dotClass}"></span> ${platform.charAt(0).toUpperCase() + platform.slice(1)}</span>
-                    <span class="eq-tier ${tier}">${tier.toUpperCase()} <span class="eq-card-capacity">${c.slots_left}/500 left</span></span>
+                    <span class="eq-tier ${tier}" title="${tierTitle}">${tier.toUpperCase()} <span class="eq-card-capacity">${c.slots_left}/500 left</span></span>
                 </div>
                 <div class="eq-card-baseline">${baseline}</div>
                 <div class="eq-card-meta">
                     <div>
                         <div class="eq-card-stake">${stakeDisplay}</div>
-                        <div class="eq-card-stake-label">Stake Range</div>
+                        <div class="eq-card-stake-label">Stake Capacity</div>
                     </div>
                     <div class="eq-card-time">${timeLabel}</div>
                 </div>
                 <button class="eq-card-cta primary eq-lock-btn" onclick="event.stopPropagation();">Lock Capital →</button>
+                <div class="eq-lock-micro">Capital is locked until settlement</div>
             </div>
         `;
     }
 
     function updateStats(stats) {
-        if (!stats) return;
+        if (!stats || !stats.tvlUsd || stats.tvlUsd === '0') {
+            // Simulated Beta Stats
+            statCapital.textContent = '$2.1M (BETA)';
+            statContracts.textContent = '142';
+            statPool.textContent = '$12.5M (BETA)';
+            return;
+        }
         statCapital.textContent = '$' + (stats.tvlUsd ? (stats.tvlUsd / 1000000).toFixed(1) + 'M' : '—');
         statContracts.textContent = stats.activeCount || '—';
         statPool.textContent = '$' + (stats.volume24hUsd ? (stats.volume24hUsd / 1000).toFixed(0) + 'k' : '—');

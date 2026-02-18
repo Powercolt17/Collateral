@@ -28,20 +28,22 @@ export function renderOverview() {
             }
             .eq-stats { display: flex; gap: 32px; }
             .eq-stat-value {
-                font-size: 20px;
+                font-size: 18px;
                 font-weight: 600;
-                color: #0a0a0a;
+                color: #111;
                 font-family: 'IBM Plex Sans', sans-serif;
+                letter-spacing: -0.5px;
             }
             .eq-stat-label {
-                font-size: 12px;
+                font-size: 11px;
                 color: #555;
-                font-weight: 500;
+                font-weight: 600;
                 text-transform: uppercase;
                 letter-spacing: 0.5px;
                 margin-top: 2px;
                 font-family: 'IBM Plex Mono', monospace;
             }
+            .eq-stat-divider { width: 1px; height: 32px; background: #e5e5e5; margin: 0 16px; }
             .eq-controls { display: flex; gap: 8px; align-items: center; }
 
             /* Search */
@@ -101,32 +103,33 @@ export function renderOverview() {
                 background: #fff;
             }
             .eq-tab {
-                padding: 14px 20px;
+                padding: 16px 20px;
                 font-size: 13px;
-                font-weight: 600;
-                color: #888;
+                font-weight: 500;
+                color: #666;
                 background: transparent;
                 border: none;
                 border-bottom: 2px solid transparent;
                 cursor: pointer;
                 font-family: 'IBM Plex Sans', sans-serif;
                 text-transform: uppercase;
-                letter-spacing: 0.3px;
-                transition: color 0.15s;
+                letter-spacing: 0.2px;
+                transition: all 0.2s;
                 position: relative;
             }
-            .eq-tab:hover { color: #333; }
-            .eq-tab.active { color: #0a0a0a; border-bottom-color: #8B1818; }
+            .eq-tab:hover { color: #111; }
+            .eq-tab.active { color: #111; font-weight: 600; border-bottom-color: #b91c1c; }
             .eq-tab-count {
-                font-size: 9px;
-                background: #eee;
-                color: #666;
-                padding: 1px 5px;
-                border-radius: 8px;
+                font-size: 10px;
+                background: #f3f4f6;
+                color: #4b5563;
+                padding: 2px 6px;
+                border-radius: 999px;
                 margin-left: 6px;
                 font-weight: 600;
+                font-family: 'IBM Plex Mono', monospace;
             }
-            .eq-tab.active .eq-tab-count { background: #8B1818; color: #fff; }
+            .eq-tab.active .eq-tab-count { background: #fee2e2; color: #b91c1c; }
 
             /* Filters */
             .eq-filters {
@@ -149,29 +152,36 @@ export function renderOverview() {
             .eq-pill {
                 padding: 6px 14px;
                 font-size: 12px;
-                color: #444;
-                background: #f5f5f5;
+                color: #4b5563;
+                background: #fff;
                 font-weight: 500;
-                border: 1px solid #eee;
+                border: 1px solid #e5e5e5;
                 border-radius: 999px;
                 cursor: pointer;
                 transition: all 0.15s;
                 font-family: 'IBM Plex Sans', sans-serif;
+                box-shadow: 0 1px 2px rgba(0,0,0,0.03);
             }
-            .eq-pill:hover { border-color: #ccc; }
-            .eq-pill.active { background: #0a0a0a; color: #fff; border-color: #0a0a0a; }
+            .eq-pill:hover { border-color: #ccc; color: #111; }
+            .eq-pill.active { 
+                background: #fff; 
+                color: #111; 
+                border-color: #111; 
+                box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+                font-weight: 600;
+            }
 
             /* Integration indicator */
             .eq-card-integration {
                 display: inline-flex;
                 align-items: center;
-                gap: 5px;
-                font-size: 12px;
-                color: #444;
+                gap: 6px;
+                font-size: 13px;
+                color: #4b5563;
                 font-weight: 500;
                 font-family: 'IBM Plex Sans', sans-serif;
-                text-transform: uppercase;
-                letter-spacing: 0.3px;
+                text-transform: capitalize; 
+                letter-spacing: normal;
             }
             .eq-card-integration .dot {
                 width: 6px;
@@ -206,14 +216,26 @@ export function renderOverview() {
             .eq-card {
                 background: #fff;
                 border: 1px solid #e5e5e5;
-                border-radius: 12px;
+                border-radius: 8px; /* Slightly sharper */
                 padding: 20px;
                 cursor: pointer;
-                transition: all 0.2s;
+                transition: all 0.2s cubic-bezier(0.2, 0.8, 0.2, 1);
                 display: flex;
                 flex-direction: column;
-                gap: 12px;
+                gap: 16px; /* Tighter rhythm */
+                position: relative;
+                overflow: hidden;
             }
+            /* Institutional Motif: Faint Ledger Lines */
+            .eq-card::before {
+                content: '';
+                position: absolute;
+                top: 0; left: 0; right: 0; height: 4px;
+                background: linear-gradient(90deg, #b91c1c 0%, transparent 20%);
+                opacity: 0;
+                transition: opacity 0.2s;
+            }
+            .eq-card:hover::before { opacity: 1; }
             .eq-card.expanded { gap: 0 !important; } /* Force remove gap */
             .eq-card.expanded > *:nth-last-child(2) { padding-bottom: 20px; } /* Ensure spacing before black header */
             .eq-card:hover {
@@ -236,13 +258,17 @@ export function renderOverview() {
 
             /* Status badge */
             .eq-badge {
-                font-size: 12px;
+                font-size: 11px;
                 font-weight: 600;
-                padding: 4px 10px;
+                height: 24px;
+                display: inline-flex;
+                align-items: center;
+                padding: 0 10px;
                 border-radius: 4px;
                 font-family: 'IBM Plex Mono', monospace;
-                letter-spacing: 0.3px;
+                letter-spacing: 0.5px;
                 text-transform: uppercase;
+                line-height: 1;
             }
             .eq-badge.active { background: #f0fdf4; color: #166534; }
             .eq-badge.action { background: #fef2f2; color: #8B1818; }
@@ -253,14 +279,16 @@ export function renderOverview() {
             .eq-tier {
                 display: inline-flex;
                 align-items: center;
-                gap: 4px;
-                font-size: 12px;
+                gap: 6px;
+                font-size: 11px;
                 font-weight: 600;
-                padding: 4px 10px;
+                height: 24px;
+                padding: 0 10px;
                 border-radius: 4px;
                 font-family: 'IBM Plex Mono', monospace;
-                letter-spacing: 0.3px;
+                letter-spacing: 0.5px;
                 text-transform: uppercase;
+                line-height: 1;
             }
             .eq-tier.controlled { background: #f0fdf4; color: #166534; }
             .eq-tier.elevated { background: #fffbeb; color: #92400e; }
@@ -269,11 +297,12 @@ export function renderOverview() {
 
             /* Card content */
             .eq-card-goal {
-                font-size: 16px;
+                font-size: 17px;
                 font-weight: 600;
                 color: #111;
-                line-height: 1.4;
+                line-height: 1.35;
                 font-family: 'IBM Plex Sans', sans-serif;
+                letter-spacing: -0.2px;
             }
 
             .eq-card-row {
@@ -297,8 +326,9 @@ export function renderOverview() {
             .eq-card-stake {
                 font-size: 20px;
                 font-weight: 700;
-                color: #0a0a0a;
+                color: #111;
                 font-family: 'IBM Plex Sans', sans-serif;
+                letter-spacing: -0.5px;
             }
             .eq-card-stake-label {
                 font-size: 12px;
@@ -322,23 +352,23 @@ export function renderOverview() {
                 text-transform: uppercase;
                 letter-spacing: 0.5px;
                 border: none;
-                cursor: pointer;
                 font-family: 'IBM Plex Sans', sans-serif;
                 border-radius: 8px;
                 transition: all 0.15s;
             }
-            .eq-card-cta.primary { background: #8B1818; color: #fff; }
-            .ch-connect:hover { background: #751212; }
-
-            .eq-card-corner {
-                position: absolute;
-                top: 0;
-                right: 0;
-                width: 8px;
-                height: 8px;
-                border-top: 2px solid #8B1818;
-                border-right: 2px solid #8B1818;
+            .eq-card-cta.primary { 
+                background: linear-gradient(180deg, #b91c1c 0%, #991b1b 100%);
+                color: #fff; 
+                box-shadow: 0 1px 2px rgba(0,0,0,0.1);
+                border: 1px solid #991b1b;
             }
+            .eq-card-cta.primary:hover { 
+                background: linear-gradient(180deg, #991b1b 0%, #7f1d1d 100%);
+                box-shadow: 0 4px 12px rgba(185, 28, 28, 0.25);
+            }
+            .ch-connect:hover { background: #751212; }
+            /* Noise Removed - No Card Corner */
+            .eq-card-corner { display: none; }
             .eq-lock-micro {
                 font-size: 12px;
                 color: #444;
@@ -349,7 +379,7 @@ export function renderOverview() {
                 letter-spacing: normal;
                 opacity: 1;
             }
-            .eq-card-cta.primary:hover { background: #6B1212; }
+
             .eq-card-cta.secondary { background: #f5f5f5; color: #333; border: 1px solid #e5e5e5; }
             .eq-card-cta.secondary:hover { background: #eee; }
 

@@ -509,13 +509,15 @@ export function renderOverview() {
             .eq-card { transition: all 0.4s cubic-bezier(0.22,1,0.36,1); position: relative; z-index: 1; }
             .eq-card.expanded {
                 grid-column: 1 / -1;
-                border-color: #d4d4d4;
-                box-shadow: 0 12px 60px rgba(0,0,0,0.15), 0 2px 8px rgba(0,0,0,0.08);
+                border-color: #e5e5e5;
+                box-shadow: 0 25px 50px -12px rgba(0,0,0,0.25);
                 cursor: default;
                 z-index: 100; /* Boost z-index to beat overlay */
                 transform: none;
                 overflow: hidden;
                 padding: 0;
+                max-width: 760px; /* Constrained width */
+                margin: 0 auto; /* Center alignment */
             }
             .eq-card.expanded > *:not(.eq-exec) {
                 display: none;
@@ -546,9 +548,19 @@ export function renderOverview() {
             /* Execution Mode - Institutional Receipt 10/10 */
             .eq-exec-mode {
                 background: #fff; 
-                padding: 16px 24px;
+                padding: 20px 32px;
                 display: flex; justify-content: space-between; align-items: center;
                 border-bottom: 1px solid #e5e5e5;
+                position: relative;
+                overflow: hidden;
+            }
+            /* Institutional Signature: Ledger Tick */
+            .eq-exec-mode::before {
+                content: '';
+                position: absolute;
+                top: 0; left: 32px;
+                width: 24px; height: 3px;
+                background: #b91c1c;
             }
             .eq-exec-mode-title {
                 font-size: 18px; font-weight: 600; text-transform: capitalize;
@@ -556,15 +568,17 @@ export function renderOverview() {
                 color: #111; display: flex; align-items: center; gap: 8px;
             }
             .eq-exec-mode-sub {
-                font-size: 12px; color: #555; font-weight: 500;
-                font-family: 'IBM Plex Mono', monospace; text-transform: uppercase;
+                font-size: 13px; color: #4b5563; font-weight: 500;
+                font-family: 'IBM Plex Sans', sans-serif;
+                margin-left: 12px; padding-left: 12px; border-left: 1px solid #e5e5e5;
             }
             .eq-exec-close {
-                width: 24px; height: 24px; display: flex; align-items: center;
-                justify-content: center; background: transparent; border: none;
-                cursor: pointer; color: #999; transition: color 0.15s;
+                width: 32px; height: 32px; display: flex; align-items: center;
+                justify-content: center; background: #f5f5f5; border: none;
+                border-radius: 6px;
+                cursor: pointer; color: #666; transition: all 0.15s;
             }
-            .eq-exec-close:hover { color: #333; }
+            .eq-exec-close:hover { background: #fee2e2; color: #991b1b; }
 
             .eq-exec-body { padding: 24px 24px 32px; }
 
@@ -573,42 +587,46 @@ export function renderOverview() {
                 display: grid; grid-template-columns: 1fr 1fr 1fr;
                 border: 1px solid #e5e5e5; border-radius: 8px;
                 overflow: hidden; margin-bottom: 24px;
+                background: #fafafa;
             }
             .eq-receipt-col {
-                padding: 16px; background: #fafafa;
+                padding: 20px;
                 border-right: 1px solid #e5e5e5;
                 text-align: center;
+                display: flex; flex-direction: column; gap: 4px;
             }
             .eq-receipt-col:last-child { border-right: none; }
             .eq-receipt-label {
-                font-size: 12px; text-transform: uppercase; letter-spacing: 0.5px;
-                color: #111; font-family: 'IBM Plex Mono', monospace; font-weight: 600;
-                margin-bottom: 8px; display: block;
+                font-size: 11px; text-transform: uppercase; letter-spacing: 0.5px;
+                color: #6b7280; font-family: 'IBM Plex Mono', monospace; font-weight: 600;
+                margin-bottom: 4px; display: block;
             }
             .eq-receipt-value {
-                font-size: 20px; font-weight: 600; color: #111;
+                font-size: 24px; font-weight: 600; color: #111;
                 font-family: 'IBM Plex Sans', sans-serif;
+                letter-spacing: -0.5px;
             }
             .eq-lock-micro {
                 text-align: center; font-size: 10px; color: #999;
                 margin: 8px 0 24px; font-family: 'Inter', sans-serif; font-style: italic;
             }
 
-            /* Tier Buttons */
+            /* Tier Buttons - Interactive Pills */
             .eq-tier-selector {
-                display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px;
+                display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px;
                 margin-bottom: 24px;
             }
             .eq-tier-btn {
-                padding: 12px; border: 1px solid #e0e0e0; background: #fff;
-                border-radius: 6px; font-size: 14px; font-weight: 600;
-                color: #111; cursor: pointer; font-family: 'IBM Plex Sans', sans-serif;
+                padding: 14px; border: 1px solid #e5e5e5; background: #fff;
+                border-radius: 8px; font-size: 14px; font-weight: 600;
+                color: #4b5563; cursor: pointer; font-family: 'IBM Plex Sans', sans-serif;
                 transition: all 0.15s; text-align: center;
+                position: relative;
             }
-            .eq-tier-btn:hover { border-color: #ccc; }
+            .eq-tier-btn:hover { border-color: #991b1b; color: #111; transform: translateY(-1px); }
             .eq-tier-btn.active {
-                border-color: #8B1818; background: #fff5f5; color: #8B1818;
-                box-shadow: 0 0 0 1px #8B1818;
+                border-color: #991b1b; background: #fef2f2; color: #991b1b;
+                box-shadow: 0 1px 3px rgba(153, 27, 27, 0.1);
             }
 
             /* Institutional Strip */
@@ -628,26 +646,30 @@ export function renderOverview() {
                 display: flex; gap: 12px; margin-bottom: 0;
             }
             .eq-confirm-input {
-                flex: 1; padding: 0 16px; height: 48px;
-                border: 1px solid #e5e5e5; border-radius: 6px;
-                font-size: 14px; font-family: 'IBM Plex Sans', sans-serif; font-weight: 500;
+                flex: 1; padding: 0 20px; height: 56px;
+                border: 1px solid #e5e5e5; border-radius: 8px;
+                font-size: 15px; font-family: 'IBM Plex Sans', sans-serif; font-weight: 500;
                 outline: none; transition: border-color 0.15s; color: #111;
+                background: #fff;
             }
-            .eq-confirm-input:focus { border-color: #8B1818; }
-            .eq-confirm-input::placeholder { color: #888; text-transform: uppercase; font-size: 12px; letter-spacing: 0.5px; font-weight: 500; }
-
+            .eq-confirm-input:focus { border-color: #991b1b; box-shadow: 0 0 0 1px #991b1b; }
+            .eq-confirm-input::placeholder { color: #9ca3af; text-transform: uppercase; font-size: 13px; letter-spacing: 0.5px; font-weight: 500; }
+            
             .eq-confirm {
-                background: #8B1818; color: #fff; border: none;
-                border-radius: 6px; height: 48px; padding: 0 24px;
-                font-size: 14px; font-weight: 600; letter-spacing: 0.5px;
+                background: linear-gradient(180deg, #991b1b 0%, #7f1d1d 100%);
+                color: #fff; border: none;
+                border-radius: 8px; height: 56px; padding: 0 32px;
+                font-size: 15px; font-weight: 600; letter-spacing: 0.5px;
                 cursor: pointer; font-family: 'IBM Plex Sans', sans-serif;
                 text-transform: uppercase; transition: all 0.2s;
-                text-transform: uppercase; transition: all 0.2s;
-                opacity: 0.5; pointer-events: none; min-width: 140px;
-                box-shadow: 0 4px 12px rgba(139, 24, 24, 0.2);
+                opacity: 0.5; pointer-events: none; min-width: 180px;
+                box-shadow: 0 4px 12px rgba(127, 29, 29, 0.2);
             }
             .eq-confirm.ready { opacity: 1; pointer-events: auto; transform: translateY(-1px); }
-            .eq-confirm.ready:hover { background: #751212; box-shadow: 0 6px 16px rgba(139, 24, 24, 0.3); }
+            .eq-confirm.ready:hover { 
+                background: linear-gradient(180deg, #7f1d1d 0%, #450a0a 100%);
+                box-shadow: 0 6px 16px rgba(127, 29, 29, 0.3); 
+            }
             }
             .eq-funding-sub {
                 font-size: 9px; color: #aaa;

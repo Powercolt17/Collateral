@@ -216,34 +216,39 @@ export function renderOverview() {
             .eq-card {
                 background: #fff;
                 border: 1px solid #e5e5e5;
-                border-radius: 8px; /* Slightly sharper */
-                padding: 20px;
+                border-radius: 6px; /* Tighter radius */
+                padding: 16px 20px; /* Reduced vertical and horizontal for density */
                 cursor: pointer;
                 transition: all 0.2s cubic-bezier(0.2, 0.8, 0.2, 1);
                 display: flex;
                 flex-direction: column;
-                gap: 16px; /* Tighter rhythm */
+                gap: 12px; /* Tighter rhythm */
                 position: relative;
                 overflow: hidden;
             }
-            /* Institutional Motif: Faint Ledger Lines */
-            .eq-card::before {
+            /* Institutional Motif: Ledger Notch */
+            .eq-card::after {
                 content: '';
                 position: absolute;
-                top: 0; left: 0; right: 0; height: 4px;
-                background: linear-gradient(90deg, #752122 0%, transparent 20%);
-                opacity: 0;
-                transition: opacity 0.2s;
+                top: 16px; bottom: 16px; left: 0;
+                width: 3px;
+                background: #f0f0f0;
+                border-radius: 0 2px 2px 0;
+                transition: background 0.2s;
             }
-            .eq-card:hover::before { opacity: 1; }
-            .eq-card.expanded { gap: 0 !important; } /* Force remove gap */
-            .eq-card.expanded > *:nth-last-child(2) { padding-bottom: 20px; } /* Ensure spacing before black header */
+            .eq-card:hover::after { background: #752122; }
+
+            /* Remove old top border gradient if present */
+            .eq-card::before { display: none; }
+
             .eq-card:hover {
                 border-color: #ccc;
-                box-shadow: 0 2px 12px rgba(0,0,0,0.04);
-                transform: translateY(-1px);
+                box-shadow: 0 4px 20px rgba(0,0,0,0.06);
+                transform: translateY(-2px);
             }
             .eq-card.hidden-card { display: none; }
+            .eq-card.expanded { gap: 0 !important; }
+            .eq-card.expanded > *:nth-last-child(2) { padding-bottom: 16px; }
 
             .eq-card-top {
                 display: flex;
@@ -251,14 +256,15 @@ export function renderOverview() {
                 align-items: center;
             }
             .eq-card-id {
-                font-size: 12px;
-                color: #888;
+                font-size: 11px;
+                color: #9ca3af; /* Lower contrast */
                 font-family: 'IBM Plex Mono', monospace;
+                letter-spacing: 0.5px;
             }
 
             /* Status badge */
             .eq-badge {
-                font-size: 11px;
+                font-size: 12px; /* Bump to 12px */
                 font-weight: 600;
                 height: 24px;
                 display: inline-flex;
@@ -275,25 +281,26 @@ export function renderOverview() {
             .eq-badge.verifying { background: #eff6ff; color: #1e40af; }
             .eq-badge.settled { background: #f5f5f5; color: #666; }
 
-            /* Tier badge */
+            /* Tier badge - Refined */
             .eq-tier {
                 display: inline-flex;
                 align-items: center;
                 gap: 6px;
-                font-size: 11px;
+                font-size: 12px; /* Standardized 12px */
                 font-weight: 600;
-                height: 24px;
-                padding: 0 10px;
+                height: 24px; /* Fixed height */
+                padding: 0 8px;
                 border-radius: 4px;
-                font-family: 'IBM Plex Mono', monospace;
-                letter-spacing: 0.5px;
+                font-family: 'IBM Plex Sans', sans-serif; /* Semibold sans */
+                letter-spacing: 0.3px;
                 text-transform: uppercase;
                 line-height: 1;
             }
-            .eq-tier.controlled { background: #f0fdf4; color: #166534; }
-            .eq-tier.elevated { background: #fffbeb; color: #92400e; }
-            .eq-tier.maximum { background: #fef2f2; color: #752122; }
-            .eq-tier-rate { font-weight: 400; opacity: 0.7; }
+            .eq-tier.controlled { background: #f0fdf4; color: #15803d; }
+            .eq-tier.elevated { background: #fff7ed; color: #9a3412; }
+            /* Muted Maroon for Maximum */
+            .eq-tier.maximum { background: #fff1f2; color: #881337; }
+            .eq-tier-rate { font-weight: 400; opacity: 0.8; }
 
             /* Card content */
             .eq-card-goal {
@@ -359,14 +366,19 @@ export function renderOverview() {
             .eq-card-cta.primary { 
                 background: linear-gradient(180deg, #752122 0%, #5e1b1c 100%);
                 color: #fff; 
-                box-shadow: 0 1px 2px rgba(0,0,0,0.1);
+                box-shadow: 0 2px 4px rgba(0,0,0,0.1);
                 border: 1px solid #752122;
+                transition: all 0.2s ease-out;
             }
             .eq-card-cta.primary:hover { 
-                background: linear-gradient(180deg, #5e1b1c 0%, #4a1516 100%);
-                box-shadow: 0 4px 12px rgba(117, 33, 34, 0.25);
+                background: linear-gradient(180deg, #5e1b1c 0%, #450a0a 100%);
+                box-shadow: 0 0 12px rgba(117, 33, 34, 0.4); /* Glow */
+                transform: translateY(-1px);
             }
-            .ch-connect:hover { background: #751212; }
+            .eq-card-cta.primary:active {
+                transform: translateY(1px);
+                box-shadow: 0 1px 2px rgba(0,0,0,0.1);
+            }
             /* Noise Removed - No Card Corner */
             .eq-card-corner { display: none; }
             .eq-lock-micro {
@@ -1133,7 +1145,8 @@ export function initOverview() {
         // Baseline/Target formatting
         const isConnected = hasAuthToken();
         const displayPlatform = (platform === 'amazon') ? 'Amazon' : (platform.charAt(0).toUpperCase() + platform.slice(1));
-        const baseline = isConnected ? `Baseline: — → Target: —` : `Connect ${displayPlatform} to generate terms`;
+        const displayPlatform = (platform === 'amazon') ? 'Amazon' : (platform.charAt(0).toUpperCase() + platform.slice(1));
+        const baseline = isConnected ? `<span style="color:#166534;font-weight:600">Terms Verified</span>` : `Terms unlock after verification`;
 
         const tierTitle = tier === 'controlled' ? '~30% Win Rate' :
             tier === 'elevated' ? '~20% Win Rate' :

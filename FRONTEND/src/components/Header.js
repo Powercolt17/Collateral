@@ -50,13 +50,12 @@ export function renderHeader(currentRoute) {
                 z-index: 50;
             }
             .ch-header-inner {
-                max-width: 1800px;
-                margin: 0 auto;
+                width: 100%;
                 padding: 0 32px;
                 height: 72px;
                 display: flex;
                 align-items: center;
-                gap: 32px;
+                gap: 40px;
             }
 
             /* Logo */
@@ -69,14 +68,14 @@ export function renderHeader(currentRoute) {
                 line-height: 1;
             }
             .ch-logo-main {
-                font-size: 20px;
-                font-weight: 700;
-                color: #111;
-                letter-spacing: -0.5px;
+                font-size: 24px;
+                font-weight: 800;
+                color: #0a0a0a;
+                letter-spacing: -0.8px;
                 font-family: 'IBM Plex Sans', sans-serif;
             }
             .ch-logo-sub {
-                font-size: 11px;
+                font-size: 10px;
                 font-weight: 700;
                 color: #752122;
                 letter-spacing: 2px;
@@ -95,9 +94,9 @@ export function renderHeader(currentRoute) {
                 .ch-nav { display: flex; }
             }
             .nav-link {
-                padding: 24px 4px; /* Height of header to create clickable area */
-                font-size: 14px;
-                font-weight: 500;
+                padding: 26px 4px; /* Height of header to create clickable area */
+                font-size: 12px;
+                font-weight: 600;
                 color: #4b5563;
                 text-decoration: none;
                 font-family: 'IBM Plex Sans', sans-serif;

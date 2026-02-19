@@ -1313,7 +1313,7 @@ export function initOverview() {
             if (e.target.closest('.eq-exec') || e.target.closest('button') || e.target.closest('input')) return;
 
             const id = card.dataset.id;
-            if (id) window.router.navigate('/contracts/' + id);
+            if (id) window.router.navigate('/market/' + id);
         }
     });
 

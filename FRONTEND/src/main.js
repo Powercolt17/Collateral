@@ -11,6 +11,7 @@ import { renderDocs, initDocs } from './views/Docs.js';
 import { renderFunding, initFunding } from './views/Funding.js';
 import { renderReceipts, initReceipts } from './views/Receipts.js';
 import { renderReceiptDetail, initReceiptDetail } from './views/ReceiptDetail.js';
+import { renderTermSheet, initTermSheet } from './views/TermSheet.js';
 import { renderStripeCallback, initStripeCallback } from './views/StripeCallback.js';
 import { renderXCallback, initXCallback } from './views/XCallback.js';
 import { renderPreLaunch, initPreLaunch } from './views/PreLaunch.js';
@@ -145,12 +146,14 @@ const routes = PRE_LAUNCH_MODE ? [
     { path: '/funding', render: renderPreLaunch, init: initPreLaunch },
     { path: '/receipts', render: renderPreLaunch, init: initPreLaunch },
     { path: '/receipts/:id', render: renderPreLaunch, init: initPreLaunch },
+    { path: '/market/:id', render: renderPreLaunch, init: initPreLaunch },
 ] : [
     // Normal mode: full app
     { path: '/overview', render: renderOverview, init: initOverview },
     { path: '/ledger', render: renderLedger, init: initLedger },
     { path: '/contracts', render: renderContracts, init: initContracts },
     { path: '/contracts/:id', render: renderContractDetail, init: initContractDetail },
+    { path: '/market/:id', render: renderTermSheet, init: initTermSheet },
     { path: '/profile', render: renderProfile, init: initProfile },
     { path: '/settings', render: renderProfile, init: initProfile }, // Redirect settings to profile
     { path: '/my-contracts', render: renderMyContracts, init: initMyContracts },

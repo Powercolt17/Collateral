@@ -1185,7 +1185,6 @@ export function initOverview() {
         // Baseline/Target formatting
         const isConnected = hasAuthToken();
         const displayPlatform = (platform === 'amazon') ? 'Amazon' : (platform.charAt(0).toUpperCase() + platform.slice(1));
-        const displayPlatform = (platform === 'amazon') ? 'Amazon' : (platform.charAt(0).toUpperCase() + platform.slice(1));
         const baseline = isConnected ? `<span style="color:#166534;font-weight:600">Terms Verified</span>` : `Terms unlock after verification`;
 
         const tierTitle = tier === 'controlled' ? '~30% Win Rate' :

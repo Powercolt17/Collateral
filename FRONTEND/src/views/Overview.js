@@ -58,7 +58,7 @@ export function renderOverview() {
                 color: #333;
                 transition: border-color 0.15s;
             }
-            .eq-search:focus { border-color: #8B1818; }
+            .eq-search:focus { border-color: #752122; }
             .eq-search::placeholder { color: #aaa; }
 
             /* Sort */
@@ -73,7 +73,7 @@ export function renderOverview() {
                 color: #555;
                 outline: none;
             }
-            .eq-sort:focus { border-color: #8B1818; }
+            .eq-sort:focus { border-color: #752122; }
 
             .eq-rules-btn {
                 padding: 8px 14px;
@@ -118,7 +118,7 @@ export function renderOverview() {
                 position: relative;
             }
             .eq-tab:hover { color: #111; }
-            .eq-tab.active { color: #111; font-weight: 600; border-bottom-color: #b91c1c; }
+            .eq-tab.active { color: #111; font-weight: 600; border-bottom-color: #752122; }
             .eq-tab-count {
                 font-size: 10px;
                 background: #f3f4f6;
@@ -129,7 +129,7 @@ export function renderOverview() {
                 font-weight: 600;
                 font-family: 'IBM Plex Mono', monospace;
             }
-            .eq-tab.active .eq-tab-count { background: #fee2e2; color: #b91c1c; }
+            .eq-tab.active .eq-tab-count { background: #fee2e2; color: #752122; }
 
             /* Filters */
             .eq-filters {
@@ -231,7 +231,7 @@ export function renderOverview() {
                 content: '';
                 position: absolute;
                 top: 0; left: 0; right: 0; height: 4px;
-                background: linear-gradient(90deg, #b91c1c 0%, transparent 20%);
+                background: linear-gradient(90deg, #752122 0%, transparent 20%);
                 opacity: 0;
                 transition: opacity 0.2s;
             }
@@ -271,7 +271,7 @@ export function renderOverview() {
                 line-height: 1;
             }
             .eq-badge.active { background: #f0fdf4; color: #166534; }
-            .eq-badge.action { background: #fef2f2; color: #8B1818; }
+            .eq-badge.action { background: #fef2f2; color: #752122; }
             .eq-badge.verifying { background: #eff6ff; color: #1e40af; }
             .eq-badge.settled { background: #f5f5f5; color: #666; }
 
@@ -292,7 +292,7 @@ export function renderOverview() {
             }
             .eq-tier.controlled { background: #f0fdf4; color: #166534; }
             .eq-tier.elevated { background: #fffbeb; color: #92400e; }
-            .eq-tier.maximum { background: #fef2f2; color: #8B1818; }
+            .eq-tier.maximum { background: #fef2f2; color: #752122; }
             .eq-tier-rate { font-weight: 400; opacity: 0.7; }
 
             /* Card content */
@@ -357,14 +357,14 @@ export function renderOverview() {
                 transition: all 0.15s;
             }
             .eq-card-cta.primary { 
-                background: linear-gradient(180deg, #b91c1c 0%, #991b1b 100%);
+                background: linear-gradient(180deg, #752122 0%, #5e1b1c 100%);
                 color: #fff; 
                 box-shadow: 0 1px 2px rgba(0,0,0,0.1);
-                border: 1px solid #991b1b;
+                border: 1px solid #752122;
             }
             .eq-card-cta.primary:hover { 
-                background: linear-gradient(180deg, #991b1b 0%, #7f1d1d 100%);
-                box-shadow: 0 4px 12px rgba(185, 28, 28, 0.25);
+                background: linear-gradient(180deg, #5e1b1c 0%, #4a1516 100%);
+                box-shadow: 0 4px 12px rgba(117, 33, 34, 0.25);
             }
             .ch-connect:hover { background: #751212; }
             /* Noise Removed - No Card Corner */
@@ -440,7 +440,7 @@ export function renderOverview() {
                 border-bottom: 1px solid #f0f0f0;
             }
             .eq-rule-row:last-child { border-bottom: none; }
-            .eq-rule-row input[type="checkbox"] { width: 16px; height: 16px; accent-color: #8B1818; cursor: pointer; }
+            .eq-rule-row input[type="checkbox"] { width: 16px; height: 16px; accent-color: #752122; cursor: pointer; }
             .eq-rule-row span { font-size: 13px; color: #333; }
             .eq-rule-divider {
                 font-size: 10px;
@@ -475,7 +475,7 @@ export function renderOverview() {
             .eq-threshold-table tr:last-child td { border-bottom: none; }
             .eq-threshold-table .tier-controlled { color: #166534; font-weight: 600; }
             .eq-threshold-table .tier-elevated { color: #92400e; font-weight: 600; }
-            .eq-threshold-table .tier-maximum { color: #8B1818; font-weight: 600; }
+            .eq-threshold-table .tier-maximum { color: #752122; font-weight: 600; }
 
             .eq-slider-row {
                 display: flex;
@@ -490,7 +490,7 @@ export function renderOverview() {
             }
             .eq-slider {
                 flex: 1;
-                accent-color: #8B1818;
+                accent-color: #752122;
                 cursor: pointer;
             }
             .eq-slider-value {
@@ -578,7 +578,7 @@ export function renderOverview() {
                 border-radius: 6px;
                 cursor: pointer; color: #666; transition: all 0.15s;
             }
-            .eq-exec-close:hover { background: #fee2e2; color: #991b1b; }
+            .eq-exec-close:hover { background: #fee2e2; color: #752122; }
 
             .eq-exec-body { padding: 24px 24px 32px; }
 
@@ -623,10 +623,10 @@ export function renderOverview() {
                 transition: all 0.15s; text-align: center;
                 position: relative;
             }
-            .eq-tier-btn:hover { border-color: #991b1b; color: #111; transform: translateY(-1px); }
+            .eq-tier-btn:hover { border-color: #752122; color: #111; transform: translateY(-1px); }
             .eq-tier-btn.active {
-                border-color: #991b1b; background: #fef2f2; color: #991b1b;
-                box-shadow: 0 1px 3px rgba(153, 27, 27, 0.1);
+                border-color: #752122; background: #fef2f2; color: #752122;
+                box-shadow: 0 1px 3px rgba(117, 33, 34, 0.1);
             }
 
             /* Institutional Strip */
@@ -652,23 +652,23 @@ export function renderOverview() {
                 outline: none; transition: border-color 0.15s; color: #111;
                 background: #fff;
             }
-            .eq-confirm-input:focus { border-color: #991b1b; box-shadow: 0 0 0 1px #991b1b; }
+            .eq-confirm-input:focus { border-color: #752122; box-shadow: 0 0 0 1px #752122; }
             .eq-confirm-input::placeholder { color: #9ca3af; text-transform: uppercase; font-size: 13px; letter-spacing: 0.5px; font-weight: 500; }
             
             .eq-confirm {
-                background: linear-gradient(180deg, #991b1b 0%, #7f1d1d 100%);
+                background: linear-gradient(180deg, #752122 0%, #5e1b1c 100%);
                 color: #fff; border: none;
                 border-radius: 8px; height: 56px; padding: 0 32px;
                 font-size: 15px; font-weight: 600; letter-spacing: 0.5px;
                 cursor: pointer; font-family: 'IBM Plex Sans', sans-serif;
                 text-transform: uppercase; transition: all 0.2s;
                 opacity: 0.5; pointer-events: none; min-width: 180px;
-                box-shadow: 0 4px 12px rgba(127, 29, 29, 0.2);
+                box-shadow: 0 4px 12px rgba(117, 33, 34, 0.2);
             }
             .eq-confirm.ready { opacity: 1; pointer-events: auto; transform: translateY(-1px); }
             .eq-confirm.ready:hover { 
-                background: linear-gradient(180deg, #7f1d1d 0%, #450a0a 100%);
-                box-shadow: 0 6px 16px rgba(127, 29, 29, 0.3); 
+                background: linear-gradient(180deg, #5e1b1c 0%, #4a1516 100%);
+                box-shadow: 0 6px 16px rgba(117, 33, 34, 0.3); 
             }
             }
             .eq-funding-sub {
@@ -676,7 +676,7 @@ export function renderOverview() {
                 font-family: 'JetBrains Mono', monospace;
             }
             .eq-funding-change {
-                font-size: 10px; color: #8B1818; cursor: pointer;
+                font-size: 10px; color: #752122; cursor: pointer;
                 font-family: 'JetBrains Mono', monospace; text-transform: uppercase;
                 background: none; border: none; font-weight: 600;
             }
@@ -697,7 +697,7 @@ export function renderOverview() {
                 padding: 14px; cursor: pointer;
             }
             .eq-sig-body input[type="checkbox"] {
-                width: 18px; height: 18px; accent-color: #8B1818;
+                width: 18px; height: 18px; accent-color: #752122;
                 margin-top: 1px; cursor: pointer; flex-shrink: 0;
             }
             .eq-sig-text {
@@ -760,9 +760,9 @@ export function renderOverview() {
                 border: 2px solid transparent;
             }
             .eq-exec-step.active .eq-step-dot {
-                background: #8B1818; border-color: rgba(139,24,24,0.3);
+                background: #752122; border-color: rgba(117,33,34,0.3);
                 animation: pulse-dot 1s infinite;
-                box-shadow: 0 0 8px rgba(139,24,24,0.3);
+                box-shadow: 0 0 8px rgba(117,33,34,0.3);
             }
             .eq-exec-step.done .eq-step-dot {
                 background: #166534; border-color: rgba(22,101,52,0.2);
@@ -796,7 +796,7 @@ export function renderOverview() {
             .eq-exec-error {
                 background: #fef2f2; border: 1px solid #fecaca;
                 border-radius: 8px; padding: 12px 14px; margin-top: 12px;
-                font-size: 11px; color: #991b1b;
+                font-size: 11px; color: #752122;
                 font-family: 'JetBrains Mono', monospace;
             }
 
@@ -828,7 +828,7 @@ export function renderOverview() {
                 gap: 8px;
             }
             .eq-live-dot {
-                width: 6px; height: 6px; background: #8B1818; border-radius: 50%;
+                width: 6px; height: 6px; background: #752122; border-radius: 50%;
                 animation: pulse-live 2s infinite;
             }
 
@@ -860,7 +860,7 @@ export function renderOverview() {
                 background: #f5f5f5; padding: 2px 6px; border-radius: 4px;
             }
             .eq-card-countdown {
-                font-size: 10px; color: #8B1818; font-weight: 600;
+                font-size: 10px; color: #752122; font-weight: 600;
                 font-family: 'JetBrains Mono', monospace;
             }
         </style>
@@ -1535,7 +1535,7 @@ export function initOverview() {
             console.error('[Exec] Error:', err);
             const errEl = document.getElementById(`exec-error-${id}`);
             if (errEl) {
-                errEl.innerHTML = `<div class="eq-exec-error">⚠ ${err.message || 'Execution failed'}<br><button onclick="this.closest('.eq-exec').querySelector('[data-action=collapse]')?.click()" style="margin-top:8px;padding:6px 12px;background:#8B1818;color:#fff;border:none;border-radius:4px;cursor:pointer;font-size:10px;font-family:'JetBrains Mono',monospace;">DISMISS</button></div>`;
+                errEl.innerHTML = `<div class="eq-exec-error">⚠ ${err.message || 'Execution failed'}<br><button onclick="this.closest('.eq-exec').querySelector('[data-action=collapse]')?.click()" style="margin-top:8px;padding:6px 12px;background:#752122;color:#fff;border:none;border-radius:4px;cursor:pointer;font-size:10px;font-family:'JetBrains Mono',monospace;">DISMISS</button></div>`;
             }
         }
     }

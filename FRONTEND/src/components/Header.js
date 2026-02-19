@@ -78,7 +78,7 @@ export function renderHeader(currentRoute) {
             .ch-logo-sub {
                 font-size: 11px;
                 font-weight: 700;
-                color: #b91c1c;
+                color: #752122;
                 letter-spacing: 2px;
                 font-family: 'IBM Plex Sans', sans-serif;
                 margin-top: -2px;
@@ -110,7 +110,7 @@ export function renderHeader(currentRoute) {
             .nav-link.active { 
                 color: #111; 
                 font-weight: 600;
-                border-bottom-color: #b91c1c;
+                border-bottom-color: #752122;
             }
 
             /* Search bar */
@@ -201,14 +201,14 @@ export function renderHeader(currentRoute) {
                 font-size: 11px;
                 font-weight: 600;
                 color: #fff;
-                background: #921818;
+                background: #752122;
                 border: none;
                 cursor: pointer;
                 font-family: 'JetBrains Mono', monospace;
                 letter-spacing: 0.5px;
                 transition: background 0.15s;
             }
-            .ch-connect:hover { background: #751212; }
+            .ch-connect:hover { background: #5c1a1b; }
 
             /* User menu (authenticated) */
             .ch-user-menu {
@@ -261,7 +261,7 @@ export function renderHeader(currentRoute) {
                 font-family: 'JetBrains Mono', monospace;
             }
             .ch-user-dropdown button:hover { background: #f5f5f5; }
-            .ch-user-dropdown .signout { color: #921818; }
+            .ch-user-dropdown .signout { color: #752122; }
 
             /* Mobile menu button */
             .ch-mobile-btn {
@@ -313,7 +313,7 @@ export function renderHeader(currentRoute) {
                 border-bottom: 1px solid #f0f0f0;
                 font-family: 'JetBrains Mono', monospace;
             }
-            .mobile-nav-link.active { color: #921818; font-weight: 600; }
+            .mobile-nav-link.active { color: #752122; font-weight: 600; }
         </style>
 
         <header class="ch-header">

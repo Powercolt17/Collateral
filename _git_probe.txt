@@ -1,3 +1,0 @@
-This file is used to verify that Antigravity is editing the same folder that is open in GitHub Desktop.
-If you see this file in your "Changes" list, then the connection is correct.
-If you DO NOT see this file, then you have the wrong folder open in GitHub Desktop.

@@ -1312,8 +1312,16 @@ export function initOverview() {
             // Ensure we aren't clicking inside the execution area or other interactive elements
             if (e.target.closest('.eq-exec') || e.target.closest('button') || e.target.closest('input')) return;
 
+            e.preventDefault();
+            e.stopPropagation();
+
             const id = card.dataset.id;
-            if (id) window.router.navigate('/market/' + id);
+            console.log('[Overview] Card clicked, navigating to market template:', id);
+
+            if (id) {
+                // Direct hash manipulation to ensure router picks it up
+                window.location.hash = '/market/' + id;
+            }
         }
     });
 

@@ -21,7 +21,7 @@ export function renderContractDetail(params) {
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
                     </svg>
                 </div>
-                <h2 class="text-lg font-semibold text-neutral-800 mb-2">Failed to load contract</h2>
+                <h2 class="text-lg font-semibold text-neutral-800 mb-2">Failed to load contract (v2 check)</h2>
                 <p id="contract-error-message" class="text-sm text-neutral-500 mb-4"></p>
                 <button onclick="window.router.navigate('/my-contracts')" class="px-4 py-2 bg-neutral-900 text-white text-sm rounded">
                     Back to Contracts

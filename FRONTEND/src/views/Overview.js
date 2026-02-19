@@ -375,10 +375,50 @@ export function renderOverview() {
                 box-shadow: 0 0 12px rgba(117, 33, 34, 0.4); /* Glow */
                 transform: translateY(-1px);
             }
-            .eq-card-cta.primary:active {
                 transform: translateY(1px);
                 box-shadow: 0 1px 2px rgba(0,0,0,0.1);
             }
+            .eq-card-cta.locking {
+                background: #f5f5f5;
+                color: #888;
+                border: 1px solid #e5e5e5;
+                cursor: not-allowed;
+                box-shadow: none;
+                pointer-events: none;
+            }
+            .eq-loading-spinner {
+                display: inline-block;
+                width: 12px; height: 12px;
+                border: 2px solid rgba(0,0,0,0.1);
+                border-top-color: #555;
+                border-radius: 50%;
+                animation: spin 0.8s linear infinite;
+                margin-right: 8px;
+            }
+            @keyframes spin { to { transform: rotate(360deg); } }
+            @keyframes pulse-red { 0% { box-shadow: 0 0 0 0 rgba(117, 33, 34, 0.4); } 70% { box-shadow: 0 0 0 10px rgba(117, 33, 34, 0); } 100% { box-shadow: 0 0 0 0 rgba(117, 33, 34, 0); } }
+
+            /* Receipt Success Stats */
+            .eq-receipt-success { animation: fadeIn 0.4s ease-out; }
+            .eq-receipt-icon { font-size: 32px; margin-bottom: 12px; text-align: center; }
+            .eq-receipt-title { 
+                font-size: 16px; font-weight: 700; color: #111; text-align: center; margin-bottom: 24px; 
+                font-family: 'IBM Plex Sans', sans-serif; letter-spacing: -0.3px;
+            }
+            .eq-receipt-grid {
+                display: grid; grid-template-columns: 1fr 1fr; gap: 16px;
+                background: #f9fafb; padding: 20px; border-radius: 8px; border: 1px solid #e5e5e5;
+                margin-bottom: 20px;
+            }
+            .eq-receipt-item-label { font-size: 11px; color: #666; font-family:'JetBrains Mono',monospace; margin-bottom: 4px; }
+            .eq-receipt-item-value { font-size: 14px; font-weight: 600; color: #111; font-family:'IBM Plex Sans', sans-serif; }
+            .eq-receipt-ledger {
+                margin: 20px 0; padding: 12px; background: #fff1f2; border: 1px solid #fecaca; border-radius: 6px;
+                font-size: 11px; color: #752122; font-family: 'JetBrains Mono', monospace;
+                display: flex; align-items: center; gap: 10px;
+            }
+            .eq-ledger-event { opacity: 0.8; font-weight: 600; }
+            .eq-receipt-actions { display: flex; gap: 12px; margin-top: 24px; }
             /* Noise Removed - No Card Corner */
             .eq-card-corner { display: none; }
             .eq-lock-micro {
@@ -1452,27 +1492,12 @@ export function initOverview() {
 
 
 
-        // Helper to run execution (renamed to avoid conflict with existing executeWithAPI, or just inline it)
         function runExecution(cardEl, id, execDiv, finalStake) {
-            // Show step animation first (optimistic UI)
-            execDiv.innerHTML = `
-                <div class="eq-exec-mode">
-                    <div>
-                        <div class="eq-exec-mode-title">Executing Contract</div>
-                        <div class="eq-exec-mode-sub">RCPT-${id.split('-')[0].toUpperCase()} · Live Transaction</div>
-                    </div>
-                    <span style="font-size:10px;color:rgba(255,255,255,0.4);font-family:'JetBrains Mono',monospace;">LIVE</span>
-                </div>
-                <div class="eq-exec-body">
-                    <div class="eq-exec-steps">
-                        <div class="eq-exec-step" id="step-1-${id}"><span class="eq-step-dot"></span> Authorizing Capital <span class="eq-step-check" style="display:none">✓</span></div>
-                        <div class="eq-exec-step" id="step-2-${id}"><span class="eq-step-dot"></span> Writing Receipt <span class="eq-step-check" style="display:none">✓</span></div>
-                        <div class="eq-exec-step" id="step-3-${id}"><span class="eq-step-dot"></span> Execution Confirmed <span class="eq-step-check" style="display:none">✓</span></div>
-                        <div class="eq-exec-step" id="step-4-${id}"><span class="eq-step-dot"></span> Window Begins Now <span class="eq-step-check" style="display:none">✓</span></div>
-                    </div>
-                    <div id="exec-error-${id}"></div>
-                </div>
-            `;
+            const confirmBtn = document.getElementById(`confirm-btn-${id}`);
+            if (confirmBtn) {
+                confirmBtn.innerHTML = `<span class="eq-loading-spinner"></span> LOCKING CAPITAL...`;
+                confirmBtn.className = 'eq-card-cta locking';
+            }
 
             // Run real API calls alongside animation
             executeWithAPI(cardEl, id, execDiv, {
@@ -1483,14 +1508,10 @@ export function initOverview() {
 
     async function executeWithAPI(cardEl, id, execDiv, params) {
         const { platform, metricType, threshold, riskTier, stake, deadline } = params;
-        let realContractId = null;
 
         try {
-            // Step 1: Authorizing Capital — create the contract matches the instance
-            activateStep(id, 1);
-
-            // Artificial delay for feel
-            await sleep(800);
+            // Artificial delay for feel (instant start, but process takes a moment)
+            await sleep(1500);
 
             const createResult = await window.api.createContract({
                 platform,
@@ -1501,55 +1522,34 @@ export function initOverview() {
                     deadline: deadline || new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toISOString(),
                 },
                 lockAmountUsdCents: Math.round(stake * 100),
-                payoutAmountUsdCents: Math.round(stake * 100),
+                payoutAmountUsdCents: Math.round(stake * (riskTier === 'MAXIMUM' ? 4 : riskTier === 'ELEVATED' ? 2.5 : 1.5) * 100), // Approx logic
                 riskTier,
-                marketInstanceId: id // Link to the specific market drop
+                marketInstanceId: id
             });
 
-            realContractId = createResult.contract?.id || createResult.id;
+            const realContractId = createResult.contract?.id || createResult.id;
             console.log('[Exec] Contract created:', realContractId);
-            completeStep(id, 1);
 
-            // Step 2: Writing Receipt — create funding intent
-            activateStep(id, 2);
             if (realContractId) {
                 try {
                     await window.api.createFundingIntent(realContractId);
-                } catch (e) {
-                    console.warn('[Exec] Funding intent warning:', e.message);
-                }
-            }
-            await sleep(600);
-            completeStep(id, 2);
-
-            // Step 3: Execution Confirmed — execute the contract
-            activateStep(id, 3);
-            if (realContractId) {
-                try {
-                    // This finalizes the lock
                     await window.api.executeContract(realContractId);
                 } catch (e) {
-                    console.warn('[Exec] Execute warning:', e.message);
+                    console.warn('[Exec] Warning:', e.message);
                 }
             }
-            await sleep(600);
-            completeStep(id, 3);
 
-            // Step 4: Window Begins Now
-            activateStep(id, 4);
-            await sleep(800);
-            completeStep(id, 4);
-
-            // Show completion
-            await sleep(400);
-            showExecutionComplete(cardEl, id, stake, realContractId);
+            // Show completion screen
+            showExecutionComplete(cardEl, id, stake, realContractId, params);
 
         } catch (err) {
             console.error('[Exec] Error:', err);
-            const errEl = document.getElementById(`exec-error-${id}`);
-            if (errEl) {
-                errEl.innerHTML = `<div class="eq-exec-error">⚠ ${err.message || 'Execution failed'}<br><button onclick="this.closest('.eq-exec').querySelector('[data-action=collapse]')?.click()" style="margin-top:8px;padding:6px 12px;background:#752122;color:#fff;border:none;border-radius:4px;cursor:pointer;font-size:10px;font-family:'JetBrains Mono',monospace;">DISMISS</button></div>`;
+            const confirmBtn = document.getElementById(`confirm-btn-${id}`);
+            if (confirmBtn) {
+                confirmBtn.textContent = 'LOCK FAILED - RETRY';
+                confirmBtn.className = 'eq-confirm ready'; // Allow retry
             }
+            // Optional: show error message below button
         }
     }
 
@@ -1576,21 +1576,75 @@ export function initOverview() {
         return new Promise(resolve => setTimeout(resolve, ms));
     }
 
-    function showExecutionComplete(cardEl, id, stake, realContractId) {
+    function showExecutionComplete(cardEl, id, stake, realContractId, params) {
         const execDiv = cardEl.querySelector('.eq-exec');
         if (!execDiv) return;
 
+        // Card Updates
+        const badge = cardEl.querySelector('.eq-badge');
+        if (badge) {
+            badge.className = 'eq-badge action';
+            badge.style.background = '#fef2f2'; badge.style.color = '#752122';
+            badge.innerHTML = 'CAPITAL LOCKED';
+        }
+
+        // Remove Lock Button from collapsed state (or hide it permanently)
+        const lockBtn = cardEl.querySelector('.eq-lock-btn');
+        if (lockBtn) lockBtn.remove(); // Remove instead of just hiding
+
+        // Calculate timestamps
+        const now = new Date();
+        const startStr = now.toLocaleDateString([], { month: 'short', day: 'numeric' }) + ' ' + now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+        const settleDate = new Date(now.setDate(now.getDate() + 30)).toLocaleDateString([], { month: 'short', day: 'numeric', year: 'numeric' });
+
+        const fee = 2; // Hardcoded or from params
+        const payout = (stake * (params?.riskTier === 'MAXIMUM' ? 4 : params?.riskTier === 'ELEVATED' ? 2.5 : 1.5)).toLocaleString();
+
         execDiv.innerHTML = `
-            <div class="eq-exec-body" style="text-align:center;padding:40px 0;">
-                <div style="font-size:24px;margin-bottom:10px">✅</div>
-                <div style="font-weight:600">Execution Confirmed</div>
-                <button class="eq-card-cta secondary" style="margin-top:20px" onclick="window.router.navigate('/receipts/${realContractId || id}')">View Receipt →</button>
+            <div class="eq-receipt-success">
+                <div class="eq-receipt-icon">✅</div>
+                <div class="eq-receipt-title">EXECUTION CONFIRMED</div>
+                
+                <div class="eq-receipt-grid">
+                    <div>
+                        <div class="eq-receipt-item-label">Locked Capital</div>
+                        <div class="eq-receipt-item-value">$${stake.toLocaleString()}</div>
+                    </div>
+                    <div>
+                         <div class="eq-receipt-item-label">Est. Payout</div>
+                        <div class="eq-receipt-item-value">$${payout}</div>
+                    </div>
+                     <div>
+                        <div class="eq-receipt-item-label">Window Start</div>
+                        <div class="eq-receipt-item-value">${startStr}</div>
+                    </div>
+                    <div>
+                        <div class="eq-receipt-item-label">Settlement</div>
+                        <div class="eq-receipt-item-value">${settleDate}</div>
+                    </div>
+                     <div>
+                        <div class="eq-receipt-item-label">Verification</div>
+                        <div class="eq-receipt-item-value">${params?.platform || 'Stripe'} API</div>
+                    </div>
+                    <div>
+                        <div class="eq-receipt-item-label">Receipt ID</div>
+                        <div class="eq-receipt-item-value">RCPT-${(realContractId || id).slice(0, 4).toUpperCase()}</div>
+                    </div>
+                </div>
+
+                <div class="eq-lock-micro" style="margin-bottom:20px">Capital is now locked until settlement.</div>
+
+                <div class="eq-receipt-ledger">
+                    <span>✅ Receipt written to ledger</span>
+                    <span class="eq-ledger-event">Event: EXECUTION_CONFIRMED</span>
+                </div>
+
+                <div class="eq-receipt-actions">
+                    <button class="eq-card-cta primary" onclick="window.router.navigate('/receipts/${realContractId || id}')">View Receipt →</button>
+                    <button class="eq-card-cta secondary" onclick="document.querySelector('.eq-dim-overlay').click()">Return to Market</button>
+                </div>
             </div>
         `;
-
-        // Update Card state
-        const badge = cardEl.querySelector('.eq-badge');
-        if (badge) { badge.className = 'eq-badge active'; badge.textContent = 'ACTIVE'; }
     }
 
     // Wire up Rule Modal Logic (preserved)

@@ -1493,10 +1493,33 @@ export function initOverview() {
 
 
         function runExecution(cardEl, id, execDiv, finalStake) {
-            const confirmBtn = document.getElementById(`confirm-btn-${id}`);
-            if (confirmBtn) {
-                confirmBtn.innerHTML = `<span class="eq-loading-spinner"></span> LOCKING CAPITAL...`;
-                confirmBtn.className = 'eq-card-cta locking';
+            // Show step animation first (optimistic UI)
+            execDiv.innerHTML = `
+                <div class="eq-exec-mode">
+                    <div>
+                        <div class="eq-exec-mode-title">Executing Contract</div>
+                        <div class="eq-exec-mode-sub">RCPT-${id.split('-')[0].toUpperCase()} · Live Transaction</div>
+                    </div>
+                    <div>
+                         <span style="font-size:10px;color:rgba(255,255,255,0.4);font-family:'JetBrains Mono',monospace;margin-right:12px;">LIVE</span>
+                         <button class="eq-exec-close" data-action="collapse">✕</button>
+                    </div>
+                </div>
+                <div class="eq-exec-body">
+                    <div class="eq-exec-steps">
+                        <div class="eq-exec-step" id="step-1-${id}"><span class="eq-step-dot"></span> Authorizing Capital <span class="eq-step-check" style="display:none">✓</span></div>
+                        <div class="eq-exec-step" id="step-2-${id}"><span class="eq-step-dot"></span> Writing Receipt <span class="eq-step-check" style="display:none">✓</span></div>
+                        <div class="eq-exec-step" id="step-3-${id}"><span class="eq-step-dot"></span> Execution Confirmed <span class="eq-step-check" style="display:none">✓</span></div>
+                        <div class="eq-exec-step" id="step-4-${id}"><span class="eq-step-dot"></span> Window Begins Now <span class="eq-step-check" style="display:none">✓</span></div>
+                    </div>
+                    <div id="exec-error-${id}"></div>
+                </div>
+            `;
+
+            // Re-attach close listener
+            const closeBtn = execDiv.querySelector('.eq-exec-close');
+            if (closeBtn) {
+                closeBtn.addEventListener('click', (e) => { e.stopPropagation(); collapseAll(); });
             }
 
             // Run real API calls alongside animation

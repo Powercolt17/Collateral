@@ -262,37 +262,45 @@ export function renderTermSheet(params) {
                 user-select: none;
             }
 
-            /* Execute Button */
+            /* Execute Button — Dual-State */
             .ext-execute {
                 width: 100%;
                 padding: 18px 24px;
                 font-size: 13px;
-                font-weight: 700;
+                font-weight: 600;
                 text-transform: uppercase;
                 letter-spacing: 0.5px;
-                color: #fff;
-                background: #752122;
-                border: none;
-                border-radius: 6px;
+                color: #111111;
+                background: #ffffff;
+                border: 1px solid #e5e5e5;
+                border-radius: 8px;
                 cursor: pointer;
                 font-family: 'IBM Plex Sans', sans-serif;
-                transition: all 0.2s cubic-bezier(0.2, 0.8, 0.2, 1);
-                box-shadow: 0 4px 12px rgba(117, 33, 34, 0.2);
+                transition: all 150ms ease;
                 position: relative;
                 overflow: hidden;
+                box-shadow: none;
             }
             .ext-execute:hover:not(:disabled) {
-                background: #5a191a;
+                border-color: #7f1d1d;
+                color: #7f1d1d;
                 transform: translateY(-1px);
-                box-shadow: 0 8px 24px rgba(117, 33, 34, 0.3);
             }
             .ext-execute:active:not(:disabled) {
-                transform: translateY(1px);
-                box-shadow: 0 2px 6px rgba(117, 33, 34, 0.15);
+                background: #7f1d1d;
+                color: #ffffff;
+                border-color: #7f1d1d;
+                box-shadow: inset 0 2px 4px rgba(0,0,0,0.2);
+                transform: translateY(0);
+            }
+            .ext-execute:focus-visible {
+                outline: 2px solid rgba(127,29,29,0.4);
+                outline-offset: 2px;
             }
             .ext-execute:disabled {
-                background: #d4d4d4;
+                background: #f5f5f5;
                 color: #999;
+                border-color: #e5e5e5;
                 cursor: not-allowed;
                 box-shadow: none;
             }
@@ -545,7 +553,7 @@ export function renderTermSheet(params) {
 
                         <!-- Execute Button -->
                         <button class="ext-execute" id="ext-execute-btn" disabled>
-                            LOCK CAPITAL
+                            EXECUTE CONTRACT
                         </button>
                     </div>
 

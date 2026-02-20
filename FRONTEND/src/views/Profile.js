@@ -128,8 +128,10 @@ export function renderProfile() {
             .prf-pill.active{background:#fff;color:#111;border-color:#111;font-weight:600}
 
             /* CTA */
-            .prf-cta{display:inline-flex;align-items:center;justify-content:center;gap:6px;padding:0 20px;height:44px;font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:0.5px;border:none;font-family:'IBM Plex Sans',sans-serif;border-radius:6px;cursor:pointer;transition:all 0.15s;background:linear-gradient(180deg,#752122 0%,#5e1b1c 100%);color:#fff;box-shadow:0 2px 4px rgba(0,0,0,0.1);border:1px solid #752122}
-            .prf-cta:hover{background:linear-gradient(180deg,#5e1b1c 0%,#450a0a 100%);transform:translateY(-1px)}
+            .prf-cta{display:inline-flex;align-items:center;justify-content:center;gap:6px;padding:0 20px;height:44px;font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:0.5px;font-family:'IBM Plex Sans',sans-serif;border-radius:8px;cursor:pointer;transition:all 150ms ease;background:#ffffff;color:#111111;border:1px solid #e5e5e5;box-shadow:none}
+            .prf-cta:hover{border-color:#7f1d1d;color:#7f1d1d;transform:translateY(-1px)}
+            .prf-cta:active{background:#7f1d1d;color:#ffffff;border-color:#7f1d1d;box-shadow:inset 0 2px 4px rgba(0,0,0,0.2);transform:translateY(0)}
+            .prf-cta:focus-visible{outline:2px solid rgba(127,29,29,0.4);outline-offset:2px}
             .prf-cta.sm{height:32px;font-size:11px;padding:0 14px}
             .prf-cta.ghost{background:#fff;color:#555;border:1px solid #e5e5e5;box-shadow:none}
             .prf-cta.ghost:hover{border-color:#bbb;color:#111;background:#fafafa;transform:none}
@@ -340,7 +342,7 @@ export function renderProfile() {
                                 </div>
                             </div>
                             <!-- CTA -->
-                            <button class="prf-cta full" style="margin-top:18px;height:48px;font-size:13px" onclick="window.router.navigate('/overview')">Lock Capital →</button>
+                            <button class="prf-cta full" style="margin-top:18px;height:48px;font-size:13px" onclick="window.router.navigate('/overview')">Execute Contract →</button>
                         </div>
                     </div>
                     <!-- System status micro footer -->

@@ -363,25 +363,33 @@ export function renderOverview() {
                 font-weight: 600;
                 text-transform: uppercase;
                 letter-spacing: 0.5px;
-                border: none;
                 font-family: 'IBM Plex Sans', sans-serif;
                 border-radius: 8px;
-                transition: all 0.15s;
+                cursor: pointer;
+                transition: all 150ms ease;
             }
-            .eq-card-cta.primary { 
-                background: linear-gradient(180deg, #752122 0%, #5e1b1c 100%);
-                color: #fff; 
-                box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-                border: 1px solid #752122;
-                transition: all 0.2s ease-out;
+            .eq-card-cta.primary {
+                background: #ffffff;
+                color: #111111;
+                border: 1px solid #e5e5e5;
+                box-shadow: none;
             }
-            .eq-card-cta.primary:hover { 
-                background: linear-gradient(180deg, #5e1b1c 0%, #450a0a 100%);
-                box-shadow: 0 0 12px rgba(117, 33, 34, 0.4); /* Glow */
+            .eq-card-cta.primary:hover {
+                border-color: #7f1d1d;
+                color: #7f1d1d;
                 transform: translateY(-1px);
+                box-shadow: none;
             }
-                transform: translateY(1px);
-                box-shadow: 0 1px 2px rgba(0,0,0,0.1);
+            .eq-card-cta.primary:active {
+                background: #7f1d1d;
+                color: #ffffff;
+                border-color: #7f1d1d;
+                box-shadow: inset 0 2px 4px rgba(0,0,0,0.2);
+                transform: translateY(0);
+            }
+            .eq-card-cta.primary:focus-visible {
+                outline: 2px solid rgba(127,29,29,0.4);
+                outline-offset: 2px;
             }
             .eq-card-cta.locking {
                 background: #f5f5f5;
@@ -935,7 +943,7 @@ export function initOverview() {
                     </div>
                     <div class="eq-card-time">${timeLabel}</div>
                 </div>
-                <button class="eq-card-cta primary eq-lock-btn">Lock Capital →</button>
+                <button class="eq-card-cta primary eq-lock-btn">Execute Contract →</button>
                 <div class="eq-lock-micro">Capital is locked until settlement</div>
             </div>
         `;

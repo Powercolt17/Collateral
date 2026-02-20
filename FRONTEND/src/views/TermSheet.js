@@ -1,5 +1,5 @@
 
-import { formatDate, formatCurrency } from '../utils/format.js'; // Assuming we have utils, or I'll inline them if not. 
+
 // Actually I'll inline them to be safe as I didn't check for a utils file.
 
 export function renderTermSheet(params) {

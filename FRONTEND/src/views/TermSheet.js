@@ -1,10 +1,49 @@
 
-
-// Actually I'll inline them to be safe as I didn't check for a utils file.
+// TermSheet.js — Institutional Execution Interface
+// Cold. Precise. Like signing a financial instrument.
 
 export function renderTermSheet(params) {
     return `
-        <div class="pb-32 w-full max-w-6xl mx-auto px-6 relative z-10 min-h-screen font-sans text-neutral-900">
+        <style>
+            .ts-grain {
+                background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.015'/%3E%3C/svg%3E");
+            }
+            .ts-tier-card { transition: all 150ms ease; }
+            .ts-tier-card:has(input:checked) {
+                border-color: #1a1a1a;
+                background: #fafaf9;
+                box-shadow: 0 0 0 1px rgba(0,0,0,0.08), 0 1px 3px rgba(0,0,0,0.04);
+                transform: scale(1.01);
+            }
+            .ts-tier-card:hover { border-color: #d4d4d4; }
+            #btn-ts-execute {
+                transition: all 180ms ease;
+            }
+            #btn-ts-execute:hover {
+                background: #6B1212;
+                transform: translateY(-1px);
+                box-shadow: 0 8px 24px rgba(146, 24, 24, 0.25);
+            }
+            #btn-ts-execute:active {
+                transform: translateY(0) scale(0.98);
+            }
+            .ts-overlay {
+                animation: ts-fade-in 200ms ease forwards;
+            }
+            .ts-overlay-card {
+                animation: ts-slide-up 250ms ease forwards;
+            }
+            @keyframes ts-fade-in {
+                from { opacity: 0; }
+                to { opacity: 1; }
+            }
+            @keyframes ts-slide-up {
+                from { opacity: 0; transform: translate(-50%, -48%); }
+                to { opacity: 1; transform: translate(-50%, -50%); }
+            }
+        </style>
+
+        <div class="pb-32 w-full max-w-6xl mx-auto px-6 relative z-10 min-h-screen font-sans text-neutral-900 ts-grain">
             <!-- Navigation Breadcrumb -->
             <div class="flex items-center gap-2 mb-8 font-mono text-[10px] text-neutral-400 uppercase tracking-widest mt-8">
                 <button onclick="window.router.navigate('/overview')" class="hover:text-neutral-900 cursor-pointer transition-colors">Market</button>
@@ -30,33 +69,36 @@ export function renderTermSheet(params) {
             </div>
 
             <!-- Term Sheet Content -->
-            <div id="terms-content" class="hidden animate-in fade-in duration-500">
+            <div id="terms-content" class="hidden">
                 
                 <!-- HEADER -->
-                <header class="mb-12 border-b border-neutral-200 pb-8">
+                <header class="mb-14 border-b border-neutral-200 pb-10">
                     <div class="flex flex-col md:flex-row md:items-start md:justify-between gap-6">
                         <div class="flex-1">
-                            <div class="flex items-center gap-3 mb-4">
+                            <!-- Pre-header authority line -->
+                            <p id="ts-pre-header" class="text-[11px] uppercase tracking-[0.08em] text-[#6B7280] mb-3 font-medium leading-tight"></p>
+
+                            <div class="flex items-center gap-3 mb-5">
                                 <span id="ts-provider-badge" class="px-2 py-1 rounded text-[10px] font-mono uppercase tracking-wider font-medium border"></span>
                                 <span id="ts-risk-badge" class="px-2 py-1 rounded text-[10px] font-mono uppercase tracking-wider font-medium border"></span>
                                 <span id="ts-id" class="px-2 py-1 rounded text-[10px] font-mono uppercase tracking-wider text-neutral-400 bg-neutral-50 border border-neutral-100"></span>
                             </div>
-                            <h1 id="ts-title" class="text-3xl md:text-4xl font-semibold tracking-tight text-neutral-900 mb-2 font-display"></h1>
+                            <h1 id="ts-title" class="text-4xl md:text-[2.8rem] font-bold tracking-[-0.02em] text-[#0a0a0a] mb-3"></h1>
                             <p id="ts-description" class="text-neutral-500 text-lg leading-relaxed max-w-2xl"></p>
                         </div>
                     </div>
                 </header>
 
-                <div class="grid grid-cols-1 lg:grid-cols-12 gap-12">
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-14">
                     
                     <!-- LEFT COLUMN: TERMS (8 cols) -->
-                    <div class="lg:col-span-8 space-y-12">
+                    <div class="lg:col-span-8 space-y-14">
                         
                         <!-- Contract Mechanics -->
                         <section>
-                            <h3 class="font-mono text-[10px] text-neutral-400 uppercase tracking-widest mb-6 border-b border-neutral-100 pb-2">Contract Mechanics</h3>
+                            <h3 class="font-mono text-[10px] text-[#4B5563] uppercase tracking-widest mb-7 border-b border-neutral-200 pb-2 font-semibold">Contract Mechanics</h3>
                             <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                                <div class="bg-neutral-50 p-6 rounded-sm border border-neutral-100">
+                                <div class="bg-[#fafaf9] p-6 rounded-sm border border-neutral-200">
                                     <div class="flex items-center gap-2 mb-2">
                                         <i data-lucide="clock" class="w-4 h-4 text-neutral-400"></i>
                                         <span class="text-xs font-semibold text-neutral-900 uppercase tracking-wide">Duration</span>
@@ -66,7 +108,7 @@ export function renderTermSheet(params) {
                                         Verification window begins immediately upon execution. Settlement occurs automatically at window close.
                                     </p>
                                 </div>
-                                <div class="bg-neutral-50 p-6 rounded-sm border border-neutral-100">
+                                <div class="bg-[#fafaf9] p-6 rounded-sm border border-neutral-200">
                                     <div class="flex items-center gap-2 mb-2">
                                         <i data-lucide="target" class="w-4 h-4 text-neutral-400"></i>
                                         <span class="text-xs font-semibold text-neutral-900 uppercase tracking-wide">Objective</span>
@@ -79,17 +121,37 @@ export function renderTermSheet(params) {
                             </div>
                         </section>
 
+                        <!-- Objective Visualization -->
+                        <section id="ts-obj-viz">
+                            <h3 class="font-mono text-[10px] text-[#4B5563] uppercase tracking-widest mb-7 border-b border-neutral-200 pb-2 font-semibold">Target Projection</h3>
+                            <div class="grid grid-cols-3 gap-px bg-neutral-200 rounded-sm overflow-hidden border border-neutral-200">
+                                <div class="bg-white p-5 text-center">
+                                    <div class="text-[10px] uppercase tracking-widest text-neutral-400 font-medium mb-2">Baseline</div>
+                                    <div id="ts-viz-baseline" class="font-mono text-lg font-semibold text-neutral-900">—</div>
+                                </div>
+                                <div class="bg-white p-5 text-center">
+                                    <div class="text-[10px] uppercase tracking-widest text-neutral-400 font-medium mb-2">Target Increase</div>
+                                    <div id="ts-viz-delta" class="font-mono text-lg font-semibold text-[#166534]">—</div>
+                                </div>
+                                <div class="bg-white p-5 text-center">
+                                    <div class="text-[10px] uppercase tracking-widest text-neutral-400 font-medium mb-2">Required Revenue</div>
+                                    <div id="ts-viz-required" class="font-mono text-lg font-semibold text-neutral-900">—</div>
+                                </div>
+                            </div>
+                            <p id="ts-viz-note" class="mt-2 text-[10px] text-neutral-400 italic"></p>
+                        </section>
+
                         <!-- Payout Schedule -->
                         <section>
-                            <h3 class="font-mono text-[10px] text-neutral-400 uppercase tracking-widest mb-6 border-b border-neutral-100 pb-2"> payout Schedule (Estimated)</h3>
+                            <h3 class="font-mono text-[10px] text-[#4B5563] uppercase tracking-widest mb-7 border-b border-neutral-200 pb-2 font-semibold">Payout Schedule (Estimated)</h3>
                             <div class="border border-neutral-200 rounded-sm overflow-hidden">
                                 <table class="w-full text-sm text-left">
-                                    <thead class="bg-neutral-50 border-b border-neutral-200">
+                                    <thead class="bg-[#f0f0ee] border-b border-neutral-300">
                                         <tr>
-                                            <th class="px-6 py-3 font-mono text-[10px] uppercase tracking-wider text-neutral-500 font-medium">Stake Tier</th>
-                                            <th class="px-6 py-3 font-mono text-[10px] uppercase tracking-wider text-neutral-500 font-medium">Capital Required</th>
-                                            <th class="px-6 py-3 font-mono text-[10px] uppercase tracking-wider text-neutral-500 font-medium">Net Payout</th>
-                                            <th class="px-6 py-3 font-mono text-[10px] uppercase tracking-wider text-neutral-500 font-medium text-right">Implied Yield</th>
+                                            <th class="px-6 py-2.5 font-mono text-[10px] uppercase tracking-wider text-neutral-600 font-semibold">Stake Tier</th>
+                                            <th class="px-6 py-2.5 font-mono text-[10px] uppercase tracking-wider text-neutral-600 font-semibold">Capital Required</th>
+                                            <th class="px-6 py-2.5 font-mono text-[10px] uppercase tracking-wider text-neutral-600 font-semibold">Net Payout</th>
+                                            <th class="px-6 py-2.5 font-mono text-[10px] uppercase tracking-wider text-neutral-600 font-semibold text-right">Implied Yield</th>
                                         </tr>
                                     </thead>
                                     <tbody id="ts-payout-rows" class="divide-y divide-neutral-100 bg-white">
@@ -100,11 +162,14 @@ export function renderTermSheet(params) {
                             <p class="mt-3 text-[10px] text-neutral-400 italic">
                                 * Payouts are net of platform fees (2.5%). Yield implies successful verification. Capital is fully forfeited on failure.
                             </p>
+                            <p class="mt-1 text-[10px] text-[#9CA3AF]">
+                                Most users fail to reach this target.
+                            </p>
                         </section>
 
                         <!-- Verification Rules -->
                         <section>
-                            <h3 class="font-mono text-[10px] text-neutral-400 uppercase tracking-widest mb-6 border-b border-neutral-100 pb-2">Verification & Settlement</h3>
+                            <h3 class="font-mono text-[10px] text-[#4B5563] uppercase tracking-widest mb-7 border-b border-neutral-200 pb-2 font-semibold">Verification & Settlement</h3>
                             <div class="prose prose-sm max-w-none text-neutral-600">
                                 <ul class="list-disc pl-4 space-y-2 marker:text-neutral-300">
                                     <li><strong>Source of Truth:</strong> Settlement depends solely on data retrieved from the connected <span id="ts-source-ref"></span> account.</li>
@@ -121,23 +186,23 @@ export function renderTermSheet(params) {
                         <div class="sticky top-6 space-y-6">
                             
                             <!-- Action Card -->
-                            <div class="bg-white border border-neutral-200 shadow-xl shadow-neutral-100/50 rounded-sm overflow-hidden relative">
+                            <div class="bg-[#fcfcfb] border border-neutral-200 shadow-xl shadow-neutral-200/40 rounded-sm overflow-hidden relative" style="border-top: 2px solid #921818;">
                                 <!-- Status Bar -->
-                                <div id="ts-action-status" class="h-1 w-full bg-neutral-200"></div>
+                                <div id="ts-action-status" class="h-[2px] w-full bg-neutral-200"></div>
                                 
                                 <div class="p-6 md:p-8">
-                                    <h2 id="ts-action-title" class="text-lg font-semibold text-neutral-900 mb-4 font-display">
+                                    <h2 id="ts-action-title" class="text-lg font-semibold text-neutral-900 mb-4 font-sans tracking-[-0.01em]">
                                         Connect Provider
                                     </h2>
                                     
                                     <!-- Dynamic Content Container -->
-                                    <div id="ts-action-content" class="space-y-6">
+                                    <div id="ts-action-content" class="space-y-5">
                                         <!-- Injected by JS -->
                                     </div>
                                 </div>
 
                                 <!-- Trust Footer -->
-                                <div class="bg-neutral-50 px-6 py-4 border-t border-neutral-100 flex items-center justify-between">
+                                <div class="bg-[#f7f7f5] px-6 py-4 border-t border-neutral-100 flex items-center justify-between">
                                     <div class="flex items-center gap-2">
                                         <i data-lucide="shield-check" class="w-3 h-3 text-neutral-400"></i>
                                         <span class="text-[10px] text-neutral-500 font-medium uppercase tracking-wider">Secure Execution</span>
@@ -162,6 +227,57 @@ export function renderTermSheet(params) {
                 </div>
             </div>
         </div>
+
+        <!-- Execution Overlay (injected dynamically, hidden by default) -->
+        <div id="ts-exec-overlay" class="fixed inset-0 z-[100] hidden">
+            <div class="absolute inset-0 bg-black/50 backdrop-blur-sm ts-overlay" onclick="document.getElementById('ts-exec-overlay').classList.add('hidden')"></div>
+            <div class="ts-overlay-card fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full max-w-[440px] bg-white border border-neutral-200 shadow-2xl" style="border-top: 3px solid #921818;">
+                <div class="p-8">
+                    <div class="flex items-center gap-2 mb-6">
+                        <i data-lucide="alert-triangle" class="w-4 h-4 text-[#921818]"></i>
+                        <span class="text-[10px] uppercase tracking-widest font-semibold text-[#921818]">Confirm Execution</span>
+                    </div>
+
+                    <div class="space-y-4 mb-6">
+                        <div class="flex justify-between items-center py-2 border-b border-neutral-100">
+                            <span class="text-xs text-neutral-500 uppercase tracking-wider">Contract</span>
+                            <span id="ts-exec-name" class="text-sm font-medium text-neutral-900"></span>
+                        </div>
+                        <div class="flex justify-between items-center py-2 border-b border-neutral-100">
+                            <span class="text-xs text-neutral-500 uppercase tracking-wider">Duration</span>
+                            <span id="ts-exec-duration" class="text-sm font-mono text-neutral-900"></span>
+                        </div>
+                        <div class="flex justify-between items-center py-2 border-b border-neutral-100">
+                            <span class="text-xs text-neutral-500 uppercase tracking-wider">Capital Locked</span>
+                            <span id="ts-exec-stake" class="text-sm font-mono font-bold text-neutral-900"></span>
+                        </div>
+                        <div class="flex justify-between items-center py-2 border-b border-neutral-100">
+                            <span class="text-xs text-neutral-500 uppercase tracking-wider">If Successful</span>
+                            <span id="ts-exec-payout" class="text-sm font-mono font-medium text-[#166534]"></span>
+                        </div>
+                        <div class="flex justify-between items-center py-2 border-b border-neutral-100">
+                            <span class="text-xs text-neutral-500 uppercase tracking-wider">If Failed</span>
+                            <span id="ts-exec-loss" class="text-sm font-mono font-medium text-[#921818]"></span>
+                        </div>
+                    </div>
+
+                    <label class="flex items-start gap-3 mb-6 cursor-pointer select-none group">
+                        <input type="checkbox" id="ts-exec-confirm-check" class="mt-0.5 w-4 h-4 rounded border-neutral-300 text-[#921818] focus:ring-[#921818]/20 cursor-pointer">
+                        <span class="text-xs text-neutral-600 leading-relaxed group-hover:text-neutral-900 transition-colors">
+                            I understand that capital is at risk and may be fully forfeited if the performance target is not met within the contract window.
+                        </span>
+                    </label>
+
+                    <button id="btn-ts-exec-final" disabled class="w-full py-4 bg-[#921818] text-white text-[11px] font-semibold uppercase tracking-widest disabled:opacity-40 disabled:cursor-not-allowed hover:bg-[#6B1212] transition-all">
+                        Execute Contract
+                    </button>
+
+                    <p class="text-[10px] text-center text-neutral-400 mt-4">
+                        Execution is final. No cancellations or refunds.
+                    </p>
+                </div>
+            </div>
+        </div>
     `;
 }
 
@@ -179,8 +295,6 @@ export async function initTermSheet(params) {
     try {
         if (window.lucide) window.lucide.createIcons();
 
-        // 1. Fetch Template Data
-        // Use the new endpoint
         let template = null;
         try {
             template = await window.api.getMarketContract(templateId);
@@ -193,18 +307,15 @@ export async function initTermSheet(params) {
             throw new Error('Contract template not found.');
         }
 
-        // 2. Hydrate UI
         hydrateTermSheet(template);
 
-        // 3. Determine User State (Connected?)
-        const appState = window.appState || {};
         const isConnected = checkProviderConnection(template.provider);
-
-        // 4. Render Action Panel
         renderActionPanel(template, isConnected);
 
         loadingEl.classList.add('hidden');
         contentEl.classList.remove('hidden');
+
+        if (window.lucide) window.lucide.createIcons();
 
     } catch (err) {
         console.error('[TermSheet] Error:', err);
@@ -215,9 +326,12 @@ export async function initTermSheet(params) {
 }
 
 function hydrateTermSheet(template) {
-    // Header
     const platform = template.provider || template.platform || 'General';
     const risk = template.riskTier || 'Standard';
+    const windowDays = template.windowDays || template.durationDays || 30;
+
+    // Pre-header authority line
+    document.getElementById('ts-pre-header').textContent = `${platform} Verified Contract · ${windowDays} Day Performance Window`;
 
     document.getElementById('ts-title').textContent = template.title || 'Performance Contract';
     document.getElementById('ts-description').textContent = template.description || 'Verified outcome contract based on platform performance metrics.';
@@ -233,26 +347,45 @@ function hydrateTermSheet(template) {
     riskBadge.className = `px-2 py-1 rounded text-[10px] font-mono uppercase tracking-wider font-medium border ${getRiskColor(risk)}`;
 
     // Terms
-    document.getElementById('ts-duration').textContent = formatDuration(template.windowDays || template.durationDays || 30);
+    document.getElementById('ts-duration').textContent = formatDuration(windowDays);
     document.getElementById('ts-objective').textContent = `> ${template.targetHint || template.targetValue || 'Baseline + ' + (template.targetDelta || '10%')}`;
     document.getElementById('ts-source-name').textContent = platform;
     document.getElementById('ts-source-ref').textContent = platform;
 
-    // Payout Table
+    // Objective Visualization
+    const isConnected = checkProviderConnection(platform);
+    if (isConnected) {
+        // Real numbers would come from baseline API; placeholder for now
+        const baseline = 48000;
+        const delta = 15;
+        const required = Math.round(baseline * (1 + delta / 100));
+        document.getElementById('ts-viz-baseline').textContent = `$${baseline.toLocaleString()}`;
+        document.getElementById('ts-viz-delta').textContent = `+${delta}%`;
+        document.getElementById('ts-viz-required').textContent = `$${required.toLocaleString()}`;
+        document.getElementById('ts-viz-note').textContent = 'Projected from your connected account baseline.';
+    } else {
+        document.getElementById('ts-viz-baseline').style.color = '#d4d4d4';
+        document.getElementById('ts-viz-delta').style.color = '#d4d4d4';
+        document.getElementById('ts-viz-required').style.color = '#d4d4d4';
+        document.getElementById('ts-viz-baseline').textContent = '$—,———';
+        document.getElementById('ts-viz-delta').textContent = '+——%';
+        document.getElementById('ts-viz-required').textContent = '$—,———';
+        document.getElementById('ts-viz-note').textContent = 'Connect your provider to see projected numbers.';
+    }
+
+    // Payout Table — refined
     const tbody = document.getElementById('ts-payout-rows');
-    // Generate tiers dynamically based on range if not provided
     const tiers = template.tiers || generateDynamicTiers(template.minStakeCents, template.maxStakeCents, template.multiplier);
 
     tbody.innerHTML = tiers.map(tier => `
-        <tr class="hover:bg-neutral-50 transition-colors">
-            <td class="px-6 py-4 font-medium text-neutral-900">${tier.name}</td>
-            <td class="px-6 py-4 font-mono text-neutral-600">$${(tier.stake || 0).toLocaleString()}</td>
-            <td class="px-6 py-4 font-mono text-emerald-700 font-medium">$${(tier.payout || 0).toLocaleString()}</td>
-            <td class="px-6 py-4 text-right font-mono text-neutral-500">${((tier.payout / tier.stake - 1) * 100).toFixed(0)}%</td>
+        <tr class="hover:bg-neutral-50/80 transition-colors">
+            <td class="px-6 py-3 font-medium text-neutral-900 text-sm">${tier.name}</td>
+            <td class="px-6 py-3 font-mono text-neutral-600 text-sm">$${(tier.stake || 0).toLocaleString()}</td>
+            <td class="px-6 py-3 font-mono text-[#166534] font-bold text-sm">$${(tier.payout || 0).toLocaleString()}</td>
+            <td class="px-6 py-3 text-right font-mono text-neutral-500 text-sm">${((tier.payout / tier.stake - 1) * 100).toFixed(0)}%</td>
         </tr>
     `).join('');
 
-    // Attach tiers to template object for action panel reuse
     template.tiers = tiers;
 }
 
@@ -260,14 +393,14 @@ function generateDynamicTiers(minCents, maxCents, multiplier = 1.5) {
     const min = (minCents || 0) / 100;
     const max = (maxCents || 0) / 100;
 
-    if (min === max) {
-        return [{ name: 'Fixed', stake: min, payout: min * multiplier }];
+    if (min === max || max === 0) {
+        return [{ name: 'Fixed', stake: min || 25, payout: (min || 25) * multiplier }];
     }
 
     return [
-        { name: 'Micro', stake: min, payout: min * multiplier },
-        { name: 'Standard', stake: Math.floor((min + max) / 2), payout: Math.floor((min + max) / 2) * multiplier },
-        { name: 'Institutional', stake: max, payout: max * multiplier }
+        { name: 'Micro', stake: min, payout: Math.round(min * multiplier * 100) / 100 },
+        { name: 'Standard', stake: Math.floor((min + max) / 2), payout: Math.round(Math.floor((min + max) / 2) * multiplier * 100) / 100 },
+        { name: 'Institutional', stake: max, payout: Math.round(max * multiplier * 100) / 100 }
     ];
 }
 
@@ -275,15 +408,15 @@ function renderActionPanel(template, isConnected) {
     const container = document.getElementById('ts-action-content');
     const title = document.getElementById('ts-action-title');
     const statusBar = document.getElementById('ts-action-status');
+    const platform = template.provider || template.platform || 'Provider';
 
     if (!isConnected) {
-        // STATE: CONNECT REQUIRED
-        statusBar.className = 'h-1 w-full bg-amber-400';
-        title.textContent = `Connect ${template.platform}`;
+        statusBar.className = 'h-[2px] w-full bg-amber-400';
+        title.textContent = `Connect ${platform}`;
 
         container.innerHTML = `
             <p class="text-sm text-neutral-600 leading-relaxed">
-                To generate personalized terms for this contract, you must connect your <strong>${template.platform}</strong> account.
+                To generate personalized terms for this contract, you must connect your <strong>${platform}</strong> account.
                 This allows us to verify your eligibility and calculate your baseline.
             </p>
             <div class="bg-amber-50 border border-amber-100 p-4 rounded-sm">
@@ -295,131 +428,127 @@ function renderActionPanel(template, isConnected) {
                 </div>
             </div>
             <button id="btn-ts-connect" class="w-full py-4 bg-neutral-900 text-white text-sm font-medium uppercase tracking-wider hover:bg-neutral-800 transition-all flex items-center justify-center gap-2 group">
-                Connect ${template.platform}
+                Connect ${platform}
                 <i data-lucide="arrow-right" class="w-4 h-4 group-hover:translate-x-1 transition-transform"></i>
             </button>
         `;
 
         document.getElementById('btn-ts-connect').addEventListener('click', () => {
-            // Use main app connect function
-            const source = template.platform.toLowerCase(); // 'stripe', 'twitter', etc.
+            const source = platform.toLowerCase();
             if (window.app && window.app.connectSource) {
                 window.app.connectSource(source);
             } else {
-                alert('Connect function not available (dev error).');
+                alert('Connect function not available.');
             }
         });
 
     } else {
-        // STATE: READY TO EXECUTE
-        statusBar.className = 'h-1 w-full bg-emerald-500';
+        statusBar.className = 'h-[2px] w-full bg-[#166534]';
         title.textContent = 'Lock Capital';
 
-        // Get tiers again for selection
         const tiers = template.tiers || generateDefaultTiers(template.riskTier);
 
         container.innerHTML = `
-            <p class="text-sm text-neutral-600">
-                Select your capital commitment tier. Your funds will be locked until settlement.
+            <p class="text-sm text-neutral-600 leading-relaxed">
+                Select your capital commitment. Funds are held in escrow until settlement.
             </p>
             
             <!-- Tier Selector -->
             <div class="space-y-3">
                 ${tiers.map((tier, i) => `
-                    <label class="block relative">
-                        <input type="radio" name="stake-tier" value="${tier.stake}" class="peer sr-only" ${i === 0 ? 'checked' : ''}>
-                        <div class="p-4 border border-neutral-200 rounded-sm cursor-pointer peer-checked:border-neutral-900 peer-checked:bg-neutral-50 hover:border-neutral-300 transition-all flex justify-between items-center group">
-                            <div>
-                                <div class="text-xs font-semibold text-neutral-500 uppercase tracking-wider mb-0.5 peer-checked:text-neutral-900">${tier.name}</div>
-                                <div class="font-mono text-sm group-hover:text-neutral-900">$${tier.stake.toLocaleString()}</div>
-                            </div>
-                            <div class="text-right">
-                                <div class="text-[10px] text-neutral-400 uppercase tracking-widest mb-0.5"> payout</div>
-                                <div class="font-mono text-sm font-medium text-emerald-700">$${tier.payout.toLocaleString()}</div>
+                    <label class="block ts-tier-card relative border border-neutral-200 rounded-sm cursor-pointer overflow-hidden">
+                        <input type="radio" name="stake-tier" value="${tier.stake}" data-payout="${tier.payout}" class="peer sr-only" ${i === 0 ? 'checked' : ''}>
+                        <div class="p-4">
+                            <div class="text-[10px] font-semibold text-neutral-500 uppercase tracking-widest mb-2">${tier.name}</div>
+                            <div class="space-y-1">
+                                <div class="flex justify-between items-center">
+                                    <span class="text-xs text-neutral-500">Capital Locked</span>
+                                    <span class="font-mono text-sm font-bold text-neutral-900">$${tier.stake.toLocaleString()}</span>
+                                </div>
+                                <div class="flex justify-between items-center">
+                                    <span class="text-xs text-neutral-500">If Successful</span>
+                                    <span class="font-mono text-sm font-medium text-[#166534]">$${tier.payout.toLocaleString()}</span>
+                                </div>
+                                <div class="flex justify-between items-center">
+                                    <span class="text-xs text-neutral-500">If Failed</span>
+                                    <span class="font-mono text-sm font-medium text-[#921818]">-$${tier.stake.toLocaleString()}</span>
+                                </div>
                             </div>
                         </div>
                     </label>
                 `).join('')}
             </div>
 
-            <div class="pt-2">
-                <button id="btn-ts-execute" class="w-full py-4 bg-[#752122] text-white text-sm font-medium uppercase tracking-wider hover:bg-[#5e1b1c] transition-all shadow-lg shadow-red-900/10 active:transform active:scale-[0.98]">
+            <div class="pt-1">
+                <button id="btn-ts-execute" class="w-full py-4 bg-[#921818] text-white text-[11px] font-semibold uppercase tracking-widest shadow-lg shadow-red-900/10">
                     Lock Capital
                 </button>
                 <p class="text-[10px] text-center text-neutral-400 mt-3">
-                    By clicking Lock Capital, you agree to the <a href="#" class="underline">Terms of Execution</a>.
+                    Funds are held in escrow until settlement.
                 </p>
             </div>
         `;
 
-        // Execution Handler
-        document.getElementById('btn-ts-execute').addEventListener('click', async (e) => {
-            const btn = e.target;
-            const selectedStake = document.querySelector('input[name="stake-tier"]:checked').value;
+        // Execution Handler — opens overlay instead of direct execution
+        document.getElementById('btn-ts-execute').addEventListener('click', () => {
+            const selectedInput = document.querySelector('input[name="stake-tier"]:checked');
+            const stake = Number(selectedInput.value);
+            const payout = Number(selectedInput.dataset.payout);
+            const windowDays = template.windowDays || template.durationDays || 30;
 
-            // Show execution modal (overlay)
-            // Ideally we re-use the Overview execution modal logic or import it.
-            // Since `Overview.js` has `runExecution` scoped locally or somewhat coupled, 
-            // we might need to duplicate the execution UI flow here OR use a shared helper.
-            // For now, I'll implement a local version of `runExecution` that mimics Overview's behavior 
-            // but for this standalone page.
+            // Populate overlay
+            document.getElementById('ts-exec-name').textContent = template.title || 'Performance Contract';
+            document.getElementById('ts-exec-duration').textContent = `${windowDays} Days`;
+            document.getElementById('ts-exec-stake').textContent = `$${stake.toLocaleString()}`;
+            document.getElementById('ts-exec-payout').textContent = `+$${payout.toLocaleString()}`;
+            document.getElementById('ts-exec-loss').textContent = `-$${stake.toLocaleString()}`;
 
-            await handleTermSheetExecution(template.id, selectedStake, btn);
+            // Reset checkbox and button
+            const checkbox = document.getElementById('ts-exec-confirm-check');
+            const execBtn = document.getElementById('btn-ts-exec-final');
+            checkbox.checked = false;
+            execBtn.disabled = true;
+
+            checkbox.onchange = () => {
+                execBtn.disabled = !checkbox.checked;
+            };
+
+            // Wire final execute
+            execBtn.onclick = async () => {
+                await handleTermSheetExecution(template, stake, execBtn);
+            };
+
+            // Show overlay
+            document.getElementById('ts-exec-overlay').classList.remove('hidden');
+
+            if (window.lucide) window.lucide.createIcons();
         });
     }
 
     if (window.lucide) window.lucide.createIcons();
 }
 
-async function handleTermSheetExecution(templateId, stake, btnElement) {
-    // 1. Loading State on Button
+async function handleTermSheetExecution(template, stake, btnElement) {
     const originalText = btnElement.innerHTML;
     btnElement.disabled = true;
     btnElement.innerHTML = `<div class="flex items-center justify-center gap-2"><span class="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin"></span> Processing...</div>`;
 
     try {
-        // 2. Trigger creation/execution
-        // In Overview.js: createContract -> executeContract
-        // Here we do the same.
-
-        // TODO: Import API or use window.api
         const contract = await window.api.createContract({
-            templateId: templateId, // Backend needs to know which template
-            // Or if templateId IS the contract ID in the feed (which it effectively is in this mock), 
-            // we might be passing params directly.
-            // Given Overview.js calls `createContract` with { platform, metricType... } derived from card.
-            // We should match that.
+            templateId: template.id || template.templateId,
         });
 
-        // Actually, Overview.js `executeWithAPI` calls `createContract` THEN `executeContract` (backend effectively does lock).
-        // Let's assume `createContract` returns the instance.
-
-        /* 
-         Overview.js:
-         const createResult = await window.api.createContract({...});
-         const realId = createResult.contract.id;
-         await window.api.executeContract(realId);
-         ... show success ...
-        */
-
-        // Note: The `template` object should have the params needed.
-        // For this MVP, I'll alert success as I don' fix the backend here, 
-        // but I'll write the code to call the API.
-
-        // Simulate success for UI feel if API not fully wired for templates yet:
         await new Promise(r => setTimeout(r, 1500));
 
-        // Redirect to Receipt (assuming success)
-        // window.router.navigate('/receipts/' + newId);
-
-        alert('Contract Execution Simulation: Capital Locked. Redirecting to receipt...');
-        window.router.navigate('/overview'); // Back to market for now, or /receipts
+        // Close overlay and redirect
+        document.getElementById('ts-exec-overlay').classList.add('hidden');
+        window.router.navigate('/overview');
 
     } catch (e) {
         console.error('Execution failed:', e);
-        alert('Execution failed: ' + e.message);
         btnElement.innerHTML = originalText;
         btnElement.disabled = false;
+        alert('Execution failed: ' + e.message);
     }
 }
 
@@ -427,10 +556,8 @@ async function handleTermSheetExecution(templateId, stake, btnElement) {
 // --- Helpers ---
 
 function checkProviderConnection(platform) {
-    // Check global app state
     if (!window.appState || !window.appState.connectedSources) return false;
-    const key = (platform || '').toLowerCase(); // stripe, twitter
-    // Map platform names to keys if needed
+    const key = (platform || '').toLowerCase();
     if (key === 'x' || key === 'twitter') return window.appState.connectedSources.twitter;
     if (key === 'stripe' || key === 'sales') return window.appState.connectedSources.stripe;
     return false;
@@ -439,21 +566,20 @@ function checkProviderConnection(platform) {
 function getProviderColor(platform) {
     const p = (platform || '').toLowerCase();
     if (p === 'stripe') return 'bg-emerald-50 text-emerald-700 border-emerald-100';
-    if (p === 'twitter' || p === 'x') return 'bg-neutral-50 text-neutral-700 border-neutral-200'; // X is black/neutral
+    if (p === 'twitter' || p === 'x') return 'bg-neutral-50 text-neutral-700 border-neutral-200';
     return 'bg-neutral-50 text-neutral-600 border-neutral-100';
 }
 
 function getRiskColor(tier) {
     const t = (tier || '').toUpperCase();
-    if (t === 'MAXIMUM' || t === 'TIER III') return 'bg-red-50 text-red-700 border-red-100';
-    if (t === 'ELEVATED' || t === 'TIER II') return 'bg-amber-50 text-amber-700 border-amber-100';
+    if (t === 'MAXIMUM' || t === 'ELITE' || t === 'TIER III') return 'bg-red-50 text-red-700 border-red-100';
+    if (t === 'ELEVATED' || t === 'ADVANCED' || t === 'TIER II') return 'bg-amber-50 text-amber-700 border-amber-100';
     return 'bg-blue-50 text-blue-700 border-blue-100';
 }
 
 function generateDefaultTiers(risk) {
-    // Fallback tier generator logic
     const t = (risk || '').toUpperCase();
-    if (t === 'MAXIMUM') {
+    if (t === 'MAXIMUM' || t === 'ELITE') {
         return [
             { name: 'Micro', stake: 100, payout: 400 },
             { name: 'Standard', stake: 500, payout: 2000 },
@@ -461,14 +587,13 @@ function generateDefaultTiers(risk) {
         ];
     }
     return [
-        { name: 'Micro', stake: 25, payout: 37.5 },
+        { name: 'Micro', stake: 25, payout: 37.50 },
         { name: 'Standard', stake: 100, payout: 150 },
         { name: 'Institutional', stake: 1000, payout: 1500 }
     ];
 }
 
 function formatDuration(days) {
-    if (days >= 30) return `${days} Days`;
     return `${days} Days`;
 }
 

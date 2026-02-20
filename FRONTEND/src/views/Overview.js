@@ -1339,13 +1339,14 @@ export function initOverview() {
             return;
         }
 
-        // 2. Card click — open same modal (unless clicking inside interactive elements)
+        // 2. Card click — navigate to contract term sheet
         const card = e.target.closest('.eq-card');
         if (card) {
             if (e.target.closest('button') || e.target.closest('input')) return;
             e.preventDefault();
             e.stopPropagation();
-            openExecutionModal(extractContractData(card));
+            const id = card.dataset.id;
+            if (id) window.location.hash = '/contract/' + id;
         }
     });
 

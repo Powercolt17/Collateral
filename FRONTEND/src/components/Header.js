@@ -373,7 +373,7 @@ export function renderHeader(currentRoute) {
                         <div id="user-dropdown-content" class="ch-user-dropdown">
                             <button onclick="window.router.navigate('/profile')">MY IDENTITY</button>
                             <button onclick="window.router.navigate('/my-contracts')">MY CONTRACTS</button>
-
+                            <button onclick="window.router.navigate('/receipts')">RECEIPTS</button>
                             <button onclick="window.router.navigate('/funding')">FUNDING</button>
                             <button onclick="window.app.handleSignOut()" class="signout">SIGN OUT</button>
                         </div>

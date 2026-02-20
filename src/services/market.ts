@@ -304,6 +304,50 @@ export async function getMarketListings(options: MarketFeedOptions = {}) {
             // Terms / Fees
             fee_bps: i.feeBps,
 
-        };
-    });
+        });
+}
+
+export async function getMarketInstanceDetails(instanceId: string) {
+    const [row] = await db
+        .select({
+            instance: marketContractInstances,
+            template: contractTemplates,
+        })
+        .from(marketContractInstances)
+        .innerJoin(contractTemplates, eq(marketContractInstances.templateId, contractTemplates.id))
+        .where(eq(marketContractInstances.id, instanceId));
+
+    if (!row) return null;
+
+    const { instance, template } = row;
+    const rules = (template.rulesJson as any) || {};
+    const winRate = { 'CONTROLLED': '~30%', 'ELEVATED': '~20%', 'MAXIMUM': '~10%' }[instance.tier] || '~15%';
+
+    return {
+        // Core Template Fields
+        templateId: template.id,
+        title: template.title,
+        description: template.description || '',
+        provider: template.provider,
+        windowDays: Number(rules.window_days || 7),
+
+        // Instance-Specific Terms (The "Offer")
+        id: instance.id,
+        tier: instance.tier,
+        riskTier: instance.tier === 'CONTROLLED' ? 'STANDARD' : instance.tier === 'ELEVATED' ? 'ADVANCED' : 'ELITE',
+        minStakeCents: instance.minLockCents || 2500,
+        maxStakeCents: instance.maxLockCents || 50000,
+        feeBps: (instance.instanceTermsJson as any)?.executionFeeBps || 200,
+
+        // Detailed Rules
+        verificationMethod: 'OAUTH_READ_ONLY', // Static for now
+        antiGaming: 'Identity verification required. One active contract per provider persona.',
+
+        // Display Helpers
+        winRate,
+        multiplier: Number(instance.multiplier),
+        metricKey: instance.metricKey,
+        targetHint: instance.displayTargetHint,
+        expiry: instance.fundingCloseAt.toISOString(),
+    };
 }

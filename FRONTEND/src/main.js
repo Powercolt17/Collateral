@@ -16,6 +16,7 @@ import { renderStripeCallback, initStripeCallback } from './views/StripeCallback
 import { renderXCallback, initXCallback } from './views/XCallback.js';
 import { renderPreLaunch, initPreLaunch } from './views/PreLaunch.js';
 import './views/PreLaunch.css';
+import './index.css';
 // API Client for backend integration
 import api from './api.js';
 

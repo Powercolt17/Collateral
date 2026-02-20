@@ -305,6 +305,16 @@ export async function getMarketListings(params = {}) {
     return getPublic(`/v1/market/listings?${query}`);
 }
 
+// --- MARKET (Public Templates) ---
+
+export async function getMarketContract(id) {
+    return getPublic(`/v1/market/contracts/${id}`);
+}
+
+export async function getMarketQuote(id, stake) {
+    return postPublic(`/v1/market/contracts/${id}/quote`, { stake });
+}
+
 // --- FUNDING ---
 
 export async function createFundingIntent(contractId) {
@@ -446,7 +456,10 @@ export default {
     getContracts,
     getContract,
     getMarketFeed,
+    getMarketFeed,
     getMarketListings,
+    getMarketContract,
+    getMarketQuote,
 
     // Funding
     createFundingIntent,

@@ -1,5 +1,5 @@
 import { FastifyInstance } from 'fastify';
-import { getMarketFeed, getGlobalStats, publishDrop, expireInstance, getMarketListings, PublishDropParams } from '../services/market.js';
+import { getMarketFeed, getGlobalStats, publishDrop, expireInstance, getMarketListings, getMarketInstanceDetails, PublishDropParams } from '../services/market.js';
 import { z } from 'zod';
 
 // Input Schemas
@@ -62,6 +62,55 @@ export default async function marketRoutes(fastify: FastifyInstance) {
         return {
             listings,
             stats
+        };
+    });
+
+    // Public Contract Template/Listing Details (Term Sheet)
+    fastify.get('/v1/market/contracts/:id', async (request, reply) => {
+        const { id } = request.params as { id: string };
+        const details = await getMarketInstanceDetails(id);
+
+        if (!details) {
+            return reply.status(404).send({ error: 'Market contract not found' });
+        }
+
+        return details;
+    });
+
+    // Quote Endpoint for Term Sheet
+    fastify.post('/v1/market/contracts/:id/quote', async (request, reply) => {
+        const { id } = request.params as { id: string };
+        const { stake } = request.body as { stake: number }; // stake in dollars
+
+        const details = await getMarketInstanceDetails(id);
+        if (!details) {
+            return reply.status(404).send({ error: 'Market contract not found' });
+        }
+
+        const stakeCents = Math.round(stake * 100);
+
+        // Simple validation
+        if (stakeCents < details.minStakeCents || stakeCents > details.maxStakeCents) {
+            return reply.status(400).send({ error: `Stake must be between $${details.minStakeCents / 100} and $${details.maxStakeCents / 100}` });
+        }
+
+        // Calculate payout
+        const payoutCents = Math.round(stakeCents * details.multiplier);
+        const feeCents = Math.round(stakeCents * (details.feeBps / 10000));
+
+        return {
+            ok: true,
+            quoteId: `Q-${Date.now()}`,
+            stakeCents,
+            payoutCents,
+            feeCents,
+            multiplier: details.multiplier,
+            verified: true, // Mock verification for now
+            baseline: {
+                metric: details.metricKey,
+                value: 0, // Would fetch real baseline here if connected
+                source: details.provider
+            }
         };
     });
 

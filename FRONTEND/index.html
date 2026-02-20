@@ -15,62 +15,8 @@
         rel="stylesheet">
 
     <!-- Tailwind -->
-    <script src="https://cdn.tailwindcss.com"></script>
+
     <script src="https://unpkg.com/lucide@latest"></script>
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    fontFamily: {
-                        sans: ['IBM Plex Sans', 'sans-serif'],
-                        mono: ['IBM Plex Mono', 'monospace'],
-                    },
-                    colors: {
-                        neutral: {
-                            50: '#F7F7F6',
-                            900: '#111111',
-                        },
-                    }
-                }
-            }
-        }
-    </script>
-    <style>
-        :root {
-            --bg-page: #FFFFFF;
-            --bg-panel: #FAFAFA;
-            --text-primary: #111111;
-            font-family: 'IBM Plex Sans', sans-serif;
-            font-size: 14px;
-            line-height: 1.35;
-            color: #111;
-        }
-
-        --text-secondary: #6B6B6B;
-        --text-muted: #9CA3AF;
-        --divider: #E5E5E5;
-        --divider-subtle: #F0F0F0;
-        --red: #8B1818;
-        --red-hover: #6B1212;
-        --red-light: #FEF2F2;
-        --green: #166534;
-        --green-light: #F0FDF4;
-        }
-
-        .no-scrollbar::-webkit-scrollbar {
-            display: none;
-        }
-
-        .no-scrollbar {
-            -ms-overflow-style: none;
-            scrollbar-width: none;
-        }
-
-        ::selection {
-            background-color: var(--red);
-            color: #ffffff;
-        }
-    </style>
 </head>
 
 <body class="min-h-screen flex flex-col font-sans relative text-[#1A1A1A] bg-white antialiased overflow-x-hidden">

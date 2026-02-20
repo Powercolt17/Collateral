@@ -1,0 +1,44 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+    --bg-page: #FFFFFF;
+    --bg-panel: #FAFAFA;
+    --text-primary: #111111;
+    font-family: 'IBM Plex Sans', sans-serif;
+    font-size: 14px;
+    line-height: 1.35;
+    color: #111;
+}
+
+:root {
+    --text-secondary: #6B6B6B;
+    --text-muted: #9CA3AF;
+    --divider: #E5E5E5;
+    --divider-subtle: #F0F0F0;
+    --red: #8B1818;
+    --red-hover: #6B1212;
+    --red-light: #FEF2F2;
+    --green: #166534;
+    --green-light: #F0FDF4;
+}
+
+.no-scrollbar::-webkit-scrollbar {
+    display: none;
+}
+
+.no-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}
+
+::selection {
+    background-color: var(--red);
+    color: #ffffff;
+}
+
+@keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.5; }
+}

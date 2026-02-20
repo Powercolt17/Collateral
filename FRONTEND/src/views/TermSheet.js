@@ -180,31 +180,13 @@ export async function initTermSheet(params) {
         if (window.lucide) window.lucide.createIcons();
 
         // 1. Fetch Template Data
-        // Ideally: window.api.getMarketListing(templateId)
-        // Fallback: Fetch feed and find
+        // Use the new endpoint
         let template = null;
         try {
-            // Try fetching specific listing first if endpoint existed, but we'll use feed for now as planned
-            const feed = await window.api.getMarketListings(); // Or getMarketFeed
-            // The structure from getContracts (feed) is { contracts: [...], stats: ... }
-            // But getMarketListings might return array. Let's check api.js response.
-            // api.js getMarketListings calls /v1/market/listings
-
-            if (feed.listings) {
-                template = feed.listings.find(l => l.id === templateId || l.templateId === templateId);
-            } else if (Array.isArray(feed)) {
-                template = feed.find(l => l.id === templateId);
-            } else if (feed.contracts) {
-                // Logic from Overview
-                template = feed.contracts.find(c => c.id === templateId);
-            }
-
-            if (!template) throw new Error('Contract template not found in market.');
-
+            template = await window.api.getMarketContract(templateId);
         } catch (e) {
-            console.warn('Failed to fetch template from list, trying direct fallback...', e);
-            // Fallback mock if dev or if just testing
-            // throw e; 
+            console.error('Failed to fetch market contract:', e);
+            throw new Error('Contract template not found.');
         }
 
         if (!template) {
@@ -216,7 +198,7 @@ export async function initTermSheet(params) {
 
         // 3. Determine User State (Connected?)
         const appState = window.appState || {};
-        const isConnected = checkProviderConnection(template.platform);
+        const isConnected = checkProviderConnection(template.provider);
 
         // 4. Render Action Panel
         renderActionPanel(template, isConnected);
@@ -234,7 +216,7 @@ export async function initTermSheet(params) {
 
 function hydrateTermSheet(template) {
     // Header
-    const platform = template.platform || 'General';
+    const platform = template.provider || template.platform || 'General';
     const risk = template.riskTier || 'Standard';
 
     document.getElementById('ts-title').textContent = template.title || 'Performance Contract';
@@ -251,14 +233,15 @@ function hydrateTermSheet(template) {
     riskBadge.className = `px-2 py-1 rounded text-[10px] font-mono uppercase tracking-wider font-medium border ${getRiskColor(risk)}`;
 
     // Terms
-    document.getElementById('ts-duration').textContent = formatDuration(template.durationDays || 30);
-    document.getElementById('ts-objective').textContent = `> ${template.targetValue || 'Baseline + ' + (template.targetDelta || '10%')}`;
+    document.getElementById('ts-duration').textContent = formatDuration(template.windowDays || template.durationDays || 30);
+    document.getElementById('ts-objective').textContent = `> ${template.targetHint || template.targetValue || 'Baseline + ' + (template.targetDelta || '10%')}`;
     document.getElementById('ts-source-name').textContent = platform;
     document.getElementById('ts-source-ref').textContent = platform;
 
     // Payout Table
     const tbody = document.getElementById('ts-payout-rows');
-    const tiers = template.tiers || generateDefaultTiers(risk); // Fallback if no tiers in data
+    // Generate tiers dynamically based on range if not provided
+    const tiers = template.tiers || generateDynamicTiers(template.minStakeCents, template.maxStakeCents, template.multiplier);
 
     tbody.innerHTML = tiers.map(tier => `
         <tr class="hover:bg-neutral-50 transition-colors">
@@ -268,6 +251,24 @@ function hydrateTermSheet(template) {
             <td class="px-6 py-4 text-right font-mono text-neutral-500">${((tier.payout / tier.stake - 1) * 100).toFixed(0)}%</td>
         </tr>
     `).join('');
+
+    // Attach tiers to template object for action panel reuse
+    template.tiers = tiers;
+}
+
+function generateDynamicTiers(minCents, maxCents, multiplier = 1.5) {
+    const min = (minCents || 0) / 100;
+    const max = (maxCents || 0) / 100;
+
+    if (min === max) {
+        return [{ name: 'Fixed', stake: min, payout: min * multiplier }];
+    }
+
+    return [
+        { name: 'Micro', stake: min, payout: min * multiplier },
+        { name: 'Standard', stake: Math.floor((min + max) / 2), payout: Math.floor((min + max) / 2) * multiplier },
+        { name: 'Institutional', stake: max, payout: max * multiplier }
+    ];
 }
 
 function renderActionPanel(template, isConnected) {

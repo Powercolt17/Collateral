@@ -304,7 +304,8 @@ export async function getMarketListings(options: MarketFeedOptions = {}) {
             // Terms / Fees
             fee_bps: i.feeBps,
 
-        });
+        };
+    });
 }
 
 export async function getMarketInstanceDetails(instanceId: string) {
@@ -321,7 +322,8 @@ export async function getMarketInstanceDetails(instanceId: string) {
 
     const { instance, template } = row;
     const rules = (template.rulesJson as any) || {};
-    const winRate = { 'CONTROLLED': '~30%', 'ELEVATED': '~20%', 'MAXIMUM': '~10%' }[instance.tier] || '~15%';
+    const tierUpper = (instance.tier as string).toUpperCase();
+    const winRate = { 'CONTROLLED': '~30%', 'ELEVATED': '~20%', 'MAXIMUM': '~10%' }[tierUpper] || '~15%';
 
     return {
         // Core Template Fields
@@ -334,7 +336,7 @@ export async function getMarketInstanceDetails(instanceId: string) {
         // Instance-Specific Terms (The "Offer")
         id: instance.id,
         tier: instance.tier,
-        riskTier: instance.tier === 'CONTROLLED' ? 'STANDARD' : instance.tier === 'ELEVATED' ? 'ADVANCED' : 'ELITE',
+        riskTier: tierUpper === 'CONTROLLED' ? 'STANDARD' : tierUpper === 'ELEVATED' ? 'ADVANCED' : 'ELITE',
         minStakeCents: instance.minLockCents || 2500,
         maxStakeCents: instance.maxLockCents || 50000,
         feeBps: (instance.instanceTermsJson as any)?.executionFeeBps || 200,

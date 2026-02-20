@@ -44,7 +44,7 @@ export function renderMyContracts() {
                 <div id="contracts-tab-overview" class="contracts-panel">
                     <div class="flex items-center justify-between mb-4">
                         <h3 class="font-mono text-[10px] text-neutral-400 uppercase tracking-widest">My Contracts</h3>
-                        <button onclick="window.router.navigate('/receipts')" class="font-mono text-[11px] text-neutral-400 hover:text-neutral-900">View all receipts</button>
+                        <button onclick="window.router.navigate('/my-contracts')" class="font-mono text-[11px] text-neutral-400 hover:text-neutral-900">View all contracts</button>
                     </div>
                     
                     <!-- Contract Cards - populated by JS -->
@@ -192,7 +192,7 @@ export async function initMyContracts() {
                 let cardsHtml = '';
                 contracts.forEach(c => {
                     cardsHtml += `
-                        <div class="border border-neutral-200 bg-white p-6 hover:border-neutral-300 transition-colors cursor-pointer" onclick="window.router.navigate('/receipts/${c.id}')">
+                        <div class="border border-neutral-200 bg-white p-6 hover:border-neutral-300 transition-colors cursor-pointer" onclick="window.router.navigate('/contracts/${c.id}')">
                             <div class="flex justify-between items-start mb-3">
                                 <span class="font-mono text-[10px] text-neutral-400 uppercase tracking-widest">${getPlatformName(c.platform)}</span>
                                 <span class="font-mono text-sm text-neutral-900">${formatCurrency(c.lockAmountUsdCents)} <span class="${getStatusColor(c.state)}">${getStatusText(c.state)}</span></span>
@@ -204,7 +204,7 @@ export async function initMyContracts() {
                                     <span class="font-mono text-[11px]">${getPlatformName(c.platform)}</span>
                                 </div>
                                 <span class="font-mono text-[11px] text-neutral-500 hover:text-neutral-900 flex items-center gap-1 uppercase tracking-wide">
-                                    View Receipt <i data-lucide="arrow-right" class="w-3 h-3"></i>
+                                    View Contract <i data-lucide="arrow-right" class="w-3 h-3"></i>
                                 </span>
                             </div>
                         </div>
@@ -229,7 +229,7 @@ export async function initMyContracts() {
                             <td class="py-4 px-4 font-mono text-[11px] ${getStatusColor(c.state)}">${getStatusText(c.state)}</td>
                             <td class="py-4 px-4 font-mono text-sm text-neutral-900 text-right">${formatCurrency(c.lockAmountUsdCents)}</td>
                             <td class="py-4 px-4 text-right">
-                                <button onclick="window.router.navigate('/receipts/${c.id}')" class="font-mono text-[11px] text-neutral-400 hover:text-neutral-900 uppercase">View</button>
+                                <button onclick="window.router.navigate('/contracts/${c.id}')" class="font-mono text-[11px] text-neutral-400 hover:text-neutral-900 uppercase">View</button>
                             </td>
                         </tr>
                     `;

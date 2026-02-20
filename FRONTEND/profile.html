@@ -1,98 +1,137 @@
 <!DOCTYPE html>
-<html lang="en"><head><meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<!-- FAVICON GOES HERE -->
-<link rel="icon" href="/favicon.ico" />
-<title>Identity | Collateral</title>
-<!-- Fonts -->
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
-<link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600&amp;family=Inter:wght@400;500&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap" rel="stylesheet">
-<!-- Scripts -->
-<script src="https://cdn.tailwindcss.com"></script>
-<script src="https://unpkg.com/lucide@latest"></script>
-<script>
-tailwind.config = {
-theme: {
-extend: {
-fontFamily: {
-sans: ['Inter', 'sans-serif'],
-display: ['Inter Tight', 'sans-serif'],
-mono: ['JetBrains Mono', 'monospace'],
-},
-animation: {
-'activate': 'activate 300ms cubic-bezier(0.16, 1, 0.3, 1) forwards',
-'scale-in': 'scaleIn 200ms cubic-bezier(0.16, 1, 0.3, 1) forwards',
-},
-keyframes: {
-activate: {
-'0%': { opacity: '0', transform: 'translateY(4px)' },
-'100%': { opacity: '1', transform: 'translateY(0)' },
-},
-scaleIn: {
-'0%': { opacity: '0', transform: 'scale(0.98)' },
-'100%': { opacity: '1', transform: 'scale(1)' },
-}
-},
-colors: {
-brand: {
-DEFAULT: '#A02020',
-hover: '#851b1b',
-dim: '#FEF2F2'
-}
-}
-}
-}
-}
-</script>
-<style>
-/* Custom Scrollbar */
-::-webkit-scrollbar { width: 6px; }
-::-webkit-scrollbar-track { background: transparent; }
-::-webkit-scrollbar-thumb { background: #E5E5E5; border-radius: 10px; }
-::-webkit-scrollbar-thumb:hover { background: #D4D4D4; }
-/* Hide scrollbar for tabs but allow scroll */
-.no-scrollbar::-webkit-scrollbar { display: none; }
-.no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
-/* Dropdown fade transition */
-.dropdown-enter {
-opacity: 1;
-transform: translateY(0);
-pointer-events: auto;
-}
-.dropdown-exit {
-opacity: 0;
-transform: translateY(4px);
-pointer-events: none;
-}
-/* Utility for body lock */
-body.overflow-hidden {
-padding-right: 6px; /* Avoid layout shift from scrollbar removal */
-}
-</style></head>
-<body class="min-h-screen flex flex-col font-sans relative selection:bg-[#A02020] selection:text-white text-neutral-900 bg-[#FAFAFA] antialiased overflow-x-hidden">
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- FAVICON GOES HERE -->
+    <link rel="icon" href="/favicon.ico" />
+    <title>Identity | Collateral</title>
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600&amp;family=Inter:wght@400;500&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap"
+        rel="stylesheet">
+    <!-- Scripts -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        display: ['Inter Tight', 'sans-serif'],
+                        mono: ['JetBrains Mono', 'monospace'],
+                    },
+                    animation: {
+                        'activate': 'activate 300ms cubic-bezier(0.16, 1, 0.3, 1) forwards',
+                        'scale-in': 'scaleIn 200ms cubic-bezier(0.16, 1, 0.3, 1) forwards',
+                    },
+                    keyframes: {
+                        activate: {
+                            '0%': { opacity: '0', transform: 'translateY(4px)' },
+                            '100%': { opacity: '1', transform: 'translateY(0)' },
+                        },
+                        scaleIn: {
+                            '0%': { opacity: '0', transform: 'scale(0.98)' },
+                            '100%': { opacity: '1', transform: 'scale(1)' },
+                        }
+                    },
+                    colors: {
+                        brand: {
+                            DEFAULT: '#A02020',
+                            hover: '#851b1b',
+                            dim: '#FEF2F2'
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #E5E5E5;
+            border-radius: 10px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: #D4D4D4;
+        }
+
+        /* Hide scrollbar for tabs but allow scroll */
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+
+        .no-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+
+        /* Dropdown fade transition */
+        .dropdown-enter {
+            opacity: 1;
+            transform: translateY(0);
+            pointer-events: auto;
+        }
+
+        .dropdown-exit {
+            opacity: 0;
+            transform: translateY(4px);
+            pointer-events: none;
+        }
+
+        /* Utility for body lock */
+        body.overflow-hidden {
+            padding-right: 6px;
+            /* Avoid layout shift from scrollbar removal */
+        }
+    </style>
+</head>
+
+<body
+    class="min-h-screen flex flex-col font-sans relative selection:bg-[#A02020] selection:text-white text-neutral-900 bg-[#FAFAFA] antialiased overflow-x-hidden">
 
     <!-- Subtle Grid Background -->
-    <div class="fixed inset-0 pointer-events-none z-0" style="background-size: 40px 40px; background-image: linear-gradient(to right, rgba(0,0,0,0.02) 1px, transparent 1px), linear-gradient(to bottom, rgba(0,0,0,0.02) 1px, transparent 1px);"></div>
-    
+    <div class="fixed inset-0 pointer-events-none z-0"
+        style="background-size: 40px 40px; background-image: linear-gradient(to right, rgba(0,0,0,0.02) 1px, transparent 1px), linear-gradient(to bottom, rgba(0,0,0,0.02) 1px, transparent 1px);">
+    </div>
+
     <!-- Noise Overlay -->
-    <div class="fixed inset-0 pointer-events-none z-0 opacity-[0.03]" style="background-image: url('data:image/svg+xml,%3Csvg viewBox=%220 0 200 200%22 xmlns=%22http://www.w3.org/2000/svg%22%3E%3Cfilter id=%22noise%22%3E%3CfeTurbulence type=%22fractalNoise%22 baseFrequency=%220.65%22 numOctaves=%223%22 stitchTiles=%22stitch%22/%3E%3C/filter%3E%3Crect width=%22100%25%22 height=%22100%25%22 filter=%22url(%23noise)%22/%3E%3C/svg%3E');"></div>
+    <div class="fixed inset-0 pointer-events-none z-0 opacity-[0.03]"
+        style="background-image: url('data:image/svg+xml,%3Csvg viewBox=%220 0 200 200%22 xmlns=%22http://www.w3.org/2000/svg%22%3E%3Cfilter id=%22noise%22%3E%3CfeTurbulence type=%22fractalNoise%22 baseFrequency=%220.65%22 numOctaves=%223%22 stitchTiles=%22stitch%22/%3E%3C/filter%3E%3Crect width=%22100%25%22 height=%22100%25%22 filter=%22url(%23noise)%22/%3E%3C/svg%3E');">
+    </div>
 
     <!-- Sticky Navigation -->
     <nav class="fixed top-0 w-full z-40 border-b border-neutral-200/60 bg-[#FAFAFA]/80 backdrop-blur-md">
         <div class="max-w-5xl mx-auto px-6 h-16 flex justify-between items-center">
             <!-- Left: Brand -->
             <a href="#" class="flex items-center gap-2.5 group cursor-pointer">
-                <div class="w-4 h-4 bg-neutral-900 flex items-center justify-center rounded-[2px] transition-transform group-hover:scale-90 shadow-sm">
+                <div
+                    class="w-4 h-4 bg-neutral-900 flex items-center justify-center rounded-[2px] transition-transform group-hover:scale-90 shadow-sm">
                     <div class="w-1.5 h-1.5 bg-white rounded-[0.5px]"></div>
                 </div>
                 <span class="font-mono text-xs font-medium tracking-wider uppercase text-neutral-900">Collateral</span>
             </a>
 
             <!-- Center: Links -->
-            <div class="hidden md:flex items-center bg-white/50 border border-neutral-200/50 rounded-full px-1 py-1 shadow-sm">
-                <a href="#" class="nav-btn relative px-4 py-1.5 text-[11px] font-medium tracking-wide uppercase text-neutral-500 hover:text-neutral-900 transition-colors rounded-full">Overview</a>
-                <a href="#" class="nav-btn relative px-4 py-1.5 text-[11px] font-medium tracking-wide uppercase text-neutral-500 hover:text-neutral-900 transition-colors rounded-full">Ledger</a>
+            <div
+                class="hidden md:flex items-center bg-white/50 border border-neutral-200/50 rounded-full px-1 py-1 shadow-sm">
+                <a href="#"
+                    class="nav-btn relative px-4 py-1.5 text-[11px] font-medium tracking-wide uppercase text-neutral-500 hover:text-neutral-900 transition-colors rounded-full">Overview</a>
+                <a href="#"
+                    class="nav-btn relative px-4 py-1.5 text-[11px] font-medium tracking-wide uppercase text-neutral-500 hover:text-neutral-900 transition-colors rounded-full">Ledger</a>
             </div>
 
             <!-- Right: Logged In State + Dropdown -->
@@ -101,23 +140,34 @@ padding-right: 6px; /* Avoid layout shift from scrollbar removal */
                     <span class="w-1.5 h-1.5 rounded-full bg-neutral-300"></span>
                     <span class="font-mono text-[10px] text-neutral-400 uppercase tracking-widest">Protocol V1</span>
                 </div>
-                
+
                 <!-- Profile Dropdown Container -->
                 <div class="relative group" id="profile-container">
-                    <button id="profile-btn" class="bg-white hover:bg-neutral-50 text-neutral-900 text-[11px] font-medium px-4 py-2 rounded-[4px] border border-neutral-200 transition-all shadow-sm flex items-center gap-2 group-hover:border-neutral-300 outline-none focus:ring-2 focus:ring-neutral-100" aria-haspopup="true" aria-expanded="false">
+                    <button id="profile-btn"
+                        class="bg-white hover:bg-neutral-50 text-neutral-900 text-[11px] font-medium px-4 py-2 rounded-[4px] border border-neutral-200 transition-all shadow-sm flex items-center gap-2 group-hover:border-neutral-300 outline-none focus:ring-2 focus:ring-neutral-100"
+                        aria-haspopup="true" aria-expanded="false">
                         <div class="w-1.5 h-1.5 bg-emerald-500 rounded-full animate-pulse"></div>
                         <span class="font-mono tracking-wide">@alex_dev</span>
-                        <i data-lucide="chevron-down" id="profile-chevron" class="w-3 h-3 text-neutral-400 transition-transform duration-200"></i>
+                        <i data-lucide="chevron-down" id="profile-chevron"
+                            class="w-3 h-3 text-neutral-400 transition-transform duration-200"></i>
                     </button>
 
                     <!-- Dropdown Menu -->
-                    <div id="profile-menu" class="absolute right-0 top-full mt-2 w-48 bg-white border border-neutral-200 shadow-sm rounded-[4px] py-1.5 z-50 dropdown-exit transition-all duration-200 ease-out origin-top-right hidden">
-                        <a href="#" class="block px-4 py-2 text-[10px] font-mono uppercase tracking-widest text-neutral-600 hover:bg-neutral-50 hover:text-neutral-900 transition-colors">My Identity Record</a>
-                        <a href="#" class="block px-4 py-2 text-[10px] font-mono uppercase tracking-widest text-neutral-600 hover:bg-neutral-50 hover:text-neutral-900 transition-colors">My Contracts</a>
-                        <a href="#" class="block px-4 py-2 text-[10px] font-mono uppercase tracking-widest text-neutral-600 hover:bg-neutral-50 hover:text-neutral-900 transition-colors">Receipts</a>
-                        <button onclick="openSettings()" class="w-full text-left block px-4 py-2 text-[10px] font-mono uppercase tracking-widest text-neutral-600 hover:bg-neutral-50 hover:text-neutral-900 transition-colors">Settings</button>
+                    <div id="profile-menu"
+                        class="absolute right-0 top-full mt-2 w-48 bg-white border border-neutral-200 shadow-sm rounded-[4px] py-1.5 z-50 dropdown-exit transition-all duration-200 ease-out origin-top-right hidden">
+                        <a href="#"
+                            class="block px-4 py-2 text-[10px] font-mono uppercase tracking-widest text-neutral-600 hover:bg-neutral-50 hover:text-neutral-900 transition-colors">My
+                            Identity Record</a>
+                        <a href="#"
+                            class="block px-4 py-2 text-[10px] font-mono uppercase tracking-widest text-neutral-600 hover:bg-neutral-50 hover:text-neutral-900 transition-colors">My
+                            Contracts</a>
+
+                        <button onclick="openSettings()"
+                            class="w-full text-left block px-4 py-2 text-[10px] font-mono uppercase tracking-widest text-neutral-600 hover:bg-neutral-50 hover:text-neutral-900 transition-colors">Settings</button>
                         <div class="h-px bg-neutral-100 my-1 mx-2"></div>
-                        <button class="w-full text-left block px-4 py-2 text-[10px] font-mono uppercase tracking-widest text-neutral-600 hover:bg-brand-dim hover:text-brand transition-colors">Sign Out</button>
+                        <button
+                            class="w-full text-left block px-4 py-2 text-[10px] font-mono uppercase tracking-widest text-neutral-600 hover:bg-brand-dim hover:text-brand transition-colors">Sign
+                            Out</button>
                     </div>
                 </div>
             </div>
@@ -136,29 +186,34 @@ padding-right: 6px; /* Avoid layout shift from scrollbar removal */
                     <span class="text-neutral-900">Identity Record</span>
                 </div>
                 <div>
-                    <h1 class="font-display font-semibold text-3xl md:text-4xl tracking-tight text-[#A02020]">Alexander Doe</h1>
+                    <h1 class="font-display font-semibold text-3xl md:text-4xl tracking-tight text-[#A02020]">Alexander
+                        Doe</h1>
                     <div class="flex items-center gap-3 mt-3">
                         <span class="font-mono text-xs text-neutral-500">@alex_dev</span>
                         <span class="w-1 h-1 bg-neutral-300 rounded-full"></span>
-                        <span class="font-mono text-[11px] text-neutral-400 bg-neutral-100 px-1.5 py-0.5 rounded border border-neutral-200">0x8a7...b21</span>
+                        <span
+                            class="font-mono text-[11px] text-neutral-400 bg-neutral-100 px-1.5 py-0.5 rounded border border-neutral-200">0x8a7...b21</span>
                     </div>
                 </div>
             </div>
-            
+
             <div class="flex flex-col items-end gap-2">
                 <div class="flex items-center gap-3">
                     <!-- Copy Link Button with Tooltip -->
                     <div class="relative group flex flex-col items-center">
-                        <button class="h-9 px-4 bg-white border border-neutral-200 text-neutral-500 text-[11px] font-medium uppercase tracking-widest rounded-[4px] hover:border-neutral-300 hover:text-neutral-900 transition-all shadow-sm flex items-center gap-2">
+                        <button
+                            class="h-9 px-4 bg-white border border-neutral-200 text-neutral-500 text-[11px] font-medium uppercase tracking-widest rounded-[4px] hover:border-neutral-300 hover:text-neutral-900 transition-all shadow-sm flex items-center gap-2">
                             <i data-lucide="link" class="w-3 h-3"></i> Copy Record Link
                         </button>
                         <!-- Tooltip -->
-                        <div class="absolute top-full mt-2 px-3 py-1.5 bg-neutral-900 text-neutral-200 text-[9px] font-medium rounded shadow-sm opacity-0 translate-y-1 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-200 pointer-events-none whitespace-nowrap z-50">
+                        <div
+                            class="absolute top-full mt-2 px-3 py-1.5 bg-neutral-900 text-neutral-200 text-[9px] font-medium rounded shadow-sm opacity-0 translate-y-1 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-200 pointer-events-none whitespace-nowrap z-50">
                             Public, read-only record
                         </div>
                     </div>
-                    
-                    <button onclick="openSettings()" class="h-9 px-4 bg-[#A02020] text-white text-[11px] font-medium uppercase tracking-widest rounded-[4px] hover:bg-[#851b1b] transition-all shadow-sm flex items-center gap-2">
+
+                    <button onclick="openSettings()"
+                        class="h-9 px-4 bg-[#A02020] text-white text-[11px] font-medium uppercase tracking-widest rounded-[4px] hover:bg-[#851b1b] transition-all shadow-sm flex items-center gap-2">
                         <i data-lucide="settings" class="w-3 h-3"></i> Settings
                     </button>
                 </div>
@@ -166,75 +221,97 @@ padding-right: 6px; /* Avoid layout shift from scrollbar removal */
         </div>
 
         <!-- Metric Grid -->
-        <div class="grid grid-cols-2 md:grid-cols-4 gap-px bg-neutral-200 border border-neutral-200 rounded-lg overflow-hidden shadow-sm mb-12">
+        <div
+            class="grid grid-cols-2 md:grid-cols-4 gap-px bg-neutral-200 border border-neutral-200 rounded-lg overflow-hidden shadow-sm mb-12">
             <div class="bg-white p-6 flex flex-col justify-between hover:bg-neutral-50 transition-colors h-32">
                 <div class="flex flex-col gap-1">
-                    <span class="font-mono text-[10px] uppercase tracking-widest text-neutral-500">Settlement Rate</span>
+                    <span class="font-mono text-[10px] uppercase tracking-widest text-neutral-500">Settlement
+                        Rate</span>
                     <span class="font-display font-semibold text-2xl text-neutral-900">98.5%</span>
                 </div>
-                <span class="text-[9px] text-neutral-400 font-sans leading-tight">Derived from settled vs forfeited contracts</span>
+                <span class="text-[9px] text-neutral-400 font-sans leading-tight">Derived from settled vs forfeited
+                    contracts</span>
             </div>
-            
+
             <div class="bg-white p-6 flex flex-col justify-between hover:bg-neutral-50 transition-colors h-32">
                 <div class="flex flex-col gap-1">
-                    <span class="font-mono text-[10px] uppercase tracking-widest text-neutral-500">Total Contracts</span>
+                    <span class="font-mono text-[10px] uppercase tracking-widest text-neutral-500">Total
+                        Contracts</span>
                     <span class="font-display font-semibold text-2xl text-neutral-900">42</span>
                 </div>
             </div>
-            
+
             <div class="bg-white p-6 flex flex-col justify-between hover:bg-neutral-50 transition-colors h-32">
-                 <div class="flex flex-col gap-1">
-                     <span class="font-mono text-[10px] uppercase tracking-widest text-neutral-500">TVL (Settled)</span>
-                     <span class="font-display font-semibold text-2xl text-neutral-900">$12,450</span>
-                 </div>
+                <div class="flex flex-col gap-1">
+                    <span class="font-mono text-[10px] uppercase tracking-widest text-neutral-500">TVL (Settled)</span>
+                    <span class="font-display font-semibold text-2xl text-neutral-900">$12,450</span>
+                </div>
             </div>
-            
+
             <div class="bg-white p-6 flex flex-col justify-between hover:bg-neutral-50 transition-colors h-32">
-                 <div class="flex flex-col gap-1">
-                     <span class="font-mono text-[10px] uppercase tracking-widest text-brand">Forfeited</span>
-                     <span class="font-display font-semibold text-2xl text-brand">1</span>
-                 </div>
+                <div class="flex flex-col gap-1">
+                    <span class="font-mono text-[10px] uppercase tracking-widest text-brand">Forfeited</span>
+                    <span class="font-display font-semibold text-2xl text-brand">1</span>
+                </div>
             </div>
         </div>
 
         <!-- Content Tabs -->
         <div class="flex flex-col w-full">
             <div class="flex border-b border-neutral-200 mb-8 overflow-x-auto no-scrollbar">
-                <button onclick="switchTab('overview')" id="tab-btn-overview" class="profile-tab-btn px-1 py-3 mr-8 text-[11px] font-medium uppercase tracking-wide border-b-2 border-neutral-900 text-neutral-900 transition-colors whitespace-nowrap">Overview</button>
-                <button onclick="switchTab('contracts')" id="tab-btn-contracts" class="profile-tab-btn px-1 py-3 mr-8 text-[11px] font-medium uppercase tracking-wide border-b-2 border-transparent text-neutral-500 hover:text-neutral-900 transition-colors whitespace-nowrap">Active Contracts <span class="ml-1.5 bg-neutral-100 text-neutral-600 px-1.5 py-0.5 rounded-full text-[9px] align-middle">3</span></button>
-                <button onclick="switchTab('history')" id="tab-btn-history" class="profile-tab-btn px-1 py-3 mr-8 text-[11px] font-medium uppercase tracking-wide border-b-2 border-transparent text-neutral-500 hover:text-neutral-900 transition-colors whitespace-nowrap">Settlement History</button>
-                <button onclick="switchTab('sources')" id="tab-btn-sources" class="profile-tab-btn px-1 py-3 mr-8 text-[11px] font-medium uppercase tracking-wide border-b-2 border-transparent text-neutral-500 hover:text-neutral-900 transition-colors whitespace-nowrap">Connected Sources</button>
-                <button onclick="switchTab('timeline')" id="tab-btn-timeline" class="profile-tab-btn px-1 py-3 mr-8 text-[11px] font-medium uppercase tracking-wide border-b-2 border-transparent text-neutral-500 hover:text-neutral-900 transition-colors whitespace-nowrap">Identity Timeline</button>
+                <button onclick="switchTab('overview')" id="tab-btn-overview"
+                    class="profile-tab-btn px-1 py-3 mr-8 text-[11px] font-medium uppercase tracking-wide border-b-2 border-neutral-900 text-neutral-900 transition-colors whitespace-nowrap">Overview</button>
+                <button onclick="switchTab('contracts')" id="tab-btn-contracts"
+                    class="profile-tab-btn px-1 py-3 mr-8 text-[11px] font-medium uppercase tracking-wide border-b-2 border-transparent text-neutral-500 hover:text-neutral-900 transition-colors whitespace-nowrap">Active
+                    Contracts <span
+                        class="ml-1.5 bg-neutral-100 text-neutral-600 px-1.5 py-0.5 rounded-full text-[9px] align-middle">3</span></button>
+                <button onclick="switchTab('history')" id="tab-btn-history"
+                    class="profile-tab-btn px-1 py-3 mr-8 text-[11px] font-medium uppercase tracking-wide border-b-2 border-transparent text-neutral-500 hover:text-neutral-900 transition-colors whitespace-nowrap">Settlement
+                    History</button>
+                <button onclick="switchTab('sources')" id="tab-btn-sources"
+                    class="profile-tab-btn px-1 py-3 mr-8 text-[11px] font-medium uppercase tracking-wide border-b-2 border-transparent text-neutral-500 hover:text-neutral-900 transition-colors whitespace-nowrap">Connected
+                    Sources</button>
+                <button onclick="switchTab('timeline')" id="tab-btn-timeline"
+                    class="profile-tab-btn px-1 py-3 mr-8 text-[11px] font-medium uppercase tracking-wide border-b-2 border-transparent text-neutral-500 hover:text-neutral-900 transition-colors whitespace-nowrap">Identity
+                    Timeline</button>
             </div>
 
             <!-- Tab 1: Overview -->
             <div id="tab-overview" class="profile-tab-content grid grid-cols-1 lg:grid-cols-3 gap-8">
                 <!-- Left: Summary Text -->
                 <div class="lg:col-span-2 flex flex-col gap-6">
-                   <div class="p-6 bg-white border border-neutral-200 rounded-lg">
-                        <h3 class="font-mono text-[11px] font-medium uppercase tracking-widest text-neutral-900 mb-3">Identity Summary</h3>
+                    <div class="p-6 bg-white border border-neutral-200 rounded-lg">
+                        <h3 class="font-mono text-[11px] font-medium uppercase tracking-widest text-neutral-900 mb-3">
+                            Identity Summary</h3>
                         <p class="text-sm text-neutral-500 leading-relaxed font-sans">
-                            Summary of this identity’s historical contract performance. This record aggregates cryptographic proof of executed commitments, settlement rates, and total value locked across all connected verification sources. This account maintains a high settlement standing with minimal forfeiture history.
+                            Summary of this identity’s historical contract performance. This record aggregates
+                            cryptographic proof of executed commitments, settlement rates, and total value locked across
+                            all connected verification sources. This account maintains a high settlement standing with
+                            minimal forfeiture history.
                         </p>
-                   </div>
+                    </div>
                 </div>
 
                 <!-- Right: Identity Details -->
                 <div class="lg:col-span-1">
                     <div class="bg-neutral-50/50 border border-neutral-200 rounded-lg p-6 sticky top-24">
                         <div class="flex items-center justify-between mb-6">
-                            <h3 class="font-mono text-[11px] font-medium uppercase tracking-widest text-[#A02020]">Identity Metadata</h3>
+                            <h3 class="font-mono text-[11px] font-medium uppercase tracking-widest text-[#A02020]">
+                                Identity Metadata</h3>
                             <i data-lucide="lock" class="w-3 h-3 text-neutral-400"></i>
                         </div>
                         <div class="flex flex-col gap-5">
                             <div class="flex flex-col gap-1">
                                 <span class="text-[10px] text-neutral-400 font-mono">BIO</span>
-                                <p class="text-sm text-neutral-600 leading-relaxed font-sans">Full-stack developer building on-chain accountability tools.</p>
+                                <p class="text-sm text-neutral-600 leading-relaxed font-sans">Full-stack developer
+                                    building on-chain accountability tools.</p>
                             </div>
                             <div class="w-full h-[1px] bg-neutral-200"></div>
                             <div class="flex justify-between items-center">
                                 <span class="text-[10px] text-neutral-400 font-mono">VERIFIED</span>
-                                <div class="flex items-center gap-1.5"><i data-lucide="check-circle-2" class="w-3.5 h-3.5 text-emerald-600"></i><span class="text-xs text-neutral-900 font-mono">True</span></div>
+                                <div class="flex items-center gap-1.5"><i data-lucide="check-circle-2"
+                                        class="w-3.5 h-3.5 text-emerald-600"></i><span
+                                        class="text-xs text-neutral-900 font-mono">True</span></div>
                             </div>
                         </div>
                     </div>
@@ -248,49 +325,80 @@ padding-right: 6px; /* Avoid layout shift from scrollbar removal */
                         <table class="min-w-full divide-y divide-neutral-200">
                             <thead class="bg-neutral-50">
                                 <tr>
-                                    <th scope="col" class="px-6 py-3 text-left text-[10px] font-medium text-neutral-500 uppercase tracking-widest font-mono">Contract</th>
-                                    <th scope="col" class="px-6 py-3 text-left text-[10px] font-medium text-neutral-500 uppercase tracking-widest font-mono">Source</th>
-                                    <th scope="col" class="px-6 py-3 text-left text-[10px] font-medium text-neutral-500 uppercase tracking-widest font-mono">Locked</th>
-                                    <th scope="col" class="px-6 py-3 text-left text-[10px] font-medium text-neutral-500 uppercase tracking-widest font-mono">Deadline (UTC)</th>
-                                    <th scope="col" class="px-6 py-3 text-left text-[10px] font-medium text-neutral-500 uppercase tracking-widest font-mono">Status</th>
+                                    <th scope="col"
+                                        class="px-6 py-3 text-left text-[10px] font-medium text-neutral-500 uppercase tracking-widest font-mono">
+                                        Contract</th>
+                                    <th scope="col"
+                                        class="px-6 py-3 text-left text-[10px] font-medium text-neutral-500 uppercase tracking-widest font-mono">
+                                        Source</th>
+                                    <th scope="col"
+                                        class="px-6 py-3 text-left text-[10px] font-medium text-neutral-500 uppercase tracking-widest font-mono">
+                                        Locked</th>
+                                    <th scope="col"
+                                        class="px-6 py-3 text-left text-[10px] font-medium text-neutral-500 uppercase tracking-widest font-mono">
+                                        Deadline (UTC)</th>
+                                    <th scope="col"
+                                        class="px-6 py-3 text-left text-[10px] font-medium text-neutral-500 uppercase tracking-widest font-mono">
+                                        Status</th>
                                     <th scope="col" class="relative px-6 py-3"><span class="sr-only">View</span></th>
                                 </tr>
                             </thead>
                             <tbody class="bg-white divide-y divide-neutral-200">
                                 <tr class="hover:bg-neutral-50 transition-colors">
-                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-neutral-900">Ship v2.1 to Production</td>
-                                    <td class="px-6 py-4 whitespace-nowrap text-xs text-neutral-500 font-mono">GitHub</td>
-                                    <td class="px-6 py-4 whitespace-nowrap text-xs text-neutral-900 font-mono font-medium">$500.00</td>
-                                    <td class="px-6 py-4 whitespace-nowrap text-xs text-neutral-500 font-mono">Oct 25, 12:00</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-neutral-900">Ship
+                                        v2.1 to Production</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-xs text-neutral-500 font-mono">GitHub
+                                    </td>
+                                    <td
+                                        class="px-6 py-4 whitespace-nowrap text-xs text-neutral-900 font-mono font-medium">
+                                        $500.00</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-xs text-neutral-500 font-mono">Oct 25,
+                                        12:00</td>
                                     <td class="px-6 py-4 whitespace-nowrap">
-                                        <span class="inline-flex items-center px-2 py-0.5 rounded text-[10px] font-medium bg-emerald-50 text-emerald-700 border border-emerald-100 uppercase tracking-wide">Active</span>
+                                        <span
+                                            class="inline-flex items-center px-2 py-0.5 rounded text-[10px] font-medium bg-emerald-50 text-emerald-700 border border-emerald-100 uppercase tracking-wide">Active</span>
                                     </td>
                                     <td class="px-6 py-4 whitespace-nowrap text-right text-xs font-mono">
-                                        <a href="#" class="text-neutral-400 hover:text-neutral-900 transition-colors">View</a>
+                                        <a href="#"
+                                            class="text-neutral-400 hover:text-neutral-900 transition-colors">View</a>
                                     </td>
                                 </tr>
                                 <tr class="hover:bg-neutral-50 transition-colors">
-                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-neutral-900">Maintain 99.9% Uptime</td>
-                                    <td class="px-6 py-4 whitespace-nowrap text-xs text-neutral-500 font-mono">Pingdom</td>
-                                    <td class="px-6 py-4 whitespace-nowrap text-xs text-neutral-900 font-mono font-medium">$5,000.00</td>
-                                    <td class="px-6 py-4 whitespace-nowrap text-xs text-neutral-500 font-mono">Nov 01, 00:00</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-neutral-900">
+                                        Maintain 99.9% Uptime</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-xs text-neutral-500 font-mono">Pingdom
+                                    </td>
+                                    <td
+                                        class="px-6 py-4 whitespace-nowrap text-xs text-neutral-900 font-mono font-medium">
+                                        $5,000.00</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-xs text-neutral-500 font-mono">Nov 01,
+                                        00:00</td>
                                     <td class="px-6 py-4 whitespace-nowrap">
-                                        <span class="inline-flex items-center px-2 py-0.5 rounded text-[10px] font-medium bg-emerald-50 text-emerald-700 border border-emerald-100 uppercase tracking-wide">Active</span>
+                                        <span
+                                            class="inline-flex items-center px-2 py-0.5 rounded text-[10px] font-medium bg-emerald-50 text-emerald-700 border border-emerald-100 uppercase tracking-wide">Active</span>
                                     </td>
                                     <td class="px-6 py-4 whitespace-nowrap text-right text-xs font-mono">
-                                        <a href="#" class="text-neutral-400 hover:text-neutral-900 transition-colors">View</a>
+                                        <a href="#"
+                                            class="text-neutral-400 hover:text-neutral-900 transition-colors">View</a>
                                     </td>
                                 </tr>
                                 <tr class="hover:bg-neutral-50 transition-colors">
-                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-neutral-900">Weekly Fitness Goal</td>
-                                    <td class="px-6 py-4 whitespace-nowrap text-xs text-neutral-500 font-mono">Strava</td>
-                                    <td class="px-6 py-4 whitespace-nowrap text-xs text-neutral-900 font-mono font-medium">$100.00</td>
-                                    <td class="px-6 py-4 whitespace-nowrap text-xs text-neutral-500 font-mono">Oct 27, 08:00</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-neutral-900">Weekly
+                                        Fitness Goal</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-xs text-neutral-500 font-mono">Strava
+                                    </td>
+                                    <td
+                                        class="px-6 py-4 whitespace-nowrap text-xs text-neutral-900 font-mono font-medium">
+                                        $100.00</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-xs text-neutral-500 font-mono">Oct 27,
+                                        08:00</td>
                                     <td class="px-6 py-4 whitespace-nowrap">
-                                        <span class="inline-flex items-center px-2 py-0.5 rounded text-[10px] font-medium bg-neutral-100 text-neutral-600 border border-neutral-200 uppercase tracking-wide">Pending</span>
+                                        <span
+                                            class="inline-flex items-center px-2 py-0.5 rounded text-[10px] font-medium bg-neutral-100 text-neutral-600 border border-neutral-200 uppercase tracking-wide">Pending</span>
                                     </td>
                                     <td class="px-6 py-4 whitespace-nowrap text-right text-xs font-mono">
-                                        <a href="#" class="text-neutral-400 hover:text-neutral-900 transition-colors">View</a>
+                                        <a href="#"
+                                            class="text-neutral-400 hover:text-neutral-900 transition-colors">View</a>
                                     </td>
                                 </tr>
                             </tbody>
@@ -301,54 +409,88 @@ padding-right: 6px; /* Avoid layout shift from scrollbar removal */
 
             <!-- Tab 3: Settlement History -->
             <div id="tab-history" class="profile-tab-content hidden">
-                 <div class="border border-neutral-200 rounded-lg overflow-hidden bg-white">
+                <div class="border border-neutral-200 rounded-lg overflow-hidden bg-white">
                     <div class="overflow-x-auto">
                         <table class="min-w-full divide-y divide-neutral-200">
                             <thead class="bg-neutral-50">
                                 <tr>
-                                    <th scope="col" class="px-6 py-3 text-left text-[10px] font-medium text-neutral-500 uppercase tracking-widest font-mono">Contract</th>
-                                    <th scope="col" class="px-6 py-3 text-left text-[10px] font-medium text-neutral-500 uppercase tracking-widest font-mono">Outcome</th>
-                                    <th scope="col" class="px-6 py-3 text-left text-[10px] font-medium text-neutral-500 uppercase tracking-widest font-mono">Settled Amount</th>
-                                    <th scope="col" class="px-6 py-3 text-left text-[10px] font-medium text-neutral-500 uppercase tracking-widest font-mono">Source</th>
-                                    <th scope="col" class="px-6 py-3 text-left text-[10px] font-medium text-neutral-500 uppercase tracking-widest font-mono">Settled At (UTC)</th>
+                                    <th scope="col"
+                                        class="px-6 py-3 text-left text-[10px] font-medium text-neutral-500 uppercase tracking-widest font-mono">
+                                        Contract</th>
+                                    <th scope="col"
+                                        class="px-6 py-3 text-left text-[10px] font-medium text-neutral-500 uppercase tracking-widest font-mono">
+                                        Outcome</th>
+                                    <th scope="col"
+                                        class="px-6 py-3 text-left text-[10px] font-medium text-neutral-500 uppercase tracking-widest font-mono">
+                                        Settled Amount</th>
+                                    <th scope="col"
+                                        class="px-6 py-3 text-left text-[10px] font-medium text-neutral-500 uppercase tracking-widest font-mono">
+                                        Source</th>
+                                    <th scope="col"
+                                        class="px-6 py-3 text-left text-[10px] font-medium text-neutral-500 uppercase tracking-widest font-mono">
+                                        Settled At (UTC)</th>
                                     <th scope="col" class="relative px-6 py-3"><span class="sr-only">Receipt</span></th>
                                 </tr>
                             </thead>
                             <tbody class="bg-white divide-y divide-neutral-200">
                                 <tr class="hover:bg-neutral-50 transition-colors">
-                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-neutral-900">Ship v2.0 Release</td>
-                                    <td class="px-6 py-4 whitespace-nowrap text-[10px] font-mono uppercase tracking-wide text-emerald-600">Success</td>
-                                    <td class="px-6 py-4 whitespace-nowrap text-xs text-neutral-900 font-mono font-medium">$250.00</td>
-                                    <td class="px-6 py-4 whitespace-nowrap text-xs text-neutral-500 font-mono">GitHub</td>
-                                    <td class="px-6 py-4 whitespace-nowrap text-xs text-neutral-500 font-mono">Oct 15, 14:30</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-neutral-900">Ship
+                                        v2.0 Release</td>
+                                    <td
+                                        class="px-6 py-4 whitespace-nowrap text-[10px] font-mono uppercase tracking-wide text-emerald-600">
+                                        Success</td>
+                                    <td
+                                        class="px-6 py-4 whitespace-nowrap text-xs text-neutral-900 font-mono font-medium">
+                                        $250.00</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-xs text-neutral-500 font-mono">GitHub
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-xs text-neutral-500 font-mono">Oct 15,
+                                        14:30</td>
                                     <td class="px-6 py-4 whitespace-nowrap text-right text-xs font-mono">
-                                        <a href="#" class="text-neutral-400 hover:text-neutral-900 transition-colors underline decoration-neutral-300 underline-offset-2">Receipt</a>
+                                        <a href="#"
+                                            class="text-neutral-400 hover:text-neutral-900 transition-colors underline decoration-neutral-300 underline-offset-2">Receipt</a>
                                     </td>
                                 </tr>
                                 <tr class="hover:bg-neutral-50 transition-colors">
-                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-neutral-900">Morning Run (5k)</td>
-                                    <td class="px-6 py-4 whitespace-nowrap text-[10px] font-mono uppercase tracking-wide text-brand">Forfeited</td>
-                                    <td class="px-6 py-4 whitespace-nowrap text-xs text-neutral-900 font-mono font-medium">$50.00</td>
-                                    <td class="px-6 py-4 whitespace-nowrap text-xs text-neutral-500 font-mono">Strava</td>
-                                    <td class="px-6 py-4 whitespace-nowrap text-xs text-neutral-500 font-mono">Oct 12, 09:15</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-neutral-900">Morning
+                                        Run (5k)</td>
+                                    <td
+                                        class="px-6 py-4 whitespace-nowrap text-[10px] font-mono uppercase tracking-wide text-brand">
+                                        Forfeited</td>
+                                    <td
+                                        class="px-6 py-4 whitespace-nowrap text-xs text-neutral-900 font-mono font-medium">
+                                        $50.00</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-xs text-neutral-500 font-mono">Strava
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-xs text-neutral-500 font-mono">Oct 12,
+                                        09:15</td>
                                     <td class="px-6 py-4 whitespace-nowrap text-right text-xs font-mono">
-                                        <a href="#" class="text-neutral-400 hover:text-neutral-900 transition-colors underline decoration-neutral-300 underline-offset-2">Receipt</a>
+                                        <a href="#"
+                                            class="text-neutral-400 hover:text-neutral-900 transition-colors underline decoration-neutral-300 underline-offset-2">Receipt</a>
                                     </td>
                                 </tr>
                                 <tr class="hover:bg-neutral-50 transition-colors">
-                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-neutral-900">Push to Master</td>
-                                    <td class="px-6 py-4 whitespace-nowrap text-[10px] font-mono uppercase tracking-wide text-emerald-600">Success</td>
-                                    <td class="px-6 py-4 whitespace-nowrap text-xs text-neutral-900 font-mono font-medium">$25.00</td>
-                                    <td class="px-6 py-4 whitespace-nowrap text-xs text-neutral-500 font-mono">GitHub</td>
-                                    <td class="px-6 py-4 whitespace-nowrap text-xs text-neutral-500 font-mono">Oct 10, 11:00</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-neutral-900">Push to
+                                        Master</td>
+                                    <td
+                                        class="px-6 py-4 whitespace-nowrap text-[10px] font-mono uppercase tracking-wide text-emerald-600">
+                                        Success</td>
+                                    <td
+                                        class="px-6 py-4 whitespace-nowrap text-xs text-neutral-900 font-mono font-medium">
+                                        $25.00</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-xs text-neutral-500 font-mono">GitHub
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-xs text-neutral-500 font-mono">Oct 10,
+                                        11:00</td>
                                     <td class="px-6 py-4 whitespace-nowrap text-right text-xs font-mono">
-                                        <a href="#" class="text-neutral-400 hover:text-neutral-900 transition-colors underline decoration-neutral-300 underline-offset-2">Receipt</a>
+                                        <a href="#"
+                                            class="text-neutral-400 hover:text-neutral-900 transition-colors underline decoration-neutral-300 underline-offset-2">Receipt</a>
                                     </td>
                                 </tr>
                             </tbody>
                         </table>
                     </div>
-                 </div>
+                </div>
             </div>
 
             <!-- Tab 4: Connected Sources -->
@@ -358,8 +500,10 @@ padding-right: 6px; /* Avoid layout shift from scrollbar removal */
                     <div class="p-5 flex items-center justify-between hover:bg-neutral-50 transition-colors">
                         <div class="flex items-center gap-4">
                             <span class="font-medium text-sm text-neutral-900 w-32">Stripe</span>
-                            <span class="inline-flex items-center px-2 py-0.5 rounded text-[10px] font-mono font-medium bg-emerald-50 text-emerald-700 border border-emerald-100 uppercase tracking-wide">Connected</span>
-                            <span class="text-xs text-neutral-500 hidden sm:block">Handles payment processing and capital locks.</span>
+                            <span
+                                class="inline-flex items-center px-2 py-0.5 rounded text-[10px] font-mono font-medium bg-emerald-50 text-emerald-700 border border-emerald-100 uppercase tracking-wide">Connected</span>
+                            <span class="text-xs text-neutral-500 hidden sm:block">Handles payment processing and
+                                capital locks.</span>
                         </div>
                         <i data-lucide="lock" class="w-3.5 h-3.5 text-neutral-300"></i>
                     </div>
@@ -367,19 +511,24 @@ padding-right: 6px; /* Avoid layout shift from scrollbar removal */
                     <div class="p-5 flex items-center justify-between hover:bg-neutral-50 transition-colors">
                         <div class="flex items-center gap-4">
                             <span class="font-medium text-sm text-neutral-900 w-32">GitHub</span>
-                            <span class="inline-flex items-center px-2 py-0.5 rounded text-[10px] font-mono font-medium bg-emerald-50 text-emerald-700 border border-emerald-100 uppercase tracking-wide">Connected</span>
-                            <span class="text-xs text-neutral-500 hidden sm:block">Verifies code commits and merge requests.</span>
+                            <span
+                                class="inline-flex items-center px-2 py-0.5 rounded text-[10px] font-mono font-medium bg-emerald-50 text-emerald-700 border border-emerald-100 uppercase tracking-wide">Connected</span>
+                            <span class="text-xs text-neutral-500 hidden sm:block">Verifies code commits and merge
+                                requests.</span>
                         </div>
-                         <i data-lucide="lock" class="w-3.5 h-3.5 text-neutral-300"></i>
+                        <i data-lucide="lock" class="w-3.5 h-3.5 text-neutral-300"></i>
                     </div>
-                     <!-- Source Item -->
-                     <div class="p-5 flex items-center justify-between hover:bg-neutral-50 transition-colors">
+                    <!-- Source Item -->
+                    <div class="p-5 flex items-center justify-between hover:bg-neutral-50 transition-colors">
                         <div class="flex items-center gap-4">
                             <span class="font-medium text-sm text-neutral-900 w-32">X (Twitter)</span>
-                            <span class="inline-flex items-center px-2 py-0.5 rounded text-[10px] font-mono font-medium bg-neutral-100 text-neutral-500 border border-neutral-200 uppercase tracking-wide">Not Connected</span>
-                            <span class="text-xs text-neutral-500 hidden sm:block">Verifies social posts and public statements.</span>
+                            <span
+                                class="inline-flex items-center px-2 py-0.5 rounded text-[10px] font-mono font-medium bg-neutral-100 text-neutral-500 border border-neutral-200 uppercase tracking-wide">Not
+                                Connected</span>
+                            <span class="text-xs text-neutral-500 hidden sm:block">Verifies social posts and public
+                                statements.</span>
                         </div>
-                         <i data-lucide="lock" class="w-3.5 h-3.5 text-neutral-300"></i>
+                        <i data-lucide="lock" class="w-3.5 h-3.5 text-neutral-300"></i>
                     </div>
                 </div>
             </div>
@@ -390,45 +539,64 @@ padding-right: 6px; /* Avoid layout shift from scrollbar removal */
                     <div class="relative pl-4 border-l border-neutral-200 ml-2 space-y-10">
                         <!-- Timeline Item -->
                         <div class="relative">
-                            <div class="absolute -left-[21px] top-1.5 h-2.5 w-2.5 rounded-full border-2 border-white bg-neutral-300"></div>
+                            <div
+                                class="absolute -left-[21px] top-1.5 h-2.5 w-2.5 rounded-full border-2 border-white bg-neutral-300">
+                            </div>
                             <div class="flex flex-col sm:flex-row sm:items-baseline gap-1 sm:gap-4">
-                                <span class="font-mono text-[10px] text-neutral-400 uppercase tracking-widest w-28 flex-shrink-0">Oct 25, 12:05</span>
+                                <span
+                                    class="font-mono text-[10px] text-neutral-400 uppercase tracking-widest w-28 flex-shrink-0">Oct
+                                    25, 12:05</span>
                                 <div class="flex flex-col gap-0.5">
                                     <span class="text-sm font-medium text-neutral-900">Contract Executed</span>
-                                    <span class="text-xs text-neutral-500">Capital locked for "Ship v2.1 to Production" via Stripe.</span>
-                                </div>
-                            </div>
-                        </div>
-
-                         <!-- Timeline Item -->
-                         <div class="relative">
-                            <div class="absolute -left-[21px] top-1.5 h-2.5 w-2.5 rounded-full border-2 border-white bg-neutral-300"></div>
-                            <div class="flex flex-col sm:flex-row sm:items-baseline gap-1 sm:gap-4">
-                                <span class="font-mono text-[10px] text-neutral-400 uppercase tracking-widest w-28 flex-shrink-0">Oct 15, 14:30</span>
-                                <div class="flex flex-col gap-0.5">
-                                    <span class="text-sm font-medium text-neutral-900">Contract Settled</span>
-                                    <span class="text-xs text-neutral-500">Outcome SUCCESS verified by GitHub. Funds released.</span>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Timeline Item -->
-                         <div class="relative">
-                            <div class="absolute -left-[21px] top-1.5 h-2.5 w-2.5 rounded-full border-2 border-white bg-neutral-300"></div>
-                            <div class="flex flex-col sm:flex-row sm:items-baseline gap-1 sm:gap-4">
-                                <span class="font-mono text-[10px] text-neutral-400 uppercase tracking-widest w-28 flex-shrink-0">Oct 12, 09:15</span>
-                                <div class="flex flex-col gap-0.5">
-                                    <span class="text-sm font-medium text-brand">Contract Forfeited</span>
-                                    <span class="text-xs text-neutral-500">Condition failed for "Morning Run". Capital seized.</span>
+                                    <span class="text-xs text-neutral-500">Capital locked for "Ship v2.1 to Production"
+                                        via Stripe.</span>
                                 </div>
                             </div>
                         </div>
 
                         <!-- Timeline Item -->
                         <div class="relative">
-                            <div class="absolute -left-[21px] top-1.5 h-2.5 w-2.5 rounded-full border-2 border-white bg-neutral-300"></div>
+                            <div
+                                class="absolute -left-[21px] top-1.5 h-2.5 w-2.5 rounded-full border-2 border-white bg-neutral-300">
+                            </div>
                             <div class="flex flex-col sm:flex-row sm:items-baseline gap-1 sm:gap-4">
-                                <span class="font-mono text-[10px] text-neutral-400 uppercase tracking-widest w-28 flex-shrink-0">Oct 01, 08:00</span>
+                                <span
+                                    class="font-mono text-[10px] text-neutral-400 uppercase tracking-widest w-28 flex-shrink-0">Oct
+                                    15, 14:30</span>
+                                <div class="flex flex-col gap-0.5">
+                                    <span class="text-sm font-medium text-neutral-900">Contract Settled</span>
+                                    <span class="text-xs text-neutral-500">Outcome SUCCESS verified by GitHub. Funds
+                                        released.</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Timeline Item -->
+                        <div class="relative">
+                            <div
+                                class="absolute -left-[21px] top-1.5 h-2.5 w-2.5 rounded-full border-2 border-white bg-neutral-300">
+                            </div>
+                            <div class="flex flex-col sm:flex-row sm:items-baseline gap-1 sm:gap-4">
+                                <span
+                                    class="font-mono text-[10px] text-neutral-400 uppercase tracking-widest w-28 flex-shrink-0">Oct
+                                    12, 09:15</span>
+                                <div class="flex flex-col gap-0.5">
+                                    <span class="text-sm font-medium text-brand">Contract Forfeited</span>
+                                    <span class="text-xs text-neutral-500">Condition failed for "Morning Run". Capital
+                                        seized.</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Timeline Item -->
+                        <div class="relative">
+                            <div
+                                class="absolute -left-[21px] top-1.5 h-2.5 w-2.5 rounded-full border-2 border-white bg-neutral-300">
+                            </div>
+                            <div class="flex flex-col sm:flex-row sm:items-baseline gap-1 sm:gap-4">
+                                <span
+                                    class="font-mono text-[10px] text-neutral-400 uppercase tracking-widest w-28 flex-shrink-0">Oct
+                                    01, 08:00</span>
                                 <div class="flex flex-col gap-0.5">
                                     <span class="text-sm font-medium text-neutral-900">Source Connected</span>
                                     <span class="text-xs text-neutral-500">GitHub verification adapter enabled.</span>
@@ -438,12 +606,17 @@ padding-right: 6px; /* Avoid layout shift from scrollbar removal */
 
                         <!-- Timeline Item -->
                         <div class="relative">
-                            <div class="absolute -left-[21px] top-1.5 h-2.5 w-2.5 rounded-full border-2 border-white bg-neutral-900"></div>
+                            <div
+                                class="absolute -left-[21px] top-1.5 h-2.5 w-2.5 rounded-full border-2 border-white bg-neutral-900">
+                            </div>
                             <div class="flex flex-col sm:flex-row sm:items-baseline gap-1 sm:gap-4">
-                                <span class="font-mono text-[10px] text-neutral-400 uppercase tracking-widest w-28 flex-shrink-0">Sep 28, 10:15</span>
+                                <span
+                                    class="font-mono text-[10px] text-neutral-400 uppercase tracking-widest w-28 flex-shrink-0">Sep
+                                    28, 10:15</span>
                                 <div class="flex flex-col gap-0.5">
                                     <span class="text-sm font-medium text-neutral-900">Identity Record Created</span>
-                                    <span class="text-xs text-neutral-500">Immutable identity established on Protocol V1.</span>
+                                    <span class="text-xs text-neutral-500">Immutable identity established on Protocol
+                                        V1.</span>
                                 </div>
                             </div>
                         </div>
@@ -454,39 +627,52 @@ padding-right: 6px; /* Avoid layout shift from scrollbar removal */
     </div>
 
     <!-- Status Bar -->
-    <div class="fixed bottom-0 w-full bg-white/90 backdrop-blur border-t border-neutral-200 py-2.5 px-6 flex justify-between items-center z-40 text-[10px] font-mono uppercase tracking-widest text-neutral-400">
+    <div
+        class="fixed bottom-0 w-full bg-white/90 backdrop-blur border-t border-neutral-200 py-2.5 px-6 flex justify-between items-center z-40 text-[10px] font-mono uppercase tracking-widest text-neutral-400">
         <div class="flex items-center gap-4">
             <span class="text-neutral-900 font-medium">System Status</span>
-            <span class="flex items-center gap-1.5"><span class="w-1.5 h-1.5 bg-emerald-500 rounded-full animate-pulse"></span> Operational</span>
+            <span class="flex items-center gap-1.5"><span
+                    class="w-1.5 h-1.5 bg-emerald-500 rounded-full animate-pulse"></span> Operational</span>
         </div>
         <div class="flex items-center gap-4">
-             <span class="hover:text-neutral-900 cursor-pointer transition-colors">Docs</span>
-             <span class="hover:text-neutral-900 cursor-pointer transition-colors">Terms</span>
+            <span class="hover:text-neutral-900 cursor-pointer transition-colors">Docs</span>
+            <span class="hover:text-neutral-900 cursor-pointer transition-colors">Terms</span>
         </div>
     </div>
 
     <!-- SETTINGS OVERLAY -->
     <div id="settings-overlay" class="fixed inset-0 z-[100] hidden" aria-hidden="true">
         <!-- Backdrop -->
-        <div class="absolute inset-0 bg-neutral-900/20 backdrop-blur-sm transition-opacity cursor-default" onclick="closeSettings()"></div>
-        
+        <div class="absolute inset-0 bg-neutral-900/20 backdrop-blur-sm transition-opacity cursor-default"
+            onclick="closeSettings()"></div>
+
         <!-- Modal Panel -->
         <div class="absolute inset-0 flex items-center justify-center p-4 sm:p-6 pointer-events-none">
-            <div class="pointer-events-auto bg-white w-full max-w-4xl h-[85vh] rounded-xl shadow-2xl border border-neutral-200 flex flex-col md:flex-row overflow-hidden animate-scale-in">
-                
+            <div
+                class="pointer-events-auto bg-white w-full max-w-4xl h-[85vh] rounded-xl shadow-2xl border border-neutral-200 flex flex-col md:flex-row overflow-hidden animate-scale-in">
+
                 <!-- Sidebar -->
                 <div class="w-full md:w-60 bg-neutral-50/50 border-r border-neutral-200 flex-shrink-0 flex flex-col">
                     <div class="p-6 border-b border-neutral-200/50 h-16 flex items-center">
                         <h2 class="font-display font-medium text-lg text-neutral-900">Settings</h2>
                     </div>
                     <nav class="flex-1 overflow-y-auto p-3 flex flex-col gap-0.5">
-                        <button onclick="switchSettingsTab('account')" id="set-nav-account" class="settings-nav-btn text-left px-3 py-2.5 text-[10px] font-medium uppercase tracking-widest text-neutral-900 bg-neutral-200/60 rounded-[4px] transition-colors outline-none focus:ring-2 focus:ring-neutral-100">Account Status</button>
-                        <button onclick="switchSettingsTab('sources')" id="set-nav-sources" class="settings-nav-btn text-left px-3 py-2.5 text-[10px] font-medium uppercase tracking-widest text-neutral-500 hover:bg-neutral-100 rounded-[4px] transition-colors outline-none focus:ring-2 focus:ring-neutral-100">Connected Sources</button>
-                        <button onclick="switchSettingsTab('payouts')" id="set-nav-payouts" class="settings-nav-btn text-left px-3 py-2.5 text-[10px] font-medium uppercase tracking-widest text-neutral-500 hover:bg-neutral-100 rounded-[4px] transition-colors outline-none focus:ring-2 focus:ring-neutral-100">Payouts</button>
-                        <button onclick="switchSettingsTab('security')" id="set-nav-security" class="settings-nav-btn text-left px-3 py-2.5 text-[10px] font-medium uppercase tracking-widest text-neutral-500 hover:bg-neutral-100 rounded-[4px] transition-colors outline-none focus:ring-2 focus:ring-neutral-100">Security</button>
-                        <button onclick="switchSettingsTab('legal')" id="set-nav-legal" class="settings-nav-btn text-left px-3 py-2.5 text-[10px] font-medium uppercase tracking-widest text-neutral-500 hover:bg-neutral-100 rounded-[4px] transition-colors outline-none focus:ring-2 focus:ring-neutral-100">Legal</button>
+                        <button onclick="switchSettingsTab('account')" id="set-nav-account"
+                            class="settings-nav-btn text-left px-3 py-2.5 text-[10px] font-medium uppercase tracking-widest text-neutral-900 bg-neutral-200/60 rounded-[4px] transition-colors outline-none focus:ring-2 focus:ring-neutral-100">Account
+                            Status</button>
+                        <button onclick="switchSettingsTab('sources')" id="set-nav-sources"
+                            class="settings-nav-btn text-left px-3 py-2.5 text-[10px] font-medium uppercase tracking-widest text-neutral-500 hover:bg-neutral-100 rounded-[4px] transition-colors outline-none focus:ring-2 focus:ring-neutral-100">Connected
+                            Sources</button>
+                        <button onclick="switchSettingsTab('payouts')" id="set-nav-payouts"
+                            class="settings-nav-btn text-left px-3 py-2.5 text-[10px] font-medium uppercase tracking-widest text-neutral-500 hover:bg-neutral-100 rounded-[4px] transition-colors outline-none focus:ring-2 focus:ring-neutral-100">Payouts</button>
+                        <button onclick="switchSettingsTab('security')" id="set-nav-security"
+                            class="settings-nav-btn text-left px-3 py-2.5 text-[10px] font-medium uppercase tracking-widest text-neutral-500 hover:bg-neutral-100 rounded-[4px] transition-colors outline-none focus:ring-2 focus:ring-neutral-100">Security</button>
+                        <button onclick="switchSettingsTab('legal')" id="set-nav-legal"
+                            class="settings-nav-btn text-left px-3 py-2.5 text-[10px] font-medium uppercase tracking-widest text-neutral-500 hover:bg-neutral-100 rounded-[4px] transition-colors outline-none focus:ring-2 focus:ring-neutral-100">Legal</button>
                         <div class="h-px bg-neutral-200/50 my-2 mx-3"></div>
-                        <button onclick="switchSettingsTab('danger')" id="set-nav-danger" class="settings-nav-btn text-left px-3 py-2.5 text-[10px] font-medium uppercase tracking-widest text-brand hover:bg-brand-dim rounded-[4px] transition-colors outline-none focus:ring-2 focus:ring-brand/20">Danger Zone</button>
+                        <button onclick="switchSettingsTab('danger')" id="set-nav-danger"
+                            class="settings-nav-btn text-left px-3 py-2.5 text-[10px] font-medium uppercase tracking-widest text-brand hover:bg-brand-dim rounded-[4px] transition-colors outline-none focus:ring-2 focus:ring-brand/20">Danger
+                            Zone</button>
                     </nav>
                 </div>
 
@@ -494,42 +680,54 @@ padding-right: 6px; /* Avoid layout shift from scrollbar removal */
                 <div class="flex-1 flex flex-col bg-white relative min-w-0">
                     <!-- Header with Close -->
                     <div class="h-16 border-b border-neutral-100 flex items-center justify-between px-8 flex-shrink-0">
-                        <h3 id="settings-title" class="font-sans text-sm font-medium text-neutral-500">Operational Account Settings</h3>
-                        <button onclick="closeSettings()" class="text-neutral-400 hover:text-neutral-900 transition-colors p-2 -mr-2 rounded-md hover:bg-neutral-50 focus:outline-none focus:ring-2 focus:ring-neutral-100">
+                        <h3 id="settings-title" class="font-sans text-sm font-medium text-neutral-500">Operational
+                            Account Settings</h3>
+                        <button onclick="closeSettings()"
+                            class="text-neutral-400 hover:text-neutral-900 transition-colors p-2 -mr-2 rounded-md hover:bg-neutral-50 focus:outline-none focus:ring-2 focus:ring-neutral-100">
                             <i data-lucide="x" class="w-5 h-5"></i>
                         </button>
                     </div>
-                    
+
                     <!-- Scrollable Content -->
                     <div class="flex-1 overflow-y-auto p-8">
-                        
+
                         <!-- Section: Account Status -->
                         <div id="set-content-account" class="settings-section space-y-8">
                             <div>
                                 <h4 class="font-display text-lg font-medium text-neutral-900 mb-1">Account Status</h4>
-                                <p class="text-sm text-neutral-500">Read-only summary of your immutable identity record.</p>
+                                <p class="text-sm text-neutral-500">Read-only summary of your immutable identity record.
+                                </p>
                             </div>
-                            
+
                             <div class="grid gap-6 max-w-xl">
                                 <div class="flex flex-col gap-1.5">
-                                    <span class="text-[10px] font-mono uppercase tracking-widest text-neutral-400">Username</span>
+                                    <span
+                                        class="text-[10px] font-mono uppercase tracking-widest text-neutral-400">Username</span>
                                     <div class="flex items-center gap-2">
-                                        <span class="font-mono text-sm text-neutral-900 bg-neutral-50 border border-neutral-200 px-3 py-1.5 rounded w-full">@alex_dev</span>
+                                        <span
+                                            class="font-mono text-sm text-neutral-900 bg-neutral-50 border border-neutral-200 px-3 py-1.5 rounded w-full">@alex_dev</span>
                                         <i data-lucide="lock" class="w-3 h-3 text-neutral-300"></i>
                                     </div>
-                                    <span class="text-[10px] text-neutral-500 mt-1 block">Usernames are permanent once contracts are executed.</span>
+                                    <span class="text-[10px] text-neutral-500 mt-1 block">Usernames are permanent once
+                                        contracts are executed.</span>
                                 </div>
-                                
+
                                 <div class="flex flex-col gap-1.5">
-                                    <span class="text-[10px] font-mono uppercase tracking-widest text-neutral-400">Identity Hash (ID)</span>
+                                    <span
+                                        class="text-[10px] font-mono uppercase tracking-widest text-neutral-400">Identity
+                                        Hash (ID)</span>
                                     <div class="flex items-center gap-2">
-                                        <span class="font-mono text-xs text-neutral-600 bg-neutral-50 border border-neutral-200 px-3 py-2 rounded w-full break-all">0x8a72390f1...b2109cd</span>
-                                        <i data-lucide="copy" class="w-3 h-3 text-neutral-400 cursor-pointer hover:text-neutral-900"></i>
+                                        <span
+                                            class="font-mono text-xs text-neutral-600 bg-neutral-50 border border-neutral-200 px-3 py-2 rounded w-full break-all">0x8a72390f1...b2109cd</span>
+                                        <i data-lucide="copy"
+                                            class="w-3 h-3 text-neutral-400 cursor-pointer hover:text-neutral-900"></i>
                                     </div>
                                 </div>
 
                                 <div class="flex flex-col gap-1.5">
-                                    <span class="text-[10px] font-mono uppercase tracking-widest text-neutral-400">Creation Date</span>
+                                    <span
+                                        class="text-[10px] font-mono uppercase tracking-widest text-neutral-400">Creation
+                                        Date</span>
                                     <span class="font-sans text-sm text-neutral-900">October 24, 2023 • 09:15 UTC</span>
                                 </div>
                             </div>
@@ -539,7 +737,8 @@ padding-right: 6px; /* Avoid layout shift from scrollbar removal */
                                 <div class="flex flex-col gap-1">
                                     <span class="text-xs font-medium text-blue-900">Identity Locked</span>
                                     <p class="text-[11px] text-blue-700 leading-normal">
-                                        This identity record is permanently written to the ledger. Metadata changes here do not affect historical contracts or settlements.
+                                        This identity record is permanently written to the ledger. Metadata changes here
+                                        do not affect historical contracts or settlements.
                                     </p>
                                 </div>
                             </div>
@@ -548,94 +747,115 @@ padding-right: 6px; /* Avoid layout shift from scrollbar removal */
                         <!-- Section: Connected Sources -->
                         <div id="set-content-sources" class="settings-section hidden space-y-8">
                             <div>
-                                <h4 class="font-display text-lg font-medium text-neutral-900 mb-1">Connected Sources</h4>
-                                <p class="text-sm text-neutral-500">Verification adapters available to this identity.</p>
+                                <h4 class="font-display text-lg font-medium text-neutral-900 mb-1">Connected Sources
+                                </h4>
+                                <p class="text-sm text-neutral-500">Verification adapters available to this identity.
+                                </p>
                             </div>
 
                             <div class="border border-neutral-200 rounded-lg divide-y divide-neutral-100">
                                 <!-- Stripe -->
                                 <div class="p-5 flex items-center justify-between">
                                     <div class="flex items-center gap-4">
-                                        <div class="w-10 h-10 bg-neutral-50 rounded flex items-center justify-center border border-neutral-200 text-neutral-700">
+                                        <div
+                                            class="w-10 h-10 bg-neutral-50 rounded flex items-center justify-center border border-neutral-200 text-neutral-700">
                                             <i data-lucide="credit-card" class="w-5 h-5"></i>
                                         </div>
                                         <div>
                                             <h5 class="text-sm font-medium text-neutral-900">Stripe</h5>
                                             <div class="flex items-center gap-2 mt-0.5">
                                                 <div class="w-1.5 h-1.5 rounded-full bg-emerald-500"></div>
-                                                <span class="text-[10px] text-neutral-500 uppercase tracking-wider">Connected</span>
+                                                <span
+                                                    class="text-[10px] text-neutral-500 uppercase tracking-wider">Connected</span>
                                             </div>
                                         </div>
                                     </div>
-                                    <button onclick="return confirm('Disconnecting this source prevents execution of contracts relying on it. Existing contracts are unaffected.')" class="px-3 py-1.5 text-[10px] font-medium uppercase tracking-widest text-neutral-500 hover:text-neutral-900 border border-neutral-200 rounded hover:border-neutral-300 transition-all">Disconnect</button>
+                                    <button
+                                        onclick="return confirm('Disconnecting this source prevents execution of contracts relying on it. Existing contracts are unaffected.')"
+                                        class="px-3 py-1.5 text-[10px] font-medium uppercase tracking-widest text-neutral-500 hover:text-neutral-900 border border-neutral-200 rounded hover:border-neutral-300 transition-all">Disconnect</button>
                                 </div>
 
                                 <!-- GitHub -->
                                 <div class="p-5 flex items-center justify-between">
                                     <div class="flex items-center gap-4">
-                                        <div class="w-10 h-10 bg-neutral-50 rounded flex items-center justify-center border border-neutral-200 text-neutral-700">
+                                        <div
+                                            class="w-10 h-10 bg-neutral-50 rounded flex items-center justify-center border border-neutral-200 text-neutral-700">
                                             <i data-lucide="github" class="w-5 h-5"></i>
                                         </div>
                                         <div>
                                             <h5 class="text-sm font-medium text-neutral-900">GitHub</h5>
                                             <div class="flex items-center gap-2 mt-0.5">
                                                 <div class="w-1.5 h-1.5 rounded-full bg-emerald-500"></div>
-                                                <span class="text-[10px] text-neutral-500 uppercase tracking-wider">Connected</span>
+                                                <span
+                                                    class="text-[10px] text-neutral-500 uppercase tracking-wider">Connected</span>
                                             </div>
                                         </div>
                                     </div>
-                                    <button onclick="return confirm('Disconnecting this source prevents execution of contracts relying on it. Existing contracts are unaffected.')" class="px-3 py-1.5 text-[10px] font-medium uppercase tracking-widest text-neutral-500 hover:text-neutral-900 border border-neutral-200 rounded hover:border-neutral-300 transition-all">Disconnect</button>
+                                    <button
+                                        onclick="return confirm('Disconnecting this source prevents execution of contracts relying on it. Existing contracts are unaffected.')"
+                                        class="px-3 py-1.5 text-[10px] font-medium uppercase tracking-widest text-neutral-500 hover:text-neutral-900 border border-neutral-200 rounded hover:border-neutral-300 transition-all">Disconnect</button>
                                 </div>
 
                                 <!-- X -->
                                 <div class="p-5 flex items-center justify-between bg-neutral-50/30">
                                     <div class="flex items-center gap-4">
-                                        <div class="w-10 h-10 bg-white rounded flex items-center justify-center border border-neutral-200 text-neutral-400">
+                                        <div
+                                            class="w-10 h-10 bg-white rounded flex items-center justify-center border border-neutral-200 text-neutral-400">
                                             <i data-lucide="twitter" class="w-5 h-5"></i>
                                         </div>
                                         <div>
                                             <h5 class="text-sm font-medium text-neutral-500">X (Twitter)</h5>
                                             <div class="flex items-center gap-2 mt-0.5">
                                                 <div class="w-1.5 h-1.5 rounded-full bg-neutral-300"></div>
-                                                <span class="text-[10px] text-neutral-400 uppercase tracking-wider">Disconnected</span>
+                                                <span
+                                                    class="text-[10px] text-neutral-400 uppercase tracking-wider">Disconnected</span>
                                             </div>
                                         </div>
                                     </div>
-                                    <button class="px-3 py-1.5 text-[10px] font-medium uppercase tracking-widest text-neutral-900 bg-white border border-neutral-200 rounded hover:border-neutral-300 shadow-sm transition-all">Connect</button>
+                                    <button
+                                        class="px-3 py-1.5 text-[10px] font-medium uppercase tracking-widest text-neutral-900 bg-white border border-neutral-200 rounded hover:border-neutral-300 shadow-sm transition-all">Connect</button>
                                 </div>
                             </div>
                         </div>
 
-                         <!-- Section: Payouts -->
-                         <div id="set-content-payouts" class="settings-section hidden space-y-8">
+                        <!-- Section: Payouts -->
+                        <div id="set-content-payouts" class="settings-section hidden space-y-8">
                             <div>
                                 <h4 class="font-display text-lg font-medium text-neutral-900 mb-1">Payout Settings</h4>
-                                <p class="text-sm text-neutral-500">Configure where settled contract funds are routed.</p>
+                                <p class="text-sm text-neutral-500">Configure where settled contract funds are routed.
+                                </p>
                             </div>
-                            
+
                             <div class="bg-white border border-neutral-200 rounded-lg p-6 max-w-xl">
                                 <div class="flex justify-between items-start mb-6">
                                     <div class="flex flex-col gap-1">
-                                        <span class="text-[10px] font-mono uppercase tracking-widest text-neutral-400">Primary Account</span>
+                                        <span
+                                            class="text-[10px] font-mono uppercase tracking-widest text-neutral-400">Primary
+                                            Account</span>
                                         <span class="font-medium text-neutral-900">Stripe Connect Express</span>
                                         <span class="text-xs text-neutral-500 font-mono">acct_1Hh...29d</span>
                                     </div>
-                                    <span class="px-2 py-0.5 rounded text-[10px] font-mono font-medium bg-emerald-50 text-emerald-700 border border-emerald-100 uppercase">Active</span>
+                                    <span
+                                        class="px-2 py-0.5 rounded text-[10px] font-mono font-medium bg-emerald-50 text-emerald-700 border border-emerald-100 uppercase">Active</span>
                                 </div>
                                 <div class="flex flex-col gap-1 mb-6">
-                                    <span class="text-[10px] font-mono uppercase tracking-widest text-neutral-400">Last Payout</span>
+                                    <span class="text-[10px] font-mono uppercase tracking-widest text-neutral-400">Last
+                                        Payout</span>
                                     <span class="text-sm text-neutral-900">Nov 01, 2023 • $1,250.00 USD</span>
                                 </div>
-                                <button class="w-full py-2 bg-white border border-neutral-200 text-neutral-900 text-[11px] font-medium uppercase tracking-widest rounded-[4px] hover:bg-neutral-50 transition-colors flex items-center justify-center gap-2">
-                                    Update Payout Method <i data-lucide="external-link" class="w-3 h-3 text-neutral-400"></i>
+                                <button
+                                    class="w-full py-2 bg-white border border-neutral-200 text-neutral-900 text-[11px] font-medium uppercase tracking-widest rounded-[4px] hover:bg-neutral-50 transition-colors flex items-center justify-center gap-2">
+                                    Update Payout Method <i data-lucide="external-link"
+                                        class="w-3 h-3 text-neutral-400"></i>
                                 </button>
                             </div>
-                            <p class="text-[10px] text-neutral-500 mt-3">Payout configuration does not affect contract execution or verification.</p>
+                            <p class="text-[10px] text-neutral-500 mt-3">Payout configuration does not affect contract
+                                execution or verification.</p>
                         </div>
 
                         <!-- Section: Security -->
                         <div id="set-content-security" class="settings-section hidden space-y-8">
-                             <div>
+                            <div>
                                 <h4 class="font-display text-lg font-medium text-neutral-900 mb-1">Security</h4>
                                 <p class="text-sm text-neutral-500">Manage active sessions and access controls.</p>
                             </div>
@@ -643,74 +863,91 @@ padding-right: 6px; /* Avoid layout shift from scrollbar removal */
                             <div class="space-y-6">
                                 <div class="flex items-center justify-between py-4 border-b border-neutral-100">
                                     <div class="flex flex-col gap-1">
-                                        <span class="text-sm font-medium text-neutral-900">Two-Factor Authentication</span>
-                                        <span class="text-xs text-neutral-500">Protect your identity with an authenticator app.</span>
+                                        <span class="text-sm font-medium text-neutral-900">Two-Factor
+                                            Authentication</span>
+                                        <span class="text-xs text-neutral-500">Protect your identity with an
+                                            authenticator app.</span>
                                     </div>
-                                    <button class="relative inline-flex h-5 w-9 items-center rounded-full bg-neutral-900 transition-colors focus:outline-none">
-                                        <span class="translate-x-4.5 inline-block h-3.5 w-3.5 transform rounded-full bg-white transition-transform duration-200 ease-in-out translate-x-4"></span>
+                                    <button
+                                        class="relative inline-flex h-5 w-9 items-center rounded-full bg-neutral-900 transition-colors focus:outline-none">
+                                        <span
+                                            class="translate-x-4.5 inline-block h-3.5 w-3.5 transform rounded-full bg-white transition-transform duration-200 ease-in-out translate-x-4"></span>
                                     </button>
                                 </div>
 
                                 <div class="flex flex-col gap-4">
-                                    <span class="text-[10px] font-mono uppercase tracking-widest text-neutral-400">Active Sessions</span>
+                                    <span
+                                        class="text-[10px] font-mono uppercase tracking-widest text-neutral-400">Active
+                                        Sessions</span>
                                     <div class="border border-neutral-200 rounded-lg overflow-hidden">
                                         <div class="p-4 flex items-center justify-between bg-neutral-50/50">
                                             <div class="flex items-center gap-3">
                                                 <i data-lucide="monitor" class="w-4 h-4 text-neutral-400"></i>
                                                 <div class="flex flex-col">
-                                                    <span class="text-sm font-medium text-neutral-900">Chrome on MacOS</span>
-                                                    <span class="text-[10px] text-neutral-500">Last active: Oct 24, 2023 14:32 UTC • San Francisco, US</span>
+                                                    <span class="text-sm font-medium text-neutral-900">Chrome on
+                                                        MacOS</span>
+                                                    <span class="text-[10px] text-neutral-500">Last active: Oct 24, 2023
+                                                        14:32 UTC • San Francisco, US</span>
                                                 </div>
                                             </div>
-                                            <span class="text-[10px] font-mono text-emerald-600 bg-emerald-50 px-1.5 py-0.5 rounded border border-emerald-100">CURRENT</span>
+                                            <span
+                                                class="text-[10px] font-mono text-emerald-600 bg-emerald-50 px-1.5 py-0.5 rounded border border-emerald-100">CURRENT</span>
                                         </div>
                                         <div class="p-4 flex items-center justify-between border-t border-neutral-200">
                                             <div class="flex items-center gap-3">
                                                 <i data-lucide="smartphone" class="w-4 h-4 text-neutral-400"></i>
                                                 <div class="flex flex-col">
-                                                    <span class="text-sm font-medium text-neutral-900">Safari on iPhone 14</span>
-                                                    <span class="text-[10px] text-neutral-500">Last active: Oct 22, 2023 09:15 UTC • San Francisco, US</span>
+                                                    <span class="text-sm font-medium text-neutral-900">Safari on iPhone
+                                                        14</span>
+                                                    <span class="text-[10px] text-neutral-500">Last active: Oct 22, 2023
+                                                        09:15 UTC • San Francisco, US</span>
                                                 </div>
                                             </div>
-                                            <button class="text-[10px] font-medium text-neutral-400 hover:text-brand transition-colors uppercase tracking-wide">Revoke</button>
+                                            <button
+                                                class="text-[10px] font-medium text-neutral-400 hover:text-brand transition-colors uppercase tracking-wide">Revoke</button>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
 
-                         <!-- Section: Legal -->
-                         <div id="set-content-legal" class="settings-section hidden space-y-8">
+                        <!-- Section: Legal -->
+                        <div id="set-content-legal" class="settings-section hidden space-y-8">
                             <div>
-                                <h4 class="font-display text-lg font-medium text-neutral-900 mb-1">Legal &amp; Acknowledgements</h4>
+                                <h4 class="font-display text-lg font-medium text-neutral-900 mb-1">Legal &amp;
+                                    Acknowledgements</h4>
                                 <p class="text-sm text-neutral-500">Agreements bound permanently to this identity.</p>
                             </div>
 
                             <div class="flex flex-col gap-3 max-w-xl">
-                                <div class="flex items-center gap-3 p-3 border border-neutral-200 rounded bg-neutral-50/30">
+                                <div
+                                    class="flex items-center gap-3 p-3 border border-neutral-200 rounded bg-neutral-50/30">
                                     <i data-lucide="check-square" class="w-4 h-4 text-neutral-400"></i>
                                     <div class="flex flex-col">
                                         <span class="text-sm font-medium text-neutral-900">Terms of Service</span>
                                         <span class="text-[10px] text-neutral-500">Accepted Oct 24, 2023 UTC</span>
                                     </div>
                                     <div class="flex-1"></div>
-                                    <a href="#" class="text-[10px] text-neutral-400 hover:text-neutral-900 underline">View</a>
+                                    <a href="#"
+                                        class="text-[10px] text-neutral-400 hover:text-neutral-900 underline">View</a>
                                 </div>
-                                <div class="flex items-center gap-3 p-3 border border-neutral-200 rounded bg-neutral-50/30">
+                                <div
+                                    class="flex items-center gap-3 p-3 border border-neutral-200 rounded bg-neutral-50/30">
                                     <i data-lucide="check-square" class="w-4 h-4 text-neutral-400"></i>
                                     <div class="flex flex-col">
                                         <span class="text-sm font-medium text-neutral-900">Anti-Gaming Policy</span>
                                         <span class="text-[10px] text-neutral-500">Accepted Oct 24, 2023 UTC</span>
                                     </div>
-                                     <div class="flex-1"></div>
-                                    <a href="#" class="text-[10px] text-neutral-400 hover:text-neutral-900 underline">View</a>
+                                    <div class="flex-1"></div>
+                                    <a href="#"
+                                        class="text-[10px] text-neutral-400 hover:text-neutral-900 underline">View</a>
                                 </div>
                             </div>
                         </div>
 
                         <!-- Section: Danger Zone -->
                         <div id="set-content-danger" class="settings-section hidden space-y-8">
-                             <div>
+                            <div>
                                 <h4 class="font-display text-lg font-medium text-brand mb-1">Danger Zone</h4>
                                 <p class="text-sm text-neutral-500">Irreversible actions affecting this identity.</p>
                             </div>
@@ -718,16 +955,18 @@ padding-right: 6px; /* Avoid layout shift from scrollbar removal */
                             <div class="border border-brand/20 bg-brand-dim/30 rounded-lg p-6">
                                 <h5 class="text-sm font-medium text-neutral-900 mb-2">Delete Identity Record</h5>
                                 <p class="text-xs text-neutral-600 mb-6 leading-relaxed max-w-lg">
-                                    This action permanently flags your identity as terminated on the ledger. 
-                                    Public receipts and settlement history remain visible. 
+                                    This action permanently flags your identity as terminated on the ledger.
+                                    Public receipts and settlement history remain visible.
                                     This action cannot be performed while active contracts exist.
                                 </p>
-                                
+
                                 <div class="flex items-center justify-between">
-                                    <div class="flex items-center gap-2 text-[10px] text-brand uppercase tracking-wide font-mono">
+                                    <div
+                                        class="flex items-center gap-2 text-[10px] text-brand uppercase tracking-wide font-mono">
                                         <i data-lucide="alert-triangle" class="w-3 h-3"></i> 3 Active Contracts
                                     </div>
-                                    <button disabled="" class="px-4 py-2 bg-white border border-brand/30 text-brand/50 text-[11px] font-medium uppercase tracking-widest rounded-[4px] cursor-not-allowed">
+                                    <button disabled=""
+                                        class="px-4 py-2 bg-white border border-brand/30 text-brand/50 text-[11px] font-medium uppercase tracking-widest rounded-[4px] cursor-not-allowed">
                                         Delete Identity
                                     </button>
                                 </div>
@@ -747,7 +986,7 @@ padding-right: 6px; /* Avoid layout shift from scrollbar removal */
         function switchTab(tabName) {
             document.querySelectorAll('.profile-tab-content').forEach(el => el.classList.add('hidden'));
             document.getElementById(`tab-${tabName}`).classList.remove('hidden');
-            
+
             document.querySelectorAll('.profile-tab-btn').forEach(btn => {
                 if (btn.id === `tab-btn-${tabName}`) {
                     btn.classList.remove('border-transparent', 'text-neutral-500', 'hover:text-neutral-900');
@@ -765,8 +1004,8 @@ padding-right: 6px; /* Avoid layout shift from scrollbar removal */
         const profileBtn = document.getElementById('profile-btn');
         const profileMenu = document.getElementById('profile-menu');
         const profileChevron = document.getElementById('profile-chevron');
-        
-        let isMenuLocked = false; 
+
+        let isMenuLocked = false;
 
         function showMenu() {
             profileMenu.classList.remove('hidden');
@@ -788,7 +1027,7 @@ padding-right: 6px; /* Avoid layout shift from scrollbar removal */
                 if (!profileMenu.classList.contains('dropdown-enter')) {
                     profileMenu.classList.add('hidden');
                 }
-            }, 200); 
+            }, 200);
         }
 
         profileBtn.addEventListener('click', (e) => {
@@ -809,14 +1048,14 @@ padding-right: 6px; /* Avoid layout shift from scrollbar removal */
 
         // --- SETTINGS OVERLAY LOGIC ---
         const settingsOverlay = document.getElementById('settings-overlay');
-        
+
         function openSettings() {
             settingsOverlay.classList.remove('hidden');
             document.body.classList.add('overflow-hidden'); // Lock body scroll
-            
+
             // Reset to first tab if needed, or keep last state. Resetting for cleaner UX here:
             switchSettingsTab('account');
-            
+
             // Close dropdown if open
             isMenuLocked = false;
             hideMenu();
@@ -851,15 +1090,15 @@ padding-right: 6px; /* Avoid layout shift from scrollbar removal */
             document.querySelectorAll('.settings-nav-btn').forEach(btn => {
                 // Reset styles
                 btn.classList.remove('bg-neutral-200/60', 'text-neutral-900');
-                
+
                 // Keep danger zone red
-                if(btn.id === 'set-nav-danger') {
+                if (btn.id === 'set-nav-danger') {
                     // Specific logic handled via hover classes, just ensure active state isn't grey
-                     if (tabName === 'danger') {
-                         btn.classList.add('bg-brand-dim', 'ring-1', 'ring-brand/20');
-                     } else {
-                         btn.classList.remove('bg-brand-dim', 'ring-1', 'ring-brand/20');
-                     }
+                    if (tabName === 'danger') {
+                        btn.classList.add('bg-brand-dim', 'ring-1', 'ring-brand/20');
+                    } else {
+                        btn.classList.remove('bg-brand-dim', 'ring-1', 'ring-brand/20');
+                    }
                 } else {
                     // Normal tabs
                     btn.classList.add('text-neutral-500', 'hover:bg-neutral-100');
@@ -869,11 +1108,13 @@ padding-right: 6px; /* Avoid layout shift from scrollbar removal */
                     }
                 }
             });
-            
+
             lucide.createIcons();
         }
 
     </script>
 
 
-</body></html>
+</body>
+
+</html>

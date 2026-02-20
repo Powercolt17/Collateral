@@ -327,9 +327,7 @@ function renderActionPanel(contract, state) {
                         <p class="text-xs text-neutral-500">Your funds have been returned.</p>
                     </div>
                 </div>
-                <button onclick="window.router.navigate('/receipts/${contractId}')" class="mt-4 px-4 py-2 border border-neutral-200 text-neutral-600 text-sm font-medium hover:border-neutral-400 transition-colors">
-                    View Receipt
-                </button>
+
             `;
             break;
 

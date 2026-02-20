@@ -390,9 +390,9 @@ async function runExecution(contractData, stake, multiplier, btnEl, bodyEl) {
     }
 }
 
-function showSuccess(bodyEl, stake, multiplier, receiptId) {
+function showSuccess(bodyEl, stake, multiplier, contractId) {
     const payout = Math.round(stake * multiplier);
-    const shortId = (receiptId || '').split('-')[0].slice(0, 4).toUpperCase();
+    const shortId = (contractId || '').split('-')[0].slice(0, 4).toUpperCase();
 
     bodyEl.innerHTML = `
         <div class="exec-success">
@@ -400,7 +400,7 @@ function showSuccess(bodyEl, stake, multiplier, receiptId) {
             <div class="exec-success-title">Execution Confirmed</div>
             <div class="exec-success-sub">RCPT-${shortId} · Capital locked until settlement</div>
             <div class="exec-success-actions">
-                <button class="exec-success-btn primary" id="exec-view-receipt">View Receipt →</button>
+                <button class="exec-success-btn primary" id="exec-view-receipt">View Contract →</button>
                 <button class="exec-success-btn secondary" id="exec-return-market">Return to Market</button>
             </div>
         </div>
@@ -408,7 +408,7 @@ function showSuccess(bodyEl, stake, multiplier, receiptId) {
 
     bodyEl.querySelector('#exec-view-receipt').addEventListener('click', () => {
         closeExecutionModal();
-        window.location.hash = '/receipts/' + receiptId;
+        window.location.hash = '/contracts/' + contractId;
     });
 
     bodyEl.querySelector('#exec-return-market').addEventListener('click', () => {

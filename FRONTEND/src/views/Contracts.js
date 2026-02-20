@@ -1158,7 +1158,7 @@ export function initContracts() {
 
             if (lockRes.contract?.derivedState === 'LOCKED') {
                 releaseFlowLock();
-                setTimeout(() => window.router.navigate('/receipts/' + contractId), 1000);
+                setTimeout(() => window.router.navigate('/contracts/' + contractId), 1000);
                 return;
             }
 
@@ -1171,7 +1171,7 @@ export function initContracts() {
                 }
                 if (lockedRes.contract?.derivedState === 'LOCKED') {
                     releaseFlowLock();
-                    setTimeout(() => window.router.navigate('/receipts/' + contractId), 1000);
+                    setTimeout(() => window.router.navigate('/contracts/' + contractId), 1000);
                     return;
                 }
             }
@@ -1221,7 +1221,7 @@ export function initContracts() {
             if (statusLabel) statusLabel.textContent = 'COMPLETE';
             execBtn.style.background = '#065f46';
 
-            setTimeout(() => window.router.navigate('/receipts/' + contractId), 1500);
+            setTimeout(() => window.router.navigate('/contracts/' + contractId), 1500);
 
         } catch (error) {
             console.error('[Exec] Error:', error);

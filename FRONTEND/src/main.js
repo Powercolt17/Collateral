@@ -9,8 +9,7 @@ import { renderProfile, initProfile } from './views/Profile.js';
 import { renderMyContracts, initMyContracts } from './views/MyContracts.js';
 import { renderDocs, initDocs } from './views/Docs.js';
 import { renderFunding, initFunding } from './views/Funding.js';
-import { renderReceipts, initReceipts } from './views/Receipts.js';
-import { renderReceiptDetail, initReceiptDetail } from './views/ReceiptDetail.js';
+
 import { renderTermSheet, initTermSheet } from './views/TermSheet.js';
 import { renderContractTermSheet, initContractTermSheet } from './views/ContractTermSheet.js';
 import { renderStripeCallback, initStripeCallback } from './views/StripeCallback.js';
@@ -146,8 +145,7 @@ const routes = PRE_LAUNCH_MODE ? [
     { path: '/my-contracts', render: renderPreLaunch, init: initPreLaunch },
     { path: '/docs', render: renderPreLaunch, init: initPreLaunch },
     { path: '/funding', render: renderPreLaunch, init: initPreLaunch },
-    { path: '/receipts', render: renderPreLaunch, init: initPreLaunch },
-    { path: '/receipts/:id', render: renderPreLaunch, init: initPreLaunch },
+
     { path: '/market/:id', render: renderPreLaunch, init: initPreLaunch },
     { path: '/contract/:id', render: renderPreLaunch, init: initPreLaunch },
 ] : [
@@ -163,8 +161,7 @@ const routes = PRE_LAUNCH_MODE ? [
     { path: '/my-contracts', render: renderMyContracts, init: initMyContracts },
     { path: '/docs', render: renderDocs, init: initDocs },
     { path: '/funding', render: renderFunding, init: initFunding },
-    { path: '/receipts', render: renderReceipts, init: initReceipts },
-    { path: '/receipts/:id', render: renderReceiptDetail, init: initReceiptDetail },
+
     { path: '/stripe/callback', render: renderStripeCallback, init: initStripeCallback },
     { path: '/x/callback', render: renderXCallback, init: initXCallback }
 ];

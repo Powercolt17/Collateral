@@ -33,7 +33,7 @@ function ensureModal() {
                 width: 100%; max-width: 460px;
                 background: #fff;
                 border: 1px solid #d4d4d4;
-                border-top: 2px solid #921818;
+                border-top: 2px solid #752122;
                 border-radius: 6px;
                 box-shadow: 0 25px 50px -12px rgba(0,0,0,0.25), 0 0 0 1px rgba(0,0,0,0.03);
                 animation: exec-scale 180ms ease forwards;
@@ -114,7 +114,7 @@ function ensureModal() {
                 letter-spacing: -0.01em;
             }
             .exec-outcome-value.success { color: #166534; }
-            .exec-outcome-value.failure { color: #921818; opacity: 0.85; }
+            .exec-outcome-value.failure { color: #752122; opacity: 0.85; }
 
             /* Divider */
             .exec-div {
@@ -137,7 +137,7 @@ function ensureModal() {
             }
             .exec-risk-row input[type="checkbox"] {
                 width: 15px; height: 15px; margin-top: 1px;
-                accent-color: #921818; cursor: pointer; flex-shrink: 0;
+                accent-color: #752122; cursor: pointer; flex-shrink: 0;
             }
             .exec-risk-text {
                 font-size: 12px; color: #374151; line-height: 1.5;
@@ -147,7 +147,7 @@ function ensureModal() {
             /* Primary Button */
             .exec-btn-primary {
                 width: 100%; height: 48px; border: none;
-                background: #921818; color: #fff;
+                background: #752122; color: #fff;
                 font-size: 12px; font-weight: 600;
                 text-transform: uppercase; letter-spacing: 0.06em;
                 font-family: 'IBM Plex Sans', sans-serif;
@@ -157,7 +157,7 @@ function ensureModal() {
                 border-radius: 4px;
             }
             .exec-btn-primary:hover:not(:disabled) {
-                background: #6B1212;
+                background: #5a191a;
                 box-shadow: 0 4px 12px rgba(146,24,24,0.2);
             }
             .exec-btn-primary:active:not(:disabled) {
@@ -182,7 +182,7 @@ function ensureModal() {
             .exec-error {
                 background: #fef2f2; border: 1px solid #e5c5c5;
                 padding: 10px 14px; margin-top: 12px;
-                font-size: 11px; color: #921818;
+                font-size: 11px; color: #752122;
                 font-family: 'IBM Plex Mono', monospace;
                 border-radius: 4px; display: none;
             }

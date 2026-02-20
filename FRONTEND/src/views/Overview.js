@@ -6,6 +6,7 @@
 // EVERY BUTTON IS LIVE — tabs, pills, CTAs, modal, search, sort
 
 import { getMarketListings, hasAuthToken } from '../api.js';
+import { openExecutionModal } from './ExecutionModal.js';
 
 export function renderOverview() {
     return `
@@ -1289,393 +1290,64 @@ export function initOverview() {
     pollInterval = setInterval(() => fetchFeed(true), 15000);
 
     // ===================================================================
-    // EXPAND-IN-PLACE & EXECUTION
+    // UNIFIED EXECUTION — Card click + Lock button → same modal
     // ===================================================================
-    // Re-implementing the original expand logic but attached to the grid container
 
-    // [Previously identified expandCard logic goes here, modified for event delegation]
-    // Since I'm running out of context window, I will simplify by adding the Event Delegation for 'eq-lock-btn'
+    function extractContractData(cardEl) {
+        const id = cardEl.dataset.id;
+        const tier = (cardEl.dataset.tier || 'controlled').toLowerCase();
+        const minStake = parseFloat(cardEl.dataset.stakeMin || '0');
+        const maxStake = parseFloat(cardEl.dataset.stakeMax || '0');
+        const feeBps = parseFloat(cardEl.dataset.fee || '2') * 100;
+        const goal = cardEl.dataset.goal || '';
+        const deadline = cardEl.dataset.deadline || '';
+
+        const integration = cardEl.querySelector('.eq-card-integration')?.textContent?.trim() || '';
+        let provider = 'x';
+        if (integration.toLowerCase().includes('stripe')) provider = 'stripe';
+        else if (integration.toLowerCase().includes('shopify')) provider = 'shopify';
+        else if (integration.toLowerCase().includes('amazon')) provider = 'amazon';
+
+        const tierUpper = tier.toUpperCase();
+        const multiplier = tierUpper === 'MAXIMUM' ? 4.0 : tierUpper === 'ELEVATED' ? 2.5 : 1.5;
+
+        return {
+            id,
+            title: goal,
+            goal,
+            tier,
+            provider,
+            platform: provider,
+            min_stake: minStake > 0 ? minStake : 25,
+            max_stake: maxStake,
+            multiplier,
+            fee_bps: feeBps,
+            window_days: 30,
+            target_hint: goal,
+            deadline
+        };
+    }
 
     grid.addEventListener('click', (e) => {
-        // 1. Check for Lock/Expand Button
+        // 1. Lock button — stop propagation, open modal
         const btn = e.target.closest('.eq-lock-btn');
         if (btn) {
             e.stopPropagation();
-            expandCard(btn.closest('.eq-card'));
+            e.preventDefault();
+            const card = btn.closest('.eq-card');
+            if (card) openExecutionModal(extractContractData(card));
             return;
         }
 
-        // 2. Check for Card Navigation (if not clicking button/interactive elements)
+        // 2. Card click — open same modal (unless clicking inside interactive elements)
         const card = e.target.closest('.eq-card');
         if (card) {
-            // Ensure we aren't clicking inside the execution area or other interactive elements
-            if (e.target.closest('.eq-exec') || e.target.closest('button') || e.target.closest('input')) return;
-
+            if (e.target.closest('button') || e.target.closest('input')) return;
             e.preventDefault();
             e.stopPropagation();
-
-            const id = card.dataset.id;
-            console.log('[Overview] Card clicked, navigating to market template:', id);
-
-            if (id) {
-                // Direct hash manipulation to ensure router picks it up
-                window.location.hash = '/market/' + id;
-            }
+            openExecutionModal(extractContractData(card));
         }
     });
-
-    let expandedCardId = null;
-    // Dim Overlay
-    const dimOverlay = document.createElement('div');
-    dimOverlay.className = 'eq-dim-overlay';
-    const eqContainer = grid.closest('.eq') || grid.parentElement || document.body;
-    eqContainer.appendChild(dimOverlay);
-    dimOverlay.addEventListener('click', () => collapseAll());
-
-    function collapseAll() {
-        dimOverlay.classList.remove('active');
-        grid.classList.remove('has-expanded');
-        grid.querySelectorAll('.eq-card').forEach(c => {
-            c.classList.remove('expanded', 'dimmed');
-            c.style.padding = '';
-            const exec = c.querySelector('.eq-exec');
-            if (exec) exec.remove();
-
-            // Restore button
-            const btn = c.querySelector('.eq-lock-btn');
-            if (btn) btn.style.display = '';
-        });
-        expandedCardId = null;
-        isFrozen = false;
-    }
-
-    function expandCard(cardEl) {
-        const id = cardEl.dataset.id;
-        if (expandedCardId === id) { collapseAll(); return; }
-        collapseAll();
-        expandedCardId = id;
-        isFrozen = true;
-
-        dimOverlay.classList.add('active');
-        grid.querySelectorAll('.eq-card').forEach(c => {
-            if (c.dataset.id !== id) c.classList.add('dimmed');
-        });
-        cardEl.classList.add('expanded');
-        grid.classList.add('has-expanded');
-
-        const lockBtn = cardEl.querySelector('.eq-lock-btn');
-        if (lockBtn) lockBtn.style.display = 'none';
-
-        const goal = cardEl.dataset.goal || '';
-        const tier = (cardEl.dataset.tier || 'controlled').toUpperCase();
-
-        // Stake Ladder Logic
-        const minStake = parseFloat(cardEl.dataset.stakeMin || '0');
-        const maxStake = parseFloat(cardEl.dataset.stakeMax || '0');
-        const feeBps = parseFloat(cardEl.dataset.fee || '200'); // stored as 2.0 or 200? API sent 2.0 (fee/100) or feeBps. 
-        // Wait, renderCard set data-fee = fee_bps / 100. So 200 bps -> 2.
-        const feePercent = parseFloat(cardEl.dataset.fee || '2');
-
-        let currentStake = minStake > 0 ? minStake : 25;
-
-        const deadline = cardEl.dataset.deadline || '';
-        const shortId = id.split('-')[0];
-        const rcptId = 'RCPT-' + shortId.slice(0, 4).toUpperCase();
-
-        const integration = cardEl.querySelector('.eq-card-integration')?.textContent?.trim() || '';
-
-        // Map domain/integration to platform + metric
-        let platform = 'X', metricType = 'FOLLOWERS';
-        if (integration.toLowerCase().includes('stripe')) { platform = 'STRIPE'; metricType = 'REVENUE'; }
-        else if (integration.toLowerCase().includes('shopify')) { platform = 'SHOPIFY'; metricType = 'REVENUE'; }
-        else if (integration.toLowerCase().includes('amazon')) { platform = 'AMAZON'; metricType = 'REVENUE'; }
-        else { platform = 'X'; metricType = 'FOLLOWERS'; }
-
-        const thresholdMatch = goal.match(/(\d+)%/);
-        const threshold = thresholdMatch ? parseInt(thresholdMatch[1]) : 15;
-        const riskTier = tier === 'ELEVATED' ? 'ADVANCED' : tier === 'MAXIMUM' ? 'ELITE' : 'STANDARD';
-
-        const execDiv = document.createElement('div');
-        execDiv.className = 'eq-exec';
-
-        // Multiplier lookup
-        let multiplier = 1.5;
-        if (tier === 'ELEVATED') multiplier = 2.5;
-        if (tier === 'MAXIMUM') multiplier = 4.0;
-
-        const winRate = tier === 'CONTROLLED' ? '~30%' : tier === 'ELEVATED' ? '~20%' : '~10%';
-
-        execDiv.innerHTML = `
-            <div class="eq-exec-mode">
-                <div class="eq-exec-mode-title">
-                    <span>Execution Confirmation</span>
-                </div>
-                <div class="eq-exec-mode-sub">${goal} · ${platform} Verified</div>
-                <button class="eq-exec-close" data-action="collapse">✕</button>
-            </div>
-            <div class="eq-exec-body">
-                <div class="eq-receipt-panel">
-                     <div class="eq-receipt-col">
-                        <span class="eq-receipt-label">Locked Capital</span>
-                        <div class="eq-receipt-value" id="exec-val-${id}">$${currentStake.toLocaleString()}</div>
-                     </div>
-                     <div class="eq-receipt-col">
-                        <span class="eq-receipt-label">Est. Payout</span>
-                        <div class="eq-receipt-value" id="exec-payout-${id}">$${(currentStake * multiplier).toLocaleString()}</div>
-                     </div>
-                     <div class="eq-receipt-col">
-                        <span class="eq-receipt-label">Fee</span>
-                        <div class="eq-receipt-value">${feePercent}%</div>
-                     </div>
-                </div>
-                
-                <div class="eq-lock-micro">Capital is locked until settlement.</div>
-
-                <div class="eq-tier-selector" id="tiers-${id}">
-                    <div class="eq-tier-btn" data-val="100">$100</div>
-                    <div class="eq-tier-btn" data-val="500">$500</div>
-                    <div class="eq-tier-btn" data-val="1000">$1,000</div>
-                    <div class="eq-tier-btn" data-val="2500">$2,500</div>
-                </div>
-
-                <div class="eq-risk-strip">
-                    <div class="eq-risk-item">Win Probability: <span class="eq-risk-val">${winRate}</span></div>
-                    <div class="eq-risk-item">Window: <span class="eq-risk-val">30 Days</span></div>
-                    <div class="eq-risk-item">Verification: <span class="eq-risk-val">API</span></div>
-                </div>
-
-                <div class="eq-confirm-row">
-                    <input type="text" class="eq-confirm-input" id="confirm-input-${id}" placeholder="Type 'LOCK' to confirm">
-                    <button class="eq-confirm" id="confirm-btn-${id}">LOCK $${currentStake} CAPITAL →</button>
-                </div>
-            </div>
-        `;
-
-        cardEl.appendChild(execDiv);
-
-        // Listeners for this specific execution instance
-        execDiv.querySelector('[data-action="collapse"]').addEventListener('click', (e) => { e.stopPropagation(); collapseAll(); });
-
-        const input = document.getElementById(`confirm-input-${id}`);
-        const confirm = document.getElementById(`confirm-btn-${id}`);
-        const tierBtns = document.getElementById(`tiers-${id}`).querySelectorAll('.eq-tier-btn');
-        const valEl = document.getElementById(`exec-val-${id}`);
-        const payEl = document.getElementById(`exec-payout-${id}`);
-
-        // Set initial active tier if matches
-        tierBtns.forEach(btn => {
-            const val = parseFloat(btn.dataset.val);
-            if (val === currentStake) btn.classList.add('active');
-
-            btn.addEventListener('click', (e) => {
-                e.stopPropagation();
-                tierBtns.forEach(b => b.classList.remove('active'));
-                btn.classList.add('active');
-                currentStake = val;
-
-                // Update UI
-                valEl.textContent = `$${currentStake.toLocaleString()}`;
-                payEl.textContent = `$${Math.round(currentStake * multiplier).toLocaleString()}`;
-                confirm.textContent = `LOCK $${currentStake} CAPITAL →`;
-            });
-        });
-
-        // Confirmation Logic
-        input.addEventListener('input', (e) => {
-            if (e.target.value.toUpperCase() === 'LOCK') {
-                confirm.classList.add('ready');
-            } else {
-                confirm.classList.remove('ready');
-            }
-        });
-
-        input.addEventListener('click', (e) => e.stopPropagation());
-
-        confirm.addEventListener('click', (e) => {
-            e.stopPropagation();
-            if (!confirm.classList.contains('ready')) return;
-            runExecution(cardEl, id, execDiv, currentStake);
-        });
-
-
-
-        function runExecution(cardEl, id, execDiv, finalStake) {
-            // Show step animation first (optimistic UI)
-            execDiv.innerHTML = `
-                <div class="eq-exec-mode">
-                    <div>
-                        <div class="eq-exec-mode-title">Executing Contract</div>
-                        <div class="eq-exec-mode-sub">RCPT-${id.split('-')[0].toUpperCase()} · Live Transaction</div>
-                    </div>
-                    <div>
-                         <span style="font-size:10px;color:rgba(255,255,255,0.4);font-family:'JetBrains Mono',monospace;margin-right:12px;">LIVE</span>
-                         <button class="eq-exec-close" data-action="collapse">✕</button>
-                    </div>
-                </div>
-                <div class="eq-exec-body">
-                    <div class="eq-exec-steps">
-                        <div class="eq-exec-step" id="step-1-${id}"><span class="eq-step-dot"></span> Authorizing Capital <span class="eq-step-check" style="display:none">✓</span></div>
-                        <div class="eq-exec-step" id="step-2-${id}"><span class="eq-step-dot"></span> Writing Receipt <span class="eq-step-check" style="display:none">✓</span></div>
-                        <div class="eq-exec-step" id="step-3-${id}"><span class="eq-step-dot"></span> Execution Confirmed <span class="eq-step-check" style="display:none">✓</span></div>
-                        <div class="eq-exec-step" id="step-4-${id}"><span class="eq-step-dot"></span> Window Begins Now <span class="eq-step-check" style="display:none">✓</span></div>
-                    </div>
-                    <div id="exec-error-${id}"></div>
-                </div>
-            `;
-
-            // Re-attach close listener
-            const closeBtn = execDiv.querySelector('.eq-exec-close');
-            if (closeBtn) {
-                closeBtn.addEventListener('click', (e) => { e.stopPropagation(); collapseAll(); });
-            }
-
-            // Run real API calls alongside animation
-            executeWithAPI(cardEl, id, execDiv, {
-                platform, metricType, threshold, riskTier, stake: finalStake, deadline
-            });
-        }
-    }
-
-    async function executeWithAPI(cardEl, id, execDiv, params) {
-        const { platform, metricType, threshold, riskTier, stake, deadline } = params;
-
-        try {
-            // Artificial delay for feel (instant start, but process takes a moment)
-            await sleep(1500);
-
-            const createResult = await window.api.createContract({
-                platform,
-                metricType,
-                condition: {
-                    operator: 'GTE',
-                    threshold,
-                    deadline: deadline || new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toISOString(),
-                },
-                lockAmountUsdCents: Math.round(stake * 100),
-                payoutAmountUsdCents: Math.round(stake * (riskTier === 'MAXIMUM' ? 4 : riskTier === 'ELEVATED' ? 2.5 : 1.5) * 100), // Approx logic
-                riskTier,
-                marketInstanceId: id
-            });
-
-            const realContractId = createResult.contract?.id || createResult.id;
-            console.log('[Exec] Contract created:', realContractId);
-
-            if (realContractId) {
-                try {
-                    await window.api.createFundingIntent(realContractId);
-                    await window.api.executeContract(realContractId);
-                } catch (e) {
-                    console.warn('[Exec] Warning:', e.message);
-                }
-            }
-
-            // Show completion screen
-            showExecutionComplete(cardEl, id, stake, realContractId, params);
-
-        } catch (err) {
-            console.error('[Exec] Error:', err);
-            const confirmBtn = document.getElementById(`confirm-btn-${id}`);
-            if (confirmBtn) {
-                confirmBtn.textContent = 'LOCK FAILED - RETRY';
-                confirmBtn.className = 'eq-confirm ready'; // Allow retry
-            }
-            // Optional: show error message below button
-        }
-    }
-
-    function activateStep(id, stepNum) {
-        const stepEl = document.getElementById(`step-${stepNum}-${id}`);
-        if (stepEl) {
-            stepEl.classList.add('active');
-            stepEl.querySelector('.eq-step-dot').classList.add('active');
-        }
-    }
-
-    function completeStep(id, stepNum) {
-        const stepEl = document.getElementById(`step-${stepNum}-${id}`);
-        if (stepEl) {
-            stepEl.classList.remove('active');
-            stepEl.classList.add('completed');
-            stepEl.querySelector('.eq-step-dot').classList.remove('active');
-            stepEl.querySelector('.eq-step-dot').classList.add('completed');
-            stepEl.querySelector('.eq-step-check').style.display = 'inline';
-        }
-    }
-
-    async function sleep(ms) {
-        return new Promise(resolve => setTimeout(resolve, ms));
-    }
-
-    function showExecutionComplete(cardEl, id, stake, realContractId, params) {
-        const execDiv = cardEl.querySelector('.eq-exec');
-        if (!execDiv) return;
-
-        // Card Updates
-        const badge = cardEl.querySelector('.eq-badge');
-        if (badge) {
-            badge.className = 'eq-badge action';
-            badge.style.background = '#fef2f2'; badge.style.color = '#752122';
-            badge.innerHTML = 'CAPITAL LOCKED';
-        }
-
-        // Remove Lock Button from collapsed state (or hide it permanently)
-        const lockBtn = cardEl.querySelector('.eq-lock-btn');
-        if (lockBtn) lockBtn.remove(); // Remove instead of just hiding
-
-        // Calculate timestamps
-        const now = new Date();
-        const startStr = now.toLocaleDateString([], { month: 'short', day: 'numeric' }) + ' ' + now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
-        const settleDate = new Date(now.setDate(now.getDate() + 30)).toLocaleDateString([], { month: 'short', day: 'numeric', year: 'numeric' });
-
-        const fee = 2; // Hardcoded or from params
-        const payout = (stake * (params?.riskTier === 'MAXIMUM' ? 4 : params?.riskTier === 'ELEVATED' ? 2.5 : 1.5)).toLocaleString();
-
-        execDiv.innerHTML = `
-            <div class="eq-receipt-success">
-                <div class="eq-receipt-icon">✅</div>
-                <div class="eq-receipt-title">EXECUTION CONFIRMED</div>
-                
-                <div class="eq-receipt-grid">
-                    <div>
-                        <div class="eq-receipt-item-label">Locked Capital</div>
-                        <div class="eq-receipt-item-value">$${stake.toLocaleString()}</div>
-                    </div>
-                    <div>
-                         <div class="eq-receipt-item-label">Est. Payout</div>
-                        <div class="eq-receipt-item-value">$${payout}</div>
-                    </div>
-                     <div>
-                        <div class="eq-receipt-item-label">Window Start</div>
-                        <div class="eq-receipt-item-value">${startStr}</div>
-                    </div>
-                    <div>
-                        <div class="eq-receipt-item-label">Settlement</div>
-                        <div class="eq-receipt-item-value">${settleDate}</div>
-                    </div>
-                     <div>
-                        <div class="eq-receipt-item-label">Verification</div>
-                        <div class="eq-receipt-item-value">${params?.platform || 'Stripe'} API</div>
-                    </div>
-                    <div>
-                        <div class="eq-receipt-item-label">Receipt ID</div>
-                        <div class="eq-receipt-item-value">RCPT-${(realContractId || id).slice(0, 4).toUpperCase()}</div>
-                    </div>
-                </div>
-
-                <div class="eq-lock-micro" style="margin-bottom:20px">Capital is now locked until settlement.</div>
-
-                <div class="eq-receipt-ledger">
-                    <span>✅ Receipt written to ledger</span>
-                    <span class="eq-ledger-event">Event: EXECUTION_CONFIRMED</span>
-                </div>
-
-                <div class="eq-receipt-actions">
-                    <button class="eq-card-cta primary" onclick="window.router.navigate('/receipts/${realContractId || id}')">View Receipt →</button>
-                    <button class="eq-card-cta secondary" onclick="document.querySelector('.eq-dim-overlay').click()">Return to Market</button>
-                </div>
-            </div>
-        `;
-    }
 
     // Wire up Rule Modal Logic (preserved)
     const rulesBtn = document.getElementById('btn-rules');

@@ -2,6 +2,8 @@
 // TermSheet.js — Institutional Execution Interface
 // Cold. Precise. Like signing a financial instrument.
 
+import { openExecutionModal } from './ExecutionModal.js';
+
 export function renderTermSheet(params) {
     return `
         <style>
@@ -228,56 +230,7 @@ export function renderTermSheet(params) {
             </div>
         </div>
 
-        <!-- Execution Overlay (injected dynamically, hidden by default) -->
-        <div id="ts-exec-overlay" class="fixed inset-0 z-[100] hidden">
-            <div class="absolute inset-0 bg-black/50 backdrop-blur-sm ts-overlay" onclick="document.getElementById('ts-exec-overlay').classList.add('hidden')"></div>
-            <div class="ts-overlay-card fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full max-w-[440px] bg-white border border-neutral-200 shadow-2xl" style="border-top: 3px solid #921818;">
-                <div class="p-8">
-                    <div class="flex items-center gap-2 mb-6">
-                        <i data-lucide="alert-triangle" class="w-4 h-4 text-[#921818]"></i>
-                        <span class="text-[10px] uppercase tracking-widest font-semibold text-[#921818]">Confirm Execution</span>
-                    </div>
-
-                    <div class="space-y-4 mb-6">
-                        <div class="flex justify-between items-center py-2 border-b border-neutral-100">
-                            <span class="text-xs text-neutral-500 uppercase tracking-wider">Contract</span>
-                            <span id="ts-exec-name" class="text-sm font-medium text-neutral-900"></span>
-                        </div>
-                        <div class="flex justify-between items-center py-2 border-b border-neutral-100">
-                            <span class="text-xs text-neutral-500 uppercase tracking-wider">Duration</span>
-                            <span id="ts-exec-duration" class="text-sm font-mono text-neutral-900"></span>
-                        </div>
-                        <div class="flex justify-between items-center py-2 border-b border-neutral-100">
-                            <span class="text-xs text-neutral-500 uppercase tracking-wider">Capital Locked</span>
-                            <span id="ts-exec-stake" class="text-sm font-mono font-bold text-neutral-900"></span>
-                        </div>
-                        <div class="flex justify-between items-center py-2 border-b border-neutral-100">
-                            <span class="text-xs text-neutral-500 uppercase tracking-wider">If Successful</span>
-                            <span id="ts-exec-payout" class="text-sm font-mono font-medium text-[#166534]"></span>
-                        </div>
-                        <div class="flex justify-between items-center py-2 border-b border-neutral-100">
-                            <span class="text-xs text-neutral-500 uppercase tracking-wider">If Failed</span>
-                            <span id="ts-exec-loss" class="text-sm font-mono font-medium text-[#921818]"></span>
-                        </div>
-                    </div>
-
-                    <label class="flex items-start gap-3 mb-6 cursor-pointer select-none group">
-                        <input type="checkbox" id="ts-exec-confirm-check" class="mt-0.5 w-4 h-4 rounded border-neutral-300 text-[#921818] focus:ring-[#921818]/20 cursor-pointer">
-                        <span class="text-xs text-neutral-600 leading-relaxed group-hover:text-neutral-900 transition-colors">
-                            I understand that capital is at risk and may be fully forfeited if the performance target is not met within the contract window.
-                        </span>
-                    </label>
-
-                    <button id="btn-ts-exec-final" disabled class="w-full py-4 bg-[#921818] text-white text-[11px] font-semibold uppercase tracking-widest disabled:opacity-40 disabled:cursor-not-allowed hover:bg-[#6B1212] transition-all">
-                        Execute Contract
-                    </button>
-
-                    <p class="text-[10px] text-center text-neutral-400 mt-4">
-                        Execution is final. No cancellations or refunds.
-                    </p>
-                </div>
-            </div>
-        </div>
+        <!-- Execution Overlay handled by shared ExecutionModal.js -->
     `;
 }
 
@@ -489,68 +442,35 @@ function renderActionPanel(template, isConnected) {
             </div>
         `;
 
-        // Execution Handler — opens overlay instead of direct execution
+        // Execution Handler — opens shared execution modal
         document.getElementById('btn-ts-execute').addEventListener('click', () => {
             const selectedInput = document.querySelector('input[name="stake-tier"]:checked');
             const stake = Number(selectedInput.value);
             const payout = Number(selectedInput.dataset.payout);
             const windowDays = template.windowDays || template.durationDays || 30;
+            const mult = stake > 0 ? payout / stake : 1.5;
 
-            // Populate overlay
-            document.getElementById('ts-exec-name').textContent = template.title || 'Performance Contract';
-            document.getElementById('ts-exec-duration').textContent = `${windowDays} Days`;
-            document.getElementById('ts-exec-stake').textContent = `$${stake.toLocaleString()}`;
-            document.getElementById('ts-exec-payout').textContent = `+$${payout.toLocaleString()}`;
-            document.getElementById('ts-exec-loss').textContent = `-$${stake.toLocaleString()}`;
-
-            // Reset checkbox and button
-            const checkbox = document.getElementById('ts-exec-confirm-check');
-            const execBtn = document.getElementById('btn-ts-exec-final');
-            checkbox.checked = false;
-            execBtn.disabled = true;
-
-            checkbox.onchange = () => {
-                execBtn.disabled = !checkbox.checked;
-            };
-
-            // Wire final execute
-            execBtn.onclick = async () => {
-                await handleTermSheetExecution(template, stake, execBtn);
-            };
-
-            // Show overlay
-            document.getElementById('ts-exec-overlay').classList.remove('hidden');
-
-            if (window.lucide) window.lucide.createIcons();
+            openExecutionModal({
+                id: template.id || template.templateId,
+                title: template.title || 'Performance Contract',
+                goal: template.title || 'Performance Contract',
+                tier: (template.riskTier || 'controlled').toLowerCase(),
+                provider: template.provider || template.platform || 'stripe',
+                platform: template.provider || template.platform || 'stripe',
+                min_stake: stake,
+                max_stake: stake,
+                multiplier: mult,
+                fee_bps: 250,
+                window_days: windowDays,
+                target_hint: template.targetHint || template.targetValue || '+15%',
+                deadline: template.deadline || new Date(Date.now() + windowDays * 24 * 60 * 60 * 1000).toISOString()
+            });
         });
     }
 
     if (window.lucide) window.lucide.createIcons();
 }
 
-async function handleTermSheetExecution(template, stake, btnElement) {
-    const originalText = btnElement.innerHTML;
-    btnElement.disabled = true;
-    btnElement.innerHTML = `<div class="flex items-center justify-center gap-2"><span class="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin"></span> Processing...</div>`;
-
-    try {
-        const contract = await window.api.createContract({
-            templateId: template.id || template.templateId,
-        });
-
-        await new Promise(r => setTimeout(r, 1500));
-
-        // Close overlay and redirect
-        document.getElementById('ts-exec-overlay').classList.add('hidden');
-        window.router.navigate('/overview');
-
-    } catch (e) {
-        console.error('Execution failed:', e);
-        btnElement.innerHTML = originalText;
-        btnElement.disabled = false;
-        alert('Execution failed: ' + e.message);
-    }
-}
 
 
 // --- Helpers ---

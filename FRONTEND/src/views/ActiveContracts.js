@@ -29,9 +29,9 @@ export function renderActiveContracts() {
                 font-size: 10px;
                 text-transform: uppercase;
                 letter-spacing: 1px;
-                color: #999;
+                color: #8A8A8A;
             }
-            .act-breadcrumb span.active { color: #111; font-weight: 500; }
+            .act-breadcrumb span.active { color: #111111; font-weight: 600; }
 
             /* Header Section */
             .act-header {
@@ -44,12 +44,12 @@ export function renderActiveContracts() {
                 font-size: 28px;
                 font-weight: 700;
                 letter-spacing: -0.5px;
-                color: #0a0a0a;
+                color: #111111;
                 margin: 0;
             }
             .act-subtitle {
                 font-size: 14px;
-                color: #666;
+                color: #444444;
                 margin: 0;
                 line-height: 1.5;
             }
@@ -63,21 +63,19 @@ export function renderActiveContracts() {
 
             .act-card {
                 background: #fff;
-                border: 1px solid #e5e5e5;
-                border-radius: 6px;
-                padding: 20px 24px;
+                border: 1px solid #DCDCDC;
+                padding: 22px 24px;
                 display: flex;
                 align-items: center;
                 justify-content: space-between;
-                transition: all 0.2s ease;
+                transition: border-color 0.12s, box-shadow 0.12s;
                 cursor: pointer;
                 text-decoration: none;
                 color: inherit;
             }
             .act-card:hover {
                 border-color: #bbb;
-                box-shadow: 0 4px 12px rgba(0,0,0,0.03);
-                transform: translateY(-1px);
+                box-shadow: 0 4px 12px rgba(0,0,0,0.04);
             }
 
             .act-card-left {
@@ -106,13 +104,13 @@ export function renderActiveContracts() {
             .act-card-id {
                 font-family: 'IBM Plex Mono', monospace;
                 font-size: 11px;
-                color: #999;
+                color: #8A8A8A;
                 letter-spacing: 0.5px;
             }
             .act-card-platform {
                 font-size: 15px;
-                font-weight: 600;
-                color: #111;
+                font-weight: 700;
+                color: #111111;
             }
 
             .act-card-right {
@@ -122,10 +120,11 @@ export function renderActiveContracts() {
                 gap: 4px;
             }
             .act-card-amount {
-                font-size: 16px;
+                font-size: 17px;
                 font-weight: 700;
-                color: #111;
+                color: #111111;
                 font-family: 'IBM Plex Mono', monospace;
+                letter-spacing: -0.5px;
             }
             .act-card-status {
                 font-size: 10px;
@@ -143,8 +142,7 @@ export function renderActiveContracts() {
             /* Empty State */
             .act-empty {
                 background: #fff;
-                border: 1px solid #e5e5e5;
-                border-radius: 8px;
+                border: 1px solid #DCDCDC;
                 padding: 80px 40px;
                 text-align: center;
                 display: flex;
@@ -153,46 +151,47 @@ export function renderActiveContracts() {
                 gap: 20px;
             }
             .act-empty-icon {
-                width: 64px;
-                height: 64px;
-                background: #fafafa;
-                border: 1px solid #f0f0f0;
-                border-radius: 50%;
+                width: 56px;
+                height: 56px;
+                background: #F9F9F9;
+                border: 1px solid #E5E5E5;
                 display: flex;
                 align-items: center;
                 justify-content: center;
-                color: #ccc;
+                color: #8A8A8A;
                 margin-bottom: 8px;
             }
             .act-empty-title {
-                font-size: 20px;
-                font-weight: 600;
-                color: #111;
+                font-size: 16px;
+                font-weight: 700;
+                color: #111111;
                 margin: 0;
+                text-transform: uppercase;
+                letter-spacing: 0.5px;
+                font-family: 'IBM Plex Sans', sans-serif;
             }
             .act-empty-msg {
                 font-size: 14px;
-                color: #666;
-                max-width: 320px;
+                color: #6B6B6B;
+                max-width: 340px;
                 line-height: 1.6;
                 margin: 0;
             }
             .act-empty-btn {
                 margin-top: 12px;
-                padding: 12px 24px;
-                background: #111;
+                padding: 12px 28px;
+                background: #111111;
                 color: #fff;
                 font-size: 12px;
-                font-weight: 600;
+                font-weight: 700;
                 text-transform: uppercase;
-                letter-spacing: 0.5px;
+                letter-spacing: 0.8px;
                 border: none;
-                border-radius: 4px;
                 cursor: pointer;
-                transition: background 0.15s;
+                transition: background 0.12s;
                 font-family: 'IBM Plex Sans', sans-serif;
             }
-            .act-empty-btn:hover { background: #333; }
+            .act-empty-btn:hover { background: #921818; }
 
             /* Loading */
             .act-loading {
@@ -207,7 +206,7 @@ export function renderActiveContracts() {
                 width: 24px;
                 height: 24px;
                 border: 2px solid #eee;
-                border-top-color: #752122;
+                border-top-color: #921818;
                 border-radius: 50%;
                 animation: act-spin 0.8s linear infinite;
             }
@@ -215,7 +214,7 @@ export function renderActiveContracts() {
             .act-loading-text {
                 font-family: 'IBM Plex Mono', monospace;
                 font-size: 11px;
-                color: #999;
+                color: #8A8A8A;
                 text-transform: uppercase;
                 letter-spacing: 1px;
             }
@@ -292,12 +291,12 @@ function renderEmptyState(container) {
     container.innerHTML = `
         <div class="act-empty">
             <div class="act-empty-icon">
-                <i data-lucide="file-text" style="width: 32px; height: 32px;"></i>
+                <i data-lucide="vault" style="width: 28px; height: 28px;"></i>
             </div>
-            <h2 class="act-empty-title">No Active Contracts</h2>
-            <p class="act-empty-msg">You have no active performance contracts monitorized in the clearinghouse.</p>
+            <h2 class="act-empty-title">NO CAPITAL CURRENTLY COMMITTED</h2>
+            <p class="act-empty-msg">Capital is idle and available for allocation. Deploy to a performance contract to begin settlement tracking.</p>
             <button class="act-empty-btn" onclick="window.router.navigate('/overview')">
-                Browse Market Feed
+                DEPLOY CAPITAL
             </button>
         </div>
     `;

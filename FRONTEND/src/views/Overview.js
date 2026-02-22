@@ -30,51 +30,50 @@ export function renderOverview() {
             .eq-stats { display: flex; gap: 32px; }
             .eq-stat-value {
                 font-size: 18px;
-                font-weight: 600;
-                color: #111;
+                font-weight: 700;
+                color: #111111;
                 font-family: 'IBM Plex Sans', sans-serif;
                 letter-spacing: -0.5px;
             }
             .eq-stat-label {
                 font-size: 11px;
-                color: #555;
-                font-weight: 600;
+                color: #6B6B6B;
+                font-weight: 700;
                 text-transform: uppercase;
                 letter-spacing: 0.5px;
                 margin-top: 2px;
                 font-family: 'IBM Plex Mono', monospace;
             }
-            .eq-stat-divider { width: 1px; height: 32px; background: #e5e5e5; margin: 0 16px; }
+            .eq-stat-divider { width: 1px; height: 32px; background: #DCDCDC; margin: 0 16px; }
             .eq-controls { display: flex; gap: 8px; align-items: center; }
 
             /* Search */
             .eq-search {
                 padding: 8px 12px;
                 font-size: 13px;
-                border: 1px solid #e0e0e0;
-                border-radius: 6px;
+                border: 1px solid #DCDCDC;
+                border-radius: 0;
                 outline: none;
                 width: 200px;
                 font-family: 'IBM Plex Sans', sans-serif;
                 color: #333;
                 transition: border-color 0.15s;
             }
-            .eq-search:focus { border-color: #752122; }
-            .eq-search::placeholder { color: #aaa; }
+            .eq-search:focus { border-color: #921818; }
+            .eq-search::placeholder { color: #8A8A8A; }
 
             /* Sort */
             .eq-sort {
                 padding: 8px 12px;
                 font-size: 13px;
-                border: 1px solid #e0e0e0;
-                border-radius: 6px;
+                border: 1px solid #DCDCDC;
                 background: #fff;
                 cursor: pointer;
                 font-family: 'IBM Plex Mono', monospace;
-                color: #555;
+                color: #444444;
                 outline: none;
             }
-            .eq-sort:focus { border-color: #752122; }
+            .eq-sort:focus { border-color: #921818; }
 
             .eq-rules-btn {
                 padding: 8px 14px;
@@ -93,7 +92,7 @@ export function renderOverview() {
                 transition: all 0.15s;
                 border-radius: 6px;
             }
-            .eq-rules-btn:hover { border-color: #ccc; color: #333; }
+            .eq-rules-btn:hover { border-color: #bbb; color: #111; }
 
             /* Tabs */
             .eq-tabs {
@@ -106,8 +105,8 @@ export function renderOverview() {
             .eq-tab {
                 padding: 16px 20px;
                 font-size: 13px;
-                font-weight: 500;
-                color: #666;
+                font-weight: 600;
+                color: #444444;
                 background: transparent;
                 border: none;
                 border-bottom: 2px solid transparent;
@@ -115,11 +114,11 @@ export function renderOverview() {
                 font-family: 'IBM Plex Sans', sans-serif;
                 text-transform: uppercase;
                 letter-spacing: 0.2px;
-                transition: all 0.2s;
+                transition: color 0.12s;
                 position: relative;
             }
-            .eq-tab:hover { color: #111; }
-            .eq-tab.active { color: #111; font-weight: 600; border-bottom-color: #752122; }
+            .eq-tab:hover { color: #111111; }
+            .eq-tab.active { color: #111111; font-weight: 700; border-bottom-color: #921818; }
             .eq-tab-count {
                 font-size: 10px;
                 background: #f3f4f6;
@@ -130,7 +129,7 @@ export function renderOverview() {
                 font-weight: 600;
                 font-family: 'IBM Plex Mono', monospace;
             }
-            .eq-tab.active .eq-tab-count { background: #fee2e2; color: #752122; }
+            .eq-tab.active .eq-tab-count { background: #fef2f2; color: #921818; }
 
             /* Filters */
             .eq-filters {
@@ -144,32 +143,29 @@ export function renderOverview() {
             }
             .eq-filter-label {
                 font-size: 12px;
-                color: #555;
+                color: #6B6B6B;
                 text-transform: uppercase;
                 font-family: 'IBM Plex Mono', monospace;
                 margin-right: 4px;
-                font-weight: 500;
+                font-weight: 700;
             }
             .eq-pill {
                 padding: 6px 14px;
                 font-size: 12px;
-                color: #4b5563;
+                color: #444444;
                 background: #fff;
-                font-weight: 500;
-                border: 1px solid #e5e5e5;
-                border-radius: 999px;
+                font-weight: 600;
+                border: 1px solid #E5E5E5;
                 cursor: pointer;
-                transition: all 0.15s;
+                transition: all 0.12s;
                 font-family: 'IBM Plex Sans', sans-serif;
-                box-shadow: 0 1px 2px rgba(0,0,0,0.03);
             }
-            .eq-pill:hover { border-color: #ccc; color: #111; }
+            .eq-pill:hover { border-color: #DCDCDC; color: #111111; }
             .eq-pill.active { 
                 background: #fff; 
-                color: #111; 
-                border-color: #111; 
-                box-shadow: 0 1px 3px rgba(0,0,0,0.08);
-                font-weight: 600;
+                color: #111111; 
+                border-color: #111111; 
+                font-weight: 700;
             }
 
             /* Integration indicator */
@@ -216,14 +212,13 @@ export function renderOverview() {
             /* Card */
             .eq-card {
                 background: #fff;
-                border: 1px solid #e5e5e5;
-                border-radius: 6px; /* Tighter radius */
-                padding: 16px 20px; /* Reduced vertical and horizontal for density */
+                border: 1px solid #DCDCDC;
+                padding: 20px 24px;
                 cursor: pointer;
                 transition: all 0.2s cubic-bezier(0.2, 0.8, 0.2, 1);
                 display: flex;
                 flex-direction: column;
-                gap: 12px; /* Tighter rhythm */
+                gap: 14px;
                 position: relative;
                 overflow: hidden;
             }
@@ -237,7 +232,7 @@ export function renderOverview() {
                 border-radius: 0 2px 2px 0;
                 transition: background 0.2s;
             }
-            .eq-card:hover::after { background: #752122; }
+            .eq-card:hover::after { background: #921818; }
 
             /* Remove old top border gradient if present */
             .eq-card::before { display: none; }
@@ -262,7 +257,7 @@ export function renderOverview() {
             }
             .eq-card-id {
                 font-size: 11px;
-                color: #9ca3af; /* Lower contrast */
+                color: #8A8A8A;
                 font-family: 'IBM Plex Mono', monospace;
                 letter-spacing: 0.5px;
             }
@@ -281,8 +276,8 @@ export function renderOverview() {
                 text-transform: uppercase;
                 line-height: 1;
             }
-            .eq-badge.active { background: #f0fdf4; color: #166534; }
-            .eq-badge.action { background: #fef2f2; color: #752122; }
+            .eq-badge.active { background: #f0fdf4; color: #15803d; }
+            .eq-badge.action { background: #fef2f2; color: #921818; }
             .eq-badge.verifying { background: #eff6ff; color: #1e40af; }
             .eq-badge.settled { background: #f5f5f5; color: #666; }
 
@@ -344,47 +339,46 @@ export function renderOverview() {
             }
             .eq-card-stake-label {
                 font-size: 12px;
-                color: #555;
-                font-weight: 500;
+                color: #6B6B6B;
+                font-weight: 600;
                 text-transform: uppercase;
-                font-family: 'JetBrains Mono', monospace;
+                font-family: 'IBM Plex Mono', monospace;
                 letter-spacing: 0.5px;
             }
             .eq-card-time {
                 font-size: 12px;
-                color: #888;
-                font-family: 'JetBrains Mono', monospace;
+                color: #8A8A8A;
+                font-family: 'IBM Plex Mono', monospace;
             }
 
             .eq-card-cta {
                 width: 100%;
                 padding: 12px;
                 font-size: 14px;
-                font-weight: 600;
+                font-weight: 700;
                 text-transform: uppercase;
                 letter-spacing: 0.5px;
                 font-family: 'IBM Plex Sans', sans-serif;
-                border-radius: 8px;
                 cursor: pointer;
-                transition: all 150ms ease;
+                transition: all 120ms ease;
             }
             .eq-card-cta.primary {
-                background: #ffffff;
-                color: #111111;
-                border: 1px solid #e5e5e5;
+                background: #111111;
+                color: #ffffff;
+                border: 1px solid #111111;
                 box-shadow: none;
             }
             .eq-card-cta.primary:hover {
-                border-color: #7f1d1d;
-                color: #7f1d1d;
+                background: #921818;
+                border-color: #921818;
+                color: #ffffff;
                 transform: translateY(-1px);
                 box-shadow: none;
             }
             .eq-card-cta.primary:active {
-                background: #7f1d1d;
+                background: #6B1212;
                 color: #ffffff;
-                border-color: #7f1d1d;
-                box-shadow: inset 0 2px 4px rgba(0,0,0,0.2);
+                border-color: #6B1212;
                 transform: translateY(0);
             }
             .eq-card-cta.primary:focus-visible {

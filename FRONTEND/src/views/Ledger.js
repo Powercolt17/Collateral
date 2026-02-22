@@ -17,7 +17,7 @@ export function renderLedger() {
 
             /* ── Centered Container ── */
             .ldg-container {
-                max-width: 1000px;
+                max-width: 900px;
                 margin: 0 auto;
                 padding: 0 24px;
             }
@@ -103,7 +103,7 @@ export function renderLedger() {
                 padding: 13px 16px;
                 font-size: 11px;
                 font-weight: 600;
-                color: #8A8A8A;
+                color: #555555;
                 background: transparent;
                 border: none;
                 border-bottom: 2px solid transparent;
@@ -114,7 +114,7 @@ export function renderLedger() {
                 transition: color 0.12s;
                 white-space: nowrap;
             }
-            .ldg-tab:hover { color: #444444; }
+            .ldg-tab:hover { color: #333333; }
             .ldg-tab.active {
                 color: #111111;
                 font-weight: 700;
@@ -161,7 +161,7 @@ export function renderLedger() {
                 padding: 4px 10px;
                 font-size: 10px;
                 font-weight: 600;
-                color: #8A8A8A;
+                color: #555555;
                 background: transparent;
                 border: none;
                 border-bottom: 1px solid transparent;
@@ -171,7 +171,7 @@ export function renderLedger() {
                 text-transform: uppercase;
                 letter-spacing: 0.3px;
             }
-            .ldg-pill:hover { color: #444444; }
+            .ldg-pill:hover { color: #333333; }
             .ldg-pill.active {
                 color: #111111;
                 font-weight: 700;
@@ -220,21 +220,21 @@ export function renderLedger() {
             .ldg-list {
                 display: flex;
                 flex-direction: column;
-                gap: 10px;
+                gap: 8px;
             }
 
             /* ── Event Card ── */
             .ldg-card {
                 background: #fff;
-                border: 1px solid #E5E5E5;
-                padding: 20px;
+                border: 1px solid #E3E3E3;
+                padding: 16px 18px;
                 cursor: pointer;
                 transition: box-shadow 0.15s, border-color 0.15s, transform 0.15s;
                 position: relative;
             }
             .ldg-card:hover {
-                border-color: #DCDCDC;
-                box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+                border-color: #D0D0D0;
+                box-shadow: 0 2px 8px rgba(0,0,0,0.05);
                 transform: translateY(-1px);
             }
             .ldg-card::before {
@@ -252,24 +252,26 @@ export function renderLedger() {
                 display: flex;
                 align-items: flex-start;
                 justify-content: space-between;
-                margin-bottom: 12px;
+                margin-bottom: 10px;
             }
             .ldg-card-left {
                 display: flex;
                 flex-direction: column;
-                gap: 4px;
+                gap: 3px;
             }
 
             /* Event Tag */
             .ldg-event-tag {
                 display: inline-block;
                 font-family: 'IBM Plex Mono', monospace;
-                font-size: 10px;
+                font-size: 11px;
                 font-weight: 600;
                 text-transform: uppercase;
                 letter-spacing: 0.3px;
-                padding: 3px 8px;
-                border: 1px solid;
+                padding: 4px 8px;
+                background: #F2F2F2;
+                border: none;
+                border-radius: 3px;
                 white-space: nowrap;
                 align-self: flex-start;
             }
@@ -302,16 +304,16 @@ export function renderLedger() {
                 display: inline-flex;
                 align-items: center;
                 justify-content: center;
-                padding: 3px 7px;
+                padding: 2px 6px;
                 font-family: 'IBM Plex Mono', monospace;
                 font-size: 9px;
                 font-weight: 700;
                 text-transform: uppercase;
                 letter-spacing: 0.5px;
                 white-space: nowrap;
-                margin-top: 4px;
+                margin-top: 6px;
             }
-            .ldg-status.locked    { background: #f5f5f5; color: #444444; border: 1px solid #E5E5E5; }
+            .ldg-status.locked    { background: #f5f5f5; color: #555555; border: 1px solid #E3E3E3; }
             .ldg-status.settled   { background: #f0fdf4; color: #15803d; border: 1px solid #bbf7d0; }
             .ldg-status.failed    { background: #fef2f2; color: #921818; border: 1px solid #fecaca; }
             .ldg-status.pending   { background: #fffbeb; color: #92400e; border: 1px solid #fde68a; }
@@ -324,9 +326,9 @@ export function renderLedger() {
                 gap: 8px;
                 font-family: 'IBM Plex Mono', monospace;
                 font-size: 10px;
-                color: #8A8A8A;
-                padding-top: 12px;
-                border-top: 1px solid #F5F5F5;
+                color: #888888;
+                padding-top: 10px;
+                border-top: 1px solid #F0F0F0;
             }
             .ldg-provider {
                 display: inline-flex;
@@ -373,8 +375,8 @@ export function renderLedger() {
             /* ── Skeleton ── */
             .ldg-skeleton {
                 background: #fff;
-                border: 1px solid #E5E5E5;
-                height: 100px;
+                border: 1px solid #E3E3E3;
+                height: 88px;
                 position: relative;
                 overflow: hidden;
             }
@@ -585,13 +587,13 @@ export function renderLedger() {
                 .ldg-controls { padding: 10px 0; }
                 .ldg-search { max-width: none; }
                 .ldg-feed { padding: 16px 0 60px; }
-                .ldg-list { gap: 12px; }
+                .ldg-list { gap: 16px; }
                 .ldg-card { padding: 16px; }
 
                 /* Mobile card: stacked layout */
                 .ldg-card-top {
                     flex-direction: column;
-                    gap: 12px;
+                    gap: 10px;
                 }
                 .ldg-card-amount { text-align: left; }
                 .ldg-event-amount { font-size: 20px; }
@@ -850,7 +852,7 @@ export async function initLedger() {
                 <div class="ldg-card" data-index="${i}">
                     <div class="ldg-card-top">
                         <div class="ldg-card-left">
-                            <div class="ldg-event-tag" style="color: ${tagColor}; border-color: ${tagColor};">
+                            <div class="ldg-event-tag" style="color: ${tagColor};">
                                 ${formatEventType(event.eventType)}
                             </div>
                             <div class="ldg-event-rcpt">${contractShort}</div>

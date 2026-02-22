@@ -58,35 +58,17 @@ export function renderHeader(currentRoute) {
                 gap: 40px;
             }
 
-            /* ── Wordmark: COLL[ATERAL] ── */
+            /* ── Wordmark ── */
             .ch-logo {
                 display: inline-flex;
                 align-items: center;
                 text-decoration: none;
                 flex-shrink: 0;
-                line-height: 1;
-                gap: 0;
             }
-            .ch-logo-prefix {
-                font-size: 18px;
-                font-weight: 700;
+            .ch-logo-text {
+                font-size: 17px;
+                font-weight: 600;
                 color: #111111;
-                letter-spacing: -0.02em;
-                font-family: 'IBM Plex Sans', sans-serif;
-                line-height: 1;
-            }
-            .ch-logo-block {
-                display: inline-flex;
-                align-items: center;
-                background: #7B1E1E;
-                padding: 4px 6px;
-                margin-left: -1px;
-                line-height: 1;
-            }
-            .ch-logo-block span {
-                font-size: 18px;
-                font-weight: 700;
-                color: #ffffff;
                 letter-spacing: -0.02em;
                 font-family: 'IBM Plex Sans', sans-serif;
                 line-height: 1;
@@ -378,7 +360,7 @@ export function renderHeader(currentRoute) {
             <div class="ch-header-inner">
                 <!-- Logo -->
                 <a href="#" onclick="window.router.navigate('/overview'); return false;" class="ch-logo">
-                    <span class="ch-logo-prefix">COLL</span><span class="ch-logo-block"><span>ATERAL</span></span>
+                    <span class="ch-logo-text">COLLATERAL</span>
                 </a>
 
                 <!-- Nav Links -->

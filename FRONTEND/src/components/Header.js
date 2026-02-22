@@ -213,51 +213,96 @@ export function renderHeader(currentRoute) {
             .ch-connect {
                 padding: 8px 16px;
                 font-size: 11px;
-                font-weight: 600;
+                font-weight: 700;
                 color: #fff;
-                background: #752122;
+                background: #111111;
                 border: none;
                 cursor: pointer;
-                font-family: 'JetBrains Mono', monospace;
+                font-family: 'IBM Plex Mono', monospace;
                 letter-spacing: 0.5px;
-                transition: background 0.15s;
+                text-transform: uppercase;
+                transition: background 0.12s;
             }
-            .ch-connect:hover { background: #5c1a1b; }
+            .ch-connect:hover { background: #921818; }
 
-            /* User menu (authenticated) */
+            /* Account badge — institutional */
             .ch-user-menu {
                 position: relative;
             }
             .ch-user-btn {
                 display: flex;
                 align-items: center;
-                justify-content: center;
-                width: 40px;
-                height: 40px;
+                gap: 8px;
                 padding: 0;
-                border-radius: 50%;
-                background: #fff;
-                border: 1px solid #e5e5e5;
+                background: transparent;
+                border: none;
                 cursor: pointer;
-                transition: all 0.15s;
             }
-            .ch-user-btn:hover { border-color: #ccc; box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
-            .ch-user-avatar {
-                font-size: 14px;
-                font-weight: 600;
-                color: #111;
+            .ch-user-badge {
+                width: 32px;
+                height: 32px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                background: #fff;
+                border: 1px solid #E5E5E5;
+                transition: background 0.1s, border-color 0.1s;
+            }
+            .ch-user-btn:hover .ch-user-badge {
+                background: #F7F7F7;
+                border-color: #DCDCDC;
+            }
+            .ch-user-initials {
                 font-family: 'IBM Plex Sans', sans-serif;
+                font-size: 12px;
+                font-weight: 700;
+                color: #111111;
+                letter-spacing: -0.3px;
+                line-height: 1;
             }
-            .ch-user-name, .ch-user-btn i { display: none; } /* Hide name and chevron for clean circle look */
+            .ch-user-label-wrap {
+                display: none;
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 0;
+            }
+            @media (min-width: 1024px) {
+                .ch-user-label-wrap { display: flex; }
+            }
+            .ch-user-label-id {
+                font-family: 'IBM Plex Mono', monospace;
+                font-size: 11px;
+                font-weight: 700;
+                color: #111111;
+                letter-spacing: -0.2px;
+                line-height: 1;
+            }
+            .ch-user-label-role {
+                font-family: 'IBM Plex Mono', monospace;
+                font-size: 8px;
+                font-weight: 600;
+                text-transform: uppercase;
+                letter-spacing: 1.2px;
+                color: #8A8A8A;
+                line-height: 1;
+                margin-top: 3px;
+            }
+            .ch-user-chevron {
+                color: #CCCCCC;
+                transition: color 0.1s;
+            }
+            .ch-user-btn:hover .ch-user-chevron { color: #888; }
+
+            /* Account dropdown */
             .ch-user-dropdown {
                 position: absolute;
                 right: 0;
                 top: 100%;
-                margin-top: 4px;
+                margin-top: 6px;
                 width: 200px;
                 background: #fff;
-                border: 1px solid #e5e5e5;
-                box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+                border: 1px solid #E5E5E5;
+                box-shadow: 0 4px 12px rgba(0,0,0,0.06);
                 display: none;
                 z-index: 100;
             }
@@ -266,16 +311,22 @@ export function renderHeader(currentRoute) {
             .ch-user-dropdown button {
                 width: 100%;
                 padding: 10px 14px;
-                font-size: 11px;
+                font-size: 10px;
+                font-weight: 700;
                 text-align: left;
-                color: #333;
+                text-transform: uppercase;
+                letter-spacing: 0.5px;
+                color: #333333;
                 background: transparent;
                 border: none;
+                border-bottom: 1px solid #F5F5F5;
                 cursor: pointer;
-                font-family: 'JetBrains Mono', monospace;
+                font-family: 'IBM Plex Mono', monospace;
+                transition: background 0.1s;
             }
-            .ch-user-dropdown button:hover { background: #f5f5f5; }
-            .ch-user-dropdown .signout { color: #752122; }
+            .ch-user-dropdown button:last-child { border-bottom: none; }
+            .ch-user-dropdown button:hover { background: #FAFAFA; }
+            .ch-user-dropdown .signout { color: #921818; }
 
             /* Mobile menu button */
             .ch-mobile-btn {
@@ -378,18 +429,23 @@ export function renderHeader(currentRoute) {
                         CONNECT
                     </button>
 
-                    <!-- Authenticated User Menu (hidden by default) -->
+                    <!-- Authenticated Account Badge (hidden by default) -->
                     <div id="user-menu" class="ch-user-menu hidden">
                         <button id="user-menu-btn" onclick="window.app.toggleMenuPersistence(event)" class="ch-user-btn">
-                            <span class="ch-user-avatar" id="menu-initial">U</span>
-                            <span class="ch-user-name" id="menu-username">@username</span>
-                            <i data-lucide="chevron-down" style="width: 12px; height: 12px; color: #999;"></i>
+                            <div class="ch-user-badge">
+                                <span class="ch-user-initials" id="menu-initial">U</span>
+                            </div>
+                            <div class="ch-user-label-wrap">
+                                <span class="ch-user-label-id" id="menu-username">OPERATOR</span>
+                                <span class="ch-user-label-role">CLEARING ACCOUNT</span>
+                            </div>
+                            <i data-lucide="chevron-down" class="ch-user-chevron" style="width: 12px; height: 12px;"></i>
                         </button>
                         <div id="user-dropdown-content" class="ch-user-dropdown">
                             <button onclick="window.router.navigate('/profile')">MY IDENTITY</button>
                             <button onclick="window.router.navigate('/my-contracts')">MY CONTRACTS</button>
                             <button onclick="window.router.navigate('/receipts')">RECEIPTS</button>
-                            <button onclick="window.router.navigate('/funding')">FUNDING</button>
+                            <button onclick="window.router.navigate('/funding')">CAPITAL</button>
                             <button onclick="window.app.handleSignOut()" class="signout">SIGN OUT</button>
                         </div>
                     </div>

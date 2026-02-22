@@ -64,6 +64,24 @@ export function renderHeader(currentRoute) {
                 align-items: center;
                 text-decoration: none;
                 flex-shrink: 0;
+                gap: 3px;
+            }
+            .ch-logo-mark {
+                width: 22px;
+                height: 22px;
+                border: 1.5px solid #111111;
+                display: inline-flex;
+                align-items: center;
+                justify-content: center;
+                flex-shrink: 0;
+            }
+            .ch-logo-mark span {
+                font-size: 13px;
+                font-weight: 700;
+                color: #111111;
+                font-family: 'IBM Plex Sans', sans-serif;
+                line-height: 1;
+                margin-top: -0.5px;
             }
             .ch-logo-text {
                 font-size: 17px;
@@ -360,7 +378,7 @@ export function renderHeader(currentRoute) {
             <div class="ch-header-inner">
                 <!-- Logo -->
                 <a href="#" onclick="window.router.navigate('/overview'); return false;" class="ch-logo">
-                    <span class="ch-logo-text">COLLATERAL</span>
+                    <span class="ch-logo-mark"><span>C</span></span><span class="ch-logo-text">OLLATERAL</span>
                 </a>
 
                 <!-- Nav Links -->

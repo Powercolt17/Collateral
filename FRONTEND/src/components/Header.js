@@ -58,30 +58,45 @@ export function renderHeader(currentRoute) {
                 gap: 40px;
             }
 
-            /* Logo */
+            /* Wordmark */
             .ch-logo {
                 display: flex;
                 flex-direction: column;
-                align-items: center;
+                align-items: flex-start;
                 text-decoration: none;
                 flex-shrink: 0;
                 line-height: 1;
+                gap: 0;
             }
             .ch-logo-main {
-                font-size: 24px;
-                font-weight: 800;
+                font-size: 20px;
+                font-weight: 700;
                 color: #0a0a0a;
-                letter-spacing: -0.8px;
+                letter-spacing: -1.2px;
                 font-family: 'IBM Plex Sans', sans-serif;
+                line-height: 1;
+                position: relative;
+                display: inline-block;
+            }
+            /* Option C: Subtle red underline accent */
+            .ch-logo-main::after {
+                content: '';
+                position: absolute;
+                bottom: -2px;
+                left: 0;
+                width: 100%;
+                height: 1.5px;
+                background: #921818;
             }
             .ch-logo-sub {
-                font-size: 10px;
-                font-weight: 700;
-                color: #752122;
-                letter-spacing: 2px;
+                font-size: 8px;
+                font-weight: 500;
+                color: #921818;
+                letter-spacing: 3.5px;
                 font-family: 'IBM Plex Sans', sans-serif;
-                margin-top: -2px;
+                margin-top: 5px;
                 text-transform: uppercase;
+                padding-left: 1px; /* optical nudge to counteract letter-spacing overhang */
             }
 
             /* Nav links */

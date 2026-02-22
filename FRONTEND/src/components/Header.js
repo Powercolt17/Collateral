@@ -9,7 +9,7 @@ export function renderHeader(currentRoute) {
 
     const navItems = routes.map(route => {
         const isActive = currentRoute === route.path ||
-            (route.path === '/contracts' && currentRoute.startsWith('/contracts')) ||
+            (route.path === '/contracts' && (currentRoute === '/contracts' || currentRoute.startsWith('/contracts/'))) ||
             (route.path === '/overview' && currentRoute === '/');
 
         return `
@@ -26,7 +26,7 @@ export function renderHeader(currentRoute) {
     // Generate mobile navigation items
     const mobileNavItems = routes.map(route => {
         const isActive = currentRoute === route.path ||
-            (route.path === '/contracts' && currentRoute.startsWith('/contracts')) ||
+            (route.path === '/contracts' && (currentRoute === '/contracts' || currentRoute.startsWith('/contracts/'))) ||
             (route.path === '/overview' && currentRoute === '/');
 
         return `

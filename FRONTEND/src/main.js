@@ -10,6 +10,7 @@ import { renderMyContracts, initMyContracts } from './views/MyContracts.js';
 import { renderDocs, initDocs } from './views/Docs.js';
 import { renderFunding, initFunding } from './views/Funding.js';
 import { renderReceipts, initReceipts } from './views/Receipts.js';
+import { renderActiveContracts, initActiveContracts } from './views/ActiveContracts.js';
 
 import { renderTermSheet, initTermSheet } from './views/TermSheet.js';
 import { renderContractTermSheet, initContractTermSheet } from './views/ContractTermSheet.js';
@@ -155,7 +156,8 @@ const routes = PRE_LAUNCH_MODE ? [
     // Normal mode: full app
     { path: '/overview', render: renderOverview, init: initOverview },
     { path: '/ledger', render: renderLedger, init: initLedger },
-    { path: '/contracts', render: renderContracts, init: initContracts },
+    { path: '/contracts', render: renderActiveContracts, init: initActiveContracts },
+    { path: '/contracts/execute', render: renderContracts, init: initContracts },
     { path: '/contracts/:id', render: renderContractDetail, init: initContractDetail },
     { path: '/market/:id', render: () => '<div></div>', init: (params) => { window.location.hash = '/contract/' + (params?.id || ''); } },
     { path: '/contract/:id', render: renderContractTermSheet, init: initContractTermSheet },
@@ -1063,7 +1065,7 @@ function updateAuthUI() {
 }
 
 // Protected routes that require login
-const protectedRoutes = ['/contracts', '/my-contracts', '/profile', '/funding'];
+const protectedRoutes = ['/contracts', '/contracts/execute', '/my-contracts', '/profile', '/funding'];
 
 // Route change handler
 router.onRouteChange = function (route, path) {

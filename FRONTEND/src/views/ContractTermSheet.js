@@ -381,21 +381,13 @@ function showContent(c) {
     // Wire LOCK button → execution modal
     if (lockBtn) {
         lockBtn.addEventListener('click', () => {
-            openExecutionModal({
+            const params = new URLSearchParams({
                 id,
-                title,
-                goal: title,
                 tier,
-                provider,
-                platform: provider,
-                min_stake: currentStake,
-                max_stake: currentStake,
-                multiplier,
-                fee_bps: feeBps,
-                window_days: windowDays,
-                target_hint: targetHint,
-                deadline: c.fundingCloseAt || new Date(Date.now() + windowDays * 86400000).toISOString()
+                source: provider,
+                capital: currentStake
             });
+            window.router.navigate('/contracts/execute?' + params.toString());
         });
     }
 }

@@ -952,7 +952,7 @@ export function initContracts() {
     // NAV — Back button
     // =========================================================
     document.getElementById('ext-nav-back')?.addEventListener('click', () => {
-        window.location.hash = '/overview';
+        window.router.navigate('/contracts');
     });
 
     // =========================================================

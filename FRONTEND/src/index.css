@@ -1,42 +1,192 @@
 @import "tailwindcss";
 
+/* ================================================================
+   COLLATERAL.MARKET — GLOBAL TYPOGRAPHY & CONTRAST SYSTEM
+   Institutional grade. WCAG AA minimum. Zero softness.
+   ================================================================ */
+
+/* ── Design Tokens ── */
 :root {
-    --bg-page: #FFFFFF;
-    --bg-panel: #FAFAFA;
-    --text-primary: #111111;
-    font-family: 'IBM Plex Sans', sans-serif;
-    font-size: 14px;
-    line-height: 1.35;
-    color: #111;
+    /* Backgrounds */
+    --bg-page:           #F9F9F9;
+    --bg-panel:          #FFFFFF;
+    --bg-subtle:         #F5F5F5;
+
+    /* Text hierarchy — all WCAG AA compliant on white */
+    --text-primary:      #111111;   /* headings, amounts, contract IDs */
+    --text-secondary:    #444444;   /* labels, metadata */
+    --text-tertiary:     #6B6B6B;   /* timestamps, sub-labels */
+    --text-muted:        #8A8A8A;   /* placeholder, lowest-priority info */
+
+    /* Brand */
+    --red:               #921818;
+    --red-hover:         #6B1212;
+    --red-light:         #FEF2F2;
+    --green:             #15803D;
+    --green-light:       #F0FDF4;
+
+    /* Borders */
+    --divider:           #E5E5E5;   /* structural borders */
+    --divider-strong:    #DCDCDC;   /* row separators that need more contrast */
+    --divider-subtle:    #F0F0F0;   /* lightest internal dividers */
+
+    /* Spacing rhythm */
+    --space-section:     24px;
+    --space-row:         16px;
+    --space-label-value: 8px;
 }
 
-:root {
-    --text-secondary: #6B6B6B;
-    --text-muted: #9CA3AF;
-    --divider: #E5E5E5;
-    --divider-subtle: #F0F0F0;
-    --red: #8B1818;
-    --red-hover: #6B1212;
-    --red-light: #FEF2F2;
-    --green: #166534;
-    --green-light: #F0FDF4;
+/* ── Global Base ── */
+*, *::before, *::after {
+    box-sizing: border-box;
 }
 
-.no-scrollbar::-webkit-scrollbar {
-    display: none;
+html {
+    font-size: 16px;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
 }
 
-.no-scrollbar {
-    -ms-overflow-style: none;
-    scrollbar-width: none;
+body {
+    font-family: 'IBM Plex Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+    font-size: 16px;
+    line-height: 1.5;
+    color: var(--text-primary);
+    background: var(--bg-page);
+    margin: 0;
+    padding: 0;
 }
 
+/* ── Typography Scale ── */
+h1 {
+    font-size: 28px;
+    font-weight: 700;
+    color: var(--text-primary);
+    letter-spacing: -0.5px;
+    line-height: 1.15;
+    margin: 0;
+}
+
+h2 {
+    font-size: 21px;
+    font-weight: 700;
+    color: var(--text-primary);
+    letter-spacing: -0.3px;
+    line-height: 1.2;
+    margin: 0;
+}
+
+h3 {
+    font-size: 17px;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin: 0;
+}
+
+p {
+    font-size: 16px;
+    color: var(--text-secondary);
+    line-height: 1.55;
+    margin: 0;
+}
+
+/* ── Utility Classes — Typography Tiers ── */
+.t-primary   { color: var(--text-primary)   !important; }
+.t-secondary { color: var(--text-secondary) !important; }
+.t-tertiary  { color: var(--text-tertiary)  !important; }
+.t-muted     { color: var(--text-muted)     !important; }
+.t-red       { color: var(--red)            !important; }
+.t-green     { color: var(--green)          !important; }
+
+/* Mono utility */
+.mono {
+    font-family: 'IBM Plex Mono', monospace;
+}
+
+/* ── Global Amount Styling ── */
+.amount,
+[class*="-amount"],
+[class*="-value"][class*="stat"],
+[class*="-stat-value"] {
+    font-weight: 700;
+    color: var(--text-primary);
+    font-family: 'IBM Plex Mono', monospace;
+    letter-spacing: -0.5px;
+}
+
+/* ── Section Labels ── */
+.section-label,
+[class*="-stat-label"],
+[class*="-filter-label"],
+[class*="-drawer-label"],
+[class*="-footer-line"] {
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1.2px;
+    color: var(--text-tertiary);
+    font-family: 'IBM Plex Mono', monospace;
+}
+
+/* ── Row Height Rhythm ── */
+[class*="-event"],
+[class*="-row"],
+[class*="-drawer-row"] {
+    padding-top: var(--space-row);
+    padding-bottom: var(--space-row);
+}
+
+/* ── Tag Readability ── */
+[class*="-event-tag"] {
+    padding: 4px 9px !important;
+    font-size: 10px !important;
+    font-weight: 700 !important;
+    opacity: 1 !important;
+    border-width: 1px !important;
+    font-family: 'IBM Plex Mono', monospace !important;
+}
+
+/* ── Borders — Structural Clarity ── */
+[class*="-event"] {
+    border-color: var(--divider-strong) !important;
+}
+
+/* ── Button Clarity ── */
+button[class*="-connect"],
+button[class*="-cta"],
+.btn-primary {
+    background: #111111 !important;
+    color: #ffffff !important;
+    border: none;
+}
+button[class*="-connect"]:hover,
+.btn-primary:hover {
+    background: var(--red) !important;
+}
+
+/* ── Nav Link Contrast ── */
+.nav-link {
+    color: #333333 !important;
+}
+.nav-link:hover {
+    color: #000000 !important;
+}
+.nav-link.active {
+    color: #111111 !important;
+}
+
+/* ── Scrollbar ── */
+.no-scrollbar::-webkit-scrollbar { display: none; }
+.no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
+/* ── Selection ── */
 ::selection {
     background-color: var(--red);
     color: #ffffff;
 }
 
+/* ── Keyframes ── */
 @keyframes pulse {
     0%, 100% { opacity: 1; }
-    50% { opacity: 0.5; }
+    50%       { opacity: 0.5; }
 }

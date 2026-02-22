@@ -68,17 +68,18 @@ export function renderLedger() {
             .ldg-stat:last-of-type { border-right: none; }
             .ldg-stat-value {
                 font-family: 'IBM Plex Mono', monospace;
-                font-size: 20px;
+                font-size: 22px;
                 font-weight: 700;
-                color: #0a0a0a;
+                color: #111111;
                 letter-spacing: -1px;
                 line-height: 1;
-                margin-bottom: 5px;
+                margin-bottom: 6px;
             }
             .ldg-stat-value.operational {
                 color: #15803d;
                 font-size: 13px;
                 letter-spacing: 0;
+                font-weight: 700;
                 display: flex;
                 align-items: center;
                 gap: 6px;
@@ -92,11 +93,11 @@ export function renderLedger() {
             }
             .ldg-stat-label {
                 font-family: 'IBM Plex Mono', monospace;
-                font-size: 8px;
+                font-size: 9px;
                 font-weight: 700;
                 text-transform: uppercase;
                 letter-spacing: 1.5px;
-                color: #bbb;
+                color: #6B6B6B;
             }
             .ldg-controls {
                 display: flex;
@@ -234,9 +235,9 @@ export function renderLedger() {
             /* ── Event Row ── */
             .ldg-event {
                 background: #fff;
-                border: 1px solid #e8e8e8;
+                border: 1px solid #DCDCDC;
                 border-bottom: none;
-                padding: 16px 20px;
+                padding: 18px 20px;
                 cursor: pointer;
                 transition: background 0.1s, border-color 0.1s;
                 display: grid;
@@ -267,15 +268,15 @@ export function renderLedger() {
                 font-weight: 700;
                 text-transform: uppercase;
                 letter-spacing: 0.3px;
-                padding: 3px 7px;
+                padding: 4px 9px;
                 border: 1px solid currentColor;
-                opacity: 0.85;
-                margin-bottom: 5px;
+                margin-bottom: 6px;
+                opacity: 1;
             }
             .ldg-event-time {
                 font-family: 'IBM Plex Mono', monospace;
-                font-size: 10px;
-                color: #aaa;
+                font-size: 11px;
+                color: #6B6B6B;
             }
 
             /* Col 2: Contract ID + Provider + Hash */
@@ -286,9 +287,9 @@ export function renderLedger() {
             }
             .ldg-event-rcpt {
                 font-family: 'IBM Plex Mono', monospace;
-                font-size: 12px;
+                font-size: 13px;
                 font-weight: 700;
-                color: #333;
+                color: #111111;
             }
             .ldg-event-meta {
                 display: flex;
@@ -322,16 +323,16 @@ export function renderLedger() {
             /* Col 3: Amount */
             .ldg-event-amount {
                 font-family: 'IBM Plex Mono', monospace;
-                font-size: 16px;
+                font-size: 17px;
                 font-weight: 700;
-                color: #0a0a0a;
+                color: #111111;
                 letter-spacing: -0.5px;
                 text-align: right;
             }
             .ldg-event-amount-sub {
                 font-family: 'IBM Plex Mono', monospace;
                 font-size: 9px;
-                color: #ccc;
+                color: #8A8A8A;
                 text-align: right;
                 text-transform: uppercase;
                 letter-spacing: 1px;

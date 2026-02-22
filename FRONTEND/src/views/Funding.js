@@ -34,12 +34,12 @@ export function renderFunding() {
                 font-size: 28px;
                 font-weight: 700;
                 letter-spacing: -0.5px;
-                color: #0a0a0a;
+                color: #111111;
                 margin: 0 0 4px;
             }
             .cap-hdr-sub {
                 font-size: 13px;
-                color: #666;
+                color: #444444;
                 margin: 0;
                 font-family: 'IBM Plex Mono', monospace;
                 letter-spacing: 0.2px;
@@ -81,13 +81,13 @@ export function renderFunding() {
             .cap-overview {
                 display: grid;
                 grid-template-columns: repeat(3, 1fr);
-                border: 1px solid #e5e5e5;
+                border: 1px solid #DCDCDC;
                 background: #fff;
                 margin-bottom: 24px;
             }
             .cap-stat {
                 padding: 24px;
-                border-right: 1px solid #e5e5e5;
+                border-right: 1px solid #E5E5E5;
                 display: flex;
                 flex-direction: column;
                 gap: 6px;
@@ -96,24 +96,24 @@ export function renderFunding() {
             .cap-stat-lbl {
                 font-family: 'IBM Plex Mono', monospace;
                 font-size: 9px;
-                font-weight: 600;
+                font-weight: 700;
                 text-transform: uppercase;
                 letter-spacing: 1.5px;
-                color: #999;
+                color: #6B6B6B;
             }
             .cap-stat-val {
                 font-family: 'IBM Plex Mono', monospace;
                 font-size: 26px;
                 font-weight: 700;
-                color: #0a0a0a;
+                color: #111111;
                 letter-spacing: -1px;
                 line-height: 1;
             }
-            .cap-stat-val.locked { color: #752122; }
+            .cap-stat-val.locked { color: #921818; }
             .cap-stat-val.pending { color: #1e40af; }
             .cap-stat-sub {
-                font-size: 11px;
-                color: #999;
+                font-size: 12px;
+                color: #6B6B6B;
                 line-height: 1.4;
             }
 

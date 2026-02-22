@@ -110,21 +110,21 @@ export function renderHeader(currentRoute) {
             }
             .nav-link {
                 padding: 26px 4px; /* Height of header to create clickable area */
-                font-size: 12px;
+                font-size: 13px;
                 font-weight: 600;
-                color: #4b5563;
+                color: #333333;
                 text-decoration: none;
                 font-family: 'IBM Plex Sans', sans-serif;
-                letter-spacing: 0.2px;
-                transition: all 0.15s;
+                letter-spacing: 0.1px;
+                transition: color 0.12s;
                 position: relative;
                 border-bottom: 2px solid transparent;
             }
-            .nav-link:hover { color: #111; }
-            .nav-link.active { 
-                color: #111; 
-                font-weight: 600;
-                border-bottom-color: #752122;
+            .nav-link:hover { color: #000000; }
+            .nav-link.active {
+                color: #111111;
+                font-weight: 700;
+                border-bottom-color: #921818;
             }
 
             /* Search bar */

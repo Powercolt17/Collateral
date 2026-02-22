@@ -1,331 +1,706 @@
-// Funding & Payouts View with Live Stripe Card Verification
+// CAPITAL — Institutional Capital Control Terminal
+// Redesigned from "Funding & Payouts" to match homepage contract grid aesthetic
+
 export function renderFunding() {
     return `
-        <div class="min-h-screen bg-gray-50">
-            <div class="mx-auto max-w-4xl px-6 py-12">
+        <style>
+            /* ===================================================
+               CAPITAL TERMINAL — INSTITUTIONAL DESIGN SYSTEM
+               IBM Plex Sans / Mono · Sharp borders · Ledger-first
+               =================================================== */
+            .cap {
+                background: #f9f9f9;
+                min-height: calc(100vh - 72px);
+                font-family: 'IBM Plex Sans', -apple-system, sans-serif;
+                color: #111;
+            }
+
+            .cap-inner {
+                max-width: 860px;
+                margin: 0 auto;
+                padding: 40px 24px 80px;
+            }
+
+            /* ── Page Header ── */
+            .cap-hdr {
+                margin-bottom: 36px;
+                display: flex;
+                align-items: flex-end;
+                justify-content: space-between;
+                gap: 16px;
+            }
+            .cap-hdr-left {}
+            .cap-hdr-title {
+                font-size: 28px;
+                font-weight: 700;
+                letter-spacing: -0.5px;
+                color: #0a0a0a;
+                margin: 0 0 4px;
+            }
+            .cap-hdr-sub {
+                font-size: 13px;
+                color: #666;
+                margin: 0;
+                font-family: 'IBM Plex Mono', monospace;
+                letter-spacing: 0.2px;
+            }
+            .cap-deposit-btn {
+                padding: 10px 20px;
+                background: #111;
+                color: #fff;
+                font-size: 11px;
+                font-weight: 700;
+                text-transform: uppercase;
+                letter-spacing: 1px;
+                border: none;
+                cursor: pointer;
+                transition: background 0.15s;
+                font-family: 'IBM Plex Sans', sans-serif;
+                white-space: nowrap;
+                flex-shrink: 0;
+            }
+            .cap-deposit-btn:hover { background: #752122; }
+
+            /* ── Restriction Banner ── */
+            .cap-alert {
+                display: none;
+                background: #fff8f8;
+                border: 1px solid #fca5a5;
+                border-left: 3px solid #752122;
+                padding: 12px 16px;
+                margin-bottom: 24px;
+                font-family: 'IBM Plex Mono', monospace;
+                font-size: 11px;
+                color: #752122;
+                text-transform: uppercase;
+                letter-spacing: 0.5px;
+            }
+            .cap-alert.visible { display: block; }
+
+            /* ── Overview Strip ── */
+            .cap-overview {
+                display: grid;
+                grid-template-columns: repeat(3, 1fr);
+                border: 1px solid #e5e5e5;
+                background: #fff;
+                margin-bottom: 24px;
+            }
+            .cap-stat {
+                padding: 24px;
+                border-right: 1px solid #e5e5e5;
+                display: flex;
+                flex-direction: column;
+                gap: 6px;
+            }
+            .cap-stat:last-child { border-right: none; }
+            .cap-stat-lbl {
+                font-family: 'IBM Plex Mono', monospace;
+                font-size: 9px;
+                font-weight: 600;
+                text-transform: uppercase;
+                letter-spacing: 1.5px;
+                color: #999;
+            }
+            .cap-stat-val {
+                font-family: 'IBM Plex Mono', monospace;
+                font-size: 26px;
+                font-weight: 700;
+                color: #0a0a0a;
+                letter-spacing: -1px;
+                line-height: 1;
+            }
+            .cap-stat-val.locked { color: #752122; }
+            .cap-stat-val.pending { color: #1e40af; }
+            .cap-stat-sub {
+                font-size: 11px;
+                color: #999;
+                line-height: 1.4;
+            }
+
+            /* ── Section Container ── */
+            .cap-section {
+                background: #fff;
+                border: 1px solid #e5e5e5;
+                margin-bottom: 16px;
+            }
+            .cap-section-hdr {
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                padding: 14px 20px;
+                border-bottom: 1px solid #f0f0f0;
+            }
+            .cap-section-title {
+                font-family: 'IBM Plex Mono', monospace;
+                font-size: 9px;
+                font-weight: 700;
+                text-transform: uppercase;
+                letter-spacing: 2px;
+                color: #888;
+            }
+
+            /* ── Source/Destination Row ── */
+            .cap-row {
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                padding: 18px 20px;
+                border-bottom: 1px solid #f4f4f4;
+                transition: background 0.1s;
+            }
+            .cap-row:last-child { border-bottom: none; }
+            .cap-row:hover { background: #fafafa; }
+            .cap-row-left {
+                display: flex;
+                flex-direction: column;
+                gap: 5px;
+            }
+            .cap-row-label {
+                font-size: 13px;
+                font-weight: 600;
+                color: #111;
+                display: flex;
+                align-items: center;
+                gap: 8px;
+            }
+            .cap-row-detail {
+                font-family: 'IBM Plex Mono', monospace;
+                font-size: 11px;
+                color: #666;
+            }
+
+            /* ── Status Badges ── */
+            .cap-badge {
+                display: inline-flex;
+                align-items: center;
+                padding: 2px 6px;
+                font-family: 'IBM Plex Mono', monospace;
+                font-size: 9px;
+                font-weight: 700;
+                text-transform: uppercase;
+                letter-spacing: 0.5px;
+                border-radius: 2px;
+            }
+            .cap-badge.verified {
+                background: #f0fdf4;
+                color: #15803d;
+                border: 1px solid #bbf7d0;
+            }
+            .cap-badge.required {
+                background: #fff7ed;
+                color: #c2410c;
+                border: 1px solid #fed7aa;
+            }
+            .cap-badge.pending-badge {
+                background: #eff6ff;
+                color: #1e40af;
+                border: 1px solid #bfdbfe;
+            }
+
+            /* ── Action Links ── */
+            .cap-action {
+                font-family: 'IBM Plex Mono', monospace;
+                font-size: 10px;
+                font-weight: 600;
+                text-transform: uppercase;
+                letter-spacing: 0.5px;
+                color: #666;
+                background: none;
+                border: none;
+                cursor: pointer;
+                padding: 4px 0;
+                transition: color 0.15s;
+                white-space: nowrap;
+                display: flex;
+                align-items: center;
+                gap: 4px;
+            }
+            .cap-action::before { content: '→'; }
+            .cap-action:hover { color: #752122; }
+
+            /* ── Footer (Bloomberg-style) ── */
+            .cap-footer {
+                margin-top: 40px;
+                padding-top: 20px;
+                border-top: 1px solid #f0f0f0;
+                display: flex;
+                gap: 32px;
+            }
+            .cap-footer-item {
+                display: flex;
+                flex-direction: column;
+                gap: 2px;
+            }
+            .cap-footer-lbl {
+                font-family: 'IBM Plex Mono', monospace;
+                font-size: 9px;
+                font-weight: 700;
+                text-transform: uppercase;
+                letter-spacing: 1.5px;
+                color: #bbb;
+            }
+            .cap-footer-val {
+                font-family: 'IBM Plex Mono', monospace;
+                font-size: 10px;
+                color: #888;
+            }
+            .cap-footer-dot {
+                display: inline-block;
+                width: 6px;
+                height: 6px;
+                background: #15803d;
+                border-radius: 50%;
+                margin-right: 5px;
+                vertical-align: middle;
+            }
+
+            @media (max-width: 640px) {
+                .cap-overview { grid-template-columns: 1fr; }
+                .cap-stat { border-right: none; border-bottom: 1px solid #e5e5e5; }
+                .cap-stat:last-child { border-bottom: none; }
+                .cap-hdr { flex-direction: column; align-items: flex-start; }
+                .cap-footer { flex-wrap: wrap; gap: 20px; }
+            }
+
+            /* ===================================================
+               MODAL SYSTEM — Institutional dialogs
+               =================================================== */
+            .cap-modal-overlay {
+                position: fixed;
+                inset: 0;
+                background: rgba(0,0,0,0.5);
+                display: none;
+                align-items: center;
+                justify-content: center;
+                z-index: 9000;
+            }
+            .cap-modal-overlay.open {
+                display: flex;
+            }
+            .cap-modal {
+                background: #fff;
+                width: 100%;
+                max-width: 440px;
+                margin: 0 16px;
+                border: 1px solid #e5e5e5;
+                box-shadow: 0 20px 60px rgba(0,0,0,0.12);
+            }
+            .cap-modal-hdr {
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                padding: 16px 20px;
+                border-bottom: 1px solid #f0f0f0;
+            }
+            .cap-modal-title {
+                font-family: 'IBM Plex Mono', monospace;
+                font-size: 11px;
+                font-weight: 700;
+                text-transform: uppercase;
+                letter-spacing: 1px;
+                color: #111;
+            }
+            .cap-modal-close {
+                background: none;
+                border: none;
+                cursor: pointer;
+                color: #999;
+                padding: 4px;
+                display: flex;
+                align-items: center;
+            }
+            .cap-modal-close:hover { color: #111; }
+            .cap-modal-body {
+                padding: 24px 20px;
+            }
+            .cap-modal-sub {
+                font-size: 12px;
+                color: #666;
+                margin-bottom: 20px;
+                font-family: 'IBM Plex Mono', monospace;
+            }
+            .cap-modal-footer {
+                padding: 12px 20px;
+                border-top: 1px solid #f0f0f0;
+                background: #fafafa;
+                font-family: 'IBM Plex Mono', monospace;
+                font-size: 10px;
+                color: #999;
+                text-align: center;
+            }
+
+            /* Card element */
+            .cap-card-el {
+                border: 1px solid #e5e5e5;
+                padding: 12px;
+                margin-bottom: 16px;
+                background: #fafafa;
+            }
+            .cap-card-el:focus-within { border-color: #bbb; background: #fff; }
+
+            /* Error  */
+            .cap-error {
+                font-size: 11px;
+                color: #752122;
+                font-family: 'IBM Plex Mono', monospace;
+                margin-bottom: 12px;
+                display: none;
+            }
+            .cap-error.visible { display: block; }
+
+            /* Modal Buttons */
+            .cap-btn-primary {
+                width: 100%;
+                padding: 12px;
+                background: #111;
+                color: #fff;
+                font-size: 11px;
+                font-weight: 700;
+                text-transform: uppercase;
+                letter-spacing: 1px;
+                border: none;
+                cursor: pointer;
+                transition: background 0.15s;
+                font-family: 'IBM Plex Sans', sans-serif;
+            }
+            .cap-btn-primary:hover { background: #333; }
+            .cap-btn-primary:disabled { opacity: 0.5; cursor: not-allowed; }
+
+            .cap-btn-danger {
+                width: 100%;
+                padding: 12px;
+                background: #752122;
+                color: #fff;
+                font-size: 11px;
+                font-weight: 700;
+                text-transform: uppercase;
+                letter-spacing: 1px;
+                border: none;
+                cursor: pointer;
+                transition: background 0.15s;
+                font-family: 'IBM Plex Sans', sans-serif;
+                margin-top: 8px;
+            }
+            .cap-btn-danger:hover { background: #5c1a1b; }
+            .cap-btn-ghost {
+                width: 100%;
+                padding: 12px;
+                background: transparent;
+                color: #666;
+                font-size: 11px;
+                font-weight: 600;
+                text-transform: uppercase;
+                letter-spacing: 1px;
+                border: 1px solid #e5e5e5;
+                cursor: pointer;
+                transition: all 0.15s;
+                font-family: 'IBM Plex Sans', sans-serif;
+            }
+            .cap-btn-ghost:hover { border-color: #bbb; color: #111; }
+
+            /* Add funds input */
+            .cap-input-wrap {
+                margin-bottom: 16px;
+            }
+            .cap-input-lbl {
+                display: block;
+                font-family: 'IBM Plex Mono', monospace;
+                font-size: 9px;
+                font-weight: 700;
+                text-transform: uppercase;
+                letter-spacing: 1px;
+                color: #888;
+                margin-bottom: 8px;
+            }
+            .cap-input-amt {
+                position: relative;
+            }
+            .cap-input-prefix {
+                position: absolute;
+                left: 12px;
+                top: 50%;
+                transform: translateY(-50%);
+                color: #666;
+                font-family: 'IBM Plex Mono', monospace;
+                font-size: 16px;
+            }
+            .cap-input-amt input {
+                width: 100%;
+                padding: 12px 12px 12px 28px;
+                border: 1px solid #e5e5e5;
+                font-size: 22px;
+                font-family: 'IBM Plex Mono', monospace;
+                color: #111;
+                background: #fafafa;
+                box-sizing: border-box;
+                outline: none;
+            }
+            .cap-input-amt input:focus {
+                border-color: #bbb;
+                background: #fff;
+            }
+
+            /* Success modal */
+            .cap-success-body {
+                text-align: center;
+                padding: 32px 24px;
+            }
+            .cap-success-icon {
+                width: 48px;
+                height: 48px;
+                background: #f0fdf4;
+                border: 1px solid #bbf7d0;
+                border-radius: 50%;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                margin: 0 auto 16px;
+                color: #15803d;
+                font-size: 20px;
+            }
+            .cap-success-title {
+                font-size: 16px;
+                font-weight: 700;
+                color: #111;
+                margin: 0 0 8px;
+            }
+            .cap-success-amt {
+                font-family: 'IBM Plex Mono', monospace;
+                font-size: 32px;
+                font-weight: 700;
+                color: #0a0a0a;
+                margin: 12px 0 4px;
+            }
+            .cap-success-sub {
+                font-size: 12px;
+                color: #888;
+                font-family: 'IBM Plex Mono', monospace;
+                margin-bottom: 24px;
+            }
+        </style>
+
+        <div class="cap">
+            <div class="cap-inner">
+
+                <!-- Restriction Alert -->
+                <div class="cap-alert" id="restriction-banner">
+                    ⚠ ACCOUNT RESTRICTED — Payouts and new contracts are currently disabled.
+                </div>
+
                 <!-- Page Header -->
-                <div class="mb-10">
-                    <h1 class="mb-2 text-2xl font-medium tracking-tight text-gray-900">
-                        Funding & Payouts
-                    </h1>
-                    <p class="text-sm text-gray-500">
-                        Manage capital custody and settlement flows.
-                    </p>
+                <div class="cap-hdr">
+                    <div class="cap-hdr-left">
+                        <h1 class="cap-hdr-title">CAPITAL</h1>
+                        <p class="cap-hdr-sub">Manage capital custody, allocation, and settlement.</p>
+                    </div>
+                    <button class="cap-deposit-btn" id="add-funds-btn">DEPOSIT CAPITAL</button>
                 </div>
 
-                <!-- Main Content -->
-                <div class="space-y-6">
-                    <!-- RESTRICTION BANNER -->
-                    <div id="restriction-banner" class="hidden bg-l-4 p-4 mb-4" style="background-color: #fef2f2; border-left: 4px solid #ef4444;">
-                        <div class="flex">
-                            <div class="flex-shrink-0">
-                                <i data-lucide="alert-circle" class="h-5 w-5 text-red-500"></i>
-                            </div>
-                            <div class="ml-3">
-                                <p class="text-sm text-red-700">
-                                    Your account is currently restricted due to a payment dispute. Payouts and new contracts are disabled.
-                                </p>
-                            </div>
-                        </div>
+                <!-- Capital Overview Strip -->
+                <div class="cap-overview">
+                    <div class="cap-stat">
+                        <div class="cap-stat-lbl">Available Capital</div>
+                        <div class="cap-stat-val" id="available-balance">$0.00</div>
+                        <div class="cap-stat-sub">Undeployed. Ready to lock.</div>
+                    </div>
+                    <div class="cap-stat">
+                        <div class="cap-stat-lbl">Locked in Contracts</div>
+                        <div class="cap-stat-val locked" id="locked-balance">$0.00</div>
+                        <div class="cap-stat-sub">Actively committed and at risk.</div>
+                    </div>
+                    <div class="cap-stat">
+                        <div class="cap-stat-lbl">Pending Settlement</div>
+                        <div class="cap-stat-val pending" id="pending-payout">$0.00</div>
+                        <div class="cap-stat-sub">Released. Transfer in progress.</div>
+                    </div>
+                </div>
+
+                <!-- Funding Sources -->
+                <div class="cap-section">
+                    <div class="cap-section-hdr">
+                        <span class="cap-section-title">Funding Sources</span>
                     </div>
 
-                    <!-- Funding Sources -->
-                    <div class="border border-gray-200 bg-white rounded">
-                        <div class="px-5 py-3 border-b border-gray-100">
-                            <h2 class="text-[11px] uppercase tracking-wider text-gray-400 font-medium">
-                                Funding Sources
-                            </h2>
-                        </div>
-                        <div class="divide-y divide-gray-100" id="funding-sources-list">
-                            <!-- Card -->
-                            <div class="flex items-center justify-between px-5 py-4" id="source-card">
-                                <div class="flex flex-col">
-                                    <div class="flex items-center gap-2">
-                                        <span class="text-sm text-gray-900">Card</span>
-                                        <span class="text-xs text-gray-400">via Stripe</span>
-                                    </div>
-                                    <span class="text-xs mt-0.5" id="card-status">Loading...</span>
-                                </div>
-                                <button id="manage-card-btn" class="flex items-center gap-1.5 border border-gray-200 bg-white px-3 py-1.5 text-xs text-gray-600 hover:bg-gray-50 rounded">
-                                    <i data-lucide="settings" class="w-3 h-3"></i>
-                                    Manage
-                                </button>
+                    <!-- Card Source -->
+                    <div class="cap-row" id="source-card">
+                        <div class="cap-row-left">
+                            <div class="cap-row-label">
+                                <i data-lucide="credit-card" style="width:14px;height:14px;color:#999;"></i>
+                                Card
+                                <span id="card-badge"></span>
                             </div>
-                            <!-- Bank Account -->
-                            <div class="flex items-center justify-between px-5 py-4" id="source-bank">
-                                <div class="flex flex-col">
-                                    <div class="flex items-center gap-2">
-                                        <span class="text-sm text-gray-900">Bank Account</span>
-                                        <span class="text-xs text-gray-400">via Stripe Connect</span>
-                                    </div>
-                                    <span class="text-xs text-gray-400 mt-0.5" id="bank-status">Loading...</span>
-                                </div>
-                                <button id="manage-bank-btn" class="flex items-center gap-1.5 border border-gray-200 bg-white px-3 py-1.5 text-xs text-gray-600 hover:bg-gray-50 rounded">
-                                    <i data-lucide="settings" class="w-3 h-3"></i>
-                                    Manage
-                                </button>
-                            </div>
+                            <div class="cap-row-detail" id="card-status">Loading...</div>
                         </div>
+                        <button class="cap-action" id="manage-card-btn">UPDATE</button>
                     </div>
 
-                    <!-- Balance State -->
-                    <div class="border border-gray-200 bg-white rounded">
-                        <div class="px-5 py-3 border-b border-gray-100 flex items-center justify-between">
-                            <h2 class="text-[11px] uppercase tracking-wider text-gray-400 font-medium">
-                                Balance State
-                            </h2>
-                            <button id="add-funds-btn" class="hidden items-center gap-1.5 bg-neutral-900 text-white px-4 py-1.5 text-xs font-medium hover:bg-neutral-800 rounded transition-colors">
-                                <i data-lucide="plus" class="w-3 h-3"></i>
-                                Add Funds
-                            </button>
+                    <!-- Bank Source -->
+                    <div class="cap-row" id="source-bank">
+                        <div class="cap-row-left">
+                            <div class="cap-row-label">
+                                <i data-lucide="landmark" style="width:14px;height:14px;color:#999;"></i>
+                                Bank Account
+                                <span class="cap-badge required" id="bank-badge">REQUIRED</span>
+                            </div>
+                            <div class="cap-row-detail" id="bank-status">Not configured</div>
                         </div>
-                        <div class="grid grid-cols-3 divide-x divide-gray-100">
-                            <!-- Available Balance -->
-                            <div class="px-5 py-5">
-                                <div class="text-[10px] uppercase tracking-wider text-gray-400 mb-2">
-                                    Available Balance
-                                </div>
-                                <div class="text-2xl tabular-nums text-gray-900 mb-1" id="available-balance">
-                                    $0.00
-                                </div>
-                                <div class="text-xs text-gray-400">
-                                    Capital not currently locked
-                                </div>
-                            </div>
-                            <!-- Locked in Contracts -->
-                            <div class="px-5 py-5">
-                                <div class="text-[10px] uppercase tracking-wider text-gray-400 mb-2">
-                                    Locked in Contracts
-                                </div>
-                                <div class="text-2xl tabular-nums mb-1" style="color: #b45309;" id="locked-balance">
-                                    $0.00
-                                </div>
-                                <div class="text-xs text-gray-400">
-                                    Capital actively committed and at risk
-                                </div>
-                            </div>
-                            <!-- Pending Payout -->
-                            <div class="px-5 py-5">
-                                <div class="text-[10px] uppercase tracking-wider text-gray-400 mb-2">
-                                    Pending Payout
-                                </div>
-                                <div class="text-2xl tabular-nums mb-1" style="color: #1e40af;" id="pending-payout">
-                                    $0.00
-                                </div>
-                                <div class="text-xs text-gray-400">
-                                    Capital released but not yet transferred
-                                </div>
-                            </div>
-                        </div>
+                        <button class="cap-action" id="manage-bank-btn">CONFIGURE</button>
                     </div>
+                </div>
 
-                    <!-- Payout Destinations -->
-                    <div class="border border-gray-200 bg-white rounded">
-                        <div class="px-5 py-3 border-b border-gray-100">
-                            <h2 class="text-[11px] uppercase tracking-wider text-gray-400 font-medium">
-                                Payout Destinations
-                            </h2>
-                        </div>
-                        <div class="divide-y divide-gray-100" id="payout-destinations-list">
-                            <!-- Bank Account Destination -->
-                            <div class="flex items-center justify-between px-5 py-4" id="destination-bank">
-                                <div class="flex flex-col">
-                                    <div class="flex items-center gap-2">
-                                        <span class="text-sm text-gray-900">
-                                            Bank Account
-                                            <span class="text-gray-400" id="payout-last-four"></span>
-                                        </span>
-                                        <span class="text-xs text-gray-400">via Stripe Connect</span>
-                                    </div>
-                                    <span class="text-xs text-gray-400 mt-0.5" id="payout-status">Loading...</span>
-                                </div>
-                                <button id="manage-payout-btn" class="flex items-center gap-1.5 border border-gray-200 bg-white px-3 py-1.5 text-xs text-gray-600 hover:bg-gray-50 rounded">
-                                    <i data-lucide="settings" class="w-3 h-3"></i>
-                                    Manage
-                                </button>
+                <!-- Payout Destinations -->
+                <div class="cap-section">
+                    <div class="cap-section-hdr">
+                        <span class="cap-section-title">Settlement Destinations</span>
+                    </div>
+                    <div class="cap-row" id="destination-bank">
+                        <div class="cap-row-left">
+                            <div class="cap-row-label">
+                                <i data-lucide="building-2" style="width:14px;height:14px;color:#999;"></i>
+                                Bank Account
+                                <span id="payout-last-four"></span>
                             </div>
+                            <div class="cap-row-detail" id="payout-status">Loading...</div>
                         </div>
-                        <div class="px-5 py-3 bg-gray-50 border-t border-gray-100 rounded-b">
-                            <p class="text-xs text-gray-500">
-                                Payouts occur only after contract settlement.
-                            </p>
-                        </div>
+                        <button class="cap-action" id="manage-payout-btn">CONFIGURE</button>
+                    </div>
+                    <div style="padding: 10px 20px; font-family: 'IBM Plex Mono', monospace; font-size: 10px; color: #bbb; border-top: 1px solid #f4f4f4;">
+                        Payouts execute only after contract settlement and clearance.
+                    </div>
+                </div>
+
+                <!-- Bloomberg Footer -->
+                <div class="cap-footer">
+                    <div class="cap-footer-item">
+                        <span class="cap-footer-lbl">System Status</span>
+                        <span class="cap-footer-val"><span class="cap-footer-dot"></span>OPERATIONAL</span>
+                    </div>
+                    <div class="cap-footer-item">
+                        <span class="cap-footer-lbl">Custody</span>
+                        <span class="cap-footer-val">Stripe Connect</span>
+                    </div>
+                    <div class="cap-footer-item">
+                        <span class="cap-footer-lbl">Settlement</span>
+                        <span class="cap-footer-val">Automated</span>
+                    </div>
+                    <div class="cap-footer-item">
+                        <span class="cap-footer-lbl">Jurisdiction</span>
+                        <span class="cap-footer-val">US / Regulated</span>
                     </div>
                 </div>
             </div>
         </div>
 
-        <!-- Card Modal -->
-        <div id="card-modal" class="fixed inset-0 bg-black/50 hidden items-center justify-center z-50">
-            <div class="bg-white rounded-lg w-full max-w-md mx-4 shadow-xl">
-                <div class="px-6 py-4 border-b border-gray-200">
-                    <div class="flex items-center justify-between">
-                        <h3 class="text-lg font-semibold text-gray-900">Add Card</h3>
-                        <button id="close-card-modal" class="text-gray-400 hover:text-gray-600">
-                            <i data-lucide="x" class="w-5 h-5"></i>
-                        </button>
-                    </div>
-                    <p class="text-sm text-gray-500 mt-1">
-                        Verify a card to use as your funding source
-                    </p>
-                </div>
-                <div class="px-6 py-6">
-                    <div id="card-element-container" class="border border-gray-300 rounded px-3 py-3 mb-4">
-                        <!-- Stripe Card Element mounted here -->
-                    </div>
-                    <div id="card-error" class="text-sm text-red-600 mb-4 hidden"></div>
-                    <button id="submit-card-btn" class="w-full py-2.5 bg-gray-900 text-white text-sm font-medium rounded hover:bg-gray-800 disabled:opacity-50 disabled:cursor-not-allowed">
-                        Verify & Save Card
+        <!-- ===== CARD MODAL ===== -->
+        <div id="card-modal" class="cap-modal-overlay">
+            <div class="cap-modal">
+                <div class="cap-modal-hdr">
+                    <span class="cap-modal-title">Add Funding Card</span>
+                    <button id="close-card-modal" class="cap-modal-close">
+                        <i data-lucide="x" style="width:16px;height:16px;"></i>
                     </button>
                 </div>
-                <div class="px-6 py-3 bg-gray-50 border-t border-gray-200 rounded-b-lg">
-                    <p class="text-xs text-gray-500 text-center">
-                        Your card will be verified but not charged until you lock capital.
-                    </p>
+                <div class="cap-modal-body">
+                    <p class="cap-modal-sub">Verify a card to use as your funding instrument.</p>
+                    <div class="cap-card-el" id="card-element-container"></div>
+                    <div class="cap-error" id="card-error"></div>
+                    <button class="cap-btn-primary" id="submit-card-btn">VERIFY &amp; SAVE CARD</button>
+                </div>
+                <div class="cap-modal-footer">
+                    Card is verified but not charged until capital is locked.
                 </div>
             </div>
         </div>
 
-        <!-- Remove Card Confirmation Modal -->
-        <div id="remove-card-modal" class="fixed inset-0 bg-black/50 hidden items-center justify-center z-50">
-            <div class="bg-white rounded-lg w-full max-w-sm mx-4 shadow-xl">
-                <div class="px-6 py-4 border-b border-gray-200">
-                    <h3 class="text-lg font-semibold text-gray-900">Remove Card</h3>
+        <!-- ===== REMOVE CARD MODAL ===== -->
+        <div id="remove-card-modal" class="cap-modal-overlay">
+            <div class="cap-modal">
+                <div class="cap-modal-hdr">
+                    <span class="cap-modal-title">Remove Funding Card</span>
                 </div>
-                <div class="px-6 py-6">
-                    <p class="text-sm text-gray-600 mb-4">
-                        Are you sure you want to remove this card? You'll need to add a new card before locking capital.
-                    </p>
-                    <div class="flex gap-3">
-                        <button id="cancel-remove-btn" class="flex-1 py-2 border border-gray-300 text-sm text-gray-700 rounded hover:bg-gray-50">
-                            Cancel
-                        </button>
-                        <button id="confirm-remove-btn" class="flex-1 py-2 bg-red-600 text-white text-sm rounded hover:bg-red-700">
-                            Remove Card
-                        </button>
-                    </div>
+                <div class="cap-modal-body">
+                    <p class="cap-modal-sub">This will remove your verified funding source. A new card must be added before locking capital.</p>
+                    <button class="cap-btn-ghost" id="cancel-remove-btn">CANCEL</button>
+                    <button class="cap-btn-danger" id="confirm-remove-btn">REMOVE CARD</button>
                 </div>
             </div>
         </div>
 
-        <!-- Add Funds Modal -->
-        <div id="add-funds-modal" class="fixed inset-0 bg-black/50 hidden items-center justify-center z-50">
-            <div class="bg-white rounded-lg w-full max-w-md mx-4 shadow-xl">
-                <div class="px-6 py-4 border-b border-gray-200">
-                    <div class="flex items-center justify-between">
-                        <h3 class="text-lg font-semibold text-gray-900">Add Funds</h3>
-                        <button id="close-add-funds-modal" class="text-gray-400 hover:text-gray-600">
-                            <i data-lucide="x" class="w-5 h-5"></i>
-                        </button>
-                    </div>
-                    <p class="text-sm text-gray-500 mt-1">
-                        Add capital to your available balance
-                    </p>
-                </div>
-                <div class="px-6 py-6">
-                    <div class="mb-4">
-                        <label class="block text-sm font-medium text-gray-700 mb-2">Amount (USD)</label>
-                        <div class="relative">
-                            <span class="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500">$</span>
-                            <input id="add-funds-amount" type="number" min="1" step="1" placeholder="100" 
-                                class="w-full pl-8 pr-4 py-2.5 border border-gray-300 rounded text-lg focus:ring-2 focus:ring-neutral-900 focus:border-neutral-900 outline-none">
-                        </div>
-                        <p class="text-xs text-gray-400 mt-1">Minimum: $1.00</p>
-                    </div>
-                    <div id="add-funds-error" class="text-sm text-red-600 mb-4 hidden"></div>
-                    <button id="submit-add-funds-btn" class="w-full py-2.5 bg-neutral-900 text-white text-sm font-medium rounded hover:bg-neutral-800 disabled:opacity-50 disabled:cursor-not-allowed">
-                        Add Funds
+        <!-- ===== DEPOSIT CAPITAL MODAL ===== -->
+        <div id="add-funds-modal" class="cap-modal-overlay">
+            <div class="cap-modal">
+                <div class="cap-modal-hdr">
+                    <span class="cap-modal-title">Deposit Capital</span>
+                    <button id="close-add-funds-modal" class="cap-modal-close">
+                        <i data-lucide="x" style="width:16px;height:16px;"></i>
                     </button>
                 </div>
-                <div class="px-6 py-3 bg-gray-50 border-t border-gray-200 rounded-b-lg">
-                    <p class="text-xs text-gray-500 text-center">
-                        Funds will be charged to your verified card immediately.
-                    </p>
+                <div class="cap-modal-body">
+                    <p class="cap-modal-sub">Allocate capital to your available balance.</p>
+                    <div class="cap-input-wrap">
+                        <label class="cap-input-lbl">AMOUNT_USD</label>
+                        <div class="cap-input-amt">
+                            <span class="cap-input-prefix">$</span>
+                            <input id="add-funds-amount" type="number" min="1" step="1" placeholder="0">
+                        </div>
+                    </div>
+                    <div class="cap-error" id="add-funds-error"></div>
+                    <button class="cap-btn-primary" id="submit-add-funds-btn">DEPOSIT CAPITAL</button>
                 </div>
+                <div class="cap-modal-footer">Charged immediately to your verified card.</div>
             </div>
         </div>
 
-        <!-- Success Notification Modal -->
-        <div id="success-modal" class="fixed inset-0 bg-black/60 backdrop-blur-sm hidden items-center justify-center z-[100]">
-            <div id="success-modal-content" class="bg-white rounded-xl w-full max-w-sm mx-4 shadow-2xl transform scale-95 opacity-0 transition-all duration-300">
-                <div class="px-8 py-10 text-center">
-                    <!-- Animated Success Icon -->
-                    <div class="relative mx-auto w-20 h-20 mb-6">
-                        <div class="absolute inset-0 bg-emerald-100 rounded-full animate-ping opacity-20"></div>
-                        <div class="absolute inset-0 bg-gradient-to-br from-emerald-400 to-emerald-600 rounded-full flex items-center justify-center shadow-lg shadow-emerald-200">
-                            <svg class="w-10 h-10 text-white" fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"></path>
-                            </svg>
-                        </div>
-                    </div>
-                    
-                    <!-- Title -->
-                    <h3 class="text-xl font-semibold text-gray-900 mb-2">Funds Added Successfully</h3>
-                    
-                    <!-- Amount Display -->
-                    <div class="bg-emerald-50 border border-emerald-200 rounded-lg px-4 py-3 mb-4">
-                        <span class="text-3xl font-bold text-emerald-600" id="success-amount">$0.00</span>
-                        <p class="text-xs text-emerald-700 mt-1">Added to your available balance</p>
-                    </div>
-                    
-                    <!-- Subtitle -->
-                    <p class="text-sm text-gray-500 mb-6">
-                        Your capital is ready to lock into contracts.
-                    </p>
-                    
-                    <!-- Action Button -->
-                    <button id="success-modal-close" class="w-full py-3 bg-gray-900 text-white text-sm font-medium rounded-lg hover:bg-gray-800 transition-colors">
-                        Continue
-                    </button>
+        <!-- ===== SUCCESS MODAL ===== -->
+        <div id="success-modal" class="cap-modal-overlay">
+            <div class="cap-modal">
+                <div class="cap-success-body">
+                    <div class="cap-success-icon">✓</div>
+                    <h3 class="cap-success-title">Capital Deposited</h3>
+                    <div class="cap-success-amt" id="success-amount">$0.00</div>
+                    <p class="cap-success-sub">Added to your available balance</p>
+                    <button class="cap-btn-primary" id="success-modal-close">CONTINUE</button>
                 </div>
             </div>
         </div>
     `;
 }
 
-// Helper to format USD amounts
+// ═══════════════════════════════════════════════════════
+// Helper
+// ═══════════════════════════════════════════════════════
 function formatUSD(cents) {
     const dollars = cents / 100;
     return '$' + dollars.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
 }
 
-// Stripe.js instance
+// Stripe instance (module-level)
 let stripe = null;
 let cardElement = null;
 
+// ═══════════════════════════════════════════════════════
+// INIT
+// ═══════════════════════════════════════════════════════
 export async function initFunding() {
-    if (window.lucide) {
-        window.lucide.createIcons();
-    }
+    if (window.lucide) window.lucide.createIcons();
 
     // Initialize Stripe.js
     const STRIPE_PUBLISHABLE_KEY = import.meta.env.VITE_STRIPE_PUBLISHABLE_KEY;
     const isProduction = window.location.hostname === 'collateral.market';
 
     if (!isProduction) {
-        console.log('[Funding] Stripe key:', STRIPE_PUBLISHABLE_KEY ? 'present' : 'MISSING');
-        if (STRIPE_PUBLISHABLE_KEY) {
-            // Log key prefix (first 15 chars safe to show - helps verify account match)
-            console.log('[Funding] Stripe key prefix:', STRIPE_PUBLISHABLE_KEY.substring(0, 15) + '...');
-        }
+        console.log('[Capital] Stripe key:', STRIPE_PUBLISHABLE_KEY ? 'present' : 'MISSING');
     }
 
     if (window.Stripe && STRIPE_PUBLISHABLE_KEY && !STRIPE_PUBLISHABLE_KEY.includes('placeholder')) {
         try {
             stripe = window.Stripe(STRIPE_PUBLISHABLE_KEY);
-            if (!isProduction) {
-                console.log('[Funding] Stripe initialized successfully');
-            }
         } catch (stripeErr) {
-            console.error('[Funding] Failed to initialize Stripe:', stripeErr);
+            console.error('[Capital] Failed to initialize Stripe:', stripeErr);
         }
-    } else if (!window.Stripe) {
-        console.warn('[Funding] Stripe.js not loaded - check index.html for <script src="https://js.stripe.com/v3/">');
-    } else if (!STRIPE_PUBLISHABLE_KEY) {
-        console.warn('[Funding] VITE_STRIPE_PUBLISHABLE_KEY not set in environment');
     }
 
-    // Get UI elements
+    // ── DOM refs ──
     const cardStatusEl = document.getElementById('card-status');
     const bankStatusEl = document.getElementById('bank-status');
     const payoutStatusEl = document.getElementById('payout-status');
@@ -336,8 +711,11 @@ export async function initFunding() {
     const manageCardBtn = document.getElementById('manage-card-btn');
     const manageBankBtn = document.getElementById('manage-bank-btn');
     const managePayoutBtn = document.getElementById('manage-payout-btn');
+    const addFundsBtn = document.getElementById('add-funds-btn');
+    const cardBadgeEl = document.getElementById('card-badge');
+    const bankBadgeEl = document.getElementById('bank-badge');
 
-    // Modal elements
+    // Modal refs
     const cardModal = document.getElementById('card-modal');
     const closeCardModalBtn = document.getElementById('close-card-modal');
     const submitCardBtn = document.getElementById('submit-card-btn');
@@ -345,125 +723,71 @@ export async function initFunding() {
     const removeCardModal = document.getElementById('remove-card-modal');
     const cancelRemoveBtn = document.getElementById('cancel-remove-btn');
     const confirmRemoveBtn = document.getElementById('confirm-remove-btn');
-
-    // Add Funds modal elements
     const addFundsModal = document.getElementById('add-funds-modal');
-    const closeAddFundsModalBtn = document.getElementById('close-add-funds-modal');
+    const closeAddFundsBtn = document.getElementById('close-add-funds-modal');
     const addFundsAmountInput = document.getElementById('add-funds-amount');
     const addFundsErrorEl = document.getElementById('add-funds-error');
     const submitAddFundsBtn = document.getElementById('submit-add-funds-btn');
-    const addFundsBtn = document.getElementById('add-funds-btn');
-
-    // Success modal elements
     const successModal = document.getElementById('success-modal');
-    const successModalContent = document.getElementById('success-modal-content');
     const successAmountEl = document.getElementById('success-amount');
-    const successModalCloseBtn = document.getElementById('success-modal-close');
+    const successCloseBtn = document.getElementById('success-modal-close');
 
-    // Current card state
     let currentCardStatus = null;
 
-    // ====================
-    // Success Modal Logic
-    // ====================
+    // ── Modal helpers ──
+    function openModal(el) { el?.classList.add('open'); }
+    function closeModal(el) { el?.classList.remove('open'); }
+
+    // ── Success modal ──
     function showSuccessModal(amount) {
-        // Set the amount
         successAmountEl.textContent = `$${amount.toFixed(2)}`;
-
-        // Show modal
-        successModal.classList.remove('hidden');
-        successModal.classList.add('flex');
-
-        // Trigger animation after a frame
-        requestAnimationFrame(() => {
-            successModalContent.classList.remove('scale-95', 'opacity-0');
-            successModalContent.classList.add('scale-100', 'opacity-100');
-        });
+        openModal(successModal);
     }
+    successCloseBtn?.addEventListener('click', () => closeModal(successModal));
+    successModal?.addEventListener('click', (e) => { if (e.target === successModal) closeModal(successModal); });
 
-    function hideSuccessModal() {
-        successModalContent.classList.remove('scale-100', 'opacity-100');
-        successModalContent.classList.add('scale-95', 'opacity-0');
-
-        setTimeout(() => {
-            successModal.classList.add('hidden');
-            successModal.classList.remove('flex');
-        }, 300);
-    }
-
-    // Success modal event listeners
-    successModalCloseBtn?.addEventListener('click', hideSuccessModal);
-    successModal?.addEventListener('click', (e) => {
-        if (e.target === successModal) hideSuccessModal();
-    });
-
-    // ====================
-    // Fetch & Display Data
-    // ====================
+    // ── Load billing status ──
     async function loadBillingStatus() {
         try {
-            // Fetch billing status
             const billingStatus = await window.api.getBillingStatus();
+
+            if (billingStatus?.identityStatus === 'SUSPENDED') {
+                document.getElementById('restriction-banner')?.classList.add('visible');
+                [manageCardBtn, manageBankBtn, addFundsBtn].forEach(b => { if (b) { b.disabled = true; b.style.opacity = '0.3'; } });
+            }
 
             if (billingStatus?.fundingSource) {
                 const fs = billingStatus.fundingSource;
                 currentCardStatus = fs.status;
 
-                // Handle Restricted Status
-                if (billingStatus?.identityStatus === 'SUSPENDED') {
-                    const banner = document.getElementById('restriction-banner');
-                    if (banner) banner.classList.remove('hidden');
-
-                    // Disable buttons
-                    if (manageCardBtn) { manageCardBtn.disabled = true; manageCardBtn.classList.add('opacity-50'); }
-                    if (manageBankBtn) { manageBankBtn.disabled = true; manageBankBtn.classList.add('opacity-50'); }
-                    const addFundsBtn = document.getElementById('add-funds-btn');
-                    if (addFundsBtn) { addFundsBtn.disabled = true; addFundsBtn.classList.add('opacity-50'); }
-                }
-
                 if (fs.status === 'verified') {
-                    const brand = fs.brand || 'CARD';
+                    const brand = fs.brand?.toUpperCase() || 'CARD';
                     const last4 = fs.last4 || '****';
                     const exp = fs.expMonth && fs.expYear ? `${String(fs.expMonth).padStart(2, '0')}/${String(fs.expYear).slice(-2)}` : '';
-
-                    cardStatusEl.innerHTML = `
-                        <span class="text-gray-700">${brand} •••• ${last4}</span>
-                        ${exp ? `<span class="text-gray-400 ml-2">exp ${exp}</span>` : ''}
-                        <span class="inline-flex items-center ml-2 px-1.5 py-0.5 rounded text-[10px] font-medium bg-green-100 text-green-800">Verified</span>
-                    `;
-                    manageCardBtn.textContent = 'Manage';
-
-                    // Show Add Funds button when card is verified
-                    const addFundsBtn = document.getElementById('add-funds-btn');
-                    if (addFundsBtn) {
-                        addFundsBtn.classList.remove('hidden');
-                        addFundsBtn.classList.add('flex');
-                    }
+                    cardStatusEl.textContent = `${brand} •••• ${last4}${exp ? '  ·  exp ' + exp : ''}`;
+                    if (cardBadgeEl) cardBadgeEl.innerHTML = '<span class="cap-badge verified">VERIFIED</span>';
+                    if (manageCardBtn) manageCardBtn.textContent = 'REMOVE';
                 } else if (fs.status === 'pending_verification') {
-                    cardStatusEl.textContent = 'Verification pending...';
-                    cardStatusEl.classList.add('text-amber-600');
+                    cardStatusEl.textContent = 'Verification pending';
+                    if (cardBadgeEl) cardBadgeEl.innerHTML = '<span class="cap-badge pending-badge">PENDING</span>';
                 } else {
                     cardStatusEl.textContent = 'Not configured';
-                    cardStatusEl.classList.add('text-gray-400');
+                    if (cardBadgeEl) cardBadgeEl.innerHTML = '<span class="cap-badge required">REQUIRED</span>';
                 }
             } else {
                 cardStatusEl.textContent = 'Not configured';
-                cardStatusEl.classList.add('text-gray-400');
+                if (cardBadgeEl) cardBadgeEl.innerHTML = '<span class="cap-badge required">REQUIRED</span>';
             }
 
             if (billingStatus?.payoutDestination?.connected) {
                 bankStatusEl.textContent = 'Configured';
-                bankStatusEl.classList.remove('text-gray-400');
-                bankStatusEl.classList.add('text-gray-600');
-                payoutStatusEl.textContent = 'Configured';
-                payoutStatusEl.classList.remove('text-gray-400');
-                payoutStatusEl.classList.add('text-gray-600');
+                if (bankBadgeEl) { bankBadgeEl.className = 'cap-badge verified'; bankBadgeEl.textContent = 'ACTIVE'; }
+                payoutStatusEl.textContent = 'Connected';
             } else {
                 bankStatusEl.textContent = 'Not configured';
                 payoutStatusEl.textContent = 'Not configured';
             }
 
-            // Update balances
             if (billingStatus?.balances) {
                 availableBalanceEl.textContent = formatUSD(billingStatus.balances.availableBalanceUsdCents || 0);
                 lockedBalanceEl.textContent = formatUSD(billingStatus.balances.lockedBalanceUsdCents || 0);
@@ -471,7 +795,7 @@ export async function initFunding() {
             }
 
         } catch (err) {
-            console.error('[Funding] Error loading billing status:', err);
+            console.error('[Capital] Error loading billing status:', err);
             cardStatusEl.textContent = 'Error loading';
         }
     }
@@ -492,250 +816,156 @@ export async function initFunding() {
                 .filter(c => pendingPayoutStates.includes(c.derivedState))
                 .reduce((sum, c) => sum + (c.lockAmountUsdCents || 0), 0);
 
-            lockedBalanceEl.textContent = formatUSD(lockedCents);
-            pendingPayoutEl.textContent = formatUSD(pendingCents);
+            if (lockedCents > 0) lockedBalanceEl.textContent = formatUSD(lockedCents);
+            if (pendingCents > 0) pendingPayoutEl.textContent = formatUSD(pendingCents);
 
         } catch (err) {
-            console.error('[Funding] Error loading contracts:', err);
+            console.error('[Capital] Error loading contracts:', err);
         }
     }
 
-    // ====================
-    // Card Modal Logic
-    // ====================
+    // ── Card Modal ──
     function showCardModal() {
-        cardModal.classList.remove('hidden');
-        cardModal.classList.add('flex');
-
-        // Mount Stripe Card Element if not already mounted
+        openModal(cardModal);
         if (stripe && !cardElement) {
             const elements = stripe.elements();
             cardElement = elements.create('card', {
                 style: {
                     base: {
-                        fontSize: '16px',
-                        color: '#374151',
-                        fontFamily: 'ui-sans-serif, system-ui, sans-serif',
-                        '::placeholder': { color: '#9CA3AF' },
+                        fontSize: '15px',
+                        color: '#111',
+                        fontFamily: "'IBM Plex Mono', monospace",
+                        '::placeholder': { color: '#bbb' },
                     },
-                    invalid: { color: '#DC2626' },
+                    invalid: { color: '#752122' },
                 },
             });
             cardElement.mount('#card-element-container');
             cardElement.on('change', (event) => {
                 if (event.error) {
                     cardErrorEl.textContent = event.error.message;
-                    cardErrorEl.classList.remove('hidden');
+                    cardErrorEl.classList.add('visible');
                 } else {
-                    cardErrorEl.classList.add('hidden');
+                    cardErrorEl.classList.remove('visible');
                 }
             });
         }
-
         if (window.lucide) window.lucide.createIcons();
-    }
-
-    function hideCardModal() {
-        cardModal.classList.add('hidden');
-        cardModal.classList.remove('flex');
-    }
-
-    function showRemoveModal() {
-        removeCardModal.classList.remove('hidden');
-        removeCardModal.classList.add('flex');
-    }
-
-    function hideRemoveModal() {
-        removeCardModal.classList.add('hidden');
-        removeCardModal.classList.remove('flex');
     }
 
     async function submitCard() {
         if (!stripe || !cardElement) {
-            const reason = !window.Stripe
-                ? 'Stripe.js failed to load'
-                : !stripe
-                    ? 'VITE_STRIPE_PUBLISHABLE_KEY not set in Vercel environment'
+            const reason = !window.Stripe ? 'Stripe.js not loaded'
+                : !stripe ? 'VITE_STRIPE_PUBLISHABLE_KEY missing'
                     : 'Card element not ready';
-            cardErrorEl.textContent = `${reason}. Please contact support.`;
-            cardErrorEl.classList.remove('hidden');
-            console.error('[Funding] Submit failed:', { stripe: !!stripe, cardElement: !!cardElement, stripeGlobal: !!window.Stripe });
+            cardErrorEl.textContent = `${reason}. Contact support.`;
+            cardErrorEl.classList.add('visible');
             return;
         }
 
         submitCardBtn.disabled = true;
-        submitCardBtn.textContent = 'Verifying...';
-        cardErrorEl.classList.add('hidden');
+        submitCardBtn.textContent = 'VERIFYING...';
+        cardErrorEl.classList.remove('visible');
 
         try {
-            // Create SetupIntent
-            console.log('[Funding] Creating SetupIntent...');
             const siResponse = await window.api.createCardSetupIntent();
-            console.log('[Funding] SetupIntent response:', {
-                hasClientSecret: !!siResponse?.clientSecret,
-                clientSecretPrefix: siResponse?.clientSecret?.substring(0, 20),
-                setupIntentId: siResponse?.setupIntentId,
-            });
+            if (!siResponse?.clientSecret) throw new Error('Failed to create setup intent');
+            if (!siResponse.clientSecret.includes('_secret_')) throw new Error('Invalid setup intent format');
 
-            if (!siResponse?.clientSecret) {
-                throw new Error('Failed to create setup intent - no clientSecret in response');
-            }
-
-            // Verify client_secret format (must contain _secret_)
-            if (!siResponse.clientSecret.includes('_secret_')) {
-                console.error('[Funding] Invalid clientSecret format - missing _secret_:', siResponse.clientSecret.substring(0, 30));
-                throw new Error('Invalid setup intent format from server');
-            }
-
-            // Confirm with Stripe
-            console.log('[Funding] Confirming with Stripe.js...');
             const { setupIntent, error } = await stripe.confirmCardSetup(siResponse.clientSecret, {
                 payment_method: { card: cardElement },
             });
 
-            if (error) {
-                throw new Error(error.message);
-            }
+            if (error) throw new Error(error.message);
 
             if (setupIntent.status === 'succeeded') {
-                // Confirm with backend
                 await window.api.confirmCard(setupIntent.id, setupIntent.payment_method);
-
-                hideCardModal();
+                closeModal(cardModal);
                 await loadBillingStatus();
             } else if (setupIntent.status === 'requires_action') {
-                // SCA challenge may have been presented
-                cardErrorEl.textContent = 'Additional verification required. Please complete the authentication.';
-                cardErrorEl.classList.remove('hidden');
+                cardErrorEl.textContent = 'Additional authentication required.';
+                cardErrorEl.classList.add('visible');
             }
-
         } catch (err) {
-            cardErrorEl.textContent = err.message || 'Card verification failed. Please try again.';
-            cardErrorEl.classList.remove('hidden');
+            cardErrorEl.textContent = err.message || 'Verification failed. Please retry.';
+            cardErrorEl.classList.add('visible');
         } finally {
             submitCardBtn.disabled = false;
-            submitCardBtn.textContent = 'Verify & Save Card';
+            submitCardBtn.textContent = 'VERIFY & SAVE CARD';
         }
     }
 
     async function removeCard() {
         confirmRemoveBtn.disabled = true;
-        confirmRemoveBtn.textContent = 'Removing...';
-
+        confirmRemoveBtn.textContent = 'REMOVING...';
         try {
             await window.api.removeCard();
-            hideRemoveModal();
+            closeModal(removeCardModal);
             await loadBillingStatus();
         } catch (err) {
             alert('Failed to remove card: ' + (err.message || 'Unknown error'));
         } finally {
             confirmRemoveBtn.disabled = false;
-            confirmRemoveBtn.textContent = 'Remove Card';
+            confirmRemoveBtn.textContent = 'REMOVE CARD';
         }
     }
 
-    // ====================
-    // Add Funds Modal Logic
-    // ====================
-    function showAddFundsModal() {
-        addFundsModal.classList.remove('hidden');
-        addFundsModal.classList.add('flex');
-        addFundsAmountInput.value = '';
-        addFundsErrorEl.classList.add('hidden');
-        if (window.lucide) window.lucide.createIcons();
-    }
-
-    function hideAddFundsModal() {
-        addFundsModal.classList.add('hidden');
-        addFundsModal.classList.remove('flex');
-    }
-
+    // ── Add Funds ──
     async function submitAddFunds() {
         const amount = parseFloat(addFundsAmountInput.value);
-
         if (!amount || amount < 1) {
-            addFundsErrorEl.textContent = 'Please enter an amount of at least $1.00';
-            addFundsErrorEl.classList.remove('hidden');
+            addFundsErrorEl.textContent = 'MIN_AMOUNT: $1.00';
+            addFundsErrorEl.classList.add('visible');
             return;
         }
-
         submitAddFundsBtn.disabled = true;
-        submitAddFundsBtn.textContent = 'Processing...';
-        addFundsErrorEl.classList.add('hidden');
-
+        submitAddFundsBtn.textContent = 'PROCESSING...';
+        addFundsErrorEl.classList.remove('visible');
         try {
-            const amountCents = Math.round(amount * 100);
-
-            // Call backend to create a direct charge to available balance
-            const result = await window.api.addFunds(amountCents);
-
-            if (result.error) {
-                throw new Error(result.error);
-            }
-
-            // Success!
-            hideAddFundsModal();
+            const result = await window.api.addFunds(Math.round(amount * 100));
+            if (result.error) throw new Error(result.error);
+            closeModal(addFundsModal);
             await loadBillingStatus();
-
-            // Show premium success notification
             showSuccessModal(amount);
-
         } catch (err) {
-            addFundsErrorEl.textContent = err.message || 'Failed to add funds. Please try again.';
-            addFundsErrorEl.classList.remove('hidden');
+            addFundsErrorEl.textContent = err.message || 'Deposit failed. Retry.';
+            addFundsErrorEl.classList.add('visible');
         } finally {
             submitAddFundsBtn.disabled = false;
-            submitAddFundsBtn.textContent = 'Add Funds';
+            submitAddFundsBtn.textContent = 'DEPOSIT CAPITAL';
         }
     }
 
-    // ====================
-    // Event Listeners
-    // ====================
+    // ── Event Wiring ──
     manageCardBtn?.addEventListener('click', () => {
         if (currentCardStatus === 'verified') {
-            // Show options menu (for now, show remove modal)
-            showRemoveModal();
+            openModal(removeCardModal);
         } else {
             showCardModal();
         }
     });
+    manageBankBtn?.addEventListener('click', () => window.app?.setupPayout?.());
+    managePayoutBtn?.addEventListener('click', () => window.app?.setupPayout?.());
 
-    manageBankBtn?.addEventListener('click', () => {
-        window.app?.setupPayout?.();
-    });
-
-    managePayoutBtn?.addEventListener('click', () => {
-        window.app?.setupPayout?.();
-    });
-
-    closeCardModalBtn?.addEventListener('click', hideCardModal);
-    cardModal?.addEventListener('click', (e) => {
-        if (e.target === cardModal) hideCardModal();
-    });
-
+    closeCardModalBtn?.addEventListener('click', () => closeModal(cardModal));
+    cardModal?.addEventListener('click', (e) => { if (e.target === cardModal) closeModal(cardModal); });
     submitCardBtn?.addEventListener('click', submitCard);
 
-    cancelRemoveBtn?.addEventListener('click', hideRemoveModal);
+    cancelRemoveBtn?.addEventListener('click', () => closeModal(removeCardModal));
     confirmRemoveBtn?.addEventListener('click', removeCard);
-    removeCardModal?.addEventListener('click', (e) => {
-        if (e.target === removeCardModal) hideRemoveModal();
-    });
+    removeCardModal?.addEventListener('click', (e) => { if (e.target === removeCardModal) closeModal(removeCardModal); });
 
-    // Add Funds modal event listeners
-    addFundsBtn?.addEventListener('click', showAddFundsModal);
-    closeAddFundsModalBtn?.addEventListener('click', hideAddFundsModal);
+    addFundsBtn?.addEventListener('click', () => {
+        addFundsAmountInput.value = '';
+        addFundsErrorEl.classList.remove('visible');
+        openModal(addFundsModal);
+    });
+    closeAddFundsBtn?.addEventListener('click', () => closeModal(addFundsModal));
+    addFundsModal?.addEventListener('click', (e) => { if (e.target === addFundsModal) closeModal(addFundsModal); });
     submitAddFundsBtn?.addEventListener('click', submitAddFunds);
-    addFundsModal?.addEventListener('click', (e) => {
-        if (e.target === addFundsModal) hideAddFundsModal();
-    });
-    addFundsAmountInput?.addEventListener('keydown', (e) => {
-        if (e.key === 'Enter') submitAddFunds();
-    });
+    addFundsAmountInput?.addEventListener('keydown', (e) => { if (e.key === 'Enter') submitAddFunds(); });
 
-    // ====================
-    // Initial Load
-    // ====================
+    // ── Load ──
     await loadBillingStatus();
     await loadContractBalances();
 }

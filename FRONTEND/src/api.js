@@ -281,6 +281,44 @@ export async function getStripeStatus() {
     return get('/v1/connect/stripe/status');
 }
 
+// --- SHOPIFY CONNECT ---
+
+export async function startShopifyConnect(shop) {
+    const token = getAuthToken();
+    console.log('[API] startShopifyConnect called for shop:', shop);
+    if (!token) {
+        throw new Error('Login required to connect Shopify. Please log in first.');
+    }
+    return get(`/v1/connect/shopify/start?shop=${encodeURIComponent(shop)}`);
+}
+
+export async function getShopifyStatus() {
+    return get('/v1/connect/shopify/status');
+}
+
+export async function disconnectShopify() {
+    return post('/v1/connect/shopify/disconnect');
+}
+
+// --- AMAZON CONNECT ---
+
+export async function startAmazonConnect() {
+    const token = getAuthToken();
+    console.log('[API] startAmazonConnect called');
+    if (!token) {
+        throw new Error('Login required to connect Amazon. Please log in first.');
+    }
+    return get('/v1/connect/amazon/start');
+}
+
+export async function getAmazonStatus() {
+    return get('/v1/connect/amazon/status');
+}
+
+export async function disconnectAmazon() {
+    return post('/v1/connect/amazon/disconnect');
+}
+
 // --- CONTRACTS ---
 
 export async function createContract(params) {
@@ -450,6 +488,16 @@ export default {
     startStripeConnect,
     completeStripeConnect,
     getStripeStatus,
+
+    // Shopify Connect
+    startShopifyConnect,
+    getShopifyStatus,
+    disconnectShopify,
+
+    // Amazon Connect
+    startAmazonConnect,
+    getAmazonStatus,
+    disconnectAmazon,
 
     // Contracts
     createContract,

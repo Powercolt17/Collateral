@@ -15,6 +15,8 @@ import { renderTermSheet, initTermSheet } from './views/TermSheet.js';
 import { renderContractTermSheet, initContractTermSheet } from './views/ContractTermSheet.js';
 import { renderStripeCallback, initStripeCallback } from './views/StripeCallback.js';
 import { renderXCallback, initXCallback } from './views/XCallback.js';
+import { renderShopifyCallback, initShopifyCallback } from './views/ShopifyCallback.js';
+import { renderAmazonCallback, initAmazonCallback } from './views/AmazonCallback.js';
 import { renderPreLaunch, initPreLaunch } from './views/PreLaunch.js';
 import './views/PreLaunch.css';
 import './index.css';
@@ -164,7 +166,9 @@ const routes = PRE_LAUNCH_MODE ? [
     { path: '/funding', render: renderFunding, init: initFunding },
     { path: '/receipts', render: renderReceipts, init: initReceipts },
     { path: '/stripe/callback', render: renderStripeCallback, init: initStripeCallback },
-    { path: '/x/callback', render: renderXCallback, init: initXCallback }
+    { path: '/x/callback', render: renderXCallback, init: initXCallback },
+    { path: '/shopify/callback', render: renderShopifyCallback, init: initShopifyCallback },
+    { path: '/amazon/callback', render: renderAmazonCallback, init: initAmazonCallback }
 ];
 
 // ================================================================================
@@ -234,6 +238,8 @@ const routes = PRE_LAUNCH_MODE ? [
     const map = {
         '/x/callback': '/#/x/callback',
         '/stripe/callback': '/#/stripe/callback',
+        '/shopify/callback': '/#/shopify/callback',
+        '/amazon/callback': '/#/amazon/callback',
     };
 
     const dest = map[pathname];
@@ -572,8 +578,108 @@ window.app = {
 
                     return;
                 }
+            } else if (source === 'shopify') {
+                // Prompt user for their shop domain
+                const shop = prompt('Enter your Shopify store domain (e.g. mystore.myshopify.com):');
+                if (!shop) {
+                    btn.innerHTML = 'Connect';
+                    btn.disabled = false;
+                    return;
+                }
+                const result = await window.api.startShopifyConnect(shop);
+                if (result.oauthUrl) {
+                    localStorage.setItem('shopify_oauth_flow', JSON.stringify({ state: result.state, startedAt: Date.now() }));
+                    const popup = window.open(result.oauthUrl, 'ShopifyConnect', 'width=600,height=700');
+                    const pollInterval = setInterval(async () => {
+                        try {
+                            if (popup && popup.closed) {
+                                clearInterval(pollInterval);
+                                const status = await window.api.getShopifyStatus();
+                                if (status.connected) {
+                                    if (window.hydrateSession) await window.hydrateSession();
+                                    btn.innerHTML = '✓ Connected';
+                                    btn.disabled = true;
+                                    const current = (window.location.hash || '#/profile').replace(/^#/, '');
+                                    window.router.navigate(current);
+                                } else {
+                                    btn.innerHTML = 'Connect';
+                                    btn.disabled = false;
+                                }
+                                localStorage.removeItem('shopify_oauth_flow');
+                                return;
+                            }
+                            const status = await window.api.getShopifyStatus();
+                            if (status.connected) {
+                                clearInterval(pollInterval);
+                                if (popup && !popup.closed) popup.close();
+                                if (window.hydrateSession) await window.hydrateSession();
+                                btn.innerHTML = '✓ Connected';
+                                btn.disabled = true;
+                                localStorage.removeItem('shopify_oauth_flow');
+                                const current = (window.location.hash || '#/profile').replace(/^#/, '');
+                                window.router.navigate(current);
+                            }
+                        } catch (pollErr) {
+                            console.warn('[Shopify] Poll error:', pollErr);
+                        }
+                    }, 2000);
+                    setTimeout(() => {
+                        clearInterval(pollInterval);
+                        if (btn.innerHTML.includes('spin')) {
+                            btn.innerHTML = 'Connect';
+                            btn.disabled = false;
+                        }
+                    }, 10 * 60 * 1000);
+                    return;
+                }
+            } else if (source === 'amazon') {
+                const result = await window.api.startAmazonConnect();
+                if (result.oauthUrl) {
+                    localStorage.setItem('amazon_oauth_flow', JSON.stringify({ state: result.state, startedAt: Date.now() }));
+                    const popup = window.open(result.oauthUrl, 'AmazonConnect', 'width=600,height=700');
+                    const pollInterval = setInterval(async () => {
+                        try {
+                            if (popup && popup.closed) {
+                                clearInterval(pollInterval);
+                                const status = await window.api.getAmazonStatus();
+                                if (status.connected) {
+                                    if (window.hydrateSession) await window.hydrateSession();
+                                    btn.innerHTML = '✓ Connected';
+                                    btn.disabled = true;
+                                    const current = (window.location.hash || '#/profile').replace(/^#/, '');
+                                    window.router.navigate(current);
+                                } else {
+                                    btn.innerHTML = 'Connect';
+                                    btn.disabled = false;
+                                }
+                                localStorage.removeItem('amazon_oauth_flow');
+                                return;
+                            }
+                            const status = await window.api.getAmazonStatus();
+                            if (status.connected) {
+                                clearInterval(pollInterval);
+                                if (popup && !popup.closed) popup.close();
+                                if (window.hydrateSession) await window.hydrateSession();
+                                btn.innerHTML = '✓ Connected';
+                                btn.disabled = true;
+                                localStorage.removeItem('amazon_oauth_flow');
+                                const current = (window.location.hash || '#/profile').replace(/^#/, '');
+                                window.router.navigate(current);
+                            }
+                        } catch (pollErr) {
+                            console.warn('[Amazon] Poll error:', pollErr);
+                        }
+                    }, 2000);
+                    setTimeout(() => {
+                        clearInterval(pollInterval);
+                        if (btn.innerHTML.includes('spin')) {
+                            btn.innerHTML = 'Connect';
+                            btn.disabled = false;
+                        }
+                    }, 10 * 60 * 1000);
+                    return;
+                }
             } else if (source === 'github') {
-                // GitHub not yet implemented
                 alert('GitHub integration coming soon.');
                 btn.innerHTML = 'Connect';
                 btn.disabled = false;

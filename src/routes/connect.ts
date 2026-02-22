@@ -837,6 +837,57 @@ async function connectRoutes(fastify: FastifyInstance) {
                 });
             }
 
+
+            // Shopify: from connectedAccounts
+            const shopifyAccount = accounts.find(a => a.platform === 'SHOPIFY');
+            if (shopifyAccount) {
+                platforms.push({
+                    platform: 'SHOPIFY',
+                    connectionStatus: shopifyAccount.status === 'ACTIVE' ? 'CONNECTED' : 'INACTIVE',
+                    verificationStatus: shopifyAccount.verificationStatus === 'VERIFIED' ? 'VERIFIED' :
+                        shopifyAccount.verificationStatus === 'PENDING' ? 'PENDING' : 'UNVERIFIED',
+                    externalAccountId: shopifyAccount.externalAccountId,
+                    connectedAt: shopifyAccount.connectedAt?.toISOString() || null,
+                    verifiedAt: shopifyAccount.verifiedAt?.toISOString() || null,
+                    metadata: shopifyAccount.metadataJson,
+                });
+            } else {
+                platforms.push({
+                    platform: 'SHOPIFY',
+                    connectionStatus: 'DISCONNECTED',
+                    verificationStatus: 'UNVERIFIED',
+                    externalAccountId: null,
+                    connectedAt: null,
+                    verifiedAt: null,
+                    metadata: null,
+                });
+            }
+
+            // Amazon: from connectedAccounts
+            const amazonAccount = accounts.find(a => a.platform === 'AMAZON');
+            if (amazonAccount) {
+                platforms.push({
+                    platform: 'AMAZON',
+                    connectionStatus: amazonAccount.status === 'ACTIVE' ? 'CONNECTED' : 'INACTIVE',
+                    verificationStatus: amazonAccount.verificationStatus === 'VERIFIED' ? 'VERIFIED' :
+                        amazonAccount.verificationStatus === 'PENDING' ? 'PENDING' : 'UNVERIFIED',
+                    externalAccountId: amazonAccount.externalAccountId,
+                    connectedAt: amazonAccount.connectedAt?.toISOString() || null,
+                    verifiedAt: amazonAccount.verifiedAt?.toISOString() || null,
+                    metadata: amazonAccount.metadataJson,
+                });
+            } else {
+                platforms.push({
+                    platform: 'AMAZON',
+                    connectionStatus: 'DISCONNECTED',
+                    verificationStatus: 'UNVERIFIED',
+                    externalAccountId: null,
+                    connectedAt: null,
+                    verifiedAt: null,
+                    metadata: null,
+                });
+            }
+
             return reply.status(200).send({
                 ok: true,
                 platforms,

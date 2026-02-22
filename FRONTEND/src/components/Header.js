@@ -58,7 +58,7 @@ export function renderHeader(currentRoute) {
                 gap: 40px;
             }
 
-            /* Wordmark */
+            /* ── Wordmark: COLLATERAL / MARKET ── */
             .ch-logo {
                 display: flex;
                 flex-direction: column;
@@ -67,36 +67,29 @@ export function renderHeader(currentRoute) {
                 flex-shrink: 0;
                 line-height: 1;
                 gap: 0;
+                padding: 2px 0; /* symmetric vertical breathing room */
             }
             .ch-logo-main {
-                font-size: 20px;
+                font-size: 19px;
                 font-weight: 700;
-                color: #0a0a0a;
-                letter-spacing: -1.2px;
+                color: #111111;
+                letter-spacing: -0.03em;
                 font-family: 'IBM Plex Sans', sans-serif;
                 line-height: 1;
-                position: relative;
-                display: inline-block;
+                display: block;
             }
-            /* Option C: Subtle red underline accent */
-            .ch-logo-main::after {
-                content: '';
-                position: absolute;
-                bottom: -2px;
-                left: 0;
-                width: 100%;
-                height: 1.5px;
-                background: #921818;
-            }
+            /* No decorative underline — typography carries authority */
             .ch-logo-sub {
-                font-size: 8px;
+                font-size: 7.5px;
                 font-weight: 500;
                 color: #921818;
-                letter-spacing: 3.5px;
+                letter-spacing: 0.22em;
                 font-family: 'IBM Plex Sans', sans-serif;
-                margin-top: 5px;
+                margin-top: 4px;
                 text-transform: uppercase;
-                padding-left: 1px; /* optical nudge to counteract letter-spacing overhang */
+                /* Center MARKET under COLLATERAL precisely */
+                align-self: center;
+                padding-right: 0.22em; /* compensate trailing letter-spacing */
             }
 
             /* Nav links */

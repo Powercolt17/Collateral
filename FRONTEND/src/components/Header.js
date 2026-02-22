@@ -76,7 +76,7 @@ export function renderHeader(currentRoute) {
                 flex-shrink: 0;
             }
             .ch-logo-mark span {
-                font-size: 12.5px;
+                font-size: 14px;
                 font-weight: 700;
                 color: #ffffff;
                 font-family: 'IBM Plex Sans', sans-serif;

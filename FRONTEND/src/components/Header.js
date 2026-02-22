@@ -64,24 +64,23 @@ export function renderHeader(currentRoute) {
                 align-items: center;
                 text-decoration: none;
                 flex-shrink: 0;
-                gap: 3px;
+                gap: 2px;
             }
             .ch-logo-mark {
-                width: 22px;
-                height: 22px;
-                border: 1.5px solid #111111;
+                width: 20px;
+                height: 20px;
+                background: #921818;
                 display: inline-flex;
                 align-items: center;
                 justify-content: center;
                 flex-shrink: 0;
             }
             .ch-logo-mark span {
-                font-size: 13px;
+                font-size: 12px;
                 font-weight: 700;
-                color: #111111;
+                color: #ffffff;
                 font-family: 'IBM Plex Sans', sans-serif;
                 line-height: 1;
-                margin-top: -0.5px;
             }
             .ch-logo-text {
                 font-size: 17px;
@@ -90,6 +89,17 @@ export function renderHeader(currentRoute) {
                 letter-spacing: -0.02em;
                 font-family: 'IBM Plex Sans', sans-serif;
                 line-height: 1;
+            }
+            .ch-logo-text::after {
+                content: '';
+                display: inline-block;
+                width: 3px;
+                height: 3px;
+                background: #921818;
+                border-radius: 50%;
+                margin-left: 3px;
+                vertical-align: middle;
+                margin-bottom: 1px;
             }
 
             /* Nav links */

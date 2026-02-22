@@ -58,38 +58,21 @@ export function renderHeader(currentRoute) {
                 gap: 40px;
             }
 
-            /* ── Wordmark: COLLATERAL / MARKET ── */
+            /* ── Wordmark: COLLATERAL ── */
             .ch-logo {
-                display: flex;
-                flex-direction: column;
-                align-items: flex-start;
+                display: inline-flex;
+                align-items: center;
                 text-decoration: none;
                 flex-shrink: 0;
                 line-height: 1;
-                gap: 0;
-                padding: 2px 0; /* symmetric vertical breathing room */
             }
             .ch-logo-main {
-                font-size: 19px;
+                font-size: 18px;
                 font-weight: 700;
                 color: #111111;
-                letter-spacing: -0.03em;
+                letter-spacing: -0.025em;
                 font-family: 'IBM Plex Sans', sans-serif;
                 line-height: 1;
-                display: block;
-            }
-            /* No decorative underline — typography carries authority */
-            .ch-logo-sub {
-                font-size: 7.5px;
-                font-weight: 500;
-                color: #921818;
-                letter-spacing: 0.22em;
-                font-family: 'IBM Plex Sans', sans-serif;
-                margin-top: 4px;
-                text-transform: uppercase;
-                /* Center MARKET under COLLATERAL precisely */
-                align-self: center;
-                padding-right: 0.22em; /* compensate trailing letter-spacing */
             }
 
             /* Nav links */
@@ -379,7 +362,6 @@ export function renderHeader(currentRoute) {
                 <!-- Logo -->
                 <a href="#" onclick="window.router.navigate('/overview'); return false;" class="ch-logo">
                     <span class="ch-logo-main">COLLATERAL</span>
-                    <span class="ch-logo-sub">MARKET</span>
                 </a>
 
                 <!-- Nav Links -->

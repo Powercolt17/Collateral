@@ -632,15 +632,15 @@ export function renderOverview() {
                 font-size: 10px; color: #752122; font-weight: 600;
                 font-family: 'JetBrains Mono', monospace;
             }
-            /* ── Hero Clarity Strip ── */
+            /* ── Hero ── */
             .eq-hero {
                 background: #fff;
                 border-bottom: 1px solid #e5e5e5;
-                padding: 28px 32px 22px;
+                padding: 24px 32px 18px;
                 text-align: center;
             }
             .eq-hero-headline {
-                font-size: 22px;
+                font-size: 24px;
                 font-weight: 700;
                 color: #111;
                 letter-spacing: -0.5px;
@@ -648,7 +648,7 @@ export function renderOverview() {
                 font-family: 'IBM Plex Sans', sans-serif;
             }
             .eq-hero-sub {
-                font-size: 14px;
+                font-size: 13px;
                 color: #666;
                 margin: 0 0 10px;
                 line-height: 1.5;
@@ -661,55 +661,6 @@ export function renderOverview() {
                 text-transform: uppercase;
                 letter-spacing: 1.5px;
                 color: #999;
-            }
-
-            /* ── 3-Step Micro Explanation ── */
-            .eq-steps {
-                display: grid;
-                grid-template-columns: 1fr 1fr 1fr;
-                gap: 0;
-                background: #fff;
-                border-bottom: 1px solid #e5e5e5;
-            }
-            .eq-step-col {
-                padding: 14px 32px;
-                text-align: center;
-                border-right: 1px solid #f0f0f0;
-            }
-            .eq-step-col:last-child { border-right: none; }
-            .eq-step-label {
-                font-family: 'IBM Plex Mono', monospace;
-                font-size: 10px;
-                font-weight: 700;
-                text-transform: uppercase;
-                letter-spacing: 1px;
-                color: #111;
-                margin: 0 0 3px;
-            }
-            .eq-step-desc {
-                font-size: 11px;
-                color: #888;
-                line-height: 1.4;
-            }
-
-            /* ── Section Label Above Tabs ── */
-            .eq-section-label {
-                padding: 14px 32px 0;
-                background: #fff;
-            }
-            .eq-section-label-title {
-                font-size: 12px;
-                font-weight: 700;
-                color: #111;
-                letter-spacing: 0.2px;
-                margin: 0 0 2px;
-            }
-            .eq-section-label-sub {
-                font-family: 'IBM Plex Mono', monospace;
-                font-size: 10px;
-                color: #999;
-                text-transform: uppercase;
-                letter-spacing: 0.5px;
             }
 
             /* ── Stake Warning ── */
@@ -726,38 +677,18 @@ export function renderOverview() {
             }
 
             @media (max-width: 768px) {
-                .eq-hero { padding: 20px 16px 16px; }
-                .eq-hero-headline { font-size: 18px; }
-                .eq-steps { grid-template-columns: 1fr; }
-                .eq-step-col { border-right: none; border-bottom: 1px solid #f0f0f0; padding: 10px 16px; }
-                .eq-step-col:last-child { border-bottom: none; }
-                .eq-section-label { padding: 12px 16px 0; }
+                .eq-hero { padding: 20px 16px 14px; }
+                .eq-hero-headline { font-size: 20px; }
                 .eq-stake-warning { padding: 0 16px 16px; }
             }
         </style>
 
         <div class="eq">
-            <!-- Hero Clarity Strip -->
+            <!-- Hero -->
             <div class="eq-hero">
-                <div class="eq-hero-headline">Lock Capital Against Real Performance.</div>
-                <div class="eq-hero-sub">Choose a measurable target. Stake funds. Get paid if you hit it. Lose capital if you don't.</div>
-                <div class="eq-hero-rule">Deterministic. Verified. No Appeals.</div>
-            </div>
-
-            <!-- 3-Step Micro Explanation -->
-            <div class="eq-steps">
-                <div class="eq-step-col">
-                    <div class="eq-step-label">Connect Source</div>
-                    <div class="eq-step-desc">Bind a verified data provider</div>
-                </div>
-                <div class="eq-step-col">
-                    <div class="eq-step-label">Lock Capital</div>
-                    <div class="eq-step-desc">Stake funds against your target</div>
-                </div>
-                <div class="eq-step-col">
-                    <div class="eq-step-label">Automatic Settlement</div>
-                    <div class="eq-step-desc">Verified outcome, instant resolution</div>
-                </div>
+                <div class="eq-hero-headline">Put Capital on the Line.</div>
+                <div class="eq-hero-sub">Commit to a measurable target. Lock funds. If you hit it, you get paid. If you miss, you lose.</div>
+                <div class="eq-hero-rule">Real Performance. Real Stakes.</div>
             </div>
 
             <!-- Live Header -->
@@ -788,12 +719,6 @@ export function renderOverview() {
                         <i data-lucide="sliders-horizontal"></i> RULES
                     </button>
                 </div>
-            </div>
-
-            <!-- Section Label -->
-            <div class="eq-section-label">
-                <div class="eq-section-label-title">Available Performance Contracts</div>
-                <div class="eq-section-label-sub">Stake capital against measurable outcomes.</div>
             </div>
 
             <!-- Tabs (Sort Modes) -->

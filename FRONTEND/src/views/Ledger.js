@@ -17,9 +17,9 @@ export function renderLedger() {
 
             /* ── Centered Container ── */
             .ldg-container {
-                max-width: 900px;
+                max-width: 1240px;
                 margin: 0 auto;
-                padding: 0 24px;
+                padding: 0 40px;
             }
 
             /* ── Page Header ── */
@@ -51,7 +51,7 @@ export function renderLedger() {
             }
             .ldg-stat {
                 text-align: center;
-                padding: 0 20px;
+                padding: 0 24px;
             }
             .ldg-stat-value {
                 font-family: 'IBM Plex Mono', monospace;
@@ -224,14 +224,14 @@ export function renderLedger() {
             .ldg-list {
                 display: flex;
                 flex-direction: column;
-                gap: 8px;
+                gap: 10px;
             }
 
             /* ── Event Card ── */
             .ldg-card {
                 background: #fff;
-                border: 1px solid #E3E3E3;
-                padding: 16px 18px;
+                border: 1px solid #E8E8E8;
+                padding: 18px 24px;
                 cursor: pointer;
                 transition: box-shadow 0.15s, border-color 0.15s, transform 0.15s;
                 position: relative;

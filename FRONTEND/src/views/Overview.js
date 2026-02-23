@@ -59,7 +59,7 @@ export function renderOverview() {
                 color: #333;
                 transition: border-color 0.15s;
             }
-            .eq-search:focus { border-color: #921818; }
+            .eq-search:focus { border-color: #752122; }
             .eq-search::placeholder { color: #8A8A8A; }
 
             /* Sort */
@@ -73,7 +73,7 @@ export function renderOverview() {
                 color: #444444;
                 outline: none;
             }
-            .eq-sort:focus { border-color: #921818; }
+            .eq-sort:focus { border-color: #752122; }
 
             .eq-rules-btn {
                 padding: 8px 14px;
@@ -118,7 +118,7 @@ export function renderOverview() {
                 position: relative;
             }
             .eq-tab:hover { color: #111111; }
-            .eq-tab.active { color: #111111; font-weight: 700; border-bottom-color: #921818; }
+            .eq-tab.active { color: #111111; font-weight: 700; border-bottom-color: #752122; }
             .eq-tab-count {
                 font-size: 10px;
                 background: #f3f4f6;
@@ -129,7 +129,7 @@ export function renderOverview() {
                 font-weight: 600;
                 font-family: 'IBM Plex Mono', monospace;
             }
-            .eq-tab.active .eq-tab-count { background: #fef2f2; color: #921818; }
+            .eq-tab.active .eq-tab-count { background: #fef2f2; color: #752122; }
 
             /* Filters */
             .eq-filters {
@@ -232,7 +232,7 @@ export function renderOverview() {
                 border-radius: 0 2px 2px 0;
                 transition: background 0.2s;
             }
-            .eq-card:hover::after { background: #921818; }
+            .eq-card:hover::after { background: #752122; }
 
             /* Remove old top border gradient if present */
             .eq-card::before { display: none; }
@@ -277,7 +277,7 @@ export function renderOverview() {
                 line-height: 1;
             }
             .eq-badge.active { background: #f0fdf4; color: #15803d; }
-            .eq-badge.action { background: #fef2f2; color: #921818; }
+            .eq-badge.action { background: #fef2f2; color: #752122; }
             .eq-badge.verifying { background: #eff6ff; color: #1e40af; }
             .eq-badge.settled { background: #f5f5f5; color: #666; }
 
@@ -369,8 +369,8 @@ export function renderOverview() {
                 box-shadow: none;
             }
             .eq-card-cta.primary:hover {
-                background: #921818;
-                border-color: #921818;
+                background: #752122;
+                border-color: #752122;
                 color: #ffffff;
                 transform: translateY(-1px);
                 box-shadow: none;
@@ -636,31 +636,33 @@ export function renderOverview() {
             .eq-hero {
                 background: #fff;
                 border-bottom: 1px solid #e5e5e5;
-                padding: 24px 32px 18px;
+                padding: 64px 32px 40px;
                 text-align: center;
             }
             .eq-hero-headline {
-                font-size: 24px;
+                font-size: 44px;
                 font-weight: 700;
                 color: #111;
-                letter-spacing: -0.5px;
-                margin: 0 0 6px;
+                letter-spacing: -1.5px;
+                margin: 0 0 16px;
                 font-family: 'IBM Plex Sans', sans-serif;
+                line-height: 1.1;
             }
             .eq-hero-sub {
-                font-size: 13px;
-                color: #666;
-                margin: 0 0 10px;
-                line-height: 1.5;
+                font-size: 15px;
+                color: #777;
+                margin: 0 auto 20px;
+                line-height: 1.6;
                 font-family: 'IBM Plex Sans', sans-serif;
+                max-width: 480px;
             }
             .eq-hero-rule {
                 font-family: 'IBM Plex Mono', monospace;
-                font-size: 10px;
-                font-weight: 700;
+                font-size: 11px;
+                font-weight: 600;
                 text-transform: uppercase;
-                letter-spacing: 1.5px;
-                color: #999;
+                letter-spacing: 2.5px;
+                color: #aaa;
             }
 
             /* ── Stake Warning ── */
@@ -677,8 +679,9 @@ export function renderOverview() {
             }
 
             @media (max-width: 768px) {
-                .eq-hero { padding: 20px 16px 14px; }
-                .eq-hero-headline { font-size: 20px; }
+                .eq-hero { padding: 40px 16px 28px; }
+                .eq-hero-headline { font-size: 28px; letter-spacing: -1px; }
+                .eq-hero-sub { font-size: 14px; }
                 .eq-stake-warning { padding: 0 16px 16px; }
             }
         </style>
@@ -688,7 +691,7 @@ export function renderOverview() {
             <div class="eq-hero">
                 <div class="eq-hero-headline">Put Capital on the Line.</div>
                 <div class="eq-hero-sub">Commit to a measurable target. Lock funds. If you hit it, you get paid. If you miss, you lose.</div>
-                <div class="eq-hero-rule">Real Performance. Real Stakes.</div>
+                <div class="eq-hero-rule">Real Performance &nbsp;•&nbsp; Real Stakes</div>
             </div>
 
             <!-- Live Header -->

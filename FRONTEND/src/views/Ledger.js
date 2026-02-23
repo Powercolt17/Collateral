@@ -9,7 +9,7 @@ export function renderLedger() {
                ============================================================ */
 
             .ldg {
-                background: #F6F6F6;
+                background: #F2F2F2;
                 min-height: calc(100vh - 72px);
                 font-family: 'IBM Plex Sans', -apple-system, sans-serif;
                 color: #111;
@@ -42,7 +42,7 @@ export function renderLedger() {
 
             /* Layer 2: Metrics */
             .ldg-topbar {
-                padding: 24px 0;
+                padding: 20px 0;
             }
             .ldg-stats-grid {
                 display: grid;
@@ -97,7 +97,6 @@ export function renderLedger() {
                 display: flex;
                 align-items: center;
                 justify-content: space-between;
-                border-top: 1px solid #F0F0F0;
             }
             .ldg-tabs {
                 display: flex;
@@ -224,28 +223,28 @@ export function renderLedger() {
             .ldg-list {
                 display: flex;
                 flex-direction: column;
-                gap: 10px;
+                gap: 6px;
             }
 
             /* ── Event Card ── */
             .ldg-card {
                 background: #fff;
-                border: 1px solid #E3E3E3;
-                border-radius: 6px;
-                padding: 18px 24px;
+                border: 1px solid #DADADA;
+                border-radius: 4px;
+                padding: 14px 24px;
                 cursor: pointer;
                 transition: box-shadow 0.15s, border-color 0.15s, transform 0.15s;
                 position: relative;
             }
             .ldg-card:hover {
-                border-color: #D0D0D0;
-                box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+                border-color: #C8C8C8;
+                box-shadow: 0 1px 4px rgba(0,0,0,0.04);
                 transform: translateY(-1px);
             }
             .ldg-card::before {
                 content: '';
                 position: absolute;
-                top: 6px; bottom: 6px; left: 0;
+                top: 4px; bottom: 4px; left: 0;
                 width: 3px;
                 border-radius: 0 2px 2px 0;
                 background: transparent;
@@ -274,10 +273,11 @@ export function renderLedger() {
                 font-weight: 600;
                 text-transform: uppercase;
                 letter-spacing: 0.3px;
-                padding: 4px 8px;
-                background: #F2F2F2;
+                padding: 3px 7px;
+                background: #EFEFEF;
+                color: #333;
                 border: none;
-                border-radius: 3px;
+                border-radius: 4px;
                 white-space: nowrap;
                 align-self: flex-start;
             }
@@ -319,7 +319,7 @@ export function renderLedger() {
                 white-space: nowrap;
                 margin-top: 6px;
             }
-            .ldg-status.locked    { background: #f5f5f5; color: #555555; border: 1px solid #E3E3E3; }
+            .ldg-status.locked    { background: #f5f5f5; color: #666666; border: 1px solid #E0E0E0; }
             .ldg-status.settled   { background: #f0fdf4; color: #15803d; border: 1px solid #bbf7d0; }
             .ldg-status.failed    { background: #fef2f2; color: #921818; border: 1px solid #fecaca; }
             .ldg-status.pending   { background: #fffbeb; color: #92400e; border: 1px solid #fde68a; }
@@ -334,7 +334,6 @@ export function renderLedger() {
                 font-size: 10px;
                 color: #888888;
                 padding-top: 10px;
-                border-top: 1px solid #F0F0F0;
             }
             .ldg-provider {
                 display: inline-flex;
@@ -381,9 +380,9 @@ export function renderLedger() {
             /* ── Skeleton ── */
             .ldg-skeleton {
                 background: #fff;
-                border: 1px solid #E3E3E3;
-                border-radius: 6px;
-                height: 88px;
+                border: 1px solid #DADADA;
+                border-radius: 4px;
+                height: 80px;
                 position: relative;
                 overflow: hidden;
             }

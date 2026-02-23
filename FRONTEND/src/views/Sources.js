@@ -820,15 +820,46 @@ export async function initSources() {
                 proceedBtn.disabled = true;
                 proceedBtn.textContent = 'CONNECTING...';
                 try {
-                    if (prov.connectFn && window.api[prov.connectFn]) {
-                        const result = await window.api[prov.connectFn]();
-                        if (result?.url || result?.authUrl || result?.redirectUrl) {
-                            window.location.href = result.url || result.authUrl || result.redirectUrl;
+                    // Shopify requires a shop domain
+                    let result;
+                    if (prov.id === 'shopify') {
+                        const shop = prompt('Enter your Shopify store domain (e.g. mystore.myshopify.com):');
+                        if (!shop) {
+                            proceedBtn.textContent = 'PROCEED';
+                            proceedBtn.disabled = false;
+                            return;
                         }
+                        result = await window.api.startShopifyConnect(shop);
+                    } else if (prov.connectFn && window.api[prov.connectFn]) {
+                        result = await window.api[prov.connectFn]();
+                    } else {
+                        throw new Error('Connect method not available');
                     }
+
+                    console.log('[Sources] Connect result:', JSON.stringify(result));
+
+                    // Already connected — just reload
+                    if (result?.connected || result?.alreadyConnected) {
+                        window.closeSrcModal();
+                        initSources();
+                        return;
+                    }
+
+                    // Redirect to OAuth provider
+                    const redirectUrl = result?.oauthUrl || result?.url || result?.authUrl || result?.redirectUrl;
+                    if (redirectUrl) {
+                        window.location.href = redirectUrl;
+                        return;
+                    }
+
+                    // No URL returned — unknown response
+                    console.warn('[Sources] No redirect URL in response:', result);
+                    proceedBtn.textContent = 'NO REDIRECT — RETRY';
+                    proceedBtn.disabled = false;
                 } catch (err) {
                     console.error(`[Sources] Connect ${prov.id} failed:`, err);
-                    proceedBtn.textContent = 'ERROR — RETRY';
+                    const msg = err?.message || 'Connection failed';
+                    proceedBtn.textContent = msg.length > 30 ? 'ERROR — RETRY' : msg.toUpperCase();
                     proceedBtn.disabled = false;
                 }
             };

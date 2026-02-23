@@ -8,7 +8,15 @@ export function renderContractDetail(params) {
             /* ================================================================
                CONTRACT DETAIL — Institutional Receipt
                ================================================================ */
-            .cd { max-width: 780px; margin: 0 auto; padding: 32px 24px 100px; font-family: 'IBM Plex Sans', -apple-system, sans-serif; color: #111; }
+            .cd {
+                max-width: 1400px;
+                margin: 0 auto;
+                padding: 32px 40px 100px;
+                font-family: 'IBM Plex Sans', -apple-system, sans-serif;
+                color: #111;
+                background: #F2F2F2;
+                min-height: calc(100vh - 72px);
+            }
 
             /* Breadcrumb */
             .cd-breadcrumb { display: flex; align-items: center; gap: 6px; margin-bottom: 28px; }
@@ -23,8 +31,11 @@ export function renderContractDetail(params) {
 
             /* Card */
             .cd-card {
-                background: #fff; border: 1px solid #d4d4d4;
-                border-top: 3px solid #752122; overflow: hidden;
+                background: #fff;
+                border: 1px solid #DADADA;
+                border-radius: 4px;
+                border-top: 3px solid #752122;
+                overflow: hidden;
             }
 
             /* Loading */
@@ -48,16 +59,16 @@ export function renderContractDetail(params) {
             .cd-hidden { display: none !important; }
 
             /* === HEADER === */
-            .cd-header { padding: 24px 28px; border-bottom: 1px solid #e5e5e5; display: flex; justify-content: space-between; align-items: flex-start; gap: 16px; }
+            .cd-header { padding: 20px 24px; border-bottom: 1px solid #e5e5e5; display: flex; justify-content: space-between; align-items: flex-start; gap: 16px; }
             .cd-header-left { display: flex; flex-direction: column; gap: 4px; }
             .cd-header-lbl { font-size: 9px; text-transform: uppercase; letter-spacing: 0.1em; color: #9ca3af; font-family: 'IBM Plex Mono', monospace; font-weight: 600; }
-            .cd-header-id { font-size: 18px; font-family: 'IBM Plex Mono', monospace; font-weight: 600; color: #0a0a0a; letter-spacing: -0.01em; }
+            .cd-header-id { font-size: 16px; font-family: 'IBM Plex Mono', monospace; font-weight: 600; color: #0a0a0a; letter-spacing: -0.01em; }
             .cd-header-right { display: flex; flex-direction: column; align-items: flex-end; gap: 6px; }
             .cd-badge {
                 display: inline-flex; align-items: center; padding: 3px 10px;
                 font-size: 10px; font-weight: 700; text-transform: uppercase;
                 letter-spacing: 0.08em; font-family: 'IBM Plex Mono', monospace;
-                border: 1px solid transparent;
+                border: 1px solid transparent; border-radius: 3px;
             }
             .cd-badge-created { background: #f5f5f5; border-color: #e5e5e5; color: #6b7280; }
             .cd-badge-pending { background: #fffbeb; border-color: #fde68a; color: #92400e; }
@@ -72,7 +83,7 @@ export function renderContractDetail(params) {
             .cd-terms { display: grid; grid-template-columns: repeat(4, 1fr); border-bottom: 1px solid #e5e5e5; }
             @media (max-width: 600px) { .cd-terms { grid-template-columns: repeat(2, 1fr); } }
             .cd-term {
-                padding: 18px 20px; border-right: 1px solid #e5e5e5;
+                padding: 14px 20px; border-right: 1px solid #e5e5e5;
                 background: #fafafa;
             }
             .cd-term:last-child { border-right: none; }
@@ -83,16 +94,16 @@ export function renderContractDetail(params) {
             /* === CAPITAL BLOCK === */
             .cd-capital { display: grid; grid-template-columns: 1fr 1fr; border-bottom: 1px solid #e5e5e5; }
             @media (max-width: 500px) { .cd-capital { grid-template-columns: 1fr; } }
-            .cd-capital-cell { padding: 24px 28px; }
+            .cd-capital-cell { padding: 20px 24px; }
             .cd-capital-cell:first-child { border-right: 1px solid #e5e5e5; }
             @media (max-width: 500px) { .cd-capital-cell:first-child { border-right: none; border-bottom: 1px solid #e5e5e5; } }
             .cd-capital-lbl { font-size: 9px; text-transform: uppercase; letter-spacing: 0.1em; color: #6b7280; font-family: 'IBM Plex Mono', monospace; font-weight: 600; margin-bottom: 8px; }
-            .cd-capital-amount { font-size: 28px; font-weight: 700; letter-spacing: -0.02em; color: #0a0a0a; font-family: 'IBM Plex Sans', sans-serif; }
-            .cd-capital-payout { font-size: 22px; font-weight: 600; color: #166534; }
+            .cd-capital-amount { font-size: 30px; font-weight: 700; letter-spacing: -0.02em; color: #0a0a0a; font-family: 'IBM Plex Mono', monospace; }
+            .cd-capital-payout { font-size: 24px; font-weight: 600; color: #166534; font-family: 'IBM Plex Mono', monospace; }
 
             /* === IMMUTABLE NOTICE === */
             .cd-immutable {
-                padding: 10px 28px; border-bottom: 1px solid #e5e5e5;
+                padding: 8px 24px; border-bottom: 1px solid #e5e5e5;
                 background: #fafafa; display: flex; align-items: center; gap: 8px;
                 font-size: 10px; font-family: 'IBM Plex Mono', monospace;
                 color: #9ca3af; text-transform: uppercase; letter-spacing: 0.06em;
@@ -100,7 +111,7 @@ export function renderContractDetail(params) {
             .cd-immutable svg { width: 12px; height: 12px; flex-shrink: 0; }
 
             /* === ACTION PANEL === */
-            .cd-action { padding: 24px 28px; border-bottom: 1px solid #e5e5e5; background: #fff; }
+            .cd-action { padding: 20px 24px; border-bottom: 1px solid #e5e5e5; background: #fff; }
             .cd-action-title { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: #9ca3af; font-family: 'IBM Plex Mono', monospace; margin-bottom: 16px; }
             .cd-action-body { }
 
@@ -148,19 +159,19 @@ export function renderContractDetail(params) {
             .cd-payment-msg.success { color: #166534; }
 
             /* === EVENT LOG === */
-            .cd-events { padding: 24px 28px; border-bottom: 1px solid #e5e5e5; }
-            .cd-events-title { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: #9ca3af; font-family: 'IBM Plex Mono', monospace; margin-bottom: 20px; }
+            .cd-events { padding: 20px 24px; border-bottom: 1px solid #e5e5e5; }
+            .cd-events-title { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: #9ca3af; font-family: 'IBM Plex Mono', monospace; margin-bottom: 16px; }
             .cd-timeline { position: relative; padding-left: 20px; }
             .cd-timeline::before {
                 content: ''; position: absolute; left: 4px; top: 6px; bottom: 6px;
-                width: 1px; background: #e5e5e5;
+                width: 1px; background: #E0E0E0;
             }
-            .cd-event { position: relative; margin-bottom: 18px; display: flex; justify-content: space-between; align-items: baseline; gap: 12px; }
+            .cd-event { position: relative; margin-bottom: 14px; display: flex; justify-content: space-between; align-items: baseline; gap: 12px; }
             .cd-event:last-child { margin-bottom: 0; }
             .cd-event-dot {
                 position: absolute; left: -20px; top: 5px;
                 width: 9px; height: 9px; border-radius: 50%;
-                border: 2px solid #fff; box-shadow: 0 0 0 1px #e5e5e5;
+                border: 2px solid #fff; box-shadow: 0 0 0 1px #E0E0E0;
             }
             .cd-event-dot.neutral { background: #d4d4d4; }
             .cd-event-dot.amber { background: #f59e0b; }
@@ -174,8 +185,9 @@ export function renderContractDetail(params) {
 
             /* === FOOTER === */
             .cd-footer {
-                padding: 16px 28px; background: #fafafa;
+                padding: 14px 24px; background: #fafafa;
                 display: flex; justify-content: space-between; align-items: center;
+                border-radius: 0 0 4px 4px;
             }
             .cd-footer-lbl { font-size: 9px; text-transform: uppercase; letter-spacing: 0.08em; color: #9ca3af; font-family: 'IBM Plex Mono', monospace; font-weight: 600; }
             .cd-footer-val { font-size: 10px; color: #6b7280; font-family: 'IBM Plex Mono', monospace; margin-top: 2px; }
@@ -185,9 +197,9 @@ export function renderContractDetail(params) {
             /* Payment result banner */
             .cd-banner {
                 position: fixed; top: 16px; left: 50%; transform: translateX(-50%); z-index: 100;
-                padding: 12px 20px; border: 1px solid; border-radius: 6px;
+                padding: 12px 20px; border: 1px solid; border-radius: 4px;
                 font-size: 13px; font-weight: 500; display: flex; align-items: center; gap: 10px;
-                box-shadow: 0 4px 16px rgba(0,0,0,0.1); font-family: 'IBM Plex Sans', sans-serif;
+                box-shadow: 0 2px 8px rgba(0,0,0,0.08); font-family: 'IBM Plex Sans', sans-serif;
             }
             .cd-banner.success { background: #f0fdf4; border-color: #bbf7d0; color: #166534; }
             .cd-banner.error { background: #fef2f2; border-color: #fecaca; color: #991b1b; }

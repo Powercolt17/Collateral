@@ -267,7 +267,7 @@ export async function initActiveContracts() {
         // LOCKED, ACTIVE, EXECUTION_CONFIRMED = Primary
         // CREATED, FUNDS_AUTHORIZED = Needs attention
         const activeStates = ['LOCKED', 'ACTIVE', 'EXECUTION_CONFIRMED', 'CREATED', 'FUNDS_AUTHORIZED'];
-        const activeContracts = contracts.filter(c => activeStates.includes(c.state));
+        const activeContracts = contracts.filter(c => activeStates.includes(c.derivedState || c.state));
 
         if (activeContracts.length === 0) {
             renderEmptyState(container);
@@ -313,10 +313,10 @@ function renderContractList(container, contracts) {
         let statusClass = 'status-active';
         let statusLabel = 'ACTIVE';
 
-        if (['CREATED', 'FUNDS_AUTHORIZED'].includes(c.state)) {
+        if (['CREATED', 'FUNDS_AUTHORIZED'].includes(c.derivedState || c.state)) {
             statusClass = 'status-pending';
             statusLabel = 'FUNDING_REQUIRED';
-        } else if (c.state === 'EXECUTION_CONFIRMED') {
+        } else if ((c.derivedState || c.state) === 'EXECUTION_CONFIRMED') {
             statusLabel = 'EXECUTED';
         }
 

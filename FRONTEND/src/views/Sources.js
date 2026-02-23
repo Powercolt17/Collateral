@@ -39,15 +39,15 @@ export function renderSources() {
             }
             .src-page-sub {
                 font-size: 12px;
-                color: #888;
+                color: #777;
                 margin: 4px 0 0;
                 font-family: 'IBM Plex Mono', monospace;
             }
 
             /* Metrics Strip */
             .src-metrics {
-                padding: 20px 0;
-                border-bottom: 1px solid #ECECEC;
+                padding: 16px 0;
+                border-bottom: 1px solid #E0E0E0;
             }
             .src-metrics-grid {
                 display: grid;
@@ -62,7 +62,7 @@ export function renderSources() {
             .src-metric:last-child { border-right: none; }
             .src-metric-value {
                 font-family: 'IBM Plex Mono', monospace;
-                font-size: 22px;
+                font-size: 26px;
                 font-weight: 700;
                 color: #111;
                 letter-spacing: -0.5px;
@@ -90,12 +90,12 @@ export function renderSources() {
                 font-weight: 700;
                 text-transform: uppercase;
                 letter-spacing: 1.5px;
-                color: #777;
+                color: #666;
             }
 
             /* ── Feed Area ── */
             .src-feed {
-                padding: 28px 0 60px;
+                padding: 24px 0 48px;
             }
 
             /* ── Section Headers ── */
@@ -106,7 +106,9 @@ export function renderSources() {
                 text-transform: uppercase;
                 letter-spacing: 1.5px;
                 color: #888;
-                margin: 0 0 14px;
+                margin: 0 0 10px;
+                padding-bottom: 8px;
+                border-bottom: 1px solid #ECECEC;
             }
 
             /* ── Connected Source Cards ── */
@@ -114,14 +116,14 @@ export function renderSources() {
                 display: flex;
                 flex-direction: column;
                 gap: 6px;
-                margin-bottom: 36px;
+                margin-bottom: 28px;
             }
 
             .src-conn-card {
                 background: #fff;
                 border: 1px solid #DADADA;
                 border-radius: 4px;
-                padding: 12px 24px;
+                padding: 10px 24px;
                 display: flex;
                 align-items: center;
                 justify-content: space-between;
@@ -131,7 +133,7 @@ export function renderSources() {
                 content: '';
                 position: absolute;
                 top: 4px; bottom: 4px; left: 0;
-                width: 3px;
+                width: 2px;
                 border-radius: 0 2px 2px 0;
                 background: #15803d;
             }
@@ -139,10 +141,10 @@ export function renderSources() {
             .src-conn-left {
                 display: flex;
                 align-items: center;
-                gap: 14px;
+                gap: 12px;
             }
             .src-conn-icon {
-                width: 36px; height: 36px;
+                width: 32px; height: 32px;
                 background: #EFEFEF;
                 border-radius: 4px;
                 display: flex;
@@ -155,11 +157,11 @@ export function renderSources() {
             .src-conn-info {
                 display: flex;
                 flex-direction: column;
-                gap: 2px;
+                gap: 1px;
             }
             .src-conn-name {
                 font-size: 13px;
-                font-weight: 700;
+                font-weight: 600;
                 color: #111;
             }
             .src-conn-id {
@@ -243,15 +245,15 @@ export function renderSources() {
 
             .src-prov-card {
                 background: #fff;
-                border: 1px solid #DADADA;
+                border: 1px solid #D6D6D6;
                 border-radius: 4px;
-                padding: 20px 24px;
+                padding: 14px 20px;
                 transition: border-color 0.12s;
                 display: flex;
                 flex-direction: column;
-                gap: 14px;
+                gap: 10px;
             }
-            .src-prov-card:hover { border-color: #C8C8C8; }
+            .src-prov-card:hover { border-color: #B8B8B8; }
             .src-prov-card.connected { opacity: 0.5; pointer-events: none; }
 
             .src-prov-top {
@@ -260,7 +262,7 @@ export function renderSources() {
                 gap: 12px;
             }
             .src-prov-icon {
-                width: 36px; height: 36px;
+                width: 32px; height: 32px;
                 background: #EFEFEF;
                 border-radius: 4px;
                 display: flex;
@@ -285,11 +287,11 @@ export function renderSources() {
             .src-prov-btn {
                 align-self: flex-start;
                 font-family: 'IBM Plex Mono', monospace;
-                font-size: 10px;
+                font-size: 11px;
                 font-weight: 700;
                 text-transform: uppercase;
                 letter-spacing: 0.8px;
-                padding: 8px 20px;
+                padding: 8px 28px;
                 background: #111;
                 color: #fff;
                 border: none;
@@ -316,33 +318,36 @@ export function renderSources() {
             .src-coming-soon {
                 font-family: 'IBM Plex Mono', monospace;
                 font-size: 9px;
-                font-weight: 700;
+                font-weight: 600;
                 text-transform: uppercase;
                 letter-spacing: 1px;
-                color: #bbb;
+                color: #ccc;
                 align-self: flex-start;
+            }
+            .src-prov-card-dimmed {
+                opacity: 0.55;
             }
 
             /* ── Footer Notice ── */
             .src-footer-notice {
-                margin-top: 40px;
-                padding: 12px 24px;
+                margin-top: 28px;
+                padding: 10px 20px;
                 background: #fff;
-                border: 1px solid #ECECEC;
+                border: 1px solid #E0E0E0;
                 border-radius: 4px;
                 display: flex;
                 align-items: center;
                 gap: 10px;
             }
             .src-footer-notice-icon {
-                color: #999;
+                color: #888;
                 flex-shrink: 0;
             }
             .src-footer-notice-icon svg { width: 14px; height: 14px; }
             .src-footer-notice-text {
                 font-family: 'IBM Plex Mono', monospace;
                 font-size: 10px;
-                color: #888;
+                color: #666;
                 text-transform: uppercase;
                 letter-spacing: 0.5px;
                 line-height: 1.6;
@@ -466,7 +471,7 @@ export function renderSources() {
             /* ── Empty Connected State ── */
             .src-empty-connected {
                 text-align: center;
-                padding: 24px;
+                padding: 18px;
                 font-family: 'IBM Plex Mono', monospace;
                 font-size: 10px;
                 color: #999;
@@ -752,7 +757,7 @@ export async function initSources() {
 
         if (prov.comingSoon) {
             html += `
-                <div class="src-prov-card">
+                <div class="src-prov-card src-prov-card-dimmed">
                     <div class="src-prov-top">
                         <div class="src-prov-icon"><i data-lucide="${prov.icon}"></i></div>
                         <span class="src-prov-name">${prov.name}</span>

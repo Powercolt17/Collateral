@@ -11,6 +11,7 @@ import { renderDocs, initDocs } from './views/Docs.js';
 import { renderFunding, initFunding } from './views/Funding.js';
 import { renderReceipts, initReceipts } from './views/Receipts.js';
 import { renderActiveContracts, initActiveContracts } from './views/ActiveContracts.js';
+import { renderSources, initSources } from './views/Sources.js';
 
 import { renderTermSheet, initTermSheet } from './views/TermSheet.js';
 import { renderContractTermSheet, initContractTermSheet } from './views/ContractTermSheet.js';
@@ -147,6 +148,7 @@ const routes = PRE_LAUNCH_MODE ? [
     { path: '/profile', render: renderPreLaunch, init: initPreLaunch },
     { path: '/settings', render: renderPreLaunch, init: initPreLaunch },
     { path: '/my-contracts', render: renderPreLaunch, init: initPreLaunch },
+    { path: '/sources', render: renderPreLaunch, init: initPreLaunch },
     { path: '/docs', render: renderPreLaunch, init: initPreLaunch },
     { path: '/funding', render: renderPreLaunch, init: initPreLaunch },
     { path: '/receipts', render: renderPreLaunch, init: initPreLaunch },
@@ -157,6 +159,7 @@ const routes = PRE_LAUNCH_MODE ? [
     { path: '/overview', render: renderOverview, init: initOverview },
     { path: '/ledger', render: renderLedger, init: initLedger },
     { path: '/contracts', render: renderActiveContracts, init: initActiveContracts },
+    { path: '/sources', render: renderSources, init: initSources },
     { path: '/contracts/execute', render: renderContracts, init: initContracts },
     { path: '/contracts/:id', render: renderContractDetail, init: initContractDetail },
     { path: '/market/:id', render: () => '<div></div>', init: (params) => { window.location.hash = '/contract/' + (params?.id || ''); } },
@@ -1065,7 +1068,7 @@ function updateAuthUI() {
 }
 
 // Protected routes that require login
-const protectedRoutes = ['/contracts', '/contracts/execute', '/my-contracts', '/profile', '/funding'];
+const protectedRoutes = ['/contracts', '/contracts/execute', '/my-contracts', '/profile', '/funding', '/sources'];
 
 // Route change handler
 router.onRouteChange = function (route, path) {

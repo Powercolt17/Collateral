@@ -4,6 +4,7 @@ export function renderHeader(currentRoute) {
         { path: '/overview', label: 'MARKET' },
         { path: '/ledger', label: 'LEDGER' },
         { path: '/contracts', label: 'CONTRACTS' },
+        { path: '/sources', label: 'SOURCES' },
         { path: '/docs', label: 'DOCS' }
     ];
 

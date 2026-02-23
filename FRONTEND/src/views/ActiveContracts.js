@@ -45,6 +45,7 @@ export function renderActiveContracts() {
             /* Layer 2: Metrics Strip */
             .act-metrics {
                 padding: 20px 0;
+                border-bottom: 1px solid #ECECEC;
             }
             .act-metrics-grid {
                 display: grid;
@@ -54,10 +55,12 @@ export function renderActiveContracts() {
             .act-metric {
                 text-align: center;
                 padding: 0 32px;
+                border-right: 1px solid #ECECEC;
             }
+            .act-metric:last-child { border-right: none; }
             .act-metric-value {
                 font-family: 'IBM Plex Mono', monospace;
-                font-size: 20px;
+                font-size: 26px;
                 font-weight: 700;
                 color: #111;
                 letter-spacing: -0.5px;
@@ -70,12 +73,12 @@ export function renderActiveContracts() {
                 font-weight: 700;
                 text-transform: uppercase;
                 letter-spacing: 1.5px;
-                color: #888;
+                color: #777;
             }
 
             /* ── Feed ── */
             .act-feed {
-                padding: 24px 0 80px;
+                padding: 24px 0 60px;
             }
 
             /* ── Contract Cards ── */
@@ -89,7 +92,7 @@ export function renderActiveContracts() {
                 background: #fff;
                 border: 1px solid #DADADA;
                 border-radius: 4px;
-                padding: 14px 24px;
+                padding: 10px 24px;
                 display: flex;
                 align-items: center;
                 justify-content: space-between;
@@ -200,7 +203,7 @@ export function renderActiveContracts() {
                 padding-left: 24px;
             }
             .act-card-amount {
-                font-size: 22px;
+                font-size: 24px;
                 font-weight: 700;
                 color: #111;
                 font-family: 'IBM Plex Mono', monospace;

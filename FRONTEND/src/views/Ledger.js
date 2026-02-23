@@ -43,6 +43,7 @@ export function renderLedger() {
             /* Layer 2: Metrics */
             .ldg-topbar {
                 padding: 20px 0;
+                border-bottom: 1px solid #ECECEC;
             }
             .ldg-stats-grid {
                 display: grid;
@@ -55,7 +56,7 @@ export function renderLedger() {
             }
             .ldg-stat-value {
                 font-family: 'IBM Plex Mono', monospace;
-                font-size: 20px;
+                font-size: 22px;
                 font-weight: 700;
                 color: #111111;
                 letter-spacing: -0.5px;
@@ -84,7 +85,7 @@ export function renderLedger() {
                 font-weight: 700;
                 text-transform: uppercase;
                 letter-spacing: 1.5px;
-                color: #888888;
+                color: #777777;
             }
 
             /* Layer 3: Controls */
@@ -231,7 +232,7 @@ export function renderLedger() {
                 background: #fff;
                 border: 1px solid #DADADA;
                 border-radius: 4px;
-                padding: 14px 24px;
+                padding: 10px 24px;
                 cursor: pointer;
                 transition: box-shadow 0.15s, border-color 0.15s, transform 0.15s;
                 position: relative;
@@ -257,7 +258,7 @@ export function renderLedger() {
                 display: flex;
                 align-items: flex-start;
                 justify-content: space-between;
-                margin-bottom: 10px;
+                margin-bottom: 8px;
             }
             .ldg-card-left {
                 display: flex;
@@ -298,7 +299,7 @@ export function renderLedger() {
             }
             .ldg-event-amount {
                 font-family: 'IBM Plex Mono', monospace;
-                font-size: 22px;
+                font-size: 24px;
                 font-weight: 700;
                 color: #111111;
                 letter-spacing: -0.5px;
@@ -317,7 +318,7 @@ export function renderLedger() {
                 text-transform: uppercase;
                 letter-spacing: 0.5px;
                 white-space: nowrap;
-                margin-top: 6px;
+                margin-top: 4px;
             }
             .ldg-status.locked    { background: #f5f5f5; color: #666666; border: 1px solid #E0E0E0; }
             .ldg-status.settled   { background: #f0fdf4; color: #15803d; border: 1px solid #bbf7d0; }

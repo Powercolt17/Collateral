@@ -9,7 +9,7 @@ export function renderLedger() {
                ============================================================ */
 
             .ldg {
-                background: #f5f5f5;
+                background: #F6F6F6;
                 min-height: calc(100vh - 72px);
                 font-family: 'IBM Plex Sans', -apple-system, sans-serif;
                 color: #111;
@@ -17,7 +17,7 @@ export function renderLedger() {
 
             /* ── Centered Container ── */
             .ldg-container {
-                max-width: 1240px;
+                max-width: 1400px;
                 margin: 0 auto;
                 padding: 0 40px;
             }
@@ -51,7 +51,7 @@ export function renderLedger() {
             }
             .ldg-stat {
                 text-align: center;
-                padding: 0 24px;
+                padding: 0 32px;
             }
             .ldg-stat-value {
                 font-family: 'IBM Plex Mono', monospace;
@@ -230,7 +230,8 @@ export function renderLedger() {
             /* ── Event Card ── */
             .ldg-card {
                 background: #fff;
-                border: 1px solid #E8E8E8;
+                border: 1px solid #E3E3E3;
+                border-radius: 6px;
                 padding: 18px 24px;
                 cursor: pointer;
                 transition: box-shadow 0.15s, border-color 0.15s, transform 0.15s;
@@ -244,8 +245,9 @@ export function renderLedger() {
             .ldg-card::before {
                 content: '';
                 position: absolute;
-                top: 0; bottom: 0; left: 0;
+                top: 6px; bottom: 6px; left: 0;
                 width: 3px;
+                border-radius: 0 2px 2px 0;
                 background: transparent;
                 transition: background 0.1s;
             }
@@ -380,6 +382,7 @@ export function renderLedger() {
             .ldg-skeleton {
                 background: #fff;
                 border: 1px solid #E3E3E3;
+                border-radius: 6px;
                 height: 88px;
                 position: relative;
                 overflow: hidden;

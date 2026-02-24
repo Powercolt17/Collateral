@@ -632,43 +632,36 @@ export function renderOverview() {
                 font-size: 10px; color: #752122; font-weight: 600;
                 font-family: 'JetBrains Mono', monospace;
             }
-            /* ── Hero ── */
+            /* ── Hero (System Header) ── */
             .eq-hero {
                 background: #fff;
-                border-bottom: 2px solid #752122;
-                padding: 80px 32px 48px;
-                text-align: center;
+                border-bottom: 1px solid #e5e5e5;
+                padding: 24px 32px 20px;
             }
-            .eq-hero-headline {
-                font-size: 56px;
-                font-weight: 700;
-                color: #111;
-                letter-spacing: -2px;
-                margin: 0 0 20px;
-                font-family: 'IBM Plex Sans', sans-serif;
-                line-height: 1.05;
-            }
-            .eq-hero-accent {
-                width: 48px;
-                height: 3px;
-                background: #752122;
-                margin: 0 auto 20px;
-            }
-            .eq-hero-sub {
-                font-size: 16px;
-                color: #666;
-                margin: 0 auto 24px;
-                line-height: 1.6;
-                font-family: 'IBM Plex Sans', sans-serif;
-                max-width: 520px;
-            }
-            .eq-hero-rule {
+            .eq-hero-label {
                 font-family: 'IBM Plex Mono', monospace;
-                font-size: 11px;
+                font-size: 10px;
                 font-weight: 700;
                 text-transform: uppercase;
-                letter-spacing: 3px;
+                letter-spacing: 1.5px;
                 color: #752122;
+                margin: 0 0 8px;
+            }
+            .eq-hero-headline {
+                font-size: 22px;
+                font-weight: 700;
+                color: #111;
+                letter-spacing: -0.5px;
+                margin: 0 0 6px;
+                font-family: 'IBM Plex Sans', sans-serif;
+                line-height: 1.2;
+            }
+            .eq-hero-sub {
+                font-size: 13px;
+                color: #888;
+                margin: 0;
+                line-height: 1.5;
+                font-family: 'IBM Plex Sans', sans-serif;
             }
 
             /* ── Stake Warning ── */
@@ -685,20 +678,18 @@ export function renderOverview() {
             }
 
             @media (max-width: 768px) {
-                .eq-hero { padding: 48px 16px 32px; }
-                .eq-hero-headline { font-size: 32px; letter-spacing: -1px; }
-                .eq-hero-sub { font-size: 14px; }
+                .eq-hero { padding: 20px 16px 16px; }
+                .eq-hero-headline { font-size: 20px; }
                 .eq-stake-warning { padding: 0 16px 16px; }
             }
         </style>
 
         <div class="eq">
-            <!-- Hero -->
+            <!-- System Header -->
             <div class="eq-hero">
+                <div class="eq-hero-label">Capital-Backed Performance Contracts</div>
                 <div class="eq-hero-headline">Put Capital on the Line.</div>
-                <div class="eq-hero-accent"></div>
-                <div class="eq-hero-sub">Commit to a measurable target. Lock funds. If you hit it, you get paid. If you miss, you lose.</div>
-                <div class="eq-hero-rule">Real Performance &nbsp;•&nbsp; Real Stakes</div>
+                <div class="eq-hero-sub">Stake funds against measurable outcomes. Automatic settlement at deadline.</div>
             </div>
 
             <!-- Live Header -->

@@ -632,28 +632,6 @@ export function renderOverview() {
                 font-size: 10px; color: #752122; font-weight: 600;
                 font-family: 'JetBrains Mono', monospace;
             }
-            /* ── Market Header ── */
-            .eq-hero {
-                background: #fff;
-                border-bottom: 1px solid #e5e5e5;
-                padding: 32px 32px 24px;
-            }
-            .eq-hero-headline {
-                font-size: 18px;
-                font-weight: 700;
-                color: #111;
-                letter-spacing: -0.3px;
-                margin: 0 0 6px;
-                font-family: 'IBM Plex Sans', sans-serif;
-                line-height: 1.3;
-            }
-            .eq-hero-sub {
-                font-size: 13px;
-                color: #888;
-                margin: 0;
-                line-height: 1.5;
-                font-family: 'IBM Plex Sans', sans-serif;
-            }
 
             /* ── Stake Warning ── */
             .eq-stake-warning {
@@ -669,19 +647,11 @@ export function renderOverview() {
             }
 
             @media (max-width: 768px) {
-                .eq-hero { padding: 20px 16px 16px; }
-                .eq-hero-headline { font-size: 20px; }
                 .eq-stake-warning { padding: 0 16px 16px; }
             }
         </style>
 
         <div class="eq">
-            <!-- Market Header -->
-            <div class="eq-hero">
-                <div class="eq-hero-headline">Stake Your Performance.</div>
-                <div class="eq-hero-sub">Commit capital to measurable results. Automatic settlement at deadline.</div>
-            </div>
-
             <!-- Live Header -->
             <div class="eq-live-header">
                 <div class="eq-live-dot"></div>

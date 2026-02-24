@@ -632,29 +632,20 @@ export function renderOverview() {
                 font-size: 10px; color: #752122; font-weight: 600;
                 font-family: 'JetBrains Mono', monospace;
             }
-            /* ── Hero (System Header) ── */
+            /* ── Market Header ── */
             .eq-hero {
                 background: #fff;
                 border-bottom: 1px solid #e5e5e5;
-                padding: 24px 32px 20px;
-            }
-            .eq-hero-label {
-                font-family: 'IBM Plex Mono', monospace;
-                font-size: 10px;
-                font-weight: 700;
-                text-transform: uppercase;
-                letter-spacing: 1.5px;
-                color: #752122;
-                margin: 0 0 8px;
+                padding: 32px 32px 24px;
             }
             .eq-hero-headline {
-                font-size: 22px;
+                font-size: 18px;
                 font-weight: 700;
                 color: #111;
-                letter-spacing: -0.5px;
+                letter-spacing: -0.3px;
                 margin: 0 0 6px;
                 font-family: 'IBM Plex Sans', sans-serif;
-                line-height: 1.2;
+                line-height: 1.3;
             }
             .eq-hero-sub {
                 font-size: 13px;
@@ -685,11 +676,10 @@ export function renderOverview() {
         </style>
 
         <div class="eq">
-            <!-- System Header -->
+            <!-- Market Header -->
             <div class="eq-hero">
-                <div class="eq-hero-label">Capital-Backed Performance Contracts</div>
-                <div class="eq-hero-headline">Put Capital on the Line.</div>
-                <div class="eq-hero-sub">Stake funds against measurable outcomes. Automatic settlement at deadline.</div>
+                <div class="eq-hero-headline">Capital-Backed Performance Contracts</div>
+                <div class="eq-hero-sub">Stake funds against measurable outcomes. Settlement is automatic and final.</div>
             </div>
 
             <!-- Live Header -->

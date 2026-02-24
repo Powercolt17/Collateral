@@ -118,7 +118,7 @@ export function renderOverview() {
                 position: relative;
             }
             .eq-tab:hover { color: #111111; }
-            .eq-tab.active { color: #111111; font-weight: 700; border-bottom-color: #752122; }
+            .eq-tab.active { color: #111111; font-weight: 700; border-bottom-color: #752122; border-bottom-width: 3px; }
             .eq-tab-count {
                 font-size: 10px;
                 background: #f3f4f6;
@@ -163,8 +163,8 @@ export function renderOverview() {
             .eq-pill:hover { border-color: #DCDCDC; color: #111111; }
             .eq-pill.active { 
                 background: #fff; 
-                color: #111111; 
-                border-color: #111111; 
+                color: #752122; 
+                border-color: #752122; 
                 font-weight: 700;
             }
 
@@ -635,34 +635,40 @@ export function renderOverview() {
             /* ── Hero ── */
             .eq-hero {
                 background: #fff;
-                border-bottom: 1px solid #e5e5e5;
-                padding: 64px 32px 40px;
+                border-bottom: 2px solid #752122;
+                padding: 80px 32px 48px;
                 text-align: center;
             }
             .eq-hero-headline {
-                font-size: 44px;
+                font-size: 56px;
                 font-weight: 700;
                 color: #111;
-                letter-spacing: -1.5px;
-                margin: 0 0 16px;
+                letter-spacing: -2px;
+                margin: 0 0 20px;
                 font-family: 'IBM Plex Sans', sans-serif;
-                line-height: 1.1;
+                line-height: 1.05;
+            }
+            .eq-hero-accent {
+                width: 48px;
+                height: 3px;
+                background: #752122;
+                margin: 0 auto 20px;
             }
             .eq-hero-sub {
-                font-size: 15px;
-                color: #777;
-                margin: 0 auto 20px;
+                font-size: 16px;
+                color: #666;
+                margin: 0 auto 24px;
                 line-height: 1.6;
                 font-family: 'IBM Plex Sans', sans-serif;
-                max-width: 480px;
+                max-width: 520px;
             }
             .eq-hero-rule {
                 font-family: 'IBM Plex Mono', monospace;
                 font-size: 11px;
-                font-weight: 600;
+                font-weight: 700;
                 text-transform: uppercase;
-                letter-spacing: 2.5px;
-                color: #aaa;
+                letter-spacing: 3px;
+                color: #752122;
             }
 
             /* ── Stake Warning ── */
@@ -679,8 +685,8 @@ export function renderOverview() {
             }
 
             @media (max-width: 768px) {
-                .eq-hero { padding: 40px 16px 28px; }
-                .eq-hero-headline { font-size: 28px; letter-spacing: -1px; }
+                .eq-hero { padding: 48px 16px 32px; }
+                .eq-hero-headline { font-size: 32px; letter-spacing: -1px; }
                 .eq-hero-sub { font-size: 14px; }
                 .eq-stake-warning { padding: 0 16px 16px; }
             }
@@ -690,6 +696,7 @@ export function renderOverview() {
             <!-- Hero -->
             <div class="eq-hero">
                 <div class="eq-hero-headline">Put Capital on the Line.</div>
+                <div class="eq-hero-accent"></div>
                 <div class="eq-hero-sub">Commit to a measurable target. Lock funds. If you hit it, you get paid. If you miss, you lose.</div>
                 <div class="eq-hero-rule">Real Performance &nbsp;•&nbsp; Real Stakes</div>
             </div>

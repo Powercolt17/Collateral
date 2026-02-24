@@ -1,71 +1,63 @@
 // ActiveContracts.js — Institutional Contract Hub
-// Capital infrastructure. Not SaaS dashboard.
+// Left-aligned, clean, flat layout
 
 export function renderActiveContracts() {
     return `
         <style>
-            /* ===== ACTIVE CONTRACTS — CLEARINGHOUSE GRADE ===== */
+            /* ===== ACTIVE CONTRACTS — LEFT-ALIGNED INSTITUTIONAL ===== */
             .act {
-                background: #F2F2F2;
+                background: #fff;
                 min-height: calc(100vh - 72px);
                 font-family: 'IBM Plex Sans', -apple-system, sans-serif;
                 color: #111;
             }
 
-            .act-container {
-                max-width: 1400px;
-                margin: 0 auto;
-                padding: 0 40px;
-            }
-
-            /* ── Top Block (white) ── */
-            .act-top {
-                background: #fff;
-                border-bottom: 1px solid #DADADA;
-            }
-
-            /* Layer 1: Title */
-            .act-page-hdr {
-                padding: 20px 0 0;
+            /* ── Page Header ── */
+            .act-header {
+                padding: 28px 32px 0;
             }
             .act-page-title {
-                font-size: 18px;
-                font-weight: 600;
-                letter-spacing: -0.3px;
+                font-size: 16px;
+                font-weight: 700;
+                letter-spacing: 0.5px;
                 color: #111;
                 margin: 0;
+                text-transform: uppercase;
             }
             .act-page-sub {
-                font-size: 12px;
-                color: #888;
+                font-size: 11px;
+                color: #999;
                 margin: 4px 0 0;
                 font-family: 'IBM Plex Mono', monospace;
+                text-transform: uppercase;
+                letter-spacing: 0.5px;
             }
 
-            /* Layer 2: Metrics Strip */
+            /* ── Metrics Strip ── */
             .act-metrics {
-                padding: 20px 0;
-                border-bottom: 1px solid #ECECEC;
-            }
-            .act-metrics-grid {
-                display: grid;
-                grid-template-columns: repeat(4, 1fr);
+                display: flex;
+                align-items: stretch;
+                padding: 20px 32px 24px;
                 gap: 0;
+                border-bottom: 1px solid #e5e5e5;
             }
             .act-metric {
-                text-align: center;
-                padding: 0 32px;
-                border-right: 1px solid #ECECEC;
+                flex: 1;
+                padding: 16px 24px;
+                border: 1px solid #e5e5e5;
+                border-right: none;
             }
-            .act-metric:last-child { border-right: none; }
+            .act-metric:last-child {
+                border-right: 1px solid #e5e5e5;
+            }
             .act-metric-value {
-                font-family: 'IBM Plex Mono', monospace;
+                font-family: 'IBM Plex Sans', sans-serif;
                 font-size: 26px;
                 font-weight: 700;
                 color: #111;
                 letter-spacing: -0.5px;
                 line-height: 1.2;
-                margin-bottom: 6px;
+                margin-bottom: 4px;
             }
             .act-metric-label {
                 font-family: 'IBM Plex Mono', monospace;
@@ -73,55 +65,52 @@ export function renderActiveContracts() {
                 font-weight: 700;
                 text-transform: uppercase;
                 letter-spacing: 1.5px;
-                color: #777;
+                color: #888;
             }
 
-            /* ── Feed ── */
+            /* ── Contract Feed ── */
             .act-feed {
-                padding: 24px 0 60px;
+                padding: 24px 32px 60px;
             }
 
             /* ── Contract Cards ── */
             .act-list {
                 display: flex;
                 flex-direction: column;
-                gap: 6px;
+                gap: 0;
             }
 
             .act-card {
-                background: #fff;
-                border: 1px solid #DADADA;
-                border-radius: 4px;
-                padding: 10px 24px;
+                background: #fafafa;
+                border: 1px solid #e5e5e5;
+                padding: 16px 24px;
                 display: flex;
                 align-items: center;
                 justify-content: space-between;
-                transition: border-color 0.12s, box-shadow 0.12s, transform 0.15s;
+                transition: background 0.12s, border-color 0.12s;
                 cursor: pointer;
                 text-decoration: none;
                 color: inherit;
-                position: relative;
+                margin-bottom: -1px;
+            }
+            .act-card:first-child {
+                border-radius: 4px 4px 0 0;
+            }
+            .act-card:last-child {
+                border-radius: 0 0 4px 4px;
+            }
+            .act-card:only-child {
+                border-radius: 4px;
             }
             .act-card:hover {
-                border-color: #C8C8C8;
-                box-shadow: 0 1px 4px rgba(0,0,0,0.04);
-                transform: translateY(-1px);
+                background: #f5f5f5;
+                border-color: #ddd;
             }
-            .act-card::before {
-                content: '';
-                position: absolute;
-                top: 4px; bottom: 4px; left: 0;
-                width: 3px;
-                border-radius: 0 2px 2px 0;
-                background: transparent;
-                transition: background 0.1s;
-            }
-            .act-card:hover::before { background: #921818; }
 
             .act-card-left {
                 display: flex;
                 align-items: center;
-                gap: 16px;
+                gap: 14px;
                 flex: 1;
                 min-width: 0;
             }
@@ -129,8 +118,8 @@ export function renderActiveContracts() {
             .act-card-icon {
                 width: 36px;
                 height: 36px;
-                background: #EFEFEF;
-                border-radius: 4px;
+                background: #e8e8e8;
+                border-radius: 6px;
                 display: flex;
                 align-items: center;
                 justify-content: center;
@@ -146,7 +135,7 @@ export function renderActiveContracts() {
                 min-width: 0;
             }
             .act-card-platform {
-                font-size: 13px;
+                font-size: 14px;
                 font-weight: 700;
                 color: #111;
             }
@@ -154,28 +143,28 @@ export function renderActiveContracts() {
                 font-family: 'IBM Plex Mono', monospace;
                 font-size: 10px;
                 color: #999;
-                letter-spacing: 0.5px;
+                letter-spacing: 0.3px;
             }
 
-            /* Center: Risk + Status */
+            /* Center: Risk + Status badges */
             .act-card-center {
                 display: flex;
                 align-items: center;
-                gap: 12px;
+                gap: 8px;
                 flex-shrink: 0;
             }
 
             .act-risk-badge {
                 display: inline-block;
                 font-family: 'IBM Plex Mono', monospace;
-                font-size: 10px;
+                font-size: 9px;
                 font-weight: 700;
                 text-transform: uppercase;
                 letter-spacing: 0.5px;
-                padding: 3px 8px;
-                background: #EFEFEF;
+                padding: 4px 10px;
+                background: #fff;
                 color: #555;
-                border-radius: 3px;
+                border: 1px solid #ddd;
             }
 
             .act-status-badge {
@@ -185,13 +174,11 @@ export function renderActiveContracts() {
                 font-weight: 700;
                 text-transform: uppercase;
                 letter-spacing: 0.5px;
-                padding: 3px 8px;
-                border-radius: 3px;
+                padding: 4px 10px;
+                border: 1px solid #ddd;
+                background: #fff;
+                color: #555;
             }
-            .act-status-active { background: #f0fdf4; color: #166534; }
-            .act-status-pending { background: #fffbeb; color: #92400e; }
-            .act-status-executed { background: #eff6ff; color: #1e40af; }
-            .act-status-locked { background: #f5f5f5; color: #666; }
 
             /* Right: Capital */
             .act-card-right {
@@ -203,15 +190,15 @@ export function renderActiveContracts() {
                 padding-left: 24px;
             }
             .act-card-amount {
-                font-size: 24px;
+                font-size: 22px;
                 font-weight: 700;
                 color: #111;
-                font-family: 'IBM Plex Mono', monospace;
+                font-family: 'IBM Plex Sans', sans-serif;
                 letter-spacing: -0.5px;
                 line-height: 1;
             }
             .act-card-payout {
-                font-size: 13px;
+                font-size: 12px;
                 font-weight: 600;
                 color: #166534;
                 font-family: 'IBM Plex Mono', monospace;
@@ -246,7 +233,7 @@ export function renderActiveContracts() {
                 transition: background 0.12s;
                 font-family: 'IBM Plex Sans', sans-serif;
             }
-            .act-empty-btn:hover { background: #921818; }
+            .act-empty-btn:hover { background: #752122; }
 
             /* ── Loading ── */
             .act-loading {
@@ -261,7 +248,7 @@ export function renderActiveContracts() {
                 width: 20px;
                 height: 20px;
                 border: 2px solid #eee;
-                border-top-color: #921818;
+                border-top-color: #752122;
                 border-radius: 50%;
                 animation: act-spin 0.8s linear infinite;
             }
@@ -275,14 +262,11 @@ export function renderActiveContracts() {
             }
 
             /* ── Responsive ── */
-            @media (max-width: 640px) {
-                .act-container { padding: 0 16px; }
-                .act-page-hdr { padding: 16px 0 0; }
-                .act-metrics { padding: 16px 0; }
-                .act-metrics-grid {
-                    grid-template-columns: repeat(2, 1fr);
-                    gap: 16px 0;
-                }
+            @media (max-width: 768px) {
+                .act-header { padding: 20px 16px 0; }
+                .act-metrics { padding: 16px 16px 20px; flex-wrap: wrap; }
+                .act-metric { min-width: calc(50% - 1px); padding: 12px 16px; }
+                .act-feed { padding: 16px 16px 60px; }
                 .act-card {
                     flex-direction: column;
                     align-items: stretch;
@@ -302,48 +286,38 @@ export function renderActiveContracts() {
         </style>
 
         <div class="act">
-            <div class="act-top">
-                <!-- Layer 1: Title -->
-                <div class="act-page-hdr">
-                    <div class="act-container">
-                        <h1 class="act-page-title">CONTRACTS</h1>
-                        <p class="act-page-sub">Active positions and performance monitors</p>
-                    </div>
-                </div>
+            <!-- Header -->
+            <div class="act-header">
+                <h1 class="act-page-title">CONTRACTS</h1>
+                <p class="act-page-sub">Active positions and performance monitor</p>
+            </div>
 
-                <!-- Layer 2: Metrics -->
-                <div class="act-metrics">
-                    <div class="act-container">
-                        <div class="act-metrics-grid">
-                            <div class="act-metric">
-                                <div class="act-metric-value" id="act-deployed">—</div>
-                                <div class="act-metric-label">Deployed Capital</div>
-                            </div>
-                            <div class="act-metric">
-                                <div class="act-metric-value" id="act-active-count">—</div>
-                                <div class="act-metric-label">Active Contracts</div>
-                            </div>
-                            <div class="act-metric">
-                                <div class="act-metric-value" id="act-payout-total">—</div>
-                                <div class="act-metric-label">Potential Payout</div>
-                            </div>
-                            <div class="act-metric">
-                                <div class="act-metric-value" id="act-avg-risk">—</div>
-                                <div class="act-metric-label">Avg Risk Tier</div>
-                            </div>
-                        </div>
-                    </div>
+            <!-- Metrics Strip -->
+            <div class="act-metrics">
+                <div class="act-metric">
+                    <div class="act-metric-value" id="act-deployed">—</div>
+                    <div class="act-metric-label">Deployed Capital</div>
+                </div>
+                <div class="act-metric">
+                    <div class="act-metric-value" id="act-active-count">—</div>
+                    <div class="act-metric-label">Active Contracts</div>
+                </div>
+                <div class="act-metric">
+                    <div class="act-metric-value" id="act-payout-total">—</div>
+                    <div class="act-metric-label">Potential Payout</div>
+                </div>
+                <div class="act-metric">
+                    <div class="act-metric-value" id="act-avg-risk">—</div>
+                    <div class="act-metric-label">Avg Risk Tier</div>
                 </div>
             </div>
 
-            <!-- Feed -->
+            <!-- Contract Feed -->
             <div class="act-feed">
-                <div class="act-container">
-                    <div id="act-content">
-                        <div class="act-loading">
-                            <div class="act-spinner"></div>
-                            <p class="act-loading-text">Retrieving ledger state...</p>
-                        </div>
+                <div id="act-content">
+                    <div class="act-loading">
+                        <div class="act-spinner"></div>
+                        <p class="act-loading-text">Retrieving ledger state...</p>
                     </div>
                 </div>
             </div>
@@ -432,21 +406,17 @@ function renderContractList(container, contracts) {
         const riskTier = c.riskTier?.toUpperCase() || 'STANDARD';
         const state = c.derivedState || c.state;
 
-        let statusClass = 'act-status-active';
         let statusLabel = 'ACTIVE';
-
         if (['CREATED', 'FUNDS_AUTHORIZED'].includes(state)) {
-            statusClass = 'act-status-pending';
             statusLabel = 'PENDING';
         } else if (state === 'EXECUTION_CONFIRMED') {
-            statusClass = 'act-status-executed';
             statusLabel = 'EXECUTED';
         } else if (state === 'LOCKED') {
-            statusClass = 'act-status-locked';
             statusLabel = 'LOCKED';
         }
 
         const icon = getPlatformIcon(c.platform);
+        const contractShort = 'CNTRCT-' + c.id.slice(0, 3).toUpperCase();
 
         return `
             <a href="#/contracts/${c.id}" class="act-card">
@@ -455,13 +425,13 @@ function renderContractList(container, contracts) {
                         <i data-lucide="${icon}"></i>
                     </div>
                     <div class="act-card-info">
-                        <span class="act-card-platform">${platform} Performance</span>
-                        <span class="act-card-id">${c.id.slice(0, 12).toUpperCase()}</span>
+                        <span class="act-card-platform">${platform.charAt(0) + platform.slice(1).toLowerCase()} Performance</span>
+                        <span class="act-card-id">${contractShort}</span>
                     </div>
                 </div>
                 <div class="act-card-center">
                     <span class="act-risk-badge">${riskTier}</span>
-                    <span class="act-status-badge ${statusClass}">${statusLabel}</span>
+                    <span class="act-status-badge">${statusLabel}</span>
                 </div>
                 <div class="act-card-right">
                     <span class="act-card-amount">${amount}</span>

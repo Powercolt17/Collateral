@@ -1,363 +1,270 @@
 // PUBLIC LEDGER — Append-only record of executions and settlements
-// Card-based feed layout — Desktop + Mobile 10/10
+// Table-based institutional layout — clean flat rows
 
 export function renderLedger() {
     return `
         <style>
             /* ============================================================
-               PUBLIC LEDGER — CARD-BASED INSTITUTIONAL FEED
+               PUBLIC LEDGER — TABLE-BASED INSTITUTIONAL LAYOUT
                ============================================================ */
 
             .ldg {
-                background: #F2F2F2;
+                background: #fff;
                 min-height: calc(100vh - 72px);
                 font-family: 'IBM Plex Sans', -apple-system, sans-serif;
                 color: #111;
             }
 
-            /* ── Centered Container ── */
-            .ldg-container {
-                max-width: 1400px;
-                margin: 0 auto;
-                padding: 0 40px;
-            }
-
-            /* ── Page Header ── */
-            .ldg-top {
-                background: #fff;
-                border-bottom: 1px solid #E3E3E3;
-            }
-
-            /* Layer 1: Title */
-            .ldg-page-hdr {
-                padding: 20px 0 0;
-            }
-            .ldg-page-title {
-                font-size: 18px;
-                font-weight: 600;
-                letter-spacing: -0.3px;
-                color: #111111;
-                margin: 0;
-            }
-
-            /* Layer 2: Metrics */
-            .ldg-topbar {
-                padding: 20px 0;
-                border-bottom: 1px solid #ECECEC;
-            }
-            .ldg-stats-grid {
-                display: grid;
-                grid-template-columns: repeat(4, 1fr);
-                gap: 0;
-            }
-            .ldg-stat {
-                text-align: center;
-                padding: 0 32px;
-            }
-            .ldg-stat-value {
-                font-family: 'IBM Plex Mono', monospace;
-                font-size: 22px;
-                font-weight: 700;
-                color: #111111;
-                letter-spacing: -0.5px;
-                line-height: 1.2;
-                margin-bottom: 6px;
-            }
-            .ldg-stat-value.operational {
-                color: #15803d;
-                font-size: 13px;
-                letter-spacing: 0;
-                font-weight: 700;
-                display: inline-flex;
+            /* ── Live Header Bar ── */
+            .ldg-live-bar {
+                display: flex;
                 align-items: center;
-                gap: 6px;
+                gap: 8px;
+                padding: 10px 32px;
+                background: #fafafa;
+                border-bottom: 1px solid #e5e5e5;
+                font-family: 'IBM Plex Mono', monospace;
+                font-size: 10px;
+                font-weight: 600;
+                text-transform: uppercase;
+                letter-spacing: 1px;
+                color: #666;
             }
-            .ldg-stat-dot {
-                width: 7px;
-                height: 7px;
-                background: #15803d;
+            .ldg-live-dot {
+                width: 6px; height: 6px;
+                background: #752122;
                 border-radius: 50%;
-                flex-shrink: 0;
+                animation: ldg-pulse 2s infinite;
             }
-            .ldg-stat-label {
+            @keyframes ldg-pulse {
+                0%, 100% { opacity: 1; }
+                50% { opacity: 0.4; }
+            }
+
+            /* ── Metrics Strip ── */
+            .ldg-metrics {
+                display: flex;
+                align-items: baseline;
+                gap: 40px;
+                padding: 28px 32px 24px;
+                border-bottom: 1px solid #e5e5e5;
+            }
+            .ldg-metric {
+                display: flex;
+                flex-direction: column;
+                gap: 2px;
+            }
+            .ldg-metric-value {
+                font-family: 'IBM Plex Sans', sans-serif;
+                font-size: 28px;
+                font-weight: 700;
+                color: #111;
+                letter-spacing: -1px;
+                line-height: 1;
+            }
+            .ldg-metric-label {
                 font-family: 'IBM Plex Mono', monospace;
                 font-size: 9px;
                 font-weight: 700;
                 text-transform: uppercase;
                 letter-spacing: 1.5px;
-                color: #777777;
+                color: #888;
             }
-
-            /* Layer 3: Controls */
-            .ldg-controls-block {
-                padding: 0 0 0;
-            }
-
-            /* Row 1: Tabs + Search */
-            .ldg-controls-row {
+            .ldg-metrics-right {
+                margin-left: auto;
                 display: flex;
                 align-items: center;
-                justify-content: space-between;
-            }
-            .ldg-tabs {
-                display: flex;
-                gap: 0;
-                overflow-x: auto;
-                -webkit-overflow-scrolling: touch;
-                flex: 1;
-                min-width: 0;
-            }
-            .ldg-tab {
-                padding: 12px 14px;
-                font-size: 11px;
-                font-weight: 600;
-                color: #555555;
-                background: transparent;
-                border: none;
-                border-bottom: 2px solid transparent;
-                cursor: pointer;
-                font-family: 'IBM Plex Mono', monospace;
-                text-transform: uppercase;
-                letter-spacing: 0.8px;
-                transition: color 0.12s;
-                white-space: nowrap;
-            }
-            .ldg-tab:hover { color: #333333; }
-            .ldg-tab.active {
-                color: #111111;
-                font-weight: 700;
-                border-bottom-color: #921818;
-            }
-            .ldg-tab-count {
-                font-size: 9px;
-                background: #f3f4f6;
-                color: #888888;
-                padding: 1px 5px;
-                margin-left: 4px;
-                font-weight: 700;
-                font-family: 'IBM Plex Mono', monospace;
-            }
-            .ldg-tab.active .ldg-tab-count {
-                background: #fef2f2;
-                color: #921818;
-            }
-            .ldg-controls-right {
-                display: flex;
-                align-items: center;
-                gap: 6px;
-                flex-shrink: 0;
-                padding: 8px 0;
             }
             .ldg-search {
-                padding: 7px 10px;
-                font-size: 11px;
-                border: 1px solid #E3E3E3;
+                padding: 8px 12px;
+                font-size: 12px;
+                border: 1px solid #e0e0e0;
                 outline: none;
-                width: 180px;
-                font-family: 'IBM Plex Mono', monospace;
+                width: 200px;
+                font-family: 'IBM Plex Sans', sans-serif;
                 color: #333;
                 background: #fff;
                 transition: border-color 0.12s;
             }
-            .ldg-search:focus { border-color: #921818; }
-            .ldg-search::placeholder { color: #aaa; }
-            .ldg-sort {
-                padding: 7px 8px;
-                font-size: 11px;
-                border: 1px solid #E3E3E3;
-                background: #fff;
-                cursor: pointer;
-                font-family: 'IBM Plex Mono', monospace;
-                color: #555;
-                outline: none;
-            }
-            .ldg-sort:focus { border-color: #921818; }
+            .ldg-search:focus { border-color: #752122; }
+            .ldg-search::placeholder { color: #bbb; }
 
-            /* Row 2: Sub-filters */
-            .ldg-sub-filters {
+            /* ── Tabs ── */
+            .ldg-tabs-bar {
                 display: flex;
                 align-items: center;
-                gap: 4px;
-                padding: 8px 0 12px;
+                border-bottom: 1px solid #e5e5e5;
+                padding: 0 32px;
+            }
+            .ldg-tab {
+                padding: 14px 0;
+                margin-right: 28px;
+                font-size: 12px;
+                font-weight: 600;
+                color: #888;
+                background: none;
+                border: none;
+                border-bottom: 2px solid transparent;
+                cursor: pointer;
+                font-family: 'IBM Plex Sans', sans-serif;
+                text-transform: uppercase;
+                letter-spacing: 0.5px;
+                transition: color 0.12s;
+            }
+            .ldg-tab:hover { color: #444; }
+            .ldg-tab.active {
+                color: #111;
+                font-weight: 700;
+                border-bottom-color: #111;
+            }
+
+            /* ── Filters Row ── */
+            .ldg-filters-row {
+                display: flex;
+                align-items: center;
+                gap: 6px;
+                padding: 12px 32px;
+                border-bottom: 1px solid #f0f0f0;
                 flex-wrap: wrap;
             }
             .ldg-filter-label {
-                font-size: 9px;
+                font-size: 10px;
                 font-weight: 700;
-                color: #888888;
+                color: #888;
                 text-transform: uppercase;
-                letter-spacing: 1px;
-                font-family: 'IBM Plex Mono', monospace;
+                letter-spacing: 0.8px;
+                font-family: 'IBM Plex Sans', sans-serif;
                 margin-right: 2px;
             }
             .ldg-filter-divider {
                 width: 1px;
-                height: 12px;
-                background: #E3E3E3;
-                margin: 0 8px;
+                height: 14px;
+                background: #e0e0e0;
+                margin: 0 10px;
             }
             .ldg-pill {
-                padding: 3px 8px;
-                font-size: 10px;
-                font-weight: 600;
-                color: #555555;
-                background: transparent;
-                border: none;
-                border-bottom: 1px solid transparent;
-                cursor: pointer;
-                transition: all 0.12s;
-                font-family: 'IBM Plex Mono', monospace;
-                text-transform: uppercase;
-                letter-spacing: 0.3px;
-            }
-            .ldg-pill:hover { color: #333333; }
-            .ldg-pill.active {
-                color: #111111;
-                font-weight: 700;
-                border-bottom-color: #921818;
-            }
-
-            /* ── Event Feed ── */
-            .ldg-feed {
-                padding: 24px 0 80px;
-            }
-            .ldg-list {
-                display: flex;
-                flex-direction: column;
-                gap: 6px;
-            }
-
-            /* ── Event Card ── */
-            .ldg-card {
-                background: #fff;
-                border: 1px solid #DADADA;
-                border-radius: 4px;
-                padding: 10px 24px;
-                cursor: pointer;
-                transition: box-shadow 0.15s, border-color 0.15s, transform 0.15s;
-                position: relative;
-            }
-            .ldg-card:hover {
-                border-color: #C8C8C8;
-                box-shadow: 0 1px 4px rgba(0,0,0,0.04);
-                transform: translateY(-1px);
-            }
-            .ldg-card::before {
-                content: '';
-                position: absolute;
-                top: 4px; bottom: 4px; left: 0;
-                width: 3px;
-                border-radius: 0 2px 2px 0;
-                background: transparent;
-                transition: background 0.1s;
-            }
-            .ldg-card:hover::before { background: #921818; }
-
-            /* Card layout */
-            .ldg-card-top {
-                display: flex;
-                align-items: flex-start;
-                justify-content: space-between;
-                margin-bottom: 8px;
-            }
-            .ldg-card-left {
-                display: flex;
-                flex-direction: column;
-                gap: 3px;
-            }
-
-            /* Event Tag */
-            .ldg-event-tag {
-                display: inline-block;
-                font-family: 'IBM Plex Mono', monospace;
+                padding: 4px 10px;
                 font-size: 11px;
                 font-weight: 600;
+                color: #666;
+                background: #fff;
+                border: 1px solid #e0e0e0;
+                cursor: pointer;
+                transition: all 0.12s;
+                font-family: 'IBM Plex Sans', sans-serif;
+            }
+            .ldg-pill:hover { border-color: #ccc; color: #333; }
+            .ldg-pill.active {
+                background: #111;
+                color: #fff;
+                border-color: #111;
+            }
+            .ldg-sort-inline {
+                font-size: 10px;
+                font-weight: 600;
+                color: #888;
                 text-transform: uppercase;
-                letter-spacing: 0.3px;
-                padding: 3px 7px;
-                background: #EFEFEF;
-                color: #333;
-                border: none;
-                border-radius: 4px;
-                white-space: nowrap;
-                align-self: flex-start;
-            }
-
-            /* Contract ID */
-            .ldg-event-rcpt {
-                font-family: 'IBM Plex Mono', monospace;
-                font-size: 13px;
-                font-weight: 700;
-                color: #111111;
-                margin-top: 2px;
-            }
-
-            /* Amount — THE HERO */
-            .ldg-card-amount {
-                text-align: right;
-                flex-shrink: 0;
-            }
-            .ldg-event-amount {
-                font-family: 'IBM Plex Mono', monospace;
-                font-size: 24px;
-                font-weight: 700;
-                color: #111111;
-                letter-spacing: -0.5px;
-                line-height: 1;
-            }
-
-            /* Status */
-            .ldg-status {
-                display: inline-flex;
+                letter-spacing: 0.5px;
+                font-family: 'IBM Plex Sans', sans-serif;
+                display: flex;
                 align-items: center;
-                justify-content: center;
-                padding: 2px 6px;
+                gap: 4px;
+            }
+            .ldg-sort-select {
+                padding: 3px 6px;
+                font-size: 11px;
+                border: 1px solid #e0e0e0;
+                background: #fff;
+                cursor: pointer;
+                font-family: 'IBM Plex Sans', sans-serif;
+                color: #333;
+                outline: none;
+                font-weight: 600;
+            }
+            .ldg-sort-select:focus { border-color: #752122; }
+
+            /* ── Table ── */
+            .ldg-table-wrap {
+                padding: 0 32px;
+            }
+            .ldg-table {
+                width: 100%;
+                border-collapse: collapse;
+            }
+            .ldg-table thead th {
                 font-family: 'IBM Plex Mono', monospace;
                 font-size: 9px;
                 font-weight: 700;
                 text-transform: uppercase;
-                letter-spacing: 0.5px;
-                white-space: nowrap;
-                margin-top: 4px;
+                letter-spacing: 1.5px;
+                color: #999;
+                padding: 14px 0 10px;
+                border-bottom: 1px solid #e5e5e5;
+                text-align: left;
             }
-            .ldg-status.locked    { background: #f5f5f5; color: #666666; border: 1px solid #E0E0E0; }
-            .ldg-status.settled   { background: #f0fdf4; color: #15803d; border: 1px solid #bbf7d0; }
-            .ldg-status.failed    { background: #fef2f2; color: #921818; border: 1px solid #fecaca; }
-            .ldg-status.pending   { background: #fffbeb; color: #92400e; border: 1px solid #fde68a; }
-            .ldg-status.fee       { background: #fefce8; color: #713f12; border: 1px solid #fef08a; }
+            .ldg-table thead th:last-child {
+                text-align: right;
+            }
+            .ldg-table tbody tr {
+                border-bottom: 1px solid #f0f0f0;
+                cursor: pointer;
+                transition: background 0.1s;
+            }
+            .ldg-table tbody tr:hover {
+                background: #fafafa;
+            }
+            .ldg-table tbody td {
+                padding: 14px 0;
+                font-size: 13px;
+                vertical-align: middle;
+            }
 
-            /* Card bottom — meta line */
-            .ldg-card-meta {
-                display: flex;
-                align-items: center;
-                gap: 8px;
+            /* Status cell */
+            .ldg-status-text {
                 font-family: 'IBM Plex Mono', monospace;
-                font-size: 10px;
-                color: #888888;
-                padding-top: 10px;
+                font-size: 11px;
+                font-weight: 700;
+                text-transform: uppercase;
+                letter-spacing: 0.3px;
             }
-            .ldg-provider {
-                display: inline-flex;
-                align-items: center;
-                gap: 4px;
-                font-weight: 600;
+            .ldg-status-text.execution { color: #752122; }
+            .ldg-status-text.locked { color: #15803d; }
+            .ldg-status-text.settlement { color: #15803d; }
+            .ldg-status-text.failure { color: #752122; }
+            .ldg-status-text.fee { color: #92400e; }
+
+            /* Receipt cell */
+            .ldg-rcpt {
+                font-family: 'IBM Plex Mono', monospace;
+                font-size: 12px;
+                font-weight: 700;
+                color: #111;
             }
-            .ldg-provider-dot {
-                width: 5px;
-                height: 5px;
-                border-radius: 50%;
+
+            /* Hash cell */
+            .ldg-hash {
+                font-family: 'IBM Plex Mono', monospace;
+                font-size: 11px;
+                color: #999;
+                letter-spacing: 0;
             }
-            .ldg-provider-dot.stripe  { background: #635bff; }
-            .ldg-provider-dot.shopify { background: #96bf48; }
-            .ldg-provider-dot.amazon  { background: #ff9900; }
-            .ldg-provider-dot.x       { background: #0a0a0a; }
-            .ldg-card-arrow {
-                margin-left: auto;
-                color: #DCDCDC;
+
+            /* Date cell */
+            .ldg-date {
+                font-family: 'IBM Plex Sans', sans-serif;
+                font-size: 12px;
+                color: #888;
+            }
+
+            /* Amount cell */
+            .ldg-amount {
+                font-family: 'IBM Plex Mono', monospace;
                 font-size: 14px;
-                transition: color 0.1s;
+                font-weight: 700;
+                color: #111;
+                text-align: right;
+                letter-spacing: -0.3px;
             }
-            .ldg-card:hover .ldg-card-arrow { color: #921818; }
 
             /* ── Empty State ── */
             .ldg-empty {
@@ -370,48 +277,57 @@ export function renderLedger() {
                 font-weight: 700;
                 text-transform: uppercase;
                 letter-spacing: 2px;
-                color: #8A8A8A;
+                color: #999;
                 margin-bottom: 8px;
             }
             .ldg-empty-text {
                 font-size: 13px;
-                color: #6B6B6B;
+                color: #888;
+            }
+
+            /* ── Footer ── */
+            .ldg-footer {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                padding: 20px 32px;
+                border-top: 1px solid #e5e5e5;
+                margin-top: 40px;
+            }
+            .ldg-footer-status {
+                font-family: 'IBM Plex Mono', monospace;
+                font-size: 10px;
+                font-weight: 700;
+                text-transform: uppercase;
+                letter-spacing: 1.5px;
+                color: #888;
+            }
+            .ldg-footer-status span {
+                color: #15803d;
+            }
+            .ldg-footer-count {
+                font-family: 'IBM Plex Sans', sans-serif;
+                font-size: 12px;
+                color: #999;
             }
 
             /* ── Skeleton ── */
-            .ldg-skeleton {
-                background: #fff;
-                border: 1px solid #DADADA;
-                border-radius: 4px;
-                height: 80px;
+            .ldg-skeleton-row {
+                height: 48px;
+                border-bottom: 1px solid #f0f0f0;
                 position: relative;
                 overflow: hidden;
             }
-            .ldg-skeleton::after {
+            .ldg-skeleton-row::after {
                 content: '';
                 position: absolute;
                 inset: 0;
-                background: linear-gradient(90deg, transparent, rgba(0,0,0,0.02), transparent);
+                background: linear-gradient(90deg, transparent, rgba(0,0,0,0.015), transparent);
                 animation: ldg-shimmer 1.5s infinite;
             }
             @keyframes ldg-shimmer {
                 0% { transform: translateX(-100%); }
                 100% { transform: translateX(100%); }
-            }
-
-            /* ── Footer ── */
-            .ldg-footer {
-                padding: 20px 0;
-                text-align: center;
-            }
-            .ldg-footer-line {
-                font-family: 'IBM Plex Mono', monospace;
-                font-size: 9px;
-                font-weight: 700;
-                text-transform: uppercase;
-                letter-spacing: 2px;
-                color: #DCDCDC;
-                line-height: 2;
             }
 
             /* ── Drawer / Detail Panel ── */
@@ -434,7 +350,7 @@ export function renderLedger() {
                 width: 400px; max-width: 90vw;
                 height: 100vh;
                 background: #fff;
-                border-left: 1px solid #DCDCDC;
+                border-left: 1px solid #e0e0e0;
                 z-index: 201;
                 transform: translateX(100%);
                 transition: transform 0.25s cubic-bezier(0.22, 1, 0.36, 1);
@@ -450,7 +366,7 @@ export function renderLedger() {
                 justify-content: space-between;
                 align-items: center;
                 padding: 18px 20px;
-                border-bottom: 1px solid #E5E5E5;
+                border-bottom: 1px solid #e5e5e5;
             }
             .ldg-drawer-title {
                 font-family: 'IBM Plex Mono', monospace;
@@ -458,26 +374,26 @@ export function renderLedger() {
                 font-weight: 700;
                 text-transform: uppercase;
                 letter-spacing: 1.5px;
-                color: #111111;
+                color: #111;
             }
             .ldg-drawer-close {
                 width: 28px; height: 28px;
                 display: flex; align-items: center; justify-content: center;
                 background: #f5f5f5;
-                border: 1px solid #E5E5E5;
+                border: 1px solid #e5e5e5;
                 cursor: pointer;
-                color: #8A8A8A;
+                color: #888;
                 font-size: 12px;
                 transition: all 0.1s;
             }
-            .ldg-drawer-close:hover { background: #fef2f2; color: #921818; border-color: #fecaca; }
+            .ldg-drawer-close:hover { background: #fef2f2; color: #752122; border-color: #fecaca; }
             .ldg-drawer-body { padding: 20px; flex: 1; }
             .ldg-drawer-row {
                 display: flex;
                 justify-content: space-between;
                 align-items: flex-start;
                 padding: 11px 0;
-                border-bottom: 1px solid #F0F0F0;
+                border-bottom: 1px solid #f0f0f0;
             }
             .ldg-drawer-row:last-child { border-bottom: none; }
             .ldg-drawer-label {
@@ -486,13 +402,13 @@ export function renderLedger() {
                 font-weight: 700;
                 text-transform: uppercase;
                 letter-spacing: 1px;
-                color: #8A8A8A;
+                color: #888;
                 flex-shrink: 0;
                 padding-top: 1px;
             }
             .ldg-drawer-value {
                 font-size: 12px;
-                color: #111111;
+                color: #111;
                 font-family: 'IBM Plex Sans', sans-serif;
                 font-weight: 600;
                 text-align: right;
@@ -502,31 +418,31 @@ export function renderLedger() {
             .ldg-drawer-value.mono {
                 font-family: 'IBM Plex Mono', monospace;
                 font-size: 10px;
-                color: #444444;
+                color: #444;
             }
             .ldg-copy-btn {
                 padding: 2px 6px;
                 margin-left: 6px;
                 font-size: 9px;
-                color: #8A8A8A;
+                color: #888;
                 background: #f5f5f5;
-                border: 1px solid #E5E5E5;
+                border: 1px solid #e5e5e5;
                 cursor: pointer;
                 font-family: 'IBM Plex Mono', monospace;
                 text-transform: uppercase;
                 letter-spacing: 0.3px;
                 transition: all 0.1s;
             }
-            .ldg-copy-btn:hover { border-color: #DCDCDC; color: #111111; }
+            .ldg-copy-btn:hover { border-color: #ccc; color: #111; }
             .ldg-drawer-section {
                 font-family: 'IBM Plex Mono', monospace;
                 font-size: 9px;
                 font-weight: 700;
                 text-transform: uppercase;
                 letter-spacing: 1.5px;
-                color: #8A8A8A;
+                color: #888;
                 padding: 16px 0 8px;
-                border-bottom: 1px solid #E5E5E5;
+                border-bottom: 1px solid #e5e5e5;
                 margin-top: 8px;
             }
             .ldg-drawer-link {
@@ -535,7 +451,7 @@ export function renderLedger() {
                 gap: 4px;
                 font-size: 11px;
                 font-weight: 700;
-                color: #921818;
+                color: #752122;
                 text-decoration: none;
                 cursor: pointer;
                 font-family: 'IBM Plex Mono', monospace;
@@ -543,7 +459,7 @@ export function renderLedger() {
                 letter-spacing: 0.3px;
                 transition: color 0.1s;
             }
-            .ldg-drawer-link:hover { color: #6B1212; }
+            .ldg-drawer-link:hover { color: #5a1818; }
             .ldg-drawer-json {
                 background: #0a0a0a;
                 color: #a3a3a3;
@@ -564,9 +480,9 @@ export function renderLedger() {
                 padding: 9px;
                 font-size: 10px;
                 font-weight: 700;
-                color: #8A8A8A;
-                background: #FAFAFA;
-                border: 1px solid #E5E5E5;
+                color: #888;
+                background: #fafafa;
+                border: 1px solid #e5e5e5;
                 cursor: pointer;
                 font-family: 'IBM Plex Mono', monospace;
                 text-transform: uppercase;
@@ -574,144 +490,120 @@ export function renderLedger() {
                 transition: all 0.1s;
                 margin-top: 10px;
             }
-            .ldg-json-toggle:hover { border-color: #DCDCDC; color: #111111; }
+            .ldg-json-toggle:hover { border-color: #ccc; color: #111; }
+
+            /* Status pills for drawer */
+            .ldg-status { display: inline-flex; align-items: center; padding: 2px 6px; font-family: 'IBM Plex Mono', monospace; font-size: 9px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; white-space: nowrap; }
+            .ldg-status.locked    { background: #f5f5f5; color: #666; border: 1px solid #e0e0e0; }
+            .ldg-status.settled   { background: #f0fdf4; color: #15803d; border: 1px solid #bbf7d0; }
+            .ldg-status.failed    { background: #fef2f2; color: #752122; border: 1px solid #fecaca; }
+            .ldg-status.pending   { background: #fffbeb; color: #92400e; border: 1px solid #fde68a; }
+            .ldg-status.fee       { background: #fefce8; color: #713f12; border: 1px solid #fef08a; }
 
             /* ── Responsive ── */
-            @media (max-width: 640px) {
-                .ldg-container { padding: 0 16px; }
-                .ldg-page-hdr { padding: 16px 0 0; }
-                .ldg-topbar { padding: 20px 0; }
-                .ldg-stats-grid {
-                    grid-template-columns: repeat(2, 1fr);
-                    gap: 16px 0;
-                }
-                .ldg-controls-row {
-                    flex-direction: column;
-                    align-items: stretch;
-                }
-                .ldg-controls-right {
-                    padding: 8px 0 4px;
-                    justify-content: flex-start;
-                }
-                .ldg-search { width: 100%; flex: 1; }
-                .ldg-sub-filters { padding: 8px 0 10px; }
-                .ldg-feed { padding: 16px 0 60px; }
-                .ldg-list { gap: 16px; }
-                .ldg-card { padding: 16px; }
-
-                /* Mobile card: stacked layout */
-                .ldg-card-top {
-                    flex-direction: column;
-                    gap: 10px;
-                }
-                .ldg-card-amount { text-align: left; }
-                .ldg-event-amount { font-size: 20px; }
-
-                /* Mobile drawer: full screen */
-                .ldg-drawer {
-                    width: 100vw;
-                    max-width: 100vw;
-                    border-left: none;
-                }
+            @media (max-width: 768px) {
+                .ldg-live-bar { padding: 10px 16px; }
+                .ldg-metrics { padding: 20px 16px; gap: 24px; flex-wrap: wrap; }
+                .ldg-metric-value { font-size: 22px; }
+                .ldg-metrics-right { width: 100%; margin-left: 0; margin-top: 12px; }
+                .ldg-search { width: 100%; }
+                .ldg-tabs-bar { padding: 0 16px; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+                .ldg-tab { font-size: 11px; margin-right: 20px; white-space: nowrap; }
+                .ldg-filters-row { padding: 10px 16px; }
+                .ldg-table-wrap { padding: 0 16px; overflow-x: auto; }
+                .ldg-footer { padding: 16px 16px; flex-direction: column; gap: 8px; align-items: flex-start; }
+                .ldg-drawer { width: 100vw; max-width: 100vw; border-left: none; }
+            }
+            @media (max-width: 480px) {
+                .ldg-metrics { gap: 16px; }
+                .ldg-metric-value { font-size: 18px; }
+                .ldg-hash { display: none; }
             }
         </style>
 
         <div class="ldg">
+            <!-- Live Header Bar -->
+            <div class="ldg-live-bar">
+                <div class="ldg-live-dot"></div>
+                LIVE LEDGER — UPDATED <span id="ldg-time">just now</span>
+            </div>
 
-            <!-- Unified Top Block -->
-            <div class="ldg-top">
-
-                <!-- Layer 1: Title -->
-                <div class="ldg-page-hdr">
-                    <div class="ldg-container">
-                        <h1 class="ldg-page-title">PUBLIC LEDGER</h1>
-                    </div>
+            <!-- Metrics Strip -->
+            <div class="ldg-metrics">
+                <div class="ldg-metric">
+                    <div class="ldg-metric-value" id="ldg-tvl">—</div>
+                    <div class="ldg-metric-label">Capital Locked</div>
                 </div>
-
-                <!-- Layer 2: Metrics -->
-                <div class="ldg-topbar">
-                    <div class="ldg-container">
-                        <div class="ldg-stats-grid">
-                            <div class="ldg-stat">
-                                <div class="ldg-stat-value" id="ldg-tvl">—</div>
-                                <div class="ldg-stat-label">Capital Locked</div>
-                            </div>
-                            <div class="ldg-stat">
-                                <div class="ldg-stat-value" id="ldg-active">—</div>
-                                <div class="ldg-stat-label">Active Contracts</div>
-                            </div>
-                            <div class="ldg-stat">
-                                <div class="ldg-stat-value" id="ldg-events-24h">—</div>
-                                <div class="ldg-stat-label">Events (24H)</div>
-                            </div>
-                            <div class="ldg-stat">
-                                <div class="ldg-stat-value operational">
-                                    <span class="ldg-stat-dot"></span> OPERATIONAL
-                                </div>
-                                <div class="ldg-stat-label">System Status</div>
-                            </div>
-                        </div>
-                    </div>
+                <div class="ldg-metric">
+                    <div class="ldg-metric-value" id="ldg-active">—</div>
+                    <div class="ldg-metric-label">Active Contracts</div>
                 </div>
-
-                <!-- Layer 3: Controls -->
-                <div class="ldg-controls-block">
-                    <div class="ldg-container">
-                        <!-- Row 1: Tabs + Search/Sort -->
-                        <div class="ldg-controls-row" id="ldg-tabs">
-                            <div class="ldg-tabs">
-                                <button class="ldg-tab active" data-filter="all">ALL <span class="ldg-tab-count" id="ldg-count-all">0</span></button>
-                                <button class="ldg-tab" data-filter="execution">EXECUTIONS <span class="ldg-tab-count" id="ldg-count-exec">0</span></button>
-                                <button class="ldg-tab" data-filter="settlement">SETTLEMENTS <span class="ldg-tab-count" id="ldg-count-settle">0</span></button>
-                                <button class="ldg-tab" data-filter="failure">FAILURES <span class="ldg-tab-count" id="ldg-count-fail">0</span></button>
-                                <button class="ldg-tab" data-filter="fee">FEES <span class="ldg-tab-count" id="ldg-count-fee">0</span></button>
-                            </div>
-                            <div class="ldg-controls-right">
-                                <input type="text" class="ldg-search" id="ldg-search" placeholder="Search RCPT or hash...">
-                                <select class="ldg-sort" id="ldg-sort">
-                                    <option value="newest">NEWEST</option>
-                                    <option value="value">VALUE</option>
-                                    <option value="status">STATUS</option>
-                                </select>
-                            </div>
-                        </div>
-
-                        <!-- Row 2: Sub-filters -->
-                        <div class="ldg-sub-filters" id="ldg-filters">
-                            <span class="ldg-filter-label">PROVIDER</span>
-                            <button class="ldg-pill active" data-provider="all">ALL</button>
-                            <button class="ldg-pill" data-provider="stripe">STRIPE</button>
-                            <button class="ldg-pill" data-provider="shopify">SHOPIFY</button>
-                            <button class="ldg-pill" data-provider="amazon">AMAZON</button>
-                            <button class="ldg-pill" data-provider="x">X</button>
-                            <div class="ldg-filter-divider"></div>
-                            <span class="ldg-filter-label">PERIOD</span>
-                            <button class="ldg-pill active" data-time="all">ALL</button>
-                            <button class="ldg-pill" data-time="24h">24H</button>
-                            <button class="ldg-pill" data-time="7d">7D</button>
-                            <button class="ldg-pill" data-time="30d">30D</button>
-                        </div>
-                    </div>
+                <div class="ldg-metric">
+                    <div class="ldg-metric-value" id="ldg-volume">$0</div>
+                    <div class="ldg-metric-label">Volume (24H)</div>
                 </div>
-
-            </div><!-- /ldg-top -->
-
-            <!-- Event Feed -->
-            <div class="ldg-container">
-                <div class="ldg-feed">
-                    <div class="ldg-list" id="ldg-list">
-                        <div class="ldg-skeleton"></div>
-                        <div class="ldg-skeleton"></div>
-                        <div class="ldg-skeleton"></div>
-                        <div class="ldg-skeleton"></div>
-                    </div>
-
-                    <!-- Footer -->
-                    <div class="ldg-footer">
-                        <div class="ldg-footer-line">RECORDS ARE IMMUTABLE</div>
-                        <div class="ldg-footer-line">OUTCOMES ARE FINAL</div>
-                    </div>
+                <div class="ldg-metrics-right">
+                    <input type="text" class="ldg-search" id="ldg-search" placeholder="Search Ledger ...">
                 </div>
+            </div>
+
+            <!-- Tabs -->
+            <div class="ldg-tabs-bar" id="ldg-tabs">
+                <button class="ldg-tab active" data-filter="all">All</button>
+                <button class="ldg-tab" data-filter="execution">Executions</button>
+                <button class="ldg-tab" data-filter="settlement">Settlements</button>
+                <button class="ldg-tab" data-filter="failure">Failures</button>
+                <button class="ldg-tab" data-filter="fee">Fees</button>
+            </div>
+
+            <!-- Filters -->
+            <div class="ldg-filters-row" id="ldg-filters">
+                <span class="ldg-filter-label">Parties</span>
+                <button class="ldg-pill active" data-provider="all">ALL</button>
+                <button class="ldg-pill" data-provider="stripe">Byson</button>
+                <button class="ldg-pill" data-provider="shopify">Modept</button>
+                <button class="ldg-pill" data-provider="amazon">Amazon</button>
+                <div class="ldg-filter-divider"></div>
+                <span class="ldg-filter-label">Period</span>
+                <button class="ldg-pill active" data-time="all">ALL</button>
+                <button class="ldg-pill" data-time="24h">24h</button>
+                <button class="ldg-pill" data-time="7d">7D</button>
+                <button class="ldg-pill" data-time="30d">30D</button>
+                <div class="ldg-filter-divider"></div>
+                <span class="ldg-sort-inline">Sort:
+                    <select class="ldg-sort-select" id="ldg-sort">
+                        <option value="newest">Newest ↓</option>
+                        <option value="value">Value</option>
+                        <option value="status">Status</option>
+                    </select>
+                </span>
+            </div>
+
+            <!-- Table -->
+            <div class="ldg-table-wrap">
+                <table class="ldg-table">
+                    <thead>
+                        <tr>
+                            <th>Status</th>
+                            <th>Receipt</th>
+                            <th>Hash</th>
+                            <th>Date</th>
+                            <th>Amount</th>
+                        </tr>
+                    </thead>
+                    <tbody id="ldg-list">
+                        <tr class="ldg-skeleton-row"><td colspan="5"></td></tr>
+                        <tr class="ldg-skeleton-row"><td colspan="5"></td></tr>
+                        <tr class="ldg-skeleton-row"><td colspan="5"></td></tr>
+                        <tr class="ldg-skeleton-row"><td colspan="5"></td></tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Footer -->
+            <div class="ldg-footer">
+                <div class="ldg-footer-status">System Status — <span>Operational</span></div>
+                <div class="ldg-footer-count" id="ldg-record-count">Showing 0 records</div>
             </div>
         </div>
 
@@ -755,7 +647,7 @@ export async function initLedger() {
     }
 
     function formatEventType(type) {
-        return type || '—';
+        return (type || '—').replace(/_/g, ' ');
     }
 
     function getEventCategory(type) {
@@ -766,12 +658,21 @@ export async function initLedger() {
         return 'execution';
     }
 
+    function getStatusClass(type) {
+        if (type.includes('SETTLED_SUCCESS') || type.includes('VERIFICATION_SUCCEEDED')) return 'settlement';
+        if (type.includes('SETTLED_FAILURE') || type.includes('VERIFICATION_FAILED')) return 'failure';
+        if (type.includes('FEE')) return 'fee';
+        if (type.includes('LOCKED')) return 'locked';
+        if (type.includes('EXECUTION_CONFIRMED')) return 'execution';
+        return 'execution';
+    }
+
     function getTagColor(type) {
         if (type.includes('SETTLED_SUCCESS') || type.includes('VERIFICATION_SUCCEEDED')) return '#15803d';
-        if (type.includes('SETTLED_FAILURE') || type.includes('VERIFICATION_FAILED')) return '#921818';
+        if (type.includes('SETTLED_FAILURE') || type.includes('VERIFICATION_FAILED')) return '#752122';
         if (type.includes('FEE')) return '#92400e';
-        if (type.includes('LOCKED') || type.includes('EXECUTION_CONFIRMED')) return '#111111';
-        return '#6B6B6B';
+        if (type.includes('LOCKED') || type.includes('EXECUTION_CONFIRMED')) return '#111';
+        return '#666';
     }
 
     function getStatusPill(type) {
@@ -790,7 +691,7 @@ export async function initLedger() {
 
     function truncateHash(hash) {
         if (!hash) return '—';
-        if (hash.length > 16) return hash.slice(0, 8) + '…' + hash.slice(-6);
+        if (hash.length > 20) return hash.slice(0, 12) + '…' + hash.slice(-6);
         return hash;
     }
 
@@ -801,10 +702,12 @@ export async function initLedger() {
         return '';
     }
 
-    function getProviderBadge(provider) {
-        if (!provider) return '';
-        const name = provider.charAt(0).toUpperCase() + provider.slice(1);
-        return `<span class="ldg-provider"><span class="ldg-provider-dot ${provider}"></span>${name}</span>`;
+    function updateTime() {
+        const el = document.getElementById('ldg-time');
+        if (el) {
+            const now = new Date();
+            el.textContent = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' });
+        }
     }
 
     // ── Filter / Sort ──
@@ -842,16 +745,24 @@ export async function initLedger() {
         return filtered;
     }
 
-    // ── Render Events — Card Layout ──
+    // ── Render Events — Table Rows ──
     function renderEvents() {
         const filtered = filterEvents();
 
+        // Update record count
+        const countEl = document.getElementById('ldg-record-count');
+        if (countEl) countEl.textContent = `Showing ${filtered.length} records`;
+
         if (filtered.length === 0) {
             list.innerHTML = `
-                <div class="ldg-empty">
-                    <div class="ldg-empty-lbl">No Records</div>
-                    <div class="ldg-empty-text">No events match your current filter set.</div>
-                </div>
+                <tr>
+                    <td colspan="5">
+                        <div class="ldg-empty">
+                            <div class="ldg-empty-lbl">No Records</div>
+                            <div class="ldg-empty-text">No events match your current filter set.</div>
+                        </div>
+                    </td>
+                </tr>
             `;
             return;
         }
@@ -860,35 +771,21 @@ export async function initLedger() {
             const contractShort = event.contractId
                 ? 'RCPT-' + event.contractId.slice(0, 4).toUpperCase()
                 : '—';
-            const provider = getProviderFromEvent(event);
-            const tagColor = getTagColor(event.eventType);
+            const statusClass = getStatusClass(event.eventType);
 
             return `
-                <div class="ldg-card" data-index="${i}">
-                    <div class="ldg-card-top">
-                        <div class="ldg-card-left">
-                            <div class="ldg-event-tag" style="color: ${tagColor};">
-                                ${formatEventType(event.eventType)}
-                            </div>
-                            <div class="ldg-event-rcpt">${contractShort}</div>
-                        </div>
-                        <div class="ldg-card-amount">
-                            <div class="ldg-event-amount">${formatCurrency(event.amountUsdCents)}</div>
-                            ${getStatusPill(event.eventType)}
-                        </div>
-                    </div>
-                    <div class="ldg-card-meta">
-                        <span>${formatTimestamp(event.timestamp)}</span>
-                        ${provider ? getProviderBadge(provider) : ''}
-                        <span>${truncateHash(event.eventHash)}</span>
-                        <span class="ldg-card-arrow">→</span>
-                    </div>
-                </div>
+                <tr data-index="${i}">
+                    <td><span class="ldg-status-text ${statusClass}">${formatEventType(event.eventType)}</span></td>
+                    <td><span class="ldg-rcpt">${contractShort}</span></td>
+                    <td><span class="ldg-hash">${truncateHash(event.eventHash)}</span></td>
+                    <td><span class="ldg-date">${formatTimestamp(event.timestamp)}</span></td>
+                    <td><span class="ldg-amount">${formatCurrency(event.amountUsdCents)}</span></td>
+                </tr>
             `;
         }).join('');
 
         // Click → drawer
-        list.querySelectorAll('.ldg-card').forEach(el => {
+        list.querySelectorAll('tr[data-index]').forEach(el => {
             el.addEventListener('click', () => {
                 const idx = parseInt(el.dataset.index);
                 const current = filterEvents();
@@ -980,34 +877,25 @@ export async function initLedger() {
     // ── Stats ──
     function updateStats() {
         const tvlEl = document.getElementById('ldg-tvl');
-        const events24El = document.getElementById('ldg-events-24h');
         const activeEl = document.getElementById('ldg-active');
+        const volumeEl = document.getElementById('ldg-volume');
 
         const totalCents = allEvents
             .filter(e => e.amountUsdCents)
             .reduce((sum, e) => sum + (e.amountUsdCents || 0), 0);
         if (tvlEl) tvlEl.textContent = formatCurrency(totalCents);
 
-        const now = Date.now();
-        const events24h = allEvents.filter(e => (now - new Date(e.timestamp).getTime()) <= 86400000).length;
-        if (events24El) events24El.textContent = events24h.toString();
-
         const activeCount = allEvents.filter(e =>
             ['FUNDS_LOCKED', 'EXECUTION_CONFIRMED'].includes(e.eventType)
         ).length;
         if (activeEl) activeEl.textContent = activeCount.toString();
 
-        // Tab counts
-        const counts = { all: allEvents.length, execution: 0, settlement: 0, failure: 0, fee: 0 };
-        allEvents.forEach(e => {
-            const cat = getEventCategory(e.eventType);
-            if (counts[cat] !== undefined) counts[cat]++;
-        });
-        const ids = { all: 'ldg-count-all', execution: 'ldg-count-exec', settlement: 'ldg-count-settle', failure: 'ldg-count-fail', fee: 'ldg-count-fee' };
-        Object.entries(ids).forEach(([key, id]) => {
-            const el = document.getElementById(id);
-            if (el) el.textContent = counts[key];
-        });
+        // 24h volume
+        const now = Date.now();
+        const vol24h = allEvents
+            .filter(e => e.amountUsdCents && (now - new Date(e.timestamp).getTime()) <= 86400000)
+            .reduce((sum, e) => sum + (e.amountUsdCents || 0), 0);
+        if (volumeEl) volumeEl.textContent = formatCurrency(vol24h);
     }
 
     // ── Event Wiring ──
@@ -1062,19 +950,26 @@ export async function initLedger() {
     });
 
     // ── Fetch ──
+    updateTime();
+
     try {
         const response = await window.api.getPublicLedger();
         allEvents = response?.events || [];
         console.log('[Ledger] Loaded', allEvents.length, 'events');
         updateStats();
         renderEvents();
+        updateTime();
     } catch (error) {
         console.error('[Ledger] Error loading events:', error);
         list.innerHTML = `
-            <div class="ldg-empty">
-                <div class="ldg-empty-lbl">LEDGER UNAVAILABLE</div>
-                <div class="ldg-empty-text">System synchronizing. Records will appear shortly.</div>
-            </div>
+            <tr>
+                <td colspan="5">
+                    <div class="ldg-empty">
+                        <div class="ldg-empty-lbl">LEDGER UNAVAILABLE</div>
+                        <div class="ldg-empty-text">System synchronizing. Records will appear shortly.</div>
+                    </div>
+                </td>
+            </tr>
         `;
     }
 

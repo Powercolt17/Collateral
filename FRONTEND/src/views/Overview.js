@@ -678,8 +678,8 @@ export function renderOverview() {
         <div class="eq">
             <!-- Market Header -->
             <div class="eq-hero">
-                <div class="eq-hero-headline">Capital-Backed Performance Contracts</div>
-                <div class="eq-hero-sub">Stake funds against measurable outcomes. Settlement is automatic and final.</div>
+                <div class="eq-hero-headline">Stake Your Performance.</div>
+                <div class="eq-hero-sub">Commit capital to measurable results. Automatic settlement at deadline.</div>
             </div>
 
             <!-- Live Header -->

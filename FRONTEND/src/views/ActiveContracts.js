@@ -8,7 +8,7 @@ export function renderActiveContracts() {
             .act {
                 background: #fff;
                 min-height: calc(100vh - 72px);
-                font-family: 'IBM Plex Sans', -apple-system, sans-serif;
+                font-family: 'Neue Haas Grotesk Display', 'Helvetica Neue', Helvetica, Arial, sans-serif;
                 color: #111;
             }
 
@@ -28,7 +28,7 @@ export function renderActiveContracts() {
                 font-size: 11px;
                 color: #999;
                 margin: 4px 0 0;
-                font-family: 'IBM Plex Mono', monospace;
+                font-family: 'JetBrains Mono', monospace;
                 text-transform: uppercase;
                 letter-spacing: 0.5px;
             }
@@ -51,7 +51,7 @@ export function renderActiveContracts() {
                 border-right: 1px solid #e5e5e5;
             }
             .act-metric-value {
-                font-family: 'IBM Plex Sans', sans-serif;
+                font-family: 'Neue Haas Grotesk Display', 'Helvetica Neue', Helvetica, Arial, sans-serif;
                 font-size: 26px;
                 font-weight: 700;
                 color: #111;
@@ -60,7 +60,7 @@ export function renderActiveContracts() {
                 margin-bottom: 4px;
             }
             .act-metric-label {
-                font-family: 'IBM Plex Mono', monospace;
+                font-family: 'JetBrains Mono', monospace;
                 font-size: 9px;
                 font-weight: 700;
                 text-transform: uppercase;
@@ -140,7 +140,7 @@ export function renderActiveContracts() {
                 color: #111;
             }
             .act-card-id {
-                font-family: 'IBM Plex Mono', monospace;
+                font-family: 'JetBrains Mono', monospace;
                 font-size: 10px;
                 color: #999;
                 letter-spacing: 0.3px;
@@ -156,7 +156,7 @@ export function renderActiveContracts() {
 
             .act-risk-badge {
                 display: inline-block;
-                font-family: 'IBM Plex Mono', monospace;
+                font-family: 'JetBrains Mono', monospace;
                 font-size: 9px;
                 font-weight: 700;
                 text-transform: uppercase;
@@ -169,7 +169,7 @@ export function renderActiveContracts() {
 
             .act-status-badge {
                 display: inline-block;
-                font-family: 'IBM Plex Mono', monospace;
+                font-family: 'JetBrains Mono', monospace;
                 font-size: 9px;
                 font-weight: 700;
                 text-transform: uppercase;
@@ -193,7 +193,7 @@ export function renderActiveContracts() {
                 font-size: 22px;
                 font-weight: 700;
                 color: #111;
-                font-family: 'IBM Plex Sans', sans-serif;
+                font-family: 'Neue Haas Grotesk Display', 'Helvetica Neue', Helvetica, Arial, sans-serif;
                 letter-spacing: -0.5px;
                 line-height: 1;
             }
@@ -201,7 +201,7 @@ export function renderActiveContracts() {
                 font-size: 12px;
                 font-weight: 600;
                 color: #166534;
-                font-family: 'IBM Plex Mono', monospace;
+                font-family: 'JetBrains Mono', monospace;
                 letter-spacing: -0.3px;
             }
 
@@ -216,7 +216,7 @@ export function renderActiveContracts() {
                 color: #888;
                 text-transform: uppercase;
                 letter-spacing: 1px;
-                font-family: 'IBM Plex Mono', monospace;
+                font-family: 'JetBrains Mono', monospace;
                 margin: 0 0 16px;
             }
             .act-empty-btn {
@@ -231,7 +231,7 @@ export function renderActiveContracts() {
                 border-radius: 4px;
                 cursor: pointer;
                 transition: background 0.12s;
-                font-family: 'IBM Plex Sans', sans-serif;
+                font-family: 'Neue Haas Grotesk Display', 'Helvetica Neue', Helvetica, Arial, sans-serif;
             }
             .act-empty-btn:hover { background: #752122; }
 
@@ -254,7 +254,7 @@ export function renderActiveContracts() {
             }
             @keyframes act-spin { to { transform: rotate(360deg); } }
             .act-loading-text {
-                font-family: 'IBM Plex Mono', monospace;
+                font-family: 'JetBrains Mono', monospace;
                 font-size: 10px;
                 color: #888;
                 text-transform: uppercase;
@@ -349,7 +349,7 @@ export async function initActiveContracts() {
     } catch (err) {
         console.error('[ActiveContracts] Load error:', err);
         container.innerHTML = `
-            <div style="text-align:center; padding: 40px; color: #752122; font-family: 'IBM Plex Mono', monospace; font-size: 12px;">
+            <div style="text-align:center; padding: 40px; color: #752122; font-family: 'JetBrains Mono', monospace; font-size: 12px;">
                 ERROR_RETRIEVING_CONTRACT_STATE: ${err.message}
             </div>
         `;

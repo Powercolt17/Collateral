@@ -53,12 +53,12 @@ function ensureModal() {
             }
             .exec-header-title {
                 font-size: 11px; font-weight: 600; color: #374151;
-                font-family: 'IBM Plex Mono', 'JetBrains Mono', monospace;
+                font-family: 'JetBrains Mono', 'JetBrains Mono', monospace;
                 text-transform: uppercase; letter-spacing: 0.08em;
             }
             .exec-header-id {
                 font-size: 10px; color: #9ca3af;
-                font-family: 'IBM Plex Mono', monospace;
+                font-family: 'JetBrains Mono', monospace;
                 letter-spacing: 0.04em;
             }
 
@@ -72,12 +72,12 @@ function ensureModal() {
             }
             .exec-tier-label {
                 font-size: 11px; font-weight: 600; color: #374151;
-                font-family: 'IBM Plex Mono', monospace;
+                font-family: 'JetBrains Mono', monospace;
                 text-transform: uppercase; letter-spacing: 0.06em;
             }
             .exec-tier-badge {
                 font-size: 11px; font-weight: 700; color: #111;
-                font-family: 'IBM Plex Sans', sans-serif;
+                font-family: 'Neue Haas Grotesk Display', 'Helvetica Neue', Helvetica, Arial, sans-serif;
                 text-transform: uppercase; letter-spacing: 0.04em;
             }
             .exec-stake-presets {
@@ -88,7 +88,7 @@ function ensureModal() {
                 flex: 1; padding: 10px 0; border: none;
                 background: #fff; color: #374151;
                 font-size: 13px; font-weight: 600;
-                font-family: 'IBM Plex Sans', sans-serif;
+                font-family: 'Neue Haas Grotesk Display', 'Helvetica Neue', Helvetica, Arial, sans-serif;
                 cursor: pointer; transition: all 120ms ease;
                 border-right: 1px solid #e5e5e5;
                 font-variant-numeric: tabular-nums;
@@ -110,11 +110,11 @@ function ensureModal() {
             .exec-outcome-label {
                 font-size: 11px; color: #6b7280;
                 text-transform: uppercase; letter-spacing: 0.06em;
-                font-family: 'IBM Plex Mono', monospace; font-weight: 500;
+                font-family: 'JetBrains Mono', monospace; font-weight: 500;
             }
             .exec-outcome-value {
                 font-size: 16px; font-weight: 700;
-                font-family: 'IBM Plex Sans', sans-serif;
+                font-family: 'Neue Haas Grotesk Display', 'Helvetica Neue', Helvetica, Arial, sans-serif;
                 letter-spacing: -0.01em;
                 font-variant-numeric: tabular-nums;
             }
@@ -131,7 +131,7 @@ function ensureModal() {
             /* Escrow */
             .exec-escrow {
                 font-size: 10px; color: #9ca3af; text-align: center;
-                font-family: 'IBM Plex Mono', monospace;
+                font-family: 'JetBrains Mono', monospace;
                 letter-spacing: 0.02em;
                 margin-bottom: 16px;
             }
@@ -147,7 +147,7 @@ function ensureModal() {
             }
             .exec-risk-text {
                 font-size: 12px; color: #374151; line-height: 1.5;
-                font-family: 'IBM Plex Sans', sans-serif;
+                font-family: 'Neue Haas Grotesk Display', 'Helvetica Neue', Helvetica, Arial, sans-serif;
             }
 
             /* ── Primary Button — Dual-State ── */
@@ -157,7 +157,7 @@ function ensureModal() {
                 border: 1px solid #e5e5e5;
                 font-size: 12px; font-weight: 600;
                 text-transform: uppercase; letter-spacing: 0.06em;
-                font-family: 'IBM Plex Sans', sans-serif;
+                font-family: 'Neue Haas Grotesk Display', 'Helvetica Neue', Helvetica, Arial, sans-serif;
                 cursor: pointer; overflow: hidden;
                 transition: all 150ms ease;
                 box-shadow: none;
@@ -192,7 +192,7 @@ function ensureModal() {
             .exec-btn-cancel {
                 width: 100%; border: none; background: transparent;
                 color: #9ca3af; font-size: 11px; font-weight: 500;
-                font-family: 'IBM Plex Sans', sans-serif;
+                font-family: 'Neue Haas Grotesk Display', 'Helvetica Neue', Helvetica, Arial, sans-serif;
                 cursor: pointer; padding: 8px; margin-top: 4px;
                 transition: color 150ms; letter-spacing: 0.02em;
             }
@@ -203,7 +203,7 @@ function ensureModal() {
                 background: #fef2f2; border: 1px solid #e5c5c5;
                 padding: 10px 14px; margin-top: 12px;
                 font-size: 11px; color: #752122;
-                font-family: 'IBM Plex Mono', monospace;
+                font-family: 'JetBrains Mono', monospace;
                 border-radius: 4px; display: none;
             }
 
@@ -213,12 +213,12 @@ function ensureModal() {
             .exec-success-title {
                 font-size: 11px; font-weight: 700; color: #166534;
                 text-transform: uppercase; letter-spacing: 0.06em;
-                font-family: 'IBM Plex Mono', monospace;
+                font-family: 'JetBrains Mono', monospace;
                 margin-bottom: 4px;
             }
             .exec-success-sub {
                 font-size: 10px; color: #9ca3af;
-                font-family: 'IBM Plex Mono', monospace;
+                font-family: 'JetBrains Mono', monospace;
             }
             .exec-success-actions {
                 display: flex; gap: 8px; margin-top: 16px;
@@ -227,7 +227,7 @@ function ensureModal() {
                 flex: 1; padding: 12px; border: none;
                 font-size: 11px; font-weight: 600;
                 text-transform: uppercase; letter-spacing: 0.04em;
-                font-family: 'IBM Plex Sans', sans-serif;
+                font-family: 'Neue Haas Grotesk Display', 'Helvetica Neue', Helvetica, Arial, sans-serif;
                 cursor: pointer; transition: all 150ms;
                 border-radius: 4px;
             }

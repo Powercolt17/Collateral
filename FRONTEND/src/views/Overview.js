@@ -14,7 +14,7 @@ export function renderOverview() {
             .eq {
                 background: #fafafa;
                 min-height: 100vh;
-                font-family: 'IBM Plex Sans', -apple-system, sans-serif;
+                font-family: 'Neue Haas Grotesk Display', 'Helvetica Neue', Helvetica, Arial, sans-serif;
                 color: #111;
             }
 
@@ -32,7 +32,7 @@ export function renderOverview() {
                 font-size: 18px;
                 font-weight: 700;
                 color: #111111;
-                font-family: 'IBM Plex Sans', sans-serif;
+                font-family: 'Neue Haas Grotesk Display', 'Helvetica Neue', Helvetica, Arial, sans-serif;
                 letter-spacing: -0.5px;
             }
             .eq-stat-label {
@@ -42,7 +42,7 @@ export function renderOverview() {
                 text-transform: uppercase;
                 letter-spacing: 0.5px;
                 margin-top: 2px;
-                font-family: 'IBM Plex Mono', monospace;
+                font-family: 'JetBrains Mono', monospace;
             }
             .eq-stat-divider { width: 1px; height: 32px; background: #DCDCDC; margin: 0 16px; }
             .eq-controls { display: flex; gap: 8px; align-items: center; }
@@ -55,7 +55,7 @@ export function renderOverview() {
                 border-radius: 0;
                 outline: none;
                 width: 200px;
-                font-family: 'IBM Plex Sans', sans-serif;
+                font-family: 'Neue Haas Grotesk Display', 'Helvetica Neue', Helvetica, Arial, sans-serif;
                 color: #333;
                 transition: border-color 0.15s;
             }
@@ -69,7 +69,7 @@ export function renderOverview() {
                 border: 1px solid #DCDCDC;
                 background: #fff;
                 cursor: pointer;
-                font-family: 'IBM Plex Mono', monospace;
+                font-family: 'JetBrains Mono', monospace;
                 color: #444444;
                 outline: none;
             }
@@ -83,7 +83,7 @@ export function renderOverview() {
                 background: #fff;
                 border: 1px solid #e0e0e0;
                 cursor: pointer;
-                font-family: 'IBM Plex Mono', monospace;
+                font-family: 'JetBrains Mono', monospace;
                 text-transform: uppercase;
                 letter-spacing: 0.3px;
                 display: flex;
@@ -111,7 +111,7 @@ export function renderOverview() {
                 border: none;
                 border-bottom: 2px solid transparent;
                 cursor: pointer;
-                font-family: 'IBM Plex Sans', sans-serif;
+                font-family: 'Neue Haas Grotesk Display', 'Helvetica Neue', Helvetica, Arial, sans-serif;
                 text-transform: uppercase;
                 letter-spacing: 0.2px;
                 transition: color 0.12s;
@@ -127,7 +127,7 @@ export function renderOverview() {
                 border-radius: 999px;
                 margin-left: 6px;
                 font-weight: 600;
-                font-family: 'IBM Plex Mono', monospace;
+                font-family: 'JetBrains Mono', monospace;
             }
             .eq-tab.active .eq-tab-count { background: #fef2f2; color: #752122; }
 
@@ -145,7 +145,7 @@ export function renderOverview() {
                 font-size: 12px;
                 color: #6B6B6B;
                 text-transform: uppercase;
-                font-family: 'IBM Plex Mono', monospace;
+                font-family: 'JetBrains Mono', monospace;
                 margin-right: 4px;
                 font-weight: 700;
             }
@@ -158,7 +158,7 @@ export function renderOverview() {
                 border: 1px solid #E5E5E5;
                 cursor: pointer;
                 transition: all 0.12s;
-                font-family: 'IBM Plex Sans', sans-serif;
+                font-family: 'Neue Haas Grotesk Display', 'Helvetica Neue', Helvetica, Arial, sans-serif;
             }
             .eq-pill:hover { border-color: #DCDCDC; color: #111111; }
             .eq-pill.active { 
@@ -176,7 +176,7 @@ export function renderOverview() {
                 font-size: 13px;
                 color: #4b5563;
                 font-weight: 500;
-                font-family: 'IBM Plex Sans', sans-serif;
+                font-family: 'Neue Haas Grotesk Display', 'Helvetica Neue', Helvetica, Arial, sans-serif;
                 text-transform: capitalize; 
                 letter-spacing: normal;
             }
@@ -258,7 +258,7 @@ export function renderOverview() {
             .eq-card-id {
                 font-size: 11px;
                 color: #8A8A8A;
-                font-family: 'IBM Plex Mono', monospace;
+                font-family: 'JetBrains Mono', monospace;
                 letter-spacing: 0.5px;
             }
 
@@ -271,7 +271,7 @@ export function renderOverview() {
                 align-items: center;
                 padding: 0 10px;
                 border-radius: 4px;
-                font-family: 'IBM Plex Mono', monospace;
+                font-family: 'JetBrains Mono', monospace;
                 letter-spacing: 0.5px;
                 text-transform: uppercase;
                 line-height: 1;
@@ -291,7 +291,7 @@ export function renderOverview() {
                 height: 24px; /* Fixed height */
                 padding: 0 8px;
                 border-radius: 4px;
-                font-family: 'IBM Plex Sans', sans-serif; /* Semibold sans */
+                font-family: 'Neue Haas Grotesk Display', 'Helvetica Neue', Helvetica, Arial, sans-serif; /* Semibold sans */
                 letter-spacing: 0.3px;
                 text-transform: uppercase;
                 line-height: 1;
@@ -308,7 +308,7 @@ export function renderOverview() {
                 font-weight: 600;
                 color: #111;
                 line-height: 1.35;
-                font-family: 'IBM Plex Sans', sans-serif;
+                font-family: 'Neue Haas Grotesk Display', 'Helvetica Neue', Helvetica, Arial, sans-serif;
                 letter-spacing: -0.2px;
             }
 
@@ -334,7 +334,7 @@ export function renderOverview() {
                 font-size: 20px;
                 font-weight: 700;
                 color: #111;
-                font-family: 'IBM Plex Sans', sans-serif;
+                font-family: 'Neue Haas Grotesk Display', 'Helvetica Neue', Helvetica, Arial, sans-serif;
                 letter-spacing: -0.5px;
             }
             .eq-card-stake-label {
@@ -342,13 +342,13 @@ export function renderOverview() {
                 color: #6B6B6B;
                 font-weight: 600;
                 text-transform: uppercase;
-                font-family: 'IBM Plex Mono', monospace;
+                font-family: 'JetBrains Mono', monospace;
                 letter-spacing: 0.5px;
             }
             .eq-card-time {
                 font-size: 12px;
                 color: #8A8A8A;
-                font-family: 'IBM Plex Mono', monospace;
+                font-family: 'JetBrains Mono', monospace;
             }
 
             .eq-card-cta {
@@ -358,7 +358,7 @@ export function renderOverview() {
                 font-weight: 700;
                 text-transform: uppercase;
                 letter-spacing: 0.5px;
-                font-family: 'IBM Plex Sans', sans-serif;
+                font-family: 'Neue Haas Grotesk Display', 'Helvetica Neue', Helvetica, Arial, sans-serif;
                 cursor: pointer;
                 transition: all 120ms ease;
             }
@@ -410,7 +410,7 @@ export function renderOverview() {
             .eq-receipt-icon { font-size: 32px; margin-bottom: 12px; text-align: center; }
             .eq-receipt-title { 
                 font-size: 16px; font-weight: 700; color: #111; text-align: center; margin-bottom: 24px; 
-                font-family: 'IBM Plex Sans', sans-serif; letter-spacing: -0.3px;
+                font-family: 'Neue Haas Grotesk Display', 'Helvetica Neue', Helvetica, Arial, sans-serif; letter-spacing: -0.3px;
             }
             .eq-receipt-grid {
                 display: grid; grid-template-columns: 1fr 1fr; gap: 16px;
@@ -418,7 +418,7 @@ export function renderOverview() {
                 margin-bottom: 20px;
             }
             .eq-receipt-item-label { font-size: 11px; color: #666; font-family:'JetBrains Mono',monospace; margin-bottom: 4px; }
-            .eq-receipt-item-value { font-size: 14px; font-weight: 600; color: #111; font-family:'IBM Plex Sans', sans-serif; }
+            .eq-receipt-item-value { font-size: 14px; font-weight: 600; color: #111; font-family:'Neue Haas Grotesk Display', 'Helvetica Neue', Helvetica, Arial, sans-serif; }
             .eq-receipt-ledger {
                 margin: 20px 0; padding: 12px; background: #fff1f2; border: 1px solid #fecaca; border-radius: 6px;
                 font-size: 11px; color: #752122; font-family: 'JetBrains Mono', monospace;
@@ -433,7 +433,7 @@ export function renderOverview() {
                 color: #444;
                 text-align: center;
                 margin-top: 8px;
-                font-family: 'IBM Plex Sans', sans-serif;
+                font-family: 'Neue Haas Grotesk Display', 'Helvetica Neue', Helvetica, Arial, sans-serif;
                 font-weight: 400;
                 letter-spacing: normal;
                 opacity: 1;
@@ -558,7 +558,7 @@ export function renderOverview() {
                 min-width: 60px;
                 text-align: right;
                 color: #0a0a0a;
-                font-family: 'IBM Plex Sans', sans-serif;
+                font-family: 'Neue Haas Grotesk Display', 'Helvetica Neue', Helvetica, Arial, sans-serif;
             }
 
             /* Stat counter animation */
@@ -639,7 +639,7 @@ export function renderOverview() {
                 text-align: center;
             }
             .eq-stake-warning-text {
-                font-family: 'IBM Plex Mono', monospace;
+                font-family: 'JetBrains Mono', monospace;
                 font-size: 10px;
                 color: #999;
                 text-transform: uppercase;

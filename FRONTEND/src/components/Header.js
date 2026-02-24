@@ -80,7 +80,7 @@ export function renderHeader(currentRoute) {
                 font-size: 14px;
                 font-weight: 700;
                 color: #ffffff;
-                font-family: 'IBM Plex Sans', sans-serif;
+                font-family: 'Neue Haas Grotesk Display', 'Helvetica Neue', Helvetica, Arial, sans-serif;
                 line-height: 1;
             }
             .ch-logo-text {
@@ -88,7 +88,7 @@ export function renderHeader(currentRoute) {
                 font-weight: 700;
                 color: #111111;
                 letter-spacing: -0.02em;
-                font-family: 'IBM Plex Sans', sans-serif;
+                font-family: 'Neue Haas Grotesk Display', 'Helvetica Neue', Helvetica, Arial, sans-serif;
                 line-height: 1;
             }
 
@@ -107,7 +107,7 @@ export function renderHeader(currentRoute) {
                 font-weight: 600;
                 color: #333333;
                 text-decoration: none;
-                font-family: 'IBM Plex Sans', sans-serif;
+                font-family: 'Neue Haas Grotesk Display', 'Helvetica Neue', Helvetica, Arial, sans-serif;
                 letter-spacing: 0.1px;
                 transition: color 0.12s;
                 position: relative;
@@ -211,7 +211,7 @@ export function renderHeader(currentRoute) {
                 background: #111111;
                 border: none;
                 cursor: pointer;
-                font-family: 'IBM Plex Mono', monospace;
+                font-family: 'JetBrains Mono', monospace;
                 letter-spacing: 0.5px;
                 text-transform: uppercase;
                 transition: background 0.12s;
@@ -246,7 +246,7 @@ export function renderHeader(currentRoute) {
                 border-color: #DCDCDC;
             }
             .ch-user-initials {
-                font-family: 'IBM Plex Sans', sans-serif;
+                font-family: 'Neue Haas Grotesk Display', 'Helvetica Neue', Helvetica, Arial, sans-serif;
                 font-size: 12px;
                 font-weight: 700;
                 color: #111111;
@@ -263,7 +263,7 @@ export function renderHeader(currentRoute) {
                 .ch-user-label-wrap { display: flex; }
             }
             .ch-user-label-id {
-                font-family: 'IBM Plex Mono', monospace;
+                font-family: 'JetBrains Mono', monospace;
                 font-size: 11px;
                 font-weight: 700;
                 color: #111111;
@@ -271,7 +271,7 @@ export function renderHeader(currentRoute) {
                 line-height: 1;
             }
             .ch-user-label-role {
-                font-family: 'IBM Plex Mono', monospace;
+                font-family: 'JetBrains Mono', monospace;
                 font-size: 8px;
                 font-weight: 600;
                 text-transform: uppercase;
@@ -314,7 +314,7 @@ export function renderHeader(currentRoute) {
                 border: none;
                 border-bottom: 1px solid #F5F5F5;
                 cursor: pointer;
-                font-family: 'IBM Plex Mono', monospace;
+                font-family: 'JetBrains Mono', monospace;
                 transition: background 0.1s;
             }
             .ch-user-dropdown button:last-child { border-bottom: none; }

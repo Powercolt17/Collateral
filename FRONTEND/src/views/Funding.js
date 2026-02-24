@@ -11,7 +11,7 @@ export function renderFunding() {
             .cap {
                 background: #f9f9f9;
                 min-height: calc(100vh - 72px);
-                font-family: 'IBM Plex Sans', -apple-system, sans-serif;
+                font-family: 'Neue Haas Grotesk Display', 'Helvetica Neue', Helvetica, Arial, sans-serif;
                 color: #111;
             }
 
@@ -41,7 +41,7 @@ export function renderFunding() {
                 font-size: 13px;
                 color: #444444;
                 margin: 0;
-                font-family: 'IBM Plex Mono', monospace;
+                font-family: 'JetBrains Mono', monospace;
                 letter-spacing: 0.2px;
             }
             .cap-deposit-btn {
@@ -55,7 +55,7 @@ export function renderFunding() {
                 border: none;
                 cursor: pointer;
                 transition: background 0.15s;
-                font-family: 'IBM Plex Sans', sans-serif;
+                font-family: 'Neue Haas Grotesk Display', 'Helvetica Neue', Helvetica, Arial, sans-serif;
                 white-space: nowrap;
                 flex-shrink: 0;
             }
@@ -69,7 +69,7 @@ export function renderFunding() {
                 border-left: 3px solid #752122;
                 padding: 12px 16px;
                 margin-bottom: 24px;
-                font-family: 'IBM Plex Mono', monospace;
+                font-family: 'JetBrains Mono', monospace;
                 font-size: 11px;
                 color: #752122;
                 text-transform: uppercase;
@@ -94,7 +94,7 @@ export function renderFunding() {
             }
             .cap-stat:last-child { border-right: none; }
             .cap-stat-lbl {
-                font-family: 'IBM Plex Mono', monospace;
+                font-family: 'JetBrains Mono', monospace;
                 font-size: 9px;
                 font-weight: 700;
                 text-transform: uppercase;
@@ -102,7 +102,7 @@ export function renderFunding() {
                 color: #6B6B6B;
             }
             .cap-stat-val {
-                font-family: 'IBM Plex Mono', monospace;
+                font-family: 'JetBrains Mono', monospace;
                 font-size: 26px;
                 font-weight: 700;
                 color: #111111;
@@ -131,7 +131,7 @@ export function renderFunding() {
                 border-bottom: 1px solid #f0f0f0;
             }
             .cap-section-title {
-                font-family: 'IBM Plex Mono', monospace;
+                font-family: 'JetBrains Mono', monospace;
                 font-size: 9px;
                 font-weight: 700;
                 text-transform: uppercase;
@@ -164,7 +164,7 @@ export function renderFunding() {
                 gap: 8px;
             }
             .cap-row-detail {
-                font-family: 'IBM Plex Mono', monospace;
+                font-family: 'JetBrains Mono', monospace;
                 font-size: 11px;
                 color: #666;
             }
@@ -174,7 +174,7 @@ export function renderFunding() {
                 display: inline-flex;
                 align-items: center;
                 padding: 2px 6px;
-                font-family: 'IBM Plex Mono', monospace;
+                font-family: 'JetBrains Mono', monospace;
                 font-size: 9px;
                 font-weight: 700;
                 text-transform: uppercase;
@@ -199,7 +199,7 @@ export function renderFunding() {
 
             /* ── Action Links ── */
             .cap-action {
-                font-family: 'IBM Plex Mono', monospace;
+                font-family: 'JetBrains Mono', monospace;
                 font-size: 10px;
                 font-weight: 600;
                 text-transform: uppercase;
@@ -232,7 +232,7 @@ export function renderFunding() {
                 gap: 2px;
             }
             .cap-footer-lbl {
-                font-family: 'IBM Plex Mono', monospace;
+                font-family: 'JetBrains Mono', monospace;
                 font-size: 9px;
                 font-weight: 700;
                 text-transform: uppercase;
@@ -240,7 +240,7 @@ export function renderFunding() {
                 color: #bbb;
             }
             .cap-footer-val {
-                font-family: 'IBM Plex Mono', monospace;
+                font-family: 'JetBrains Mono', monospace;
                 font-size: 10px;
                 color: #888;
             }
@@ -293,7 +293,7 @@ export function renderFunding() {
                 border-bottom: 1px solid #f0f0f0;
             }
             .cap-modal-title {
-                font-family: 'IBM Plex Mono', monospace;
+                font-family: 'JetBrains Mono', monospace;
                 font-size: 11px;
                 font-weight: 700;
                 text-transform: uppercase;
@@ -317,13 +317,13 @@ export function renderFunding() {
                 font-size: 12px;
                 color: #666;
                 margin-bottom: 20px;
-                font-family: 'IBM Plex Mono', monospace;
+                font-family: 'JetBrains Mono', monospace;
             }
             .cap-modal-footer {
                 padding: 12px 20px;
                 border-top: 1px solid #f0f0f0;
                 background: #fafafa;
-                font-family: 'IBM Plex Mono', monospace;
+                font-family: 'JetBrains Mono', monospace;
                 font-size: 10px;
                 color: #999;
                 text-align: center;
@@ -342,7 +342,7 @@ export function renderFunding() {
             .cap-error {
                 font-size: 11px;
                 color: #752122;
-                font-family: 'IBM Plex Mono', monospace;
+                font-family: 'JetBrains Mono', monospace;
                 margin-bottom: 12px;
                 display: none;
             }
@@ -361,7 +361,7 @@ export function renderFunding() {
                 border: none;
                 cursor: pointer;
                 transition: background 0.15s;
-                font-family: 'IBM Plex Sans', sans-serif;
+                font-family: 'Neue Haas Grotesk Display', 'Helvetica Neue', Helvetica, Arial, sans-serif;
             }
             .cap-btn-primary:hover { background: #333; }
             .cap-btn-primary:disabled { opacity: 0.5; cursor: not-allowed; }
@@ -378,7 +378,7 @@ export function renderFunding() {
                 border: none;
                 cursor: pointer;
                 transition: background 0.15s;
-                font-family: 'IBM Plex Sans', sans-serif;
+                font-family: 'Neue Haas Grotesk Display', 'Helvetica Neue', Helvetica, Arial, sans-serif;
                 margin-top: 8px;
             }
             .cap-btn-danger:hover { background: #5c1a1b; }
@@ -394,7 +394,7 @@ export function renderFunding() {
                 border: 1px solid #e5e5e5;
                 cursor: pointer;
                 transition: all 0.15s;
-                font-family: 'IBM Plex Sans', sans-serif;
+                font-family: 'Neue Haas Grotesk Display', 'Helvetica Neue', Helvetica, Arial, sans-serif;
             }
             .cap-btn-ghost:hover { border-color: #bbb; color: #111; }
 
@@ -404,7 +404,7 @@ export function renderFunding() {
             }
             .cap-input-lbl {
                 display: block;
-                font-family: 'IBM Plex Mono', monospace;
+                font-family: 'JetBrains Mono', monospace;
                 font-size: 9px;
                 font-weight: 700;
                 text-transform: uppercase;
@@ -421,7 +421,7 @@ export function renderFunding() {
                 top: 50%;
                 transform: translateY(-50%);
                 color: #666;
-                font-family: 'IBM Plex Mono', monospace;
+                font-family: 'JetBrains Mono', monospace;
                 font-size: 16px;
             }
             .cap-input-amt input {
@@ -429,7 +429,7 @@ export function renderFunding() {
                 padding: 12px 12px 12px 28px;
                 border: 1px solid #e5e5e5;
                 font-size: 22px;
-                font-family: 'IBM Plex Mono', monospace;
+                font-family: 'JetBrains Mono', monospace;
                 color: #111;
                 background: #fafafa;
                 box-sizing: border-box;
@@ -465,7 +465,7 @@ export function renderFunding() {
                 margin: 0 0 8px;
             }
             .cap-success-amt {
-                font-family: 'IBM Plex Mono', monospace;
+                font-family: 'JetBrains Mono', monospace;
                 font-size: 32px;
                 font-weight: 700;
                 color: #0a0a0a;
@@ -474,7 +474,7 @@ export function renderFunding() {
             .cap-success-sub {
                 font-size: 12px;
                 color: #888;
-                font-family: 'IBM Plex Mono', monospace;
+                font-family: 'JetBrains Mono', monospace;
                 margin-bottom: 24px;
             }
         </style>
@@ -564,7 +564,7 @@ export function renderFunding() {
                         </div>
                         <button class="cap-action" id="manage-payout-btn">CONFIGURE</button>
                     </div>
-                    <div style="padding: 10px 20px; font-family: 'IBM Plex Mono', monospace; font-size: 10px; color: #bbb; border-top: 1px solid #f4f4f4;">
+                    <div style="padding: 10px 20px; font-family: 'JetBrains Mono', monospace; font-size: 10px; color: #bbb; border-top: 1px solid #f4f4f4;">
                         Payouts execute only after contract settlement and clearance.
                     </div>
                 </div>
@@ -834,7 +834,7 @@ export async function initFunding() {
                     base: {
                         fontSize: '15px',
                         color: '#111',
-                        fontFamily: "'IBM Plex Mono', monospace",
+                        fontFamily: "'JetBrains Mono', monospace",
                         '::placeholder': { color: '#bbb' },
                     },
                     invalid: { color: '#752122' },

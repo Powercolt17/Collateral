@@ -12,7 +12,7 @@ export function renderContractDetail(params) {
                 max-width: 1400px;
                 margin: 0 auto;
                 padding: 32px 40px 100px;
-                font-family: 'IBM Plex Sans', -apple-system, sans-serif;
+                font-family: 'Neue Haas Grotesk Display', 'Helvetica Neue', Helvetica, Arial, sans-serif;
                 color: #111;
                 background: #F2F2F2;
                 min-height: calc(100vh - 72px);
@@ -21,7 +21,7 @@ export function renderContractDetail(params) {
             /* Breadcrumb */
             .cd-breadcrumb { display: flex; align-items: center; gap: 6px; margin-bottom: 28px; }
             .cd-breadcrumb a, .cd-breadcrumb span {
-                font-size: 10px; font-family: 'IBM Plex Mono', monospace;
+                font-size: 10px; font-family: 'JetBrains Mono', monospace;
                 text-transform: uppercase; letter-spacing: 0.08em; color: #9ca3af;
                 text-decoration: none; transition: color 150ms; cursor: pointer;
             }
@@ -46,13 +46,13 @@ export function renderContractDetail(params) {
             /* Error */
             .cd-error { text-align: center; padding: 60px 20px; }
             .cd-error-icon { width: 48px; height: 48px; border-radius: 50%; background: #fef2f2; display: flex; align-items: center; justify-content: center; margin: 0 auto 16px; font-size: 20px; }
-            .cd-error-title { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: #374151; font-family: 'IBM Plex Mono', monospace; margin-bottom: 8px; }
+            .cd-error-title { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: #374151; font-family: 'JetBrains Mono', monospace; margin-bottom: 8px; }
             .cd-error-msg { font-size: 13px; color: #6b7280; margin-bottom: 20px; }
             .cd-error-btn {
                 display: inline-block; padding: 10px 24px; background: #111; color: #fff;
                 border: none; font-size: 11px; font-weight: 600; text-transform: uppercase;
                 letter-spacing: 0.06em; cursor: pointer; transition: background 150ms;
-                font-family: 'IBM Plex Sans', sans-serif;
+                font-family: 'Neue Haas Grotesk Display', 'Helvetica Neue', Helvetica, Arial, sans-serif;
             }
             .cd-error-btn:hover { background: #333; }
 
@@ -61,13 +61,13 @@ export function renderContractDetail(params) {
             /* === HEADER === */
             .cd-header { padding: 20px 24px; border-bottom: 1px solid #e5e5e5; display: flex; justify-content: space-between; align-items: flex-start; gap: 16px; }
             .cd-header-left { display: flex; flex-direction: column; gap: 4px; }
-            .cd-header-lbl { font-size: 9px; text-transform: uppercase; letter-spacing: 0.1em; color: #9ca3af; font-family: 'IBM Plex Mono', monospace; font-weight: 600; }
-            .cd-header-id { font-size: 16px; font-family: 'IBM Plex Mono', monospace; font-weight: 600; color: #0a0a0a; letter-spacing: -0.01em; }
+            .cd-header-lbl { font-size: 9px; text-transform: uppercase; letter-spacing: 0.1em; color: #9ca3af; font-family: 'JetBrains Mono', monospace; font-weight: 600; }
+            .cd-header-id { font-size: 16px; font-family: 'JetBrains Mono', monospace; font-weight: 600; color: #0a0a0a; letter-spacing: -0.01em; }
             .cd-header-right { display: flex; flex-direction: column; align-items: flex-end; gap: 6px; }
             .cd-badge {
                 display: inline-flex; align-items: center; padding: 3px 10px;
                 font-size: 10px; font-weight: 700; text-transform: uppercase;
-                letter-spacing: 0.08em; font-family: 'IBM Plex Mono', monospace;
+                letter-spacing: 0.08em; font-family: 'JetBrains Mono', monospace;
                 border: 1px solid transparent; border-radius: 3px;
             }
             .cd-badge-created { background: #f5f5f5; border-color: #e5e5e5; color: #6b7280; }
@@ -77,7 +77,7 @@ export function renderContractDetail(params) {
             .cd-badge-verifying { background: #faf5ff; border-color: #e9d5ff; color: #7c3aed; }
             .cd-badge-settled { background: #f0fdf4; border-color: #bbf7d0; color: #166534; }
             .cd-badge-forfeited { background: #fef2f2; border-color: #fecaca; color: #991b1b; }
-            .cd-updated { font-size: 10px; font-family: 'IBM Plex Mono', monospace; color: #9ca3af; letter-spacing: 0.04em; }
+            .cd-updated { font-size: 10px; font-family: 'JetBrains Mono', monospace; color: #9ca3af; letter-spacing: 0.04em; }
 
             /* === TERMS GRID === */
             .cd-terms { display: grid; grid-template-columns: repeat(4, 1fr); border-bottom: 1px solid #e5e5e5; }
@@ -88,7 +88,7 @@ export function renderContractDetail(params) {
             }
             .cd-term:last-child { border-right: none; }
             @media (max-width: 600px) { .cd-term { border-bottom: 1px solid #e5e5e5; } .cd-term:nth-child(2n) { border-right: none; } }
-            .cd-term-lbl { font-size: 9px; text-transform: uppercase; letter-spacing: 0.08em; color: #6b7280; font-family: 'IBM Plex Mono', monospace; font-weight: 600; margin-bottom: 6px; }
+            .cd-term-lbl { font-size: 9px; text-transform: uppercase; letter-spacing: 0.08em; color: #6b7280; font-family: 'JetBrains Mono', monospace; font-weight: 600; margin-bottom: 6px; }
             .cd-term-val { font-size: 13px; font-weight: 600; color: #111; }
 
             /* === CAPITAL BLOCK === */
@@ -97,22 +97,22 @@ export function renderContractDetail(params) {
             .cd-capital-cell { padding: 20px 24px; }
             .cd-capital-cell:first-child { border-right: 1px solid #e5e5e5; }
             @media (max-width: 500px) { .cd-capital-cell:first-child { border-right: none; border-bottom: 1px solid #e5e5e5; } }
-            .cd-capital-lbl { font-size: 9px; text-transform: uppercase; letter-spacing: 0.1em; color: #6b7280; font-family: 'IBM Plex Mono', monospace; font-weight: 600; margin-bottom: 8px; }
-            .cd-capital-amount { font-size: 30px; font-weight: 700; letter-spacing: -0.02em; color: #0a0a0a; font-family: 'IBM Plex Mono', monospace; }
-            .cd-capital-payout { font-size: 24px; font-weight: 600; color: #166534; font-family: 'IBM Plex Mono', monospace; }
+            .cd-capital-lbl { font-size: 9px; text-transform: uppercase; letter-spacing: 0.1em; color: #6b7280; font-family: 'JetBrains Mono', monospace; font-weight: 600; margin-bottom: 8px; }
+            .cd-capital-amount { font-size: 30px; font-weight: 700; letter-spacing: -0.02em; color: #0a0a0a; font-family: 'JetBrains Mono', monospace; }
+            .cd-capital-payout { font-size: 24px; font-weight: 600; color: #166534; font-family: 'JetBrains Mono', monospace; }
 
             /* === IMMUTABLE NOTICE === */
             .cd-immutable {
                 padding: 8px 24px; border-bottom: 1px solid #e5e5e5;
                 background: #fafafa; display: flex; align-items: center; gap: 8px;
-                font-size: 10px; font-family: 'IBM Plex Mono', monospace;
+                font-size: 10px; font-family: 'JetBrains Mono', monospace;
                 color: #9ca3af; text-transform: uppercase; letter-spacing: 0.06em;
             }
             .cd-immutable svg { width: 12px; height: 12px; flex-shrink: 0; }
 
             /* === ACTION PANEL === */
             .cd-action { padding: 20px 24px; border-bottom: 1px solid #e5e5e5; background: #fff; }
-            .cd-action-title { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: #9ca3af; font-family: 'IBM Plex Mono', monospace; margin-bottom: 16px; }
+            .cd-action-title { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: #9ca3af; font-family: 'JetBrains Mono', monospace; margin-bottom: 16px; }
             .cd-action-body { }
 
             .cd-action-msg { font-size: 13px; color: #374151; line-height: 1.5; margin-bottom: 8px; }
@@ -133,7 +133,7 @@ export function renderContractDetail(params) {
                 padding: 12px 28px; min-width: 180px; border: none;
                 background: #752122; color: #fff;
                 font-size: 12px; font-weight: 600; text-transform: uppercase;
-                letter-spacing: 0.06em; font-family: 'IBM Plex Sans', sans-serif;
+                letter-spacing: 0.06em; font-family: 'Neue Haas Grotesk Display', 'Helvetica Neue', Helvetica, Arial, sans-serif;
                 cursor: pointer; transition: background 180ms, box-shadow 180ms;
                 box-shadow: 0 1px 3px rgba(0,0,0,0.08);
             }
@@ -144,7 +144,7 @@ export function renderContractDetail(params) {
                 display: inline-flex; align-items: center; justify-content: center;
                 padding: 10px 24px; border: 1px solid #d4d4d4; background: #fff;
                 color: #374151; font-size: 11px; font-weight: 600; text-transform: uppercase;
-                letter-spacing: 0.06em; font-family: 'IBM Plex Sans', sans-serif;
+                letter-spacing: 0.06em; font-family: 'Neue Haas Grotesk Display', 'Helvetica Neue', Helvetica, Arial, sans-serif;
                 cursor: pointer; transition: background 150ms;
             }
             .cd-btn-secondary:hover { background: #f5f5f5; }
@@ -160,7 +160,7 @@ export function renderContractDetail(params) {
 
             /* === EVENT LOG === */
             .cd-events { padding: 20px 24px; border-bottom: 1px solid #e5e5e5; }
-            .cd-events-title { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: #9ca3af; font-family: 'IBM Plex Mono', monospace; margin-bottom: 16px; }
+            .cd-events-title { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: #9ca3af; font-family: 'JetBrains Mono', monospace; margin-bottom: 16px; }
             .cd-timeline { position: relative; padding-left: 20px; }
             .cd-timeline::before {
                 content: ''; position: absolute; left: 4px; top: 6px; bottom: 6px;
@@ -179,9 +179,9 @@ export function renderContractDetail(params) {
             .cd-event-dot.green { background: #22c55e; }
             .cd-event-dot.purple { background: #a855f7; }
             .cd-event-dot.red { background: #ef4444; }
-            .cd-event-label { font-size: 11px; font-weight: 600; color: #111; font-family: 'IBM Plex Mono', monospace; text-transform: uppercase; letter-spacing: 0.04em; }
-            .cd-event-time { font-size: 10px; color: #9ca3af; font-family: 'IBM Plex Mono', monospace; white-space: nowrap; }
-            .cd-events-empty { font-size: 12px; color: #9ca3af; font-family: 'IBM Plex Mono', monospace; padding-left: 20px; }
+            .cd-event-label { font-size: 11px; font-weight: 600; color: #111; font-family: 'JetBrains Mono', monospace; text-transform: uppercase; letter-spacing: 0.04em; }
+            .cd-event-time { font-size: 10px; color: #9ca3af; font-family: 'JetBrains Mono', monospace; white-space: nowrap; }
+            .cd-events-empty { font-size: 12px; color: #9ca3af; font-family: 'JetBrains Mono', monospace; padding-left: 20px; }
 
             /* === FOOTER === */
             .cd-footer {
@@ -189,9 +189,9 @@ export function renderContractDetail(params) {
                 display: flex; justify-content: space-between; align-items: center;
                 border-radius: 0 0 4px 4px;
             }
-            .cd-footer-lbl { font-size: 9px; text-transform: uppercase; letter-spacing: 0.08em; color: #9ca3af; font-family: 'IBM Plex Mono', monospace; font-weight: 600; }
-            .cd-footer-val { font-size: 10px; color: #6b7280; font-family: 'IBM Plex Mono', monospace; margin-top: 2px; }
-            .cd-footer-stamp { display: flex; align-items: center; gap: 6px; font-size: 9px; color: #9ca3af; font-family: 'IBM Plex Mono', monospace; text-transform: uppercase; letter-spacing: 0.06em; }
+            .cd-footer-lbl { font-size: 9px; text-transform: uppercase; letter-spacing: 0.08em; color: #9ca3af; font-family: 'JetBrains Mono', monospace; font-weight: 600; }
+            .cd-footer-val { font-size: 10px; color: #6b7280; font-family: 'JetBrains Mono', monospace; margin-top: 2px; }
+            .cd-footer-stamp { display: flex; align-items: center; gap: 6px; font-size: 9px; color: #9ca3af; font-family: 'JetBrains Mono', monospace; text-transform: uppercase; letter-spacing: 0.06em; }
             .cd-footer-stamp svg { width: 12px; height: 12px; }
 
             /* Payment result banner */
@@ -199,7 +199,7 @@ export function renderContractDetail(params) {
                 position: fixed; top: 16px; left: 50%; transform: translateX(-50%); z-index: 100;
                 padding: 12px 20px; border: 1px solid; border-radius: 4px;
                 font-size: 13px; font-weight: 500; display: flex; align-items: center; gap: 10px;
-                box-shadow: 0 2px 8px rgba(0,0,0,0.08); font-family: 'IBM Plex Sans', sans-serif;
+                box-shadow: 0 2px 8px rgba(0,0,0,0.08); font-family: 'Neue Haas Grotesk Display', 'Helvetica Neue', Helvetica, Arial, sans-serif;
             }
             .cd-banner.success { background: #f0fdf4; border-color: #bbf7d0; color: #166534; }
             .cd-banner.error { background: #fef2f2; border-color: #fecaca; color: #991b1b; }

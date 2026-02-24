@@ -11,7 +11,7 @@ export function renderLedger() {
             .ldg {
                 background: #fff;
                 min-height: calc(100vh - 72px);
-                font-family: 'IBM Plex Sans', -apple-system, sans-serif;
+                font-family: 'Neue Haas Grotesk Display', 'Helvetica Neue', Helvetica, Arial, sans-serif;
                 color: #111;
             }
 
@@ -23,7 +23,7 @@ export function renderLedger() {
                 padding: 10px 32px;
                 background: #fafafa;
                 border-bottom: 1px solid #e5e5e5;
-                font-family: 'IBM Plex Mono', monospace;
+                font-family: 'JetBrains Mono', monospace;
                 font-size: 10px;
                 font-weight: 600;
                 text-transform: uppercase;
@@ -55,7 +55,7 @@ export function renderLedger() {
                 gap: 2px;
             }
             .ldg-metric-value {
-                font-family: 'IBM Plex Sans', sans-serif;
+                font-family: 'Neue Haas Grotesk Display', 'Helvetica Neue', Helvetica, Arial, sans-serif;
                 font-size: 28px;
                 font-weight: 700;
                 color: #111;
@@ -63,7 +63,7 @@ export function renderLedger() {
                 line-height: 1;
             }
             .ldg-metric-label {
-                font-family: 'IBM Plex Mono', monospace;
+                font-family: 'JetBrains Mono', monospace;
                 font-size: 9px;
                 font-weight: 700;
                 text-transform: uppercase;
@@ -81,7 +81,7 @@ export function renderLedger() {
                 border: 1px solid #e0e0e0;
                 outline: none;
                 width: 200px;
-                font-family: 'IBM Plex Sans', sans-serif;
+                font-family: 'Neue Haas Grotesk Display', 'Helvetica Neue', Helvetica, Arial, sans-serif;
                 color: #333;
                 background: #fff;
                 transition: border-color 0.12s;
@@ -106,7 +106,7 @@ export function renderLedger() {
                 border: none;
                 border-bottom: 2px solid transparent;
                 cursor: pointer;
-                font-family: 'IBM Plex Sans', sans-serif;
+                font-family: 'Neue Haas Grotesk Display', 'Helvetica Neue', Helvetica, Arial, sans-serif;
                 text-transform: uppercase;
                 letter-spacing: 0.5px;
                 transition: color 0.12s;
@@ -133,7 +133,7 @@ export function renderLedger() {
                 color: #888;
                 text-transform: uppercase;
                 letter-spacing: 0.8px;
-                font-family: 'IBM Plex Sans', sans-serif;
+                font-family: 'Neue Haas Grotesk Display', 'Helvetica Neue', Helvetica, Arial, sans-serif;
                 margin-right: 2px;
             }
             .ldg-filter-divider {
@@ -151,7 +151,7 @@ export function renderLedger() {
                 border: 1px solid #e0e0e0;
                 cursor: pointer;
                 transition: all 0.12s;
-                font-family: 'IBM Plex Sans', sans-serif;
+                font-family: 'Neue Haas Grotesk Display', 'Helvetica Neue', Helvetica, Arial, sans-serif;
             }
             .ldg-pill:hover { border-color: #ccc; color: #333; }
             .ldg-pill.active {
@@ -165,7 +165,7 @@ export function renderLedger() {
                 color: #888;
                 text-transform: uppercase;
                 letter-spacing: 0.5px;
-                font-family: 'IBM Plex Sans', sans-serif;
+                font-family: 'Neue Haas Grotesk Display', 'Helvetica Neue', Helvetica, Arial, sans-serif;
                 display: flex;
                 align-items: center;
                 gap: 4px;
@@ -176,7 +176,7 @@ export function renderLedger() {
                 border: 1px solid #e0e0e0;
                 background: #fff;
                 cursor: pointer;
-                font-family: 'IBM Plex Sans', sans-serif;
+                font-family: 'Neue Haas Grotesk Display', 'Helvetica Neue', Helvetica, Arial, sans-serif;
                 color: #333;
                 outline: none;
                 font-weight: 600;
@@ -192,7 +192,7 @@ export function renderLedger() {
                 border-collapse: collapse;
             }
             .ldg-table thead th {
-                font-family: 'IBM Plex Mono', monospace;
+                font-family: 'JetBrains Mono', monospace;
                 font-size: 9px;
                 font-weight: 700;
                 text-transform: uppercase;
@@ -221,7 +221,7 @@ export function renderLedger() {
 
             /* Status cell */
             .ldg-status-text {
-                font-family: 'IBM Plex Mono', monospace;
+                font-family: 'JetBrains Mono', monospace;
                 font-size: 11px;
                 font-weight: 700;
                 text-transform: uppercase;
@@ -235,7 +235,7 @@ export function renderLedger() {
 
             /* Receipt cell */
             .ldg-rcpt {
-                font-family: 'IBM Plex Mono', monospace;
+                font-family: 'JetBrains Mono', monospace;
                 font-size: 12px;
                 font-weight: 700;
                 color: #111;
@@ -243,7 +243,7 @@ export function renderLedger() {
 
             /* Hash cell */
             .ldg-hash {
-                font-family: 'IBM Plex Mono', monospace;
+                font-family: 'JetBrains Mono', monospace;
                 font-size: 11px;
                 color: #999;
                 letter-spacing: 0;
@@ -251,14 +251,14 @@ export function renderLedger() {
 
             /* Date cell */
             .ldg-date {
-                font-family: 'IBM Plex Sans', sans-serif;
+                font-family: 'Neue Haas Grotesk Display', 'Helvetica Neue', Helvetica, Arial, sans-serif;
                 font-size: 12px;
                 color: #888;
             }
 
             /* Amount cell */
             .ldg-amount {
-                font-family: 'IBM Plex Mono', monospace;
+                font-family: 'JetBrains Mono', monospace;
                 font-size: 14px;
                 font-weight: 700;
                 color: #111;
@@ -272,7 +272,7 @@ export function renderLedger() {
                 padding: 64px 20px;
             }
             .ldg-empty-lbl {
-                font-family: 'IBM Plex Mono', monospace;
+                font-family: 'JetBrains Mono', monospace;
                 font-size: 10px;
                 font-weight: 700;
                 text-transform: uppercase;
@@ -295,7 +295,7 @@ export function renderLedger() {
                 margin-top: 40px;
             }
             .ldg-footer-status {
-                font-family: 'IBM Plex Mono', monospace;
+                font-family: 'JetBrains Mono', monospace;
                 font-size: 10px;
                 font-weight: 700;
                 text-transform: uppercase;
@@ -306,7 +306,7 @@ export function renderLedger() {
                 color: #15803d;
             }
             .ldg-footer-count {
-                font-family: 'IBM Plex Sans', sans-serif;
+                font-family: 'Neue Haas Grotesk Display', 'Helvetica Neue', Helvetica, Arial, sans-serif;
                 font-size: 12px;
                 color: #999;
             }
@@ -369,7 +369,7 @@ export function renderLedger() {
                 border-bottom: 1px solid #e5e5e5;
             }
             .ldg-drawer-title {
-                font-family: 'IBM Plex Mono', monospace;
+                font-family: 'JetBrains Mono', monospace;
                 font-size: 10px;
                 font-weight: 700;
                 text-transform: uppercase;
@@ -397,7 +397,7 @@ export function renderLedger() {
             }
             .ldg-drawer-row:last-child { border-bottom: none; }
             .ldg-drawer-label {
-                font-family: 'IBM Plex Mono', monospace;
+                font-family: 'JetBrains Mono', monospace;
                 font-size: 9px;
                 font-weight: 700;
                 text-transform: uppercase;
@@ -409,14 +409,14 @@ export function renderLedger() {
             .ldg-drawer-value {
                 font-size: 12px;
                 color: #111;
-                font-family: 'IBM Plex Sans', sans-serif;
+                font-family: 'Neue Haas Grotesk Display', 'Helvetica Neue', Helvetica, Arial, sans-serif;
                 font-weight: 600;
                 text-align: right;
                 max-width: 240px;
                 word-break: break-all;
             }
             .ldg-drawer-value.mono {
-                font-family: 'IBM Plex Mono', monospace;
+                font-family: 'JetBrains Mono', monospace;
                 font-size: 10px;
                 color: #444;
             }
@@ -428,14 +428,14 @@ export function renderLedger() {
                 background: #f5f5f5;
                 border: 1px solid #e5e5e5;
                 cursor: pointer;
-                font-family: 'IBM Plex Mono', monospace;
+                font-family: 'JetBrains Mono', monospace;
                 text-transform: uppercase;
                 letter-spacing: 0.3px;
                 transition: all 0.1s;
             }
             .ldg-copy-btn:hover { border-color: #ccc; color: #111; }
             .ldg-drawer-section {
-                font-family: 'IBM Plex Mono', monospace;
+                font-family: 'JetBrains Mono', monospace;
                 font-size: 9px;
                 font-weight: 700;
                 text-transform: uppercase;
@@ -454,7 +454,7 @@ export function renderLedger() {
                 color: #752122;
                 text-decoration: none;
                 cursor: pointer;
-                font-family: 'IBM Plex Mono', monospace;
+                font-family: 'JetBrains Mono', monospace;
                 text-transform: uppercase;
                 letter-spacing: 0.3px;
                 transition: color 0.1s;
@@ -464,7 +464,7 @@ export function renderLedger() {
                 background: #0a0a0a;
                 color: #a3a3a3;
                 padding: 14px;
-                font-family: 'IBM Plex Mono', monospace;
+                font-family: 'JetBrains Mono', monospace;
                 font-size: 10px;
                 line-height: 1.6;
                 overflow-x: auto;
@@ -484,7 +484,7 @@ export function renderLedger() {
                 background: #fafafa;
                 border: 1px solid #e5e5e5;
                 cursor: pointer;
-                font-family: 'IBM Plex Mono', monospace;
+                font-family: 'JetBrains Mono', monospace;
                 text-transform: uppercase;
                 letter-spacing: 0.5px;
                 transition: all 0.1s;
@@ -493,7 +493,7 @@ export function renderLedger() {
             .ldg-json-toggle:hover { border-color: #ccc; color: #111; }
 
             /* Status pills for drawer */
-            .ldg-status { display: inline-flex; align-items: center; padding: 2px 6px; font-family: 'IBM Plex Mono', monospace; font-size: 9px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; white-space: nowrap; }
+            .ldg-status { display: inline-flex; align-items: center; padding: 2px 6px; font-family: 'JetBrains Mono', monospace; font-size: 9px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; white-space: nowrap; }
             .ldg-status.locked    { background: #f5f5f5; color: #666; border: 1px solid #e0e0e0; }
             .ldg-status.settled   { background: #f0fdf4; color: #15803d; border: 1px solid #bbf7d0; }
             .ldg-status.failed    { background: #fef2f2; color: #752122; border: 1px solid #fecaca; }
@@ -807,7 +807,7 @@ export async function initLedger() {
         body.innerHTML = `
             <div class="ldg-drawer-row">
                 <span class="ldg-drawer-label">Event Type</span>
-                <span class="ldg-drawer-value" style="color: ${getTagColor(event.eventType)}; font-weight: 700; font-family: 'IBM Plex Mono', monospace; font-size:11px;">
+                <span class="ldg-drawer-value" style="color: ${getTagColor(event.eventType)}; font-weight: 700; font-family: 'JetBrains Mono', monospace; font-size:11px;">
                     ${formatEventType(event.eventType)}
                 </span>
             </div>
@@ -824,7 +824,7 @@ export async function initLedger() {
             </div>
             <div class="ldg-drawer-row">
                 <span class="ldg-drawer-label">Amount</span>
-                <span class="ldg-drawer-value" style="font-family:'IBM Plex Mono',monospace; font-size:18px; font-weight:700; letter-spacing:-0.5px;">
+                <span class="ldg-drawer-value" style="font-family:'JetBrains Mono',monospace; font-size:18px; font-weight:700; letter-spacing:-0.5px;">
                     ${formatCurrency(event.amountUsdCents)}
                 </span>
             </div>

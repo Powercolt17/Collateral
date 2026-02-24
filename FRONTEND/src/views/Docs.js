@@ -10,7 +10,7 @@ export function renderDocs() {
             .doc {
                 background: #F2F2F2;
                 min-height: calc(100vh - 72px);
-                font-family: 'IBM Plex Sans', -apple-system, sans-serif;
+                font-family: 'Neue Haas Grotesk Display', 'Helvetica Neue', Helvetica, Arial, sans-serif;
                 color: #111;
             }
 
@@ -39,7 +39,7 @@ export function renderDocs() {
                 font-size: 12px;
                 color: #777;
                 margin: 4px 0 0;
-                font-family: 'IBM Plex Mono', monospace;
+                font-family: 'JetBrains Mono', monospace;
             }
 
             /* ── Layout ── */
@@ -64,7 +64,7 @@ export function renderDocs() {
                 margin-bottom: 20px;
             }
             .doc-nav-label {
-                font-family: 'IBM Plex Mono', monospace;
+                font-family: 'JetBrains Mono', monospace;
                 font-size: 9px;
                 font-weight: 700;
                 text-transform: uppercase;
@@ -171,7 +171,7 @@ export function renderDocs() {
                 margin: 12px 0;
             }
             .doc-rule-text {
-                font-family: 'IBM Plex Mono', monospace;
+                font-family: 'JetBrains Mono', monospace;
                 font-size: 10px;
                 color: #666;
                 text-transform: uppercase;
@@ -193,7 +193,7 @@ export function renderDocs() {
                 display: flex;
                 align-items: center;
                 justify-content: center;
-                font-family: 'IBM Plex Mono', monospace;
+                font-family: 'JetBrains Mono', monospace;
                 font-size: 11px;
                 font-weight: 700;
                 color: #666;
@@ -222,7 +222,7 @@ export function renderDocs() {
                 margin-bottom: 6px;
             }
             .doc-tier-name {
-                font-family: 'IBM Plex Mono', monospace;
+                font-family: 'JetBrains Mono', monospace;
                 font-size: 10px;
                 font-weight: 700;
                 text-transform: uppercase;
@@ -269,7 +269,7 @@ export function renderDocs() {
             }
             .doc-divider-note-icon svg { width: 14px; height: 14px; }
             .doc-divider-note-text {
-                font-family: 'IBM Plex Mono', monospace;
+                font-family: 'JetBrains Mono', monospace;
                 font-size: 10px;
                 color: #666;
                 text-transform: uppercase;

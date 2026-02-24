@@ -10,7 +10,7 @@ export function renderSources() {
             .src {
                 background: #F2F2F2;
                 min-height: calc(100vh - 72px);
-                font-family: 'IBM Plex Sans', -apple-system, sans-serif;
+                font-family: 'Neue Haas Grotesk Display', 'Helvetica Neue', Helvetica, Arial, sans-serif;
                 color: #111;
             }
 
@@ -41,7 +41,7 @@ export function renderSources() {
                 font-size: 12px;
                 color: #777;
                 margin: 4px 0 0;
-                font-family: 'IBM Plex Mono', monospace;
+                font-family: 'JetBrains Mono', monospace;
             }
 
             /* Metrics Strip */
@@ -61,7 +61,7 @@ export function renderSources() {
             }
             .src-metric:last-child { border-right: none; }
             .src-metric-value {
-                font-family: 'IBM Plex Mono', monospace;
+                font-family: 'JetBrains Mono', monospace;
                 font-size: 26px;
                 font-weight: 700;
                 color: #111;
@@ -85,7 +85,7 @@ export function renderSources() {
                 flex-shrink: 0;
             }
             .src-metric-label {
-                font-family: 'IBM Plex Mono', monospace;
+                font-family: 'JetBrains Mono', monospace;
                 font-size: 9px;
                 font-weight: 700;
                 text-transform: uppercase;
@@ -100,7 +100,7 @@ export function renderSources() {
 
             /* ── Section Headers ── */
             .src-section-title {
-                font-family: 'IBM Plex Mono', monospace;
+                font-family: 'JetBrains Mono', monospace;
                 font-size: 10px;
                 font-weight: 700;
                 text-transform: uppercase;
@@ -165,7 +165,7 @@ export function renderSources() {
                 color: #111;
             }
             .src-conn-id {
-                font-family: 'IBM Plex Mono', monospace;
+                font-family: 'JetBrains Mono', monospace;
                 font-size: 10px;
                 color: #999;
                 letter-spacing: 0.3px;
@@ -177,7 +177,7 @@ export function renderSources() {
                 gap: 16px;
             }
             .src-conn-detail {
-                font-family: 'IBM Plex Mono', monospace;
+                font-family: 'JetBrains Mono', monospace;
                 font-size: 10px;
                 color: #888;
                 letter-spacing: 0.3px;
@@ -192,7 +192,7 @@ export function renderSources() {
             /* Status badges */
             .src-badge {
                 display: inline-block;
-                font-family: 'IBM Plex Mono', monospace;
+                font-family: 'JetBrains Mono', monospace;
                 font-size: 9px;
                 font-weight: 700;
                 text-transform: uppercase;
@@ -206,7 +206,7 @@ export function renderSources() {
             .src-badge-reauth { background: #fff7ed; color: #9a3412; }
 
             .src-btn-manage {
-                font-family: 'IBM Plex Mono', monospace;
+                font-family: 'JetBrains Mono', monospace;
                 font-size: 10px;
                 font-weight: 600;
                 text-transform: uppercase;
@@ -221,7 +221,7 @@ export function renderSources() {
             }
             .src-btn-manage:hover { border-color: #999; color: #555; }
             .src-btn-disconnect {
-                font-family: 'IBM Plex Mono', monospace;
+                font-family: 'JetBrains Mono', monospace;
                 font-size: 10px;
                 font-weight: 600;
                 text-transform: uppercase;
@@ -286,7 +286,7 @@ export function renderSources() {
 
             .src-prov-btn {
                 align-self: flex-start;
-                font-family: 'IBM Plex Mono', monospace;
+                font-family: 'JetBrains Mono', monospace;
                 font-size: 11px;
                 font-weight: 700;
                 text-transform: uppercase;
@@ -306,7 +306,7 @@ export function renderSources() {
                 cursor: not-allowed;
             }
             .src-prov-connected {
-                font-family: 'IBM Plex Mono', monospace;
+                font-family: 'JetBrains Mono', monospace;
                 font-size: 10px;
                 font-weight: 600;
                 color: #166534;
@@ -316,7 +316,7 @@ export function renderSources() {
 
             /* Coming Soon */
             .src-coming-soon {
-                font-family: 'IBM Plex Mono', monospace;
+                font-family: 'JetBrains Mono', monospace;
                 font-size: 9px;
                 font-weight: 600;
                 text-transform: uppercase;
@@ -345,7 +345,7 @@ export function renderSources() {
             }
             .src-footer-notice-icon svg { width: 14px; height: 14px; }
             .src-footer-notice-text {
-                font-family: 'IBM Plex Mono', monospace;
+                font-family: 'JetBrains Mono', monospace;
                 font-size: 10px;
                 color: #666;
                 text-transform: uppercase;
@@ -389,7 +389,7 @@ export function renderSources() {
                 margin: 0;
             }
             .src-modal-provider {
-                font-family: 'IBM Plex Mono', monospace;
+                font-family: 'JetBrains Mono', monospace;
                 font-size: 10px;
                 color: #888;
                 text-transform: uppercase;
@@ -403,7 +403,7 @@ export function renderSources() {
                 margin-bottom: 16px;
             }
             .src-modal-label {
-                font-family: 'IBM Plex Mono', monospace;
+                font-family: 'JetBrains Mono', monospace;
                 font-size: 9px;
                 font-weight: 700;
                 text-transform: uppercase;
@@ -424,7 +424,7 @@ export function renderSources() {
                 background: #fafafa;
                 border: 1px solid #ECECEC;
                 border-radius: 3px;
-                font-family: 'IBM Plex Mono', monospace;
+                font-family: 'JetBrains Mono', monospace;
                 font-size: 10px;
                 color: #888;
                 letter-spacing: 0.3px;
@@ -439,7 +439,7 @@ export function renderSources() {
                 gap: 10px;
             }
             .src-modal-cancel {
-                font-family: 'IBM Plex Mono', monospace;
+                font-family: 'JetBrains Mono', monospace;
                 font-size: 10px;
                 font-weight: 600;
                 text-transform: uppercase;
@@ -453,7 +453,7 @@ export function renderSources() {
             }
             .src-modal-cancel:hover { border-color: #999; }
             .src-modal-proceed {
-                font-family: 'IBM Plex Mono', monospace;
+                font-family: 'JetBrains Mono', monospace;
                 font-size: 10px;
                 font-weight: 700;
                 text-transform: uppercase;
@@ -472,7 +472,7 @@ export function renderSources() {
             .src-empty-connected {
                 text-align: center;
                 padding: 18px;
-                font-family: 'IBM Plex Mono', monospace;
+                font-family: 'JetBrains Mono', monospace;
                 font-size: 10px;
                 color: #999;
                 text-transform: uppercase;
@@ -497,7 +497,7 @@ export function renderSources() {
             }
             @keyframes src-spin { to { transform: rotate(360deg); } }
             .src-loading-text {
-                font-family: 'IBM Plex Mono', monospace;
+                font-family: 'JetBrains Mono', monospace;
                 font-size: 10px;
                 color: #888;
                 text-transform: uppercase;

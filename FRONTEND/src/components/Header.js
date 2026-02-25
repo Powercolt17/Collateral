@@ -60,17 +60,17 @@ export function renderHeader(currentRoute) {
             }
 
             /* ── Wordmark ── */
-            /* ── New Institutional Wordmark ── */
+            /* ── New Institutional Wordmark — POWERFUL ── */
             .ch-logo {
                 display: inline-flex;
                 align-items: center;
                 text-decoration: none;
                 flex-shrink: 0;
-                gap: 12px; /* Restored gap for accent bar */
+                gap: 14px; /* Slightly increased gap for larger scale */
             }
             .ch-logo-accent {
-                width: 2px;
-                height: 24px;
+                width: 3px; /* Widened for power */
+                height: 34px; /* Tall to match 26px + subline */
                 background: #752122;
                 flex-shrink: 0;
             }
@@ -81,22 +81,22 @@ export function renderHeader(currentRoute) {
                 line-height: 1;
             }
             .ch-logo-headline {
-                font-size: 15px; /* Precision 15px */
-                font-weight: 700; /* Bold */
+                font-size: 26px; /* SCALED UP for dominance */
+                font-weight: 700; /* BOLD authority */
                 color: #111111;
-                letter-spacing: -0.01em;
+                letter-spacing: -0.015em; /* Tighter kerning for impact */
                 font-family: 'GT America', 'Neue Haas Grotesk Display', 'Helvetica Neue', Helvetica, Arial, sans-serif;
                 text-transform: uppercase;
                 margin: 0;
             }
             .ch-logo-sub {
                 font-family: 'JetBrains Mono', monospace;
-                font-size: 7px; /* Reduced to 7px */
-                font-weight: 800; /* Bold/Extra Bold */
-                color: #752122; /* Dark Red accent */
+                font-size: 9.5px; /* Scaled for readability */
+                font-weight: 800; /* BOLD contrast */
+                color: #752122; /* Dark Red signature */
                 text-transform: uppercase;
-                letter-spacing: 0.12em; /* Increased spacing for clarity at small size */
-                margin-top: 2px; /* Tightened gap */
+                letter-spacing: 0.14em; /* Expanded for industrial feel */
+                margin-top: 3px; /* Tightened gap */
             }
 
             /* Nav links */
@@ -388,7 +388,7 @@ export function renderHeader(currentRoute) {
                     <div class="ch-logo-accent"></div>
                     <div class="ch-logo-text-wrap">
                         <span class="ch-logo-headline">COLLATERAL</span>
-                        <span class="ch-logo-sub">FINANCIAL PERFORMANCE PLATFORM</span>
+                        <span class="ch-logo-sub">PERFORMANCE PLATFORM</span>
                     </div>
                 </a>
 

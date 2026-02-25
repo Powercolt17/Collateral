@@ -329,9 +329,7 @@ export function renderOverview() {
             .eq-grid {
                 display: grid;
                 grid-template-columns: repeat(4, 1fr);
-                gap: 1px;
-                background: #f2f2f2;
-                border: 1px solid #f2f2f2;
+                gap: 24px;
             }
             .eq-card {
                 background: #fff;
@@ -339,9 +337,10 @@ export function renderOverview() {
                 display: flex;
                 flex-direction: column;
                 cursor: pointer;
-                transition: background 0.2s;
+                transition: background 0.2s, box-shadow 0.2s;
                 position: relative;
                 overflow: hidden;
+                border: 1px solid #eee;
             }
             .eq-card:hover { background: #fafafa; }
             .eq-card::before {

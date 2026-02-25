@@ -109,14 +109,17 @@ export function renderOverview() {
 
             /* --- MECHANISM SECTION --- */
             .eq-mechanism {
-                padding: 100px 32px;
+                padding: 100px 0;
                 border-top: 1px solid #f2f2f2;
+                max-width: 1300px;
+                margin: 0 auto;
             }
             .eq-mechanism-header {
                 display: flex;
                 justify-content: space-between;
                 align-items: flex-end;
                 margin-bottom: 80px;
+                padding: 0 32px;
             }
             .eq-mechanism-title {
                 font-size: 48px;
@@ -136,11 +139,11 @@ export function renderOverview() {
             .eq-mechanism-grid {
                 display: grid;
                 grid-template-columns: repeat(4, 1fr);
-                margin: 0 -32px;
+                border-top: 1px solid #f0f0f0;
             }
             .eq-mech-card {
-                padding: 60px 48px;
-                border-right: 1px solid #f2f2f2;
+                padding: 60px 40px;
+                border-right: 1px solid #f0f0f0;
                 position: relative;
             }
             .eq-mech-card:last-child { border-right: none; }
@@ -167,6 +170,8 @@ export function renderOverview() {
             /* --- MARKET SECTION --- */
             .eq-market-header {
                 padding: 100px 32px 40px;
+                max-width: 1300px;
+                margin: 0 auto;
             }
             .eq-market-title {
                 font-size: 48px;
@@ -312,7 +317,6 @@ export function renderOverview() {
                 gap: 1px;
                 background: #f2f2f2;
                 border: 1px solid #f2f2f2;
-                margin: 0 -32px;
             }
             .eq-card {
                 background: #fff;
@@ -531,11 +535,12 @@ export function renderOverview() {
             </section>
 
             <!-- Contract Grid -->
-            <div class="eq-grid-container" style="padding: 0 32px;">
+            <div class="eq-grid-container" style="padding: 0 32px; max-width: 1300px; margin: 0 auto;">
                 <div style="font-family:'JetBrains Mono'; font-size: 10px; color: #ccc; margin-bottom: 24px;" id="eq-count-lbl">12 contracts</div>
                 <div class="eq-grid" id="eq-grid">
                     <!-- Dynamic cards go here -->
                 </div>
+                <div id="eq-empty" style="display:none; padding:60px; text-align:center; color:#ccc; font-size:14px; grid-column:1/-1;">No contracts match your filters.</div>
             </div>
 
             <!-- Stake Warning -->
@@ -629,8 +634,14 @@ export function initOverview() {
     const statCapital = document.getElementById('stat-capital');
     const statContracts = document.getElementById('stat-contracts');
     const statPool = document.getElementById('stat-pool');
+    const countLbl = document.getElementById('eq-count-lbl');
 
     if (!grid) return;
+
+    // Show demo stats immediately while loading
+    if (statCapital) statCapital.textContent = '2.1M';
+    if (statContracts) statContracts.textContent = '142';
+    if (statPool) statPool.textContent = '12.5M';
 
     // ===================================================================
     // DATA FETCHING & RENDERING
@@ -646,18 +657,17 @@ export function initOverview() {
             const data = await getMarketListings(params);
 
             if (isPoll) {
-                // If data changed (simple check: top contract ID or count)
+                // If data changed, auto-refresh the grid
                 const contracts = Array.isArray(data?.listings) ? data.listings : [];
                 const currentTopId = grid.querySelector('.eq-card')?.dataset.id;
                 const newTopId = contracts[0]?.id;
                 const hasChanges = currentTopId !== newTopId || contracts.length !== grid.querySelectorAll('.eq-card').length;
 
                 if (hasChanges) {
-                    const diff = Math.abs(contracts.length - grid.querySelectorAll('.eq-card').length) || 1;
-                    updateCount.textContent = diff;
-                    updateChip.classList.add('visible');
-                    // Store for refresh
                     lastFeedData = data;
+                    renderGrid(contracts);
+                    updateStats(data?.stats || {});
+                    updateTime();
                 }
             } else {
                 const contracts = Array.isArray(data?.listings) ? data.listings : [];
@@ -673,35 +683,34 @@ export function initOverview() {
     }
 
     function renderGrid(contracts) {
-        // Clear grid but keep empty state element
-        const emptyClone = emptyEl.cloneNode(true);
+        // Clear grid
         grid.innerHTML = '';
-        grid.appendChild(emptyClone);
 
         // Filter client-side for Rules (Tier/Stake)
         const visibleContracts = contracts.filter(c => {
             const tier = (c.tier || 'controlled').toLowerCase();
-            const stake = c.costCents ? c.costCents / 100 : 0;
+            const stake = c.min_stake || (c.costCents ? c.costCents / 100 : 0);
             if (!enabledTiers[tier]) return false;
             if (stake < minStake) return false;
             return true;
         });
 
+        // Update count label
+        if (countLbl) countLbl.textContent = `${visibleContracts.length} contract${visibleContracts.length !== 1 ? 's' : ''}`;
+
         if (visibleContracts.length === 0) {
-            emptyClone.style.display = 'flex'; // Eq-empty is flex usually
+            grid.innerHTML = '<div style="padding:60px; text-align:center; color:#ccc; font-size:14px; grid-column:1/-1; background:#fff;">No contracts match your filters.</div>';
             return;
         }
-        emptyClone.style.display = 'none';
 
         visibleContracts.forEach(contract => {
             const el = document.createElement('div');
             el.innerHTML = renderCard(contract);
-            // Unwrap
             const card = el.firstElementChild;
             grid.appendChild(card);
         });
 
-        lucide.createIcons();
+        if (typeof lucide !== 'undefined') lucide.createIcons();
     }
 
     function renderCard(c) {
@@ -786,15 +795,15 @@ export function initOverview() {
     }
 
     function updateStats(stats) {
-        if (!stats || !stats.tvlUsd || stats.tvlUsd === '0') {
-            statCapital.textContent = '2.1M';
-            statContracts.textContent = '142';
-            statPool.textContent = '12.5M';
+        if (!stats || !stats.tvlUsd || stats.tvlUsd === '0' || Number(stats.tvlUsd) === 0) {
+            if (statCapital) statCapital.textContent = '2.1M';
+            if (statContracts) statContracts.textContent = '142';
+            if (statPool) statPool.textContent = '12.5M';
             return;
         }
-        statCapital.textContent = (stats.tvlUsd / 1000000).toFixed(1) + 'M';
-        statContracts.textContent = stats.activeCount || '0';
-        statPool.textContent = (stats.volume24hUsd / 1000).toFixed(0) + 'k';
+        if (statCapital) statCapital.textContent = (stats.tvlUsd / 1000000).toFixed(1) + 'M';
+        if (statContracts) statContracts.textContent = stats.activeCount || '0';
+        if (statPool) statPool.textContent = (stats.volume24hUsd / 1000).toFixed(0) + 'k';
     }
 
     function updateTime() {
@@ -833,12 +842,17 @@ export function initOverview() {
     }
 
     // Update Chip
-    updateChip.addEventListener('click', () => {
-        renderGrid(lastFeedData.contracts);
-        updateStats(lastFeedData.stats);
-        updateTime();
-        updateChip.classList.remove('visible');
-    });
+    if (updateChip) {
+        updateChip.addEventListener('click', () => {
+            if (lastFeedData) {
+                const contracts = Array.isArray(lastFeedData?.listings) ? lastFeedData.listings : [];
+                renderGrid(contracts);
+                updateStats(lastFeedData.stats);
+                updateTime();
+            }
+            updateChip.classList.remove('visible');
+        });
+    }
 
     // Initial Load
     fetchFeed(false);

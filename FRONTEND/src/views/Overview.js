@@ -650,7 +650,7 @@ export function renderOverview() {
                 letter-spacing: -2.8px; /* Tight kerning */
                 line-height: 0.95;
                 margin: 0 auto 18px;
-                max-width: 820px;
+                max-width: 1080px; /* Widened to allow 2 lines */
                 font-family: 'Neue Haas Grotesk Display', 'Helvetica Neue', Helvetica, Arial, sans-serif;
                 -webkit-font-smoothing: antialiased;
                 animation: fade-in-up 0.6s cubic-bezier(0.16, 1, 0.3, 1);
@@ -705,7 +705,7 @@ export function renderOverview() {
             <!-- Institutional Hero -->
             <div class="eq-hero">
                 <div class="eq-hero-headline">Stake Capital on Measurable Performance</div>
-                <div class="eq-hero-sub">Stake against revenue, sales, or growth targets. Verification is automatic. Settlement is final.</div>
+                <div class="eq-hero-sub">Stake against revenue, sales, or growth. Automatic verification. Final settlement.</div>
                 <div class="eq-hero-tension">MISS THE TARGET. LOSE THE STAKE.</div>
                 <div class="eq-hero-divider-hr"></div>
             </div>

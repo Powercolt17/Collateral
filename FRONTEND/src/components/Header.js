@@ -66,7 +66,7 @@ export function renderHeader(currentRoute) {
                 align-items: center;
                 text-decoration: none;
                 flex-shrink: 0;
-                gap: 0; /* Tightened gap without icon */
+                gap: 0;
             }
             .ch-logo-text-wrap {
                 display: flex;
@@ -75,22 +75,22 @@ export function renderHeader(currentRoute) {
                 line-height: 1;
             }
             .ch-logo-headline {
-                font-size: 19px; /* Reduced from 22px */
-                font-weight: 500; /* Regular weight */
+                font-size: 17px; /* Reduced from 19px */
+                font-weight: 400; /* Regular weight */
                 color: #111111;
                 letter-spacing: -0.01em;
-                font-family: 'Neue Haas Grotesk Display', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+                font-family: 'GT America', 'Neue Haas Grotesk Display', 'Helvetica Neue', Helvetica, Arial, sans-serif;
                 text-transform: uppercase;
                 margin: 0;
             }
             .ch-logo-sub {
                 font-family: 'JetBrains Mono', monospace;
-                font-size: 8px; /* Reduced from 9px */
-                font-weight: 700; /* Bold */
+                font-size: 7.5px; /* Reduced from 8px */
+                font-weight: 800; /* Extra Bold */
                 color: #666;
                 text-transform: uppercase;
                 letter-spacing: 0.08em;
-                margin-top: 5px; /* Slight adjustment */
+                margin-top: 4px; /* Slight adjustment */
             }
 
             /* Nav links */

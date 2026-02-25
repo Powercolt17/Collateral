@@ -103,7 +103,8 @@ export function renderHeader(currentRoute) {
             .ch-nav {
                 display: none;
                 align-items: center;
-                gap: 4px;
+                gap: 24px;
+                margin-left: 24px;
             }
             @media (min-width: 768px) {
                 .ch-nav { display: flex; }

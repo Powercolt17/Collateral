@@ -334,10 +334,9 @@ export function renderOverview() {
             }
             .eq-card {
                 background: #fff;
-                padding: 32px;
+                padding: 36px 32px 32px;
                 display: flex;
                 flex-direction: column;
-                gap: 16px;
                 cursor: pointer;
                 transition: background 0.2s;
                 position: relative;
@@ -371,7 +370,7 @@ export function renderOverview() {
                 font-size: 18px;
                 font-weight: 700;
                 color: #111;
-                margin-bottom: 8px;
+                margin: 12px 0 8px;
                 letter-spacing: -0.5px;
             }
             .eq-card-provider {
@@ -407,7 +406,7 @@ export function renderOverview() {
                 font-size: 9px;
                 color: #10b981;
                 text-transform: uppercase;
-                margin-bottom: 24px;
+                margin-bottom: 16px;
             }
             .eq-card-status .dot { width: 4px; height: 4px; border-radius: 50%; background: currentcolor; }
 
@@ -415,7 +414,7 @@ export function renderOverview() {
                 display: flex;
                 align-items: center;
                 gap: 12px;
-                margin-bottom: 24px;
+                margin-bottom: 20px;
             }
             .eq-stake-val { font-size: 24px; font-weight: 500; letter-spacing: -1px; }
             .eq-stake-separator { width: 16px; height: 1px; background: #eee; }
@@ -428,16 +427,17 @@ export function renderOverview() {
             }
 
             .eq-card-cta {
-                background: #000;
+                background: #0a0a0a;
                 color: #fff;
                 border: none;
-                padding: 14px;
-                font-size: 12px;
+                padding: 16px;
+                font-size: 11px;
                 font-weight: 700;
                 text-transform: uppercase;
-                letter-spacing: 1px;
+                letter-spacing: 1.5px;
                 width: 100%;
                 cursor: pointer;
+                margin-top: auto;
             }
             .eq-card-footer {
                 font-size: 10px;

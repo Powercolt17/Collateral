@@ -618,7 +618,7 @@ export function renderOverview() {
             </section>
 
             <!-- Contract Grid -->
-            <div class="eq-grid-container" style="padding: 0 32px;">
+            <div class="eq-grid-container" style="padding: 0 32px; max-width: 1440px; margin: 0 auto;">
                 <div style="font-family:'JetBrains Mono'; font-size: 10px; color: #ccc; margin-bottom: 24px;" id="eq-count-lbl">12 contracts</div>
                 <div class="eq-grid" id="eq-grid">
                     <!-- Dynamic cards go here -->

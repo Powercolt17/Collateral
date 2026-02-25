@@ -145,7 +145,21 @@ export function renderOverview() {
                 padding: 60px 40px;
                 border-right: 1px solid #f0f0f0;
                 position: relative;
+                overflow: hidden;
+                transition: background 0.3s;
             }
+            .eq-mech-card:hover { background: #fafafa; }
+            .eq-mech-card::before {
+                content: '';
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 0;
+                height: 3px;
+                background: #752122;
+                transition: width 0.4s ease;
+            }
+            .eq-mech-card:hover::before { width: 100%; }
             .eq-mech-card:last-child { border-right: none; }
             .eq-mech-num {
                 font-family: 'Neue Haas Grotesk Display', sans-serif;
@@ -326,8 +340,21 @@ export function renderOverview() {
                 gap: 16px;
                 cursor: pointer;
                 transition: background 0.2s;
+                position: relative;
+                overflow: hidden;
             }
-            .eq-card:hover { background: #fcfcfc; }
+            .eq-card:hover { background: #fafafa; }
+            .eq-card::before {
+                content: '';
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 0;
+                height: 3px;
+                background: #752122;
+                transition: width 0.4s ease;
+            }
+            .eq-card:hover::before { width: 100%; }
             .eq-card-meta {
                 display: flex;
                 justify-content: space-between;

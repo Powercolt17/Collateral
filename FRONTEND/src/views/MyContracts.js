@@ -1,75 +1,186 @@
-// My Contracts View - Fetches and displays real contracts
+// MyContracts.js — Personal Performance Hub
+// Matches ActiveContracts.js institutional layout
+
 export function renderMyContracts() {
     return `
-        <div class="pb-32 w-full max-w-5xl mx-auto px-6 relative z-10 min-h-screen">
-            <!-- Breadcrumb -->
-            <div class="flex items-center gap-2 mb-4 font-mono text-[10px] text-neutral-400 uppercase tracking-widest mt-8">
-                <span>Collateral</span>
-                <span>›</span>
-                <span class="text-neutral-900">My Contracts</span>
+        <style>
+            .myc {
+                background: #fff;
+                min-height: calc(100vh - 72px);
+                font-family: 'Neue Haas Grotesk Display', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+                color: #111;
+            }
+
+            /* ── Page Header ── */
+            .myc-header {
+                padding: 28px 32px 0;
+                display: flex;
+                justify-content: space-between;
+                align-items: flex-end;
+            }
+            .myc-title-wrap {}
+            .myc-page-title {
+                font-size: 16px;
+                font-weight: 700;
+                letter-spacing: 0.5px;
+                color: #111;
+                margin: 0;
+                text-transform: uppercase;
+            }
+            .myc-page-sub {
+                font-size: 11px;
+                color: #999;
+                margin: 4px 0 0;
+                font-family: 'JetBrains Mono', monospace;
+                text-transform: uppercase;
+                letter-spacing: 0.5px;
+            }
+
+            .myc-header-actions {
+                display: flex;
+                gap: 12px;
+            }
+            .myc-btn-secondary {
+                padding: 10px 18px;
+                background: #fff;
+                border: 1px solid #e5e5e5;
+                font-size: 11px;
+                font-weight: 700;
+                text-transform: uppercase;
+                letter-spacing: 0.8px;
+                cursor: pointer;
+                font-family: 'Neue Haas Grotesk Display', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+                transition: border-color 0.1s;
+            }
+            .myc-btn-secondary:hover { border-color: #aaa; }
+
+            /* ── Metrics Strip ── */
+            .myc-metrics {
+                display: flex;
+                align-items: stretch;
+                padding: 20px 32px 24px;
+                border-bottom: 1px solid #e5e5e5;
+            }
+            .myc-metric {
+                flex: 1;
+                padding: 16px 24px;
+                border: 1px solid #e5e5e5;
+                border-right: none;
+            }
+            .myc-metric:last-child { border-right: 1px solid #e5e5e5; }
+            .myc-metric-value {
+                font-size: 26px;
+                font-weight: 700;
+                color: #111;
+                letter-spacing: -0.5px;
+                line-height: 1.2;
+                margin-bottom: 4px;
+            }
+            .myc-metric-label {
+                font-family: 'JetBrains Mono', monospace;
+                font-size: 9px;
+                font-weight: 700;
+                text-transform: uppercase;
+                letter-spacing: 1.5px;
+                color: #888;
+            }
+
+            /* ── Contract Feed ── */
+            .myc-feed { padding: 24px 32px 60px; }
+            .myc-list { display: flex; flex-direction: column; }
+
+            .myc-card {
+                background: #fafafa;
+                border: 1px solid #e5e5e5;
+                padding: 16px 24px;
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                transition: background 0.12s;
+                cursor: pointer;
+                text-decoration: none;
+                color: inherit;
+                margin-bottom: -1px;
+            }
+            .myc-card:first-child { border-radius: 4px 4px 0 0; }
+            .myc-card:last-child { border-radius: 0 0 4px 4px; }
+            .myc-card:hover { background: #f5f5f5; }
+
+            .myc-card-left { display: flex; align-items: center; gap: 14px; flex: 1; min-width: 0; }
+            .myc-card-icon {
+                width: 36px; height: 36px;
+                background: #e8e8e8; border-radius: 6px;
+                display: flex; align-items: center; justify-content: center;
+                color: #666; flex-shrink: 0;
+            }
+            .myc-card-icon svg { width: 16px; height: 16px; }
+
+            .myc-card-info { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
+            .myc-card-platform { font-size: 14px; font-weight: 700; color: #111; }
+            .myc-card-id { font-family: 'JetBrains Mono', monospace; font-size: 10px; color: #999; }
+
+            .myc-card-center { display: flex; align-items: center; gap: 8px; flex-shrink: 0; }
+            .myc-status-badge {
+                font-family: 'JetBrains Mono', monospace; font-size: 9px; font-weight: 700;
+                text-transform: uppercase; letter-spacing: 0.5px; padding: 4px 10px;
+                border: 1px solid #ddd; background: #fff; color: #555;
+            }
+
+            .myc-card-right { text-align: right; display: flex; flex-direction: column; gap: 2px; padding-left: 24px; }
+            .myc-card-amount { font-size: 22px; font-weight: 700; color: #111; letter-spacing: -0.5px; }
+            .myc-card-status-text { font-size: 12px; font-weight: 600; font-family: 'JetBrains Mono', monospace; }
+
+            /* Loading & Empty */
+            .myc-loading { display: flex; flex-direction: column; align-items: center; padding: 80px 0; gap: 16px; }
+            .myc-spinner { width: 20px; height: 20px; border: 2px solid #eee; border-top-color: #752122; border-radius: 50%; animation: myc-spin 0.8s linear infinite; }
+            @keyframes myc-spin { to { transform: rotate(360deg); } }
+            
+            @media (max-width: 768px) {
+                .myc-header { padding: 20px 16px 0; flex-direction: column; align-items: flex-start; gap: 16px; }
+                .myc-metrics { padding: 16px 16px 20px; flex-wrap: wrap; }
+                .myc-metric { min-width: calc(50% - 1px); }
+                .myc-feed { padding: 16px 16px 60px; }
+                .myc-card { flex-direction: column; align-items: stretch; gap: 10px; }
+                .myc-card-right { text-align: left; padding-left: 0; flex-direction: row; align-items: baseline; gap: 10px; }
+            }
+        </style>
+
+        <div class="myc">
+            <div class="myc-header">
+                <div class="myc-title-wrap">
+                    <h1 class="myc-page-title">MY CONTRACTS</h1>
+                    <p class="myc-page-sub">Personalized performance record</p>
+                </div>
+                <div class="myc-header-actions">
+                    <button class="myc-btn-secondary" onclick="window.router.navigate('/profile')">View Identity</button>
+                    <button class="myc-btn-secondary" style="background: #111; color: #fff; border: none;" onclick="window.router.navigate('/overview')">New Contract</button>
+                </div>
             </div>
 
-            <!-- Profile Header -->
-            <div class="flex flex-col md:flex-row md:items-start md:justify-between gap-6 mb-8">
-                <div>
-                    <h1 id="mycontracts-displayname" class="font-display text-4xl md:text-5xl font-normal text-[#921818] tracking-tight mb-2">Loading...</h1>
-                    <div class="flex items-center gap-3">
-                        <span id="mycontracts-handle" class="font-mono text-sm text-neutral-500">@...</span>
-                        <span class="text-neutral-300">•</span>
-                        <span id="mycontracts-userid" class="font-mono text-[11px] text-neutral-400 bg-neutral-100 px-2 py-0.5 rounded-sm">...</span>
-                    </div>
+            <div class="myc-metrics">
+                <div class="myc-metric">
+                    <div class="myc-metric-value" id="myc-total-locked">—</div>
+                    <div class="myc-metric-label">Total Locked</div>
                 </div>
-                <!-- Action Buttons -->
-                <div class="flex gap-3">
-                    <button onclick="window.router.navigate('/profile')" class="flex items-center gap-2 px-4 py-2.5 border border-neutral-200 bg-white text-neutral-600 text-[11px] font-medium uppercase tracking-wide hover:border-neutral-400 transition-colors">
-                        <i data-lucide="user" class="w-3.5 h-3.5"></i>
-                        View Profile
-                    </button>
-                    <button onclick="window.router.navigate('/contracts')" class="flex items-center gap-2 px-4 py-2.5 bg-[#921818] text-white text-[11px] font-medium uppercase tracking-wide hover:bg-[#751212] transition-colors">
-                        <i data-lucide="plus" class="w-3.5 h-3.5"></i>
-                        New Contract
-                    </button>
+                <div class="myc-metric">
+                    <div class="myc-metric-value" id="myc-active-count">—</div>
+                    <div class="myc-metric-label">Active Contracts</div>
+                </div>
+                <div class="myc-metric">
+                    <div class="myc-metric-value" id="myc-settle-rate">—</div>
+                    <div class="myc-metric-label">Settlement Rate</div>
+                </div>
+                <div class="myc-metric">
+                    <div class="myc-metric-value" id="myc-avg-risk">—</div>
+                    <div class="myc-metric-label">Avg Risk Tier</div>
                 </div>
             </div>
 
-            <!-- Tabs -->
-            <div class="flex gap-0 border-b border-neutral-200 mb-8">
-                <button class="contracts-tab px-4 py-3 font-mono text-[11px] uppercase tracking-widest border-b-2 border-neutral-900 text-neutral-900 font-medium" data-tab="overview">Overview</button>
-                <button class="contracts-tab px-4 py-3 font-mono text-[11px] uppercase tracking-widest border-b-2 border-transparent text-neutral-400 hover:text-neutral-600" data-tab="active">All Contracts <span id="contracts-count-badge" class="text-[10px] bg-neutral-100 px-1.5 py-0.5 rounded ml-1">0</span></button>
-            </div>
-
-            <!-- Tab Content -->
-            <div id="contracts-tab-content">
-                <!-- Overview Tab -->
-                <div id="contracts-tab-overview" class="contracts-panel">
-                    <div class="flex items-center justify-between mb-4">
-                        <h3 class="font-mono text-[10px] text-neutral-400 uppercase tracking-widest">My Contracts</h3>
-                        <button onclick="window.router.navigate('/my-contracts')" class="font-mono text-[11px] text-neutral-400 hover:text-neutral-900">View all contracts</button>
-                    </div>
-                    
-                    <!-- Contract Cards - populated by JS -->
-                    <div id="contracts-cards-container" class="space-y-4">
-                        <div class="text-center py-8 text-neutral-400 font-mono text-sm">Loading contracts...</div>
-                    </div>
-                </div>
-
-                <!-- All Contracts Tab (Table View) -->
-                <div id="contracts-tab-active" class="contracts-panel hidden">
-                    <div class="border border-neutral-200 bg-white overflow-hidden">
-                        <table class="w-full">
-                            <thead class="border-b border-neutral-200">
-                                <tr>
-                                    <th class="text-left py-3 px-4 font-mono text-[10px] text-neutral-400 uppercase tracking-widest">ID</th>
-                                    <th class="text-left py-3 px-4 font-mono text-[10px] text-neutral-400 uppercase tracking-widest">Platform</th>
-                                    <th class="text-left py-3 px-4 font-mono text-[10px] text-neutral-400 uppercase tracking-widest">Status</th>
-                                    <th class="text-right py-3 px-4 font-mono text-[10px] text-neutral-400 uppercase tracking-widest">Amount</th>
-                                    <th class="text-right py-3 px-4 font-mono text-[10px] text-neutral-400 uppercase tracking-widest">Action</th>
-                                </tr>
-                            </thead>
-                            <tbody id="contracts-table-body" class="divide-y divide-neutral-100">
-                                <tr><td colspan="5" class="py-8 text-center text-neutral-400 font-mono text-sm">Loading...</td></tr>
-                            </tbody>
-                        </table>
+            <div class="myc-feed">
+                <div id="myc-content">
+                    <div class="myc-loading">
+                        <div class="myc-spinner"></div>
+                        <p style="font-family:'JetBrains Mono',monospace; font-size:10px; color:#888; text-transform:uppercase;">Retrieving personal record...</p>
                     </div>
                 </div>
             </div>
@@ -78,173 +189,95 @@ export function renderMyContracts() {
 }
 
 export async function initMyContracts() {
-    const tabs = document.querySelectorAll('.contracts-tab');
-    const panels = document.querySelectorAll('.contracts-panel');
+    const container = document.getElementById('myc-content');
+    if (!container) return;
 
-    // Tab switching
-    tabs.forEach(tab => {
-        tab.addEventListener('click', () => {
-            const targetTab = tab.getAttribute('data-tab');
-
-            // Update tab styles
-            tabs.forEach(t => {
-                t.classList.remove('border-neutral-900', 'text-neutral-900', 'font-medium');
-                t.classList.add('border-transparent', 'text-neutral-400');
-            });
-            tab.classList.remove('border-transparent', 'text-neutral-400');
-            tab.classList.add('border-neutral-900', 'text-neutral-900', 'font-medium');
-
-            // Show/hide panels
-            panels.forEach(panel => panel.classList.add('hidden'));
-            const targetPanel = document.getElementById('contracts-tab-' + targetTab);
-            if (targetPanel) targetPanel.classList.remove('hidden');
-
-            if (window.lucide) window.lucide.createIcons();
-        });
-    });
-
-    if (window.lucide) window.lucide.createIcons();
-
-    // Fetch profile data
-    try {
-        const profile = await window.api.getProfile();
-
-        const displayNameEl = document.getElementById('mycontracts-displayname');
-        const handleEl = document.getElementById('mycontracts-handle');
-        const userIdEl = document.getElementById('mycontracts-userid');
-
-        if (displayNameEl && profile.identity?.displayName) {
-            displayNameEl.textContent = profile.identity.displayName;
-        } else if (displayNameEl && profile.identity?.username) {
-            displayNameEl.textContent = profile.identity.username;
-        }
-
-        if (handleEl && profile.identity?.username) {
-            handleEl.textContent = '@' + profile.identity.username;
-        }
-
-        if (userIdEl && profile.user?.id) {
-            userIdEl.textContent = profile.user.id.slice(0, 7) + '...';
-        }
-    } catch (err) {
-        console.error('[MyContracts] Error loading profile:', err);
-    }
-
-    // Fetch and render contracts
     try {
         const response = await window.api.getContracts();
         const contracts = response?.contracts || [];
 
-        console.log('[MyContracts] Loaded contracts:', contracts.length);
+        // Summary Calculations
+        const totalLocked = contracts.reduce((sum, c) => sum + (c.lockAmountUsdCents || 0), 0);
+        const activeCount = contracts.filter(c => !c.isTerminal).length;
 
-        // Update badge
-        const badge = document.getElementById('contracts-count-badge');
-        if (badge) badge.textContent = contracts.length.toString();
+        const terminal = contracts.filter(c => c.isTerminal);
+        const wins = terminal.filter(c => ['SETTLED', 'SETTLED_SUCCESS', 'PAYOUT_COMPLETE'].includes(c.derivedState || c.state)).length;
+        const rate = terminal.length > 0 ? (wins / terminal.length * 100).toFixed(1) + '%' : '100%';
 
-        // Helper functions
-        function formatCurrency(cents) {
-            if (!cents) return '-';
-            return '$' + (cents / 100).toLocaleString('en-US', { minimumFractionDigits: 2 });
+        // Risk average
+        const tierMap = { 'CONSERVATIVE': 1, 'STANDARD': 2, 'AGGRESSIVE': 3 };
+        const tierLabels = ['—', 'CONSERVATIVE', 'STANDARD', 'AGGRESSIVE'];
+        const totalTier = contracts.length > 0 ? contracts.reduce((sum, c) => sum + (tierMap[c.riskTier?.toUpperCase()] || 2), 0) : 0;
+        const avgTier = contracts.length > 0 ? tierLabels[Math.round(totalTier / contracts.length)] : '—';
+
+        // Update Summary
+        document.getElementById('myc-total-locked').textContent = '$' + (totalLocked / 100).toLocaleString('en-US', { minimumFractionDigits: 0 });
+        document.getElementById('myc-active-count').textContent = activeCount.toString();
+        document.getElementById('myc-settle-rate').textContent = rate;
+        document.getElementById('myc-avg-risk').textContent = avgTier;
+
+        if (contracts.length === 0) {
+            container.innerHTML = `
+                <div style="text-align:center; padding: 60px 0;">
+                    <div style="font-family:'JetBrains Mono',monospace; font-size:11px; color:#888; text-transform:uppercase; margin-bottom:16px;">No contracts in record</div>
+                    <button class="myc-btn-secondary" style="background:#111; color:#fff; border:none;" onclick="window.router.navigate('/overview')">Create First Contract</button>
+                </div>
+            `;
+        } else {
+            renderContractList(container, contracts);
         }
-
-        function getStatusText(state) {
-            const map = {
-                'CREATED': 'Created', 'FUNDS_AUTHORIZED': 'Pending', 'FUNDS_LOCKED': 'Funded',
-                'LOCKED': 'Active', 'ACTIVE': 'Active', 'EXECUTION_CONFIRMED': 'Executed',
-                'VERIFIED': 'Verified', 'VERIFYING': 'Verifying',
-                'SETTLED_SUCCESS': 'Settled', 'SETTLED': 'Settled',
-                'SETTLED_FAILURE': 'Forfeited', 'FORFEITED': 'Forfeited'
-            };
-            return map[state] || state;
-        }
-
-        function getStatusColor(state) {
-            if (['SETTLED_SUCCESS', 'SETTLED'].includes(state)) return 'text-green-600';
-            if (['SETTLED_FAILURE', 'FORFEITED'].includes(state)) return 'text-red-600';
-            if (['LOCKED', 'ACTIVE', 'EXECUTION_CONFIRMED'].includes(state)) return 'text-neutral-900 font-medium';
-            return 'text-neutral-500';
-        }
-
-        function getPlatformName(platform) {
-            if (platform === 'x' || platform === 'twitter') return 'X (Twitter)';
-            if (platform === 'stripe') return 'Stripe';
-            if (platform === 'github') return 'GitHub';
-            return platform || 'Unknown';
-        }
-
-        // Render cards view
-        const cardsContainer = document.getElementById('contracts-cards-container');
-        if (cardsContainer) {
-            if (contracts.length === 0) {
-                cardsContainer.innerHTML = `
-                    <div class="border border-neutral-200 bg-white p-8 text-center">
-                        <div class="w-12 h-12 bg-neutral-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                            <i data-lucide="file-text" class="w-6 h-6 text-neutral-400"></i>
-                        </div>
-                        <h4 class="font-sans text-sm font-medium text-neutral-700 mb-1">No Contracts Yet</h4>
-                        <p class="font-mono text-[11px] text-neutral-400 mb-4">Create your first performance contract to get started.</p>
-                        <button onclick="window.router.navigate('/contracts')" class="px-4 py-2 bg-neutral-900 text-white text-[11px] font-mono uppercase tracking-wide hover:bg-neutral-800">
-                            Create Contract
-                        </button>
-                    </div>
-                `;
-            } else {
-                let cardsHtml = '';
-                contracts.forEach(c => {
-                    cardsHtml += `
-                        <div class="border border-neutral-200 bg-white p-6 hover:border-neutral-300 transition-colors cursor-pointer" onclick="window.router.navigate('/contracts/${c.id}')">
-                            <div class="flex justify-between items-start mb-3">
-                                <span class="font-mono text-[10px] text-neutral-400 uppercase tracking-widest">${getPlatformName(c.platform)}</span>
-                                <span class="font-mono text-sm text-neutral-900">${formatCurrency(c.lockAmountUsdCents)} <span class="${getStatusColor(c.state)}">${getStatusText(c.state)}</span></span>
-                            </div>
-                            <h4 class="font-sans text-lg font-medium text-neutral-900 mb-2">${c.id.slice(0, 8)}...</h4>
-                            <div class="flex items-center justify-between">
-                                <div class="flex items-center gap-2 text-neutral-500">
-                                    <i data-lucide="${c.platform === 'x' || c.platform === 'twitter' ? 'twitter' : 'credit-card'}" class="w-4 h-4"></i>
-                                    <span class="font-mono text-[11px]">${getPlatformName(c.platform)}</span>
-                                </div>
-                                <span class="font-mono text-[11px] text-neutral-500 hover:text-neutral-900 flex items-center gap-1 uppercase tracking-wide">
-                                    View Contract <i data-lucide="arrow-right" class="w-3 h-3"></i>
-                                </span>
-                            </div>
-                        </div>
-                    `;
-                });
-                cardsContainer.innerHTML = cardsHtml;
-            }
-        }
-
-        // Render table view
-        const tableBody = document.getElementById('contracts-table-body');
-        if (tableBody) {
-            if (contracts.length === 0) {
-                tableBody.innerHTML = `<tr><td colspan="5" class="py-8 text-center text-neutral-400 font-mono text-sm">No contracts found</td></tr>`;
-            } else {
-                let tableHtml = '';
-                contracts.forEach(c => {
-                    tableHtml += `
-                        <tr class="hover:bg-neutral-50">
-                            <td class="py-4 px-4 font-mono text-[11px] text-neutral-500">${c.id.slice(0, 8)}...</td>
-                            <td class="py-4 px-4 font-sans text-sm text-neutral-900">${getPlatformName(c.platform)}</td>
-                            <td class="py-4 px-4 font-mono text-[11px] ${getStatusColor(c.state)}">${getStatusText(c.state)}</td>
-                            <td class="py-4 px-4 font-mono text-sm text-neutral-900 text-right">${formatCurrency(c.lockAmountUsdCents)}</td>
-                            <td class="py-4 px-4 text-right">
-                                <button onclick="window.router.navigate('/contracts/${c.id}')" class="font-mono text-[11px] text-neutral-400 hover:text-neutral-900 uppercase">View</button>
-                            </td>
-                        </tr>
-                    `;
-                });
-                tableBody.innerHTML = tableHtml;
-            }
-        }
-
-        if (window.lucide) window.lucide.createIcons();
-
     } catch (err) {
-        console.error('[MyContracts] Error loading contracts:', err);
-        const cardsContainer = document.getElementById('contracts-cards-container');
-        if (cardsContainer) {
-            cardsContainer.innerHTML = `<div class="text-center py-8 text-red-500 font-mono text-sm">Error loading contracts: ${err.message}</div>`;
-        }
+        console.error('[MyContracts] Error:', err);
+        container.innerHTML = `<div style="text-align:center; padding:40px; color:#752122; font-family:'JetBrains Mono',monospace; font-size:12px;">SYSTEM_RECORD_ERROR: ${err.message}</div>`;
     }
+
+    if (window.lucide) window.lucide.createIcons();
+}
+
+function renderContractList(container, contracts) {
+    contracts.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+
+    const listHtml = contracts.map(c => {
+        const platform = c.platform?.toUpperCase() || 'UNKNOWN';
+        const amount = (c.lockAmountUsdCents / 100).toLocaleString('en-US', { style: 'currency', currency: 'USD' });
+        const state = c.derivedState || c.state;
+        const riskTier = c.riskTier?.toUpperCase() || 'STANDARD';
+
+        let statusLabel = 'ACTIVE';
+        let statusColor = '#555';
+        if (['SETTLED', 'SETTLED_SUCCESS', 'PAYOUT_COMPLETE'].includes(state)) {
+            statusLabel = 'SETTLED';
+            statusColor = '#166534';
+        } else if (['FORFEITED', 'SETTLED_FAILURE'].includes(state)) {
+            statusLabel = 'FORFEITED';
+            statusColor = '#921818';
+        } else if (['CREATED', 'FUNDS_AUTHORIZED'].includes(state)) {
+            statusLabel = 'PENDING';
+        }
+
+        const iconMap = { 'twitter': 'twitter', 'x': 'twitter', 'stripe': 'credit-card', 'shopify': 'shopping-bag', 'amazon': 'package', 'github': 'github' };
+        const lucideIcon = iconMap[c.platform?.toLowerCase()] || 'file-text';
+
+        return `
+            <a href="#/contracts/${c.id}" class="myc-card">
+                <div class="myc-card-left">
+                    <div class="myc-card-icon"><i data-lucide="${lucideIcon}"></i></div>
+                    <div class="myc-card-info">
+                        <span class="myc-card-platform">${platform.charAt(0) + platform.slice(1).toLowerCase()} Performance</span>
+                        <span class="myc-card-id">CNTRCT-${c.id.slice(0, 5).toUpperCase()}</span>
+                    </div>
+                </div>
+                <div class="myc-card-center">
+                    <span class="myc-status-badge" style="background:transparent; border-color:#eee; color:#999; font-weight:500;">${riskTier}</span>
+                    <span class="myc-status-badge">${statusLabel}</span>
+                </div>
+                <div class="myc-card-right">
+                    <span class="myc-card-amount">${amount}</span>
+                    <span class="myc-card-status-text" style="color:${statusColor}">${statusLabel}</span>
+                </div>
+            </a>
+        `;
+    }).join('');
+
+    container.innerHTML = `<div class="myc-list">${listHtml}</div>`;
 }

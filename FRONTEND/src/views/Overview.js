@@ -55,7 +55,8 @@ export function renderOverview() {
                 max-width: 900px;
             }
             .eq-hero-headline strong {
-                font-weight: 800; /* Heavy weight for measurable */
+                font-weight: 800;
+                color: #752122;
             }
             .eq-hero-sub {
                 font-size: 16px;
@@ -71,7 +72,7 @@ export function renderOverview() {
                 gap: 24px;
             }
             .eq-btn-primary {
-                background: #0a0a0a;
+                background: #752122;
                 color: #fff;
                 padding: 18px 32px;
                 font-size: 14px;
@@ -170,15 +171,15 @@ export function renderOverview() {
                 margin-bottom: 40px;
             }
             .eq-mech-label {
-                font-size: 18px;
+                font-size: 22px;
                 font-weight: 700;
-                margin-bottom: 24px;
+                margin-bottom: 20px;
                 color: #111;
             }
             .eq-mech-desc {
-                font-size: 14px;
+                font-size: 15px;
                 color: #888;
-                line-height: 1.6;
+                line-height: 1.65;
             }
 
             /* --- MARKET SECTION --- */

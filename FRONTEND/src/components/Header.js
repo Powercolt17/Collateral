@@ -60,36 +60,43 @@ export function renderHeader(currentRoute) {
             }
 
             /* ── Wordmark ── */
+            /* ── New Institutional Wordmark ── */
             .ch-logo {
                 display: inline-flex;
                 align-items: center;
                 text-decoration: none;
                 flex-shrink: 0;
-                gap: 1px;
+                gap: 12px;
             }
-            .ch-logo-mark {
-                width: 19px;
-                height: 19px;
-                background: #921818;
-                display: inline-flex;
-                align-items: center;
-                justify-content: center;
+            .ch-logo-icon {
+                width: 14px;
+                height: 14px;
+                background: #752122;
                 flex-shrink: 0;
             }
-            .ch-logo-mark span {
-                font-size: 14px;
-                font-weight: 700;
-                color: #ffffff;
-                font-family: 'Neue Haas Grotesk Display', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            .ch-logo-text-wrap {
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
                 line-height: 1;
             }
-            .ch-logo-text {
-                font-size: 17px;
-                font-weight: 700;
+            .ch-logo-headline {
+                font-size: 20px;
+                font-weight: 800;
                 color: #111111;
-                letter-spacing: -0.02em;
+                letter-spacing: -0.01em;
                 font-family: 'Neue Haas Grotesk Display', 'Helvetica Neue', Helvetica, Arial, sans-serif;
-                line-height: 1;
+                text-transform: uppercase;
+                margin: 0;
+            }
+            .ch-logo-sub {
+                font-family: 'JetBrains Mono', monospace;
+                font-size: 8px;
+                font-weight: 500;
+                color: #888;
+                text-transform: uppercase;
+                letter-spacing: 0.12em;
+                margin-top: 2px;
             }
 
             /* Nav links */
@@ -378,7 +385,11 @@ export function renderHeader(currentRoute) {
             <div class="ch-header-inner">
                 <!-- Logo -->
                 <a href="#" onclick="window.router.navigate('/overview'); return false;" class="ch-logo">
-                    <span class="ch-logo-mark"><span>C</span></span><span class="ch-logo-text">OLLATERAL</span>
+                    <div class="ch-logo-icon"></div>
+                    <div class="ch-logo-text-wrap">
+                        <span class="ch-logo-headline">COLLATERAL</span>
+                        <span class="ch-logo-sub">FINANCIAL PERFORMANCE PLATFORM</span>
+                    </div>
                 </a>
 
                 <!-- Nav Links -->

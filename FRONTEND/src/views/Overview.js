@@ -635,37 +635,87 @@ export function renderOverview() {
 
             /* ── Hero Heading ── */
             .eq-hero {
-                padding: 80px 32px 64px;
+                padding: 110px 32px 90px;
                 text-align: center;
                 background: #fff;
+                background-image: 
+                    radial-gradient(#eee 0.75px, transparent 0.75px),
+                    linear-gradient(to right, #f8f8f8 1px, transparent 1px),
+                    linear-gradient(to left, #f8f8f8 1px, transparent 1px);
+                background-size: 24px 24px, 100% 100%, 100% 100%;
+                background-position: center;
                 border-bottom: 1px solid #e5e5e5;
+                position: relative;
+                overflow: hidden;
             }
+            .eq-hero::before, .eq-hero::after {
+                content: '';
+                position: absolute;
+                top: 0; bottom: 0;
+                width: 1px;
+                background: #f0f0f0;
+            }
+            .eq-hero::before { left: 10%; }
+            .eq-hero::after { right: 10%; }
+
             .eq-hero-headline {
-                font-size: 56px;
-                font-weight: 700;
+                font-size: 68px;
+                font-weight: 800;
                 color: #111;
-                letter-spacing: -2px;
-                line-height: 1.05;
-                margin: 0 auto 24px;
-                max-width: 820px;
+                letter-spacing: -3.5px;
+                line-height: 0.9;
+                margin: 0 auto 32px;
+                max-width: 920px;
                 font-family: 'Neue Haas Grotesk Display', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+                -webkit-font-smoothing: antialiased;
+                animation: fade-in-up 0.8s cubic-bezier(0.16, 1, 0.3, 1);
             }
             .eq-hero-sub {
-                font-size: 22px;
+                font-size: 26px;
                 font-weight: 600;
                 color: #752122;
-                line-height: 1.5;
-                margin: 0 auto 28px;
-                max-width: 600px;
+                line-height: 1.3;
+                margin: 0 auto 36px;
+                max-width: 680px;
                 font-family: 'Neue Haas Grotesk Display', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+                letter-spacing: -0.8px;
+                -webkit-font-smoothing: antialiased;
+                animation: fade-in-up 1s cubic-bezier(0.16, 1, 0.3, 1) 0.1s both;
+            }
+            .eq-hero-divider {
+                width: 1px;
+                height: 48px;
+                background: #752122;
+                margin: 0 auto 36px;
+                opacity: 0.4;
+                position: relative;
+            }
+            .eq-hero-divider::after {
+                content: '';
+                position: absolute;
+                top: 0; left: 0; right: 0; bottom: 0;
+                background: #752122;
+                box-shadow: 0 0 8px #752122;
+                animation: divider-pulse 2s ease-in-out infinite;
+            }
+            @keyframes divider-pulse {
+                0%, 100% { opacity: 0; transform: scaleY(0.5); }
+                50% { opacity: 1; transform: scaleY(1); }
+            }
+            @keyframes fade-in-up {
+                from { opacity: 0; transform: translateY(20px); }
+                to { opacity: 1; transform: translateY(0); }
             }
             .eq-hero-forfeit {
                 font-family: 'JetBrains Mono', monospace;
-                font-size: 12px;
+                font-size: 11px;
                 color: #aaa;
                 text-transform: uppercase;
-                letter-spacing: 1.5px;
+                letter-spacing: 2.5px;
+                font-weight: 500;
+                animation: fade-in 2s ease-in 0.5s both;
             }
+            @keyframes fade-in { from { opacity: 0; } to { opacity: 1; } }
 
             /* ── Stake Warning ── */
             .eq-stake-warning {
@@ -681,9 +731,10 @@ export function renderOverview() {
             }
 
             @media (max-width: 768px) {
-                .eq-hero { padding: 48px 20px 36px; }
-                .eq-hero-headline { font-size: 34px; letter-spacing: -1.2px; }
-                .eq-hero-sub { font-size: 17px; }
+                .eq-hero { padding: 60px 20px 48px; }
+                .eq-hero-headline { font-size: 38px; letter-spacing: -1.5px; }
+                .eq-hero-sub { font-size: 18px; }
+                .eq-hero-divider { height: 30px; margin-bottom: 24px; }
                 .eq-stake-warning { padding: 0 16px 16px; }
             }
         </style>
@@ -693,6 +744,7 @@ export function renderOverview() {
             <div class="eq-hero">
                 <div class="eq-hero-headline">Stake Capital on Measurable Performance.</div>
                 <div class="eq-hero-sub">Lock funds against verified targets.<br>Automatic settlement at deadline.</div>
+                <div class="eq-hero-divider"></div>
                 <div class="eq-hero-forfeit">Capital is forfeited if targets are not met.</div>
             </div>
 

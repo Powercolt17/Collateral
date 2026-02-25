@@ -56,7 +56,7 @@ export function renderHeader(currentRoute) {
                 height: 72px;
                 display: flex;
                 align-items: center;
-                gap: 40px;
+                gap: 64px;
             }
 
             /* ── Wordmark ── */
@@ -129,8 +129,8 @@ export function renderHeader(currentRoute) {
 
             /* Search bar */
             .ch-search {
-                flex: 1;
-                max-width: 400px;
+                max-width: 280px;
+                width: 280px;
                 position: relative;
                 display: none;
             }
@@ -397,27 +397,13 @@ export function renderHeader(currentRoute) {
                     ${navItems}
                 </nav>
 
-                <!-- Search Bar -->
-                <div class="ch-search">
-                    <i data-lucide="search" class="ch-search-icon" style="width: 16px; height: 16px;"></i>
-                    <input type="text" placeholder="Search RCPT or Provider...">
-                </div>
-
                 <!-- Right Section -->
                 <div class="ch-right">
-                    <!-- Status Dropdown -->
-                    <button class="ch-dropdown">
-                        <span class="ch-dropdown-label">STATUS:</span>
-                        <span>ALL</span>
-                        <i data-lucide="chevron-down" style="width: 12px; height: 12px;"></i>
-                    </button>
-
-                    <!-- Sort Dropdown -->
-                    <button class="ch-dropdown">
-                        <span class="ch-dropdown-label">SORT:</span>
-                        <span>CAPITAL</span>
-                        <i data-lucide="chevron-down" style="width: 12px; height: 12px;"></i>
-                    </button>
+                    <!-- Search Bar -->
+                    <div class="ch-search">
+                        <i data-lucide="search" class="ch-search-icon" style="width: 16px; height: 16px;"></i>
+                        <input type="text" placeholder="Search RCPT or Provider...">
+                    </div>
 
                     <!-- Icon Buttons -->
                     <button class="ch-icon-btn">

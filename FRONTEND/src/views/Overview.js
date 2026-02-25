@@ -633,6 +633,40 @@ export function renderOverview() {
                 font-family: 'JetBrains Mono', monospace;
             }
 
+            /* ── Hero Heading ── */
+            .eq-hero {
+                padding: 64px 32px 48px;
+                text-align: center;
+                background: #fff;
+                border-bottom: 1px solid #e5e5e5;
+            }
+            .eq-hero-headline {
+                font-size: 42px;
+                font-weight: 700;
+                color: #111;
+                letter-spacing: -1.5px;
+                line-height: 1.1;
+                margin: 0 auto 20px;
+                max-width: 700px;
+                font-family: 'Neue Haas Grotesk Display', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            }
+            .eq-hero-sub {
+                font-size: 18px;
+                font-weight: 600;
+                color: #752122;
+                line-height: 1.6;
+                margin: 0 auto 24px;
+                max-width: 520px;
+                font-family: 'Neue Haas Grotesk Display', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            }
+            .eq-hero-forfeit {
+                font-family: 'JetBrains Mono', monospace;
+                font-size: 11px;
+                color: #aaa;
+                text-transform: uppercase;
+                letter-spacing: 1.5px;
+            }
+
             /* ── Stake Warning ── */
             .eq-stake-warning {
                 padding: 0 32px 24px;
@@ -647,11 +681,21 @@ export function renderOverview() {
             }
 
             @media (max-width: 768px) {
+                .eq-hero { padding: 40px 20px 32px; }
+                .eq-hero-headline { font-size: 28px; letter-spacing: -1px; }
+                .eq-hero-sub { font-size: 15px; }
                 .eq-stake-warning { padding: 0 16px 16px; }
             }
         </style>
 
         <div class="eq">
+            <!-- Hero Heading -->
+            <div class="eq-hero">
+                <div class="eq-hero-headline">Stake Capital on Measurable Performance.</div>
+                <div class="eq-hero-sub">Lock funds against verified targets.<br>Automatic settlement at deadline.</div>
+                <div class="eq-hero-forfeit">Capital is forfeited if targets are not met.</div>
+            </div>
+
             <!-- Live Header -->
             <div class="eq-live-header">
                 <div class="eq-live-dot"></div>

@@ -82,7 +82,7 @@ export function renderHeader(currentRoute) {
             }
             .ch-logo-headline {
                 font-size: 15px; /* Precision 15px */
-                font-weight: 500; /* Medium weight */
+                font-weight: 700; /* Bold */
                 color: #111111;
                 letter-spacing: -0.01em;
                 font-family: 'GT America', 'Neue Haas Grotesk Display', 'Helvetica Neue', Helvetica, Arial, sans-serif;
@@ -92,7 +92,7 @@ export function renderHeader(currentRoute) {
             .ch-logo-sub {
                 font-family: 'JetBrains Mono', monospace;
                 font-size: 7px; /* Reduced to 7px */
-                font-weight: 900; /* Ultra Bold impact */
+                font-weight: 800; /* Bold/Extra Bold */
                 color: #752122; /* Dark Red accent */
                 text-transform: uppercase;
                 letter-spacing: 0.12em; /* Increased spacing for clarity at small size */

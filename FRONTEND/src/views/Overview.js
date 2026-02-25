@@ -12,841 +12,529 @@ export function renderOverview() {
     return `
         <style>
             .eq {
-                background: #fafafa;
+                background: #fff;
                 min-height: 100vh;
                 font-family: 'Neue Haas Grotesk Display', 'Helvetica Neue', Helvetica, Arial, sans-serif;
                 color: #111;
+                padding-bottom: 100px;
             }
 
-            /* Top bar */
-            .eq-topbar {
-                display: flex;
-                justify-content: space-between;
-                align-items: center;
-                padding: 20px 32px;
-                border-bottom: 1px solid #e5e5e5;
-                background: #fff;
-            }
-            .eq-stats { display: flex; gap: 32px; }
-            .eq-stat-value {
-                font-size: 18px;
-                font-weight: 700;
-                color: #111111;
-                font-family: 'Neue Haas Grotesk Display', 'Helvetica Neue', Helvetica, Arial, sans-serif;
-                letter-spacing: -0.5px;
-            }
-            .eq-stat-label {
-                font-size: 11px;
-                color: #6B6B6B;
-                font-weight: 700;
-                text-transform: uppercase;
-                letter-spacing: 0.5px;
-                margin-top: 2px;
-                font-family: 'JetBrains Mono', monospace;
-            }
-            .eq-stat-divider { width: 1px; height: 32px; background: #DCDCDC; margin: 0 16px; }
-            .eq-controls { display: flex; gap: 8px; align-items: center; }
-
-            /* Search */
-            .eq-search {
-                padding: 8px 12px;
-                font-size: 13px;
-                border: 1px solid #DCDCDC;
-                border-radius: 0;
-                outline: none;
-                width: 200px;
-                font-family: 'Neue Haas Grotesk Display', 'Helvetica Neue', Helvetica, Arial, sans-serif;
-                color: #333;
-                transition: border-color 0.15s;
-            }
-            .eq-search:focus { border-color: #752122; }
-            .eq-search::placeholder { color: #8A8A8A; }
-
-            /* Sort */
-            .eq-sort {
-                padding: 8px 12px;
-                font-size: 13px;
-                border: 1px solid #DCDCDC;
-                background: #fff;
-                cursor: pointer;
-                font-family: 'JetBrains Mono', monospace;
-                color: #444444;
-                outline: none;
-            }
-            .eq-sort:focus { border-color: #752122; }
-
-            .eq-rules-btn {
-                padding: 8px 14px;
-                font-size: 12px;
-                font-weight: 600;
-                color: #444;
-                background: #fff;
-                border: 1px solid #e0e0e0;
-                cursor: pointer;
-                font-family: 'JetBrains Mono', monospace;
-                text-transform: uppercase;
-                letter-spacing: 0.3px;
+            /* --- TYPE SYSTEM --- */
+            .eq-tag {
                 display: flex;
                 align-items: center;
-                gap: 6px;
-                transition: all 0.15s;
-                border-radius: 6px;
-            }
-            .eq-rules-btn:hover { border-color: #bbb; color: #111; }
-
-            /* Tabs */
-            .eq-tabs {
-                display: flex;
-                gap: 0;
-                padding: 0 32px;
-                border-bottom: 1px solid #e5e5e5;
-                background: #fff;
-            }
-            .eq-tab {
-                padding: 16px 20px;
-                font-size: 13px;
-                font-weight: 600;
-                color: #444444;
-                background: transparent;
-                border: none;
-                border-bottom: 2px solid transparent;
-                cursor: pointer;
-                font-family: 'Neue Haas Grotesk Display', 'Helvetica Neue', Helvetica, Arial, sans-serif;
-                text-transform: uppercase;
-                letter-spacing: 0.2px;
-                transition: color 0.12s;
-                position: relative;
-            }
-            .eq-tab:hover { color: #111111; }
-            .eq-tab.active { color: #111111; font-weight: 700; border-bottom-color: #752122; border-bottom-width: 3px; }
-            .eq-tab-count {
+                gap: 12px;
+                font-family: 'JetBrains Mono', monospace;
                 font-size: 10px;
-                background: #f3f4f6;
-                color: #4b5563;
-                padding: 2px 6px;
-                border-radius: 999px;
-                margin-left: 6px;
-                font-weight: 600;
-                font-family: 'JetBrains Mono', monospace;
-            }
-            .eq-tab.active .eq-tab-count { background: #fef2f2; color: #752122; }
-
-            /* Filters */
-            .eq-filters {
-                display: flex;
-                gap: 6px;
-                padding: 14px 32px;
-                background: #fff;
-                border-bottom: 1px solid #f0f0f0;
-                flex-wrap: wrap;
-                align-items: center;
-            }
-            .eq-filter-label {
-                font-size: 12px;
-                color: #6B6B6B;
                 text-transform: uppercase;
-                font-family: 'JetBrains Mono', monospace;
-                margin-right: 4px;
-                font-weight: 700;
+                letter-spacing: 1.5px;
+                color: #752122;
+                margin-bottom: 24px;
             }
-            .eq-pill {
-                padding: 6px 14px;
-                font-size: 12px;
-                color: #444444;
-                background: #fff;
-                font-weight: 600;
-                border: 1px solid #E5E5E5;
-                cursor: pointer;
-                transition: all 0.12s;
-                font-family: 'Neue Haas Grotesk Display', 'Helvetica Neue', Helvetica, Arial, sans-serif;
-            }
-            .eq-pill:hover { border-color: #DCDCDC; color: #111111; }
-            .eq-pill.active { 
-                background: #fff; 
-                color: #752122; 
-                border-color: #752122; 
-                font-weight: 700;
-            }
-
-            /* Integration indicator */
-            .eq-card-integration {
-                display: inline-flex;
-                align-items: center;
-                gap: 6px;
-                font-size: 13px;
-                color: #4b5563;
-                font-weight: 500;
-                font-family: 'Neue Haas Grotesk Display', 'Helvetica Neue', Helvetica, Arial, sans-serif;
-                text-transform: capitalize; 
-                letter-spacing: normal;
-            }
-            .eq-card-integration .dot {
-                width: 6px;
-                height: 6px;
-                border-radius: 50%;
-            }
-            .eq-card-integration .dot.stripe { background: #635bff; }
-            .eq-card-integration .dot.shopify { background: #96bf48; }
-            .eq-card-integration .dot.amazon { background: #ff9900; }
-            .eq-card-integration .dot.x { background: #0a0a0a; }
-
-            /* Cards grid */
-            .eq-grid {
-                display: grid;
-                grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-                gap: 16px;
-                padding: 24px 32px 80px;
-            }
-
-            /* Empty state */
-            .eq-empty {
-                grid-column: 1 / -1;
-                text-align: center;
-                padding: 60px 20px;
-                color: #999;
-            }
-            .eq-empty-icon { font-size: 40px; margin-bottom: 12px; opacity: 0.4; }
-            .eq-empty-text { font-size: 14px; margin-bottom: 4px; }
-            .eq-empty-sub { font-size: 12px; color: #bbb; }
-
-            /* Card */
-            .eq-card {
-                background: #fff;
-                border: 1px solid #DCDCDC;
-                padding: 20px 24px;
-                cursor: pointer;
-                transition: all 0.2s cubic-bezier(0.2, 0.8, 0.2, 1);
-                display: flex;
-                flex-direction: column;
-                gap: 14px;
-                position: relative;
-                overflow: hidden;
-            }
-            /* Institutional Motif: Ledger Notch */
-            .eq-card::after {
+            .eq-tag::before {
                 content: '';
-                position: absolute;
-                top: 16px; bottom: 16px; left: 0;
-                width: 3px;
-                background: #f0f0f0;
-                border-radius: 0 2px 2px 0;
-                transition: background 0.2s;
-            }
-            .eq-card:hover::after { background: #752122; }
-
-            /* Remove old top border gradient if present */
-            .eq-card::before { display: none; }
-
-            .eq-card:hover {
-                border-color: #bbb;
-                box-shadow: 0 8px 24px rgba(0,0,0,0.10), 0 2px 6px rgba(0,0,0,0.06);
-                transform: translateY(-2px);
-            }
-            .eq-card:active {
-                transform: translateY(0);
-                box-shadow: 0 2px 8px rgba(0,0,0,0.08);
-            }
-            .eq-card.hidden-card { display: none; }
-            .eq-card.expanded { gap: 0 !important; }
-            .eq-card.expanded > *:nth-last-child(2) { padding-bottom: 16px; }
-
-            .eq-card-top {
-                display: flex;
-                justify-content: space-between;
-                align-items: center;
-            }
-            .eq-card-id {
-                font-size: 11px;
-                color: #8A8A8A;
-                font-family: 'JetBrains Mono', monospace;
-                letter-spacing: 0.5px;
-            }
-
-            /* Status badge */
-            .eq-badge {
-                font-size: 12px; /* Bump to 12px */
-                font-weight: 600;
-                height: 24px;
-                display: inline-flex;
-                align-items: center;
-                padding: 0 10px;
-                border-radius: 4px;
-                font-family: 'JetBrains Mono', monospace;
-                letter-spacing: 0.5px;
-                text-transform: uppercase;
-                line-height: 1;
-            }
-            .eq-badge.active { background: #f0fdf4; color: #15803d; }
-            .eq-badge.action { background: #fef2f2; color: #752122; }
-            .eq-badge.verifying { background: #eff6ff; color: #1e40af; }
-            .eq-badge.settled { background: #f5f5f5; color: #666; }
-
-            /* Tier badge - Refined */
-            .eq-tier {
-                display: inline-flex;
-                align-items: center;
-                gap: 6px;
-                font-size: 12px; /* Standardized 12px */
-                font-weight: 600;
-                height: 24px; /* Fixed height */
-                padding: 0 8px;
-                border-radius: 4px;
-                font-family: 'Neue Haas Grotesk Display', 'Helvetica Neue', Helvetica, Arial, sans-serif; /* Semibold sans */
-                letter-spacing: 0.3px;
-                text-transform: uppercase;
-                line-height: 1;
-            }
-            .eq-tier.controlled { background: #f0fdf4; color: #15803d; }
-            .eq-tier.elevated { background: #fff7ed; color: #9a3412; }
-            /* Muted Maroon for Maximum */
-            .eq-tier.maximum { background: #fff1f2; color: #881337; }
-            .eq-tier-rate { font-weight: 400; opacity: 0.8; }
-
-            /* Card content */
-            .eq-card-goal {
-                font-size: 17px;
-                font-weight: 600;
-                color: #111;
-                line-height: 1.35;
-                font-family: 'Neue Haas Grotesk Display', 'Helvetica Neue', Helvetica, Arial, sans-serif;
-                letter-spacing: -0.2px;
-            }
-
-            .eq-card-row {
-                display: flex;
-                justify-content: space-between;
-                align-items: center;
-            }
-
-            .eq-card-baseline {
-                font-size: 12px;
-                color: #444;
-                font-weight: 500;
-                font-family: 'JetBrains Mono', monospace;
-            }
-
-            .eq-card-meta {
-                display: flex;
-                justify-content: space-between;
-                align-items: baseline;
-            }
-            .eq-card-stake {
-                font-size: 20px;
-                font-weight: 700;
-                color: #111;
-                font-family: 'Neue Haas Grotesk Display', 'Helvetica Neue', Helvetica, Arial, sans-serif;
-                letter-spacing: -0.5px;
-            }
-            .eq-card-stake-label {
-                font-size: 12px;
-                color: #6B6B6B;
-                font-weight: 600;
-                text-transform: uppercase;
-                font-family: 'JetBrains Mono', monospace;
-                letter-spacing: 0.5px;
-            }
-            .eq-card-time {
-                font-size: 12px;
-                color: #8A8A8A;
-                font-family: 'JetBrains Mono', monospace;
-            }
-
-            .eq-card-cta {
-                width: 100%;
-                padding: 12px;
-                font-size: 14px;
-                font-weight: 700;
-                text-transform: uppercase;
-                letter-spacing: 0.5px;
-                font-family: 'Neue Haas Grotesk Display', 'Helvetica Neue', Helvetica, Arial, sans-serif;
-                cursor: pointer;
-                transition: all 120ms ease;
-            }
-            .eq-card-cta.primary {
-                background: #111111;
-                color: #ffffff;
-                border: 1px solid #111111;
-                box-shadow: none;
-            }
-            .eq-card-cta.primary:hover {
+                width: 32px;
+                height: 1px;
                 background: #752122;
-                border-color: #752122;
-                color: #ffffff;
-                transform: translateY(-1px);
-                box-shadow: none;
-            }
-            .eq-card-cta.primary:active {
-                background: #6B1212;
-                color: #ffffff;
-                border-color: #6B1212;
-                transform: translateY(0);
-            }
-            .eq-card-cta.primary:focus-visible {
-                outline: 2px solid rgba(127,29,29,0.4);
-                outline-offset: 2px;
-            }
-            .eq-card-cta.locking {
-                background: #f5f5f5;
-                color: #888;
-                border: 1px solid #e5e5e5;
-                cursor: not-allowed;
-                box-shadow: none;
-                pointer-events: none;
-            }
-            .eq-loading-spinner {
-                display: inline-block;
-                width: 12px; height: 12px;
-                border: 2px solid rgba(0,0,0,0.1);
-                border-top-color: #555;
-                border-radius: 50%;
-                animation: spin 0.8s linear infinite;
-                margin-right: 8px;
-            }
-            @keyframes spin { to { transform: rotate(360deg); } }
-            @keyframes pulse-red { 0% { box-shadow: 0 0 0 0 rgba(117, 33, 34, 0.4); } 70% { box-shadow: 0 0 0 10px rgba(117, 33, 34, 0); } 100% { box-shadow: 0 0 0 0 rgba(117, 33, 34, 0); } }
-
-            /* Receipt Success Stats */
-            .eq-receipt-success { animation: fadeIn 0.4s ease-out; }
-            .eq-receipt-icon { font-size: 32px; margin-bottom: 12px; text-align: center; }
-            .eq-receipt-title { 
-                font-size: 16px; font-weight: 700; color: #111; text-align: center; margin-bottom: 24px; 
-                font-family: 'Neue Haas Grotesk Display', 'Helvetica Neue', Helvetica, Arial, sans-serif; letter-spacing: -0.3px;
-            }
-            .eq-receipt-grid {
-                display: grid; grid-template-columns: 1fr 1fr; gap: 16px;
-                background: #f9fafb; padding: 20px; border-radius: 8px; border: 1px solid #e5e5e5;
-                margin-bottom: 20px;
-            }
-            .eq-receipt-item-label { font-size: 11px; color: #666; font-family:'JetBrains Mono',monospace; margin-bottom: 4px; }
-            .eq-receipt-item-value { font-size: 14px; font-weight: 600; color: #111; font-family:'Neue Haas Grotesk Display', 'Helvetica Neue', Helvetica, Arial, sans-serif; }
-            .eq-receipt-ledger {
-                margin: 20px 0; padding: 12px; background: #fff1f2; border: 1px solid #fecaca; border-radius: 6px;
-                font-size: 11px; color: #752122; font-family: 'JetBrains Mono', monospace;
-                display: flex; align-items: center; gap: 10px;
-            }
-            .eq-ledger-event { opacity: 0.8; font-weight: 600; }
-            .eq-receipt-actions { display: flex; gap: 12px; margin-top: 24px; }
-            /* Noise Removed - No Card Corner */
-            .eq-card-corner { display: none; }
-            .eq-lock-micro {
-                font-size: 12px;
-                color: #444;
-                text-align: center;
-                margin-top: 8px;
-                font-family: 'Neue Haas Grotesk Display', 'Helvetica Neue', Helvetica, Arial, sans-serif;
-                font-weight: 400;
-                letter-spacing: normal;
-                opacity: 1;
             }
 
-            .eq-card-cta.secondary { background: #f5f5f5; color: #333; border: 1px solid #e5e5e5; }
-            .eq-card-cta.secondary:hover { background: #eee; }
-
-            /* Rules Modal */
-            .eq-modal-backdrop {
-                position: fixed;
-                inset: 0;
-                background: rgba(0,0,0,0.4);
-                z-index: 100;
-                display: none;
-                justify-content: center;
-                align-items: center;
-                backdrop-filter: blur(2px);
-            }
-            .eq-modal-backdrop.open { display: flex; }
-            .eq-modal {
-                background: #fff;
-                border-radius: 16px;
-                width: 440px;
-                max-width: 90vw;
-                padding: 28px;
-                box-shadow: 0 20px 60px rgba(0,0,0,0.15);
-                max-height: 85vh;
-                overflow-y: auto;
-            }
-            .eq-modal-header {
-                display: flex;
-                justify-content: space-between;
-                align-items: center;
-                margin-bottom: 20px;
-            }
-            .eq-modal-title {
-                font-size: 14px;
-                font-weight: 600;
-                color: #0a0a0a;
-                font-family: 'JetBrains Mono', monospace;
-                text-transform: uppercase;
-            }
-            .eq-modal-close {
-                width: 28px;
-                height: 28px;
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                background: #f5f5f5;
-                border: none;
-                border-radius: 8px;
-                cursor: pointer;
-                color: #666;
-                font-size: 16px;
-            }
-            .eq-modal-close:hover { background: #eee; }
-            .eq-rule-row {
-                display: flex;
-                align-items: center;
-                gap: 12px;
-                padding: 10px 0;
-                border-bottom: 1px solid #f0f0f0;
-            }
-            .eq-rule-row:last-child { border-bottom: none; }
-            .eq-rule-row input[type="checkbox"] { width: 16px; height: 16px; accent-color: #752122; cursor: pointer; }
-            .eq-rule-row span { font-size: 13px; color: #333; }
-            .eq-rule-divider {
-                font-size: 10px;
-                color: #999;
-                text-transform: uppercase;
-                font-family: 'JetBrains Mono', monospace;
-                margin-top: 16px;
-                margin-bottom: 8px;
-            }
-
-            .eq-threshold-table {
-                width: 100%;
-                border-collapse: collapse;
-                margin: 8px 0;
-                font-size: 11px;
-                font-family: 'JetBrains Mono', monospace;
-            }
-            .eq-threshold-table th {
-                text-align: left;
-                padding: 6px 8px;
-                font-size: 9px;
-                text-transform: uppercase;
-                color: #999;
-                border-bottom: 1px solid #eee;
-                font-weight: 500;
-            }
-            .eq-threshold-table td {
-                padding: 6px 8px;
-                color: #333;
-                border-bottom: 1px solid #f5f5f5;
-            }
-            .eq-threshold-table tr:last-child td { border-bottom: none; }
-            .eq-threshold-table .tier-controlled { color: #166534; font-weight: 600; }
-            .eq-threshold-table .tier-elevated { color: #92400e; font-weight: 600; }
-            .eq-threshold-table .tier-maximum { color: #752122; font-weight: 600; }
-
-            .eq-slider-row {
-                display: flex;
-                align-items: center;
-                gap: 12px;
-                padding: 10px 0;
-            }
-            .eq-slider-label {
-                font-size: 12px;
-                color: #888;
-                min-width: 80px;
-            }
-            .eq-slider {
-                flex: 1;
-                accent-color: #752122;
-                cursor: pointer;
-            }
-            .eq-slider-value {
-                font-size: 13px;
-                font-weight: 600;
-                min-width: 60px;
-                text-align: right;
-                color: #0a0a0a;
-                font-family: 'Neue Haas Grotesk Display', 'Helvetica Neue', Helvetica, Arial, sans-serif;
-            }
-
-            /* Stat counter animation */
-            .eq-stat-value { transition: opacity 0.2s; }
-
-            .eq-lock-micro {
-                text-align: center; font-size: 10px; color: #999;
-                margin: 8px 0 24px; font-family: 'Inter', sans-serif; font-style: italic;
-            }
-
-            @media (max-width: 768px) {
-                .eq-topbar { padding: 16px; flex-direction: column; gap: 12px; align-items: flex-start; }
-                .eq-tabs { padding: 0 16px; overflow-x: auto; }
-                .eq-filters { padding: 10px 16px; }
-                .eq-grid { padding: 16px; grid-template-columns: 1fr; }
-                .eq-stats { gap: 20px; }
-                .eq-search { width: 140px; }
-                .eq-terms-grid { grid-template-columns: 1fr 1fr; }
-            }
-
-            /* --- LIVE MARKET UPGRADES --- */
-            @keyframes pulse-live { 0% { opacity: 0.6; } 50% { opacity: 1; } 100% { opacity: 0.6; } }
-            @keyframes slide-up-fade { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
-
-            .eq-live-header {
-                padding: 12px 32px;
-                background: #f8f8f8;
-                border-bottom: 1px solid #e5e5e5;
-                font-family: 'JetBrains Mono', monospace;
-                font-size: 10px;
-                text-transform: uppercase;
-                letter-spacing: 1px;
-                color: #666;
-                display: flex;
-                align-items: center;
-                gap: 8px;
-            }
-            .eq-live-dot {
-                width: 6px; height: 6px; background: #752122; border-radius: 50%;
-                animation: pulse-live 2s infinite;
-            }
-
-            .eq-update-chip {
-                position: absolute;
-                top: 140px; /* Adjust based on tabs/header height */
-                left: 50%;
-                transform: translateX(-50%);
-                background: #0a0a0a;
-                color: #fff;
-                padding: 8px 16px;
-                border-radius: 999px;
-                font-size: 11px;
-                font-family: 'JetBrains Mono', monospace;
-                cursor: pointer;
-                box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-                z-index: 20;
-                display: none;
-                align-items: center;
-                gap: 8px;
-                transition: all 0.2s;
-            }
-            .eq-update-chip:hover { transform: translateX(-50%) translateY(-2px); box-shadow: 0 6px 16px rgba(0,0,0,0.2); }
-            .eq-update-chip.visible { display: flex; animation: slide-up-fade 0.3s ease-out; }
-
-            /* Card Upgrades */
-            .eq-card-capacity {
-                font-size: 9px; color: #888; font-family: 'JetBrains Mono', monospace;
-                background: #f5f5f5; padding: 2px 6px; border-radius: 4px;
-            }
-            .eq-card-countdown {
-                font-size: 10px; color: #752122; font-weight: 600;
-                font-family: 'JetBrains Mono', monospace;
-            }
-
-            /* ── Institutional Hero (Refined) ── */
+            /* --- HERO SECTION --- */
             .eq-hero {
-                padding: 64px 32px 48px; /* Tighter vertical spacing */
-                text-align: center;
-                background: #fff;
-                border-bottom: 1px solid #e5e5e5;
+                padding: 120px 32px 100px;
+                max-width: 1300px;
+                margin: 0 auto;
                 position: relative;
-                overflow: hidden;
             }
-
             .eq-hero-headline {
-                font-size: 64px; /* Exact ~6% reduction */
-                font-weight: 800;
-                color: #000;
-                letter-spacing: -2.8px; /* Tight kerning */
+                font-size: 84px;
+                font-weight: 500; /* Regular weight for main */
+                color: #111;
                 line-height: 0.95;
-                margin: 0 auto 18px;
-                max-width: 1080px; /* Widened to allow 2 lines */
-                font-family: 'Neue Haas Grotesk Display', 'Helvetica Neue', Helvetica, Arial, sans-serif;
-                -webkit-font-smoothing: antialiased;
-                animation: fade-in-up 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+                letter-spacing: -3.5px;
+                margin-bottom: 40px;
+                max-width: 900px;
+            }
+            .eq-hero-headline strong {
+                font-weight: 800; /* Heavy weight for measurable */
             }
             .eq-hero-sub {
-                font-size: 20px;
-                font-weight: 500;
-                color: #333; /* Dark Charcoal */
-                line-height: 1.4;
-                margin: 0 auto 20px;
-                max-width: 600px;
-                font-family: 'Neue Haas Grotesk Display', 'Helvetica Neue', Helvetica, Arial, sans-serif;
-                letter-spacing: -0.3px;
-                -webkit-font-smoothing: antialiased;
-                animation: fade-in-up 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.1s both;
+                font-size: 16px;
+                color: #888;
+                max-width: 480px;
+                line-height: 1.6;
+                margin-bottom: 40px;
+                font-family: 'Neue Haas Grotesk Display', sans-serif;
             }
-
-            .eq-hero-tension {
-                font-family: 'JetBrains Mono', monospace;
-                font-size: 11px;
-                color: #666; /* Medium Contrast Gray */
-                text-transform: uppercase;
-                letter-spacing: 3px; /* Slightly increased spacing */
+            .eq-hero-actions {
+                display: flex;
+                align-items: center;
+                gap: 24px;
+            }
+            .eq-btn-primary {
+                background: #0a0a0a;
+                color: #fff;
+                padding: 18px 32px;
+                font-size: 14px;
                 font-weight: 700;
-                margin-bottom: 32px;
-                animation: fade-in 1.2s ease-in 0.4s both;
+                border: none;
+                cursor: pointer;
+                border-radius: 0;
             }
-
-            .eq-hero-divider-hr {
-                width: 48px;
-                height: 1px;
-                background: #752122; /* Institutional Accent */
-                margin: 0 auto;
-                opacity: 0.8;
+            .eq-link-more {
+                color: #888;
+                font-size: 14px;
+                text-decoration: none;
+                font-weight: 500;
             }
-
-            @keyframes fade-in-up {
-                from { opacity: 0; transform: translateY(15px); }
-                to { opacity: 1; transform: translateY(0); }
+            .eq-hero-scroll {
+                position: absolute;
+                right: 32px;
+                bottom: 100px;
+                writing-mode: vertical-rl;
+                font-family: 'JetBrains Mono', monospace;
+                font-size: 9px;
+                color: #ccc;
+                letter-spacing: 3px;
+                text-transform: uppercase;
+                display: flex;
+                align-items: center;
+                gap: 16px;
             }
-            @keyframes fade-in { from { opacity: 0; } to { opacity: 1; } }
-
-            @media (max-width: 768px) {
-                .eq-hero { padding: 48px 20px 32px; }
-                .eq-hero-headline { font-size: 34px; letter-spacing: -1.2px; }
-                .eq-hero-sub { font-size: 16px; }
-                .eq-hero-tension { font-size: 9px; letter-spacing: 2px; }
+            .eq-hero-scroll::after {
+                content: '';
+                width: 1px;
+                height: 60px;
+                background: #eee;
             }
 
             /* --- MECHANISM SECTION --- */
             .eq-mechanism {
-                background: #fff;
-                padding: 0 32px 64px;
-                border-bottom: 1px solid #e5e5e5;
+                padding: 100px 32px;
+                border-top: 1px solid #f2f2f2;
             }
+            .eq-mechanism-header {
+                display: flex;
+                justify-content: space-between;
+                align-items: flex-end;
+                margin-bottom: 80px;
+            }
+            .eq-mechanism-title {
+                font-size: 48px;
+                font-weight: 500;
+                letter-spacing: -2px;
+                line-height: 1;
+            }
+            .eq-mechanism-title strong { font-weight: 800; }
+            .eq-mechanism-side {
+                max-width: 320px;
+                font-size: 14px;
+                color: #888;
+                line-height: 1.6;
+                text-align: right;
+            }
+
             .eq-mechanism-grid {
                 display: grid;
                 grid-template-columns: repeat(4, 1fr);
-                gap: 24px;
-                max-width: 1200px;
-                margin: 0 auto;
+                margin: 0 -32px;
             }
             .eq-mech-card {
-                padding: 24px;
-                border: 1px solid #eee;
-                background: #fff;
-                transition: border-color 0.2s;
+                padding: 60px 48px;
+                border-right: 1px solid #f2f2f2;
+                position: relative;
             }
-            .eq-mech-card:hover { border-color: #752122; }
+            .eq-mech-card:last-child { border-right: none; }
             .eq-mech-num {
-                font-family: 'JetBrains Mono', monospace;
-                font-size: 40px;
-                font-weight: 300;
-                color: #752122;
-                margin-bottom: 16px;
-                line-height: 1;
+                font-family: 'Neue Haas Grotesk Display', sans-serif;
+                font-size: 80px;
+                font-weight: 700;
+                color: #f5f5f5;
+                line-height: 0.8;
+                margin-bottom: 40px;
             }
-            .eq-mech-title {
-                font-size: 14px;
-                font-weight: 800;
-                color: #000;
-                text-transform: uppercase;
-                letter-spacing: 0.5px;
-                margin-bottom: 8px;
-                font-family: 'Neue Haas Grotesk Display', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            .eq-mech-label {
+                font-size: 18px;
+                font-weight: 700;
+                margin-bottom: 24px;
+                color: #111;
             }
             .eq-mech-desc {
-                font-size: 13px;
-                line-height: 1.5;
-                color: #666;
-                font-family: 'Neue Haas Grotesk Display', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+                font-size: 14px;
+                color: #888;
+                line-height: 1.6;
             }
-            @media (max-width: 1024px) {
+
+            /* --- MARKET SECTION --- */
+            .eq-market-header {
+                padding: 100px 32px 40px;
+            }
+            .eq-market-title {
+                font-size: 48px;
+                font-weight: 500;
+                letter-spacing: -2px;
+                margin-bottom: 24px;
+            }
+            .eq-market-title strong { font-weight: 800; }
+            .eq-market-live {
+                display: flex;
+                align-items: center;
+                gap: 8px;
+                font-family: 'JetBrains Mono', monospace;
+                font-size: 10px;
+                color: #aaa;
+                text-transform: uppercase;
+                letter-spacing: 1px;
+                margin-bottom: 48px;
+            }
+            .eq-market-dot {
+                width: 6px; height: 6px;
+                background: #10b981;
+                border-radius: 50%;
+            }
+
+            .eq-stats-strip {
+                display: flex;
+                gap: 80px;
+                margin-bottom: 64px;
+            }
+            .eq-stat-group { display: flex; flex-direction: column; gap: 8px; }
+            .eq-stat-val {
+                font-size: 42px;
+                font-weight: 500;
+                letter-spacing: -1.5px;
+                display: flex;
+                align-items: baseline;
+                gap: 4px;
+            }
+            .eq-stat-val small { font-size: 14px; color: #ccc; font-weight: 400; letter-spacing: 0; }
+            .eq-stat-lbl {
+                font-family: 'JetBrains Mono', monospace;
+                font-size: 10px;
+                text-transform: uppercase;
+                letter-spacing: 1px;
+                color: #bbb;
+            }
+
+            /* --- CONTROLS --- */
+            .eq-controls {
+                display: flex;
+                justify-content: space-between;
+                align-items: flex-end;
+                padding-bottom: 2px;
+                border-bottom: 1px solid #f2f2f2;
+                margin-bottom: 24px;
+            }
+            .eq-tabs { display: flex; gap: 32px; }
+            .eq-tab {
+                padding: 12px 0;
+                font-family: 'JetBrains Mono', monospace;
+                font-size: 11px;
+                font-weight: 700;
+                color: #bbb;
+                background: none;
+                border: none;
+                cursor: pointer;
+                text-transform: uppercase;
+                letter-spacing: 1px;
+                border-bottom: 2px solid transparent;
+                transition: all 0.2s;
+            }
+            .eq-tab.active { color: #111; border-bottom-color: #111; }
+            
+            .eq-search-wrap {
+                display: flex;
+                align-items: center;
+                gap: 12px;
+                margin-bottom: 12px;
+            }
+            .eq-search-box {
+                background: #fcfcfc;
+                border: 1px solid #eee;
+                padding: 10px 16px;
+                font-size: 13px;
+                width: 240px;
+                font-family: 'Neue Haas Grotesk Display', sans-serif;
+            }
+            .eq-btn-rules {
+                background: #fff;
+                border: 1px solid #eee;
+                padding: 10px 16px;
+                font-family: 'JetBrains Mono', monospace;
+                font-size: 11px;
+                font-weight: 700;
+                text-transform: uppercase;
+                letter-spacing: 1px;
+                cursor: pointer;
+                color: #666;
+            }
+
+            .eq-filter-bar {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                margin-bottom: 48px;
+            }
+            .eq-pills { display: flex; align-items: center; gap: 8px; }
+            .eq-filter-lbl { 
+                font-family: 'JetBrains Mono', monospace; 
+                font-size: 10px; 
+                color: #ccc; 
+                text-transform: uppercase; 
+                margin-right: 12px; 
+            }
+            .eq-pill {
+                padding: 6px 16px;
+                font-size: 11px;
+                font-weight: 500;
+                border: 1px solid #eee;
+                background: #fff;
+                cursor: pointer;
+                color: #888;
+                transition: all 0.2s;
+            }
+            .eq-pill.active { background: #000; color: #fff; border-color: #000; }
+
+            .eq-status-operational {
+                display: flex;
+                align-items: center;
+                gap: 8px;
+                font-family: 'JetBrains Mono', monospace;
+                font-size: 9px;
+                text-transform: uppercase;
+                color: #ccc;
+            }
+            .eq-status-operational .dot { width: 5px; height: 5px; background: #10b981; border-radius: 50%; }
+
+            /* --- CARD GRID --- */
+            .eq-grid {
+                display: grid;
+                grid-template-columns: repeat(4, 1fr);
+                gap: 1px;
+                background: #f2f2f2;
+                border: 1px solid #f2f2f2;
+                margin: 0 -32px;
+            }
+            .eq-card {
+                background: #fff;
+                padding: 32px;
+                display: flex;
+                flex-direction: column;
+                gap: 16px;
+                cursor: pointer;
+                transition: background 0.2s;
+            }
+            .eq-card:hover { background: #fcfcfc; }
+            .eq-card-meta {
+                display: flex;
+                justify-content: space-between;
+                font-family: 'JetBrains Mono', monospace;
+                font-size: 10px;
+                text-transform: uppercase;
+                letter-spacing: 0.5px;
+            }
+            .eq-closing { color: #752122; font-weight: 700; }
+            .eq-id { color: #ccc; }
+            .eq-time { color: #ccc; display: flex; align-items: center; gap: 4px; }
+
+            .eq-card-title {
+                font-size: 18px;
+                font-weight: 700;
+                color: #111;
+                margin-bottom: 8px;
+                letter-spacing: -0.5px;
+            }
+            .eq-card-provider {
+                display: flex;
+                align-items: center;
+                gap: 8px;
+                margin-bottom: 8px;
+            }
+            .eq-provider-name {
+                font-family: 'JetBrains Mono', monospace;
+                font-size: 10px;
+                text-transform: uppercase;
+                color: #888;
+            }
+            .eq-tier-badge {
+                padding: 3px 8px;
+                font-size: 9px;
+                font-weight: 700;
+                border-radius: 2px;
+                text-transform: uppercase;
+                font-family: 'JetBrains Mono', monospace;
+                letter-spacing: 0.5px;
+            }
+            .eq-tier-badge.controlled { background: #f0fdf4; color: #166534; border: 1px solid #dcfce7; }
+            .eq-tier-badge.elevated { background: #fff7ed; color: #9a3412; border: 1px solid #ffedd5; }
+            .eq-tier-badge.maximum { background: #fff1f2; color: #9f1239; border: 1px solid #ffe4e6; }
+
+            .eq-card-status {
+                display: flex;
+                align-items: center;
+                gap: 6px;
+                font-family: 'JetBrains Mono', monospace;
+                font-size: 9px;
+                color: #10b981;
+                text-transform: uppercase;
+                margin-bottom: 24px;
+            }
+            .eq-card-status .dot { width: 4px; height: 4px; border-radius: 50%; background: currentcolor; }
+
+            .eq-card-stake-info {
+                display: flex;
+                align-items: center;
+                gap: 12px;
+                margin-bottom: 24px;
+            }
+            .eq-stake-val { font-size: 24px; font-weight: 500; letter-spacing: -1px; }
+            .eq-stake-separator { width: 16px; height: 1px; background: #eee; }
+            .eq-stake-lbl {
+                font-family: 'JetBrains Mono', monospace;
+                font-size: 9px;
+                color: #ccc;
+                text-transform: uppercase;
+                margin-top: 4px;
+            }
+
+            .eq-card-cta {
+                background: #000;
+                color: #fff;
+                border: none;
+                padding: 14px;
+                font-size: 12px;
+                font-weight: 700;
+                text-transform: uppercase;
+                letter-spacing: 1px;
+                width: 100%;
+                cursor: pointer;
+            }
+            .eq-card-footer {
+                font-size: 10px;
+                color: #eee;
+                text-align: center;
+                margin-top: 12px;
+                font-style: italic;
+            }
+
+            @media (max-width: 1200px) {
+                .eq-grid { grid-template-columns: repeat(2, 1fr); }
                 .eq-mechanism-grid { grid-template-columns: repeat(2, 1fr); }
             }
-            @media (max-width: 640px) {
+            @media (max-width: 768px) {
+                .eq-hero-headline { font-size: 48px; letter-spacing: -2px; }
+                .eq-grid { grid-template-columns: 1fr; }
                 .eq-mechanism-grid { grid-template-columns: 1fr; }
-                .eq-mechanism { padding: 0 20px 48px; }
+                .eq-stats-strip { flex-direction: column; gap: 32px; }
             }
         </style>
 
         <div class="eq">
-            <!-- Institutional Hero -->
+            <!-- Section 1: Hero -->
             <div class="eq-hero">
-                <div class="eq-hero-headline">Stake Capital on Measurable Performance</div>
-                <div class="eq-hero-sub">Stake against revenue, sales, or growth. Automatic verification. Final settlement.</div>
-                <div class="eq-hero-tension">MISS THE TARGET. LOSE THE STAKE.</div>
-                <div class="eq-hero-divider-hr"></div>
+                <div class="eq-tag">Performance Collateral Protocol</div>
+                <h1 class="eq-hero-headline">Capital committed to <strong>measurable</strong> outcomes.</h1>
+                <p class="eq-hero-sub">Stake against revenue, sales, or growth targets. Automatic verification. Final settlement. No appeals.</p>
+                <div class="eq-hero-actions">
+                    <button class="eq-btn-primary" onclick="document.getElementById('live-market').scrollIntoView({behavior:'smooth'})">Explore Market</button>
+                    <a href="#" class="eq-link-more">Learn more →</a>
+                </div>
+                <div class="eq-hero-scroll">Scroll</div>
             </div>
 
-            <!-- Mechanism Section -->
+            <!-- Section 2: Mechanism -->
             <section class="eq-mechanism">
+                <div class="eq-mechanism-header">
+                    <div class="eq-mechanism-side-left">
+                        <div class="eq-tag">How it works</div>
+                        <h2 class="eq-mechanism-title">Four steps to <strong>settlement.</strong></h2>
+                    </div>
+                    <div class="eq-mechanism-side">
+                        A protocol designed for finality. Every commitment resolves to a binary outcome — hit the target or forfeit the stake.
+                    </div>
+                </div>
                 <div class="eq-mechanism-grid">
                     <div class="eq-mech-card">
                         <div class="eq-mech-num">01</div>
-                        <div class="eq-mech-title">Commit</div>
-                        <div class="eq-mech-desc">Stake capital against specific, measurable performance targets.</div>
+                        <div class="eq-mech-label">Commit</div>
+                        <div class="eq-mech-desc">Stake capital against specific, measurable performance targets. Define the metric, set the threshold, lock the funds.</div>
                     </div>
                     <div class="eq-mech-card">
                         <div class="eq-mech-num">02</div>
-                        <div class="eq-mech-title">Monitor</div>
-                        <div class="eq-mech-desc">Metrics are tracked in real-time via verified data adapters.</div>
+                        <div class="eq-mech-label">Monitor</div>
+                        <div class="eq-mech-desc">Metrics are tracked in real-time through verified data adapters connected to authoritative sources.</div>
                     </div>
                     <div class="eq-mech-card">
                         <div class="eq-mech-num">03</div>
-                        <div class="eq-mech-title">Verify</div>
-                        <div class="eq-mech-desc">Automated oracle verification at the deadline. No appeals.</div>
+                        <div class="eq-mech-label">Verify</div>
+                        <div class="eq-mech-desc">Automated oracle verification at the deadline. Deterministic. Transparent. No appeals process.</div>
                     </div>
                     <div class="eq-mech-card">
                         <div class="eq-mech-num">04</div>
-                        <div class="eq-mech-title">Settle</div>
-                        <div class="eq-mech-desc">variance is calculated and capital is released or forfeited.</div>
+                        <div class="eq-mech-label">Settle</div>
+                        <div class="eq-mech-desc">Variance is calculated against the target. Capital is released to the counterparty or returned to the staker.</div>
                     </div>
                 </div>
             </section>
 
-            <!-- Live Header -->
-            <div class="eq-live-header">
-                <div class="eq-live-dot"></div>
-                LIVE MARKET — Updated <span id="last-updated">just now</span>
-            </div>
+            <!-- Section 3: Live Market Header -->
+            <section class="eq-market-header" id="live-market">
+                <div class="eq-tag">Live Contracts</div>
+                <h2 class="eq-market-title">Active <strong>market.</strong></h2>
+                <div class="eq-market-live">
+                    <div class="eq-market-dot"></div>
+                    Live — Updated <span id="last-updated">04:20:00 PM</span>
+                </div>
 
-            <!-- Top Bar -->
-            <div class="eq-topbar">
-                <div class="eq-stats">
-                    <div>
-                        <div class="eq-stat-value" id="stat-capital">—</div>
-                        <div class="eq-stat-label">Capital Locked</div>
+                <div class="eq-stats-strip">
+                    <div class="eq-stat-group">
+                        <div class="eq-stat-val">$<span id="stat-capital">0</span><small>(BETA)</small></div>
+                        <div class="eq-stat-lbl">Capital Locked</div>
                     </div>
-                    <div>
-                        <div class="eq-stat-value" id="stat-contracts">—</div>
-                        <div class="eq-stat-label">Active Contracts</div>
+                    <div class="eq-stat-group">
+                        <div class="eq-stat-val" id="stat-contracts">0</div>
+                        <div class="eq-stat-lbl">Active Contracts</div>
                     </div>
-                    <div>
-                        <div class="eq-stat-value" id="stat-pool">—</div>
-                        <div class="eq-stat-label">Volume 24h</div>
+                    <div class="eq-stat-group">
+                        <div class="eq-stat-val">$<span id="stat-pool">0</span><small>(BETA)</small></div>
+                        <div class="eq-stat-lbl">Volume 24h</div>
                     </div>
                 </div>
+
+                <!-- Controls -->
                 <div class="eq-controls">
-                    <input type="text" class="eq-search" id="eq-search" placeholder="Search contracts...">
-                    <button class="eq-rules-btn" id="btn-rules">
-                        <i data-lucide="sliders-horizontal"></i> RULES
-                    </button>
+                    <div class="eq-tabs" id="eq-tabs">
+                        <button class="eq-tab active" data-sort="trending_24h">TRENDING</button>
+                        <button class="eq-tab" data-sort="new">NEW</button>
+                        <button class="eq-tab" data-sort="closing_soon">CLOSING SOON</button>
+                        <button class="eq-tab" data-sort="volume_24h">HIGH VOLUME</button>
+                    </div>
+                    <div class="eq-search-wrap">
+                        <input type="text" class="eq-search-box" id="eq-search" placeholder="Search contracts...">
+                        <button class="eq-btn-rules" id="btn-rules">Rules</button>
+                    </div>
                 </div>
-            </div>
 
-            <!-- Tabs (Sort Modes) -->
-            <div class="eq-tabs" id="eq-tabs">
-                <button class="eq-tab active" data-sort="trending_24h">TRENDING</button>
-                <button class="eq-tab" data-sort="new">NEW</button>
-                <button class="eq-tab" data-sort="closing_soon">CLOSING SOON</button>
-                <button class="eq-tab" data-sort="volume_24h">HIGH VOLUME</button>
-            </div>
+                <!-- Filters -->
+                <div class="eq-filter-bar">
+                    <div class="eq-pills" id="eq-filters">
+                        <span class="eq-filter-lbl">Domain</span>
+                        <button class="eq-pill active" data-category="all">All</button>
+                        <button class="eq-pill" data-category="sales">Sales</button>
+                        <button class="eq-pill" data-category="social">Social</button>
+                        <button class="eq-pill" data-category="commerce">Commerce</button>
+                        <button class="eq-pill" data-category="finance">Finance</button>
+                    </div>
+                    <div class="eq-status-operational">
+                        System Status <div class="dot"></div> Operational
+                    </div>
+                </div>
+            </section>
 
-            <!-- Update Chip -->
-            <div class="eq-update-chip" id="update-chip">
-                <span id="update-count">0</span> updates available — <span style="text-decoration:underline">Refresh</span>
-            </div>
-
-            <!-- Filters -->
-            <div class="eq-filters" id="eq-filters">
-                <span class="eq-filter-label">DOMAIN</span>
-                <button class="eq-pill active" data-category="all">All</button>
-                <button class="eq-pill" data-category="sales">Sales</button>
-                <button class="eq-pill" data-category="social">Social</button>
-                <button class="eq-pill" data-category="commerce">Commerce</button>
-                <button class="eq-pill" data-category="finance">Finance</button>
-            </div>
-
-            <!-- Contract Cards Grid -->
-            <div class="eq-grid" id="eq-grid">
-                <!-- Dynamic Content Loading... -->
-                <div class="eq-empty" id="eq-empty" style="display:none;">
-                    <div class="eq-empty-icon">📋</div>
-                    <div class="eq-empty-text">No contracts match your filters</div>
-                    <div class="eq-empty-sub">Try adjusting your filters</div>
+            <!-- Contract Grid -->
+            <div class="eq-grid-container" style="padding: 0 32px;">
+                <div style="font-family:'JetBrains Mono'; font-size: 10px; color: #ccc; margin-bottom: 24px;" id="eq-count-lbl">12 contracts</div>
+                <div class="eq-grid" id="eq-grid">
+                    <!-- Dynamic cards go here -->
                 </div>
             </div>
 
@@ -1038,11 +726,10 @@ export function initOverview() {
         const hoursLeft = Math.ceil(timeLeftMs / (1000 * 60 * 60));
 
         let timeLabel = `${daysLeft}d left`;
-        if (daysLeft <= 1) timeLabel = `<span class="eq-card-countdown">${hoursLeft}h left</span>`;
+        if (daysLeft <= 1) timeLabel = `${hoursLeft}h left`;
         if (timeLeftMs < 0) timeLabel = 'Ended';
 
         const platform = (c.provider || 'X').toString();
-        const category = c.domain || 'social';
         const goal = c.title || 'Contract Goal';
 
         // Integration Icon
@@ -1051,66 +738,63 @@ export function initOverview() {
         if (platform === 'shopify') dotClass = 'shopify';
         if (platform === 'amazon') dotClass = 'amazon';
 
-        // Status Badge: Active, Closing Soon, Trending
-        let badge = `<span class="eq-badge active">ACTIVE</span>`;
-        if (c.scarcityScore > 80) badge = `<span class="eq-badge action">HIGH DEMAND</span>`;
-        if (timeLeftMs < 1000 * 60 * 60 * 24) badge = `<span class="eq-badge action">CLOSING SOON</span>`;
+        const tierUpper = tier.toUpperCase();
+        const multiplier = tierUpper === 'MAXIMUM' ? 4.0 : tierUpper === 'ELEVATED' ? 2.5 : 1.5;
 
-        // Baseline/Target formatting
-        const isConnected = hasAuthToken();
-        const displayPlatform = (platform === 'amazon') ? 'Amazon' : (platform.charAt(0).toUpperCase() + platform.slice(1));
-        const baseline = isConnected ? `<span style="color:#166534;font-weight:600">Terms Verified</span>` : `Terms unlock after verification`;
-
-        const tierTitle = tier === 'controlled' ? '~30% Win Rate' :
-            tier === 'elevated' ? '~20% Win Rate' :
-                tier === 'maximum' ? '~10% Win Rate' : '';
+        // Scarcity or urgent closing
+        let isClosingSoon = timeLeftMs < 1000 * 60 * 60 * 24;
+        let closingAmtText = isClosingSoon ? "CLOSING SOON" : `OPEN MARKET`;
 
         return `
             <div class="eq-card"
                  data-id="${c.id}" 
                  data-status="active" 
-                 data-domain="${category}"
+                 data-domain="${c.domain || 'social'}"
                  data-tier="${tier}" 
                  data-stake-min="${min}"
                  data-stake-max="${max}"
                  data-fee="${fee}"
                  data-deadline="${c.fundingCloseAt}"
                  data-goal="${goal}">
-                <div class="eq-card-top">
-                    <div class="eq-card-corner"></div>
-                    ${badge}
-                    <span class="eq-card-id">RCPT-${shortId.slice(0, 4).toUpperCase()}</span>
-                </div>
-                <div class="eq-card-goal">${goal}</div>
-                <div class="eq-card-row">
-                    <span class="eq-card-integration"><span class="dot ${dotClass}"></span> ${platform.charAt(0).toUpperCase() + platform.slice(1)}</span>
-                    <span class="eq-tier ${tier}" title="${tierTitle}">${tier.toUpperCase()} <span class="eq-card-capacity">${c.slots_left}/500 left</span></span>
-                </div>
-                <div class="eq-card-baseline">${baseline}</div>
                 <div class="eq-card-meta">
-                    <div>
-                        <div class="eq-card-stake">${stakeDisplay}</div>
-                        <div class="eq-card-stake-label">Stake Capacity</div>
-                    </div>
-                    <div class="eq-card-time">${timeLabel}</div>
+                    <span class="eq-closing">${closingAmtText}</span>
+                    <span class="eq-id">RCPT-${shortId.slice(0, 4).toUpperCase()}</span>
+                    <span class="eq-time">○ ${timeLabel}</span>
                 </div>
-                <button class="eq-card-cta primary eq-lock-btn">Execute Contract →</button>
-                <div class="eq-lock-micro">Capital is locked until settlement</div>
+                <div class="eq-card-title">${goal}</div>
+                <div class="eq-card-provider">
+                    <span class="dot ${dotClass}" style="width: 6px; height: 6px; border-radius: 50%; background: ${dotClass === 'stripe' ? '#635bff' : dotClass === 'shopify' ? '#96bf48' : dotClass === 'amazon' ? '#ff9900' : '#111'}"></span>
+                    <span class="eq-provider-name">${platform.toUpperCase()}</span>
+                    <span class="eq-tier-badge ${tier}">${tier.toUpperCase()}</span>
+                </div>
+                <div class="eq-card-status"><span class="dot" style="width:4px; height:4px; border-radius:50%; background:#10b981; display:inline-block; margin-right:4px;"></span> TERMS VERIFIED</div>
+                <div class="eq-card-stake-info">
+                    <div>
+                        <div class="eq-stake-val">${stakeDisplay}</div>
+                        <div class="eq-stake-lbl">STAKE CAPACITY</div>
+                    </div>
+                    <div class="eq-stake-separator"></div>
+                    <div>
+                        <div class="eq-stake-val">${multiplier}x</div>
+                        <div class="eq-stake-lbl">YIELD MULTIPLIER</div>
+                    </div>
+                </div>
+                <button class="eq-card-cta primary eq-lock-btn">EXECUTE CONTRACT</button>
+                <div class="eq-card-footer">Capital is locked until settlement.</div>
             </div>
         `;
     }
 
     function updateStats(stats) {
         if (!stats || !stats.tvlUsd || stats.tvlUsd === '0') {
-            // Simulated Beta Stats
-            statCapital.textContent = '$2.1M (BETA)';
+            statCapital.textContent = '2.1M';
             statContracts.textContent = '142';
-            statPool.textContent = '$12.5M (BETA)';
+            statPool.textContent = '12.5M';
             return;
         }
-        statCapital.textContent = '$' + (stats.tvlUsd ? (stats.tvlUsd / 1000000).toFixed(1) + 'M' : '—');
-        statContracts.textContent = stats.activeCount || '—';
-        statPool.textContent = '$' + (stats.volume24hUsd ? (stats.volume24hUsd / 1000).toFixed(0) + 'k' : '—');
+        statCapital.textContent = (stats.tvlUsd / 1000000).toFixed(1) + 'M';
+        statContracts.textContent = stats.activeCount || '0';
+        statPool.textContent = (stats.volume24hUsd / 1000).toFixed(0) + 'k';
     }
 
     function updateTime() {
@@ -1231,5 +915,20 @@ export function initOverview() {
         document.addEventListener('keydown', (e) => {
             if (e.key === 'Escape' && rulesModal.classList.contains('open')) rulesModal.classList.remove('open');
         });
+
+        // Rules filters
+        document.getElementById('tier-controlled')?.addEventListener('change', (e) => { enabledTiers.controlled = e.target.checked; fetchFeed(false); });
+        document.getElementById('tier-elevated')?.addEventListener('change', (e) => { enabledTiers.elevated = e.target.checked; fetchFeed(false); });
+        document.getElementById('tier-maximum')?.addEventListener('change', (e) => { enabledTiers.maximum = e.target.checked; fetchFeed(false); });
+
+        const stakeSlider = document.getElementById('stake-slider');
+        const stakeVal = document.getElementById('stake-slider-value');
+        if (stakeSlider && stakeVal) {
+            stakeSlider.addEventListener('input', (e) => {
+                minStake = parseInt(e.target.value);
+                stakeVal.textContent = `$${minStake.toLocaleString()}`;
+                fetchFeed(false);
+            });
+        }
     }
 }

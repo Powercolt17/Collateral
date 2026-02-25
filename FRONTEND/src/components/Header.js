@@ -66,7 +66,13 @@ export function renderHeader(currentRoute) {
                 align-items: center;
                 text-decoration: none;
                 flex-shrink: 0;
-                gap: 0;
+                gap: 12px; /* Restored gap for accent bar */
+            }
+            .ch-logo-accent {
+                width: 2px;
+                height: 24px;
+                background: #752122;
+                flex-shrink: 0;
             }
             .ch-logo-text-wrap {
                 display: flex;
@@ -75,8 +81,8 @@ export function renderHeader(currentRoute) {
                 line-height: 1;
             }
             .ch-logo-headline {
-                font-size: 17px; /* Reduced from 19px */
-                font-weight: 400; /* Regular weight */
+                font-size: 15px; /* Precision 15px */
+                font-weight: 500; /* Medium weight */
                 color: #111111;
                 letter-spacing: -0.01em;
                 font-family: 'GT America', 'Neue Haas Grotesk Display', 'Helvetica Neue', Helvetica, Arial, sans-serif;
@@ -85,12 +91,12 @@ export function renderHeader(currentRoute) {
             }
             .ch-logo-sub {
                 font-family: 'JetBrains Mono', monospace;
-                font-size: 7.5px; /* Reduced from 8px */
-                font-weight: 800; /* Extra Bold */
-                color: #666;
+                font-size: 7px; /* Reduced to 7px */
+                font-weight: 900; /* Ultra Bold impact */
+                color: #752122; /* Dark Red accent */
                 text-transform: uppercase;
-                letter-spacing: 0.08em;
-                margin-top: 4px; /* Slight adjustment */
+                letter-spacing: 0.12em; /* Increased spacing for clarity at small size */
+                margin-top: 2px; /* Tightened gap */
             }
 
             /* Nav links */
@@ -379,6 +385,7 @@ export function renderHeader(currentRoute) {
             <div class="ch-header-inner">
                 <!-- Logo -->
                 <a href="#" onclick="window.router.navigate('/overview'); return false;" class="ch-logo">
+                    <div class="ch-logo-accent"></div>
                     <div class="ch-logo-text-wrap">
                         <span class="ch-logo-headline">COLLATERAL</span>
                         <span class="ch-logo-sub">FINANCIAL PERFORMANCE PLATFORM</span>

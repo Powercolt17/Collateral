@@ -447,6 +447,62 @@ export function renderOverview() {
                 font-style: italic;
             }
 
+            /* --- RULES MODAL --- */
+            .eq-modal-backdrop {
+                display: none;
+                position: fixed;
+                inset: 0;
+                background: rgba(0,0,0,0.4);
+                z-index: 1000;
+                align-items: center;
+                justify-content: center;
+            }
+            .eq-modal-backdrop.open { display: flex; }
+            .eq-modal {
+                background: #fff;
+                width: 520px;
+                max-width: 90vw;
+                max-height: 85vh;
+                overflow-y: auto;
+                padding: 32px;
+            }
+            .eq-modal-header {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                margin-bottom: 24px;
+            }
+            .eq-modal-title { font-size: 18px; font-weight: 700; color: #111; }
+            .eq-modal-close { background: none; border: none; font-size: 18px; cursor: pointer; color: #888; padding: 4px 8px; }
+            .eq-rule-divider {
+                font-family: 'JetBrains Mono', monospace;
+                font-size: 10px;
+                text-transform: uppercase;
+                letter-spacing: 1px;
+                color: #aaa;
+                border-top: 1px solid #f2f2f2;
+                padding-top: 16px;
+                margin-top: 20px;
+                margin-bottom: 12px;
+                font-weight: 700;
+            }
+            .eq-rule-row { display: flex; align-items: center; gap: 10px; padding: 8px 0; font-size: 13px; color: #555; }
+            .eq-rule-row input[type="checkbox"] { accent-color: #752122; }
+            .eq-threshold-table { width: 100%; border-collapse: collapse; font-size: 12px; margin-top: 8px; }
+            .eq-threshold-table th { text-align: left; font-family: 'JetBrains Mono', monospace; font-size: 10px; text-transform: uppercase; letter-spacing: 0.5px; color: #aaa; padding: 8px 12px; border-bottom: 1px solid #f2f2f2; }
+            .eq-threshold-table td { padding: 8px 12px; color: #555; border-bottom: 1px solid #f8f8f8; }
+            .eq-threshold-table .tier-controlled { color: #166534; font-weight: 600; }
+            .eq-threshold-table .tier-elevated { color: #9a3412; font-weight: 600; }
+            .eq-threshold-table .tier-maximum { color: #9f1239; font-weight: 600; }
+            .eq-slider-row { display: flex; align-items: center; gap: 12px; padding: 12px 0; }
+            .eq-slider-label { font-size: 12px; color: #888; min-width: 80px; }
+            .eq-slider { flex: 1; accent-color: #752122; }
+            .eq-slider-value { font-family: 'JetBrains Mono', monospace; font-size: 12px; color: #111; font-weight: 600; min-width: 60px; text-align: right; }
+
+            /* --- STAKE WARNING --- */
+            .eq-stake-warning { max-width: 1300px; margin: 0 auto; padding: 24px 32px; border-top: 1px solid #f2f2f2; }
+            .eq-stake-warning-text { font-size: 12px; color: #ccc; font-style: italic; }
+
             @media (max-width: 1200px) {
                 .eq-grid { grid-template-columns: repeat(2, 1fr); }
                 .eq-mechanism-grid { grid-template-columns: repeat(2, 1fr); }

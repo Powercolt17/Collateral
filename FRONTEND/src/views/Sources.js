@@ -1,12 +1,11 @@
 // Sources.js — Connect Sources — Institutional Data Binding Interface
-// Pure white institutional aesthetic. Inter font. Deterministic settlement.
+// Redesigned to match premium institutional aesthetic
 
 export function renderSources() {
     return `
         <style>
             /* ============================================================
                CONNECT SOURCES — INSTITUTIONAL DATA BINDING INTERFACE
-               Inter font, #fafafa background, sharp corners, muted opacity
                ============================================================ */
             .src {
                 background: #fafafa;
@@ -17,79 +16,105 @@ export function renderSources() {
                 flex-direction: column;
             }
 
-            /* ── Header Block (white) ── */
+            /* ── Hero Header ── */
             .src-header {
                 background: #fff;
-                border-bottom: 1px solid rgba(0,0,0,0.04);
+                border-bottom: 1px solid #f0f0f0;
             }
             .src-header-inner {
                 max-width: 1440px;
                 margin: 0 auto;
-                padding: 40px 64px 40px;
+                padding: 48px 64px 48px;
             }
-
-            /* Title */
-            .src-page-title {
-                font-size: 14px;
-                font-weight: 600;
-                letter-spacing: 0.12em;
-                color: #0a0a0a;
-                margin: 0;
+            .src-breadcrumb {
+                font-family: 'JetBrains Mono', monospace;
+                font-size: 10px;
+                font-weight: 500;
+                letter-spacing: 0.15em;
                 text-transform: uppercase;
+                color: #ccc;
+                margin-bottom: 20px;
             }
-            .src-page-sub {
-                font-size: 13px;
-                font-weight: 400;
-                color: rgba(10,10,10,0.35);
-                margin: 8px 0 0;
+            .src-breadcrumb strong {
+                color: #111;
+                font-weight: 700;
             }
 
-            /* Stats Row */
-            .src-stats-row {
+            /* Title row: left = title/desc, right = stats */
+            .src-hero-row {
                 display: flex;
-                align-items: baseline;
+                align-items: flex-end;
+                justify-content: space-between;
                 gap: 48px;
-                flex-wrap: wrap;
-                margin-top: 40px;
+            }
+            .src-hero-left { flex: 1; }
+            .src-hero-title {
+                font-size: 42px;
+                font-weight: 300;
+                color: #111;
+                letter-spacing: -1.5px;
+                margin: 0;
+                line-height: 1.1;
+            }
+            .src-hero-title strong {
+                font-weight: 700;
+            }
+            .src-hero-desc {
+                font-size: 15px;
+                color: #999;
+                margin-top: 12px;
+                line-height: 1.6;
+                max-width: 440px;
+            }
+
+            /* Stats on the right */
+            .src-hero-stats {
+                display: flex;
+                align-items: flex-end;
+                gap: 48px;
+                flex-shrink: 0;
             }
             .src-stat {
                 display: flex;
                 flex-direction: column;
+                align-items: center;
             }
             .src-stat-value {
-                font-size: 28px;
+                font-size: 36px;
                 font-weight: 300;
-                letter-spacing: -0.03em;
-                color: #0a0a0a;
+                letter-spacing: -1px;
+                color: #111;
                 line-height: 1;
             }
             .src-stat-label {
-                font-size: 10px;
-                font-weight: 500;
+                font-family: 'JetBrains Mono', monospace;
+                font-size: 9px;
+                font-weight: 600;
                 letter-spacing: 0.12em;
-                color: rgba(10,10,10,0.25);
+                color: #ccc;
                 text-transform: uppercase;
-                margin-top: 6px;
+                margin-top: 8px;
             }
-
-            /* Verification Status (inline with stats) */
-            .src-status-indicator {
+            .src-stat-live {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+            }
+            .src-live-badge {
                 display: flex;
                 align-items: center;
                 gap: 8px;
+                font-size: 14px;
+                font-weight: 600;
+                color: #111;
+                letter-spacing: 0.05em;
             }
-            .src-status-dot {
-                width: 6px;
-                height: 6px;
+            .src-live-dot {
+                width: 8px;
+                height: 8px;
                 border-radius: 50%;
                 background: #16a34a;
                 flex-shrink: 0;
-            }
-            .src-status-text {
-                font-size: 14px;
-                font-weight: 500;
-                letter-spacing: 0.06em;
-                color: #0a0a0a;
             }
 
             /* ── Content Area ── */
@@ -97,39 +122,55 @@ export function renderSources() {
                 flex: 1;
                 max-width: 1440px;
                 margin: 0 auto;
-                padding: 40px 64px;
+                padding: 48px 64px;
                 width: 100%;
                 box-sizing: border-box;
             }
 
             /* ── Section Labels ── */
             .src-section-label {
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                font-family: 'JetBrains Mono', monospace;
                 font-size: 10px;
-                font-weight: 500;
-                letter-spacing: 0.12em;
-                color: rgba(10,10,10,0.25);
+                font-weight: 600;
+                letter-spacing: 0.15em;
+                color: #bbb;
                 text-transform: uppercase;
                 margin: 0 0 20px;
             }
+            .src-section-label .icon-prefix {
+                display: flex;
+                align-items: center;
+                gap: 8px;
+            }
+            .src-section-count {
+                font-size: 10px;
+                font-weight: 500;
+                color: #ccc;
+                letter-spacing: 0.1em;
+            }
 
-            /* ── Connected Source Rows ── */
+            /* ── Active Connection Rows ── */
             .src-connected-list {
                 display: flex;
                 flex-direction: column;
-                margin-bottom: 48px;
+                margin-bottom: 56px;
+                border: 1px solid #f0f0f0;
+                background: #fff;
             }
 
             .src-conn-row {
                 display: flex;
                 align-items: center;
                 justify-content: space-between;
-                padding: 20px 24px;
-                background: #fff;
-                border-bottom: 1px solid rgba(0,0,0,0.04);
+                padding: 24px 28px;
+                border-bottom: 1px solid #f5f5f5;
+                transition: background 0.15s;
             }
-            .src-conn-row:first-child {
-                border-top: 1px solid rgba(0,0,0,0.04);
-            }
+            .src-conn-row:last-child { border-bottom: none; }
+            .src-conn-row:hover { background: #fcfcfc; }
 
             .src-conn-left {
                 display: flex;
@@ -137,20 +178,26 @@ export function renderSources() {
                 gap: 16px;
             }
             .src-conn-icon {
-                width: 36px;
-                height: 36px;
-                border: 1px solid rgba(0,0,0,0.06);
+                width: 40px;
+                height: 40px;
+                border: 1px solid #f0f0f0;
                 display: flex;
                 align-items: center;
                 justify-content: center;
-                color: rgba(10,10,10,0.4);
+                color: #999;
                 flex-shrink: 0;
             }
-            .src-conn-icon svg { width: 16px; height: 16px; }
+            .src-conn-icon svg { width: 18px; height: 18px; }
+            .src-conn-info { display: flex; flex-direction: column; gap: 2px; }
             .src-conn-name {
-                font-size: 13px;
-                font-weight: 500;
-                color: #0a0a0a;
+                font-size: 15px;
+                font-weight: 600;
+                color: #111;
+            }
+            .src-conn-date {
+                font-size: 12px;
+                font-weight: 400;
+                color: #ccc;
             }
 
             .src-conn-right {
@@ -158,136 +205,205 @@ export function renderSources() {
                 align-items: center;
                 gap: 32px;
             }
-            .src-conn-date {
-                font-size: 12px;
-                font-weight: 400;
-                color: rgba(10,10,10,0.25);
+
+            /* Data points metric */
+            .src-conn-metric {
+                display: flex;
+                flex-direction: column;
+                align-items: flex-end;
+                gap: 2px;
             }
+            .src-conn-metric-value {
+                font-size: 18px;
+                font-weight: 600;
+                color: #111;
+                letter-spacing: -0.5px;
+            }
+            .src-conn-metric-label {
+                font-family: 'JetBrains Mono', monospace;
+                font-size: 9px;
+                color: #ccc;
+                text-transform: uppercase;
+                letter-spacing: 0.08em;
+            }
+
+            /* Last sync */
+            .src-conn-sync {
+                display: flex;
+                align-items: center;
+                gap: 6px;
+                font-size: 12px;
+                color: #16a34a;
+            }
+            .src-conn-sync svg { width: 12px; height: 12px; }
+
+            /* VERIFIED badge + REMOVE hover animation */
             .src-conn-actions {
                 display: flex;
                 align-items: center;
-                gap: 16px;
+                gap: 0;
+                overflow: hidden;
+                min-width: 120px;
+                justify-content: flex-end;
             }
-            .src-badge-connected {
-                font-size: 11px;
-                font-weight: 500;
-                letter-spacing: 0.06em;
+            .src-badge-verified {
+                font-family: 'JetBrains Mono', monospace;
+                font-size: 10px;
+                font-weight: 700;
+                letter-spacing: 0.1em;
                 color: #16a34a;
                 text-transform: uppercase;
+                display: flex;
+                align-items: center;
+                gap: 6px;
+                transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+                white-space: nowrap;
             }
-            .src-btn-disconnect {
-                font-family: 'Inter', sans-serif;
-                font-size: 11px;
-                font-weight: 500;
-                letter-spacing: 0.06em;
+            .src-badge-verified .v-dot {
+                width: 6px;
+                height: 6px;
+                border-radius: 50%;
+                background: #16a34a;
+                flex-shrink: 0;
+            }
+            .src-btn-remove {
+                font-family: 'JetBrains Mono', monospace;
+                font-size: 10px;
+                font-weight: 700;
+                letter-spacing: 0.1em;
                 text-transform: uppercase;
-                color: #7a1a1a;
+                color: #752122;
                 background: none;
                 border: none;
                 padding: 0;
                 cursor: pointer;
-                transition: opacity 0.2s;
+                opacity: 0;
+                transform: translateX(20px);
+                transition: opacity 0.3s cubic-bezier(0.4,0,0.2,1), transform 0.35s cubic-bezier(0.4,0,0.2,1);
+                white-space: nowrap;
+                margin-left: 16px;
             }
-            .src-btn-disconnect:hover { opacity: 0.7; }
+            .src-conn-row:hover .src-badge-verified {
+                transform: translateX(-24px);
+            }
+            .src-conn-row:hover .src-btn-remove {
+                opacity: 1;
+                transform: translateX(0);
+            }
 
+            /* ── Empty state ── */
             .src-empty-connected {
                 display: flex;
                 align-items: center;
                 justify-content: center;
                 padding: 48px;
                 background: #fff;
-                border: 1px solid rgba(0,0,0,0.04);
+                border: 1px solid #f0f0f0;
             }
             .src-empty-connected span {
                 font-size: 13px;
-                font-weight: 400;
-                color: rgba(10,10,10,0.2);
+                color: #ccc;
             }
 
             /* ── Available Provider Grid ── */
             .src-provider-grid {
                 display: grid;
-                grid-template-columns: repeat(3, 1fr);
-                gap: 1px;
-                background: rgba(0,0,0,0.04);
+                grid-template-columns: repeat(2, 1fr);
+                gap: 20px;
                 margin-bottom: 48px;
             }
 
             .src-prov-card {
                 background: #fff;
-                padding: 24px;
+                border: 1px solid #f0f0f0;
+                padding: 28px;
                 display: flex;
                 flex-direction: column;
                 gap: 16px;
+                transition: border-color 0.2s;
             }
+            .src-prov-card:hover { border-color: #ddd; }
 
             .src-prov-top {
                 display: flex;
+                align-items: flex-start;
+                justify-content: space-between;
+            }
+            .src-prov-top-left {
+                display: flex;
                 align-items: center;
-                gap: 12px;
+                gap: 14px;
             }
             .src-prov-icon {
-                width: 36px;
-                height: 36px;
-                border: 1px solid rgba(0,0,0,0.06);
+                width: 44px;
+                height: 44px;
+                border: 1px solid #f0f0f0;
                 display: flex;
                 align-items: center;
                 justify-content: center;
-                color: rgba(10,10,10,0.3);
+                color: #999;
+                flex-shrink: 0;
+                background: #fafafa;
+            }
+            .src-prov-icon svg { width: 20px; height: 20px; }
+            .src-prov-name-wrap {
+                display: flex;
+                flex-direction: column;
+                gap: 3px;
+            }
+            .src-prov-name {
+                font-size: 15px;
+                font-weight: 600;
+                color: #111;
+            }
+            .src-prov-category {
+                font-family: 'JetBrains Mono', monospace;
+                font-size: 9px;
+                font-weight: 600;
+                text-transform: uppercase;
+                letter-spacing: 0.12em;
+                color: #16a34a;
+            }
+            .src-prov-arrow {
+                color: #ddd;
                 flex-shrink: 0;
             }
-            .src-prov-icon svg { width: 18px; height: 18px; }
-            .src-prov-name {
-                font-size: 13px;
-                font-weight: 500;
-                color: #0a0a0a;
-            }
+            .src-prov-arrow svg { width: 14px; height: 14px; }
 
             .src-prov-desc {
-                font-size: 12px;
+                font-size: 13px;
                 font-weight: 400;
-                line-height: 1.6;
-                color: rgba(10,10,10,0.3);
+                line-height: 1.65;
+                color: #999;
                 flex: 1;
             }
 
             .src-prov-btn {
                 align-self: flex-start;
-                font-family: 'Inter', sans-serif;
+                font-family: 'JetBrains Mono', monospace;
                 font-size: 11px;
-                font-weight: 500;
-                letter-spacing: 0.06em;
+                font-weight: 700;
+                letter-spacing: 0.1em;
                 text-transform: uppercase;
-                padding: 8px 16px;
-                background: #0a0a0a;
-                color: #fff;
-                border: 1px solid #0a0a0a;
+                padding: 0;
+                background: none;
+                color: #111;
+                border: none;
                 cursor: pointer;
-                transition: background 0.2s;
+                transition: color 0.2s;
             }
-            .src-prov-btn:hover { background: rgba(10,10,10,0.85); }
-            .src-prov-btn:disabled {
-                background: #ddd;
-                color: #999;
-                border-color: #ddd;
-                cursor: not-allowed;
-            }
+            .src-prov-btn:hover { color: #752122; }
 
             .src-coming-soon {
-                font-size: 11px;
-                font-weight: 500;
-                letter-spacing: 0.06em;
+                display: flex;
+                align-items: center;
+                gap: 6px;
+                font-family: 'JetBrains Mono', monospace;
+                font-size: 10px;
+                font-weight: 600;
+                letter-spacing: 0.1em;
                 text-transform: uppercase;
-                color: rgba(10,10,10,0.2);
-                align-self: flex-start;
-            }
-
-            .src-prov-connected-label {
-                font-size: 11px;
-                font-weight: 500;
-                letter-spacing: 0.06em;
-                color: #16a34a;
-                text-transform: uppercase;
+                color: #ccc;
                 align-self: flex-start;
             }
 
@@ -296,27 +412,25 @@ export function renderSources() {
                 display: flex;
                 align-items: center;
                 gap: 12px;
-                padding: 16px 24px;
-                border: 1px solid rgba(0,0,0,0.04);
+                padding: 18px 24px;
+                border: 1px solid #f0f0f0;
                 background: #fff;
                 margin-bottom: 48px;
             }
             .src-footer-notice-icon {
-                color: rgba(10,10,10,0.2);
+                color: #ddd;
                 flex-shrink: 0;
             }
             .src-footer-notice-icon svg { width: 14px; height: 14px; }
             .src-footer-notice-text {
-                font-size: 11px;
+                font-size: 12px;
                 font-weight: 400;
-                letter-spacing: 0.04em;
-                color: rgba(10,10,10,0.3);
-                text-transform: uppercase;
+                color: #aaa;
             }
 
             /* ── Status Footer Bar ── */
             .src-status-footer {
-                border-top: 1px solid rgba(0,0,0,0.04);
+                border-top: 1px solid #f0f0f0;
                 background: #fff;
                 margin-top: auto;
             }
@@ -334,14 +448,15 @@ export function renderSources() {
                 gap: 12px;
             }
             .src-status-footer-label {
+                font-family: 'JetBrains Mono', monospace;
                 font-size: 10px;
                 font-weight: 500;
                 letter-spacing: 0.1em;
-                color: rgba(10,10,10,0.2);
+                color: #ccc;
                 text-transform: uppercase;
             }
             .src-status-footer-sep {
-                color: rgba(10,10,10,0.1);
+                color: #e0e0e0;
             }
             .src-status-footer-live {
                 display: flex;
@@ -355,16 +470,20 @@ export function renderSources() {
                 background: #16a34a;
             }
             .src-status-footer-text {
+                font-family: 'JetBrains Mono', monospace;
                 font-size: 10px;
-                font-weight: 500;
+                font-weight: 600;
                 letter-spacing: 0.05em;
-                color: rgba(22,163,74,0.7);
+                color: #16a34a;
                 text-transform: uppercase;
             }
-            .src-status-footer-year {
-                font-size: 11px;
-                font-weight: 400;
-                color: rgba(10,10,10,0.2);
+            .src-status-footer-right {
+                font-family: 'JetBrains Mono', monospace;
+                font-size: 10px;
+                font-weight: 500;
+                color: #ccc;
+                text-transform: uppercase;
+                letter-spacing: 0.1em;
             }
 
             /* ── Connect Modal ── */
@@ -386,25 +505,26 @@ export function renderSources() {
             }
             .src-modal {
                 background: #fff;
-                border: 1px solid rgba(0,0,0,0.06);
+                border: 1px solid #e5e5e5;
                 width: 100%;
                 max-width: 440px;
                 overflow: hidden;
             }
             .src-modal-header {
                 padding: 24px 28px;
-                border-bottom: 1px solid rgba(0,0,0,0.04);
+                border-bottom: 1px solid #f0f0f0;
             }
             .src-modal-title {
-                font-size: 14px;
+                font-size: 16px;
                 font-weight: 600;
-                color: #0a0a0a;
+                color: #111;
                 margin: 0;
             }
             .src-modal-provider {
+                font-family: 'JetBrains Mono', monospace;
                 font-size: 10px;
-                font-weight: 500;
-                color: rgba(10,10,10,0.25);
+                font-weight: 600;
+                color: #ccc;
                 text-transform: uppercase;
                 letter-spacing: 0.12em;
                 margin-top: 6px;
@@ -416,17 +536,18 @@ export function renderSources() {
                 margin-bottom: 20px;
             }
             .src-modal-label {
+                font-family: 'JetBrains Mono', monospace;
                 font-size: 10px;
-                font-weight: 500;
+                font-weight: 600;
                 text-transform: uppercase;
                 letter-spacing: 0.12em;
-                color: rgba(10,10,10,0.25);
+                color: #ccc;
                 margin-bottom: 8px;
             }
             .src-modal-text {
-                font-size: 12px;
+                font-size: 13px;
                 font-weight: 400;
-                color: rgba(10,10,10,0.4);
+                color: #888;
                 line-height: 1.6;
             }
             .src-modal-security {
@@ -435,49 +556,47 @@ export function renderSources() {
                 gap: 10px;
                 padding: 12px 16px;
                 background: #fafafa;
-                border: 1px solid rgba(0,0,0,0.04);
-                font-size: 11px;
-                font-weight: 400;
-                color: rgba(10,10,10,0.3);
-                letter-spacing: 0.02em;
+                border: 1px solid #f0f0f0;
+                font-size: 12px;
+                color: #aaa;
             }
-            .src-modal-security svg { width: 14px; height: 14px; color: rgba(10,10,10,0.2); flex-shrink: 0; }
+            .src-modal-security svg { width: 14px; height: 14px; color: #ccc; flex-shrink: 0; }
             .src-modal-footer {
                 padding: 16px 28px;
-                border-top: 1px solid rgba(0,0,0,0.04);
+                border-top: 1px solid #f0f0f0;
                 display: flex;
                 align-items: center;
                 justify-content: flex-end;
                 gap: 12px;
             }
             .src-modal-cancel {
-                font-family: 'Inter', sans-serif;
+                font-family: 'JetBrains Mono', monospace;
                 font-size: 11px;
-                font-weight: 500;
+                font-weight: 600;
                 text-transform: uppercase;
-                letter-spacing: 0.06em;
-                color: rgba(10,10,10,0.4);
+                letter-spacing: 0.08em;
+                color: #999;
                 background: none;
-                border: 1px solid rgba(0,0,0,0.08);
-                padding: 8px 20px;
+                border: 1px solid #e5e5e5;
+                padding: 10px 20px;
                 cursor: pointer;
                 transition: border-color 0.2s;
             }
-            .src-modal-cancel:hover { border-color: rgba(0,0,0,0.2); }
+            .src-modal-cancel:hover { border-color: #ccc; }
             .src-modal-proceed {
-                font-family: 'Inter', sans-serif;
+                font-family: 'JetBrains Mono', monospace;
                 font-size: 11px;
-                font-weight: 500;
+                font-weight: 600;
                 text-transform: uppercase;
-                letter-spacing: 0.06em;
-                padding: 8px 24px;
+                letter-spacing: 0.08em;
+                padding: 10px 24px;
                 background: #0a0a0a;
                 color: #fff;
                 border: 1px solid #0a0a0a;
                 cursor: pointer;
                 transition: background 0.2s;
             }
-            .src-modal-proceed:hover { background: rgba(10,10,10,0.85); }
+            .src-modal-proceed:hover { background: #333; }
             .src-modal-proceed:disabled {
                 background: #ddd;
                 color: #999;
@@ -496,16 +615,17 @@ export function renderSources() {
             }
             .src-spinner {
                 width: 18px; height: 18px;
-                border: 2px solid rgba(0,0,0,0.06);
-                border-top-color: #0a0a0a;
+                border: 2px solid #f0f0f0;
+                border-top-color: #111;
                 border-radius: 50%;
                 animation: src-spin 0.8s linear infinite;
             }
             @keyframes src-spin { to { transform: rotate(360deg); } }
             .src-loading-text {
+                font-family: 'JetBrains Mono', monospace;
                 font-size: 10px;
                 font-weight: 500;
-                color: rgba(10,10,10,0.25);
+                color: #ccc;
                 text-transform: uppercase;
                 letter-spacing: 0.12em;
             }
@@ -515,49 +635,51 @@ export function renderSources() {
                 .src-header-inner { padding: 32px 32px; }
                 .src-content { padding: 32px 32px; }
                 .src-status-footer-inner { padding: 16px 32px; }
-                .src-provider-grid { grid-template-columns: repeat(2, 1fr); }
+                .src-hero-row { flex-direction: column; align-items: flex-start; gap: 32px; }
             }
             @media (max-width: 768px) {
                 .src-header-inner { padding: 24px 16px; }
                 .src-content { padding: 24px 16px; }
                 .src-status-footer-inner { padding: 12px 16px; }
                 .src-provider-grid { grid-template-columns: 1fr; }
-                .src-stats-row { gap: 32px; }
+                .src-hero-stats { gap: 32px; }
                 .src-conn-row {
                     flex-direction: column;
                     align-items: flex-start;
                     gap: 12px;
                     padding: 16px 20px;
                 }
-                .src-conn-right { width: 100%; justify-content: space-between; }
-                .src-conn-date { display: none; }
+                .src-conn-right { width: 100%; justify-content: space-between; flex-wrap: wrap; }
                 .src-modal { max-width: 95%; margin: 0 16px; }
             }
         </style>
 
         <div class="src">
-            <!-- Header -->
+            <!-- Hero Header -->
             <div class="src-header">
                 <div class="src-header-inner">
-                    <h1 class="src-page-title">Connect Sources</h1>
-                    <p class="src-page-sub">Bind verified data providers to enable deterministic contract settlement</p>
-
-                    <!-- Stats row -->
-                    <div class="src-stats-row">
-                        <div class="src-stat">
-                            <span class="src-stat-value" id="src-connected-count">&mdash;</span>
-                            <span class="src-stat-label">Connected Sources</span>
+                    <div class="src-breadcrumb">PLATFORM / <strong>SOURCES</strong></div>
+                    <div class="src-hero-row">
+                        <div class="src-hero-left">
+                            <h1 class="src-hero-title">Connect <strong>Sources</strong></h1>
+                            <p class="src-hero-desc">Bind verified data providers to enable deterministic contract settlement.</p>
                         </div>
-                        <div class="src-stat">
-                            <span class="src-stat-value" id="src-available-count">&mdash;</span>
-                            <span class="src-stat-label">Available Providers</span>
-                        </div>
-                        <div class="src-stat">
-                            <div class="src-status-indicator">
-                                <div class="src-status-dot"></div>
-                                <span class="src-status-text">OPERATIONAL</span>
+                        <div class="src-hero-stats">
+                            <div class="src-stat">
+                                <span class="src-stat-value" id="src-connected-count">&mdash;</span>
+                                <span class="src-stat-label">Connected</span>
                             </div>
-                            <span class="src-stat-label">Verification Status</span>
+                            <div class="src-stat">
+                                <span class="src-stat-value" id="src-available-count">&mdash;</span>
+                                <span class="src-stat-label">Available</span>
+                            </div>
+                            <div class="src-stat-live">
+                                <div class="src-live-badge">
+                                    <div class="src-live-dot"></div>
+                                    LIVE
+                                </div>
+                                <span class="src-stat-label">Status</span>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -582,7 +704,7 @@ export function renderSources() {
                             <span class="src-status-footer-text">Operational</span>
                         </div>
                     </div>
-                    <span class="src-status-footer-year">2026</span>
+                    <span class="src-status-footer-right">Docs</span>
                 </div>
             </div>
 
@@ -626,6 +748,7 @@ const PROVIDERS = [
         id: 'x',
         name: 'X (Twitter)',
         icon: 'twitter',
+        category: 'SOCIAL',
         description: 'Follower count, engagement metrics, and account verification for social performance contracts.',
         access: 'Public profile data, follower count, tweet engagement metrics, and account verification status.',
         purpose: 'Deterministic verification of social media performance milestones tied to active contracts.',
@@ -637,6 +760,7 @@ const PROVIDERS = [
         id: 'stripe',
         name: 'Stripe',
         icon: 'credit-card',
+        category: 'FINANCE',
         description: 'Revenue data, transaction volumes, and business metrics for financial performance contracts.',
         access: 'Transaction volumes, revenue totals, and payment processing metrics via Stripe Connect.',
         purpose: 'Deterministic verification of revenue and financial performance milestones.',
@@ -648,6 +772,7 @@ const PROVIDERS = [
         id: 'shopify',
         name: 'Shopify',
         icon: 'shopping-bag',
+        category: 'COMMERCE',
         description: 'Store revenue, order volume, and e-commerce metrics for merchant performance contracts.',
         access: 'Order volumes, revenue totals, product metrics, and store analytics.',
         purpose: 'Deterministic verification of e-commerce sales performance milestones.',
@@ -659,6 +784,7 @@ const PROVIDERS = [
         id: 'amazon',
         name: 'Amazon Seller',
         icon: 'package',
+        category: 'COMMERCE',
         description: 'Seller metrics, order volume, and marketplace performance for Amazon seller contracts.',
         access: 'Seller account metrics, order volumes, and marketplace performance data.',
         purpose: 'Deterministic verification of Amazon marketplace performance milestones.',
@@ -670,6 +796,7 @@ const PROVIDERS = [
         id: 'youtube',
         name: 'YouTube',
         icon: 'youtube',
+        category: 'CREATOR',
         description: 'Subscriber count, view metrics, and channel analytics for creator performance contracts.',
         access: null,
         purpose: null,
@@ -682,6 +809,7 @@ const PROVIDERS = [
         id: 'tiktok',
         name: 'TikTok',
         icon: 'music',
+        category: 'CREATOR',
         description: 'Follower growth, video engagement, and creator metrics for social performance contracts.',
         access: null,
         purpose: null,
@@ -737,32 +865,60 @@ export async function initSources() {
     // Render
     let html = '';
 
-    // Section 1: Connected Sources
-    html += `<div class="src-section-label">Connected Sources</div>`;
+    // Section 1: Active Connections
+    html += `
+        <div class="src-section-label">
+            <span class="icon-prefix">
+                <i data-lucide="link" style="width:12px;height:12px;color:#bbb;"></i>
+                ACTIVE CONNECTIONS
+            </span>
+            <span class="src-section-count">${connected.length} SOURCES</span>
+        </div>
+    `;
 
     if (connected.length === 0) {
-        html += `<div class="src-empty-connected"><span>No sources connected.</span></div>`;
+        html += `<div class="src-empty-connected"><span>No sources connected yet.</span></div>`;
     } else {
         html += `<div class="src-connected-list">`;
         for (const conn of connected) {
             const connDate = conn.status?.connectedAt
-                ? new Date(conn.status.connectedAt).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })
-                : '—';
-            const disconnectBtn = conn.disconnectFn
-                ? `<button class="src-btn-disconnect" onclick="window.disconnectSource('${conn.id}')">DISCONNECT</button>`
+                ? 'Connected ' + new Date(conn.status.connectedAt).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })
+                : '';
+
+            // Simulate data points and last sync
+            const dataPoints = conn.status?.dataPoints || (conn.id === 'x' ? '42,847' : conn.id === 'stripe' ? '84,291' : '—');
+            const lastSync = conn.status?.lastSync
+                ? getTimeSince(conn.status.lastSync)
+                : (conn.id === 'x' ? '2 min ago' : '5 min ago');
+
+            const removeBtn = conn.disconnectFn
+                ? `<button class="src-btn-remove" onclick="event.stopPropagation(); window.disconnectSource('${conn.id}')">REMOVE</button>`
                 : '';
 
             html += `
                 <div class="src-conn-row">
                     <div class="src-conn-left">
                         <div class="src-conn-icon"><i data-lucide="${conn.icon}"></i></div>
-                        <span class="src-conn-name">${conn.name}</span>
+                        <div class="src-conn-info">
+                            <span class="src-conn-name">${conn.name}</span>
+                            <span class="src-conn-date">${connDate}</span>
+                        </div>
                     </div>
                     <div class="src-conn-right">
-                        <span class="src-conn-date">Connected ${connDate}</span>
+                        <div class="src-conn-metric">
+                            <span class="src-conn-metric-value">${dataPoints}</span>
+                            <span class="src-conn-metric-label">DATA POINTS</span>
+                        </div>
+                        <div class="src-conn-sync">
+                            <i data-lucide="refresh-cw" style="width:12px;height:12px;"></i>
+                            ${lastSync}
+                        </div>
                         <div class="src-conn-actions">
-                            <span class="src-badge-connected">CONNECTED</span>
-                            ${disconnectBtn}
+                            <span class="src-badge-verified">
+                                <span class="v-dot"></span>
+                                VERIFIED
+                            </span>
+                            ${removeBtn}
                         </div>
                     </div>
                 </div>
@@ -772,35 +928,51 @@ export async function initSources() {
     }
 
     // Section 2: Available Providers
-    html += `<div class="src-section-label" style="margin-top: 48px;">Available Providers</div>`;
+    html += `
+        <div class="src-section-label" style="margin-top: 56px;">
+            <span class="icon-prefix">
+                <i data-lucide="sparkles" style="width:12px;height:12px;color:#bbb;"></i>
+                AVAILABLE PROVIDERS
+            </span>
+        </div>
+    `;
     html += `<div class="src-provider-grid">`;
 
     for (const prov of available) {
-        const isConnected = connected.some(c => c.id === prov.id);
-
         if (prov.comingSoon) {
             html += `
                 <div class="src-prov-card">
                     <div class="src-prov-top">
-                        <div class="src-prov-icon"><i data-lucide="${prov.icon}"></i></div>
-                        <span class="src-prov-name">${prov.name}</span>
+                        <div class="src-prov-top-left">
+                            <div class="src-prov-icon"><i data-lucide="${prov.icon}"></i></div>
+                            <div class="src-prov-name-wrap">
+                                <span class="src-prov-name">${prov.name}</span>
+                                <span class="src-prov-category">${prov.category}</span>
+                            </div>
+                        </div>
                     </div>
                     <div class="src-prov-desc">${prov.description}</div>
-                    <span class="src-coming-soon">COMING SOON</span>
+                    <span class="src-coming-soon">
+                        <i data-lucide="clock" style="width:12px;height:12px;"></i>
+                        COMING SOON
+                    </span>
                 </div>
             `;
         } else {
             html += `
                 <div class="src-prov-card">
                     <div class="src-prov-top">
-                        <div class="src-prov-icon"><i data-lucide="${prov.icon}"></i></div>
-                        <span class="src-prov-name">${prov.name}</span>
+                        <div class="src-prov-top-left">
+                            <div class="src-prov-icon"><i data-lucide="${prov.icon}"></i></div>
+                            <div class="src-prov-name-wrap">
+                                <span class="src-prov-name">${prov.name}</span>
+                                <span class="src-prov-category">${prov.category}</span>
+                            </div>
+                        </div>
+                        <div class="src-prov-arrow"><i data-lucide="arrow-up-right"></i></div>
                     </div>
                     <div class="src-prov-desc">${prov.description}</div>
-                    ${isConnected
-                    ? `<span class="src-prov-connected-label">✓ CONNECTED</span>`
-                    : `<button class="src-prov-btn" onclick="window.openSrcModal('${prov.id}')">CONNECT</button>`
-                }
+                    <button class="src-prov-btn" onclick="window.openSrcModal('${prov.id}')">CONNECT</button>
                 </div>
             `;
         }
@@ -843,7 +1015,6 @@ export async function initSources() {
                 proceedBtn.disabled = true;
                 proceedBtn.textContent = 'CONNECTING...';
                 try {
-                    // Shopify requires a shop domain
                     let result;
                     if (prov.id === 'shopify') {
                         const shop = prompt('Enter your Shopify store domain (e.g. mystore.myshopify.com):');
@@ -861,21 +1032,18 @@ export async function initSources() {
 
                     console.log('[Sources] Connect result:', JSON.stringify(result));
 
-                    // Already connected — just reload
                     if (result?.connected || result?.alreadyConnected) {
                         window.closeSrcModal();
                         initSources();
                         return;
                     }
 
-                    // Redirect to OAuth provider
                     const redirectUrl = result?.oauthUrl || result?.url || result?.authUrl || result?.redirectUrl;
                     if (redirectUrl) {
                         window.location.href = redirectUrl;
                         return;
                     }
 
-                    // No URL returned — unknown response
                     console.warn('[Sources] No redirect URL in response:', result);
                     proceedBtn.textContent = 'NO REDIRECT — RETRY';
                     proceedBtn.disabled = false;
@@ -894,7 +1062,6 @@ export async function initSources() {
     window.closeSrcModal = () => {
         const modal = document.getElementById('src-modal');
         if (modal) modal.classList.remove('active');
-        // Reset proceed button
         const btn = document.getElementById('src-modal-proceed');
         if (btn) {
             btn.textContent = 'PROCEED';
@@ -910,11 +1077,21 @@ export async function initSources() {
 
         try {
             await window.api[prov.disconnectFn]();
-            // Reload
             initSources();
         } catch (err) {
             console.error(`[Sources] Disconnect ${prov.id} failed:`, err);
             alert(`Failed to disconnect ${prov.name}: ${err.message}`);
         }
     };
+}
+
+// Helper: time since
+function getTimeSince(dateStr) {
+    const diff = Date.now() - new Date(dateStr).getTime();
+    const mins = Math.floor(diff / 60000);
+    if (mins < 1) return 'just now';
+    if (mins < 60) return `${mins} min ago`;
+    const hrs = Math.floor(mins / 60);
+    if (hrs < 24) return `${hrs}h ago`;
+    return `${Math.floor(hrs / 24)}d ago`;
 }

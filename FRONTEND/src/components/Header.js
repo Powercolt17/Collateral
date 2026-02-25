@@ -69,10 +69,11 @@ export function renderHeader(currentRoute) {
                 gap: 12px;
             }
             .ch-logo-icon {
-                width: 14px;
-                height: 14px;
+                width: 8px;
+                height: 8px;
                 background: #752122;
                 flex-shrink: 0;
+                margin-top: 2px; /* Visual center alignment */
             }
             .ch-logo-text-wrap {
                 display: flex;
@@ -81,8 +82,8 @@ export function renderHeader(currentRoute) {
                 line-height: 1;
             }
             .ch-logo-headline {
-                font-size: 20px;
-                font-weight: 800;
+                font-size: 22px;
+                font-weight: 900;
                 color: #111111;
                 letter-spacing: -0.01em;
                 font-family: 'Neue Haas Grotesk Display', 'Helvetica Neue', Helvetica, Arial, sans-serif;
@@ -91,12 +92,12 @@ export function renderHeader(currentRoute) {
             }
             .ch-logo-sub {
                 font-family: 'JetBrains Mono', monospace;
-                font-size: 8px;
-                font-weight: 500;
-                color: #888;
+                font-size: 9px;
+                font-weight: 700;
+                color: #666;
                 text-transform: uppercase;
-                letter-spacing: 0.12em;
-                margin-top: 2px;
+                letter-spacing: 0.08em;
+                margin-top: 3px;
             }
 
             /* Nav links */

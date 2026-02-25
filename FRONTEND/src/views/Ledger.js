@@ -1,191 +1,267 @@
 // PUBLIC LEDGER — Append-only record of executions and settlements
-// Table-based institutional layout — clean flat rows
+// Redesigned institutional layout matching premium aesthetic
 
 export function renderLedger() {
     return `
         <style>
             /* ============================================================
-               PUBLIC LEDGER — TABLE-BASED INSTITUTIONAL LAYOUT
+               PUBLIC LEDGER — INSTITUTIONAL LAYOUT
                ============================================================ */
 
             .ldg {
                 background: #fff;
                 min-height: calc(100vh - 72px);
-                font-family: 'Neue Haas Grotesk Display', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+                font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
                 color: #111;
+                display: flex;
+                flex-direction: column;
             }
 
-            /* ── Live Header Bar ── */
-            .ldg-live-bar {
+            /* ── Hero Header ── */
+            .ldg-header {
+                background: #fff;
+                border-bottom: 1px solid #f0f0f0;
+            }
+            .ldg-header-inner {
+                max-width: 1440px;
+                margin: 0 auto;
+                padding: 48px 64px 48px;
+            }
+            .ldg-hero-row {
+                display: flex;
+                align-items: flex-end;
+                justify-content: space-between;
+                gap: 48px;
+            }
+            .ldg-hero-left { flex: 1; }
+            .ldg-hero-title {
+                font-size: 42px;
+                font-weight: 300;
+                color: #111;
+                letter-spacing: -1.5px;
+                margin: 0;
+                line-height: 1.1;
                 display: flex;
                 align-items: center;
-                gap: 8px;
-                padding: 10px 32px;
-                background: #fafafa;
-                border-bottom: 1px solid #e5e5e5;
-                font-family: 'JetBrains Mono', monospace;
-                font-size: 10px;
-                font-weight: 600;
-                text-transform: uppercase;
-                letter-spacing: 1px;
-                color: #666;
+                gap: 16px;
             }
-            .ldg-live-dot {
-                width: 6px; height: 6px;
-                background: #752122;
+            .ldg-hero-title strong {
+                font-weight: 700;
+            }
+            .ldg-synced-badge {
+                display: inline-flex;
+                align-items: center;
+                gap: 6px;
+                font-family: 'JetBrains Mono', monospace;
+                font-size: 9px;
+                font-weight: 700;
+                letter-spacing: 0.12em;
+                text-transform: uppercase;
+                color: #16a34a;
+                background: #f0fdf4;
+                border: 1px solid #bbf7d0;
+                padding: 4px 10px;
+            }
+            .ldg-synced-dot {
+                width: 6px;
+                height: 6px;
                 border-radius: 50%;
+                background: #16a34a;
                 animation: ldg-pulse 2s infinite;
             }
             @keyframes ldg-pulse {
                 0%, 100% { opacity: 1; }
                 50% { opacity: 0.4; }
             }
-
-            /* ── Metrics Strip ── */
-            .ldg-metrics {
-                display: flex;
-                align-items: baseline;
-                gap: 40px;
-                padding: 28px 32px 24px;
-                border-bottom: 1px solid #e5e5e5;
+            .ldg-hero-desc {
+                font-size: 15px;
+                color: #999;
+                margin-top: 12px;
+                line-height: 1.6;
+                max-width: 480px;
             }
-            .ldg-metric {
+
+            /* Stats on the right */
+            .ldg-hero-stats {
+                display: flex;
+                align-items: flex-end;
+                gap: 48px;
+                flex-shrink: 0;
+            }
+            .ldg-stat {
                 display: flex;
                 flex-direction: column;
-                gap: 2px;
+                align-items: center;
             }
-            .ldg-metric-value {
-                font-family: 'Neue Haas Grotesk Display', 'Helvetica Neue', Helvetica, Arial, sans-serif;
-                font-size: 28px;
-                font-weight: 700;
-                color: #111;
+            .ldg-stat-value {
+                font-size: 36px;
+                font-weight: 300;
                 letter-spacing: -1px;
+                color: #111;
                 line-height: 1;
             }
-            .ldg-metric-label {
+            .ldg-stat-label {
                 font-family: 'JetBrains Mono', monospace;
                 font-size: 9px;
-                font-weight: 700;
+                font-weight: 600;
+                letter-spacing: 0.12em;
+                color: #ccc;
                 text-transform: uppercase;
-                letter-spacing: 1.5px;
-                color: #888;
+                margin-top: 8px;
             }
-            .ldg-metrics-right {
-                margin-left: auto;
-                display: flex;
-                align-items: center;
-            }
-            .ldg-search {
-                padding: 8px 12px;
-                font-size: 12px;
-                border: 1px solid #e0e0e0;
-                outline: none;
-                width: 200px;
-                font-family: 'Neue Haas Grotesk Display', 'Helvetica Neue', Helvetica, Arial, sans-serif;
-                color: #333;
-                background: #fff;
-                transition: border-color 0.12s;
-            }
-            .ldg-search:focus { border-color: #752122; }
-            .ldg-search::placeholder { color: #bbb; }
 
-            /* ── Tabs ── */
-            .ldg-tabs-bar {
+            /* ── Content Area ── */
+            .ldg-content {
+                flex: 1;
+                max-width: 1440px;
+                margin: 0 auto;
+                padding: 0 64px;
+                width: 100%;
+                box-sizing: border-box;
+            }
+
+            /* ── Tabs + Search Row ── */
+            .ldg-controls-row {
                 display: flex;
                 align-items: center;
-                border-bottom: 1px solid #e5e5e5;
-                padding: 0 32px;
+                justify-content: space-between;
+                border-bottom: 1px solid #f0f0f0;
+                margin-top: 8px;
+            }
+            .ldg-tabs {
+                display: flex;
+                align-items: center;
+                gap: 0;
             }
             .ldg-tab {
-                padding: 14px 0;
-                margin-right: 28px;
-                font-size: 12px;
-                font-weight: 600;
-                color: #888;
+                padding: 16px 0;
+                margin-right: 32px;
+                font-size: 13px;
+                font-weight: 500;
+                color: #bbb;
                 background: none;
                 border: none;
                 border-bottom: 2px solid transparent;
                 cursor: pointer;
-                font-family: 'Neue Haas Grotesk Display', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+                font-family: 'Inter', sans-serif;
                 text-transform: uppercase;
-                letter-spacing: 0.5px;
-                transition: color 0.12s;
+                letter-spacing: 0.06em;
+                transition: color 0.15s;
             }
-            .ldg-tab:hover { color: #444; }
+            .ldg-tab:hover { color: #666; }
             .ldg-tab.active {
                 color: #111;
-                font-weight: 700;
+                font-weight: 600;
                 border-bottom-color: #111;
             }
+
+            .ldg-controls-right {
+                display: flex;
+                align-items: center;
+                gap: 12px;
+            }
+            .ldg-search {
+                padding: 8px 14px;
+                font-size: 13px;
+                border: 1px solid #e5e5e5;
+                outline: none;
+                width: 180px;
+                font-family: 'Inter', sans-serif;
+                color: #333;
+                background: #fafafa;
+                transition: border-color 0.15s;
+            }
+            .ldg-search:focus { border-color: #111; background: #fff; }
+            .ldg-search::placeholder { color: #ccc; }
+
+            .ldg-csv-btn {
+                display: flex;
+                align-items: center;
+                gap: 6px;
+                padding: 8px 14px;
+                font-family: 'JetBrains Mono', monospace;
+                font-size: 10px;
+                font-weight: 700;
+                letter-spacing: 0.1em;
+                text-transform: uppercase;
+                color: #666;
+                background: #fff;
+                border: 1px solid #e5e5e5;
+                cursor: pointer;
+                transition: all 0.15s;
+            }
+            .ldg-csv-btn:hover { border-color: #111; color: #111; }
+            .ldg-csv-btn svg { width: 14px; height: 14px; }
 
             /* ── Filters Row ── */
             .ldg-filters-row {
                 display: flex;
                 align-items: center;
                 gap: 6px;
-                padding: 12px 32px;
+                padding: 14px 0;
                 border-bottom: 1px solid #f0f0f0;
                 flex-wrap: wrap;
             }
             .ldg-filter-label {
+                font-family: 'JetBrains Mono', monospace;
                 font-size: 10px;
                 font-weight: 700;
-                color: #888;
+                color: #bbb;
                 text-transform: uppercase;
-                letter-spacing: 0.8px;
-                font-family: 'Neue Haas Grotesk Display', 'Helvetica Neue', Helvetica, Arial, sans-serif;
-                margin-right: 2px;
+                letter-spacing: 0.1em;
+                margin-right: 4px;
             }
             .ldg-filter-divider {
                 width: 1px;
-                height: 14px;
-                background: #e0e0e0;
-                margin: 0 10px;
+                height: 16px;
+                background: #e5e5e5;
+                margin: 0 12px;
             }
             .ldg-pill {
-                padding: 4px 10px;
+                padding: 5px 12px;
                 font-size: 11px;
-                font-weight: 600;
-                color: #666;
+                font-weight: 500;
+                color: #999;
                 background: #fff;
-                border: 1px solid #e0e0e0;
+                border: 1px solid #e5e5e5;
                 cursor: pointer;
-                transition: all 0.12s;
-                font-family: 'Neue Haas Grotesk Display', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+                transition: all 0.15s;
+                font-family: 'Inter', sans-serif;
             }
-            .ldg-pill:hover { border-color: #ccc; color: #333; }
+            .ldg-pill:hover { border-color: #ccc; color: #666; }
             .ldg-pill.active {
                 background: #111;
                 color: #fff;
                 border-color: #111;
             }
             .ldg-sort-inline {
+                font-family: 'JetBrains Mono', monospace;
                 font-size: 10px;
-                font-weight: 600;
-                color: #888;
+                font-weight: 700;
+                color: #bbb;
                 text-transform: uppercase;
-                letter-spacing: 0.5px;
-                font-family: 'Neue Haas Grotesk Display', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+                letter-spacing: 0.08em;
                 display: flex;
                 align-items: center;
-                gap: 4px;
+                gap: 6px;
+                margin-left: auto;
             }
             .ldg-sort-select {
-                padding: 3px 6px;
-                font-size: 11px;
-                border: 1px solid #e0e0e0;
+                padding: 5px 8px;
+                font-size: 12px;
+                border: 1px solid #e5e5e5;
                 background: #fff;
                 cursor: pointer;
-                font-family: 'Neue Haas Grotesk Display', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+                font-family: 'Inter', sans-serif;
                 color: #333;
                 outline: none;
-                font-weight: 600;
+                font-weight: 500;
             }
-            .ldg-sort-select:focus { border-color: #752122; }
+            .ldg-sort-select:focus { border-color: #111; }
 
             /* ── Table ── */
             .ldg-table-wrap {
-                padding: 0 32px;
+                margin-top: 0;
             }
             .ldg-table {
                 width: 100%;
@@ -196,40 +272,57 @@ export function renderLedger() {
                 font-size: 9px;
                 font-weight: 700;
                 text-transform: uppercase;
-                letter-spacing: 1.5px;
-                color: #999;
-                padding: 14px 0 10px;
-                border-bottom: 1px solid #e5e5e5;
+                letter-spacing: 0.12em;
+                color: #ccc;
+                padding: 16px 0 12px;
+                border-bottom: 1px solid #f0f0f0;
                 text-align: left;
             }
             .ldg-table thead th:last-child {
                 text-align: right;
             }
             .ldg-table tbody tr {
-                border-bottom: 1px solid #f0f0f0;
+                border-bottom: 1px solid #f5f5f5;
                 cursor: pointer;
                 transition: background 0.1s;
             }
             .ldg-table tbody tr:hover {
-                background: #fafafa;
+                background: #fcfcfc;
             }
             .ldg-table tbody td {
-                padding: 14px 0;
+                padding: 18px 0;
                 font-size: 13px;
                 vertical-align: middle;
             }
 
-            /* Status cell */
+            /* Status cell — dot + text */
+            .ldg-status-cell {
+                display: flex;
+                align-items: center;
+                gap: 10px;
+            }
+            .ldg-status-dot {
+                width: 7px;
+                height: 7px;
+                border-radius: 50%;
+                flex-shrink: 0;
+            }
+            .ldg-status-dot.execution { background: #f59e0b; }
+            .ldg-status-dot.locked { background: #16a34a; }
+            .ldg-status-dot.settlement { background: #16a34a; }
+            .ldg-status-dot.failure { background: #752122; }
+            .ldg-status-dot.fee { background: #92400e; }
+
             .ldg-status-text {
                 font-family: 'JetBrains Mono', monospace;
                 font-size: 11px;
                 font-weight: 700;
                 text-transform: uppercase;
-                letter-spacing: 0.3px;
+                letter-spacing: 0.04em;
             }
             .ldg-status-text.execution { color: #752122; }
-            .ldg-status-text.locked { color: #15803d; }
-            .ldg-status-text.settlement { color: #15803d; }
+            .ldg-status-text.locked { color: #16a34a; }
+            .ldg-status-text.settlement { color: #16a34a; }
             .ldg-status-text.failure { color: #752122; }
             .ldg-status-text.fee { color: #92400e; }
 
@@ -245,21 +338,19 @@ export function renderLedger() {
             .ldg-hash {
                 font-family: 'JetBrains Mono', monospace;
                 font-size: 11px;
-                color: #999;
-                letter-spacing: 0;
+                color: #bbb;
             }
 
             /* Date cell */
             .ldg-date {
-                font-family: 'Neue Haas Grotesk Display', 'Helvetica Neue', Helvetica, Arial, sans-serif;
-                font-size: 12px;
+                font-size: 13px;
                 color: #888;
             }
 
             /* Amount cell */
             .ldg-amount {
-                font-family: 'JetBrains Mono', monospace;
-                font-size: 14px;
+                font-family: 'Inter', sans-serif;
+                font-size: 15px;
                 font-weight: 700;
                 color: #111;
                 text-align: right;
@@ -276,58 +367,130 @@ export function renderLedger() {
                 font-size: 10px;
                 font-weight: 700;
                 text-transform: uppercase;
-                letter-spacing: 2px;
-                color: #999;
+                letter-spacing: 0.15em;
+                color: #ccc;
                 margin-bottom: 8px;
             }
             .ldg-empty-text {
                 font-size: 13px;
+                color: #aaa;
+            }
+
+            /* ── Pagination ── */
+            .ldg-pagination {
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                padding: 20px 0;
+                margin-top: 8px;
+            }
+            .ldg-page-info {
+                font-family: 'JetBrains Mono', monospace;
+                font-size: 10px;
+                font-weight: 500;
+                color: #ccc;
+                text-transform: uppercase;
+                letter-spacing: 0.1em;
+            }
+            .ldg-page-btns {
+                display: flex;
+                align-items: center;
+                gap: 4px;
+            }
+            .ldg-page-btn {
+                width: 32px;
+                height: 32px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                font-family: 'Inter', sans-serif;
+                font-size: 12px;
+                font-weight: 600;
                 color: #888;
+                background: #fff;
+                border: 1px solid #e5e5e5;
+                cursor: pointer;
+                transition: all 0.15s;
+            }
+            .ldg-page-btn:hover { border-color: #111; color: #111; }
+            .ldg-page-btn.active {
+                background: #111;
+                color: #fff;
+                border-color: #111;
+            }
+            .ldg-page-btn:disabled {
+                color: #ddd;
+                border-color: #f0f0f0;
+                cursor: not-allowed;
             }
 
             /* ── Footer ── */
             .ldg-footer {
-                display: flex;
-                justify-content: space-between;
-                align-items: center;
-                padding: 20px 32px;
-                border-top: 1px solid #e5e5e5;
-                margin-top: 40px;
+                border-top: 1px solid #f0f0f0;
+                background: #fff;
+                margin-top: auto;
             }
-            .ldg-footer-status {
+            .ldg-footer-inner {
+                max-width: 1440px;
+                margin: 0 auto;
+                padding: 16px 64px;
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+            }
+            .ldg-footer-left {
+                display: flex;
+                align-items: center;
+                gap: 12px;
+            }
+            .ldg-footer-label {
                 font-family: 'JetBrains Mono', monospace;
                 font-size: 10px;
-                font-weight: 700;
+                font-weight: 500;
+                letter-spacing: 0.1em;
+                color: #ccc;
                 text-transform: uppercase;
-                letter-spacing: 1.5px;
-                color: #888;
             }
-            .ldg-footer-status span {
-                color: #15803d;
+            .ldg-footer-sep {
+                color: #e0e0e0;
+            }
+            .ldg-footer-live {
+                display: flex;
+                align-items: center;
+                gap: 6px;
+            }
+            .ldg-footer-dot {
+                width: 6px;
+                height: 6px;
+                border-radius: 50%;
+                background: #16a34a;
+            }
+            .ldg-footer-text {
+                font-family: 'JetBrains Mono', monospace;
+                font-size: 10px;
+                font-weight: 600;
+                letter-spacing: 0.05em;
+                color: #16a34a;
+                text-transform: uppercase;
             }
             .ldg-footer-count {
-                font-family: 'Neue Haas Grotesk Display', 'Helvetica Neue', Helvetica, Arial, sans-serif;
-                font-size: 12px;
-                color: #999;
+                font-family: 'JetBrains Mono', monospace;
+                font-size: 10px;
+                font-weight: 500;
+                color: #ccc;
+                text-transform: uppercase;
+                letter-spacing: 0.1em;
             }
-
-            /* ── Skeleton ── */
-            .ldg-skeleton-row {
-                height: 48px;
-                border-bottom: 1px solid #f0f0f0;
-                position: relative;
-                overflow: hidden;
-            }
-            .ldg-skeleton-row::after {
-                content: '';
-                position: absolute;
-                inset: 0;
-                background: linear-gradient(90deg, transparent, rgba(0,0,0,0.015), transparent);
-                animation: ldg-shimmer 1.5s infinite;
-            }
-            @keyframes ldg-shimmer {
-                0% { transform: translateX(-100%); }
-                100% { transform: translateX(100%); }
+            .ldg-footer-count .ldg-count-badge {
+                display: inline-flex;
+                align-items: center;
+                padding: 3px 10px;
+                background: #752122;
+                color: #fff;
+                font-size: 10px;
+                font-weight: 700;
+                letter-spacing: 0.08em;
+                margin-left: 8px;
             }
 
             /* ── Drawer / Detail Panel ── */
@@ -350,7 +513,7 @@ export function renderLedger() {
                 width: 400px; max-width: 90vw;
                 height: 100vh;
                 background: #fff;
-                border-left: 1px solid #e0e0e0;
+                border-left: 1px solid #e5e5e5;
                 z-index: 201;
                 transform: translateX(100%);
                 transition: transform 0.25s cubic-bezier(0.22, 1, 0.36, 1);
@@ -365,21 +528,21 @@ export function renderLedger() {
                 display: flex;
                 justify-content: space-between;
                 align-items: center;
-                padding: 18px 20px;
-                border-bottom: 1px solid #e5e5e5;
+                padding: 20px 24px;
+                border-bottom: 1px solid #f0f0f0;
             }
             .ldg-drawer-title {
                 font-family: 'JetBrains Mono', monospace;
                 font-size: 10px;
                 font-weight: 700;
                 text-transform: uppercase;
-                letter-spacing: 1.5px;
+                letter-spacing: 0.15em;
                 color: #111;
             }
             .ldg-drawer-close {
                 width: 28px; height: 28px;
                 display: flex; align-items: center; justify-content: center;
-                background: #f5f5f5;
+                background: #fafafa;
                 border: 1px solid #e5e5e5;
                 cursor: pointer;
                 color: #888;
@@ -387,13 +550,13 @@ export function renderLedger() {
                 transition: all 0.1s;
             }
             .ldg-drawer-close:hover { background: #fef2f2; color: #752122; border-color: #fecaca; }
-            .ldg-drawer-body { padding: 20px; flex: 1; }
+            .ldg-drawer-body { padding: 24px; flex: 1; }
             .ldg-drawer-row {
                 display: flex;
                 justify-content: space-between;
                 align-items: flex-start;
-                padding: 11px 0;
-                border-bottom: 1px solid #f0f0f0;
+                padding: 12px 0;
+                border-bottom: 1px solid #f5f5f5;
             }
             .ldg-drawer-row:last-child { border-bottom: none; }
             .ldg-drawer-label {
@@ -401,15 +564,14 @@ export function renderLedger() {
                 font-size: 9px;
                 font-weight: 700;
                 text-transform: uppercase;
-                letter-spacing: 1px;
-                color: #888;
+                letter-spacing: 0.12em;
+                color: #bbb;
                 flex-shrink: 0;
                 padding-top: 1px;
             }
             .ldg-drawer-value {
-                font-size: 12px;
+                font-size: 13px;
                 color: #111;
-                font-family: 'Neue Haas Grotesk Display', 'Helvetica Neue', Helvetica, Arial, sans-serif;
                 font-weight: 600;
                 text-align: right;
                 max-width: 240px;
@@ -418,19 +580,19 @@ export function renderLedger() {
             .ldg-drawer-value.mono {
                 font-family: 'JetBrains Mono', monospace;
                 font-size: 10px;
-                color: #444;
+                color: #666;
             }
             .ldg-copy-btn {
-                padding: 2px 6px;
+                padding: 2px 8px;
                 margin-left: 6px;
                 font-size: 9px;
                 color: #888;
-                background: #f5f5f5;
+                background: #fafafa;
                 border: 1px solid #e5e5e5;
                 cursor: pointer;
                 font-family: 'JetBrains Mono', monospace;
                 text-transform: uppercase;
-                letter-spacing: 0.3px;
+                letter-spacing: 0.05em;
                 transition: all 0.1s;
             }
             .ldg-copy-btn:hover { border-color: #ccc; color: #111; }
@@ -439,10 +601,10 @@ export function renderLedger() {
                 font-size: 9px;
                 font-weight: 700;
                 text-transform: uppercase;
-                letter-spacing: 1.5px;
-                color: #888;
+                letter-spacing: 0.15em;
+                color: #bbb;
                 padding: 16px 0 8px;
-                border-bottom: 1px solid #e5e5e5;
+                border-bottom: 1px solid #f0f0f0;
                 margin-top: 8px;
             }
             .ldg-drawer-link {
@@ -456,7 +618,7 @@ export function renderLedger() {
                 cursor: pointer;
                 font-family: 'JetBrains Mono', monospace;
                 text-transform: uppercase;
-                letter-spacing: 0.3px;
+                letter-spacing: 0.05em;
                 transition: color 0.1s;
             }
             .ldg-drawer-link:hover { color: #5a1818; }
@@ -477,7 +639,7 @@ export function renderLedger() {
             }
             .ldg-json-toggle {
                 width: 100%;
-                padding: 9px;
+                padding: 10px;
                 font-size: 10px;
                 font-weight: 700;
                 color: #888;
@@ -486,124 +648,185 @@ export function renderLedger() {
                 cursor: pointer;
                 font-family: 'JetBrains Mono', monospace;
                 text-transform: uppercase;
-                letter-spacing: 0.5px;
+                letter-spacing: 0.08em;
                 transition: all 0.1s;
                 margin-top: 10px;
             }
             .ldg-json-toggle:hover { border-color: #ccc; color: #111; }
 
             /* Status pills for drawer */
-            .ldg-status { display: inline-flex; align-items: center; padding: 2px 6px; font-family: 'JetBrains Mono', monospace; font-size: 9px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; white-space: nowrap; }
+            .ldg-status { display: inline-flex; align-items: center; padding: 3px 8px; font-family: 'JetBrains Mono', monospace; font-size: 9px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; white-space: nowrap; }
             .ldg-status.locked    { background: #f5f5f5; color: #666; border: 1px solid #e0e0e0; }
-            .ldg-status.settled   { background: #f0fdf4; color: #15803d; border: 1px solid #bbf7d0; }
+            .ldg-status.settled   { background: #f0fdf4; color: #16a34a; border: 1px solid #bbf7d0; }
             .ldg-status.failed    { background: #fef2f2; color: #752122; border: 1px solid #fecaca; }
             .ldg-status.pending   { background: #fffbeb; color: #92400e; border: 1px solid #fde68a; }
             .ldg-status.fee       { background: #fefce8; color: #713f12; border: 1px solid #fef08a; }
 
+            /* ── Skeleton ── */
+            .ldg-skeleton-row {
+                height: 52px;
+                border-bottom: 1px solid #f5f5f5;
+                position: relative;
+                overflow: hidden;
+            }
+            .ldg-skeleton-row::after {
+                content: '';
+                position: absolute;
+                inset: 0;
+                background: linear-gradient(90deg, transparent, rgba(0,0,0,0.012), transparent);
+                animation: ldg-shimmer 1.5s infinite;
+            }
+            @keyframes ldg-shimmer {
+                0% { transform: translateX(-100%); }
+                100% { transform: translateX(100%); }
+            }
+
             /* ── Responsive ── */
+            @media (max-width: 1024px) {
+                .ldg-header-inner { padding: 32px 32px; }
+                .ldg-content { padding: 0 32px; }
+                .ldg-footer-inner { padding: 16px 32px; }
+                .ldg-hero-row { flex-direction: column; align-items: flex-start; gap: 32px; }
+            }
             @media (max-width: 768px) {
-                .ldg-live-bar { padding: 10px 16px; }
-                .ldg-metrics { padding: 20px 16px; gap: 24px; flex-wrap: wrap; }
-                .ldg-metric-value { font-size: 22px; }
-                .ldg-metrics-right { width: 100%; margin-left: 0; margin-top: 12px; }
+                .ldg-header-inner { padding: 24px 16px; }
+                .ldg-content { padding: 0 16px; }
+                .ldg-footer-inner { padding: 12px 16px; }
+                .ldg-hero-stats { gap: 32px; }
+                .ldg-controls-row { flex-direction: column; align-items: flex-start; gap: 12px; }
+                .ldg-controls-right { width: 100%; }
                 .ldg-search { width: 100%; }
-                .ldg-tabs-bar { padding: 0 16px; overflow-x: auto; -webkit-overflow-scrolling: touch; }
-                .ldg-tab { font-size: 11px; margin-right: 20px; white-space: nowrap; }
-                .ldg-filters-row { padding: 10px 16px; }
-                .ldg-table-wrap { padding: 0 16px; overflow-x: auto; }
-                .ldg-footer { padding: 16px 16px; flex-direction: column; gap: 8px; align-items: flex-start; }
+                .ldg-filters-row { padding: 10px 0; }
+                .ldg-table-wrap { overflow-x: auto; }
+                .ldg-tab { font-size: 11px; margin-right: 20px; }
                 .ldg-drawer { width: 100vw; max-width: 100vw; border-left: none; }
+                .ldg-pagination { flex-direction: column; gap: 12px; align-items: flex-start; }
             }
             @media (max-width: 480px) {
-                .ldg-metrics { gap: 16px; }
-                .ldg-metric-value { font-size: 18px; }
+                .ldg-hero-stats { gap: 24px; }
+                .ldg-stat-value { font-size: 28px; }
                 .ldg-hash { display: none; }
             }
         </style>
 
         <div class="ldg">
-            <!-- Live Header Bar -->
-            <div class="ldg-live-bar">
-                <div class="ldg-live-dot"></div>
-                LIVE LEDGER — UPDATED <span id="ldg-time">just now</span>
+            <!-- Hero Header -->
+            <div class="ldg-header">
+                <div class="ldg-header-inner">
+                    <div class="ldg-hero-row">
+                        <div class="ldg-hero-left">
+                            <h1 class="ldg-hero-title">
+                                Live <strong>Ledger</strong>
+                                <span class="ldg-synced-badge">
+                                    <span class="ldg-synced-dot"></span>
+                                    SYNCED
+                                </span>
+                            </h1>
+                            <p class="ldg-hero-desc">Real-time execution log for all contract events, settlements, and capital flows.</p>
+                        </div>
+                        <div class="ldg-hero-stats">
+                            <div class="ldg-stat">
+                                <span class="ldg-stat-value" id="ldg-tvl">&mdash;</span>
+                                <span class="ldg-stat-label">Capital Locked</span>
+                            </div>
+                            <div class="ldg-stat">
+                                <span class="ldg-stat-value" id="ldg-active">&mdash;</span>
+                                <span class="ldg-stat-label">Events</span>
+                            </div>
+                            <div class="ldg-stat">
+                                <span class="ldg-stat-value" id="ldg-volume">$0</span>
+                                <span class="ldg-stat-label">Settled</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
 
-            <!-- Metrics Strip -->
-            <div class="ldg-metrics">
-                <div class="ldg-metric">
-                    <div class="ldg-metric-value" id="ldg-tvl">—</div>
-                    <div class="ldg-metric-label">Capital Locked</div>
+            <!-- Content -->
+            <div class="ldg-content">
+                <!-- Tabs + Search -->
+                <div class="ldg-controls-row">
+                    <div class="ldg-tabs" id="ldg-tabs">
+                        <button class="ldg-tab active" data-filter="all">ALL</button>
+                        <button class="ldg-tab" data-filter="execution">EXECUTIONS</button>
+                        <button class="ldg-tab" data-filter="settlement">SETTLEMENTS</button>
+                        <button class="ldg-tab" data-filter="failure">FAILURES</button>
+                        <button class="ldg-tab" data-filter="fee">FEES</button>
+                    </div>
+                    <div class="ldg-controls-right">
+                        <input type="text" class="ldg-search" id="ldg-search" placeholder="Search...">
+                        <button class="ldg-csv-btn" id="ldg-csv-btn">
+                            <i data-lucide="download" style="width:14px;height:14px;"></i>
+                            CSV
+                        </button>
+                    </div>
                 </div>
-                <div class="ldg-metric">
-                    <div class="ldg-metric-value" id="ldg-active">—</div>
-                    <div class="ldg-metric-label">Active Contracts</div>
-                </div>
-                <div class="ldg-metric">
-                    <div class="ldg-metric-value" id="ldg-volume">$0</div>
-                    <div class="ldg-metric-label">Volume (24H)</div>
-                </div>
-                <div class="ldg-metrics-right">
-                    <input type="text" class="ldg-search" id="ldg-search" placeholder="Search Ledger ...">
-                </div>
-            </div>
 
-            <!-- Tabs -->
-            <div class="ldg-tabs-bar" id="ldg-tabs">
-                <button class="ldg-tab active" data-filter="all">All</button>
-                <button class="ldg-tab" data-filter="execution">Executions</button>
-                <button class="ldg-tab" data-filter="settlement">Settlements</button>
-                <button class="ldg-tab" data-filter="failure">Failures</button>
-                <button class="ldg-tab" data-filter="fee">Fees</button>
-            </div>
+                <!-- Filters -->
+                <div class="ldg-filters-row" id="ldg-filters">
+                    <span class="ldg-filter-label">Parties</span>
+                    <button class="ldg-pill active" data-provider="all">All</button>
+                    <button class="ldg-pill" data-provider="stripe">Byson</button>
+                    <button class="ldg-pill" data-provider="shopify">Modept</button>
+                    <button class="ldg-pill" data-provider="amazon">Amazon</button>
+                    <div class="ldg-filter-divider"></div>
+                    <span class="ldg-filter-label">Period</span>
+                    <button class="ldg-pill active" data-time="all">ALL</button>
+                    <button class="ldg-pill" data-time="24h">24h</button>
+                    <button class="ldg-pill" data-time="7d">7D</button>
+                    <button class="ldg-pill" data-time="30d">30D</button>
+                    <span class="ldg-sort-inline">SORT:
+                        <select class="ldg-sort-select" id="ldg-sort">
+                            <option value="newest">Newest ↓</option>
+                            <option value="value">Value</option>
+                            <option value="status">Status</option>
+                        </select>
+                    </span>
+                </div>
 
-            <!-- Filters -->
-            <div class="ldg-filters-row" id="ldg-filters">
-                <span class="ldg-filter-label">Parties</span>
-                <button class="ldg-pill active" data-provider="all">ALL</button>
-                <button class="ldg-pill" data-provider="stripe">Byson</button>
-                <button class="ldg-pill" data-provider="shopify">Modept</button>
-                <button class="ldg-pill" data-provider="amazon">Amazon</button>
-                <div class="ldg-filter-divider"></div>
-                <span class="ldg-filter-label">Period</span>
-                <button class="ldg-pill active" data-time="all">ALL</button>
-                <button class="ldg-pill" data-time="24h">24h</button>
-                <button class="ldg-pill" data-time="7d">7D</button>
-                <button class="ldg-pill" data-time="30d">30D</button>
-                <div class="ldg-filter-divider"></div>
-                <span class="ldg-sort-inline">Sort:
-                    <select class="ldg-sort-select" id="ldg-sort">
-                        <option value="newest">Newest ↓</option>
-                        <option value="value">Value</option>
-                        <option value="status">Status</option>
-                    </select>
-                </span>
-            </div>
+                <!-- Table -->
+                <div class="ldg-table-wrap">
+                    <table class="ldg-table">
+                        <thead>
+                            <tr>
+                                <th>Status</th>
+                                <th>Receipt</th>
+                                <th>Hash</th>
+                                <th>Date</th>
+                                <th>Amount</th>
+                            </tr>
+                        </thead>
+                        <tbody id="ldg-list">
+                            <tr class="ldg-skeleton-row"><td colspan="5"></td></tr>
+                            <tr class="ldg-skeleton-row"><td colspan="5"></td></tr>
+                            <tr class="ldg-skeleton-row"><td colspan="5"></td></tr>
+                            <tr class="ldg-skeleton-row"><td colspan="5"></td></tr>
+                        </tbody>
+                    </table>
+                </div>
 
-            <!-- Table -->
-            <div class="ldg-table-wrap">
-                <table class="ldg-table">
-                    <thead>
-                        <tr>
-                            <th>Status</th>
-                            <th>Receipt</th>
-                            <th>Hash</th>
-                            <th>Date</th>
-                            <th>Amount</th>
-                        </tr>
-                    </thead>
-                    <tbody id="ldg-list">
-                        <tr class="ldg-skeleton-row"><td colspan="5"></td></tr>
-                        <tr class="ldg-skeleton-row"><td colspan="5"></td></tr>
-                        <tr class="ldg-skeleton-row"><td colspan="5"></td></tr>
-                        <tr class="ldg-skeleton-row"><td colspan="5"></td></tr>
-                    </tbody>
-                </table>
+                <!-- Pagination -->
+                <div class="ldg-pagination" id="ldg-pagination">
+                    <div class="ldg-page-info" id="ldg-page-info">Showing 0 records</div>
+                    <div class="ldg-page-btns" id="ldg-page-btns"></div>
+                </div>
             </div>
 
             <!-- Footer -->
             <div class="ldg-footer">
-                <div class="ldg-footer-status">System Status — <span>Operational</span></div>
-                <div class="ldg-footer-count" id="ldg-record-count">Showing 0 records</div>
+                <div class="ldg-footer-inner">
+                    <div class="ldg-footer-left">
+                        <span class="ldg-footer-label">System Status</span>
+                        <span class="ldg-footer-sep">&mdash;</span>
+                        <div class="ldg-footer-live">
+                            <div class="ldg-footer-dot"></div>
+                            <span class="ldg-footer-text">Operational</span>
+                        </div>
+                    </div>
+                    <div class="ldg-footer-count" id="ldg-record-count">
+                        0 Records
+                    </div>
+                </div>
             </div>
         </div>
 
@@ -631,6 +854,8 @@ export async function initLedger() {
     let activeTime = 'all';
     let searchQuery = '';
     let sortBy = 'newest';
+    let currentPage = 1;
+    const perPage = 15;
 
     // ── Helpers ──
     function formatTimestamp(isoString) {
@@ -652,14 +877,14 @@ export async function initLedger() {
 
     function getEventCategory(type) {
         if (['FUNDS_LOCKED', 'EXECUTION_CONFIRMED', 'FUNDS_AUTHORIZED', 'CONTRACT_CREATED', 'BASELINE_SNAPSHOTTED'].includes(type)) return 'execution';
-        if (['SETTLED_SUCCESS', 'SETTLEMENT_STARTED'].includes(type)) return 'settlement';
+        if (['SETTLED_SUCCESS', 'SETTLEMENT_STARTED', 'SETTLEMENT_COMPLETE'].includes(type)) return 'settlement';
         if (['SETTLED_FAILURE', 'VERIFICATION_FAILED'].includes(type)) return 'failure';
         if (['FEE_COLLECTED'].includes(type)) return 'fee';
         return 'execution';
     }
 
     function getStatusClass(type) {
-        if (type.includes('SETTLED_SUCCESS') || type.includes('VERIFICATION_SUCCEEDED')) return 'settlement';
+        if (type.includes('SETTLED_SUCCESS') || type.includes('SETTLEMENT') || type.includes('VERIFICATION_SUCCEEDED')) return 'settlement';
         if (type.includes('SETTLED_FAILURE') || type.includes('VERIFICATION_FAILED')) return 'failure';
         if (type.includes('FEE')) return 'fee';
         if (type.includes('LOCKED')) return 'locked';
@@ -668,7 +893,7 @@ export async function initLedger() {
     }
 
     function getTagColor(type) {
-        if (type.includes('SETTLED_SUCCESS') || type.includes('VERIFICATION_SUCCEEDED')) return '#15803d';
+        if (type.includes('SETTLED_SUCCESS') || type.includes('SETTLEMENT') || type.includes('VERIFICATION_SUCCEEDED')) return '#16a34a';
         if (type.includes('SETTLED_FAILURE') || type.includes('VERIFICATION_FAILED')) return '#752122';
         if (type.includes('FEE')) return '#92400e';
         if (type.includes('LOCKED') || type.includes('EXECUTION_CONFIRMED')) return '#111';
@@ -676,7 +901,7 @@ export async function initLedger() {
     }
 
     function getStatusPill(type) {
-        if (type.includes('SETTLED_SUCCESS') || type.includes('VERIFICATION_SUCCEEDED')) return '<span class="ldg-status settled">SETTLED</span>';
+        if (type.includes('SETTLED_SUCCESS') || type.includes('SETTLEMENT') || type.includes('VERIFICATION_SUCCEEDED')) return '<span class="ldg-status settled">SETTLED</span>';
         if (type.includes('SETTLED_FAILURE') || type.includes('VERIFICATION_FAILED')) return '<span class="ldg-status failed">FAILED</span>';
         if (type.includes('LOCKED') || type.includes('EXECUTION_CONFIRMED')) return '<span class="ldg-status locked">LOCKED</span>';
         if (type.includes('FEE')) return '<span class="ldg-status fee">FEE</span>';
@@ -700,14 +925,6 @@ export async function initLedger() {
         if (meta.platform) return meta.platform.toLowerCase();
         if (meta.provider) return meta.provider.toLowerCase();
         return '';
-    }
-
-    function updateTime() {
-        const el = document.getElementById('ldg-time');
-        if (el) {
-            const now = new Date();
-            el.textContent = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' });
-        }
     }
 
     // ── Filter / Sort ──
@@ -745,15 +962,69 @@ export async function initLedger() {
         return filtered;
     }
 
+    // ── Pagination ──
+    function renderPagination(totalItems) {
+        const totalPages = Math.max(1, Math.ceil(totalItems / perPage));
+        const pageInfo = document.getElementById('ldg-page-info');
+        const pageBtns = document.getElementById('ldg-page-btns');
+
+        const start = (currentPage - 1) * perPage + 1;
+        const end = Math.min(currentPage * perPage, totalItems);
+
+        if (pageInfo) pageInfo.textContent = totalItems > 0 ? `Showing ${start}-${end} of ${totalItems}` : 'No records';
+
+        if (pageBtns && totalPages > 1) {
+            let html = '';
+            // Previous
+            html += `<button class="ldg-page-btn" data-page="prev" ${currentPage === 1 ? 'disabled' : ''}>&lt;</button>`;
+
+            for (let i = 1; i <= totalPages; i++) {
+                if (totalPages > 7 && i > 3 && i < totalPages - 1 && Math.abs(i - currentPage) > 1) {
+                    if (i === 4) html += `<button class="ldg-page-btn" disabled>…</button>`;
+                    continue;
+                }
+                html += `<button class="ldg-page-btn ${i === currentPage ? 'active' : ''}" data-page="${i}">${i}</button>`;
+            }
+
+            // Next
+            html += `<button class="ldg-page-btn" data-page="next" ${currentPage === totalPages ? 'disabled' : ''}>&gt;</button>`;
+
+            pageBtns.innerHTML = html;
+
+            pageBtns.querySelectorAll('.ldg-page-btn').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    const val = btn.dataset.page;
+                    if (val === 'prev' && currentPage > 1) currentPage--;
+                    else if (val === 'next' && currentPage < totalPages) currentPage++;
+                    else if (!isNaN(val)) currentPage = parseInt(val);
+                    renderEvents();
+                });
+            });
+        } else if (pageBtns) {
+            pageBtns.innerHTML = '';
+        }
+    }
+
     // ── Render Events — Table Rows ──
     function renderEvents() {
         const filtered = filterEvents();
+        const totalItems = filtered.length;
 
-        // Update record count
+        // Paginate
+        const totalPages = Math.max(1, Math.ceil(totalItems / perPage));
+        if (currentPage > totalPages) currentPage = totalPages;
+        const pageItems = filtered.slice((currentPage - 1) * perPage, currentPage * perPage);
+
+        // Update record count in footer
         const countEl = document.getElementById('ldg-record-count');
-        if (countEl) countEl.textContent = `Showing ${filtered.length} records`;
+        if (countEl) {
+            countEl.innerHTML = `${totalItems} Records` +
+                (totalItems > 0 ? `<span class="ldg-count-badge">Showing ${pageItems.length} records</span>` : '');
+        }
 
-        if (filtered.length === 0) {
+        renderPagination(totalItems);
+
+        if (pageItems.length === 0) {
             list.innerHTML = `
                 <tr>
                     <td colspan="5">
@@ -767,15 +1038,21 @@ export async function initLedger() {
             return;
         }
 
-        list.innerHTML = filtered.map((event, i) => {
+        list.innerHTML = pageItems.map((event, i) => {
+            const globalIdx = (currentPage - 1) * perPage + i;
             const contractShort = event.contractId
                 ? 'RCPT-' + event.contractId.slice(0, 4).toUpperCase()
                 : '—';
             const statusClass = getStatusClass(event.eventType);
 
             return `
-                <tr data-index="${i}">
-                    <td><span class="ldg-status-text ${statusClass}">${formatEventType(event.eventType)}</span></td>
+                <tr data-index="${globalIdx}">
+                    <td>
+                        <div class="ldg-status-cell">
+                            <div class="ldg-status-dot ${statusClass}"></div>
+                            <span class="ldg-status-text ${statusClass}">${formatEventType(event.eventType)}</span>
+                        </div>
+                    </td>
                     <td><span class="ldg-rcpt">${contractShort}</span></td>
                     <td><span class="ldg-hash">${truncateHash(event.eventHash)}</span></td>
                     <td><span class="ldg-date">${formatTimestamp(event.timestamp)}</span></td>
@@ -885,17 +1162,37 @@ export async function initLedger() {
             .reduce((sum, e) => sum + (e.amountUsdCents || 0), 0);
         if (tvlEl) tvlEl.textContent = formatCurrency(totalCents);
 
-        const activeCount = allEvents.filter(e =>
-            ['FUNDS_LOCKED', 'EXECUTION_CONFIRMED'].includes(e.eventType)
-        ).length;
-        if (activeEl) activeEl.textContent = activeCount.toString();
+        if (activeEl) activeEl.textContent = allEvents.length.toString();
 
-        // 24h volume
-        const now = Date.now();
-        const vol24h = allEvents
-            .filter(e => e.amountUsdCents && (now - new Date(e.timestamp).getTime()) <= 86400000)
+        // Settled amount
+        const settledCents = allEvents
+            .filter(e => e.amountUsdCents && (e.eventType?.includes('SETTLED') || e.eventType?.includes('SETTLEMENT')))
             .reduce((sum, e) => sum + (e.amountUsdCents || 0), 0);
-        if (volumeEl) volumeEl.textContent = formatCurrency(vol24h);
+        if (volumeEl) volumeEl.textContent = formatCurrency(settledCents);
+    }
+
+    // ── CSV Export ──
+    function exportCSV() {
+        const filtered = filterEvents();
+        if (filtered.length === 0) return;
+
+        const headers = ['Event Type', 'Receipt', 'Hash', 'Date', 'Amount (USD)'];
+        const rows = filtered.map(e => [
+            e.eventType || '',
+            e.contractId ? 'RCPT-' + e.contractId.slice(0, 4).toUpperCase() : '',
+            e.eventHash || '',
+            e.timestamp || '',
+            e.amountUsdCents ? (e.amountUsdCents / 100).toFixed(2) : ''
+        ]);
+
+        const csv = [headers, ...rows].map(r => r.map(v => `"${v}"`).join(',')).join('\n');
+        const blob = new Blob([csv], { type: 'text/csv' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = `ledger-export-${new Date().toISOString().slice(0, 10)}.csv`;
+        a.click();
+        URL.revokeObjectURL(url);
     }
 
     // ── Event Wiring ──
@@ -905,6 +1202,7 @@ export async function initLedger() {
         document.querySelectorAll('.ldg-tab').forEach(t => t.classList.remove('active'));
         tab.classList.add('active');
         activeTab = tab.dataset.filter;
+        currentPage = 1;
         renderEvents();
     });
 
@@ -921,6 +1219,7 @@ export async function initLedger() {
             pill.classList.add('active');
             activeTime = pill.dataset.time;
         }
+        currentPage = 1;
         renderEvents();
     });
 
@@ -931,6 +1230,7 @@ export async function initLedger() {
             clearTimeout(searchTimeout);
             searchTimeout = setTimeout(() => {
                 searchQuery = searchInput.value.trim();
+                currentPage = 1;
                 renderEvents();
             }, 200);
         });
@@ -940,25 +1240,24 @@ export async function initLedger() {
     if (sortSelect) {
         sortSelect.addEventListener('change', () => {
             sortBy = sortSelect.value;
+            currentPage = 1;
             renderEvents();
         });
     }
 
+    document.getElementById('ldg-csv-btn')?.addEventListener('click', exportCSV);
     document.getElementById('ldg-drawer-close')?.addEventListener('click', closeDrawer);
     document.getElementById('ldg-drawer')?.addEventListener('click', (e) => {
         if (e.target.id === 'ldg-drawer') closeDrawer();
     });
 
     // ── Fetch ──
-    updateTime();
-
     try {
         const response = await window.api.getPublicLedger();
         allEvents = response?.events || [];
         console.log('[Ledger] Loaded', allEvents.length, 'events');
         updateStats();
         renderEvents();
-        updateTime();
     } catch (error) {
         console.error('[Ledger] Error loading events:', error);
         list.innerHTML = `

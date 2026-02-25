@@ -70,13 +70,13 @@ export function renderHeader(currentRoute) {
             }
             .ch-logo-accent {
                 width: 3px;
-                height: 28px;
+                height: 22px;
                 background: #752122;
                 flex-shrink: 0;
             }
             .ch-logo-headline {
-                font-size: 18px;
-                font-weight: 600;
+                font-size: 15px;
+                font-weight: 800;
                 color: #111111;
                 letter-spacing: 0.25em;
                 font-family: 'GT America', 'Neue Haas Grotesk Display', 'Helvetica Neue', Helvetica, Arial, sans-serif;

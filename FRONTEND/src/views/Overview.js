@@ -699,6 +699,57 @@ export function renderOverview() {
                 .eq-hero-sub { font-size: 16px; }
                 .eq-hero-tension { font-size: 9px; letter-spacing: 2px; }
             }
+
+            /* --- MECHANISM SECTION --- */
+            .eq-mechanism {
+                background: #fff;
+                padding: 0 32px 64px;
+                border-bottom: 1px solid #e5e5e5;
+            }
+            .eq-mechanism-grid {
+                display: grid;
+                grid-template-columns: repeat(4, 1fr);
+                gap: 24px;
+                max-width: 1200px;
+                margin: 0 auto;
+            }
+            .eq-mech-card {
+                padding: 24px;
+                border: 1px solid #eee;
+                background: #fff;
+                transition: border-color 0.2s;
+            }
+            .eq-mech-card:hover { border-color: #752122; }
+            .eq-mech-num {
+                font-family: 'JetBrains Mono', monospace;
+                font-size: 40px;
+                font-weight: 300;
+                color: #752122;
+                margin-bottom: 16px;
+                line-height: 1;
+            }
+            .eq-mech-title {
+                font-size: 14px;
+                font-weight: 800;
+                color: #000;
+                text-transform: uppercase;
+                letter-spacing: 0.5px;
+                margin-bottom: 8px;
+                font-family: 'Neue Haas Grotesk Display', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            }
+            .eq-mech-desc {
+                font-size: 13px;
+                line-height: 1.5;
+                color: #666;
+                font-family: 'Neue Haas Grotesk Display', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            }
+            @media (max-width: 1024px) {
+                .eq-mechanism-grid { grid-template-columns: repeat(2, 1fr); }
+            }
+            @media (max-width: 640px) {
+                .eq-mechanism-grid { grid-template-columns: 1fr; }
+                .eq-mechanism { padding: 0 20px 48px; }
+            }
         </style>
 
         <div class="eq">
@@ -709,6 +760,32 @@ export function renderOverview() {
                 <div class="eq-hero-tension">MISS THE TARGET. LOSE THE STAKE.</div>
                 <div class="eq-hero-divider-hr"></div>
             </div>
+
+            <!-- Mechanism Section -->
+            <section class="eq-mechanism">
+                <div class="eq-mechanism-grid">
+                    <div class="eq-mech-card">
+                        <div class="eq-mech-num">01</div>
+                        <div class="eq-mech-title">Commit</div>
+                        <div class="eq-mech-desc">Stake capital against specific, measurable performance targets.</div>
+                    </div>
+                    <div class="eq-mech-card">
+                        <div class="eq-mech-num">02</div>
+                        <div class="eq-mech-title">Monitor</div>
+                        <div class="eq-mech-desc">Metrics are tracked in real-time via verified data adapters.</div>
+                    </div>
+                    <div class="eq-mech-card">
+                        <div class="eq-mech-num">03</div>
+                        <div class="eq-mech-title">Verify</div>
+                        <div class="eq-mech-desc">Automated oracle verification at the deadline. No appeals.</div>
+                    </div>
+                    <div class="eq-mech-card">
+                        <div class="eq-mech-num">04</div>
+                        <div class="eq-mech-title">Settle</div>
+                        <div class="eq-mech-desc">variance is calculated and capital is released or forfeited.</div>
+                    </div>
+                </div>
+            </section>
 
             <!-- Live Header -->
             <div class="eq-live-header">

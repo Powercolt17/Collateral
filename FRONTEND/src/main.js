@@ -1233,10 +1233,30 @@ hydrateSession();
         window.Clerk = clerk;
         console.log('[Clerk] ✅ SDK loaded, session:', !!clerk.session);
 
-        // If user has Clerk session but no internal JWT, auto-exchange
-        if (clerk.session && !api.hasAuthToken()) {
-            console.log('[Clerk] Found active session, exchanging token...');
-            await window.app._handleClerkCallback();
+        // If user has Clerk session, reflect it on the frontend
+        if (clerk.session && clerk.user) {
+            // Immediately show user as logged in from Clerk data
+            const clerkUser = clerk.user;
+            const email = clerkUser.emailAddresses?.[0]?.emailAddress || '';
+            const firstName = clerkUser.firstName || '';
+            const lastName = clerkUser.lastName || '';
+            const displayName = [firstName, lastName].filter(Boolean).join(' ') || email.split('@')[0] || 'User';
+
+            appState.isLoggedIn = true;
+            appState.displayName = displayName;
+            appState.username = email.split('@')[0] || displayName.toLowerCase().replace(/\s/g, '');
+            console.log('[Clerk] ✅ Showing user as logged in:', displayName);
+            updateAuthUI();
+
+            // Then try backend token exchange in background (for internal JWT)
+            if (!api.hasAuthToken()) {
+                console.log('[Clerk] Exchanging token with backend...');
+                try {
+                    await window.app._exchangeClerkToken();
+                } catch (e) {
+                    console.warn('[Clerk] Backend token exchange failed (user still shown as logged in):', e.message);
+                }
+            }
         }
     } catch (err) {
         console.error('[Clerk] SDK init failed:', err);

@@ -219,33 +219,36 @@ export function renderContractDetail(params) {
             .cd-btn svg { width: 14px; height: 14px; color: #a3a3a3; }
 
             /* Event Log */
-            .cd-timeline { position: relative; padding-left: 24px; }
+            .cd-timeline { position: relative; padding-left: 20px; margin-left: 4px; }
             .cd-timeline::before {
-                content: ''; position: absolute; left: 5px; top: 5px; bottom: 5px;
-                width: 2px; background: #111;
+                content: ''; position: absolute; left: 3px; top: 4px; bottom: 4px;
+                width: 1px; background: #222;
             }
-            .cd-event { position: relative; padding-bottom: 32px; display: flex; justify-content: space-between; align-items: flex-start; }
+            .cd-event { position: relative; padding-bottom: 28px; display: flex; justify-content: space-between; align-items: center; }
             .cd-event:last-child { padding-bottom: 0; }
             .cd-event-dot {
-                position: absolute; left: -24px; top: 0px;
-                width: 12px; height: 12px; border-radius: 50%;
-                background: #752122;
+                position: absolute; left: -20px; top: 50%; transform: translateY(-50%);
+                width: 7px; height: 7px; border-radius: 50%;
+                background: #752122; border: 2px solid #fff;
+                box-shadow: 0 0 0 1px #752122;
                 z-index: 1;
             }
             .cd-event-dot.pending {
-                background: #752122;
-                animation: cd-blink 1.2s ease-in-out infinite;
+                background: #752122; border-color: #fff;
+                box-shadow: 0 0 0 1px #752122;
+                animation: cd-blink 1.5s ease-in-out infinite;
             }
             .cd-event-dot.future {
-                background: #e5e5e5;
+                background: #fff; border-color: #fff;
+                box-shadow: 0 0 0 1px #d4d4d4;
             }
             @keyframes cd-blink {
-                0%, 100% { opacity: 1; box-shadow: 0 0 0 0 rgba(117,33,34,0.5); }
-                50% { opacity: 0.4; box-shadow: 0 0 0 6px rgba(117,33,34,0); }
+                0%, 100% { opacity: 1; }
+                50% { opacity: 0.25; }
             }
-            .cd-event-name { font-family: 'JetBrains Mono', monospace; font-size: 10px; font-weight: 700; color: #111; letter-spacing: 0.05em; text-transform: uppercase; }
-            .cd-event-name.future-text { color: #ccc; }
-            .cd-event-time { font-family: 'JetBrains Mono', monospace; font-size: 9px; color: #ccc; text-transform: uppercase; }
+            .cd-event-name { font-family: 'JetBrains Mono', monospace; font-size: 10px; font-weight: 600; color: #111; letter-spacing: 0.06em; text-transform: uppercase; }
+            .cd-event-name.future-text { color: #d4d4d4; font-weight: 500; }
+            .cd-event-time { font-family: 'JetBrains Mono', monospace; font-size: 9px; color: #bbb; letter-spacing: 0.02em; }
         </style>
 
         <div class="cd">

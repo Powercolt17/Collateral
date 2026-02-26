@@ -471,6 +471,7 @@ export default {
     devLogin,
     logout,
     getAuthToken,
+    setAuthToken,
     hasAuthToken,
     clearAuthToken,
     getStoredUser,

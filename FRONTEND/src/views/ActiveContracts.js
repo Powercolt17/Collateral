@@ -401,10 +401,184 @@ export function renderActiveContracts() {
                 .act-content { padding: 0 16px; }
                 .act-hero-stats { gap: 32px; flex-wrap: wrap; }
                 .act-card-brand { width: 100%; }
-                .act-card-tags { display: none; } /* Hide tags on mobile to save space */
+                .act-card-tags { display: none; }
                 .act-card-status { width: auto; }
                 .act-card-financials { width: auto; margin-left: auto; }
+                .act-detail-grid { grid-template-columns: 1fr 1fr; }
             }
+
+            /* ── Contract Card Wrapper (clickable, not a link) ── */
+            .act-card-wrap {
+                border-bottom: 1px solid #f0f0f0;
+            }
+            .act-card {
+                border-bottom: none;
+                cursor: pointer;
+            }
+            .act-card-wrap.expanded .act-card-arrow svg {
+                transform: rotate(180deg);
+            }
+            .act-card-arrow svg {
+                transition: transform 0.25s ease;
+            }
+
+            /* ── Dropdown Detail Panel ── */
+            .act-detail {
+                max-height: 0;
+                overflow: hidden;
+                transition: max-height 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+                background: #fff;
+                border-top: 1px solid #f0f0f0;
+            }
+            .act-card-wrap.expanded .act-detail {
+                max-height: 600px;
+            }
+            .act-detail-inner {
+                padding: 32px 32px 28px;
+            }
+
+            /* Detail grid: 4 columns */
+            .act-detail-grid {
+                display: grid;
+                grid-template-columns: repeat(4, 1fr);
+                gap: 0;
+                border-bottom: 1px solid #f0f0f0;
+                padding-bottom: 28px;
+                margin-bottom: 28px;
+            }
+            .act-detail-item {}
+            .act-detail-label {
+                font-family: 'JetBrains Mono', monospace;
+                font-size: 9px;
+                font-weight: 600;
+                text-transform: uppercase;
+                letter-spacing: 0.12em;
+                color: #ccc;
+                margin-bottom: 6px;
+            }
+            .act-detail-value {
+                font-size: 15px;
+                font-weight: 600;
+                color: #111;
+            }
+
+            /* Performance Metric Section */
+            .act-perf-header {
+                display: flex;
+                align-items: center;
+                gap: 8px;
+                margin-bottom: 20px;
+            }
+            .act-perf-header svg { width: 14px; height: 14px; color: #bbb; }
+            .act-perf-label {
+                font-family: 'JetBrains Mono', monospace;
+                font-size: 9px;
+                font-weight: 700;
+                text-transform: uppercase;
+                letter-spacing: 0.12em;
+                color: #ccc;
+            }
+
+            .act-perf-grid {
+                display: grid;
+                grid-template-columns: 1fr 1fr 1fr;
+                gap: 0;
+                margin-bottom: 20px;
+            }
+            .act-perf-col {}
+            .act-perf-col-label {
+                font-family: 'JetBrains Mono', monospace;
+                font-size: 9px;
+                font-weight: 600;
+                text-transform: uppercase;
+                letter-spacing: 0.12em;
+                color: #ccc;
+                margin-bottom: 6px;
+            }
+            .act-perf-col-value {
+                font-size: 15px;
+                font-weight: 600;
+                color: #111;
+            }
+            .act-perf-col-value.green {
+                color: #16a34a;
+            }
+
+            /* Full-width progress bar in dropdown */
+            .act-detail-progress {
+                width: 100%;
+                height: 4px;
+                background: #f0f0f0;
+                position: relative;
+                margin-bottom: 6px;
+            }
+            .act-detail-progress-fill {
+                position: absolute;
+                left: 0; top: 0; bottom: 0;
+                background: #752122;
+            }
+            .act-detail-progress-pct {
+                text-align: right;
+                font-family: 'JetBrains Mono', monospace;
+                font-size: 11px;
+                font-weight: 700;
+                color: #752122;
+                margin-bottom: 20px;
+            }
+
+            /* Oracle note */
+            .act-oracle-note {
+                display: flex;
+                align-items: center;
+                gap: 8px;
+                padding: 16px 0;
+                border-top: 1px solid #f0f0f0;
+                margin-bottom: 20px;
+            }
+            .act-oracle-note svg { width: 14px; height: 14px; color: #ccc; flex-shrink: 0; }
+            .act-oracle-note-text {
+                font-size: 12px;
+                color: #bbb;
+            }
+
+            /* Action buttons */
+            .act-detail-actions {
+                display: flex;
+                align-items: center;
+                gap: 12px;
+            }
+            .act-btn {
+                padding: 10px 20px;
+                font-family: 'JetBrains Mono', monospace;
+                font-size: 10px;
+                font-weight: 700;
+                letter-spacing: 0.08em;
+                text-transform: uppercase;
+                border: none;
+                cursor: pointer;
+                text-decoration: none;
+                display: inline-flex;
+                align-items: center;
+                gap: 6px;
+                transition: all 0.15s;
+            }
+            .act-btn svg { width: 12px; height: 12px; }
+            .act-btn-primary {
+                background: #752122;
+                color: #fff;
+            }
+            .act-btn-primary:hover { background: #5a1818; }
+            .act-btn-dark {
+                background: #111;
+                color: #fff;
+            }
+            .act-btn-dark:hover { background: #333; }
+            .act-btn-outline {
+                background: #fff;
+                color: #888;
+                border: 1px solid #e5e5e5;
+            }
+            .act-btn-outline:hover { border-color: #111; color: #111; }
         </style>
 
         <div class="act">
@@ -583,23 +757,24 @@ function renderContractList(container, allContracts, filter) {
         return;
     }
 
-    const listHtml = filtered.map((c, i) => {
-        const platform = c.platform?.toUpperCase() || 'UNKNOWN';
-        const amount = (c.lockAmountUsdCents / 100).toLocaleString('en-US', { style: 'currency', currency: 'USD' });
-        const payout = c.payoutAmountUsdCents ? '+$' + (c.payoutAmountUsdCents / 100).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) : '';
-        const riskTier = c.riskTier?.toUpperCase() || 'STANDARD';
-        const state = c.derivedState || c.state;
+    var listHtml = filtered.map(function (c, i) {
+        var platform = c.platform ? c.platform.toUpperCase() : 'UNKNOWN';
+        var platformDisplay = platform.charAt(0) + platform.slice(1).toLowerCase();
+        var amount = (c.lockAmountUsdCents / 100).toLocaleString('en-US', { style: 'currency', currency: 'USD' });
+        var payout = c.payoutAmountUsdCents ? '+$' + (c.payoutAmountUsdCents / 100).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) : '';
+        var riskTier = c.riskTier ? c.riskTier.toUpperCase() : 'STANDARD';
+        var state = c.derivedState || c.state;
 
-        let statusMode = 'active';
-        let statusLabel = 'ACTIVE';
-        let isPending = false;
-        let isSettled = false;
+        var statusMode = 'active';
+        var statusLabel = 'ACTIVE';
+        var isPending = false;
+        var isSettled = false;
 
-        if (['CREATED', 'FUNDS_AUTHORIZED', 'PENDING'].includes(state)) {
+        if (['CREATED', 'FUNDS_AUTHORIZED', 'PENDING'].indexOf(state) !== -1) {
             statusMode = 'pending';
             statusLabel = 'PENDING';
             isPending = true;
-        } else if (['LOCKED', 'ACTIVE', 'EXECUTION_CONFIRMED'].includes(state)) {
+        } else if (['LOCKED', 'ACTIVE', 'EXECUTION_CONFIRMED'].indexOf(state) !== -1) {
             statusMode = 'active';
             statusLabel = 'ACTIVE';
         } else {
@@ -608,17 +783,18 @@ function renderContractList(container, allContracts, filter) {
             isSettled = true;
         }
 
-        const icon = getPlatformIcon(c.platform);
-        const contractShort = 'CXTRCT-' + (c.id.length > 5 ? c.id.slice(0, 4).toUpperCase() : 'XXX');
+        var icon = getPlatformIcon(c.platform);
+        var contractShort = 'CXTRCT-' + (c.id.length > 5 ? c.id.slice(0, 4).toUpperCase() : 'XXX');
 
-        let progressHtml = '';
+        // Progress
+        var pct = getDerivedProgress(c.id);
+        var isRed = pct > 80 || i === 0;
+        var decimalPct = (pct + (Math.abs(c.id.charCodeAt(0)) % 10) / 10).toFixed(1);
+        var fillClass = isRed ? 'act-progress-fill red' : 'act-progress-fill';
+        var pctClass = isRed ? 'act-progress-pct red' : 'act-progress-pct';
+
+        var progressHtml = '';
         if (statusMode === 'active') {
-            const pct = getDerivedProgress(c.id);
-            const isRed = pct > 80 || i === 0;
-            const decimalPct = (pct + (Math.abs(c.id.charCodeAt(0)) % 10) / 10).toFixed(1);
-            const fillClass = isRed ? 'act-progress-fill red' : 'act-progress-fill';
-            const pctClass = isRed ? 'act-progress-pct red' : 'act-progress-pct';
-
             progressHtml = '<div class="act-card-progress">' +
                 '<div class="act-progress-track">' +
                 '<div class="' + fillClass + '" style="width: ' + pct + '%"></div>' +
@@ -629,15 +805,29 @@ function renderContractList(container, allContracts, filter) {
             progressHtml = '<div class="act-card-progress"></div>';
         }
 
-        const tagLabel = isSettled ? 'SETTLED' : (isPending ? 'PENDING' : 'LEDGER');
-        const tagsHtml = '<div class="act-tag">' + riskTier + '</div>' +
+        var tagLabel = isSettled ? 'SETTLED' : (isPending ? 'PENDING' : 'LEDGER');
+        var tagsHtml = '<div class="act-tag">' + riskTier + '</div>' +
             '<div class="act-tag">' + tagLabel + '</div>';
 
-        return '<a href="#/contracts/' + c.id + '" class="act-card">' +
+        // Counterparty data
+        var counterparty = c.counterparty || 'Byson';
+        var dataSourceLabel = getDataSourceLabel(c.platform);
+
+        // Contract period
+        var createdDate = c.createdAt ? formatDateShort(c.createdAt) : 'Jan 15, 2026';
+        var endDate = c.endDate ? formatDateShort(c.endDate) : calculateEndDate(c.createdAt, c.durationDays || 90);
+
+        // Performance metric
+        var metricName = getMetricName(c.platform);
+        var threshold = c.targetValue ? Number(c.targetValue).toLocaleString('en-US') : '50,000';
+        var currentVal = c.currentValue ? Number(c.currentValue).toLocaleString('en-US') : getDerivedCurrentValue(c.id, threshold);
+
+        // The summary row (header)
+        var headerHtml = '<div class="act-card" data-card-idx="' + i + '">' +
             '<div class="act-card-brand">' +
             '<div class="act-card-icon"><i data-lucide="' + icon + '"></i></div>' +
             '<div class="act-card-title-col">' +
-            '<span class="act-card-title">' + platform.charAt(0) + platform.slice(1).toLowerCase() + ' Performance</span>' +
+            '<span class="act-card-title">' + platformDisplay + ' Performance</span>' +
             '<span class="act-card-id">' + contractShort + '</span>' +
             '</div>' +
             '</div>' +
@@ -654,15 +844,108 @@ function renderContractList(container, allContracts, filter) {
             '<span class="act-fin-sub">' + (statusMode === 'active' ? payout : '') + '</span>' +
             '</div>' +
             '<div class="act-card-arrow"><i data-lucide="chevron-down"></i></div>' +
-            '</a>';
+            '</div>';
+
+        // The expandable detail panel
+        var detailHtml = '<div class="act-detail">' +
+            '<div class="act-detail-inner">' +
+
+            // 4-column info grid
+            '<div class="act-detail-grid">' +
+            '<div class="act-detail-item">' +
+            '<div class="act-detail-label">Counterparty</div>' +
+            '<div class="act-detail-value">' + counterparty + '</div>' +
+            '</div>' +
+            '<div class="act-detail-item">' +
+            '<div class="act-detail-label">Data Source</div>' +
+            '<div class="act-detail-value">' + dataSourceLabel + '</div>' +
+            '</div>' +
+            '<div class="act-detail-item">' +
+            '<div class="act-detail-label">Risk Tier</div>' +
+            '<div class="act-detail-value" style="font-weight:700;">' + riskTier + '</div>' +
+            '</div>' +
+            '<div class="act-detail-item">' +
+            '<div class="act-detail-label">Contract Period</div>' +
+            '<div class="act-detail-value">' + createdDate + ' &mdash; ' + endDate + '</div>' +
+            '</div>' +
+            '</div>' +
+
+            // Performance Metric header
+            '<div class="act-perf-header">' +
+            '<i data-lucide="activity"></i>' +
+            '<span class="act-perf-label">Performance Metric</span>' +
+            '</div>' +
+
+            // 3-column metric grid
+            '<div class="act-perf-grid">' +
+            '<div class="act-perf-col">' +
+            '<div class="act-perf-col-label">Metric</div>' +
+            '<div class="act-perf-col-value">' + metricName + '</div>' +
+            '</div>' +
+            '<div class="act-perf-col">' +
+            '<div class="act-perf-col-label">Threshold</div>' +
+            '<div class="act-perf-col-value">' + threshold + '</div>' +
+            '</div>' +
+            '<div class="act-perf-col">' +
+            '<div class="act-perf-col-label">Current Value</div>' +
+            '<div class="act-perf-col-value green">' + currentVal + '</div>' +
+            '</div>' +
+            '</div>' +
+
+            // Full-width progress bar
+            '<div class="act-detail-progress">' +
+            '<div class="act-detail-progress-fill" style="width:' + decimalPct + '%"></div>' +
+            '</div>' +
+            '<div class="act-detail-progress-pct">' + decimalPct + '%</div>' +
+
+            // Oracle note
+            '<div class="act-oracle-note">' +
+            '<i data-lucide="clock"></i>' +
+            '<span class="act-oracle-note-text">Oracle checks ' + metricName.toLowerCase() + ' daily at 00:00 UTC. Threshold breach triggers automatic settlement within 48h.</span>' +
+            '</div>' +
+
+            // Action buttons
+            '<div class="act-detail-actions">' +
+            '<a href="#/contracts/' + c.id + '" class="act-btn act-btn-primary">' +
+            '<i data-lucide="file-text"></i> View Contract' +
+            '</a>' +
+            '<a href="#/ledger" class="act-btn act-btn-dark">' +
+            '<i data-lucide="book-open"></i> View in Ledger' +
+            '</a>' +
+            '<a href="#/sources" class="act-btn act-btn-outline">' +
+            '<i data-lucide="external-link"></i> View Source' +
+            '</a>' +
+            '</div>' +
+
+            '</div>' +
+            '</div>';
+
+        return '<div class="act-card-wrap" data-wrap-idx="' + i + '">' + headerHtml + detailHtml + '</div>';
     }).join('');
 
     container.innerHTML = '<div class="act-list">' + listHtml + '</div>';
     if (window.lucide) window.lucide.createIcons();
+
+    // Bind click to toggle expand/collapse
+    container.querySelectorAll('.act-card[data-card-idx]').forEach(function (card) {
+        card.addEventListener('click', function (e) {
+            e.preventDefault();
+            var wrap = card.closest('.act-card-wrap');
+            if (!wrap) return;
+
+            // Close all others
+            container.querySelectorAll('.act-card-wrap.expanded').forEach(function (other) {
+                if (other !== wrap) other.classList.remove('expanded');
+            });
+
+            // Toggle this one
+            wrap.classList.toggle('expanded');
+        });
+    });
 }
 
 function getPlatformIcon(platform) {
-    const map = {
+    var map = {
         'twitter': 'twitter',
         'x': 'twitter',
         'stripe': 'credit-card',
@@ -671,6 +954,58 @@ function getPlatformIcon(platform) {
         'github': 'github',
         'youtube': 'youtube'
     };
-    return map[platform?.toLowerCase()] || 'file-text';
+    return map[platform ? platform.toLowerCase() : ''] || 'file-text';
 }
 
+function getDataSourceLabel(platform) {
+    var map = {
+        'twitter': 'X (Twitter)',
+        'x': 'X (Twitter)',
+        'stripe': 'Stripe API',
+        'shopify': 'Shopify API',
+        'amazon': 'Amazon Seller',
+        'github': 'GitHub API',
+        'youtube': 'YouTube API'
+    };
+    return map[platform ? platform.toLowerCase() : ''] || 'API';
+}
+
+function getMetricName(platform) {
+    var map = {
+        'twitter': 'Follower Count',
+        'x': 'Follower Count',
+        'stripe': 'Monthly Revenue',
+        'shopify': 'Revenue Growth',
+        'amazon': 'Sales Volume',
+        'github': 'Stars Count',
+        'youtube': 'Subscriber Count'
+    };
+    return map[platform ? platform.toLowerCase() : ''] || 'Performance Metric';
+}
+
+function formatDateShort(isoStr) {
+    if (!isoStr) return '—';
+    var d = new Date(isoStr);
+    var months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+    return months[d.getMonth()] + ' ' + String(d.getDate()).padStart(2, '0') + ', ' + d.getFullYear();
+}
+
+function calculateEndDate(startIso, durationDays) {
+    if (!startIso) return 'Apr 15, 2026';
+    var d = new Date(startIso);
+    d.setDate(d.getDate() + (durationDays || 90));
+    return formatDateShort(d.toISOString());
+}
+
+function getDerivedCurrentValue(id, thresholdStr) {
+    // Generate a plausible current value based on the contract ID
+    var threshold = parseInt(thresholdStr.replace(/,/g, ''), 10) || 50000;
+    var hash = 0;
+    for (var i = 0; i < id.length; i++) {
+        hash = ((hash << 5) - hash) + id.charCodeAt(i);
+        hash |= 0;
+    }
+    var pct = 0.7 + (Math.abs(hash % 28) / 100);
+    var val = Math.round(threshold * pct);
+    return val.toLocaleString('en-US');
+}

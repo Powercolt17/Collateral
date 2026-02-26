@@ -173,7 +173,8 @@ const routes = PRE_LAUNCH_MODE ? [
     { path: '/stripe/callback', render: renderStripeCallback, init: initStripeCallback },
     { path: '/x/callback', render: renderXCallback, init: initXCallback },
     { path: '/shopify/callback', render: renderShopifyCallback, init: initShopifyCallback },
-    { path: '/amazon/callback', render: renderAmazonCallback, init: initAmazonCallback }
+    { path: '/amazon/callback', render: renderAmazonCallback, init: initAmazonCallback },
+    { path: '/sso-callback', render: () => '<div style="display:flex;align-items:center;justify-content:center;min-height:60vh;"><p style="color:#999;font-size:14px;">Completing sign-in…</p></div>', init: () => { window.app._handleSSOCallback(); } }
 ];
 
 // ================================================================================
@@ -435,10 +436,11 @@ window.app = {
         try {
             if (!window.Clerk) { alert('OAuth not available. Please use email/password or refresh.'); return; }
             console.log('[Auth] Starting Google OAuth via Clerk...');
-            await window.Clerk.client.signIn.create({
+            window.app.closeAccessModal();
+            await window.Clerk.client.signIn.authenticateWithRedirect({
                 strategy: 'oauth_google',
-                redirectUrl: window.location.origin + '/#/overview',
-                actionCompleteRedirectUrl: window.location.origin + '/#/overview',
+                redirectUrl: window.location.origin + '/#/sso-callback',
+                redirectUrlComplete: window.location.origin + '/#/overview',
             });
         } catch (err) { console.error('[Auth] Google sign-in failed:', err); }
     },
@@ -446,14 +448,44 @@ window.app = {
         try {
             if (!window.Clerk) { alert('OAuth not available. Please use email/password or refresh.'); return; }
             console.log('[Auth] Starting Apple OAuth via Clerk...');
-            await window.Clerk.client.signIn.create({
+            window.app.closeAccessModal();
+            await window.Clerk.client.signIn.authenticateWithRedirect({
                 strategy: 'oauth_apple',
-                redirectUrl: window.location.origin + '/#/overview',
-                actionCompleteRedirectUrl: window.location.origin + '/#/overview',
+                redirectUrl: window.location.origin + '/#/sso-callback',
+                redirectUrlComplete: window.location.origin + '/#/overview',
             });
         } catch (err) { console.error('[Auth] Apple sign-in failed:', err); }
     },
-    _handleClerkCallback: async function () {
+    _handleSSOCallback: async function () {
+        // Called when Clerk redirects back to /#/sso-callback after OAuth
+        try {
+            if (!window.Clerk) {
+                // Clerk not loaded yet — wait for it
+                console.log('[Auth] Waiting for Clerk SDK to load...');
+                let attempts = 0;
+                while (!window.Clerk && attempts < 50) {
+                    await new Promise(r => setTimeout(r, 200));
+                    attempts++;
+                }
+                if (!window.Clerk) { console.error('[Auth] Clerk never loaded'); window.router.navigate('/overview'); return; }
+            }
+
+            console.log('[Auth] Processing SSO callback...');
+            await window.Clerk.handleRedirectCallback();
+
+            // After callback, Clerk should have a session
+            if (window.Clerk.session) {
+                await window.app._exchangeClerkToken();
+            } else {
+                console.log('[Auth] No session after SSO callback');
+            }
+            window.router.navigate('/overview');
+        } catch (err) {
+            console.error('[Auth] SSO callback failed:', err);
+            window.router.navigate('/overview');
+        }
+    },
+    _exchangeClerkToken: async function () {
         try {
             if (!window.Clerk || !window.Clerk.session) return;
             const clerkToken = await window.Clerk.session.getToken();
@@ -483,8 +515,11 @@ window.app = {
             updateAuthUI();
         } catch (err) {
             console.error('[Auth] Clerk token exchange failed:', err);
-            alert('Sign-in failed. Please try again.');
         }
+    },
+    _handleClerkCallback: async function () {
+        // Legacy alias
+        await window.app._exchangeClerkToken();
     },
     toggleMenuPersistence: function (e) {
         e.stopPropagation();

@@ -941,7 +941,7 @@ export async function initSources() {
     for (const prov of available) {
         if (prov.comingSoon) {
             html += `
-                <div class="src-prov-card">
+                <div class="src-prov-card" style="opacity:0.45; filter:grayscale(100%); pointer-events:none; border-color:#eee;">
                     <div class="src-prov-top">
                         <div class="src-prov-top-left">
                             <div class="src-prov-icon"><i data-lucide="${prov.icon}"></i></div>
@@ -952,7 +952,7 @@ export async function initSources() {
                         </div>
                     </div>
                     <div class="src-prov-desc">${prov.description}</div>
-                    <span class="src-coming-soon">
+                    <span class="src-coming-soon" style="color:#bbb;">
                         <i data-lucide="clock" style="width:12px;height:12px;"></i>
                         COMING SOON
                     </span>

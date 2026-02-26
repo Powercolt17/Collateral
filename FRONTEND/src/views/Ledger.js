@@ -15,6 +15,9 @@ export function renderLedger() {
                 color: #111;
                 display: flex;
                 flex-direction: column;
+                font-feature-settings: 'zero' 0;
+                -moz-font-feature-settings: 'zero' 0;
+                -webkit-font-feature-settings: 'zero' 0;
             }
 
             /* ── Hero Header ── */

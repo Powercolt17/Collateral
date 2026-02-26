@@ -219,23 +219,32 @@ export function renderContractDetail(params) {
             .cd-btn svg { width: 14px; height: 14px; color: #a3a3a3; }
 
             /* Event Log */
-            .cd-timeline { position: relative; padding-left: 12px; }
+            .cd-timeline { position: relative; padding-left: 24px; }
             .cd-timeline::before {
-                content: ''; position: absolute; left: 6px; top: 10px; bottom: 10px;
-                width: 1px; background: #f0f0f0;
+                content: ''; position: absolute; left: 5px; top: 5px; bottom: 5px;
+                width: 2px; background: #111;
             }
-            .cd-event { position: relative; padding-bottom: 24px; display: flex; justify-content: space-between; align-items: flex-start; }
+            .cd-event { position: relative; padding-bottom: 32px; display: flex; justify-content: space-between; align-items: flex-start; }
             .cd-event:last-child { padding-bottom: 0; }
             .cd-event-dot {
-                position: absolute; left: -10px; top: 2px;
-                width: 8px; height: 16px; border-radius: 2px;
+                position: absolute; left: -24px; top: 0px;
+                width: 12px; height: 12px; border-radius: 50%;
+                background: #752122;
+                z-index: 1;
             }
-            .cd-event-dot.blue { background: #3b82f6; }
-            .cd-event-dot.amber { background: #d97706; }
-            .cd-event-dot.gray { background: #d4d4d4; }
-            .cd-event-dot.green { background: #22c55e; }
-            .cd-event-dot.red { background: #ef4444; }
-            .cd-event-name { font-family: 'JetBrains Mono', monospace; font-size: 10px; font-weight: 700; color: #111; letter-spacing: 0.05em; text-transform: uppercase; margin-left: 16px;}
+            .cd-event-dot.pending {
+                background: #752122;
+                animation: cd-blink 1.2s ease-in-out infinite;
+            }
+            .cd-event-dot.future {
+                background: #e5e5e5;
+            }
+            @keyframes cd-blink {
+                0%, 100% { opacity: 1; box-shadow: 0 0 0 0 rgba(117,33,34,0.5); }
+                50% { opacity: 0.4; box-shadow: 0 0 0 6px rgba(117,33,34,0); }
+            }
+            .cd-event-name { font-family: 'JetBrains Mono', monospace; font-size: 10px; font-weight: 700; color: #111; letter-spacing: 0.05em; text-transform: uppercase; }
+            .cd-event-name.future-text { color: #ccc; }
             .cd-event-time { font-family: 'JetBrains Mono', monospace; font-size: 9px; color: #ccc; text-transform: uppercase; }
         </style>
 
@@ -521,56 +530,84 @@ function renderActionPanel(state, daysLeft) {
 }
 
 function renderEventLog(events) {
-    const log = document.getElementById('cd-event-log');
-    document.getElementById('cd-events-count').textContent = events.length + ' EVENTS';
+    var log = document.getElementById('cd-event-log');
 
-    if (events.length === 0) {
-        // Mock if empty for demo matching screenshot
-        log.innerHTML = '<div class="cd-timeline">' +
-            '<div class="cd-event">' +
-            '<div class="cd-event-dot blue"></div>' +
-            '<span class="cd-event-name">FUNDS LOCKED</span>' +
-            '<span class="cd-event-time">Feb 2, 2026 02:28 PM</span>' +
-            '</div>' +
-            '<div class="cd-event">' +
-            '<div class="cd-event-dot amber"></div>' +
-            '<span class="cd-event-name">FUNDING INITIATED</span>' +
-            '<span class="cd-event-time">Feb 2, 2026 02:20 PM</span>' +
-            '</div>' +
-            '<div class="cd-event">' +
-            '<div class="cd-event-dot gray"></div>' +
-            '<span class="cd-event-name">BASELINE CAPTURED</span>' +
-            '<span class="cd-event-time">Feb 2, 2026 02:20 PM</span>' +
-            '</div>' +
-            '<div class="cd-event">' +
-            '<div class="cd-event-dot gray"></div>' +
-            '<span class="cd-event-name">CONTRACT CREATED</span>' +
-            '<span class="cd-event-time">Feb 2, 2026 02:20 PM</span>' +
-            '</div>' +
-            '</div>';
-        return;
+    // 5 crucial lifecycle steps in order
+    var steps = [
+        { key: 'created', label: 'CONTRACT CREATED', matchTypes: ['CONTRACT_CREATED'] },
+        { key: 'funded', label: 'FUNDS LOCKED', matchTypes: ['FUNDS_LOCKED', 'FUNDS_AUTHORIZED'] },
+        { key: 'executed', label: 'CONTRACT EXECUTED', matchTypes: ['EXECUTION_CONFIRMED', 'EXECUTION_REQUESTED'] },
+        { key: 'verified', label: 'VERIFICATION', matchTypes: ['VERIFICATION_STARTED', 'SETTLED_SUCCESS', 'SETTLED_FAILURE'] },
+        { key: 'payout', label: 'PAYOUT', matchTypes: ['SETTLED_SUCCESS', 'SETTLEMENT_COMPLETE'] }
+    ];
+
+    // Build a set of event types that have occurred
+    var doneTypes = {};
+    var eventTimes = {};
+    if (events && events.length > 0) {
+        events.forEach(function (e) {
+            doneTypes[e.eventType] = true;
+            eventTimes[e.eventType] = e.timestampUtc;
+        });
     }
 
-    const cfg = {
-        'CONTRACT_CREATED': { label: 'Contract Created', dot: 'gray' },
-        'BASELINE_SNAPSHOTTED': { label: 'Baseline Captured', dot: 'gray' },
-        'FUNDS_AUTHORIZED': { label: 'Funding Initiated', dot: 'amber' },
-        'FUNDS_LOCKED': { label: 'Funds Locked', dot: 'blue' },
-        'EXECUTION_REQUESTED': { label: 'Execution Requested', dot: 'gray' },
-        'EXECUTION_CONFIRMED': { label: 'Contract Executed', dot: 'green' },
-        'VERIFICATION_STARTED': { label: 'Verification Started', dot: 'amber' },
-        'SETTLED_SUCCESS': { label: 'Settled (Success)', dot: 'green' },
-        'SETTLED_FAILURE': { label: 'Settled (Failed)', dot: 'red' },
-        'CONTRACT_FORFEITED': { label: 'Forfeited', dot: 'red' },
-    };
+    // Determine which steps are done
+    var completedCount = 0;
+    steps.forEach(function (step) {
+        step.done = false;
+        step.time = null;
+        for (var i = 0; i < step.matchTypes.length; i++) {
+            if (doneTypes[step.matchTypes[i]]) {
+                step.done = true;
+                step.time = eventTimes[step.matchTypes[i]];
+                break;
+            }
+        }
+        if (step.done) completedCount++;
+    });
 
-    let html = '<div class="cd-timeline">';
-    events.forEach(e => {
-        const c = cfg[e.eventType] || { label: e.eventType, dot: 'gray' };
+    // If no events at all, mock first 3 as done for demo
+    if (!events || events.length === 0) {
+        steps[0].done = true; steps[0].time = '2026-02-02T14:20:00Z';
+        steps[1].done = true; steps[1].time = '2026-02-02T14:28:00Z';
+        steps[2].done = true; steps[2].time = '2026-02-02T14:30:00Z';
+        completedCount = 3;
+    }
+
+    // Find first not-done step (the pending/blinking one)
+    var pendingIdx = -1;
+    for (var i = 0; i < steps.length; i++) {
+        if (!steps[i].done) { pendingIdx = i; break; }
+    }
+
+    document.getElementById('cd-events-count').textContent = steps.length + ' STEPS';
+
+    var html = '<div class="cd-timeline">';
+    steps.forEach(function (step, idx) {
+        var dotClass = 'cd-event-dot';
+        var nameClass = 'cd-event-name';
+        var timeStr = '';
+
+        if (step.done) {
+            // Completed: solid red circle
+            dotClass = 'cd-event-dot';
+            timeStr = step.time ? formatDateTimeForEvent(step.time) : '';
+        } else if (idx === pendingIdx) {
+            // Next step: blinking red
+            dotClass = 'cd-event-dot pending';
+            nameClass = 'cd-event-name';
+            timeStr = 'PENDING';
+        } else {
+            // Future: gray circle
+            dotClass = 'cd-event-dot future';
+            nameClass = 'cd-event-name future-text';
+            timeStr = '—';
+        }
+
         html += '<div class="cd-event">' +
-            '<div class="cd-event-dot ' + c.dot + '"></div>' +
-            '<span class="cd-event-name">' + c.label + '</span>' +
-            '<span class="cd-event-time">' + formatDateTimeForEvent(e.timestampUtc) + '</span>' +
+            '<div class="' + dotClass + '"></div>' +
+            '<span class="' + nameClass + '">' + step.label + '</span>' +
+            '<span class="cd-event-time">' + timeStr + '</span>' +
             '</div>';
     });
     html += '</div>';

@@ -687,8 +687,13 @@ export async function initActiveContracts() {
     } catch (err) {
         console.error('[ActiveContracts] Load error:', err);
         container.innerHTML = `
-            <div style="text-align:center; padding: 40px; color: #752122; font-family: 'JetBrains Mono', monospace; font-size: 12px;">
-                ERROR_RETRIEVING_CONTRACT_STATE: ${err.message}
+            <div style="text-align:center; padding: 80px 40px;">
+                <div style="width:56px;height:56px;border-radius:50%;background:#f9f9f9;display:flex;align-items:center;justify-content:center;margin:0 auto 20px;">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#bbb" stroke-width="1.5"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+                </div>
+                <div style="font-size:16px;font-weight:600;color:#1a1a1a;margin-bottom:8px;">Sign in to view contracts</div>
+                <div style="font-size:13px;color:#999;max-width:360px;margin:0 auto 24px;">Create an account or sign in to deploy capital against your targets and track active contracts.</div>
+                <button onclick="window.app.openAccessModal()" style="background:#1a1a1a;color:#fff;border:none;padding:10px 28px;border-radius:6px;font-size:13px;font-weight:500;cursor:pointer;letter-spacing:0.02em;">Sign In</button>
             </div>
         `;
     }
@@ -753,7 +758,16 @@ function renderContractList(container, allContracts, filter) {
     if (countEl) countEl.textContent = filtered.length + ' CONTRACTS';
 
     if (filtered.length === 0) {
-        container.innerHTML = '<div class="act-empty"><div class="act-empty-title">No ' + filter.toUpperCase() + ' CONTRACTS</div></div>';
+        container.innerHTML = `
+            <div style="text-align:center; padding: 80px 40px;">
+                <div style="width:56px;height:56px;border-radius:50%;background:#f9f9f9;display:flex;align-items:center;justify-content:center;margin:0 auto 20px;">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#bbb" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="9" y1="21" x2="9" y2="9"/></svg>
+                </div>
+                <div style="font-size:16px;font-weight:600;color:#1a1a1a;margin-bottom:8px;">No ${filter === 'all' ? '' : filter} contracts yet</div>
+                <div style="font-size:13px;color:#999;max-width:360px;margin:0 auto 24px;">When you deploy capital against a target, your contracts will appear here.</div>
+                <a href="/#/contracts/execute" style="background:#1a1a1a;color:#fff;border:none;padding:10px 28px;border-radius:6px;font-size:13px;font-weight:500;cursor:pointer;text-decoration:none;letter-spacing:0.02em;display:inline-block;">Create Contract</a>
+            </div>
+        `;
         return;
     }
 

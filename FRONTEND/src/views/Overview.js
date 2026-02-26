@@ -519,7 +519,7 @@ export function renderOverview() {
             <!-- Section 1: Hero -->
             <div class="eq-hero">
                 <div class="eq-tag">Performance Collateral Protocol</div>
-                <h1 class="eq-hero-headline">Capital committed to <strong>measurable</strong> outcomes.</h1>
+                <h1 class="eq-hero-headline">Back yourself. <strong>Lock the capital</strong> to prove it.</h1>
                 <p class="eq-hero-sub">Stake against revenue, sales, or growth targets. Automatic verification. Final settlement. No appeals.</p>
                 <div class="eq-hero-actions">
                     <button class="eq-btn-primary" onclick="document.getElementById('live-market').scrollIntoView({behavior:'smooth'})">Explore Market</button>

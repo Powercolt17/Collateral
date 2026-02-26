@@ -328,22 +328,17 @@ window.app = {
         window.app._authMode = isSignup ? 'signup' : 'signin';
 
         const title = document.getElementById('auth-modal-title');
-        const subtitle = document.getElementById('auth-modal-subtitle');
         const btn = document.getElementById('btn-auth-submit');
         const usernameField = document.getElementById('auth-username-field');
         const toggleText = document.getElementById('auth-toggle-text');
 
         if (isSignup) {
-            // Switching to signup
             if (title) title.textContent = 'Create your account.';
-            if (subtitle) subtitle.textContent = 'Lock capital against your own targets.';
             if (btn) btn.textContent = 'Create Account';
             if (usernameField) usernameField.classList.remove('hidden');
             if (toggleText) toggleText.innerHTML = 'Already have an account? <button onclick="window.app.toggleAuthMode()" class="text-[#111] font-medium hover:underline bg-transparent border-none cursor-pointer p-0">Sign in</button>';
         } else {
-            // Switching to signin
             if (title) title.textContent = 'Sign in to lock capital.';
-            if (subtitle) subtitle.textContent = 'Secure authentication. No passwords stored by us.';
             if (btn) btn.textContent = 'Sign In';
             if (usernameField) usernameField.classList.add('hidden');
             if (toggleText) toggleText.innerHTML = 'New here? <button onclick="window.app.toggleAuthMode()" class="text-[#111] font-medium hover:underline bg-transparent border-none cursor-pointer p-0">Create account</button>';

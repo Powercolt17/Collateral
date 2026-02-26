@@ -13,6 +13,7 @@ import contractWriteRoutes from './routes/contracts-write.js';
 import profileRoutes from './routes/profiles.js';
 import usersRoutes from './routes/users.js';
 import authRoutes from './routes/auth.js';
+import clerkAuthRoutes from './routes/clerk-auth.js';
 import identityRoutes from './routes/identity.js';
 import webhookRoutes from './routes/webhooks.js';
 import connectRoutes from './routes/connect.js';
@@ -250,6 +251,7 @@ async function bootFastify() {
 
         // Identity & Auth
         await safeRegister('auth', authRoutes);
+        await safeRegister('clerk-auth', clerkAuthRoutes);
         await safeRegister('identity', identityRoutes);
         await safeRegister('connect', connectRoutes);
         await safeRegister('x-oauth', xOAuthRoutes);

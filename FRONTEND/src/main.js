@@ -282,7 +282,13 @@ window.app = {
             modal.classList.add('hidden');
         }, 300);
     },
-    handleSignOut: function () {
+    handleSignOut: async function () {
+        // Sign out of Clerk first (if available)
+        try {
+            if (window.Clerk && window.Clerk.signOut) {
+                await window.Clerk.signOut();
+            }
+        } catch (e) { console.warn('[Auth] Clerk sign-out failed:', e); }
         api.logout();
         appState.isLoggedIn = false;
         appState.username = null;
@@ -307,141 +313,100 @@ window.app = {
         }
     },
     handleLoginSubmit: async function () {
-        const btn = document.getElementById('btn-login-submit');
-        const emailInput = document.getElementById('login-email');
-        const passwordInput = document.getElementById('login-password');
-        const email = emailInput?.value?.trim();
-        const password = passwordInput?.value;
-
-        if (!email || !password) {
-            alert('Please enter email and password');
-            return;
-        }
-
-        const originalText = btn.innerText;
-        btn.innerHTML = `<div class="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin mx-auto"></div>`;
-        btn.disabled = true;
-
+        // Legacy - redirect to OAuth
+        window.app.signInWithGoogle();
+    },
+    signInWithGoogle: async function () {
         try {
-            console.log('[App] Logging in with email:', email);
-            const result = await api.login(email, password);
-
-            if (!result.ok) {
-                throw new Error(result.error || 'Login failed');
+            if (!window.Clerk) {
+                alert('Sign-in not available. Please refresh.');
+                return;
+            }
+            console.log('[Auth] Starting Google OAuth via Clerk...');
+            await window.Clerk.client.signIn.create({
+                strategy: 'oauth_google',
+                redirectUrl: window.location.origin + '/#/overview',
+                actionCompleteRedirectUrl: window.location.origin + '/#/overview',
+            });
+        } catch (err) {
+            console.error('[Auth] Google sign-in failed:', err);
+        }
+    },
+    signInWithApple: async function () {
+        try {
+            if (!window.Clerk) {
+                alert('Sign-in not available. Please refresh.');
+                return;
+            }
+            console.log('[Auth] Starting Apple OAuth via Clerk...');
+            await window.Clerk.client.signIn.create({
+                strategy: 'oauth_apple',
+                redirectUrl: window.location.origin + '/#/overview',
+                actionCompleteRedirectUrl: window.location.origin + '/#/overview',
+            });
+        } catch (err) {
+            console.error('[Auth] Apple sign-in failed:', err);
+        }
+    },
+    _handleClerkCallback: async function () {
+        // Called after Clerk session is established - exchange for internal JWT
+        try {
+            if (!window.Clerk || !window.Clerk.session) {
+                console.log('[Auth] No Clerk session to exchange');
+                return;
+            }
+            const clerkToken = await window.Clerk.session.getToken();
+            if (!clerkToken) {
+                console.log('[Auth] No Clerk token available');
+                return;
             }
 
-            // Set appState from identity (CANONICAL source, NO email fallbacks)
+            console.log('[Auth] Exchanging Clerk token for internal JWT...');
+            const resp = await fetch((import.meta.env.VITE_API_BASE_URL || 'https://collateral-production.up.railway.app') + '/v1/auth/clerk', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ token: clerkToken }),
+            });
+
+            const result = await resp.json();
+            if (!result.ok) throw new Error(result.error || 'Token exchange failed');
+
+            // Store internal JWT (same as before — existing pipeline)
+            api.setAuthToken(result.accessToken);
+            api.setStoredUser({
+                email: result.user?.email,
+                userId: result.user?.id,
+                displayName: result.identity?.displayName,
+                username: result.identity?.username,
+            });
+
             appState.isLoggedIn = true;
             appState.displayName = result.identity?.displayName || null;
-            appState.username = result.identity?.username || null; // stored WITHOUT @ prefix
+            appState.username = result.identity?.username || null;
             appState.userId = result.user?.id;
 
-            console.log('[App] ✅ Logged in as:', appState.displayName, '@' + appState.username);
-
+            console.log('[Auth] ✅ Signed in via Clerk as:', appState.displayName, '@' + appState.username);
             window.app.closeAccessModal();
             updateAuthUI();
-        } catch (error) {
-            console.error('Login failed:', error);
-            alert('Login failed: ' + (error.message || 'Unknown error'));
-        } finally {
-            btn.innerText = originalText;
-            btn.disabled = false;
+        } catch (err) {
+            console.error('[Auth] Clerk token exchange failed:', err);
+            alert('Sign-in failed. Please try again.');
         }
     },
     goToCreateIdentity: function () {
-        window.app.closeAccessModal();
-        setTimeout(() => {
-            window.app.openCreateModal();
-        }, 350);
+        // With OAuth, signup and signin are the same flow
+        window.app.signInWithGoogle();
     },
     openCreateModal: function () {
-        const backdrop = document.getElementById('modal-create-backdrop');
-        const modal = document.getElementById('modal-create');
-        backdrop.classList.remove('hidden');
-        modal.classList.remove('hidden');
-        setTimeout(() => {
-            backdrop.classList.remove('opacity-0');
-            modal.classList.remove('scale-95', 'opacity-0');
-            modal.classList.add('scale-100', 'opacity-100');
-        }, 10);
+        // Redirect to OAuth modal
+        window.app.openAccessModal();
     },
     closeCreateModal: function () {
-        const backdrop = document.getElementById('modal-create-backdrop');
-        const modal = document.getElementById('modal-create');
-        backdrop.classList.add('opacity-0');
-        modal.classList.add('scale-95', 'opacity-0');
-        modal.classList.remove('scale-100', 'opacity-100');
-        setTimeout(() => {
-            backdrop.classList.add('hidden');
-            modal.classList.add('hidden');
-        }, 300);
+        window.app.closeAccessModal();
     },
     handleCreateAccount: async function () {
-        const btn = document.getElementById('btn-create-submit');
-        const emailInput = document.getElementById('create-email');
-        const passwordInput = document.getElementById('create-password');
-        const usernameInput = document.getElementById('create-username'); // Username/handle input
-
-        const email = emailInput?.value?.trim();
-        const password = passwordInput?.value;
-        const username = usernameInput?.value?.trim();
-
-        // Validation
-        if (!email) {
-            alert('Please enter your email');
-            return;
-        }
-        if (!password || password.length < 8) {
-            alert('Password must be at least 8 characters');
-            return;
-        }
-        if (!username) {
-            alert('Please enter a username');
-            return;
-        }
-        // Validate username format: 3-20 chars, alphanumeric + underscores
-        const usernameRegex = /^[a-zA-Z0-9_]{3,20}$/;
-        if (!usernameRegex.test(username)) {
-            alert('Username must be 3-20 characters, letters/numbers/underscores only');
-            return;
-        }
-
-        const originalText = btn.innerText;
-        btn.innerHTML = `<div class="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin mx-auto"></div>`;
-        btn.disabled = true;
-
-        try {
-            // username = handle (e.g. powercolt)
-            // displayName = pretty name (defaults to username if not separate input)
-            const displayName = username; // Same for now, can add separate input later
-
-            console.log('[App] Creating account:', { email, username, displayName });
-
-            // Call signup with username as handle, displayName as pretty name
-            const result = await api.signup(email, password, username, displayName);
-            console.log('[App] Signup result:', result);
-
-            if (!result.ok) {
-                throw new Error(result.error || 'Signup failed');
-            }
-
-            // Set appState from identity (CANONICAL source, NO @ prefix stored)
-            appState.isLoggedIn = true;
-            appState.displayName = result.identity.displayName;
-            appState.username = result.identity.username; // stored WITHOUT @ prefix
-            appState.userId = result.user.id;
-
-            console.log('[App] ✅ Signed up as:', appState.displayName, '@' + appState.username);
-
-            window.app.closeCreateModal();
-            updateAuthUI();
-        } catch (error) {
-            console.error('Account creation failed:', error);
-            alert('Account creation failed: ' + (error.message || 'Unknown error'));
-        } finally {
-            btn.innerText = originalText;
-            btn.disabled = false;
-        }
+        // With OAuth, signup is handled by Clerk
+        window.app.signInWithGoogle();
     },
     toggleMenuPersistence: function (e) {
         e.stopPropagation();
@@ -1137,3 +1102,30 @@ if (!window.location.hash && !isOAuthLanding) {
 // Hydrate session from backend on app init
 // This ensures identity is always canonical from DB, even if localStorage is stale
 hydrateSession();
+
+// =============================================================================
+// CLERK SDK INITIALIZATION
+// =============================================================================
+(async function initClerk() {
+    const clerkPubKey = import.meta.env.VITE_CLERK_PUBLISHABLE_KEY;
+    if (!clerkPubKey) {
+        console.log('[Clerk] No publishable key configured, OAuth sign-in disabled');
+        return;
+    }
+    try {
+        // Dynamically import Clerk JS
+        const { Clerk } = await import('https://cdn.jsdelivr.net/npm/@clerk/clerk-js@latest/+esm');
+        const clerk = new Clerk(clerkPubKey);
+        await clerk.load();
+        window.Clerk = clerk;
+        console.log('[Clerk] ✅ SDK loaded, session:', !!clerk.session);
+
+        // If user has Clerk session but no internal JWT, auto-exchange
+        if (clerk.session && !api.hasAuthToken()) {
+            console.log('[Clerk] Found active session, exchanging token...');
+            await window.app._handleClerkCallback();
+        }
+    } catch (err) {
+        console.error('[Clerk] SDK init failed:', err);
+    }
+})();

@@ -187,9 +187,12 @@ export const users = pgTable('users', {
     xAccessToken: text('x_access_token'),      // OAuth 1.0a access token
     xAccessTokenSecret: text('x_access_token_secret'), // OAuth 1.0a token secret
     xAccountCreatedAt: timestamp('x_account_created_at', { withTimezone: true }), // X account age for gating
+    // Clerk OAuth
+    clerkUserId: varchar('clerk_user_id', { length: 255 }),
     createdAt: timestamp('created_at', { withTimezone: true }).defaultNow().notNull(),
 }, (table) => [
     uniqueIndex('idx_users_x_user_id').on(table.xUserId),
+    uniqueIndex('idx_users_clerk_user_id').on(table.clerkUserId),
 ]);
 
 export const identities = pgTable('identities', {

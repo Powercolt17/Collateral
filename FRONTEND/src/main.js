@@ -312,54 +312,157 @@ window.app = {
             window.router.navigate('/contracts');
         }
     },
+    _authMode: 'signin', // 'signin' or 'signup'
+    _showAuthError: function (msg) {
+        const el = document.getElementById('auth-error');
+        const txt = document.getElementById('auth-error-text');
+        if (el && txt) { txt.textContent = msg; el.classList.remove('hidden'); }
+    },
+    _hideAuthError: function () {
+        const el = document.getElementById('auth-error');
+        if (el) el.classList.add('hidden');
+    },
+    toggleAuthMode: function () {
+        window.app._hideAuthError();
+        const isSignup = window.app._authMode === 'signin';
+        window.app._authMode = isSignup ? 'signup' : 'signin';
+
+        const title = document.getElementById('auth-modal-title');
+        const subtitle = document.getElementById('auth-modal-subtitle');
+        const btn = document.getElementById('btn-auth-submit');
+        const usernameField = document.getElementById('auth-username-field');
+        const toggleText = document.getElementById('auth-toggle-text');
+
+        if (isSignup) {
+            // Switching to signup
+            if (title) title.textContent = 'Create your account.';
+            if (subtitle) subtitle.textContent = 'Lock capital against your own targets.';
+            if (btn) btn.textContent = 'Create Account';
+            if (usernameField) usernameField.classList.remove('hidden');
+            if (toggleText) toggleText.innerHTML = 'Already have an account? <button onclick="window.app.toggleAuthMode()" class="text-[#111] font-medium hover:underline bg-transparent border-none cursor-pointer p-0">Sign in</button>';
+        } else {
+            // Switching to signin
+            if (title) title.textContent = 'Sign in to lock capital.';
+            if (subtitle) subtitle.textContent = 'Secure authentication. No passwords stored by us.';
+            if (btn) btn.textContent = 'Sign In';
+            if (usernameField) usernameField.classList.add('hidden');
+            if (toggleText) toggleText.innerHTML = 'New here? <button onclick="window.app.toggleAuthMode()" class="text-[#111] font-medium hover:underline bg-transparent border-none cursor-pointer p-0">Create account</button>';
+        }
+    },
+    handleAuthSubmit: async function () {
+        window.app._hideAuthError();
+        const email = document.getElementById('auth-email')?.value?.trim();
+        const password = document.getElementById('auth-password')?.value;
+        const btn = document.getElementById('btn-auth-submit');
+
+        if (!email || !password) {
+            window.app._showAuthError('Email and password are required.');
+            return;
+        }
+
+        if (window.app._authMode === 'signup') {
+            // Sign up flow
+            const username = document.getElementById('auth-username')?.value?.trim();
+            if (!username) { window.app._showAuthError('Username is required.'); return; }
+            if (!/^[a-zA-Z0-9_]{3,20}$/.test(username)) {
+                window.app._showAuthError('Username: 3-20 chars, letters/numbers/underscores only.');
+                return;
+            }
+            if (password.length < 8) { window.app._showAuthError('Password must be at least 8 characters.'); return; }
+
+            const originalText = btn.textContent;
+            btn.innerHTML = '<div class="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin mx-auto"></div>';
+            btn.disabled = true;
+
+            try {
+                const result = await api.signup(email, password, username, username);
+                if (!result.ok) throw new Error(result.error || 'Signup failed');
+
+                appState.isLoggedIn = true;
+                appState.displayName = result.identity?.displayName || null;
+                appState.username = result.identity?.username || null;
+                appState.userId = result.user?.id;
+
+                console.log('[Auth] ✅ Signed up as:', appState.displayName);
+                window.app.closeAccessModal();
+                updateAuthUI();
+            } catch (err) {
+                window.app._showAuthError(err.message || 'Account creation failed.');
+            } finally {
+                btn.textContent = originalText;
+                btn.disabled = false;
+            }
+        } else {
+            // Sign in flow
+            const originalText = btn.textContent;
+            btn.innerHTML = '<div class="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin mx-auto"></div>';
+            btn.disabled = true;
+
+            try {
+                const result = await api.login(email, password);
+                if (!result.ok) throw new Error(result.error || 'Login failed');
+
+                appState.isLoggedIn = true;
+                appState.displayName = result.identity?.displayName || null;
+                appState.username = result.identity?.username || null;
+                appState.userId = result.user?.id;
+
+                console.log('[Auth] ✅ Signed in as:', appState.displayName);
+                window.app.closeAccessModal();
+                updateAuthUI();
+            } catch (err) {
+                window.app._showAuthError(err.message || 'Invalid email or password.');
+            } finally {
+                btn.textContent = originalText;
+                btn.disabled = false;
+            }
+        }
+    },
     handleLoginSubmit: async function () {
-        // Legacy - redirect to OAuth
-        window.app.signInWithGoogle();
+        window.app.handleAuthSubmit();
+    },
+    goToCreateIdentity: function () {
+        if (window.app._authMode !== 'signup') window.app.toggleAuthMode();
+        window.app.openAccessModal();
+    },
+    openCreateModal: function () {
+        if (window.app._authMode !== 'signup') window.app.toggleAuthMode();
+        window.app.openAccessModal();
+    },
+    closeCreateModal: function () {
+        window.app.closeAccessModal();
+    },
+    handleCreateAccount: async function () {
+        if (window.app._authMode !== 'signup') window.app.toggleAuthMode();
+        window.app.openAccessModal();
     },
     signInWithGoogle: async function () {
         try {
-            if (!window.Clerk) {
-                alert('Sign-in not available. Please refresh.');
-                return;
-            }
+            if (!window.Clerk) { alert('OAuth not available. Please use email/password or refresh.'); return; }
             console.log('[Auth] Starting Google OAuth via Clerk...');
             await window.Clerk.client.signIn.create({
                 strategy: 'oauth_google',
                 redirectUrl: window.location.origin + '/#/overview',
                 actionCompleteRedirectUrl: window.location.origin + '/#/overview',
             });
-        } catch (err) {
-            console.error('[Auth] Google sign-in failed:', err);
-        }
+        } catch (err) { console.error('[Auth] Google sign-in failed:', err); }
     },
     signInWithApple: async function () {
         try {
-            if (!window.Clerk) {
-                alert('Sign-in not available. Please refresh.');
-                return;
-            }
+            if (!window.Clerk) { alert('OAuth not available. Please use email/password or refresh.'); return; }
             console.log('[Auth] Starting Apple OAuth via Clerk...');
             await window.Clerk.client.signIn.create({
                 strategy: 'oauth_apple',
                 redirectUrl: window.location.origin + '/#/overview',
                 actionCompleteRedirectUrl: window.location.origin + '/#/overview',
             });
-        } catch (err) {
-            console.error('[Auth] Apple sign-in failed:', err);
-        }
+        } catch (err) { console.error('[Auth] Apple sign-in failed:', err); }
     },
     _handleClerkCallback: async function () {
-        // Called after Clerk session is established - exchange for internal JWT
         try {
-            if (!window.Clerk || !window.Clerk.session) {
-                console.log('[Auth] No Clerk session to exchange');
-                return;
-            }
+            if (!window.Clerk || !window.Clerk.session) return;
             const clerkToken = await window.Clerk.session.getToken();
-            if (!clerkToken) {
-                console.log('[Auth] No Clerk token available');
-                return;
-            }
+            if (!clerkToken) return;
 
             console.log('[Auth] Exchanging Clerk token for internal JWT...');
             const resp = await fetch((import.meta.env.VITE_API_BASE_URL || 'https://collateral-production.up.railway.app') + '/v1/auth/clerk', {
@@ -367,46 +470,26 @@ window.app = {
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ token: clerkToken }),
             });
-
             const result = await resp.json();
             if (!result.ok) throw new Error(result.error || 'Token exchange failed');
 
-            // Store internal JWT (same as before — existing pipeline)
             api.setAuthToken(result.accessToken);
             api.setStoredUser({
-                email: result.user?.email,
-                userId: result.user?.id,
-                displayName: result.identity?.displayName,
-                username: result.identity?.username,
+                email: result.user?.email, userId: result.user?.id,
+                displayName: result.identity?.displayName, username: result.identity?.username,
             });
-
             appState.isLoggedIn = true;
             appState.displayName = result.identity?.displayName || null;
             appState.username = result.identity?.username || null;
             appState.userId = result.user?.id;
 
-            console.log('[Auth] ✅ Signed in via Clerk as:', appState.displayName, '@' + appState.username);
+            console.log('[Auth] ✅ Signed in via Clerk as:', appState.displayName);
             window.app.closeAccessModal();
             updateAuthUI();
         } catch (err) {
             console.error('[Auth] Clerk token exchange failed:', err);
             alert('Sign-in failed. Please try again.');
         }
-    },
-    goToCreateIdentity: function () {
-        // With OAuth, signup and signin are the same flow
-        window.app.signInWithGoogle();
-    },
-    openCreateModal: function () {
-        // Redirect to OAuth modal
-        window.app.openAccessModal();
-    },
-    closeCreateModal: function () {
-        window.app.closeAccessModal();
-    },
-    handleCreateAccount: async function () {
-        // With OAuth, signup is handled by Clerk
-        window.app.signInWithGoogle();
     },
     toggleMenuPersistence: function (e) {
         e.stopPropagation();

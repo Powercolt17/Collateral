@@ -11,7 +11,7 @@ export function renderLedger() {
             .ldg {
                 background: #fff;
                 min-height: calc(100vh - 72px);
-                font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+                font-family: 'Neue Haas Grotesk Display', 'Helvetica Neue', Helvetica, Arial, sans-serif;
                 color: #111;
                 display: flex;
                 flex-direction: column;
@@ -143,7 +143,7 @@ export function renderLedger() {
                 border: none;
                 border-bottom: 2px solid transparent;
                 cursor: pointer;
-                font-family: 'Inter', sans-serif;
+                font-family: 'Neue Haas Grotesk Display', 'Helvetica Neue', Helvetica, Arial, sans-serif;
                 text-transform: uppercase;
                 letter-spacing: 0.06em;
                 transition: color 0.15s;
@@ -166,7 +166,7 @@ export function renderLedger() {
                 border: 1px solid #e5e5e5;
                 outline: none;
                 width: 180px;
-                font-family: 'Inter', sans-serif;
+                font-family: 'Neue Haas Grotesk Display', 'Helvetica Neue', Helvetica, Arial, sans-serif;
                 color: #333;
                 background: #fafafa;
                 transition: border-color 0.15s;
@@ -226,7 +226,7 @@ export function renderLedger() {
                 border: 1px solid #e5e5e5;
                 cursor: pointer;
                 transition: all 0.15s;
-                font-family: 'Inter', sans-serif;
+                font-family: 'Neue Haas Grotesk Display', 'Helvetica Neue', Helvetica, Arial, sans-serif;
             }
             .ldg-pill:hover { border-color: #ccc; color: #666; }
             .ldg-pill.active {
@@ -252,7 +252,7 @@ export function renderLedger() {
                 border: 1px solid #e5e5e5;
                 background: #fff;
                 cursor: pointer;
-                font-family: 'Inter', sans-serif;
+                font-family: 'Neue Haas Grotesk Display', 'Helvetica Neue', Helvetica, Arial, sans-serif;
                 color: #333;
                 outline: none;
                 font-weight: 500;

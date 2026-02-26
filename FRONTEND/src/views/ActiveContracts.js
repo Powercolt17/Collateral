@@ -573,21 +573,16 @@ function renderContractList(container, allContracts, filter) {
     }
 
     const countEl = document.getElementById('act-list-count');
-    if (countEl) countEl.textContent = \`\${filtered.length} CONTRACTS\`;
+    if (countEl) countEl.textContent = filtered.length + ' CONTRACTS';
 
     if (filtered.length === 0) {
-        container.innerHTML = \`
-            <div class="act-empty">
-                <div class="act-empty-title">No \${filter.toUpperCase()} CONTRACTS</div>
-            </div>
-        \`;
+        container.innerHTML = '<div class="act-empty"><div class="act-empty-title">No ' + filter.toUpperCase() + ' CONTRACTS</div></div>';
         return;
     }
 
     const listHtml = filtered.map((c, i) => {
         const platform = c.platform?.toUpperCase() || 'UNKNOWN';
         const amount = (c.lockAmountUsdCents / 100).toLocaleString('en-US', { style: 'currency', currency: 'USD' });
-        // Expected payout display based on image: +$2,000.00
         const payout = c.payoutAmountUsdCents ? '+$' + (c.payoutAmountUsdCents / 100).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) : '';
         const riskTier = c.riskTier?.toUpperCase() || 'STANDARD';
         const state = c.derivedState || c.state;
@@ -612,71 +607,54 @@ function renderContractList(container, allContracts, filter) {
 
         const icon = getPlatformIcon(c.platform);
         const contractShort = 'CXTRCT-' + (c.id.length > 5 ? c.id.slice(0, 4).toUpperCase() : 'XXX');
-        
+
         let progressHtml = '';
         if (statusMode === 'active') {
             const pct = getDerivedProgress(c.id);
-            // Example visual rule: if > 80%, visually make it red like the screenshot for excitement
             const isRed = pct > 80 || i === 0;
             const decimalPct = (pct + (Math.abs(c.id.charCodeAt(0)) % 10) / 10).toFixed(1);
-            
-            progressHtml = \`
-                <div class="act-card-progress">
-                    <div class="act-progress-track">
-                        <div class="act-progress-fill \${isRed ? 'red' : ''}" style="width: \${pct}%"></div>
-                    </div>
-                    <div class="act-progress-pct \${isRed ? 'red' : ''}">\${decimalPct}%</div>
-                </div>
-            \`;
+            const fillClass = isRed ? 'act-progress-fill red' : 'act-progress-fill';
+            const pctClass = isRed ? 'act-progress-pct red' : 'act-progress-pct';
+
+            progressHtml = '<div class="act-card-progress">' +
+                '<div class="act-progress-track">' +
+                '<div class="' + fillClass + '" style="width: ' + pct + '%"></div>' +
+                '</div>' +
+                '<div class="' + pctClass + '">' + decimalPct + '%</div>' +
+                '</div>';
         } else {
-            // For pending/settled, mock an empty spacer or just leave it out to match design
-            progressHtml = \`<div class="act-card-progress"></div>\`;
+            progressHtml = '<div class="act-card-progress"></div>';
         }
 
-        // Tags based on status
-        let tagsHtml = \`
-            <div class="act-tag">\${riskTier}</div>
-            <div class="act-tag">\${isSettled ? 'SETTLED' : (isPending ? 'PENDING' : 'LEDGER')}</div>
-        \`;
+        const tagLabel = isSettled ? 'SETTLED' : (isPending ? 'PENDING' : 'LEDGER');
+        const tagsHtml = '<div class="act-tag">' + riskTier + '</div>' +
+            '<div class="act-tag">' + tagLabel + '</div>';
 
-        return \`
-            <a href="#/contracts/\${c.id}" class="act-card">
-                <div class="act-card-brand">
-                    <div class="act-card-icon">
-                        <i data-lucide="\${icon}"></i>
-                    </div>
-                    <div class="act-card-title-col">
-                        <span class="act-card-title">\${platform.charAt(0) + platform.slice(1).toLowerCase()} Performance</span>
-                        <span class="act-card-id">\${contractShort}</span>
-                    </div>
-                </div>
-
-                \${progressHtml}
-
-                <div class="act-card-status">
-                    <span class="act-status-pill \${statusMode}">
-                        <span class="dot"></span>
-                        \${statusLabel}
-                    </span>
-                </div>
-
-                <div class="act-card-tags">
-                    \${tagsHtml}
-                </div>
-
-                <div class="act-card-financials">
-                    <span class="act-fin-main">\${amount}</span>
-                    <span class="act-fin-sub">\${statusMode === 'active' ? payout : ''}</span>
-                </div>
-
-                <div class="act-card-arrow">
-                    <i data-lucide="chevron-down"></i>
-                </div>
-            </a>
-        \`;
+        return '<a href="#/contracts/' + c.id + '" class="act-card">' +
+            '<div class="act-card-brand">' +
+            '<div class="act-card-icon"><i data-lucide="' + icon + '"></i></div>' +
+            '<div class="act-card-title-col">' +
+            '<span class="act-card-title">' + platform.charAt(0) + platform.slice(1).toLowerCase() + ' Performance</span>' +
+            '<span class="act-card-id">' + contractShort + '</span>' +
+            '</div>' +
+            '</div>' +
+            progressHtml +
+            '<div class="act-card-status">' +
+            '<span class="act-status-pill ' + statusMode + '">' +
+            '<span class="dot"></span>' +
+            statusLabel +
+            '</span>' +
+            '</div>' +
+            '<div class="act-card-tags">' + tagsHtml + '</div>' +
+            '<div class="act-card-financials">' +
+            '<span class="act-fin-main">' + amount + '</span>' +
+            '<span class="act-fin-sub">' + (statusMode === 'active' ? payout : '') + '</span>' +
+            '</div>' +
+            '<div class="act-card-arrow"><i data-lucide="chevron-down"></i></div>' +
+            '</a>';
     }).join('');
 
-    container.innerHTML = \`<div class="act-list">\${listHtml}</div>\`;
+    container.innerHTML = '<div class="act-list">' + listHtml + '</div>';
     if (window.lucide) window.lucide.createIcons();
 }
 
@@ -692,3 +670,4 @@ function getPlatformIcon(platform) {
     };
     return map[platform?.toLowerCase()] || 'file-text';
 }
+

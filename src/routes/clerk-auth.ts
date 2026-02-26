@@ -47,7 +47,23 @@ const clerkAuthRoutes: FastifyPluginAsync = async (fastify) => {
         try {
             // Verify the Clerk session token
             const clerk = createClerkClient({ secretKey: clerkSecretKey });
-            const { sub: clerkUserId } = await clerk.verifyToken(token);
+
+            let clerkUserId: string;
+            try {
+                const payload = await clerk.verifyToken(token, {
+                    authorizedParties: [
+                        'https://collateral.market',
+                        'https://www.collateral.market',
+                        'http://localhost:5173',
+                        'http://localhost:3000',
+                    ],
+                });
+                clerkUserId = payload.sub;
+            } catch (verifyErr: any) {
+                console.error('[ClerkAuth] Token verify failed:', verifyErr.message, verifyErr.reason || '');
+                reply.status(401);
+                return { ok: false, error: 'Token verification failed: ' + (verifyErr.reason || verifyErr.message) };
+            }
 
             if (!clerkUserId) {
                 reply.status(401);

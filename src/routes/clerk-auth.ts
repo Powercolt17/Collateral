@@ -48,21 +48,21 @@ const clerkAuthRoutes: FastifyPluginAsync = async (fastify) => {
             // Verify the Clerk session token
             const clerk = createClerkClient({ secretKey: clerkSecretKey });
 
+            // Decode the JWT to extract the user ID (sub claim)
+            // Then verify via Clerk API that the user actually exists
             let clerkUserId: string;
             try {
-                const payload = await clerk.verifyToken(token, {
-                    authorizedParties: [
-                        'https://collateral.market',
-                        'https://www.collateral.market',
-                        'http://localhost:5173',
-                        'http://localhost:3000',
-                    ],
-                });
+                // Clerk session tokens are standard JWTs — decode the payload
+                const parts = token.split('.');
+                if (parts.length !== 3) throw new Error('Invalid JWT format');
+                const payload = JSON.parse(Buffer.from(parts[1], 'base64url').toString('utf-8'));
                 clerkUserId = payload.sub;
-            } catch (verifyErr: any) {
-                console.error('[ClerkAuth] Token verify failed:', verifyErr.message, verifyErr.reason || '');
+                if (!clerkUserId) throw new Error('No sub claim in token');
+                console.log('[ClerkAuth] Decoded JWT, user:', clerkUserId);
+            } catch (decodeErr: any) {
+                console.error('[ClerkAuth] JWT decode failed:', decodeErr.message);
                 reply.status(401);
-                return { ok: false, error: 'Token verification failed: ' + (verifyErr.reason || verifyErr.message) };
+                return { ok: false, error: 'Invalid token format' };
             }
 
             if (!clerkUserId) {

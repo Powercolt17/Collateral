@@ -413,7 +413,9 @@ async function runExecution(contractData, stake, multiplier, btnEl, bodyEl) {
             condition: {
                 operator: 'GTE',
                 threshold,
-                deadline: contractData.deadline || new Date(Date.now() + 30 * 86400000).toISOString(),
+                deadline: (contractData.deadline && contractData.deadline !== 'undefined' && !isNaN(new Date(contractData.deadline).getTime()))
+                    ? contractData.deadline
+                    : new Date(Date.now() + 30 * 86400000).toISOString(),
             },
             lockAmountUsdCents: Math.round(stake * 100),
             payoutAmountUsdCents: Math.round(stake * multiplier * 100),

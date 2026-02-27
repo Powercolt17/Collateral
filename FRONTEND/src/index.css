@@ -1,5 +1,14 @@
 @import "tailwindcss";
 
+/* Override JetBrains Mono's slashed zero with a clean zero from system fonts */
+@font-face {
+    font-family: 'JetBrains Mono';
+    src: local('Helvetica Neue'), local('Helvetica'), local('Arial');
+    unicode-range: U+0030;
+    font-weight: 100 900;
+    font-style: normal;
+}
+
 /* ================================================================
    COLLATERAL.MARKET — GLOBAL TYPOGRAPHY & CONTRAST SYSTEM
    Institutional grade. WCAG AA minimum. Zero softness.

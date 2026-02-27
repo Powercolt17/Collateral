@@ -604,6 +604,81 @@ export function renderSources() {
                 cursor: not-allowed;
             }
 
+            /* ── Shopify Domain Input Step ── */
+            .src-shopify-step {
+                padding: 28px;
+            }
+            .src-shopify-step-title {
+                font-size: 14px;
+                font-weight: 600;
+                color: #111;
+                margin-bottom: 4px;
+            }
+            .src-shopify-step-sub {
+                font-size: 12px;
+                color: #999;
+                margin-bottom: 20px;
+                line-height: 1.5;
+            }
+            .src-shopify-input-label {
+                font-family: 'JetBrains Mono', monospace;
+                font-size: 10px;
+                font-weight: 600;
+                text-transform: uppercase;
+                letter-spacing: 0.12em;
+                color: #aaa;
+                margin-bottom: 8px;
+                display: block;
+            }
+            .src-shopify-input-wrap {
+                display: flex;
+                align-items: center;
+                border: 1px solid #e0e0e0;
+                background: #fafafa;
+                transition: border-color 0.2s;
+            }
+            .src-shopify-input-wrap:focus-within {
+                border-color: #752122;
+                background: #fff;
+            }
+            .src-shopify-input-wrap.error {
+                border-color: #dc2626;
+            }
+            .src-shopify-input {
+                flex: 1;
+                padding: 12px 14px;
+                font-size: 14px;
+                font-family: 'JetBrains Mono', monospace;
+                color: #111;
+                border: none;
+                background: transparent;
+                outline: none;
+                letter-spacing: -0.01em;
+            }
+            .src-shopify-input::placeholder {
+                color: #ccc;
+            }
+            .src-shopify-suffix {
+                font-family: 'JetBrains Mono', monospace;
+                font-size: 13px;
+                color: #999;
+                padding-right: 14px;
+                white-space: nowrap;
+                user-select: none;
+            }
+            .src-shopify-error {
+                font-size: 12px;
+                color: #dc2626;
+                margin-top: 8px;
+                min-height: 18px;
+            }
+            .src-shopify-hint {
+                font-size: 11px;
+                color: #bbb;
+                margin-top: 10px;
+                line-height: 1.5;
+            }
+
             /* ── Loading ── */
             .src-loading {
                 display: flex;
@@ -1017,14 +1092,11 @@ export async function initSources() {
                 try {
                     let result;
                     if (prov.id === 'shopify') {
-                        const shopRaw = prompt('Enter your Shopify store domain (e.g. mystore.myshopify.com):');
-                        if (!shopRaw) {
-                            proceedBtn.textContent = 'PROCEED';
-                            proceedBtn.disabled = false;
-                            return;
-                        }
-                        const shop = shopRaw.trim().replace(/^https?:\/\//, '').replace(/\/+$/, '');
-                        result = await window.api.startShopifyConnect(shop);
+                        // Show custom Shopify domain input step
+                        proceedBtn.textContent = 'PROCEED';
+                        proceedBtn.disabled = false;
+                        showShopifyDomainStep(modal, proceedBtn);
+                        return;
                     } else if (prov.connectFn && window.api[prov.connectFn]) {
                         result = await window.api[prov.connectFn]();
                     } else {
@@ -1084,6 +1156,141 @@ export async function initSources() {
             alert(`Failed to disconnect ${prov.name}: ${err.message}`);
         }
     };
+}
+
+// ── Custom Shopify Domain Input Step ──
+function showShopifyDomainStep(modalOverlay, originalProceedBtn) {
+    const modal = modalOverlay.querySelector('.src-modal');
+    if (!modal) return;
+
+    // Replace body + footer with custom Shopify input step
+    const body = modal.querySelector('.src-modal-body');
+    const footer = modal.querySelector('.src-modal-footer');
+
+    if (body) {
+        body.innerHTML = `
+            <div class="src-shopify-step" style="padding: 0;">
+                <div class="src-shopify-step-title">Enter your Shopify store domain</div>
+                <div class="src-shopify-step-sub">
+                    We'll redirect you to Shopify to authorize read-only access to your store data for contract verification.
+                </div>
+                <label class="src-shopify-input-label">Store Domain</label>
+                <div class="src-shopify-input-wrap" id="shopify-input-wrap">
+                    <input type="text"
+                        class="src-shopify-input"
+                        id="shopify-domain-input"
+                        placeholder="your-store"
+                        autocomplete="off"
+                        spellcheck="false" />
+                    <span class="src-shopify-suffix">.myshopify.com</span>
+                </div>
+                <div class="src-shopify-error" id="shopify-domain-error"></div>
+                <div class="src-shopify-hint">
+                    You can find this in your Shopify admin URL: <strong>your-store</strong>.myshopify.com
+                </div>
+            </div>
+        `;
+    }
+
+    if (footer) {
+        footer.innerHTML = `
+            <button class="src-modal-cancel" id="shopify-cancel-btn">CANCEL</button>
+            <button class="src-modal-proceed" id="shopify-connect-btn">CONNECT STORE →</button>
+        `;
+    }
+
+    const input = document.getElementById('shopify-domain-input');
+    const inputWrap = document.getElementById('shopify-input-wrap');
+    const errorEl = document.getElementById('shopify-domain-error');
+    const connectBtn = document.getElementById('shopify-connect-btn');
+    const cancelBtn = document.getElementById('shopify-cancel-btn');
+
+    // Focus input
+    setTimeout(() => { if (input) input.focus(); }, 100);
+
+    // Cancel
+    if (cancelBtn) {
+        cancelBtn.onclick = () => {
+            if (window.closeSrcModal) window.closeSrcModal();
+        };
+    }
+
+    // Validate on input
+    if (input) {
+        input.addEventListener('input', () => {
+            if (inputWrap) inputWrap.classList.remove('error');
+            if (errorEl) errorEl.textContent = '';
+        });
+
+        // Enter key submits
+        input.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter') {
+                e.preventDefault();
+                if (connectBtn) connectBtn.click();
+            }
+        });
+    }
+
+    // Connect
+    if (connectBtn) {
+        connectBtn.onclick = async () => {
+            const rawVal = (input?.value || '').trim();
+
+            // Strip protocol and trailing slashes
+            let shop = rawVal.replace(/^https?:\/\//, '').replace(/\/+$/, '');
+
+            // If they typed the full domain, strip .myshopify.com
+            if (shop.endsWith('.myshopify.com')) {
+                shop = shop.replace('.myshopify.com', '');
+            }
+
+            // Validate
+            if (!shop) {
+                if (inputWrap) inputWrap.classList.add('error');
+                if (errorEl) errorEl.textContent = 'Please enter your store name.';
+                return;
+            }
+
+            if (!/^[a-zA-Z0-9][a-zA-Z0-9-]*$/.test(shop)) {
+                if (inputWrap) inputWrap.classList.add('error');
+                if (errorEl) errorEl.textContent = 'Invalid store name. Use letters, numbers, and hyphens only.';
+                return;
+            }
+
+            const fullDomain = shop + '.myshopify.com';
+
+            // Send
+            connectBtn.disabled = true;
+            connectBtn.textContent = 'CONNECTING...';
+            if (errorEl) errorEl.textContent = '';
+
+            try {
+                const result = await window.api.startShopifyConnect(fullDomain);
+                console.log('[Sources] Shopify connect result:', JSON.stringify(result));
+
+                if (result?.connected || result?.alreadyConnected) {
+                    if (window.closeSrcModal) window.closeSrcModal();
+                    initSources();
+                    return;
+                }
+
+                const redirectUrl = result?.oauthUrl || result?.url || result?.authUrl || result?.redirectUrl;
+                if (redirectUrl) {
+                    window.location.href = redirectUrl;
+                    return;
+                }
+
+                if (errorEl) errorEl.textContent = 'No redirect URL returned. Please try again.';
+                connectBtn.disabled = false;
+                connectBtn.textContent = 'CONNECT STORE →';
+            } catch (err) {
+                console.error('[Sources] Shopify connect failed:', err);
+                if (errorEl) errorEl.textContent = err?.message || 'Connection failed. Please try again.';
+                connectBtn.disabled = false;
+                connectBtn.textContent = 'CONNECT STORE →';
+            }
+        };
+    }
 }
 
 // Helper: time since

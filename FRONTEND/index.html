@@ -27,22 +27,76 @@
     <!-- Main Content (injected by router) -->
     <div id="app" class="pt-16 relative z-10 min-h-screen flex flex-col"></div>
 
-    <!-- Status Bar (Fixed Bottom) -->
-    <div class="fixed bottom-0 w-full bg-white border-t border-[#E5E5E5] py-2 px-6 flex justify-between items-center z-40 text-[10px] uppercase tracking-widest text-[#6B6B6B]"
-        style="font-family: 'JetBrains Mono', monospace;">
-        <div class="flex items-center gap-2">
-            <span class="font-medium text-[#1A1A1A]">SYSTEM STATUS</span>
-            <span class="text-[#D0D0D0]">•</span>
-            <span class="flex items-center gap-1.5 text-[#166534]"><span class="w-1.5 h-1.5 bg-[#22c55e] rounded-full"
-                    style="animation: pulse 2s ease-in-out infinite;"></span>OPERATIONAL</span>
+    <!-- Global Footer -->
+    <footer id="global-footer" style="
+        background: #111; color: #999; padding: 0; margin: 0;
+        font-family: 'Neue Haas Grotesk Display', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    ">
+        <div
+            style="max-width: 1200px; margin: 0 auto; padding: 64px 48px 48px; display: flex; justify-content: space-between; flex-wrap: wrap; gap: 48px;">
+            <!-- Left: Branding -->
+            <div style="max-width: 360px;">
+                <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 20px;">
+                    <div style="width: 3px; height: 20px; background: #921818; border-radius: 1px;"></div>
+                    <span
+                        style="font-size: 13px; font-weight: 700; color: #fff; letter-spacing: 3px; text-transform: uppercase; font-family: 'JetBrains Mono', monospace;">COLLATERAL</span>
+                </div>
+                <p style="font-size: 13px; line-height: 1.7; color: #777; margin: 0;">
+                    The performance collateral protocol. Capital committed to measurable outcomes.
+                </p>
+            </div>
+            <!-- Right: Link Columns -->
+            <div style="display: flex; gap: 80px; flex-wrap: wrap;">
+                <div>
+                    <div
+                        style="font-size: 10px; font-weight: 700; color: #666; letter-spacing: 1.5px; text-transform: uppercase; margin-bottom: 16px; font-family: 'JetBrains Mono', monospace;">
+                        PLATFORM</div>
+                    <div style="display: flex; flex-direction: column; gap: 12px;">
+                        <a href="#" onclick="window.router.navigate('/overview'); return false;"
+                            style="color: #ccc; text-decoration: none; font-size: 13px; transition: color 0.15s;">Market</a>
+                        <a href="#" onclick="window.router.navigate('/contracts'); return false;"
+                            style="color: #ccc; text-decoration: none; font-size: 13px; transition: color 0.15s;">Contracts</a>
+                        <a href="#" onclick="window.router.navigate('/ledger'); return false;"
+                            style="color: #ccc; text-decoration: none; font-size: 13px; transition: color 0.15s;">Ledger</a>
+                        <a href="#" onclick="window.router.navigate('/sources'); return false;"
+                            style="color: #ccc; text-decoration: none; font-size: 13px; transition: color 0.15s;">Sources</a>
+                    </div>
+                </div>
+                <div>
+                    <div
+                        style="font-size: 10px; font-weight: 700; color: #666; letter-spacing: 1.5px; text-transform: uppercase; margin-bottom: 16px; font-family: 'JetBrains Mono', monospace;">
+                        RESOURCES</div>
+                    <div style="display: flex; flex-direction: column; gap: 12px;">
+                        <a href="#" onclick="window.router.navigate('/docs'); return false;"
+                            style="color: #ccc; text-decoration: none; font-size: 13px; transition: color 0.15s;">Documentation</a>
+                        <a href="#" onclick="window.router.navigate('/profile'); return false;"
+                            style="color: #ccc; text-decoration: none; font-size: 13px; transition: color 0.15s;">Profile</a>
+                        <a href="#" onclick="window.router.navigate('/funding'); return false;"
+                            style="color: #ccc; text-decoration: none; font-size: 13px; transition: color 0.15s;">Funding</a>
+                    </div>
+                </div>
+            </div>
         </div>
-        <div class="hidden md:block text-[#999]">SETTLEMENT IS FINAL. NO APPEALS.</div>
-        <div class="flex items-center gap-4">
-            <a href="#" onclick="window.router.navigate('/docs'); return false;"
-                class="hover:text-[#1A1A1A] cursor-pointer transition-colors">DOCS</a>
+        <!-- Bottom Bar -->
+        <div
+            style="border-top: 1px solid #222; max-width: 1200px; margin: 0 auto; padding: 24px 48px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px;">
+            <span style="font-size: 12px; color: #555;">© 2025 Collateral Protocol. All rights reserved.</span>
+            <div style="display: flex; gap: 24px;">
+                <a href="#"
+                    style="font-size: 12px; color: #666; text-decoration: none; transition: color 0.15s;">Terms</a>
+                <a href="#"
+                    style="font-size: 12px; color: #666; text-decoration: none; transition: color 0.15s;">Privacy</a>
+                <a href="#"
+                    style="font-size: 12px; color: #666; text-decoration: none; transition: color 0.15s;">Security</a>
+            </div>
         </div>
-    </div>
+    </footer>
+
     <style>
+        #global-footer a:hover {
+            color: #fff !important;
+        }
+
         @keyframes pulse {
 
             0%,
@@ -51,7 +105,7 @@
             }
 
             50% {
-                opacity: 0.5;
+                opacity: 0.4;
             }
         }
     </style>

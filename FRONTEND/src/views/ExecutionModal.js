@@ -426,12 +426,8 @@ async function runExecution(contractData, stake, multiplier, btnEl, bodyEl) {
         const realContractId = createResult.contract?.id || createResult.id;
 
         if (realContractId) {
-            try {
-                await window.api.createFundingIntent(realContractId);
-                await window.api.executeContract(realContractId);
-            } catch (e) {
-                console.warn('[Exec] Warning:', e.message);
-            }
+            await window.api.createFundingIntent(realContractId);
+            await window.api.executeContract(realContractId);
         }
 
         showSuccess(bodyEl, stake, multiplier, realContractId || id);

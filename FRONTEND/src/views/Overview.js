@@ -535,9 +535,6 @@ export function renderOverview() {
                         <div class="eq-tag">How it works</div>
                         <h2 class="eq-mechanism-title">Four steps to <strong>settlement.</strong></h2>
                     </div>
-                    <div class="eq-mechanism-side">
-                        A protocol designed for finality. Every commitment resolves to a binary outcome — hit the target or forfeit the stake.
-                    </div>
                 </div>
                 <div class="eq-mechanism-grid">
                     <div class="eq-mech-card">

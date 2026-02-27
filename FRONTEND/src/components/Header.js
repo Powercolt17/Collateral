@@ -2,9 +2,9 @@
 export function renderHeader(currentRoute) {
     const routes = [
         { path: '/overview', label: 'MARKET' },
+        { path: '/contracts', label: 'ACTIVE' },
         { path: '/ledger', label: 'LEDGER' },
-        { path: '/contracts', label: 'CONTRACTS' },
-        { path: '/sources', label: 'SOURCES' },
+         { path: '/sources', label: 'SOURCES' },
         { path: '/docs', label: 'DOCS' }
     ];
 
@@ -415,10 +415,10 @@ export function renderHeader(currentRoute) {
                             <i data-lucide="chevron-down" class="ch-user-chevron" style="width: 12px; height: 12px;"></i>
                         </button>
                         <div id="user-dropdown-content" class="ch-user-dropdown">
-                            <button onclick="window.router.navigate('/profile')">MY IDENTITY</button>
-                            <button onclick="window.router.navigate('/my-contracts')">MY CONTRACTS</button>
-                            <button onclick="window.router.navigate('/receipts')">RECEIPTS</button>
-                            <button onclick="window.router.navigate('/funding')">CAPITAL</button>
+                            <button onclick="window.router.navigate('/profile')">Profile</button>
+                            <button onclick="window.router.navigate('/my-contracts')">Active</button>
+                            <button onclick="window.router.navigate('/receipts')">Ledger Receipts</button>
+                            <button onclick="window.router.navigate('/funding')">Account Capital</button>
                             <button onclick="window.app.handleSignOut()" class="signout">SIGN OUT</button>
                         </div>
                     </div>

@@ -140,7 +140,7 @@ const contractWriteRoutes: FastifyPluginAsync = async (fastify) => {
             // =========================================================
             let verifiedConnection: Awaited<ReturnType<typeof requireVerifiedConnection>> | null = null;
 
-            if (platform === 'X' || platform === 'STRIPE') {
+            if (platform === 'X' || platform === 'STRIPE' || platform === 'SHOPIFY' || platform === 'AMAZON') {
                 try {
                     verifiedConnection = await requireVerifiedConnection(principalUserId, platform);
                     console.log(`[contracts-write] Verified ${platform} connection:`, verifiedConnection.externalAccountId);
@@ -176,7 +176,7 @@ const contractWriteRoutes: FastifyPluginAsync = async (fastify) => {
 
             if (!username) {
                 reply.status(400);
-                return { error: 'No identity found. Please connect your X account first.' };
+                return { error: `No identity found. Please connect your ${platform} account first.` };
             }
 
             // Input validation
@@ -188,7 +188,7 @@ const contractWriteRoutes: FastifyPluginAsync = async (fastify) => {
             // =========================================================
             // BASELINE REJECTION - X/STRIPE baseline frozen at execution, not creation
             // =========================================================
-            if ((platform === 'X' || platform === 'STRIPE') && baseline) {
+            if ((platform === 'X' || platform === 'STRIPE' || platform === 'SHOPIFY' || platform === 'AMAZON') && baseline) {
                 reply.status(400);
                 return {
                     code: 'BASELINE_NOT_ALLOWED_AT_CREATION',
@@ -430,7 +430,7 @@ const contractWriteRoutes: FastifyPluginAsync = async (fastify) => {
         // ENFORCE VERIFIED CONNECTION - Fail-closed if revoked
         // =========================================================
         const contractPlatform = contract.platform;
-        if (contractPlatform === 'X' || contractPlatform === 'STRIPE') {
+        if (contractPlatform === 'X' || contractPlatform === 'STRIPE' || contractPlatform === 'SHOPIFY' || contractPlatform === 'AMAZON') {
             try {
                 await requireVerifiedConnection(principalUserId, contractPlatform);
                 console.log(`[Execute] Verified ${contractPlatform} connection for contract ${id}`);
@@ -685,6 +685,100 @@ const contractWriteRoutes: FastifyPluginAsync = async (fastify) => {
                     }
                     throw err;
                 }
+            }
+
+            // SHOPIFY PLATFORM EXECUTE LOGIC
+            if (contract.platform === 'SHOPIFY') {
+                const [shopifyAccount] = await db
+                    .select()
+                    .from(connectedAccounts)
+                    .where(
+                        and(
+                            eq(connectedAccounts.userId, principalUserId),
+                            eq(connectedAccounts.platform, 'SHOPIFY'),
+                            eq(connectedAccounts.status, 'ACTIVE'),
+                            eq(connectedAccounts.verificationStatus, 'VERIFIED')
+                        )
+                    )
+                    .limit(1);
+
+                if (!shopifyAccount) {
+                    reply.status(400);
+                    return {
+                        ok: false,
+                        code: 'SHOPIFY_NOT_VERIFIED',
+                        error: 'No verified Shopify account. Connect your Shopify store first.',
+                    };
+                }
+
+                const shopDomain = shopifyAccount.externalAccountId;
+                const shopMeta = shopifyAccount.metadataJson as Record<string, any> | null;
+                const executionTime = new Date();
+
+                const baselineToStore = {
+                    platform: 'SHOPIFY',
+                    shopDomain,
+                    shopName: shopMeta?.shopName || shopDomain,
+                    measuredAtUtc: executionTime.toISOString(),
+                    frozenAtUtc: executionTime.toISOString(),
+                };
+
+                await updateContractBaseline(id, baselineToStore);
+
+                termsHash = createHash('sha256')
+                    .update(JSON.stringify({
+                        shopDomain,
+                        frozenAtUtc: executionTime.toISOString(),
+                        noAppeals: true,
+                        deterministicSettlement: true,
+                    }))
+                    .digest('hex');
+            }
+
+            // AMAZON PLATFORM EXECUTE LOGIC
+            if (contract.platform === 'AMAZON') {
+                const [amazonAccount] = await db
+                    .select()
+                    .from(connectedAccounts)
+                    .where(
+                        and(
+                            eq(connectedAccounts.userId, principalUserId),
+                            eq(connectedAccounts.platform, 'AMAZON'),
+                            eq(connectedAccounts.status, 'ACTIVE'),
+                            eq(connectedAccounts.verificationStatus, 'VERIFIED')
+                        )
+                    )
+                    .limit(1);
+
+                if (!amazonAccount) {
+                    reply.status(400);
+                    return {
+                        ok: false,
+                        code: 'AMAZON_NOT_VERIFIED',
+                        error: 'No verified Amazon Seller account. Connect your Amazon account first.',
+                    };
+                }
+
+                const sellerId = amazonAccount.externalAccountId;
+                const executionTime = new Date();
+
+                const baselineToStore = {
+                    platform: 'AMAZON',
+                    sellerId,
+                    measuredAtUtc: executionTime.toISOString(),
+                    frozenAtUtc: executionTime.toISOString(),
+                };
+
+                await updateContractBaseline(id, baselineToStore);
+
+                termsHash = createHash('sha256')
+                    .update(JSON.stringify({
+                        sellerId,
+                        frozenAtUtc: executionTime.toISOString(),
+                        noAppeals: true,
+                        deterministicSettlement: true,
+                    }))
+                    .digest('hex');
             }
 
             // 7. Append EXECUTION_CONFIRMED - transitions to LOCKED

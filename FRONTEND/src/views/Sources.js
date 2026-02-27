@@ -1017,12 +1017,13 @@ export async function initSources() {
                 try {
                     let result;
                     if (prov.id === 'shopify') {
-                        const shop = prompt('Enter your Shopify store domain (e.g. mystore.myshopify.com):');
-                        if (!shop) {
+                        const shopRaw = prompt('Enter your Shopify store domain (e.g. mystore.myshopify.com):');
+                        if (!shopRaw) {
                             proceedBtn.textContent = 'PROCEED';
                             proceedBtn.disabled = false;
                             return;
                         }
+                        const shop = shopRaw.trim().replace(/^https?:\/\//, '').replace(/\/+$/, '');
                         result = await window.api.startShopifyConnect(shop);
                     } else if (prov.connectFn && window.api[prov.connectFn]) {
                         result = await window.api[prov.connectFn]();

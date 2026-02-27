@@ -42,10 +42,21 @@ export interface StripeVerifiedMetadata {
     stripeConnectedAccountId: string;
 }
 
+export interface ShopifyVerifiedMetadata {
+    shopDomain: string;
+    shopName: string;
+}
+
+export interface AmazonVerifiedMetadata {
+    sellerId: string;
+}
+
+export type SupportedPlatform = 'X' | 'STRIPE' | 'SHOPIFY' | 'AMAZON';
+
 export interface VerifiedConnection<T = unknown> {
     id: string;
     userId: string;
-    platform: 'X' | 'STRIPE';
+    platform: SupportedPlatform;
     externalAccountId: string;
     metadata: T;
 }
@@ -65,12 +76,20 @@ export async function requireVerifiedConnection(
 ): Promise<VerifiedConnection<StripeVerifiedMetadata>>;
 export async function requireVerifiedConnection(
     userId: string,
-    platform: 'X' | 'STRIPE'
-): Promise<VerifiedConnection<XVerifiedMetadata | StripeVerifiedMetadata>>;
+    platform: 'SHOPIFY'
+): Promise<VerifiedConnection<ShopifyVerifiedMetadata>>;
 export async function requireVerifiedConnection(
     userId: string,
-    platform: 'X' | 'STRIPE'
-): Promise<VerifiedConnection<XVerifiedMetadata | StripeVerifiedMetadata>> {
+    platform: 'AMAZON'
+): Promise<VerifiedConnection<AmazonVerifiedMetadata>>;
+export async function requireVerifiedConnection(
+    userId: string,
+    platform: SupportedPlatform
+): Promise<VerifiedConnection>;
+export async function requireVerifiedConnection(
+    userId: string,
+    platform: SupportedPlatform
+): Promise<VerifiedConnection> {
     const [account] = await db
         .select({
             id: connectedAccounts.id,
@@ -144,7 +163,7 @@ export async function requireVerifiedConnection(
             externalAccountId: account.externalAccountId,
             metadata,
         };
-    } else {
+    } else if (platform === 'STRIPE') {
         const metadata: StripeVerifiedMetadata = {
             stripeConnectedAccountId: account.externalAccountId,
         };
@@ -154,6 +173,27 @@ export async function requireVerifiedConnection(
             platform: 'STRIPE',
             externalAccountId: account.externalAccountId,
             metadata,
+        };
+    } else if (platform === 'SHOPIFY') {
+        const metadata: ShopifyVerifiedMetadata = {
+            shopDomain: account.externalAccountId,
+            shopName: (rawMeta?.shopName as string) || account.externalAccountId,
+        };
+        return {
+            id: account.id,
+            userId: account.userId,
+            platform: 'SHOPIFY',
+            externalAccountId: account.externalAccountId,
+            metadata,
+        };
+    } else {
+        // AMAZON or future platforms
+        return {
+            id: account.id,
+            userId: account.userId,
+            platform,
+            externalAccountId: account.externalAccountId,
+            metadata: { sellerId: account.externalAccountId },
         };
     }
 }

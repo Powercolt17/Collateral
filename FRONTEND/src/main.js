@@ -259,6 +259,14 @@ const routes = PRE_LAUNCH_MODE ? [
 const router = new Router(routes);
 window.router = router;
 
+// Dismiss loading screen after first render
+setTimeout(() => {
+    const ls = document.getElementById('loading-screen');
+    if (ls) ls.classList.add('loaded');
+    // Remove from DOM after fade
+    setTimeout(() => { if (ls) ls.remove(); }, 600);
+}, 600);
+
 // App methods exposed globally
 window.app = {
     openAccessModal: function () {

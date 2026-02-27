@@ -844,7 +844,8 @@ export function initOverview() {
                  data-stake-max="${max}"
                  data-fee="${fee}"
                  data-deadline="${c.fundingCloseAt}"
-                 data-goal="${goal}">
+                 data-goal="${goal}"
+                 data-provider="${platform}">
                 <div class="eq-card-meta">
                     <span class="eq-closing">${closingAmtText}</span>
                     <span class="eq-id">RCPT-${shortId.slice(0, 4).toUpperCase()}</span>
@@ -953,11 +954,7 @@ export function initOverview() {
         const goal = cardEl.dataset.goal || '';
         const deadline = cardEl.dataset.deadline || '';
 
-        const integration = cardEl.querySelector('.eq-card-integration')?.textContent?.trim() || '';
-        let provider = 'x';
-        if (integration.toLowerCase().includes('stripe')) provider = 'stripe';
-        else if (integration.toLowerCase().includes('shopify')) provider = 'shopify';
-        else if (integration.toLowerCase().includes('amazon')) provider = 'amazon';
+        const provider = (cardEl.dataset.provider || 'x').toLowerCase();
 
         const tierUpper = tier.toUpperCase();
         const multiplier = tierUpper === 'MAXIMUM' ? 4.0 : tierUpper === 'ELEVATED' ? 2.5 : 1.5;

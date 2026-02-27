@@ -39,6 +39,7 @@
 /* ── Global Base ── */
 *, *::before, *::after {
     box-sizing: border-box;
+    font-feature-settings: "zero" 0;
 }
 
 html {

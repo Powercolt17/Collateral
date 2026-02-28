@@ -737,8 +737,8 @@ export async function initProfile() {
             const sources = [
                 { name: 'X / Twitter', key: 'x', connected: profile.xConnection?.connected, detail: profile.xConnection?.connected ? '@' + profile.xConnection.xUsername : 'Not connected', bg: '#0a0a0a', icon: 'X', scopes: 'Read: followers, engagement' },
                 { name: 'Stripe', key: 'stripe', connected: profile.stripeConnection?.connected, detail: profile.stripeConnection?.connected ? 'Account linked' : 'Not setup', bg: '#635bff', icon: 'S', scopes: 'Read: revenue, charges' },
-                { name: 'Shopify', key: 'shopify', connected: false, detail: 'Not connected', bg: '#96bf48', icon: '🛍', scopes: 'Read: orders, revenue' },
-                { name: 'Amazon', key: 'amazon', connected: false, detail: 'Not connected', bg: '#ff9900', icon: 'A', scopes: 'Read: sales data' }
+                { name: 'Shopify', key: 'shopify', connected: !!profile.shopifyConnection?.connected, detail: profile.shopifyConnection?.connected ? (profile.shopifyConnection.shop || 'Store linked') : 'Not connected', bg: '#96bf48', icon: '🛍', scopes: 'Read: orders, revenue' },
+                { name: 'Amazon', key: 'amazon', connected: !!profile.amazonConnection?.connected, detail: profile.amazonConnection?.connected ? (profile.amazonConnection.sellerId || 'Account linked') : 'Not connected', bg: '#ff9900', icon: 'A', scopes: 'Read: sales data' }
             ];
             srcGrid.innerHTML = sources.map(s => {
                 const statusBadge = s.connected ? '<span class="prf-badge connected">Connected</span>' : '<span class="prf-badge disconnected">Disconnected</span>';

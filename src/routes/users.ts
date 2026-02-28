@@ -236,6 +236,40 @@ const usersRoutes: FastifyPluginAsync = async (fastify) => {
             verified: false,
         };
 
+        // Build Shopify connection from connected_accounts (canonical)
+        const shopifyAccount = accounts.find(a => a.platform === 'SHOPIFY');
+        let shopifyMeta: any = null;
+        if (shopifyAccount?.metadataJson) {
+            try {
+                shopifyMeta = typeof shopifyAccount.metadataJson === 'string'
+                    ? JSON.parse(shopifyAccount.metadataJson)
+                    : shopifyAccount.metadataJson;
+            } catch (e) {
+                shopifyMeta = null;
+            }
+        }
+        const shopifyConnection = shopifyAccount ? {
+            connected: shopifyAccount.status === 'ACTIVE',
+            verified: shopifyAccount.verificationStatus === 'VERIFIED',
+            shop: shopifyMeta?.shop || shopifyAccount.externalAccountId || null,
+            connectedAt: shopifyAccount.connectedAt?.toISOString() || null,
+        } : {
+            connected: false,
+            verified: false,
+        };
+
+        // Build Amazon connection from connected_accounts (canonical)
+        const amazonAccount = accounts.find(a => a.platform === 'AMAZON');
+        const amazonConnection = amazonAccount ? {
+            connected: amazonAccount.status === 'ACTIVE',
+            verified: amazonAccount.verificationStatus === 'VERIFIED',
+            sellerId: amazonAccount.externalAccountId || null,
+            connectedAt: amazonAccount.connectedAt?.toISOString() || null,
+        } : {
+            connected: false,
+            verified: false,
+        };
+
         // Get all contracts for stats
         const userContracts = await db
             .select()
@@ -294,6 +328,8 @@ const usersRoutes: FastifyPluginAsync = async (fastify) => {
             } : null,
             xConnection,
             stripeConnection,
+            shopifyConnection,
+            amazonConnection,
             stats: {
                 settlementRate, // null for new users, number for others
                 totalContracts,

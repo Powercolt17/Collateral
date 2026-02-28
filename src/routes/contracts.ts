@@ -153,7 +153,7 @@ const contractRoutes: FastifyPluginAsync = async (fastify) => {
                 EventType.RECEIPT_ISSUED,
             ];
 
-            // Get recent public events (last 100)
+            // Get recent public events (last 200) with contract context
             const events = await db
                 .select({
                     id: ledgerEvents.id,
@@ -163,11 +163,17 @@ const contractRoutes: FastifyPluginAsync = async (fastify) => {
                     amountUsdCents: ledgerEvents.amountUsdCents,
                     eventHash: ledgerEvents.eventHash,
                     actor: ledgerEvents.actor,
+                    // Contract context
+                    platform: contracts.platform,
+                    principalIdentityUsername: contracts.principalIdentityUsername,
+                    lockAmountUsdCents: contracts.lockAmountUsdCents,
+                    riskTier: contracts.riskTier,
                 })
                 .from(ledgerEvents)
+                .innerJoin(contracts, sql`${ledgerEvents.contractId} = ${contracts.id}`)
                 .where(inArray(ledgerEvents.eventType, publicEventTypes))
                 .orderBy(desc(ledgerEvents.timestampUtc))
-                .limit(100);
+                .limit(200);
 
             return {
                 events: events.map(event => ({
@@ -178,6 +184,10 @@ const contractRoutes: FastifyPluginAsync = async (fastify) => {
                     amountUsdCents: event.amountUsdCents,
                     eventHash: event.eventHash,
                     actor: event.actor,
+                    platform: event.platform,
+                    principal: event.principalIdentityUsername,
+                    lockAmountUsdCents: event.lockAmountUsdCents,
+                    riskTier: event.riskTier,
                 })),
             };
         } catch (error) {

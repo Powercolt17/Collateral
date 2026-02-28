@@ -337,11 +337,21 @@ export function renderLedger() {
                 color: #111;
             }
 
-            /* Hash cell */
-            .ldg-hash {
+            /* Principal cell */
+            .ldg-principal {
+                font-size: 13px;
+                font-weight: 600;
+                color: #111;
+            }
+
+            /* Platform cell */
+            .ldg-platform {
                 font-family: 'JetBrains Mono', monospace;
                 font-size: 11px;
-                color: #bbb;
+                font-weight: 600;
+                color: #999;
+                text-transform: uppercase;
+                letter-spacing: 0.06em;
             }
 
             /* Date cell */
@@ -767,11 +777,12 @@ export function renderLedger() {
 
                 <!-- Filters -->
                 <div class="ldg-filters-row" id="ldg-filters">
-                    <span class="ldg-filter-label">Parties</span>
+                    <span class="ldg-filter-label">Platform</span>
                     <button class="ldg-pill active" data-provider="all">All</button>
-                    <button class="ldg-pill" data-provider="stripe">Byson</button>
-                    <button class="ldg-pill" data-provider="shopify">Modept</button>
-                    <button class="ldg-pill" data-provider="amazon">Amazon</button>
+                    <button class="ldg-pill" data-provider="X">X</button>
+                    <button class="ldg-pill" data-provider="STRIPE">Stripe</button>
+                    <button class="ldg-pill" data-provider="SHOPIFY">Shopify</button>
+                    <button class="ldg-pill" data-provider="AMAZON">Amazon</button>
                     <div class="ldg-filter-divider"></div>
                     <span class="ldg-filter-label">Period</span>
                     <button class="ldg-pill active" data-time="all">ALL</button>
@@ -793,17 +804,18 @@ export function renderLedger() {
                         <thead>
                             <tr>
                                 <th>Status</th>
+                                <th>Principal</th>
+                                <th>Platform</th>
                                 <th>Receipt</th>
-                                <th>Hash</th>
                                 <th>Date</th>
                                 <th>Amount</th>
                             </tr>
                         </thead>
                         <tbody id="ldg-list">
-                            <tr class="ldg-skeleton-row"><td colspan="5"></td></tr>
-                            <tr class="ldg-skeleton-row"><td colspan="5"></td></tr>
-                            <tr class="ldg-skeleton-row"><td colspan="5"></td></tr>
-                            <tr class="ldg-skeleton-row"><td colspan="5"></td></tr>
+                            <tr class="ldg-skeleton-row"><td colspan="6"></td></tr>
+                            <tr class="ldg-skeleton-row"><td colspan="6"></td></tr>
+                            <tr class="ldg-skeleton-row"><td colspan="6"></td></tr>
+                            <tr class="ldg-skeleton-row"><td colspan="6"></td></tr>
                         </tbody>
                     </table>
                 </div>
@@ -924,9 +936,10 @@ export async function initLedger() {
     }
 
     function getProviderFromEvent(event) {
+        if (event.platform) return event.platform;
         const meta = event.metadataJson || event.metadata || {};
-        if (meta.platform) return meta.platform.toLowerCase();
-        if (meta.provider) return meta.provider.toLowerCase();
+        if (meta.platform) return meta.platform;
+        if (meta.provider) return meta.provider;
         return '';
     }
 
@@ -951,7 +964,9 @@ export async function initLedger() {
             filtered = filtered.filter(e =>
                 (e.contractId && e.contractId.toLowerCase().includes(q)) ||
                 (e.eventHash && e.eventHash.toLowerCase().includes(q)) ||
-                (e.eventType && e.eventType.toLowerCase().includes(q))
+                (e.eventType && e.eventType.toLowerCase().includes(q)) ||
+                (e.principal && e.principal.toLowerCase().includes(q)) ||
+                (e.platform && e.platform.toLowerCase().includes(q))
             );
         }
         if (sortBy === 'value') {
@@ -1030,7 +1045,7 @@ export async function initLedger() {
         if (pageItems.length === 0) {
             list.innerHTML = `
                 <tr>
-                    <td colspan="5">
+                    <td colspan="6">
                         <div class="ldg-empty">
                             <div class="ldg-empty-lbl">No Records</div>
                             <div class="ldg-empty-text">No events match your current filter set.</div>
@@ -1047,6 +1062,8 @@ export async function initLedger() {
                 ? 'RCPT-' + event.contractId.slice(0, 4).toUpperCase()
                 : '—';
             const statusClass = getStatusClass(event.eventType);
+            const principal = event.principal || '—';
+            const platform = event.platform || '—';
 
             return `
                 <tr data-index="${globalIdx}">
@@ -1056,8 +1073,9 @@ export async function initLedger() {
                             <span class="ldg-status-text ${statusClass}">${formatEventType(event.eventType)}</span>
                         </div>
                     </td>
+                    <td><span class="ldg-principal">${principal}</span></td>
+                    <td><span class="ldg-platform">${platform}</span></td>
                     <td><span class="ldg-rcpt">${contractShort}</span></td>
-                    <td><span class="ldg-hash">${truncateHash(event.eventHash)}</span></td>
                     <td><span class="ldg-date">${formatTimestamp(event.timestamp)}</span></td>
                     <td><span class="ldg-amount">${formatCurrency(event.amountUsdCents)}</span></td>
                 </tr>
@@ -1265,7 +1283,7 @@ export async function initLedger() {
         console.error('[Ledger] Error loading events:', error);
         list.innerHTML = `
             <tr>
-                <td colspan="5">
+                <td colspan="6">
                     <div class="ldg-empty">
                         <div class="ldg-empty-lbl">LEDGER UNAVAILABLE</div>
                         <div class="ldg-empty-text">System synchronizing. Records will appear shortly.</div>

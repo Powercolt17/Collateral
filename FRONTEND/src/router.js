@@ -13,7 +13,11 @@ class Router {
     }
 
     handleRoute() {
-        const hash = window.location.hash.slice(1) || '/overview';
+        const raw = window.location.hash.slice(1) || '/overview';
+
+        // Strip query string before matching routes
+        // Query params remain readable via window.location.hash
+        const hash = raw.split('?')[0];
 
         // Check for exact match first
         let route = this.routes.find(r => r.path === hash);

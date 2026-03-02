@@ -182,6 +182,24 @@ async function amazonConnectRoutes(fastify: FastifyInstance) {
 
                 const now = new Date();
 
+                // GLOBAL UNIQUENESS — Block if another user already connected this Amazon seller
+                const [globallyVerified] = await db
+                    .select({ userId: connectedAccounts.userId })
+                    .from(connectedAccounts)
+                    .where(
+                        and(
+                            eq(connectedAccounts.platform, 'AMAZON'),
+                            eq(connectedAccounts.externalAccountId, selling_partner_id),
+                            eq(connectedAccounts.verificationStatus, 'VERIFIED')
+                        )
+                    )
+                    .limit(1);
+
+                if (globallyVerified && globallyVerified.userId !== userId) {
+                    console.log(`[Amazon Connect] BLOCKED: Seller ${selling_partner_id} already verified by user ${globallyVerified.userId}`);
+                    return reply.redirect(`${FRONTEND_URL}/#/amazon/callback?error=${encodeURIComponent('This Amazon seller account is already connected to another Collateral account')}`);
+                }
+
                 // Upsert connected account
                 await db
                     .insert(connectedAccounts)

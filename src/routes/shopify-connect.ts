@@ -237,6 +237,24 @@ async function shopifyConnectRoutes(fastify: FastifyInstance) {
 
                 const now = new Date();
 
+                // GLOBAL UNIQUENESS — Block if another user already connected this Shopify store
+                const [globallyVerified] = await db
+                    .select({ userId: connectedAccounts.userId })
+                    .from(connectedAccounts)
+                    .where(
+                        and(
+                            eq(connectedAccounts.platform, 'SHOPIFY'),
+                            eq(connectedAccounts.externalAccountId, shop),
+                            eq(connectedAccounts.verificationStatus, 'VERIFIED')
+                        )
+                    )
+                    .limit(1);
+
+                if (globallyVerified && globallyVerified.userId !== userId) {
+                    console.log(`[Shopify Connect] BLOCKED: Shop ${shop} already verified by user ${globallyVerified.userId}`);
+                    return reply.redirect(`${FRONTEND_URL}/#/shopify/callback?error=${encodeURIComponent('This Shopify store is already connected to another Collateral account')}`);
+                }
+
                 // Upsert connected account
                 await db
                     .insert(connectedAccounts)

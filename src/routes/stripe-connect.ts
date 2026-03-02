@@ -212,6 +212,24 @@ async function stripeConnectRoutes(fastify: FastifyInstance) {
 
                 const now = new Date();
 
+                // GLOBAL UNIQUENESS — Block if another user already connected this Stripe account
+                const [globallyVerified] = await db
+                    .select({ userId: connectedAccounts.userId })
+                    .from(connectedAccounts)
+                    .where(
+                        and(
+                            eq(connectedAccounts.platform, 'STRIPE'),
+                            eq(connectedAccounts.externalAccountId, stripeAccountId),
+                            eq(connectedAccounts.verificationStatus, 'VERIFIED')
+                        )
+                    )
+                    .limit(1);
+
+                if (globallyVerified && globallyVerified.userId !== userId) {
+                    console.log(`[Stripe Connect] BLOCKED: Stripe ${stripeAccountId} already verified by user ${globallyVerified.userId}`);
+                    return reply.redirect(`${FRONTEND_URL}/#/stripe/callback?error=${encodeURIComponent('This Stripe account is already connected to another Collateral account')}`);
+                }
+
                 // Upsert connected account
                 await db
                     .insert(connectedAccounts)
@@ -335,6 +353,27 @@ async function stripeConnectRoutes(fastify: FastifyInstance) {
                 }
 
                 const now = new Date();
+
+                // GLOBAL UNIQUENESS — Block if another user already connected this Stripe account
+                const [globallyVerifiedPost] = await db
+                    .select({ userId: connectedAccounts.userId })
+                    .from(connectedAccounts)
+                    .where(
+                        and(
+                            eq(connectedAccounts.platform, 'STRIPE'),
+                            eq(connectedAccounts.externalAccountId, stripeAccountId),
+                            eq(connectedAccounts.verificationStatus, 'VERIFIED')
+                        )
+                    )
+                    .limit(1);
+
+                if (globallyVerifiedPost && globallyVerifiedPost.userId !== userId) {
+                    console.log(`[Stripe Connect] BLOCKED: Stripe ${stripeAccountId} already verified by user ${globallyVerifiedPost.userId}`);
+                    return reply.status(409).send({
+                        code: 'STRIPE_ALREADY_VERIFIED_GLOBAL',
+                        error: 'This Stripe account is already connected to another Collateral account.',
+                    });
+                }
 
                 // Upsert connected account
                 await db

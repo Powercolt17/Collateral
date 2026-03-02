@@ -105,6 +105,11 @@ const authRoutes: FastifyPluginAsync = async (fastify) => {
 
         console.log(`✅ Created user ${user.id} with identity @${identity.username} (${identity.displayName})`);
 
+        // EMAIL: Welcome notification (fire-and-forget)
+        import('../services/email.js').then(({ sendWelcomeEmail }) => {
+            sendWelcomeEmail(user.email, identity.username).catch(() => { });
+        }).catch(() => { });
+
         // Sign JWT access token
         const accessToken = signAccessToken(user.id);
 

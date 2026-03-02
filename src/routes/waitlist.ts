@@ -46,6 +46,11 @@ const waitlistRoutes: FastifyPluginAsync = async (fastify) => {
 
             console.log(`[Waitlist] New signup: ${normalizedEmail}`);
 
+            // EMAIL: Waitlist confirmation (fire-and-forget)
+            import('../services/email.js').then(({ sendWaitlistEmail }) => {
+                sendWaitlistEmail(normalizedEmail).catch(() => { });
+            }).catch(() => { });
+
             return {
                 success: true,
                 message: 'You\'re on the list. We\'ll be in touch.',

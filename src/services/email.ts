@@ -331,3 +331,99 @@ export async function sendSettlementFailureEmail(params: {
 
     await safeSend(email, subject, html);
 }
+
+// ================================================================
+// WELCOME / LIFECYCLE EMAILS
+// ================================================================
+
+function welcomeEmail(params: { username: string }): { subject: string; html: string } {
+    return {
+        subject: 'Welcome to Collateral',
+        html: baseTemplate('Welcome to Collateral', `
+            <p style="font-size:16px;color:#111;font-weight:600;margin:0 0 16px 0;">
+                Hey @${params.username} — you're in.
+            </p>
+            <p style="font-size:14px;color:#555;line-height:1.7;margin:0 0 20px 0;">
+                Collateral is the performance contract protocol. Lock capital against measurable outcomes — Stripe revenue, X followers, Shopify sales, Amazon growth. Hit your target, get your payout. Miss, and it's forfeited.
+            </p>
+            <div style="background:#f9fafb;border:1px solid #f0f0f0;padding:20px;margin-bottom:24px;">
+                <div style="font-size:11px;color:#888;text-transform:uppercase;letter-spacing:1.5px;font-weight:600;margin-bottom:12px;">GET STARTED</div>
+                <table style="width:100%;border-collapse:collapse;font-size:13px;">
+                    <tr><td style="padding:8px 0;color:#111;border-bottom:1px solid #f0f0f0;"><strong>1.</strong> Connect a platform (Stripe, X, Shopify, Amazon)</td></tr>
+                    <tr><td style="padding:8px 0;color:#111;border-bottom:1px solid #f0f0f0;"><strong>2.</strong> Choose a performance contract</td></tr>
+                    <tr><td style="padding:8px 0;color:#111;border-bottom:1px solid #f0f0f0;"><strong>3.</strong> Lock your capital ($25 – $25,000)</td></tr>
+                    <tr><td style="padding:8px 0;color:#111;"><strong>4.</strong> Hit your target → get paid</td></tr>
+                </table>
+            </div>
+            <a href="${DOMAIN}/#/overview" style="display:inline-block;background:#111;color:#fff;padding:12px 28px;font-size:12px;font-weight:700;text-decoration:none;text-transform:uppercase;letter-spacing:1px;">
+                Browse Contracts →
+            </a>
+        `),
+    };
+}
+
+function waitlistConfirmationEmail(): { subject: string; html: string } {
+    return {
+        subject: "You're on the Collateral waitlist",
+        html: baseTemplate("You're on the list", `
+            <p style="font-size:14px;color:#555;line-height:1.7;margin:0 0 20px 0;">
+                We'll notify you when Collateral opens. You'll be among the first to lock capital against measurable business outcomes.
+            </p>
+            <div style="background:#f9fafb;border:1px solid #f0f0f0;padding:20px;margin-bottom:24px;">
+                <p style="font-size:13px;color:#444;line-height:1.7;margin:0;">
+                    <strong>What is Collateral?</strong><br>
+                    A performance contract protocol. Pick a growth target — Stripe revenue, X followers, Shopify sales, or Amazon growth. Lock capital. Hit your target and earn a payout. Miss and it's forfeited.
+                </p>
+            </div>
+            <p style="font-size:12px;color:#999;margin:0;">No action needed. We'll be in touch.</p>
+        `),
+    };
+}
+
+function sourceConnectedEmail(params: { platform: string; username?: string }): { subject: string; html: string } {
+    return {
+        subject: `${params.platform} connected to Collateral`,
+        html: baseTemplate(`${params.platform} Connected`, `
+            <div style="background:#f0fdf4;border:1px solid #bbf7d0;padding:16px 20px;margin-bottom:24px;">
+                <div style="font-size:14px;font-weight:600;color:#111;">&#10003; ${params.platform} verified</div>
+                ${params.username ? `<div style="font-size:12px;color:#666;">@${params.username}</div>` : ''}
+            </div>
+            <p style="font-size:14px;color:#555;line-height:1.7;margin:0 0 20px 0;">
+                Your ${params.platform} account has been connected for read-only verification. You can now create performance contracts that track ${params.platform} metrics.
+            </p>
+            <a href="${DOMAIN}/#/overview" style="display:inline-block;background:#111;color:#fff;padding:12px 28px;font-size:12px;font-weight:700;text-decoration:none;text-transform:uppercase;letter-spacing:1px;">
+                Create Contract →
+            </a>
+        `),
+    };
+}
+
+/**
+ * Send welcome email on signup
+ */
+export async function sendWelcomeEmail(email: string, username: string): Promise<void> {
+    const { subject, html } = welcomeEmail({ username });
+    await safeSend(email, subject, html);
+}
+
+/**
+ * Send waitlist confirmation
+ */
+export async function sendWaitlistEmail(email: string): Promise<void> {
+    const { subject, html } = waitlistConfirmationEmail();
+    await safeSend(email, subject, html);
+}
+
+/**
+ * Send source connected notification
+ */
+export async function sendSourceConnectedEmail(params: {
+    userId: string;
+    platform: string;
+    username?: string;
+}): Promise<void> {
+    const email = await getUserEmail(params.userId);
+    if (!email) return;
+    const { subject, html } = sourceConnectedEmail({ platform: params.platform, username: params.username });
+    await safeSend(email, subject, html);
+}

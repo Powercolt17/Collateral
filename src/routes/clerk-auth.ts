@@ -116,6 +116,13 @@ const clerkAuthRoutes: FastifyPluginAsync = async (fastify) => {
                         .returning();
                     user = created;
                     console.log(`✅ [ClerkAuth] Created new user ${user.id} via Clerk (${email})`);
+
+                    // EMAIL: Welcome (fire-and-forget)
+                    if (email) {
+                        import('../services/email.js').then(({ sendWelcomeEmail }) => {
+                            sendWelcomeEmail(email, displayName).catch(() => { });
+                        }).catch(() => { });
+                    }
                 }
             }
 

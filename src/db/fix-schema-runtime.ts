@@ -68,6 +68,18 @@ export async function fixSchemaDrift() {
         }
         console.log('[schema-fix] ✅ Stats columns ensured.');
 
+        // 5. Update market instance tier pricing to current ranges
+        try {
+            await db.execute(sql`
+                UPDATE market_contract_instances SET min_lock_cents = 10000, max_lock_cents = 150000 WHERE tier = 'controlled' AND (min_lock_cents != 10000 OR max_lock_cents != 150000);
+                UPDATE market_contract_instances SET min_lock_cents = 25000, max_lock_cents = 300000 WHERE tier = 'elevated' AND (min_lock_cents != 25000 OR max_lock_cents != 300000);
+                UPDATE market_contract_instances SET min_lock_cents = 50000, max_lock_cents = 500000 WHERE tier = 'maximum' AND (min_lock_cents != 50000 OR max_lock_cents != 500000);
+            `);
+            console.log('[schema-fix] ✅ Tier pricing updated (Controlled $100-$1.5K, Elevated $250-$3K, Maximum $500-$5K).');
+        } catch (e: any) {
+            console.log(`[schema-fix] ⚠️ Tier pricing update skipped: ${e.message}`);
+        }
+
         console.log('[schema-fix] ✅ Runtime Schema Fix Complete.');
     } catch (err) {
         console.error('[schema-fix] ❌ Failed to run runtime schema fix:', err);

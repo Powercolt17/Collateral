@@ -457,7 +457,7 @@ export async function seedCatalog() {
                 feeBps = 300;       // 3%
             } else if (tier === 'maximum') {
                 minStake = 50000;   // $500
-                maxStake = 1000000; // $10,000
+                maxStake = 500000;  // $5,000
                 multiplier = 4.0;
                 feeBps = 500;       // 5%
             }

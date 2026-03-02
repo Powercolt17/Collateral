@@ -217,7 +217,7 @@ export const DEFAULT_TIER_CONFIGS: Record<RiskTier, RiskTierConfig> = {
         timePressureCoefficient: 1.3,  // Aggressive time pressure
 
         minStakeUsdCents: 50000,        // $500 minimum
-        maxStakeUsdCents: 1000000,      // $10,000 max
+        maxStakeUsdCents: 500000,       // $5,000 max (whale protection)
         stakeEscalationFactor: 1.5,    // 50% higher stakes
     },
 };

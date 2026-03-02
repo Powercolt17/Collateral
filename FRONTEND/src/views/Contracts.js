@@ -649,6 +649,36 @@ export function initContracts() {
     let stripeAccountId = null;
 
     // =========================================================
+    // URL PARAM HYDRATION — Read from term sheet navigation
+    // =========================================================
+    const hashQuery = window.location.hash.split('?')[1];
+    if (hashQuery) {
+        const urlParams = new URLSearchParams(hashQuery);
+
+        // Capital amount
+        const cap = parseInt(urlParams.get('capital'));
+        if (cap && cap > 0) capitalAmount = cap;
+
+        // Tier → risk mapping
+        const tierParam = (urlParams.get('tier') || '').toLowerCase();
+        const tierToRisk = {
+            'controlled': 'STEADY',
+            'steady': 'STEADY',
+            'elevated': 'BOLD',
+            'bold': 'BOLD',
+            'maximum': 'ALL_IN',
+            'all_in': 'ALL_IN',
+        };
+        if (tierToRisk[tierParam]) selectedRisk = tierToRisk[tierParam];
+
+        // Source
+        const src = (urlParams.get('source') || '').toUpperCase();
+        if (src === 'STRIPE' || src === 'X' || src === 'TWITTER') {
+            selectedSource = src === 'X' ? 'TWITTER' : src;
+        }
+    }
+
+    // =========================================================
     // FLOW LOCK — Prevent duplicate executions
     // =========================================================
     const FLOW_LOCK_KEY = 'collateral_flow_lock';

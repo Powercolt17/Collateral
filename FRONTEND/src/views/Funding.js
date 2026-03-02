@@ -595,19 +595,28 @@ export function renderFunding() {
         <div id="card-modal" class="cap-modal-overlay">
             <div class="cap-modal">
                 <div class="cap-modal-hdr">
-                    <span class="cap-modal-title">Add Funding Card</span>
+                    <span class="cap-modal-title">Add Funding Method</span>
                     <button id="close-card-modal" class="cap-modal-close">
                         <i data-lucide="x" style="width:16px;height:16px;"></i>
                     </button>
                 </div>
                 <div class="cap-modal-body">
+                    <!-- Apple Pay / Google Pay -->
+                    <div id="wallet-pay-section" style="display:none;">
+                        <div id="payment-request-button" style="margin-bottom:16px;"></div>
+                        <div style="display:flex;align-items:center;gap:12px;margin-bottom:16px;">
+                            <div style="flex:1;height:1px;background:#e5e5e5;"></div>
+                            <span style="font-family:'JetBrains Mono',monospace;font-size:10px;color:#aaa;text-transform:uppercase;letter-spacing:0.1em;">or enter card</span>
+                            <div style="flex:1;height:1px;background:#e5e5e5;"></div>
+                        </div>
+                    </div>
                     <p class="cap-modal-sub">Verify a card to use as your funding instrument.</p>
                     <div class="cap-card-el" id="card-element-container"></div>
                     <div class="cap-error" id="card-error"></div>
                     <button class="cap-btn-primary" id="submit-card-btn">VERIFY &amp; SAVE CARD</button>
                 </div>
                 <div class="cap-modal-footer">
-                    Card is verified but not charged until capital is locked.
+                    Payment method is verified but not charged until capital is locked.
                 </div>
             </div>
         </div>
@@ -825,6 +834,7 @@ export async function initFunding() {
     }
 
     // ── Card Modal ──
+    let walletInitialized = false;
     function showCardModal() {
         openModal(cardModal);
         if (stripe && !cardElement) {
@@ -850,6 +860,87 @@ export async function initFunding() {
                 }
             });
         }
+
+        // ── Apple Pay / Google Pay (Payment Request Button) ──
+        if (stripe && !walletInitialized) {
+            walletInitialized = true;
+            const paymentRequest = stripe.paymentRequest({
+                country: 'US',
+                currency: 'usd',
+                total: { label: 'Collateral — Verify Payment Method', amount: 0 },
+                requestPayerName: true,
+                requestPayerEmail: true,
+            });
+
+            const prButton = stripe.elements().create('paymentRequestButton', {
+                paymentRequest,
+                style: {
+                    paymentRequestButton: {
+                        type: 'default',
+                        theme: 'dark',
+                        height: '48px',
+                    },
+                },
+            });
+
+            paymentRequest.canMakePayment().then((result) => {
+                if (result) {
+                    const walletSection = document.getElementById('wallet-pay-section');
+                    if (walletSection) walletSection.style.display = 'block';
+                    prButton.mount('#payment-request-button');
+                    console.log('[Capital] Wallet payment available:', result.applePay ? 'Apple Pay' : 'Google Pay');
+                } else {
+                    console.log('[Capital] No wallet payment available (Apple Pay / Google Pay)');
+                }
+            });
+
+            // When user authenticates with Apple Pay / Google Pay
+            paymentRequest.on('paymentmethod', async (ev) => {
+                try {
+                    const siResponse = await window.api.createCardSetupIntent();
+                    if (!siResponse?.clientSecret) {
+                        ev.complete('fail');
+                        return;
+                    }
+
+                    const { setupIntent, error } = await stripe.confirmCardSetup(
+                        siResponse.clientSecret,
+                        { payment_method: ev.paymentMethod.id },
+                        { handleActions: false }
+                    );
+
+                    if (error) {
+                        ev.complete('fail');
+                        cardErrorEl.textContent = error.message;
+                        cardErrorEl.classList.add('visible');
+                        return;
+                    }
+
+                    ev.complete('success');
+
+                    if (setupIntent.status === 'succeeded') {
+                        await window.api.confirmCard(setupIntent.id, setupIntent.payment_method);
+                        closeModal(cardModal);
+                        await loadBillingStatus();
+                    } else if (setupIntent.status === 'requires_action') {
+                        const { error: actionError } = await stripe.confirmCardSetup(siResponse.clientSecret);
+                        if (actionError) {
+                            cardErrorEl.textContent = actionError.message;
+                            cardErrorEl.classList.add('visible');
+                        } else {
+                            await window.api.confirmCard(setupIntent.id, setupIntent.payment_method);
+                            closeModal(cardModal);
+                            await loadBillingStatus();
+                        }
+                    }
+                } catch (err) {
+                    ev.complete('fail');
+                    cardErrorEl.textContent = err.message || 'Wallet verification failed.';
+                    cardErrorEl.classList.add('visible');
+                }
+            });
+        }
+
         if (window.lucide) window.lucide.createIcons();
     }
 

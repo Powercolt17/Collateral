@@ -202,6 +202,132 @@ const authRoutes: FastifyPluginAsync = async (fastify) => {
     });
 
     /**
+     * POST /v1/auth/forgot-password
+     * Request a password reset email.
+     * Only for email/password accounts (not Clerk/OAuth).
+     * Always returns success to prevent email enumeration.
+     */
+    fastify.post<{
+        Body: { email: string };
+    }>('/v1/auth/forgot-password', async (request, reply) => {
+        const { email } = request.body;
+
+        if (!email) {
+            reply.status(400);
+            return { ok: false, error: 'Email required' };
+        }
+
+        const successResponse = {
+            ok: true,
+            message: 'If an account exists with that email, a reset link has been sent.',
+        };
+
+        try {
+            const [user] = await db
+                .select()
+                .from(users)
+                .where(eq(users.email, email.toLowerCase()))
+                .limit(1);
+
+            if (!user || !user.passwordHash) {
+                return successResponse;
+            }
+
+            const crypto = await import('crypto');
+            const resetToken = crypto.randomBytes(32).toString('hex');
+            const expiresAt = new Date(Date.now() + 15 * 60 * 1000);
+
+            const { sql } = await import('drizzle-orm');
+            await db.execute(sql`
+                UPDATE users 
+                SET reset_token = ${resetToken}, 
+                    reset_token_expires_at = ${expiresAt.toISOString()}
+                WHERE id = ${user.id}
+            `);
+
+            const appUrl = process.env.APP_URL || 'https://collateral.market';
+            const resetUrl = `${appUrl}/#/reset-password?token=${resetToken}`;
+
+            import('../services/email.js').then(({ sendPasswordResetEmail }) => {
+                sendPasswordResetEmail(email.toLowerCase(), resetUrl).catch(() => { });
+            }).catch(() => { });
+
+            console.log(`[Auth] Password reset requested for ${email}`);
+            return successResponse;
+        } catch (err: any) {
+            console.error('[Auth] Forgot password error:', err.message);
+            return successResponse;
+        }
+    });
+
+    /**
+     * POST /v1/auth/reset-password
+     * Reset password using token from email link.
+     */
+    fastify.post<{
+        Body: { token: string; password: string };
+    }>('/v1/auth/reset-password', async (request, reply) => {
+        const { token, password } = request.body;
+
+        if (!token || !password) {
+            reply.status(400);
+            return { ok: false, error: 'Token and new password required' };
+        }
+
+        if (password.length < 8) {
+            reply.status(400);
+            return { ok: false, error: 'Password must be at least 8 characters' };
+        }
+
+        try {
+            const { sql } = await import('drizzle-orm');
+            const result = await db.execute(sql`
+                SELECT id, email, reset_token_expires_at 
+                FROM users 
+                WHERE reset_token = ${token}
+                LIMIT 1
+            `);
+
+            const rows = (result as any).rows || (Array.isArray(result) ? result : []);
+            const user = rows[0];
+
+            if (!user) {
+                reply.status(400);
+                return { ok: false, error: 'Invalid or expired reset link. Please request a new one.' };
+            }
+
+            const expiresAt = new Date(user.reset_token_expires_at);
+            if (expiresAt < new Date()) {
+                await db.execute(sql`
+                    UPDATE users SET reset_token = NULL, reset_token_expires_at = NULL WHERE id = ${user.id}
+                `);
+                reply.status(400);
+                return { ok: false, error: 'Reset link has expired. Please request a new one.' };
+            }
+
+            const newHash = await bcrypt.hash(password, SALT_ROUNDS);
+            await db.execute(sql`
+                UPDATE users 
+                SET password_hash = ${newHash}, 
+                    reset_token = NULL, 
+                    reset_token_expires_at = NULL
+                WHERE id = ${user.id}
+            `);
+
+            console.log(`[Auth] Password reset completed for ${user.email}`);
+
+            return {
+                ok: true,
+                message: 'Password updated successfully. You can now sign in.',
+            };
+        } catch (err: any) {
+            console.error('[Auth] Reset password error:', err.message);
+            reply.status(500);
+            return { ok: false, error: 'Failed to reset password. Please try again.' };
+        }
+    });
+
+    /**
      * POST /auth/login (DEPRECATED - Dev only)
      * Legacy passwordless login - will be removed
      * Only works in development mode

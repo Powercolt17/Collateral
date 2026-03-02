@@ -23,6 +23,8 @@ import { renderAmazonCallback, initAmazonCallback } from './views/AmazonCallback
 import { renderPreLaunch, initPreLaunch } from './views/PreLaunch.js';
 import { renderTerms, initTerms } from './views/Terms.js';
 import { renderPrivacy, initPrivacy } from './views/Privacy.js';
+import { renderForgotPassword, initForgotPassword } from './views/ForgotPassword.js';
+import { renderResetPassword, initResetPassword } from './views/ResetPassword.js';
 import './views/PreLaunch.css';
 import './index.css';
 import './mobile.css';
@@ -182,7 +184,9 @@ const routes = PRE_LAUNCH_MODE ? [
     { path: '/amazon/callback', render: renderAmazonCallback, init: initAmazonCallback },
     { path: '/sso-callback', render: () => '<div style="display:flex;align-items:center;justify-content:center;min-height:60vh;"><p style="color:#999;font-size:14px;">Completing sign-in…</p></div>', init: () => { window.app._handleSSOCallback(); } },
     { path: '/terms', render: renderTerms, init: initTerms },
-    { path: '/privacy', render: renderPrivacy, init: initPrivacy }
+    { path: '/privacy', render: renderPrivacy, init: initPrivacy },
+    { path: '/forgot-password', render: renderForgotPassword, init: initForgotPassword },
+    { path: '/reset-password', render: renderResetPassword, init: initResetPassword }
 ];
 
 // ================================================================================

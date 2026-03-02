@@ -427,3 +427,40 @@ export async function sendSourceConnectedEmail(params: {
     const { subject, html } = sourceConnectedEmail({ platform: params.platform, username: params.username });
     await safeSend(email, subject, html);
 }
+
+// ================================================================
+// PASSWORD RESET
+// ================================================================
+
+function passwordResetEmail(params: { resetUrl: string }): { subject: string; html: string } {
+    return {
+        subject: 'Reset your Collateral password',
+        html: baseTemplate('Password Reset', `
+            <p style="font-size:14px;color:#555;line-height:1.7;margin:0 0 20px 0;">
+                We received a request to reset your password. Click the button below to choose a new one.
+            </p>
+            <div style="text-align:center;margin:28px 0;">
+                <a href="${params.resetUrl}" style="display:inline-block;background:#111;color:#fff;padding:14px 36px;font-size:13px;font-weight:700;text-decoration:none;text-transform:uppercase;letter-spacing:1px;">
+                    Reset Password →
+                </a>
+            </div>
+            <div style="background:#fef9c3;border:1px solid #fde68a;padding:14px 16px;margin-bottom:20px;">
+                <p style="font-size:12px;color:#92400e;margin:0;line-height:1.5;">
+                    This link expires in <strong>15 minutes</strong>. If you didn't request this reset, you can safely ignore this email.
+                </p>
+            </div>
+            <p style="font-size:12px;color:#999;margin:0;">
+                If the button doesn't work, copy and paste this URL:<br>
+                <span style="font-size:11px;word-break:break-all;color:#666;">${params.resetUrl}</span>
+            </p>
+        `),
+    };
+}
+
+/**
+ * Send password reset email
+ */
+export async function sendPasswordResetEmail(email: string, resetUrl: string): Promise<void> {
+    const { subject, html } = passwordResetEmail({ resetUrl });
+    await safeSend(email, subject, html);
+}

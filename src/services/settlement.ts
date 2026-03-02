@@ -17,6 +17,7 @@ import { tryAcquireLock, getNextRetryTime, scheduleRetry } from './job-lock.js';
 import { classifyError } from './error-classification.js';
 import { eq, and, or, isNull, lte, sql } from 'drizzle-orm';
 import { appendAccountEvent, AccountEventType } from './balances.js';
+import { sendSettlementSuccessEmail, sendSettlementFailureEmail } from './email.js';
 
 // =====================================================
 // SETTLEMENT EVENT TYPES
@@ -414,6 +415,15 @@ export async function settleContract(
 
             console.log(`✅ Payout QUEUED for ${contractId}: ${contract.payoutAmountUsdCents} cents`);
 
+            // EMAIL: Settlement success notification (fire-and-forget)
+            sendSettlementSuccessEmail({
+                userId: contract.principalUserId,
+                contractId,
+                platform: contract.platform,
+                lockAmountCents: contract.lockAmountUsdCents,
+                payoutAmountCents: contract.payoutAmountUsdCents,
+            }).catch(() => { }); // Never block settlement on email
+
             // 7. Append SETTLED_SUCCESS
             // Note: We do NOT transfer funds here anymore. The Payout Job will pick up PAYOUT_QUEUED events.
             await appendEvent({
@@ -467,6 +477,14 @@ export async function settleContract(
             });
 
             console.log(`❌ Contract ${contractId} settled FAILURE - forfeited ${contract.lockAmountUsdCents} cents`);
+
+            // EMAIL: Forfeiture notification (fire-and-forget)
+            sendSettlementFailureEmail({
+                userId: contract.principalUserId,
+                contractId,
+                platform: contract.platform,
+                lockAmountCents: contract.lockAmountUsdCents,
+            }).catch(() => { }); // Never block settlement on email
         }
 
         // =================================================================

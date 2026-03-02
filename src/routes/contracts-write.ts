@@ -798,6 +798,19 @@ const contractWriteRoutes: FastifyPluginAsync = async (fastify) => {
             const updatedEvents = await getEventsForContract(id);
             const newState = deriveState(updatedEvents);
 
+            // EMAIL: Execution confirmed notification (fire-and-forget)
+            import('../services/email.js').then(({ sendExecutionEmail }) => {
+                sendExecutionEmail({
+                    userId: contract.principalUserId,
+                    contractId: id,
+                    platform: contract.platform,
+                    lockAmountCents: contract.lockAmountUsdCents,
+                    payoutAmountCents: contract.payoutAmountUsdCents,
+                    deadline: contract.deadlineUtc.toISOString(),
+                    metricType: contract.metricType,
+                }).catch(() => { });
+            }).catch(() => { });
+
             return {
                 ok: true,
                 contractId: contract.id,

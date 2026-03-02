@@ -1,0 +1,293 @@
+/* ================================================================
+   COLLATERAL.MARKET — MOBILE RESPONSIVE
+   ================================================================ */
+
+@media (max-width: 768px) {
+
+    /* ── Overview Hero ── */
+    .eq-hero {
+        padding: 48px 20px 48px !important;
+    }
+
+    .eq-hero-headline {
+        font-size: 36px !important;
+        letter-spacing: -1px !important;
+        margin-bottom: 20px !important;
+    }
+
+    .eq-hero-sub {
+        font-size: 14px !important;
+        margin-bottom: 24px !important;
+    }
+
+    .eq-hero-actions {
+        flex-wrap: wrap !important;
+        gap: 12px !important;
+    }
+
+    .eq-btn-primary,
+    .eq-btn-secondary {
+        padding: 14px 20px !important;
+        font-size: 12px !important;
+        width: 100% !important;
+        text-align: center !important;
+        justify-content: center !important;
+    }
+
+    /* ── Overview Stats ── */
+    .eq-stats-strip {
+        flex-wrap: wrap !important;
+        gap: 24px !important;
+        margin-bottom: 32px !important;
+    }
+
+    .eq-stat-val {
+        font-size: 28px !important;
+    }
+
+    /* ── Overview Controls ── */
+    .eq-controls {
+        flex-direction: column !important;
+        align-items: flex-start !important;
+        gap: 12px !important;
+    }
+
+    .eq-tabs {
+        flex-wrap: wrap !important;
+        gap: 16px !important;
+    }
+
+    .eq-right {
+        width: 100% !important;
+        flex-direction: column !important;
+        gap: 8px !important;
+    }
+
+    .eq-sort,
+    .eq-search-bar {
+        width: 100% !important;
+    }
+
+    /* ── Overview Grid ── */
+    .eq-grid {
+        grid-template-columns: 1fr !important;
+        gap: 16px !important;
+    }
+
+    .eq-card {
+        padding: 20px !important;
+    }
+
+    .eq-market-section {
+        padding: 0 20px !important;
+    }
+
+    /* ── Ledger ── */
+    .ldg-table-wrap {
+        overflow-x: auto !important;
+        -webkit-overflow-scrolling: touch !important;
+    }
+
+    .ldg-table {
+        min-width: 600px !important;
+    }
+
+    .ldg-hero-inner {
+        padding: 40px 20px !important;
+    }
+
+    .ldg-hero-headline {
+        font-size: 28px !important;
+    }
+
+    .ldg-hero-stats {
+        flex-wrap: wrap !important;
+        gap: 20px !important;
+    }
+
+    .ldg-controls-row {
+        flex-direction: column !important;
+        gap: 12px !important;
+    }
+
+    .ldg-tabs {
+        flex-wrap: wrap !important;
+        gap: 8px !important;
+    }
+
+    .ldg-controls-right {
+        width: 100% !important;
+    }
+
+    .ldg-search {
+        width: 100% !important;
+    }
+
+    .ldg-filters-row {
+        flex-wrap: wrap !important;
+        gap: 8px !important;
+        padding: 12px 16px !important;
+    }
+
+    .ldg-content {
+        padding: 0 16px !important;
+    }
+
+    .ldg-footer-inner {
+        flex-direction: column !important;
+        gap: 8px !important;
+        padding: 16px !important;
+    }
+
+    /* ── Profile ── */
+    .prf-hero {
+        padding: 40px 20px !important;
+    }
+
+    .prf-hero-title {
+        font-size: 28px !important;
+    }
+
+    .prf-stats-grid {
+        grid-template-columns: repeat(2, 1fr) !important;
+        gap: 12px !important;
+    }
+
+    .prf-tabs {
+        flex-wrap: wrap !important;
+        gap: 8px !important;
+    }
+
+    .prf-grid {
+        grid-template-columns: 1fr !important;
+        gap: 12px !important;
+    }
+
+    .prf-pcard {
+        padding: 16px !important;
+    }
+
+    /* ── Active Contracts ── */
+    .ac-hero {
+        padding: 40px 20px !important;
+    }
+
+    .ac-hero-title {
+        font-size: 28px !important;
+    }
+
+    .ac-controls {
+        flex-direction: column !important;
+        gap: 12px !important;
+    }
+
+    .ac-grid {
+        grid-template-columns: 1fr !important;
+    }
+
+    /* ── Header ── */
+    .ch-search {
+        display: none !important;
+    }
+
+    .ch-nav {
+        display: none !important;
+    }
+
+    .ch-notif-panel {
+        width: 280px !important;
+        right: -40px !important;
+    }
+
+    /* ── Footer ── */
+    #global-footer>div:first-child {
+        flex-direction: column !important;
+        padding: 40px 20px 32px !important;
+        gap: 32px !important;
+    }
+
+    #global-footer>div:last-child {
+        flex-direction: column !important;
+        align-items: flex-start !important;
+        padding: 20px !important;
+    }
+
+    /* ── Modals ── */
+    #modal-access,
+    #modal-card {
+        max-width: 95vw !important;
+        width: 95vw !important;
+    }
+
+    #modal-settings {
+        max-width: 95vw !important;
+        width: 95vw !important;
+        flex-direction: column !important;
+        min-height: auto !important;
+        max-height: 90vh !important;
+    }
+
+    #modal-settings>div:first-child {
+        width: 100% !important;
+        flex-direction: row !important;
+        overflow-x: auto !important;
+        padding: 12px !important;
+    }
+
+    #modal-settings>div:first-child nav {
+        flex-direction: row !important;
+    }
+
+    /* ── Execution Modal ── */
+    .exec-modal {
+        max-width: 95vw !important;
+        width: 95vw !important;
+    }
+
+    /* ── Contract Detail ── */
+    .cd-hero {
+        padding: 40px 20px !important;
+    }
+
+    .cd-hero-title {
+        font-size: 24px !important;
+    }
+
+    .cd-grid {
+        grid-template-columns: 1fr !important;
+    }
+
+    /* ── Drawer ── */
+    .ldg-drawer {
+        width: 100% !important;
+        max-width: 100% !important;
+    }
+}
+
+/* ── Small phones (375px) ── */
+@media (max-width: 480px) {
+    .eq-hero-headline {
+        font-size: 28px !important;
+    }
+
+    .eq-stat-val {
+        font-size: 24px !important;
+    }
+
+    .eq-stats-strip {
+        gap: 16px !important;
+    }
+
+    .prf-stats-grid {
+        grid-template-columns: 1fr 1fr !important;
+    }
+
+    .ldg-hero-headline {
+        font-size: 22px !important;
+    }
+
+    #global-footer>div:first-child>div:last-child {
+        flex-direction: column !important;
+        gap: 32px !important;
+    }
+}

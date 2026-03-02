@@ -1294,4 +1294,21 @@ export async function initLedger() {
     }
 
     if (window.lucide) window.lucide.createIcons();
+
+    // ── Auto-Refresh (30s polling) ──
+    if (window._ledgerPollId) clearInterval(window._ledgerPollId);
+    window._ledgerPollId = setInterval(async () => {
+        try {
+            const el = document.getElementById('ldg-list');
+            if (!el) { clearInterval(window._ledgerPollId); return; }
+            const response = await window.api.getPublicLedger();
+            const newEvents = response?.events || [];
+            if (newEvents.length !== allEvents.length) {
+                allEvents = newEvents;
+                updateStats();
+                renderEvents();
+                console.log('[Ledger] Auto-refreshed:', allEvents.length, 'events');
+            }
+        } catch (e) { /* silent retry */ }
+    }, 30000);
 }

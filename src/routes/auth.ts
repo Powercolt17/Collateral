@@ -248,9 +248,15 @@ const authRoutes: FastifyPluginAsync = async (fastify) => {
             const appUrl = process.env.APP_URL || 'https://collateral.market';
             const resetUrl = `${appUrl}/#/reset-password?token=${resetToken}`;
 
-            import('../services/email.js').then(({ sendPasswordResetEmail }) => {
-                sendPasswordResetEmail(email.toLowerCase(), resetUrl).catch(() => { });
-            }).catch(() => { });
+            // Send reset email (non-blocking but with proper logging)
+            try {
+                const { sendPasswordResetEmail } = await import('../services/email.js');
+                await sendPasswordResetEmail(email.toLowerCase(), resetUrl);
+                console.log(`[Auth] Password reset email sent to ${email}`);
+            } catch (emailErr: any) {
+                console.error(`[Auth] ❌ Failed to send password reset email to ${email}:`, emailErr.message);
+                // Don't block the response — user still gets the generic success message
+            }
 
             console.log(`[Auth] Password reset requested for ${email}`);
             return successResponse;

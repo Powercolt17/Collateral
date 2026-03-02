@@ -505,9 +505,39 @@ export async function initProfile() {
         });
     });
 
-    // ── Export CSV stub ──
+    // ── Export CSV ──
     const exportBtn = $('export-csv-btn');
-    if (exportBtn) exportBtn.addEventListener('click', () => { alert('CSV export coming soon.'); });
+    if (exportBtn) exportBtn.addEventListener('click', () => {
+        try {
+            const rows = [['Contract ID', 'Platform', 'Metric', 'Stake (USD)', 'State', 'Risk Tier', 'Created', 'Deadline']];
+            contracts.forEach(c => {
+                const st = c.derivedState || c.state;
+                rows.push([
+                    c.id,
+                    c.platform || '',
+                    c.metricType || '',
+                    (c.lockAmountUsdCents / 100).toFixed(2),
+                    st,
+                    c.riskTier || '',
+                    c.createdAt ? new Date(c.createdAt).toISOString().split('T')[0] : '',
+                    c.deadlineUtc ? new Date(c.deadlineUtc).toISOString().split('T')[0] : ''
+                ]);
+            });
+            const csv = rows.map(r => r.map(v => `"${(v || '').replace(/"/g, '""')}"`).join(',')).join('\n');
+            const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `collateral-contracts-${new Date().toISOString().split('T')[0]}.csv`;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+            exportBtn.innerHTML = '<i data-lucide="check" style="width:13px;height:13px"></i> Downloaded!';
+            if (window.lucide) window.lucide.createIcons();
+            setTimeout(() => { exportBtn.innerHTML = '<i data-lucide="download" style="width:13px;height:13px"></i> Export CSV'; if (window.lucide) window.lucide.createIcons(); }, 2000);
+        } catch (e) { console.error('[CSV]', e); alert('Export failed: ' + e.message); }
+    });
 
     // ── Fetch data ──
     try {
@@ -750,8 +780,8 @@ export async function initProfile() {
                     <div class="prf-pcard-scope">${s.connected ? 'Detail: ' + s.detail : ''}</div>
                     <div class="prf-pcard-actions">
                         ${s.connected
-                        ? '<button class="prf-cta ghost sm">Manage</button><button class="prf-cta ghost sm" onclick="event.stopPropagation();document.getElementById(\'rules-modal\').classList.add(\'open\')">Rules</button>'
-                        : '<button class="prf-cta sm">Connect →</button>'}
+                        ? '<button class="prf-cta ghost sm" onclick="event.stopPropagation();window.router.navigate(\'/sources\')">Manage</button><button class="prf-cta ghost sm" onclick="event.stopPropagation();document.getElementById(\'rules-modal\').classList.add(\'open\')">Rules</button>'
+                        : '<button class="prf-cta sm" onclick="event.stopPropagation();window.router.navigate(\'/sources\')">Connect →</button>'}
                     </div>
                 </div>`;
             }).join('');

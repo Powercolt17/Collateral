@@ -10,6 +10,7 @@ import { renderMyContracts, initMyContracts } from './views/MyContracts.js';
 import { renderDocs, initDocs } from './views/Docs.js';
 import { renderFunding, initFunding } from './views/Funding.js';
 import { renderReceipts, initReceipts } from './views/Receipts.js';
+import { renderReceiptDetail, initReceiptDetail } from './views/ReceiptDetail.js';
 import { renderActiveContracts, initActiveContracts } from './views/ActiveContracts.js';
 import { renderSources, initSources } from './views/Sources.js';
 
@@ -152,6 +153,7 @@ const routes = PRE_LAUNCH_MODE ? [
     { path: '/docs', render: renderPreLaunch, init: initPreLaunch },
     { path: '/funding', render: renderPreLaunch, init: initPreLaunch },
     { path: '/receipts', render: renderPreLaunch, init: initPreLaunch },
+    { path: '/receipts/:id', render: renderPreLaunch, init: initPreLaunch },
     { path: '/market/:id', render: renderPreLaunch, init: initPreLaunch },
     { path: '/contract/:id', render: renderPreLaunch, init: initPreLaunch },
 ] : [
@@ -170,6 +172,7 @@ const routes = PRE_LAUNCH_MODE ? [
     { path: '/docs', render: renderDocs, init: initDocs },
     { path: '/funding', render: renderFunding, init: initFunding },
     { path: '/receipts', render: renderReceipts, init: initReceipts },
+    { path: '/receipts/:id', render: renderReceiptDetail, init: initReceiptDetail },
     { path: '/stripe/callback', render: renderStripeCallback, init: initStripeCallback },
     { path: '/x/callback', render: renderXCallback, init: initXCallback },
     { path: '/shopify/callback', render: renderShopifyCallback, init: initShopifyCallback },
@@ -533,6 +536,64 @@ window.app = {
         e.stopPropagation();
         const dropdown = document.getElementById('user-dropdown-content');
         if (dropdown) dropdown.classList.toggle('!block');
+    },
+    toggleNotifications: async function (e) {
+        e.stopPropagation();
+        const wrap = document.getElementById('notif-wrap');
+        if (!wrap) return;
+        const isOpen = wrap.classList.contains('open');
+        wrap.classList.toggle('open');
+        if (isOpen) return; // closing
+
+        const list = document.getElementById('notif-list');
+        if (!list) return;
+
+        // Close when clicking outside
+        const closeHandler = (ev) => {
+            if (!wrap.contains(ev.target)) {
+                wrap.classList.remove('open');
+                document.removeEventListener('click', closeHandler);
+            }
+        };
+        setTimeout(() => document.addEventListener('click', closeHandler), 0);
+
+        // Fetch recent activity
+        if (!appState.isLoggedIn) {
+            list.innerHTML = '<div class="ch-notif-empty">Sign in to see activity</div>';
+            return;
+        }
+
+        try {
+            const res = await api.getContracts();
+            const contracts = (res?.contracts || []).slice(0, 5);
+            if (contracts.length === 0) {
+                list.innerHTML = '<div class="ch-notif-empty">No recent activity</div>';
+                wrap.classList.remove('has-items');
+                return;
+            }
+            wrap.classList.add('has-items');
+            const timeAgo = (d) => {
+                const s = Math.floor((Date.now() - new Date(d)) / 1000);
+                if (s < 60) return 'just now';
+                if (s < 3600) return Math.floor(s / 60) + 'm ago';
+                if (s < 86400) return Math.floor(s / 3600) + 'h ago';
+                return Math.floor(s / 86400) + 'd ago';
+            };
+            list.innerHTML = contracts.map(c => {
+                const st = c.derivedState || c.state;
+                let icon = '⚡', cls = 'exec', label = 'Contract Executed';
+                if (['SETTLED', 'SETTLED_SUCCESS', 'PAYOUT_COMPLETE'].includes(st)) { icon = '✓'; cls = 'settle'; label = 'Settlement Posted'; }
+                else if (['FORFEITED', 'SETTLED_FAILURE'].includes(st)) { icon = '✕'; cls = 'forfeit'; label = 'Capital Forfeited'; }
+                const amt = c.lockAmountUsdCents ? '$' + (c.lockAmountUsdCents / 100).toLocaleString() : '';
+                return `<div class="ch-notif-item" onclick="window.router.navigate('/contracts/${c.id}');document.getElementById('notif-wrap').classList.remove('open');">
+                    <div class="ch-notif-icon ${cls}">${icon}</div>
+                    <span class="ch-notif-text">${label} ${amt}</span>
+                    <span class="ch-notif-time">${timeAgo(c.createdAt)}</span>
+                </div>`;
+            }).join('');
+        } catch (err) {
+            list.innerHTML = '<div class="ch-notif-empty">Could not load activity</div>';
+        }
     },
     connectSource: async function (source) {
         const btn = document.getElementById(source + '-btn');

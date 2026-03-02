@@ -315,6 +315,73 @@ export function renderHeader(currentRoute) {
             .ch-user-dropdown button:hover { background: #FAFAFA; }
             .ch-user-dropdown .signout { color: #921818; }
 
+            /* Notification dropdown */
+            .ch-notif-wrap { position: relative; }
+            .ch-notif-panel {
+                position: absolute;
+                right: 0;
+                top: 100%;
+                margin-top: 6px;
+                width: 320px;
+                background: #fff;
+                border: 1px solid #E5E5E5;
+                box-shadow: 0 4px 16px rgba(0,0,0,0.08);
+                display: none;
+                z-index: 100;
+                max-height: 360px;
+                overflow-y: auto;
+            }
+            .ch-notif-wrap.open .ch-notif-panel { display: block; }
+            .ch-notif-hd {
+                padding: 10px 14px;
+                border-bottom: 1px solid #f0f0f0;
+                font-size: 9px;
+                font-weight: 700;
+                text-transform: uppercase;
+                letter-spacing: 1px;
+                color: #888;
+                font-family: 'JetBrains Mono', monospace;
+            }
+            .ch-notif-item {
+                padding: 10px 14px;
+                border-bottom: 1px solid #f5f5f5;
+                display: flex;
+                align-items: center;
+                gap: 10px;
+                cursor: pointer;
+                transition: background 0.1s;
+                font-size: 12px;
+            }
+            .ch-notif-item:hover { background: #fafafa; }
+            .ch-notif-item:last-child { border-bottom: none; }
+            .ch-notif-icon {
+                width: 28px; height: 28px;
+                border-radius: 6px;
+                display: flex; align-items: center; justify-content: center;
+                flex-shrink: 0; font-size: 11px;
+            }
+            .ch-notif-icon.exec { background: #fef2f2; color: #752122; }
+            .ch-notif-icon.settle { background: #f0fdf4; color: #166534; }
+            .ch-notif-icon.forfeit { background: #fef2f2; color: #991b1b; }
+            .ch-notif-text { flex: 1; color: #444; font-weight: 500; }
+            .ch-notif-time { font-size: 10px; color: #999; font-family: 'JetBrains Mono', monospace; white-space: nowrap; }
+            .ch-notif-empty {
+                padding: 24px 14px;
+                text-align: center;
+                font-size: 11px;
+                color: #999;
+                font-family: 'JetBrains Mono', monospace;
+            }
+            .ch-notif-badge {
+                position: absolute;
+                top: 4px; right: 4px;
+                width: 7px; height: 7px;
+                background: #752122;
+                border-radius: 50%;
+                display: none;
+            }
+            .ch-notif-wrap.has-items .ch-notif-badge { display: block; }
+
             /* Mobile menu button */
             .ch-mobile-btn {
                 display: flex;
@@ -386,14 +453,23 @@ export function renderHeader(currentRoute) {
                     <!-- Search Bar -->
                     <div class="ch-search">
                         <i data-lucide="search" class="ch-search-icon" style="width: 16px; height: 16px;"></i>
-                        <input type="text" placeholder="Search RCPT or Provider...">
+                        <input type="text" id="global-search" placeholder="Search RCPT or Provider..." onkeydown="if(event.key==='Enter'){const q=this.value.trim();if(q){window.router.navigate('/contracts');setTimeout(()=>{const s=document.getElementById('ac-search');if(s){s.value=q;s.dispatchEvent(new Event('input'));}},200);}this.blur();}">
                     </div>
 
-                    <!-- Icon Buttons -->
-                    <button class="ch-icon-btn">
-                        <i data-lucide="bell" style="width: 18px; height: 18px;"></i>
-                    </button>
-                    <button class="ch-icon-btn">
+                    <!-- Notification Bell -->
+                    <div class="ch-notif-wrap" id="notif-wrap">
+                        <button class="ch-icon-btn" onclick="window.app.toggleNotifications(event)">
+                            <i data-lucide="bell" style="width: 18px; height: 18px;"></i>
+                            <div class="ch-notif-badge"></div>
+                        </button>
+                        <div class="ch-notif-panel" id="notif-panel">
+                            <div class="ch-notif-hd">Recent Activity</div>
+                            <div id="notif-list">
+                                <div class="ch-notif-empty">Loading...</div>
+                            </div>
+                        </div>
+                    </div>
+                    <button class="ch-icon-btn" onclick="window.router.navigate('/profile')">
                         <i data-lucide="user" style="width: 18px; height: 18px;"></i>
                     </button>
 

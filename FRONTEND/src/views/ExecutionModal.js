@@ -388,6 +388,16 @@ export function closeExecutionModal() {
 }
 
 async function runExecution(contractData, stake, multiplier, btnEl, bodyEl) {
+    // Auth gate — require login before execution
+    if (!hasAuthToken()) {
+        const errorEl = bodyEl.querySelector('#exec-error-msg');
+        if (errorEl) {
+            errorEl.innerHTML = 'Sign in required to execute contracts. <a href="#" onclick="event.preventDefault();window.app.handleAuthClick();" style="color:#752122;text-decoration:underline;font-weight:600;">Sign In →</a>';
+            errorEl.style.display = 'block';
+        }
+        return;
+    }
+
     const id = contractData.id;
     const provider = contractData.provider || contractData.platform || 'stripe';
     const tier = (contractData.tier || 'controlled').toUpperCase();

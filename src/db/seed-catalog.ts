@@ -440,24 +440,24 @@ export async function seedCatalog() {
             const tierOptions = t.tierOptionsJson as any;
 
             // Smart Stake Ladder Configuration
-            let minStake = 2500;   // $25
-            let maxStake = 50000;  // $500
+            let minStake = 10000;   // $100
+            let maxStake = 150000;  // $1,500
             let multiplier = 1.5;
             let feeBps = 200;      // 2%
 
             if (tier === 'controlled') {
-                minStake = 2500;    // $25
-                maxStake = 50000;   // $500
+                minStake = 10000;    // $100
+                maxStake = 150000;   // $1,500
                 multiplier = 1.5;
                 feeBps = 200;       // 2%
             } else if (tier === 'elevated') {
-                minStake = 10000;   // $100
-                maxStake = 250000;  // $2,500
+                minStake = 25000;   // $250
+                maxStake = 300000;  // $3,000
                 multiplier = 2.5;
                 feeBps = 300;       // 3%
             } else if (tier === 'maximum') {
                 minStake = 50000;   // $500
-                maxStake = 2500000; // $25,000
+                maxStake = 1000000; // $10,000
                 multiplier = 4.0;
                 feeBps = 500;       // 5%
             }

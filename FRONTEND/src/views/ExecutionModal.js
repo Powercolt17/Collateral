@@ -292,9 +292,9 @@ export function openExecutionModal(contractData) {
     const targetDisplay = target_hint || goal || '+15%';
 
     // ── Build stake presets from min/max ──
-    const minS = min_stake > 0 ? min_stake : 25;
-    const maxS = max_stake > 0 ? max_stake : 25000;
-    const allPresets = [25, 50, 100, 250, 500, 1000, 2500, 5000, 10000, 25000];
+    const minS = min_stake > 0 ? min_stake : 100;
+    const maxS = max_stake > 0 ? max_stake : 10000;
+    const allPresets = [100, 250, 500, 1000, 1500, 2000, 3000, 5000, 10000];
     const presets = allPresets.filter(p => p >= minS && p <= maxS);
     if (presets.length === 0) presets.push(minS);
     // Cap at 5 presets for layout

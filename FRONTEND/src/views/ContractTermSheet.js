@@ -192,8 +192,8 @@ function showContent(c) {
     const displayProvider = provider.charAt(0).toUpperCase() + provider.slice(1);
     const tier = (c.tier || 'controlled').toLowerCase();
     const tierUpper = tier.toUpperCase();
-    const minStake = c.min_stake || 25;
-    const maxStake = c.max_stake || 500;
+    const minStake = c.min_stake || 100;
+    const maxStake = c.max_stake || 1500;
     const feeBps = c.fee_bps || 250;
     const feePercent = (feeBps / 100).toFixed(1);
     const windowDays = 30;
@@ -395,7 +395,7 @@ function showContent(c) {
 function buildTierSteps(min, max) {
     if (min === max || max <= 0) return [min || 25];
     const steps = [min];
-    const candidates = [50, 100, 250, 500, 1000, 2500, 5000];
+    const candidates = [100, 250, 500, 1000, 1500, 2000, 3000, 5000, 10000];
     for (const v of candidates) {
         if (v > min && v <= max && steps.length < 4) steps.push(v);
     }

@@ -3,6 +3,7 @@ import http from 'node:http';
 import Fastify from 'fastify';
 import cors from '@fastify/cors';
 import rawBody from 'fastify-raw-body';
+import { registerSecurity } from './middleware/security.js';
 
 // Route imports
 import healthRoutes from './routes/health.js';
@@ -172,10 +173,21 @@ async function bootFastify() {
             },
         });
 
-        // CORS
+        // CORS — Restrict to known origins in production
+        const ALLOWED_ORIGINS = IS_PRODUCTION
+            ? [
+                'https://collateral.market',
+                'https://www.collateral.market',
+                'https://collateral-production.up.railway.app',
+            ]
+            : true; // Allow all in development
+
         await fastify.register(cors, {
-            origin: true,
+            origin: ALLOWED_ORIGINS,
             credentials: true,
+            methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
+            allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With'],
+            maxAge: 86400, // Cache preflight for 24h
         });
 
         // Raw body support for Stripe webhook signature verification
@@ -224,6 +236,11 @@ async function bootFastify() {
                 error: error.message || 'Unknown error',
             });
         });
+
+        // =========================================================
+        // Security Middleware (Rate Limiting + Headers)
+        // =========================================================
+        await registerSecurity(fastify);
 
         // =========================================================
         // Route Registration

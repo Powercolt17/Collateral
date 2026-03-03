@@ -68,6 +68,125 @@
         .card-unselected:hover {
             border-color: #B0B2B8;
         }
+
+        /* ── Scroll Reveal Animations ── */
+        [data-reveal] {
+            opacity: 0;
+            transform: translateY(32px);
+            transition: opacity 0.9s cubic-bezier(0.16, 1, 0.3, 1),
+                transform 0.9s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        [data-reveal].revealed {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        [data-reveal-delay="1"] {
+            transition-delay: 0.1s;
+        }
+
+        [data-reveal-delay="2"] {
+            transition-delay: 0.2s;
+        }
+
+        [data-reveal-delay="3"] {
+            transition-delay: 0.3s;
+        }
+
+        [data-reveal-delay="4"] {
+            transition-delay: 0.4s;
+        }
+
+        /* ── Transparent Nav on Scroll ── */
+        #main-nav {
+            transition: background-color 0.4s ease,
+                border-color 0.4s ease,
+                box-shadow 0.4s ease;
+        }
+
+        #main-nav.nav-scrolled {
+            background-color: rgba(247, 247, 246, 0.6) !important;
+            backdrop-filter: blur(16px) saturate(180%);
+            -webkit-backdrop-filter: blur(16px) saturate(180%);
+            border-color: rgba(217, 219, 225, 0.4) !important;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.03), 0 4px 20px rgba(0, 0, 0, 0.02);
+        }
+
+        #main-nav::after {
+            content: '';
+            position: absolute;
+            bottom: -1px;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: linear-gradient(90deg, transparent 0%, #921818 50%, transparent 100%);
+            opacity: 0;
+            transition: opacity 0.5s ease;
+        }
+
+        #main-nav.nav-scrolled::after {
+            opacity: 1;
+        }
+
+        /* ── Text Shimmer for Hero ── */
+        @keyframes text-shimmer {
+            0% {
+                background-position: -200% center;
+            }
+
+            100% {
+                background-position: 200% center;
+            }
+        }
+
+        .hero-shimmer {
+            background: linear-gradient(90deg, #0E0E11 40%, #921818 50%, #0E0E11 60%);
+            background-size: 200% auto;
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: text-shimmer 4s ease-in-out infinite;
+            animation-delay: 1.5s;
+        }
+
+        /* ── Stagger children utility ── */
+        [data-reveal-stagger]>* {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1),
+                transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        [data-reveal-stagger].revealed>*:nth-child(1) {
+            transition-delay: 0.05s;
+        }
+
+        [data-reveal-stagger].revealed>*:nth-child(2) {
+            transition-delay: 0.12s;
+        }
+
+        [data-reveal-stagger].revealed>*:nth-child(3) {
+            transition-delay: 0.19s;
+        }
+
+        [data-reveal-stagger].revealed>*:nth-child(4) {
+            transition-delay: 0.26s;
+        }
+
+        [data-reveal-stagger].revealed>*:nth-child(5) {
+            transition-delay: 0.33s;
+        }
+
+        [data-reveal-stagger].revealed>* {
+            opacity: 0;
+            transform: translateY(20px);
+        }
+
+        [data-reveal-stagger].revealed>* {
+            opacity: 1;
+            transform: translateY(0);
+        }
     </style>
     <!-- Scripts -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -192,7 +311,7 @@
 
         <!-- VIEW: LANDING -->
         <main id="view-landing" class="view-section flex flex-col items-start opacity-0 animate-activate">
-            <div class="w-full mt-12 relative">
+            <div class="w-full mt-12 relative" data-reveal>
                 <div class="absolute -left-4 top-0 bottom-0 w-[1px] bg-[#D9DBE1] hidden md:block"></div>
 
                 <div class="relative">
@@ -252,13 +371,13 @@
             </div>
 
             <!-- Emotional Hook (Spacer) -->
-            <div class="w-full mt-24 max-w-2xl">
+            <div class="w-full mt-24 max-w-2xl" data-reveal>
                 <p class="font-display font-normal text-lg text-[#6B6E76] italic">"Most people underestimate how
                     motivating locked capital is."</p>
             </div>
 
             <!-- RISK PROFILE SECTION -->
-            <div class="w-full mt-16">
+            <div class="w-full mt-16" data-reveal>
                 <h2 class="font-display font-semibold text-lg uppercase tracking-tight text-[#921818] mb-8">Choose Your
                     Risk Profile</h2>
 
@@ -371,7 +490,7 @@
             </div>
 
             <!-- WHAT CAN BE VERIFIED SECTION -->
-            <div class="w-full mt-24 max-w-4xl">
+            <div class="w-full mt-24 max-w-4xl" data-reveal>
                 <h2 class="font-display font-semibold text-lg uppercase tracking-tight text-[#921818] mb-2">What Can Be
                     Verified</h2>
                 <div class="w-full h-px bg-[#D9DBE1] mb-8"></div>
@@ -407,7 +526,7 @@
             </div>
 
             <!-- EXECUTION MODEL SECTION -->
-            <div class="w-full mt-24 max-w-4xl">
+            <div class="w-full mt-24 max-w-4xl" data-reveal>
                 <h2 class="font-display font-semibold text-lg uppercase tracking-tight text-[#921818] mb-2">Execution
                     Model</h2>
                 <div class="w-full h-px bg-[#921818]/20 mb-8"></div>
@@ -459,7 +578,7 @@
             </div>
 
             <!-- Bottom Credibility Line -->
-            <div class="w-full mt-32 mb-8 text-center">
+            <div class="w-full mt-32 mb-8 text-center" data-reveal>
                 <p class="font-sans text-sm text-[#6B6E76]">Contracts are enforced by external data sources, not
                     internal discretion.</p>
             </div>
@@ -1046,6 +1165,46 @@
                 }, 500); // Match transition duration
 
             }, 3000); // 3 seconds per slide
+        })();
+
+        // ── Scroll-Transparent Navbar ──
+        (function initScrollNav() {
+            const nav = document.getElementById('main-nav');
+            if (!nav) return;
+            let ticking = false;
+            window.addEventListener('scroll', () => {
+                if (!ticking) {
+                    requestAnimationFrame(() => {
+                        if (window.scrollY > 80) {
+                            nav.classList.add('nav-scrolled');
+                        } else {
+                            nav.classList.remove('nav-scrolled');
+                        }
+                        ticking = false;
+                    });
+                    ticking = true;
+                }
+            });
+        })();
+
+        // ── Scroll Reveal (IntersectionObserver) ──
+        (function initScrollReveal() {
+            const revealEls = document.querySelectorAll('[data-reveal]');
+            if (!revealEls.length) return;
+
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('revealed');
+                        observer.unobserve(entry.target); // Only animate once
+                    }
+                });
+            }, {
+                threshold: 0.12,
+                rootMargin: '0px 0px -60px 0px'
+            });
+
+            revealEls.forEach(el => observer.observe(el));
         })();
     </script>
 

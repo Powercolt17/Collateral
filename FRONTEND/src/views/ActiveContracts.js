@@ -583,7 +583,7 @@ export function renderActiveContracts() {
 
         <div class="act">
             <!-- Hero Header -->
-            <div class="act-header">
+            <div class="act-header" data-reveal>
                 <div class="act-header-inner">
                     <div class="act-breadcrumb">PLATFORM / <span>CONTRACTS</span></div>
                     <div class="act-hero-row">
@@ -616,7 +616,7 @@ export function renderActiveContracts() {
             </div>
 
             <!-- Content Area -->
-            <div class="act-content">
+            <div class="act-content" data-reveal>
                 <!-- Tabs Row -->
                 <div class="act-controls-row">
                     <div class="act-tabs" id="act-tabs">
@@ -640,7 +640,7 @@ export function renderActiveContracts() {
                     </div>
 
                     <!-- Footer Note -->
-                    <div class="act-footer-note">
+                    <div class="act-footer-note" data-reveal>
                         <div class="act-footer-note-icon">
                             <i data-lucide="shield"></i>
                         </div>

@@ -517,7 +517,7 @@ export function renderOverview() {
 
         <div class="eq">
             <!-- Section 1: Hero -->
-            <div class="eq-hero">
+            <div class="eq-hero" data-reveal>
                 <div class="eq-tag">Performance Collateral Protocol</div>
                 <h1 class="eq-hero-headline">Back yourself. <strong>Lock the capital</strong> to prove it.</h1>
                 <p class="eq-hero-sub">Stake against revenue, sales, or growth targets. Automatic verification. Final settlement. No appeals.</p>
@@ -529,7 +529,7 @@ export function renderOverview() {
             </div>
 
             <!-- Section 2: Mechanism -->
-            <section class="eq-mechanism">
+            <section class="eq-mechanism" data-reveal>
                 <div class="eq-mechanism-header">
                     <div class="eq-mechanism-side-left">
                         <div class="eq-tag">How it works</div>
@@ -561,7 +561,7 @@ export function renderOverview() {
             </section>
 
             <!-- Section 3: Live Market Header -->
-            <section class="eq-market-header" id="live-market">
+            <section class="eq-market-header" id="live-market" data-reveal>
                 <div class="eq-tag">Live Contracts</div>
                 <h2 class="eq-market-title">Active <strong>market.</strong></h2>
                 <div class="eq-market-live">

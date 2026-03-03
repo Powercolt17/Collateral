@@ -49,7 +49,47 @@ export function renderHeader(currentRoute) {
                 position: fixed;
                 top: 0;
                 z-index: 50;
+                transition: background 0.4s ease,
+                            border-color 0.4s ease,
+                            box-shadow 0.4s ease,
+                            backdrop-filter 0.4s ease;
             }
+            .ch-header.nav-scrolled {
+                background: rgba(255, 255, 255, 0.55) !important;
+                backdrop-filter: blur(18px) saturate(180%);
+                -webkit-backdrop-filter: blur(18px) saturate(180%);
+                border-bottom-color: rgba(229, 229, 229, 0.35) !important;
+                box-shadow: 0 1px 3px rgba(0,0,0,0.02), 0 8px 32px rgba(0,0,0,0.03);
+            }
+            .ch-header::after {
+                content: '';
+                position: absolute;
+                bottom: -1px;
+                left: 0;
+                width: 100%;
+                height: 2px;
+                background: linear-gradient(90deg, transparent 0%, #921818 50%, transparent 100%);
+                opacity: 0;
+                transition: opacity 0.5s ease;
+            }
+            .ch-header.nav-scrolled::after {
+                opacity: 1;
+            }
+
+            /* ── Global Scroll Reveal ── */
+            [data-reveal] {
+                opacity: 0;
+                transform: translateY(28px);
+                transition: opacity 0.85s cubic-bezier(0.16, 1, 0.3, 1),
+                            transform 0.85s cubic-bezier(0.16, 1, 0.3, 1);
+            }
+            [data-reveal].revealed {
+                opacity: 1;
+                transform: translateY(0);
+            }
+            [data-reveal-delay="1"] { transition-delay: 0.1s; }
+            [data-reveal-delay="2"] { transition-delay: 0.2s; }
+            [data-reveal-delay="3"] { transition-delay: 0.3s; }
             .ch-header-inner {
                 width: 100%;
                 padding: 0 32px;
@@ -530,4 +570,51 @@ export function renderHeader(currentRoute) {
             </div>
         </div>
     `;
+}
+
+/**
+ * Initialize scroll effects:
+ * 1. Transparent glass navbar on scroll
+ * 2. IntersectionObserver scroll-reveal animations
+ * Call this AFTER the header HTML is injected into the DOM.
+ */
+export function initScrollEffects() {
+    // ── Scroll-Transparent Navbar ──
+    const header = document.querySelector('.ch-header');
+    if (header) {
+        let ticking = false;
+        const onScroll = () => {
+            if (!ticking) {
+                requestAnimationFrame(() => {
+                    if (window.scrollY > 60) {
+                        header.classList.add('nav-scrolled');
+                    } else {
+                        header.classList.remove('nav-scrolled');
+                    }
+                    ticking = false;
+                });
+                ticking = true;
+            }
+        };
+        window.addEventListener('scroll', onScroll, { passive: true });
+        // Run once on init in case the page is already scrolled
+        onScroll();
+    }
+
+    // ── Scroll Reveal (IntersectionObserver) ──
+    const revealEls = document.querySelectorAll('[data-reveal]');
+    if (revealEls.length) {
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('revealed');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        });
+        revealEls.forEach(el => observer.observe(el));
+    }
 }

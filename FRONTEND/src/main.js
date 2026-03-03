@@ -1,6 +1,6 @@
 // Main entry point
 import { Router } from './router.js';
-import { renderHeader } from './components/Header.js';
+import { renderHeader, initScrollEffects } from './components/Header.js';
 import { renderOverview, initOverview } from './views/Overview.js';
 import { renderLedger, initLedger } from './views/Ledger.js';
 import { renderContracts, initContracts } from './views/Contracts.js';
@@ -1275,6 +1275,10 @@ router.onRouteChange = function (route, path) {
     if (window.lucide) {
         setTimeout(() => window.lucide.createIcons(), 10);
     }
+
+    // Initialize scroll effects AFTER view content is rendered
+    // (data-reveal elements are in the view HTML, not the header)
+    setTimeout(() => initScrollEffects(), 20);
 
     // Update auth UI
     updateAuthUI();

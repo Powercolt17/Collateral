@@ -90,6 +90,38 @@ export function renderHeader(currentRoute) {
             [data-reveal-delay="1"] { transition-delay: 0.1s; }
             [data-reveal-delay="2"] { transition-delay: 0.2s; }
             [data-reveal-delay="3"] { transition-delay: 0.3s; }
+
+            /* ── Scroll Progress Bar ── */
+            .scroll-progress {
+                position: fixed;
+                top: 0;
+                left: 0;
+                height: 3px;
+                background: linear-gradient(90deg, #752122, #921818);
+                z-index: 100;
+                width: 0%;
+                transition: none;
+            }
+
+            /* ── Nav Link Underline Sweep ── */
+            .nav-link::after {
+                content: '';
+                position: absolute;
+                bottom: 0;
+                left: 50%;
+                width: 0;
+                height: 2px;
+                background: #921818;
+                transition: width 0.3s ease, left 0.3s ease;
+            }
+            .nav-link:hover::after {
+                width: 100%;
+                left: 0;
+            }
+            .nav-link.active::after {
+                width: 100%;
+                left: 0;
+            }
             .ch-header-inner {
                 width: 100%;
                 padding: 0 32px;
@@ -549,6 +581,9 @@ export function renderHeader(currentRoute) {
             </div>
         </header>
 
+        <!-- Scroll Progress Bar -->
+        <div class="scroll-progress" id="scroll-progress"></div>
+
         <!-- Mobile Menu Overlay -->
         <div id="mobile-menu-overlay" class="ch-mobile-overlay" onclick="window.app.closeMobileMenu()"></div>
 
@@ -579,17 +614,25 @@ export function renderHeader(currentRoute) {
  * Call this AFTER the header HTML is injected into the DOM.
  */
 export function initScrollEffects() {
-    // ── Scroll-Transparent Navbar ──
+    // ── Scroll-Transparent Navbar + Progress Bar ──
     const header = document.querySelector('.ch-header');
+    const progressBar = document.getElementById('scroll-progress');
     if (header) {
         let ticking = false;
         const onScroll = () => {
             if (!ticking) {
                 requestAnimationFrame(() => {
-                    if (window.scrollY > 60) {
+                    const scrollY = window.scrollY;
+                    if (scrollY > 60) {
                         header.classList.add('nav-scrolled');
                     } else {
                         header.classList.remove('nav-scrolled');
+                    }
+                    // Update scroll progress bar
+                    if (progressBar) {
+                        const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+                        const progress = docHeight > 0 ? (scrollY / docHeight) * 100 : 0;
+                        progressBar.style.width = progress + '%';
                     }
                     ticking = false;
                 });
@@ -597,7 +640,6 @@ export function initScrollEffects() {
             }
         };
         window.addEventListener('scroll', onScroll, { passive: true });
-        // Run once on init in case the page is already scrolled
         onScroll();
     }
 

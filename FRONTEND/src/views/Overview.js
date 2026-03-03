@@ -80,6 +80,30 @@ export function renderOverview() {
                 border: none;
                 cursor: pointer;
                 border-radius: 0;
+                position: relative;
+                overflow: hidden;
+                transition: transform 0.2s ease, box-shadow 0.2s ease;
+            }
+            .eq-btn-primary:hover {
+                transform: translateY(-2px);
+                box-shadow: 0 6px 20px rgba(117, 33, 34, 0.25);
+            }
+            .eq-btn-primary:active {
+                transform: translateY(0);
+            }
+            .eq-btn-primary::after {
+                content: '';
+                position: absolute;
+                top: -50%;
+                left: -75%;
+                width: 50%;
+                height: 200%;
+                background: linear-gradient(90deg, transparent, rgba(255,255,255,0.15), transparent);
+                transform: skewX(-25deg);
+                transition: left 0.6s ease;
+            }
+            .eq-btn-primary:hover::after {
+                left: 125%;
             }
             .eq-link-more {
                 color: #888;
@@ -147,9 +171,13 @@ export function renderOverview() {
                 border-right: 1px solid #f0f0f0;
                 position: relative;
                 overflow: hidden;
-                transition: background 0.3s;
+                transition: background 0.3s, transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.35s ease;
             }
-            .eq-mech-card:hover { background: #fafafa; }
+            .eq-mech-card:hover {
+                background: #fafafa;
+                transform: translateY(-6px);
+                box-shadow: 0 12px 40px rgba(0, 0, 0, 0.06);
+            }
             .eq-mech-card::before {
                 content: '';
                 position: absolute;
@@ -210,6 +238,16 @@ export function renderOverview() {
                 width: 6px; height: 6px;
                 background: #10b981;
                 border-radius: 50%;
+                animation: dotPulse 2s ease-in-out infinite;
+                box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.4);
+            }
+            @keyframes dotPulse {
+                0%, 100% {
+                    box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.4);
+                }
+                50% {
+                    box-shadow: 0 0 0 6px rgba(16, 185, 129, 0);
+                }
             }
 
             .eq-stats-strip {
@@ -223,6 +261,11 @@ export function renderOverview() {
                 font-weight: 500;
                 letter-spacing: -1.5px;
                 display: flex;
+                transition: color 0.3s ease;
+            }
+            .eq-stat-group:hover .eq-stat-val {
+                color: #752122;
+            }
                 align-items: baseline;
                 gap: 4px;
             }
@@ -438,6 +481,24 @@ export function renderOverview() {
                 width: 100%;
                 cursor: pointer;
                 margin-top: auto;
+                position: relative;
+                overflow: hidden;
+                transition: background 0.2s ease;
+            }
+            .eq-card-cta:hover { background: #752122; }
+            .eq-card-cta::after {
+                content: '';
+                position: absolute;
+                top: -50%;
+                left: -75%;
+                width: 50%;
+                height: 200%;
+                background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
+                transform: skewX(-25deg);
+                transition: left 0.5s ease;
+            }
+            .eq-card-cta:hover::after {
+                left: 125%;
             }
             .eq-card-footer {
                 font-size: 10px;

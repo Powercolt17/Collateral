@@ -62,7 +62,7 @@ export const STRIPE_DEDUCTION_TYPES = ['refund', 'dispute', 'charge_failure'];
 // V1 SPEC CONSTANTS
 // =============================================================================
 export const STRIPE_WINDOW_DAYS = 30; // Contract window is exactly 30 days
-export const STRIPE_MIN_DELTA_CENTS = 0; // TESTING: was 50000 ($500.00)
+export const STRIPE_MIN_DELTA_CENTS = 50000; // $500.00 — minimum absolute delta to prevent trivial targets
 
 // TIER PERCENTAGES (Revenue growth requirements by tier)
 export const STRIPE_TIER_PERCENTAGES = {
@@ -78,15 +78,16 @@ export const STRIPE_DELTA_FLOOR_PERCENTAGE = STRIPE_TIER_PERCENTAGES.STEADY; // 
 // TIER ELIGIBILITY FLOORS (Minimum baseline to qualify for tier)
 // =============================================================================
 export const STRIPE_TIER_MINIMUM_BASELINE = {
-    STEADY: 0,      // TESTING: was 100000 ($1,000)
-    BROAD: 0,       // TESTING: was 500000 ($5,000)
-    ALL_IN: 0,      // TESTING: was 1000000 ($10,000)
+    STEADY: 100000,   // $1,000/mo — minimum viable revenue business
+    BROAD: 500000,    // $5,000/mo — mid-tier with consistent revenue
+    ALL_IN: 1000000,  // $10,000/mo — established businesses only
 } as const;
 
 // =============================================================================
 // ANTI-ONE-INVOICE CONSTANTS
 // =============================================================================
 export const STRIPE_SINGLE_CHARGE_MAX_PERCENTAGE = 0.50; // 50% - if one charge is ≥50%, fail
+export const STRIPE_MIN_CHARGE_COUNT = 3; // Minimum distinct charges in baseline window — prevents 1-2 lucky charges
 
 // =============================================================================
 // ERROR CODES
@@ -97,6 +98,7 @@ export const STRIPE_ERROR_CODES = {
     CURRENCY_MISMATCH: 'STRIPE_CURRENCY_MISMATCH',
     API_UNAVAILABLE: 'STRIPE_API_UNAVAILABLE',
     DELTA_FLOOR_NOT_MET: 'STRIPE_DELTA_FLOOR_NOT_MET',
+    INSUFFICIENT_CHARGE_COUNT: 'STRIPE_INSUFFICIENT_CHARGE_COUNT',
 } as const;
 
 // =============================================================================
@@ -973,6 +975,17 @@ export const stripeRevenueAdapter = {
                 `Baseline too low for ${tier} tier. ` +
                 `Baseline: $${(baselineNetRevenueCents / 100).toFixed(2)}, ` +
                 `Minimum required: $${(tierEligibility.minimumRequired / 100).toFixed(2)}`
+            );
+        }
+
+        // 2b. Validate minimum charge count (anti-gaming: no 1-2 lucky charges)
+        const chargeCount = baselineResult.countedChargeIds.length;
+        if (chargeCount < STRIPE_MIN_CHARGE_COUNT) {
+            throw new Error(
+                `[${STRIPE_ERROR_CODES.INSUFFICIENT_CHARGE_COUNT}] ` +
+                `Insufficient charge history. ` +
+                `Found ${chargeCount} charges in baseline window, minimum ${STRIPE_MIN_CHARGE_COUNT} required. ` +
+                `Build consistent revenue before creating a contract.`
             );
         }
 

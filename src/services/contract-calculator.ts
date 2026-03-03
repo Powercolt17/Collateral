@@ -108,9 +108,9 @@ export function calculateQuote(input: QuoteInput) {
 export const MINIMUM_BASELINES = {
     STRIPE: {
         REVENUE: {
-            STANDARD: 20000,   // $200/mo
-            ADVANCED: 50000,   // $500/mo
-            ELITE: 100000      // $1000/mo
+            STANDARD: 100000,   // $1,000/mo — matches STEADY tier
+            ADVANCED: 500000,   // $5,000/mo — matches BROAD tier
+            ELITE: 1000000      // $10,000/mo — matches ALL_IN tier
         }
     },
     X: {

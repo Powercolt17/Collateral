@@ -221,6 +221,8 @@ async function safeSend(to: string, subject: string, html: string): Promise<void
         return;
     }
 
+    console.log(`[email] 📤 Attempting send: "${subject}" → ${to} (from: ${FROM_EMAIL})`);
+
     try {
         const result = await client.emails.send({
             from: FROM_EMAIL,
@@ -228,10 +230,19 @@ async function safeSend(to: string, subject: string, html: string): Promise<void
             subject,
             html,
         });
-        console.log(`[email] ✅ Sent: "${subject}" → ${to} (id: ${(result as any)?.data?.id || 'ok'})`);
+
+        // Resend SDK v4+ returns { data, error } instead of throwing
+        const { data, error } = result as any;
+
+        if (error) {
+            console.error(`[email] ❌ Resend API error: "${subject}" → ${to}:`, JSON.stringify(error));
+            return;
+        }
+
+        console.log(`[email] ✅ Sent: "${subject}" → ${to} (id: ${data?.id || 'unknown'})`);
     } catch (err: any) {
         // NEVER block the pipeline on email failure
-        console.error(`[email] ❌ Failed: "${subject}" → ${to}:`, err.message);
+        console.error(`[email] ❌ Exception: "${subject}" → ${to}:`, err.message);
     }
 }
 

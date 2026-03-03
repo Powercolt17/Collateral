@@ -513,46 +513,153 @@ export function renderOverview() {
                 .eq-mechanism-grid { grid-template-columns: 1fr; }
                 .eq-stats-strip { flex-direction: column; gap: 32px; }
             }
+
+            /* ── Hero Entrance Animations ── */
+            @keyframes fadeSlideUp {
+                from {
+                    opacity: 0;
+                    transform: translateY(40px);
+                }
+                to {
+                    opacity: 1;
+                    transform: translateY(0);
+                }
+            }
+            @keyframes fadeSlideLeft {
+                from {
+                    opacity: 0;
+                    transform: translateX(-24px);
+                }
+                to {
+                    opacity: 1;
+                    transform: translateX(0);
+                }
+            }
+            @keyframes headlineReveal {
+                from {
+                    opacity: 0;
+                    transform: translateY(48px) scale(0.97);
+                    filter: blur(4px);
+                }
+                to {
+                    opacity: 1;
+                    transform: translateY(0) scale(1);
+                    filter: blur(0);
+                }
+            }
+            @keyframes cardSlideUp {
+                from {
+                    opacity: 0;
+                    transform: translateY(36px);
+                }
+                to {
+                    opacity: 1;
+                    transform: translateY(0);
+                }
+            }
+
+            .anim-tag {
+                opacity: 0;
+                animation: fadeSlideLeft 0.7s cubic-bezier(0.16, 1, 0.3, 1) 0.1s forwards;
+            }
+            .anim-headline {
+                opacity: 0;
+                animation: headlineReveal 1s cubic-bezier(0.16, 1, 0.3, 1) 0.25s forwards;
+            }
+            .anim-sub {
+                opacity: 0;
+                animation: fadeSlideUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.55s forwards;
+            }
+            .anim-actions {
+                opacity: 0;
+                animation: fadeSlideUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.75s forwards;
+            }
+            .anim-scroll-hint {
+                opacity: 0;
+                animation: fadeSlideUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) 1.1s forwards;
+            }
+
+            /* ── Mechanism Section Animations ── */
+            .anim-mech-tag {
+                opacity: 0;
+                animation: fadeSlideLeft 0.7s cubic-bezier(0.16, 1, 0.3, 1) 0.1s forwards;
+                animation-play-state: paused;
+            }
+            .anim-mech-title {
+                opacity: 0;
+                animation: headlineReveal 0.9s cubic-bezier(0.16, 1, 0.3, 1) 0.2s forwards;
+                animation-play-state: paused;
+            }
+            .anim-mech-card-1 {
+                opacity: 0;
+                animation: cardSlideUp 0.7s cubic-bezier(0.16, 1, 0.3, 1) 0.3s forwards;
+                animation-play-state: paused;
+            }
+            .anim-mech-card-2 {
+                opacity: 0;
+                animation: cardSlideUp 0.7s cubic-bezier(0.16, 1, 0.3, 1) 0.42s forwards;
+                animation-play-state: paused;
+            }
+            .anim-mech-card-3 {
+                opacity: 0;
+                animation: cardSlideUp 0.7s cubic-bezier(0.16, 1, 0.3, 1) 0.54s forwards;
+                animation-play-state: paused;
+            }
+            .anim-mech-card-4 {
+                opacity: 0;
+                animation: cardSlideUp 0.7s cubic-bezier(0.16, 1, 0.3, 1) 0.66s forwards;
+                animation-play-state: paused;
+            }
+
+            /* When revealed by IntersectionObserver, play the animations */
+            .revealed .anim-mech-tag,
+            .revealed .anim-mech-title,
+            .revealed .anim-mech-card-1,
+            .revealed .anim-mech-card-2,
+            .revealed .anim-mech-card-3,
+            .revealed .anim-mech-card-4 {
+                animation-play-state: running;
+            }
         </style>
 
         <div class="eq">
             <!-- Section 1: Hero -->
             <div class="eq-hero" data-reveal>
-                <div class="eq-tag">Performance Collateral Protocol</div>
-                <h1 class="eq-hero-headline">Back yourself. <strong>Lock the capital</strong> to prove it.</h1>
-                <p class="eq-hero-sub">Stake against revenue, sales, or growth targets. Automatic verification. Final settlement. No appeals.</p>
-                <div class="eq-hero-actions">
+                <div class="eq-tag anim-tag">Performance Collateral Protocol</div>
+                <h1 class="eq-hero-headline anim-headline">Back yourself. <strong>Lock the capital</strong> to prove it.</h1>
+                <p class="eq-hero-sub anim-sub">Stake against revenue, sales, or growth targets. Automatic verification. Final settlement. No appeals.</p>
+                <div class="eq-hero-actions anim-actions">
                     <button class="eq-btn-primary" onclick="document.getElementById('live-market').scrollIntoView({behavior:'smooth'})">Explore Market</button>
                     <a href="#" class="eq-link-more">Learn more →</a>
                 </div>
-                <div class="eq-hero-scroll">Scroll</div>
+                <div class="eq-hero-scroll anim-scroll-hint">Scroll</div>
             </div>
 
             <!-- Section 2: Mechanism -->
             <section class="eq-mechanism" data-reveal>
                 <div class="eq-mechanism-header">
                     <div class="eq-mechanism-side-left">
-                        <div class="eq-tag">How it works</div>
-                        <h2 class="eq-mechanism-title">Four steps to <strong>settlement.</strong></h2>
+                        <div class="eq-tag anim-mech-tag">How it works</div>
+                        <h2 class="eq-mechanism-title anim-mech-title">Four steps to <strong>settlement.</strong></h2>
                     </div>
                 </div>
                 <div class="eq-mechanism-grid">
-                    <div class="eq-mech-card">
+                    <div class="eq-mech-card anim-mech-card-1">
                         <div class="eq-mech-num">01</div>
                         <div class="eq-mech-label">Commit</div>
                         <div class="eq-mech-desc">Stake capital against specific, measurable performance targets. Define the metric, set the threshold, lock the funds.</div>
                     </div>
-                    <div class="eq-mech-card">
+                    <div class="eq-mech-card anim-mech-card-2">
                         <div class="eq-mech-num">02</div>
                         <div class="eq-mech-label">Monitor</div>
                         <div class="eq-mech-desc">Metrics are tracked in real-time through verified data adapters connected to authoritative sources.</div>
                     </div>
-                    <div class="eq-mech-card">
+                    <div class="eq-mech-card anim-mech-card-3">
                         <div class="eq-mech-num">03</div>
                         <div class="eq-mech-label">Verify</div>
                         <div class="eq-mech-desc">Automated oracle verification at the deadline. Deterministic. Transparent. No appeals process.</div>
                     </div>
-                    <div class="eq-mech-card">
+                    <div class="eq-mech-card anim-mech-card-4">
                         <div class="eq-mech-num">04</div>
                         <div class="eq-mech-label">Settle</div>
                         <div class="eq-mech-desc">Variance is calculated against the target. Capital is released to the counterparty or returned to the staker.</div>

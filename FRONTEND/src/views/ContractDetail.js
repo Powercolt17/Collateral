@@ -268,7 +268,7 @@ export function renderContractDetail(params) {
             </div>
 
             <div id="cd-detail" class="cd-hidden">
-                <div class="cd-top-header">
+                <div class="cd-top-header" data-reveal>
                     <div class="cd-top-left">
                         <div class="cd-brand-icon" id="cd-brand-icon">
                             <i data-lucide="twitter"></i>
@@ -293,7 +293,7 @@ export function renderContractDetail(params) {
                     </div>
                 </div>
 
-                <div class="cd-layout">
+                <div class="cd-layout" data-reveal>
                     <div class="cd-col-left">
                         <div class="cd-block">
                             <div class="cd-block-header">

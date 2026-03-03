@@ -146,7 +146,7 @@ export function renderMyContracts() {
         </style>
 
         <div class="myc">
-            <div class="myc-header">
+            <div class="myc-header" data-reveal>
                 <div class="myc-title-wrap">
                     <h1 class="myc-page-title">MY CONTRACTS</h1>
                     <p class="myc-page-sub">Personalized performance record</p>
@@ -157,7 +157,7 @@ export function renderMyContracts() {
                 </div>
             </div>
 
-            <div class="myc-metrics">
+            <div class="myc-metrics" data-reveal>
                 <div class="myc-metric">
                     <div class="myc-metric-value" id="myc-total-locked">—</div>
                     <div class="myc-metric-label">Total Locked</div>
@@ -176,7 +176,7 @@ export function renderMyContracts() {
                 </div>
             </div>
 
-            <div class="myc-feed">
+            <div class="myc-feed" data-reveal>
                 <div id="myc-content">
                     <div class="myc-loading">
                         <div class="myc-spinner"></div>

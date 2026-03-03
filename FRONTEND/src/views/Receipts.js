@@ -6,7 +6,7 @@ export function renderReceipts() {
     return `
         <div class="min-h-screen bg-white">
             <!-- Header -->
-            <div class="border-b border-neutral-200">
+            <div class="border-b border-neutral-200" data-reveal>
                 <div class="max-w-5xl mx-auto px-8 py-8">
                     <div class="flex items-center gap-2 mb-6">
                         <span class="font-mono text-[11px] tracking-widest text-neutral-400 uppercase cursor-pointer hover:text-neutral-900 transition-colors"
@@ -34,7 +34,7 @@ export function renderReceipts() {
             </div>
 
             <!-- Footer Notice -->
-            <div class="border-t border-neutral-200">
+            <div class="border-t border-neutral-200" data-reveal>
                 <div class="max-w-5xl mx-auto px-8 py-6">
                     <p class="text-xs font-mono text-neutral-400 text-center">
                         Receipts reflect the current state of active contracts. Records are immutable once settled.

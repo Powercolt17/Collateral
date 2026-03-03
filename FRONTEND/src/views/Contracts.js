@@ -501,7 +501,7 @@ export function renderContracts() {
 
             <!-- Main Content -->
             <div id="ext-main" style="display: none;">
-                <div class="ext-title-area">
+                <div class="ext-title-area" data-reveal>
                     <h1 class="ext-page-title">CONTRACT EXECUTION</h1>
                     <p class="ext-page-sub">You are committing capital under fixed performance terms.</p>
                 </div>
@@ -543,7 +543,7 @@ export function renderContracts() {
                     </div>
 
                     <!-- Baseline Snapshot -->
-                    <div class="ext-card">
+                    <div class="ext-card" data-reveal>
                         <div class="ext-card-hd">
                             <h3 class="ext-card-title">Baseline Snapshot</h3>
                         </div>
@@ -573,7 +573,7 @@ export function renderContracts() {
                     </div>
 
                     <!-- Forfeiture Terms -->
-                    <div class="ext-forfeit">
+                    <div class="ext-forfeit" data-reveal>
                         <h3 class="ext-forfeit-hd">Capital Forfeiture Terms</h3>
                         <p class="ext-forfeit-body">
                             If performance target is not met:<br>
@@ -582,7 +582,7 @@ export function renderContracts() {
                     </div>
 
                     <!-- Irreversibility Warning -->
-                    <div class="ext-warn">
+                    <div class="ext-warn" data-reveal>
                         <h3 class="ext-warn-hd">Execution Terms</h3>
                         <ul class="ext-warn-list">
                             <li><span class="ext-warn-dot"></span> Execution is irreversible.</li>
@@ -621,7 +621,7 @@ export function renderContracts() {
                     </div>
 
                     <!-- Footer -->
-                    <div class="ext-foot">
+                    <div class="ext-foot" data-reveal>
                         <span class="ext-foot-text">Settlement event will be recorded in the Global Ledger.</span>
                     </div>
                 </div>

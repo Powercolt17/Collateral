@@ -359,7 +359,7 @@ export function renderDocs() {
                     <div class="doc-content">
 
                         <!-- OVERVIEW -->
-                        <section class="doc-section" id="overview">
+                        <section class="doc-section" data-reveal id="overview">
                             <h2 class="doc-section-title">Overview</h2>
                             <p class="doc-p">Collateral is a capital-backed enforcement protocol.</p>
                             <p class="doc-p">Users voluntarily lock capital against measurable, externally verifiable outcomes. If the outcome is achieved within the defined contract window, capital is returned and payout is issued according to tier rules. If the outcome is not achieved, capital is forfeited.</p>
@@ -377,7 +377,7 @@ export function renderDocs() {
                         </section>
 
                         <!-- HOW IT WORKS -->
-                        <section class="doc-section" id="how-it-works">
+                        <section class="doc-section" data-reveal id="how-it-works">
                             <h2 class="doc-section-title">How It Works</h2>
                             <div class="doc-step">
                                 <div class="doc-step-num">01</div>
@@ -424,7 +424,7 @@ export function renderDocs() {
                         </section>
 
                         <!-- CAPITAL & FORFEITURE -->
-                        <section class="doc-section" id="capital">
+                        <section class="doc-section" data-reveal id="capital">
                             <h2 class="doc-section-title">Capital & Forfeiture</h2>
                             <p class="doc-p">Capital is locked upon execution confirmation.</p>
                             <p class="doc-p">Capital is:</p>
@@ -442,7 +442,7 @@ export function renderDocs() {
                         </section>
 
                         <!-- ECONOMIC MODEL -->
-                        <section class="doc-section" id="economic-model">
+                        <section class="doc-section" data-reveal id="economic-model">
                             <h2 class="doc-section-title">Economic Model</h2>
                             <p class="doc-p">Collateral uses tiered payout design.</p>
                             <div class="doc-tier">
@@ -464,7 +464,7 @@ export function renderDocs() {
                         </section>
 
                         <!-- RISK DISCLOSURE -->
-                        <section class="doc-section" id="risk">
+                        <section class="doc-section" data-reveal id="risk">
                             <h2 class="doc-section-title">Risk Disclosure</h2>
                             <p class="doc-p">Participation involves financial risk.</p>
                             <p class="doc-p"><span class="doc-strong">Users may lose 100% of locked capital.</span></p>
@@ -477,7 +477,7 @@ export function renderDocs() {
                         </section>
 
                         <!-- VERIFICATION SYSTEM -->
-                        <section class="doc-section" id="verification">
+                        <section class="doc-section" data-reveal id="verification">
                             <h2 class="doc-section-title">Verification System</h2>
                             <p class="doc-p">Collateral verifies performance exclusively via official provider APIs.</p>
                             <p class="doc-p"><span class="doc-strong">No manual data input is accepted.</span></p>
@@ -492,7 +492,7 @@ export function renderDocs() {
                         </section>
 
                         <!-- SOURCE REQUIREMENTS -->
-                        <section class="doc-section" id="sources">
+                        <section class="doc-section" data-reveal id="sources">
                             <h2 class="doc-section-title">Source Requirements</h2>
                             <p class="doc-p">Supported providers:</p>
                             <ul class="doc-list">
@@ -512,7 +512,7 @@ export function renderDocs() {
                         </section>
 
                         <!-- ANTI-GAMING RULES -->
-                        <section class="doc-section" id="anti-gaming">
+                        <section class="doc-section" data-reveal id="anti-gaming">
                             <h2 class="doc-section-title">Anti-Gaming Rules</h2>
                             <p class="doc-p">Collateral enforces strict anti-manipulation safeguards.</p>
                             <p class="doc-p">These include but are not limited to:</p>
@@ -537,7 +537,7 @@ export function renderDocs() {
                         </section>
 
                         <!-- SETTLEMENT PROCESS -->
-                        <section class="doc-section" id="settlement">
+                        <section class="doc-section" data-reveal id="settlement">
                             <h2 class="doc-section-title">Settlement Process</h2>
                             <p class="doc-p">At deadline:</p>
                             <div class="doc-step">
@@ -582,7 +582,7 @@ export function renderDocs() {
                         </section>
 
                         <!-- DISPUTE POLICY -->
-                        <section class="doc-section" id="disputes">
+                        <section class="doc-section" data-reveal id="disputes">
                             <h2 class="doc-section-title">Dispute Policy</h2>
                             <p class="doc-p">Collateral contracts are deterministic.</p>
                             <p class="doc-p"><span class="doc-strong">There is no discretionary appeal system.</span></p>
@@ -592,7 +592,7 @@ export function renderDocs() {
                         </section>
 
                         <!-- TECHNICAL ARCHITECTURE -->
-                        <section class="doc-section" id="architecture">
+                        <section class="doc-section" data-reveal id="architecture">
                             <h2 class="doc-section-title">Technical Architecture</h2>
                             <ul class="doc-list">
                                 <li>Append-only ledger model</li>
@@ -608,7 +608,7 @@ export function renderDocs() {
                         </section>
 
                         <!-- SECURITY -->
-                        <section class="doc-section" id="security">
+                        <section class="doc-section" data-reveal id="security">
                             <h2 class="doc-section-title">Security</h2>
                             <ul class="doc-list">
                                 <li>OAuth authentication</li>
@@ -624,7 +624,7 @@ export function renderDocs() {
                         </section>
 
                         <!-- API -->
-                        <section class="doc-section" id="api">
+                        <section class="doc-section" data-reveal id="api">
                             <h2 class="doc-section-title">API</h2>
                             <p class="doc-p">Collateral exposes authenticated REST endpoints for contract execution, source connection, ledger access, and settlement queries.</p>
                             <p class="doc-p">All endpoints require bearer token authentication. Rate limits apply. Settlement endpoints are server-side only and are not exposed to client applications.</p>
@@ -632,7 +632,7 @@ export function renderDocs() {
                         </section>
 
                         <!-- FAQ -->
-                        <section class="doc-section" id="faq">
+                        <section class="doc-section" data-reveal id="faq">
                             <h2 class="doc-section-title">FAQ</h2>
                             <div class="doc-faq">
                                 <div class="doc-faq-q">Can I withdraw capital early?</div>

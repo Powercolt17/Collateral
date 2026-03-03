@@ -86,7 +86,7 @@ export function renderPrivacy() {
                 <h1 class="legal-title">Privacy Policy</h1>
                 <p class="legal-updated">Last updated: March 1, 2026</p>
 
-                <div class="legal-section">
+                <div class="legal-section" data-reveal>
                     <h2>1. Information We Collect</h2>
                     <p>We collect information necessary to operate the performance collateral protocol:</p>
                     <ul>
@@ -99,7 +99,7 @@ export function renderPrivacy() {
 
                 <div class="legal-divider"></div>
 
-                <div class="legal-section">
+                <div class="legal-section" data-reveal>
                     <h2>2. How We Use Information</h2>
                     <p>We use your information to:</p>
                     <ul>
@@ -113,7 +113,7 @@ export function renderPrivacy() {
 
                 <div class="legal-divider"></div>
 
-                <div class="legal-section">
+                <div class="legal-section" data-reveal>
                     <h2>3. Connected Source Access</h2>
                     <p>When you connect a platform (Stripe, X, Shopify, Amazon), we request only read-only access to the specific metrics needed for verification:</p>
                     <ul>
@@ -127,7 +127,7 @@ export function renderPrivacy() {
 
                 <div class="legal-divider"></div>
 
-                <div class="legal-section">
+                <div class="legal-section" data-reveal>
                     <h2>4. Data Retention</h2>
                     <p>Contract events are stored permanently in an append-only ledger as the canonical source of truth. Account data is retained for the duration of your account plus any legal retention requirements.</p>
                     <p>Connected source tokens are stored encrypted and can be revoked by disconnecting the source.</p>
@@ -135,7 +135,7 @@ export function renderPrivacy() {
 
                 <div class="legal-divider"></div>
 
-                <div class="legal-section">
+                <div class="legal-section" data-reveal>
                     <h2>5. Data Security</h2>
                     <p>We implement industry-standard security measures including:</p>
                     <ul>
@@ -148,7 +148,7 @@ export function renderPrivacy() {
 
                 <div class="legal-divider"></div>
 
-                <div class="legal-section">
+                <div class="legal-section" data-reveal>
                     <h2>6. Third-Party Services</h2>
                     <p>We use the following third-party services:</p>
                     <ul>
@@ -161,7 +161,7 @@ export function renderPrivacy() {
 
                 <div class="legal-divider"></div>
 
-                <div class="legal-section">
+                <div class="legal-section" data-reveal>
                     <h2>7. Your Rights</h2>
                     <p>You may:</p>
                     <ul>
@@ -174,7 +174,7 @@ export function renderPrivacy() {
 
                 <div class="legal-divider"></div>
 
-                <div class="legal-section">
+                <div class="legal-section" data-reveal>
                     <h2>8. Contact</h2>
                     <p>For privacy-related inquiries, contact privacy@collateral.market.</p>
                 </div>

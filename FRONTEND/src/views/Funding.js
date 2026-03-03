@@ -488,7 +488,7 @@ export function renderFunding() {
                 </div>
 
                 <!-- Page Header -->
-                <div class="cap-hdr">
+                <div class="cap-hdr" data-reveal>
                     <div class="cap-hdr-left">
                         <h1 class="cap-hdr-title">CAPITAL</h1>
                         <p class="cap-hdr-sub">Manage capital custody, allocation, and settlement.</p>
@@ -497,7 +497,7 @@ export function renderFunding() {
                 </div>
 
                 <!-- Capital Overview Strip -->
-                <div class="cap-overview">
+                <div class="cap-overview" data-reveal>
                     <div class="cap-stat">
                         <div class="cap-stat-lbl">Available Capital</div>
                         <div class="cap-stat-val" id="available-balance">$0.00</div>
@@ -516,7 +516,7 @@ export function renderFunding() {
                 </div>
 
                 <!-- Funding Sources -->
-                <div class="cap-section">
+                <div class="cap-section" data-reveal>
                     <div class="cap-section-hdr">
                         <span class="cap-section-title">Funding Sources</span>
                     </div>
@@ -549,7 +549,7 @@ export function renderFunding() {
                 </div>
 
                 <!-- Payout Destinations -->
-                <div class="cap-section">
+                <div class="cap-section" data-reveal>
                     <div class="cap-section-hdr">
                         <span class="cap-section-title">Settlement Destinations</span>
                     </div>

@@ -94,7 +94,7 @@ export function renderTerms() {
 
                 <div class="legal-divider"></div>
 
-                <div class="legal-section">
+                <div class="legal-section" data-reveal>
                     <h2>2. Service Description</h2>
                     <p>Collateral is a performance contract protocol that enables users to lock capital against measurable business outcomes. The Service includes:</p>
                     <ul>
@@ -107,7 +107,7 @@ export function renderTerms() {
 
                 <div class="legal-divider"></div>
 
-                <div class="legal-section">
+                <div class="legal-section" data-reveal>
                     <h2>3. Capital Commitment</h2>
                     <p>When you execute a contract, you commit capital ("stake") which is held in escrow for the contract duration. Key terms:</p>
                     <ul>
@@ -119,7 +119,7 @@ export function renderTerms() {
 
                 <div class="legal-divider"></div>
 
-                <div class="legal-section">
+                <div class="legal-section" data-reveal>
                     <h2>4. User Accounts</h2>
                     <p>You are responsible for maintaining the security of your account credentials. You agree to immediately notify us of any unauthorized use of your account.</p>
                     <p>Each user may hold a maximum number of active contracts as determined by anti-sybil controls. These limits exist to ensure platform integrity.</p>
@@ -127,7 +127,7 @@ export function renderTerms() {
 
                 <div class="legal-divider"></div>
 
-                <div class="legal-section">
+                <div class="legal-section" data-reveal>
                     <h2>5. Connected Sources</h2>
                     <p>To verify contract outcomes, you grant the Service read-only access to your connected accounts (e.g., Stripe, X/Twitter, Shopify, Amazon). We only access the minimum data required for verification.</p>
                     <p>You may disconnect a source at any time, but doing so may result in inability to verify active contracts, leading to forfeiture.</p>
@@ -135,14 +135,14 @@ export function renderTerms() {
 
                 <div class="legal-divider"></div>
 
-                <div class="legal-section">
+                <div class="legal-section" data-reveal>
                     <h2>6. Fees</h2>
                     <p>The Service charges fees on contract execution as displayed at the time of commitment. Fees are non-refundable and are deducted from the contract value.</p>
                 </div>
 
                 <div class="legal-divider"></div>
 
-                <div class="legal-section">
+                <div class="legal-section" data-reveal>
                     <h2>7. Limitation of Liability</h2>
                     <p>THE SERVICE IS PROVIDED "AS IS" WITHOUT WARRANTY OF ANY KIND. We are not liable for any indirect, incidental, special, or consequential damages arising from your use of the Service.</p>
                     <p>Our total liability is limited to the amount of capital you have committed through the Service in the preceding 12 months.</p>
@@ -150,14 +150,14 @@ export function renderTerms() {
 
                 <div class="legal-divider"></div>
 
-                <div class="legal-section">
+                <div class="legal-section" data-reveal>
                     <h2>8. Modifications</h2>
                     <p>We reserve the right to modify these Terms at any time. Material changes will be communicated via the Service. Continued use after modification constitutes acceptance.</p>
                 </div>
 
                 <div class="legal-divider"></div>
 
-                <div class="legal-section">
+                <div class="legal-section" data-reveal>
                     <h2>9. Contact</h2>
                     <p>Questions about these Terms should be directed to legal@collateral.market.</p>
                 </div>

@@ -731,7 +731,7 @@ export function renderSources() {
 
         <div class="src">
             <!-- Hero Header -->
-            <div class="src-header">
+            <div class="src-header" data-reveal>
                 <div class="src-header-inner">
                     <div class="src-breadcrumb">PLATFORM / <strong>SOURCES</strong></div>
                     <div class="src-hero-row">
@@ -769,7 +769,7 @@ export function renderSources() {
             </div>
 
             <!-- Status Footer -->
-            <div class="src-status-footer">
+            <div class="src-status-footer" data-reveal>
                 <div class="src-status-footer-inner">
                     <div class="src-status-footer-left">
                         <span class="src-status-footer-label">System Status</span>

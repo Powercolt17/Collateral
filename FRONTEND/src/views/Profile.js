@@ -233,7 +233,7 @@ export function renderProfile() {
 
         <div class="prf">
             <!-- Header -->
-            <div class="prf-header">
+            <div class="prf-header" data-reveal>
                 <div class="prf-header-inner">
                     <div>
                         <h1 class="prf-name">
@@ -294,7 +294,7 @@ export function renderProfile() {
             <div class="prf-content">
 
                 <!-- ============ OVERVIEW TAB ============ -->
-                <div id="tab-overview" class="tab-panel">
+                <div id="tab-overview" class="tab-panel" data-reveal>
                     <div class="prf-grid">
                         <div>
                             <!-- Performance Record -->

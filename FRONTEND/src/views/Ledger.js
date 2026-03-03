@@ -724,7 +724,7 @@ export function renderLedger() {
 
         <div class="ldg">
             <!-- Hero Header -->
-            <div class="ldg-header">
+            <div class="ldg-header" data-reveal>
                 <div class="ldg-header-inner">
                     <div class="ldg-hero-row">
                         <div class="ldg-hero-left">
@@ -756,7 +756,7 @@ export function renderLedger() {
             </div>
 
             <!-- Content -->
-            <div class="ldg-content">
+            <div class="ldg-content" data-reveal>
                 <!-- Tabs + Search -->
                 <div class="ldg-controls-row">
                     <div class="ldg-tabs" id="ldg-tabs">
@@ -828,7 +828,7 @@ export function renderLedger() {
             </div>
 
             <!-- Footer -->
-            <div class="ldg-footer">
+            <div class="ldg-footer" data-reveal>
                 <div class="ldg-footer-inner">
                     <div class="ldg-footer-left">
                         <span class="ldg-footer-label">System Status</span>

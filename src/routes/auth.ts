@@ -230,8 +230,8 @@ const authRoutes: FastifyPluginAsync = async (fastify) => {
                 .where(eq(users.email, email.toLowerCase()))
                 .limit(1);
 
-            if (!user || !user.passwordHash) {
-                console.log(`[Auth] Forgot-password: No email/password account found for ${email} (ok, returning generic success)`);
+            if (!user) {
+                console.log(`[Auth] Forgot-password: No account found for ${email} (returning generic success)`);
                 return successResponse;
             }
 

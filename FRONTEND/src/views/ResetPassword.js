@@ -221,10 +221,13 @@ export function initResetPassword() {
         messageEl.style.display = 'none';
 
         try {
-            const response = await window.api.request('/v1/auth/reset-password', {
+            const API_BASE = window.api?.getApiEnvironment?.()?.url || 'https://collateral-production.up.railway.app';
+            const res = await fetch(`${API_BASE}/v1/auth/reset-password`, {
                 method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ token, password }),
             });
+            const response = await res.json().catch(() => ({}));
 
             if (response.ok) {
                 messageEl.className = 'rp-message success';
@@ -244,6 +247,7 @@ export function initResetPassword() {
                 submitBtn.disabled = false;
             }
         } catch (err) {
+            console.error('[ResetPassword] Request failed:', err);
             messageEl.className = 'rp-message error';
             messageEl.textContent = err.message || 'Failed to reset password. Please try again.';
             messageEl.style.display = 'block';

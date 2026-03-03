@@ -68,7 +68,17 @@ export async function fixSchemaDrift() {
         }
         console.log('[schema-fix] ✅ Stats columns ensured.');
 
-        // 5. Update market instance tier pricing to current ranges
+        // 5. Ensure password reset columns exist on users table
+        try {
+            await db.execute(sql`ALTER TABLE "users" ADD COLUMN IF NOT EXISTS "reset_token" TEXT`);
+            await db.execute(sql`ALTER TABLE "users" ADD COLUMN IF NOT EXISTS "reset_token_expires_at" TIMESTAMPTZ`);
+            await db.execute(sql`CREATE INDEX IF NOT EXISTS "idx_users_reset_token" ON "users"("reset_token") WHERE "reset_token" IS NOT NULL`);
+            console.log('[schema-fix] ✅ Password reset columns ensured.');
+        } catch (e: any) {
+            console.log(`[schema-fix] ⚠️ Password reset columns skipped: ${e.message}`);
+        }
+
+        // 6. Update market instance tier pricing to current ranges
         try {
             await db.execute(sql`
                 UPDATE market_contract_instances SET min_lock_cents = 10000, max_lock_cents = 150000 WHERE tier = 'controlled' AND (min_lock_cents != 10000 OR max_lock_cents != 150000);

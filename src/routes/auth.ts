@@ -223,6 +223,7 @@ const authRoutes: FastifyPluginAsync = async (fastify) => {
         };
 
         try {
+            console.log(`[Auth] Forgot-password: Looking up ${email.toLowerCase()}...`);
             const [user] = await db
                 .select()
                 .from(users)
@@ -230,9 +231,11 @@ const authRoutes: FastifyPluginAsync = async (fastify) => {
                 .limit(1);
 
             if (!user || !user.passwordHash) {
+                console.log(`[Auth] Forgot-password: No email/password account found for ${email} (ok, returning generic success)`);
                 return successResponse;
             }
 
+            console.log(`[Auth] Forgot-password: User found (${user.id}). Generating reset token...`);
             const crypto = await import('crypto');
             const resetToken = crypto.randomBytes(32).toString('hex');
             const expiresAt = new Date(Date.now() + 15 * 60 * 1000);
@@ -244,24 +247,26 @@ const authRoutes: FastifyPluginAsync = async (fastify) => {
                     reset_token_expires_at = ${expiresAt.toISOString()}
                 WHERE id = ${user.id}
             `);
+            console.log(`[Auth] Forgot-password: Token stored in DB. Expires ${expiresAt.toISOString()}`);
 
-            const appUrl = process.env.APP_URL || 'https://collateral.market';
+            const appUrl = process.env.APP_URL || process.env.FRONTEND_URL || 'https://collateral.market';
             const resetUrl = `${appUrl}/#/reset-password?token=${resetToken}`;
+            console.log(`[Auth] Forgot-password: Reset URL = ${resetUrl}`);
 
-            // Send reset email (non-blocking but with proper logging)
+            // Send reset email with full error surfacing
             try {
+                console.log(`[Auth] Forgot-password: Importing email service...`);
                 const { sendPasswordResetEmail } = await import('../services/email.js');
+                console.log(`[Auth] Forgot-password: Sending email to ${email.toLowerCase()}...`);
                 await sendPasswordResetEmail(email.toLowerCase(), resetUrl);
-                console.log(`[Auth] Password reset email sent to ${email}`);
+                console.log(`[Auth] ✅ Password reset email SENT to ${email}`);
             } catch (emailErr: any) {
-                console.error(`[Auth] ❌ Failed to send password reset email to ${email}:`, emailErr.message);
-                // Don't block the response — user still gets the generic success message
+                console.error(`[Auth] ❌ Password reset email FAILED for ${email}:`, emailErr.message, emailErr.stack);
             }
 
-            console.log(`[Auth] Password reset requested for ${email}`);
             return successResponse;
         } catch (err: any) {
-            console.error('[Auth] Forgot password error:', err.message);
+            console.error('[Auth] ❌ Forgot password flow error:', err.message, err.stack);
             return successResponse;
         }
     });

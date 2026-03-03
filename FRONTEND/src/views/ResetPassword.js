@@ -235,10 +235,15 @@ export function initResetPassword() {
                 messageEl.style.display = 'block';
                 submitBtn.textContent = 'Updated ✓';
 
-                // Redirect to login after 2 seconds
+                // Redirect to homepage and pop up sign-in modal
                 setTimeout(() => {
-                    window.location.hash = '#/login';
-                }, 2000);
+                    window.location.hash = '#/overview';
+                    setTimeout(() => {
+                        if (window.app?.openAccessModal) {
+                            window.app.openAccessModal();
+                        }
+                    }, 300);
+                }, 1500);
             } else {
                 messageEl.className = 'rp-message error';
                 messageEl.textContent = response.error || 'Failed to reset password.';

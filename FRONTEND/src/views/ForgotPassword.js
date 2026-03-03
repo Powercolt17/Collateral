@@ -186,18 +186,22 @@ export function initForgotPassword() {
         messageEl.style.display = 'none';
 
         try {
-            const response = await window.api.request('/v1/auth/forgot-password', {
+            const API_BASE = window.api?.getApiEnvironment?.()?.url || 'https://collateral-production.up.railway.app';
+            const res = await fetch(`${API_BASE}/v1/auth/forgot-password`, {
                 method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ email }),
             });
+            const data = await res.json().catch(() => ({}));
 
             messageEl.className = 'fp-message success';
-            messageEl.textContent = response.message || 'If an account exists with that email, a reset link has been sent.';
+            messageEl.textContent = data.message || 'If an account exists with that email, a reset link has been sent.';
             messageEl.style.display = 'block';
             submitBtn.textContent = 'Sent ✓';
         } catch (err) {
-            messageEl.className = 'fp-message success';
-            messageEl.textContent = 'If an account exists with that email, a reset link has been sent.';
+            console.error('[ForgotPassword] Request failed:', err);
+            messageEl.className = 'fp-message error';
+            messageEl.textContent = 'Something went wrong. Please try again.';
             messageEl.style.display = 'block';
             submitBtn.textContent = 'Send Reset Link →';
             submitBtn.disabled = false;

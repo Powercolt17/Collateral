@@ -91,17 +91,6 @@ export function renderHeader(currentRoute) {
             [data-reveal-delay="2"] { transition-delay: 0.2s; }
             [data-reveal-delay="3"] { transition-delay: 0.3s; }
 
-            /* ── Scroll Progress Bar ── */
-            .scroll-progress {
-                position: fixed;
-                top: 0;
-                left: 0;
-                height: 3px;
-                background: linear-gradient(90deg, #752122, #921818);
-                z-index: 100;
-                width: 0%;
-                transition: none;
-            }
 
             /* ── Nav Link Underline Sweep ── */
             .nav-link::after {
@@ -581,9 +570,6 @@ export function renderHeader(currentRoute) {
             </div>
         </header>
 
-        <!-- Scroll Progress Bar -->
-        <div class="scroll-progress" id="scroll-progress"></div>
-
         <!-- Mobile Menu Overlay -->
         <div id="mobile-menu-overlay" class="ch-mobile-overlay" onclick="window.app.closeMobileMenu()"></div>
 
@@ -614,9 +600,8 @@ export function renderHeader(currentRoute) {
  * Call this AFTER the header HTML is injected into the DOM.
  */
 export function initScrollEffects() {
-    // ── Scroll-Transparent Navbar + Progress Bar ──
+    // ── Scroll-Transparent Navbar ──
     const header = document.querySelector('.ch-header');
-    const progressBar = document.getElementById('scroll-progress');
     if (header) {
         let ticking = false;
         const onScroll = () => {
@@ -627,12 +612,6 @@ export function initScrollEffects() {
                         header.classList.add('nav-scrolled');
                     } else {
                         header.classList.remove('nav-scrolled');
-                    }
-                    // Update scroll progress bar
-                    if (progressBar) {
-                        const docHeight = document.documentElement.scrollHeight - window.innerHeight;
-                        const progress = docHeight > 0 ? (scrollY / docHeight) * 100 : 0;
-                        progressBar.style.width = progress + '%';
                     }
                     ticking = false;
                 });

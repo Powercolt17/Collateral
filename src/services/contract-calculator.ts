@@ -115,9 +115,9 @@ export const MINIMUM_BASELINES = {
     },
     X: {
         FOLLOWERS: {
-            STANDARD: 1_000,     // 1K followers — Controlled tier
-            ADVANCED: 10_000,    // 10K followers — Elevated tier
-            ELITE: 50_000        // 50K followers — Maximum tier
+            STANDARD: 500,       // 500 followers — Controlled tier
+            ADVANCED: 2_000,     // 2K followers — Elevated tier
+            ELITE: 5_000         // 5K followers — Maximum tier
         }
     },
     SHOPIFY: {

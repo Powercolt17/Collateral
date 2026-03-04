@@ -36,7 +36,7 @@ export function renderResetPassword() {
             </form>
 
             <div class="rp-back">
-                <a href="#/login" class="rp-back-link">← Back to Sign In</a>
+                <a href="#" onclick="window.location.hash='#/overview'; setTimeout(()=>window.app&&window.app.openAccessModal(),300); return false;" class="rp-back-link">← Back to Sign In</a>
             </div>
         </div>
     </div>

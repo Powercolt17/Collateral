@@ -31,7 +31,7 @@ export function renderForgotPassword() {
             </form>
 
             <div class="fp-back">
-                <a href="#/login" class="fp-back-link">← Back to Sign In</a>
+                <a href="#" onclick="window.location.hash='#/overview'; setTimeout(()=>window.app&&window.app.openAccessModal(),300); return false;" class="fp-back-link">← Back to Sign In</a>
             </div>
         </div>
     </div>

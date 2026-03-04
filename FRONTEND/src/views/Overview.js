@@ -773,8 +773,8 @@ export function renderOverview() {
                     padding: 36px 16px 32px;
                 }
                 .eq-hero-headline {
-                    font-size: 28px;
-                    letter-spacing: -1px;
+                    font-size: 44px;
+                    letter-spacing: -1.5px;
                 }
                 .eq-hero-sub {
                     font-size: 13px;

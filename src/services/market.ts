@@ -11,6 +11,44 @@ import { eq, and, desc, asc, gt, gte, lte, inArray, sql } from 'drizzle-orm';
 import { seedCatalog } from '../db/seed-catalog.js';
 
 // =============================================================================
+// TARGET HINT COMPUTATION (serve-time, not DB-dependent)
+// =============================================================================
+
+function computeTargetPct(metricKey: string, tier: string): number {
+    const t = (tier || 'controlled').toLowerCase();
+    const isRevenue = metricKey.startsWith('stripe') || metricKey === 'shopify_net_sales' || metricKey === 'amazon_revenue';
+    const isFollowers = metricKey.startsWith('x') || metricKey === 'youtube_subscribers';
+    const isViews = metricKey === 'youtube_30day_views';
+
+    if (t === 'controlled') {
+        if (isRevenue) return 20;
+        if (isFollowers) return 2;
+        if (isViews) return 15;
+        return 10;
+    } else if (t === 'elevated') {
+        if (isRevenue) return 35;
+        if (isFollowers) return 5;
+        if (isViews) return 30;
+        return 20;
+    } else {
+        if (isRevenue) return 50;
+        if (isFollowers) return 12;
+        if (isViews) return 50;
+        return 40;
+    }
+}
+
+function computeTargetHint(metricKey: string, tier: string, windowDays: number): string {
+    const pct = computeTargetPct(metricKey, tier);
+    const noun = metricKey.includes('revenue') || metricKey.includes('sales') ? 'revenue' :
+        metricKey.includes('followers') ? 'followers' :
+            metricKey.includes('subscribers') ? 'subscribers' :
+                metricKey.includes('views') ? 'views' :
+                    metricKey.includes('volume') ? 'orders' : 'units';
+    return `Target: +${pct}% ${noun} (${windowDays}d)`;
+}
+
+// =============================================================================
 // TYPES
 // =============================================================================
 
@@ -171,7 +209,11 @@ export async function getMarketFeed(options: MarketFeedOptions = {}): Promise<Ma
             tier: instance.tier,
             multiplier: Number(instance.multiplier),
             metricKey: instance.metricKey,
-            displayTargetHint: instance.displayTargetHint,
+            displayTargetHint: computeTargetHint(
+                instance.metricKey,
+                instance.tier,
+                Number((template.rulesJson as any)?.window_days || 30)
+            ),
 
             stats: {
                 executions1h: stats?.executions1h ?? 0,
@@ -364,7 +406,11 @@ export async function getMarketInstanceDetails(instanceId: string) {
         winRate,
         multiplier: Number(instance.multiplier),
         metricKey: instance.metricKey,
-        targetHint: instance.displayTargetHint,
+        targetHint: computeTargetHint(
+            instance.metricKey,
+            instance.tier as string,
+            Number(rules.window_days || 30)
+        ),
         expiry: instance.fundingCloseAt.toISOString(),
     };
 }

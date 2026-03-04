@@ -583,9 +583,10 @@ export function renderOverview() {
                 /* Hero */
                 .eq-hero {
                     padding: 48px 20px 40px;
+                    text-align: center;
                 }
                 .eq-hero-headline {
-                    font-size: 36px;
+                    font-size: 40px;
                     letter-spacing: -1.5px;
                     margin-bottom: 24px;
                     max-width: 100%;
@@ -594,17 +595,19 @@ export function renderOverview() {
                     font-size: 14px;
                     margin-bottom: 28px;
                     max-width: 100%;
+                    margin-left: auto;
+                    margin-right: auto;
                 }
                 .eq-hero-actions {
                     flex-direction: column;
                     gap: 16px;
-                    align-items: stretch;
+                    align-items: center;
                 }
                 .eq-btn-primary {
-                    padding: 16px 24px;
+                    padding: 16px 40px;
                     font-size: 13px;
                     text-align: center;
-                    width: 100%;
+                    width: auto;
                 }
                 .eq-link-more {
                     text-align: center;
@@ -613,9 +616,7 @@ export function renderOverview() {
                     display: none;
                 }
                 .eq-tag {
-                    font-size: 9px;
-                    letter-spacing: 1.2px;
-                    margin-bottom: 16px;
+                    display: none;
                 }
 
                 /* Mechanism */

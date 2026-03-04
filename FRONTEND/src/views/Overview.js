@@ -963,7 +963,7 @@ export function renderOverview() {
 
                 <div class="eq-stats-strip">
                     <div class="eq-stat-group">
-                        <div class="eq-stat-val">$<span id="stat-capital">0</span><small>(BETA)</small></div>
+                        <div class="eq-stat-val">$<span id="stat-capital">0</span></div>
                         <div class="eq-stat-lbl">Capital Locked</div>
                     </div>
                     <div class="eq-stat-group">
@@ -971,7 +971,7 @@ export function renderOverview() {
                         <div class="eq-stat-lbl">Active Contracts</div>
                     </div>
                     <div class="eq-stat-group">
-                        <div class="eq-stat-val">$<span id="stat-pool">0</span><small>(BETA)</small></div>
+                        <div class="eq-stat-val">$<span id="stat-pool">0</span></div>
                         <div class="eq-stat-lbl">Volume 24h</div>
                     </div>
                 </div>
@@ -1110,10 +1110,10 @@ export function initOverview() {
 
     if (!grid) return;
 
-    // Show demo stats immediately while loading
-    if (statCapital) statCapital.textContent = '2.1M';
-    if (statContracts) statContracts.textContent = '142';
-    if (statPool) statPool.textContent = '12.5M';
+    // Stats start at 0 until API data loads
+    if (statCapital) statCapital.textContent = '0';
+    if (statContracts) statContracts.textContent = '0';
+    if (statPool) statPool.textContent = '0';
 
     // ===================================================================
     // DATA FETCHING & RENDERING
@@ -1268,15 +1268,36 @@ export function initOverview() {
     }
 
     function updateStats(stats) {
-        if (!stats || !stats.tvlUsd || stats.tvlUsd === '0' || Number(stats.tvlUsd) === 0) {
-            if (statCapital) statCapital.textContent = '2.1M';
-            if (statContracts) statContracts.textContent = '142';
-            if (statPool) statPool.textContent = '12.5M';
-            return;
+        if (!stats) return;
+
+        // Capital locked
+        if (statCapital) {
+            const tvl = Number(stats.tvlUsd) || 0;
+            if (tvl >= 1_000_000) {
+                statCapital.textContent = (tvl / 1_000_000).toFixed(1) + 'M';
+            } else if (tvl >= 1_000) {
+                statCapital.textContent = (tvl / 1_000).toFixed(0) + 'k';
+            } else {
+                statCapital.textContent = tvl.toLocaleString();
+            }
         }
-        if (statCapital) statCapital.textContent = (stats.tvlUsd / 1000000).toFixed(1) + 'M';
-        if (statContracts) statContracts.textContent = stats.activeCount || '0';
-        if (statPool) statPool.textContent = (stats.volume24hUsd / 1000).toFixed(0) + 'k';
+
+        // Active contracts
+        if (statContracts) {
+            statContracts.textContent = stats.activeCount || '0';
+        }
+
+        // Volume 24h
+        if (statPool) {
+            const vol = Number(stats.volume24hUsd) || 0;
+            if (vol >= 1_000_000) {
+                statPool.textContent = (vol / 1_000_000).toFixed(1) + 'M';
+            } else if (vol >= 1_000) {
+                statPool.textContent = (vol / 1_000).toFixed(0) + 'k';
+            } else {
+                statPool.textContent = vol.toLocaleString();
+            }
+        }
     }
 
     function updateTime() {

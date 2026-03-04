@@ -541,8 +541,10 @@ export async function createContract(params: CreateContractParams): Promise<Cont
             }
         } catch (xErr) {
             console.error('[Contract] Failed to fetch X account info:', (xErr as any).message);
-            const xBaseline = params.baseline as Record<string, unknown> | undefined;
-            followerCount = Number(xBaseline?.followersCount ?? xBaseline?.followers ?? 0);
+            throw new Error(
+                `Failed to fetch X follower count: ${(xErr as any).message || 'Unknown error'}. ` +
+                `Please try again or reconnect your X account.`
+            );
         }
 
         // ACCOUNT AGE CHECK: X account

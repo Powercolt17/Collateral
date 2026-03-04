@@ -44,6 +44,7 @@ class Router {
         }
 
         this.currentRoute = hash;
+        window.scrollTo(0, 0);
 
         if (this.onRouteChange) {
             this.onRouteChange(route, hash);

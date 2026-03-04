@@ -462,6 +462,33 @@ export async function seedCatalog() {
     }
     console.log(`[Seed] ✅ Ensured ${TEMPLATES.length} templates.`);
 
+    // 1b. FIX STALE displayTargetHint values on existing instances
+    // Recalculate from targetPolicyJson and metricKey to ensure fixed percentages
+    const existingInstances = await db.select().from(marketContractInstances);
+    let fixedCount = 0;
+    for (const inst of existingInstances) {
+        const policy = inst.targetPolicyJson as any;
+        const metricKey = inst.metricKey || 'generic';
+        if (!policy?.target_pct) continue;
+
+        // Find matching template to get window_days
+        const [tmpl] = await db.select().from(contractTemplates)
+            .where(eq(contractTemplates.id, inst.templateId)).limit(1);
+        const rules = (tmpl?.rulesJson as any) || {};
+        const windowDays = rules.window_days || 30;
+
+        const expectedHint = getHint(metricKey, policy, windowDays);
+        if (inst.displayTargetHint !== expectedHint) {
+            await db.update(marketContractInstances)
+                .set({ displayTargetHint: expectedHint } as any)
+                .where(eq(marketContractInstances.id, inst.id));
+            fixedCount++;
+        }
+    }
+    if (fixedCount > 0) {
+        console.log(`[Seed] 🔧 Fixed ${fixedCount} stale displayTargetHint values.`);
+    }
+
     // 2. Ensure Listings (20 Open)
     // - slotsTotal = 500
     // - slotsFilled = random(0-50)

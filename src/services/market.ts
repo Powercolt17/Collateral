@@ -186,28 +186,38 @@ export async function getMarketFeed(options: MarketFeedOptions = {}): Promise<Ma
 }
 
 export async function getGlobalStats() {
-    const [stats] = await db
-        .select({
-            activeCount: sql<number>`count(*)`,
-            volume24h: sql<number>`coalesce(sum(${marketStatsCache.capitalLocked24hCents}), 0)`,
-        })
-        .from(marketContractInstances)
-        .leftJoin(marketStatsCache, eq(marketContractInstances.id, marketStatsCache.instanceId))
-        .where(eq(marketContractInstances.status, 'published'));
+    try {
+        const [stats] = await db
+            .select({
+                activeCount: sql<number>`count(*)`,
+                volume24h: sql<number>`coalesce(sum(${marketStatsCache.capitalLocked24hCents}), 0)`,
+            })
+            .from(marketContractInstances)
+            .leftJoin(marketStatsCache, eq(marketContractInstances.id, marketStatsCache.instanceId))
+            .where(eq(marketContractInstances.status, 'published'));
 
-    // Real TVL: sum lock_amount_usd_cents from all actively locked contracts
-    const tvlResult = await db.execute(sql`
-        SELECT coalesce(sum(lock_amount_usd_cents), 0) AS total_locked
-        FROM contracts
-        WHERE state IN ('LOCKED', 'VERIFYING', 'SETTLING', 'PAYOUT_PENDING')
-    `);
-    const totalLockedCents = Number((tvlResult as any).rows?.[0]?.total_locked || 0);
+        // Real TVL: sum lock_amount_usd_cents from all actively locked contracts
+        let totalLockedCents = 0;
+        try {
+            const tvlResult = await db.execute(sql`
+                SELECT coalesce(sum(lock_amount_usd_cents), 0) AS total_locked
+                FROM contracts
+                WHERE state IN ('LOCKED', 'VERIFYING', 'SETTLING', 'PAYOUT_PENDING')
+            `);
+            totalLockedCents = Number((tvlResult as any).rows?.[0]?.total_locked || 0);
+        } catch (tvlErr) {
+            console.warn('[Market] TVL query failed (non-fatal):', (tvlErr as any).message);
+        }
 
-    return {
-        activeCount: Number(stats?.activeCount || 0),
-        volume24hUsd: Number(stats?.volume24h || 0) / 100,
-        tvlUsd: totalLockedCents / 100,
-    };
+        return {
+            activeCount: Number(stats?.activeCount || 0),
+            volume24hUsd: Number(stats?.volume24h || 0) / 100,
+            tvlUsd: totalLockedCents / 100,
+        };
+    } catch (err) {
+        console.error('[Market] getGlobalStats failed:', (err as any).message);
+        return { activeCount: 0, volume24hUsd: 0, tvlUsd: 0 };
+    }
 }
 
 // =============================================================================
@@ -266,11 +276,17 @@ export async function expireInstance(instanceId: string) {
 export async function getMarketListings(options: MarketFeedOptions = {}) {
     // 1. Get all published instances (published/closing)
     // Force status published, but allow other filters
-    const instances = await getMarketFeed({ ...options, status: 'published', limit: options.limit || 100 });
+    let instances = await getMarketFeed({ ...options, status: 'published', limit: options.limit || 100 });
 
-    // Auto-spawn if low inventory (lazy worker)
+    // Auto-spawn if low inventory — await so fresh listings appear immediately
     if (instances.length < 20) {
-        seedCatalog().catch(e => console.error('[Market][AutoSeed] Failed:', e));
+        try {
+            await seedCatalog();
+            // Re-query to include newly seeded listings
+            instances = await getMarketFeed({ ...options, status: 'published', limit: options.limit || 100 });
+        } catch (e) {
+            console.error('[Market][AutoSeed] Failed:', e);
+        }
     }
 
     // 2. Transform to simplified "Listings" shape

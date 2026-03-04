@@ -425,7 +425,11 @@ export async function createContract(params: CreateContractParams): Promise<Cont
             ))
             .limit(1);
 
-        if (stripeAccount?.createdAt) {
+        if (!stripeAccount) {
+            throw new Error('Cannot create Stripe contract: No connected Stripe account. Connect your Stripe account first.');
+        }
+
+        if (stripeAccount.createdAt) {
             const accountAgeDays = Math.floor((Date.now() - new Date(stripeAccount.createdAt).getTime()) / (1000 * 60 * 60 * 24));
             if (accountAgeDays < MIN_ACCOUNT_AGE_DAYS.STRIPE) {
                 throw new Error(
@@ -435,7 +439,11 @@ export async function createContract(params: CreateContractParams): Promise<Cont
             }
         }
 
-        if (userRecord) {
+        if (!userRecord) {
+            throw new Error('Cannot create Stripe contract: User record not found.');
+        }
+
+        try {
             const snapshot = await stripeRevenueAdapter.snapshotBaseline(userRecord);
             baselineJson = snapshot.metrics;
 
@@ -450,6 +458,14 @@ export async function createContract(params: CreateContractParams): Promise<Cont
                     `Your current 30-day revenue is $${gotDollars}. Build revenue first.`
                 );
             }
+        } catch (stripeErr) {
+            if ((stripeErr as any).message?.includes('Baseline too low')) throw stripeErr;
+            if ((stripeErr as any).message?.includes('Account too new')) throw stripeErr;
+            console.error('[Contract] Failed to fetch Stripe baseline:', (stripeErr as any).message);
+            throw new Error(
+                `Failed to fetch Stripe revenue: ${(stripeErr as any).message || 'Unknown error'}. ` +
+                `Please try again or reconnect your Stripe account.`
+            );
         }
 
     } else if (platform === 'GITHUB' && metricType === 'PRS_MERGED') {

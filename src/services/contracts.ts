@@ -24,7 +24,7 @@ import { eq, and, sql, gt } from 'drizzle-orm';
 import { createHash } from 'crypto';
 import { stripeRevenueAdapter } from '../adapters/stripe-revenue.js';
 import { githubAdapter, getGithubClient } from '../adapters/github.js';
-import { MINIMUM_BASELINES } from './contract-calculator.js';
+import { MINIMUM_BASELINES, MIN_ACCOUNT_AGE_DAYS } from './contract-calculator.js';
 
 // =============================================================================
 // ANTI-ABUSE CONSTANTS (GitHub)
@@ -413,10 +413,27 @@ export async function createContract(params: CreateContractParams): Promise<Cont
     // Snapshot Baseline if needed
     let baselineJson: any = null;
     if (platform === 'STRIPE' && metricType === 'REVENUE') {
-        // Actually we need to fetch user to pass to adapter
-        // Or adapter fetches user.
-        // Let's fetch user here.
         const [userRecord] = await db.select().from(users).where(eq(users.id, principalUserId)).limit(1);
+
+        // ACCOUNT AGE CHECK: Stripe connected account
+        const [stripeAccount] = await db
+            .select()
+            .from(connectedAccounts)
+            .where(and(
+                eq(connectedAccounts.userId, principalUserId),
+                eq(connectedAccounts.platform, 'STRIPE')
+            ))
+            .limit(1);
+
+        if (stripeAccount?.createdAt) {
+            const accountAgeDays = Math.floor((Date.now() - new Date(stripeAccount.createdAt).getTime()) / (1000 * 60 * 60 * 24));
+            if (accountAgeDays < MIN_ACCOUNT_AGE_DAYS.STRIPE) {
+                throw new Error(
+                    `Account too new: Stripe account must be at least ${MIN_ACCOUNT_AGE_DAYS.STRIPE} days old. ` +
+                    `Your account is ${accountAgeDays} days old.`
+                );
+            }
+        }
 
         if (userRecord) {
             const snapshot = await stripeRevenueAdapter.snapshotBaseline(userRecord);
@@ -509,22 +526,37 @@ export async function createContract(params: CreateContractParams): Promise<Cont
         }
 
         let followerCount = 0;
+        let xAccountCreatedAt: string | null = null;
         try {
-            // Use the X adapter singleton to fetch real follower count
+            // Use the X adapter singleton to fetch real follower count + account age
             const { getXClient } = await import('../adapters/x.js');
             const xClient = getXClient();
             const xUsername = xAccount.externalAccountId || xAccount.externalUsername;
             if (xUsername) {
-                followerCount = await xClient.getFollowers(xUsername);
-                console.log(`[Contract] X follower count for ${xUsername}: ${followerCount}`);
+                // getUserWithHealth returns followers + createdAt
+                const health = await xClient.getUserWithHealth(xUsername);
+                followerCount = health.publicMetrics.followersCount;
+                xAccountCreatedAt = health.createdAt;
+                console.log(`[Contract] X account: ${xUsername}, followers: ${followerCount}, created: ${xAccountCreatedAt}`);
             }
         } catch (xErr) {
-            console.error('[Contract] Failed to fetch X followers:', (xErr as any).message);
-            // Fall back to params.baseline if X API fails
+            console.error('[Contract] Failed to fetch X account info:', (xErr as any).message);
             const xBaseline = params.baseline as Record<string, unknown> | undefined;
             followerCount = Number(xBaseline?.followersCount ?? xBaseline?.followers ?? 0);
         }
 
+        // ACCOUNT AGE CHECK: X account
+        if (xAccountCreatedAt) {
+            const accountAgeDays = Math.floor((Date.now() - new Date(xAccountCreatedAt).getTime()) / (1000 * 60 * 60 * 24));
+            if (accountAgeDays < MIN_ACCOUNT_AGE_DAYS.X) {
+                throw new Error(
+                    `Account too new: X account must be at least ${MIN_ACCOUNT_AGE_DAYS.X} days old. ` +
+                    `Your account is ${accountAgeDays} days old.`
+                );
+            }
+        }
+
+        // FOLLOWER MINIMUM CHECK
         const minFollowers = MINIMUM_BASELINES.X.FOLLOWERS[riskTier];
         if (followerCount < minFollowers) {
             throw new Error(
@@ -533,9 +565,33 @@ export async function createContract(params: CreateContractParams): Promise<Cont
             );
         }
 
-        baselineJson = { followersCount: followerCount };
+        baselineJson = { followersCount: followerCount, accountCreatedAt: xAccountCreatedAt };
     } else if (platform === 'SHOPIFY') {
-        // Fetch real Shopify revenue baseline from connected account
+        // ACCOUNT AGE CHECK: Shopify connected account
+        const [shopifyAccount] = await db
+            .select()
+            .from(connectedAccounts)
+            .where(and(
+                eq(connectedAccounts.userId, principalUserId),
+                eq(connectedAccounts.platform, 'SHOPIFY')
+            ))
+            .limit(1);
+
+        if (!shopifyAccount) {
+            throw new Error('Cannot create Shopify contract: No connected Shopify account. Connect your store first.');
+        }
+
+        if (shopifyAccount.createdAt) {
+            const accountAgeDays = Math.floor((Date.now() - new Date(shopifyAccount.createdAt).getTime()) / (1000 * 60 * 60 * 24));
+            if (accountAgeDays < MIN_ACCOUNT_AGE_DAYS.SHOPIFY) {
+                throw new Error(
+                    `Account too new: Shopify store must be at least ${MIN_ACCOUNT_AGE_DAYS.SHOPIFY} days old. ` +
+                    `Your account is ${accountAgeDays} days old.`
+                );
+            }
+        }
+
+        // Fetch real Shopify revenue baseline
         try {
             const { shopifyAdapter } = await import('../adapters/shopify.js');
             const snapshot = await shopifyAdapter.snapshotBaseline(principalUserId);
@@ -556,6 +612,7 @@ export async function createContract(params: CreateContractParams): Promise<Cont
             console.log(`[Contract] Shopify baseline: $${(netCents / 100).toFixed(2)} net revenue (${snapshot.orderCount} orders)`);
         } catch (shopErr) {
             if ((shopErr as any).message?.includes('Baseline too low')) throw shopErr;
+            if ((shopErr as any).message?.includes('Account too new')) throw shopErr;
             console.error('[Contract] Failed to fetch Shopify baseline:', (shopErr as any).message);
             throw new Error('Cannot create Shopify contract: Failed to verify store revenue. Ensure your Shopify account is connected and has recent orders.');
         }

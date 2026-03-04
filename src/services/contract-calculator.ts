@@ -128,3 +128,12 @@ export const MINIMUM_BASELINES = {
         }
     }
 } as const;
+
+// =============================================================================
+// MINIMUM ACCOUNT AGE (days) — ANTI-GAMING
+// =============================================================================
+export const MIN_ACCOUNT_AGE_DAYS = {
+    X: 90,          // X account must be 90+ days old
+    STRIPE: 90,     // Stripe account must be 90+ days old
+    SHOPIFY: 90,    // Shopify store must be 90+ days old
+} as const;

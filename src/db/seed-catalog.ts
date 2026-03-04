@@ -320,30 +320,26 @@ function getPolicyForTier(metricKey: string, tier: string, windowDays: number) {
     const isAmazonRev = metricKey === 'amazon_revenue';
     const isAmazonUnits = metricKey === 'amazon_units_sold';
 
-    let minPct = 0;
-    let maxPct = 0;
-    // let floorAbs = 0; // Simplified floor for seed visualization
+    let targetPct = 0;
 
     if (tier === 'controlled') {
-        if (isStripe || isShopifySales || isAmazonRev) { minPct = 8; maxPct = 15; }
-        else if (isX) { minPct = 1; maxPct = 3; }
-        else { minPct = 5; maxPct = 12; } // Vol/Units
+        if (isStripe || isShopifySales || isAmazonRev) { targetPct = 20; }
+        else if (isX) { targetPct = 2; }
+        else { targetPct = 10; } // Vol/Units
     } else if (tier === 'elevated') {
-        if (isStripe || isShopifySales || isAmazonRev) { minPct = 18; maxPct = 30; }
-        else if (isX) { minPct = 4; maxPct = 7; }
-        else { minPct = 15; maxPct = 25; }
+        if (isStripe || isShopifySales || isAmazonRev) { targetPct = 35; }
+        else if (isX) { targetPct = 5; }
+        else { targetPct = 20; }
     } else { // maximum
-        if (isStripe || isShopifySales || isAmazonRev) { minPct = 35; maxPct = 60; }
-        else if (isX) { minPct = 8; maxPct = 15; }
-        else { minPct = 30; maxPct = 50; }
+        if (isStripe || isShopifySales || isAmazonRev) { targetPct = 50; }
+        else if (isX) { targetPct = 12; }
+        else { targetPct = 40; }
     }
 
-    // Generate specific target for this listing (simulated "policy" range)
     return {
         mode: 'percentage_delta',
-        min_pct: minPct,
-        max_pct: maxPct,
-        min_absolute_floor: 10 // heuristic
+        target_pct: targetPct,
+        min_absolute_floor: 10
     };
 }
 
@@ -352,7 +348,7 @@ function getHint(metricKey: string, policy: any, windowDays: number) {
         metricKey.includes('followers') ? 'followers' :
             metricKey.includes('volume') ? 'orders' : 'units';
 
-    return `Target: +${policy.min_pct}–${policy.max_pct}% ${noun} (${windowDays}d)`;
+    return `Target: +${policy.target_pct}% ${noun} (${windowDays}d)`;
 }
 
 export async function seedCatalog() {

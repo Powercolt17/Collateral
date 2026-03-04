@@ -319,6 +319,25 @@ export async function disconnectAmazon() {
     return post('/v1/connect/amazon/disconnect');
 }
 
+// --- YOUTUBE CONNECT ---
+
+export async function startYouTubeConnect() {
+    const token = getAuthToken();
+    console.log('[API] startYouTubeConnect called');
+    if (!token) {
+        throw new Error('Login required to connect YouTube. Please log in first.');
+    }
+    return get('/v1/connect/youtube/start');
+}
+
+export async function getYouTubeStatus() {
+    return get('/v1/connect/youtube/status');
+}
+
+export async function disconnectYouTube() {
+    return post('/v1/connect/youtube/disconnect');
+}
+
 // --- CONTRACTS ---
 
 export async function createContract(params) {
@@ -499,6 +518,11 @@ export default {
     startAmazonConnect,
     getAmazonStatus,
     disconnectAmazon,
+
+    // YouTube Connect
+    startYouTubeConnect,
+    getYouTubeStatus,
+    disconnectYouTube,
 
     // Contracts
     createContract,

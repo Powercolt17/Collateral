@@ -528,16 +528,75 @@ export async function createContract(params: CreateContractParams): Promise<Cont
         let followerCount = 0;
         let xAccountCreatedAt: string | null = null;
         try {
-            // Use the X adapter singleton to fetch real follower count + account age
-            const { getXClient } = await import('../adapters/x.js');
-            const xClient = getXClient();
-            const xUsername = xAccount.externalAccountId || xAccount.externalUsername;
-            if (xUsername) {
-                // getUserWithHealth returns followers + createdAt
-                const health = await xClient.getUserWithHealth(xUsername);
-                followerCount = health.publicMetrics.followersCount;
-                xAccountCreatedAt = health.createdAt;
-                console.log(`[Contract] X account: ${xUsername}, followers: ${followerCount}, created: ${xAccountCreatedAt}`);
+            // Fetch the user's stored OAuth 1.0a tokens from the users table
+            const [userRecord] = await db
+                .select({
+                    xAccessToken: users.xAccessToken,
+                    xAccessTokenSecret: users.xAccessTokenSecret,
+                    xAccountCreatedAt: users.xAccountCreatedAt,
+                })
+                .from(users)
+                .where(eq(users.id, principalUserId))
+                .limit(1);
+
+            const xApiKey = process.env.X_API_KEY;
+            const xApiSecret = process.env.X_API_SECRET;
+
+            if (userRecord?.xAccessToken && userRecord?.xAccessTokenSecret && xApiKey && xApiSecret) {
+                // Use OAuth 1.0a verify_credentials — works on ALL X API tiers (including Free)
+                const { createHmac, randomBytes } = await import('crypto');
+                const nonce = randomBytes(16).toString('hex');
+                const timestamp = Math.floor(Date.now() / 1000).toString();
+                const verifyUrl = 'https://api.twitter.com/1.1/account/verify_credentials.json';
+
+                const percentEncode = (s: string) => encodeURIComponent(s)
+                    .replace(/!/g, '%21').replace(/'/g, '%27')
+                    .replace(/\(/g, '%28').replace(/\)/g, '%29').replace(/\*/g, '%2A');
+
+                const oauthParams: Record<string, string> = {
+                    oauth_consumer_key: xApiKey,
+                    oauth_nonce: nonce,
+                    oauth_signature_method: 'HMAC-SHA1',
+                    oauth_timestamp: timestamp,
+                    oauth_token: userRecord.xAccessToken,
+                    oauth_version: '1.0',
+                };
+
+                // Generate signature
+                const sortedParams = Object.keys(oauthParams).sort()
+                    .map(k => `${percentEncode(k)}=${percentEncode(oauthParams[k])}`)
+                    .join('&');
+                const signatureBase = ['GET', percentEncode(verifyUrl), percentEncode(sortedParams)].join('&');
+                const signingKey = `${percentEncode(xApiSecret)}&${percentEncode(userRecord.xAccessTokenSecret)}`;
+                const signature = createHmac('sha1', signingKey).update(signatureBase).digest('base64');
+                oauthParams.oauth_signature = signature;
+
+                const authHeader = 'OAuth ' + Object.keys(oauthParams).sort()
+                    .map(k => `${percentEncode(k)}="${percentEncode(oauthParams[k])}"`)
+                    .join(', ');
+
+                const response = await fetch(verifyUrl, {
+                    headers: { 'Authorization': authHeader },
+                });
+
+                if (!response.ok) {
+                    throw new Error(`X verify_credentials failed (${response.status})`);
+                }
+
+                const userData = await response.json() as {
+                    followers_count: number;
+                    created_at: string;
+                };
+
+                followerCount = userData.followers_count;
+                xAccountCreatedAt = new Date(userData.created_at).toISOString();
+                console.log(`[Contract] X verify_credentials: followers=${followerCount}, created=${xAccountCreatedAt}`);
+            } else {
+                // Fallback: use stored metadata from connection time
+                const meta = xAccount.metadataJson as { followersCount?: number; accountCreatedAt?: string } | null;
+                followerCount = meta?.followersCount ?? 0;
+                xAccountCreatedAt = meta?.accountCreatedAt ?? null;
+                console.log(`[Contract] X using stored metadata: followers=${followerCount}`);
             }
         } catch (xErr) {
             console.error('[Contract] Failed to fetch X account info:', (xErr as any).message);

@@ -13,6 +13,7 @@
 import { runVerificationJob } from './verification.js';
 import { runSettlementJob } from './settlement.js';
 import { runReconciliationJob } from './reconciliation.js';
+import { runOracleRefreshJob } from '../jobs/oracle-refresh.js';
 import {
     isVerificationEnabled,
     isSettlementEnabled,
@@ -33,6 +34,7 @@ export interface SchedulerResult {
     verification: JobResult | null;
     settlement: JobResult | null;
     reconciliation: JobResult | null;
+    oracleRefresh: JobResult | null;
     totalDurationMs: number;
 }
 
@@ -137,6 +139,33 @@ export async function runScheduledJobs(): Promise<SchedulerResult> {
         }
     }
 
+    // 4. Oracle Refresh Job (always runs if verification enabled)
+    let oracleResult: JobResult | null = null;
+    if (isVerificationEnabled()) {
+        const jobStart = Date.now();
+        try {
+            const result = await runOracleRefreshJob();
+            const durationMs = Date.now() - jobStart;
+
+            oracleResult = {
+                jobType: 'ORACLE_REFRESH',
+                processed: result.processed,
+                succeeded: result.succeeded,
+                failed: result.failed,
+                skipped: result.skipped,
+                durationMs,
+                skipReasons: {
+                    locked: 0,
+                    retryScheduled: 0,
+                    terminal: 0,
+                },
+            };
+            logJobResult(oracleResult);
+        } catch (err: any) {
+            console.error('❌ Oracle refresh job error:', err.message);
+        }
+    }
+
     const totalDurationMs = Date.now() - startTime;
     console.log(`✅ Scheduled job run complete in ${totalDurationMs}ms`);
 
@@ -144,6 +173,7 @@ export async function runScheduledJobs(): Promise<SchedulerResult> {
         verification: verificationResult,
         settlement: settlementResult,
         reconciliation: reconciliationResult,
+        oracleRefresh: oracleResult,
         totalDurationMs,
     };
 }

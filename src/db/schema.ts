@@ -10,7 +10,8 @@ import {
     uniqueIndex,
     unique,
     index,
-    boolean
+    boolean,
+    numeric
 } from 'drizzle-orm/pg-core';
 import { sql } from 'drizzle-orm';
 
@@ -164,7 +165,10 @@ export const ledgerEventTypeEnum = pgEnum('ledger_event_type', [
     'COMMERCE_VERIFICATION_UNVERIFIABLE',
     'COMMERCE_JOB_LOCK_ACQUIRED',
     'COMMERCE_JOB_LOCK_CONTENTION',
-    'COMMERCE_JOB_LOCK_RELEASED'
+    'COMMERCE_JOB_LOCK_RELEASED',
+    // Oracle metric tracking events
+    'ORACLE_SNAPSHOT_RECORDED',
+    'WEBHOOK_SNAPSHOT_RECORDED'
 ]);
 
 
@@ -604,6 +608,9 @@ export const EventType = {
     COMMERCE_JOB_LOCK_ACQUIRED: 'COMMERCE_JOB_LOCK_ACQUIRED',
     COMMERCE_JOB_LOCK_CONTENTION: 'COMMERCE_JOB_LOCK_CONTENTION',
     COMMERCE_JOB_LOCK_RELEASED: 'COMMERCE_JOB_LOCK_RELEASED',
+    // Oracle metric tracking events
+    ORACLE_SNAPSHOT_RECORDED: 'ORACLE_SNAPSHOT_RECORDED',
+    WEBHOOK_SNAPSHOT_RECORDED: 'WEBHOOK_SNAPSHOT_RECORDED',
 } as const;
 
 export type EventTypeType = typeof EventType[keyof typeof EventType];
@@ -706,3 +713,42 @@ export type NewMarketContractInstance = typeof marketContractInstances.$inferIns
 
 export type MarketStatsCache = typeof marketStatsCache.$inferSelect;
 export type NewMarketStatsCache = typeof marketStatsCache.$inferInsert;
+
+// =============================================================================
+// ORACLE METRIC TABLES (Live Progress Tracking)
+// =============================================================================
+
+// Append-only log of every metric fetch (oracle poll or webhook)
+export const contractMetricSnapshots = pgTable('contract_metric_snapshots', {
+    id: uuid('id').primaryKey().defaultRandom(),
+    contractId: uuid('contract_id').references(() => contracts.id).notNull(),
+    provider: text('provider').notNull(),
+    metricKey: text('metric_key').notNull(),
+    metricValue: numeric('metric_value').notNull(),
+    fetchedAt: timestamp('fetched_at', { withTimezone: true }).notNull(),
+    requestId: text('request_id'),
+    rawPayloadHash: text('raw_payload_hash'),
+    createdAt: timestamp('created_at', { withTimezone: true }).defaultNow().notNull(),
+}, (table) => ({
+    contractFetchedIdx: index('idx_metric_snapshots_contract_fetched').on(table.contractId, table.fetchedAt),
+    contractIdx: index('idx_metric_snapshots_contract_id').on(table.contractId),
+}));
+
+// Fast-read cache for UI — one row per active contract, upserted each refresh
+export const contractMetricCurrent = pgTable('contract_metric_current', {
+    contractId: uuid('contract_id').references(() => contracts.id).primaryKey(),
+    provider: text('provider').notNull(),
+    metricKey: text('metric_key').notNull(),
+    metricValue: numeric('metric_value').notNull(),
+    fetchedAt: timestamp('fetched_at', { withTimezone: true }).notNull(),
+    progressPct: numeric('progress_pct').notNull().default('0'),
+    nextCheckAt: timestamp('next_check_at', { withTimezone: true }),
+    updatedAt: timestamp('updated_at', { withTimezone: true }).defaultNow().notNull(),
+});
+
+// Type exports
+export type ContractMetricSnapshot = typeof contractMetricSnapshots.$inferSelect;
+export type NewContractMetricSnapshot = typeof contractMetricSnapshots.$inferInsert;
+
+export type ContractMetricCurrent = typeof contractMetricCurrent.$inferSelect;
+export type NewContractMetricCurrent = typeof contractMetricCurrent.$inferInsert;

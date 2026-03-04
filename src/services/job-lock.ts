@@ -19,7 +19,7 @@ import { eq, and, lt } from 'drizzle-orm';
 // Lock TTL in milliseconds (5 minutes)
 const LOCK_TTL_MS = 5 * 60 * 1000;
 
-export type JobType = 'VERIFY' | 'SETTLE';
+export type JobType = 'VERIFY' | 'SETTLE' | 'ORACLE';
 
 export interface JobLockResult {
     acquired: boolean;

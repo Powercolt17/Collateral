@@ -299,6 +299,79 @@ const TEMPLATES = [
         description: 'Increase Amazon FBA units sold over 60 days.',
         rules: { metricKey: 'amazon_units_sold', window_days: 60 },
         tierOptions: TIER_OPTIONS
+    },
+    // --- YOUTUBE (Creator) - 8 Templates ---
+    {
+        slug: 'youtube-subscriber-growth-7d',
+        title: 'Subscriber Growth (7d)',
+        category: 'social',
+        provider: 'YOUTUBE',
+        description: 'Grow your YouTube subscriber count over 7 days.',
+        rules: { metricKey: 'youtube_subscribers', window_days: 7 },
+        tierOptions: TIER_OPTIONS
+    },
+    {
+        slug: 'youtube-subscriber-growth-14d',
+        title: 'Subscriber Growth (14d)',
+        category: 'social',
+        provider: 'YOUTUBE',
+        description: 'Grow your YouTube subscriber count over 14 days.',
+        rules: { metricKey: 'youtube_subscribers', window_days: 14 },
+        tierOptions: TIER_OPTIONS
+    },
+    {
+        slug: 'youtube-subscriber-growth-30d',
+        title: 'Subscriber Growth (30d)',
+        category: 'social',
+        provider: 'YOUTUBE',
+        description: 'Grow your YouTube subscriber count over 30 days.',
+        rules: { metricKey: 'youtube_subscribers', window_days: 30 },
+        tierOptions: TIER_OPTIONS
+    },
+    {
+        slug: 'youtube-subscriber-growth-60d',
+        title: 'Subscriber Growth (60d)',
+        category: 'social',
+        provider: 'YOUTUBE',
+        description: 'Grow your YouTube subscriber count over 60 days.',
+        rules: { metricKey: 'youtube_subscribers', window_days: 60 },
+        tierOptions: TIER_OPTIONS
+    },
+    {
+        slug: 'youtube-views-growth-7d',
+        title: '30-Day Views Growth (7d)',
+        category: 'social',
+        provider: 'YOUTUBE',
+        description: 'Grow your YouTube 30-day view count over 7 days.',
+        rules: { metricKey: 'youtube_30day_views', window_days: 7 },
+        tierOptions: TIER_OPTIONS
+    },
+    {
+        slug: 'youtube-views-growth-14d',
+        title: '30-Day Views Growth (14d)',
+        category: 'social',
+        provider: 'YOUTUBE',
+        description: 'Grow your YouTube 30-day view count over 14 days.',
+        rules: { metricKey: 'youtube_30day_views', window_days: 14 },
+        tierOptions: TIER_OPTIONS
+    },
+    {
+        slug: 'youtube-views-growth-30d',
+        title: '30-Day Views Growth (30d)',
+        category: 'social',
+        provider: 'YOUTUBE',
+        description: 'Grow your YouTube 30-day view count over 30 days.',
+        rules: { metricKey: 'youtube_30day_views', window_days: 30 },
+        tierOptions: TIER_OPTIONS
+    },
+    {
+        slug: 'youtube-views-growth-60d',
+        title: '30-Day Views Growth (60d)',
+        category: 'social',
+        provider: 'YOUTUBE',
+        description: 'Grow your YouTube 30-day view count over 60 days.',
+        rules: { metricKey: 'youtube_30day_views', window_days: 60 },
+        tierOptions: TIER_OPTIONS
     }
 ];
 
@@ -319,20 +392,25 @@ function getPolicyForTier(metricKey: string, tier: string, windowDays: number) {
     const isShopifyVolume = metricKey === 'shopify_order_volume';
     const isAmazonRev = metricKey === 'amazon_revenue';
     const isAmazonUnits = metricKey === 'amazon_units_sold';
+    const isYouTubeSubs = metricKey === 'youtube_subscribers';
+    const isYouTubeViews = metricKey === 'youtube_30day_views';
 
     let targetPct = 0;
 
     if (tier === 'controlled') {
         if (isStripe || isShopifySales || isAmazonRev) { targetPct = 20; }
-        else if (isX) { targetPct = 2; }
+        else if (isX || isYouTubeSubs) { targetPct = 2; }
+        else if (isYouTubeViews) { targetPct = 15; }
         else { targetPct = 10; } // Vol/Units
     } else if (tier === 'elevated') {
         if (isStripe || isShopifySales || isAmazonRev) { targetPct = 35; }
-        else if (isX) { targetPct = 5; }
+        else if (isX || isYouTubeSubs) { targetPct = 5; }
+        else if (isYouTubeViews) { targetPct = 30; }
         else { targetPct = 20; }
     } else { // maximum
         if (isStripe || isShopifySales || isAmazonRev) { targetPct = 50; }
-        else if (isX) { targetPct = 12; }
+        else if (isX || isYouTubeSubs) { targetPct = 12; }
+        else if (isYouTubeViews) { targetPct = 50; }
         else { targetPct = 40; }
     }
 
@@ -346,7 +424,9 @@ function getPolicyForTier(metricKey: string, tier: string, windowDays: number) {
 function getHint(metricKey: string, policy: any, windowDays: number) {
     const noun = metricKey.includes('revenue') || metricKey.includes('sales') ? 'revenue' :
         metricKey.includes('followers') ? 'followers' :
-            metricKey.includes('volume') ? 'orders' : 'units';
+            metricKey.includes('subscribers') ? 'subscribers' :
+                metricKey.includes('views') ? 'views' :
+                    metricKey.includes('volume') ? 'orders' : 'units';
 
     return `Target: +${policy.target_pct}% ${noun} (${windowDays}d)`;
 }

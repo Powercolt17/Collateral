@@ -126,6 +126,18 @@ export const MINIMUM_BASELINES = {
             ADVANCED: 500_000,   // $5,000/mo — matches Elevated tier
             ELITE: 1_000_000     // $10,000/mo — matches Maximum tier
         }
+    },
+    YOUTUBE: {
+        SUBSCRIBERS: {
+            STANDARD: 1_000,     // 1K subs — Controlled tier
+            ADVANCED: 10_000,    // 10K subs — Elevated tier
+            ELITE: 100_000       // 100K subs — Maximum tier
+        },
+        VIEWS: {
+            STANDARD: 10_000,    // 10K 30d views — Controlled tier
+            ADVANCED: 100_000,   // 100K 30d views — Elevated tier
+            ELITE: 1_000_000     // 1M 30d views — Maximum tier
+        }
     }
 } as const;
 
@@ -136,4 +148,5 @@ export const MIN_ACCOUNT_AGE_DAYS = {
     X: 90,          // X account must be 90+ days old
     STRIPE: 90,     // Stripe account must be 90+ days old
     SHOPIFY: 90,    // Shopify store must be 90+ days old
+    YOUTUBE: 90,    // YouTube channel must be 90+ days old
 } as const;

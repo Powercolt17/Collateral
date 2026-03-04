@@ -534,6 +534,31 @@ export async function createContract(params: CreateContractParams): Promise<Cont
         }
 
         baselineJson = { followersCount: followerCount };
+    } else if (platform === 'SHOPIFY') {
+        // Fetch real Shopify revenue baseline from connected account
+        try {
+            const { shopifyAdapter } = await import('../adapters/shopify.js');
+            const snapshot = await shopifyAdapter.snapshotBaseline(principalUserId);
+            baselineJson = snapshot;
+
+            // HARD GATE: Enforce minimum revenue baseline per tier
+            const netCents = snapshot.netCents ?? 0;
+            const minRevenue = MINIMUM_BASELINES.SHOPIFY?.REVENUE?.[riskTier] ?? 100_000;
+            if (netCents < minRevenue) {
+                const minDollars = (minRevenue / 100).toFixed(0);
+                const gotDollars = (netCents / 100).toFixed(0);
+                throw new Error(
+                    `Baseline too low: ${riskTier} tier requires minimum $${minDollars}/mo revenue. ` +
+                    `Your current 30-day Shopify revenue is $${gotDollars}. Build revenue first.`
+                );
+            }
+
+            console.log(`[Contract] Shopify baseline: $${(netCents / 100).toFixed(2)} net revenue (${snapshot.orderCount} orders)`);
+        } catch (shopErr) {
+            if ((shopErr as any).message?.includes('Baseline too low')) throw shopErr;
+            console.error('[Contract] Failed to fetch Shopify baseline:', (shopErr as any).message);
+            throw new Error('Cannot create Shopify contract: Failed to verify store revenue. Ensure your Shopify account is connected and has recent orders.');
+        }
     }
 
     const deadlineUtc = new Date(condition.deadline);

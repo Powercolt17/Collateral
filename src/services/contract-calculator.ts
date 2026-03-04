@@ -119,5 +119,12 @@ export const MINIMUM_BASELINES = {
             ADVANCED: 1000,
             ELITE: 5000
         }
+    },
+    SHOPIFY: {
+        REVENUE: {
+            STANDARD: 100_000,   // $1,000/mo — matches Controlled tier
+            ADVANCED: 500_000,   // $5,000/mo — matches Elevated tier
+            ELITE: 1_000_000     // $10,000/mo — matches Maximum tier
+        }
     }
 } as const;

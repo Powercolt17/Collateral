@@ -586,7 +586,7 @@ export function renderOverview() {
                     text-align: center;
                 }
                 .eq-hero-headline {
-                    font-size: 40px;
+                    font-size: 48px;
                     letter-spacing: -1.5px;
                     margin-bottom: 24px;
                     max-width: 100%;

@@ -764,16 +764,25 @@ export async function initProfile() {
         // ━━━ CONNECTED SOURCES TAB ━━━
         const srcGrid = $('sources-grid');
         if (srcGrid) {
+            const brandLogos = {
+                x: `<img src="https://cdn.simpleicons.org/x/000000" alt="X" width="20" height="20" style="display:block;" />`,
+                stripe: `<img src="https://cdn.simpleicons.org/stripe/635BFF" alt="Stripe" width="20" height="20" style="display:block;" />`,
+                shopify: `<img src="https://cdn.simpleicons.org/shopify/95BF47" alt="Shopify" width="20" height="20" style="display:block;" />`,
+                amazon: `<svg viewBox="0 0 48 48" width="20" height="20"><path fill="#FF9900" d="M36.7 35.5c-11 8.1-26.9 4.9-26.9 4.9s-1.4-.5-.2-1.6c1.5-1 2.6-.9 2.6-.9 3.1-.3 6.3.7 9.2-.3 4.8-1.6 8.3-5.5 8.3-5.5s.6-.8 1.3-.3c1.3 1 .8 2.5-1.2 4.6-.3.3 3.3-1.1 6.9-4.3.4-.4.9-.2 1 .2.2.5-.1 1.7-1 3.2z"/><path fill="#FF9900" d="M39.5 33.1c-.6-.8-3.8-1-5.3-.5-.5.2-.4.6.1.6.5 0 2.6-.3 3.6.2.3.2.2.8-.4 1.4-.5.5-3.3 2.6-3.8 3-.3.2-.1.5.2.4 2.1-.8 4.3-2 5.1-2.9.6-.6.9-1.6.5-2.2z"/><path fill="#232F3E" d="M28.6 16.9c0-2.6.1-4.8-1.2-7.1-1.1-1.9-2.8-3-4.7-3-2.6 0-4.2 2-4.2 5 0 4.8 4.3 6.6 8.3 6.6h1.8v-1.5zm6.1 14.8c-.4.4-.9.4-1.4.1-1.9-1.6-2.2-2.3-3.3-3.8-3.1 3.2-5.3 4.1-9.4 4.1-4.8 0-8.5-3-8.5-8.9 0-4.6 2.5-7.8 6.1-9.3 3.1-1.3 7.4-1.6 10.7-1.9v-.7c0-1.3.1-2.9-.7-4.1-.7-1-2-1.4-3.2-1.4-2.2 0-4.1 1.1-4.6 3.4-.1.5-.5.9-1 .9l-5.5-.6c-.4-.1-.9-.5-.8-1.1C14.5 3.3 19.9 1.2 24.8 1.2c2.5 0 5.8.7 7.8 2.6 2.5 2.3 2.3 5.4 2.3 8.8v8c0 2.4 1 3.4 1.9 4.7.3.5.4 1 0 1.3-1.1.9-3 2.6-4.1 3.5v-.4z"/></svg>`,
+                youtube: `<img src="https://cdn.simpleicons.org/youtube/FF0000" alt="YouTube" width="20" height="20" style="display:block;" />`,
+            };
             const sources = [
-                { name: 'X / Twitter', key: 'x', connected: profile.xConnection?.connected, detail: profile.xConnection?.connected ? '@' + profile.xConnection.xUsername : 'Not connected', bg: '#0a0a0a', icon: 'X', scopes: 'Read: followers, engagement' },
-                { name: 'Stripe', key: 'stripe', connected: profile.stripeConnection?.connected, detail: profile.stripeConnection?.connected ? 'Account linked' : 'Not setup', bg: '#635bff', icon: 'S', scopes: 'Read: revenue, charges' },
-                { name: 'Shopify', key: 'shopify', connected: !!profile.shopifyConnection?.connected, detail: profile.shopifyConnection?.connected ? (profile.shopifyConnection.shop || 'Store linked') : 'Not connected', bg: '#96bf48', icon: '🛍', scopes: 'Read: orders, revenue' },
-                { name: 'Amazon', key: 'amazon', connected: !!profile.amazonConnection?.connected, detail: profile.amazonConnection?.connected ? (profile.amazonConnection.sellerId || 'Account linked') : 'Not connected', bg: '#ff9900', icon: 'A', scopes: 'Read: sales data' }
+                { name: 'X / Twitter', key: 'x', connected: profile.xConnection?.connected, detail: profile.xConnection?.connected ? '@' + profile.xConnection.xUsername : 'Not connected', scopes: 'Read: followers, engagement' },
+                { name: 'Stripe', key: 'stripe', connected: profile.stripeConnection?.connected, detail: profile.stripeConnection?.connected ? 'Account linked' : 'Not setup', scopes: 'Read: revenue, charges' },
+                { name: 'Shopify', key: 'shopify', connected: !!profile.shopifyConnection?.connected, detail: profile.shopifyConnection?.connected ? (profile.shopifyConnection.shop || 'Store linked') : 'Not connected', scopes: 'Read: orders, revenue' },
+                { name: 'Amazon', key: 'amazon', connected: !!profile.amazonConnection?.connected, detail: profile.amazonConnection?.connected ? (profile.amazonConnection.sellerId || 'Account linked') : 'Not connected', scopes: 'Read: sales data' },
+                { name: 'YouTube', key: 'youtube', connected: !!profile.youtubeConnection?.connected, detail: profile.youtubeConnection?.connected ? (profile.youtubeConnection.channelTitle || 'Channel linked') : 'Not connected', scopes: 'Read: subscribers, views' }
             ];
             srcGrid.innerHTML = sources.map(s => {
                 const statusBadge = s.connected ? '<span class="prf-badge connected">Connected</span>' : '<span class="prf-badge disconnected">Disconnected</span>';
+                const logo = brandLogos[s.key] || s.key[0].toUpperCase();
                 return `<div class="prf-pcard ${s.connected ? '' : 'disconnected'}">
-                    <div class="prf-pcard-icon" style="background:${s.bg}">${s.icon}</div>
+                    <div class="prf-pcard-icon" style="background:#f5f5f5;display:flex;align-items:center;justify-content:center;border-radius:10px;">${logo}</div>
                     <div class="prf-pcard-name">${s.name}</div>
                     <div style="margin-bottom:8px">${statusBadge}</div>
                     <div class="prf-pcard-scope">${s.scopes}</div>

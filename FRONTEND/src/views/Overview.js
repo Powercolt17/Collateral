@@ -564,15 +564,238 @@ export function renderOverview() {
             .eq-stake-warning { max-width: 1300px; margin: 0 auto; padding: 24px 32px; border-top: 1px solid #f2f2f2; }
             .eq-stake-warning-text { font-size: 12px; color: #ccc; font-style: italic; }
 
+            /* ── Responsive: Tablet (≤1200px) ── */
             @media (max-width: 1200px) {
                 .eq-grid { grid-template-columns: repeat(2, 1fr); }
                 .eq-mechanism-grid { grid-template-columns: repeat(2, 1fr); }
+                .eq-hero-headline { font-size: 64px; letter-spacing: -2.5px; }
+                .eq-hero { padding: 80px 32px 60px; }
+                .eq-mechanism { padding: 60px 0; }
+                .eq-mechanism-header { flex-direction: column; align-items: flex-start; gap: 16px; }
+                .eq-mechanism-side { text-align: left; max-width: 100%; }
+                .eq-mech-card { padding: 40px 28px; }
+                .eq-stats-strip { gap: 48px; }
+                .eq-stat-val { font-size: 32px; }
             }
+
+            /* ── Responsive: Mobile (≤768px) ── */
             @media (max-width: 768px) {
-                .eq-hero-headline { font-size: 48px; letter-spacing: -2px; }
-                .eq-grid { grid-template-columns: 1fr; }
-                .eq-mechanism-grid { grid-template-columns: 1fr; }
-                .eq-stats-strip { flex-direction: column; gap: 32px; }
+                /* Hero */
+                .eq-hero {
+                    padding: 48px 20px 40px;
+                }
+                .eq-hero-headline {
+                    font-size: 36px;
+                    letter-spacing: -1.5px;
+                    margin-bottom: 24px;
+                    max-width: 100%;
+                }
+                .eq-hero-sub {
+                    font-size: 14px;
+                    margin-bottom: 28px;
+                    max-width: 100%;
+                }
+                .eq-hero-actions {
+                    flex-direction: column;
+                    gap: 16px;
+                    align-items: stretch;
+                }
+                .eq-btn-primary {
+                    padding: 16px 24px;
+                    font-size: 13px;
+                    text-align: center;
+                    width: 100%;
+                }
+                .eq-link-more {
+                    text-align: center;
+                }
+                .eq-hero-scroll {
+                    display: none;
+                }
+                .eq-tag {
+                    font-size: 9px;
+                    letter-spacing: 1.2px;
+                    margin-bottom: 16px;
+                }
+
+                /* Mechanism */
+                .eq-mechanism {
+                    padding: 48px 0;
+                }
+                .eq-mechanism-header {
+                    flex-direction: column;
+                    align-items: flex-start;
+                    gap: 12px;
+                    margin-bottom: 40px;
+                    padding: 0 20px;
+                }
+                .eq-mechanism-title {
+                    font-size: 28px;
+                    letter-spacing: -1px;
+                }
+                .eq-mechanism-side {
+                    text-align: left;
+                    max-width: 100%;
+                    font-size: 13px;
+                }
+                .eq-mechanism-grid {
+                    grid-template-columns: 1fr;
+                }
+                .eq-mech-card {
+                    padding: 32px 20px;
+                    border-right: none;
+                    border-bottom: 1px solid #f0f0f0;
+                }
+                .eq-mech-card:last-child { border-bottom: none; }
+                .eq-mech-num {
+                    font-size: 48px;
+                    margin-bottom: 20px;
+                }
+                .eq-mech-label {
+                    font-size: 18px;
+                    margin-bottom: 12px;
+                }
+                .eq-mech-desc {
+                    font-size: 14px;
+                }
+
+                /* Market Header */
+                .eq-market-header {
+                    padding: 48px 20px 24px;
+                }
+                .eq-market-title {
+                    font-size: 28px;
+                    letter-spacing: -1px;
+                    margin-bottom: 16px;
+                }
+
+                /* Stats */
+                .eq-stats-strip {
+                    flex-direction: column;
+                    gap: 20px;
+                    margin-bottom: 32px;
+                }
+                .eq-stat-val {
+                    font-size: 28px;
+                    letter-spacing: -1px;
+                }
+
+                /* Controls — scrollable tabs */
+                .eq-controls {
+                    flex-direction: column;
+                    align-items: flex-start;
+                    gap: 12px;
+                }
+                .eq-tabs {
+                    overflow-x: auto;
+                    -webkit-overflow-scrolling: touch;
+                    gap: 20px;
+                    width: 100%;
+                    padding-bottom: 2px;
+                }
+                .eq-tab {
+                    white-space: nowrap;
+                    font-size: 10px;
+                }
+                .eq-search-wrap {
+                    width: 100%;
+                }
+                .eq-search-box {
+                    flex: 1;
+                    width: 100%;
+                    min-width: 0;
+                }
+
+                /* Filters — scrollable pills */
+                .eq-filter-bar {
+                    flex-direction: column;
+                    align-items: flex-start;
+                    gap: 12px;
+                    margin-bottom: 24px;
+                }
+                .eq-pills {
+                    overflow-x: auto;
+                    -webkit-overflow-scrolling: touch;
+                    width: 100%;
+                    padding-bottom: 4px;
+                    flex-wrap: nowrap;
+                }
+                .eq-pill {
+                    white-space: nowrap;
+                    flex-shrink: 0;
+                    font-size: 10px;
+                    padding: 5px 12px;
+                }
+
+                /* Grid */
+                .eq-grid {
+                    grid-template-columns: 1fr;
+                    gap: 16px;
+                }
+                .eq-grid-container {
+                    padding: 0 20px !important;
+                }
+                .eq-card {
+                    padding: 24px 20px 20px;
+                }
+                .eq-card-title {
+                    font-size: 16px;
+                }
+                .eq-stake-val {
+                    font-size: 20px;
+                }
+                .eq-card-cta {
+                    padding: 14px;
+                    font-size: 10px;
+                }
+
+                /* Warning */
+                .eq-stake-warning {
+                    padding: 20px;
+                }
+
+                /* Modal */
+                .eq-modal {
+                    padding: 20px;
+                    max-height: 90vh;
+                }
+                .eq-threshold-table th,
+                .eq-threshold-table td {
+                    padding: 6px 8px;
+                    font-size: 11px;
+                }
+            }
+
+            /* ── Responsive: Small phone (≤400px) ── */
+            @media (max-width: 400px) {
+                .eq-hero {
+                    padding: 36px 16px 32px;
+                }
+                .eq-hero-headline {
+                    font-size: 28px;
+                    letter-spacing: -1px;
+                }
+                .eq-hero-sub {
+                    font-size: 13px;
+                }
+                .eq-market-header {
+                    padding: 36px 16px 20px;
+                }
+                .eq-market-title {
+                    font-size: 24px;
+                }
+                .eq-mechanism-header {
+                    padding: 0 16px;
+                }
+                .eq-mechanism-title {
+                    font-size: 24px;
+                }
+                .eq-grid-container {
+                    padding: 0 16px !important;
+                }
+                .eq-stat-val {
+                    font-size: 24px;
+                }
             }
 
             /* ── Hero Entrance Animations ── */

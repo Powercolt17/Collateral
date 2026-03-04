@@ -462,14 +462,13 @@ export async function seedCatalog() {
     }
     console.log(`[Seed] ✅ Ensured ${TEMPLATES.length} templates.`);
 
-    // 1b. FIX STALE displayTargetHint values on existing instances
-    // Recalculate from targetPolicyJson and metricKey to ensure fixed percentages
+    // 1b. FIX ALL displayTargetHint values on existing instances
+    // Recalculate from tier + metricKey using getPolicyForTier to ensure fixed percentages
     const existingInstances = await db.select().from(marketContractInstances);
     let fixedCount = 0;
     for (const inst of existingInstances) {
-        const policy = inst.targetPolicyJson as any;
         const metricKey = inst.metricKey || 'generic';
-        if (!policy?.target_pct) continue;
+        const tier = (inst.tier || 'controlled').toLowerCase();
 
         // Find matching template to get window_days
         const [tmpl] = await db.select().from(contractTemplates)
@@ -477,16 +476,27 @@ export async function seedCatalog() {
         const rules = (tmpl?.rulesJson as any) || {};
         const windowDays = rules.window_days || 30;
 
-        const expectedHint = getHint(metricKey, policy, windowDays);
-        if (inst.displayTargetHint !== expectedHint) {
+        // Recalculate policy and hint from scratch
+        const correctPolicy = getPolicyForTier(metricKey, tier, windowDays);
+        const correctHint = getHint(metricKey, correctPolicy, windowDays);
+
+        // Update if either policy or hint is wrong
+        const currentPolicy = inst.targetPolicyJson as any;
+        const needsUpdate = inst.displayTargetHint !== correctHint ||
+            currentPolicy?.target_pct !== correctPolicy.target_pct;
+
+        if (needsUpdate) {
             await db.update(marketContractInstances)
-                .set({ displayTargetHint: expectedHint } as any)
+                .set({
+                    targetPolicyJson: correctPolicy,
+                    displayTargetHint: correctHint
+                } as any)
                 .where(eq(marketContractInstances.id, inst.id));
             fixedCount++;
         }
     }
     if (fixedCount > 0) {
-        console.log(`[Seed] 🔧 Fixed ${fixedCount} stale displayTargetHint values.`);
+        console.log(`[Seed] 🔧 Fixed ${fixedCount} instances: updated targetPolicyJson + displayTargetHint.`);
     }
 
     // 2. Ensure Listings (20 Open)

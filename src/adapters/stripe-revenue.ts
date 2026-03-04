@@ -59,34 +59,50 @@ export const STRIPE_EXCLUDED_TRANSACTION_TYPES = [
 export const STRIPE_DEDUCTION_TYPES = ['refund', 'dispute', 'charge_failure'];
 
 // =============================================================================
-// V1 SPEC CONSTANTS
+// V1 SPEC CONSTANTS — FINAL LOCKED PARAMETERS
 // =============================================================================
-export const STRIPE_WINDOW_DAYS = 30; // Contract window is exactly 30 days
-export const STRIPE_MIN_DELTA_CENTS = 0; // TESTING: was 50000 ($500.00)
+export const STRIPE_WINDOW_DAYS = 30; // Default contract window (overridden per tier)
 
-// TIER PERCENTAGES (Revenue growth requirements by tier)
-export const STRIPE_TIER_PERCENTAGES = {
-    STEADY: 0.15,   // 15% - removes accidental wins, forces real behavior change
-    BROAD: 0.25,    // 25% - clearly difficult, requires action (ads, launch, pricing)
-    ALL_IN: 0.40,   // 40% - extremely punitive, high forfeiture yield
+// Per-tier window days (matches house-edge-policy.ts SYSTEM_DURATIONS)
+export const STRIPE_TIER_WINDOW_DAYS = {
+    STEADY: 30,    // Controlled: 30 days
+    BROAD: 21,     // Elevated: 21 days
+    ALL_IN: 14,    // Maximum: 14 days
 } as const;
 
-// Default tier for delta floor calculation (can be overridden per contract)
-export const STRIPE_DELTA_FLOOR_PERCENTAGE = STRIPE_TIER_PERCENTAGES.STEADY; // 15%
+// GROWTH PERCENTAGES — The difficulty lever that drives failure rates
+// DO NOT adjust these to change profitability; adjust baselines/delta floors instead
+export const STRIPE_TIER_PERCENTAGES = {
+    STEADY: 0.20,   // 20% growth → ~75% failure rate
+    BROAD: 0.30,    // 30% growth → ~80% failure rate
+    ALL_IN: 0.45,   // 45% growth → ~90% failure rate
+} as const;
+
+// Default tier for delta floor calculation
+export const STRIPE_DELTA_FLOOR_PERCENTAGE = STRIPE_TIER_PERCENTAGES.STEADY; // 20%
+
+// PER-TIER DELTA FLOORS (minimum absolute growth in cents)
+export const STRIPE_MIN_DELTA_CENTS = 50_000; // $500 base floor
+export const STRIPE_TIER_DELTA_FLOORS = {
+    STEADY: 50_000,    // $500 minimum growth
+    BROAD: 100_000,    // $1,000 minimum growth
+    ALL_IN: 250_000,   // $2,500 minimum growth
+} as const;
 
 // =============================================================================
 // TIER ELIGIBILITY FLOORS (Minimum baseline to qualify for tier)
 // =============================================================================
 export const STRIPE_TIER_MINIMUM_BASELINE = {
-    STEADY: 0,      // TESTING: was 100000 ($1,000)
-    BROAD: 0,       // TESTING: was 500000 ($5,000)
-    ALL_IN: 0,      // TESTING: was 1000000 ($10,000)
+    STEADY: 100_000,   // $1,000/mo — minimum viable revenue business
+    BROAD: 500_000,    // $5,000/mo — mid-tier with consistent revenue
+    ALL_IN: 1_000_000, // $10,000/mo — established businesses only
 } as const;
 
 // =============================================================================
 // ANTI-ONE-INVOICE CONSTANTS
 // =============================================================================
 export const STRIPE_SINGLE_CHARGE_MAX_PERCENTAGE = 0.50; // 50% - if one charge is ≥50%, fail
+export const STRIPE_MIN_CHARGE_COUNT = 3; // Minimum distinct charges in baseline window
 
 // =============================================================================
 // ERROR CODES
@@ -97,6 +113,7 @@ export const STRIPE_ERROR_CODES = {
     CURRENCY_MISMATCH: 'STRIPE_CURRENCY_MISMATCH',
     API_UNAVAILABLE: 'STRIPE_API_UNAVAILABLE',
     DELTA_FLOOR_NOT_MET: 'STRIPE_DELTA_FLOOR_NOT_MET',
+    INSUFFICIENT_CHARGE_COUNT: 'STRIPE_INSUFFICIENT_CHARGE_COUNT',
 } as const;
 
 // =============================================================================

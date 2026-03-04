@@ -66,23 +66,23 @@ export function validateQuoteInput(input: any): QuoteInput {
 }
 
 export function calculateQuote(input: QuoteInput) {
-    // Legacy logic shim using the new smart tier concepts where possible, 
-    // or just standard fixed logic to satisfy the endpoint.
+    // Uses the final locked growth percentages per tier.
 
     const { baseline, windowDays, tier } = input;
 
-    let multiplier = 1.1; // Standard
-    let risk = 'LOW';
+    // Final locked growth targets
+    let multiplier = 1.20; // Controlled: 20% growth
+    let risk = 'CONTROLLED';
 
     if (tier === 'ADVANCED') {
-        multiplier = 1.25;
-        risk = 'MEDIUM';
+        multiplier = 1.30;  // Elevated: 30% growth
+        risk = 'ELEVATED';
     } else if (tier === 'ELITE') {
-        multiplier = 1.5;
-        risk = 'HIGH';
+        multiplier = 1.45;  // Maximum: 45% growth
+        risk = 'MAXIMUM';
     }
 
-    // Simple projection
+    // target = baseline × (1 + growth_percentage)
     const target = Math.ceil(baseline * multiplier);
     const growth = target - baseline;
     const growthPct = Math.round(((target - baseline) / baseline) * 100);
@@ -95,22 +95,22 @@ export function calculateQuote(input: QuoteInput) {
             growthPercent: growthPct,
             impliedDailyGrowth: growth / windowDays,
             riskLevel: risk,
-            // Computed "Win Probability" for UI display
-            winProbability: tier === 'ELITE' ? 0.15 : tier === 'ADVANCED' ? 0.35 : 0.65
+            // Target failure rates for UI display
+            winProbability: tier === 'ELITE' ? 0.10 : tier === 'ADVANCED' ? 0.20 : 0.25
         }
     };
 }
 
 // =============================================================================
-// SHARED CONSTANTS
+// SHARED CONSTANTS — FINAL LOCKED PARAMETERS
 // =============================================================================
 
 export const MINIMUM_BASELINES = {
     STRIPE: {
         REVENUE: {
-            STANDARD: 20000,   // $200/mo
-            ADVANCED: 50000,   // $500/mo
-            ELITE: 100000      // $1000/mo
+            STANDARD: 100_000,   // $1,000/mo — matches Controlled tier
+            ADVANCED: 500_000,   // $5,000/mo — matches Elevated tier
+            ELITE: 1_000_000     // $10,000/mo — matches Maximum tier
         }
     },
     X: {

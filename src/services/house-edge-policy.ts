@@ -1,5 +1,5 @@
 /**
- * House Edge Policy — WHALE PROTECTION
+ * House Edge Policy — FINAL LOCKED PARAMETERS
  * 
  * CORE INVARIANT: The SYSTEM dictates ALL contract terms.
  * Users do NOT choose their own targets, payouts, or stake amounts.
@@ -7,8 +7,15 @@
  * The system calculates:
  * 1. Target (from baseline + tier → contract-calculator.ts)
  * 2. Stake amount (system-set, capped per tier)  
- * 3. Payout amount (system-calculated, always less than expected value)
+ * 3. Payout amount (system-calculated, FIXED multiplier per tier)
  * 4. Duration (system-set per tier)
+ * 
+ * IMPORTANT DESIGN RULE:
+ * Payout multipliers are FIXED and NEVER adjust dynamically.
+ * Platform profitability is controlled through:
+ *   - Growth percentage difficulty
+ *   - Baseline requirements
+ *   - Delta floors
  * 
  * WHALE DEFENSE:
  * - Hard max stake per contract per tier
@@ -16,13 +23,16 @@
  * - System-calculated payouts ensure house always profits long-run
  * - No user-specified payouts
  * 
- * MATH:
- * If Controlled wins 30% of the time:
- *   House keeps 70% of stakes, pays out 30% of stakes * payout_multiplier
- *   For the house to profit: payout_multiplier < (1 / win_rate)
- *   Controlled: payout_multiplier < 3.33x (we use 1.8x → house edge 46%)
- *   Elevated:   payout_multiplier < 5.0x  (we use 2.5x → house edge 50%)
- *   Maximum:    payout_multiplier < 10.0x (we use 4.0x → house edge 60%)
+ * ECONOMICS (Final — Locked):
+ * 
+ *   Controlled: ~25% win rate × 1.7x = 0.425 → house margin ~30-35%
+ *   Elevated:   ~20% win rate × 2.5x = 0.500 → house margin ~35-40%
+ *   Maximum:    ~10% win rate × 4.0x = 0.400 → house margin ~40-60%
+ * 
+ * Target failure rates:
+ *   Controlled: ~75%   (20% growth in 30 days)
+ *   Elevated:   ~80%   (30% growth in 21 days)
+ *   Maximum:    ~90%   (45% growth in 14 days)
  */
 
 // =============================================================================
@@ -39,41 +49,40 @@ export const STAKE_CAPS: Record<RiskTier, {
     minUsdCents: number;
     maxUsdCents: number;
 }> = {
-    // Controlled: Low risk to house (30% win rate)
-    // But also lowest payout multiplier, so cap stake to limit exposure
+    // Controlled: ~25% win rate, 1.7x payout
     STANDARD: {
-        minUsdCents: 10_00,       // $10 minimum
+        minUsdCents: 100_00,      // $100 minimum
         maxUsdCents: 2_500_00,    // $2,500 maximum per contract
     },
 
-    // Elevated: Medium risk (20% win rate)
+    // Elevated: ~20% win rate, 2.5x payout
     ADVANCED: {
-        minUsdCents: 50_00,       // $50 minimum
+        minUsdCents: 250_00,      // $250 minimum
         maxUsdCents: 5_000_00,    // $5,000 maximum per contract
     },
 
-    // Maximum: Highest risk but lowest win rate (10%)
+    // Maximum: ~10% win rate, 4.0x payout
     ELITE: {
-        minUsdCents: 250_00,      // $250 minimum
+        minUsdCents: 500_00,      // $500 minimum
         maxUsdCents: 10_000_00,   // $10,000 maximum per contract
     },
 };
 
 // =============================================================================
-// PAYOUT MULTIPLIERS (System-calculated, NOT user-specified)
+// PAYOUT MULTIPLIERS (FIXED — Never dynamically adjusted)
 // 
-// These ensure the house always wins over time:
-//   Expected house revenue per contract = stake * (1 - win_rate * payout_multiplier)
+// Profitability is controlled through growth %, baselines, and delta floors.
+// DO NOT change these multipliers to adjust margins.
 //
-//   Controlled: 1 - (0.30 * 1.8) = 1 - 0.54 = +46% house edge
-//   Elevated:   1 - (0.20 * 2.5) = 1 - 0.50 = +50% house edge  
-//   Maximum:    1 - (0.10 * 4.0) = 1 - 0.40 = +60% house edge
+//   Controlled: 1.7x  → $1,000 stake pays $1,700 on success
+//   Elevated:   2.5x  → $1,000 stake pays $2,500 on success
+//   Maximum:    4.0x  → $1,000 stake pays $4,000 on success
 // =============================================================================
 
 export const PAYOUT_MULTIPLIERS: Record<RiskTier, number> = {
-    STANDARD: 1.8,   // Win $1,800 on a $1,000 stake (house edge 46%)
-    ADVANCED: 2.5,   // Win $2,500 on a $1,000 stake (house edge 50%)
-    ELITE: 4.0,      // Win $4,000 on a $1,000 stake (house edge 60%)
+    STANDARD: 1.7,   // Controlled: $1,700 on $1,000 stake
+    ADVANCED: 2.5,   // Elevated:   $2,500 on $1,000 stake
+    ELITE: 4.0,      // Maximum:    $4,000 on $1,000 stake
 };
 
 // =============================================================================
@@ -105,12 +114,43 @@ export const SYSTEM_DURATIONS: Record<RiskTier, {
 };
 
 // =============================================================================
+// GROWTH TARGETS (The difficulty lever — this is what drives failure rates)
+// =============================================================================
+
+export const GROWTH_TARGETS: Record<RiskTier, {
+    percentage: number;
+    deltaFloorCents: number;
+    minBaselineCents: number;
+    minEventCount: number;
+}> = {
+    STANDARD: {
+        percentage: 0.20,          // 20% growth in 30 days → ~75% failure
+        deltaFloorCents: 50_000,   // $500 minimum absolute growth
+        minBaselineCents: 100_000,  // $1,000/mo minimum baseline
+        minEventCount: 3,          // Minimum 3 charges/events
+    },
+    ADVANCED: {
+        percentage: 0.30,          // 30% growth in 21 days → ~80% failure
+        deltaFloorCents: 100_000,  // $1,000 minimum absolute growth
+        minBaselineCents: 500_000,  // $5,000/mo minimum baseline
+        minEventCount: 3,          // Minimum 3 charges/events
+    },
+    ELITE: {
+        percentage: 0.45,          // 45% growth in 14 days → ~90% failure
+        deltaFloorCents: 250_000,  // $2,500 minimum absolute growth
+        minBaselineCents: 1_000_000, // $10,000/mo minimum baseline
+        minEventCount: 3,          // Minimum 3 charges/events
+    },
+};
+
+// =============================================================================
 // FUNCTIONS
 // =============================================================================
 
 /**
  * Calculate system-determined payout for a given stake and tier
  * Users NEVER specify this — it's always calculated
+ * payout = stake × multiplier
  */
 export function calculatePayout(stakeUsdCents: number, tier: RiskTier): number {
     return Math.round(stakeUsdCents * PAYOUT_MULTIPLIERS[tier]);
@@ -177,6 +217,48 @@ export function validatePoolExposure(
 }
 
 /**
+ * Calculate target metric from baseline using tier growth percentage
+ * Formula: target = baseline × (1 + growth_percentage)
+ */
+export function calculateTargetMetric(baselineCents: number, tier: RiskTier): number {
+    const growth = GROWTH_TARGETS[tier];
+    const target = Math.ceil(baselineCents * (1 + growth.percentage));
+    const delta = target - baselineCents;
+
+    // Enforce delta floor — target must grow by at least the delta floor
+    if (delta < growth.deltaFloorCents) {
+        return baselineCents + growth.deltaFloorCents;
+    }
+
+    return target;
+}
+
+/**
+ * Validate baseline meets all tier requirements
+ * Returns error message if invalid, null if OK
+ */
+export function validateBaseline(
+    baselineCents: number,
+    eventCount: number,
+    tier: RiskTier
+): string | null {
+    const growth = GROWTH_TARGETS[tier];
+
+    // Minimum baseline check
+    if (baselineCents < growth.minBaselineCents) {
+        const minDollars = (growth.minBaselineCents / 100).toLocaleString();
+        return `Minimum baseline for ${tier} tier is $${minDollars}/month`;
+    }
+
+    // Minimum event count check
+    if (eventCount < growth.minEventCount) {
+        return `Minimum ${growth.minEventCount} charges/events required. Found ${eventCount}. Build consistent revenue before creating a contract.`;
+    }
+
+    return null;
+}
+
+/**
  * Get system-generated contract terms for a given tier and stake
  * This is THE function that produces non-negotiable terms
  */
@@ -184,6 +266,7 @@ export function getSystemTerms(stakeUsdCents: number, tier: RiskTier) {
     const duration = SYSTEM_DURATIONS[tier];
     const payout = calculatePayout(stakeUsdCents, tier);
     const caps = STAKE_CAPS[tier];
+    const growth = GROWTH_TARGETS[tier];
 
     return {
         tier,
@@ -192,6 +275,10 @@ export function getSystemTerms(stakeUsdCents: number, tier: RiskTier) {
         durationDays: duration.days,
         durationLabel: duration.label,
         payoutMultiplier: PAYOUT_MULTIPLIERS[tier],
+        growthPercentage: growth.percentage,
+        deltaFloorCents: growth.deltaFloorCents,
+        minBaselineCents: growth.minBaselineCents,
+        minEventCount: growth.minEventCount,
         stakeRange: {
             min: caps.minUsdCents,
             max: caps.maxUsdCents,
@@ -200,6 +287,7 @@ export function getSystemTerms(stakeUsdCents: number, tier: RiskTier) {
         stakeDisplay: `$${(stakeUsdCents / 100).toLocaleString()}`,
         payoutDisplay: `$${(payout / 100).toLocaleString()}`,
         multiplierDisplay: `${PAYOUT_MULTIPLIERS[tier]}x`,
+        growthDisplay: `${(growth.percentage * 100).toFixed(0)}%`,
     };
 }
 
@@ -211,25 +299,31 @@ export function getHouseEdgeReport() {
         tiers: {
             STANDARD: {
                 displayName: 'Controlled',
-                winRate: 0.30,
+                targetFailureRate: 0.75,
+                winRate: 0.25,
                 payoutMultiplier: PAYOUT_MULTIPLIERS.STANDARD,
-                houseEdge: 1 - (0.30 * PAYOUT_MULTIPLIERS.STANDARD),
+                houseMargin: `~30-35%`,
+                growthTarget: `${(GROWTH_TARGETS.STANDARD.percentage * 100).toFixed(0)}% in ${SYSTEM_DURATIONS.STANDARD.days} days`,
                 maxStake: `$${(STAKE_CAPS.STANDARD.maxUsdCents / 100).toLocaleString()}`,
                 maxPayout: `$${(calculatePayout(STAKE_CAPS.STANDARD.maxUsdCents, 'STANDARD') / 100).toLocaleString()}`,
             },
             ADVANCED: {
                 displayName: 'Elevated',
+                targetFailureRate: 0.80,
                 winRate: 0.20,
                 payoutMultiplier: PAYOUT_MULTIPLIERS.ADVANCED,
-                houseEdge: 1 - (0.20 * PAYOUT_MULTIPLIERS.ADVANCED),
+                houseMargin: `~35-40%`,
+                growthTarget: `${(GROWTH_TARGETS.ADVANCED.percentage * 100).toFixed(0)}% in ${SYSTEM_DURATIONS.ADVANCED.days} days`,
                 maxStake: `$${(STAKE_CAPS.ADVANCED.maxUsdCents / 100).toLocaleString()}`,
                 maxPayout: `$${(calculatePayout(STAKE_CAPS.ADVANCED.maxUsdCents, 'ADVANCED') / 100).toLocaleString()}`,
             },
             ELITE: {
                 displayName: 'Maximum',
+                targetFailureRate: 0.90,
                 winRate: 0.10,
                 payoutMultiplier: PAYOUT_MULTIPLIERS.ELITE,
-                houseEdge: 1 - (0.10 * PAYOUT_MULTIPLIERS.ELITE),
+                houseMargin: `~40-60%`,
+                growthTarget: `${(GROWTH_TARGETS.ELITE.percentage * 100).toFixed(0)}% in ${SYSTEM_DURATIONS.ELITE.days} days`,
                 maxStake: `$${(STAKE_CAPS.ELITE.maxUsdCents / 100).toLocaleString()}`,
                 maxPayout: `$${(calculatePayout(STAKE_CAPS.ELITE.maxUsdCents, 'ELITE') / 100).toLocaleString()}`,
             },

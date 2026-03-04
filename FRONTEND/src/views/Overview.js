@@ -586,8 +586,8 @@ export function renderOverview() {
                     text-align: center;
                 }
                 .eq-hero-headline {
-                    font-size: 48px;
-                    letter-spacing: -1.5px;
+                    font-size: 48px !important;
+                    letter-spacing: -1.5px !important;
                     margin-bottom: 24px;
                     max-width: 100%;
                 }
@@ -773,8 +773,8 @@ export function renderOverview() {
                     padding: 36px 16px 32px;
                 }
                 .eq-hero-headline {
-                    font-size: 44px;
-                    letter-spacing: -1.5px;
+                    font-size: 44px !important;
+                    letter-spacing: -1.5px !important;
                 }
                 .eq-hero-sub {
                     font-size: 13px;

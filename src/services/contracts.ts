@@ -494,13 +494,39 @@ export async function createContract(params: CreateContractParams): Promise<Cont
         };
 
     } else if (platform === 'X') {
-        // TODO: Fetch real follower count from X binding
-        // For now, validate that baseline is passed in params
-        const xBaseline = params.baseline as Record<string, unknown> | undefined;
-        const followerCount = xBaseline?.followersCount ?? xBaseline?.followers ?? 0;
+        // Fetch real follower count from connected X account
+        const [xAccount] = await db
+            .select()
+            .from(connectedAccounts)
+            .where(and(
+                eq(connectedAccounts.userId, principalUserId),
+                eq(connectedAccounts.platform, 'X')
+            ))
+            .limit(1);
+
+        if (!xAccount) {
+            throw new Error('Cannot create X contract: No connected X account. Connect your X account first.');
+        }
+
+        let followerCount = 0;
+        try {
+            // Use the X adapter singleton to fetch real follower count
+            const { getXClient } = await import('../adapters/x.js');
+            const xClient = getXClient();
+            const xUsername = xAccount.externalAccountId || xAccount.externalUsername;
+            if (xUsername) {
+                followerCount = await xClient.getFollowers(xUsername);
+                console.log(`[Contract] X follower count for ${xUsername}: ${followerCount}`);
+            }
+        } catch (xErr) {
+            console.error('[Contract] Failed to fetch X followers:', (xErr as any).message);
+            // Fall back to params.baseline if X API fails
+            const xBaseline = params.baseline as Record<string, unknown> | undefined;
+            followerCount = Number(xBaseline?.followersCount ?? xBaseline?.followers ?? 0);
+        }
 
         const minFollowers = MINIMUM_BASELINES.X.FOLLOWERS[riskTier];
-        if (typeof followerCount !== 'number' || followerCount < minFollowers) {
+        if (followerCount < minFollowers) {
             throw new Error(
                 `Baseline too low: ${riskTier} tier requires minimum ${minFollowers} followers. ` +
                 `Got ${followerCount}. You need an existing audience to create a contract.`

@@ -397,21 +397,22 @@ function getPolicyForTier(metricKey: string, tier: string, windowDays: number) {
 
     let targetPct = 0;
 
+    // Targets calibrated to win rates: Controlled ~30%, Elevated ~20%, Maximum ~10%
     if (tier === 'controlled') {
-        if (isStripe || isShopifySales || isAmazonRev) { targetPct = 20; }
-        else if (isX || isYouTubeSubs) { targetPct = 2; }
-        else if (isYouTubeViews) { targetPct = 15; }
-        else { targetPct = 10; } // Vol/Units
+        if (isStripe || isShopifySales || isAmazonRev) { targetPct = 30; }
+        else if (isX || isYouTubeSubs) { targetPct = 25; }
+        else if (isYouTubeViews) { targetPct = 40; }
+        else { targetPct = 20; } // Vol/Units
     } else if (tier === 'elevated') {
-        if (isStripe || isShopifySales || isAmazonRev) { targetPct = 35; }
-        else if (isX || isYouTubeSubs) { targetPct = 5; }
-        else if (isYouTubeViews) { targetPct = 30; }
-        else { targetPct = 20; }
-    } else { // maximum
-        if (isStripe || isShopifySales || isAmazonRev) { targetPct = 50; }
-        else if (isX || isYouTubeSubs) { targetPct = 12; }
-        else if (isYouTubeViews) { targetPct = 50; }
+        if (isStripe || isShopifySales || isAmazonRev) { targetPct = 60; }
+        else if (isX || isYouTubeSubs) { targetPct = 50; }
+        else if (isYouTubeViews) { targetPct = 75; }
         else { targetPct = 40; }
+    } else { // maximum
+        if (isStripe || isShopifySales || isAmazonRev) { targetPct = 100; }
+        else if (isX || isYouTubeSubs) { targetPct = 100; }
+        else if (isYouTubeViews) { targetPct = 150; }
+        else { targetPct = 75; }
     }
 
     return {

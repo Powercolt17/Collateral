@@ -20,21 +20,22 @@ function computeTargetPct(metricKey: string, tier: string): number {
     const isFollowers = metricKey.startsWith('x') || metricKey === 'youtube_subscribers';
     const isViews = metricKey === 'youtube_30day_views';
 
+    // Targets calibrated to win rates: Controlled ~30%, Elevated ~20%, Maximum ~10%
     if (t === 'controlled') {
-        if (isRevenue) return 20;
-        if (isFollowers) return 2;
-        if (isViews) return 15;
-        return 10;
+        if (isRevenue) return 30;
+        if (isFollowers) return 25;
+        if (isViews) return 40;
+        return 20; // orders/units
     } else if (t === 'elevated') {
-        if (isRevenue) return 35;
-        if (isFollowers) return 5;
-        if (isViews) return 30;
-        return 20;
-    } else {
-        if (isRevenue) return 50;
-        if (isFollowers) return 12;
-        if (isViews) return 50;
-        return 40;
+        if (isRevenue) return 60;
+        if (isFollowers) return 50;
+        if (isViews) return 75;
+        return 40; // orders/units
+    } else { // maximum
+        if (isRevenue) return 100;
+        if (isFollowers) return 100;
+        if (isViews) return 150;
+        return 75; // orders/units
     }
 }
 

@@ -465,39 +465,48 @@ export async function seedCatalog() {
 
     // 1b. FIX ALL displayTargetHint values on existing instances
     // Recalculate from tier + metricKey using getPolicyForTier to ensure fixed percentages
-    const existingInstances = await db.select().from(marketContractInstances);
-    let fixedCount = 0;
-    for (const inst of existingInstances) {
-        const metricKey = inst.metricKey || 'generic';
-        const tier = (inst.tier || 'controlled').toLowerCase();
+    try {
+        const existingInstances = await db.select().from(marketContractInstances);
+        let fixedCount = 0;
+        for (const inst of existingInstances) {
+            try {
+                const metricKey = inst.metricKey || 'generic';
+                const tier = (inst.tier || 'controlled').toLowerCase();
 
-        // Find matching template to get window_days
-        const [tmpl] = await db.select().from(contractTemplates)
-            .where(eq(contractTemplates.id, inst.templateId)).limit(1);
-        const rules = (tmpl?.rulesJson as any) || {};
-        const windowDays = rules.window_days || 30;
+                // Find matching template to get window_days
+                const [tmpl] = await db.select().from(contractTemplates)
+                    .where(eq(contractTemplates.id, inst.templateId)).limit(1);
+                if (!tmpl) continue; // Skip orphaned instances
+                const rules = (tmpl?.rulesJson as any) || {};
+                const windowDays = rules.window_days || 30;
 
-        // Recalculate policy and hint from scratch
-        const correctPolicy = getPolicyForTier(metricKey, tier, windowDays);
-        const correctHint = getHint(metricKey, correctPolicy, windowDays);
+                // Recalculate policy and hint from scratch
+                const correctPolicy = getPolicyForTier(metricKey, tier, windowDays);
+                const correctHint = getHint(metricKey, correctPolicy, windowDays);
 
-        // Update if either policy or hint is wrong
-        const currentPolicy = inst.targetPolicyJson as any;
-        const needsUpdate = inst.displayTargetHint !== correctHint ||
-            currentPolicy?.target_pct !== correctPolicy.target_pct;
+                // Update if either policy or hint is wrong
+                const currentPolicy = inst.targetPolicyJson as any;
+                const needsUpdate = inst.displayTargetHint !== correctHint ||
+                    currentPolicy?.target_pct !== correctPolicy.target_pct;
 
-        if (needsUpdate) {
-            await db.update(marketContractInstances)
-                .set({
-                    targetPolicyJson: correctPolicy,
-                    displayTargetHint: correctHint
-                } as any)
-                .where(eq(marketContractInstances.id, inst.id));
-            fixedCount++;
+                if (needsUpdate) {
+                    await db.update(marketContractInstances)
+                        .set({
+                            targetPolicyJson: correctPolicy,
+                            displayTargetHint: correctHint
+                        } as any)
+                        .where(eq(marketContractInstances.id, inst.id));
+                    fixedCount++;
+                }
+            } catch (instErr) {
+                console.warn(`[Seed] ⚠️ Failed to fix instance ${inst.id}:`, (instErr as any).message);
+            }
         }
-    }
-    if (fixedCount > 0) {
-        console.log(`[Seed] 🔧 Fixed ${fixedCount} instances: updated targetPolicyJson + displayTargetHint.`);
+        if (fixedCount > 0) {
+            console.log(`[Seed] 🔧 Fixed ${fixedCount} instances: updated targetPolicyJson + displayTargetHint.`);
+        }
+    } catch (fixErr) {
+        console.warn('[Seed] ⚠️ Failed to fix displayTargetHint values (non-fatal):', (fixErr as any).message);
     }
 
     // 2. Ensure Listings (20 Open)

@@ -26,9 +26,9 @@ const authRoutes: FastifyPluginAsync = async (fastify) => {
      * Returns JWT access token + user + identity
      */
     fastify.post<{
-        Body: { email: string; password: string; username: string; displayName?: string };
+        Body: { email: string; password: string; username: string; displayName?: string; referralCode?: string };
     }>('/v1/auth/signup', async (request, reply) => {
-        const { email, password, username, displayName } = request.body;
+        const { email, password, username, displayName, referralCode } = request.body;
 
         // Validation
         if (!email || !password || !username) {
@@ -89,7 +89,8 @@ const authRoutes: FastifyPluginAsync = async (fastify) => {
             .values({
                 email: email.toLowerCase(),
                 passwordHash,
-            })
+                referralCode: username.toLowerCase(),
+            } as any)
             .returning();
 
         // Create identity
@@ -104,6 +105,23 @@ const authRoutes: FastifyPluginAsync = async (fastify) => {
             .returning();
 
         console.log(`✅ Created user ${user.id} with identity @${identity.username} (${identity.displayName})`);
+
+        // REFERRAL: If signed up with a referral code, create pending referral
+        if (referralCode) {
+            try {
+                const { lookupReferrer, createPendingReferral } = await import('../services/referral.js');
+                const referrerId = await lookupReferrer(referralCode);
+                if (referrerId && referrerId !== user.id) {
+                    await db.update(users)
+                        .set({ referredByUserId: referrerId } as any)
+                        .where(eq(users.id, user.id));
+                    await createPendingReferral(referrerId, user.id);
+                    console.log(`🔗 Referral tracked: ${referralCode} → ${user.id}`);
+                }
+            } catch (err: any) {
+                console.error('[Auth] Referral tracking failed (non-blocking):', err.message);
+            }
+        }
 
         // EMAIL: Welcome notification (fire-and-forget)
         import('../services/email.js').then(({ sendWelcomeEmail }) => {

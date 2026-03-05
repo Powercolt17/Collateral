@@ -183,7 +183,8 @@ export async function signup(email, password, username, displayName = null) {
         email,
         password,
         username,
-        displayName: displayName || username
+        displayName: displayName || username,
+        referralCode: getReferralCode() || undefined
     });
     console.log('[API] signup response:', data);
 
@@ -483,6 +484,29 @@ export async function removeSocialBonus(contractId) {
     return handleResponse(response);
 }
 
+// --- REFERRAL SYSTEM ---
+
+export async function getReferralStats() {
+    return get('/me/referrals');
+}
+
+export async function validateReferralCode(code) {
+    return getPublic(`/r/${encodeURIComponent(code)}`);
+}
+
+// Referral code cookie management
+export function setReferralCode(code) {
+    if (code) localStorage.setItem('collateral_referral', code.toLowerCase());
+}
+
+export function getReferralCode() {
+    return localStorage.getItem('collateral_referral');
+}
+
+export function clearReferralCode() {
+    localStorage.removeItem('collateral_referral');
+}
+
 // --- HEALTH ---
 
 export async function checkHealth() {
@@ -585,6 +609,13 @@ export default {
     // Social Share Bonus
     submitSocialBonus,
     removeSocialBonus,
+
+    // Referral System
+    getReferralStats,
+    validateReferralCode,
+    setReferralCode,
+    getReferralCode,
+    clearReferralCode,
 
     // Health
     checkHealth,

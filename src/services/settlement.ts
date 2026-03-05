@@ -419,6 +419,28 @@ export async function settleContract(
                 }
             }
 
+            // 6b2. REFERRAL BOOST CHECK: up to +25% profit based on referral count
+            let referralBonusApplied = false;
+            let referralBonusAmountCents = 0;
+            let referralBoostPct = 0;
+
+            try {
+                const [referrer] = await db.select().from(users)
+                    .where(eq(users.id, contract.principalUserId)).limit(1);
+                referralBoostPct = referrer?.referralBoostPct ?? 0;
+                if (referralBoostPct > 0) {
+                    const profitCents = contract.payoutAmountUsdCents - contract.lockAmountUsdCents;
+                    if (profitCents > 0) {
+                        referralBonusAmountCents = Math.round(profitCents * (referralBoostPct / 100));
+                        finalPayoutCents += referralBonusAmountCents;
+                        referralBonusApplied = true;
+                        console.log(`🎉 Referral boost applied for ${contractId}: +${referralBonusAmountCents} cents (${referralBoostPct}% of ${profitCents} profit)`);
+                    }
+                }
+            } catch (err: any) {
+                console.error('[Settlement] Referral boost check failed (non-blocking):', err.message);
+            }
+
             // 6c. QUEUE PAYOUT
             await appendAccountEvent({
                 userId: contract.principalUserId,
@@ -433,6 +455,11 @@ export async function settleContract(
                         socialBonusApplied: true,
                         socialBonusAmountCents,
                         originalPayoutCents: contract.payoutAmountUsdCents,
+                    }),
+                    ...(referralBonusApplied && {
+                        referralBonusApplied: true,
+                        referralBonusAmountCents,
+                        referralBoostPct,
                     })
                 }
             });

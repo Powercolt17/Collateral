@@ -25,6 +25,7 @@ import { renderTerms, initTerms } from './views/Terms.js';
 import { renderPrivacy, initPrivacy } from './views/Privacy.js';
 import { renderForgotPassword, initForgotPassword } from './views/ForgotPassword.js';
 import { renderResetPassword, initResetPassword } from './views/ResetPassword.js';
+import { renderReferrals } from './views/Referrals.js';
 import './views/PreLaunch.css';
 import './index.css';
 import './mobile.css';
@@ -186,7 +187,19 @@ const routes = PRE_LAUNCH_MODE ? [
     { path: '/terms', render: renderTerms, init: initTerms },
     { path: '/privacy', render: renderPrivacy, init: initPrivacy },
     { path: '/forgot-password', render: renderForgotPassword, init: initForgotPassword },
-    { path: '/reset-password', render: renderResetPassword, init: initResetPassword }
+    { path: '/reset-password', render: renderResetPassword, init: initResetPassword },
+    { path: '/referrals', render: (el) => renderReferrals(el), init: () => { } },
+    {
+        path: '/r/:code', render: () => '<div></div>', init: (params) => {
+            // Store referral code and redirect to signup
+            if (params?.code) {
+                api.setReferralCode(params.code);
+                console.log('[Referral] Stored referral code:', params.code);
+            }
+            window.location.hash = '/overview';
+            setTimeout(() => window.app.openAccessModal(), 300);
+        }
+    }
 ];
 
 // ================================================================================

@@ -193,10 +193,28 @@ export const users = pgTable('users', {
     xAccountCreatedAt: timestamp('x_account_created_at', { withTimezone: true }), // X account age for gating
     // Clerk OAuth
     clerkUserId: varchar('clerk_user_id', { length: 255 }),
+    // REFERRAL SYSTEM: profit boost via invites
+    referralCode: varchar('referral_code', { length: 20 }),
+    referredByUserId: uuid('referred_by_user_id'),
+    referralCount: integer('referral_count').default(0),
+    referralBoostPct: integer('referral_boost_pct').default(0),
     createdAt: timestamp('created_at', { withTimezone: true }).defaultNow().notNull(),
 }, (table) => [
     uniqueIndex('idx_users_x_user_id').on(table.xUserId),
     uniqueIndex('idx_users_clerk_user_id').on(table.clerkUserId),
+]);
+
+// REFERRAL TRACKING TABLE
+export const referrals = pgTable('referrals', {
+    id: uuid('id').primaryKey().defaultRandom(),
+    referrerUserId: uuid('referrer_user_id').references(() => users.id).notNull(),
+    referredUserId: uuid('referred_user_id').references(() => users.id).notNull(),
+    status: varchar('status', { length: 20 }).default('PENDING').notNull(),
+    createdAt: timestamp('created_at', { withTimezone: true }).defaultNow().notNull(),
+    activatedAt: timestamp('activated_at', { withTimezone: true }),
+}, (table) => [
+    uniqueIndex('idx_referrals_referred').on(table.referredUserId),
+    index('idx_referrals_referrer').on(table.referrerUserId),
 ]);
 
 export const identities = pgTable('identities', {

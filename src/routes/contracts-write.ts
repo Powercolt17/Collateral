@@ -811,6 +811,15 @@ const contractWriteRoutes: FastifyPluginAsync = async (fastify) => {
                 }).catch(() => { });
             }).catch(() => { });
 
+            // REFERRAL: Activate referral on first contract execution (fire-and-forget)
+            import('../services/referral.js').then(({ activateReferral }) => {
+                activateReferral(principalUserId, contract.lockAmountUsdCents)
+                    .then(activated => {
+                        if (activated) console.log(`🎉 Referral activated for user ${principalUserId}`);
+                    })
+                    .catch(err => console.error('[Referral] Activation failed (non-blocking):', err.message));
+            }).catch(() => { });
+
             return {
                 ok: true,
                 contractId: contract.id,

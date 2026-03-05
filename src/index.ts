@@ -33,6 +33,7 @@ import commerceRoutes from './routes/commerce.js';
 import marketRoutes from './routes/market.js';
 import oracleRoutes from './routes/oracle.js';
 import socialBonusRoutes from './routes/social-bonus.js';
+import referralRoutes from './routes/referrals.js';
 
 const PORT = parseInt(process.env.PORT || '3000', 10);
 
@@ -298,6 +299,7 @@ async function bootFastify() {
         await safeRegister('market', marketRoutes);
         await safeRegister('oracle', oracleRoutes);
         await safeRegister('social-bonus', socialBonusRoutes);
+        await safeRegister('referrals', referralRoutes);
 
         console.log('[startup] All routes queued, calling ready()...');
 

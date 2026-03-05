@@ -7,6 +7,7 @@
 
 import { FastifyPluginAsync } from 'fastify';
 import { getReferralStats, lookupReferrer } from '../services/referral.js';
+import { getPrincipal } from '../services/auth.js';
 
 const referralRoutes: FastifyPluginAsync = async (fastify) => {
 
@@ -15,9 +16,10 @@ const referralRoutes: FastifyPluginAsync = async (fastify) => {
      * Get current user's referral stats, boost, and referral list
      */
     fastify.get('/me/referrals', async (request, reply) => {
-        // @ts-ignore
-        const userId = request.userId;
-        if (!userId) {
+        let userId: string;
+        try {
+            userId = getPrincipal(request);
+        } catch {
             reply.status(401);
             return { error: 'Unauthorized' };
         }

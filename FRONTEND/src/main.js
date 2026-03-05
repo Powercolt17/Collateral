@@ -25,7 +25,7 @@ import { renderTerms, initTerms } from './views/Terms.js';
 import { renderPrivacy, initPrivacy } from './views/Privacy.js';
 import { renderForgotPassword, initForgotPassword } from './views/ForgotPassword.js';
 import { renderResetPassword, initResetPassword } from './views/ResetPassword.js';
-import { renderReferrals } from './views/Referrals.js';
+import { renderReferrals, initReferrals } from './views/Referrals.js';
 import './views/PreLaunch.css';
 import './index.css';
 import './mobile.css';
@@ -188,7 +188,7 @@ const routes = PRE_LAUNCH_MODE ? [
     { path: '/privacy', render: renderPrivacy, init: initPrivacy },
     { path: '/forgot-password', render: renderForgotPassword, init: initForgotPassword },
     { path: '/reset-password', render: renderResetPassword, init: initResetPassword },
-    { path: '/referrals', render: (el) => renderReferrals(el), init: () => { } },
+    { path: '/referrals', render: renderReferrals, init: initReferrals },
     {
         path: '/r/:code', render: () => '<div></div>', init: (params) => {
             // Store referral code and redirect to signup

@@ -4,8 +4,8 @@
  * Dashboard showing referral stats, boost tier, and shareable link.
  */
 
-export function renderReferrals(container) {
-    container.innerHTML = `
+export function renderReferrals() {
+    return `
         <div id="referrals-page" style="max-width:600px;margin:40px auto;padding:0 20px;font-family:'Neue Haas Grotesk Display','Helvetica Neue',sans-serif;">
             <div style="text-align:center;margin-bottom:32px;">
                 <h1 style="font-size:22px;font-weight:700;color:#111;margin:0 0 6px;letter-spacing:-0.02em;">Referral Program</h1>
@@ -20,14 +20,18 @@ export function renderReferrals(container) {
             <div id="referral-error" style="display:none;text-align:center;padding:40px 0;color:#752122;font-size:13px;"></div>
         </div>
     `;
-
-    loadReferralData(container);
 }
 
-async function loadReferralData(container) {
-    const loadingEl = container.querySelector('#referral-loading');
-    const contentEl = container.querySelector('#referral-content');
-    const errorEl = container.querySelector('#referral-error');
+export function initReferrals() {
+    loadReferralData();
+}
+
+async function loadReferralData() {
+    const loadingEl = document.getElementById('referral-loading');
+    const contentEl = document.getElementById('referral-content');
+    const errorEl = document.getElementById('referral-error');
+
+    if (!loadingEl || !contentEl || !errorEl) return;
 
     try {
         const stats = await window.api.getReferralStats();
@@ -53,7 +57,6 @@ async function loadReferralData(container) {
 
         // Build tier table
         const tierRows = stats.tiers.map(t => {
-            const isCurrent = stats.boostPct >= t.boostPct && (stats.nextTier ? stats.boostPct < stats.nextTier.boostPct || t.boostPct === stats.boostPct : t.boostPct === stats.maxBoostPct);
             const isUnlocked = stats.referralCount >= t.minReferrals;
             return `<tr style="opacity:${isUnlocked ? '1' : '0.5'};">
                 <td style="padding:6px 10px;font-size:11px;font-family:'JetBrains Mono',monospace;border-bottom:1px solid #f3f4f6;">${t.minReferrals}${t.minReferrals === 1 ? ' referral' : ' referrals'}</td>
@@ -61,7 +64,17 @@ async function loadReferralData(container) {
             </tr>`;
         }).join('');
 
+        // First-contract bonus callout
+        const firstBonusHtml = stats.firstBonusAvailable
+            ? `<div style="margin-bottom:16px;padding:12px;background:#fefce8;border:1px solid #fde68a;border-radius:6px;text-align:center;">
+                   <div style="font-size:11px;font-weight:600;color:#92400e;">🎁 You have a +${stats.firstBonusPct}% bonus on your first contract!</div>
+                   <div style="font-size:10px;color:#a16207;margin-top:2px;">Execute your first contract to claim it.</div>
+               </div>`
+            : '';
+
         contentEl.innerHTML = `
+            ${firstBonusHtml}
+
             <!-- Boost Card -->
             <div style="background:#111;color:#fff;border-radius:8px;padding:24px;text-align:center;margin-bottom:16px;">
                 <div style="font-size:10px;text-transform:uppercase;letter-spacing:0.08em;color:#9ca3af;font-family:'JetBrains Mono',monospace;margin-bottom:8px;">Your Profit Boost</div>
@@ -113,10 +126,10 @@ async function loadReferralData(container) {
         `;
 
         // Wire copy button
-        const copyBtn = contentEl.querySelector('#referral-copy-btn');
+        const copyBtn = document.getElementById('referral-copy-btn');
         if (copyBtn) {
             copyBtn.addEventListener('click', () => {
-                const input = contentEl.querySelector('#referral-link-input');
+                const input = document.getElementById('referral-link-input');
                 input.select();
                 navigator.clipboard.writeText(input.value).then(() => {
                     copyBtn.textContent = 'Copied!';

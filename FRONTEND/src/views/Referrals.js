@@ -158,6 +158,18 @@ async function loadReferralData() {
     } catch (err) {
         loadingEl.style.display = 'none';
         errorEl.style.display = 'block';
-        errorEl.textContent = err.message || 'Failed to load referral data';
+        // If 401/Unauthorized, show sign-in prompt instead of raw error
+        const msg = err.message || '';
+        if (err.status === 401 || msg.includes('Unauthorized') || msg.includes('401')) {
+            errorEl.innerHTML = `
+                <div style="padding:40px 0;text-align:center;">
+                    <div style="font-size:14px;color:#374151;font-weight:600;margin-bottom:8px;">Sign in to view your referrals</div>
+                    <div style="font-size:12px;color:#6b7280;margin-bottom:16px;">Your session has expired. Please sign in again.</div>
+                    <button onclick="window.app.openAccessModal()" style="padding:10px 20px;background:#111;color:#fff;border:none;border-radius:4px;font-size:12px;font-weight:600;cursor:pointer;font-family:'Neue Haas Grotesk Display',sans-serif;">Sign In</button>
+                </div>
+            `;
+        } else {
+            errorEl.textContent = msg || 'Failed to load referral data';
+        }
     }
 }

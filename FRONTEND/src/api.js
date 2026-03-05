@@ -469,6 +469,20 @@ export async function settleContract(contractId, outcome) {
     return post(`/v1/contracts/${contractId}/settle`, { outcome });
 }
 
+// --- SOCIAL SHARE BONUS ---
+
+export async function submitSocialBonus(contractId, tweetUrl) {
+    return post(`/contracts/${contractId}/social-bonus`, { tweetUrl });
+}
+
+export async function removeSocialBonus(contractId) {
+    const response = await fetch(`${API_BASE_URL}/contracts/${contractId}/social-bonus`, {
+        method: 'DELETE',
+        headers: getHeaders(),
+    });
+    return handleResponse(response);
+}
+
 // --- HEALTH ---
 
 export async function checkHealth() {
@@ -565,9 +579,12 @@ export default {
     getConnectStatus,
     runPayouts,
 
-    // Lock & Settle
     lockContract,
     settleContract,
+
+    // Social Share Bonus
+    submitSocialBonus,
+    removeSocialBonus,
 
     // Health
     checkHealth,

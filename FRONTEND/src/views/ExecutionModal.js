@@ -454,6 +454,9 @@ async function runExecution(contractData, stake, multiplier, btnEl, bodyEl) {
 
 function showSuccess(bodyEl, stake, multiplier, contractId) {
     const payout = Math.round(stake * multiplier);
+    const profit = payout - stake;
+    const bonusProfit = Math.round(profit * 0.05);
+    const bonusPayout = payout + bonusProfit;
     const shortId = (contractId || '').split('-')[0].slice(0, 4).toUpperCase();
 
     bodyEl.innerHTML = `
@@ -461,12 +464,100 @@ function showSuccess(bodyEl, stake, multiplier, contractId) {
             <div class="exec-success-icon">✅</div>
             <div class="exec-success-title">Execution Confirmed</div>
             <div class="exec-success-sub">RCPT-${shortId} · Capital locked until settlement</div>
+
+            <div style="background:#fafafa;border:1px solid #e5e5e5;border-radius:6px;padding:16px;margin:20px 0 12px;text-align:left;">
+                <div style="display:flex;align-items:center;gap:8px;margin-bottom:10px;">
+                    <span style="font-size:16px;">🐦</span>
+                    <span style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.06em;font-family:'JetBrains Mono',monospace;color:#111;">Boost Your Payout</span>
+                </div>
+                <div style="font-size:12px;color:#374151;line-height:1.5;margin-bottom:12px;font-family:'Neue Haas Grotesk Display','Helvetica Neue',sans-serif;">
+                    Share your contract on X to earn <strong>+5% extra profit</strong> if you succeed.
+                </div>
+                <div style="display:flex;gap:6px;font-size:10px;color:#6b7280;font-family:'JetBrains Mono',monospace;margin-bottom:14px;">
+                    <span>Normal: $${payout.toLocaleString()}</span>
+                    <span>→</span>
+                    <span style="color:#166534;font-weight:600;">Boosted: $${bonusPayout.toLocaleString()} (+$${bonusProfit.toLocaleString()})</span>
+                </div>
+                <button id="exec-share-x" style="width:100%;padding:10px;background:#0f1419;color:#fff;border:none;border-radius:4px;font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:0.04em;cursor:pointer;font-family:'Neue Haas Grotesk Display',sans-serif;display:flex;align-items:center;justify-content:center;gap:8px;transition:background 150ms;">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="white"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+                    Share on X
+                </button>
+            </div>
+
+            <div id="exec-tweet-verify" style="display:none;background:#f0fdf4;border:1px solid #bbf7d0;border-radius:6px;padding:14px;margin-bottom:12px;text-align:left;">
+                <div style="font-size:11px;font-weight:600;color:#166534;margin-bottom:8px;font-family:'JetBrains Mono',monospace;text-transform:uppercase;letter-spacing:0.04em;">Paste Your Tweet URL</div>
+                <input id="exec-tweet-url" type="text" placeholder="https://x.com/you/status/..." style="width:100%;padding:8px 10px;border:1px solid #d4d4d4;border-radius:4px;font-size:12px;font-family:'JetBrains Mono',monospace;margin-bottom:8px;box-sizing:border-box;">
+                <button id="exec-verify-tweet" style="width:100%;padding:8px;background:#166534;color:#fff;border:none;border-radius:4px;font-size:11px;font-weight:600;cursor:pointer;text-transform:uppercase;letter-spacing:0.04em;font-family:'Neue Haas Grotesk Display',sans-serif;">Verify & Activate Bonus</button>
+                <div id="exec-tweet-status" style="font-size:10px;color:#6b7280;margin-top:6px;font-family:'JetBrains Mono',monospace;display:none;"></div>
+            </div>
+
+            <div id="exec-bonus-confirmed" style="display:none;background:#f0fdf4;border:1px solid #bbf7d0;border-radius:6px;padding:12px;margin-bottom:12px;text-align:center;">
+                <div style="font-size:13px;font-weight:700;color:#166534;">🐦 +5% Bonus Activated</div>
+                <div style="font-size:10px;color:#6b7280;margin-top:4px;font-family:'JetBrains Mono',monospace;">Tweet must stay live until settlement</div>
+            </div>
+
             <div class="exec-success-actions">
                 <button class="exec-success-btn primary" id="exec-view-receipt">View Contract →</button>
                 <button class="exec-success-btn secondary" id="exec-return-market">Return to Market</button>
             </div>
         </div>
     `;
+
+    // Generate tweet text
+    const tweetText = `I just locked $${stake.toLocaleString()} on @CollateralMkt that I hit my performance target in the next 30 days.\n\nIf I fail I lose the money.\nIf I succeed I get paid.\n\nhttps://collateral.market/c/${contractId}`;
+    const tweetUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(tweetText)}`;
+
+    // Wire Share on X button
+    bodyEl.querySelector('#exec-share-x').addEventListener('click', () => {
+        window.open(tweetUrl, '_blank', 'width=600,height=400');
+        // Show tweet paste input after a short delay
+        setTimeout(() => {
+            const verifySection = bodyEl.querySelector('#exec-tweet-verify');
+            if (verifySection) verifySection.style.display = 'block';
+        }, 1500);
+    });
+
+    // Wire tweet verification
+    bodyEl.querySelector('#exec-verify-tweet')?.addEventListener('click', async () => {
+        const urlInput = bodyEl.querySelector('#exec-tweet-url');
+        const statusEl = bodyEl.querySelector('#exec-tweet-status');
+        const tweetUrlValue = urlInput?.value?.trim();
+
+        if (!tweetUrlValue) {
+            statusEl.textContent = 'Please paste your tweet URL';
+            statusEl.style.display = 'block';
+            statusEl.style.color = '#752122';
+            return;
+        }
+
+        // Validate URL format
+        if (!tweetUrlValue.match(/(?:twitter\.com|x\.com)\/\w+\/status\/\d+/)) {
+            statusEl.textContent = 'Invalid tweet URL format';
+            statusEl.style.display = 'block';
+            statusEl.style.color = '#752122';
+            return;
+        }
+
+        const verifyBtn = bodyEl.querySelector('#exec-verify-tweet');
+        verifyBtn.disabled = true;
+        verifyBtn.textContent = 'Verifying...';
+        statusEl.style.display = 'block';
+        statusEl.style.color = '#6b7280';
+        statusEl.textContent = 'Submitting tweet for verification...';
+
+        try {
+            await window.api.submitSocialBonus(contractId, tweetUrlValue);
+            // Success!
+            bodyEl.querySelector('#exec-tweet-verify').style.display = 'none';
+            bodyEl.querySelector('#exec-share-x').parentElement.style.display = 'none';
+            bodyEl.querySelector('#exec-bonus-confirmed').style.display = 'block';
+        } catch (err) {
+            statusEl.textContent = err.message || 'Failed to verify tweet';
+            statusEl.style.color = '#752122';
+            verifyBtn.disabled = false;
+            verifyBtn.textContent = 'Verify & Activate Bonus';
+        }
+    });
 
     bodyEl.querySelector('#exec-view-receipt').addEventListener('click', () => {
         closeExecutionModal();

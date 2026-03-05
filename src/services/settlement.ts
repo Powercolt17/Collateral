@@ -18,6 +18,7 @@ import { classifyError } from './error-classification.js';
 import { eq, and, or, isNull, lte, sql } from 'drizzle-orm';
 import { appendAccountEvent, AccountEventType } from './balances.js';
 import { sendSettlementSuccessEmail, sendSettlementFailureEmail } from './email.js';
+import { verifyTweetForSettlement, SOCIAL_BONUS_MULTIPLIER } from '../jobs/verify-tweet.js';
 
 // =====================================================
 // SETTLEMENT EVENT TYPES
@@ -400,20 +401,43 @@ export async function settleContract(
             // SUCCESS: Queue Payout (Funds move from Available -> Pending Payout)
             // User gets their principal + winnings (payoutAmountUsdCents)
 
-            // 6b. QUEUE PAYOUT
+            // 6b. SOCIAL BONUS CHECK: +5% profit if tweet verified
+            let finalPayoutCents = contract.payoutAmountUsdCents;
+            let socialBonusApplied = false;
+            let socialBonusAmountCents = 0;
+
+            if (contract.socialBonusEnabled) {
+                const tweetStillValid = await verifyTweetForSettlement(contractId);
+                if (tweetStillValid) {
+                    const profitCents = contract.payoutAmountUsdCents - contract.lockAmountUsdCents;
+                    if (profitCents > 0) {
+                        socialBonusAmountCents = Math.round(profitCents * SOCIAL_BONUS_MULTIPLIER);
+                        finalPayoutCents = contract.payoutAmountUsdCents + socialBonusAmountCents;
+                        socialBonusApplied = true;
+                        console.log(`🐦 Social bonus applied for ${contractId}: +${socialBonusAmountCents} cents (${SOCIAL_BONUS_MULTIPLIER * 100}% of ${profitCents} profit)`);
+                    }
+                }
+            }
+
+            // 6c. QUEUE PAYOUT
             await appendAccountEvent({
                 userId: contract.principalUserId,
                 contractId,
                 eventType: AccountEventType.PAYOUT_QUEUED,
-                amountCents: contract.payoutAmountUsdCents,
+                amountCents: finalPayoutCents,
                 idempotencyKey: `payout_queue_${contractId}_${settlementStartedEvent.id}`,
                 metadata: {
                     outcome: 'SUCCESS',
-                    queuedAt: new Date().toISOString()
+                    queuedAt: new Date().toISOString(),
+                    ...(socialBonusApplied && {
+                        socialBonusApplied: true,
+                        socialBonusAmountCents,
+                        originalPayoutCents: contract.payoutAmountUsdCents,
+                    })
                 }
             });
 
-            console.log(`✅ Payout QUEUED for ${contractId}: ${contract.payoutAmountUsdCents} cents`);
+            console.log(`✅ Payout QUEUED for ${contractId}: ${finalPayoutCents} cents${socialBonusApplied ? ' (includes social bonus)' : ''}`);
 
             // EMAIL: Settlement success notification (fire-and-forget)
             sendSettlementSuccessEmail({
@@ -430,16 +454,20 @@ export async function settleContract(
                 contractId,
                 actor: 'SYSTEM',
                 eventType: EventType.SETTLED_SUCCESS,
-                amountUsdCents: contract.payoutAmountUsdCents,
+                amountUsdCents: finalPayoutCents,
                 metadata: {
                     outcome: 'SUCCESS',
                     payoutQueued: true,
-                    stripeConnectedAccountId: (contract as any)?.stripeConnectedAccountId || null, // Will be resolved by payout job
+                    stripeConnectedAccountId: (contract as any)?.stripeConnectedAccountId || null,
                     settledAt: new Date().toISOString(),
                     payoutToUser: true,
                     lockAmountUsdCents: contract.lockAmountUsdCents,
-                    payoutAmountUsdCents: contract.payoutAmountUsdCents,
-                    // If manually overridden
+                    payoutAmountUsdCents: finalPayoutCents,
+                    originalPayoutAmountUsdCents: contract.payoutAmountUsdCents,
+                    ...(socialBonusApplied && {
+                        socialBonusApplied: true,
+                        socialBonusAmountCents,
+                    }),
                     ...(overrideOutcome && { manualOverride: true })
                 },
                 tx,

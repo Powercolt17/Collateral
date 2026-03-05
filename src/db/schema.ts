@@ -328,6 +328,10 @@ export const contracts = pgTable('contracts', {
     githubBindingId: uuid('github_binding_id'),   // FK to identity_bindings deferred
     // LIVE MARKET LINKAGE
     marketInstanceId: uuid('market_instance_id'), // FK to market_contract_instances deferred
+    // SOCIAL SHARE BONUS: +5% profit boost for public X/Twitter share
+    socialBonusEnabled: boolean('social_bonus_enabled').default(false),
+    socialBonusVerified: boolean('social_bonus_verified').default(false),
+    socialBonusTweetId: text('social_bonus_tweet_id'),
     createdAt: timestamp('created_at', { withTimezone: true }).defaultNow().notNull(),
     updatedAt: timestamp('updated_at', { withTimezone: true }).defaultNow().notNull(),
 });

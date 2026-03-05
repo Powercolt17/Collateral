@@ -49,6 +49,9 @@ const contractRoutes: FastifyPluginAsync = async (fastify) => {
                 riskTier: contract.riskTier,
                 state, // Derived from ledger events, never persisted
                 recordHash: contract.recordHash,
+                socialBonusEnabled: contract.socialBonusEnabled ?? false,
+                socialBonusVerified: contract.socialBonusVerified ?? false,
+                socialBonusTweetId: contract.socialBonusTweetId ?? null,
                 createdAt: contract.createdAt.toISOString(),
                 updatedAt: contract.updatedAt.toISOString(),
             },
@@ -124,6 +127,7 @@ const contractRoutes: FastifyPluginAsync = async (fastify) => {
                 lockAmountUsdCents: contract.lockAmountUsdCents,
                 riskTier: contract.riskTier,
                 state, // Derived from ledger events
+                socialBonusEnabled: contract.socialBonusEnabled ?? false,
                 createdAt: contract.createdAt.toISOString(),
             })),
         };

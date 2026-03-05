@@ -470,24 +470,76 @@ window.app = {
             if (!window.Clerk) { alert('OAuth not available. Please use email/password or refresh.'); return; }
             console.log('[Auth] Starting Google OAuth via Clerk...');
             window.app.closeAccessModal();
+            // If Clerk already has a session, exchange it directly
+            if (window.Clerk.session) {
+                console.log('[Auth] Clerk session exists, exchanging token...');
+                await window.app._exchangeClerkToken();
+                updateAuthUI();
+                window.router.navigate('/overview');
+                return;
+            }
             await window.Clerk.client.signIn.authenticateWithRedirect({
                 strategy: 'oauth_google',
                 redirectUrl: window.location.origin + '/#/sso-callback',
                 redirectUrlComplete: window.location.origin + '/#/overview',
             });
-        } catch (err) { console.error('[Auth] Google sign-in failed:', err); }
+        } catch (err) {
+            console.error('[Auth] Google sign-in failed:', err);
+            // If "already signed in", sign out Clerk first and retry
+            if (err?.message?.includes('already signed in') || err?.message?.includes('single session')) {
+                try {
+                    console.log('[Auth] Signing out stale Clerk session and retrying...');
+                    await window.Clerk.signOut();
+                    await window.Clerk.client.signIn.authenticateWithRedirect({
+                        strategy: 'oauth_google',
+                        redirectUrl: window.location.origin + '/#/sso-callback',
+                        redirectUrlComplete: window.location.origin + '/#/overview',
+                    });
+                } catch (retryErr) {
+                    console.error('[Auth] Google retry also failed:', retryErr);
+                    window.app.openAccessModal();
+                    window.app._showAuthError('Google sign-in failed. Please try email/password.');
+                }
+            }
+        }
     },
     signInWithApple: async function () {
         try {
             if (!window.Clerk) { alert('OAuth not available. Please use email/password or refresh.'); return; }
             console.log('[Auth] Starting Apple OAuth via Clerk...');
             window.app.closeAccessModal();
+            // If Clerk already has a session, exchange it directly
+            if (window.Clerk.session) {
+                console.log('[Auth] Clerk session exists, exchanging token...');
+                await window.app._exchangeClerkToken();
+                updateAuthUI();
+                window.router.navigate('/overview');
+                return;
+            }
             await window.Clerk.client.signIn.authenticateWithRedirect({
                 strategy: 'oauth_apple',
                 redirectUrl: window.location.origin + '/#/sso-callback',
                 redirectUrlComplete: window.location.origin + '/#/overview',
             });
-        } catch (err) { console.error('[Auth] Apple sign-in failed:', err); }
+        } catch (err) {
+            console.error('[Auth] Apple sign-in failed:', err);
+            // If "already signed in", sign out Clerk first and retry
+            if (err?.message?.includes('already signed in') || err?.message?.includes('single session')) {
+                try {
+                    console.log('[Auth] Signing out stale Clerk session and retrying...');
+                    await window.Clerk.signOut();
+                    await window.Clerk.client.signIn.authenticateWithRedirect({
+                        strategy: 'oauth_apple',
+                        redirectUrl: window.location.origin + '/#/sso-callback',
+                        redirectUrlComplete: window.location.origin + '/#/overview',
+                    });
+                } catch (retryErr) {
+                    console.error('[Auth] Apple retry also failed:', retryErr);
+                    window.app.openAccessModal();
+                    window.app._showAuthError('Apple sign-in failed. Please try email/password.');
+                }
+            }
+        }
     },
     _handleSSOCallback: async function () {
         // Called when Clerk redirects back to /#/sso-callback after OAuth

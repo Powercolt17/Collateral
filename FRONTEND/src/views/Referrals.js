@@ -23,6 +23,23 @@ export function renderReferrals() {
 }
 
 export function initReferrals() {
+    // Check if user is logged in before making API call
+    if (!window.appState?.isLoggedIn) {
+        const loadingEl = document.getElementById('referral-loading');
+        const errorEl = document.getElementById('referral-error');
+        if (loadingEl) loadingEl.style.display = 'none';
+        if (errorEl) {
+            errorEl.style.display = 'block';
+            errorEl.innerHTML = `
+                <div style="padding:40px 0;text-align:center;">
+                    <div style="font-size:14px;color:#374151;font-weight:600;margin-bottom:8px;">Sign in to view your referrals</div>
+                    <div style="font-size:12px;color:#6b7280;margin-bottom:16px;">Create an account or sign in to access your referral dashboard.</div>
+                    <button onclick="window.app.openAccessModal()" style="padding:10px 20px;background:#111;color:#fff;border:none;border-radius:4px;font-size:12px;font-weight:600;cursor:pointer;font-family:'Neue Haas Grotesk Display',sans-serif;">Sign In</button>
+                </div>
+            `;
+        }
+        return;
+    }
     loadReferralData();
 }
 

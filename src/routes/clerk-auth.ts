@@ -179,7 +179,7 @@ const clerkAuthRoutes: FastifyPluginAsync = async (fastify) => {
                 accessToken,
             };
         } catch (err: any) {
-            console.error('[ClerkAuth] Token verification failed:', err.message);
+            console.error('[ClerkAuth] Token verification failed:', err.message, err.stack?.split('\n').slice(0, 3).join('\n'));
             reply.status(401);
             return { ok: false, error: 'Authentication failed' };
         }

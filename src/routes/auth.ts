@@ -84,39 +84,59 @@ const authRoutes: FastifyPluginAsync = async (fastify) => {
         const passwordHash = await bcrypt.hash(password, SALT_ROUNDS);
 
         // Create user with password hash
-        const [user] = await db
-            .insert(users)
-            .values({
-                email: email.toLowerCase(),
-                passwordHash,
-                referralCode: username.toLowerCase(),
-            } as any)
-            .returning();
+        // Use raw SQL to avoid Drizzle's RETURNING * which includes all schema columns
+        // (referral columns may not exist if migration 0034 hasn't been applied)
+        const { sql: rawSql } = await import('drizzle-orm');
+        const userResult = await db.execute(rawSql`
+            INSERT INTO users (email, password_hash)
+            VALUES (${email.toLowerCase()}, ${passwordHash})
+            RETURNING id, email, created_at
+        `);
+        const user = (userResult as any)[0] || (userResult as any).rows?.[0];
+        if (!user) {
+            reply.status(500);
+            return { ok: false, error: 'Failed to create account' };
+        }
+        // Normalize field access (some drivers use snake_case)
+        const userId = user.id;
+        const userEmail = user.email;
+        const userCreatedAt = user.created_at || user.createdAt;
 
         // Create identity
         const [identity] = await db
             .insert(identities)
             .values({
-                userId: user.id,
+                userId: userId,
                 username: username.toLowerCase(),
                 displayName: displayName || username,
                 status: 'ACTIVE' as const,
             })
             .returning();
 
-        console.log(`✅ Created user ${user.id} with identity @${identity.username} (${identity.displayName})`);
+        console.log(`✅ Created user ${userId} with identity @${identity.username} (${identity.displayName})`);
 
-        // REFERRAL: If signed up with a referral code, create pending referral
+        // REFERRAL: Set referral code + track referral (non-blocking)
+        // Wrapped in try/catch so signup works even if referral columns don't exist yet
+        try {
+            await db.execute(rawSql`
+                UPDATE users SET referral_code = ${username.toLowerCase()}
+                WHERE id = ${userId}
+            `);
+        } catch (err: any) {
+            console.warn('[Auth] Could not set referral_code (migration pending?):', err.message);
+        }
+
         if (referralCode) {
             try {
                 const { lookupReferrer, createPendingReferral } = await import('../services/referral.js');
                 const referrerId = await lookupReferrer(referralCode);
-                if (referrerId && referrerId !== user.id) {
-                    await db.update(users)
-                        .set({ referredByUserId: referrerId } as any)
-                        .where(eq(users.id, user.id));
-                    await createPendingReferral(referrerId, user.id);
-                    console.log(`🔗 Referral tracked: ${referralCode} → ${user.id}`);
+                if (referrerId && referrerId !== userId) {
+                    await db.execute(rawSql`
+                        UPDATE users SET referred_by_user_id = ${referrerId}
+                        WHERE id = ${userId}
+                    `);
+                    await createPendingReferral(referrerId, userId);
+                    console.log(`🔗 Referral tracked: ${referralCode} → ${userId}`);
                 }
             } catch (err: any) {
                 console.error('[Auth] Referral tracking failed (non-blocking):', err.message);
@@ -125,18 +145,18 @@ const authRoutes: FastifyPluginAsync = async (fastify) => {
 
         // EMAIL: Welcome notification (fire-and-forget)
         import('../services/email.js').then(({ sendWelcomeEmail }) => {
-            sendWelcomeEmail(user.email, identity.username).catch(() => { });
+            sendWelcomeEmail(userEmail, identity.username).catch(() => { });
         }).catch(() => { });
 
         // Sign JWT access token
-        const accessToken = signAccessToken(user.id);
+        const accessToken = signAccessToken(userId);
 
         return {
             ok: true,
             user: {
-                id: user.id,
-                email: user.email,
-                createdAt: user.createdAt.toISOString(),
+                id: userId,
+                email: userEmail,
+                createdAt: typeof userCreatedAt === 'string' ? userCreatedAt : new Date(userCreatedAt).toISOString(),
             },
             identity: {
                 username: identity.username,

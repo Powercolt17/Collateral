@@ -106,6 +106,36 @@ export async function runMigrations() {
                 console.log('[migrate] ✅ Tables confirmed to exist.');
             }
 
+            // 3. Check for missing referral columns (0034_referral_system)
+            const [refCol] = await migrationDb.execute(sql`
+                SELECT column_name FROM information_schema.columns 
+                WHERE table_name = 'users' AND column_name = 'referral_code'
+            `);
+
+            if (!refCol) {
+                console.warn('[migrate] ⚠️ Referral columns missing. FORCE APPLYING 0034...');
+                const forceRefFile = '0034_referral_system.sql';
+                const forceRefPath = resolve(migrationsFolder, forceRefFile);
+
+                if (fs.existsSync(forceRefPath)) {
+                    const sqlContent = fs.readFileSync(forceRefPath, 'utf-8');
+                    await migrationDb.execute(sql.raw(sqlContent));
+                    console.log('[migrate] ☢️ FORCE APPLY 0034 (referral_system) EXECUTED.');
+                } else {
+                    console.error(`[migrate] ❌ Could not find ${forceRefFile}! Path: ${forceRefPath}`);
+                }
+
+                // Also apply 0035 (referral first bonus)
+                const bonus35Path = resolve(migrationsFolder, '0035_referral_first_bonus.sql');
+                if (fs.existsSync(bonus35Path)) {
+                    const sql35 = fs.readFileSync(bonus35Path, 'utf-8');
+                    await migrationDb.execute(sql.raw(sql35));
+                    console.log('[migrate] ☢️ FORCE APPLY 0035 (referral_first_bonus) EXECUTED.');
+                }
+            } else {
+                console.log('[migrate] ✅ Referral columns confirmed to exist.');
+            }
+
         } catch (valErr) {
             console.error('[migrate] ⚠️ Validation/Force-Fix failed:', valErr);
         }

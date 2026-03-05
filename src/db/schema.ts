@@ -198,6 +198,7 @@ export const users = pgTable('users', {
     referredByUserId: uuid('referred_by_user_id'),
     referralCount: integer('referral_count').default(0),
     referralBoostPct: integer('referral_boost_pct').default(0),
+    referralFirstBonusUsed: boolean('referral_first_bonus_used').default(false),
     createdAt: timestamp('created_at', { withTimezone: true }).defaultNow().notNull(),
 }, (table) => [
     uniqueIndex('idx_users_x_user_id').on(table.xUserId),

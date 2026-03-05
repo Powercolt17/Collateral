@@ -441,6 +441,27 @@ export async function settleContract(
                 console.error('[Settlement] Referral boost check failed (non-blocking):', err.message);
             }
 
+            // 6b3. FIRST-CONTRACT BONUS: +5% profit for referred users' first contract
+            let firstContractBonusApplied = false;
+            let firstContractBonusCents = 0;
+            let firstContractBonusPct = 0;
+
+            try {
+                const { checkFirstContractBonus } = await import('./referral.js');
+                firstContractBonusPct = await checkFirstContractBonus(contract.principalUserId);
+                if (firstContractBonusPct > 0) {
+                    const profitCents = contract.payoutAmountUsdCents - contract.lockAmountUsdCents;
+                    if (profitCents > 0) {
+                        firstContractBonusCents = Math.round(profitCents * (firstContractBonusPct / 100));
+                        finalPayoutCents += firstContractBonusCents;
+                        firstContractBonusApplied = true;
+                        console.log(`🎁 First-contract bonus applied for ${contractId}: +${firstContractBonusCents} cents (${firstContractBonusPct}% of ${profitCents} profit)`);
+                    }
+                }
+            } catch (err: any) {
+                console.error('[Settlement] First-contract bonus check failed (non-blocking):', err.message);
+            }
+
             // 6c. QUEUE PAYOUT
             await appendAccountEvent({
                 userId: contract.principalUserId,
@@ -460,6 +481,11 @@ export async function settleContract(
                         referralBonusApplied: true,
                         referralBonusAmountCents,
                         referralBoostPct,
+                    }),
+                    ...(firstContractBonusApplied && {
+                        firstContractBonusApplied: true,
+                        firstContractBonusCents,
+                        firstContractBonusPct,
                     })
                 }
             });

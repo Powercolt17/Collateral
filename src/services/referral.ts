@@ -7,7 +7,7 @@
 
 import { db } from '../db/client.js';
 import { users, referrals } from '../db/schema.js';
-import { eq, and, sql } from 'drizzle-orm';
+import { eq, and, sql, gte } from 'drizzle-orm';
 
 // =============================================
 // BOOST TIER TABLE
@@ -22,7 +22,9 @@ const BOOST_TIERS = [
 ];
 
 const MAX_BOOST_PCT = 25;
-const MIN_STAKE_CENTS = 2500; // $25 minimum stake for activation
+const MIN_STAKE_CENTS = 5000; // $50 minimum stake for activation
+const MAX_ACTIVATIONS_PER_DAY = 5; // Rate limit per referrer
+const REFERRED_USER_FIRST_BONUS_PCT = 5; // +5% bonus on first contract for referred users
 
 /**
  * Calculate boost percentage from referral count
@@ -40,9 +42,7 @@ export function calculateBoostPct(referralCount: number): number {
  * Get the next tier info for a given count
  */
 export function getNextTier(referralCount: number): { needed: number; boostPct: number } | null {
-    // Find current tier level
     const currentBoost = calculateBoostPct(referralCount);
-    // Find next tier above current
     const sortedAsc = [...BOOST_TIERS].reverse();
     for (const tier of sortedAsc) {
         if (tier.boostPct > currentBoost) {
@@ -74,19 +74,39 @@ export async function createPendingReferral(referrerUserId: string, referredUser
 }
 
 /**
+ * Check if referrer has hit daily activation limit
+ */
+async function checkDailyRateLimit(referrerUserId: string): Promise<boolean> {
+    const todayStart = new Date();
+    todayStart.setHours(0, 0, 0, 0);
+
+    const [result] = await db.select({ count: sql<number>`count(*)` })
+        .from(referrals)
+        .where(and(
+            eq(referrals.referrerUserId, referrerUserId),
+            eq(referrals.status, 'ACTIVATED'),
+            gte(referrals.activatedAt, todayStart)
+        ));
+
+    const todayCount = Number(result?.count ?? 0);
+    return todayCount < MAX_ACTIVATIONS_PER_DAY;
+}
+
+/**
  * Activate a referral when the referred user executes their first contract
  * - Marks referral as ACTIVATED
  * - Increments referrer's referral_count
  * - Recalculates referrer's boost tier
+ * - Rate limited to 5 activations per day per referrer
  * 
  * @param referredUserId The user who was referred and just executed a contract
  * @param stakeCents The stake amount in cents (must be >= MIN_STAKE_CENTS)
  * @returns true if activation happened
  */
 export async function activateReferral(referredUserId: string, stakeCents: number): Promise<boolean> {
-    // Check minimum stake
+    // Check minimum stake ($50)
     if (stakeCents < MIN_STAKE_CENTS) {
-        console.log(`[Referral] Stake ${stakeCents} below minimum ${MIN_STAKE_CENTS}, skipping activation`);
+        console.log(`[Referral] Stake ${stakeCents} below minimum ${MIN_STAKE_CENTS} ($${MIN_STAKE_CENTS / 100}), skipping activation`);
         return false;
     }
 
@@ -100,6 +120,13 @@ export async function activateReferral(referredUserId: string, stakeCents: numbe
 
     if (!referral) {
         return false; // No pending referral
+    }
+
+    // Rate limit check: max 5 activations per day per referrer
+    const withinLimit = await checkDailyRateLimit(referral.referrerUserId);
+    if (!withinLimit) {
+        console.log(`[Referral] Rate limit: ${referral.referrerUserId} has reached ${MAX_ACTIVATIONS_PER_DAY} activations today`);
+        return false;
     }
 
     // Activate referral
@@ -154,12 +181,19 @@ export async function getReferralStats(userId: string) {
 
     const referralCode = user.referralCode || identity?.username || null;
 
+    // Check if this user was referred (for first-contract bonus display)
+    const wasReferred = !!(user as any).referredByUserId;
+    const firstBonusUsed = !!(user as any).referralFirstBonusUsed;
+
     return {
         referralCode,
         referralCount: user.referralCount ?? 0,
         boostPct: user.referralBoostPct ?? 0,
         maxBoostPct: MAX_BOOST_PCT,
         nextTier,
+        wasReferred,
+        firstBonusAvailable: wasReferred && !firstBonusUsed,
+        firstBonusPct: REFERRED_USER_FIRST_BONUS_PCT,
         referrals: referralList.map(r => ({
             id: r.id,
             status: r.status,
@@ -194,4 +228,31 @@ export async function lookupReferrer(referralCode: string): Promise<string | nul
     return null;
 }
 
-export { MIN_STAKE_CENTS, MAX_BOOST_PCT, BOOST_TIERS };
+/**
+ * Check and apply first-contract bonus for referred users
+ * Returns the bonus percentage if applicable, 0 otherwise
+ * Marks the bonus as consumed after first use
+ */
+export async function checkFirstContractBonus(userId: string): Promise<number> {
+    const [user] = await db.select().from(users)
+        .where(eq(users.id, userId)).limit(1);
+
+    if (!user) return 0;
+
+    const wasReferred = !!(user as any).referredByUserId;
+    const firstBonusUsed = !!(user as any).referralFirstBonusUsed;
+
+    if (wasReferred && !firstBonusUsed) {
+        // Mark bonus as consumed
+        await db.update(users)
+            .set({ referralFirstBonusUsed: true } as any)
+            .where(eq(users.id, userId));
+
+        console.log(`🎁 First-contract referral bonus applied for ${userId}: +${REFERRED_USER_FIRST_BONUS_PCT}%`);
+        return REFERRED_USER_FIRST_BONUS_PCT;
+    }
+
+    return 0;
+}
+
+export { MIN_STAKE_CENTS, MAX_BOOST_PCT, BOOST_TIERS, REFERRED_USER_FIRST_BONUS_PCT, MAX_ACTIVATIONS_PER_DAY };

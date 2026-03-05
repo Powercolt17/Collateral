@@ -494,17 +494,28 @@ export async function validateReferralCode(code) {
     return getPublic(`/r/${encodeURIComponent(code)}`);
 }
 
-// Referral code cookie management
+// Referral code storage — cookie (30 day) + localStorage for persistence
 export function setReferralCode(code) {
-    if (code) localStorage.setItem('collateral_referral', code.toLowerCase());
+    if (!code) return;
+    const val = code.toLowerCase();
+    localStorage.setItem('collateral_referral', val);
+    // Set 30-day cookie
+    const expires = new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toUTCString();
+    document.cookie = `collateral_ref=${encodeURIComponent(val)};expires=${expires};path=/;SameSite=Lax`;
 }
 
 export function getReferralCode() {
-    return localStorage.getItem('collateral_referral');
+    // Check localStorage first, then cookie
+    const ls = localStorage.getItem('collateral_referral');
+    if (ls) return ls;
+    // Parse cookie
+    const match = document.cookie.match(/(?:^|;\s*)collateral_ref=([^;]*)/);
+    return match ? decodeURIComponent(match[1]) : null;
 }
 
 export function clearReferralCode() {
     localStorage.removeItem('collateral_referral');
+    document.cookie = 'collateral_ref=;expires=Thu, 01 Jan 1970 00:00:00 GMT;path=/;SameSite=Lax';
 }
 
 // --- HEALTH ---

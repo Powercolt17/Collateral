@@ -152,7 +152,8 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="dns-prefetch" href="https://collateral-production.up.railway.app">
-    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&display=swap"
+    <link
+        href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap"
         rel="stylesheet">
 
     <!-- Stripe.js (required for card elements & payment confirmation) -->
@@ -279,7 +280,19 @@
                 pointer-events: none;
             }
         </style>
-        <div class="load-bar"></div>
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"
+            style="margin-bottom: 24px;">
+            <defs>
+                <clipPath id="saturn-load-top">
+                    <rect x="0" y="0" width="24" height="11" />
+                </clipPath>
+            </defs>
+            <circle cx="12" cy="12" r="6" fill="#921818" />
+            <ellipse cx="12" cy="12" rx="11" ry="3.5" transform="rotate(-18 12 12)" stroke="#921818" stroke-width="1.5"
+                fill="none" clip-path="url(#saturn-load-top)" />
+            <ellipse cx="12" cy="12" rx="11" ry="3.5" transform="rotate(-18 12 12)" stroke="#921818" stroke-width="1.5"
+                fill="none" style="clip-path: polygon(0 55%, 100% 40%, 100% 100%, 0 100%);" />
+        </svg>
         <div class="load-wordmark">
             <span>C</span><span>O</span><span>L</span><span>L</span><span>A</span><span>T</span><span>E</span><span>R</span><span>A</span><span>L</span>
         </div>
@@ -354,9 +367,21 @@
             <!-- Left: Branding -->
             <div style="max-width: 360px;">
                 <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 20px;">
-                    <div style="width: 3px; height: 20px; background: #921818; border-radius: 1px;"></div>
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <defs>
+                            <clipPath id="saturn-footer-top">
+                                <rect x="0" y="0" width="24" height="11" />
+                            </clipPath>
+                        </defs>
+                        <circle cx="12" cy="12" r="6" fill="#752122" />
+                        <ellipse cx="12" cy="12" rx="11" ry="3.5" transform="rotate(-18 12 12)" stroke="#752122"
+                            stroke-width="1.5" fill="none" clip-path="url(#saturn-footer-top)" />
+                        <ellipse cx="12" cy="12" rx="11" ry="3.5" transform="rotate(-18 12 12)" stroke="#752122"
+                            stroke-width="1.5" fill="none"
+                            style="clip-path: polygon(0 55%, 100% 40%, 100% 100%, 0 100%);" />
+                    </svg>
                     <span
-                        style="font-size: 13px; font-weight: 700; color: #fff; letter-spacing: 3px; text-transform: uppercase; font-family: 'JetBrains Mono', monospace;">COLLATERAL</span>
+                        style="font-size: 13px; font-weight: 700; color: #fff; letter-spacing: 0.18em; text-transform: uppercase; font-family: 'IBM Plex Sans', 'Inter', 'JetBrains Mono', monospace;">COLLATERAL</span>
                 </div>
                 <p style="font-size: 13px; line-height: 1.7; color: #777; margin: 0;">
                     The performance collateral protocol. Capital committed to measurable outcomes.
@@ -439,9 +464,21 @@
             <!-- Header -->
             <div class="mb-6 text-center">
                 <div class="flex items-center justify-center gap-2.5 mb-5">
-                    <div style="width:3px;height:24px;background:#752122;border-radius:1px;"></div>
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <defs>
+                            <clipPath id="saturn-modal-top">
+                                <rect x="0" y="0" width="24" height="11" />
+                            </clipPath>
+                        </defs>
+                        <circle cx="12" cy="12" r="6" fill="#752122" />
+                        <ellipse cx="12" cy="12" rx="11" ry="3.5" transform="rotate(-18 12 12)" stroke="#752122"
+                            stroke-width="1.5" fill="none" clip-path="url(#saturn-modal-top)" />
+                        <ellipse cx="12" cy="12" rx="11" ry="3.5" transform="rotate(-18 12 12)" stroke="#752122"
+                            stroke-width="1.5" fill="none"
+                            style="clip-path: polygon(0 55%, 100% 40%, 100% 100%, 0 100%);" />
+                    </svg>
                     <span
-                        style="font-size:18px;font-weight:800;color:#111;letter-spacing:0.12em;text-transform:uppercase;">COLLATERAL</span>
+                        style="font-size:18px;font-weight:700;color:#111;letter-spacing:0.16em;text-transform:uppercase;font-family:'IBM Plex Sans','Inter',sans-serif;">COLLATERAL</span>
                 </div>
                 <h3 id="auth-modal-title" class="font-semibold text-sm text-[#6B6B6B] tracking-tight">Commit Capital.
                     Prove Performance</h3>

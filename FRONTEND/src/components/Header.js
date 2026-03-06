@@ -502,8 +502,7 @@ export function renderHeader(currentRoute) {
             <div class="ch-header-inner">
                 <!-- Logo -->
                 <a href="#" onclick="window.router.navigate('/overview'); return false;" class="ch-logo">
-                    <img src="/logo.png" alt="Collateral" style="height:20px;width:auto;" />
-                    <span class="ch-logo-headline">COLLATERAL</span>
+                    <img src="/logo.svg" alt="Collateral" style="height:28px;width:auto;" />
                 </a>
 
                 <!-- Nav Links -->

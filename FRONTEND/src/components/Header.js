@@ -502,13 +502,7 @@ export function renderHeader(currentRoute) {
             <div class="ch-header-inner">
                 <!-- Logo -->
                 <a href="#" onclick="window.router.navigate('/overview'); return false;" class="ch-logo">
-                    <div class="ch-logo-accent">
-                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <ellipse cx="12" cy="12" rx="11" ry="3.2" transform="rotate(-18 12 12)" stroke="#752122" stroke-width="1.1" fill="none" style="clip-path: polygon(0 0, 100% 0, 100% 50%, 0 50%);"/>
-                            <circle cx="12" cy="12" r="5" fill="#752122"/>
-                            <ellipse cx="12" cy="12" rx="11" ry="3.2" transform="rotate(-18 12 12)" stroke="#752122" stroke-width="1.1" fill="none" style="clip-path: polygon(0 50%, 100% 50%, 100% 100%, 0 100%);"/>
-                        </svg>
-                    </div>
+                    <img src="/logo.png" alt="Collateral" style="height:20px;width:auto;" />
                     <span class="ch-logo-headline">COLLATERAL</span>
                 </a>
 

@@ -182,8 +182,26 @@ export async function getReferralStats(userId: string) {
     const referralCode = user.referralCode || identity?.username || null;
 
     // Check if this user was referred (for first-contract bonus display)
-    const wasReferred = !!(user as any).referredByUserId;
-    const firstBonusUsed = !!(user as any).referralFirstBonusUsed;
+    // Use raw SQL as a fallback — Drizzle may not return these columns
+    // if there's a compiled schema mismatch vs. the running DB
+    let wasReferred = !!(user as any).referredByUserId;
+    let firstBonusUsed = !!(user as any).referralFirstBonusUsed;
+
+    if (!wasReferred) {
+        try {
+            const rawResult = await db.execute(sql`
+                SELECT referred_by_user_id, referral_first_bonus_used
+                FROM users WHERE id = ${userId}
+            `);
+            const row = (rawResult as any)[0] || (rawResult as any).rows?.[0];
+            if (row) {
+                wasReferred = !!(row.referred_by_user_id);
+                firstBonusUsed = !!(row.referral_first_bonus_used);
+            }
+        } catch (err: any) {
+            console.warn('[Referral] Could not check referral bonus columns:', err.message);
+        }
+    }
 
     return {
         referralCode,

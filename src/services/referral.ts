@@ -187,6 +187,7 @@ export async function getReferralStats(userId: string) {
     let wasReferred = !!(user as any).referredByUserId;
     let firstBonusUsed = !!(user as any).referralFirstBonusUsed;
 
+    // Fallback 1: Check raw SQL on users table
     if (!wasReferred) {
         try {
             const rawResult = await db.execute(sql`
@@ -202,6 +203,34 @@ export async function getReferralStats(userId: string) {
             console.warn('[Referral] Could not check referral bonus columns:', err.message);
         }
     }
+
+    // Fallback 2: Check referrals table — this user might appear as referred_user_id
+    // even if referred_by_user_id was never set on the users row
+    if (!wasReferred) {
+        try {
+            const refResult = await db.execute(sql`
+                SELECT referrer_user_id FROM referrals
+                WHERE referred_user_id = ${userId}
+                LIMIT 1
+            `);
+            const refRow = (refResult as any)[0] || (refResult as any).rows?.[0];
+            if (refRow && refRow.referrer_user_id) {
+                wasReferred = true;
+                console.log(`[Referral] Found referral via table for ${userId}, referrer: ${refRow.referrer_user_id}`);
+                // Retroactively fix the user record
+                try {
+                    await db.execute(sql`
+                        UPDATE users SET referred_by_user_id = ${refRow.referrer_user_id}
+                        WHERE id = ${userId} AND referred_by_user_id IS NULL
+                    `);
+                } catch { /* non-critical */ }
+            }
+        } catch (err: any) {
+            console.warn('[Referral] Could not check referrals table:', err.message);
+        }
+    }
+
+    console.log(`[Referral] Stats for ${userId}: wasReferred=${wasReferred}, firstBonusUsed=${firstBonusUsed}, firstBonusAvailable=${wasReferred && !firstBonusUsed}`);
 
     return {
         referralCode,

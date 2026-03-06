@@ -401,7 +401,9 @@ function showContent(c) {
 
     // Fetch referral bonus asynchronously
     if (hasAuthToken()) {
+        console.log('[TermSheet] Fetching referral stats...');
         getReferralStats().then(stats => {
+            console.log('[TermSheet] Referral stats:', stats);
             if (stats && stats.firstBonusAvailable && stats.firstBonusPct > 0) {
                 referralBonusPct = stats.firstBonusPct;
                 const basePayout = Math.round(currentStake * multiplier);
@@ -412,8 +414,12 @@ function showContent(c) {
                     bonusRow.style.display = 'block';
                     bonusRow.innerHTML = `<div class="cts-panel-row" style="background:#f0fdf4;border:1px solid #bbf7d0;padding:4px 12px;margin:2px 0;"><span class="cts-panel-lbl" style="color:#15803d;font-weight:600;font-size:9px;">🎁 Referral Bonus (+${referralBonusPct}%)</span><span class="cts-panel-val success" style="font-size:12px;">+$${bonusAmt.toLocaleString()}</span></div>`;
                 }
+            } else {
+                console.log('[TermSheet] No referral bonus available:', { firstBonusAvailable: stats?.firstBonusAvailable, wasReferred: stats?.wasReferred });
             }
-        }).catch(() => { /* silently ignore */ });
+        }).catch(err => { console.error('[TermSheet] Referral stats fetch failed:', err); });
+    } else {
+        console.log('[TermSheet] No auth token, skipping referral bonus check');
     }
 }
 

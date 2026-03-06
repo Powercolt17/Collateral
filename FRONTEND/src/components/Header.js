@@ -130,8 +130,8 @@ export function renderHeader(currentRoute) {
                 gap: 12px;
             }
             .ch-logo-accent {
-                width: 22px;
-                height: 22px;
+                width: 20px;
+                height: 20px;
                 flex-shrink: 0;
                 display: flex;
                 align-items: center;
@@ -139,10 +139,10 @@ export function renderHeader(currentRoute) {
             }
             .ch-logo-headline {
                 font-size: 15px;
-                font-weight: 700;
+                font-weight: 600;
                 color: #111111;
-                letter-spacing: 0.18em;
-                font-family: 'IBM Plex Sans', 'Inter', 'Neue Haas Grotesk Display', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+                letter-spacing: 0.2em;
+                font-family: 'IBM Plex Sans', 'Inter', 'Helvetica Neue', Helvetica, Arial, sans-serif;
                 text-transform: uppercase;
                 margin: 0;
             }
@@ -503,13 +503,10 @@ export function renderHeader(currentRoute) {
                 <!-- Logo -->
                 <a href="#" onclick="window.router.navigate('/overview'); return false;" class="ch-logo">
                     <div class="ch-logo-accent">
-                        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <defs>
-                                <clipPath id="saturn-clip-top"><rect x="0" y="0" width="24" height="11"/></clipPath>
-                            </defs>
-                            <circle cx="12" cy="12" r="6" fill="#752122"/>
-                            <ellipse cx="12" cy="12" rx="11" ry="3.5" transform="rotate(-18 12 12)" stroke="#752122" stroke-width="1.5" fill="none" clip-path="url(#saturn-clip-top)"/>
-                            <ellipse cx="12" cy="12" rx="11" ry="3.5" transform="rotate(-18 12 12)" stroke="#752122" stroke-width="1.5" fill="none" style="clip-path: polygon(0 55%, 100% 40%, 100% 100%, 0 100%);"/>
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <ellipse cx="12" cy="12" rx="11" ry="3.2" transform="rotate(-18 12 12)" stroke="#752122" stroke-width="1.1" fill="none" style="clip-path: polygon(0 0, 100% 0, 100% 50%, 0 50%);"/>
+                            <circle cx="12" cy="12" r="5" fill="#752122"/>
+                            <ellipse cx="12" cy="12" rx="11" ry="3.2" transform="rotate(-18 12 12)" stroke="#752122" stroke-width="1.1" fill="none" style="clip-path: polygon(0 50%, 100% 50%, 100% 100%, 0 100%);"/>
                         </svg>
                     </div>
                     <span class="ch-logo-headline">COLLATERAL</span>

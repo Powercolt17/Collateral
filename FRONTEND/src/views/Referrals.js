@@ -82,7 +82,7 @@ async function loadReferralData() {
             : 'Maximum reached';
         const progressHint = stats.nextTier
             ? `${stats.nextTier.needed - stats.referralCount} more referral${(stats.nextTier.needed - stats.referralCount) !== 1 ? 's' : ''} to unlock <strong style="color:#8B1A1A;">+${stats.nextTier.boostPct}%</strong> boost`
-            : '🏆 You've reached the maximum boost tier';
+            : '🏆 You\'ve reached the maximum boost tier';
 
         // First-contract bonus banner
         const firstBonusHtml = stats.firstBonusAvailable

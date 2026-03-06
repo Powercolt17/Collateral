@@ -7,7 +7,7 @@
 
 import { FastifyPluginAsync } from 'fastify';
 import { getReferralStats, lookupReferrer } from '../services/referral.js';
-import { getPrincipal } from '../services/auth.js';
+import { getPrincipal, requireAuth } from '../services/auth.js';
 
 const referralRoutes: FastifyPluginAsync = async (fastify) => {
 
@@ -15,7 +15,7 @@ const referralRoutes: FastifyPluginAsync = async (fastify) => {
      * GET /me/referrals
      * Get current user's referral stats, boost, and referral list
      */
-    fastify.get('/me/referrals', async (request, reply) => {
+    fastify.get('/me/referrals', { preHandler: requireAuth }, async (request, reply) => {
         let userId: string;
         try {
             userId = getPrincipal(request);

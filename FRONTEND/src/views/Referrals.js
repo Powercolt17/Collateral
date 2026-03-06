@@ -63,7 +63,7 @@ export function renderReferrals() {
             }
             .ref-hero-desc {
                 font-size: 15px;
-                color: #999;
+                color: #333;
                 margin-top: 12px;
                 line-height: 1.6;
                 max-width: 440px;
@@ -92,7 +92,7 @@ export function renderReferrals() {
                 font-size: 9px;
                 font-weight: 600;
                 letter-spacing: 0.12em;
-                color: #ccc;
+                color: #555;
                 text-transform: uppercase;
                 margin-top: 8px;
             }
@@ -126,12 +126,12 @@ export function renderReferrals() {
                 font-weight: 700;
                 text-transform: uppercase;
                 letter-spacing: 2px;
-                color: #888;
+                color: #333;
             }
             .ref-section-sub {
                 font-family: 'JetBrains Mono', monospace;
                 font-size: 10px;
-                color: #bbb;
+                color: #555;
             }
 
             /* ── Tier Row ── */
@@ -164,7 +164,7 @@ export function renderReferrals() {
                 font-weight: 600;
                 color: #111;
             }
-            .ref-tier-label.dimmed { color: #bbb; font-weight: 400; }
+            .ref-tier-label.dimmed { color: #888; font-weight: 400; }
 
             /* ── Badges ── */
             .ref-badge {
@@ -195,7 +195,7 @@ export function renderReferrals() {
                 color: #111;
                 letter-spacing: -0.5px;
             }
-            .ref-tier-pct.dimmed { color: #ccc; font-weight: 400; }
+            .ref-tier-pct.dimmed { color: #888; font-weight: 400; }
 
             /* ── Referral Link Card ── */
             .ref-link-card {
@@ -262,7 +262,7 @@ export function renderReferrals() {
             }
             .ref-progress-hint {
                 font-size: 12px;
-                color: #999;
+                color: #333;
                 display: flex;
                 align-items: center;
                 gap: 6px;
@@ -298,8 +298,8 @@ export function renderReferrals() {
                 margin-bottom: 6px;
             }
             .ref-step-desc {
-                font-size: 12px;
-                color: #999;
+                font-size: 13px;
+                color: #333;
                 line-height: 1.5;
             }
 
@@ -381,12 +381,12 @@ export function renderReferrals() {
                 font-weight: 700;
                 text-transform: uppercase;
                 letter-spacing: 1.5px;
-                color: #bbb;
+                color: #555;
             }
             .ref-footer-val {
                 font-family: 'JetBrains Mono', monospace;
                 font-size: 10px;
-                color: #888;
+                color: #111;
             }
             .ref-footer-dot {
                 display: inline-block;
@@ -625,8 +625,8 @@ async function loadReferralData() {
             + '</div>'
             + '<div class="ref-step">'
             + '<div class="ref-step-num">02</div>'
-            + '<div class="ref-step-title">They Join</div>'
-            + '<div class="ref-step-desc">When they sign up and activate, your referral counts.</div>'
+            + '<div class="ref-step-title">They Execute</div>'
+            + '<div class="ref-step-desc">Your referral counts when they create and execute a contract with a $50+ stake.</div>'
             + '</div>'
             + '<div class="ref-step">'
             + '<div class="ref-step-num">03</div>'

@@ -481,6 +481,17 @@
                     <p class="text-[10px] text-[#9CA3AF]">3-20 characters. Letters, numbers, underscores.</p>
                 </div>
 
+                <!-- Sign Up Only: Referral Code field (hidden by default) -->
+                <div id="auth-referral-field" class="flex flex-col gap-1.5 hidden">
+                    <label class="text-xs font-medium text-[#6B6B6B]">Referral Code <span
+                            style="color:#9CA3AF;font-weight:400;">(optional)</span></label>
+                    <input type="text" id="auth-referral-code"
+                        class="w-full bg-white border border-[#E5E5E5] rounded-md px-4 py-3 h-11 text-sm text-[#1A1A1A] focus:outline-none focus:border-[#752122] focus:ring-1 focus:ring-[#752122]/10 transition-colors"
+                        placeholder="friend's username" maxlength="20">
+                    <p class="text-[10px] text-[#9CA3AF]">Enter a friend's code to get +5% bonus on your first contract.
+                    </p>
+                </div>
+
                 <!-- Submit Button -->
                 <button onclick="window.app.handleAuthSubmit()" id="btn-auth-submit"
                     class="w-full h-11 mt-1 bg-[#111] hover:bg-black text-white text-sm font-medium rounded-md transition-colors flex items-center justify-center">

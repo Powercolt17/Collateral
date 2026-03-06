@@ -372,17 +372,26 @@ window.app = {
         const title = document.getElementById('auth-modal-title');
         const btn = document.getElementById('btn-auth-submit');
         const usernameField = document.getElementById('auth-username-field');
+        const referralField = document.getElementById('auth-referral-field');
         const toggleText = document.getElementById('auth-toggle-text');
 
         if (isSignup) {
             if (title) title.textContent = 'Create your account.';
             if (btn) btn.textContent = 'Create Account';
             if (usernameField) usernameField.classList.remove('hidden');
+            if (referralField) referralField.classList.remove('hidden');
+            // Pre-fill referral code from localStorage (if came via link)
+            const storedCode = api.getReferralCode ? api.getReferralCode() : null;
+            if (storedCode) {
+                const refInput = document.getElementById('auth-referral-code');
+                if (refInput && !refInput.value) refInput.value = storedCode;
+            }
             if (toggleText) toggleText.innerHTML = 'Already have an account? <button onclick="window.app.toggleAuthMode()" class="text-[#111] font-medium hover:underline bg-transparent border-none cursor-pointer p-0">Sign in</button>';
         } else {
             if (title) title.textContent = 'Sign in to lock capital.';
             if (btn) btn.textContent = 'Sign In';
             if (usernameField) usernameField.classList.add('hidden');
+            if (referralField) referralField.classList.add('hidden');
             if (toggleText) toggleText.innerHTML = 'New here? <button onclick="window.app.toggleAuthMode()" class="text-[#111] font-medium hover:underline bg-transparent border-none cursor-pointer p-0">Create account</button>';
         }
     },
@@ -410,6 +419,12 @@ window.app = {
             const originalText = btn.textContent;
             btn.innerHTML = '<div class="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin mx-auto"></div>';
             btn.disabled = true;
+
+            // Store referral code from the input field (overrides any link-based code)
+            const referralInput = document.getElementById('auth-referral-code')?.value?.trim();
+            if (referralInput) {
+                api.setReferralCode(referralInput);
+            }
 
             try {
                 const result = await api.signup(email, password, username, username);

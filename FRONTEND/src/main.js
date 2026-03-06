@@ -492,6 +492,9 @@ window.app = {
         try {
             if (!window.Clerk) { alert('OAuth not available. Please use email/password or refresh.'); return; }
             console.log('[Auth] Starting Google OAuth via Clerk...');
+            // Store referral code before redirect (if entered)
+            const refInput = document.getElementById('auth-referral-code')?.value?.trim();
+            if (refInput) api.setReferralCode(refInput);
             window.app.closeAccessModal();
             // If Clerk already has a session, exchange it directly
             if (window.Clerk.session) {
@@ -600,10 +603,11 @@ window.app = {
             if (!clerkToken) return;
 
             console.log('[Auth] Exchanging Clerk token for internal JWT...');
+            const referralCode = api.getReferralCode ? api.getReferralCode() : null;
             const resp = await fetch((import.meta.env.VITE_API_BASE_URL || 'https://collateral-production.up.railway.app') + '/v1/auth/clerk', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ token: clerkToken }),
+                body: JSON.stringify({ token: clerkToken, referralCode: referralCode || undefined }),
             });
             const result = await resp.json();
             if (!result.ok) throw new Error(result.error || 'Token exchange failed');

@@ -28,9 +28,9 @@ const clerkAuthRoutes: FastifyPluginAsync = async (fastify) => {
      * 5. Returns internal JWT + user data
      */
     fastify.post<{
-        Body: { token: string };
+        Body: { token: string; referralCode?: string };
     }>('/v1/auth/clerk', async (request, reply) => {
-        const { token } = request.body;
+        const { token, referralCode } = request.body;
 
         if (!token) {
             reply.status(400);
@@ -116,6 +116,35 @@ const clerkAuthRoutes: FastifyPluginAsync = async (fastify) => {
                         .returning();
                     user = created;
                     console.log(`✅ [ClerkAuth] Created new user ${user.id} via Clerk (${email})`);
+
+                    // REFERRAL: Process referral code for new OAuth users
+                    if (referralCode) {
+                        try {
+                            const { lookupReferrer, createPendingReferral } = await import('../services/referral.js');
+                            const { sql } = await import('drizzle-orm');
+                            const referrerId = await lookupReferrer(referralCode);
+                            if (referrerId && referrerId !== user.id) {
+                                await db.execute(sql`
+                                    UPDATE users SET referred_by_user_id = ${referrerId}
+                                    WHERE id = ${user.id}
+                                `);
+                                await createPendingReferral(referrerId, user.id);
+                                console.log(`🔗 [ClerkAuth] Referral tracked: ${referralCode} → ${user.id}`);
+                            }
+                        } catch (err: any) {
+                            console.error('[ClerkAuth] Referral tracking failed (non-blocking):', err.message);
+                        }
+                    }
+
+                    // Set referral code (username) for the new user
+                    try {
+                        const { sql } = await import('drizzle-orm');
+                        const username = (displayName.toLowerCase().replace(/[^a-z0-9_]/g, '') || 'user').slice(0, 20);
+                        await db.execute(sql`
+                            UPDATE users SET referral_code = ${username}
+                            WHERE id = ${user.id} AND referral_code IS NULL
+                        `);
+                    } catch { /* non-critical */ }
 
                     // EMAIL: Welcome (fire-and-forget)
                     if (email) {

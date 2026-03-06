@@ -578,7 +578,7 @@ async function loadReferralData() {
                     + '</div>';
             }).join('');
 
-            historyHtml = '<div class="ref-section" data-reveal>'
+            historyHtml = '<div class="ref-section">'
                 + '<div class="ref-section-hdr"><span class="ref-section-title">Referral History</span><span class="ref-section-sub">' + stats.referrals.length + ' total</span></div>'
                 + rows
                 + '</div>';
@@ -588,7 +588,7 @@ async function loadReferralData() {
             + bonusHtml
 
             // Progress to Next Tier
-            + '<div class="ref-section" data-reveal>'
+            + '<div class="ref-section">'
             + '<div class="ref-section-hdr"><span class="ref-section-title">Progress to Next Tier</span><span class="ref-section-sub">' + progressLabel + '</span></div>'
             + '<div style="padding:16px 20px;">'
             + '<div class="ref-progress-track"><div class="ref-progress-fill" style="width:' + progressPct + '%;"></div></div>'
@@ -598,7 +598,7 @@ async function loadReferralData() {
 
             // Referral Link
             + (referralLink
-                ? '<div class="ref-link-card" data-reveal>'
+                ? '<div class="ref-link-card">'
                 + '<div class="ref-link-title">Your Referral Link</div>'
                 + '<div class="ref-link-row">'
                 + '<input id="referral-link-input" class="ref-link-input" type="text" readonly value="' + referralLink + '">'
@@ -611,13 +611,13 @@ async function loadReferralData() {
                 : '')
 
             // Boost Tiers
-            + '<div class="ref-section" data-reveal>'
+            + '<div class="ref-section">'
             + '<div class="ref-section-hdr"><span class="ref-section-title">Boost Tiers</span></div>'
             + tierRows
             + '</div>'
 
             // How It Works
-            + '<div class="ref-steps" data-reveal>'
+            + '<div class="ref-steps">'
             + '<div class="ref-step">'
             + '<div class="ref-step-num">01</div>'
             + '<div class="ref-step-title">Share Link</div>'

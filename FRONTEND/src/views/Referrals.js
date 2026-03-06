@@ -626,7 +626,7 @@ async function loadReferralData() {
             + '<div class="ref-step">'
             + '<div class="ref-step-num">02</div>'
             + '<div class="ref-step-title">They Execute</div>'
-            + '<div class="ref-step-desc">Your referral counts when they create and execute a contract with a $50+ stake.</div>'
+            + '<div class="ref-step-desc">Your referral counts when they create and execute a contract.</div>'
             + '</div>'
             + '<div class="ref-step">'
             + '<div class="ref-step-num">03</div>'

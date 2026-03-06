@@ -302,11 +302,22 @@ export function openExecutionModal(contractData) {
 
     let selectedStake = displayPresets[0];
 
+    // ── Referral bonus state ──
+    let referralBonusPct = 0;
+
     const fmtStake = (v) => v >= 1000 ? '$' + (v / 1000).toLocaleString('en-US', { maximumFractionDigits: 1 }).replace(/\.0$/, '') + 'K' : '$' + v.toLocaleString();
     const fmtDollar = (v) => '$' + v.toLocaleString();
 
     const renderBody = () => {
-        const payout = Math.round(selectedStake * mult);
+        const basePayout = Math.round(selectedStake * mult);
+        const bonusAmount = referralBonusPct > 0 ? Math.round(basePayout * referralBonusPct / 100) : 0;
+        const totalPayout = basePayout + bonusAmount;
+
+        const bonusHtml = referralBonusPct > 0 ? `
+            <div class="exec-outcome" style="background:#f0fdf4;border:1px solid #bbf7d0;padding:8px 12px;margin:-2px 0 2px;">
+                <span class="exec-outcome-label" style="color:#15803d;font-weight:600;">🎁 Referral Bonus (+${referralBonusPct}%)</span>
+                <span class="exec-outcome-value success" style="color:#15803d;">+${fmtDollar(bonusAmount)}</span>
+            </div>` : '';
 
         body.innerHTML = `
             <div class="exec-tier-row">
@@ -328,8 +339,9 @@ export function openExecutionModal(contractData) {
             </div>
             <div class="exec-outcome">
                 <span class="exec-outcome-label">If Successful</span>
-                <span class="exec-outcome-value success" id="exec-out-success">+${fmtDollar(payout)}</span>
+                <span class="exec-outcome-value success" id="exec-out-success">+${fmtDollar(totalPayout)}</span>
             </div>
+            ${bonusHtml}
             <div class="exec-outcome">
                 <span class="exec-outcome-label">If Failed</span>
                 <span class="exec-outcome-value failure" id="exec-out-fail">-${fmtDollar(selectedStake)}</span>
@@ -379,6 +391,16 @@ export function openExecutionModal(contractData) {
 
     renderBody();
     modal.classList.add('open');
+
+    // Fetch referral bonus asynchronously and re-render if available
+    if (window.api && window.api.getReferralStats && window.appState?.isLoggedIn) {
+        window.api.getReferralStats().then(stats => {
+            if (stats && stats.firstBonusAvailable && stats.firstBonusPct > 0) {
+                referralBonusPct = stats.firstBonusPct;
+                renderBody();
+            }
+        }).catch(() => { /* silently ignore */ });
+    }
 }
 
 export function closeExecutionModal() {

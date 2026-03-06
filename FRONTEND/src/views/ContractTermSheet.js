@@ -1,7 +1,7 @@
 // ContractTermSheet.js — Institutional Contract Term Sheet
 // Mechanical specification page. Not marketing.
 
-import { getMarketListings, hasAuthToken } from '../api.js';
+import { getMarketListings, hasAuthToken, getReferralStats } from '../api.js';
 import { openExecutionModal } from './ExecutionModal.js';
 
 export function renderContractTermSheet(params) {
@@ -339,6 +339,7 @@ function showContent(c) {
                     <span class="cts-panel-lbl">If Successful</span>
                     <span class="cts-panel-val success" id="cts-payout-val">+$${currentPayout.toLocaleString()}</span>
                 </div>
+                <div id="cts-bonus-row" style="display:none;"></div>
                 <div class="cts-panel-row">
                     <span class="cts-panel-lbl">If Failed</span>
                     <span class="cts-panel-val failure" id="cts-loss-val">-$${currentStake.toLocaleString()}</span>
@@ -359,6 +360,8 @@ function showContent(c) {
     const payoutVal = document.getElementById('cts-payout-val');
     const lossVal = document.getElementById('cts-loss-val');
     const lockBtn = document.getElementById('cts-lock-btn');
+    const bonusRow = document.getElementById('cts-bonus-row');
+    let referralBonusPct = 0;
 
     if (tierGroup) {
         tierGroup.addEventListener('click', (e) => {
@@ -369,12 +372,17 @@ function showContent(c) {
             opt.classList.add('active');
 
             currentStake = parseInt(opt.dataset.stake);
-            currentPayout = Math.round(currentStake * multiplier);
+            const basePayout = Math.round(currentStake * multiplier);
+            const bonusAmt = referralBonusPct > 0 ? Math.round(basePayout * referralBonusPct / 100) : 0;
+            currentPayout = basePayout + bonusAmt;
 
             stakeVal.textContent = `$${currentStake.toLocaleString()}`;
             payoutVal.textContent = `+$${currentPayout.toLocaleString()}`;
             lossVal.textContent = `-$${currentStake.toLocaleString()}`;
             lockBtn.textContent = `LOCK $${currentStake.toLocaleString()} CAPITAL →`;
+            if (bonusRow && referralBonusPct > 0) {
+                bonusRow.innerHTML = `<div class="cts-panel-row" style="background:#f0fdf4;border:1px solid #bbf7d0;padding:4px 12px;margin:2px 0;"><span class="cts-panel-lbl" style="color:#15803d;font-weight:600;font-size:9px;">🎁 Referral Bonus (+${referralBonusPct}%)</span><span class="cts-panel-val success" style="font-size:12px;">+$${bonusAmt.toLocaleString()}</span></div>`;
+            }
         });
     }
 
@@ -389,6 +397,23 @@ function showContent(c) {
             });
             window.router.navigate('/contracts/execute?' + params.toString());
         });
+    }
+
+    // Fetch referral bonus asynchronously
+    if (hasAuthToken()) {
+        getReferralStats().then(stats => {
+            if (stats && stats.firstBonusAvailable && stats.firstBonusPct > 0) {
+                referralBonusPct = stats.firstBonusPct;
+                const basePayout = Math.round(currentStake * multiplier);
+                const bonusAmt = Math.round(basePayout * referralBonusPct / 100);
+                currentPayout = basePayout + bonusAmt;
+                if (payoutVal) payoutVal.textContent = `+$${currentPayout.toLocaleString()}`;
+                if (bonusRow) {
+                    bonusRow.style.display = 'block';
+                    bonusRow.innerHTML = `<div class="cts-panel-row" style="background:#f0fdf4;border:1px solid #bbf7d0;padding:4px 12px;margin:2px 0;"><span class="cts-panel-lbl" style="color:#15803d;font-weight:600;font-size:9px;">🎁 Referral Bonus (+${referralBonusPct}%)</span><span class="cts-panel-val success" style="font-size:12px;">+$${bonusAmt.toLocaleString()}</span></div>`;
+                }
+            }
+        }).catch(() => { /* silently ignore */ });
     }
 }
 

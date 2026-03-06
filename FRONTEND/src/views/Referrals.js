@@ -527,9 +527,7 @@ async function loadReferralData() {
         if (countEl) countEl.textContent = String(stats.referralCount || 0);
         if (nextEl) nextEl.textContent = stats.nextTier ? '+' + stats.nextTier.boostPct + '%' : 'MAX';
 
-        const referralLink = stats.referralCode
-            ? 'https://collateral.market/r/' + stats.referralCode
-            : null;
+        const referralCode = stats.referralCode || null;
 
         const progressPct = stats.nextTier
             ? Math.min(100, Math.round((stats.referralCount / stats.nextTier.needed) * 100))
@@ -596,17 +594,18 @@ async function loadReferralData() {
             + '</div>'
             + '</div>'
 
-            // Referral Link
-            + (referralLink
+            // Referral Code
+            + (referralCode
                 ? '<div class="ref-link-card">'
-                + '<div class="ref-link-title">Your Referral Link</div>'
+                + '<div class="ref-link-title">Your Referral Code</div>'
                 + '<div class="ref-link-row">'
-                + '<input id="referral-link-input" class="ref-link-input" type="text" readonly value="' + referralLink + '">'
+                + '<input id="referral-link-input" class="ref-link-input" type="text" readonly value="' + referralCode + '">'
                 + '<button id="referral-copy-btn" class="ref-link-btn">'
                 + '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>'
                 + 'COPY'
                 + '</button>'
                 + '</div>'
+                + '<p style="font-size:11px;color:#777;margin-top:10px;">Share this code with friends. They enter it when creating an account.</p>'
                 + '</div>'
                 : '')
 
@@ -620,8 +619,8 @@ async function loadReferralData() {
             + '<div class="ref-steps">'
             + '<div class="ref-step">'
             + '<div class="ref-step-num">01</div>'
-            + '<div class="ref-step-title">Share Link</div>'
-            + '<div class="ref-step-desc">Send your unique referral link to peers and colleagues.</div>'
+            + '<div class="ref-step-title">Share Code</div>'
+            + '<div class="ref-step-desc">Send your unique referral code to peers and colleagues.</div>'
             + '</div>'
             + '<div class="ref-step">'
             + '<div class="ref-step-num">02</div>'

@@ -265,6 +265,14 @@ const routes = PRE_LAUNCH_MODE ? [
         }
     }
 
+    // Referral link redirect: /r/:code → /#/r/:code
+    const refMatch = pathname.match(/^\/r\/([a-zA-Z0-9_-]+)\/?$/);
+    if (refMatch) {
+        console.log('[Referral] Intercepting', pathname, ', redirecting to hash route');
+        window.location.replace(origin + '/#/r/' + refMatch[1]);
+        return;
+    }
+
     // Map of path-based OAuth callbacks to hash routes
     const map = {
         '/x/callback': '/#/x/callback',

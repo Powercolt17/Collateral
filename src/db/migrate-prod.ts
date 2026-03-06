@@ -62,9 +62,16 @@ export async function runMigrations() {
         await migrate(migrationDb, { migrationsFolder });
         console.log('[migrate] ✅ Migrations applied successfully.');
 
-        // VALIDATION & FORCE FIX
+        // =================================================================
+        // FORCE-APPLY ALL UNTRACKED MIGRATIONS (0024–0035)
+        // =================================================================
+        // The Drizzle journal only tracks up to 0023. Migrations 0024–0035
+        // were added manually and never registered in the journal.
+        // All migration files use idempotent SQL (IF NOT EXISTS, etc.),
+        // so re-running them is always safe.
+        // =================================================================
         try {
-            // 1. Log tracking status
+            // Log tracking status
             try {
                 const applied = await migrationDb.execute(sql`SELECT count(*) as count FROM drizzle.__drizzle_migrations`);
                 console.log(`[migrate] ℹ️ Drizzle tracking table has ${applied[0]?.count} rows.`);
@@ -72,68 +79,73 @@ export async function runMigrations() {
                 console.log('[migrate] ℹ️ Could not query drizzle.__drizzle_migrations (might not exist yet).');
             }
 
-            // 2. Check for missing tables
-            const [mci] = await migrationDb.execute(sql`SELECT to_regclass('public.market_contract_instances') as exists`);
-            const [ct] = await migrationDb.execute(sql`SELECT to_regclass('public.contract_templates') as exists`);
+            // All untracked migrations in order
+            const untrackedMigrations = [
+                '0024_ensure_market_tables.sql',
+                '0025_add_missing_market_tables_v2.sql',
+                '0026_smart_tiers.sql',
+                '0027_fix_schema_mismatch.sql',
+                '0028_fix_schema_drift_v2.sql',
+                '0029_add_clerk_user_id.sql',
+                '0030_password_reset_tokens.sql',
+                '0031_update_tier_pricing.sql',
+                '0032_oracle_metric_tables.sql',
+                '0033_social_share_bonus.sql',
+                '0034_referral_system.sql',
+                '0035_referral_first_bonus.sql',
+            ];
 
-            const mciExists = !!mci?.exists;
-            const ctExists = !!ct?.exists;
+            console.log(`[migrate] 🔧 Force-applying ${untrackedMigrations.length} untracked migrations...`);
 
-            console.log(`[migrate] 🔍 Table Check: market_contract_instances=${mciExists}, contract_templates=${ctExists}`);
-
-            if (!mciExists || !ctExists) {
-                console.warn('[migrate] ⚠️ Critical tables missing despite migration success. FORCE APPLYING 0025...');
-
-                // Force read 0025 and execute
-                const forceFile = '0025_add_missing_market_tables_v2.sql';
-                const forcePath = resolve(migrationsFolder, forceFile);
-
-                if (fs.existsSync(forcePath)) {
-                    console.log(`[migrate] reading ${forceFile}...`);
-                    const sqlContent = fs.readFileSync(forcePath, 'utf-8');
-
-                    // Simple execute (assuming file is safe standard SQL)
-                    await migrationDb.execute(sql.raw(sqlContent));
-                    console.log('[migrate] ☢️ FORCE APPLY 0025 EXECUTED.');
-
-                    // Re-verify
-                    const [mci2] = await migrationDb.execute(sql`SELECT to_regclass('public.market_contract_instances') as exists`);
-                    console.log(`[migrate] 🔍 Re-Check: market_contract_instances=${!!mci2?.exists}`);
-                } else {
-                    console.error(`[migrate] ❌ Could not find ${forceFile} to force apply! Path checked: ${forcePath}`);
+            for (const fileName of untrackedMigrations) {
+                const filePath = resolve(migrationsFolder, fileName);
+                if (!fs.existsSync(filePath)) {
+                    console.warn(`[migrate] ⚠️ Skipping ${fileName} (file not found)`);
+                    continue;
                 }
-            } else {
-                console.log('[migrate] ✅ Tables confirmed to exist.');
+
+                try {
+                    const sqlContent = fs.readFileSync(filePath, 'utf-8');
+                    await migrationDb.execute(sql.raw(sqlContent));
+                    console.log(`[migrate] ✅ Force-applied: ${fileName}`);
+                } catch (err: any) {
+                    // Log but don't crash — idempotent SQL should not fail,
+                    // but if it does we still want the rest to run
+                    console.error(`[migrate] ⚠️ Error applying ${fileName}: ${err.message}`);
+                }
             }
 
-            // 3. Check for missing referral columns (0034_referral_system)
-            const [refCol] = await migrationDb.execute(sql`
-                SELECT column_name FROM information_schema.columns 
-                WHERE table_name = 'users' AND column_name = 'referral_code'
-            `);
+            // Verification: spot-check critical columns/tables
+            const checks = [
+                { label: 'market_contract_instances', query: sql`SELECT to_regclass('public.market_contract_instances') as exists` },
+                { label: 'contract_templates', query: sql`SELECT to_regclass('public.contract_templates') as exists` },
+                { label: 'contract_metric_snapshots', query: sql`SELECT to_regclass('public.contract_metric_snapshots') as exists` },
+                { label: 'referrals', query: sql`SELECT to_regclass('public.referrals') as exists` },
+            ];
 
-            if (!refCol) {
-                console.warn('[migrate] ⚠️ Referral columns missing. FORCE APPLYING 0034...');
-                const forceRefFile = '0034_referral_system.sql';
-                const forceRefPath = resolve(migrationsFolder, forceRefFile);
+            for (const check of checks) {
+                const [result] = await migrationDb.execute(check.query);
+                const exists = !!(result as any)?.exists;
+                console.log(`[migrate] 🔍 ${check.label}: ${exists ? '✅' : '❌ MISSING'}`);
+            }
 
-                if (fs.existsSync(forceRefPath)) {
-                    const sqlContent = fs.readFileSync(forceRefPath, 'utf-8');
-                    await migrationDb.execute(sql.raw(sqlContent));
-                    console.log('[migrate] ☢️ FORCE APPLY 0034 (referral_system) EXECUTED.');
-                } else {
-                    console.error(`[migrate] ❌ Could not find ${forceRefFile}! Path: ${forceRefPath}`);
-                }
+            // Column spot-checks on users/contracts tables
+            const colChecks = [
+                { table: 'users', column: 'referral_code' },
+                { table: 'users', column: 'clerk_user_id' },
+                { table: 'users', column: 'reset_token' },
+                { table: 'users', column: 'referral_first_bonus_used' },
+                { table: 'contracts', column: 'social_bonus_enabled' },
+                { table: 'contracts', column: 'market_instance_id' },
+            ];
 
-                // Also apply 0035 (referral first bonus)
-                const bonus35Path = resolve(migrationsFolder, '0035_referral_first_bonus.sql');
-                if (fs.existsSync(bonus35Path)) {
-                    const sql35 = fs.readFileSync(bonus35Path, 'utf-8');
-                    await migrationDb.execute(sql.raw(sql35));
-                    console.log('[migrate] ☢️ FORCE APPLY 0035 (referral_first_bonus) EXECUTED.');
-                }
-            } else {
-                console.log('[migrate] ✅ Referral columns confirmed to exist.');
+            for (const { table, column } of colChecks) {
+                const [result] = await migrationDb.execute(sql`
+                    SELECT column_name FROM information_schema.columns 
+                    WHERE table_name = ${table} AND column_name = ${column}
+                `);
+                const exists = !!(result as any)?.column_name;
+                console.log(`[migrate] 🔍 ${table}.${column}: ${exists ? '✅' : '❌ MISSING'}`);
             }
 
         } catch (valErr) {

@@ -7,7 +7,9 @@ export function renderAmazonCallback() {
         <style>
             .amz-cb { min-height: 100vh; background: #fafafa; display: flex; align-items: center; justify-content: center; font-family: 'Neue Haas Grotesk Display', 'Helvetica Neue', Helvetica, Arial, sans-serif; }
             .amz-cb-card { background: #fff; border: 1px solid #e5e5e5; border-radius: 12px; padding: 40px 32px; max-width: 420px; width: 100%; text-align: center; }
-            .amz-cb-spinner { width: 48px; height: 48px; border: 4px solid #e5e5e5; border-top-color: #ff9900; border-radius: 50%; animation: amz-spin 0.8s linear infinite; margin: 0 auto 20px; }
+            @keyframes cl-spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+            @keyframes cl-pulse { 0%, 100% { opacity: 0.7; } 50% { opacity: 1; } }
+            .amz-cb-spinner { position: relative; width: 48px; height: 48px; margin: 0 auto 20px; }
             @keyframes amz-spin { to { transform: rotate(360deg); } }
             .amz-cb-icon { width: 48px; height: 48px; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 16px; font-size: 24px; }
             .amz-cb-icon.success { background: rgba(22, 163, 74, 0.1); }
@@ -23,7 +25,10 @@ export function renderAmazonCallback() {
         <div class="amz-cb">
             <div class="amz-cb-card">
                 <div id="amazon-cb-loading">
-                    <div class="amz-cb-spinner"></div>
+                    <div class="amz-cb-spinner">
+                        <svg style="position:absolute;top:0;left:0;width:100%;height:100%" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="32" cy="32" r="15.5" stroke="#3B0001" stroke-width="2"/><line x1="32" y1="19.5" x2="32" y2="44.5" stroke="#3B0001" stroke-width="1.5" stroke-linecap="round" style="animation:cl-pulse 1.6s ease-in-out infinite"/></svg>
+                        <svg style="position:absolute;top:0;left:0;width:100%;height:100%;animation:cl-spin 2.4s linear infinite;transform-origin:center center" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg"><ellipse cx="32" cy="32" rx="26.5" ry="7.5" stroke="#3B0001" stroke-width="1.1" fill="none" transform="rotate(-27 32 32)"/></svg>
+                    </div>
                     <h2>Connecting Amazon Seller</h2>
                     <p>Please wait while we complete the connection...</p>
                 </div>

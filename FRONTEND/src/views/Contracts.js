@@ -393,14 +393,8 @@ export function renderContracts() {
                 padding: 120px 0;
                 gap: 16px;
             }
-            .ext-spinner {
-                width: 28px; height: 28px;
-                border: 2px solid #e5e5e5;
-                border-top-color: #752122;
-                border-radius: 50%;
-                animation: ext-spin 0.7s linear infinite;
-            }
-            @keyframes ext-spin { to { transform: rotate(360deg); } }
+            @keyframes cl-spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+            @keyframes cl-pulse { 0%, 100% { opacity: 0.7; } 50% { opacity: 1; } }
             .ext-loading-text {
                 font-size: 12px;
                 color: #999;
@@ -495,7 +489,10 @@ export function renderContracts() {
 
             <!-- Loading -->
             <div class="ext-loading" id="ext-loader">
-                <div class="ext-spinner"></div>
+                <div style="position:relative;width:32px;height:32px;">
+                    <svg style="position:absolute;top:0;left:0;width:100%;height:100%" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="32" cy="32" r="15.5" stroke="#3B0001" stroke-width="2"/><line x1="32" y1="19.5" x2="32" y2="44.5" stroke="#3B0001" stroke-width="1.5" stroke-linecap="round" style="animation:cl-pulse 1.6s ease-in-out infinite"/></svg>
+                    <svg style="position:absolute;top:0;left:0;width:100%;height:100%;animation:cl-spin 2.4s linear infinite;transform-origin:center center" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg"><ellipse cx="32" cy="32" rx="26.5" ry="7.5" stroke="#3B0001" stroke-width="1.1" fill="none" transform="rotate(-27 32 32)"/></svg>
+                </div>
                 <div class="ext-loading-text">Initializing execution terminal...</div>
             </div>
 

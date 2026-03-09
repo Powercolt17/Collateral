@@ -132,7 +132,8 @@ export function renderMyContracts() {
 
             /* Loading & Empty */
             .myc-loading { display: flex; flex-direction: column; align-items: center; padding: 80px 0; gap: 16px; }
-            .myc-spinner { width: 20px; height: 20px; border: 2px solid #eee; border-top-color: #752122; border-radius: 50%; animation: myc-spin 0.8s linear infinite; }
+            @keyframes cl-spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+            @keyframes cl-pulse { 0%, 100% { opacity: 0.7; } 50% { opacity: 1; } }
             @keyframes myc-spin { to { transform: rotate(360deg); } }
             
             @media (max-width: 768px) {
@@ -179,7 +180,10 @@ export function renderMyContracts() {
             <div class="myc-feed" data-reveal>
                 <div id="myc-content">
                     <div class="myc-loading">
-                        <div class="myc-spinner"></div>
+                        <div style="position:relative;width:24px;height:24px;">
+                            <svg style="position:absolute;top:0;left:0;width:100%;height:100%" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="32" cy="32" r="15.5" stroke="#3B0001" stroke-width="2"/><line x1="32" y1="19.5" x2="32" y2="44.5" stroke="#3B0001" stroke-width="1.5" stroke-linecap="round" style="animation:cl-pulse 1.6s ease-in-out infinite"/></svg>
+                            <svg style="position:absolute;top:0;left:0;width:100%;height:100%;animation:cl-spin 2.4s linear infinite;transform-origin:center center" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg"><ellipse cx="32" cy="32" rx="26.5" ry="7.5" stroke="#3B0001" stroke-width="1.1" fill="none" transform="rotate(-27 32 32)"/></svg>
+                        </div>
                         <p style="font-family:'JetBrains Mono',monospace; font-size:10px; color:#888; text-transform:uppercase;">Retrieving personal record...</p>
                     </div>
                 </div>

@@ -163,7 +163,7 @@
     <script src="https://unpkg.com/lucide@latest" defer></script>
     <style>
         .ch-logo img {
-            height: 40px !important;
+            height: 64px !important;
             width: auto !important;
         }
     </style>
@@ -181,94 +181,42 @@
         transition: opacity 0.5s ease, visibility 0.5s ease;
     ">
         <style>
-            @keyframes load-pulse {
-
-                0%,
-                100% {
-                    opacity: 0.3;
-                    transform: scaleX(0.6);
+            @keyframes cl-fadeIn {
+                from {
+                    opacity: 0;
                 }
 
-                50% {
-                    opacity: 1;
-                    transform: scaleX(1);
-                }
-            }
-
-            @keyframes load-fade-letters {
-
-                0%,
-                100% {
-                    opacity: 0.4;
-                }
-
-                50% {
+                to {
                     opacity: 1;
                 }
             }
 
-            #loading-screen .load-bar {
-                width: 48px;
-                height: 3px;
-                background: #921818;
-                border-radius: 2px;
-                animation: load-pulse 1.6s ease-in-out infinite;
-                margin-bottom: 28px;
+            @keyframes cl-spin {
+                from {
+                    transform: rotate(0deg);
+                }
+
+                to {
+                    transform: rotate(360deg);
+                }
             }
 
-            #loading-screen .load-wordmark {
-                font-family: 'Neue Haas Grotesk Display', 'Helvetica Neue', Helvetica, Arial, sans-serif;
-                font-size: 13px;
-                font-weight: 600;
-                letter-spacing: 0.28em;
-                color: #1A1A1A;
-                text-transform: uppercase;
-                display: flex;
-                gap: 2px;
+            @keyframes cl-pulse {
+
+                0%,
+                100% {
+                    opacity: 0.7;
+                }
+
+                50% {
+                    opacity: 1;
+                }
             }
 
-            #loading-screen .load-wordmark span {
-                animation: load-fade-letters 2s ease-in-out infinite;
-            }
-
-            #loading-screen .load-wordmark span:nth-child(1) {
-                animation-delay: 0s;
-            }
-
-            #loading-screen .load-wordmark span:nth-child(2) {
-                animation-delay: 0.05s;
-            }
-
-            #loading-screen .load-wordmark span:nth-child(3) {
-                animation-delay: 0.1s;
-            }
-
-            #loading-screen .load-wordmark span:nth-child(4) {
-                animation-delay: 0.15s;
-            }
-
-            #loading-screen .load-wordmark span:nth-child(5) {
-                animation-delay: 0.2s;
-            }
-
-            #loading-screen .load-wordmark span:nth-child(6) {
-                animation-delay: 0.25s;
-            }
-
-            #loading-screen .load-wordmark span:nth-child(7) {
-                animation-delay: 0.3s;
-            }
-
-            #loading-screen .load-wordmark span:nth-child(8) {
-                animation-delay: 0.35s;
-            }
-
-            #loading-screen .load-wordmark span:nth-child(9) {
-                animation-delay: 0.4s;
-            }
-
-            #loading-screen .load-wordmark span:nth-child(10) {
-                animation-delay: 0.45s;
+            #loading-screen.loaded {
+                opacity: 0;
+                visibility: hidden;
+                pointer-events: none;
             }
 
             #loading-screen .load-sub {
@@ -277,19 +225,26 @@
                 color: #bbb;
                 letter-spacing: 0.12em;
                 text-transform: uppercase;
-                margin-top: 14px;
-            }
-
-            #loading-screen.loaded {
-                opacity: 0;
-                visibility: hidden;
-                pointer-events: none;
+                margin-top: 24px;
             }
         </style>
-        <img src="/logo.svg" alt="Collateral" style="height:64px;width:auto;margin-bottom:24px;" />
-        <div class="load-wordmark">
-            <span>C</span><span>O</span><span>L</span><span>L</span><span>A</span><span>T</span><span>E</span><span>R</span><span>A</span><span>L</span>
+
+        <div style="position:relative;width:64px;height:64px;animation:cl-fadeIn 350ms ease-out both;">
+            <!-- Static layer: circle + ledger -->
+            <svg style="position:absolute;top:0;left:0;width:100%;height:100%" viewBox="0 0 64 64" fill="none"
+                xmlns="http://www.w3.org/2000/svg">
+                <circle cx="32" cy="32" r="15.5" stroke="#3B0001" stroke-width="2" />
+                <line x1="32" y1="19.5" x2="32" y2="44.5" stroke="#3B0001" stroke-width="1.5" stroke-linecap="round"
+                    style="animation:cl-pulse 1.6s ease-in-out infinite" />
+            </svg>
+            <!-- Rotating layer: orbital ring -->
+            <svg style="position:absolute;top:0;left:0;width:100%;height:100%;animation:cl-spin 2.4s linear infinite;transform-origin:center center"
+                viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <ellipse cx="32" cy="32" rx="26.5" ry="7.5" stroke="#3B0001" stroke-width="1.1" fill="none"
+                    transform="rotate(-27 32 32)" />
+            </svg>
         </div>
+
         <div class="load-sub">Initializing Protocol</div>
     </div>
 

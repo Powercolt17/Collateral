@@ -670,15 +670,29 @@ export function renderOverview() {
                     margin-bottom: 16px;
                 }
 
-                /* Stats */
+                /* Stats — compact horizontal row on mobile */
                 .eq-stats-strip {
-                    flex-direction: column;
-                    gap: 20px;
+                    display: grid;
+                    grid-template-columns: repeat(3, 1fr);
+                    gap: 0;
                     margin-bottom: 32px;
+                    border: 1px solid #f0f0f0;
+                    border-radius: 8px;
+                    overflow: hidden;
                 }
+                .eq-stat-group {
+                    padding: 16px 12px;
+                    text-align: center;
+                    border-right: 1px solid #f0f0f0;
+                }
+                .eq-stat-group:last-child { border-right: none; }
                 .eq-stat-val {
-                    font-size: 28px;
-                    letter-spacing: -1px;
+                    font-size: 20px;
+                    letter-spacing: -0.5px;
+                }
+                .eq-stat-lbl {
+                    font-size: 8px;
+                    letter-spacing: 0.08em;
                 }
 
                 /* Controls — scrollable tabs */

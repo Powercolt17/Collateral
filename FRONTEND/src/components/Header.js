@@ -468,7 +468,8 @@ export function renderHeader(currentRoute) {
             .ch-mobile-overlay {
                 position: fixed;
                 inset: 0;
-                background: rgba(0,0,0,0.5);
+                background: rgba(0,0,0,0.4);
+                backdrop-filter: blur(4px);
                 z-index: 40;
                 display: none;
             }
@@ -476,25 +477,117 @@ export function renderHeader(currentRoute) {
                 position: fixed;
                 top: 0;
                 right: 0;
-                width: 280px;
+                width: 320px;
+                max-width: 85vw;
                 height: 100%;
                 background: #fff;
                 z-index: 50;
                 transform: translateX(100%);
-                transition: transform 0.3s;
-                padding: 20px;
+                transition: transform 0.3s ease;
+                display: flex;
+                flex-direction: column;
             }
             .ch-mobile-menu.open { transform: translateX(0); }
+            .ch-mob-header {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                padding: 20px 24px;
+                border-bottom: 1px solid #f0f0f0;
+            }
+            .ch-mob-header-title {
+                font-size: 11px;
+                font-weight: 600;
+                letter-spacing: 0.12em;
+                color: #999;
+                font-family: 'JetBrains Mono', monospace;
+                text-transform: uppercase;
+            }
+            .ch-mob-nav {
+                flex: 1;
+                overflow-y: auto;
+                padding: 8px 0;
+            }
             .mobile-nav-link {
-                display: block;
-                padding: 12px 0;
-                font-size: 14px;
+                display: flex;
+                align-items: center;
+                gap: 12px;
+                padding: 14px 24px;
+                font-size: 13px;
+                font-weight: 500;
                 color: #333;
                 text-decoration: none;
-                border-bottom: 1px solid #f0f0f0;
-                font-family: 'JetBrains Mono', monospace;
+                border-bottom: 1px solid #f8f8f8;
+                font-family: 'Inter Tight', 'IBM Plex Sans', sans-serif;
+                letter-spacing: 0.04em;
+                transition: background 0.12s, color 0.12s;
             }
-            .mobile-nav-link.active { color: #752122; font-weight: 600; }
+            .mobile-nav-link:hover { background: #fafafa; }
+            .mobile-nav-link.active { color: #3B0001; font-weight: 600; background: #fdf8f8; }
+            .ch-mob-footer {
+                border-top: 1px solid #f0f0f0;
+                padding: 20px 24px;
+                background: #fafafa;
+            }
+            .ch-mob-status {
+                display: flex;
+                align-items: center;
+                gap: 6px;
+                margin-bottom: 16px;
+            }
+            .ch-mob-status-dot {
+                width: 6px;
+                height: 6px;
+                border-radius: 50%;
+                background: #22c55e;
+            }
+            .ch-mob-status-text {
+                font-size: 10px;
+                font-weight: 500;
+                color: #999;
+                font-family: 'JetBrains Mono', monospace;
+                text-transform: uppercase;
+                letter-spacing: 0.08em;
+            }
+            .ch-mob-meta {
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+                gap: 12px;
+                margin-bottom: 16px;
+            }
+            .ch-mob-meta-item {
+                display: flex;
+                flex-direction: column;
+                gap: 2px;
+            }
+            .ch-mob-meta-label {
+                font-size: 9px;
+                font-weight: 600;
+                color: #bbb;
+                font-family: 'JetBrains Mono', monospace;
+                text-transform: uppercase;
+                letter-spacing: 0.1em;
+            }
+            .ch-mob-meta-value {
+                font-size: 12px;
+                font-weight: 500;
+                color: #555;
+                font-family: 'Inter Tight', 'IBM Plex Sans', sans-serif;
+            }
+            .ch-mob-legal {
+                display: flex;
+                gap: 16px;
+                padding-top: 12px;
+                border-top: 1px solid #eee;
+            }
+            .ch-mob-legal a {
+                font-size: 10px;
+                color: #bbb;
+                text-decoration: none;
+                font-family: 'JetBrains Mono', monospace;
+                letter-spacing: 0.04em;
+            }
+            .ch-mob-legal a:hover { color: #888; }
         </style>
 
         <header class="ch-header">
@@ -583,19 +676,54 @@ export function renderHeader(currentRoute) {
 
         <!-- Mobile Menu -->
         <div id="mobile-menu" class="ch-mobile-menu">
-            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
-                <span style="font-size: 14px; font-weight: 600; font-family: 'JetBrains Mono', monospace;">MENU</span>
-                <button onclick="window.app.closeMobileMenu()" style="background: none; border: none; cursor: pointer;">
-                    <i data-lucide="x" style="width: 20px; height: 20px;"></i>
+            <div class="ch-mob-header">
+                <div style="display:flex;align-items:center;gap:8px;">
+                    <svg viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg" style="width:18px;height:18px;"><circle cx="22" cy="22" r="13.2" stroke="#3B0001" stroke-width="1.7"/><line x1="22" y1="13.5" x2="22" y2="30.5" stroke="#3B0001" stroke-width="1.3" stroke-linecap="round"/><ellipse cx="22" cy="22" rx="20.8" ry="5.8" stroke="#3B0001" stroke-width="0.85" fill="none" transform="rotate(-27 22 22)"/></svg>
+                    <span class="ch-mob-header-title">Navigation</span>
+                </div>
+                <button onclick="window.app.closeMobileMenu()" style="background:none;border:none;cursor:pointer;padding:4px;">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#999" stroke-width="2" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
                 </button>
             </div>
-            <nav>
+
+            <nav class="ch-mob-nav">
                 ${mobileNavItems}
             </nav>
-            <div style="margin-top: 20px;">
-                <button onclick="window.app.closeMobileMenu(); window.app.handleAuthClick()" id="btn-auth-mobile" class="ch-connect" style="width: 100%;">
+
+            <div style="padding:0 24px 16px;">
+                <button onclick="window.app.closeMobileMenu(); window.app.handleAuthClick()" id="btn-auth-mobile" class="ch-connect" style="width:100%;height:44px;border-radius:8px;font-family:'Inter Tight','IBM Plex Sans',sans-serif;font-size:13px;font-weight:500;letter-spacing:0.06em;">
                     CONNECT
                 </button>
+            </div>
+
+            <div class="ch-mob-footer">
+                <div class="ch-mob-status">
+                    <div class="ch-mob-status-dot"></div>
+                    <span class="ch-mob-status-text">All systems operational</span>
+                </div>
+                <div class="ch-mob-meta">
+                    <div class="ch-mob-meta-item">
+                        <span class="ch-mob-meta-label">Protocol</span>
+                        <span class="ch-mob-meta-value">v1.0</span>
+                    </div>
+                    <div class="ch-mob-meta-item">
+                        <span class="ch-mob-meta-label">Network</span>
+                        <span class="ch-mob-meta-value">Mainnet</span>
+                    </div>
+                    <div class="ch-mob-meta-item">
+                        <span class="ch-mob-meta-label">Settlement</span>
+                        <span class="ch-mob-meta-value">USD</span>
+                    </div>
+                    <div class="ch-mob-meta-item">
+                        <span class="ch-mob-meta-label">Uptime</span>
+                        <span class="ch-mob-meta-value">99.9%</span>
+                    </div>
+                </div>
+                <div class="ch-mob-legal">
+                    <a href="/#/terms" onclick="window.app.closeMobileMenu()">Terms</a>
+                    <a href="/#/docs" onclick="window.app.closeMobileMenu()">Docs</a>
+                    <a href="https://x.com/collaboralcap" target="_blank">X / Twitter</a>
+                </div>
             </div>
         </div>
     `;

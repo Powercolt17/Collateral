@@ -229,7 +229,7 @@
             }
         </style>
 
-        <div style="position:relative;width:64px;height:64px;animation:cl-fadeIn 350ms ease-out both;">
+        <div style="position:relative;width:72px;height:72px;animation:cl-fadeIn 300ms ease-out both;">
             <!-- Static layer: circle + ledger -->
             <svg style="position:absolute;top:0;left:0;width:100%;height:100%" viewBox="0 0 64 64" fill="none"
                 xmlns="http://www.w3.org/2000/svg">
@@ -245,7 +245,9 @@
             </svg>
         </div>
 
-        <div class="load-sub">Initializing Protocol</div>
+        <div class="load-sub" id="load-sub-text" style="opacity:0;transition:opacity 0.4s ease;">Initializing Protocol
+        </div>
+        <script>setTimeout(function () { var el = document.getElementById('load-sub-text'); if (el) el.style.opacity = '1'; }, 1500);</script>
     </div>
 
     <!-- Header (injected by JS) -->

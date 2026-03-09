@@ -226,11 +226,7 @@ button[class*="-connect"]:hover,
     scrollbar-width: none;
 }
 
-/* ── Header Logo Size ── */
-.ch-logo img {
-    height: 64px !important;
-    width: auto !important;
-}
+/* ── Header Logo ── */
 
 /* ── Selection ── */
 ::selection {

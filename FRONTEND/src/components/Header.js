@@ -127,23 +127,22 @@ export function renderHeader(currentRoute) {
                 align-items: center;
                 text-decoration: none;
                 flex-shrink: 0;
-                gap: 12px;
+                gap: 10px;
             }
-            .ch-logo-accent {
-                width: 20px;
-                height: 20px;
+            .ch-logo-icon {
+                width: 36px;
+                height: 36px;
                 flex-shrink: 0;
-                display: flex;
-                align-items: center;
-                justify-content: center;
+                position: relative;
             }
-            .ch-logo-headline {
-                font-size: 15px;
-                font-weight: 600;
+            .ch-logo-wordmark {
+                font-size: 15.5px;
+                font-weight: 500;
                 color: #111111;
-                letter-spacing: 0.2em;
-                font-family: 'IBM Plex Sans', 'Inter', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+                letter-spacing: 0.14em;
+                font-family: 'Inter Tight', 'IBM Plex Sans', 'Neue Haas Grotesk Display', 'Helvetica Neue', -apple-system, sans-serif;
                 text-transform: uppercase;
+                line-height: 1;
                 margin: 0;
             }
 
@@ -502,7 +501,14 @@ export function renderHeader(currentRoute) {
             <div class="ch-header-inner">
                 <!-- Logo -->
                 <a href="#" onclick="window.router.navigate('/overview'); return false;" class="ch-logo">
-                    <img src="/logo.svg" alt="Collateral" style="height:64px;width:auto;" />
+                    <div class="ch-logo-icon">
+                        <svg viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:100%;">
+                            <circle cx="22" cy="22" r="13.2" stroke="#3B0001" stroke-width="1.7"/>
+                            <line x1="22" y1="13.5" x2="22" y2="30.5" stroke="#3B0001" stroke-width="1.3" stroke-linecap="round"/>
+                            <ellipse cx="22" cy="22" rx="20.8" ry="5.8" stroke="#3B0001" stroke-width="0.85" fill="none" transform="rotate(-27 22 22)"/>
+                        </svg>
+                    </div>
+                    <span class="ch-logo-wordmark">COLLATERAL</span>
                 </a>
 
                 <!-- Nav Links -->

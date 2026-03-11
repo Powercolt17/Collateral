@@ -46,14 +46,20 @@ export function renderRivalryDetail() {
             .rvd-vs-strip {
                 display: flex;
                 align-items: stretch;
-                background: #fafafa;
+                background: linear-gradient(
+                    to right,
+                    rgba(15,81,50,0.04),
+                    transparent 40%,
+                    transparent 60%,
+                    rgba(59,0,1,0.04)
+                );
                 border: 1px solid #f0f0f0;
                 overflow: hidden;
                 margin-bottom: 24px;
             }
             .rvd-player {
                 flex: 1;
-                padding: 32px 36px;
+                padding: 40px 40px;
                 display: flex;
                 flex-direction: column;
                 gap: 6px;
@@ -74,8 +80,8 @@ export function renderRivalryDetail() {
                 color: #111; letter-spacing: 0.02em;
             }
             .rvd-player-growth {
-                font-size: 36px; font-weight: 300;
-                letter-spacing: -1px; margin-top: 4px;
+                font-size: 48px; font-weight: 300;
+                letter-spacing: -1.5px; margin-top: 4px;
             }
             .rvd-player-growth.leading {
                 color: #0F5132;
@@ -86,6 +92,15 @@ export function renderRivalryDetail() {
                 font-family: 'JetBrains Mono', monospace;
                 font-size: 10px; color: #bbb;
                 letter-spacing: 0.04em;
+            }
+            .rvd-leader-tag {
+                font-family: 'JetBrains Mono', monospace;
+                font-size: 9px;
+                font-weight: 700;
+                letter-spacing: 0.12em;
+                text-transform: uppercase;
+                color: #0F5132;
+                margin-bottom: 2px;
             }
 
             .rvd-vs-center {
@@ -104,15 +119,85 @@ export function renderRivalryDetail() {
 
             /* Momentum Bar */
             .rvd-momentum {
-                height: 8px; display: flex;
+                height: 10px; display: flex;
                 overflow: hidden; margin-bottom: 32px;
                 background: #f0f0f0;
+                border-radius: 5px;
             }
             .rvd-momentum-left {
                 background: #0F5132; transition: width 0.4s ease;
+                border-radius: 5px 0 0 5px;
             }
             .rvd-momentum-right {
                 background: #3B0001; transition: width 0.4s ease;
+                border-radius: 0 5px 5px 0;
+            }
+            .rvd-momentum-left.is-leader {
+                box-shadow: 0 0 8px rgba(15,81,50,0.35);
+            }
+            .rvd-momentum-right.is-leader {
+                box-shadow: 0 0 8px rgba(59,0,1,0.35);
+            }
+
+            /* ── Performance Chart ── */
+            .rvd-chart-section {
+                max-width: 1200px; margin: 0 auto;
+                padding: 0 64px 8px;
+            }
+            .rvd-chart-panel {
+                background: #fafafa;
+                border: 1px solid #f0f0f0;
+                padding: 28px;
+            }
+            .rvd-chart-header {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                margin-bottom: 20px;
+            }
+            .rvd-chart-title {
+                font-family: 'JetBrains Mono', monospace;
+                font-size: 9px; font-weight: 700;
+                letter-spacing: 0.12em; color: #bbb;
+                text-transform: uppercase;
+            }
+            .rvd-chart-legend {
+                display: flex; gap: 16px;
+            }
+            .rvd-chart-legend-item {
+                display: flex; align-items: center; gap: 6px;
+                font-family: 'JetBrains Mono', monospace;
+                font-size: 9px; font-weight: 600;
+                letter-spacing: 0.06em; color: #999;
+            }
+            .rvd-chart-legend-dot {
+                width: 8px; height: 8px;
+                border-radius: 50%;
+            }
+            .rvd-chart-canvas {
+                position: relative;
+                height: 200px;
+                width: 100%;
+            }
+            .rvd-chart-canvas svg {
+                width: 100%; height: 100%;
+            }
+            .rvd-chart-gridline {
+                stroke: #f0f0f0; stroke-width: 1;
+            }
+            .rvd-chart-label {
+                font-family: 'JetBrains Mono', monospace;
+                font-size: 9px; fill: #ccc;
+            }
+            .rvd-chart-footer {
+                display: flex;
+                justify-content: space-between;
+                margin-top: 8px;
+            }
+            .rvd-chart-footer span {
+                font-family: 'JetBrains Mono', monospace;
+                font-size: 9px; color: #ccc;
+                letter-spacing: 0.04em;
             }
 
             /* ── Status Bar ── */
@@ -220,11 +305,13 @@ export function renderRivalryDetail() {
                 .rvd-vs-strip { flex-direction: column; }
                 .rvd-player.right { text-align: left; border-left: none; border-top: 1px solid #f0f0f0; }
                 .rvd-vs-center { width: 100%; height: 40px; border-left: none; border-right: none; border-top: 1px solid #f0f0f0; border-bottom: 1px solid #f0f0f0; }
-                .rvd-player-growth { font-size: 28px; }
+                .rvd-player-growth { font-size: 32px; }
                 .rvd-grid { grid-template-columns: 1fr; padding: 24px 20px 40px; }
                 .rvd-share { padding: 0 20px 32px; flex-wrap: wrap; }
                 .rvd-warning { padding: 0 20px 32px; }
                 .rvd-status-bar { flex-direction: column; align-items: flex-start; gap: 8px; }
+                .rvd-chart-section { padding: 0 20px 8px; }
+                .rvd-chart-canvas { height: 160px; }
             }
         </style>
 
@@ -313,6 +400,7 @@ export function initRivalryDetail() {
 
                 <div class="rvd-vs-strip">
                     <div class="rvd-player">
+                        ${isLeading ? '<div class="rvd-leader-tag">LEADING</div>' : ''}
                         <span class="rvd-player-label">CHALLENGER</span>
                         <span class="rvd-player-name">${rivalry.challenger.name}</span>
                         <span class="rvd-player-growth ${isLeading ? 'leading' : 'trailing'}">${rivalry.challenger.growth > 0 ? '+' : ''}${rivalry.challenger.growth}%</span>
@@ -322,6 +410,7 @@ export function initRivalryDetail() {
                         <span class="rvd-vs-text">VS</span>
                     </div>
                     <div class="rvd-player right">
+                        ${!isLeading ? '<div class="rvd-leader-tag">LEADING</div>' : ''}
                         <span class="rvd-player-label">OPPONENT</span>
                         <span class="rvd-player-name">${rivalry.opponent.name}</span>
                         <span class="rvd-player-growth ${!isLeading ? 'leading' : 'trailing'}">${rivalry.opponent.growth > 0 ? '+' : ''}${rivalry.opponent.growth}%</span>
@@ -330,8 +419,8 @@ export function initRivalryDetail() {
                 </div>
 
                 <div class="rvd-momentum">
-                    <div class="rvd-momentum-left" style="width:${leftPct}%"></div>
-                    <div class="rvd-momentum-right" style="width:${rightPct}%"></div>
+                    <div class="rvd-momentum-left ${isLeading ? 'is-leader' : ''}" style="width:${leftPct}%"></div>
+                    <div class="rvd-momentum-right ${!isLeading ? 'is-leader' : ''}" style="width:${rightPct}%"></div>
                 </div>
 
                 <div class="rvd-status-bar">
@@ -340,6 +429,32 @@ export function initRivalryDetail() {
                         ${statusLabel} · ${rivalry.metric} · ${rivalry.provider.toUpperCase()}
                     </div>
                     <span class="rvd-time">${timeLabel}</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="rvd-chart-section">
+            <div class="rvd-chart-panel">
+                <div class="rvd-chart-header">
+                    <div class="rvd-chart-title">Performance Over Time</div>
+                    <div class="rvd-chart-legend">
+                        <div class="rvd-chart-legend-item">
+                            <div class="rvd-chart-legend-dot" style="background:#0F5132"></div>
+                            ${rivalry.challenger.name}
+                        </div>
+                        <div class="rvd-chart-legend-item">
+                            <div class="rvd-chart-legend-dot" style="background:#3B0001"></div>
+                            ${rivalry.opponent.name}
+                        </div>
+                    </div>
+                </div>
+                <div class="rvd-chart-canvas" id="rvd-perf-chart"></div>
+                <div class="rvd-chart-footer">
+                    <span>Day 0</span>
+                    <span>Day ${Math.floor(rivalry.totalDays / 4)}</span>
+                    <span>Day ${Math.floor(rivalry.totalDays / 2)}</span>
+                    <span>Day ${Math.floor(rivalry.totalDays * 3 / 4)}</span>
+                    <span>Day ${rivalry.totalDays}</span>
                 </div>
             </div>
         </div>
@@ -443,4 +558,95 @@ export function initRivalryDetail() {
             <div class="rvd-warning-text">Capital is locked. Settlement is automatic and final. No appeals. No reversals.</div>
         </div>
     `;
+
+    // ── Render Performance Chart (SVG) ──
+    const chartEl = document.getElementById('rvd-perf-chart');
+    if (chartEl && rivalry.status !== 'pending') {
+        const W = 800, H = 200, PAD = 32;
+        const POINTS = 20;
+        const elapsed = rivalry.totalDays - rivalry.daysLeft;
+        const visiblePoints = Math.max(2, Math.round((elapsed / rivalry.totalDays) * POINTS));
+
+        // Generate realistic growth curves
+        function generateCurve(finalGrowth, seed) {
+            const pts = [0];
+            let val = 0;
+            for (let i = 1; i <= POINTS; i++) {
+                const progress = i / POINTS;
+                const target = finalGrowth * progress;
+                const noise = Math.sin(seed * i * 0.7) * (finalGrowth * 0.15) +
+                    Math.cos(seed * i * 1.3) * (finalGrowth * 0.08);
+                val = target + noise;
+                if (i === POINTS) val = finalGrowth;
+                pts.push(val);
+            }
+            return pts.slice(0, visiblePoints + 1);
+        }
+
+        const challData = generateCurve(rivalry.challenger.growth, 3.14);
+        const oppData = generateCurve(rivalry.opponent.growth, 7.28);
+
+        const allVals = [...challData, ...oppData];
+        const minVal = Math.min(0, ...allVals);
+        const maxVal = Math.max(...allVals) * 1.15;
+        const range = maxVal - minVal || 1;
+
+        function toX(i, total) { return PAD + (i / (total - 1)) * (W - PAD * 2); }
+        function toY(v) { return H - PAD - ((v - minVal) / range) * (H - PAD * 2); }
+
+        function buildPath(data) {
+            return data.map((v, i) => `${i === 0 ? 'M' : 'L'}${toX(i, data.length).toFixed(1)},${toY(v).toFixed(1)}`).join(' ');
+        }
+        function buildAreaPath(data) {
+            const line = buildPath(data);
+            const lastX = toX(data.length - 1, data.length).toFixed(1);
+            const firstX = toX(0, data.length).toFixed(1);
+            const baseY = toY(0).toFixed(1);
+            return `${line} L${lastX},${baseY} L${firstX},${baseY} Z`;
+        }
+
+        // Gridlines
+        const gridCount = 4;
+        let gridLines = '';
+        for (let i = 0; i <= gridCount; i++) {
+            const val = minVal + (range / gridCount) * i;
+            const y = toY(val);
+            gridLines += `<line x1="${PAD}" y1="${y}" x2="${W - PAD}" y2="${y}" class="rvd-chart-gridline"/>`;
+            gridLines += `<text x="${PAD - 6}" y="${y + 3}" text-anchor="end" class="rvd-chart-label">${val.toFixed(0)}%</text>`;
+        }
+
+        const challPath = buildPath(challData);
+        const oppPath = buildPath(oppData);
+        const challArea = buildAreaPath(challData);
+        const oppArea = buildAreaPath(oppData);
+
+        const challEnd = challData[challData.length - 1];
+        const oppEnd = oppData[oppData.length - 1];
+        const challEndX = toX(challData.length - 1, challData.length);
+        const oppEndX = toX(oppData.length - 1, oppData.length);
+
+        chartEl.innerHTML = `
+            <svg viewBox="0 0 ${W} ${H}" preserveAspectRatio="none">
+                <defs>
+                    <linearGradient id="grad-chall" x1="0" y1="0" x2="0" y2="1">
+                        <stop offset="0%" stop-color="#0F5132" stop-opacity="0.12"/>
+                        <stop offset="100%" stop-color="#0F5132" stop-opacity="0"/>
+                    </linearGradient>
+                    <linearGradient id="grad-opp" x1="0" y1="0" x2="0" y2="1">
+                        <stop offset="0%" stop-color="#3B0001" stop-opacity="0.10"/>
+                        <stop offset="100%" stop-color="#3B0001" stop-opacity="0"/>
+                    </linearGradient>
+                </defs>
+                ${gridLines}
+                <path d="${challArea}" fill="url(#grad-chall)"/>
+                <path d="${oppArea}" fill="url(#grad-opp)"/>
+                <path d="${oppPath}" fill="none" stroke="#3B0001" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" opacity="0.7"/>
+                <path d="${challPath}" fill="none" stroke="#0F5132" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+                <circle cx="${challEndX}" cy="${toY(challEnd)}" r="4" fill="#0F5132"/>
+                <circle cx="${oppEndX}" cy="${toY(oppEnd)}" r="4" fill="#3B0001"/>
+            </svg>
+        `;
+    } else if (chartEl) {
+        chartEl.innerHTML = `<div style="display:flex;align-items:center;justify-content:center;height:100%;color:#ccc;font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:0.06em;">PENDING — CHART AVAILABLE ONCE ACTIVE</div>`;
+    }
 }

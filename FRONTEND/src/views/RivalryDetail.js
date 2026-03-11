@@ -240,9 +240,9 @@ export function initRivalryDetail() {
     const container = document.getElementById('rvd-container');
     if (!container) return;
 
-    // Extract rivalry ID from URL
-    const path = window.location.pathname;
-    const id = path.split('/rivalry/')[1];
+    // Extract rivalry ID from hash-based URL (#/rivalry/RV-001)
+    const hash = window.location.hash || '';
+    const id = hash.replace('#', '').split('/rivalry/')[1] || '';
 
     // Sample data lookup (will be replaced by API)
     const sampleRivalries = [
@@ -259,6 +259,12 @@ export function initRivalryDetail() {
             stake: 1000, daysLeft: 6, totalDays: 14,
         },
         {
+            id: 'RV-003', status: 'pending', metric: 'Sales Growth', provider: 'shopify',
+            challenger: { name: '@ecomgrind', growth: 0, baseline: 15600 },
+            opponent: { name: '@storescale', growth: 0, baseline: 22100 },
+            stake: 5000, daysLeft: 30, totalDays: 30,
+        },
+        {
             id: 'RV-004', status: 'active', metric: 'Order Growth', provider: 'amazon',
             challenger: { name: '@fbaseller', growth: 41.8, baseline: 340 },
             opponent: { name: '@primeops', growth: 39.2, baseline: 520 },
@@ -270,6 +276,12 @@ export function initRivalryDetail() {
             opponent: { name: '@revscale', growth: 45.1, baseline: 41200 },
             stake: 10000, daysLeft: 0, totalDays: 90,
         },
+        {
+            id: 'RV-006', status: 'active', metric: 'Follower Growth', provider: 'x',
+            challenger: { name: '@contentking', growth: 12.4, baseline: 5200 },
+            opponent: { name: '@viralops', growth: 15.8, baseline: 7800 },
+            stake: 750, daysLeft: 9, totalDays: 14,
+        },
     ];
 
     const rivalry = sampleRivalries.find(r => r.id === id);
@@ -278,7 +290,7 @@ export function initRivalryDetail() {
         container.innerHTML = `
             <div class="rvd-loading">
                 <div class="rvd-loading-text">RIVALRY NOT FOUND</div>
-                <a href="/rivalry" style="color:#3B0001; font-size:13px; margin-top:16px; display:inline-block;">← Back to Rivalries</a>
+                <a href="#/rivalry" style="color:#3B0001; font-size:13px; margin-top:16px; display:inline-block;">← Back to Rivalries</a>
             </div>`;
         return;
     }
@@ -296,7 +308,7 @@ export function initRivalryDetail() {
         <div class="rvd-hero">
             <div class="rvd-hero-inner">
                 <div class="rvd-breadcrumb">
-                    <a href="/rivalry">Rivalry</a> <span>/ ${rivalry.id}</span>
+                    <a href="#/rivalry">Rivalry</a> <span>/ ${rivalry.id}</span>
                 </div>
 
                 <div class="rvd-vs-strip">
@@ -361,11 +373,11 @@ export function initRivalryDetail() {
                 <div class="rvd-panel-title">Current Performance</div>
                 <div class="rvd-row">
                     <span class="rvd-row-label">${rivalry.challenger.name}</span>
-                    <span class="rvd-row-value" style="color:${isLeading ? '#10b981' : '#ef4444'}">+${rivalry.challenger.growth}%</span>
+                    <span class="rvd-row-value" style="color:${isLeading ? '#0F5132' : '#3B0001'}">+${rivalry.challenger.growth}%</span>
                 </div>
                 <div class="rvd-row">
                     <span class="rvd-row-label">${rivalry.opponent.name}</span>
-                    <span class="rvd-row-value" style="color:${!isLeading ? '#10b981' : '#ef4444'}">+${rivalry.opponent.growth}%</span>
+                    <span class="rvd-row-value" style="color:${!isLeading ? '#0F5132' : '#3B0001'}">+${rivalry.opponent.growth}%</span>
                 </div>
                 <div class="rvd-row">
                     <span class="rvd-row-label">Delta</span>

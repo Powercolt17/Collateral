@@ -1010,7 +1010,7 @@ export function renderOverview() {
             <!-- Section 1: Hero -->
             <div class="eq-hero" data-reveal>
                 <div class="eq-tag anim-tag">Performance Collateral Protocol</div>
-                <h1 class="eq-hero-headline anim-headline">Back yourself. <strong>Lock the capital</strong> to prove it.</h1>
+                <h1 class="eq-hero-headline anim-headline">Put your money where your <strong>metrics</strong> are.</h1>
                 <p class="eq-hero-sub anim-sub">Stake against revenue, sales, or growth targets. Automatic verification. Final settlement. No appeals.</p>
                 <div class="eq-hero-actions anim-actions">
                     <button class="eq-btn-primary" onclick="document.getElementById('live-market').scrollIntoView({behavior:'smooth'})">Explore Market</button>

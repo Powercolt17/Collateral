@@ -572,6 +572,101 @@ export function renderActiveContracts() {
                 border: 1px solid #e5e5e5;
             }
             .act-btn-outline:hover { border-color: #111; color: #111; }
+
+            /* ── Contract Type Picker Modal ── */
+            .ctp-overlay {
+                display: none;
+                position: fixed; inset: 0;
+                background: rgba(0,0,0,0.45);
+                z-index: 9999;
+                align-items: center; justify-content: center;
+            }
+            .ctp-overlay.open { display: flex; }
+            .ctp-modal {
+                background: #fff;
+                width: 560px; max-width: 92vw;
+                padding: 40px;
+                position: relative;
+                animation: ctpFadeIn 0.2s ease;
+            }
+            @keyframes ctpFadeIn { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
+            .ctp-close {
+                position: absolute; top: 16px; right: 16px;
+                background: none; border: none; cursor: pointer;
+                font-size: 18px; color: #999; padding: 4px 8px;
+                transition: color 0.15s;
+            }
+            .ctp-close:hover { color: #111; }
+            .ctp-tag {
+                font-family: 'JetBrains Mono', monospace;
+                font-size: 9px; font-weight: 700;
+                letter-spacing: 0.12em; text-transform: uppercase;
+                color: #752122; margin-bottom: 12px;
+            }
+            .ctp-title {
+                font-size: 26px; font-weight: 500;
+                letter-spacing: -1px; color: #111;
+                margin-bottom: 8px;
+            }
+            .ctp-title strong { font-weight: 800; }
+            .ctp-sub {
+                font-size: 13px; color: #888;
+                line-height: 1.5; margin-bottom: 32px;
+            }
+            .ctp-grid {
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+                gap: 16px;
+            }
+            .ctp-card {
+                border: 1px solid #e8e8e8;
+                padding: 28px 24px;
+                cursor: pointer;
+                text-decoration: none;
+                color: inherit;
+                display: flex; flex-direction: column;
+                transition: border-color 0.2s, box-shadow 0.2s, transform 0.2s;
+            }
+            .ctp-card:hover {
+                border-color: #ccc;
+                box-shadow: 0 8px 24px rgba(0,0,0,0.05);
+                transform: translateY(-3px);
+            }
+            .ctp-card.rivalry { border-color: rgba(117,33,34,0.15); }
+            .ctp-card.rivalry:hover { border-color: rgba(117,33,34,0.3); box-shadow: 0 8px 24px rgba(117,33,34,0.06); }
+            .ctp-card-icon {
+                width: 40px; height: 40px;
+                border-radius: 50%;
+                display: flex; align-items: center; justify-content: center;
+                margin-bottom: 16px;
+            }
+            .ctp-card-icon.solo { background: #f5f5f5; }
+            .ctp-card-icon.rivalry { background: #fef2f2; }
+            .ctp-card-label {
+                font-family: 'JetBrains Mono', monospace;
+                font-size: 10px; font-weight: 700;
+                letter-spacing: 0.1em; text-transform: uppercase;
+                margin-bottom: 8px;
+            }
+            .ctp-card.rivalry .ctp-card-label { color: #752122; }
+            .ctp-card-heading {
+                font-size: 18px; font-weight: 700;
+                color: #111; margin-bottom: 8px;
+                letter-spacing: -0.3px;
+            }
+            .ctp-card-desc {
+                font-size: 12px; color: #888;
+                line-height: 1.55; flex-grow: 1;
+                margin-bottom: 20px;
+            }
+            .ctp-card-go {
+                font-family: 'JetBrains Mono', monospace;
+                font-size: 10px; font-weight: 700;
+                letter-spacing: 0.06em;
+                color: #111;
+            }
+            .ctp-card.rivalry .ctp-card-go { color: #752122; }
+            @media (max-width: 560px) { .ctp-grid { grid-template-columns: 1fr; } }
         </style>
 
         <div class="act">
@@ -644,6 +739,42 @@ export function renderActiveContracts() {
                             All contract settlements are deterministic and oracle-verified. Capital is held in escrow until conditions are met.
                         </div>
                     </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Contract Type Picker Modal -->
+        <div class="ctp-overlay" id="ctp-overlay" onclick="if(event.target===this)this.classList.remove('open')">
+            <div class="ctp-modal">
+                <button class="ctp-close" onclick="document.getElementById('ctp-overlay').classList.remove('open')">&times;</button>
+                <div class="ctp-tag">New Contract</div>
+                <div class="ctp-title">Choose your <strong>path.</strong></div>
+                <div class="ctp-sub">Select a contract type to get started.</div>
+                <div class="ctp-grid">
+                    <a href="/#/contracts/execute" class="ctp-card" onclick="document.getElementById('ctp-overlay').classList.remove('open')">
+                        <div class="ctp-card-icon solo">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#111" stroke-width="1.5">
+                                <circle cx="12" cy="12" r="10"/>
+                                <path d="M12 8v8M9 11l3-3 3 3" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                        </div>
+                        <div class="ctp-card-label">Solo Contract</div>
+                        <div class="ctp-card-heading">Back yourself</div>
+                        <div class="ctp-card-desc">Stake capital against your own performance targets. Hit the metric — keep everything.</div>
+                        <div class="ctp-card-go">CREATE SOLO &rarr;</div>
+                    </a>
+                    <a href="/#/rivalry" class="ctp-card rivalry" onclick="document.getElementById('ctp-overlay').classList.remove('open')">
+                        <div class="ctp-card-icon rivalry">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#752122" stroke-width="1.5">
+                                <circle cx="9" cy="12" r="5"/>
+                                <circle cx="15" cy="12" r="5"/>
+                            </svg>
+                        </div>
+                        <div class="ctp-card-label">Rivalry Contract</div>
+                        <div class="ctp-card-heading">Challenge an opponent</div>
+                        <div class="ctp-card-desc">Head-to-head duel. Both lock capital. Verified growth determines the winner.</div>
+                        <div class="ctp-card-go">ISSUE CHALLENGE &rarr;</div>
+                    </a>
                 </div>
             </div>
         </div>
@@ -761,7 +892,7 @@ function renderContractList(container, allContracts, filter) {
                 </div>
                 <div style="font-size:16px;font-weight:600;color:#1a1a1a;margin-bottom:8px;">No ${filter === 'all' ? '' : filter} contracts yet</div>
                 <div style="font-size:13px;color:#999;max-width:360px;margin:0 auto 24px;">When you deploy capital against a target, your contracts will appear here.</div>
-                <a href="/#/contracts/execute" style="background:#1a1a1a;color:#fff;border:none;padding:10px 28px;border-radius:6px;font-size:13px;font-weight:500;cursor:pointer;text-decoration:none;letter-spacing:0.02em;display:inline-block;">Create Contract</a>
+                <button onclick="document.getElementById('ctp-overlay').classList.add('open')" style="background:#1a1a1a;color:#fff;border:none;padding:10px 28px;border-radius:6px;font-size:13px;font-weight:500;cursor:pointer;text-decoration:none;letter-spacing:0.02em;display:inline-block;">Create Contract</button>
             </div>
         `;
         return;

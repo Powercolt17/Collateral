@@ -11,7 +11,7 @@
 import { db } from '../db/client.js';
 import { notifications } from '../db/schema.js';
 import { eq, and, desc, sql } from 'drizzle-orm';
-import { getPrincipal } from '../middleware/auth.js';
+import { getPrincipal } from '../services/auth.js';
 
 const notificationRoutes = async (fastify) => {
 

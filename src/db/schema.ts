@@ -775,3 +775,153 @@ export type NewContractMetricSnapshot = typeof contractMetricSnapshots.$inferIns
 
 export type ContractMetricCurrent = typeof contractMetricCurrent.$inferSelect;
 export type NewContractMetricCurrent = typeof contractMetricCurrent.$inferInsert;
+
+// =============================================================================
+// RIVALRY MODE TABLES (Head-to-Head Duels)
+// =============================================================================
+
+// Rivalry participant role enum
+export const rivalryRoleEnum = pgEnum('rivalry_role', ['challenger', 'opponent']);
+
+// Rivalry status constants (derived from ledger events, not stored)
+export const RivalryStatus = {
+    CHALLENGE_ISSUED: 'CHALLENGE_ISSUED',
+    ACCEPTED: 'ACCEPTED',
+    DECLINED: 'DECLINED',
+    EXPIRED: 'EXPIRED',
+    BOTH_FUNDED: 'BOTH_FUNDED',
+    CANCELLED: 'CANCELLED',
+    ACTIVE: 'ACTIVE',
+    VERIFYING: 'VERIFYING',
+    VERIFIED: 'VERIFIED',
+    SETTLING: 'SETTLING',
+    SETTLED: 'SETTLED',
+    DRAW: 'DRAW',
+} as const;
+export type RivalryStatusType = typeof RivalryStatus[keyof typeof RivalryStatus];
+
+// Rivalry ledger event types
+export const RivalryEventType = {
+    RIVALRY_CREATED: 'RIVALRY_CREATED',
+    RIVALRY_ACCEPTED: 'RIVALRY_ACCEPTED',
+    RIVALRY_DECLINED: 'RIVALRY_DECLINED',
+    RIVALRY_EXPIRED: 'RIVALRY_EXPIRED',
+    RIVALRY_CHALLENGER_FUNDED: 'RIVALRY_CHALLENGER_FUNDED',
+    RIVALRY_OPPONENT_FUNDED: 'RIVALRY_OPPONENT_FUNDED',
+    RIVALRY_BOTH_FUNDED: 'RIVALRY_BOTH_FUNDED',
+    RIVALRY_ACTIVATED: 'RIVALRY_ACTIVATED',
+    RIVALRY_BASELINE_CAPTURED: 'RIVALRY_BASELINE_CAPTURED',
+    RIVALRY_METRIC_RECORDED: 'RIVALRY_METRIC_RECORDED',
+    RIVALRY_VERIFICATION_STARTED: 'RIVALRY_VERIFICATION_STARTED',
+    RIVALRY_VERIFIED: 'RIVALRY_VERIFIED',
+    RIVALRY_SETTLEMENT_STARTED: 'RIVALRY_SETTLEMENT_STARTED',
+    RIVALRY_SETTLED: 'RIVALRY_SETTLED',
+    RIVALRY_DRAW: 'RIVALRY_DRAW',
+    RIVALRY_CANCELLED: 'RIVALRY_CANCELLED',
+    RIVALRY_CAPITAL_RETURNED: 'RIVALRY_CAPITAL_RETURNED',
+} as const;
+
+// Core rivalry record
+export const rivalries = pgTable('rivalries', {
+    id: uuid('id').primaryKey().defaultRandom(),
+    challengerUserId: uuid('challenger_user_id').references(() => users.id).notNull(),
+    opponentUserId: uuid('opponent_user_id').references(() => users.id).notNull(),
+    platform: platformEnum('platform').notNull(),
+    metricType: metricTypeEnum('metric_type').notNull(),
+    metricKey: varchar('metric_key', { length: 50 }).notNull(),
+    stakePerSideCents: integer('stake_per_side_cents').notNull(),
+    durationDays: integer('duration_days').notNull(),
+    acceptanceTtlHours: integer('acceptance_ttl_hours').notNull().default(72),
+    fundingTtlHours: integer('funding_ttl_hours').notNull().default(48),
+    protocolFeeBps: integer('protocol_fee_bps').notNull().default(200),
+    challengeIssuedAt: timestamp('challenge_issued_at', { withTimezone: true }).defaultNow().notNull(),
+    acceptedAt: timestamp('accepted_at', { withTimezone: true }),
+    fundedAt: timestamp('funded_at', { withTimezone: true }),
+    activatedAt: timestamp('activated_at', { withTimezone: true }),
+    deadlineUtc: timestamp('deadline_utc', { withTimezone: true }),
+    settledAt: timestamp('settled_at', { withTimezone: true }),
+    winnerUserId: uuid('winner_user_id').references(() => users.id),
+    settlementMetadata: jsonb('settlement_metadata'),
+    recordHash: varchar('record_hash', { length: 64 }),
+    createdAt: timestamp('created_at', { withTimezone: true }).defaultNow().notNull(),
+    updatedAt: timestamp('updated_at', { withTimezone: true }).defaultNow().notNull(),
+}, (table) => ({
+    challengerIdx: index('idx_rivalries_challenger').on(table.challengerUserId),
+    opponentIdx: index('idx_rivalries_opponent').on(table.opponentUserId),
+    deadlineIdx: index('idx_rivalries_deadline').on(table.deadlineUtc),
+    createdIdx: index('idx_rivalries_created').on(table.createdAt),
+}));
+
+// Per-side participant record
+export const rivalryParticipants = pgTable('rivalry_participants', {
+    id: uuid('id').primaryKey().defaultRandom(),
+    rivalryId: uuid('rivalry_id').references(() => rivalries.id).notNull(),
+    userId: uuid('user_id').references(() => users.id).notNull(),
+    role: varchar('role', { length: 10 }).notNull(),
+    funded: boolean('funded').notNull().default(false),
+    fundedAt: timestamp('funded_at', { withTimezone: true }),
+    lockEventId: uuid('lock_event_id'),
+    baselineValue: numeric('baseline_value'),
+    baselineJson: jsonb('baseline_json'),
+    baselineSnapshotAt: timestamp('baseline_snapshot_at', { withTimezone: true }),
+    baselineHash: varchar('baseline_hash', { length: 64 }),
+    finalValue: numeric('final_value'),
+    finalJson: jsonb('final_json'),
+    finalSnapshotAt: timestamp('final_snapshot_at', { withTimezone: true }),
+    absoluteDelta: numeric('absolute_delta'),
+    percentageDelta: numeric('percentage_delta'),
+    outcome: varchar('outcome', { length: 10 }),
+    payoutCents: integer('payout_cents'),
+    identityBindingId: uuid('identity_binding_id'),
+    connectedAccountId: uuid('connected_account_id'),
+}, (table) => ({
+    rivalryIdx: index('idx_rivalry_participants_rivalry').on(table.rivalryId),
+    userIdx: index('idx_rivalry_participants_user').on(table.userId),
+    rivalryRoleUnique: unique().on(table.rivalryId, table.role),
+}));
+
+// Append-only hash-chained rivalry ledger
+export const rivalryLedgerEvents = pgTable('rivalry_ledger_events', {
+    id: uuid('id').primaryKey().defaultRandom(),
+    rivalryId: uuid('rivalry_id').references(() => rivalries.id).notNull(),
+    actor: ledgerActorEnum('actor').notNull(),
+    eventType: varchar('event_type', { length: 50 }).notNull(),
+    userId: uuid('user_id').references(() => users.id),
+    timestampUtc: timestamp('timestamp_utc', { withTimezone: true }).defaultNow().notNull(),
+    amountUsdCents: integer('amount_usd_cents'),
+    externalRef: varchar('external_ref', { length: 255 }),
+    metadataJson: jsonb('metadata_json'),
+    prevEventHash: varchar('prev_event_hash', { length: 64 }),
+    eventHash: varchar('event_hash', { length: 64 }).notNull(),
+}, (table) => ({
+    rivalryTimeIdx: index('idx_rivalry_ledger_rivalry').on(table.rivalryId, table.timestampUtc),
+}));
+
+// Live metric tracking for both sides
+export const rivalryMetricSnapshots = pgTable('rivalry_metric_snapshots', {
+    id: uuid('id').primaryKey().defaultRandom(),
+    rivalryId: uuid('rivalry_id').references(() => rivalries.id).notNull(),
+    userId: uuid('user_id').references(() => users.id).notNull(),
+    provider: text('provider').notNull(),
+    metricKey: text('metric_key').notNull(),
+    metricValue: numeric('metric_value').notNull(),
+    fetchedAt: timestamp('fetched_at', { withTimezone: true }).notNull(),
+    requestId: text('request_id'),
+    rawPayloadHash: text('raw_payload_hash'),
+    createdAt: timestamp('created_at', { withTimezone: true }).defaultNow().notNull(),
+}, (table) => ({
+    rivalryUserFetchedIdx: index('idx_rivalry_metrics_rivalry_user').on(table.rivalryId, table.userId, table.fetchedAt),
+}));
+
+// Type exports for rivalry tables
+export type Rivalry = typeof rivalries.$inferSelect;
+export type NewRivalry = typeof rivalries.$inferInsert;
+
+export type RivalryParticipant = typeof rivalryParticipants.$inferSelect;
+export type NewRivalryParticipant = typeof rivalryParticipants.$inferInsert;
+
+export type RivalryLedgerEvent = typeof rivalryLedgerEvents.$inferSelect;
+export type NewRivalryLedgerEvent = typeof rivalryLedgerEvents.$inferInsert;
+
+export type RivalryMetricSnapshot = typeof rivalryMetricSnapshots.$inferSelect;
+export type NewRivalryMetricSnapshot = typeof rivalryMetricSnapshots.$inferInsert;

@@ -529,6 +529,34 @@ export async function checkHealth() {
 }
 
 // =============================================================================
+// RIVALRY MODE
+// =============================================================================
+
+function createRivalry(params) { return post('/v1/rivalries', params); }
+function getRivalries(params = {}) {
+    const q = new URLSearchParams();
+    if (params.status) q.set('status', params.status);
+    if (params.limit) q.set('limit', String(params.limit));
+    if (params.offset) q.set('offset', String(params.offset));
+    const qs = q.toString();
+    return getPublic(`/v1/rivalries${qs ? '?' + qs : ''}`);
+}
+function getMyRivalries(params = {}) {
+    const q = new URLSearchParams();
+    if (params.status) q.set('status', params.status);
+    const qs = q.toString();
+    return get(`/v1/rivalries/me${qs ? '?' + qs : ''}`);
+}
+function getRivalryStats() { return getPublic('/v1/rivalries/stats'); }
+function getRivalry(id) { return getPublic(`/v1/rivalries/${id}`); }
+function acceptRivalry(id) { return post(`/v1/rivalries/${id}/accept`, null); }
+function declineRivalry(id) { return post(`/v1/rivalries/${id}/decline`, null); }
+function fundRivalry(id) { return post(`/v1/rivalries/${id}/fund`, null); }
+function getRivalryEvents(id) { return getPublic(`/v1/rivalries/${id}/events`); }
+function getRivalryMetrics(id) { return getPublic(`/v1/rivalries/${id}/metrics`); }
+function getRivalryShare(id) { return getPublic(`/v1/rivalries/${id}/share`); }
+
+// =============================================================================
 // EXPORTS
 // =============================================================================
 
@@ -634,4 +662,17 @@ export default {
     // Waitlist (pre-launch)
     joinWaitlist: (email, intendedUse) => post('/v1/waitlist/join', { email, intendedUse }),
     getWaitlistCount: () => get('/v1/waitlist/count'),
+
+    // Rivalry Mode
+    createRivalry,
+    getRivalries,
+    getMyRivalries,
+    getRivalryStats,
+    getRivalry,
+    acceptRivalry,
+    declineRivalry,
+    fundRivalry,
+    getRivalryEvents,
+    getRivalryMetrics,
+    getRivalryShare,
 };

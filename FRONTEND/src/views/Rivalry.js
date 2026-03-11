@@ -849,6 +849,10 @@ export function renderRivalry() {
 export function initRivalry() {
     if (typeof lucide !== 'undefined') lucide.createIcons();
 
+    // Dynamic import of API module
+    let api;
+    try { api = window.__collateral_api; } catch { api = null; }
+
     const grid = document.getElementById('rv-grid');
     const countLbl = document.getElementById('rv-count');
     const statActive = document.getElementById('rv-stat-active');
@@ -1018,8 +1022,28 @@ export function initRivalry() {
         grid.innerHTML = filtered.map(renderCard).join('');
     }
 
-    // ── Stats ──
-    function updateStats() {
+    // ── Stats (try live API first, fallback to sample data) ──
+    async function updateStats() {
+        try {
+            if (api && api.getRivalryStats) {
+                const res = await api.getRivalryStats();
+                if (res.ok && res.stats) {
+                    const s = res.stats;
+                    if (statActive) statActive.textContent = s.activeRivalries || 0;
+                    if (statCapital) {
+                        const c = (s.totalCapitalLockedCents || 0) / 100;
+                        statCapital.textContent = c >= 1000 ? (c / 1000).toFixed(0) + 'k' : c.toLocaleString();
+                    }
+                    if (statLargest) {
+                        const l = (s.largestPoolCents || 0) / 100;
+                        statLargest.textContent = l >= 1000 ? (l / 1000).toFixed(0) + 'k' : l.toLocaleString();
+                    }
+                    return;
+                }
+            }
+        } catch { /* fallback to sample */ }
+
+        // Fallback: sample data stats
         const active = sampleRivalries.filter(r => r.status === 'active');
         const totalCapital = sampleRivalries.reduce((sum, r) => sum + (r.stake * 2), 0);
         const largest = Math.max(...sampleRivalries.map(r => r.stake * 2));
@@ -1090,10 +1114,17 @@ export function initRivalry() {
         });
     }
 
-    // Submit challenge (placeholder)
+    // Submit challenge — calls real API
+    const METRIC_MAP = {
+        revenue_growth: { platform: 'STRIPE', metricType: 'REVENUE', metricKey: 'net_settled_amount' },
+        follower_growth: { platform: 'X', metricType: 'FOLLOWERS', metricKey: 'followers' },
+        sales_growth: { platform: 'SHOPIFY', metricType: 'GROSS_SALES', metricKey: 'gross_sales' },
+        order_growth: { platform: 'AMAZON', metricType: 'ORDER_COUNT', metricKey: 'order_count' },
+    };
+
     const submitBtn = document.getElementById('rv-btn-submit');
     if (submitBtn) {
-        submitBtn.addEventListener('click', () => {
+        submitBtn.addEventListener('click', async () => {
             const opponent = document.getElementById('rv-opponent')?.value?.trim();
             const stake = parseInt(stakeInput?.value) || 0;
 
@@ -1112,9 +1143,41 @@ export function initRivalry() {
                 return;
             }
 
-            // Future: call API to create rivalry
-            alert(`Challenge sent to ${opponent} for $${stake} on ${selectedDuration}-day ${metricSelect?.selectedOptions[0]?.text || 'duel'}. This feature is coming soon.`);
-            document.getElementById('rv-challenge-modal').classList.remove('open');
+            const metricValue = metricSelect?.value || 'revenue_growth';
+            const mapping = METRIC_MAP[metricValue] || METRIC_MAP.revenue_growth;
+
+            submitBtn.disabled = true;
+            submitBtn.textContent = 'SENDING...';
+
+            try {
+                if (api && api.createRivalry) {
+                    const result = await api.createRivalry({
+                        opponentUsername: opponent.replace('@', ''),
+                        platform: mapping.platform,
+                        metricType: mapping.metricType,
+                        metricKey: mapping.metricKey,
+                        stakePerSideCents: stake * 100,
+                        durationDays: selectedDuration,
+                    });
+
+                    if (result.ok) {
+                        document.getElementById('rv-challenge-modal').classList.remove('open');
+                        alert(`Challenge issued to @${opponent.replace('@', '')}! They have 72 hours to accept.`);
+                        // Refresh stats
+                        updateStats();
+                    } else {
+                        alert(result.error || 'Failed to create challenge');
+                    }
+                } else {
+                    alert(`Challenge sent to ${opponent} for $${stake} on ${selectedDuration}-day ${metricSelect?.selectedOptions[0]?.text || 'duel'}. Backend integration pending.`);
+                    document.getElementById('rv-challenge-modal').classList.remove('open');
+                }
+            } catch (err) {
+                alert('Failed to send challenge: ' + (err.message || 'Unknown error'));
+            } finally {
+                submitBtn.disabled = false;
+                submitBtn.textContent = 'SEND CHALLENGE';
+            }
         });
     }
 

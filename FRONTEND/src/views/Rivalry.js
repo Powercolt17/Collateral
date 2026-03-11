@@ -874,9 +874,9 @@ export function renderRivalry() {
                             <p class="rv-hero-sub">Challenge another operator to a capital-backed performance contest. Both lock funds. Verified metrics determine the winner. Loser forfeits capital.</p>
                         </div>
                         <div class="rv-hero-right">
-                            <button class="rv-btn-challenge" id="rv-btn-challenge" onclick="document.getElementById('rv-challenge-modal').classList.add('open')">
-                                ISSUE CHALLENGE
-                            </button>
+                            <button class="rv-btn-challenge" id="rv-btn-issue">
+                        ISSUE CHALLENGE
+                    </button>
                         </div>
                     </div>
 
@@ -1081,19 +1081,13 @@ export async function initRivalry() {
         };
     }
 
-    // ── Sample data (fallback) ──
-    const sampleRivalries = [
-        { id: 'RV-001', status: 'active', metric: 'Revenue Growth', provider: 'stripe', challenger: { name: '@apex_capital', growth: 34.2 }, opponent: { name: '@northpeak', growth: 28.7 }, stake: 2500, daysLeft: 12, totalDays: 30 },
-        { id: 'RV-002', status: 'active', metric: 'Follower Growth', provider: 'x', challenger: { name: '@buildfast', growth: 18.5 }, opponent: { name: '@shipweekly', growth: 22.1 }, stake: 1000, daysLeft: 6, totalDays: 14 },
-        { id: 'RV-003', status: 'pending', metric: 'Sales Growth', provider: 'shopify', challenger: { name: '@ecomgrind', growth: 0 }, opponent: { name: '@storescale', growth: 0 }, stake: 5000, daysLeft: 30, totalDays: 30 },
-        { id: 'RV-004', status: 'active', metric: 'Order Growth', provider: 'amazon', challenger: { name: '@fbaseller', growth: 41.8 }, opponent: { name: '@primeops', growth: 39.2 }, stake: 3000, daysLeft: 3, totalDays: 14 },
-        { id: 'RV-005', status: 'settled', metric: 'Revenue Growth', provider: 'stripe', challenger: { name: '@growthlab', growth: 67.3 }, opponent: { name: '@revscale', growth: 45.1 }, stake: 10000, daysLeft: 0, totalDays: 90 },
-        { id: 'RV-006', status: 'active', metric: 'Follower Growth', provider: 'x', challenger: { name: '@contentking', growth: 12.4 }, opponent: { name: '@viralops', growth: 15.8 }, stake: 750, daysLeft: 9, totalDays: 14 },
-    ];
-
-    // ── Fetch live rivalries, fallback to sample ──
-    let allRivalries = sampleRivalries;
+    // ── Fetch live rivalries ── 
+    let allRivalries = [];
     let isLive = false;
+
+    // Show loading in grid
+    grid.innerHTML = '<div style="grid-column:1/-1;text-align:center;padding:60px 20px;color:#ccc;font-family:JetBrains Mono,monospace;font-size:11px;letter-spacing:0.08em;">LOADING RIVALRIES...</div>';
+
     try {
         const res = await api.getRivalries({ limit: 50 });
         if (res.ok && res.rivalries && res.rivalries.length > 0) {
@@ -1101,10 +1095,10 @@ export async function initRivalry() {
             isLive = true;
             console.log(`[Rivalry] Loaded ${allRivalries.length} live rivalries`);
         } else {
-            console.log('[Rivalry] No live rivalries, showing sample data');
+            console.log('[Rivalry] No rivalries found');
         }
     } catch (e) {
-        console.log('[Rivalry] API unavailable, showing sample data');
+        console.log('[Rivalry] API unavailable:', e.message);
     }
 
     let activeFilter = 'active';
@@ -1207,6 +1201,14 @@ export async function initRivalry() {
         }
 
         grid.innerHTML = filtered.map(renderCard).join('');
+
+        // Empty state
+        if (filtered.length === 0) {
+            grid.innerHTML = `<div style="grid-column:1/-1;text-align:center;padding:60px 20px;">
+                <div style="font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:700;letter-spacing:0.12em;color:#ccc;text-transform:uppercase;margin-bottom:12px;">No rivalries found</div>
+                <div style="font-size:13px;color:#999;">${activeFilter === 'active' ? 'No active duels right now. Issue a challenge to start one.' : activeFilter === 'pending' ? 'No pending challenges.' : activeFilter === 'settled' ? 'No settled rivalries yet.' : 'No rivalries have been created yet.'}</div>
+            </div>`;
+        }
 
         // Card click → detail page
         grid.querySelectorAll('.rv-card').forEach(card => {
@@ -1427,6 +1429,18 @@ export async function initRivalry() {
                 submitBtn.disabled = false;
                 submitBtn.textContent = 'SEND CHALLENGE';
             }
+        });
+    }
+
+    // ── Issue Challenge button — auth guard ──
+    const issueBtn = document.getElementById('rv-btn-issue');
+    if (issueBtn) {
+        issueBtn.addEventListener('click', () => {
+            if (!window.appState?.isLoggedIn) {
+                window.app.openAccessModal();
+                return;
+            }
+            document.getElementById('rv-challenge-modal').classList.add('open');
         });
     }
 

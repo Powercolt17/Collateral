@@ -299,6 +299,39 @@ export function renderRivalryDetail() {
                 font-size: 12px; letter-spacing: 0.08em;
             }
 
+            /* ── Action Bar ── */
+            .rvd-actions {
+                max-width: 1200px; margin: 0 auto;
+                padding: 0 64px 24px;
+                display: flex; gap: 12px; align-items: center;
+            }
+            .rvd-action-btn {
+                height: 44px; padding: 0 32px;
+                border: none; cursor: pointer;
+                font-family: 'JetBrains Mono', monospace;
+                font-size: 11px; font-weight: 700;
+                letter-spacing: 0.1em; text-transform: uppercase;
+                transition: opacity 0.15s;
+            }
+            .rvd-action-btn:hover { opacity: 0.85; }
+            .rvd-action-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+            .rvd-action-btn.accept {
+                background: #0F5132; color: #fff;
+            }
+            .rvd-action-btn.decline {
+                background: #fff; color: #3B0001;
+                border: 1px solid #3B0001;
+            }
+            .rvd-action-btn.fund {
+                background: #111; color: #fff;
+            }
+            .rvd-action-status {
+                font-family: 'JetBrains Mono', monospace;
+                font-size: 10px; font-weight: 600;
+                letter-spacing: 0.08em; color: #999;
+                text-transform: uppercase;
+            }
+
             /* ── Responsive ── */
             @media (max-width: 768px) {
                 .rvd-hero-inner { padding: 36px 20px 32px; }
@@ -312,6 +345,7 @@ export function renderRivalryDetail() {
                 .rvd-status-bar { flex-direction: column; align-items: flex-start; gap: 8px; }
                 .rvd-chart-section { padding: 0 20px 8px; }
                 .rvd-chart-canvas { height: 160px; }
+                .rvd-actions { padding: 0 20px 24px; flex-wrap: wrap; }
             }
         </style>
 
@@ -370,20 +404,13 @@ export async function initRivalryDetail() {
             daysLeft,
             totalDays: r.durationDays || 30,
             metrics: r.metrics || [],
+            _rawState: r.state,
+            _challengerUserId: r.challengerUserId,
+            _opponentUserId: r.opponentUserId,
         };
     }
 
-    // ── Sample data (fallback) ──
-    const sampleRivalries = [
-        { id: 'RV-001', status: 'active', metric: 'Revenue Growth', provider: 'stripe', challenger: { name: '@apex_capital', growth: 34.2, baseline: 48200 }, opponent: { name: '@northpeak', growth: 28.7, baseline: 62800 }, stake: 2500, daysLeft: 12, totalDays: 30 },
-        { id: 'RV-002', status: 'active', metric: 'Follower Growth', provider: 'x', challenger: { name: '@buildfast', growth: 18.5, baseline: 12400 }, opponent: { name: '@shipweekly', growth: 22.1, baseline: 8900 }, stake: 1000, daysLeft: 6, totalDays: 14 },
-        { id: 'RV-003', status: 'pending', metric: 'Sales Growth', provider: 'shopify', challenger: { name: '@ecomgrind', growth: 0, baseline: 15600 }, opponent: { name: '@storescale', growth: 0, baseline: 22100 }, stake: 5000, daysLeft: 30, totalDays: 30 },
-        { id: 'RV-004', status: 'active', metric: 'Order Growth', provider: 'amazon', challenger: { name: '@fbaseller', growth: 41.8, baseline: 340 }, opponent: { name: '@primeops', growth: 39.2, baseline: 520 }, stake: 3000, daysLeft: 3, totalDays: 14 },
-        { id: 'RV-005', status: 'settled', metric: 'Revenue Growth', provider: 'stripe', challenger: { name: '@growthlab', growth: 67.3, baseline: 35000 }, opponent: { name: '@revscale', growth: 45.1, baseline: 41200 }, stake: 10000, daysLeft: 0, totalDays: 90 },
-        { id: 'RV-006', status: 'active', metric: 'Follower Growth', provider: 'x', challenger: { name: '@contentking', growth: 12.4, baseline: 5200 }, opponent: { name: '@viralops', growth: 15.8, baseline: 7800 }, stake: 750, daysLeft: 9, totalDays: 14 },
-    ];
-
-    // ── Fetch live rivalry, fallback to sample ──
+    // ── Fetch live rivalry ──
     let rivalry = null;
     try {
         const res = await api.getRivalry(id);
@@ -392,10 +419,7 @@ export async function initRivalryDetail() {
             console.log(`[RivalryDetail] Loaded live rivalry ${id}`);
         }
     } catch (e) {
-        console.log('[RivalryDetail] API unavailable, checking sample data');
-    }
-    if (!rivalry) {
-        rivalry = sampleRivalries.find(r => r.id === id) || null;
+        console.log('[RivalryDetail] API error:', e.message);
     }
 
     if (!rivalry) {
@@ -574,6 +598,10 @@ export async function initRivalryDetail() {
             </div>
         </div>
 
+        <div class="rvd-actions" id="rvd-actions">
+            <!-- Dynamically populated based on state and user role -->
+        </div>
+
         <div class="rvd-share">
             <button class="rvd-share-btn" onclick="navigator.clipboard.writeText(window.location.href).then(()=>alert('Link copied!'))">COPY LINK</button>
             <button class="rvd-share-btn" onclick="window.open('https://twitter.com/intent/tweet?text='+encodeURIComponent('${rivalry.challenger.name} vs ${rivalry.opponent.name} — $${pool.toLocaleString()} at stake. ${rivalry.metric}. ' + window.location.href))">SHARE ON X</button>
@@ -673,5 +701,67 @@ export async function initRivalryDetail() {
         `;
     } else if (chartEl) {
         chartEl.innerHTML = `<div style="display:flex;align-items:center;justify-content:center;height:100%;color:#ccc;font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:0.06em;">PENDING — CHART AVAILABLE ONCE ACTIVE</div>`;
+    }
+
+    // ── Action Bar — accept/decline/fund ──
+    const actionsEl = document.getElementById('rvd-actions');
+    if (actionsEl && rivalry._rawState) {
+        const userId = window.appState?.userId;
+        const rawState = rivalry._rawState;
+        const isOpponent = rivalry._opponentUserId && userId === rivalry._opponentUserId;
+        const isChallenger = rivalry._challengerUserId && userId === rivalry._challengerUserId;
+
+        if (rawState === 'CHALLENGE_ISSUED' && isOpponent) {
+            actionsEl.innerHTML = `
+                <button class="rvd-action-btn accept" id="rvd-accept">ACCEPT CHALLENGE</button>
+                <button class="rvd-action-btn decline" id="rvd-decline">DECLINE</button>
+                <span class="rvd-action-status">You have been challenged. Accept to lock capital.</span>
+            `;
+            document.getElementById('rvd-accept')?.addEventListener('click', async (e) => {
+                e.target.disabled = true; e.target.textContent = 'ACCEPTING...';
+                try {
+                    const res = await api.acceptRivalry(id);
+                    if (res.ok) { alert('Challenge accepted! Fund your side to begin.'); location.reload(); }
+                    else alert(res.error || 'Failed to accept');
+                } catch (err) { alert('Error: ' + err.message); }
+                e.target.disabled = false; e.target.textContent = 'ACCEPT CHALLENGE';
+            });
+            document.getElementById('rvd-decline')?.addEventListener('click', async (e) => {
+                if (!confirm('Are you sure? This cannot be undone.')) return;
+                e.target.disabled = true; e.target.textContent = 'DECLINING...';
+                try {
+                    const res = await api.declineRivalry(id);
+                    if (res.ok) { alert('Challenge declined.'); window.location.hash = '/rivalry'; }
+                    else alert(res.error || 'Failed to decline');
+                } catch (err) { alert('Error: ' + err.message); }
+                e.target.disabled = false; e.target.textContent = 'DECLINE';
+            });
+        } else if (rawState === 'ACCEPTED' && (isChallenger || isOpponent)) {
+            actionsEl.innerHTML = `
+                <button class="rvd-action-btn fund" id="rvd-fund">FUND YOUR SIDE — $${rivalry.stake.toLocaleString()}</button>
+                <span class="rvd-action-status">Both sides must fund before the duel begins.</span>
+            `;
+            document.getElementById('rvd-fund')?.addEventListener('click', async (e) => {
+                e.target.disabled = true; e.target.textContent = 'FUNDING...';
+                try {
+                    const res = await api.fundRivalry(id);
+                    if (res.ok) { alert('Funded! Waiting for opponent to fund.'); location.reload(); }
+                    else alert(res.error || 'Failed to fund');
+                } catch (err) { alert('Error: ' + err.message); }
+                e.target.disabled = false; e.target.textContent = `FUND YOUR SIDE — $${rivalry.stake.toLocaleString()}`;
+            });
+        } else if (rawState === 'CHALLENGE_ISSUED' && isChallenger) {
+            actionsEl.innerHTML = `<span class="rvd-action-status">WAITING FOR OPPONENT TO ACCEPT</span>`;
+        } else if (rawState === 'BOTH_FUNDED' || rawState === 'ACTIVE' || rawState === 'VERIFYING') {
+            actionsEl.innerHTML = `<span class="rvd-action-status">DUEL IN PROGRESS — ${rivalry.daysLeft}d REMAINING</span>`;
+        } else if (rawState === 'SETTLED' || rawState === 'DRAW') {
+            actionsEl.innerHTML = `<span class="rvd-action-status">SETTLED — ${rawState === 'DRAW' ? 'DRAW' : 'WINNER DETERMINED'}</span>`;
+        }
+    } else if (actionsEl && rivalry.status === 'pending') {
+        actionsEl.innerHTML = `<span class="rvd-action-status">CHALLENGE PENDING — WAITING FOR RESPONSE</span>`;
+    } else if (actionsEl && rivalry.status === 'active') {
+        actionsEl.innerHTML = `<span class="rvd-action-status">DUEL ACTIVE — ${rivalry.daysLeft}d REMAINING</span>`;
+    } else if (actionsEl && rivalry.status === 'settled') {
+        actionsEl.innerHTML = `<span class="rvd-action-status">SETTLED — FINAL</span>`;
     }
 }

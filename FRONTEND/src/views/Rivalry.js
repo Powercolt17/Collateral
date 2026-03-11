@@ -23,11 +23,25 @@ export function renderRivalry() {
             .rv-hero {
                 background: #fff;
                 border-bottom: 1px solid #f0f0f0;
+                position: relative;
+                overflow: hidden;
+            }
+            .rv-hero::before {
+                content: '';
+                position: absolute;
+                top: -20%;
+                left: 50%;
+                transform: translateX(-50%);
+                width: 120%;
+                height: 140%;
+                background: radial-gradient(circle at center, rgba(59,0,1,0.04), transparent 60%);
+                pointer-events: none;
             }
             .rv-hero-inner {
                 max-width: 1440px;
                 margin: 0 auto;
-                padding: 48px 64px 48px;
+                padding: 58px 64px 58px;
+                position: relative;
             }
             .rv-breadcrumb {
                 font-family: 'JetBrains Mono', monospace;
@@ -48,12 +62,12 @@ export function renderRivalry() {
             }
             .rv-hero-left { flex: 1; }
             .rv-hero-title {
-                font-size: 42px;
+                font-size: 56px;
                 font-weight: 300;
                 color: #111;
-                letter-spacing: -1.5px;
-                margin: 0 0 12px;
-                line-height: 1.1;
+                letter-spacing: -2px;
+                margin: 0 0 24px;
+                line-height: 1.08;
             }
             .rv-hero-title strong {
                 font-weight: 600;
@@ -97,11 +111,20 @@ export function renderRivalry() {
             }
             .rv-stat-group {}
             .rv-stat-val {
-                font-size: 36px;
+                font-size: 44px;
                 font-weight: 300;
                 color: #111;
                 letter-spacing: -1px;
                 font-family: 'Neue Haas Grotesk Display', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            }
+            .rv-stat-val::after {
+                content: '';
+                display: block;
+                width: 24px;
+                height: 2px;
+                background: #3B0001;
+                margin-top: 6px;
+                opacity: 0.3;
             }
             .rv-stat-lbl {
                 font-family: 'JetBrains Mono', monospace;
@@ -190,6 +213,25 @@ export function renderRivalry() {
                 position: relative;
                 overflow: hidden;
             }
+            .rv-card::before {
+                content: '';
+                position: absolute;
+                top: 0;
+                left: 0;
+                right: 0;
+                height: 3px;
+                background: linear-gradient(to right, #10b981 0%, #10b981 50%, transparent 50%);
+                opacity: 0;
+                transition: opacity 0.2s;
+            }
+            .rv-card.leader-left::before {
+                opacity: 1;
+                background: linear-gradient(to right, #10b981 0%, #10b981 50%, transparent 50%);
+            }
+            .rv-card.leader-right::before {
+                opacity: 1;
+                background: linear-gradient(to left, #10b981 0%, #10b981 50%, transparent 50%);
+            }
             .rv-card:hover {
                 border-color: #ddd;
                 box-shadow: 0 4px 20px rgba(0,0,0,0.04);
@@ -216,11 +258,17 @@ export function renderRivalry() {
                 height: 5px;
                 border-radius: 50%;
                 background: #10b981;
+                animation: rv-pulse 1.8s infinite;
+            }
+            @keyframes rv-pulse {
+                0% { transform: scale(1); opacity: 1; }
+                50% { transform: scale(1.5); opacity: 0.4; }
+                100% { transform: scale(1); opacity: 1; }
             }
             .rv-card-status.pending { color: #f59e0b; }
-            .rv-card-status.pending .dot { background: #f59e0b; }
+            .rv-card-status.pending .dot { background: #f59e0b; animation: none; }
             .rv-card-status.ended { color: #999; }
-            .rv-card-status.ended .dot { background: #999; }
+            .rv-card-status.ended .dot { background: #999; animation: none; }
             .rv-card-id {
                 font-family: 'JetBrains Mono', monospace;
                 font-size: 9px;
@@ -279,24 +327,45 @@ export function renderRivalry() {
                 letter-spacing: -0.5px;
                 margin-top: 4px;
             }
-            .rv-player-growth.leading { color: #10b981; }
+            .rv-player-growth.leading {
+                color: #10b981;
+                text-shadow: 0 0 6px rgba(16, 185, 129, 0.25);
+            }
             .rv-player-growth.trailing { color: #ef4444; }
             .rv-vs-divider {
                 display: flex;
                 align-items: center;
                 justify-content: center;
-                width: 48px;
+                width: 60px;
                 flex-shrink: 0;
-                background: #f5f5f5;
+                background: #f2f2f2;
                 border-left: 1px solid #f0f0f0;
                 border-right: 1px solid #f0f0f0;
+                box-shadow: inset 0 0 6px rgba(0,0,0,0.04);
             }
             .rv-vs-text {
                 font-family: 'JetBrains Mono', monospace;
-                font-size: 10px;
+                font-size: 11px;
                 font-weight: 700;
-                color: #ccc;
+                color: #bbb;
                 letter-spacing: 0.06em;
+            }
+
+            /* Momentum Bar */
+            .rv-momentum {
+                height: 6px;
+                display: flex;
+                overflow: hidden;
+                margin-bottom: 20px;
+                background: #f5f5f5;
+            }
+            .rv-momentum-left {
+                background: #10b981;
+                transition: width 0.4s ease;
+            }
+            .rv-momentum-right {
+                background: #ef4444;
+                transition: width 0.4s ease;
             }
 
             /* Card Bottom */
@@ -391,6 +460,13 @@ export function renderRivalry() {
             .rv-mech-card {
                 padding: 40px 32px;
                 border-right: 1px solid #e8e8e8;
+                transition: background 0.18s ease, transform 0.18s ease, box-shadow 0.18s ease;
+                cursor: default;
+            }
+            .rv-mech-card:hover {
+                background: #fff;
+                transform: translateY(-3px);
+                box-shadow: 0 6px 20px rgba(0,0,0,0.05);
             }
             .rv-mech-card:last-child { border-right: none; }
             .rv-mech-num {
@@ -627,6 +703,102 @@ export function renderRivalry() {
                 margin-bottom: 24px;
             }
 
+            /* ── Hottest Rivalry Featured Card ── */
+            .rv-featured {
+                max-width: 1440px;
+                margin: 0 auto;
+                padding: 0 64px;
+            }
+            .rv-featured-card {
+                background: #fafafa;
+                border: 1px solid #f0f0f0;
+                padding: 32px 36px;
+                position: relative;
+                margin-bottom: 12px;
+                overflow: hidden;
+            }
+            .rv-featured-card::before {
+                content: '';
+                position: absolute;
+                top: 0; left: 0; right: 0;
+                height: 3px;
+                background: linear-gradient(90deg, #3B0001 0%, #ef4444 50%, #10b981 100%);
+            }
+            .rv-featured-tag {
+                font-family: 'JetBrains Mono', monospace;
+                font-size: 9px;
+                font-weight: 700;
+                letter-spacing: 0.14em;
+                text-transform: uppercase;
+                color: #3B0001;
+                margin-bottom: 16px;
+                display: flex;
+                align-items: center;
+                gap: 6px;
+            }
+            .rv-featured-tag .fire { font-size: 12px; }
+            .rv-featured-row {
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                gap: 32px;
+            }
+            .rv-featured-vs {
+                display: flex;
+                align-items: center;
+                gap: 20px;
+                flex: 1;
+            }
+            .rv-featured-player {
+                display: flex;
+                flex-direction: column;
+                gap: 2px;
+            }
+            .rv-featured-player.right { text-align: right; }
+            .rv-featured-name {
+                font-family: 'JetBrains Mono', monospace;
+                font-size: 14px;
+                font-weight: 600;
+                color: #111;
+                letter-spacing: 0.02em;
+            }
+            .rv-featured-growth {
+                font-size: 28px;
+                font-weight: 300;
+                letter-spacing: -0.5px;
+            }
+            .rv-featured-meta {
+                display: flex;
+                flex-direction: column;
+                align-items: flex-end;
+                gap: 4px;
+                flex-shrink: 0;
+            }
+            .rv-featured-pool {
+                font-size: 22px;
+                font-weight: 500;
+                color: #111;
+            }
+            .rv-featured-time {
+                font-family: 'JetBrains Mono', monospace;
+                font-size: 10px;
+                color: #999;
+            }
+
+            /* ── Modal High Stakes Warning ── */
+            .rv-modal.high-stakes {
+                border-color: rgba(59, 0, 1, 0.3);
+            }
+            .rv-modal-warning {
+                font-family: 'JetBrains Mono', monospace;
+                font-size: 10px;
+                font-weight: 600;
+                letter-spacing: 0.06em;
+                color: #3B0001;
+                text-align: center;
+                padding: 12px 0 0;
+            }
+
             /* ── Responsive ── */
             @media (max-width: 1200px) {
                 .rv-grid { grid-template-columns: 1fr; }
@@ -637,12 +809,13 @@ export function renderRivalry() {
                 .rv-mechanism-inner { padding: 0 32px; }
                 .rv-warning { padding: 32px; }
                 .rv-stats { gap: 40px; }
+                .rv-featured { padding: 0 32px; }
             }
 
             @media (max-width: 768px) {
-                .rv-hero-inner { padding: 32px 20px; }
+                .rv-hero-inner { padding: 40px 20px; }
                 .rv-hero-row { flex-direction: column; align-items: flex-start; gap: 20px; }
-                .rv-hero-title { font-size: 28px; letter-spacing: -1px; }
+                .rv-hero-title { font-size: 32px; letter-spacing: -1px; }
                 .rv-hero-sub { font-size: 14px; }
                 .rv-stats {
                     display: grid;
@@ -681,6 +854,12 @@ export function renderRivalry() {
                 .rv-mechanism-title { font-size: 24px; }
                 .rv-warning { padding: 28px 20px; }
                 .rv-btn-challenge { width: 100%; }
+                .rv-featured { padding: 0 20px; }
+                .rv-featured-row { flex-direction: column; gap: 16px; }
+                .rv-featured-meta { align-items: flex-start; }
+                .rv-featured-vs { flex-direction: column; gap: 8px; }
+                .rv-featured-player.right { text-align: left; }
+                .rv-stat-val::after { margin: 6px auto 0; }
             }
         </style>
 
@@ -691,7 +870,7 @@ export function renderRivalry() {
                     <div class="rv-breadcrumb">Collateral Protocol <span>/ Rivalry</span></div>
                     <div class="rv-hero-row">
                         <div class="rv-hero-left">
-                            <h1 class="rv-hero-title">Head-to-head <strong>duels.</strong></h1>
+                            <h1 class="rv-hero-title">Head-to-head <strong>duels.</strong><br>Operators vs operators.</h1>
                             <p class="rv-hero-sub">Challenge another operator to a capital-backed performance contest. Both lock funds. Verified metrics determine the winner. Loser forfeits capital.</p>
                         </div>
                         <div class="rv-hero-right">
@@ -717,6 +896,9 @@ export function renderRivalry() {
                     </div>
                 </div>
             </div>
+
+            <!-- Hottest Rivalry -->
+            <div class="rv-featured" id="rv-featured"></div>
 
             <!-- Controls -->
             <div class="rv-controls">
@@ -839,6 +1021,7 @@ export function renderRivalry() {
 
                 <div class="rv-modal-footer">
                     <div class="rv-modal-footer-text">Challenge is binding once accepted. Capital locks immediately.</div>
+                    <div class="rv-modal-warning">Both operators lock capital. Losing operator forfeits stake.</div>
                 </div>
             </div>
         </div>
@@ -945,8 +1128,14 @@ export function initRivalry() {
         const statusLabel = r.status === 'pending' ? 'AWAITING ACCEPTANCE' : r.status === 'settled' ? 'SETTLED' : 'LIVE';
         const timeLabel = r.status === 'settled' ? 'Completed' : r.daysLeft <= 1 ? `${r.daysLeft * 24}h left` : `${r.daysLeft}d left`;
 
+        // Momentum bar percentages
+        const totalGrowth = Math.abs(r.challenger.growth) + Math.abs(r.opponent.growth);
+        const leftPct = totalGrowth > 0 ? Math.round((Math.abs(r.challenger.growth) / totalGrowth) * 100) : 50;
+        const rightPct = 100 - leftPct;
+        const leaderClass = r.status === 'pending' ? '' : (isLeadingChallenger ? 'leader-left' : 'leader-right');
+
         return `
-            <div class="rv-card" data-status="${r.status}">
+            <div class="rv-card ${leaderClass}" data-status="${r.status}" data-id="${r.id}">
                 <div class="rv-card-header">
                     <div class="rv-card-status ${statusClass}">
                         <span class="dot"></span>
@@ -974,6 +1163,11 @@ export function initRivalry() {
                         </span>
                     </div>
                 </div>
+                ${r.status !== 'pending' ? `
+                <div class="rv-momentum">
+                    <div class="rv-momentum-left" style="width:${leftPct}%"></div>
+                    <div class="rv-momentum-right" style="width:${rightPct}%"></div>
+                </div>` : ''}
                 <div class="rv-card-bottom">
                     <div class="rv-card-stake">
                         <span class="rv-card-stake-val">$${(r.stake * 2).toLocaleString()}</span>
@@ -1020,6 +1214,54 @@ export function initRivalry() {
         }
 
         grid.innerHTML = filtered.map(renderCard).join('');
+
+        // Card click → detail page
+        grid.querySelectorAll('.rv-card').forEach(card => {
+            card.addEventListener('click', () => {
+                const id = card.dataset.id;
+                if (id) window.location.hash = '/rivalry/' + id;
+            });
+        });
+    }
+
+    // ── Hottest Rivalry ──
+    function renderFeatured() {
+        const featured = document.getElementById('rv-featured');
+        if (!featured) return;
+
+        // Find the hottest active rivalry (largest stake)
+        const activeRivalries = sampleRivalries.filter(r => r.status === 'active');
+        if (activeRivalries.length === 0) { featured.innerHTML = ''; return; }
+
+        const hottest = activeRivalries.reduce((a, b) => a.stake > b.stake ? a : b);
+        const isLeading = hottest.challenger.growth >= hottest.opponent.growth;
+
+        featured.innerHTML = `
+            <div class="rv-featured-card">
+                <div class="rv-featured-tag"><span class="fire">🔥</span> HOTTEST RIVALRY</div>
+                <div class="rv-featured-row">
+                    <div class="rv-featured-vs">
+                        <div class="rv-featured-player">
+                            <span class="rv-player-label">CHALLENGER</span>
+                            <span class="rv-featured-name">${hottest.challenger.name}</span>
+                            <span class="rv-featured-growth ${isLeading ? 'leading' : 'trailing'}">${hottest.challenger.growth > 0 ? '+' : ''}${hottest.challenger.growth}%</span>
+                        </div>
+                        <div class="rv-vs-divider" style="height:60px;">
+                            <span class="rv-vs-text">VS</span>
+                        </div>
+                        <div class="rv-featured-player right">
+                            <span class="rv-player-label">OPPONENT</span>
+                            <span class="rv-featured-name">${hottest.opponent.name}</span>
+                            <span class="rv-featured-growth ${!isLeading ? 'leading' : 'trailing'}">${hottest.opponent.growth > 0 ? '+' : ''}${hottest.opponent.growth}%</span>
+                        </div>
+                    </div>
+                    <div class="rv-featured-meta">
+                        <span class="rv-featured-pool">$${(hottest.stake * 2).toLocaleString()}</span>
+                        <span class="rv-featured-time">${hottest.daysLeft}d remaining · ${hottest.provider.toUpperCase()}</span>
+                    </div>
+                </div>
+            </div>
+        `;
     }
 
     // ── Stats (try live API first, fallback to sample data) ──
@@ -1100,7 +1342,18 @@ export function initRivalry() {
         if (previewMetric) previewMetric.textContent = metric;
     }
 
-    if (stakeInput) stakeInput.addEventListener('input', updatePreview);
+    if (stakeInput) {
+        stakeInput.addEventListener('input', () => {
+            updatePreview();
+            // Toggle high-stakes styling
+            const modal = document.querySelector('.rv-modal');
+            const val = parseInt(stakeInput.value) || 0;
+            if (modal) {
+                if (val >= 5000) modal.classList.add('high-stakes');
+                else modal.classList.remove('high-stakes');
+            }
+        });
+    }
     if (metricSelect) metricSelect.addEventListener('change', updatePreview);
 
     if (durationPills) {
@@ -1183,6 +1436,7 @@ export function initRivalry() {
 
     // ── Initial render ──
     updateStats();
+    renderFeatured();
     renderGrid();
     updatePreview();
 }

@@ -3,6 +3,7 @@ import { Router } from './router.js';
 import { renderHeader, initScrollEffects } from './components/Header.js';
 import { renderOverview, initOverview } from './views/Overview.js';
 import { renderRivalry, initRivalry } from './views/Rivalry.js';
+import { renderRivalryDetail, initRivalryDetail } from './views/RivalryDetail.js';
 import { renderLedger, initLedger } from './views/Ledger.js';
 import { renderContracts, initContracts } from './views/Contracts.js';
 import { renderContractDetail, initContractDetail } from './views/ContractDetail.js';
@@ -167,6 +168,7 @@ const routes = PRE_LAUNCH_MODE ? [
     // Normal mode: full app
     { path: '/overview', render: renderOverview, init: initOverview },
     { path: '/rivalry', render: renderRivalry, init: initRivalry },
+    { path: '/rivalry/:id', render: renderRivalryDetail, init: initRivalryDetail },
     { path: '/ledger', render: renderLedger, init: initLedger },
     { path: '/contracts', render: renderActiveContracts, init: initActiveContracts },
     { path: '/sources', render: renderSources, init: initSources },

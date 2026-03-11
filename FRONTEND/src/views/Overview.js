@@ -165,6 +165,7 @@ export function renderOverview() {
                 display: grid;
                 grid-template-columns: repeat(4, 1fr);
                 border-top: 1px solid #f0f0f0;
+                position: relative;
             }
             .eq-mech-card {
                 padding: 60px 40px;
@@ -190,14 +191,27 @@ export function renderOverview() {
             }
             .eq-mech-card:hover::before { width: 100%; }
             .eq-mech-card:last-child { border-right: none; }
+            /* Step connector arrow */
+            .eq-mech-card:not(:last-child)::after {
+                content: '→';
+                position: absolute;
+                right: -8px; top: 50%;
+                transform: translateY(-50%);
+                font-size: 14px;
+                color: #ccc;
+                z-index: 2;
+                font-family: 'JetBrains Mono', monospace;
+            }
             .eq-mech-num {
                 font-family: 'Neue Haas Grotesk Display', sans-serif;
                 font-size: 80px;
                 font-weight: 700;
-                color: #f5f5f5;
+                color: #e0e0e0;
                 line-height: 0.8;
                 margin-bottom: 40px;
+                transition: color 0.3s;
             }
+            .eq-mech-card:hover .eq-mech-num { color: rgba(117, 33, 34, 0.15); }
             .eq-mech-label {
                 font-size: 22px;
                 font-weight: 700;
@@ -205,9 +219,14 @@ export function renderOverview() {
                 color: #111;
             }
             .eq-mech-desc {
-                font-size: 15px;
-                color: #888;
-                line-height: 1.65;
+                font-size: 14px;
+                color: #666;
+                line-height: 1.7;
+            }
+            .eq-mechanism-sub {
+                font-size: 15px; color: #888;
+                line-height: 1.65; max-width: 520px;
+                margin-top: 16px;
             }
 
             /* --- MARKET SECTION --- */
@@ -1073,6 +1092,7 @@ export function renderOverview() {
                     <div class="eq-mechanism-side-left">
                         <div class="eq-tag anim-mech-tag">How it works</div>
                         <h2 class="eq-mechanism-title anim-mech-title">Four steps to <strong>settlement.</strong></h2>
+                        <p class="eq-mechanism-sub">Every contract follows the same deterministic lifecycle. No human intervention. No exceptions.</p>
                     </div>
                 </div>
                 <div class="eq-mechanism-grid">

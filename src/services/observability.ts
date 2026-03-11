@@ -76,7 +76,7 @@ const metrics: Metrics = {
 // =============================================================================
 
 export interface JobResult {
-    jobType: 'VERIFICATION' | 'SETTLEMENT' | 'RECONCILIATION' | 'ORACLE_REFRESH';
+    jobType: 'VERIFICATION' | 'SETTLEMENT' | 'RECONCILIATION' | 'ORACLE_REFRESH' | 'RIVALRY_TRACKER' | 'RIVALRY_CRON';
     processed: number;
     succeeded: number;
     failed: number;

@@ -17,7 +17,7 @@ import { createHash } from 'crypto';
 import { eq, and, desc, asc, or, sql } from 'drizzle-orm';
 import {
     rivalries, rivalryParticipants, rivalryLedgerEvents, rivalryMetricSnapshots,
-    users, identities, accountLedgerEvents,
+    users, identities, accountLedgerEvents, connectedAccounts,
     RivalryStatus, RivalryEventType,
     type Rivalry, type NewRivalry,
     type RivalryLedgerEvent,
@@ -220,6 +220,24 @@ export async function createRivalry(params: CreateRivalryParams): Promise<Rivalr
 
     if (opponentIdentity.userId === challengerUserId) {
         throw new Error('Cannot challenge yourself');
+    }
+
+    // Validate challenger has the required provider connected
+    const [challengerAccount] = await db
+        .select()
+        .from(connectedAccounts)
+        .where(
+            and(
+                eq(connectedAccounts.userId, challengerUserId),
+                eq(connectedAccounts.platform, platform),
+                eq(connectedAccounts.status, 'ACTIVE'),
+            )
+        )
+        .limit(1);
+
+    if (!challengerAccount) {
+        const platformName = platform.charAt(0) + platform.slice(1).toLowerCase();
+        throw new Error(`You must connect ${platformName} before issuing a ${metricType.toLowerCase()} challenge`);
     }
 
     // Create rivalry atomically

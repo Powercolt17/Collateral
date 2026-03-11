@@ -14,6 +14,8 @@ import { runVerificationJob } from './verification.js';
 import { runSettlementJob } from './settlement.js';
 import { runReconciliationJob } from './reconciliation.js';
 import { runOracleRefreshJob } from '../jobs/oracle-refresh.js';
+import { runRivalryTrackerJob } from '../jobs/rivalry-tracker.js';
+import { runRivalryCronJobs } from '../jobs/rivalry-cron.js';
 import {
     isVerificationEnabled,
     isSettlementEnabled,
@@ -35,6 +37,8 @@ export interface SchedulerResult {
     settlement: JobResult | null;
     reconciliation: JobResult | null;
     oracleRefresh: JobResult | null;
+    rivalryTracker: JobResult | null;
+    rivalryCron: JobResult | null;
     totalDurationMs: number;
 }
 
@@ -166,6 +170,52 @@ export async function runScheduledJobs(): Promise<SchedulerResult> {
         }
     }
 
+    // 5. Rivalry Tracker (baseline snapshots + metric polling)
+    let rivalryTrackerResult: JobResult | null = null;
+    {
+        const jobStart = Date.now();
+        try {
+            const result = await runRivalryTrackerJob();
+            const durationMs = Date.now() - jobStart;
+
+            rivalryTrackerResult = {
+                jobType: 'RIVALRY_TRACKER',
+                processed: result.processed,
+                succeeded: result.snapshotsTaken + result.baselinesSet,
+                failed: result.errors,
+                skipped: result.skipped,
+                durationMs,
+                skipReasons: { locked: 0, retryScheduled: 0, terminal: 0 },
+            };
+            logJobResult(rivalryTrackerResult);
+        } catch (err: any) {
+            console.error('❌ Rivalry tracker job error:', err.message);
+        }
+    }
+
+    // 6. Rivalry Cron (auto-settle, expire, cancel)
+    let rivalryCronResult: JobResult | null = null;
+    {
+        const jobStart = Date.now();
+        try {
+            const result = await runRivalryCronJobs();
+            const durationMs = Date.now() - jobStart;
+
+            rivalryCronResult = {
+                jobType: 'RIVALRY_CRON',
+                processed: result.settled + result.expired + result.cancelled,
+                succeeded: result.settled + result.expired + result.cancelled,
+                failed: result.errors,
+                skipped: 0,
+                durationMs,
+                skipReasons: { locked: 0, retryScheduled: 0, terminal: 0 },
+            };
+            logJobResult(rivalryCronResult);
+        } catch (err: any) {
+            console.error('❌ Rivalry cron job error:', err.message);
+        }
+    }
+
     const totalDurationMs = Date.now() - startTime;
     console.log(`✅ Scheduled job run complete in ${totalDurationMs}ms`);
 
@@ -174,6 +224,8 @@ export async function runScheduledJobs(): Promise<SchedulerResult> {
         settlement: settlementResult,
         reconciliation: reconciliationResult,
         oracleRefresh: oracleResult,
+        rivalryTracker: rivalryTrackerResult,
+        rivalryCron: rivalryCronResult,
         totalDurationMs,
     };
 }

@@ -3,6 +3,7 @@ export function renderHeader(currentRoute) {
     const routes = [
         { path: '/overview', label: 'MARKET' },
         { path: '/contracts', label: 'ACTIVE' },
+        { path: '/rivalry', label: 'RIVALRY' },
         { path: '/ledger', label: 'LEDGER' },
         { path: '/sources', label: 'SOURCES' },
         { path: '/docs', label: 'DOCS' }

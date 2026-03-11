@@ -220,13 +220,13 @@ export function renderRivalry() {
                 left: 0;
                 right: 0;
                 height: 3px;
-                background: linear-gradient(to right, #10b981 0%, #10b981 50%, transparent 50%);
+                background: linear-gradient(to right, #0F5132 0%, #0F5132 50%, transparent 50%);
                 opacity: 0;
                 transition: opacity 0.2s;
             }
             .rv-card.leader-left::before {
                 opacity: 1;
-                background: linear-gradient(to right, #10b981 0%, #10b981 50%, transparent 50%);
+                background: linear-gradient(to right, #0F5132 0%, #0F5132 50%, transparent 50%);
             }
             .rv-card.leader-right::before {
                 opacity: 1;
@@ -248,7 +248,7 @@ export function renderRivalry() {
                 font-weight: 600;
                 letter-spacing: 0.08em;
                 text-transform: uppercase;
-                color: #10b981;
+                color: #0F5132;
                 display: flex;
                 align-items: center;
                 gap: 6px;
@@ -257,7 +257,7 @@ export function renderRivalry() {
                 width: 5px;
                 height: 5px;
                 border-radius: 50%;
-                background: #10b981;
+                background: #0F5132;
                 animation: rv-pulse 1.8s infinite;
             }
             @keyframes rv-pulse {
@@ -328,10 +328,10 @@ export function renderRivalry() {
                 margin-top: 4px;
             }
             .rv-player-growth.leading {
-                color: #10b981;
-                text-shadow: 0 0 6px rgba(16, 185, 129, 0.25);
+                color: #0F5132;
+                text-shadow: 0 0 6px rgba(15, 81, 50, 0.25);
             }
-            .rv-player-growth.trailing { color: #ef4444; }
+            .rv-player-growth.trailing { color: #3B0001; }
             .rv-vs-divider {
                 display: flex;
                 align-items: center;
@@ -360,11 +360,11 @@ export function renderRivalry() {
                 background: #f5f5f5;
             }
             .rv-momentum-left {
-                background: #10b981;
+                background: #0F5132;
                 transition: width 0.4s ease;
             }
             .rv-momentum-right {
-                background: #ef4444;
+                background: #3B0001;
                 transition: width 0.4s ease;
             }
 

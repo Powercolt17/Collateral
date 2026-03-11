@@ -78,10 +78,10 @@ export function renderRivalryDetail() {
                 letter-spacing: -1px; margin-top: 4px;
             }
             .rvd-player-growth.leading {
-                color: #10b981;
-                text-shadow: 0 0 8px rgba(16,185,129,0.2);
+                color: #0F5132;
+                text-shadow: 0 0 8px rgba(15,81,50,0.2);
             }
-            .rvd-player-growth.trailing { color: #ef4444; }
+            .rvd-player-growth.trailing { color: #3B0001; }
             .rvd-player-baseline {
                 font-family: 'JetBrains Mono', monospace;
                 font-size: 10px; color: #bbb;
@@ -109,10 +109,10 @@ export function renderRivalryDetail() {
                 background: #f0f0f0;
             }
             .rvd-momentum-left {
-                background: #10b981; transition: width 0.4s ease;
+                background: #0F5132; transition: width 0.4s ease;
             }
             .rvd-momentum-right {
-                background: #ef4444; transition: width 0.4s ease;
+                background: #3B0001; transition: width 0.4s ease;
             }
 
             /* ── Status Bar ── */
@@ -128,10 +128,10 @@ export function renderRivalryDetail() {
             }
             .rvd-status-badge .dot {
                 width: 6px; height: 6px;
-                border-radius: 50%; background: #10b981;
+                border-radius: 50%; background: #0F5132;
                 animation: rv-pulse 1.8s infinite;
             }
-            .rvd-status-badge.live { color: #10b981; }
+            .rvd-status-badge.live { color: #0F5132; }
             .rvd-status-badge.ended { color: #999; }
             .rvd-status-badge.ended .dot { background: #999; animation: none; }
             .rvd-status-badge.pending { color: #f59e0b; }

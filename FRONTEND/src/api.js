@@ -675,4 +675,10 @@ export default {
     getRivalryEvents,
     getRivalryMetrics,
     getRivalryShare,
+
+    // Notifications
+    getNotifications: () => get('/v1/notifications'),
+    getNotificationCount: () => get('/v1/notifications/count'),
+    markNotificationRead: (id) => post(`/v1/notifications/${id}/read`, null),
+    markAllNotificationsRead: () => post('/v1/notifications/read-all', null),
 };

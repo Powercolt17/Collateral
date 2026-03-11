@@ -17,7 +17,7 @@ import { createHash } from 'crypto';
 import { eq, and, desc, asc, or, sql } from 'drizzle-orm';
 import {
     rivalries, rivalryParticipants, rivalryLedgerEvents, rivalryMetricSnapshots,
-    users, identities, accountLedgerEvents, connectedAccounts,
+    users, identities, accountLedgerEvents, connectedAccounts, notifications,
     RivalryStatus, RivalryEventType,
     type Rivalry, type NewRivalry,
     type RivalryLedgerEvent,
@@ -241,7 +241,7 @@ export async function createRivalry(params: CreateRivalryParams): Promise<Rivalr
     }
 
     // Create rivalry atomically
-    return await db.transaction(async (tx) => {
+    const result = await db.transaction(async (tx) => {
         // Insert rivalry record
         const [rivalry] = await tx
             .insert(rivalries)
@@ -286,6 +286,26 @@ export async function createRivalry(params: CreateRivalryParams): Promise<Rivalr
 
         return rivalry;
     });
+
+    // Emit notification to opponent (outside tx — non-critical)
+    try {
+        const [challengerIdentity] = await db.select().from(identities).where(eq(identities.userId, challengerUserId));
+        const challengerName = challengerIdentity?.username || 'An operator';
+        const stake = `$${(stakePerSideCents / 100).toLocaleString()}`;
+
+        await db.insert(notifications).values({
+            userId: opponentIdentity.userId,
+            type: 'RIVALRY_CHALLENGE',
+            title: `⚔️ @${challengerName} challenged you`,
+            body: `${metricType} duel · ${stake} per side · ${durationDays} days`,
+            link: `/rivalry/${result.id}`,
+            metadata: { rivalryId: result.id, challengerUserId, platform, metricType, stakePerSideCents },
+        });
+    } catch (err) {
+        console.error('[rivalry] Failed to emit challenge notification:', err);
+    }
+
+    return result;
 }
 
 // =============================================================================

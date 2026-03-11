@@ -662,21 +662,24 @@ window.app = {
         };
         setTimeout(() => document.addEventListener('click', closeHandler), 0);
 
-        // Fetch recent activity
+        // Must be logged in
         if (!appState.isLoggedIn) {
             list.innerHTML = '<div class="ch-notif-empty">Sign in to see activity</div>';
             return;
         }
 
         try {
-            const res = await api.getContracts();
-            const contracts = (res?.contracts || []).slice(0, 5);
-            if (contracts.length === 0) {
-                list.innerHTML = '<div class="ch-notif-empty">No recent activity</div>';
+            const res = await api.getNotifications();
+            const notifs = (res?.notifications || []).slice(0, 10);
+            if (notifs.length === 0) {
+                list.innerHTML = '<div class="ch-notif-empty">No notifications yet</div>';
                 wrap.classList.remove('has-items');
                 return;
             }
-            wrap.classList.add('has-items');
+            const hasUnread = notifs.some(n => !n.read);
+            if (hasUnread) wrap.classList.add('has-items');
+            else wrap.classList.remove('has-items');
+
             const timeAgo = (d) => {
                 const s = Math.floor((Date.now() - new Date(d)) / 1000);
                 if (s < 60) return 'just now';
@@ -684,21 +687,65 @@ window.app = {
                 if (s < 86400) return Math.floor(s / 3600) + 'h ago';
                 return Math.floor(s / 86400) + 'd ago';
             };
-            list.innerHTML = contracts.map(c => {
-                const st = c.derivedState || c.state;
-                let icon = '⚡', cls = 'exec', label = 'Contract Executed';
-                if (['SETTLED', 'SETTLED_SUCCESS', 'PAYOUT_COMPLETE'].includes(st)) { icon = '✓'; cls = 'settle'; label = 'Settlement Posted'; }
-                else if (['FORFEITED', 'SETTLED_FAILURE'].includes(st)) { icon = '✕'; cls = 'forfeit'; label = 'Capital Forfeited'; }
-                const amt = c.lockAmountUsdCents ? '$' + (c.lockAmountUsdCents / 100).toLocaleString() : '';
-                return `<div class="ch-notif-item" onclick="window.router.navigate('/contracts/${c.id}');document.getElementById('notif-wrap').classList.remove('open');">
+            const notifIcon = (type) => {
+                if (type === 'RIVALRY_CHALLENGE') return { icon: '⚔️', cls: 'exec' };
+                if (type === 'RIVALRY_ACCEPTED') return { icon: '✓', cls: 'settle' };
+                if (type === 'RIVALRY_SETTLED') return { icon: '🏆', cls: 'settle' };
+                if (type === 'RIVALRY_DECLINED') return { icon: '✕', cls: 'forfeit' };
+                return { icon: '⚡', cls: 'exec' };
+            };
+
+            let html = '';
+            if (hasUnread) {
+                html += `<div class="ch-notif-item" style="justify-content:center;border-bottom:1px solid #eee;" onclick="window.app.markAllRead()">
+                    <span style="font-size:10px;font-family:'JetBrains Mono',monospace;color:#752122;letter-spacing:0.05em;cursor:pointer;">MARK ALL READ</span>
+                </div>`;
+            }
+            html += notifs.map(n => {
+                const { icon, cls } = notifIcon(n.type);
+                const unreadStyle = n.read ? '' : 'background:#fef6f6;';
+                const link = n.link ? `window.router.navigate('${n.link.startsWith('/') ? '#' + n.link : n.link}');` : '';
+                return `<div class="ch-notif-item" style="${unreadStyle}" onclick="${link}document.getElementById('notif-wrap').classList.remove('open');${n.read ? '' : `api.markNotificationRead('${n.id}');`}">
                     <div class="ch-notif-icon ${cls}">${icon}</div>
-                    <span class="ch-notif-text">${label} ${amt}</span>
-                    <span class="ch-notif-time">${timeAgo(c.createdAt)}</span>
+                    <div style="flex:1;min-width:0;">
+                        <div class="ch-notif-text">${n.title}</div>
+                        ${n.body ? `<div style="font-size:10px;color:#999;margin-top:2px;font-family:'JetBrains Mono',monospace;">${n.body}</div>` : ''}
+                    </div>
+                    <span class="ch-notif-time">${timeAgo(n.createdAt)}</span>
                 </div>`;
             }).join('');
+
+            list.innerHTML = html;
         } catch (err) {
-            list.innerHTML = '<div class="ch-notif-empty">Could not load activity</div>';
+            list.innerHTML = '<div class="ch-notif-empty">Could not load notifications</div>';
         }
+    },
+    markAllRead: async function () {
+        try {
+            await api.markAllNotificationsRead();
+            const wrap = document.getElementById('notif-wrap');
+            if (wrap) wrap.classList.remove('has-items');
+            // Refresh the list
+            const list = document.getElementById('notif-list');
+            if (list) {
+                list.querySelectorAll('.ch-notif-item').forEach(el => {
+                    el.style.background = '';
+                });
+                // Remove the mark-all-read button
+                const first = list.firstElementChild;
+                if (first && first.textContent.includes('MARK ALL READ')) first.remove();
+            }
+        } catch (err) { console.error('markAllRead failed', err); }
+    },
+    pollNotificationCount: async function () {
+        if (!appState.isLoggedIn) return;
+        try {
+            const res = await api.getNotificationCount();
+            const wrap = document.getElementById('notif-wrap');
+            if (!wrap) return;
+            if (res?.count > 0) wrap.classList.add('has-items');
+            else wrap.classList.remove('has-items');
+        } catch (_) { /* silent */ }
     },
     connectSource: async function (source) {
         const btn = document.getElementById(source + '-btn');
@@ -1440,3 +1487,11 @@ hydrateSession();
         console.error('[Clerk] SDK init failed:', err);
     }
 })();
+
+// Notification badge polling — check for unread every 30s
+if (api.hasAuthToken()) {
+    window.app.pollNotificationCount();
+}
+setInterval(() => {
+    if (api.hasAuthToken()) window.app.pollNotificationCount();
+}, 30000);

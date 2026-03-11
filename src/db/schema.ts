@@ -925,3 +925,25 @@ export type NewRivalryLedgerEvent = typeof rivalryLedgerEvents.$inferInsert;
 
 export type RivalryMetricSnapshot = typeof rivalryMetricSnapshots.$inferSelect;
 export type NewRivalryMetricSnapshot = typeof rivalryMetricSnapshots.$inferInsert;
+
+// =============================================================================
+// NOTIFICATIONS
+// =============================================================================
+
+export const notifications = pgTable('notifications', {
+    id: uuid('id').primaryKey().defaultRandom(),
+    userId: uuid('user_id').references(() => users.id).notNull(),
+    type: varchar('type', { length: 50 }).notNull(), // RIVALRY_CHALLENGE, RIVALRY_ACCEPTED, RIVALRY_SETTLED, etc.
+    title: varchar('title', { length: 255 }).notNull(),
+    body: text('body'),
+    link: varchar('link', { length: 255 }),
+    read: boolean('read').notNull().default(false),
+    metadata: jsonb('metadata'),
+    createdAt: timestamp('created_at', { withTimezone: true }).defaultNow().notNull(),
+}, (table) => ({
+    userCreatedIdx: index('idx_notifications_user_created').on(table.userId, table.createdAt),
+    userUnreadIdx: index('idx_notifications_user_unread').on(table.userId, table.read),
+}));
+
+export type Notification = typeof notifications.$inferSelect;
+export type NewNotification = typeof notifications.$inferInsert;

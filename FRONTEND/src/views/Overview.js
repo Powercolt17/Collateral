@@ -564,108 +564,83 @@ export function renderOverview() {
             .eq-stake-warning { max-width: 1300px; margin: 0 auto; padding: 24px 32px; border-top: 1px solid #f2f2f2; }
             .eq-stake-warning-text { font-size: 12px; color: #ccc; font-style: italic; }
 
-            /* --- RIVALRY PROMO --- */
-            .eq-rivalry-promo {
+            /* --- TWO PATHS (Solo vs Rivalry) --- */
+            .eq-paths {
                 max-width: 1300px; margin: 0 auto;
                 padding: 80px 32px;
                 border-top: 1px solid #f2f2f2;
             }
-            .eq-rivalry-inner {
+            .eq-paths-header {
+                margin-bottom: 48px;
+            }
+            .eq-paths-sub {
+                font-size: 15px; color: #888;
+                line-height: 1.65; max-width: 560px;
+                margin-top: 16px;
+            }
+            .eq-paths-grid {
                 display: grid;
                 grid-template-columns: 1fr 1fr;
-                gap: 64px;
-                align-items: center;
+                gap: 24px;
             }
-            .eq-rivalry-title {
-                font-size: 42px; font-weight: 500;
-                line-height: 1.05; letter-spacing: -1.5px;
-                color: #111; margin: 16px 0 20px;
+            .eq-path-card {
+                border: 1px solid #e8e8e8;
+                padding: 40px 36px;
+                display: flex; flex-direction: column;
+                transition: border-color 0.3s, box-shadow 0.3s;
             }
-            .eq-rivalry-title strong { font-weight: 800; color: #752122; }
-            .eq-rivalry-sub {
-                font-size: 15px; color: #888;
-                line-height: 1.65; margin-bottom: 32px;
-                max-width: 420px;
+            .eq-path-card:hover { border-color: #ccc; box-shadow: 0 8px 32px rgba(0,0,0,0.04); }
+            .eq-path-card.rivalry { border-color: rgba(117,33,34,0.15); }
+            .eq-path-card.rivalry:hover { border-color: rgba(117,33,34,0.3); box-shadow: 0 8px 32px rgba(117,33,34,0.06); }
+            .eq-path-icon { margin-bottom: 24px; }
+            .eq-path-tag {
+                font-family: 'JetBrains Mono', monospace;
+                font-size: 10px; font-weight: 700;
+                letter-spacing: 0.12em; text-transform: uppercase;
+                color: #111; margin-bottom: 12px;
             }
-            .eq-rivalry-cta {
+            .eq-path-tag.rivalry { color: #752122; }
+            .eq-path-title {
+                font-size: 28px; font-weight: 500;
+                line-height: 1.1; letter-spacing: -1px;
+                color: #111; margin-bottom: 16px;
+            }
+            .eq-path-title strong { font-weight: 800; }
+            .eq-path-card.rivalry .eq-path-title strong { color: #752122; }
+            .eq-path-desc {
+                font-size: 14px; color: #888;
+                line-height: 1.65; margin-bottom: 24px;
+                flex-grow: 1;
+            }
+            .eq-path-details { margin-bottom: 28px; }
+            .eq-path-detail {
+                display: flex; align-items: center; gap: 10px;
+                font-family: 'JetBrains Mono', monospace;
+                font-size: 11px; color: #555;
+                letter-spacing: 0.03em;
+                padding: 6px 0;
+            }
+            .eq-path-check {
+                font-size: 13px; font-weight: 700;
+                color: #0F5132;
+            }
+            .eq-path-check.rivalry { color: #752122; }
+            .eq-path-cta {
                 display: inline-block;
-                padding: 14px 28px;
+                padding: 14px 24px;
                 background: #111; color: #fff;
+                border: none;
                 font-family: 'JetBrains Mono', monospace;
                 font-size: 11px; font-weight: 700;
                 letter-spacing: 0.08em; text-transform: uppercase;
-                text-decoration: none;
+                text-decoration: none; text-align: center;
+                cursor: pointer;
                 transition: background 0.2s, transform 0.2s;
+                align-self: flex-start;
             }
-            .eq-rivalry-cta:hover { background: #752122; transform: translateY(-2px); }
-
-            .eq-rivalry-card {
-                background: #fff;
-                border: 1px solid #e8e8e8;
-                padding: 28px;
-                position: relative;
-                background: radial-gradient(ellipse at 30% 50%, rgba(15,81,50,0.03), transparent 60%),
-                            radial-gradient(ellipse at 70% 50%, rgba(59,0,1,0.03), transparent 60%);
-            }
-            .eq-rivalry-card-tag {
-                display: flex; align-items: center; gap: 8px;
-                font-family: 'JetBrains Mono', monospace;
-                font-size: 9px; font-weight: 700;
-                letter-spacing: 0.12em; text-transform: uppercase;
-                color: #752122; margin-bottom: 20px;
-            }
-            .eq-rivalry-live-dot {
-                width: 6px; height: 6px; border-radius: 50%;
-                background: #0F5132;
-                animation: rivalryPulse 2s ease-in-out infinite;
-            }
-            @keyframes rivalryPulse {
-                0%, 100% { opacity: 1; } 50% { opacity: 0.3; }
-            }
-            .eq-rivalry-duel {
-                display: flex; align-items: center;
-                gap: 20px; margin-bottom: 20px;
-            }
-            .eq-rivalry-player { flex: 1; }
-            .eq-rivalry-role {
-                font-family: 'JetBrains Mono', monospace;
-                font-size: 9px; font-weight: 600;
-                letter-spacing: 0.1em; text-transform: uppercase;
-                color: #bbb; margin-bottom: 4px;
-            }
-            .eq-rivalry-name {
-                font-size: 14px; font-weight: 600; color: #111;
-                margin-bottom: 6px;
-            }
-            .eq-rivalry-growth {
-                font-family: 'JetBrains Mono', monospace;
-                font-size: 28px; font-weight: 700;
-            }
-            .eq-rivalry-growth.green { color: #0F5132; }
-            .eq-rivalry-growth.red { color: #3B0001; }
-            .eq-rivalry-vs {
-                font-family: 'JetBrains Mono', monospace;
-                font-size: 11px; font-weight: 700;
-                letter-spacing: 0.15em; color: #ccc;
-                padding: 8px 12px; border: 1px solid #eee;
-            }
-            .eq-rivalry-meta {
-                display: flex; justify-content: space-between;
-                align-items: center;
-                font-family: 'JetBrains Mono', monospace;
-                font-size: 10px; color: #999;
-                letter-spacing: 0.05em; margin-bottom: 16px;
-            }
-            .eq-rivalry-pool { font-weight: 700; color: #111; }
-            .eq-rivalry-bar-wrap {
-                height: 4px; background: #f0f0f0;
-                border-radius: 2px; overflow: hidden;
-            }
-            .eq-rivalry-bar-fill {
-                height: 100%; background: linear-gradient(to right, #0F5132, #166534);
-                border-radius: 2px;
-                transition: width 0.6s ease;
-            }
+            .eq-path-cta:hover { background: #333; transform: translateY(-2px); }
+            .eq-path-cta.rivalry { background: #752122; }
+            .eq-path-cta.rivalry:hover { background: #5a1718; transform: translateY(-2px); }
 
             /* ── Responsive: Tablet (≤1200px) ── */
             @media (max-width: 1200px) {
@@ -679,8 +654,8 @@ export function renderOverview() {
                 .eq-mech-card { padding: 40px 28px; }
                 .eq-stats-strip { gap: 48px; }
                 .eq-stat-val { font-size: 32px; }
-                .eq-rivalry-inner { grid-template-columns: 1fr; gap: 40px; }
-                .eq-rivalry-title { font-size: 36px; }
+                .eq-paths-grid { grid-template-columns: 1fr; gap: 20px; }
+                .eq-paths { padding: 60px 32px; }
             }
 
             /* ── Responsive: Mobile (≤768px) ── */
@@ -868,12 +843,11 @@ export function renderOverview() {
                     padding: 14px;
                     font-size: 10px;
                 }
-                .eq-rivalry-promo { padding: 48px 20px; }
-                .eq-rivalry-inner { grid-template-columns: 1fr; gap: 32px; }
-                .eq-rivalry-title { font-size: 28px; letter-spacing: -1px; }
-                .eq-rivalry-sub { font-size: 14px; }
-                .eq-rivalry-growth { font-size: 22px; }
-                .eq-rivalry-card { padding: 20px; }
+                .eq-paths { padding: 48px 20px; }
+                .eq-paths-grid { grid-template-columns: 1fr; gap: 16px; }
+                .eq-path-card { padding: 28px 24px; }
+                .eq-path-title { font-size: 24px; }
+                .eq-path-desc { font-size: 13px; }
 
                 /* Warning */
                 .eq-stake-warning {
@@ -1045,7 +1019,55 @@ export function renderOverview() {
                 <div class="eq-hero-scroll anim-scroll-hint">Scroll</div>
             </div>
 
-            <!-- Section 2: Mechanism -->
+            <!-- Section 2: Two Contract Types -->
+            <section class="eq-paths" data-reveal>
+                <div class="eq-paths-header">
+                    <div class="eq-tag anim-mech-tag">Contract Types</div>
+                    <h2 class="eq-mechanism-title anim-mech-title">Two ways to <strong>compete.</strong></h2>
+                    <p class="eq-paths-sub">Collateral offers two distinct contract primitives. Same verified metrics. Same locked capital. Same automatic settlement. Different opponents.</p>
+                </div>
+                <div class="eq-paths-grid">
+                    <!-- Solo Contract -->
+                    <div class="eq-path-card anim-mech-card-1">
+                        <div class="eq-path-icon">
+                            <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
+                                <circle cx="16" cy="16" r="14" stroke="#111" stroke-width="1.5" fill="none"/>
+                                <path d="M16 10v12M12 14l4-4 4 4" stroke="#111" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                        </div>
+                        <div class="eq-path-tag">Solo Contract</div>
+                        <h3 class="eq-path-title">Back <strong>yourself.</strong></h3>
+                        <p class="eq-path-desc">Stake capital against your own performance targets. Hit the metric — keep everything. Miss — the house takes a cut based on variance.</p>
+                        <div class="eq-path-details">
+                            <div class="eq-path-detail"><span class="eq-path-check">✓</span> Single operator</div>
+                            <div class="eq-path-detail"><span class="eq-path-check">✓</span> Self-set threshold</div>
+                            <div class="eq-path-detail"><span class="eq-path-check">✓</span> Pass / fail settlement</div>
+                        </div>
+                        <button class="eq-path-cta" onclick="document.getElementById('live-market').scrollIntoView({behavior:'smooth'})">Browse Solo Contracts →</button>
+                    </div>
+                    <!-- Rivalry Contract -->
+                    <div class="eq-path-card rivalry anim-mech-card-2">
+                        <div class="eq-path-icon">
+                            <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
+                                <circle cx="11" cy="16" r="7" stroke="#752122" stroke-width="1.5" fill="none"/>
+                                <circle cx="21" cy="16" r="7" stroke="#752122" stroke-width="1.5" fill="none"/>
+                                <text x="16" y="19" text-anchor="middle" font-size="7" font-weight="800" font-family="JetBrains Mono" fill="#752122">VS</text>
+                            </svg>
+                        </div>
+                        <div class="eq-path-tag rivalry">Rivalry Contract</div>
+                        <h3 class="eq-path-title">Challenge an <strong>opponent.</strong></h3>
+                        <p class="eq-path-desc">Issue a head-to-head duel. Both operators lock matched capital. Verified growth determines the winner. Loser forfeits their stake.</p>
+                        <div class="eq-path-details">
+                            <div class="eq-path-detail"><span class="eq-path-check rivalry">✓</span> Two operators</div>
+                            <div class="eq-path-detail"><span class="eq-path-check rivalry">✓</span> Matched capital</div>
+                            <div class="eq-path-detail"><span class="eq-path-check rivalry">✓</span> Relative performance</div>
+                        </div>
+                        <a href="#/rivalry" class="eq-path-cta rivalry">Explore Rivalries →</a>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Section 2.5: How It Works (shared mechanism) -->
             <section class="eq-mechanism" data-reveal>
                 <div class="eq-mechanism-header">
                     <div class="eq-mechanism-side-left">
@@ -1073,46 +1095,6 @@ export function renderOverview() {
                         <div class="eq-mech-num">04</div>
                         <div class="eq-mech-label">Settle</div>
                         <div class="eq-mech-desc">Variance is calculated against the target. Capital is released to the counterparty or returned to the staker.</div>
-                    </div>
-                </div>
-            </section>
-
-            <!-- Section 2.5: Rivalry Mode -->
-            <section class="eq-rivalry-promo" data-reveal>
-                <div class="eq-rivalry-inner">
-                    <div class="eq-rivalry-content">
-                        <div class="eq-tag">Rivalry Mode</div>
-                        <h2 class="eq-rivalry-title">Operator vs <strong>operator.</strong></h2>
-                        <p class="eq-rivalry-sub">Challenge another operator to a head-to-head performance duel. Both lock capital. Verified metrics determine the winner. Loser forfeits their stake.</p>
-                        <a href="#/rivalry" class="eq-rivalry-cta">Explore Rivalries →</a>
-                    </div>
-                    <div class="eq-rivalry-visual">
-                        <div class="eq-rivalry-card">
-                            <div class="eq-rivalry-card-tag">
-                                <span class="eq-rivalry-live-dot"></span>
-                                ACTIVE RIVALRY
-                            </div>
-                            <div class="eq-rivalry-duel">
-                                <div class="eq-rivalry-player">
-                                    <div class="eq-rivalry-role">Challenger</div>
-                                    <div class="eq-rivalry-name">@apex_capital</div>
-                                    <div class="eq-rivalry-growth green">+34.2%</div>
-                                </div>
-                                <div class="eq-rivalry-vs">VS</div>
-                                <div class="eq-rivalry-player">
-                                    <div class="eq-rivalry-role">Opponent</div>
-                                    <div class="eq-rivalry-name">@northpeak</div>
-                                    <div class="eq-rivalry-growth red">+28.7%</div>
-                                </div>
-                            </div>
-                            <div class="eq-rivalry-meta">
-                                <span>Revenue Growth · Stripe</span>
-                                <span class="eq-rivalry-pool">$5,000 pool</span>
-                            </div>
-                            <div class="eq-rivalry-bar-wrap">
-                                <div class="eq-rivalry-bar-fill" style="width: 54%"></div>
-                            </div>
-                        </div>
                     </div>
                 </div>
             </section>

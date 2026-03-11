@@ -1029,12 +1029,8 @@ export function renderRivalry() {
 }
 
 
-export function initRivalry() {
+export async function initRivalry() {
     if (typeof lucide !== 'undefined') lucide.createIcons();
-
-    // Dynamic import of API module
-    let api;
-    try { api = window.__collateral_api; } catch { api = null; }
 
     const grid = document.getElementById('rv-grid');
     const countLbl = document.getElementById('rv-count');
@@ -1044,75 +1040,72 @@ export function initRivalry() {
 
     if (!grid) return;
 
-    // ── Sample rivalry data (uses existing market data patterns) ──
+    // ── State mapping: API state → card status ──
+    const STATE_TO_STATUS = {
+        CHALLENGE_ISSUED: 'pending', ACCEPTED: 'pending',
+        BOTH_FUNDED: 'active', ACTIVE: 'active', VERIFYING: 'active',
+        VERIFIED: 'active', SETTLING: 'active',
+        SETTLED: 'settled', DRAW: 'settled',
+        DECLINED: 'settled', EXPIRED: 'settled', CANCELLED: 'settled',
+    };
+    const METRIC_LABELS = { REVENUE: 'Revenue Growth', FOLLOWERS: 'Follower Growth', GROSS_SALES: 'Sales Growth', ORDER_COUNT: 'Order Growth' };
+    const PLATFORM_MAP = { STRIPE: 'stripe', X: 'x', SHOPIFY: 'shopify', AMAZON: 'amazon' };
+
+    // Transform API rivalry → card format
+    function transformRivalry(r) {
+        const challPart = r.participants?.find(p => p.role === 'challenger');
+        const oppPart = r.participants?.find(p => p.role === 'opponent');
+        const now = new Date();
+        const start = new Date(r.activatedAt || r.createdAt);
+        const end = new Date(start.getTime() + (r.durationDays || 30) * 86400000);
+        const daysLeft = Math.max(0, Math.ceil((end - now) / 86400000));
+
+        return {
+            id: r.id,
+            status: STATE_TO_STATUS[r.state] || 'active',
+            metric: METRIC_LABELS[r.metricType] || r.metricType || 'Revenue Growth',
+            provider: PLATFORM_MAP[r.platform] || (r.platform || 'stripe').toLowerCase(),
+            challenger: {
+                name: '@' + (r.challengerUsername || 'unknown'),
+                growth: parseFloat(challPart?.growthPercent || challPart?.currentDelta || 0),
+                baseline: parseFloat(challPart?.baselineValue || 0),
+            },
+            opponent: {
+                name: '@' + (r.opponentUsername || 'unknown'),
+                growth: parseFloat(oppPart?.growthPercent || oppPart?.currentDelta || 0),
+                baseline: parseFloat(oppPart?.baselineValue || 0),
+            },
+            stake: (r.stakePerSideCents || 0) / 100,
+            daysLeft,
+            totalDays: r.durationDays || 30,
+        };
+    }
+
+    // ── Sample data (fallback) ──
     const sampleRivalries = [
-        {
-            id: 'RV-001',
-            status: 'active',
-            metric: 'Revenue Growth',
-            provider: 'stripe',
-            challenger: { name: '@apex_capital', growth: 34.2 },
-            opponent: { name: '@northpeak', growth: 28.7 },
-            stake: 2500,
-            daysLeft: 12,
-            totalDays: 30,
-        },
-        {
-            id: 'RV-002',
-            status: 'active',
-            metric: 'Follower Growth',
-            provider: 'x',
-            challenger: { name: '@buildfast', growth: 18.5 },
-            opponent: { name: '@shipweekly', growth: 22.1 },
-            stake: 1000,
-            daysLeft: 6,
-            totalDays: 14,
-        },
-        {
-            id: 'RV-003',
-            status: 'pending',
-            metric: 'Sales Growth',
-            provider: 'shopify',
-            challenger: { name: '@ecomgrind', growth: 0 },
-            opponent: { name: '@storescale', growth: 0 },
-            stake: 5000,
-            daysLeft: 30,
-            totalDays: 30,
-        },
-        {
-            id: 'RV-004',
-            status: 'active',
-            metric: 'Order Growth',
-            provider: 'amazon',
-            challenger: { name: '@fbaseller', growth: 41.8 },
-            opponent: { name: '@primeops', growth: 39.2 },
-            stake: 3000,
-            daysLeft: 3,
-            totalDays: 14,
-        },
-        {
-            id: 'RV-005',
-            status: 'settled',
-            metric: 'Revenue Growth',
-            provider: 'stripe',
-            challenger: { name: '@growthlab', growth: 67.3 },
-            opponent: { name: '@revscale', growth: 45.1 },
-            stake: 10000,
-            daysLeft: 0,
-            totalDays: 90,
-        },
-        {
-            id: 'RV-006',
-            status: 'active',
-            metric: 'Follower Growth',
-            provider: 'x',
-            challenger: { name: '@contentking', growth: 12.4 },
-            opponent: { name: '@viralops', growth: 15.8 },
-            stake: 750,
-            daysLeft: 9,
-            totalDays: 14,
-        },
+        { id: 'RV-001', status: 'active', metric: 'Revenue Growth', provider: 'stripe', challenger: { name: '@apex_capital', growth: 34.2 }, opponent: { name: '@northpeak', growth: 28.7 }, stake: 2500, daysLeft: 12, totalDays: 30 },
+        { id: 'RV-002', status: 'active', metric: 'Follower Growth', provider: 'x', challenger: { name: '@buildfast', growth: 18.5 }, opponent: { name: '@shipweekly', growth: 22.1 }, stake: 1000, daysLeft: 6, totalDays: 14 },
+        { id: 'RV-003', status: 'pending', metric: 'Sales Growth', provider: 'shopify', challenger: { name: '@ecomgrind', growth: 0 }, opponent: { name: '@storescale', growth: 0 }, stake: 5000, daysLeft: 30, totalDays: 30 },
+        { id: 'RV-004', status: 'active', metric: 'Order Growth', provider: 'amazon', challenger: { name: '@fbaseller', growth: 41.8 }, opponent: { name: '@primeops', growth: 39.2 }, stake: 3000, daysLeft: 3, totalDays: 14 },
+        { id: 'RV-005', status: 'settled', metric: 'Revenue Growth', provider: 'stripe', challenger: { name: '@growthlab', growth: 67.3 }, opponent: { name: '@revscale', growth: 45.1 }, stake: 10000, daysLeft: 0, totalDays: 90 },
+        { id: 'RV-006', status: 'active', metric: 'Follower Growth', provider: 'x', challenger: { name: '@contentking', growth: 12.4 }, opponent: { name: '@viralops', growth: 15.8 }, stake: 750, daysLeft: 9, totalDays: 14 },
     ];
+
+    // ── Fetch live rivalries, fallback to sample ──
+    let allRivalries = sampleRivalries;
+    let isLive = false;
+    try {
+        const res = await api.getRivalries({ limit: 50 });
+        if (res.ok && res.rivalries && res.rivalries.length > 0) {
+            allRivalries = res.rivalries.map(transformRivalry);
+            isLive = true;
+            console.log(`[Rivalry] Loaded ${allRivalries.length} live rivalries`);
+        } else {
+            console.log('[Rivalry] No live rivalries, showing sample data');
+        }
+    } catch (e) {
+        console.log('[Rivalry] API unavailable, showing sample data');
+    }
 
     let activeFilter = 'active';
     let searchQuery = '';
@@ -1184,7 +1177,7 @@ export function initRivalry() {
     }
 
     function renderGrid() {
-        let filtered = sampleRivalries;
+        let filtered = allRivalries;
 
         if (activeFilter !== 'all') {
             filtered = filtered.filter(r => r.status === activeFilter);
@@ -1230,7 +1223,7 @@ export function initRivalry() {
         if (!featured) return;
 
         // Find the hottest active rivalry (largest stake)
-        const activeRivalries = sampleRivalries.filter(r => r.status === 'active');
+        const activeRivalries = allRivalries.filter(r => r.status === 'active');
         if (activeRivalries.length === 0) { featured.innerHTML = ''; return; }
 
         const hottest = activeRivalries.reduce((a, b) => a.stake > b.stake ? a : b);
@@ -1285,10 +1278,10 @@ export function initRivalry() {
             }
         } catch { /* fallback to sample */ }
 
-        // Fallback: sample data stats
-        const active = sampleRivalries.filter(r => r.status === 'active');
-        const totalCapital = sampleRivalries.reduce((sum, r) => sum + (r.stake * 2), 0);
-        const largest = Math.max(...sampleRivalries.map(r => r.stake * 2));
+        // Fallback: local data stats
+        const active = allRivalries.filter(r => r.status === 'active');
+        const totalCapital = allRivalries.reduce((sum, r) => sum + (r.stake * 2), 0);
+        const largest = Math.max(...allRivalries.map(r => r.stake * 2));
 
         if (statActive) statActive.textContent = active.length;
         if (statCapital) {
@@ -1403,27 +1396,30 @@ export function initRivalry() {
             submitBtn.textContent = 'SENDING...';
 
             try {
-                if (api && api.createRivalry) {
-                    const result = await api.createRivalry({
-                        opponentUsername: opponent.replace('@', ''),
-                        platform: mapping.platform,
-                        metricType: mapping.metricType,
-                        metricKey: mapping.metricKey,
-                        stakePerSideCents: stake * 100,
-                        durationDays: selectedDuration,
-                    });
+                const result = await api.createRivalry({
+                    opponentUsername: opponent.replace('@', ''),
+                    platform: mapping.platform,
+                    metricType: mapping.metricType,
+                    metricKey: mapping.metricKey,
+                    stakePerSideCents: stake * 100,
+                    durationDays: selectedDuration,
+                });
 
-                    if (result.ok) {
-                        document.getElementById('rv-challenge-modal').classList.remove('open');
-                        alert(`Challenge issued to @${opponent.replace('@', '')}! They have 72 hours to accept.`);
-                        // Refresh stats
-                        updateStats();
-                    } else {
-                        alert(result.error || 'Failed to create challenge');
-                    }
-                } else {
-                    alert(`Challenge sent to ${opponent} for $${stake} on ${selectedDuration}-day ${metricSelect?.selectedOptions[0]?.text || 'duel'}. Backend integration pending.`);
+                if (result.ok) {
                     document.getElementById('rv-challenge-modal').classList.remove('open');
+                    alert(`Challenge issued to @${opponent.replace('@', '')}! They have 72 hours to accept.`);
+                    // Refresh: re-fetch live data
+                    try {
+                        const res = await api.getRivalries({ limit: 50 });
+                        if (res.ok && res.rivalries && res.rivalries.length > 0) {
+                            allRivalries = res.rivalries.map(transformRivalry);
+                        }
+                    } catch { }
+                    updateStats();
+                    renderFeatured();
+                    renderGrid();
+                } else {
+                    alert(result.error || 'Failed to create challenge');
                 }
             } catch (err) {
                 alert('Failed to send challenge: ' + (err.message || 'Unknown error'));

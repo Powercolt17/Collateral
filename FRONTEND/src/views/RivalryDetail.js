@@ -323,7 +323,7 @@ export function renderRivalryDetail() {
     `;
 }
 
-export function initRivalryDetail() {
+export async function initRivalryDetail() {
     const container = document.getElementById('rvd-container');
     if (!container) return;
 
@@ -331,47 +331,72 @@ export function initRivalryDetail() {
     const hash = window.location.hash || '';
     const id = hash.replace('#', '').split('/rivalry/')[1] || '';
 
-    // Sample data lookup (will be replaced by API)
+    // ── Maps ──
+    const STATE_TO_STATUS = {
+        CHALLENGE_ISSUED: 'pending', ACCEPTED: 'pending',
+        BOTH_FUNDED: 'active', ACTIVE: 'active', VERIFYING: 'active',
+        VERIFIED: 'active', SETTLING: 'active',
+        SETTLED: 'settled', DRAW: 'settled',
+        DECLINED: 'settled', EXPIRED: 'settled', CANCELLED: 'settled',
+    };
+    const METRIC_LABELS = { REVENUE: 'Revenue Growth', FOLLOWERS: 'Follower Growth', GROSS_SALES: 'Sales Growth', ORDER_COUNT: 'Order Growth' };
+    const PLATFORM_MAP = { STRIPE: 'stripe', X: 'x', SHOPIFY: 'shopify', AMAZON: 'amazon' };
+
+    // Transform API response → display format
+    function transformDetail(r) {
+        const challPart = r.participants?.find(p => p.role === 'challenger');
+        const oppPart = r.participants?.find(p => p.role === 'opponent');
+        const now = new Date();
+        const start = new Date(r.activatedAt || r.createdAt);
+        const end = new Date(start.getTime() + (r.durationDays || 30) * 86400000);
+        const daysLeft = Math.max(0, Math.ceil((end - now) / 86400000));
+
+        return {
+            id: r.id,
+            status: STATE_TO_STATUS[r.state] || 'active',
+            metric: METRIC_LABELS[r.metricType] || r.metricType || 'Revenue Growth',
+            provider: PLATFORM_MAP[r.platform] || (r.platform || 'stripe').toLowerCase(),
+            challenger: {
+                name: '@' + (r.challengerUsername || 'unknown'),
+                growth: parseFloat(challPart?.growthPercent || challPart?.currentDelta || 0),
+                baseline: parseFloat(challPart?.baselineValue || 0),
+            },
+            opponent: {
+                name: '@' + (r.opponentUsername || 'unknown'),
+                growth: parseFloat(oppPart?.growthPercent || oppPart?.currentDelta || 0),
+                baseline: parseFloat(oppPart?.baselineValue || 0),
+            },
+            stake: (r.stakePerSideCents || 0) / 100,
+            daysLeft,
+            totalDays: r.durationDays || 30,
+            metrics: r.metrics || [],
+        };
+    }
+
+    // ── Sample data (fallback) ──
     const sampleRivalries = [
-        {
-            id: 'RV-001', status: 'active', metric: 'Revenue Growth', provider: 'stripe',
-            challenger: { name: '@apex_capital', growth: 34.2, baseline: 48200 },
-            opponent: { name: '@northpeak', growth: 28.7, baseline: 62800 },
-            stake: 2500, daysLeft: 12, totalDays: 30,
-        },
-        {
-            id: 'RV-002', status: 'active', metric: 'Follower Growth', provider: 'x',
-            challenger: { name: '@buildfast', growth: 18.5, baseline: 12400 },
-            opponent: { name: '@shipweekly', growth: 22.1, baseline: 8900 },
-            stake: 1000, daysLeft: 6, totalDays: 14,
-        },
-        {
-            id: 'RV-003', status: 'pending', metric: 'Sales Growth', provider: 'shopify',
-            challenger: { name: '@ecomgrind', growth: 0, baseline: 15600 },
-            opponent: { name: '@storescale', growth: 0, baseline: 22100 },
-            stake: 5000, daysLeft: 30, totalDays: 30,
-        },
-        {
-            id: 'RV-004', status: 'active', metric: 'Order Growth', provider: 'amazon',
-            challenger: { name: '@fbaseller', growth: 41.8, baseline: 340 },
-            opponent: { name: '@primeops', growth: 39.2, baseline: 520 },
-            stake: 3000, daysLeft: 3, totalDays: 14,
-        },
-        {
-            id: 'RV-005', status: 'settled', metric: 'Revenue Growth', provider: 'stripe',
-            challenger: { name: '@growthlab', growth: 67.3, baseline: 35000 },
-            opponent: { name: '@revscale', growth: 45.1, baseline: 41200 },
-            stake: 10000, daysLeft: 0, totalDays: 90,
-        },
-        {
-            id: 'RV-006', status: 'active', metric: 'Follower Growth', provider: 'x',
-            challenger: { name: '@contentking', growth: 12.4, baseline: 5200 },
-            opponent: { name: '@viralops', growth: 15.8, baseline: 7800 },
-            stake: 750, daysLeft: 9, totalDays: 14,
-        },
+        { id: 'RV-001', status: 'active', metric: 'Revenue Growth', provider: 'stripe', challenger: { name: '@apex_capital', growth: 34.2, baseline: 48200 }, opponent: { name: '@northpeak', growth: 28.7, baseline: 62800 }, stake: 2500, daysLeft: 12, totalDays: 30 },
+        { id: 'RV-002', status: 'active', metric: 'Follower Growth', provider: 'x', challenger: { name: '@buildfast', growth: 18.5, baseline: 12400 }, opponent: { name: '@shipweekly', growth: 22.1, baseline: 8900 }, stake: 1000, daysLeft: 6, totalDays: 14 },
+        { id: 'RV-003', status: 'pending', metric: 'Sales Growth', provider: 'shopify', challenger: { name: '@ecomgrind', growth: 0, baseline: 15600 }, opponent: { name: '@storescale', growth: 0, baseline: 22100 }, stake: 5000, daysLeft: 30, totalDays: 30 },
+        { id: 'RV-004', status: 'active', metric: 'Order Growth', provider: 'amazon', challenger: { name: '@fbaseller', growth: 41.8, baseline: 340 }, opponent: { name: '@primeops', growth: 39.2, baseline: 520 }, stake: 3000, daysLeft: 3, totalDays: 14 },
+        { id: 'RV-005', status: 'settled', metric: 'Revenue Growth', provider: 'stripe', challenger: { name: '@growthlab', growth: 67.3, baseline: 35000 }, opponent: { name: '@revscale', growth: 45.1, baseline: 41200 }, stake: 10000, daysLeft: 0, totalDays: 90 },
+        { id: 'RV-006', status: 'active', metric: 'Follower Growth', provider: 'x', challenger: { name: '@contentking', growth: 12.4, baseline: 5200 }, opponent: { name: '@viralops', growth: 15.8, baseline: 7800 }, stake: 750, daysLeft: 9, totalDays: 14 },
     ];
 
-    const rivalry = sampleRivalries.find(r => r.id === id);
+    // ── Fetch live rivalry, fallback to sample ──
+    let rivalry = null;
+    try {
+        const res = await api.getRivalry(id);
+        if (res.ok && res.rivalry) {
+            rivalry = transformDetail(res.rivalry);
+            console.log(`[RivalryDetail] Loaded live rivalry ${id}`);
+        }
+    } catch (e) {
+        console.log('[RivalryDetail] API unavailable, checking sample data');
+    }
+    if (!rivalry) {
+        rivalry = sampleRivalries.find(r => r.id === id) || null;
+    }
 
     if (!rivalry) {
         container.innerHTML = `

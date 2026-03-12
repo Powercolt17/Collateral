@@ -243,9 +243,10 @@ export async function getGlobalStats() {
         let totalLockedCents = 0;
         try {
             const tvlResult = await db.execute(sql`
-                SELECT coalesce(sum(lock_amount_usd_cents), 0) AS total_locked
-                FROM contracts
-                WHERE state IN ('LOCKED', 'VERIFYING', 'SETTLING', 'PAYOUT_PENDING')
+                SELECT coalesce(sum(c.lock_amount_usd_cents), 0) AS total_locked
+                FROM contracts c
+                INNER JOIN contract_index ci ON ci.contract_id = c.id
+                WHERE ci.current_state IN ('LOCKED', 'VERIFYING', 'SETTLING', 'PAYOUT_PENDING')
             `);
             totalLockedCents = Number((tvlResult as any).rows?.[0]?.total_locked || 0);
         } catch (tvlErr) {

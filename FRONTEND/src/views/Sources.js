@@ -1162,14 +1162,14 @@ export async function initSources() {
         const prov = PROVIDERS.find(p => p.id === providerId);
         if (!prov || !prov.disconnectFn || !window.api[prov.disconnectFn]) return;
 
-        if (!confirm(`Disconnect ${prov.name}? Active contracts using this source may be affected.`)) return;
+        if (!(await window.CollateralModal.showConfirm(`Disconnect ${prov.name}? Active contracts using this source may be affected.`, { title: 'Disconnect Source', confirmText: 'DISCONNECT', danger: true }))) return;
 
         try {
             await window.api[prov.disconnectFn]();
             initSources();
         } catch (err) {
             console.error(`[Sources] Disconnect ${prov.id} failed:`, err);
-            alert(`Failed to disconnect ${prov.name}: ${err.message}`);
+            window.CollateralModal.showAlert(`Failed to disconnect ${prov.name}: ${err.message}`, { type: 'error' });
         }
     };
 }

@@ -2,6 +2,7 @@
 // Spectator-grade view of a single head-to-head duel
 
 import api from '../api.js';
+import { showAlert, showConfirm } from '../modal.js';
 
 export function renderRivalryDetail() {
     return `
@@ -603,7 +604,7 @@ export async function initRivalryDetail() {
         </div>
 
         <div class="rvd-share">
-            <button class="rvd-share-btn" onclick="navigator.clipboard.writeText(window.location.href).then(()=>alert('Link copied!'))">COPY LINK</button>
+            <button class="rvd-share-btn" onclick="navigator.clipboard.writeText(window.location.href).then(()=>window.CollateralModal.showAlert('Link copied!', { type: 'success', title: 'Copied' }))">COPY LINK</button>
             <button class="rvd-share-btn" onclick="window.open('https://twitter.com/intent/tweet?text='+encodeURIComponent('${rivalry.challenger.name} vs ${rivalry.opponent.name} — $${pool.toLocaleString()} at stake. ${rivalry.metric}. ' + window.location.href))">SHARE ON X</button>
         </div>
 
@@ -721,19 +722,19 @@ export async function initRivalryDetail() {
                 e.target.disabled = true; e.target.textContent = 'ACCEPTING...';
                 try {
                     const res = await api.acceptRivalry(id);
-                    if (res.ok) { alert('Challenge accepted! Fund your side to begin.'); location.reload(); }
-                    else alert(res.error || 'Failed to accept');
-                } catch (err) { alert('Error: ' + err.message); }
+                    if (res.ok) { await showAlert('Challenge accepted! Fund your side to begin.', { type: 'success', title: 'Challenge Accepted' }); location.reload(); }
+                    else showAlert(res.error || 'Failed to accept', { type: 'error' });
+                } catch (err) { showAlert('Error: ' + err.message, { type: 'error' }); }
                 e.target.disabled = false; e.target.textContent = 'ACCEPT CHALLENGE';
             });
             document.getElementById('rvd-decline')?.addEventListener('click', async (e) => {
-                if (!confirm('Are you sure? This cannot be undone.')) return;
+                if (!(await showConfirm('Are you sure? This cannot be undone.', { title: 'Decline Challenge', confirmText: 'DECLINE', danger: true }))) return;
                 e.target.disabled = true; e.target.textContent = 'DECLINING...';
                 try {
                     const res = await api.declineRivalry(id);
-                    if (res.ok) { alert('Challenge declined.'); window.location.hash = '/rivalry'; }
-                    else alert(res.error || 'Failed to decline');
-                } catch (err) { alert('Error: ' + err.message); }
+                    if (res.ok) { await showAlert('Challenge declined.', { type: 'info', title: 'Declined' }); window.location.hash = '/rivalry'; }
+                    else showAlert(res.error || 'Failed to decline', { type: 'error' });
+                } catch (err) { showAlert('Error: ' + err.message, { type: 'error' }); }
                 e.target.disabled = false; e.target.textContent = 'DECLINE';
             });
         } else if (rawState === 'ACCEPTED' && (isChallenger || isOpponent)) {
@@ -745,9 +746,9 @@ export async function initRivalryDetail() {
                 e.target.disabled = true; e.target.textContent = 'FUNDING...';
                 try {
                     const res = await api.fundRivalry(id);
-                    if (res.ok) { alert('Funded! Waiting for opponent to fund.'); location.reload(); }
-                    else alert(res.error || 'Failed to fund');
-                } catch (err) { alert('Error: ' + err.message); }
+                    if (res.ok) { await showAlert('Funded! Waiting for opponent to fund.', { type: 'success', title: 'Funded' }); location.reload(); }
+                    else showAlert(res.error || 'Failed to fund', { type: 'error' });
+                } catch (err) { showAlert('Error: ' + err.message, { type: 'error' }); }
                 e.target.disabled = false; e.target.textContent = `FUND YOUR SIDE — $${rivalry.stake.toLocaleString()}`;
             });
         } else if (rawState === 'CHALLENGE_ISSUED' && isChallenger) {

@@ -536,7 +536,7 @@ export async function initProfile() {
             exportBtn.innerHTML = '<i data-lucide="check" style="width:13px;height:13px"></i> Downloaded!';
             if (window.lucide) window.lucide.createIcons();
             setTimeout(() => { exportBtn.innerHTML = '<i data-lucide="download" style="width:13px;height:13px"></i> Export CSV'; if (window.lucide) window.lucide.createIcons(); }, 2000);
-        } catch (e) { console.error('[CSV]', e); alert('Export failed: ' + e.message); }
+        } catch (e) { console.error('[CSV]', e); window.CollateralModal.showAlert('Export failed: ' + e.message, { type: 'error' }); }
     });
 
     // ── Fetch data ──

@@ -1,4 +1,5 @@
 // Main entry point
+import { showAlert, showConfirm } from './modal.js';
 import { Router } from './router.js';
 import { renderHeader, initScrollEffects } from './components/Header.js';
 import { renderOverview, initOverview } from './views/Overview.js';
@@ -497,7 +498,7 @@ window.app = {
     },
     signInWithGoogle: async function () {
         try {
-            if (!window.Clerk) { alert('OAuth not available. Please use email/password or refresh.'); return; }
+            if (!window.Clerk) { showAlert('OAuth not available. Please use email/password or refresh.', { type: 'warning', title: 'OAuth Unavailable' }); return; }
             console.log('[Auth] Starting Google OAuth via Clerk...');
             // Store referral code before redirect (if entered)
             const refInput = document.getElementById('auth-referral-code')?.value?.trim();
@@ -538,7 +539,7 @@ window.app = {
     },
     signInWithApple: async function () {
         try {
-            if (!window.Clerk) { alert('OAuth not available. Please use email/password or refresh.'); return; }
+            if (!window.Clerk) { showAlert('OAuth not available. Please use email/password or refresh.', { type: 'warning', title: 'OAuth Unavailable' }); return; }
             console.log('[Auth] Starting Apple OAuth via Clerk...');
             window.app.closeAccessModal();
             // If Clerk already has a session, exchange it directly
@@ -752,29 +753,29 @@ window.app = {
     },
     acceptRivalry: async function (id) {
         if (!appState.isLoggedIn) { window.app.openAccessModal(); return; }
-        if (!confirm('Accept this rivalry challenge? You will need to fund your side.')) return;
+        if (!(await showConfirm('Accept this rivalry challenge? You will need to fund your side.', { title: 'Accept Challenge', confirmText: 'ACCEPT' }))) return;
         try {
             const res = await api.acceptRivalry(id);
             if (res.ok) {
-                alert('Challenge accepted! Fund your side to activate the duel.');
+                await showAlert('Challenge accepted! Fund your side to activate the duel.', { type: 'success', title: 'Challenge Accepted' });
                 window.location.reload();
             } else {
-                alert('Failed to accept: ' + (res.error || 'Unknown error'));
+                showAlert('Failed to accept: ' + (res.error || 'Unknown error'), { type: 'error' });
             }
-        } catch (err) { alert('Failed to accept challenge: ' + err.message); }
+        } catch (err) { showAlert('Failed to accept challenge: ' + err.message, { type: 'error' }); }
     },
     declineRivalry: async function (id) {
         if (!appState.isLoggedIn) { window.app.openAccessModal(); return; }
-        if (!confirm('Decline this challenge?')) return;
+        if (!(await showConfirm('Decline this challenge?', { title: 'Decline Challenge', confirmText: 'DECLINE', danger: true }))) return;
         try {
             const res = await api.declineRivalry(id);
             if (res.ok) {
-                alert('Challenge declined.');
+                await showAlert('Challenge declined.', { type: 'info', title: 'Declined' });
                 window.location.reload();
             } else {
-                alert('Failed to decline: ' + (res.error || 'Unknown error'));
+                showAlert('Failed to decline: ' + (res.error || 'Unknown error'), { type: 'error' });
             }
-        } catch (err) { alert('Failed to decline challenge: ' + err.message); }
+        } catch (err) { showAlert('Failed to decline challenge: ' + err.message, { type: 'error' }); }
     },
     connectSource: async function (source) {
         const btn = document.getElementById(source + '-btn');
@@ -1013,14 +1014,14 @@ window.app = {
                     return;
                 }
             } else if (source === 'github') {
-                alert('GitHub integration coming soon.');
+                showAlert('GitHub integration coming soon.', { type: 'info', title: 'Coming Soon' });
                 btn.innerHTML = 'Connect';
                 btn.disabled = false;
                 return;
             }
         } catch (err) {
             console.error(`[App] connectSource ${source} error:`, err);
-            alert('Failed to connect: ' + (err.message || 'Unknown error'));
+            showAlert('Failed to connect: ' + (err.message || 'Unknown error'), { type: 'error' });
             btn.innerHTML = 'Connect';
             btn.disabled = false;
         }
@@ -1189,14 +1190,14 @@ window.app = {
                 // Redirect to Stripe's Express onboarding flow
                 window.location.href = response.onboardingUrl;
             } else if (response.alreadyConnected) {
-                alert('Your payout account is already connected!');
+                await showAlert('Your payout account is already connected!', { type: 'success', title: 'Already Connected' });
                 window.location.reload();
             } else {
                 throw new Error('No onboarding URL returned');
             }
         } catch (err) {
             console.error('Failed to start payout onboarding:', err);
-            alert('Error setting up payout: ' + err.message);
+            showAlert('Error setting up payout: ' + err.message, { type: 'error' });
             if (btn) {
                 btn.innerHTML = originalText || 'Manage';
                 btn.disabled = false;
@@ -1339,10 +1340,10 @@ window.app = {
                 return;
             }
 
-            alert('Not implemented yet.');
+            showAlert('Not implemented yet.', { type: 'info', title: 'Coming Soon' });
         } catch (err) {
             console.error('[App] disconnectSource error:', err);
-            alert('Failed to disconnect: ' + (err.message || 'Unknown error'));
+            showAlert('Failed to disconnect: ' + (err.message || 'Unknown error'), { type: 'error' });
             // Only restore button on failure (no re-render happened)
             if (btn) {
                 btn.disabled = false;

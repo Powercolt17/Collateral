@@ -315,7 +315,7 @@ async function amazonConnectRoutes(fastify: FastifyInstance) {
             const result = await db
                 .update(connectedAccounts)
                 .set({
-                    status: 'INACTIVE',
+                    status: 'REVOKED',
                     verificationStatus: 'UNVERIFIED',
                     metadataJson: null,
                 } as any)

@@ -424,7 +424,7 @@ export async function initReceiptDetail(params) {
         document.getElementById('btn-debug-mode')?.addEventListener('click', () => {
             console.log('[Debug] Contract:', contract);
             console.log('[Debug] Events:', events);
-            alert('Debug info logged to console');
+            window.CollateralModal.showAlert('Debug info logged to console', { type: 'info', title: 'Debug' });
         });
 
         console.log('[Receipt] Loaded', { contractId, state });

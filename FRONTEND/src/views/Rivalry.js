@@ -2,6 +2,7 @@
 // Institutional design matching existing Collateral aesthetic
 
 import api from '../api.js';
+import { showAlert } from '../modal.js';
 
 export function renderRivalry() {
     return `
@@ -1385,11 +1386,11 @@ export async function initRivalry() {
             const stake = parseInt(stakeInput?.value) || 0;
 
             if (!opponent) {
-                alert('Enter an opponent username');
+                showAlert('Enter an opponent username', { type: 'warning', title: 'Missing Field' });
                 return;
             }
             if (stake < 100) {
-                alert('Minimum stake is $100');
+                showAlert('Minimum stake is $100', { type: 'warning', title: 'Invalid Stake' });
                 return;
             }
 
@@ -1417,7 +1418,7 @@ export async function initRivalry() {
 
                 if (result.ok) {
                     document.getElementById('rv-challenge-modal').classList.remove('open');
-                    alert(`Challenge issued to @${opponent.replace('@', '')}! They have 72 hours to accept.`);
+                    showAlert(`Challenge issued to @${opponent.replace('@', '')}! They have 72 hours to accept.`, { type: 'success', title: 'Challenge Sent' });
                     // Refresh: re-fetch live data
                     try {
                         const res = await api.getRivalries({ limit: 50 });
@@ -1429,10 +1430,10 @@ export async function initRivalry() {
                     renderFeatured();
                     renderGrid();
                 } else {
-                    alert(result.error || 'Failed to create challenge');
+                    showAlert(result.error || 'Failed to create challenge', { type: 'error' });
                 }
             } catch (err) {
-                alert('Failed to send challenge: ' + (err.message || 'Unknown error'));
+                showAlert('Failed to send challenge: ' + (err.message || 'Unknown error'), { type: 'error' });
             } finally {
                 submitBtn.disabled = false;
                 submitBtn.textContent = 'SEND CHALLENGE';

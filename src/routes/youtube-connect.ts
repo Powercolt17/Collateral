@@ -375,7 +375,7 @@ async function youtubeConnectRoutes(fastify: FastifyInstance) {
             const result = await db
                 .update(connectedAccounts)
                 .set({
-                    status: 'INACTIVE',
+                    status: 'REVOKED',
                     verificationStatus: 'UNVERIFIED',
                     metadataJson: null,
                 } as any)

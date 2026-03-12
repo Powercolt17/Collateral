@@ -994,7 +994,7 @@ export async function initFunding() {
             closeModal(removeCardModal);
             await loadBillingStatus();
         } catch (err) {
-            alert('Failed to remove card: ' + (err.message || 'Unknown error'));
+            window.CollateralModal.showAlert('Failed to remove card: ' + (err.message || 'Unknown error'), { type: 'error' });
         } finally {
             confirmRemoveBtn.disabled = false;
             confirmRemoveBtn.textContent = 'REMOVE CARD';

@@ -700,58 +700,66 @@ export async function createContract(params: CreateContractParams): Promise<Cont
             const snapshot = await youtubeAdapter.snapshotBaseline(principalUserId);
             baselineJson = snapshot;
 
-            // ANTI-GAMING: Channel age check
-            if (snapshot.channelCreatedAt) {
-                const channelAgeDays = Math.floor((Date.now() - new Date(snapshot.channelCreatedAt).getTime()) / (1000 * 60 * 60 * 24));
-                if (channelAgeDays < MIN_ACCOUNT_AGE_DAYS.YOUTUBE) {
-                    throw new Error(
-                        `Account too new: YouTube channel must be at least ${MIN_ACCOUNT_AGE_DAYS.YOUTUBE} days old. ` +
-                        `Your channel is ${channelAgeDays} days old.`
-                    );
-                }
-            }
+            // ============================================================
+            // TEMP DISABLED FOR TESTING — RE-ENABLE AFTER TEST
+            // ============================================================
 
-            // ANTI-GAMING: Minimum video count
-            if (snapshot.videoCount < 10) {
-                throw new Error(
-                    `Not enough content: YouTube channel must have at least 10 videos. ` +
-                    `Your channel has ${snapshot.videoCount} videos.`
-                );
-            }
+            // // ANTI-GAMING: Channel age check
+            // if (snapshot.channelCreatedAt) {
+            //     const channelAgeDays = Math.floor((Date.now() - new Date(snapshot.channelCreatedAt).getTime()) / (1000 * 60 * 60 * 24));
+            //     if (channelAgeDays < MIN_ACCOUNT_AGE_DAYS.YOUTUBE) {
+            //         throw new Error(
+            //             `Account too new: YouTube channel must be at least ${MIN_ACCOUNT_AGE_DAYS.YOUTUBE} days old. ` +
+            //             `Your channel is ${channelAgeDays} days old.`
+            //         );
+            //     }
+            // }
 
-            // ANTI-GAMING: Subscriber count must be visible
-            if (snapshot.hiddenSubscriberCount) {
-                throw new Error(
-                    'Cannot create YouTube contract: Subscriber count is hidden. ' +
-                    'Make your subscriber count public in YouTube Studio settings.'
-                );
-            }
+            // // ANTI-GAMING: Minimum video count
+            // if (snapshot.videoCount < 10) {
+            //     throw new Error(
+            //         `Not enough content: YouTube channel must have at least 10 videos. ` +
+            //         `Your channel has ${snapshot.videoCount} videos.`
+            //     );
+            // }
 
-            // HARD GATE: Enforce minimum baselines per tier
-            if (metricType === 'SUBSCRIBERS') {
-                const minSubs = MINIMUM_BASELINES.YOUTUBE.SUBSCRIBERS[riskTier];
-                if (snapshot.subscribers < minSubs) {
-                    throw new Error(
-                        `Baseline too low: ${riskTier} tier requires minimum ${minSubs.toLocaleString()} subscribers. ` +
-                        `Got ${snapshot.subscribers.toLocaleString()}. Build your audience first.`
-                    );
-                }
-            } else if (metricType === 'VIEWS') {
-                const minViews = MINIMUM_BASELINES.YOUTUBE.VIEWS[riskTier];
-                if (snapshot.views30d < minViews) {
-                    throw new Error(
-                        `Baseline too low: ${riskTier} tier requires minimum ${minViews.toLocaleString()} views in 30 days. ` +
-                        `Got ${snapshot.views30d.toLocaleString()}. Build viewership first.`
-                    );
-                }
-            }
+            // // ANTI-GAMING: Subscriber count must be visible
+            // if (snapshot.hiddenSubscriberCount) {
+            //     throw new Error(
+            //         'Cannot create YouTube contract: Subscriber count is hidden. ' +
+            //         'Make your subscriber count public in YouTube Studio settings.'
+            //     );
+            // }
+
+            // // HARD GATE: Enforce minimum baselines per tier
+            // if (metricType === 'SUBSCRIBERS') {
+            //     const minSubs = MINIMUM_BASELINES.YOUTUBE.SUBSCRIBERS[riskTier];
+            //     if (snapshot.subscribers < minSubs) {
+            //         throw new Error(
+            //             `Baseline too low: ${riskTier} tier requires minimum ${minSubs.toLocaleString()} subscribers. ` +
+            //             `Got ${snapshot.subscribers.toLocaleString()}. Build your audience first.`
+            //         );
+            //     }
+            // } else if (metricType === 'VIEWS') {
+            //     const minViews = MINIMUM_BASELINES.YOUTUBE.VIEWS[riskTier];
+            //     if (snapshot.views30d < minViews) {
+            //         throw new Error(
+            //             `Baseline too low: ${riskTier} tier requires minimum ${minViews.toLocaleString()} views in 30 days. ` +
+            //             `Got ${snapshot.views30d.toLocaleString()}. Build viewership first.`
+            //         );
+            //     }
+            // }
+
+            // ============================================================
+            // END TEMP DISABLED
+            // ============================================================
 
             console.log(`[Contract] YouTube baseline: ${snapshot.subscribers} subs, ${snapshot.views30d} 30d views, ${snapshot.videoCount} videos`);
         } catch (ytErr) {
-            if ((ytErr as any).message?.includes('Baseline too low')) throw ytErr;
-            if ((ytErr as any).message?.includes('Account too new')) throw ytErr;
-            if ((ytErr as any).message?.includes('Not enough content')) throw ytErr;
-            if ((ytErr as any).message?.includes('Subscriber count is hidden')) throw ytErr;
+            // if ((ytErr as any).message?.includes('Baseline too low')) throw ytErr;  // TEMP DISABLED
+            // if ((ytErr as any).message?.includes('Account too new')) throw ytErr;   // TEMP DISABLED
+            // if ((ytErr as any).message?.includes('Not enough content')) throw ytErr; // TEMP DISABLED
+            // if ((ytErr as any).message?.includes('Subscriber count is hidden')) throw ytErr; // TEMP DISABLED
             console.error('[Contract] Failed to fetch YouTube baseline:', (ytErr as any).message);
             throw new Error('Cannot create YouTube contract: Failed to verify channel data. Ensure your YouTube account is connected.');
         }

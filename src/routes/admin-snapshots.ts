@@ -23,7 +23,8 @@ import { eq, desc, and, sql } from 'drizzle-orm';
 // =============================================================================
 
 function verifyAdmin(request: any): boolean {
-    const adminKey = request.headers['x-admin-key'];
+    // Support both header and query param for browser access
+    const adminKey = request.headers['x-admin-key'] || (request.query as any)?.key;
     if (!process.env.ADMIN_API_KEY && process.env.NODE_ENV !== 'production') {
         return true; // Allow in dev without key
     }

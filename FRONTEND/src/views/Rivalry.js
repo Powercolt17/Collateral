@@ -1103,11 +1103,11 @@ export async function initRivalry() {
         console.log('[Rivalry] API unavailable:', e.message);
     }
 
-    let activeFilter = 'active';
+    let activeFilter = 'all';
     let searchQuery = '';
 
     function getProviderColor(provider) {
-        const colors = { stripe: '#635bff', x: '#111', shopify: '#96bf48', amazon: '#ff9900' };
+        const colors = { stripe: '#635bff', x: '#111', youtube: '#ff0000', shopify: '#96bf48', amazon: '#ff9900' };
         return colors[provider] || '#111';
     }
 
@@ -1156,7 +1156,11 @@ export async function initRivalry() {
                 <div class="rv-momentum">
                     <div class="rv-momentum-left" style="width:${leftPct}%"></div>
                     <div class="rv-momentum-right" style="width:${rightPct}%"></div>
-                </div>` : ''}
+                </div>` : `
+                <div style="display:flex;gap:8px;justify-content:center;padding:8px 0;">
+                    <button class="rv-accept-btn" data-rivalry-id="${r.id}" onclick="event.stopPropagation();window.app.acceptRivalry('${r.id}')" style="flex:1;padding:10px;background:#1a1a1a;color:#fff;border:none;font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:0.1em;cursor:pointer;font-weight:700;">✓ ACCEPT</button>
+                    <button class="rv-decline-btn" data-rivalry-id="${r.id}" onclick="event.stopPropagation();window.app.declineRivalry('${r.id}')" style="flex:1;padding:10px;background:#fff;color:#752122;border:1px solid #eee;font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:0.1em;cursor:pointer;font-weight:700;">✕ DECLINE</button>
+                </div>`}
                 <div class="rv-card-bottom">
                     <div class="rv-card-stake">
                         <span class="rv-card-stake-val">$${(r.stake * 2).toLocaleString()}</span>

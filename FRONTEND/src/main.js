@@ -750,6 +750,32 @@ window.app = {
             else wrap.classList.remove('has-items');
         } catch (_) { /* silent */ }
     },
+    acceptRivalry: async function (id) {
+        if (!appState.isLoggedIn) { window.app.openAccessModal(); return; }
+        if (!confirm('Accept this rivalry challenge? You will need to fund your side.')) return;
+        try {
+            const res = await api.acceptRivalry(id);
+            if (res.ok) {
+                alert('Challenge accepted! Fund your side to activate the duel.');
+                window.location.reload();
+            } else {
+                alert('Failed to accept: ' + (res.error || 'Unknown error'));
+            }
+        } catch (err) { alert('Failed to accept challenge: ' + err.message); }
+    },
+    declineRivalry: async function (id) {
+        if (!appState.isLoggedIn) { window.app.openAccessModal(); return; }
+        if (!confirm('Decline this challenge?')) return;
+        try {
+            const res = await api.declineRivalry(id);
+            if (res.ok) {
+                alert('Challenge declined.');
+                window.location.reload();
+            } else {
+                alert('Failed to decline: ' + (res.error || 'Unknown error'));
+            }
+        } catch (err) { alert('Failed to decline challenge: ' + err.message); }
+    },
     connectSource: async function (source) {
         const btn = document.getElementById(source + '-btn');
         if (!btn) return;

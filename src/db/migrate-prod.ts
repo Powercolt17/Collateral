@@ -88,11 +88,13 @@ export async function runMigrations() {
                 '0028_fix_schema_drift_v2.sql',
                 '0029_add_clerk_user_id.sql',
                 '0030_password_reset_tokens.sql',
+                '0030_rivalry_tables.sql',
                 '0031_update_tier_pricing.sql',
                 '0032_oracle_metric_tables.sql',
                 '0033_social_share_bonus.sql',
                 '0034_referral_system.sql',
                 '0035_referral_first_bonus.sql',
+                '0036_notifications.sql',
             ];
 
             console.log(`[migrate] 🔧 Force-applying ${untrackedMigrations.length} untracked migrations...`);
@@ -121,6 +123,8 @@ export async function runMigrations() {
                 { label: 'contract_templates', query: sql`SELECT to_regclass('public.contract_templates') as exists` },
                 { label: 'contract_metric_snapshots', query: sql`SELECT to_regclass('public.contract_metric_snapshots') as exists` },
                 { label: 'referrals', query: sql`SELECT to_regclass('public.referrals') as exists` },
+                { label: 'rivalries', query: sql`SELECT to_regclass('public.rivalries') as exists` },
+                { label: 'rivalry_participants', query: sql`SELECT to_regclass('public.rivalry_participants') as exists` },
             ];
 
             for (const check of checks) {

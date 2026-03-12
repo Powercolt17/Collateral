@@ -22,6 +22,7 @@ import { renderStripeCallback, initStripeCallback } from './views/StripeCallback
 import { renderXCallback, initXCallback } from './views/XCallback.js';
 import { renderShopifyCallback, initShopifyCallback } from './views/ShopifyCallback.js';
 import { renderAmazonCallback, initAmazonCallback } from './views/AmazonCallback.js';
+import { renderYouTubeCallback, initYouTubeCallback } from './views/YouTubeCallback.js';
 import { renderPreLaunch, initPreLaunch } from './views/PreLaunch.js';
 import { renderTerms, initTerms } from './views/Terms.js';
 import { renderPrivacy, initPrivacy } from './views/Privacy.js';
@@ -187,6 +188,7 @@ const routes = PRE_LAUNCH_MODE ? [
     { path: '/x/callback', render: renderXCallback, init: initXCallback },
     { path: '/shopify/callback', render: renderShopifyCallback, init: initShopifyCallback },
     { path: '/amazon/callback', render: renderAmazonCallback, init: initAmazonCallback },
+    { path: '/youtube/callback', render: renderYouTubeCallback, init: initYouTubeCallback },
     { path: '/sso-callback', render: () => '<div style="display:flex;align-items:center;justify-content:center;min-height:60vh;"><p style="color:#999;font-size:14px;">Completing sign-in…</p></div>', init: () => { window.app._handleSSOCallback(); } },
     { path: '/terms', render: renderTerms, init: initTerms },
     { path: '/privacy', render: renderPrivacy, init: initPrivacy },
@@ -283,6 +285,7 @@ const routes = PRE_LAUNCH_MODE ? [
         '/stripe/callback': '/#/stripe/callback',
         '/shopify/callback': '/#/shopify/callback',
         '/amazon/callback': '/#/amazon/callback',
+        '/youtube/callback': '/#/youtube/callback',
     };
 
     const dest = map[pathname];

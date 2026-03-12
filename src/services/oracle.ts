@@ -26,6 +26,7 @@ import { eq, and, lte, or, isNull, sql } from 'drizzle-orm';
 import { appendEvent } from './ledger.js';
 import { tryAcquireLock, releaseLock } from './job-lock.js';
 import { getXClient } from '../adapters/x.js';
+import { getYouTubeClient, getYouTubeAccessToken } from '../adapters/youtube.js';
 import { randomUUID } from 'crypto';
 
 // =============================================================================
@@ -45,6 +46,7 @@ interface MetricFetchResult {
 /** Default polling intervals per provider (milliseconds) */
 const DEFAULT_CADENCE_MS: Record<string, number> = {
     X: 60 * 60 * 1000,          // 60 minutes
+    YOUTUBE: 60 * 60 * 1000,    // 60 minutes
     STRIPE: 6 * 60 * 60 * 1000,  // 6 hours (webhook reconciliation)
     SHOPIFY: 6 * 60 * 60 * 1000, // 6 hours (webhook reconciliation)
 };
@@ -159,6 +161,26 @@ function extractMetricParams(contract: any): {
         };
     }
 
+    if (platform === 'YOUTUBE') {
+        // Determine metric from contract metricType
+        const metricType = (contract.metricType || 'SUBSCRIBERS').toUpperCase();
+        if (metricType === 'VIEWS') {
+            return {
+                metricKey: 'views_30d',
+                baselineValue: baseline?.views30d ?? 0,
+                targetValue: condition?.threshold ?? 0,
+                mode: 'delta',
+            };
+        }
+        // Default: subscribers (absolute threshold)
+        return {
+            metricKey: 'subscribers',
+            baselineValue: baseline?.subscribers ?? 0,
+            targetValue: condition?.threshold ?? 0,
+            mode: 'absolute',
+        };
+    }
+
     // Generic fallback
     return {
         metricKey: contract.metricType?.toLowerCase() ?? 'generic',
@@ -208,6 +230,30 @@ async function fetchMetricFromProvider(
                 fetchedAt,
                 requestId,
             };
+        }
+
+        if (platform === 'YOUTUBE') {
+            // Get YouTube access token (auto-refreshes if expired)
+            const accessToken = await getYouTubeAccessToken(contract.principalUserId);
+            const client = getYouTubeClient();
+
+            if (params.metricKey === 'subscribers') {
+                const stats = await client.getChannelStats(accessToken);
+                return {
+                    metricValue: stats.subscriberCount,
+                    fetchedAt,
+                    requestId,
+                };
+            }
+
+            if (params.metricKey === 'views_30d') {
+                const viewData = await client.get30DayViews(accessToken);
+                return {
+                    metricValue: viewData.totalViews,
+                    fetchedAt,
+                    requestId,
+                };
+            }
         }
 
         // STRIPE and SHOPIFY: webhook-primary, oracle is reconciliation

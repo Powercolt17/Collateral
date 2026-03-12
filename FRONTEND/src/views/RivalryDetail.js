@@ -373,8 +373,8 @@ export async function initRivalryDetail() {
         SETTLED: 'settled', DRAW: 'settled',
         DECLINED: 'settled', EXPIRED: 'settled', CANCELLED: 'settled',
     };
-    const METRIC_LABELS = { REVENUE: 'Revenue Growth', FOLLOWERS: 'Follower Growth', GROSS_SALES: 'Sales Growth', ORDER_COUNT: 'Order Growth' };
-    const PLATFORM_MAP = { STRIPE: 'stripe', X: 'x', SHOPIFY: 'shopify', AMAZON: 'amazon' };
+    const METRIC_LABELS = { REVENUE: 'Revenue Growth', FOLLOWERS: 'Follower Growth', SUBSCRIBERS: 'Subscriber Growth', VIEWS: 'Views Growth', GROSS_SALES: 'Sales Growth', ORDER_COUNT: 'Order Growth' };
+    const PLATFORM_MAP = { STRIPE: 'stripe', X: 'x', YOUTUBE: 'youtube', SHOPIFY: 'shopify', AMAZON: 'amazon' };
 
     // Transform API response → display format
     function transformDetail(r) {

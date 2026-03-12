@@ -973,6 +973,8 @@ export function renderRivalry() {
                     <select class="rv-form-select" id="rv-metric">
                         <option value="revenue_growth">Revenue Growth (Stripe)</option>
                         <option value="follower_growth">Follower Growth (X)</option>
+                        <option value="subscriber_growth">Subscriber Growth (YouTube)</option>
+                        <option value="views_growth">Views Growth (YouTube)</option>
                         <option value="sales_growth">Sales Growth (Shopify)</option>
                         <option value="order_growth">Order Growth (Amazon)</option>
                     </select>
@@ -1048,8 +1050,8 @@ export async function initRivalry() {
         SETTLED: 'settled', DRAW: 'settled',
         DECLINED: 'settled', EXPIRED: 'settled', CANCELLED: 'settled',
     };
-    const METRIC_LABELS = { REVENUE: 'Revenue Growth', FOLLOWERS: 'Follower Growth', GROSS_SALES: 'Sales Growth', ORDER_COUNT: 'Order Growth' };
-    const PLATFORM_MAP = { STRIPE: 'stripe', X: 'x', SHOPIFY: 'shopify', AMAZON: 'amazon' };
+    const METRIC_LABELS = { REVENUE: 'Revenue Growth', FOLLOWERS: 'Follower Growth', SUBSCRIBERS: 'Subscriber Growth', VIEWS: 'Views Growth', GROSS_SALES: 'Sales Growth', ORDER_COUNT: 'Order Growth' };
+    const PLATFORM_MAP = { STRIPE: 'stripe', X: 'x', YOUTUBE: 'youtube', SHOPIFY: 'shopify', AMAZON: 'amazon' };
 
     // Transform API rivalry → card format
     function transformRivalry(r) {
@@ -1366,6 +1368,8 @@ export async function initRivalry() {
     const METRIC_MAP = {
         revenue_growth: { platform: 'STRIPE', metricType: 'REVENUE', metricKey: 'net_settled_amount' },
         follower_growth: { platform: 'X', metricType: 'FOLLOWERS', metricKey: 'followers' },
+        subscriber_growth: { platform: 'YOUTUBE', metricType: 'SUBSCRIBERS', metricKey: 'subscribers' },
+        views_growth: { platform: 'YOUTUBE', metricType: 'VIEWS', metricKey: 'views_30d' },
         sales_growth: { platform: 'SHOPIFY', metricType: 'GROSS_SALES', metricKey: 'gross_sales' },
         order_growth: { platform: 'AMAZON', metricType: 'ORDER_COUNT', metricKey: 'order_count' },
     };

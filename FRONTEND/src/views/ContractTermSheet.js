@@ -188,8 +188,12 @@ function showContent(c) {
     const id = c.id || '';
     const shortId = id.split('-')[0].slice(0, 4).toUpperCase();
     const title = c.title || 'Performance Contract';
-    const provider = (c.provider || 'stripe').toString();
-    const displayProvider = provider.charAt(0).toUpperCase() + provider.slice(1);
+    const provider = (c.provider || c.platform || c.source || 'stripe').toString().toLowerCase();
+    const providerLabelMap = {
+        'youtube': 'YouTube', 'x': 'X (Twitter)', 'twitter': 'X (Twitter)',
+        'stripe': 'Stripe', 'shopify': 'Shopify', 'github': 'GitHub', 'amazon': 'Amazon',
+    };
+    const displayProvider = providerLabelMap[provider] || provider.charAt(0).toUpperCase() + provider.slice(1);
     const tier = (c.tier || 'controlled').toLowerCase();
     const tierUpper = tier.toUpperCase();
     const minStake = c.min_stake || 100;

@@ -633,7 +633,7 @@ export function renderContracts() {
 export function initContracts() {
 
     // --- State ---
-    let selectedSource = null;   // 'TWITTER' | 'STRIPE'
+    let selectedSource = null;   // 'TWITTER' | 'STRIPE' | 'YOUTUBE' | 'SHOPIFY' | 'GITHUB'
     let selectedRisk = 'STEADY'; // default tier
     let capitalAmount = 5000;
     let multiplier = 1.5;
@@ -670,7 +670,7 @@ export function initContracts() {
 
         // Source
         const src = (urlParams.get('source') || '').toUpperCase();
-        if (src === 'STRIPE' || src === 'X' || src === 'TWITTER') {
+        if (['STRIPE', 'X', 'TWITTER', 'YOUTUBE', 'SHOPIFY', 'GITHUB'].includes(src)) {
             selectedSource = src === 'X' ? 'TWITTER' : src;
         }
     }
@@ -858,6 +858,30 @@ export function initContracts() {
                 stripeAccountId = null;
                 window.appState.connectedSources.stripe = false;
             }
+
+            // YouTube
+            const yt = status.platforms.find(p => p.platform === 'YOUTUBE');
+            if (yt && yt.verificationStatus === 'VERIFIED') {
+                window.appState.connectedSources.youtube = true;
+            } else {
+                window.appState.connectedSources.youtube = false;
+            }
+
+            // Shopify
+            const shopify = status.platforms.find(p => p.platform === 'SHOPIFY');
+            if (shopify && shopify.verificationStatus === 'VERIFIED') {
+                window.appState.connectedSources.shopify = true;
+            } else {
+                window.appState.connectedSources.shopify = false;
+            }
+
+            // GitHub
+            const github = status.platforms.find(p => p.platform === 'GITHUB');
+            if (github && github.verificationStatus === 'VERIFIED') {
+                window.appState.connectedSources.github = true;
+            } else {
+                window.appState.connectedSources.github = false;
+            }
         } catch (err) {
             console.log('[Exec] Status check failed:', err.message);
         }
@@ -872,6 +896,10 @@ export function initContracts() {
         if (!selectedSource) return false;
         if (selectedSource === 'TWITTER') return !!xVerified;
         if (selectedSource === 'STRIPE') return !!stripeVerified;
+        // YouTube, Shopify, GitHub: check via refreshed connection status
+        if (selectedSource === 'YOUTUBE') return !!window.appState?.connectedSources?.youtube;
+        if (selectedSource === 'SHOPIFY') return !!window.appState?.connectedSources?.shopify;
+        if (selectedSource === 'GITHUB') return !!window.appState?.connectedSources?.github;
         return false;
     }
 
@@ -893,7 +921,14 @@ export function initContracts() {
             return;
         }
 
-        const platformName = selectedSource === 'TWITTER' ? 'X (Twitter)' : 'Stripe';
+        const platformNames = {
+            'TWITTER': 'X (Twitter)',
+            'STRIPE': 'Stripe',
+            'YOUTUBE': 'YouTube',
+            'SHOPIFY': 'Shopify',
+            'GITHUB': 'GitHub',
+        };
+        const platformName = platformNames[selectedSource] || selectedSource;
 
         if (isConnected()) {
             // Connected → show execute section
@@ -947,7 +982,14 @@ export function initContracts() {
         setText('ext-payout', '$' + payout.toLocaleString());
         setText('ext-tier', tier.name);
         setText('ext-pass-rate', tier.rate);
-        setText('ext-source', selectedSource === 'TWITTER' ? 'X (Twitter)' : selectedSource === 'STRIPE' ? 'Stripe' : '—');
+        const sourceNames = {
+            'TWITTER': 'X (Twitter)',
+            'STRIPE': 'Stripe',
+            'YOUTUBE': 'YouTube',
+            'SHOPIFY': 'Shopify',
+            'GITHUB': 'GitHub',
+        };
+        setText('ext-source', sourceNames[selectedSource] || selectedSource || '—');
         setText('ext-window', '30 Days');
 
         // Snapshot
@@ -1123,7 +1165,22 @@ export function initContracts() {
             }
         };
 
-        const chosenPlatform = selectedSource === 'TWITTER' ? 'X' : 'STRIPE';
+        const platformMap = {
+            'TWITTER': 'X',
+            'STRIPE': 'STRIPE',
+            'YOUTUBE': 'YOUTUBE',
+            'SHOPIFY': 'SHOPIFY',
+            'GITHUB': 'GITHUB',
+        };
+        const chosenPlatform = platformMap[selectedSource] || selectedSource;
+
+        const metricTypeMap = {
+            'X': 'FOLLOWERS',
+            'STRIPE': 'REVENUE',
+            'YOUTUBE': 'SUBSCRIBERS',
+            'SHOPIFY': 'REVENUE',
+            'GITHUB': 'PRS_MERGED',
+        };
 
         try {
             // STEP 1: Create contract
@@ -1135,7 +1192,7 @@ export function initContracts() {
 
             const params = {
                 platform: chosenPlatform,
-                metricType: chosenPlatform === 'X' ? 'FOLLOWERS' : 'REVENUE',
+                metricType: metricTypeMap[chosenPlatform] || 'FOLLOWERS',
                 condition: {
                     operator: 'GTE',
                     threshold: 10000,

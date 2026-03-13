@@ -825,7 +825,7 @@ export const RivalryEventType = {
 export const rivalries = pgTable('rivalries', {
     id: uuid('id').primaryKey().defaultRandom(),
     challengerUserId: uuid('challenger_user_id').references(() => users.id).notNull(),
-    opponentUserId: uuid('opponent_user_id').references(() => users.id).notNull(),
+    opponentUserId: uuid('opponent_user_id').references(() => users.id),
     platform: platformEnum('platform').notNull(),
     metricType: metricTypeEnum('metric_type').notNull(),
     metricKey: varchar('metric_key', { length: 50 }).notNull(),

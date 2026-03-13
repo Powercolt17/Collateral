@@ -46,15 +46,15 @@ const rivalryRoutes: FastifyPluginAsync = async (fastify) => {
         const body = request.body as any;
         const { opponentUsername, platform, metricType, metricKey, stakePerSideCents, durationDays } = body;
 
-        if (!opponentUsername || !platform || !metricType || !metricKey || !stakePerSideCents || !durationDays) {
+        if (!platform || !metricType || !metricKey || !stakePerSideCents || !durationDays) {
             reply.status(400);
-            return { error: 'Missing required fields: opponentUsername, platform, metricType, metricKey, stakePerSideCents, durationDays' };
+            return { error: 'Missing required fields: platform, metricType, metricKey, stakePerSideCents, durationDays' };
         }
 
         try {
             const rivalry = await createRivalry({
                 challengerUserId: userId,
-                opponentUsername,
+                opponentUsername: opponentUsername || null,
                 platform,
                 metricType,
                 metricKey,

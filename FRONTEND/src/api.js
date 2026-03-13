@@ -549,9 +549,9 @@ function getMyRivalries(params = {}) {
 }
 function getRivalryStats() { return getPublic('/v1/rivalries/stats'); }
 function getRivalry(id) { return getPublic(`/v1/rivalries/${id}`); }
-function acceptRivalry(id) { return post(`/v1/rivalries/${id}/accept`, null); }
-function declineRivalry(id) { return post(`/v1/rivalries/${id}/decline`, null); }
-function fundRivalry(id) { return post(`/v1/rivalries/${id}/fund`, null); }
+function acceptRivalry(id) { return post(`/v1/rivalries/${id}/accept`, {}); }
+function declineRivalry(id) { return post(`/v1/rivalries/${id}/decline`, {}); }
+function fundRivalry(id) { return post(`/v1/rivalries/${id}/fund`, {}); }
 function getRivalryEvents(id) { return getPublic(`/v1/rivalries/${id}/events`); }
 function getRivalryMetrics(id) { return getPublic(`/v1/rivalries/${id}/metrics`); }
 function getRivalryShare(id) { return getPublic(`/v1/rivalries/${id}/share`); }

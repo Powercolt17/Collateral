@@ -29,6 +29,7 @@ import {
     validateRivalryFromState,
     InvalidRivalryTransitionError,
 } from './rivalry-state-derivation.js';
+import { computeBalances } from './balances.js';
 
 // =============================================================================
 // CONSTANTS
@@ -181,7 +182,7 @@ export async function appendRivalryEvent(
 
 export interface CreateRivalryParams {
     challengerUserId: string;
-    opponentUsername: string;
+    opponentUsername: string | null;
     platform: string;
     metricType: string;
     metricKey: string;
@@ -208,18 +209,28 @@ export async function createRivalry(params: CreateRivalryParams): Promise<Rivalr
         throw new Error('Duration must be 7, 14, 30, or 90 days');
     }
 
-    // Find opponent by username
-    const [opponentIdentity] = await db
-        .select()
-        .from(identities)
-        .where(eq(identities.username, opponentUsername.replace('@', '')));
+    // Resolve opponent (if direct challenge)
+    let opponentUserId: string | null = null;
+    let opponentIdentity: any = null;
+    const isOpenChallenge = !opponentUsername;
 
-    if (!opponentIdentity) {
-        throw new Error(`Opponent @${opponentUsername} not found`);
-    }
+    if (opponentUsername) {
+        // Direct challenge — find opponent by username
+        const [foundOpponent] = await db
+            .select()
+            .from(identities)
+            .where(eq(identities.username, opponentUsername.replace('@', '')));
 
-    if (opponentIdentity.userId === challengerUserId) {
-        throw new Error('Cannot challenge yourself');
+        if (!foundOpponent) {
+            throw new Error(`Opponent @${opponentUsername} not found`);
+        }
+
+        if (foundOpponent.userId === challengerUserId) {
+            throw new Error('Cannot challenge yourself');
+        }
+
+        opponentUserId = foundOpponent.userId;
+        opponentIdentity = foundOpponent;
     }
 
     // Validate challenger has the required provider connected
@@ -240,6 +251,14 @@ export async function createRivalry(params: CreateRivalryParams): Promise<Rivalr
         throw new Error(`You must connect ${platformName} before issuing a ${metricType.toLowerCase()} challenge`);
     }
 
+    // Validate challenger has sufficient funds
+    const challengerBalances = await computeBalances(challengerUserId);
+    if (challengerBalances.availableCents < stakePerSideCents) {
+        const needed = (stakePerSideCents / 100).toLocaleString('en-US', { minimumFractionDigits: 2 });
+        const available = (challengerBalances.availableCents / 100).toLocaleString('en-US', { minimumFractionDigits: 2 });
+        throw new Error(`Insufficient funds. You need $${needed} but only have $${available} available. Deposit capital first.`);
+    }
+
     // Create rivalry atomically
     const result = await db.transaction(async (tx) => {
         // Insert rivalry record
@@ -247,7 +266,7 @@ export async function createRivalry(params: CreateRivalryParams): Promise<Rivalr
             .insert(rivalries)
             .values({
                 challengerUserId,
-                opponentUserId: opponentIdentity.userId,
+                opponentUserId: opponentUserId,
                 platform: platform as any,
                 metricType: metricType as any,
                 metricKey,
@@ -260,10 +279,13 @@ export async function createRivalry(params: CreateRivalryParams): Promise<Rivalr
             .returning();
 
         // Create participant records
-        await tx.insert(rivalryParticipants).values([
+        const participantRows: any[] = [
             { rivalryId: rivalry.id, userId: challengerUserId, role: 'challenger' },
-            { rivalryId: rivalry.id, userId: opponentIdentity.userId, role: 'opponent' },
-        ]);
+        ];
+        if (opponentUserId) {
+            participantRows.push({ rivalryId: rivalry.id, userId: opponentUserId, role: 'opponent' });
+        }
+        await tx.insert(rivalryParticipants).values(participantRows);
 
         // Append RIVALRY_CREATED event
         await appendRivalryEvent(rivalry.id, {
@@ -274,8 +296,9 @@ export async function createRivalry(params: CreateRivalryParams): Promise<Rivalr
             externalRef: `rivalry:${rivalry.id}:created`,
             metadata: {
                 challengerUserId,
-                opponentUserId: opponentIdentity.userId,
-                opponentUsername: opponentIdentity.username,
+                opponentUserId: opponentUserId,
+                opponentUsername: opponentIdentity?.username || null,
+                isOpenChallenge,
                 platform,
                 metricType,
                 metricKey,
@@ -288,21 +311,23 @@ export async function createRivalry(params: CreateRivalryParams): Promise<Rivalr
     });
 
     // Emit notification to opponent (outside tx — non-critical)
-    try {
-        const [challengerIdentity] = await db.select().from(identities).where(eq(identities.userId, challengerUserId));
-        const challengerName = challengerIdentity?.username || 'An operator';
-        const stake = `$${(stakePerSideCents / 100).toLocaleString()}`;
+    if (opponentUserId && opponentIdentity) {
+        try {
+            const [challengerIdentity] = await db.select().from(identities).where(eq(identities.userId, challengerUserId));
+            const challengerName = challengerIdentity?.username || 'An operator';
+            const stake = `$${(stakePerSideCents / 100).toLocaleString()}`;
 
-        await db.insert(notifications).values({
-            userId: opponentIdentity.userId,
-            type: 'RIVALRY_CHALLENGE',
-            title: `⚔️ @${challengerName} challenged you`,
-            body: `${metricType} duel · ${stake} per side · ${durationDays} days`,
-            link: `/rivalry/${result.id}`,
-            metadata: { rivalryId: result.id, challengerUserId, platform, metricType, stakePerSideCents },
-        });
-    } catch (err) {
-        console.error('[rivalry] Failed to emit challenge notification:', err);
+            await db.insert(notifications).values({
+                userId: opponentUserId,
+                type: 'RIVALRY_CHALLENGE',
+                title: `⚔️ @${challengerName} challenged you`,
+                body: `${metricType} duel · ${stake} per side · ${durationDays} days`,
+                link: `/rivalry/${result.id}`,
+                metadata: { rivalryId: result.id, challengerUserId, platform, metricType, stakePerSideCents },
+            });
+        } catch (err) {
+            console.error('[rivalry] Failed to emit challenge notification:', err);
+        }
     }
 
     return result;
@@ -318,7 +343,23 @@ export async function acceptRivalry(rivalryId: string, userId: string): Promise<
 
     const [rivalry] = await db.select().from(rivalries).where(eq(rivalries.id, rivalryId));
     if (!rivalry) throw new Error('Rivalry not found');
-    if (rivalry.opponentUserId !== userId) throw new Error('Only the opponent can accept');
+
+    // Open challenge: any user can accept. Directed: only designated opponent.
+    const isOpenChallenge = !rivalry.opponentUserId;
+    if (!isOpenChallenge && rivalry.opponentUserId !== userId) {
+        throw new Error('Only the designated opponent can accept this challenge');
+    }
+    if (rivalry.challengerUserId === userId) {
+        throw new Error('Cannot accept your own challenge');
+    }
+
+    // Validate opponent has sufficient funds to cover stake
+    const opponentBalances = await computeBalances(userId);
+    if (opponentBalances.availableCents < rivalry.stakePerSideCents) {
+        const needed = (rivalry.stakePerSideCents / 100).toLocaleString('en-US', { minimumFractionDigits: 2 });
+        const available = (opponentBalances.availableCents / 100).toLocaleString('en-US', { minimumFractionDigits: 2 });
+        throw new Error(`Insufficient funds to accept. You need $${needed} but only have $${available} available. Deposit capital first.`);
+    }
 
     // Check TTL
     const expiresAt = new Date(rivalry.challengeIssuedAt.getTime() + rivalry.acceptanceTtlHours * 3600000);
@@ -333,9 +374,19 @@ export async function acceptRivalry(rivalryId: string, userId: string): Promise<
     }
 
     await db.transaction(async (tx) => {
+        // For open challenges, set the opponent user now
+        const updateFields: any = { acceptedAt: new Date(), updatedAt: new Date() };
+        if (isOpenChallenge) {
+            updateFields.opponentUserId = userId;
+            // Also create the opponent participant record
+            await tx.insert(rivalryParticipants).values({
+                rivalryId, userId, role: 'opponent',
+            });
+        }
+
         await tx
             .update(rivalries)
-            .set({ acceptedAt: new Date(), updatedAt: new Date() })
+            .set(updateFields)
             .where(eq(rivalries.id, rivalryId));
 
         await appendRivalryEvent(rivalryId, {
@@ -391,6 +442,14 @@ export async function fundRivalry(rivalryId: string, userId: string): Promise<vo
 
     if (!participant) throw new Error('Participant record not found');
     if (participant.funded) throw new Error('Already funded');
+
+    // Validate user has sufficient funds
+    const userBalances = await computeBalances(userId);
+    if (userBalances.availableCents < rivalry.stakePerSideCents) {
+        const needed = (rivalry.stakePerSideCents / 100).toLocaleString('en-US', { minimumFractionDigits: 2 });
+        const available = (userBalances.availableCents / 100).toLocaleString('en-US', { minimumFractionDigits: 2 });
+        throw new Error(`Insufficient funds. You need $${needed} but only have $${available} available. Deposit capital first.`);
+    }
 
     await db.transaction(async (tx) => {
         const idempotencyKey = `rivalry:${rivalryId}:${role}:lock`;
@@ -493,6 +552,12 @@ export async function listRivalries(options: {
         const state = await getRivalryState(rivalry.id);
         if (status && state !== status) continue;
 
+        // PUBLIC LISTING PRIVACY: Hide directed pending challenges from non-participants
+        // Only open challenges (opponentUserId is null) should be publicly visible while pending
+        if (!userId && rivalry.opponentUserId && (state === 'CHALLENGE_ISSUED')) {
+            continue; // Skip directed pending challenges in public feed
+        }
+
         const participants = await db
             .select()
             .from(rivalryParticipants)
@@ -500,13 +565,15 @@ export async function listRivalries(options: {
 
         // Get usernames
         const challengerIdentity = await db.select().from(identities).where(eq(identities.userId, rivalry.challengerUserId)).then(r => r[0]);
-        const opponentIdentity = await db.select().from(identities).where(eq(identities.userId, rivalry.opponentUserId)).then(r => r[0]);
+        const opponentIdentity = rivalry.opponentUserId
+            ? await db.select().from(identities).where(eq(identities.userId, rivalry.opponentUserId)).then(r => r[0])
+            : null;
 
         results.push({
             ...rivalry,
             state,
             challengerUsername: challengerIdentity?.username || 'unknown',
-            opponentUsername: opponentIdentity?.username || 'unknown',
+            opponentUsername: opponentIdentity?.username || null,
             participants,
             poolCents: rivalry.stakePerSideCents * 2,
         });

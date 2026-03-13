@@ -964,6 +964,15 @@ export function renderRivalry() {
                 </div>
 
                 <div class="rv-form-group">
+                    <label class="rv-form-label">Challenge Type</label>
+                    <div class="rv-challenge-type-toggle" id="rv-challenge-type" style="display:flex;gap:0;border:1px solid #e5e5e5;overflow:hidden;margin-bottom:8px;">
+                        <button class="rv-type-btn active" data-type="direct" style="flex:1;padding:10px 16px;background:#1a1a1a;color:#fff;border:none;font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:0.08em;cursor:pointer;font-weight:700;text-transform:uppercase;transition:all 0.15s;">✉ Direct Challenge</button>
+                        <button class="rv-type-btn" data-type="open" style="flex:1;padding:10px 16px;background:#fff;color:#666;border:none;border-left:1px solid #e5e5e5;font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:0.08em;cursor:pointer;font-weight:700;text-transform:uppercase;transition:all 0.15s;">🌐 Open Challenge</button>
+                    </div>
+                    <div class="rv-form-hint" id="rv-type-hint">Send to a specific operator</div>
+                </div>
+
+                <div class="rv-form-group" id="rv-opponent-group">
                     <label class="rv-form-label">Opponent Username</label>
                     <input type="text" class="rv-form-input" id="rv-opponent" placeholder="@username">
                     <div class="rv-form-hint">Enter the username of the operator you want to challenge</div>
@@ -1066,15 +1075,17 @@ export async function initRivalry() {
         return {
             id: r.id,
             status: STATE_TO_STATUS[r.state] || 'active',
+            state: r.state,
             metric: METRIC_LABELS[r.metricType] || r.metricType || 'Revenue Growth',
             provider: PLATFORM_MAP[r.platform] || (r.platform || 'stripe').toLowerCase(),
+            isOpen: !r.opponentUserId || r.opponentUsername === 'unknown' || !r.opponentUsername,
             challenger: {
                 name: '@' + (r.challengerUsername || 'unknown'),
                 growth: parseFloat(challPart?.growthPercent || challPart?.currentDelta || 0),
                 baseline: parseFloat(challPart?.baselineValue || 0),
             },
             opponent: {
-                name: '@' + (r.opponentUsername || 'unknown'),
+                name: r.opponentUserId ? ('@' + (r.opponentUsername || 'unknown')) : 'Open — Anyone',
                 growth: parseFloat(oppPart?.growthPercent || oppPart?.currentDelta || 0),
                 baseline: parseFloat(oppPart?.baselineValue || 0),
             },
@@ -1131,6 +1142,7 @@ export async function initRivalry() {
                         <span class="dot"></span>
                         ${statusLabel}
                     </div>
+                    ${r.isOpen && r.status === 'pending' ? '<span style="font-family:JetBrains Mono,monospace;font-size:9px;letter-spacing:0.1em;background:#1a1a1a;color:#fff;padding:3px 8px;font-weight:700;">🌐 OPEN</span>' : ''}
                     <span class="rv-card-id">${r.id}</span>
                 </div>
                 <div class="rv-card-metric">${r.metric}</div>
@@ -1157,11 +1169,14 @@ export async function initRivalry() {
                 <div class="rv-momentum">
                     <div class="rv-momentum-left" style="width:${leftPct}%"></div>
                     <div class="rv-momentum-right" style="width:${rightPct}%"></div>
+                </div>` : (r.isOpen ? `
+                <div style="display:flex;gap:8px;justify-content:center;padding:8px 0;">
+                    <button class="rv-accept-btn" data-rivalry-id="${r.id}" onclick="event.stopPropagation();window.app.acceptRivalry('${r.id}')" style="flex:1;padding:10px;background:#1a1a1a;color:#fff;border:none;font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:0.1em;cursor:pointer;font-weight:700;">⚡ ACCEPT OPEN CHALLENGE</button>
                 </div>` : `
                 <div style="display:flex;gap:8px;justify-content:center;padding:8px 0;">
                     <button class="rv-accept-btn" data-rivalry-id="${r.id}" onclick="event.stopPropagation();window.app.acceptRivalry('${r.id}')" style="flex:1;padding:10px;background:#1a1a1a;color:#fff;border:none;font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:0.1em;cursor:pointer;font-weight:700;">✓ ACCEPT</button>
                     <button class="rv-decline-btn" data-rivalry-id="${r.id}" onclick="event.stopPropagation();window.app.declineRivalry('${r.id}')" style="flex:1;padding:10px;background:#fff;color:#752122;border:1px solid #eee;font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:0.1em;cursor:pointer;font-weight:700;">✕ DECLINE</button>
-                </div>`}
+                </div>`)}
                 <div class="rv-card-bottom">
                     <div class="rv-card-stake">
                         <span class="rv-card-stake-val">$${(r.stake * 2).toLocaleString()}</span>
@@ -1380,12 +1395,36 @@ export async function initRivalry() {
     };
 
     const submitBtn = document.getElementById('rv-btn-submit');
+
+    // ── Challenge Type Toggle ──
+    let challengeType = 'direct';
+    const typeToggle = document.getElementById('rv-challenge-type');
+    const opponentGroup = document.getElementById('rv-opponent-group');
+    const typeHint = document.getElementById('rv-type-hint');
+    if (typeToggle) {
+        typeToggle.addEventListener('click', (e) => {
+            const btn = e.target.closest('.rv-type-btn');
+            if (!btn) return;
+            challengeType = btn.dataset.type;
+            typeToggle.querySelectorAll('.rv-type-btn').forEach(b => {
+                if (b.dataset.type === challengeType) {
+                    b.style.background = '#1a1a1a'; b.style.color = '#fff';
+                } else {
+                    b.style.background = '#fff'; b.style.color = '#666';
+                }
+            });
+            if (opponentGroup) opponentGroup.style.display = challengeType === 'direct' ? '' : 'none';
+            if (typeHint) typeHint.textContent = challengeType === 'direct' ? 'Send to a specific operator' : 'Anyone can accept this challenge';
+            if (submitBtn) submitBtn.textContent = challengeType === 'direct' ? 'SEND CHALLENGE' : 'POST OPEN CHALLENGE';
+        });
+    }
+
     if (submitBtn) {
         submitBtn.addEventListener('click', async () => {
             const opponent = document.getElementById('rv-opponent')?.value?.trim();
             const stake = parseInt(stakeInput?.value) || 0;
 
-            if (!opponent) {
+            if (challengeType === 'direct' && !opponent) {
                 showAlert('Enter an opponent username', { type: 'warning', title: 'Missing Field' });
                 return;
             }
@@ -1407,18 +1446,27 @@ export async function initRivalry() {
             submitBtn.textContent = 'SENDING...';
 
             try {
-                const result = await api.createRivalry({
-                    opponentUsername: opponent.replace('@', ''),
+                const payload = {
                     platform: mapping.platform,
                     metricType: mapping.metricType,
                     metricKey: mapping.metricKey,
                     stakePerSideCents: stake * 100,
                     durationDays: selectedDuration,
-                });
+                };
+                if (challengeType === 'direct') {
+                    payload.opponentUsername = opponent.replace('@', '');
+                }
+                // For open challenge, don't send opponentUsername
+
+                const result = await api.createRivalry(payload);
 
                 if (result.ok) {
                     document.getElementById('rv-challenge-modal').classList.remove('open');
-                    showAlert(`Challenge issued to @${opponent.replace('@', '')}! They have 72 hours to accept.`, { type: 'success', title: 'Challenge Sent' });
+                    if (challengeType === 'direct') {
+                        showAlert(`Challenge issued to @${opponent.replace('@', '')}! They have 72 hours to accept.`, { type: 'success', title: 'Challenge Sent' });
+                    } else {
+                        showAlert('Open challenge posted! Any operator can accept it.', { type: 'success', title: 'Challenge Posted' });
+                    }
                     // Refresh: re-fetch live data
                     try {
                         const res = await api.getRivalries({ limit: 50 });
@@ -1436,7 +1484,7 @@ export async function initRivalry() {
                 showAlert('Failed to send challenge: ' + (err.message || 'Unknown error'), { type: 'error' });
             } finally {
                 submitBtn.disabled = false;
-                submitBtn.textContent = 'SEND CHALLENGE';
+                submitBtn.textContent = challengeType === 'direct' ? 'SEND CHALLENGE' : 'POST OPEN CHALLENGE';
             }
         });
     }

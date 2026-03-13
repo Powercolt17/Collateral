@@ -42,6 +42,13 @@ export const DEFAULT_FUNDING_TTL_HOURS = 48;
 export const DEFAULT_PROTOCOL_FEE_BPS = 200; // 2%
 export const TIE_MARGIN_PCT = 0.5; // 0.5% — within this, it's a draw
 
+// Rivalry Tiers — same target for both players
+export const RIVALRY_TIERS: Record<string, number> = {
+    DUEL: 15,   // Medium risk
+    WAR: 25,    // Hard
+    BLOOD: 40,  // Brutal
+};
+
 // =============================================================================
 // HELPERS
 // =============================================================================
@@ -188,13 +195,21 @@ export interface CreateRivalryParams {
     metricKey: string;
     stakePerSideCents: number;
     durationDays: number;
+    rivalryTier?: string; // DUEL, WAR, BLOOD — defaults to DUEL
 }
 
 export async function createRivalry(params: CreateRivalryParams): Promise<Rivalry> {
     const {
         challengerUserId, opponentUsername, platform, metricType,
-        metricKey, stakePerSideCents, durationDays,
+        metricKey, stakePerSideCents, durationDays, rivalryTier,
     } = params;
+
+    // Validate tier
+    const tier = (rivalryTier || 'DUEL').toUpperCase();
+    if (!RIVALRY_TIERS[tier]) {
+        throw new Error(`Invalid rivalry tier: ${tier}. Must be DUEL, WAR, or BLOOD`);
+    }
+    const targetGrowthPct = RIVALRY_TIERS[tier];
 
     // Validate stake
     if (stakePerSideCents < MIN_RIVALRY_STAKE_CENTS) {
@@ -275,6 +290,8 @@ export async function createRivalry(params: CreateRivalryParams): Promise<Rivalr
                 acceptanceTtlHours: DEFAULT_ACCEPTANCE_TTL_HOURS,
                 fundingTtlHours: DEFAULT_FUNDING_TTL_HOURS,
                 protocolFeeBps: DEFAULT_PROTOCOL_FEE_BPS,
+                targetGrowthPct: String(targetGrowthPct),
+                rivalryTier: tier,
             })
             .returning();
 
@@ -304,6 +321,8 @@ export async function createRivalry(params: CreateRivalryParams): Promise<Rivalr
                 metricKey,
                 stakePerSideCents,
                 durationDays,
+                rivalryTier: tier,
+                targetGrowthPct,
             },
         }, tx);
 
@@ -321,9 +340,9 @@ export async function createRivalry(params: CreateRivalryParams): Promise<Rivalr
                 userId: opponentUserId,
                 type: 'RIVALRY_CHALLENGE',
                 title: `⚔️ @${challengerName} challenged you`,
-                body: `${metricType} duel · ${stake} per side · ${durationDays} days`,
+                body: `${metricType} duel · ${stake} per side · +${targetGrowthPct}% target · ${durationDays} days`,
                 link: `/rivalry/${result.id}`,
-                metadata: { rivalryId: result.id, challengerUserId, platform, metricType, stakePerSideCents },
+                metadata: { rivalryId: result.id, challengerUserId, platform, metricType, stakePerSideCents, rivalryTier: tier, targetGrowthPct },
             });
         } catch (err) {
             console.error('[rivalry] Failed to emit challenge notification:', err);

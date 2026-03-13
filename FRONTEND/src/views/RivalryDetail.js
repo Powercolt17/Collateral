@@ -450,6 +450,8 @@ export async function initRivalryDetail() {
             stake: (r.stakePerSideCents || 0) / 100,
             daysLeft,
             totalDays: r.durationDays || 30,
+            targetGrowthPct: parseFloat(r.targetGrowthPct || r.rivalry?.targetGrowthPct || 15),
+            rivalryTier: r.rivalryTier || r.rivalry?.rivalryTier || 'DUEL',
             metrics: r.metrics || [],
             _rawState: r.state,
             _challengerUserId: r.challengerUserId,
@@ -505,7 +507,7 @@ export async function initRivalryDetail() {
                         <span class="rvd-player-label">CHALLENGER</span>
                         <span class="rvd-player-name">${rivalry.challenger.name}</span>
                         <span class="rvd-player-growth ${isLeading ? 'leading' : 'trailing'}">${rivalry.challenger.growth > 0 ? '+' : ''}${rivalry.challenger.growth}%</span>
-                        <span class="rvd-player-baseline">Baseline: ${(rivalry.challenger.baseline || 0).toLocaleString()}</span>
+                        <span class="rvd-player-baseline">${rivalry.challenger.growth >= rivalry.targetGrowthPct ? '\u2705' : '\u274C'} Target: +${rivalry.targetGrowthPct}%</span>
                     </div>
                     <div class="rvd-vs-center">
                         <span class="rvd-vs-text">VS</span>
@@ -515,7 +517,7 @@ export async function initRivalryDetail() {
                         <span class="rvd-player-label">OPPONENT</span>
                         <span class="rvd-player-name">${rivalry.opponent.name}</span>
                         <span class="rvd-player-growth ${!isLeading ? 'leading' : 'trailing'}">${rivalry.opponent.growth > 0 ? '+' : ''}${rivalry.opponent.growth}%</span>
-                        <span class="rvd-player-baseline">Baseline: ${(rivalry.opponent.baseline || 0).toLocaleString()}</span>
+                        <span class="rvd-player-baseline">${rivalry.opponent.growth >= rivalry.targetGrowthPct ? '\u2705' : '\u274C'} Target: +${rivalry.targetGrowthPct}%</span>
                     </div>
                 </div>
 
@@ -567,6 +569,14 @@ export async function initRivalryDetail() {
             <div class="rvd-panel">
                 <div class="rvd-panel-title">Contract Terms</div>
                 <div class="rvd-row">
+                    <span class="rvd-row-label">Tier</span>
+                    <span class="rvd-row-value">${rivalry.rivalryTier}</span>
+                </div>
+                <div class="rvd-row">
+                    <span class="rvd-row-label">Growth Target</span>
+                    <span class="rvd-row-value" style="color:#3B0001;font-weight:700">+${rivalry.targetGrowthPct}%</span>
+                </div>
+                <div class="rvd-row">
                     <span class="rvd-row-label">Stake Per Side</span>
                     <span class="rvd-row-value">$${rivalry.stake.toLocaleString()}</span>
                 </div>
@@ -579,12 +589,8 @@ export async function initRivalryDetail() {
                     <span class="rvd-row-value">${rivalry.totalDays} days</span>
                 </div>
                 <div class="rvd-row">
-                    <span class="rvd-row-label">Protocol Fee</span>
-                    <span class="rvd-row-value">2%</span>
-                </div>
-                <div class="rvd-row">
-                    <span class="rvd-row-label">Winner Payout</span>
-                    <span class="rvd-row-value">$${Math.floor(pool * 0.98).toLocaleString()}</span>
+                    <span class="rvd-row-label">If Both Miss</span>
+                    <span class="rvd-row-value" style="color:#3B0001">Protocol Keeps Pool</span>
                 </div>
             </div>
 
@@ -592,19 +598,15 @@ export async function initRivalryDetail() {
                 <div class="rvd-panel-title">Current Performance</div>
                 <div class="rvd-row">
                     <span class="rvd-row-label">${rivalry.challenger.name}</span>
-                    <span class="rvd-row-value" style="color:${isLeading ? '#0F5132' : '#3B0001'}">+${rivalry.challenger.growth}%</span>
+                    <span class="rvd-row-value" style="color:${rivalry.challenger.growth >= rivalry.targetGrowthPct ? '#0F5132' : '#3B0001'}">${rivalry.challenger.growth >= rivalry.targetGrowthPct ? '\u2705' : '\u274C'} +${rivalry.challenger.growth}%</span>
                 </div>
                 <div class="rvd-row">
                     <span class="rvd-row-label">${rivalry.opponent.name}</span>
-                    <span class="rvd-row-value" style="color:${!isLeading ? '#0F5132' : '#3B0001'}">+${rivalry.opponent.growth}%</span>
+                    <span class="rvd-row-value" style="color:${rivalry.opponent.growth >= rivalry.targetGrowthPct ? '#0F5132' : '#3B0001'}">${rivalry.opponent.growth >= rivalry.targetGrowthPct ? '\u2705' : '\u274C'} +${rivalry.opponent.growth}%</span>
                 </div>
                 <div class="rvd-row">
-                    <span class="rvd-row-label">Delta</span>
-                    <span class="rvd-row-value">${Math.abs(rivalry.challenger.growth - rivalry.opponent.growth).toFixed(1)}%</span>
-                </div>
-                <div class="rvd-row">
-                    <span class="rvd-row-label">Current Leader</span>
-                    <span class="rvd-row-value">${isLeading ? rivalry.challenger.name : rivalry.opponent.name}</span>
+                    <span class="rvd-row-label">Target</span>
+                    <span class="rvd-row-value" style="font-weight:700">+${rivalry.targetGrowthPct}%</span>
                 </div>
                 <div class="rvd-row">
                     <span class="rvd-row-label">Time Remaining</span>
@@ -616,15 +618,19 @@ export async function initRivalryDetail() {
                 <div class="rvd-panel-title">Settlement Rules</div>
                 <div class="rvd-row">
                     <span class="rvd-row-label">Method</span>
-                    <span class="rvd-row-value">Percentage Growth Comparison</span>
+                    <span class="rvd-row-value">Target Growth Comparison</span>
                 </div>
                 <div class="rvd-row">
-                    <span class="rvd-row-label">Tie Margin</span>
-                    <span class="rvd-row-value">±0.5%</span>
+                    <span class="rvd-row-label">Both Hit Target</span>
+                    <span class="rvd-row-value">Draw — Stakes Returned</span>
                 </div>
                 <div class="rvd-row">
-                    <span class="rvd-row-label">Settlement</span>
-                    <span class="rvd-row-value">Automatic at Deadline</span>
+                    <span class="rvd-row-label">One Hits Target</span>
+                    <span class="rvd-row-value">Winner Takes Pool</span>
+                </div>
+                <div class="rvd-row">
+                    <span class="rvd-row-label">Both Miss Target</span>
+                    <span class="rvd-row-value" style="color:#3B0001;font-weight:700">Protocol Keeps Pool</span>
                 </div>
                 <div class="rvd-row">
                     <span class="rvd-row-label">Appeals</span>

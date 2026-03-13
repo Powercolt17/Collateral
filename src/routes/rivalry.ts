@@ -44,7 +44,7 @@ const rivalryRoutes: FastifyPluginAsync = async (fastify) => {
         }
 
         const body = request.body as any;
-        const { opponentUsername, platform, metricType, metricKey, stakePerSideCents, durationDays } = body;
+        const { opponentUsername, platform, metricType, metricKey, stakePerSideCents, durationDays, rivalryTier } = body;
 
         if (!platform || !metricType || !metricKey || !stakePerSideCents || !durationDays) {
             reply.status(400);
@@ -60,6 +60,7 @@ const rivalryRoutes: FastifyPluginAsync = async (fastify) => {
                 metricKey,
                 stakePerSideCents: parseInt(stakePerSideCents),
                 durationDays: parseInt(durationDays),
+                rivalryTier: rivalryTier || 'DUEL',
             });
 
             return { ok: true, rivalry };

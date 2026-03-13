@@ -834,6 +834,8 @@ export const rivalries = pgTable('rivalries', {
     acceptanceTtlHours: integer('acceptance_ttl_hours').notNull().default(72),
     fundingTtlHours: integer('funding_ttl_hours').notNull().default(48),
     protocolFeeBps: integer('protocol_fee_bps').notNull().default(200),
+    targetGrowthPct: numeric('target_growth_pct').notNull().default('15'),
+    rivalryTier: varchar('rivalry_tier', { length: 10 }).notNull().default('DUEL'),
     challengeIssuedAt: timestamp('challenge_issued_at', { withTimezone: true }).defaultNow().notNull(),
     acceptedAt: timestamp('accepted_at', { withTimezone: true }),
     fundedAt: timestamp('funded_at', { withTimezone: true }),

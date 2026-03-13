@@ -2,16 +2,15 @@
 /**
  * Rivalry Settlement Service
  * 
- * Handles settlement after verification for head-to-head duels.
+ * Target-based settlement for head-to-head duels.
  * 
- * Unlike standard contract settlement (pass/fail against threshold),
- * rivalry settlement COMPARES relative improvement between two operators
- * to determine a winner.
+ * Both participants face the SAME growth target.
+ * Settlement compares each player's growth against the shared target.
  * 
- * Settlement formula:
- *   growth_pct = ((final - baseline) / baseline) * 100
- *   winner = participant with higher growth_pct
- *   tie margin = 0.5% (configurable)
+ * Settlement rules:
+ *   Both hit target  → DRAW (stakes returned, no fee)
+ *   One hits target  → WINNER takes pool (minus 2% fee)
+ *   Both miss target → BOTH_MISS (protocol keeps entire pool)
  * 
  * State is NEVER stored — derived from ledger events.
  */
@@ -25,7 +24,6 @@ import {
 } from '../db/schema.js';
 import {
     getRivalryState, getRivalryEvents, appendRivalryEvent,
-    TIE_MARGIN_PCT,
 } from './rivalry.js';
 import { validateRivalryFromState } from './rivalry-state-derivation.js';
 
@@ -35,11 +33,14 @@ import { validateRivalryFromState } from './rivalry-state-derivation.js';
 
 export interface RivalrySettlementResult {
     success: boolean;
-    outcome: 'WIN' | 'DRAW' | null;
+    outcome: 'WIN' | 'DRAW' | 'BOTH_MISS' | null;
     winnerId: string | null;
     loserId: string | null;
     challengerGrowthPct: number;
     opponentGrowthPct: number;
+    targetGrowthPct: number;
+    challengerHitTarget: boolean;
+    opponentHitTarget: boolean;
     winnerPayoutCents: number;
     protocolFeeCents: number;
     error?: string;
@@ -61,24 +62,29 @@ function computeGrowthPct(baseline: number, final: number): number {
 }
 
 /**
- * Determine winner based on growth comparison
+ * Determine outcome based on target comparison
+ * 
+ * Same bar. Same rules. Same clock.
  */
 function determineOutcome(
     challengerGrowth: number,
     opponentGrowth: number,
-    tieMargin: number = TIE_MARGIN_PCT
-): { outcome: 'CHALLENGER_WINS' | 'OPPONENT_WINS' | 'DRAW' } {
-    const diff = Math.abs(challengerGrowth - opponentGrowth);
+    targetPct: number,
+): { outcome: 'CHALLENGER_WINS' | 'OPPONENT_WINS' | 'DRAW' | 'BOTH_MISS' } {
+    const challengerHit = challengerGrowth >= targetPct;
+    const opponentHit = opponentGrowth >= targetPct;
 
-    if (diff <= tieMargin) {
+    if (challengerHit && opponentHit) {
         return { outcome: 'DRAW' };
     }
-
-    if (challengerGrowth > opponentGrowth) {
+    if (challengerHit && !opponentHit) {
         return { outcome: 'CHALLENGER_WINS' };
     }
-
-    return { outcome: 'OPPONENT_WINS' };
+    if (!challengerHit && opponentHit) {
+        return { outcome: 'OPPONENT_WINS' };
+    }
+    // Both missed
+    return { outcome: 'BOTH_MISS' };
 }
 
 /**
@@ -93,12 +99,16 @@ export async function settleRivalry(
     txClient?: DbLike,
 ): Promise<RivalrySettlementResult> {
     const client = txClient || db;
+    const emptyResult = (error: string): RivalrySettlementResult => ({
+        success: false, outcome: null, winnerId: null, loserId: null,
+        challengerGrowthPct: 0, opponentGrowthPct: 0, targetGrowthPct: 0,
+        challengerHitTarget: false, opponentHitTarget: false,
+        winnerPayoutCents: 0, protocolFeeCents: 0, error,
+    });
 
     // Get rivalry record
     const [rivalry] = await client.select().from(rivalries).where(eq(rivalries.id, rivalryId));
-    if (!rivalry) {
-        return { success: false, outcome: null, winnerId: null, loserId: null, challengerGrowthPct: 0, opponentGrowthPct: 0, winnerPayoutCents: 0, protocolFeeCents: 0, error: 'Rivalry not found' };
-    }
+    if (!rivalry) return emptyResult('Rivalry not found');
 
     // Validate state
     const state = await getRivalryState(rivalryId, client);
@@ -113,13 +123,11 @@ export async function settleRivalry(
     const challenger = participants.find(p => p.role === 'challenger');
     const opponent = participants.find(p => p.role === 'opponent');
 
-    if (!challenger || !opponent) {
-        return { success: false, outcome: null, winnerId: null, loserId: null, challengerGrowthPct: 0, opponentGrowthPct: 0, winnerPayoutCents: 0, protocolFeeCents: 0, error: 'Missing participant records' };
-    }
+    if (!challenger || !opponent) return emptyResult('Missing participant records');
 
     // Ensure both have final values
     if (challenger.finalValue === null || opponent.finalValue === null) {
-        return { success: false, outcome: null, winnerId: null, loserId: null, challengerGrowthPct: 0, opponentGrowthPct: 0, winnerPayoutCents: 0, protocolFeeCents: 0, error: 'Both sides must have final measurements' };
+        return emptyResult('Both sides must have final measurements');
     }
 
     // Append SETTLEMENT_STARTED if not already in SETTLING
@@ -140,19 +148,24 @@ export async function settleRivalry(
     const challengerGrowthPct = computeGrowthPct(challengerBaseline, challengerFinal);
     const opponentGrowthPct = computeGrowthPct(opponentBaseline, opponentFinal);
 
-    // Determine outcome
-    const { outcome } = determineOutcome(challengerGrowthPct, opponentGrowthPct);
+    // Get target from rivalry record
+    const targetGrowthPct = parseFloat(String(rivalry.targetGrowthPct || 15));
+    const challengerHitTarget = challengerGrowthPct >= targetGrowthPct;
+    const opponentHitTarget = opponentGrowthPct >= targetGrowthPct;
+
+    // Determine outcome against target
+    const { outcome } = determineOutcome(challengerGrowthPct, opponentGrowthPct, targetGrowthPct);
 
     // Calculate payouts
     const pool = rivalry.stakePerSideCents * 2;
-    const protocolFeeCents = Math.floor(pool * rivalry.protocolFeeBps / 10000);
+    const protocolFeeBps = rivalry.protocolFeeBps || 200;
 
     try {
         await db.transaction(async (tx) => {
             if (outcome === 'DRAW') {
-                // DRAW: return capital to both, minus protocol fee from each
-                const feePerSide = Math.floor(protocolFeeCents / 2);
-                const returnPerSide = rivalry.stakePerSideCents - feePerSide;
+                // ═══ BOTH HIT TARGET ═══
+                // Stakes returned in full — no fee on draws
+                const returnPerSide = rivalry.stakePerSideCents;
 
                 // Return capital to challenger
                 await tx.insert(accountLedgerEvents).values({
@@ -160,7 +173,7 @@ export async function settleRivalry(
                     eventType: 'CAPITAL_UNLOCKED',
                     amountCents: returnPerSide,
                     idempotencyKey: `rivalry:${rivalryId}:challenger:draw_return`,
-                    metadata: { rivalryId, outcome: 'DRAW' },
+                    metadata: { rivalryId, outcome: 'DRAW', targetGrowthPct, challengerGrowthPct },
                 }).onConflictDoNothing();
 
                 // Return capital to opponent
@@ -169,7 +182,7 @@ export async function settleRivalry(
                     eventType: 'CAPITAL_UNLOCKED',
                     amountCents: returnPerSide,
                     idempotencyKey: `rivalry:${rivalryId}:opponent:draw_return`,
-                    metadata: { rivalryId, outcome: 'DRAW' },
+                    metadata: { rivalryId, outcome: 'DRAW', targetGrowthPct, opponentGrowthPct },
                 }).onConflictDoNothing();
 
                 // Update participant outcomes
@@ -187,11 +200,9 @@ export async function settleRivalry(
                     eventType: RivalryEventType.RIVALRY_DRAW,
                     externalRef: `rivalry:${rivalryId}:draw`,
                     metadata: {
-                        challengerGrowthPct,
-                        opponentGrowthPct,
-                        margin: Math.abs(challengerGrowthPct - opponentGrowthPct),
-                        protocolFeeCents,
-                        returnPerSide,
+                        challengerGrowthPct, opponentGrowthPct, targetGrowthPct,
+                        challengerHitTarget, opponentHitTarget,
+                        protocolFeeCents: 0, returnPerSide,
                     },
                 }, tx);
 
@@ -199,17 +210,83 @@ export async function settleRivalry(
                 await tx.update(rivalries)
                     .set({
                         settledAt: new Date(),
-                        settlementMetadata: { outcome: 'DRAW', challengerGrowthPct, opponentGrowthPct, protocolFeeCents },
+                        settlementMetadata: {
+                            outcome: 'DRAW', challengerGrowthPct, opponentGrowthPct,
+                            targetGrowthPct, challengerHitTarget, opponentHitTarget,
+                            protocolFeeCents: 0,
+                        },
+                        updatedAt: new Date(),
+                    })
+                    .where(eq(rivalries.id, rivalryId));
+
+            } else if (outcome === 'BOTH_MISS') {
+                // ═══ BOTH MISSED TARGET ═══
+                // Protocol keeps entire pool — neither gets capital back
+                const protocolRevenue = pool;
+
+                // Loss event for challenger
+                await tx.insert(accountLedgerEvents).values({
+                    userId: challenger.userId,
+                    eventType: 'SETTLEMENT_LOSS',
+                    amountCents: 0,
+                    idempotencyKey: `rivalry:${rivalryId}:challenger:both_miss_loss`,
+                    metadata: { rivalryId, outcome: 'BOTH_MISS', targetGrowthPct, actualGrowth: challengerGrowthPct },
+                }).onConflictDoNothing();
+
+                // Loss event for opponent
+                await tx.insert(accountLedgerEvents).values({
+                    userId: opponent.userId,
+                    eventType: 'SETTLEMENT_LOSS',
+                    amountCents: 0,
+                    idempotencyKey: `rivalry:${rivalryId}:opponent:both_miss_loss`,
+                    metadata: { rivalryId, outcome: 'BOTH_MISS', targetGrowthPct, actualGrowth: opponentGrowthPct },
+                }).onConflictDoNothing();
+
+                // Update participant outcomes
+                await tx.update(rivalryParticipants)
+                    .set({ outcome: 'BOTH_MISS', payoutCents: 0, absoluteDelta: String(challengerFinal - challengerBaseline), percentageDelta: String(challengerGrowthPct) })
+                    .where(and(eq(rivalryParticipants.rivalryId, rivalryId), eq(rivalryParticipants.role, 'challenger')));
+
+                await tx.update(rivalryParticipants)
+                    .set({ outcome: 'BOTH_MISS', payoutCents: 0, absoluteDelta: String(opponentFinal - opponentBaseline), percentageDelta: String(opponentGrowthPct) })
+                    .where(and(eq(rivalryParticipants.rivalryId, rivalryId), eq(rivalryParticipants.role, 'opponent')));
+
+                // Append SETTLED event (both_miss is a type of settlement)
+                await appendRivalryEvent(rivalryId, {
+                    actor: 'SYSTEM',
+                    eventType: RivalryEventType.RIVALRY_SETTLED,
+                    amountUsdCents: protocolRevenue,
+                    externalRef: `rivalry:${rivalryId}:both_miss`,
+                    metadata: {
+                        outcome: 'BOTH_MISS',
+                        challengerGrowthPct, opponentGrowthPct, targetGrowthPct,
+                        challengerHitTarget: false, opponentHitTarget: false,
+                        protocolRevenue,
+                    },
+                }, tx);
+
+                // Update rivalry record
+                await tx.update(rivalries)
+                    .set({
+                        settledAt: new Date(),
+                        settlementMetadata: {
+                            outcome: 'BOTH_MISS',
+                            challengerGrowthPct, opponentGrowthPct, targetGrowthPct,
+                            challengerHitTarget: false, opponentHitTarget: false,
+                            protocolRevenue,
+                        },
                         updatedAt: new Date(),
                     })
                     .where(eq(rivalries.id, rivalryId));
 
             } else {
-                // WIN/LOSS: winner gets pool minus protocol fee
+                // ═══ ONE HIT, ONE MISSED ═══
+                // Winner gets pool minus protocol fee
                 const winnerId = outcome === 'CHALLENGER_WINS' ? challenger.userId : opponent.userId;
                 const loserId = outcome === 'CHALLENGER_WINS' ? opponent.userId : challenger.userId;
                 const winnerRole = outcome === 'CHALLENGER_WINS' ? 'challenger' : 'opponent';
                 const loserRole = outcome === 'CHALLENGER_WINS' ? 'opponent' : 'challenger';
+                const protocolFeeCents = Math.floor(pool * protocolFeeBps / 10000);
                 const winnerPayout = pool - protocolFeeCents;
 
                 // Payout to winner
@@ -218,7 +295,7 @@ export async function settleRivalry(
                     eventType: 'SETTLEMENT_WIN',
                     amountCents: winnerPayout,
                     idempotencyKey: `rivalry:${rivalryId}:${winnerRole}:win`,
-                    metadata: { rivalryId, outcome: 'WIN' },
+                    metadata: { rivalryId, outcome: 'WIN', targetGrowthPct },
                 }).onConflictDoNothing();
 
                 // Loss event for loser (no capital returned)
@@ -227,23 +304,23 @@ export async function settleRivalry(
                     eventType: 'SETTLEMENT_LOSS',
                     amountCents: 0,
                     idempotencyKey: `rivalry:${rivalryId}:${loserRole}:loss`,
-                    metadata: { rivalryId, outcome: 'LOSS' },
+                    metadata: { rivalryId, outcome: 'LOSS', targetGrowthPct },
                 }).onConflictDoNothing();
 
                 // Update participant outcomes
                 const winnerGrowth = outcome === 'CHALLENGER_WINS' ? challengerGrowthPct : opponentGrowthPct;
                 const loserGrowth = outcome === 'CHALLENGER_WINS' ? opponentGrowthPct : challengerGrowthPct;
                 const winnerBaseline = outcome === 'CHALLENGER_WINS' ? challengerBaseline : opponentBaseline;
-                const winnerFinal = outcome === 'CHALLENGER_WINS' ? challengerFinal : opponentFinal;
+                const winnerFinalVal = outcome === 'CHALLENGER_WINS' ? challengerFinal : opponentFinal;
                 const loserBaseline = outcome === 'CHALLENGER_WINS' ? opponentBaseline : challengerBaseline;
-                const loserFinal = outcome === 'CHALLENGER_WINS' ? opponentFinal : challengerFinal;
+                const loserFinalVal = outcome === 'CHALLENGER_WINS' ? opponentFinal : challengerFinal;
 
                 await tx.update(rivalryParticipants)
-                    .set({ outcome: 'WIN', payoutCents: winnerPayout, absoluteDelta: String(winnerFinal - winnerBaseline), percentageDelta: String(winnerGrowth) })
+                    .set({ outcome: 'WIN', payoutCents: winnerPayout, absoluteDelta: String(winnerFinalVal - winnerBaseline), percentageDelta: String(winnerGrowth) })
                     .where(and(eq(rivalryParticipants.rivalryId, rivalryId), eq(rivalryParticipants.role, winnerRole)));
 
                 await tx.update(rivalryParticipants)
-                    .set({ outcome: 'LOSS', payoutCents: 0, absoluteDelta: String(loserFinal - loserBaseline), percentageDelta: String(loserGrowth) })
+                    .set({ outcome: 'LOSS', payoutCents: 0, absoluteDelta: String(loserFinalVal - loserBaseline), percentageDelta: String(loserGrowth) })
                     .where(and(eq(rivalryParticipants.rivalryId, rivalryId), eq(rivalryParticipants.role, loserRole)));
 
                 // Append SETTLED event
@@ -253,13 +330,10 @@ export async function settleRivalry(
                     amountUsdCents: winnerPayout,
                     externalRef: `rivalry:${rivalryId}:settled`,
                     metadata: {
-                        winnerId,
-                        loserId,
-                        winnerRole,
-                        challengerGrowthPct,
-                        opponentGrowthPct,
-                        protocolFeeCents,
-                        winnerPayout,
+                        winnerId, loserId, winnerRole, outcome,
+                        challengerGrowthPct, opponentGrowthPct, targetGrowthPct,
+                        challengerHitTarget, opponentHitTarget,
+                        protocolFeeCents, winnerPayout,
                     },
                 }, tx);
 
@@ -269,13 +343,10 @@ export async function settleRivalry(
                         winnerUserId: winnerId,
                         settledAt: new Date(),
                         settlementMetadata: {
-                            outcome: 'WIN',
-                            winnerId,
-                            loserId,
-                            challengerGrowthPct,
-                            opponentGrowthPct,
-                            protocolFeeCents,
-                            winnerPayout,
+                            outcome: 'WIN', winnerId, loserId,
+                            challengerGrowthPct, opponentGrowthPct, targetGrowthPct,
+                            challengerHitTarget, opponentHitTarget,
+                            protocolFeeCents, winnerPayout,
                         },
                         updatedAt: new Date(),
                     })
@@ -283,27 +354,29 @@ export async function settleRivalry(
             }
         });
 
+        const protocolFeeCents = outcome === 'DRAW' ? 0
+            : outcome === 'BOTH_MISS' ? pool
+            : Math.floor(pool * protocolFeeBps / 10000);
+
         return {
             success: true,
-            outcome: outcome === 'DRAW' ? 'DRAW' : 'WIN',
-            winnerId: outcome === 'DRAW' ? null : (outcome === 'CHALLENGER_WINS' ? challenger.userId : opponent.userId),
-            loserId: outcome === 'DRAW' ? null : (outcome === 'CHALLENGER_WINS' ? opponent.userId : challenger.userId),
+            outcome: outcome === 'DRAW' ? 'DRAW' : outcome === 'BOTH_MISS' ? 'BOTH_MISS' : 'WIN',
+            winnerId: (outcome === 'DRAW' || outcome === 'BOTH_MISS') ? null : (outcome === 'CHALLENGER_WINS' ? challenger.userId : opponent.userId),
+            loserId: (outcome === 'DRAW' || outcome === 'BOTH_MISS') ? null : (outcome === 'CHALLENGER_WINS' ? opponent.userId : challenger.userId),
             challengerGrowthPct,
             opponentGrowthPct,
-            winnerPayoutCents: outcome === 'DRAW' ? 0 : (pool - protocolFeeCents),
+            targetGrowthPct,
+            challengerHitTarget,
+            opponentHitTarget,
+            winnerPayoutCents: (outcome === 'DRAW' || outcome === 'BOTH_MISS') ? 0 : (pool - Math.floor(pool * protocolFeeBps / 10000)),
             protocolFeeCents,
         };
     } catch (err: any) {
         return {
-            success: false,
-            outcome: null,
-            winnerId: null,
-            loserId: null,
-            challengerGrowthPct,
-            opponentGrowthPct,
-            winnerPayoutCents: 0,
-            protocolFeeCents,
-            error: err.message,
+            success: false, outcome: null, winnerId: null, loserId: null,
+            challengerGrowthPct, opponentGrowthPct, targetGrowthPct,
+            challengerHitTarget, opponentHitTarget,
+            winnerPayoutCents: 0, protocolFeeCents: 0, error: err.message,
         };
     }
 }

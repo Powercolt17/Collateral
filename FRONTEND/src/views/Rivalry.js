@@ -586,6 +586,35 @@ export function renderRivalry() {
                 background: var(--rv-brand);
                 border-color: var(--rv-brand);
             }
+            .rv-tier-pills {
+                display: flex; gap: 8px;
+            }
+            .rv-tier-pill {
+                flex: 1; display: flex; flex-direction: column;
+                align-items: center; gap: 2px;
+                padding: 12px 8px;
+                background: #fff;
+                border: 1px solid #e5e5e5;
+                cursor: pointer;
+                transition: all 0.15s;
+                text-align: center;
+            }
+            .rv-tier-pill:hover { border-color: #999; }
+            .rv-tier-pill.active {
+                background: #111; border-color: #111;
+            }
+            .rv-tier-pill.active .rv-tier-name { color: #fff; }
+            .rv-tier-pill.active .rv-tier-target { color: rgba(255,255,255,0.7); }
+            .rv-tier-name {
+                font-family: 'JetBrains Mono', monospace;
+                font-size: 11px; font-weight: 800;
+                letter-spacing: 0.1em; color: #333;
+            }
+            .rv-tier-target {
+                font-family: 'JetBrains Mono', monospace;
+                font-size: 10px; font-weight: 600;
+                color: #999; letter-spacing: 0.02em;
+            }
             .rv-form-hint {
                 font-size: 11px;
                 color: #bbb;
@@ -967,6 +996,16 @@ export function renderRivalry() {
                 </div>
 
                 <div class="rv-form-group">
+                    <label class="rv-form-label">Rivalry Tier</label>
+                    <div class="rv-tier-pills" id="rv-tier-pills">
+                        <button class="rv-tier-pill active" data-tier="DUEL" data-target="15"><span class="rv-tier-name">DUEL</span><span class="rv-tier-target">+15%</span></button>
+                        <button class="rv-tier-pill" data-tier="WAR" data-target="25"><span class="rv-tier-name">WAR</span><span class="rv-tier-target">+25%</span></button>
+                        <button class="rv-tier-pill" data-tier="BLOOD" data-target="40"><span class="rv-tier-name">BLOOD</span><span class="rv-tier-target">+40%</span></button>
+                    </div>
+                    <div class="rv-form-hint">Both operators must hit this target or lose capital</div>
+                </div>
+
+                <div class="rv-form-group">
                     <label class="rv-form-label">Duration</label>
                     <div class="rv-duration-pills" id="rv-duration-pills">
                         <button class="rv-dur-pill" data-days="7">7D</button>
@@ -994,8 +1033,12 @@ export function renderRivalry() {
                         <span class="rv-preview-value" id="rv-preview-metric">Revenue Growth</span>
                     </div>
                     <div class="rv-preview-row">
-                        <span class="rv-preview-label">Protocol Fee</span>
-                        <span class="rv-preview-value">2%</span>
+                        <span class="rv-preview-label">Growth Target</span>
+                        <span class="rv-preview-value" id="rv-preview-target">+15%</span>
+                    </div>
+                    <div class="rv-preview-row">
+                        <span class="rv-preview-label">If Both Miss</span>
+                        <span class="rv-preview-value" style="color:#3B0001">Protocol Keeps Pool</span>
                     </div>
                 </div>
 
@@ -1343,9 +1386,12 @@ export async function initRivalry() {
 
     // ── Challenge Modal ──
     const stakePills = document.getElementById('rv-stake-pills');
+    const tierPills = document.getElementById('rv-tier-pills');
     const metricSelect = document.getElementById('rv-metric');
     const durationPills = document.getElementById('rv-duration-pills');
     let selectedStake = 100;
+    let selectedTier = 'DUEL';
+    let selectedTarget = 15;
     let selectedDuration = 14;
 
     function updatePreview() {
@@ -1361,6 +1407,8 @@ export async function initRivalry() {
         if (previewPool) previewPool.textContent = '$' + (stake * 2).toLocaleString();
         if (previewDuration) previewDuration.textContent = selectedDuration + ' days';
         if (previewMetric) previewMetric.textContent = metric;
+        const previewTarget = document.getElementById('rv-preview-target');
+        if (previewTarget) previewTarget.textContent = '+' + selectedTarget + '%';
     }
 
     if (stakePills) {
@@ -1380,6 +1428,18 @@ export async function initRivalry() {
         });
     }
     if (metricSelect) metricSelect.addEventListener('change', updatePreview);
+
+    if (tierPills) {
+        tierPills.addEventListener('click', (e) => {
+            const pill = e.target.closest('.rv-tier-pill');
+            if (!pill) return;
+            tierPills.querySelectorAll('.rv-tier-pill').forEach(p => p.classList.remove('active'));
+            pill.classList.add('active');
+            selectedTier = pill.dataset.tier;
+            selectedTarget = parseInt(pill.dataset.target);
+            updatePreview();
+        });
+    }
 
     if (durationPills) {
         durationPills.addEventListener('click', (e) => {
@@ -1460,6 +1520,7 @@ export async function initRivalry() {
                     metricKey: mapping.metricKey,
                     stakePerSideCents: stake * 100,
                     durationDays: selectedDuration,
+                    rivalryTier: selectedTier,
                 };
                 if (challengeType === 'direct') {
                     payload.opponentUsername = opponent.replace('@', '');

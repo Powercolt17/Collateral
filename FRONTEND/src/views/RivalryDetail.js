@@ -7,6 +7,14 @@ import { showAlert, showConfirm } from '../modal.js';
 export function renderRivalryDetail() {
     return `
         <style>
+            :root {
+                --rvd-ease: cubic-bezier(0.4, 0, 0.2, 1);
+                --rvd-dur: 0.25s;
+                --rvd-brand: #3B0001;
+                --rvd-green: #10B981;
+                --rvd-red: #EF4444;
+                --rvd-muted: #999;
+            }
             .rvd {
                 background: #fff;
                 min-height: calc(100vh - 72px);
@@ -14,65 +22,65 @@ export function renderRivalryDetail() {
                 color: #111;
             }
 
+            @media (prefers-reduced-motion: no-preference) {
+                @keyframes rvd-pulse { 0%,100%{transform:scale(1);opacity:1} 50%{transform:scale(1.6);opacity:.35} }
+                @keyframes rvd-fadeUp { from{opacity:0;transform:translateY(16px)} to{opacity:1;transform:translateY(0)} }
+                @keyframes rvd-shimmer { 0%{background-position:-400px 0} 100%{background-position:400px 0} }
+                @keyframes rvd-glow { 0%,100%{box-shadow:0 0 8px rgba(16,185,129,0.2)} 50%{box-shadow:0 0 16px rgba(16,185,129,0.35)} }
+                .rvd-anim { animation: rvd-fadeUp .4s var(--rvd-ease) both; }
+            }
+
             /* ── Hero VS Header ── */
             .rvd-hero {
-                position: relative;
-                overflow: hidden;
+                position: relative; overflow: hidden;
                 border-bottom: 1px solid #f0f0f0;
             }
             .rvd-hero::before {
-                content: '';
-                position: absolute;
+                content: ''; position: absolute;
                 top: -20%; left: 50%; transform: translateX(-50%);
                 width: 120%; height: 140%;
-                background: radial-gradient(circle at center, rgba(59,0,1,0.05), transparent 60%);
+                background: radial-gradient(ellipse at 30% 40%, rgba(59,0,1,0.05) 0%, transparent 55%), radial-gradient(ellipse at 70% 60%, rgba(59,0,1,0.03) 0%, transparent 50%);
                 pointer-events: none;
             }
             .rvd-hero-inner {
-                max-width: 1200px;
-                margin: 0 auto;
-                padding: 56px 64px 48px;
-                position: relative;
+                max-width: 1200px; margin: 0 auto;
+                padding: 48px 64px 40px; position: relative;
             }
             .rvd-breadcrumb {
                 font-family: 'JetBrains Mono', monospace;
                 font-size: 10px; font-weight: 700;
                 letter-spacing: 0.12em; color: #ccc;
-                text-transform: uppercase; margin-bottom: 32px;
+                text-transform: uppercase; margin-bottom: 28px;
             }
-            .rvd-breadcrumb a { color: #ccc; text-decoration: none; }
-            .rvd-breadcrumb a:hover { color: #999; }
-            .rvd-breadcrumb span { color: #3B0001; }
+            .rvd-breadcrumb a {
+                color: #ccc; text-decoration: none;
+                transition: color .15s;
+            }
+            .rvd-breadcrumb a:hover { color: #888; }
+            .rvd-breadcrumb span { color: var(--rvd-brand); }
 
             .rvd-vs-strip {
-                display: flex;
-                align-items: stretch;
-                background: linear-gradient(
-                    to right,
-                    rgba(15,81,50,0.04),
-                    transparent 40%,
-                    transparent 60%,
-                    rgba(59,0,1,0.04)
-                );
+                display: flex; align-items: stretch;
+                background: #fafafa;
                 border: 1px solid #f0f0f0;
-                overflow: hidden;
-                margin-bottom: 24px;
+                overflow: hidden; margin-bottom: 20px;
+                box-shadow: 0 2px 12px rgba(0,0,0,0.04);
+                transition: box-shadow var(--rvd-dur) var(--rvd-ease);
+            }
+            .rvd-vs-strip:hover {
+                box-shadow: 0 4px 20px rgba(0,0,0,0.06);
             }
             .rvd-player {
-                flex: 1;
-                padding: 40px 40px;
-                display: flex;
-                flex-direction: column;
-                gap: 6px;
+                flex: 1; padding: 36px 40px;
+                display: flex; flex-direction: column; gap: 6px;
             }
             .rvd-player.right {
-                text-align: right;
-                border-left: 1px solid #f0f0f0;
+                text-align: right; border-left: 1px solid #f0f0f0;
             }
             .rvd-player-label {
                 font-family: 'JetBrains Mono', monospace;
-                font-size: 9px; font-weight: 600;
-                letter-spacing: 0.1em; color: #bbb;
+                font-size: 9px; font-weight: 700;
+                letter-spacing: 0.12em; color: #bbb;
                 text-transform: uppercase;
             }
             .rvd-player-name {
@@ -81,80 +89,78 @@ export function renderRivalryDetail() {
                 color: #111; letter-spacing: 0.02em;
             }
             .rvd-player-growth {
-                font-size: 48px; font-weight: 300;
-                letter-spacing: -1.5px; margin-top: 4px;
+                font-size: 52px; font-weight: 200;
+                letter-spacing: -2px; margin-top: 4px;
+                line-height: 1.05;
+                transition: color .3s;
             }
             .rvd-player-growth.leading {
-                color: #0F5132;
-                text-shadow: 0 0 8px rgba(15,81,50,0.2);
+                color: var(--rvd-green);
             }
-            .rvd-player-growth.trailing { color: #3B0001; }
+            .rvd-player-growth.trailing { color: var(--rvd-brand); }
             .rvd-player-baseline {
                 font-family: 'JetBrains Mono', monospace;
                 font-size: 10px; color: #bbb;
-                letter-spacing: 0.04em;
+                letter-spacing: 0.04em; margin-top: 4px;
             }
             .rvd-leader-tag {
                 font-family: 'JetBrains Mono', monospace;
-                font-size: 9px;
-                font-weight: 700;
-                letter-spacing: 0.12em;
-                text-transform: uppercase;
-                color: #0F5132;
-                margin-bottom: 2px;
+                font-size: 8px; font-weight: 700;
+                letter-spacing: 0.14em; text-transform: uppercase;
+                color: var(--rvd-green); margin-bottom: 4px;
+                display: inline-flex; align-items: center; gap: 5px;
+            }
+            .rvd-leader-tag::before {
+                content: ''; width: 5px; height: 5px;
+                border-radius: 50%; background: var(--rvd-green);
             }
 
             .rvd-vs-center {
                 display: flex; align-items: center; justify-content: center;
-                width: 80px; flex-shrink: 0;
-                background: #f2f2f2;
-                border-left: 1px solid #f0f0f0;
-                border-right: 1px solid #f0f0f0;
-                box-shadow: inset 0 0 6px rgba(0,0,0,0.04);
+                width: 72px; flex-shrink: 0;
+                background: linear-gradient(180deg, #f0f0f0 0%, #e8e8e8 100%);
+                border-left: 1px solid #ebebeb;
+                border-right: 1px solid #ebebeb;
             }
             .rvd-vs-text {
                 font-family: 'JetBrains Mono', monospace;
-                font-size: 14px; font-weight: 700;
-                color: #bbb; letter-spacing: 0.06em;
+                font-size: 14px; font-weight: 800;
+                color: #bbb; letter-spacing: 0.08em;
             }
 
             /* Momentum Bar */
             .rvd-momentum {
-                height: 10px; display: flex;
-                overflow: hidden; margin-bottom: 32px;
-                background: #f0f0f0;
-                border-radius: 5px;
+                height: 6px; display: flex;
+                overflow: hidden; margin-bottom: 24px;
+                background: #f0f0f0; border-radius: 3px;
             }
             .rvd-momentum-left {
-                background: #0F5132; transition: width 0.4s ease;
-                border-radius: 5px 0 0 5px;
+                background: var(--rvd-green);
+                transition: width .6s var(--rvd-ease);
+                border-radius: 3px 0 0 3px;
             }
             .rvd-momentum-right {
-                background: #3B0001; transition: width 0.4s ease;
-                border-radius: 0 5px 5px 0;
+                background: var(--rvd-brand);
+                transition: width .6s var(--rvd-ease);
+                border-radius: 0 3px 3px 0;
             }
-            .rvd-momentum-left.is-leader {
-                box-shadow: 0 0 8px rgba(15,81,50,0.35);
-            }
-            .rvd-momentum-right.is-leader {
-                box-shadow: 0 0 8px rgba(59,0,1,0.35);
+            @media(prefers-reduced-motion:no-preference){
+                .rvd-momentum-left.is-leader { animation: rvd-glow 2s infinite; }
+                .rvd-momentum-right.is-leader { animation: rvd-glow 2s infinite; }
             }
 
             /* ── Performance Chart ── */
             .rvd-chart-section {
-                max-width: 1200px; margin: 0 auto;
-                padding: 0 64px 8px;
+                max-width: 1200px; margin: 0 auto; padding: 0 64px 8px;
             }
             .rvd-chart-panel {
-                background: #fafafa;
-                border: 1px solid #f0f0f0;
+                background: #fafafa; border: 1px solid #f0f0f0;
                 padding: 28px;
+                box-shadow: 0 1px 4px rgba(0,0,0,0.03);
             }
             .rvd-chart-header {
-                display: flex;
-                justify-content: space-between;
-                align-items: center;
-                margin-bottom: 20px;
+                display: flex; justify-content: space-between;
+                align-items: center; margin-bottom: 20px;
             }
             .rvd-chart-title {
                 font-family: 'JetBrains Mono', monospace;
@@ -162,9 +168,7 @@ export function renderRivalryDetail() {
                 letter-spacing: 0.12em; color: #bbb;
                 text-transform: uppercase;
             }
-            .rvd-chart-legend {
-                display: flex; gap: 16px;
-            }
+            .rvd-chart-legend { display: flex; gap: 16px; }
             .rvd-chart-legend-item {
                 display: flex; align-items: center; gap: 6px;
                 font-family: 'JetBrains Mono', monospace;
@@ -172,132 +176,108 @@ export function renderRivalryDetail() {
                 letter-spacing: 0.06em; color: #999;
             }
             .rvd-chart-legend-dot {
-                width: 8px; height: 8px;
-                border-radius: 50%;
+                width: 8px; height: 8px; border-radius: 50%;
             }
             .rvd-chart-canvas {
-                position: relative;
-                height: 200px;
-                width: 100%;
+                position: relative; height: 200px; width: 100%;
             }
-            .rvd-chart-canvas svg {
-                width: 100%; height: 100%;
-            }
-            .rvd-chart-gridline {
-                stroke: #f0f0f0; stroke-width: 1;
-            }
+            .rvd-chart-canvas svg { width: 100%; height: 100%; }
+            .rvd-chart-gridline { stroke: #f0f0f0; stroke-width: 1; }
             .rvd-chart-label {
                 font-family: 'JetBrains Mono', monospace;
                 font-size: 9px; fill: #ccc;
             }
             .rvd-chart-footer {
-                display: flex;
-                justify-content: space-between;
-                margin-top: 8px;
+                display: flex; justify-content: space-between; margin-top: 8px;
             }
             .rvd-chart-footer span {
                 font-family: 'JetBrains Mono', monospace;
-                font-size: 9px; color: #ccc;
-                letter-spacing: 0.04em;
+                font-size: 9px; color: #ccc; letter-spacing: 0.04em;
+            }
+            .rvd-chart-pending {
+                display: flex; align-items: center; justify-content: center;
+                height: 100%; color: #ccc;
+                font-family: 'JetBrains Mono', monospace;
+                font-size: 11px; letter-spacing: 0.06em;
             }
 
             /* ── Status Bar ── */
             .rvd-status-bar {
                 display: flex; align-items: center;
                 justify-content: space-between; gap: 24px;
+                padding: 16px 20px;
+                background: #fafafa; border: 1px solid #f0f0f0;
             }
             .rvd-status-badge {
                 font-family: 'JetBrains Mono', monospace;
                 font-size: 10px; font-weight: 700;
                 letter-spacing: 0.1em; text-transform: uppercase;
-                display: flex; align-items: center; gap: 6px;
+                display: flex; align-items: center; gap: 8px;
             }
             .rvd-status-badge .dot {
-                width: 6px; height: 6px;
-                border-radius: 50%; background: #0F5132;
-                animation: rv-pulse 1.8s infinite;
+                width: 7px; height: 7px;
+                border-radius: 50%; background: var(--rvd-green);
             }
-            .rvd-status-badge.live { color: #0F5132; }
-            .rvd-status-badge.ended { color: #999; }
-            .rvd-status-badge.ended .dot { background: #999; animation: none; }
+            @media(prefers-reduced-motion:no-preference){
+                .rvd-status-badge .dot { animation: rvd-pulse 1.8s infinite; }
+            }
+            .rvd-status-badge.live { color: var(--rvd-green); }
+            .rvd-status-badge.ended { color: var(--rvd-muted); }
+            .rvd-status-badge.ended .dot { background: var(--rvd-muted); animation: none; }
             .rvd-status-badge.pending { color: #f59e0b; }
             .rvd-status-badge.pending .dot { background: #f59e0b; animation: none; }
-
+            .rvd-status-info {
+                display: flex; gap: 12px; align-items: center;
+            }
+            .rvd-provider-pill {
+                display: inline-flex; align-items: center; padding: 3px 10px;
+                font-family: 'JetBrains Mono', monospace;
+                font-size: 8px; font-weight: 700; letter-spacing: 0.08em;
+                color: #fff; text-transform: uppercase; border-radius: 2px;
+            }
             .rvd-time {
                 font-family: 'JetBrains Mono', monospace;
-                font-size: 11px; color: #999;
+                font-size: 11px; color: var(--rvd-muted);
+                letter-spacing: 0.04em;
             }
+            .rvd-time.urgent { color: var(--rvd-red); font-weight: 700; }
 
             /* ── Detail Grid ── */
             .rvd-grid {
                 max-width: 1200px; margin: 0 auto;
-                padding: 40px 64px 64px;
-                display: grid;
-                grid-template-columns: 1fr 1fr;
-                gap: 28px;
+                padding: 32px 64px 48px;
+                display: grid; grid-template-columns: 1fr 1fr;
+                gap: 20px;
             }
             .rvd-panel {
-                background: #fafafa;
-                border: 1px solid #f0f0f0;
+                background: #fff; border: 1px solid #f0f0f0;
                 padding: 28px;
+                box-shadow: 0 1px 3px rgba(0,0,0,0.03);
+                border-left: 3px solid #f0f0f0;
+                transition: all var(--rvd-dur) var(--rvd-ease);
+            }
+            .rvd-panel:hover {
+                box-shadow: 0 4px 16px rgba(0,0,0,0.05);
+                border-left-color: rgba(59,0,1,0.2);
             }
             .rvd-panel-title {
                 font-family: 'JetBrains Mono', monospace;
                 font-size: 9px; font-weight: 700;
-                letter-spacing: 0.12em; color: #bbb;
-                text-transform: uppercase;
-                margin-bottom: 20px;
+                letter-spacing: 0.12em; color: var(--rvd-brand);
+                text-transform: uppercase; margin-bottom: 20px;
+                opacity: 0.6;
             }
             .rvd-row {
                 display: flex; justify-content: space-between;
-                align-items: center; padding: 8px 0;
-                border-bottom: 1px solid #f0f0f0;
+                align-items: center; padding: 10px 0;
+                border-bottom: 1px solid #f8f8f8;
             }
             .rvd-row:last-child { border-bottom: none; }
-            .rvd-row-label {
-                font-size: 13px; color: #888;
-            }
+            .rvd-row-label { font-size: 13px; color: #888; }
             .rvd-row-value {
-                font-size: 14px; font-weight: 500; color: #111;
-            }
-
-            /* ── Share Section ── */
-            .rvd-share {
-                max-width: 1200px; margin: 0 auto;
-                padding: 0 64px 48px;
-                display: flex; gap: 12px;
-            }
-            .rvd-share-btn {
-                height: 40px; padding: 0 24px;
-                border: 1px solid #e5e5e5; background: #fff;
+                font-size: 14px; font-weight: 600; color: #111;
                 font-family: 'JetBrains Mono', monospace;
-                font-size: 10px; font-weight: 600;
-                letter-spacing: 0.08em; text-transform: uppercase;
-                color: #666; cursor: pointer;
-                transition: border-color 0.15s, color 0.15s;
-            }
-            .rvd-share-btn:hover { border-color: #111; color: #111; }
-
-            /* ── Warning ── */
-            .rvd-warning {
-                max-width: 1200px; margin: 0 auto;
-                padding: 0 64px 40px; text-align: center;
-            }
-            .rvd-warning-text {
-                font-family: 'JetBrains Mono', monospace;
-                font-size: 10px; font-weight: 600;
-                letter-spacing: 0.1em; color: #ccc;
-                text-transform: uppercase;
-            }
-
-            /* ── Loading ── */
-            .rvd-loading {
-                text-align: center; padding: 120px 20px;
-                color: #ccc;
-            }
-            .rvd-loading-text {
-                font-family: 'JetBrains Mono', monospace;
-                font-size: 12px; letter-spacing: 0.08em;
+                letter-spacing: 0.02em;
             }
 
             /* ── Action Bar ── */
@@ -307,46 +287,112 @@ export function renderRivalryDetail() {
                 display: flex; gap: 12px; align-items: center;
             }
             .rvd-action-btn {
-                height: 44px; padding: 0 32px;
+                height: 48px; padding: 0 36px;
                 border: none; cursor: pointer;
                 font-family: 'JetBrains Mono', monospace;
                 font-size: 11px; font-weight: 700;
                 letter-spacing: 0.1em; text-transform: uppercase;
-                transition: opacity 0.15s;
+                transition: all var(--rvd-dur) var(--rvd-ease);
+                box-shadow: 0 2px 8px rgba(0,0,0,0.06);
             }
-            .rvd-action-btn:hover { opacity: 0.85; }
-            .rvd-action-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+            .rvd-action-btn:hover {
+                transform: translateY(-1px);
+                box-shadow: 0 4px 16px rgba(0,0,0,0.1);
+            }
+            .rvd-action-btn:active { transform: scale(0.98); }
+            .rvd-action-btn:disabled {
+                opacity: 0.5; cursor: not-allowed;
+                transform: none; box-shadow: none;
+            }
             .rvd-action-btn.accept {
-                background: #0F5132; color: #fff;
+                background: var(--rvd-green); color: #fff;
             }
+            .rvd-action-btn.accept:hover { background: #0e9f6e; }
             .rvd-action-btn.decline {
-                background: #fff; color: #3B0001;
-                border: 1px solid #3B0001;
+                background: #fff; color: var(--rvd-brand);
+                border: 1px solid var(--rvd-brand);
             }
+            .rvd-action-btn.decline:hover { background: rgba(59,0,1,0.04); }
             .rvd-action-btn.fund {
                 background: #111; color: #fff;
             }
+            .rvd-action-btn.fund:hover { background: var(--rvd-brand); }
             .rvd-action-status {
                 font-family: 'JetBrains Mono', monospace;
                 font-size: 10px; font-weight: 600;
-                letter-spacing: 0.08em; color: #999;
+                letter-spacing: 0.08em; color: var(--rvd-muted);
                 text-transform: uppercase;
+            }
+
+            /* ── Share Section ── */
+            .rvd-share {
+                max-width: 1200px; margin: 0 auto;
+                padding: 0 64px 40px;
+                display: flex; gap: 8px;
+            }
+            .rvd-share-btn {
+                height: 40px; padding: 0 24px;
+                border: 1px solid #e5e5e5; background: #fff;
+                font-family: 'JetBrains Mono', monospace;
+                font-size: 10px; font-weight: 600;
+                letter-spacing: 0.08em; text-transform: uppercase;
+                color: #888; cursor: pointer;
+                transition: all .15s;
+            }
+            .rvd-share-btn:hover {
+                border-color: #111; color: #111;
+                box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+            }
+
+            /* ── Warning ── */
+            .rvd-warning {
+                max-width: 1200px; margin: 0 auto;
+                padding: 0 64px 40px; text-align: center;
+            }
+            .rvd-warning-inner {
+                display: inline-flex; align-items: center; gap: 10px;
+                background: rgba(59,0,1,0.03); padding: 14px 28px;
+                border: 1px solid rgba(59,0,1,0.06);
+            }
+            .rvd-warning-text {
+                font-family: 'JetBrains Mono', monospace;
+                font-size: 10px; font-weight: 600;
+                letter-spacing: 0.12em; color: var(--rvd-muted);
+                text-transform: uppercase;
+            }
+
+            /* ── Loading ── */
+            .rvd-loading {
+                text-align: center; padding: 120px 20px; color: #ccc;
+            }
+            .rvd-loading-text {
+                font-family: 'JetBrains Mono', monospace;
+                font-size: 12px; letter-spacing: 0.08em;
+            }
+            .rvd-skel-bar {
+                background: linear-gradient(90deg, #f5f5f5 0%, #ececec 40%, #f5f5f5 80%);
+                background-size: 800px 100%; border-radius: 3px;
+            }
+            @media(prefers-reduced-motion:no-preference){
+                .rvd-skel-bar { animation: rvd-shimmer 1.5s infinite linear; }
             }
 
             /* ── Responsive ── */
             @media (max-width: 768px) {
                 .rvd-hero-inner { padding: 36px 20px 32px; }
                 .rvd-vs-strip { flex-direction: column; }
+                .rvd-player { padding: 24px 20px; }
                 .rvd-player.right { text-align: left; border-left: none; border-top: 1px solid #f0f0f0; }
-                .rvd-vs-center { width: 100%; height: 40px; border-left: none; border-right: none; border-top: 1px solid #f0f0f0; border-bottom: 1px solid #f0f0f0; }
-                .rvd-player-growth { font-size: 32px; }
-                .rvd-grid { grid-template-columns: 1fr; padding: 24px 20px 40px; }
+                .rvd-vs-center { width: 100%; height: 36px; border-left: none; border-right: none; border-top: 1px solid #f0f0f0; border-bottom: 1px solid #f0f0f0; }
+                .rvd-player-growth { font-size: 36px; letter-spacing: -1px; }
+                .rvd-grid { grid-template-columns: 1fr; padding: 24px 20px 40px; gap: 16px; }
                 .rvd-share { padding: 0 20px 32px; flex-wrap: wrap; }
                 .rvd-warning { padding: 0 20px 32px; }
-                .rvd-status-bar { flex-direction: column; align-items: flex-start; gap: 8px; }
+                .rvd-status-bar { flex-direction: column; align-items: flex-start; gap: 8px; padding: 12px 16px; }
                 .rvd-chart-section { padding: 0 20px 8px; }
                 .rvd-chart-canvas { height: 160px; }
                 .rvd-actions { padding: 0 20px 24px; flex-wrap: wrap; }
+                .rvd-action-btn { width: 100%; text-align: center; display: flex; align-items: center; justify-content: center; }
             }
         </style>
 
@@ -441,11 +487,16 @@ export async function initRivalryDetail() {
     const timeLabel = rivalry.daysLeft <= 0 ? 'Completed' : `${rivalry.daysLeft}d remaining of ${rivalry.totalDays}d`;
     const pool = rivalry.stake * 2;
 
+    function getProviderColor(p) {
+        const c = { stripe: '#635bff', x: '#111', youtube: '#ff0000', shopify: '#96bf48', amazon: '#ff9900' };
+        return c[p] || '#111';
+    }
+
     container.innerHTML = `
         <div class="rvd-hero">
             <div class="rvd-hero-inner">
                 <div class="rvd-breadcrumb">
-                    <a href="#/rivalry">Rivalry</a> <span>/ ${rivalry.id}</span>
+                    <a href="#/rivalry">Rivalry</a> <span>/ ${rivalry.id.substring(0, 12)}…</span>
                 </div>
 
                 <div class="rvd-vs-strip">
@@ -476,9 +527,12 @@ export async function initRivalryDetail() {
                 <div class="rvd-status-bar">
                     <div class="rvd-status-badge ${statusClass}">
                         <span class="dot"></span>
-                        ${statusLabel} · ${rivalry.metric} · ${rivalry.provider.toUpperCase()}
+                        ${statusLabel} · ${rivalry.metric}
                     </div>
-                    <span class="rvd-time">${timeLabel}</span>
+                    <div class="rvd-status-info">
+                        <span class="rvd-provider-pill" style="background:${getProviderColor(rivalry.provider)}">${rivalry.provider.toUpperCase()}</span>
+                        <span class="rvd-time${rivalry.daysLeft <= 3 && rivalry.status !== 'settled' ? ' urgent' : ''}">${timeLabel}</span>
+                    </div>
                 </div>
             </div>
         </div>
@@ -609,7 +663,10 @@ export async function initRivalryDetail() {
         </div>
 
         <div class="rvd-warning">
-            <div class="rvd-warning-text">Capital is locked. Settlement is automatic and final. No appeals. No reversals.</div>
+            <div class="rvd-warning-inner">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#999" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+                <div class="rvd-warning-text">Capital is locked. Settlement is automatic and final. No appeals. No reversals.</div>
+            </div>
         </div>
     `;
 

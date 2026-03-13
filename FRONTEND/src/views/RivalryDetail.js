@@ -11,7 +11,7 @@ export function renderRivalryDetail() {
                 --rvd-ease: cubic-bezier(0.4, 0, 0.2, 1);
                 --rvd-dur: 0.25s;
                 --rvd-brand: #3B0001;
-                --rvd-green: #10B981;
+                --rvd-green: #0F5132;
                 --rvd-red: #EF4444;
                 --rvd-muted: #999;
             }

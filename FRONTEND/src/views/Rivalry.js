@@ -954,12 +954,8 @@ export function renderRivalry() {
                 <div class="rv-form-group">
                     <label class="rv-form-label">Your Stake</label>
                     <div class="rv-stake-pills" id="rv-stake-pills">
-                        <button class="rv-stake-pill" data-amount="5">$5</button>
-                        <button class="rv-stake-pill" data-amount="10">$10</button>
-                        <button class="rv-stake-pill" data-amount="25">$25</button>
-                        <button class="rv-stake-pill" data-amount="50">$50</button>
-                        <button class="rv-stake-pill" data-amount="100">$100</button>
-                        <button class="rv-stake-pill active" data-amount="250">$250</button>
+                        <button class="rv-stake-pill active" data-amount="100">$100</button>
+                        <button class="rv-stake-pill" data-amount="250">$250</button>
                         <button class="rv-stake-pill" data-amount="500">$500</button>
                         <button class="rv-stake-pill" data-amount="1000">$1K</button>
                         <button class="rv-stake-pill" data-amount="2500">$2.5K</button>
@@ -967,7 +963,7 @@ export function renderRivalry() {
                         <button class="rv-stake-pill" data-amount="10000">$10K</button>
                         <button class="rv-stake-pill" data-amount="20000">$20K</button>
                     </div>
-                    <div class="rv-form-hint">Opponent must match your stake</div>
+                    <div class="rv-form-hint">Minimum $100 · Opponent must match your stake</div>
                 </div>
 
                 <div class="rv-form-group">
@@ -1349,7 +1345,7 @@ export async function initRivalry() {
     const stakePills = document.getElementById('rv-stake-pills');
     const metricSelect = document.getElementById('rv-metric');
     const durationPills = document.getElementById('rv-duration-pills');
-    let selectedStake = 250;
+    let selectedStake = 100;
     let selectedDuration = 14;
 
     function updatePreview() {

@@ -558,6 +558,34 @@ export function renderRivalry() {
                 color: #fff;
                 border-color: #111;
             }
+            .rv-stake-pills {
+                display: grid;
+                grid-template-columns: repeat(4, 1fr);
+                gap: 6px;
+            }
+            .rv-stake-pill {
+                padding: 10px 8px;
+                background: #fff;
+                border: 1px solid #e5e5e5;
+                font-family: 'JetBrains Mono', monospace;
+                font-size: 11px;
+                font-weight: 600;
+                color: #666;
+                cursor: pointer;
+                transition: all 0.15s;
+                letter-spacing: 0.02em;
+                text-align: center;
+            }
+            .rv-stake-pill:hover { border-color: #999; color: #333; }
+            .rv-stake-pill.active {
+                background: #111;
+                color: #fff;
+                border-color: #111;
+            }
+            .rv-modal.high-stakes .rv-stake-pill.active {
+                background: var(--rv-brand);
+                border-color: var(--rv-brand);
+            }
             .rv-form-hint {
                 font-size: 11px;
                 color: #bbb;
@@ -925,8 +953,21 @@ export function renderRivalry() {
 
                 <div class="rv-form-group">
                     <label class="rv-form-label">Your Stake</label>
-                    <input type="number" class="rv-form-input" id="rv-stake" placeholder="500" min="100" step="100">
-                    <div class="rv-form-hint">Minimum $100 · Opponent must match your stake</div>
+                    <div class="rv-stake-pills" id="rv-stake-pills">
+                        <button class="rv-stake-pill" data-amount="5">$5</button>
+                        <button class="rv-stake-pill" data-amount="10">$10</button>
+                        <button class="rv-stake-pill" data-amount="25">$25</button>
+                        <button class="rv-stake-pill" data-amount="50">$50</button>
+                        <button class="rv-stake-pill" data-amount="100">$100</button>
+                        <button class="rv-stake-pill active" data-amount="250">$250</button>
+                        <button class="rv-stake-pill" data-amount="500">$500</button>
+                        <button class="rv-stake-pill" data-amount="1000">$1K</button>
+                        <button class="rv-stake-pill" data-amount="2500">$2.5K</button>
+                        <button class="rv-stake-pill" data-amount="5000">$5K</button>
+                        <button class="rv-stake-pill" data-amount="10000">$10K</button>
+                        <button class="rv-stake-pill" data-amount="20000">$20K</button>
+                    </div>
+                    <div class="rv-form-hint">Opponent must match your stake</div>
                 </div>
 
                 <div class="rv-form-group">
@@ -1305,13 +1346,14 @@ export async function initRivalry() {
     }
 
     // ── Challenge Modal ──
-    const stakeInput = document.getElementById('rv-stake');
+    const stakePills = document.getElementById('rv-stake-pills');
     const metricSelect = document.getElementById('rv-metric');
     const durationPills = document.getElementById('rv-duration-pills');
+    let selectedStake = 250;
     let selectedDuration = 14;
 
     function updatePreview() {
-        const stake = parseInt(stakeInput?.value) || 0;
+        const stake = selectedStake;
         const metric = metricSelect?.selectedOptions[0]?.text || 'Revenue Growth';
 
         const previewStake = document.getElementById('rv-preview-stake');
@@ -1325,14 +1367,18 @@ export async function initRivalry() {
         if (previewMetric) previewMetric.textContent = metric;
     }
 
-    if (stakeInput) {
-        stakeInput.addEventListener('input', () => {
+    if (stakePills) {
+        stakePills.addEventListener('click', (e) => {
+            const pill = e.target.closest('.rv-stake-pill');
+            if (!pill) return;
+            stakePills.querySelectorAll('.rv-stake-pill').forEach(p => p.classList.remove('active'));
+            pill.classList.add('active');
+            selectedStake = parseInt(pill.dataset.amount);
             updatePreview();
             // Toggle high-stakes styling
             const modal = document.querySelector('.rv-modal');
-            const val = parseInt(stakeInput.value) || 0;
             if (modal) {
-                if (val >= 5000) modal.classList.add('high-stakes');
+                if (selectedStake >= 5000) modal.classList.add('high-stakes');
                 else modal.classList.remove('high-stakes');
             }
         });
@@ -1388,14 +1434,14 @@ export async function initRivalry() {
     if (submitBtn) {
         submitBtn.addEventListener('click', async () => {
             const opponent = document.getElementById('rv-opponent')?.value?.trim();
-            const stake = parseInt(stakeInput?.value) || 0;
+            const stake = selectedStake;
 
             if (challengeType === 'direct' && !opponent) {
                 showAlert('Enter an opponent username', { type: 'warning', title: 'Missing Field' });
                 return;
             }
-            if (stake < 100) {
-                showAlert('Minimum stake is $100', { type: 'warning', title: 'Invalid Stake' });
+            if (stake < 1) {
+                showAlert('Select a stake amount', { type: 'warning', title: 'Invalid Stake' });
                 return;
             }
 

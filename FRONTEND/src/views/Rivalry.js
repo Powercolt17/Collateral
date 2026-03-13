@@ -9,7 +9,17 @@ export function renderRivalry() {
         <style>
             /* ============================================================
                RIVALRY MODE — HEAD-TO-HEAD DUELS
+               Premium Financial Terminal Aesthetic
                ============================================================ */
+            :root {
+                --rv-ease: cubic-bezier(0.4, 0, 0.2, 1);
+                --rv-dur: 0.25s;
+                --rv-brand: #3B0001;
+                --rv-green: #10B981;
+                --rv-red: #EF4444;
+                --rv-amber: #F59E0B;
+                --rv-muted: #999;
+            }
 
             .rv {
                 background: #fff;
@@ -18,6 +28,17 @@ export function renderRivalry() {
                 color: #111;
                 display: flex;
                 flex-direction: column;
+            }
+
+            /* ── Animations ── */
+            @media (prefers-reduced-motion: no-preference) {
+                @keyframes rv-pulse { 0%,100%{transform:scale(1);opacity:1} 50%{transform:scale(1.6);opacity:.35} }
+                @keyframes rv-fadeUp { from{opacity:0;transform:translateY(16px)} to{opacity:1;transform:translateY(0)} }
+                @keyframes rv-shimmer { 0%{background-position:-400px 0} 100%{background-position:400px 0} }
+                @keyframes rv-pendingPulse { 0%,100%{opacity:1} 50%{opacity:.55} }
+                @keyframes rv-aurora { 0%{background-position:0% 50%} 50%{background-position:100% 50%} 100%{background-position:0% 50%} }
+                .rv-reveal { opacity:0; transform:translateY(16px); transition:opacity .5s var(--rv-ease), transform .5s var(--rv-ease); }
+                .rv-reveal.visible { opacity:1; transform:translateY(0); }
             }
 
             /* ── Hero ── */
@@ -35,7 +56,7 @@ export function renderRivalry() {
                 transform: translateX(-50%);
                 width: 120%;
                 height: 140%;
-                background: radial-gradient(circle at center, rgba(59,0,1,0.04), transparent 60%);
+                background: radial-gradient(ellipse at 30% 40%, rgba(59,0,1,0.05) 0%, transparent 55%), radial-gradient(ellipse at 70% 60%, rgba(59,0,1,0.03) 0%, transparent 50%);
                 pointer-events: none;
             }
             .rv-hero-inner {
@@ -53,8 +74,7 @@ export function renderRivalry() {
                 text-transform: uppercase;
                 margin-bottom: 24px;
             }
-            .rv-breadcrumb span { color: #3B0001; }
-
+            .rv-breadcrumb span { color: var(--rv-brand); }
             .rv-hero-row {
                 display: flex;
                 align-items: flex-end;
@@ -67,460 +87,370 @@ export function renderRivalry() {
                 font-weight: 300;
                 color: #111;
                 letter-spacing: -2px;
-                margin: 0 0 24px;
+                margin: 0 0 20px;
                 line-height: 1.08;
             }
             .rv-hero-title strong {
                 font-weight: 600;
-                color: #3B0001;
+                color: var(--rv-brand);
+                font-size: 1.05em;
             }
             .rv-hero-sub {
                 font-size: 15px;
                 color: #888;
                 line-height: 1.6;
                 max-width: 560px;
-                margin: 0;
+                margin: 0 0 20px;
             }
-            .rv-hero-right {
-                display: flex;
-                gap: 12px;
-                flex-shrink: 0;
+            .rv-hero-rule {
+                width: 48px; height: 2px; background: var(--rv-brand); opacity: 0.25;
             }
+            .rv-hero-right { display: flex; gap: 12px; flex-shrink: 0; }
             .rv-btn-challenge {
-                height: 46px;
-                padding: 0 32px;
-                background: #111;
-                color: #fff;
-                border: none;
-                font-size: 12px;
-                font-weight: 600;
-                letter-spacing: 0.08em;
+                height: 48px; padding: 0 36px;
+                background: #111; color: #fff; border: none;
+                font-size: 11px; font-weight: 700; letter-spacing: 0.1em;
                 font-family: 'JetBrains Mono', monospace;
-                text-transform: uppercase;
-                cursor: pointer;
-                transition: background 0.15s;
+                text-transform: uppercase; cursor: pointer;
+                transition: all var(--rv-dur) var(--rv-ease);
+                display: flex; align-items: center; gap: 8px;
+                box-shadow: 0 2px 8px rgba(0,0,0,0.08);
             }
-            .rv-btn-challenge:hover { background: #000; }
+            .rv-btn-challenge:hover {
+                background: var(--rv-brand);
+                transform: scale(1.02);
+                box-shadow: 0 4px 16px rgba(59,0,1,0.15);
+            }
+            .rv-btn-challenge:active { transform: scale(0.98); }
 
             /* ── Stats Strip ── */
             .rv-stats {
-                display: flex;
-                gap: 64px;
-                margin-top: 36px;
-                padding-top: 28px;
+                display: flex; gap: 0; margin-top: 36px;
                 border-top: 1px solid #f0f0f0;
             }
-            .rv-stat-group {}
-            .rv-stat-val {
-                font-size: 44px;
-                font-weight: 300;
-                color: #111;
-                letter-spacing: -1px;
-                font-family: 'Neue Haas Grotesk Display', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            .rv-stat-group {
+                flex: 1; padding: 24px 0;
+                border-right: 1px solid #f0f0f0;
+                position: relative;
             }
-            .rv-stat-val::after {
-                content: '';
-                display: block;
-                width: 24px;
-                height: 2px;
-                background: #3B0001;
-                margin-top: 6px;
-                opacity: 0.3;
+            .rv-stat-group:last-child { border-right: none; }
+            .rv-stat-group::before {
+                content: ''; position: absolute; left: 0; top: 24px; bottom: 24px;
+                width: 2px; background: var(--rv-brand); opacity: 0.2;
+            }
+            .rv-stat-group:first-child::before { display: none; }
+            .rv-stat-group:not(:first-child) { padding-left: 32px; }
+            .rv-stat-val {
+                font-size: 40px; font-weight: 300; color: #111; letter-spacing: -1px;
+                font-family: 'Neue Haas Grotesk Display', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+                line-height: 1;
             }
             .rv-stat-lbl {
                 font-family: 'JetBrains Mono', monospace;
-                font-size: 9px;
-                font-weight: 600;
-                letter-spacing: 0.12em;
-                color: #bbb;
-                text-transform: uppercase;
-                margin-top: 4px;
+                font-size: 9px; font-weight: 600; letter-spacing: 0.12em;
+                color: #bbb; text-transform: uppercase; margin-top: 8px;
             }
 
             /* ── Controls ── */
             .rv-controls {
-                max-width: 1440px;
-                margin: 0 auto;
-                padding: 28px 64px 0;
-                display: flex;
-                align-items: center;
-                justify-content: space-between;
-                gap: 24px;
-                width: 100%;
-                box-sizing: border-box;
+                max-width: 1440px; margin: 0 auto; padding: 28px 64px 0;
+                display: flex; align-items: center; justify-content: space-between;
+                gap: 24px; width: 100%; box-sizing: border-box;
             }
-            .rv-tabs {
-                display: flex;
-                gap: 32px;
-            }
+            .rv-tabs { display: flex; gap: 32px; }
             .rv-tab {
-                background: none;
-                border: none;
+                background: none; border: none;
                 font-family: 'JetBrains Mono', monospace;
-                font-size: 11px;
-                font-weight: 600;
-                letter-spacing: 0.08em;
-                text-transform: uppercase;
-                color: #bbb;
-                cursor: pointer;
-                padding: 8px 0;
-                border-bottom: 2px solid transparent;
-                transition: color 0.15s, border-color 0.15s;
+                font-size: 11px; font-weight: 600; letter-spacing: 0.08em;
+                text-transform: uppercase; color: #bbb; cursor: pointer;
+                padding: 8px 0; border-bottom: 2px solid transparent;
+                transition: color .15s, border-color .15s;
             }
             .rv-tab:hover { color: #666; }
-            .rv-tab.active { color: #111; border-bottom-color: #3B0001; }
+            .rv-tab.active { color: #111; border-bottom-color: var(--rv-brand); }
             .rv-search-box {
-                height: 38px;
-                padding: 0 14px;
-                border: 1px solid #e5e5e5;
-                border-radius: 6px;
-                font-size: 13px;
-                color: #111;
-                background: #fff;
-                outline: none;
-                width: 240px;
+                height: 38px; padding: 0 14px; border: 1px solid #e5e5e5;
+                border-radius: 6px; font-size: 13px; color: #111; background: #fff;
+                outline: none; width: 240px;
                 font-family: 'Inter Tight', 'IBM Plex Sans', sans-serif;
-                transition: border-color 0.15s;
+                transition: border-color .15s, box-shadow .15s;
             }
-            .rv-search-box:focus { border-color: #3B0001; }
+            .rv-search-box:focus { border-color: var(--rv-brand); box-shadow: 0 0 0 2px rgba(59,0,1,0.06); }
 
             /* ── Rivalry Cards Grid ── */
             .rv-grid-container {
-                max-width: 1440px;
-                margin: 0 auto;
-                padding: 28px 64px 60px;
-                width: 100%;
-                box-sizing: border-box;
+                max-width: 1440px; margin: 0 auto; padding: 28px 64px 60px;
+                width: 100%; box-sizing: border-box;
             }
             .rv-count {
                 font-family: 'JetBrains Mono', monospace;
-                font-size: 10px;
-                color: #ccc;
-                margin-bottom: 20px;
+                font-size: 10px; color: #ccc; margin-bottom: 20px;
             }
-            .rv-grid {
-                display: grid;
-                grid-template-columns: repeat(2, 1fr);
-                gap: 20px;
+            .rv-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; }
+
+            /* ── Skeleton Cards ── */
+            .rv-skeleton {
+                background: #fff; border: 1px solid #f0f0f0; padding: 28px;
+                border-left: 3px solid #f0f0f0;
+            }
+            .rv-skel-bar {
+                background: linear-gradient(90deg, #f5f5f5 0%, #ececec 40%, #f5f5f5 80%);
+                background-size: 800px 100%;
+                border-radius: 3px;
+            }
+            @media(prefers-reduced-motion:no-preference){
+                .rv-skel-bar { animation: rv-shimmer 1.5s infinite linear; }
             }
 
             /* ── Rivalry Card ── */
             .rv-card {
-                background: #fff;
-                border: 1px solid #f0f0f0;
-                padding: 28px;
-                transition: border-color 0.2s, box-shadow 0.2s;
-                cursor: pointer;
-                position: relative;
-                overflow: hidden;
+                background: #fff; border: 1px solid #f0f0f0; padding: 28px;
+                transition: all var(--rv-dur) var(--rv-ease);
+                cursor: pointer; position: relative; overflow: hidden;
+                box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+                border-left: 3px solid var(--rv-green);
             }
-            .rv-card::before {
-                content: '';
-                position: absolute;
-                top: 0;
-                left: 0;
-                right: 0;
-                height: 3px;
-                background: linear-gradient(to right, #0F5132 0%, #0F5132 50%, transparent 50%);
-                opacity: 0;
-                transition: opacity 0.2s;
-            }
-            .rv-card.leader-left::before {
-                opacity: 1;
-                background: linear-gradient(to right, #0F5132 0%, #0F5132 50%, transparent 50%);
-            }
-            .rv-card.leader-right::before {
-                opacity: 1;
-                background: linear-gradient(to left, #10b981 0%, #10b981 50%, transparent 50%);
-            }
+            .rv-card[data-status="pending"] { border-left-color: var(--rv-amber); }
+            .rv-card[data-status="settled"] { border-left-color: var(--rv-muted); }
             .rv-card:hover {
-                border-color: #ddd;
-                box-shadow: 0 4px 20px rgba(0,0,0,0.04);
+                border-color: rgba(59,0,1,0.2); border-left-color: inherit;
+                box-shadow: 0 8px 30px rgba(0,0,0,0.08);
+                transform: translateY(-2px);
+            }
+            .rv-card:active { transform: scale(0.995); }
+            /* Live card subtle aurora */
+            @media(prefers-reduced-motion:no-preference){
+                .rv-card[data-status="active"] {
+                    background: linear-gradient(135deg, #fff 0%, rgba(16,185,129,0.015) 50%, #fff 100%);
+                    background-size: 200% 200%;
+                    animation: rv-aurora 8s ease infinite;
+                }
             }
             .rv-card-header {
-                display: flex;
-                align-items: center;
-                justify-content: space-between;
-                margin-bottom: 20px;
+                display: flex; align-items: center; justify-content: space-between;
+                margin-bottom: 16px;
             }
             .rv-card-status {
                 font-family: 'JetBrains Mono', monospace;
-                font-size: 9px;
-                font-weight: 600;
-                letter-spacing: 0.08em;
-                text-transform: uppercase;
-                color: #0F5132;
-                display: flex;
-                align-items: center;
-                gap: 6px;
+                font-size: 9px; font-weight: 700; letter-spacing: 0.1em;
+                text-transform: uppercase; color: var(--rv-green);
+                display: flex; align-items: center; gap: 6px;
             }
             .rv-card-status .dot {
-                width: 5px;
-                height: 5px;
-                border-radius: 50%;
-                background: #0F5132;
-                animation: rv-pulse 1.8s infinite;
+                width: 6px; height: 6px; border-radius: 50%;
+                background: var(--rv-green);
             }
-            @keyframes rv-pulse {
-                0% { transform: scale(1); opacity: 1; }
-                50% { transform: scale(1.5); opacity: 0.4; }
-                100% { transform: scale(1); opacity: 1; }
+            @media(prefers-reduced-motion:no-preference){
+                .rv-card-status .dot { animation: rv-pulse 1.8s infinite; }
             }
-            .rv-card-status.pending { color: #f59e0b; }
-            .rv-card-status.pending .dot { background: #f59e0b; animation: none; }
-            .rv-card-status.ended { color: #999; }
-            .rv-card-status.ended .dot { background: #999; animation: none; }
+            .rv-card-status.pending { color: var(--rv-amber); }
+            .rv-card-status.pending .dot { background: var(--rv-amber); animation: none; }
+            .rv-card-status.ended { color: var(--rv-muted); }
+            .rv-card-status.ended .dot { background: var(--rv-muted); animation: none; }
             .rv-card-id {
                 font-family: 'JetBrains Mono', monospace;
-                font-size: 9px;
-                color: #ccc;
-                letter-spacing: 0.06em;
+                font-size: 8px; color: #ddd; letter-spacing: 0.04em;
+                max-width: 80px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
             }
             .rv-card-metric {
-                font-size: 16px;
-                font-weight: 500;
-                color: #111;
-                margin-bottom: 20px;
-                letter-spacing: -0.3px;
-                line-height: 1.3;
+                font-size: 15px; font-weight: 500; color: #111;
+                margin-bottom: 16px; letter-spacing: -0.3px; line-height: 1.3;
             }
 
             /* Versus Strip */
             .rv-versus {
-                display: flex;
-                align-items: stretch;
-                gap: 0;
-                background: #fafafa;
-                border: 1px solid #f0f0f0;
-                margin-bottom: 20px;
-                overflow: hidden;
+                display: flex; align-items: stretch; gap: 0;
+                background: #fafafa; border: 1px solid #f0f0f0;
+                margin-bottom: 16px; overflow: hidden;
             }
             .rv-player {
-                flex: 1;
-                padding: 16px 20px;
-                display: flex;
-                flex-direction: column;
-                gap: 4px;
+                flex: 1; padding: 20px 20px; display: flex;
+                flex-direction: column; gap: 4px;
             }
-            .rv-player.right {
-                text-align: right;
-                border-left: 1px solid #f0f0f0;
+            .rv-player.right { text-align: right; border-left: 1px solid #f0f0f0; }
+            .rv-player-label {
+                font-family: 'JetBrains Mono', monospace;
+                font-size: 8px; font-weight: 600; letter-spacing: 0.1em;
+                color: #bbb; text-transform: uppercase;
             }
             .rv-player-name {
                 font-family: 'JetBrains Mono', monospace;
-                font-size: 11px;
-                font-weight: 600;
-                color: #333;
-                letter-spacing: 0.04em;
+                font-size: 11px; font-weight: 600; color: #333; letter-spacing: 0.04em;
+                display: flex; align-items: center; gap: 5px;
             }
-            .rv-player-label {
-                font-family: 'JetBrains Mono', monospace;
-                font-size: 8px;
-                font-weight: 600;
-                letter-spacing: 0.1em;
-                color: #bbb;
-                text-transform: uppercase;
+            .rv-player.right .rv-player-name { justify-content: flex-end; }
+            .rv-lead-dot {
+                width: 5px; height: 5px; border-radius: 50%; flex-shrink: 0;
             }
             .rv-player-growth {
-                font-size: 22px;
-                font-weight: 300;
-                color: #111;
-                letter-spacing: -0.5px;
-                margin-top: 4px;
+                font-size: 30px; font-weight: 300; color: #111;
+                letter-spacing: -1px; margin-top: 4px; line-height: 1.1;
             }
-            .rv-player-growth.leading {
-                color: #0F5132;
-                text-shadow: 0 0 6px rgba(15, 81, 50, 0.25);
+            .rv-player-growth.leading { color: var(--rv-green); }
+            .rv-player-growth.trailing { color: var(--rv-brand); }
+            @media(prefers-reduced-motion:no-preference){
+                .rv-player-growth.awaiting { animation: rv-pendingPulse 2s ease infinite; color: #ccc; font-size: 14px; letter-spacing: 0.08em; font-family: 'JetBrains Mono', monospace; }
             }
-            .rv-player-growth.trailing { color: #3B0001; }
             .rv-vs-divider {
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                width: 60px;
-                flex-shrink: 0;
-                background: #f2f2f2;
-                border-left: 1px solid #f0f0f0;
-                border-right: 1px solid #f0f0f0;
-                box-shadow: inset 0 0 6px rgba(0,0,0,0.04);
+                display: flex; align-items: center; justify-content: center;
+                width: 56px; flex-shrink: 0;
+                background: linear-gradient(180deg, #f0f0f0 0%, #e8e8e8 100%);
+                border-left: 1px solid #ebebeb; border-right: 1px solid #ebebeb;
             }
             .rv-vs-text {
                 font-family: 'JetBrains Mono', monospace;
-                font-size: 11px;
-                font-weight: 700;
-                color: #bbb;
-                letter-spacing: 0.06em;
+                font-size: 12px; font-weight: 800; color: #bbb; letter-spacing: 0.08em;
             }
 
             /* Momentum Bar */
             .rv-momentum {
-                height: 6px;
-                display: flex;
-                overflow: hidden;
-                margin-bottom: 20px;
-                background: #f5f5f5;
+                height: 4px; display: flex; overflow: hidden;
+                margin-bottom: 16px; background: #f5f5f5; border-radius: 2px;
             }
-            .rv-momentum-left {
-                background: #0F5132;
-                transition: width 0.4s ease;
+            .rv-momentum-left { background: var(--rv-green); transition: width .6s var(--rv-ease); border-radius: 2px 0 0 2px; }
+            .rv-momentum-right { background: var(--rv-brand); transition: width .6s var(--rv-ease); border-radius: 0 2px 2px 0; }
+
+            /* Card Action Buttons */
+            .rv-card-actions {
+                display: flex; gap: 0; margin: 0 -28px; padding: 12px 0 0;
+                border-top: 1px solid #f0f0f0;
             }
-            .rv-momentum-right {
-                background: #3B0001;
-                transition: width 0.4s ease;
+            .rv-action-btn {
+                flex: 1; padding: 12px; border: none;
+                font-family: 'JetBrains Mono', monospace;
+                font-size: 10px; font-weight: 700; letter-spacing: 0.1em;
+                cursor: pointer; transition: all .15s var(--rv-ease);
+                text-transform: uppercase; display: flex; align-items: center;
+                justify-content: center; gap: 6px;
             }
+            .rv-action-accept {
+                background: #111; color: #fff;
+            }
+            .rv-action-accept:hover { background: var(--rv-brand); }
+            .rv-action-decline {
+                background: transparent; color: #999;
+                border-left: 1px solid #f0f0f0 !important;
+            }
+            .rv-action-decline:hover { background: rgba(239,68,68,0.04); color: var(--rv-red); }
 
             /* Card Bottom */
             .rv-card-bottom {
-                display: flex;
-                align-items: center;
-                justify-content: space-between;
+                display: flex; align-items: center; justify-content: space-between;
             }
-            .rv-card-stake {
-                display: flex;
-                flex-direction: column;
-                gap: 2px;
-            }
+            .rv-card-stake { display: flex; flex-direction: column; gap: 2px; }
             .rv-card-stake-val {
-                font-size: 18px;
-                font-weight: 500;
-                color: #111;
-                letter-spacing: -0.3px;
+                font-size: 20px; font-weight: 600; color: #111; letter-spacing: -0.5px;
             }
             .rv-card-stake-lbl {
                 font-family: 'JetBrains Mono', monospace;
-                font-size: 8px;
-                font-weight: 600;
-                color: #bbb;
-                letter-spacing: 0.1em;
-                text-transform: uppercase;
+                font-size: 8px; font-weight: 600; color: #bbb;
+                letter-spacing: 0.1em; text-transform: uppercase;
             }
             .rv-card-time {
                 font-family: 'JetBrains Mono', monospace;
-                font-size: 10px;
-                color: #999;
-                letter-spacing: 0.04em;
+                font-size: 10px; color: var(--rv-muted); letter-spacing: 0.04em;
             }
-            .rv-card-provider {
-                display: flex;
-                align-items: center;
-                gap: 6px;
-            }
-            .rv-card-provider-dot {
-                width: 6px;
-                height: 6px;
-                border-radius: 50%;
-            }
-            .rv-card-provider-name {
+            .rv-card-time.urgent { color: var(--rv-red); font-weight: 700; }
+            .rv-card-provider-pill {
+                display: inline-flex; align-items: center; padding: 3px 8px;
                 font-family: 'JetBrains Mono', monospace;
-                font-size: 9px;
-                font-weight: 600;
-                letter-spacing: 0.06em;
-                color: #999;
+                font-size: 8px; font-weight: 700; letter-spacing: 0.08em;
+                color: #fff; text-transform: uppercase; border-radius: 2px;
+            }
+            .rv-open-badge {
+                font-family: 'JetBrains Mono', monospace;
+                font-size: 8px; font-weight: 700; letter-spacing: 0.1em;
+                background: #111; color: #fff; padding: 3px 8px;
                 text-transform: uppercase;
             }
 
             /* ── How It Works ── */
             .rv-mechanism {
                 background: #fafafa;
-                border-top: 1px solid #f0f0f0;
+                border-top: 3px solid var(--rv-brand);
                 border-bottom: 1px solid #f0f0f0;
-                padding: 64px 0;
+                padding: 64px 0; position: relative;
             }
             .rv-mechanism-inner {
-                max-width: 1440px;
-                margin: 0 auto;
-                padding: 0 64px;
+                max-width: 1440px; margin: 0 auto; padding: 0 64px;
             }
             .rv-mechanism-header {
-                display: flex;
-                align-items: flex-end;
-                justify-content: space-between;
+                display: flex; align-items: flex-end; justify-content: space-between;
                 margin-bottom: 48px;
             }
             .rv-mechanism-tag {
                 font-family: 'JetBrains Mono', monospace;
-                font-size: 10px;
-                font-weight: 700;
-                letter-spacing: 0.12em;
-                color: #ccc;
-                text-transform: uppercase;
-                margin-bottom: 12px;
+                font-size: 10px; font-weight: 700; letter-spacing: 0.12em;
+                color: #ccc; text-transform: uppercase; margin-bottom: 12px;
             }
             .rv-mechanism-title {
-                font-size: 32px;
-                font-weight: 300;
-                color: #111;
-                letter-spacing: -1px;
-                margin: 0;
+                font-size: 32px; font-weight: 300; color: #111;
+                letter-spacing: -1px; margin: 0;
             }
             .rv-mechanism-title strong { font-weight: 600; }
             .rv-mechanism-grid {
-                display: grid;
-                grid-template-columns: repeat(3, 1fr);
+                display: grid; grid-template-columns: repeat(3, 1fr);
+                position: relative;
+            }
+            .rv-mechanism-grid::before {
+                content: ''; position: absolute;
+                top: 40px; left: 10%; right: 10%; height: 1px;
+                background: linear-gradient(90deg, transparent, rgba(59,0,1,0.12) 20%, rgba(59,0,1,0.12) 80%, transparent);
+                z-index: 0;
             }
             .rv-mech-card {
                 padding: 40px 32px;
                 border-right: 1px solid #e8e8e8;
-                transition: background 0.18s ease, transform 0.18s ease, box-shadow 0.18s ease;
-                cursor: default;
+                transition: all .2s var(--rv-ease);
+                cursor: default; position: relative; z-index: 1;
             }
             .rv-mech-card:hover {
-                background: #fff;
-                transform: translateY(-3px);
+                background: #fff; transform: translateY(-3px);
                 box-shadow: 0 6px 20px rgba(0,0,0,0.05);
             }
             .rv-mech-card:last-child { border-right: none; }
             .rv-mech-num {
-                font-size: 56px;
-                font-weight: 200;
-                color: #3B0001;
-                margin-bottom: 16px;
-                line-height: 1;
+                font-size: 56px; font-weight: 200;
+                color: rgba(59,0,1,0.6);
+                margin-bottom: 16px; line-height: 1;
                 font-family: 'Neue Haas Grotesk Display', 'Helvetica Neue', sans-serif;
             }
             .rv-mech-label {
-                font-size: 20px;
-                font-weight: 500;
-                color: #111;
-                margin-bottom: 12px;
-                letter-spacing: -0.3px;
+                font-size: 20px; font-weight: 500; color: #111;
+                margin-bottom: 12px; letter-spacing: -0.3px;
             }
             .rv-mech-desc {
-                font-size: 14px;
-                color: #888;
-                line-height: 1.6;
+                font-size: 14px; color: #888; line-height: 1.6;
             }
 
             /* ── Stake Warning ── */
             .rv-warning {
-                max-width: 1440px;
-                margin: 0 auto;
-                padding: 40px 64px;
-                text-align: center;
+                max-width: 1440px; margin: 0 auto;
+                padding: 40px 64px; text-align: center;
+            }
+            .rv-warning-inner {
+                display: inline-flex; align-items: center; gap: 10px;
+                background: rgba(59,0,1,0.03); padding: 14px 28px;
+                border: 1px solid rgba(59,0,1,0.06);
             }
             .rv-warning-text {
                 font-family: 'JetBrains Mono', monospace;
-                font-size: 10px;
-                font-weight: 600;
-                letter-spacing: 0.1em;
-                color: #ccc;
-                text-transform: uppercase;
+                font-size: 10px; font-weight: 600; letter-spacing: 0.12em;
+                color: #999; text-transform: uppercase;
             }
 
             /* ── Challenge Modal ── */
+            @media(prefers-reduced-motion:no-preference){
+                @keyframes rv-modalIn { from{opacity:0;transform:translateY(20px)} to{opacity:1;transform:translateY(0)} }
+            }
             .rv-modal-backdrop {
-                position: fixed;
-                inset: 0;
-                background: rgba(0,0,0,0.4);
-                backdrop-filter: blur(6px);
-                z-index: 80;
-                display: none;
-                align-items: center;
-                justify-content: center;
+                position: fixed; inset: 0;
+                background: rgba(0,0,0,0.4); backdrop-filter: blur(6px);
+                z-index: 80; display: none;
+                align-items: center; justify-content: center;
             }
-            .rv-modal-backdrop.open {
-                display: flex;
-            }
+            .rv-modal-backdrop.open { display: flex; }
+            .rv-modal-backdrop.open .rv-modal { animation: rv-modalIn .2s var(--rv-ease) both; }
             .rv-modal {
                 background: #fff;
                 width: 480px;
@@ -688,20 +618,19 @@ export function renderRivalry() {
 
             /* ── Empty State ── */
             .rv-empty {
-                text-align: center;
-                padding: 80px 20px;
-                color: #ccc;
+                text-align: center; padding: 80px 20px;
+                border: 2px dashed #f0f0f0;
+            }
+            .rv-empty-icon {
+                width: 48px; height: 48px; margin: 0 auto 20px;
+                opacity: 0.2;
             }
             .rv-empty-title {
-                font-size: 18px;
-                font-weight: 500;
-                color: #999;
+                font-size: 16px; font-weight: 500; color: #999;
                 margin-bottom: 8px;
             }
             .rv-empty-sub {
-                font-size: 13px;
-                color: #ccc;
-                margin-bottom: 24px;
+                font-size: 13px; color: #ccc; margin-bottom: 24px;
             }
 
             /* ── Hottest Rivalry Featured Card ── */
@@ -873,10 +802,11 @@ export function renderRivalry() {
                         <div class="rv-hero-left">
                             <h1 class="rv-hero-title">Head-to-head <strong>duels.</strong><br>Operators vs operators.</h1>
                             <p class="rv-hero-sub">Challenge another operator to a capital-backed performance contest. Both lock funds. Verified metrics determine the winner. Loser forfeits capital.</p>
+                            <div class="rv-hero-rule"></div>
                         </div>
                         <div class="rv-hero-right">
                             <button class="rv-btn-challenge" id="rv-btn-issue">
-                        ISSUE CHALLENGE
+                        ⚔ ISSUE CHALLENGE
                     </button>
                         </div>
                     </div>
@@ -943,7 +873,7 @@ export function renderRivalry() {
                         <div class="rv-mech-card">
                             <div class="rv-mech-num">03</div>
                             <div class="rv-mech-label">Settle</div>
-                            <div class="rv-mech-desc">At deadline, the oracle compares growth. The operator with greater improvement wins the combined stake pool. No appeals. Final settlement.</div>
+                            <div class="rv-mech-desc">At deadline, each operator's growth is verified against their target. Hit it and collect the rivalry multiplier. Miss and forfeit your capital.</div>
                         </div>
                     </div>
                 </div>
@@ -951,7 +881,10 @@ export function renderRivalry() {
 
             <!-- Warning -->
             <div class="rv-warning">
-                <div class="rv-warning-text">Both operators lock capital. The losing operator forfeits their stake. No appeals. No reversals.</div>
+                <div class="rv-warning-inner">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#999" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+                    <div class="rv-warning-text">Both operators lock capital. The losing operator forfeits their stake. No appeals. No reversals.</div>
+                </div>
             </div>
         </div>
 
@@ -1099,8 +1032,17 @@ export async function initRivalry() {
     let allRivalries = [];
     let isLive = false;
 
-    // Show loading in grid
-    grid.innerHTML = '<div style="grid-column:1/-1;text-align:center;padding:60px 20px;color:#ccc;font-family:JetBrains Mono,monospace;font-size:11px;letter-spacing:0.08em;">LOADING RIVALRIES...</div>';
+    // Show skeleton loading in grid
+    grid.innerHTML = Array(4).fill(0).map(() => `<div class="rv-skeleton">
+        <div class="rv-skel-bar" style="width:120px;height:10px;margin-bottom:20px;"></div>
+        <div class="rv-skel-bar" style="width:180px;height:14px;margin-bottom:18px;"></div>
+        <div style="display:flex;gap:0;background:#fafafa;border:1px solid #f0f0f0;margin-bottom:18px;">
+            <div style="flex:1;padding:20px;"><div class="rv-skel-bar" style="width:60px;height:8px;margin-bottom:8px;"></div><div class="rv-skel-bar" style="width:80px;height:10px;margin-bottom:8px;"></div><div class="rv-skel-bar" style="width:50px;height:24px;"></div></div>
+            <div style="width:56px;background:#f0f0f0;"></div>
+            <div style="flex:1;padding:20px;text-align:right;"><div class="rv-skel-bar" style="width:60px;height:8px;margin-bottom:8px;margin-left:auto;"></div><div class="rv-skel-bar" style="width:80px;height:10px;margin-bottom:8px;margin-left:auto;"></div><div class="rv-skel-bar" style="width:50px;height:24px;margin-left:auto;"></div></div>
+        </div>
+        <div style="display:flex;justify-content:space-between;"><div class="rv-skel-bar" style="width:80px;height:16px;"></div><div class="rv-skel-bar" style="width:60px;height:14px;"></div><div class="rv-skel-bar" style="width:70px;height:10px;"></div></div>
+    </div>`).join('');
 
     try {
         const res = await api.getRivalries({ limit: 50 });
@@ -1123,71 +1065,94 @@ export async function initRivalry() {
         return colors[provider] || '#111';
     }
 
+    function renderSkeleton() {
+        return `<div class="rv-skeleton">
+            <div class="rv-skel-bar" style="width:120px;height:10px;margin-bottom:20px;"></div>
+            <div class="rv-skel-bar" style="width:180px;height:14px;margin-bottom:18px;"></div>
+            <div style="display:flex;gap:0;background:#fafafa;border:1px solid #f0f0f0;margin-bottom:18px;">
+                <div style="flex:1;padding:20px;"><div class="rv-skel-bar" style="width:60px;height:8px;margin-bottom:8px;"></div><div class="rv-skel-bar" style="width:80px;height:10px;margin-bottom:8px;"></div><div class="rv-skel-bar" style="width:50px;height:24px;"></div></div>
+                <div style="width:56px;background:#f0f0f0;"></div>
+                <div style="flex:1;padding:20px;text-align:right;"><div class="rv-skel-bar" style="width:60px;height:8px;margin-bottom:8px;margin-left:auto;"></div><div class="rv-skel-bar" style="width:80px;height:10px;margin-bottom:8px;margin-left:auto;"></div><div class="rv-skel-bar" style="width:50px;height:24px;margin-left:auto;"></div></div>
+            </div>
+            <div style="display:flex;justify-content:space-between;"><div class="rv-skel-bar" style="width:80px;height:16px;"></div><div class="rv-skel-bar" style="width:60px;height:14px;"></div><div class="rv-skel-bar" style="width:70px;height:10px;"></div></div>
+        </div>`;
+    }
+
     function renderCard(r) {
         const isLeadingChallenger = r.challenger.growth >= r.opponent.growth;
         const statusClass = r.status === 'pending' ? 'pending' : r.status === 'settled' ? 'ended' : '';
         const statusLabel = r.status === 'pending' ? 'AWAITING ACCEPTANCE' : r.status === 'settled' ? 'SETTLED' : 'LIVE';
         const timeLabel = r.status === 'settled' ? 'Completed' : r.daysLeft <= 1 ? `${r.daysLeft * 24}h left` : `${r.daysLeft}d left`;
+        const timeUrgent = r.status !== 'settled' && r.daysLeft <= 3;
+        const shortId = r.id.substring(0, 8);
 
         // Momentum bar percentages
         const totalGrowth = Math.abs(r.challenger.growth) + Math.abs(r.opponent.growth);
         const leftPct = totalGrowth > 0 ? Math.round((Math.abs(r.challenger.growth) / totalGrowth) * 100) : 50;
         const rightPct = 100 - leftPct;
-        const leaderClass = r.status === 'pending' ? '' : (isLeadingChallenger ? 'leader-left' : 'leader-right');
+
+        // Growth display
+        const challGrowth = r.status === 'pending'
+            ? '<span class="rv-player-growth awaiting">Awaiting</span>'
+            : `<span class="rv-player-growth ${isLeadingChallenger ? 'leading' : 'trailing'}">${r.challenger.growth > 0 ? '+' : ''}${r.challenger.growth}%</span>`;
+        const oppGrowth = r.status === 'pending'
+            ? '<span class="rv-player-growth awaiting">Awaiting</span>'
+            : `<span class="rv-player-growth ${!isLeadingChallenger ? 'leading' : 'trailing'}">${r.opponent.growth > 0 ? '+' : ''}${r.opponent.growth}%</span>`;
+
+        // Lead dots
+        const challDot = r.status !== 'pending' ? `<span class="rv-lead-dot" style="background:${isLeadingChallenger ? 'var(--rv-green)' : 'var(--rv-red)'}"></span>` : '';
+        const oppDot = r.status !== 'pending' ? `<span class="rv-lead-dot" style="background:${!isLeadingChallenger ? 'var(--rv-green)' : 'var(--rv-red)'}"></span>` : '';
+
+        // Action buttons
+        let actionsHtml = '';
+        if (r.status === 'pending') {
+            if (r.isOpen) {
+                actionsHtml = `<div class="rv-card-actions"><button class="rv-action-btn rv-action-accept" data-rivalry-id="${r.id}" onclick="event.stopPropagation();window.app.acceptRivalry('${r.id}')" style="flex:1;">⚡ ACCEPT OPEN CHALLENGE</button></div>`;
+            } else {
+                actionsHtml = `<div class="rv-card-actions"><button class="rv-action-btn rv-action-accept" data-rivalry-id="${r.id}" onclick="event.stopPropagation();window.app.acceptRivalry('${r.id}')">✓ ACCEPT</button><button class="rv-action-btn rv-action-decline" data-rivalry-id="${r.id}" onclick="event.stopPropagation();window.app.declineRivalry('${r.id}')">✕ DECLINE</button></div>`;
+            }
+        }
 
         return `
-            <div class="rv-card ${leaderClass}" data-status="${r.status}" data-id="${r.id}">
+            <div class="rv-card" data-status="${r.status}" data-id="${r.id}">
                 <div class="rv-card-header">
                     <div class="rv-card-status ${statusClass}">
                         <span class="dot"></span>
                         ${statusLabel}
                     </div>
-                    ${r.isOpen && r.status === 'pending' ? '<span style="font-family:JetBrains Mono,monospace;font-size:9px;letter-spacing:0.1em;background:#1a1a1a;color:#fff;padding:3px 8px;font-weight:700;">🌐 OPEN</span>' : ''}
-                    <span class="rv-card-id">${r.id}</span>
+                    ${r.isOpen && r.status === 'pending' ? '<span class="rv-open-badge">🌐 OPEN</span>' : ''}
+                    <span class="rv-card-id">${shortId}</span>
                 </div>
                 <div class="rv-card-metric">${r.metric}</div>
                 <div class="rv-versus">
                     <div class="rv-player">
                         <span class="rv-player-label">Challenger</span>
-                        <span class="rv-player-name">${r.challenger.name}</span>
-                        <span class="rv-player-growth ${isLeadingChallenger ? 'leading' : 'trailing'}">
-                            ${r.status === 'pending' ? '—' : (r.challenger.growth > 0 ? '+' : '') + r.challenger.growth + '%'}
-                        </span>
+                        <span class="rv-player-name">${challDot}${r.challenger.name}</span>
+                        ${challGrowth}
                     </div>
                     <div class="rv-vs-divider">
                         <span class="rv-vs-text">VS</span>
                     </div>
                     <div class="rv-player right">
                         <span class="rv-player-label">Opponent</span>
-                        <span class="rv-player-name">${r.opponent.name}</span>
-                        <span class="rv-player-growth ${!isLeadingChallenger ? 'leading' : 'trailing'}">
-                            ${r.status === 'pending' ? '—' : (r.opponent.growth > 0 ? '+' : '') + r.opponent.growth + '%'}
-                        </span>
+                        <span class="rv-player-name">${r.opponent.name}${oppDot}</span>
+                        ${oppGrowth}
                     </div>
                 </div>
                 ${r.status !== 'pending' ? `
                 <div class="rv-momentum">
                     <div class="rv-momentum-left" style="width:${leftPct}%"></div>
                     <div class="rv-momentum-right" style="width:${rightPct}%"></div>
-                </div>` : (r.isOpen ? `
-                <div style="display:flex;gap:8px;justify-content:center;padding:8px 0;">
-                    <button class="rv-accept-btn" data-rivalry-id="${r.id}" onclick="event.stopPropagation();window.app.acceptRivalry('${r.id}')" style="flex:1;padding:10px;background:#1a1a1a;color:#fff;border:none;font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:0.1em;cursor:pointer;font-weight:700;">⚡ ACCEPT OPEN CHALLENGE</button>
-                </div>` : `
-                <div style="display:flex;gap:8px;justify-content:center;padding:8px 0;">
-                    <button class="rv-accept-btn" data-rivalry-id="${r.id}" onclick="event.stopPropagation();window.app.acceptRivalry('${r.id}')" style="flex:1;padding:10px;background:#1a1a1a;color:#fff;border:none;font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:0.1em;cursor:pointer;font-weight:700;">✓ ACCEPT</button>
-                    <button class="rv-decline-btn" data-rivalry-id="${r.id}" onclick="event.stopPropagation();window.app.declineRivalry('${r.id}')" style="flex:1;padding:10px;background:#fff;color:#752122;border:1px solid #eee;font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:0.1em;cursor:pointer;font-weight:700;">✕ DECLINE</button>
-                </div>`)}
+                </div>` : ''}
                 <div class="rv-card-bottom">
                     <div class="rv-card-stake">
                         <span class="rv-card-stake-val">$${(r.stake * 2).toLocaleString()}</span>
                         <span class="rv-card-stake-lbl">Combined Pool</span>
                     </div>
-                    <div class="rv-card-provider">
-                        <span class="rv-card-provider-dot" style="background:${getProviderColor(r.provider)}"></span>
-                        <span class="rv-card-provider-name">${r.provider.toUpperCase()}</span>
-                    </div>
-                    <span class="rv-card-time">○ ${timeLabel}</span>
+                    <span class="rv-card-provider-pill" style="background:${getProviderColor(r.provider)}">${r.provider.toUpperCase()}</span>
+                    <span class="rv-card-time${timeUrgent ? ' urgent' : ''}">○ ${timeLabel}</span>
                 </div>
+                ${actionsHtml}
             </div>
         `;
     }
@@ -1214,9 +1179,10 @@ export async function initRivalry() {
         if (filtered.length === 0) {
             grid.innerHTML = `
                 <div class="rv-empty" style="grid-column:1/-1;">
+                    <svg class="rv-empty-icon" viewBox="0 0 48 48" fill="none" stroke="#ccc" stroke-width="1.5" xmlns="http://www.w3.org/2000/svg"><line x1="8" y1="40" x2="24" y2="8"/><line x1="40" y1="40" x2="24" y2="8"/><line x1="12" y1="32" x2="36" y2="32"/></svg>
                     <div class="rv-empty-title">No rivalries found</div>
                     <div class="rv-empty-sub">${activeFilter === 'active' ? 'Issue a challenge to start the first duel.' : 'No rivalries match your current filter.'}</div>
-                    <button class="rv-btn-challenge" onclick="document.getElementById('rv-challenge-modal').classList.add('open')" style="margin:0 auto;">ISSUE CHALLENGE</button>
+                    <button class="rv-btn-challenge" onclick="document.getElementById('rv-challenge-modal').classList.add('open')" style="margin:0 auto;">⚔ ISSUE CHALLENGE</button>
                 </div>
             `;
             return;
@@ -1288,14 +1254,14 @@ export async function initRivalry() {
                 const res = await api.getRivalryStats();
                 if (res.ok && res.stats) {
                     const s = res.stats;
-                    if (statActive) statActive.textContent = s.activeRivalries || 0;
+                    if (statActive) statActive.textContent = s.activeRivalries || '—';
                     if (statCapital) {
                         const c = (s.totalCapitalLockedCents || 0) / 100;
-                        statCapital.textContent = c >= 1000 ? (c / 1000).toFixed(0) + 'k' : c.toLocaleString();
+                        statCapital.textContent = c === 0 ? '—' : c >= 1000 ? (c / 1000).toFixed(0) + 'k' : c.toLocaleString();
                     }
                     if (statLargest) {
                         const l = (s.largestPoolCents || 0) / 100;
-                        statLargest.textContent = l >= 1000 ? (l / 1000).toFixed(0) + 'k' : l.toLocaleString();
+                        statLargest.textContent = l === 0 ? '—' : l >= 1000 ? (l / 1000).toFixed(0) + 'k' : l.toLocaleString();
                     }
                     return;
                 }
@@ -1307,7 +1273,7 @@ export async function initRivalry() {
         const totalCapital = allRivalries.reduce((sum, r) => sum + (r.stake * 2), 0);
         const largest = Math.max(...allRivalries.map(r => r.stake * 2));
 
-        if (statActive) statActive.textContent = active.length;
+        if (statActive) statActive.textContent = active.length || '—';
         if (statCapital) {
             statCapital.textContent = totalCapital >= 1000 ? (totalCapital / 1000).toFixed(0) + 'k' : totalCapital.toLocaleString();
         }
@@ -1506,4 +1472,22 @@ export async function initRivalry() {
     renderFeatured();
     renderGrid();
     updatePreview();
+
+    // ── How It Works scroll-reveal ──
+    if ('IntersectionObserver' in window) {
+        const mechCards = document.querySelectorAll('.rv-mech-card');
+        mechCards.forEach((card, i) => {
+            card.classList.add('rv-reveal');
+            card.style.transitionDelay = `${i * 150}ms`;
+        });
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.2 });
+        mechCards.forEach(card => observer.observe(card));
+    }
 }

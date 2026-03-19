@@ -521,7 +521,7 @@ export function renderContracts() {
                                 </div>
                                 <div>
                                     <div class="ext-lbl">Tier</div>
-                                    <div class="ext-val sm" id="ext-tier">Tier I — Controlled</div>
+                                    <div class="ext-val sm" id="ext-tier">PLEDGE</div>
                                 </div>
                                 <div>
                                     <div class="ext-lbl">Expected Pass Rate</div>
@@ -661,10 +661,13 @@ export function initContracts() {
         const tierToRisk = {
             'controlled': 'STEADY',
             'steady': 'STEADY',
+            'pledge': 'STEADY',
             'elevated': 'BOLD',
             'bold': 'BOLD',
+            'stake': 'BOLD',
             'maximum': 'ALL_IN',
             'all_in': 'ALL_IN',
+            'all-in': 'ALL_IN',
         };
         if (tierToRisk[tierParam]) selectedRisk = tierToRisk[tierParam];
 
@@ -970,9 +973,9 @@ export function initContracts() {
     function hydrateFields() {
         // Tier display
         const tierMap = {
-            'STEADY': { name: 'Tier I — Controlled', rate: '~30%', mult: 1.5 },
-            'BOLD': { name: 'Tier II — Elevated', rate: '~20%', mult: 2.5 },
-            'ALL_IN': { name: 'Tier III — Maximum', rate: '~10%', mult: 4.0 }
+            'STEADY': { name: 'PLEDGE', rate: '~30%', mult: 1.5 },
+            'BOLD': { name: 'STAKE', rate: '~20%', mult: 2.5 },
+            'ALL_IN': { name: 'ALL-IN', rate: '~10%', mult: 4.0 }
         };
         const tier = tierMap[selectedRisk] || tierMap['STEADY'];
         multiplier = tier.mult;

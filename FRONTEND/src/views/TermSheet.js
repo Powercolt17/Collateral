@@ -722,15 +722,15 @@ function setText(id, value) {
 
 function formatTierName(tier) {
     const t = (tier || '').toLowerCase();
-    if (t.includes('max') || t === 'tier iii' || t === 'elite') return 'Tier III — Maximum';
-    if (t.includes('elev') || t === 'tier ii' || t === 'advanced') return 'Tier II — Elevated';
-    return 'Tier I — Controlled';
+    if (t.includes('max') || t === 'tier iii' || t === 'elite' || t === 'all-in' || t === 'all_in') return 'ALL-IN';
+    if (t.includes('elev') || t === 'tier ii' || t === 'advanced' || t === 'stake') return 'STAKE';
+    return 'PLEDGE';
 }
 
 function getPassRate(tier) {
     const t = (tier || '').toLowerCase();
-    if (t.includes('max') || t === 'tier iii' || t === 'elite') return '~10%';
-    if (t.includes('elev') || t === 'tier ii' || t === 'advanced') return '~20%';
+    if (t.includes('max') || t === 'tier iii' || t === 'elite' || t === 'all-in' || t === 'all_in') return '~10%';
+    if (t.includes('elev') || t === 'tier ii' || t === 'advanced' || t === 'stake') return '~20%';
     return '~30%';
 }
 

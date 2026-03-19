@@ -20,18 +20,18 @@ function computeTargetPct(metricKey: string, tier: string): number {
     const isFollowers = metricKey.startsWith('x') || metricKey === 'youtube_subscribers';
     const isViews = metricKey === 'youtube_30day_views';
 
-    // Targets calibrated to win rates: Controlled ~30%, Elevated ~20%, Maximum ~10%
-    if (t === 'controlled') {
+    // Targets calibrated to win rates: PLEDGE ~30%, STAKE ~20%, ALL-IN ~10%
+    if (t === 'controlled' || t === 'pledge') {
         if (isRevenue) return 30;
         if (isFollowers) return 25;
         if (isViews) return 40;
         return 20; // orders/units
-    } else if (t === 'elevated') {
+    } else if (t === 'elevated' || t === 'stake') {
         if (isRevenue) return 60;
         if (isFollowers) return 50;
         if (isViews) return 75;
         return 40; // orders/units
-    } else { // maximum
+    } else { // maximum / all-in
         if (isRevenue) return 100;
         if (isFollowers) return 100;
         if (isViews) return 150;
@@ -382,7 +382,7 @@ export async function getMarketInstanceDetails(instanceId: string) {
     const { instance, template } = row;
     const rules = (template.rulesJson as any) || {};
     const tierUpper = (instance.tier as string).toUpperCase();
-    const winRate = { 'CONTROLLED': '~30%', 'ELEVATED': '~20%', 'MAXIMUM': '~10%' }[tierUpper] || '~15%';
+    const winRate = { 'CONTROLLED': '~30%', 'PLEDGE': '~30%', 'ELEVATED': '~20%', 'STAKE': '~20%', 'MAXIMUM': '~10%', 'ALL-IN': '~10%' }[tierUpper] || '~15%';
 
     return {
         // Core Template Fields
@@ -395,7 +395,7 @@ export async function getMarketInstanceDetails(instanceId: string) {
         // Instance-Specific Terms (The "Offer")
         id: instance.id,
         tier: instance.tier,
-        riskTier: tierUpper === 'CONTROLLED' ? 'STANDARD' : tierUpper === 'ELEVATED' ? 'ADVANCED' : 'ELITE',
+        riskTier: (tierUpper === 'CONTROLLED' || tierUpper === 'PLEDGE') ? 'STANDARD' : (tierUpper === 'ELEVATED' || tierUpper === 'STAKE') ? 'ADVANCED' : 'ELITE',
         minStakeCents: instance.minLockCents || 2500,
         maxStakeCents: instance.maxLockCents || 50000,
         feeBps: (instance.instanceTermsJson as any)?.executionFeeBps || 200,

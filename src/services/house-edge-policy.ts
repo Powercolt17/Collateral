@@ -41,6 +41,13 @@
 
 export type RiskTier = 'STANDARD' | 'ADVANCED' | 'ELITE';
 
+// Display names for tiers (visceral brand language)
+export const TIER_DISPLAY_NAMES: Record<RiskTier, string> = {
+    STANDARD: 'PLEDGE',
+    ADVANCED: 'STAKE',
+    ELITE: 'ALL-IN',
+};
+
 // =============================================================================
 // STAKE CAPS (Hard maximum per contract — NO EXCEPTIONS)
 // =============================================================================
@@ -49,19 +56,19 @@ export const STAKE_CAPS: Record<RiskTier, {
     minUsdCents: number;
     maxUsdCents: number;
 }> = {
-    // Controlled: ~25% win rate, 1.7x payout
+    // PLEDGE: ~25% win rate, 1.7x payout
     STANDARD: {
         minUsdCents: 100_00,      // $100 minimum
         maxUsdCents: 2_500_00,    // $2,500 maximum per contract
     },
 
-    // Elevated: ~20% win rate, 2.5x payout
+    // STAKE: ~20% win rate, 2.5x payout
     ADVANCED: {
         minUsdCents: 250_00,      // $250 minimum
         maxUsdCents: 5_000_00,    // $5,000 maximum per contract
     },
 
-    // Maximum: ~10% win rate, 4.0x payout
+    // ALL-IN: ~10% win rate, 4.0x payout
     ELITE: {
         minUsdCents: 500_00,      // $500 minimum
         maxUsdCents: 10_000_00,   // $10,000 maximum per contract
@@ -80,9 +87,9 @@ export const STAKE_CAPS: Record<RiskTier, {
 // =============================================================================
 
 export const PAYOUT_MULTIPLIERS: Record<RiskTier, number> = {
-    STANDARD: 1.7,   // Controlled: $1,700 on $1,000 stake
-    ADVANCED: 2.5,   // Elevated:   $2,500 on $1,000 stake
-    ELITE: 4.0,      // Maximum:    $4,000 on $1,000 stake
+    STANDARD: 1.7,   // PLEDGE:  $1,700 on $1,000 stake
+    ADVANCED: 2.5,   // STAKE:   $2,500 on $1,000 stake
+    ELITE: 4.0,      // ALL-IN:  $4,000 on $1,000 stake
 };
 
 // =============================================================================
@@ -92,9 +99,9 @@ export const PAYOUT_MULTIPLIERS: Record<RiskTier, number> = {
 
 export const MAX_SINGLE_CONTRACT_POOL_PCT = 0.05;  // 5% max of pool per contract
 export const MAX_TIER_POOL_EXPOSURE_PCT: Record<RiskTier, number> = {
-    STANDARD: 0.30, // Max 30% of pool across all Controlled contracts
-    ADVANCED: 0.25, // Max 25% of pool across all Elevated contracts  
-    ELITE: 0.15,    // Max 15% of pool across all Maximum contracts
+    STANDARD: 0.30, // Max 30% of pool across all PLEDGE contracts
+    ADVANCED: 0.25, // Max 25% of pool across all STAKE contracts  
+    ELITE: 0.15,    // Max 15% of pool across all ALL-IN contracts
 };
 
 // Minimum pool balance to accept new contracts
@@ -298,7 +305,7 @@ export function getHouseEdgeReport() {
     return {
         tiers: {
             STANDARD: {
-                displayName: 'Controlled',
+                displayName: 'PLEDGE',
                 targetFailureRate: 0.75,
                 winRate: 0.25,
                 payoutMultiplier: PAYOUT_MULTIPLIERS.STANDARD,
@@ -308,7 +315,7 @@ export function getHouseEdgeReport() {
                 maxPayout: `$${(calculatePayout(STAKE_CAPS.STANDARD.maxUsdCents, 'STANDARD') / 100).toLocaleString()}`,
             },
             ADVANCED: {
-                displayName: 'Elevated',
+                displayName: 'STAKE',
                 targetFailureRate: 0.80,
                 winRate: 0.20,
                 payoutMultiplier: PAYOUT_MULTIPLIERS.ADVANCED,
@@ -318,7 +325,7 @@ export function getHouseEdgeReport() {
                 maxPayout: `$${(calculatePayout(STAKE_CAPS.ADVANCED.maxUsdCents, 'ADVANCED') / 100).toLocaleString()}`,
             },
             ELITE: {
-                displayName: 'Maximum',
+                displayName: 'ALL-IN',
                 targetFailureRate: 0.90,
                 winRate: 0.10,
                 payoutMultiplier: PAYOUT_MULTIPLIERS.ELITE,

@@ -202,7 +202,7 @@ function showContent(c) {
     const feePercent = (feeBps / 100).toFixed(1);
     const windowDays = 30;
     const multiplier = tierUpper === 'MAXIMUM' ? 4.0 : tierUpper === 'ELEVATED' ? 2.5 : 1.5;
-    const winRate = tierUpper === 'CONTROLLED' ? '~30%' : tierUpper === 'ELEVATED' ? '~20%' : '~10%';
+    const winRate = tierUpper === 'CONTROLLED' || tierUpper === 'PLEDGE' ? '~30%' : tierUpper === 'ELEVATED' || tierUpper === 'STAKE' ? '~20%' : '~10%';
     const targetHint = c.target_hint || c.display_target_hint || '+15%';
     const stakeRange = (minStake === maxStake) ? `$${minStake.toLocaleString()}` : `$${minStake.toLocaleString()} – $${maxStake.toLocaleString()}`;
     const domain = (c.domain || 'commerce').charAt(0).toUpperCase() + (c.domain || 'commerce').slice(1);

@@ -286,9 +286,10 @@ export function openExecutionModal(contractData) {
     const shortId = (id || '').split('-')[0].slice(0, 4).toUpperCase();
     idEl.textContent = `RCP-${shortId}`;
 
-    const displayTier = (tier || 'controlled').toUpperCase();
+    const rawTier = (tier || 'controlled').toUpperCase();
+    const displayTier = {CONTROLLED:'PLEDGE',ELEVATED:'STAKE',MAXIMUM:'ALL-IN',PLEDGE:'PLEDGE',STAKE:'STAKE','ALL-IN':'ALL-IN'}[rawTier] || rawTier;
     const windowDays = window_days || 30;
-    const mult = multiplier || (displayTier === 'MAXIMUM' ? 4.0 : displayTier === 'ELEVATED' ? 2.5 : 1.5);
+    const mult = multiplier || (rawTier === 'MAXIMUM' || rawTier === 'ALL-IN' ? 4.0 : rawTier === 'ELEVATED' || rawTier === 'STAKE' ? 2.5 : 1.5);
     const targetDisplay = target_hint || goal || '+15%';
 
     // ── Build stake presets from min/max ──
@@ -423,7 +424,7 @@ async function runExecution(contractData, stake, multiplier, btnEl, bodyEl) {
     const id = contractData.id;
     const provider = contractData.provider || contractData.platform || 'stripe';
     const tier = (contractData.tier || 'controlled').toUpperCase();
-    const riskTier = tier === 'ELEVATED' ? 'ADVANCED' : tier === 'MAXIMUM' ? 'ELITE' : 'STANDARD';
+    const riskTier = (tier === 'ELEVATED' || tier === 'STAKE') ? 'ADVANCED' : (tier === 'MAXIMUM' || tier === 'ALL-IN') ? 'ELITE' : 'STANDARD';
     const goal = contractData.title || contractData.goal || '';
     const thresholdMatch = goal.match(/(\d+)%/);
     const threshold = thresholdMatch ? parseInt(thresholdMatch[1]) : 15;

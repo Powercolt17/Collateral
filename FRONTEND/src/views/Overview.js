@@ -1,7 +1,7 @@
 // Overview — Collateral Execution Queue
 // ALL contracts are percentage growth from baseline
 // Social (X) = Follower % growth, Sales/Commerce/Finance = Revenue % growth
-// Tiers: Controlled (~30% win), Elevated (~20% win), Maximum (~10% win)
+// Tiers: PLEDGE (~30% win), STAKE (~20% win), ALL-IN (~10% win)
 // HARD GATE: Minimum baseline required per tier — no starting from zero
 // EVERY BUTTON IS LIVE — tabs, pills, CTAs, modal, search, sort
 
@@ -574,6 +574,9 @@ export function renderOverview() {
             .eq-threshold-table .tier-controlled { color: #166534; font-weight: 600; }
             .eq-threshold-table .tier-elevated { color: #9a3412; font-weight: 600; }
             .eq-threshold-table .tier-maximum { color: #9f1239; font-weight: 600; }
+            .eq-threshold-table .tier-pledge { color: #166534; font-weight: 600; }
+            .eq-threshold-table .tier-stake { color: #9a3412; font-weight: 600; }
+            .eq-threshold-table .tier-all-in { color: #9f1239; font-weight: 600; }
             .eq-slider-row { display: flex; align-items: center; gap: 12px; padding: 12px 0; }
             .eq-slider-label { font-size: 12px; color: #888; min-width: 80px; }
             .eq-slider { flex: 1; accent-color: #752122; }
@@ -1204,9 +1207,9 @@ export function renderOverview() {
                 <div class="eq-rule-row"><input type="checkbox" id="rule-buyout"><span>Buyout Available</span></div>
 
                 <div class="eq-rule-divider">Tier Filter</div>
-                <div class="eq-rule-row"><input type="checkbox" checked id="tier-controlled" data-tier="controlled"><span>Controlled — ~30% designed win rate</span></div>
-                <div class="eq-rule-row"><input type="checkbox" checked id="tier-elevated" data-tier="elevated"><span>Elevated — ~20% designed win rate</span></div>
-                <div class="eq-rule-row"><input type="checkbox" checked id="tier-maximum" data-tier="maximum"><span>Maximum — ~10% designed win rate</span></div>
+                <div class="eq-rule-row"><input type="checkbox" checked id="tier-controlled" data-tier="controlled"><span>PLEDGE — ~30% designed win rate</span></div>
+                <div class="eq-rule-row"><input type="checkbox" checked id="tier-elevated" data-tier="elevated"><span>STAKE — ~20% designed win rate</span></div>
+                <div class="eq-rule-row"><input type="checkbox" checked id="tier-maximum" data-tier="maximum"><span>ALL-IN — ~10% designed win rate</span></div>
 
                 <div class="eq-rule-divider">Minimum Baseline Thresholds</div>
                 <table class="eq-threshold-table">
@@ -1220,19 +1223,19 @@ export function renderOverview() {
                     </thead>
                     <tbody>
                         <tr>
-                            <td class="tier-controlled">Controlled</td>
+                            <td class="tier-controlled">PLEDGE</td>
                             <td>≥ 100</td>
                             <td>≥ $500/mo</td>
                             <td>~30%</td>
                         </tr>
                         <tr>
-                            <td class="tier-elevated">Elevated</td>
+                            <td class="tier-elevated">STAKE</td>
                             <td>≥ 250</td>
                             <td>≥ $2,000/mo</td>
                             <td>~20%</td>
                         </tr>
                         <tr>
-                            <td class="tier-maximum">Maximum</td>
+                            <td class="tier-maximum">ALL-IN</td>
                             <td>≥ 500</td>
                             <td>≥ $5,000/mo</td>
                             <td>~10%</td>
@@ -1414,7 +1417,7 @@ export function initOverview() {
                 <div class="eq-card-provider">
                     <span class="dot ${dotClass}" style="width: 6px; height: 6px; border-radius: 50%; background: ${dotClass === 'stripe' ? '#635bff' : dotClass === 'shopify' ? '#96bf48' : dotClass === 'amazon' ? '#ff9900' : '#111'}"></span>
                     <span class="eq-provider-name">${platform.toUpperCase()}</span>
-                    <span class="eq-tier-badge ${tier}">${tier.toUpperCase()}</span>
+                    <span class="eq-tier-badge ${tier}">${{controlled:'PLEDGE',elevated:'STAKE',maximum:'ALL-IN'}[tier] || tier.toUpperCase()}</span>
                 </div>
                 <div class="eq-card-status"><span class="dot" style="width:4px; height:4px; border-radius:50%; background:#10b981; display:inline-block; margin-right:4px;"></span> TERMS VERIFIED</div>
                 <div class="eq-card-stake-info">

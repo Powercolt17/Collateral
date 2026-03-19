@@ -1351,14 +1351,15 @@ export async function initRivalry() {
         // Fallback: local data stats
         const active = allRivalries.filter(r => r.status === 'active');
         const totalCapital = allRivalries.reduce((sum, r) => sum + (r.stake * 2), 0);
-        const largest = Math.max(...allRivalries.map(r => r.stake * 2));
+        const stakes = allRivalries.map(r => r.stake * 2);
+        const largest = stakes.length > 0 ? Math.max(...stakes) : 0;
 
         if (statActive) statActive.textContent = active.length || '—';
         if (statCapital) {
-            statCapital.textContent = totalCapital >= 1000 ? (totalCapital / 1000).toFixed(0) + 'k' : totalCapital.toLocaleString();
+            statCapital.textContent = totalCapital === 0 ? '$0' : totalCapital >= 1000 ? '$' + (totalCapital / 1000).toFixed(0) + 'k' : '$' + totalCapital.toLocaleString();
         }
         if (statLargest) {
-            statLargest.textContent = largest >= 1000 ? (largest / 1000).toFixed(0) + 'k' : largest.toLocaleString();
+            statLargest.textContent = largest === 0 ? '$0' : largest >= 1000 ? '$' + (largest / 1000).toFixed(0) + 'k' : '$' + largest.toLocaleString();
         }
     }
 

@@ -13,6 +13,9 @@ import { getContract } from './contracts.js';
 import { appendEvent, getEventsForContract, eventExistsForExternalRef } from './ledger.js';
 import { deriveState, validateFromState, InvalidTransitionError } from './state-derivation.js';
 import { xAdapter } from '../adapters/x.js';
+import { shopifyAdapter } from '../adapters/shopify.js';
+import { amazonAdapter } from '../adapters/amazon-seller.js';
+import { youtubeAdapter } from '../adapters/youtube.js';
 import { stripeRevenueAdapter } from '../adapters/stripe-revenue.js';
 import { githubAdapter } from '../adapters/github.js';
 import { tryAcquireLock, getNextRetryTime, scheduleRetry } from './job-lock.js';
@@ -159,7 +162,8 @@ export async function verifyContract(contractId: string, tx?: DbLike): Promise<V
     }
 
     // 2. Platform support check
-    if (contract.platform !== 'X' && contract.platform !== 'STRIPE' && contract.platform !== 'GITHUB') {
+    const SUPPORTED_PLATFORMS = ['X', 'STRIPE', 'GITHUB', 'SHOPIFY', 'AMAZON', 'YOUTUBE'];
+    if (!SUPPORTED_PLATFORMS.includes(contract.platform)) {
         return {
             success: false,
             pass: false,
@@ -167,7 +171,7 @@ export async function verifyContract(contractId: string, tx?: DbLike): Promise<V
             threshold: 0,
             operator: '',
             evidence: { snapshotAt: '', metrics: {}, source: '' },
-            error: `Platform ${contract.platform} not supported. Only X, STRIPE, and GITHUB are supported.`,
+            error: `Platform ${contract.platform} not supported. Supported: ${SUPPORTED_PLATFORMS.join(', ')}.`,
         };
     }
 
@@ -312,6 +316,78 @@ export async function verifyContract(contractId: string, tx?: DbLike): Promise<V
                 threshold: githubResult.threshold,
                 operator: githubResult.operator,
                 evidence: githubResult.evidence as any
+            };
+        } else if (contract.platform === 'SHOPIFY') {
+            // Shopify adapter uses (userId, baseline, target, windowStart, windowEnd)
+            const condition = contract.conditionJson as Record<string, any> || {};
+            const baseline = contract.baselineJson as Record<string, any> || {};
+            const baselineRevenueCents = baseline.netCents ?? baseline.netRevenueCents ?? 0;
+            const targetDeltaCents = condition.targetDeltaCents ?? condition.thresholdCents ?? 0;
+            const windowStart = new Date(activationEvent.timestampUtc);
+            const windowEnd = contract.deadlineUtc;
+
+            const shopifyResult = await shopifyAdapter.evaluate(
+                contract.principalUserId,
+                baselineRevenueCents,
+                targetDeltaCents,
+                windowStart,
+                windowEnd
+            );
+            evalResult = {
+                success: true,
+                pass: shopifyResult.pass,
+                observedValue: shopifyResult.currentRevenueCents,
+                threshold: baselineRevenueCents + targetDeltaCents,
+                operator: '>=',
+                evidence: shopifyResult.evidence as any
+            };
+        } else if (contract.platform === 'AMAZON') {
+            // Amazon adapter uses same signature as Shopify
+            const condition = contract.conditionJson as Record<string, any> || {};
+            const baseline = contract.baselineJson as Record<string, any> || {};
+            const baselineRevenueCents = baseline.netCents ?? baseline.netRevenueCents ?? 0;
+            const targetDeltaCents = condition.targetDeltaCents ?? condition.thresholdCents ?? 0;
+            const windowStart = new Date(activationEvent.timestampUtc);
+            const windowEnd = contract.deadlineUtc;
+
+            const amazonResult = await amazonAdapter.evaluate(
+                contract.principalUserId,
+                baselineRevenueCents,
+                targetDeltaCents,
+                windowStart,
+                windowEnd
+            );
+            evalResult = {
+                success: true,
+                pass: amazonResult.pass,
+                observedValue: amazonResult.currentRevenueCents,
+                threshold: baselineRevenueCents + targetDeltaCents,
+                operator: '>=',
+                evidence: amazonResult.evidence as any
+            };
+        } else if (contract.platform === 'YOUTUBE') {
+            // YouTube adapter uses (userId, metricType, baseline, targetDelta)
+            const condition = contract.conditionJson as Record<string, any> || {};
+            const baseline = contract.baselineJson as Record<string, any> || {};
+            const metricType = contract.metricType === 'VIEWS' ? 'VIEWS' : 'SUBSCRIBERS';
+            const baselineValue = metricType === 'SUBSCRIBERS'
+                ? (baseline.subscribers ?? 0)
+                : (baseline.views30d ?? 0);
+            const targetDelta = condition.targetDelta ?? condition.threshold ?? 0;
+
+            const ytResult = await youtubeAdapter.evaluate(
+                contract.principalUserId,
+                metricType,
+                baselineValue,
+                targetDelta
+            );
+            evalResult = {
+                success: true,
+                pass: ytResult.pass,
+                observedValue: ytResult.currentValue,
+                threshold: baselineValue + targetDelta,
+                operator: '>=',
+                evidence: ytResult.evidence as any
             };
         } else {
             throw new Error(`Platform ${contract.platform} logic missing`);

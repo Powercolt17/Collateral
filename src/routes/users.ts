@@ -270,6 +270,29 @@ const usersRoutes: FastifyPluginAsync = async (fastify) => {
             verified: false,
         };
 
+        // Build YouTube connection from connected_accounts (canonical)
+        const youtubeAccount = accounts.find(a => a.platform === 'YOUTUBE');
+        let youtubeMeta: any = null;
+        if (youtubeAccount?.metadataJson) {
+            try {
+                youtubeMeta = typeof youtubeAccount.metadataJson === 'string'
+                    ? JSON.parse(youtubeAccount.metadataJson)
+                    : youtubeAccount.metadataJson;
+            } catch (e) {
+                youtubeMeta = null;
+            }
+        }
+        const youtubeConnection = youtubeAccount ? {
+            connected: youtubeAccount.status === 'ACTIVE',
+            verified: youtubeAccount.verificationStatus === 'VERIFIED',
+            channelTitle: youtubeMeta?.channelTitle || null,
+            channelId: youtubeAccount.externalAccountId || null,
+            connectedAt: youtubeAccount.connectedAt?.toISOString() || null,
+        } : {
+            connected: false,
+            verified: false,
+        };
+
         // Get all contracts for stats
         const userContracts = await db
             .select()
@@ -312,6 +335,11 @@ const usersRoutes: FastifyPluginAsync = async (fastify) => {
             ? Math.round((settledContracts / completedContracts) * 1000) / 10 // One decimal place
             : null; // null = "—" in UI
 
+        // Forfeited value in dollars
+        const forfeitedValueCents = contractsWithState
+            .filter(c => c.state === 'FORFEITED')
+            .reduce((sum, c) => sum + c.lockAmountUsdCents, 0);
+
         return {
             ok: true,
             user: {
@@ -330,6 +358,7 @@ const usersRoutes: FastifyPluginAsync = async (fastify) => {
             stripeConnection,
             shopifyConnection,
             amazonConnection,
+            youtubeConnection,
             stats: {
                 settlementRate, // null for new users, number for others
                 totalContracts,
@@ -337,6 +366,7 @@ const usersRoutes: FastifyPluginAsync = async (fastify) => {
                 settledContracts,
                 forfeitedContracts,
                 tvlSettledUsd: tvlSettledCents / 100,
+                forfeitedValueUsd: forfeitedValueCents / 100,
             },
         };
     });

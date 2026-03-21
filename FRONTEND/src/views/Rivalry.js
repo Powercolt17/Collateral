@@ -1356,10 +1356,10 @@ export async function initRivalry() {
 
         if (statActive) statActive.textContent = active.length || '—';
         if (statCapital) {
-            statCapital.textContent = totalCapital === 0 ? '$0' : totalCapital >= 1000 ? '$' + (totalCapital / 1000).toFixed(0) + 'k' : '$' + totalCapital.toLocaleString();
+            statCapital.textContent = totalCapital === 0 ? '0' : totalCapital >= 1000 ? (totalCapital / 1000).toFixed(0) + 'k' : totalCapital.toLocaleString();
         }
         if (statLargest) {
-            statLargest.textContent = largest === 0 ? '$0' : largest >= 1000 ? '$' + (largest / 1000).toFixed(0) + 'k' : '$' + largest.toLocaleString();
+            statLargest.textContent = largest === 0 ? '0' : largest >= 1000 ? (largest / 1000).toFixed(0) + 'k' : largest.toLocaleString();
         }
     }
 

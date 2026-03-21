@@ -5,49 +5,73 @@ export function renderDocs() {
     return `
         <style>
             /* ============================================================
-               DOCUMENTATION — ENFORCEMENT DOCTRINE
+               DOCUMENTATION — PREMIUM ENFORCEMENT DOCTRINE
                ============================================================ */
+            @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;700&display=swap');
+
             .doc {
-                background: #F2F2F2;
+                background: #0A0A0A;
                 min-height: calc(100vh - 72px);
-                font-family: 'Neue Haas Grotesk Display', 'Helvetica Neue', Helvetica, Arial, sans-serif;
-                color: #111;
+                font-family: 'Inter', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+                color: #E5E5E5;
             }
 
             .doc-container {
                 max-width: 1400px;
                 margin: 0 auto;
-                padding: 0 40px;
+                padding: 0 48px;
             }
 
-            /* ── Top Block (white) ── */
+            /* ── Hero Header ── */
             .doc-top {
-                background: #fff;
-                border-bottom: 1px solid #E0E0E0;
+                background: linear-gradient(135deg, #0F0F0F 0%, #1A0808 50%, #0F0F0F 100%);
+                border-bottom: 1px solid rgba(146, 24, 24, 0.3);
+                position: relative;
+                overflow: hidden;
+            }
+            .doc-top::before {
+                content: '';
+                position: absolute;
+                top: -50%;
+                right: -20%;
+                width: 500px;
+                height: 500px;
+                background: radial-gradient(circle, rgba(146, 24, 24, 0.08) 0%, transparent 70%);
+                pointer-events: none;
             }
             .doc-page-hdr {
-                padding: 20px 0 16px;
+                padding: 48px 0 40px;
+                position: relative;
+                z-index: 1;
             }
             .doc-page-title {
-                font-size: 18px;
-                font-weight: 600;
-                letter-spacing: -0.3px;
-                color: #111;
+                font-size: 36px;
+                font-weight: 900;
+                letter-spacing: -1.5px;
+                color: #FFFFFF;
                 margin: 0;
+                line-height: 1.1;
+                background: linear-gradient(135deg, #FFFFFF 0%, #D4D4D4 100%);
+                -webkit-background-clip: text;
+                -webkit-text-fill-color: transparent;
+                background-clip: text;
             }
             .doc-page-sub {
-                font-size: 12px;
-                color: #777;
-                margin: 4px 0 0;
+                font-size: 13px;
+                color: #921818;
+                margin: 12px 0 0;
                 font-family: 'JetBrains Mono', monospace;
+                font-weight: 500;
+                letter-spacing: 2px;
+                text-transform: uppercase;
             }
 
             /* ── Layout ── */
             .doc-layout {
                 display: grid;
-                grid-template-columns: 200px 1fr;
-                gap: 48px;
-                padding: 28px 0 60px;
+                grid-template-columns: 220px 1fr;
+                gap: 56px;
+                padding: 40px 0 80px;
             }
 
             /* ── Sidebar ── */
@@ -58,19 +82,21 @@ export function renderDocs() {
                 max-height: calc(100vh - 100px);
                 overflow-y: auto;
             }
-            .doc-sidebar::-webkit-scrollbar { width: 0; }
+            .doc-sidebar::-webkit-scrollbar { width: 3px; }
+            .doc-sidebar::-webkit-scrollbar-track { background: transparent; }
+            .doc-sidebar::-webkit-scrollbar-thumb { background: #333; border-radius: 3px; }
 
             .doc-nav-group {
-                margin-bottom: 20px;
+                margin-bottom: 28px;
             }
             .doc-nav-label {
                 font-family: 'JetBrains Mono', monospace;
                 font-size: 9px;
                 font-weight: 700;
                 text-transform: uppercase;
-                letter-spacing: 1.5px;
-                color: #999;
-                margin: 0 0 8px;
+                letter-spacing: 2px;
+                color: #921818;
+                margin: 0 0 10px;
                 padding: 0;
             }
             .doc-nav-list {
@@ -83,22 +109,25 @@ export function renderDocs() {
             }
             .doc-nav-link {
                 display: block;
-                font-size: 12px;
-                color: #666;
+                font-size: 13px;
+                color: #777;
                 text-decoration: none;
-                padding: 3px 0 3px 10px;
-                border-left: 2px solid transparent;
-                transition: all 0.12s;
+                padding: 6px 0 6px 14px;
+                border-left: 2px solid rgba(255,255,255,0.06);
+                transition: all 0.2s ease;
                 line-height: 1.5;
+                font-weight: 400;
             }
             .doc-nav-link:hover {
-                color: #111;
-                border-left-color: #DADADA;
+                color: #E5E5E5;
+                border-left-color: rgba(146, 24, 24, 0.4);
+                background: rgba(255,255,255,0.02);
             }
             .doc-nav-link.active {
-                color: #111;
+                color: #FFFFFF;
                 font-weight: 600;
                 border-left-color: #921818;
+                background: rgba(146, 24, 24, 0.08);
             }
 
             /* ── Content ── */
@@ -107,9 +136,9 @@ export function renderDocs() {
             }
 
             .doc-section {
-                margin-bottom: 36px;
-                padding-bottom: 36px;
-                border-bottom: 1px solid #E8E8E8;
+                margin-bottom: 48px;
+                padding-bottom: 48px;
+                border-bottom: 1px solid rgba(255,255,255,0.06);
             }
             .doc-section:last-child {
                 border-bottom: none;
@@ -117,169 +146,241 @@ export function renderDocs() {
             }
 
             .doc-section-title {
-                font-size: 16px;
-                font-weight: 600;
-                color: #111;
-                margin: 0 0 14px;
-                letter-spacing: -0.2px;
+                font-size: 26px;
+                font-weight: 800;
+                color: #FFFFFF;
+                margin: 0 0 20px;
+                letter-spacing: -0.8px;
+                line-height: 1.2;
+                position: relative;
+                padding-left: 18px;
             }
+            .doc-section-title::before {
+                content: '';
+                position: absolute;
+                left: 0;
+                top: 4px;
+                bottom: 4px;
+                width: 4px;
+                background: linear-gradient(180deg, #921818, #C02020);
+                border-radius: 2px;
+            }
+
             .doc-section-title-sm {
-                font-size: 13px;
-                font-weight: 600;
-                color: #111;
-                margin: 16px 0 8px;
+                font-size: 16px;
+                font-weight: 700;
+                color: #FFFFFF;
+                margin: 24px 0 10px;
+                letter-spacing: -0.3px;
             }
 
             .doc-p {
-                font-size: 13px;
-                color: #444;
-                line-height: 1.75;
-                margin: 0 0 12px;
+                font-size: 15px;
+                color: #A3A3A3;
+                line-height: 1.8;
+                margin: 0 0 16px;
             }
             .doc-p:last-child { margin-bottom: 0; }
 
             .doc-strong {
-                color: #111;
-                font-weight: 600;
+                color: #FFFFFF;
+                font-weight: 700;
             }
 
             .doc-list {
                 list-style: none;
                 padding: 0;
-                margin: 0 0 12px;
+                margin: 0 0 16px;
             }
             .doc-list li {
-                font-size: 13px;
-                color: #444;
-                line-height: 1.75;
-                padding-left: 16px;
+                font-size: 15px;
+                color: #A3A3A3;
+                line-height: 1.9;
+                padding-left: 22px;
                 position: relative;
             }
             .doc-list li::before {
-                content: '•';
+                content: '';
                 position: absolute;
-                left: 0;
-                color: #999;
-                font-weight: 700;
+                left: 4px;
+                top: 12px;
+                width: 6px;
+                height: 6px;
+                background: #921818;
+                border-radius: 50%;
             }
 
+            /* ── Rule Blocks (Callouts) ── */
             .doc-rule-block {
-                background: #fff;
-                border: 1px solid #E0E0E0;
-                border-radius: 4px;
-                padding: 12px 16px;
-                margin: 12px 0;
+                background: linear-gradient(135deg, rgba(146, 24, 24, 0.08) 0%, rgba(146, 24, 24, 0.03) 100%);
+                border: 1px solid rgba(146, 24, 24, 0.25);
+                border-left: 3px solid #921818;
+                border-radius: 6px;
+                padding: 16px 20px;
+                margin: 18px 0;
             }
             .doc-rule-text {
                 font-family: 'JetBrains Mono', monospace;
-                font-size: 10px;
-                color: #666;
+                font-size: 11px;
+                color: #D97706;
                 text-transform: uppercase;
-                letter-spacing: 0.5px;
+                letter-spacing: 0.8px;
                 line-height: 1.7;
+                font-weight: 500;
             }
 
+            /* ── Steps ── */
             .doc-step {
                 display: flex;
-                gap: 14px;
-                margin-bottom: 14px;
+                gap: 18px;
+                margin-bottom: 20px;
+                padding: 16px 20px;
+                background: rgba(255,255,255,0.02);
+                border: 1px solid rgba(255,255,255,0.06);
+                border-radius: 10px;
+                transition: all 0.2s ease;
+            }
+            .doc-step:hover {
+                background: rgba(255,255,255,0.04);
+                border-color: rgba(146, 24, 24, 0.2);
+                transform: translateY(-1px);
             }
             .doc-step-num {
-                width: 28px;
-                height: 28px;
-                background: #F5F5F5;
-                border: 1px solid #E0E0E0;
-                border-radius: 4px;
+                width: 36px;
+                height: 36px;
+                background: linear-gradient(135deg, #921818, #B52020);
+                border: none;
+                border-radius: 8px;
                 display: flex;
                 align-items: center;
                 justify-content: center;
                 font-family: 'JetBrains Mono', monospace;
-                font-size: 11px;
+                font-size: 12px;
                 font-weight: 700;
-                color: #666;
+                color: #FFFFFF;
                 flex-shrink: 0;
+                box-shadow: 0 2px 8px rgba(146, 24, 24, 0.3);
             }
             .doc-step-content {
                 flex: 1;
+                padding-top: 2px;
             }
             .doc-step-title {
-                font-size: 13px;
-                font-weight: 600;
-                color: #111;
-                margin: 0 0 2px;
+                font-size: 15px;
+                font-weight: 700;
+                color: #FFFFFF;
+                margin: 0 0 4px;
             }
             .doc-step-desc {
-                font-size: 12px;
-                color: #666;
+                font-size: 14px;
+                color: #888;
                 line-height: 1.6;
             }
 
+            /* ── Tier Cards ── */
             .doc-tier {
-                background: #fff;
-                border: 1px solid #E0E0E0;
-                border-radius: 4px;
-                padding: 10px 14px;
-                margin-bottom: 6px;
+                background: rgba(255,255,255,0.03);
+                border: 1px solid rgba(255,255,255,0.08);
+                border-radius: 10px;
+                padding: 16px 20px;
+                margin-bottom: 10px;
+                transition: all 0.2s ease;
+            }
+            .doc-tier:hover {
+                border-color: rgba(146, 24, 24, 0.3);
+                background: rgba(146, 24, 24, 0.04);
             }
             .doc-tier-name {
                 font-family: 'JetBrains Mono', monospace;
-                font-size: 10px;
+                font-size: 11px;
                 font-weight: 700;
                 text-transform: uppercase;
-                letter-spacing: 0.5px;
-                color: #111;
-                margin: 0 0 4px;
+                letter-spacing: 1.5px;
+                color: #921818;
+                margin: 0 0 6px;
             }
             .doc-tier-desc {
-                font-size: 12px;
-                color: #666;
-                line-height: 1.5;
+                font-size: 14px;
+                color: #888;
+                line-height: 1.6;
             }
 
+            /* ── FAQ ── */
             .doc-faq {
-                margin-bottom: 14px;
+                margin-bottom: 18px;
+                padding: 16px 20px;
+                background: rgba(255,255,255,0.02);
+                border: 1px solid rgba(255,255,255,0.06);
+                border-radius: 10px;
+                transition: all 0.2s ease;
+            }
+            .doc-faq:hover {
+                border-color: rgba(255,255,255,0.12);
+                background: rgba(255,255,255,0.04);
             }
             .doc-faq-q {
-                font-size: 13px;
-                font-weight: 600;
-                color: #111;
-                margin: 0 0 4px;
+                font-size: 15px;
+                font-weight: 700;
+                color: #FFFFFF;
+                margin: 0 0 8px;
             }
             .doc-faq-a {
-                font-size: 13px;
-                color: #555;
-                line-height: 1.6;
-                padding-left: 14px;
-                border-left: 2px solid #E0E0E0;
+                font-size: 14px;
+                color: #888;
+                line-height: 1.7;
+                padding-left: 16px;
+                border-left: 2px solid #921818;
             }
 
+            /* ── Footer Notice ── */
             .doc-divider-note {
                 display: flex;
                 align-items: center;
-                gap: 10px;
-                padding: 10px 16px;
-                background: #fff;
-                border: 1px solid #E0E0E0;
-                border-radius: 4px;
-                margin-top: 20px;
+                gap: 14px;
+                padding: 16px 20px;
+                background: linear-gradient(135deg, rgba(146, 24, 24, 0.06) 0%, rgba(146, 24, 24, 0.02) 100%);
+                border: 1px solid rgba(146, 24, 24, 0.2);
+                border-radius: 10px;
+                margin-top: 32px;
             }
             .doc-divider-note-icon {
-                color: #888;
+                color: #921818;
                 flex-shrink: 0;
             }
-            .doc-divider-note-icon svg { width: 14px; height: 14px; }
+            .doc-divider-note-icon svg { width: 16px; height: 16px; }
             .doc-divider-note-text {
                 font-family: 'JetBrains Mono', monospace;
-                font-size: 10px;
-                color: #666;
+                font-size: 11px;
+                color: #888;
                 text-transform: uppercase;
-                letter-spacing: 0.5px;
-                line-height: 1.6;
+                letter-spacing: 0.8px;
+                line-height: 1.7;
+            }
+
+            /* ── Section reveal animation ── */
+            .doc-section[data-reveal] {
+                opacity: 0;
+                transform: translateY(16px);
+                animation: docReveal 0.5s ease forwards;
+            }
+            .doc-section:nth-child(1) { animation-delay: 0.05s; }
+            .doc-section:nth-child(2) { animation-delay: 0.1s; }
+            .doc-section:nth-child(3) { animation-delay: 0.15s; }
+            .doc-section:nth-child(4) { animation-delay: 0.2s; }
+            .doc-section:nth-child(5) { animation-delay: 0.25s; }
+            .doc-section:nth-child(6) { animation-delay: 0.3s; }
+            .doc-section:nth-child(7) { animation-delay: 0.35s; }
+            .doc-section:nth-child(8) { animation-delay: 0.4s; }
+            .doc-section:nth-child(9) { animation-delay: 0.45s; }
+            .doc-section:nth-child(10) { animation-delay: 0.5s; }
+            .doc-section:nth-child(11) { animation-delay: 0.55s; }
+            @keyframes docReveal {
+                to { opacity: 1; transform: translateY(0); }
             }
 
             /* ── Responsive ── */
             @media (max-width: 900px) {
-                .doc-container { padding: 0 16px; }
+                .doc-container { padding: 0 20px; }
                 .doc-layout {
                     grid-template-columns: 1fr;
                     gap: 0;
@@ -287,11 +388,14 @@ export function renderDocs() {
                 .doc-sidebar {
                     position: relative;
                     top: 0;
-                    border-bottom: 1px solid #E0E0E0;
-                    padding-bottom: 16px;
-                    margin-bottom: 24px;
+                    border-bottom: 1px solid rgba(255,255,255,0.06);
+                    padding-bottom: 20px;
+                    margin-bottom: 32px;
                     max-height: none;
                 }
+                .doc-page-title { font-size: 28px; }
+                .doc-section-title { font-size: 22px; }
+                .doc-page-hdr { padding: 32px 0 28px; }
             }
         </style>
 
@@ -500,6 +604,7 @@ export function renderDocs() {
                                 <li>Stripe</li>
                                 <li>Shopify</li>
                                 <li>Amazon Seller</li>
+                                <li>YouTube</li>
                             </ul>
                             <p class="doc-p">More providers may be added.</p>
                             <p class="doc-p">All providers must:</p>

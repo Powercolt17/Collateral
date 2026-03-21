@@ -482,6 +482,16 @@ export async function initProfile() {
     const provClass = p => { if (!p) return ''; const l = p.toLowerCase(); if (l.includes('stripe')) return 'stripe'; if (l.includes('x') || l.includes('twitter')) return 'x'; if (l.includes('shopify')) return 'shopify'; if (l.includes('amazon')) return 'amazon'; if (l.includes('github')) return 'github'; return ''; };
     const daysLeft = d => { if (!d) return ''; const diff = Math.ceil((new Date(d) - Date.now()) / 86400000); return diff > 0 ? diff + 'd left' : 'expired'; };
     const progressPct = (created, deadline) => { if (!created || !deadline) return 0; const total = new Date(deadline) - new Date(created); const elapsed = Date.now() - new Date(created); return Math.min(Math.max((elapsed / total) * 100, 0), 100); };
+    const windowDays = (created, deadline) => { if (!created || !deadline) return null; return Math.round((new Date(deadline) - new Date(created)) / 86400000); };
+    const describeContract = c => {
+        if (c.description) return c.description;
+        if (c.title) return c.title;
+        const pNames = { X: 'X', STRIPE: 'Stripe Revenue', GITHUB: 'GitHub', SHOPIFY: 'Shopify Sales', AMAZON: 'Amazon Sales', YOUTUBE: 'YouTube' };
+        const mNames = { FOLLOWERS: 'Follower Growth', REVENUE: 'Revenue Target', MRR: 'MRR Growth', SUBSCRIBERS: 'Subscriber Growth', VIEWS: 'View Count', COMMITS: 'Commit Count', PRS_MERGED: 'PRs Merged', STARS_GAINED: 'Stars Gained', GROSS_SALES: 'Gross Sales', ORDER_COUNT: 'Order Volume', CHARGE_VOLUME: 'Charge Volume', IMPRESSIONS: 'Impressions', ENGAGEMENT_RATE: 'Engagement Rate' };
+        const p = pNames[c.platform] || c.platform || 'Performance';
+        const m = mNames[c.metricType] || c.metricType || 'Contract';
+        return `${p} — ${m}`;
+    };
 
     // ── Tab switching ──
     document.querySelectorAll('.prf-tab').forEach(tab => {
@@ -578,7 +588,10 @@ export async function initProfile() {
         if (tvlEl) tvlEl.textContent = fmtBigUSD(profile.stats?.tvlSettledUsd || 0);
 
         const forfEl = $('kpi-forfeit');
-        if (forfEl) forfEl.textContent = fmtBigUSD(profile.stats?.forfeitedValueUsd || 0);
+        if (forfEl) {
+            const forfVal = profile.stats?.forfeitedValueUsd != null ? profile.stats.forfeitedValueUsd : (forfeits.reduce((s, c) => s + (c.lockAmountUsdCents || 0), 0) / 100);
+            forfEl.textContent = fmtBigUSD(forfVal);
+        }
         const forfSubEl = $('kpi-forfeit-sub');
         if (forfSubEl) forfSubEl.textContent = forfeits.length + ' forfeiture event' + (forfeits.length !== 1 ? 's' : '');
 
@@ -672,46 +685,48 @@ export async function initProfile() {
                 const pc = provClass(c.platform);
                 const pct = progressPct(c.createdAt, c.deadlineUtc);
                 const dl = daysLeft(c.deadlineUtc);
+                const wd = windowDays(c.createdAt, c.deadlineUtc);
                 return `<div class="prf-cx" onclick="window.router.navigate('/contracts/${c.id}')">
                     <div class="prf-cx-top">
                         <span class="prf-cx-id">CTR-${c.id.substring(0, 5).toUpperCase()}</span>
                         <span class="prf-badge ${cls}">${lbl}</span>
                     </div>
-                    <div class="prf-cx-title">${c.description || c.title || 'Performance Contract'}</div>
+                    <div class="prf-cx-title">${describeContract(c)}</div>
                     <div class="prf-cx-meta">
                         ${pc ? '<span class="prf-prov"><span class="prf-prov-dot ' + pc + '"></span>' + c.platform + '</span>' : ''}
-                        ${c.executionWindowDays ? '<span class="prf-cx-mi">' + c.executionWindowDays + 'd window</span>' : ''}
+                        ${wd ? '<span class="prf-cx-mi">' + wd + 'd window</span>' : ''}
                         ${dl ? '<span class="prf-cx-mi">' + dl + '</span>' : ''}
                         <span class="prf-cx-stake">${fmtUSD(c.lockAmountUsdCents)}</span>
                     </div>
                     ${c.deadlineUtc ? '<div class="prf-cx-progress"><div class="prf-cx-progress-fill" style="width:' + pct.toFixed(0) + '%"></div></div>' : ''}
                     <div class="prf-cx-actions">
-                        <button class="prf-cta sm" onclick="event.stopPropagation();window.router.navigate(\'/contracts/${c.id}\')">View Contract</button>
+                        <button class="prf-cta sm" onclick="event.stopPropagation();window.router.navigate('/contracts/${c.id}')">View Contract</button>
                     </div>
                 </div>`;
             }).join('') + '</div>';
-            if (window.lucide) window.lucide.createIcons();
-        };
-        renderActive();
 
-        // Filter bar events — contracts
-        let cFilter = 'all', cSort = 'newest';
-        document.querySelectorAll('[data-cfilter]').forEach(btn => {
-            btn.addEventListener('click', () => {
-                document.querySelectorAll('[data-cfilter]').forEach(b => b.classList.remove('active'));
-                btn.classList.add('active');
-                cFilter = btn.getAttribute('data-cfilter');
-                renderActive(cFilter, cSort);
-            });
+        if (window.lucide) window.lucide.createIcons();
+    };
+    renderActive();
+
+    // Filter bar events — contracts
+    let cFilter = 'all', cSort = 'newest';
+    document.querySelectorAll('[data-cfilter]').forEach(btn => {
+        btn.addEventListener('click', () => {
+            document.querySelectorAll('[data-cfilter]').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            cFilter = btn.getAttribute('data-cfilter');
+            renderActive(cFilter, cSort);
         });
-        document.querySelectorAll('[data-csort]').forEach(btn => {
-            btn.addEventListener('click', () => {
-                document.querySelectorAll('[data-csort]').forEach(b => b.classList.remove('active'));
-                btn.classList.add('active');
-                cSort = btn.getAttribute('data-csort');
-                renderActive(cFilter, cSort);
-            });
+    });
+    document.querySelectorAll('[data-csort]').forEach(btn => {
+        btn.addEventListener('click', () => {
+            document.querySelectorAll('[data-csort]').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            cSort = btn.getAttribute('data-csort');
+            renderActive(cFilter, cSort);
         });
+    });
 
         // ━━━ SETTLEMENT HISTORY TAB ━━━
         const shTotal = $('sh-total'); if (shTotal) shTotal.textContent = fmtBigUSD((profile.stats?.tvlSettledUsd || 0));
@@ -729,13 +744,14 @@ export async function initProfile() {
                     const st = c.derivedState || c.state;
                     const cls = statusClass(st);
                     const lbl = statusLabel(st);
+                    const wd = windowDays(c.createdAt, c.deadlineUtc);
                     return `<div class="prf-sr" id="sr-${c.id}">
                         <div class="prf-sr-main" onclick="document.getElementById('sr-${c.id}').classList.toggle('expanded')">
                             <div>
                                 <span class="prf-badge ${cls}" style="margin-right:8px">${lbl}</span>
                             </div>
                             <div class="prf-sr-info">
-                                <div class="prf-sr-title">${c.description || c.title || 'Performance Contract'}</div>
+                                <div class="prf-sr-title">${describeContract(c)}</div>
                                 <div class="prf-sr-sub">${c.platform || ''} · CTR-${c.id.substring(0, 5).toUpperCase()}</div>
                             </div>
                             <div class="prf-sr-right">
@@ -746,7 +762,7 @@ export async function initProfile() {
                         <div class="prf-sr-detail">
                             <div class="prf-sr-detail-grid">
                                 <div><div class="prf-sr-detail-label">Stake</div><div class="prf-sr-detail-val">${fmtUSD(c.lockAmountUsdCents)}</div></div>
-                                <div><div class="prf-sr-detail-label">Window</div><div class="prf-sr-detail-val">${c.executionWindowDays || '—'}d</div></div>
+                                <div><div class="prf-sr-detail-label">Window</div><div class="prf-sr-detail-val">${wd || '—'}d</div></div>
                                 <div><div class="prf-sr-detail-label">Source</div><div class="prf-sr-detail-val">${c.platform || '—'}</div></div>
                                 <div><div class="prf-sr-detail-label">Metric</div><div class="prf-sr-detail-val">${c.metricType || '—'}</div></div>
                                 <div><div class="prf-sr-detail-label">Contract ID</div><div class="prf-sr-detail-val" style="font-family:'JetBrains Mono',monospace;font-size:10px">${c.id}</div></div>
@@ -811,7 +827,7 @@ export async function initProfile() {
                 else if (['SETTLED', 'SETTLED_SUCCESS', 'PAYOUT_COMPLETE', 'COMPLETED'].includes(st)) { type = 'settlement'; dotCls = 'green'; desc = 'Contract settled'; }
                 else if (['VERIFYING', 'VERIFIED'].includes(st)) { type = 'verification'; dotCls = 'blue'; desc = 'Verification initiated'; }
                 else if (['FUNDS_LOCKED', 'LOCKED', 'ACTIVE'].includes(st)) { type = 'execution'; dotCls = 'amber'; desc = 'Capital locked'; }
-                events.push({ type, dotCls, desc, date: c.createdAt, amount: c.lockAmountUsdCents, id: c.id, state: st, platform: c.platform, title: c.description || c.title || 'Performance Contract' });
+                events.push({ type, dotCls, desc, date: c.createdAt, amount: c.lockAmountUsdCents, id: c.id, state: st, platform: c.platform, title: describeContract(c) });
             });
 
             let filtered = filter === 'all' ? events : events.filter(e => e.type === filter);

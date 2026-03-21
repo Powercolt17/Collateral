@@ -655,9 +655,8 @@ export function renderHeader(currentRoute) {
                             <button onclick="window.router.navigate('/profile')">Profile</button>
                             <button onclick="window.router.navigate('/contracts')">Active</button>
                             <button onclick="window.router.navigate('/referrals')">Referrals</button>
-                            <button onclick="window.router.navigate('/docs')">Docs</button>
-
                             <button onclick="window.router.navigate('/funding')">Account Capital</button>
+                            <button onclick="window.router.navigate('/docs')">Docs</button>
                             <button onclick="window.app.handleSignOut()" class="signout">SIGN OUT</button>
                         </div>
                     </div>

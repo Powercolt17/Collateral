@@ -133,30 +133,30 @@ export async function initXCallback() {
         // Map error codes to user-friendly messages
         const errorMessages = {
             'denied': {
-                message: 'Authorization was denied',
-                hint: 'You declined to connect your X account. Click below to try again.'
+                message: 'Authorization Denied',
+                hint: 'You declined the connection. Try again below.'
             },
             'protected': {
-                message: 'Protected accounts cannot be used',
-                hint: 'Collateral requires public follower counts for verification. Please use a public account.'
+                message: 'Account Is Protected',
+                hint: 'Only public accounts can be verified.'
             },
             'already_bound': {
-                message: 'X Account Already Linked',
-                hint: 'This X account is already connected to a different Collateral identity. Each X account can only be bound to one user. If you own both accounts, contact support to transfer the binding.'
+                message: 'Already Linked',
+                hint: 'This X account is connected to another user.'
             },
             'verification_failed': {
-                message: 'Could not verify X account',
-                hint: 'We were unable to verify your account details. Please try again or contact support.'
+                message: 'Verification Failed',
+                hint: 'Could not verify your account. Try again.'
             },
             'expired': {
-                message: 'Session expired',
-                hint: 'Your authorization session timed out. Please try connecting again.'
+                message: 'Session Expired',
+                hint: 'Authorization timed out. Try again.'
             }
         };
 
         const errorInfo = errorMessages[error] || {
-            message: 'An error occurred',
-            hint: `Error code: ${error}. Please try again.`
+            message: 'Something Went Wrong',
+            hint: 'Please try again.'
         };
 
         errorMessageEl.textContent = errorInfo.message;

@@ -58,7 +58,7 @@ export function renderDocs() {
             }
             .doc-page-sub {
                 font-size: 13px;
-                color: #921818;
+                color: rgba(255, 255, 255, 0.7);
                 margin: 12px 0 0;
                 font-family: 'JetBrains Mono', monospace;
                 font-weight: 500;

@@ -10,10 +10,10 @@ export function renderDocs() {
             @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;700&display=swap');
 
             .doc {
-                background: #0A0A0A;
+                background: #FAFAFA;
                 min-height: calc(100vh - 72px);
                 font-family: 'Inter', 'Helvetica Neue', Helvetica, Arial, sans-serif;
-                color: #E5E5E5;
+                color: #1A1A1A;
             }
 
             .doc-container {
@@ -24,8 +24,8 @@ export function renderDocs() {
 
             /* ── Hero Header ── */
             .doc-top {
-                background: linear-gradient(135deg, #0F0F0F 0%, #1A0808 50%, #0F0F0F 100%);
-                border-bottom: 1px solid rgba(146, 24, 24, 0.3);
+                background: linear-gradient(135deg, #921818 0%, #7A1414 40%, #5E1010 100%);
+                border-bottom: none;
                 position: relative;
                 overflow: hidden;
             }
@@ -36,7 +36,7 @@ export function renderDocs() {
                 right: -20%;
                 width: 500px;
                 height: 500px;
-                background: radial-gradient(circle, rgba(146, 24, 24, 0.08) 0%, transparent 70%);
+                background: radial-gradient(circle, rgba(255, 255, 255, 0.06) 0%, transparent 70%);
                 pointer-events: none;
             }
             .doc-page-hdr {
@@ -84,7 +84,7 @@ export function renderDocs() {
             }
             .doc-sidebar::-webkit-scrollbar { width: 3px; }
             .doc-sidebar::-webkit-scrollbar-track { background: transparent; }
-            .doc-sidebar::-webkit-scrollbar-thumb { background: #333; border-radius: 3px; }
+            .doc-sidebar::-webkit-scrollbar-thumb { background: #D4D4D4; border-radius: 3px; }
 
             .doc-nav-group {
                 margin-bottom: 28px;
@@ -113,21 +113,21 @@ export function renderDocs() {
                 color: #777;
                 text-decoration: none;
                 padding: 6px 0 6px 14px;
-                border-left: 2px solid rgba(255,255,255,0.06);
+                border-left: 2px solid #EBEBEB;
                 transition: all 0.2s ease;
                 line-height: 1.5;
                 font-weight: 400;
             }
             .doc-nav-link:hover {
-                color: #E5E5E5;
+                color: #1A1A1A;
                 border-left-color: rgba(146, 24, 24, 0.4);
-                background: rgba(255,255,255,0.02);
+                background: rgba(146, 24, 24, 0.03);
             }
             .doc-nav-link.active {
-                color: #FFFFFF;
+                color: #921818;
                 font-weight: 600;
                 border-left-color: #921818;
-                background: rgba(146, 24, 24, 0.08);
+                background: rgba(146, 24, 24, 0.06);
             }
 
             /* ── Content ── */
@@ -138,7 +138,7 @@ export function renderDocs() {
             .doc-section {
                 margin-bottom: 48px;
                 padding-bottom: 48px;
-                border-bottom: 1px solid rgba(255,255,255,0.06);
+                border-bottom: 1px solid #E8E8E8;
             }
             .doc-section:last-child {
                 border-bottom: none;
@@ -148,7 +148,7 @@ export function renderDocs() {
             .doc-section-title {
                 font-size: 26px;
                 font-weight: 800;
-                color: #FFFFFF;
+                color: #1A1A1A;
                 margin: 0 0 20px;
                 letter-spacing: -0.8px;
                 line-height: 1.2;
@@ -162,28 +162,28 @@ export function renderDocs() {
                 top: 4px;
                 bottom: 4px;
                 width: 4px;
-                background: linear-gradient(180deg, #921818, #C02020);
+                background: linear-gradient(180deg, #921818, #B52020);
                 border-radius: 2px;
             }
 
             .doc-section-title-sm {
                 font-size: 16px;
                 font-weight: 700;
-                color: #FFFFFF;
+                color: #1A1A1A;
                 margin: 24px 0 10px;
                 letter-spacing: -0.3px;
             }
 
             .doc-p {
                 font-size: 15px;
-                color: #A3A3A3;
+                color: #555;
                 line-height: 1.8;
                 margin: 0 0 16px;
             }
             .doc-p:last-child { margin-bottom: 0; }
 
             .doc-strong {
-                color: #FFFFFF;
+                color: #1A1A1A;
                 font-weight: 700;
             }
 
@@ -194,7 +194,7 @@ export function renderDocs() {
             }
             .doc-list li {
                 font-size: 15px;
-                color: #A3A3A3;
+                color: #555;
                 line-height: 1.9;
                 padding-left: 22px;
                 position: relative;
@@ -212,8 +212,8 @@ export function renderDocs() {
 
             /* ── Rule Blocks (Callouts) ── */
             .doc-rule-block {
-                background: linear-gradient(135deg, rgba(146, 24, 24, 0.08) 0%, rgba(146, 24, 24, 0.03) 100%);
-                border: 1px solid rgba(146, 24, 24, 0.25);
+                background: linear-gradient(135deg, rgba(146, 24, 24, 0.05) 0%, rgba(146, 24, 24, 0.02) 100%);
+                border: 1px solid rgba(146, 24, 24, 0.15);
                 border-left: 3px solid #921818;
                 border-radius: 6px;
                 padding: 16px 20px;
@@ -222,7 +222,7 @@ export function renderDocs() {
             .doc-rule-text {
                 font-family: 'JetBrains Mono', monospace;
                 font-size: 11px;
-                color: #D97706;
+                color: #921818;
                 text-transform: uppercase;
                 letter-spacing: 0.8px;
                 line-height: 1.7;
@@ -235,14 +235,15 @@ export function renderDocs() {
                 gap: 18px;
                 margin-bottom: 20px;
                 padding: 16px 20px;
-                background: rgba(255,255,255,0.02);
-                border: 1px solid rgba(255,255,255,0.06);
+                background: #FFFFFF;
+                border: 1px solid #E8E8E8;
                 border-radius: 10px;
                 transition: all 0.2s ease;
+                box-shadow: 0 1px 3px rgba(0,0,0,0.04);
             }
             .doc-step:hover {
-                background: rgba(255,255,255,0.04);
-                border-color: rgba(146, 24, 24, 0.2);
+                border-color: rgba(146, 24, 24, 0.25);
+                box-shadow: 0 4px 12px rgba(146, 24, 24, 0.08);
                 transform: translateY(-1px);
             }
             .doc-step-num {
@@ -268,7 +269,7 @@ export function renderDocs() {
             .doc-step-title {
                 font-size: 15px;
                 font-weight: 700;
-                color: #FFFFFF;
+                color: #1A1A1A;
                 margin: 0 0 4px;
             }
             .doc-step-desc {
@@ -279,16 +280,17 @@ export function renderDocs() {
 
             /* ── Tier Cards ── */
             .doc-tier {
-                background: rgba(255,255,255,0.03);
-                border: 1px solid rgba(255,255,255,0.08);
+                background: #FFFFFF;
+                border: 1px solid #E8E8E8;
                 border-radius: 10px;
                 padding: 16px 20px;
                 margin-bottom: 10px;
                 transition: all 0.2s ease;
+                box-shadow: 0 1px 3px rgba(0,0,0,0.04);
             }
             .doc-tier:hover {
                 border-color: rgba(146, 24, 24, 0.3);
-                background: rgba(146, 24, 24, 0.04);
+                box-shadow: 0 4px 12px rgba(146, 24, 24, 0.08);
             }
             .doc-tier-name {
                 font-family: 'JetBrains Mono', monospace;
@@ -309,24 +311,25 @@ export function renderDocs() {
             .doc-faq {
                 margin-bottom: 18px;
                 padding: 16px 20px;
-                background: rgba(255,255,255,0.02);
-                border: 1px solid rgba(255,255,255,0.06);
+                background: #FFFFFF;
+                border: 1px solid #E8E8E8;
                 border-radius: 10px;
                 transition: all 0.2s ease;
+                box-shadow: 0 1px 3px rgba(0,0,0,0.04);
             }
             .doc-faq:hover {
-                border-color: rgba(255,255,255,0.12);
-                background: rgba(255,255,255,0.04);
+                border-color: rgba(146, 24, 24, 0.25);
+                box-shadow: 0 4px 12px rgba(146, 24, 24, 0.08);
             }
             .doc-faq-q {
                 font-size: 15px;
                 font-weight: 700;
-                color: #FFFFFF;
+                color: #1A1A1A;
                 margin: 0 0 8px;
             }
             .doc-faq-a {
                 font-size: 14px;
-                color: #888;
+                color: #666;
                 line-height: 1.7;
                 padding-left: 16px;
                 border-left: 2px solid #921818;
@@ -338,8 +341,8 @@ export function renderDocs() {
                 align-items: center;
                 gap: 14px;
                 padding: 16px 20px;
-                background: linear-gradient(135deg, rgba(146, 24, 24, 0.06) 0%, rgba(146, 24, 24, 0.02) 100%);
-                border: 1px solid rgba(146, 24, 24, 0.2);
+                background: linear-gradient(135deg, rgba(146, 24, 24, 0.04) 0%, rgba(146, 24, 24, 0.01) 100%);
+                border: 1px solid rgba(146, 24, 24, 0.15);
                 border-radius: 10px;
                 margin-top: 32px;
             }
@@ -351,7 +354,7 @@ export function renderDocs() {
             .doc-divider-note-text {
                 font-family: 'JetBrains Mono', monospace;
                 font-size: 11px;
-                color: #888;
+                color: #777;
                 text-transform: uppercase;
                 letter-spacing: 0.8px;
                 line-height: 1.7;
@@ -388,7 +391,7 @@ export function renderDocs() {
                 .doc-sidebar {
                     position: relative;
                     top: 0;
-                    border-bottom: 1px solid rgba(255,255,255,0.06);
+                    border-bottom: 1px solid #E8E8E8;
                     padding-bottom: 20px;
                     margin-bottom: 32px;
                     max-height: none;

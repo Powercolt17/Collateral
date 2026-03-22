@@ -5,48 +5,66 @@ export function renderFunding() {
     return `
         <style>
             /* ===================================================
-               CAPITAL TERMINAL — INSTITUTIONAL DESIGN SYSTEM
-               IBM Plex Sans / Mono · Sharp borders · Ledger-first
+               CAPITAL — PREMIUM INSTITUTIONAL TERMINAL
+               Brand Red #5C1414 · Clean white · Sharp borders
                =================================================== */
+
+            @keyframes capReveal {
+                from { opacity: 0; transform: translateY(18px); }
+                to { opacity: 1; transform: translateY(0); }
+            }
+
             .cap {
-                background: #f9f9f9;
+                background: #FAFAFA;
                 min-height: calc(100vh - 72px);
                 font-family: 'Neue Haas Grotesk Display', 'Helvetica Neue', Helvetica, Arial, sans-serif;
                 color: #111;
             }
 
             .cap-inner {
-                max-width: 860px;
+                max-width: 900px;
                 margin: 0 auto;
-                padding: 40px 24px 80px;
+                padding: 48px 28px 100px;
             }
 
             /* ── Page Header ── */
             .cap-hdr {
-                margin-bottom: 36px;
+                margin-bottom: 40px;
                 display: flex;
                 align-items: flex-end;
                 justify-content: space-between;
                 gap: 16px;
+                animation: capReveal 0.6s ease both;
             }
             .cap-hdr-left {}
             .cap-hdr-title {
-                font-size: 28px;
-                font-weight: 700;
-                letter-spacing: -0.5px;
+                font-size: 32px;
+                font-weight: 800;
+                letter-spacing: -1px;
                 color: #111111;
-                margin: 0 0 4px;
+                margin: 0 0 6px;
+                position: relative;
+                display: inline-block;
+            }
+            .cap-hdr-title::after {
+                content: '';
+                position: absolute;
+                bottom: -2px;
+                left: 0;
+                width: 48px;
+                height: 3px;
+                background: #5C1414;
             }
             .cap-hdr-sub {
                 font-size: 13px;
-                color: #444444;
-                margin: 0;
+                color: #666;
+                margin: 8px 0 0;
                 font-family: 'JetBrains Mono', monospace;
                 letter-spacing: 0.2px;
             }
             .cap-deposit-btn {
-                padding: 10px 20px;
-                background: #111;
+                padding: 12px 24px;
+                background: #5C1414;
                 color: #fff;
                 font-size: 11px;
                 font-weight: 700;
@@ -54,26 +72,43 @@ export function renderFunding() {
                 letter-spacing: 1px;
                 border: none;
                 cursor: pointer;
-                transition: background 0.15s;
-                font-family: 'Neue Haas Grotesk Display', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+                transition: all 0.2s ease;
+                font-family: 'JetBrains Mono', monospace;
                 white-space: nowrap;
                 flex-shrink: 0;
+                position: relative;
+                overflow: hidden;
             }
-            .cap-deposit-btn:hover { background: #752122; }
+            .cap-deposit-btn:hover {
+                background: #4A1010;
+                transform: translateY(-1px);
+                box-shadow: 0 4px 16px rgba(92, 20, 20, 0.25);
+            }
+            .cap-deposit-btn::after {
+                content: '';
+                position: absolute;
+                top: -50%; left: -75%;
+                width: 50%; height: 200%;
+                background: linear-gradient(90deg, transparent, rgba(255,255,255,0.12), transparent);
+                transform: skewX(-25deg);
+                transition: left 0.5s ease;
+            }
+            .cap-deposit-btn:hover::after { left: 125%; }
 
             /* ── Restriction Banner ── */
             .cap-alert {
                 display: none;
-                background: #fff8f8;
-                border: 1px solid #fca5a5;
-                border-left: 3px solid #752122;
-                padding: 12px 16px;
+                background: rgba(92, 20, 20, 0.04);
+                border: 1px solid rgba(92, 20, 20, 0.2);
+                border-left: 3px solid #5C1414;
+                padding: 14px 18px;
                 margin-bottom: 24px;
                 font-family: 'JetBrains Mono', monospace;
                 font-size: 11px;
-                color: #752122;
+                color: #5C1414;
                 text-transform: uppercase;
                 letter-spacing: 0.5px;
+                border-radius: 4px;
             }
             .cap-alert.visible { display: block; }
 
@@ -81,62 +116,95 @@ export function renderFunding() {
             .cap-overview {
                 display: grid;
                 grid-template-columns: repeat(3, 1fr);
-                border: 1px solid #DCDCDC;
+                border: 1px solid #E0E0E0;
                 background: #fff;
-                margin-bottom: 24px;
+                margin-bottom: 28px;
+                border-radius: 4px;
+                overflow: hidden;
+                animation: capReveal 0.6s ease 0.1s both;
             }
             .cap-stat {
-                padding: 24px;
+                padding: 28px 24px;
                 border-right: 1px solid #E5E5E5;
                 display: flex;
                 flex-direction: column;
-                gap: 6px;
+                gap: 8px;
+                position: relative;
+                transition: background 0.2s ease;
             }
             .cap-stat:last-child { border-right: none; }
+            .cap-stat:hover { background: #FCFCFC; }
+            .cap-stat::before {
+                content: '';
+                position: absolute;
+                top: 0; left: 0;
+                width: 0; height: 3px;
+                background: #5C1414;
+                transition: width 0.35s ease;
+            }
+            .cap-stat:hover::before { width: 100%; }
             .cap-stat-lbl {
                 font-family: 'JetBrains Mono', monospace;
                 font-size: 9px;
                 font-weight: 700;
                 text-transform: uppercase;
                 letter-spacing: 1.5px;
-                color: #6B6B6B;
+                color: #5C1414;
             }
             .cap-stat-val {
                 font-family: 'JetBrains Mono', monospace;
-                font-size: 26px;
+                font-size: 28px;
                 font-weight: 700;
                 color: #111111;
                 letter-spacing: -1px;
                 line-height: 1;
+                transition: color 0.2s ease;
             }
-            .cap-stat-val.locked { color: #921818; }
-            .cap-stat-val.pending { color: #1e40af; }
+            .cap-stat:hover .cap-stat-val { color: #5C1414; }
+            .cap-stat-val.locked { color: #5C1414; }
+            .cap-stat-val.pending { color: #5C1414; }
             .cap-stat-sub {
                 font-size: 12px;
-                color: #6B6B6B;
+                color: #888;
                 line-height: 1.4;
             }
 
             /* ── Section Container ── */
             .cap-section {
                 background: #fff;
-                border: 1px solid #e5e5e5;
-                margin-bottom: 16px;
+                border: 1px solid #E0E0E0;
+                margin-bottom: 20px;
+                border-radius: 4px;
+                overflow: hidden;
+                transition: border-color 0.2s, box-shadow 0.2s;
+                animation: capReveal 0.6s ease 0.2s both;
+            }
+            .cap-section:hover {
+                border-color: rgba(92, 20, 20, 0.2);
+                box-shadow: 0 4px 16px rgba(92, 20, 20, 0.04);
             }
             .cap-section-hdr {
                 display: flex;
                 align-items: center;
                 justify-content: space-between;
-                padding: 14px 20px;
+                padding: 16px 22px;
                 border-bottom: 1px solid #f0f0f0;
+                position: relative;
+            }
+            .cap-section-hdr::before {
+                content: '';
+                position: absolute;
+                left: 0; top: 0; bottom: 0;
+                width: 3px;
+                background: #5C1414;
             }
             .cap-section-title {
                 font-family: 'JetBrains Mono', monospace;
-                font-size: 9px;
+                font-size: 10px;
                 font-weight: 700;
                 text-transform: uppercase;
                 letter-spacing: 2px;
-                color: #888;
+                color: #5C1414;
             }
 
             /* ── Source/Destination Row ── */
@@ -144,92 +212,102 @@ export function renderFunding() {
                 display: flex;
                 align-items: center;
                 justify-content: space-between;
-                padding: 18px 20px;
+                padding: 20px 22px;
                 border-bottom: 1px solid #f4f4f4;
-                transition: background 0.1s;
+                transition: background 0.15s, padding-left 0.15s;
             }
             .cap-row:last-child { border-bottom: none; }
-            .cap-row:hover { background: #fafafa; }
+            .cap-row:hover {
+                background: rgba(92, 20, 20, 0.015);
+                padding-left: 26px;
+            }
             .cap-row-left {
                 display: flex;
                 flex-direction: column;
                 gap: 5px;
             }
             .cap-row-label {
-                font-size: 13px;
-                font-weight: 600;
+                font-size: 14px;
+                font-weight: 700;
                 color: #111;
                 display: flex;
                 align-items: center;
-                gap: 8px;
+                gap: 10px;
             }
             .cap-row-detail {
                 font-family: 'JetBrains Mono', monospace;
                 font-size: 11px;
-                color: #666;
+                color: #888;
             }
 
             /* ── Status Badges ── */
             .cap-badge {
                 display: inline-flex;
                 align-items: center;
-                padding: 2px 6px;
+                padding: 3px 8px;
                 font-family: 'JetBrains Mono', monospace;
                 font-size: 9px;
                 font-weight: 700;
                 text-transform: uppercase;
                 letter-spacing: 0.5px;
-                border-radius: 2px;
+                border-radius: 3px;
             }
             .cap-badge.verified {
-                background: #f0fdf4;
-                color: #15803d;
-                border: 1px solid #bbf7d0;
+                background: rgba(92, 20, 20, 0.06);
+                color: #5C1414;
+                border: 1px solid rgba(92, 20, 20, 0.2);
             }
             .cap-badge.required {
-                background: #fff7ed;
-                color: #c2410c;
-                border: 1px solid #fed7aa;
+                background: rgba(92, 20, 20, 0.04);
+                color: #5C1414;
+                border: 1px solid rgba(92, 20, 20, 0.15);
             }
             .cap-badge.pending-badge {
-                background: #eff6ff;
-                color: #1e40af;
-                border: 1px solid #bfdbfe;
+                background: rgba(92, 20, 20, 0.04);
+                color: #5C1414;
+                border: 1px solid rgba(92, 20, 20, 0.15);
             }
 
             /* ── Action Links ── */
             .cap-action {
                 font-family: 'JetBrains Mono', monospace;
                 font-size: 10px;
-                font-weight: 600;
+                font-weight: 700;
                 text-transform: uppercase;
                 letter-spacing: 0.5px;
-                color: #666;
+                color: #999;
                 background: none;
                 border: none;
                 cursor: pointer;
-                padding: 4px 0;
-                transition: color 0.15s;
+                padding: 6px 12px;
+                transition: all 0.2s;
                 white-space: nowrap;
                 display: flex;
                 align-items: center;
-                gap: 4px;
+                gap: 5px;
+                border: 1px solid transparent;
+                border-radius: 3px;
             }
             .cap-action::before { content: '→'; }
-            .cap-action:hover { color: #752122; }
+            .cap-action:hover {
+                color: #5C1414;
+                border-color: rgba(92, 20, 20, 0.2);
+                background: rgba(92, 20, 20, 0.03);
+            }
 
             /* ── Footer (Bloomberg-style) ── */
             .cap-footer {
-                margin-top: 40px;
-                padding-top: 20px;
-                border-top: 1px solid #f0f0f0;
+                margin-top: 48px;
+                padding-top: 24px;
+                border-top: 1px solid #e8e8e8;
                 display: flex;
-                gap: 32px;
+                gap: 40px;
+                animation: capReveal 0.6s ease 0.3s both;
             }
             .cap-footer-item {
                 display: flex;
                 flex-direction: column;
-                gap: 2px;
+                gap: 3px;
             }
             .cap-footer-lbl {
                 font-family: 'JetBrains Mono', monospace;
@@ -242,16 +320,21 @@ export function renderFunding() {
             .cap-footer-val {
                 font-family: 'JetBrains Mono', monospace;
                 font-size: 10px;
-                color: #888;
+                color: #666;
             }
             .cap-footer-dot {
                 display: inline-block;
                 width: 6px;
                 height: 6px;
-                background: #15803d;
+                background: #5C1414;
                 border-radius: 50%;
                 margin-right: 5px;
                 vertical-align: middle;
+                animation: dotPulseCap 2s ease-in-out infinite;
+            }
+            @keyframes dotPulseCap {
+                0%, 100% { box-shadow: 0 0 0 0 rgba(92, 20, 20, 0.4); }
+                50% { box-shadow: 0 0 0 4px rgba(92, 20, 20, 0); }
             }
 
             @media (max-width: 640px) {
@@ -260,15 +343,18 @@ export function renderFunding() {
                 .cap-stat:last-child { border-bottom: none; }
                 .cap-hdr { flex-direction: column; align-items: flex-start; }
                 .cap-footer { flex-wrap: wrap; gap: 20px; }
+                .cap-hdr-title { font-size: 26px; }
+                .cap-deposit-btn { width: 100%; text-align: center; }
             }
 
             /* ===================================================
-               MODAL SYSTEM — Institutional dialogs
+               MODAL SYSTEM — Premium dialogs
                =================================================== */
             .cap-modal-overlay {
                 position: fixed;
                 inset: 0;
-                background: rgba(0,0,0,0.5);
+                background: rgba(0,0,0,0.45);
+                backdrop-filter: blur(4px);
                 display: none;
                 align-items: center;
                 justify-content: center;
@@ -282,15 +368,18 @@ export function renderFunding() {
                 width: 100%;
                 max-width: 440px;
                 margin: 0 16px;
-                border: 1px solid #e5e5e5;
-                box-shadow: 0 20px 60px rgba(0,0,0,0.12);
+                border: 1px solid #e0e0e0;
+                box-shadow: 0 20px 60px rgba(0,0,0,0.15);
+                border-radius: 4px;
+                overflow: hidden;
             }
             .cap-modal-hdr {
                 display: flex;
                 align-items: center;
                 justify-content: space-between;
-                padding: 16px 20px;
+                padding: 18px 22px;
                 border-bottom: 1px solid #f0f0f0;
+                background: #FCFCFC;
             }
             .cap-modal-title {
                 font-family: 'JetBrains Mono', monospace;
@@ -298,7 +387,7 @@ export function renderFunding() {
                 font-weight: 700;
                 text-transform: uppercase;
                 letter-spacing: 1px;
-                color: #111;
+                color: #5C1414;
             }
             .cap-modal-close {
                 background: none;
@@ -308,10 +397,11 @@ export function renderFunding() {
                 padding: 4px;
                 display: flex;
                 align-items: center;
+                transition: color 0.15s;
             }
-            .cap-modal-close:hover { color: #111; }
+            .cap-modal-close:hover { color: #5C1414; }
             .cap-modal-body {
-                padding: 24px 20px;
+                padding: 24px 22px;
             }
             .cap-modal-sub {
                 font-size: 12px;
@@ -320,9 +410,9 @@ export function renderFunding() {
                 font-family: 'JetBrains Mono', monospace;
             }
             .cap-modal-footer {
-                padding: 12px 20px;
+                padding: 14px 22px;
                 border-top: 1px solid #f0f0f0;
-                background: #fafafa;
+                background: #FAFAFA;
                 font-family: 'JetBrains Mono', monospace;
                 font-size: 10px;
                 color: #999;
@@ -332,16 +422,22 @@ export function renderFunding() {
             /* Card element */
             .cap-card-el {
                 border: 1px solid #e5e5e5;
-                padding: 12px;
+                padding: 14px;
                 margin-bottom: 16px;
-                background: #fafafa;
+                background: #FAFAFA;
+                border-radius: 4px;
+                transition: border-color 0.15s, background 0.15s;
             }
-            .cap-card-el:focus-within { border-color: #bbb; background: #fff; }
+            .cap-card-el:focus-within {
+                border-color: #5C1414;
+                background: #fff;
+                box-shadow: 0 0 0 3px rgba(92, 20, 20, 0.08);
+            }
 
             /* Error  */
             .cap-error {
                 font-size: 11px;
-                color: #752122;
+                color: #5C1414;
                 font-family: 'JetBrains Mono', monospace;
                 margin-bottom: 12px;
                 display: none;
@@ -351,8 +447,8 @@ export function renderFunding() {
             /* Modal Buttons */
             .cap-btn-primary {
                 width: 100%;
-                padding: 12px;
-                background: #111;
+                padding: 14px;
+                background: #5C1414;
                 color: #fff;
                 font-size: 11px;
                 font-weight: 700;
@@ -360,16 +456,20 @@ export function renderFunding() {
                 letter-spacing: 1px;
                 border: none;
                 cursor: pointer;
-                transition: background 0.15s;
-                font-family: 'Neue Haas Grotesk Display', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+                transition: all 0.2s;
+                font-family: 'JetBrains Mono', monospace;
+                border-radius: 3px;
             }
-            .cap-btn-primary:hover { background: #333; }
-            .cap-btn-primary:disabled { opacity: 0.5; cursor: not-allowed; }
+            .cap-btn-primary:hover {
+                background: #4A1010;
+                box-shadow: 0 4px 12px rgba(92, 20, 20, 0.2);
+            }
+            .cap-btn-primary:disabled { opacity: 0.4; cursor: not-allowed; }
 
             .cap-btn-danger {
                 width: 100%;
-                padding: 12px;
-                background: #752122;
+                padding: 14px;
+                background: #5C1414;
                 color: #fff;
                 font-size: 11px;
                 font-weight: 700;
@@ -377,14 +477,18 @@ export function renderFunding() {
                 letter-spacing: 1px;
                 border: none;
                 cursor: pointer;
-                transition: background 0.15s;
-                font-family: 'Neue Haas Grotesk Display', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+                transition: all 0.2s;
+                font-family: 'JetBrains Mono', monospace;
                 margin-top: 8px;
+                border-radius: 3px;
             }
-            .cap-btn-danger:hover { background: #5c1a1b; }
+            .cap-btn-danger:hover {
+                background: #4A1010;
+                box-shadow: 0 4px 12px rgba(92, 20, 20, 0.2);
+            }
             .cap-btn-ghost {
                 width: 100%;
-                padding: 12px;
+                padding: 14px;
                 background: transparent;
                 color: #666;
                 font-size: 11px;
@@ -394,9 +498,10 @@ export function renderFunding() {
                 border: 1px solid #e5e5e5;
                 cursor: pointer;
                 transition: all 0.15s;
-                font-family: 'Neue Haas Grotesk Display', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+                font-family: 'JetBrains Mono', monospace;
+                border-radius: 3px;
             }
-            .cap-btn-ghost:hover { border-color: #bbb; color: #111; }
+            .cap-btn-ghost:hover { border-color: #5C1414; color: #5C1414; }
 
             /* Add funds input */
             .cap-input-wrap {
@@ -409,7 +514,7 @@ export function renderFunding() {
                 font-weight: 700;
                 text-transform: uppercase;
                 letter-spacing: 1px;
-                color: #888;
+                color: #5C1414;
                 margin-bottom: 8px;
             }
             .cap-input-amt {
@@ -417,58 +522,63 @@ export function renderFunding() {
             }
             .cap-input-prefix {
                 position: absolute;
-                left: 12px;
+                left: 14px;
                 top: 50%;
                 transform: translateY(-50%);
-                color: #666;
+                color: #5C1414;
                 font-family: 'JetBrains Mono', monospace;
-                font-size: 16px;
+                font-size: 18px;
+                font-weight: 700;
             }
             .cap-input-amt input {
                 width: 100%;
-                padding: 12px 12px 12px 28px;
+                padding: 14px 14px 14px 32px;
                 border: 1px solid #e5e5e5;
-                font-size: 22px;
+                font-size: 24px;
                 font-family: 'JetBrains Mono', monospace;
                 color: #111;
-                background: #fafafa;
+                background: #FAFAFA;
                 box-sizing: border-box;
                 outline: none;
+                border-radius: 4px;
+                transition: border-color 0.15s, background 0.15s;
             }
             .cap-input-amt input:focus {
-                border-color: #bbb;
+                border-color: #5C1414;
                 background: #fff;
+                box-shadow: 0 0 0 3px rgba(92, 20, 20, 0.08);
             }
 
             /* Success modal */
             .cap-success-body {
                 text-align: center;
-                padding: 32px 24px;
+                padding: 36px 24px;
             }
             .cap-success-icon {
-                width: 48px;
-                height: 48px;
-                background: #f0fdf4;
-                border: 1px solid #bbf7d0;
+                width: 52px;
+                height: 52px;
+                background: rgba(92, 20, 20, 0.06);
+                border: 2px solid rgba(92, 20, 20, 0.2);
                 border-radius: 50%;
                 display: flex;
                 align-items: center;
                 justify-content: center;
                 margin: 0 auto 16px;
-                color: #15803d;
-                font-size: 20px;
+                color: #5C1414;
+                font-size: 22px;
+                font-weight: 700;
             }
             .cap-success-title {
-                font-size: 16px;
-                font-weight: 700;
+                font-size: 18px;
+                font-weight: 800;
                 color: #111;
                 margin: 0 0 8px;
             }
             .cap-success-amt {
                 font-family: 'JetBrains Mono', monospace;
-                font-size: 32px;
+                font-size: 36px;
                 font-weight: 700;
-                color: #0a0a0a;
+                color: #5C1414;
                 margin: 12px 0 4px;
             }
             .cap-success-sub {

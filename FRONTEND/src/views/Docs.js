@@ -24,7 +24,7 @@ export function renderDocs() {
 
             /* ── Hero Header ── */
             .doc-top {
-                background: linear-gradient(135deg, #921818 0%, #7A1414 40%, #5E1010 100%);
+                background: linear-gradient(135deg, #3B0001 0%, #7A1414 40%, #5E1010 100%);
                 border-bottom: none;
                 position: relative;
                 overflow: hidden;
@@ -95,7 +95,7 @@ export function renderDocs() {
                 font-weight: 700;
                 text-transform: uppercase;
                 letter-spacing: 2px;
-                color: #921818;
+                color: #3B0001;
                 margin: 0 0 10px;
                 padding: 0;
             }
@@ -120,14 +120,14 @@ export function renderDocs() {
             }
             .doc-nav-link:hover {
                 color: #1A1A1A;
-                border-left-color: rgba(146, 24, 24, 0.4);
-                background: rgba(146, 24, 24, 0.03);
+                border-left-color: rgba(59, 0, 1, 0.4);
+                background: rgba(59, 0, 1, 0.03);
             }
             .doc-nav-link.active {
-                color: #921818;
+                color: #3B0001;
                 font-weight: 600;
-                border-left-color: #921818;
-                background: rgba(146, 24, 24, 0.06);
+                border-left-color: #3B0001;
+                background: rgba(59, 0, 1, 0.06);
             }
 
             /* ── Content ── */
@@ -162,7 +162,7 @@ export function renderDocs() {
                 top: 4px;
                 bottom: 4px;
                 width: 4px;
-                background: linear-gradient(180deg, #921818, #B52020);
+                background: linear-gradient(180deg, #3B0001, #B52020);
                 border-radius: 2px;
             }
 
@@ -206,15 +206,15 @@ export function renderDocs() {
                 top: 12px;
                 width: 6px;
                 height: 6px;
-                background: #921818;
+                background: #3B0001;
                 border-radius: 50%;
             }
 
             /* ── Rule Blocks (Callouts) ── */
             .doc-rule-block {
-                background: linear-gradient(135deg, rgba(146, 24, 24, 0.05) 0%, rgba(146, 24, 24, 0.02) 100%);
-                border: 1px solid rgba(146, 24, 24, 0.15);
-                border-left: 3px solid #921818;
+                background: linear-gradient(135deg, rgba(59, 0, 1, 0.05) 0%, rgba(59, 0, 1, 0.02) 100%);
+                border: 1px solid rgba(59, 0, 1, 0.15);
+                border-left: 3px solid #3B0001;
                 border-radius: 6px;
                 padding: 16px 20px;
                 margin: 18px 0;
@@ -222,7 +222,7 @@ export function renderDocs() {
             .doc-rule-text {
                 font-family: 'JetBrains Mono', monospace;
                 font-size: 11px;
-                color: #921818;
+                color: #3B0001;
                 text-transform: uppercase;
                 letter-spacing: 0.8px;
                 line-height: 1.7;
@@ -242,14 +242,14 @@ export function renderDocs() {
                 box-shadow: 0 1px 3px rgba(0,0,0,0.04);
             }
             .doc-step:hover {
-                border-color: rgba(146, 24, 24, 0.25);
-                box-shadow: 0 4px 12px rgba(146, 24, 24, 0.08);
+                border-color: rgba(59, 0, 1, 0.25);
+                box-shadow: 0 4px 12px rgba(59, 0, 1, 0.08);
                 transform: translateY(-1px);
             }
             .doc-step-num {
                 width: 36px;
                 height: 36px;
-                background: linear-gradient(135deg, #921818, #B52020);
+                background: linear-gradient(135deg, #3B0001, #B52020);
                 border: none;
                 border-radius: 8px;
                 display: flex;
@@ -260,7 +260,7 @@ export function renderDocs() {
                 font-weight: 700;
                 color: #FFFFFF;
                 flex-shrink: 0;
-                box-shadow: 0 2px 8px rgba(146, 24, 24, 0.3);
+                box-shadow: 0 2px 8px rgba(59, 0, 1, 0.3);
             }
             .doc-step-content {
                 flex: 1;
@@ -289,8 +289,8 @@ export function renderDocs() {
                 box-shadow: 0 1px 3px rgba(0,0,0,0.04);
             }
             .doc-tier:hover {
-                border-color: rgba(146, 24, 24, 0.3);
-                box-shadow: 0 4px 12px rgba(146, 24, 24, 0.08);
+                border-color: rgba(59, 0, 1, 0.3);
+                box-shadow: 0 4px 12px rgba(59, 0, 1, 0.08);
             }
             .doc-tier-name {
                 font-family: 'JetBrains Mono', monospace;
@@ -298,7 +298,7 @@ export function renderDocs() {
                 font-weight: 700;
                 text-transform: uppercase;
                 letter-spacing: 1.5px;
-                color: #921818;
+                color: #3B0001;
                 margin: 0 0 6px;
             }
             .doc-tier-desc {
@@ -318,8 +318,8 @@ export function renderDocs() {
                 box-shadow: 0 1px 3px rgba(0,0,0,0.04);
             }
             .doc-faq:hover {
-                border-color: rgba(146, 24, 24, 0.25);
-                box-shadow: 0 4px 12px rgba(146, 24, 24, 0.08);
+                border-color: rgba(59, 0, 1, 0.25);
+                box-shadow: 0 4px 12px rgba(59, 0, 1, 0.08);
             }
             .doc-faq-q {
                 font-size: 15px;
@@ -332,7 +332,7 @@ export function renderDocs() {
                 color: #666;
                 line-height: 1.7;
                 padding-left: 16px;
-                border-left: 2px solid #921818;
+                border-left: 2px solid #3B0001;
             }
 
             /* ── Footer Notice ── */
@@ -341,13 +341,13 @@ export function renderDocs() {
                 align-items: center;
                 gap: 14px;
                 padding: 16px 20px;
-                background: linear-gradient(135deg, rgba(146, 24, 24, 0.04) 0%, rgba(146, 24, 24, 0.01) 100%);
-                border: 1px solid rgba(146, 24, 24, 0.15);
+                background: linear-gradient(135deg, rgba(59, 0, 1, 0.04) 0%, rgba(59, 0, 1, 0.01) 100%);
+                border: 1px solid rgba(59, 0, 1, 0.15);
                 border-radius: 10px;
                 margin-top: 32px;
             }
             .doc-divider-note-icon {
-                color: #921818;
+                color: #3B0001;
                 flex-shrink: 0;
             }
             .doc-divider-note-icon svg { width: 16px; height: 16px; }

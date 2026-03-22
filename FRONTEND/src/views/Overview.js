@@ -28,14 +28,14 @@ export function renderOverview() {
                 font-size: 10px;
                 text-transform: uppercase;
                 letter-spacing: 1.5px;
-                color: #752122;
+                color: #3B0001;
                 margin-bottom: 24px;
             }
             .eq-tag::before {
                 content: '';
                 width: 32px;
                 height: 1px;
-                background: #752122;
+                background: #3B0001;
             }
 
             /* --- HERO SECTION --- */
@@ -56,7 +56,7 @@ export function renderOverview() {
             }
             .eq-hero-headline strong {
                 font-weight: 800;
-                color: #752122;
+                color: #3B0001;
             }
             .eq-hero-sub {
                 font-size: 16px;
@@ -72,7 +72,7 @@ export function renderOverview() {
                 gap: 24px;
             }
             .eq-btn-primary {
-                background: #752122;
+                background: #3B0001;
                 color: #fff;
                 padding: 18px 32px;
                 font-size: 14px;
@@ -86,7 +86,7 @@ export function renderOverview() {
             }
             .eq-btn-primary:hover {
                 transform: translateY(-2px);
-                box-shadow: 0 6px 20px rgba(117, 33, 34, 0.25);
+                box-shadow: 0 6px 20px rgba(59, 0, 1, 0.25);
             }
             .eq-btn-primary:active {
                 transform: translateY(0);
@@ -186,7 +186,7 @@ export function renderOverview() {
                 left: 0;
                 width: 0;
                 height: 3px;
-                background: #752122;
+                background: #3B0001;
                 transition: width 0.4s ease;
             }
             .eq-mech-card:hover::before { width: 100%; }
@@ -211,7 +211,7 @@ export function renderOverview() {
                 margin-bottom: 40px;
                 transition: color 0.3s;
             }
-            .eq-mech-card:hover .eq-mech-num { color: rgba(117, 33, 34, 0.15); }
+            .eq-mech-card:hover .eq-mech-num { color: rgba(59, 0, 1, 0.15); }
             .eq-mech-label {
                 font-size: 22px;
                 font-weight: 700;
@@ -283,7 +283,7 @@ export function renderOverview() {
                 transition: color 0.3s ease;
             }
             .eq-stat-group:hover .eq-stat-val {
-                color: #752122;
+                color: #3B0001;
             }
                 align-items: baseline;
                 gap: 4px;
@@ -412,7 +412,7 @@ export function renderOverview() {
                 left: 0;
                 width: 0;
                 height: 3px;
-                background: #752122;
+                background: #3B0001;
                 transition: width 0.4s ease;
             }
             .eq-card:hover::before { width: 100%; }
@@ -424,7 +424,7 @@ export function renderOverview() {
                 text-transform: uppercase;
                 letter-spacing: 0.5px;
             }
-            .eq-closing { color: #752122; font-weight: 700; }
+            .eq-closing { color: #3B0001; font-weight: 700; }
             .eq-id { color: #ccc; }
             .eq-time { color: #ccc; display: flex; align-items: center; gap: 4px; }
 
@@ -504,7 +504,7 @@ export function renderOverview() {
                 overflow: hidden;
                 transition: background 0.2s ease;
             }
-            .eq-card-cta:hover { background: #752122; }
+            .eq-card-cta:hover { background: #3B0001; }
             .eq-card-cta::after {
                 content: '';
                 position: absolute;
@@ -567,7 +567,7 @@ export function renderOverview() {
                 font-weight: 700;
             }
             .eq-rule-row { display: flex; align-items: center; gap: 10px; padding: 8px 0; font-size: 13px; color: #555; }
-            .eq-rule-row input[type="checkbox"] { accent-color: #752122; }
+            .eq-rule-row input[type="checkbox"] { accent-color: #3B0001; }
             .eq-threshold-table { width: 100%; border-collapse: collapse; font-size: 12px; margin-top: 8px; }
             .eq-threshold-table th { text-align: left; font-family: 'JetBrains Mono', monospace; font-size: 10px; text-transform: uppercase; letter-spacing: 0.5px; color: #aaa; padding: 8px 12px; border-bottom: 1px solid #f2f2f2; }
             .eq-threshold-table td { padding: 8px 12px; color: #555; border-bottom: 1px solid #f8f8f8; }
@@ -579,7 +579,7 @@ export function renderOverview() {
             .eq-threshold-table .tier-all-in { color: #9f1239; font-weight: 600; }
             .eq-slider-row { display: flex; align-items: center; gap: 12px; padding: 12px 0; }
             .eq-slider-label { font-size: 12px; color: #888; min-width: 80px; }
-            .eq-slider { flex: 1; accent-color: #752122; }
+            .eq-slider { flex: 1; accent-color: #3B0001; }
             .eq-slider-value { font-family: 'JetBrains Mono', monospace; font-size: 12px; color: #111; font-weight: 600; min-width: 60px; text-align: right; }
 
             /* --- STAKE WARNING --- */
@@ -612,8 +612,8 @@ export function renderOverview() {
                 transition: border-color 0.3s, box-shadow 0.3s;
             }
             .eq-path-card:hover { border-color: #ccc; box-shadow: 0 8px 32px rgba(0,0,0,0.04); }
-            .eq-path-card.rivalry { border-color: rgba(117,33,34,0.15); }
-            .eq-path-card.rivalry:hover { border-color: rgba(117,33,34,0.3); box-shadow: 0 8px 32px rgba(117,33,34,0.06); }
+            .eq-path-card.rivalry { border-color: rgba(59,0,1,0.15); }
+            .eq-path-card.rivalry:hover { border-color: rgba(59,0,1,0.3); box-shadow: 0 8px 32px rgba(59,0,1,0.06); }
             .eq-path-icon { margin-bottom: 24px; }
             .eq-path-tag {
                 font-family: 'JetBrains Mono', monospace;
@@ -621,14 +621,14 @@ export function renderOverview() {
                 letter-spacing: 0.12em; text-transform: uppercase;
                 color: #111; margin-bottom: 12px;
             }
-            .eq-path-tag.rivalry { color: #752122; }
+            .eq-path-tag.rivalry { color: #3B0001; }
             .eq-path-title {
                 font-size: 28px; font-weight: 500;
                 line-height: 1.1; letter-spacing: -1px;
                 color: #111; margin-bottom: 16px;
             }
             .eq-path-title strong { font-weight: 800; }
-            .eq-path-card.rivalry .eq-path-title strong { color: #752122; }
+            .eq-path-card.rivalry .eq-path-title strong { color: #3B0001; }
             .eq-path-desc {
                 font-size: 14px; color: #888;
                 line-height: 1.65; margin-bottom: 24px;
@@ -646,7 +646,7 @@ export function renderOverview() {
                 font-size: 13px; font-weight: 700;
                 color: #0F5132;
             }
-            .eq-path-check.rivalry { color: #752122; }
+            .eq-path-check.rivalry { color: #3B0001; }
             .eq-path-cta {
                 display: inline-block;
                 padding: 14px 24px;
@@ -661,7 +661,7 @@ export function renderOverview() {
                 align-self: flex-start;
             }
             .eq-path-cta:hover { background: #333; transform: translateY(-2px); }
-            .eq-path-cta.rivalry { background: #752122; }
+            .eq-path-cta.rivalry { background: #3B0001; }
             .eq-path-cta.rivalry:hover { background: #5a1718; transform: translateY(-2px); }
 
             /* ── Responsive: Tablet (≤1200px) ── */
@@ -1071,9 +1071,9 @@ export function renderOverview() {
                     <div class="eq-path-card rivalry anim-mech-card-2">
                         <div class="eq-path-icon">
                             <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
-                                <circle cx="11" cy="16" r="7" stroke="#752122" stroke-width="1.5" fill="none"/>
-                                <circle cx="21" cy="16" r="7" stroke="#752122" stroke-width="1.5" fill="none"/>
-                                <text x="16" y="19" text-anchor="middle" font-size="7" font-weight="800" font-family="JetBrains Mono" fill="#752122">VS</text>
+                                <circle cx="11" cy="16" r="7" stroke="#3B0001" stroke-width="1.5" fill="none"/>
+                                <circle cx="21" cy="16" r="7" stroke="#3B0001" stroke-width="1.5" fill="none"/>
+                                <text x="16" y="19" text-anchor="middle" font-size="7" font-weight="800" font-family="JetBrains Mono" fill="#3B0001">VS</text>
                             </svg>
                         </div>
                         <div class="eq-path-tag rivalry">Rivalry Contract</div>

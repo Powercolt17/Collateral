@@ -68,7 +68,7 @@ export function renderHeader(currentRoute) {
                 left: 0;
                 width: 100%;
                 height: 2px;
-                background: linear-gradient(90deg, transparent 0%, #921818 50%, transparent 100%);
+                background: linear-gradient(90deg, transparent 0%, #5C1414 50%, transparent 100%);
                 opacity: 0;
                 transition: opacity 0.5s ease;
             }
@@ -100,7 +100,7 @@ export function renderHeader(currentRoute) {
                 left: 50%;
                 width: 0;
                 height: 2px;
-                background: #921818;
+                background: #5C1414;
                 transition: width 0.3s ease, left 0.3s ease;
             }
             .nav-link:hover::after {
@@ -173,7 +173,7 @@ export function renderHeader(currentRoute) {
             .nav-link.active {
                 color: #111111;
                 font-weight: 700;
-                border-bottom-color: #921818;
+                border-bottom-color: #5C1414;
             }
 
             /* Search bar */
@@ -272,7 +272,7 @@ export function renderHeader(currentRoute) {
                 text-transform: uppercase;
                 transition: background 0.12s;
             }
-            .ch-connect:hover { background: #921818; }
+            .ch-connect:hover { background: #5C1414; }
 
             /* Account badge — institutional */
             .ch-user-menu {
@@ -375,7 +375,7 @@ export function renderHeader(currentRoute) {
             }
             .ch-user-dropdown button:last-child { border-bottom: none; }
             .ch-user-dropdown button:hover { background: #FAFAFA; }
-            .ch-user-dropdown .signout { color: #921818; }
+            .ch-user-dropdown .signout { color: #5C1414; }
 
             /* Notification dropdown */
             .ch-notif-wrap { position: relative; }

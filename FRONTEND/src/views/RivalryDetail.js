@@ -920,8 +920,10 @@ export async function initRivalryDetail() {
         const rawState = rivalry._rawState;
         const isOpponent = rivalry._opponentUserId && userId === rivalry._opponentUserId;
         const isChallenger = rivalry._challengerUserId && userId === rivalry._challengerUserId;
+        const isOpenChallenge = !rivalry._opponentUserId;
 
         if (rawState === 'CHALLENGE_ISSUED' && isOpponent) {
+            // Directed challenge — designated opponent sees ACCEPT/DECLINE
             actionsEl.innerHTML = `
                 <button class="rvd-action-btn accept" id="rvd-accept">ACCEPT CHALLENGE</button>
                 <button class="rvd-action-btn decline" id="rvd-decline">DECLINE</button>
@@ -946,6 +948,27 @@ export async function initRivalryDetail() {
                 } catch (err) { showAlert('Error: ' + err.message, { type: 'error' }); }
                 e.target.disabled = false; e.target.textContent = 'DECLINE';
             });
+        } else if (rawState === 'CHALLENGE_ISSUED' && isOpenChallenge && userId && !isChallenger) {
+            // Open challenge — any logged-in non-challenger can accept
+            actionsEl.innerHTML = `
+                <button class="rvd-action-btn accept" id="rvd-accept">⚡ ACCEPT OPEN CHALLENGE</button>
+                <span class="rvd-action-status">This is an open challenge. Accept to lock capital and begin the duel.</span>
+            `;
+            document.getElementById('rvd-accept')?.addEventListener('click', async (e) => {
+                e.target.disabled = true; e.target.textContent = 'ACCEPTING...';
+                try {
+                    const res = await api.acceptRivalry(id);
+                    if (res.ok) { await showAlert('Challenge accepted! Fund your side to begin.', { type: 'success', title: 'Challenge Accepted' }); location.reload(); }
+                    else showAlert(res.error || 'Failed to accept', { type: 'error' });
+                } catch (err) { showAlert('Error: ' + err.message, { type: 'error' }); }
+                e.target.disabled = false; e.target.textContent = '⚡ ACCEPT OPEN CHALLENGE';
+            });
+        } else if (rawState === 'CHALLENGE_ISSUED' && isOpenChallenge && !userId) {
+            // Open challenge — not logged in
+            actionsEl.innerHTML = `
+                <button class="rvd-action-btn accept" onclick="window.app.openAccessModal()">SIGN IN TO ACCEPT</button>
+                <span class="rvd-action-status">Sign in to accept this open challenge.</span>
+            `;
         } else if (rawState === 'ACCEPTED' && (isChallenger || isOpponent)) {
             actionsEl.innerHTML = `
                 <button class="rvd-action-btn fund" id="rvd-fund">FUND YOUR SIDE — $${rivalry.stake.toLocaleString()}</button>

@@ -439,7 +439,7 @@ export async function declineRivalry(rivalryId: string, userId: string): Promise
 
 export async function fundRivalry(rivalryId: string, userId: string): Promise<void> {
     const state = await getRivalryState(rivalryId);
-    validateRivalryFromState(state, [RivalryStatus.CHALLENGE_ISSUED, RivalryStatus.ACCEPTED], 'fund rivalry');
+    validateRivalryFromState(state, [RivalryStatus.ACCEPTED], 'fund rivalry');
 
     const [rivalry] = await db.select().from(rivalries).where(eq(rivalries.id, rivalryId));
     if (!rivalry) throw new Error('Rivalry not found');

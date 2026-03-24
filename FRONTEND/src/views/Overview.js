@@ -1070,28 +1070,8 @@ export function renderOverview() {
                     <!-- Rivalry Contract -->
                     <div class="eq-path-card rivalry anim-mech-card-2">
                         <div class="eq-path-icon">
-                            <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
-                                <!-- Left cutlass blade (curved) -->
-                                <path d="M7 5 Q10 12, 16 16" stroke="#5C1414" stroke-width="1.8" stroke-linecap="round" fill="none"/>
-                                <!-- Left cutlass blade edge curve -->
-                                <path d="M7 5 Q5 8, 7 7" stroke="#5C1414" stroke-width="1" fill="#5C1414"/>
-                                <!-- Left cutlass guard (curved handguard) -->
-                                <path d="M16 16 Q18 18, 15 20" stroke="#5C1414" stroke-width="2" stroke-linecap="round" fill="none"/>
-                                <!-- Left cutlass handle -->
-                                <line x1="17" y1="18" x2="21" y2="25" stroke="#5C1414" stroke-width="1.5" stroke-linecap="round"/>
-                                <!-- Left pommel -->
-                                <circle cx="21.5" cy="25.5" r="1" fill="#5C1414"/>
-
-                                <!-- Right cutlass blade (curved) -->
-                                <path d="M25 5 Q22 12, 16 16" stroke="#5C1414" stroke-width="1.8" stroke-linecap="round" fill="none"/>
-                                <!-- Right cutlass blade edge curve -->
-                                <path d="M25 5 Q27 8, 25 7" stroke="#5C1414" stroke-width="1" fill="#5C1414"/>
-                                <!-- Right cutlass guard (curved handguard) -->
-                                <path d="M16 16 Q14 18, 17 20" stroke="#5C1414" stroke-width="2" stroke-linecap="round" fill="none"/>
-                                <!-- Right cutlass handle -->
-                                <line x1="15" y1="18" x2="11" y2="25" stroke="#5C1414" stroke-width="1.5" stroke-linecap="round"/>
-                                <!-- Right pommel -->
-                                <circle cx="10.5" cy="25.5" r="1" fill="#5C1414"/>
+                            <svg width="32" height="32" viewBox="0 0 32 32">
+                                <text x="16" y="24" text-anchor="middle" font-size="26" fill="#5C1414">⚔</text>
                             </svg>
                         </div>
                         <div class="eq-path-tag rivalry">Rivalry Contract</div>

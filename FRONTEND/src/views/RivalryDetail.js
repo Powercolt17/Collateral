@@ -666,13 +666,14 @@ export async function initRivalryDetail() {
                     <div class="rvd-chart-title">Performance Over Time</div>
                     <div class="rvd-chart-legend">
                         <div class="rvd-chart-legend-item">
-                            <div class="rvd-chart-legend-dot" style="background:#0F5132"></div>
+                            <div class="rvd-chart-legend-dot" style="background:${isLeading ? '#0F5132' : '#C41E24'}"></div>
                             ${rivalry.challenger.name}
                         </div>
                         <div class="rvd-chart-legend-item">
-                            <div class="rvd-chart-legend-dot" style="background:#3B0001"></div>
+                            <div class="rvd-chart-legend-dot" style="background:${!isLeading ? '#0F5132' : '#C41E24'}"></div>
                             ${rivalry.opponent.name}
                         </div>
+                        ${rivalry.status === 'active' ? `<div class="rvd-chart-legend-item" style="color:#0F5132;font-weight:600"><span style="width:6px;height:6px;border-radius:50%;background:#0F5132;display:inline-block;animation:rvd-skeletonWave 1s infinite;margin-right:4px"></span> LIVE</div>` : ''}
                     </div>
                 </div>
                 <div class="rvd-chart-canvas" id="rvd-perf-chart"></div>
@@ -809,108 +810,225 @@ export async function initRivalryDetail() {
         </div>
     `;
 
-    // ── Render Performance Chart (SVG) ──
+    // ── Render Performance Chart (SVG) — Uses Live Metric Data ──
     const chartEl = document.getElementById('rvd-perf-chart');
-    if (chartEl && rivalry.status !== 'pending') {
-        const W = 800, H = 200, PAD = 32;
-        const POINTS = 20;
-        const elapsed = rivalry.totalDays - rivalry.daysLeft;
-        const visiblePoints = Math.max(2, Math.round((elapsed / rivalry.totalDays) * POINTS));
 
-        // Generate realistic growth curves
-        function generateCurve(finalGrowth, seed) {
-            const pts = [0];
-            let val = 0;
-            for (let i = 1; i <= POINTS; i++) {
-                const progress = i / POINTS;
-                const target = finalGrowth * progress;
-                const noise = Math.sin(seed * i * 0.7) * (finalGrowth * 0.15) +
-                    Math.cos(seed * i * 1.3) * (finalGrowth * 0.08);
-                val = target + noise;
-                if (i === POINTS) val = finalGrowth;
-                pts.push(val);
+    function renderLiveChart(metricsData, challUserId, oppUserId, targetPct) {
+        if (!chartEl) return;
+
+        // Parse metric snapshots into per-user time series
+        const challPoints = [];
+        const oppPoints = [];
+        let challBaseline = null;
+        let oppBaseline = null;
+
+        (metricsData || []).forEach(m => {
+            const val = parseFloat(m.metricValue || m.metric_value || 0);
+            const ts = new Date(m.fetchedAt || m.fetched_at);
+            if (m.userId === challUserId || m.user_id === challUserId) {
+                if (challBaseline === null) challBaseline = val;
+                challPoints.push({ t: ts, v: val, pct: challBaseline ? ((val - challBaseline) / challBaseline) * 100 : 0 });
+            } else if (m.userId === oppUserId || m.user_id === oppUserId) {
+                if (oppBaseline === null) oppBaseline = val;
+                oppPoints.push({ t: ts, v: val, pct: oppBaseline ? ((val - oppBaseline) / oppBaseline) * 100 : 0 });
             }
-            return pts.slice(0, visiblePoints + 1);
+        });
+
+        // Sort by timestamp
+        challPoints.sort((a, b) => a.t - b.t);
+        oppPoints.sort((a, b) => a.t - b.t);
+
+        // If no data, show the skeleton
+        if (challPoints.length === 0 && oppPoints.length === 0) {
+            chartEl.innerHTML = `
+                <div style="display:flex;flex-direction:column;align-items:center;justify-content:center;height:100%;gap:16px;">
+                    <div style="display:flex;align-items:flex-end;gap:10px;height:60px;">
+                        <div style="width:8px;height:20px;background:linear-gradient(180deg,#0F5132 0%,#0F513220 100%);border-radius:2px;animation:rvd-skeletonWave 1.5s infinite"></div>
+                        <div style="width:8px;height:36px;background:linear-gradient(180deg,#3B0001 0%,#3B000120 100%);border-radius:2px;animation:rvd-skeletonWave 1.5s .2s infinite"></div>
+                        <div style="width:8px;height:28px;background:linear-gradient(180deg,#0F5132 0%,#0F513220 100%);border-radius:2px;animation:rvd-skeletonWave 1.5s .4s infinite"></div>
+                        <div style="width:8px;height:48px;background:linear-gradient(180deg,#3B0001 0%,#3B000120 100%);border-radius:2px;animation:rvd-skeletonWave 1.5s .6s infinite"></div>
+                        <div style="width:8px;height:16px;background:linear-gradient(180deg,#0F5132 0%,#0F513220 100%);border-radius:2px;animation:rvd-skeletonWave 1.5s .8s infinite"></div>
+                    </div>
+                    <span style="color:#999;font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:0.08em;text-transform:uppercase">AWAITING METRIC DATA</span>
+                    <span style="color:#ccc;font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:0.06em">Live tracking begins once the duel is active</span>
+                </div>`;
+            return;
         }
 
-        const challData = generateCurve(rivalry.challenger.growth, 3.14);
-        const oppData = generateCurve(rivalry.opponent.growth, 7.28);
+        const W = 800, H = 240, PAD_L = 50, PAD_R = 16, PAD_T = 16, PAD_B = 28;
 
-        const allVals = [...challData, ...oppData];
-        const minVal = Math.min(0, ...allVals);
-        const maxVal = Math.max(...allVals) * 1.15;
-        const range = maxVal - minVal || 1;
+        // Determine who's leading for color assignment
+        const challCurrent = challPoints.length > 0 ? challPoints[challPoints.length - 1].pct : 0;
+        const oppCurrent = oppPoints.length > 0 ? oppPoints[oppPoints.length - 1].pct : 0;
+        const challLeading = challCurrent >= oppCurrent;
 
-        function toX(i, total) { return PAD + (i / (total - 1)) * (W - PAD * 2); }
-        function toY(v) { return H - PAD - ((v - minVal) / range) * (H - PAD * 2); }
+        // Leader = green (#0F5132), trailer = red (#3B0001)
+        const challColor = challLeading ? '#0F5132' : '#C41E24';
+        const oppColor = !challLeading ? '#0F5132' : '#C41E24';
+        const challGradColor = challLeading ? '#0F5132' : '#C41E24';
+        const oppGradColor = !challLeading ? '#0F5132' : '#C41E24';
 
-        function buildPath(data) {
-            return data.map((v, i) => `${i === 0 ? 'M' : 'L'}${toX(i, data.length).toFixed(1)},${toY(v).toFixed(1)}`).join(' ');
+        // Combine all pct values for scale
+        const allPcts = [...challPoints.map(p => p.pct), ...oppPoints.map(p => p.pct), 0, targetPct];
+        const minPct = Math.min(...allPcts) - 2;
+        const maxPct = Math.max(...allPcts) + 2;
+        const range = maxPct - minPct || 1;
+
+        // Time range
+        const allTimes = [...challPoints.map(p => p.t.getTime()), ...oppPoints.map(p => p.t.getTime())];
+        const tMin = Math.min(...allTimes);
+        const tMax = Math.max(...allTimes);
+        const tRange = tMax - tMin || 1;
+
+        function toX(t) { return PAD_L + ((t - tMin) / tRange) * (W - PAD_L - PAD_R); }
+        function toY(pct) { return PAD_T + ((maxPct - pct) / range) * (H - PAD_T - PAD_B); }
+
+        function buildPath(pts) {
+            if (pts.length === 0) return '';
+            return pts.map((p, i) => `${i === 0 ? 'M' : 'L'}${toX(p.t.getTime()).toFixed(1)},${toY(p.pct).toFixed(1)}`).join(' ');
         }
-        function buildAreaPath(data) {
-            const line = buildPath(data);
-            const lastX = toX(data.length - 1, data.length).toFixed(1);
-            const firstX = toX(0, data.length).toFixed(1);
+        function buildAreaPath(pts) {
+            if (pts.length === 0) return '';
+            const line = buildPath(pts);
+            const lastX = toX(pts[pts.length - 1].t.getTime()).toFixed(1);
+            const firstX = toX(pts[0].t.getTime()).toFixed(1);
             const baseY = toY(0).toFixed(1);
             return `${line} L${lastX},${baseY} L${firstX},${baseY} Z`;
         }
 
         // Gridlines
-        const gridCount = 4;
-        let gridLines = '';
+        const gridCount = 5;
+        let gridSvg = '';
         for (let i = 0; i <= gridCount; i++) {
-            const val = minVal + (range / gridCount) * i;
-            const y = toY(val);
-            gridLines += `<line x1="${PAD}" y1="${y}" x2="${W - PAD}" y2="${y}" class="rvd-chart-gridline"/>`;
-            gridLines += `<text x="${PAD - 6}" y="${y + 3}" text-anchor="end" class="rvd-chart-label">${val.toFixed(0)}%</text>`;
+            const pct = minPct + (range / gridCount) * i;
+            const y = toY(pct);
+            gridSvg += `<line x1="${PAD_L}" y1="${y}" x2="${W - PAD_R}" y2="${y}" stroke="#f0f0f0" stroke-width="1"/>`;
+            gridSvg += `<text x="${PAD_L - 8}" y="${y + 4}" text-anchor="end" font-family="JetBrains Mono, monospace" font-size="9" fill="#bbb" font-weight="500">${pct.toFixed(0)}%</text>`;
         }
 
-        const challPath = buildPath(challData);
-        const oppPath = buildPath(oppData);
-        const challArea = buildAreaPath(challData);
-        const oppArea = buildAreaPath(oppData);
+        // Zero line
+        const zeroY = toY(0);
+        gridSvg += `<line x1="${PAD_L}" y1="${zeroY}" x2="${W - PAD_R}" y2="${zeroY}" stroke="#ddd" stroke-width="1.5"/>`;
 
-        const challEnd = challData[challData.length - 1];
-        const oppEnd = oppData[oppData.length - 1];
-        const challEndX = toX(challData.length - 1, challData.length);
-        const oppEndX = toX(oppData.length - 1, oppData.length);
+        // Target line
+        const targetY = toY(targetPct);
+        gridSvg += `<line x1="${PAD_L}" y1="${targetY}" x2="${W - PAD_R}" y2="${targetY}" stroke="#3B0001" stroke-width="1" stroke-dasharray="6 4" opacity="0.5"/>`;
+        gridSvg += `<text x="${W - PAD_R + 4}" y="${targetY + 3}" font-family="JetBrains Mono, monospace" font-size="8" font-weight="700" fill="#3B0001" opacity="0.6">TARGET +${targetPct}%</text>`;
+
+        const challPath = buildPath(challPoints);
+        const oppPath = buildPath(oppPoints);
+        const challArea = buildAreaPath(challPoints);
+        const oppArea = buildAreaPath(oppPoints);
+
+        // End dots
+        const challEnd = challPoints.length > 0 ? challPoints[challPoints.length - 1] : null;
+        const oppEnd = oppPoints.length > 0 ? oppPoints[oppPoints.length - 1] : null;
+
+        let endDots = '';
+        if (challEnd) {
+            const cx = toX(challEnd.t.getTime()).toFixed(1);
+            const cy = toY(challEnd.pct).toFixed(1);
+            endDots += `<circle cx="${cx}" cy="${cy}" r="6" fill="${challColor}" stroke="#fff" stroke-width="2.5" filter="url(#dot-glow)"/>`;
+            endDots += `<text x="${parseFloat(cx) + 10}" y="${parseFloat(cy) + 4}" font-family="JetBrains Mono, monospace" font-size="10" font-weight="700" fill="${challColor}">${challEnd.pct >= 0 ? '+' : ''}${challEnd.pct.toFixed(1)}%</text>`;
+        }
+        if (oppEnd) {
+            const cx = toX(oppEnd.t.getTime()).toFixed(1);
+            const cy = toY(oppEnd.pct).toFixed(1);
+            endDots += `<circle cx="${cx}" cy="${cy}" r="6" fill="${oppColor}" stroke="#fff" stroke-width="2.5" filter="url(#dot-glow)"/>`;
+            endDots += `<text x="${parseFloat(cx) + 10}" y="${parseFloat(cy) + 4}" font-family="JetBrains Mono, monospace" font-size="10" font-weight="700" fill="${oppColor}">${oppEnd.pct >= 0 ? '+' : ''}${oppEnd.pct.toFixed(1)}%</text>`;
+        }
+
+        // Pulse animation on leading dot
+        const pulseColor = challLeading ? challColor : oppColor;
+        const pulseEnd = challLeading ? challEnd : oppEnd;
+        let pulseSvg = '';
+        if (pulseEnd) {
+            const px = toX(pulseEnd.t.getTime()).toFixed(1);
+            const py = toY(pulseEnd.pct).toFixed(1);
+            pulseSvg = `<circle cx="${px}" cy="${py}" r="6" fill="none" stroke="${pulseColor}" stroke-width="2" opacity="0.4"><animate attributeName="r" from="6" to="18" dur="2s" repeatCount="indefinite"/><animate attributeName="opacity" from="0.4" to="0" dur="2s" repeatCount="indefinite"/></circle>`;
+        }
 
         chartEl.innerHTML = `
-            <svg viewBox="0 0 ${W} ${H}" preserveAspectRatio="none">
+            <svg viewBox="0 0 ${W} ${H}" preserveAspectRatio="xMidYMid meet" style="width:100%;height:100%">
                 <defs>
-                    <linearGradient id="grad-chall" x1="0" y1="0" x2="0" y2="1">
-                        <stop offset="0%" stop-color="#0F5132" stop-opacity="0.12"/>
-                        <stop offset="100%" stop-color="#0F5132" stop-opacity="0"/>
+                    <linearGradient id="grad-chall-live" x1="0" y1="0" x2="0" y2="1">
+                        <stop offset="0%" stop-color="${challGradColor}" stop-opacity="0.15"/>
+                        <stop offset="100%" stop-color="${challGradColor}" stop-opacity="0"/>
                     </linearGradient>
-                    <linearGradient id="grad-opp" x1="0" y1="0" x2="0" y2="1">
-                        <stop offset="0%" stop-color="#3B0001" stop-opacity="0.10"/>
-                        <stop offset="100%" stop-color="#3B0001" stop-opacity="0"/>
+                    <linearGradient id="grad-opp-live" x1="0" y1="0" x2="0" y2="1">
+                        <stop offset="0%" stop-color="${oppGradColor}" stop-opacity="0.12"/>
+                        <stop offset="100%" stop-color="${oppGradColor}" stop-opacity="0"/>
                     </linearGradient>
+                    <filter id="dot-glow" x="-50%" y="-50%" width="200%" height="200%">
+                        <feGaussianBlur stdDeviation="2" result="glow"/>
+                        <feMerge><feMergeNode in="glow"/><feMergeNode in="SourceGraphic"/></feMerge>
+                    </filter>
                 </defs>
-                ${gridLines}
-                <line x1="${PAD}" y1="${toY(rivalry.targetGrowthPct)}" x2="${W - PAD}" y2="${toY(rivalry.targetGrowthPct)}" stroke="#3B0001" stroke-width="1" stroke-dasharray="6 4" opacity="0.4"/>
-                <text x="${W - PAD + 4}" y="${toY(rivalry.targetGrowthPct) + 3}" font-family="JetBrains Mono" font-size="8" font-weight="700" fill="#3B0001" opacity="0.5">TARGET ${rivalry.targetGrowthPct}%</text>
-                <path d="${challArea}" fill="url(#grad-chall)"/>
-                <path d="${oppArea}" fill="url(#grad-opp)"/>
-                <path d="${oppPath}" fill="none" stroke="#3B0001" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" opacity="0.7"/>
-                <path d="${challPath}" fill="none" stroke="#0F5132" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
-                <circle cx="${challEndX}" cy="${toY(challEnd)}" r="5" fill="#0F5132" stroke="#fff" stroke-width="2"/>
-                <circle cx="${oppEndX}" cy="${toY(oppEnd)}" r="5" fill="#3B0001" stroke="#fff" stroke-width="2"/>
-            </svg>
-        `;
+                ${gridSvg}
+                ${challArea ? `<path d="${challArea}" fill="url(#grad-chall-live)"/>` : ''}
+                ${oppArea ? `<path d="${oppArea}" fill="url(#grad-opp-live)"/>` : ''}
+                ${oppPath ? `<path d="${oppPath}" fill="none" stroke="${oppColor}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" opacity="0.8"/>` : ''}
+                ${challPath ? `<path d="${challPath}" fill="none" stroke="${challColor}" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>` : ''}
+                ${pulseSvg}
+                ${endDots}
+            </svg>`;
+    }
+
+    // Initial render
+    if (rivalry.status !== 'pending') {
+        renderLiveChart(rivalry.metrics, rivalry._challengerUserId, rivalry._opponentUserId, rivalry.targetGrowthPct);
     } else if (chartEl) {
-        const daysUntilActive = rivalry.daysLeft > 0 ? rivalry.daysLeft : '—';
         chartEl.innerHTML = `
-            <div style="display:flex;flex-direction:column;align-items:center;justify-content:center;height:100%;gap:12px;">
-                <svg width="48" height="48" viewBox="0 0 48 48" fill="none">
-                    <rect x="4" y="36" width="6" height="8" rx="1" fill="#f0f0f0" style="animation:rvd-skeletonWave 1.5s infinite"/>
-                    <rect x="14" y="28" width="6" height="16" rx="1" fill="#f0f0f0" style="animation:rvd-skeletonWave 1.5s .2s infinite"/>
-                    <rect x="24" y="20" width="6" height="24" rx="1" fill="#f0f0f0" style="animation:rvd-skeletonWave 1.5s .4s infinite"/>
-                    <rect x="34" y="14" width="6" height="30" rx="1" fill="#f0f0f0" style="animation:rvd-skeletonWave 1.5s .6s infinite"/>
-                </svg>
-                <span style="color:#ccc;font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:0.08em;text-transform:uppercase">AWAITING ACTIVATION</span>
-                <span style="color:#ddd;font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:0.06em">Chart data will populate once both sides fund</span>
+            <div style="display:flex;flex-direction:column;align-items:center;justify-content:center;height:100%;gap:16px;">
+                <div style="display:flex;align-items:flex-end;gap:10px;height:60px;">
+                    <div style="width:8px;height:20px;background:linear-gradient(180deg,#0F5132 0%,#0F513220 100%);border-radius:2px;animation:rvd-skeletonWave 1.5s infinite"></div>
+                    <div style="width:8px;height:36px;background:linear-gradient(180deg,#3B0001 0%,#3B000120 100%);border-radius:2px;animation:rvd-skeletonWave 1.5s .2s infinite"></div>
+                    <div style="width:8px;height:28px;background:linear-gradient(180deg,#0F5132 0%,#0F513220 100%);border-radius:2px;animation:rvd-skeletonWave 1.5s .4s infinite"></div>
+                    <div style="width:8px;height:48px;background:linear-gradient(180deg,#3B0001 0%,#3B000120 100%);border-radius:2px;animation:rvd-skeletonWave 1.5s .6s infinite"></div>
+                    <div style="width:8px;height:16px;background:linear-gradient(180deg,#0F5132 0%,#0F513220 100%);border-radius:2px;animation:rvd-skeletonWave 1.5s .8s infinite"></div>
+                </div>
+                <span style="color:#999;font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:0.08em;text-transform:uppercase">AWAITING ACTIVATION</span>
+                <span style="color:#ccc;font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:0.06em">Chart data will populate once both sides fund</span>
             </div>`;
+    }
+
+    // ── Live Auto-Refresh (60s polling) ──
+    if (rivalry.status === 'active' && rivalry._rawState && !['SETTLED','DRAW','DECLINED','EXPIRED','CANCELLED'].includes(rivalry._rawState)) {
+        let pollCount = 0;
+        const pollInterval = setInterval(async () => {
+            pollCount++;
+            try {
+                // Update the LIVE badge
+                const legendEl = document.querySelector('.rvd-chart-header');
+                if (legendEl) {
+                    let liveTag = legendEl.querySelector('.rvd-live-refresh');
+                    if (!liveTag) {
+                        liveTag = document.createElement('span');
+                        liveTag.className = 'rvd-live-refresh';
+                        liveTag.style.cssText = 'font-family:"JetBrains Mono",monospace;font-size:9px;color:#0F5132;letter-spacing:0.06em;display:flex;align-items:center;gap:4px;';
+                        legendEl.appendChild(liveTag);
+                    }
+                    liveTag.innerHTML = `<span style="width:6px;height:6px;border-radius:50%;background:#0F5132;display:inline-block;animation:rvd-skeletonWave 1s infinite"></span> LIVE · Refreshing...`;
+                }
+
+                const res = await api.getRivalryMetrics(id);
+                if (res.ok && res.metrics) {
+                    renderLiveChart(res.metrics, rivalry._challengerUserId, rivalry._opponentUserId, rivalry.targetGrowthPct);
+                }
+
+                // Update live badge with timestamp
+                const liveTag = document.querySelector('.rvd-live-refresh');
+                if (liveTag) {
+                    const now = new Date();
+                    liveTag.innerHTML = `<span style="width:6px;height:6px;border-radius:50%;background:#0F5132;display:inline-block;animation:rvd-skeletonWave 1s infinite"></span> LIVE · Updated ${now.toLocaleTimeString()}`;
+                }
+            } catch (err) {
+                console.warn('[RivalryDetail] Metric poll failed:', err.message);
+            }
+        }, 60000); // 60 seconds
+
+        // Cleanup on navigation
+        window.addEventListener('hashchange', () => clearInterval(pollInterval), { once: true });
     }
 
     // ── Action Bar — accept/decline/fund ──

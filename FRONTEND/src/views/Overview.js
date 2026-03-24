@@ -1071,8 +1071,22 @@ export function renderOverview() {
                     <div class="eq-path-card rivalry anim-mech-card-2">
                         <div class="eq-path-icon">
                             <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
-                                <circle cx="16" cy="16" r="14" fill="#111" stroke="none"/>
-                                <path d="M11 11l10 10M21 11l-10 10" stroke="#fff" stroke-width="2" stroke-linecap="round"/>
+                                <!-- Sword 1: top-left to bottom-right -->
+                                <line x1="6" y1="6" x2="26" y2="26" stroke="#5C1414" stroke-width="1.5" stroke-linecap="round"/>
+                                <!-- Sword 1 blade tip -->
+                                <path d="M6 6l3 0.5L6.5 9z" fill="#5C1414"/>
+                                <!-- Sword 1 guard -->
+                                <line x1="12" y1="14" x2="14" y2="12" stroke="#5C1414" stroke-width="2" stroke-linecap="round"/>
+                                <!-- Sword 1 pommel -->
+                                <circle cx="24.5" cy="24.5" r="1.2" fill="#5C1414"/>
+                                <!-- Sword 2: top-right to bottom-left -->
+                                <line x1="26" y1="6" x2="6" y2="26" stroke="#5C1414" stroke-width="1.5" stroke-linecap="round"/>
+                                <!-- Sword 2 blade tip -->
+                                <path d="M26 6l-3 0.5L25.5 9z" fill="#5C1414"/>
+                                <!-- Sword 2 guard -->
+                                <line x1="20" y1="14" x2="18" y2="12" stroke="#5C1414" stroke-width="2" stroke-linecap="round"/>
+                                <!-- Sword 2 pommel -->
+                                <circle cx="7.5" cy="24.5" r="1.2" fill="#5C1414"/>
                             </svg>
                         </div>
                         <div class="eq-path-tag rivalry">Rivalry Contract</div>

@@ -1071,22 +1071,27 @@ export function renderOverview() {
                     <div class="eq-path-card rivalry anim-mech-card-2">
                         <div class="eq-path-icon">
                             <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
-                                <!-- Sword 1: top-left to bottom-right -->
-                                <line x1="6" y1="6" x2="26" y2="26" stroke="#5C1414" stroke-width="1.5" stroke-linecap="round"/>
-                                <!-- Sword 1 blade tip -->
-                                <path d="M6 6l3 0.5L6.5 9z" fill="#5C1414"/>
-                                <!-- Sword 1 guard -->
-                                <line x1="12" y1="14" x2="14" y2="12" stroke="#5C1414" stroke-width="2" stroke-linecap="round"/>
-                                <!-- Sword 1 pommel -->
-                                <circle cx="24.5" cy="24.5" r="1.2" fill="#5C1414"/>
-                                <!-- Sword 2: top-right to bottom-left -->
-                                <line x1="26" y1="6" x2="6" y2="26" stroke="#5C1414" stroke-width="1.5" stroke-linecap="round"/>
-                                <!-- Sword 2 blade tip -->
-                                <path d="M26 6l-3 0.5L25.5 9z" fill="#5C1414"/>
-                                <!-- Sword 2 guard -->
-                                <line x1="20" y1="14" x2="18" y2="12" stroke="#5C1414" stroke-width="2" stroke-linecap="round"/>
-                                <!-- Sword 2 pommel -->
-                                <circle cx="7.5" cy="24.5" r="1.2" fill="#5C1414"/>
+                                <!-- Left cutlass blade (curved) -->
+                                <path d="M7 5 Q10 12, 16 16" stroke="#5C1414" stroke-width="1.8" stroke-linecap="round" fill="none"/>
+                                <!-- Left cutlass blade edge curve -->
+                                <path d="M7 5 Q5 8, 7 7" stroke="#5C1414" stroke-width="1" fill="#5C1414"/>
+                                <!-- Left cutlass guard (curved handguard) -->
+                                <path d="M16 16 Q18 18, 15 20" stroke="#5C1414" stroke-width="2" stroke-linecap="round" fill="none"/>
+                                <!-- Left cutlass handle -->
+                                <line x1="17" y1="18" x2="21" y2="25" stroke="#5C1414" stroke-width="1.5" stroke-linecap="round"/>
+                                <!-- Left pommel -->
+                                <circle cx="21.5" cy="25.5" r="1" fill="#5C1414"/>
+
+                                <!-- Right cutlass blade (curved) -->
+                                <path d="M25 5 Q22 12, 16 16" stroke="#5C1414" stroke-width="1.8" stroke-linecap="round" fill="none"/>
+                                <!-- Right cutlass blade edge curve -->
+                                <path d="M25 5 Q27 8, 25 7" stroke="#5C1414" stroke-width="1" fill="#5C1414"/>
+                                <!-- Right cutlass guard (curved handguard) -->
+                                <path d="M16 16 Q14 18, 17 20" stroke="#5C1414" stroke-width="2" stroke-linecap="round" fill="none"/>
+                                <!-- Right cutlass handle -->
+                                <line x1="15" y1="18" x2="11" y2="25" stroke="#5C1414" stroke-width="1.5" stroke-linecap="round"/>
+                                <!-- Right pommel -->
+                                <circle cx="10.5" cy="25.5" r="1" fill="#5C1414"/>
                             </svg>
                         </div>
                         <div class="eq-path-tag rivalry">Rivalry Contract</div>

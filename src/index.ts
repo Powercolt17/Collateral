@@ -314,6 +314,39 @@ async function bootFastify() {
         await fastify.ready();
         console.log(`[startup] ✅ Phase 2: Fastify ready — full API available on 0.0.0.0:${PORT}`);
 
+        // =========================================================
+        // Phase 3: Auto-Scheduler — Oracle Metric Polling
+        // Runs all jobs every 5 minutes (oracle refresh, rivalry
+        // tracker, rivalry cron, verification, settlement, reconciliation)
+        // =========================================================
+        const SCHEDULER_INTERVAL_MS = 5 * 60 * 1000; // 5 minutes
+        const SCHEDULER_INITIAL_DELAY_MS = 30 * 1000; // 30 second warmup
+
+        setTimeout(() => {
+            console.log(`[scheduler] ⏰ Auto-scheduler starting (every ${SCHEDULER_INTERVAL_MS / 60000} min)...`);
+
+            // Run immediately on first tick
+            import('./services/scheduler.js').then(async ({ runScheduledJobs }) => {
+                try {
+                    const result = await runScheduledJobs();
+                    console.log(`[scheduler] ✅ Initial run complete in ${result.totalDurationMs}ms`);
+                } catch (err: any) {
+                    console.error('[scheduler] ❌ Initial run failed:', err.message);
+                }
+            });
+
+            // Then every 5 minutes
+            setInterval(async () => {
+                try {
+                    const { runScheduledJobs } = await import('./services/scheduler.js');
+                    const result = await runScheduledJobs();
+                    console.log(`[scheduler] ✅ Scheduled run complete in ${result.totalDurationMs}ms`);
+                } catch (err: any) {
+                    console.error('[scheduler] ❌ Scheduled run failed:', err.message);
+                }
+            }, SCHEDULER_INTERVAL_MS);
+        }, SCHEDULER_INITIAL_DELAY_MS);
+
     } catch (err) {
         console.error('[startup] ❌ Fastify boot failed:', err);
         console.error('[startup]    Health endpoint still running — deploy is alive');

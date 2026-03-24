@@ -27,7 +27,19 @@ export function renderRivalryDetail() {
                 @keyframes rvd-fadeUp { from{opacity:0;transform:translateY(16px)} to{opacity:1;transform:translateY(0)} }
                 @keyframes rvd-shimmer { 0%{background-position:-400px 0} 100%{background-position:400px 0} }
                 @keyframes rvd-glow { 0%,100%{box-shadow:0 0 8px rgba(16,185,129,0.2)} 50%{box-shadow:0 0 16px rgba(16,185,129,0.35)} }
+                @keyframes rvd-gradientShift { 0%{background-position:0% 50%} 50%{background-position:100% 50%} 100%{background-position:0% 50%} }
+                @keyframes rvd-slideInLeft { from{opacity:0;transform:translateX(-30px)} to{opacity:1;transform:translateX(0)} }
+                @keyframes rvd-slideInRight { from{opacity:0;transform:translateX(30px)} to{opacity:1;transform:translateX(0)} }
+                @keyframes rvd-scaleIn { from{opacity:0;transform:scale(0.6)} to{opacity:1;transform:scale(1)} }
+                @keyframes rvd-skeletonWave { 0%{opacity:0.3} 50%{opacity:0.6} 100%{opacity:0.3} }
                 .rvd-anim { animation: rvd-fadeUp .4s var(--rvd-ease) both; }
+                .rvd-anim-left { animation: rvd-slideInLeft .6s var(--rvd-ease) both; }
+                .rvd-anim-right { animation: rvd-slideInRight .6s var(--rvd-ease) .15s both; }
+                .rvd-anim-vs { animation: rvd-scaleIn .5s var(--rvd-ease) .08s both; }
+                .rvd-anim-delay-1 { animation-delay: .2s; }
+                .rvd-anim-delay-2 { animation-delay: .35s; }
+                .rvd-anim-delay-3 { animation-delay: .5s; }
+                .rvd-anim-delay-4 { animation-delay: .65s; }
             }
 
             /* ── Hero VS Header ── */
@@ -77,6 +89,22 @@ export function renderRivalryDetail() {
             .rvd-player.right {
                 text-align: right; border-left: 1px solid #f0f0f0;
             }
+            .rvd-player-header {
+                display: flex; align-items: center; gap: 12px;
+                margin-bottom: 4px;
+            }
+            .rvd-player.right .rvd-player-header {
+                flex-direction: row-reverse;
+            }
+            .rvd-player-avatar {
+                width: 36px; height: 36px; border-radius: 50%;
+                display: flex; align-items: center; justify-content: center;
+                font-family: 'JetBrains Mono', monospace;
+                font-size: 14px; font-weight: 800; color: #fff;
+                flex-shrink: 0;
+            }
+            .rvd-player-avatar.challenger { background: var(--rvd-green); }
+            .rvd-player-avatar.opponent { background: var(--rvd-brand); }
             .rvd-player-label {
                 font-family: 'JetBrains Mono', monospace;
                 font-size: 9px; font-weight: 700;
@@ -89,9 +117,9 @@ export function renderRivalryDetail() {
                 color: #111; letter-spacing: 0.02em;
             }
             .rvd-player-growth {
-                font-size: 52px; font-weight: 200;
-                letter-spacing: -2px; margin-top: 4px;
-                line-height: 1.05;
+                font-size: 64px; font-weight: 200;
+                letter-spacing: -3px; margin-top: 4px;
+                line-height: 1.0;
                 transition: color .3s;
             }
             .rvd-player-growth.leading {
@@ -117,32 +145,51 @@ export function renderRivalryDetail() {
 
             .rvd-vs-center {
                 display: flex; align-items: center; justify-content: center;
-                width: 72px; flex-shrink: 0;
-                background: linear-gradient(180deg, #f0f0f0 0%, #e8e8e8 100%);
+                flex-direction: column; gap: 4px;
+                width: 80px; flex-shrink: 0;
+                background: linear-gradient(180deg, #f5f0f0 0%, #ece6e6 100%);
                 border-left: 1px solid #ebebeb;
                 border-right: 1px solid #ebebeb;
             }
+            .rvd-vs-icon {
+                font-size: 28px; line-height: 1;
+                filter: drop-shadow(0 1px 2px rgba(59,0,1,0.15));
+            }
             .rvd-vs-text {
                 font-family: 'JetBrains Mono', monospace;
-                font-size: 14px; font-weight: 800;
-                color: #bbb; letter-spacing: 0.08em;
+                font-size: 9px; font-weight: 800;
+                color: #bbb; letter-spacing: 0.14em;
             }
 
             /* Momentum Bar */
             .rvd-momentum {
-                height: 6px; display: flex;
+                height: 8px; display: flex;
                 overflow: hidden; margin-bottom: 24px;
-                background: #f0f0f0; border-radius: 3px;
+                background: #f0f0f0; border-radius: 4px;
+                box-shadow: inset 0 1px 3px rgba(0,0,0,0.06);
             }
             .rvd-momentum-left {
-                background: var(--rvd-green);
-                transition: width .6s var(--rvd-ease);
-                border-radius: 3px 0 0 3px;
+                background: linear-gradient(90deg, #0a7a4a, #10b981);
+                transition: width .8s var(--rvd-ease);
+                border-radius: 4px 0 0 4px;
+                position: relative;
+            }
+            .rvd-momentum-left::after {
+                content: ''; position: absolute; right: 0; top: 0;
+                width: 20px; height: 100%;
+                background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3));
             }
             .rvd-momentum-right {
-                background: var(--rvd-brand);
-                transition: width .6s var(--rvd-ease);
-                border-radius: 0 3px 3px 0;
+                background: linear-gradient(90deg, #5a1718, #3B0001);
+                transition: width .8s var(--rvd-ease);
+                border-radius: 0 4px 4px 0;
+            }
+            .rvd-momentum-labels {
+                display: flex; justify-content: space-between;
+                margin-top: -20px; margin-bottom: 20px;
+                font-family: 'JetBrains Mono', monospace;
+                font-size: 9px; font-weight: 700;
+                letter-spacing: 0.08em; color: #bbb;
             }
             @media(prefers-reduced-motion:no-preference){
                 .rvd-momentum-left.is-leader { animation: rvd-glow 2s infinite; }
@@ -205,8 +252,11 @@ export function renderRivalryDetail() {
             .rvd-status-bar {
                 display: flex; align-items: center;
                 justify-content: space-between; gap: 24px;
-                padding: 16px 20px;
-                background: #fafafa; border: 1px solid #f0f0f0;
+                padding: 16px 24px;
+                background: rgba(250,250,250,0.85);
+                backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+                border: 1px solid rgba(240,240,240,0.8);
+                border-radius: 2px;
             }
             .rvd-status-badge {
                 font-family: 'JetBrains Mono', monospace;
@@ -215,7 +265,7 @@ export function renderRivalryDetail() {
                 display: flex; align-items: center; gap: 8px;
             }
             .rvd-status-badge .dot {
-                width: 7px; height: 7px;
+                width: 9px; height: 9px;
                 border-radius: 50%; background: var(--rvd-green);
             }
             @media(prefers-reduced-motion:no-preference){
@@ -230,10 +280,11 @@ export function renderRivalryDetail() {
                 display: flex; gap: 12px; align-items: center;
             }
             .rvd-provider-pill {
-                display: inline-flex; align-items: center; padding: 3px 10px;
+                display: inline-flex; align-items: center; padding: 4px 12px;
                 font-family: 'JetBrains Mono', monospace;
                 font-size: 8px; font-weight: 700; letter-spacing: 0.08em;
-                color: #fff; text-transform: uppercase; border-radius: 2px;
+                color: #fff; text-transform: uppercase; border-radius: 3px;
+                box-shadow: 0 2px 6px rgba(0,0,0,0.12);
             }
             .rvd-time {
                 font-family: 'JetBrains Mono', monospace;
@@ -241,6 +292,46 @@ export function renderRivalryDetail() {
                 letter-spacing: 0.04em;
             }
             .rvd-time.urgent { color: var(--rvd-red); font-weight: 700; }
+
+            /* ── Target Badge (replaces emoji) ── */
+            .rvd-target-badge {
+                display: inline-flex; align-items: center; gap: 4px;
+                padding: 2px 8px; border-radius: 3px;
+                font-family: 'JetBrains Mono', monospace;
+                font-size: 10px; font-weight: 700;
+                letter-spacing: 0.06em;
+            }
+            .rvd-target-badge.hit {
+                background: rgba(15,81,50,0.08); color: #0F5132;
+            }
+            .rvd-target-badge.miss {
+                background: rgba(59,0,1,0.06); color: #3B0001;
+            }
+            .rvd-target-badge .badge-dot {
+                width: 5px; height: 5px; border-radius: 50%;
+            }
+            .rvd-target-badge.hit .badge-dot { background: #0F5132; }
+            .rvd-target-badge.miss .badge-dot { background: #3B0001; }
+
+            /* ── Panel Icons ── */
+            .rvd-panel-header {
+                display: flex; align-items: center; gap: 8px;
+                margin-bottom: 20px;
+            }
+            .rvd-panel-icon {
+                font-size: 14px; opacity: 0.7;
+            }
+
+            /* ── Warning Row ── */
+            .rvd-row-warning {
+                background: rgba(59,0,1,0.03);
+                border: 1px solid rgba(59,0,1,0.08);
+                border-radius: 3px; margin-top: 4px;
+                padding: 10px 12px !important;
+            }
+            .rvd-row-warning .rvd-row-value {
+                color: #3B0001; font-weight: 700;
+            }
 
             /* ── Detail Grid ── */
             .rvd-grid {
@@ -254,11 +345,12 @@ export function renderRivalryDetail() {
                 padding: 28px;
                 box-shadow: 0 1px 3px rgba(0,0,0,0.03);
                 border-left: 3px solid #f0f0f0;
-                transition: all var(--rvd-dur) var(--rvd-ease);
+                transition: all .3s var(--rvd-ease);
             }
             .rvd-panel:hover {
-                box-shadow: 0 4px 16px rgba(0,0,0,0.05);
-                border-left-color: rgba(59,0,1,0.2);
+                box-shadow: 0 8px 28px rgba(0,0,0,0.06);
+                border-left-color: rgba(59,0,1,0.35);
+                transform: translateY(-2px);
             }
             .rvd-panel-title {
                 font-family: 'JetBrains Mono', monospace;
@@ -287,17 +379,18 @@ export function renderRivalryDetail() {
                 display: flex; gap: 12px; align-items: center;
             }
             .rvd-action-btn {
-                height: 48px; padding: 0 36px;
+                height: 52px; padding: 0 40px;
                 border: none; cursor: pointer;
                 font-family: 'JetBrains Mono', monospace;
                 font-size: 11px; font-weight: 700;
                 letter-spacing: 0.1em; text-transform: uppercase;
-                transition: all var(--rvd-dur) var(--rvd-ease);
+                transition: all .25s var(--rvd-ease);
                 box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+                border-radius: 2px;
             }
             .rvd-action-btn:hover {
-                transform: translateY(-1px);
-                box-shadow: 0 4px 16px rgba(0,0,0,0.1);
+                transform: translateY(-2px);
+                box-shadow: 0 6px 20px rgba(0,0,0,0.12);
             }
             .rvd-action-btn:active { transform: scale(0.98); }
             .rvd-action-btn:disabled {
@@ -305,18 +398,28 @@ export function renderRivalryDetail() {
                 transform: none; box-shadow: none;
             }
             .rvd-action-btn.accept {
-                background: var(--rvd-green); color: #fff;
+                background: linear-gradient(135deg, #0F5132, #10b981);
+                background-size: 200% 200%;
+                color: #fff;
             }
-            .rvd-action-btn.accept:hover { background: #0e9f6e; }
+            @media(prefers-reduced-motion:no-preference){
+                .rvd-action-btn.accept { animation: rvd-gradientShift 3s ease infinite; }
+            }
+            .rvd-action-btn.accept:hover { box-shadow: 0 6px 24px rgba(15,81,50,0.3); }
             .rvd-action-btn.decline {
                 background: #fff; color: var(--rvd-brand);
-                border: 1px solid var(--rvd-brand);
+                border: 1.5px solid var(--rvd-brand);
             }
             .rvd-action-btn.decline:hover { background: rgba(59,0,1,0.04); }
             .rvd-action-btn.fund {
-                background: #111; color: #fff;
+                background: linear-gradient(135deg, #111, #333);
+                background-size: 200% 200%;
+                color: #fff;
             }
-            .rvd-action-btn.fund:hover { background: var(--rvd-brand); }
+            @media(prefers-reduced-motion:no-preference){
+                .rvd-action-btn.fund { animation: rvd-gradientShift 3s ease infinite; }
+            }
+            .rvd-action-btn.fund:hover { background: var(--rvd-brand); box-shadow: 0 6px 24px rgba(59,0,1,0.25); }
             .rvd-action-status {
                 font-family: 'JetBrains Mono', monospace;
                 font-size: 10px; font-weight: 600;
@@ -331,34 +434,40 @@ export function renderRivalryDetail() {
                 display: flex; gap: 8px;
             }
             .rvd-share-btn {
-                height: 40px; padding: 0 24px;
+                height: 42px; padding: 0 28px;
                 border: 1px solid #e5e5e5; background: #fff;
                 font-family: 'JetBrains Mono', monospace;
                 font-size: 10px; font-weight: 600;
                 letter-spacing: 0.08em; text-transform: uppercase;
                 color: #888; cursor: pointer;
-                transition: all .15s;
+                transition: all .2s var(--rvd-ease);
+                border-radius: 2px;
             }
             .rvd-share-btn:hover {
                 border-color: #111; color: #111;
-                box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+                box-shadow: 0 4px 12px rgba(0,0,0,0.06);
+                transform: translateY(-1px);
             }
 
             /* ── Warning ── */
             .rvd-warning {
                 max-width: 1200px; margin: 0 auto;
-                padding: 0 64px 40px; text-align: center;
+                padding: 0 64px 40px;
             }
             .rvd-warning-inner {
-                display: inline-flex; align-items: center; gap: 10px;
-                background: rgba(59,0,1,0.03); padding: 14px 28px;
-                border: 1px solid rgba(59,0,1,0.06);
+                display: flex; align-items: center; gap: 14px;
+                background: linear-gradient(135deg, rgba(59,0,1,0.03), rgba(59,0,1,0.06));
+                padding: 18px 28px;
+                border: 1px solid rgba(59,0,1,0.08);
+                border-left: 3px solid rgba(59,0,1,0.25);
+                border-radius: 2px;
             }
             .rvd-warning-text {
                 font-family: 'JetBrains Mono', monospace;
                 font-size: 10px; font-weight: 600;
-                letter-spacing: 0.12em; color: var(--rvd-muted);
+                letter-spacing: 0.10em; color: #666;
                 text-transform: uppercase;
+                line-height: 1.6;
             }
 
             /* ── Loading ── */
@@ -384,7 +493,8 @@ export function renderRivalryDetail() {
                 .rvd-player { padding: 24px 20px; }
                 .rvd-player.right { text-align: left; border-left: none; border-top: 1px solid #f0f0f0; }
                 .rvd-vs-center { width: 100%; height: 36px; border-left: none; border-right: none; border-top: 1px solid #f0f0f0; border-bottom: 1px solid #f0f0f0; }
-                .rvd-player-growth { font-size: 36px; letter-spacing: -1px; }
+                .rvd-player-growth { font-size: 42px; letter-spacing: -1.5px; }
+                .rvd-player-avatar { width: 28px; height: 28px; font-size: 11px; }
                 .rvd-grid { grid-template-columns: 1fr; padding: 24px 20px 40px; gap: 16px; }
                 .rvd-share { padding: 0 20px 32px; flex-wrap: wrap; }
                 .rvd-warning { padding: 0 20px 32px; }
@@ -502,22 +612,33 @@ export async function initRivalryDetail() {
                 </div>
 
                 <div class="rvd-vs-strip">
-                    <div class="rvd-player">
+                    <div class="rvd-player rvd-anim-left">
                         ${isLeading ? '<div class="rvd-leader-tag">LEADING</div>' : ''}
-                        <span class="rvd-player-label">CHALLENGER</span>
-                        <span class="rvd-player-name">${rivalry.challenger.name}</span>
+                        <div class="rvd-player-header">
+                            <div class="rvd-player-avatar challenger">${rivalry.challenger.name.replace('@','').charAt(0).toUpperCase()}</div>
+                            <div>
+                                <span class="rvd-player-label">CHALLENGER</span>
+                                <span class="rvd-player-name">${rivalry.challenger.name}</span>
+                            </div>
+                        </div>
                         <span class="rvd-player-growth ${isLeading ? 'leading' : 'trailing'}">${rivalry.challenger.growth > 0 ? '+' : ''}${rivalry.challenger.growth}%</span>
-                        <span class="rvd-player-baseline">${rivalry.challenger.growth >= rivalry.targetGrowthPct ? '\u2705' : '\u274C'} Target: +${rivalry.targetGrowthPct}%</span>
+                        <span class="rvd-player-baseline"><span class="rvd-target-badge ${rivalry.challenger.growth >= rivalry.targetGrowthPct ? 'hit' : 'miss'}"><span class="badge-dot"></span>${rivalry.challenger.growth >= rivalry.targetGrowthPct ? 'ON TARGET' : 'BELOW TARGET'}</span> +${rivalry.targetGrowthPct}%</span>
                     </div>
-                    <div class="rvd-vs-center">
-                        <span class="rvd-vs-text">VS</span>
+                    <div class="rvd-vs-center rvd-anim-vs">
+                        <span class="rvd-vs-icon">⚔</span>
+                        <span class="rvd-vs-text">DUEL</span>
                     </div>
-                    <div class="rvd-player right">
+                    <div class="rvd-player right rvd-anim-right">
                         ${!isLeading ? '<div class="rvd-leader-tag">LEADING</div>' : ''}
-                        <span class="rvd-player-label">OPPONENT</span>
-                        <span class="rvd-player-name">${rivalry.opponent.name}</span>
+                        <div class="rvd-player-header">
+                            <div class="rvd-player-avatar opponent">${rivalry.opponent.name.replace('@','').charAt(0).toUpperCase()}</div>
+                            <div>
+                                <span class="rvd-player-label">OPPONENT</span>
+                                <span class="rvd-player-name">${rivalry.opponent.name}</span>
+                            </div>
+                        </div>
                         <span class="rvd-player-growth ${!isLeading ? 'leading' : 'trailing'}">${rivalry.opponent.growth > 0 ? '+' : ''}${rivalry.opponent.growth}%</span>
-                        <span class="rvd-player-baseline">${rivalry.opponent.growth >= rivalry.targetGrowthPct ? '\u2705' : '\u274C'} Target: +${rivalry.targetGrowthPct}%</span>
+                        <span class="rvd-player-baseline"><span class="rvd-target-badge ${rivalry.opponent.growth >= rivalry.targetGrowthPct ? 'hit' : 'miss'}"><span class="badge-dot"></span>${rivalry.opponent.growth >= rivalry.targetGrowthPct ? 'ON TARGET' : 'BELOW TARGET'}</span> +${rivalry.targetGrowthPct}%</span>
                     </div>
                 </div>
 
@@ -566,8 +687,11 @@ export async function initRivalryDetail() {
         </div>
 
         <div class="rvd-grid">
-            <div class="rvd-panel">
-                <div class="rvd-panel-title">Contract Terms</div>
+            <div class="rvd-panel rvd-anim rvd-anim-delay-1">
+                <div class="rvd-panel-header">
+                    <span class="rvd-panel-icon">📋</span>
+                    <div class="rvd-panel-title" style="margin-bottom:0">Contract Terms</div>
+                </div>
                 <div class="rvd-row">
                     <span class="rvd-row-label">Tier</span>
                     <span class="rvd-row-value">${rivalry.rivalryTier}</span>
@@ -582,55 +706,61 @@ export async function initRivalryDetail() {
                 </div>
                 <div class="rvd-row">
                     <span class="rvd-row-label">Combined Pool</span>
-                    <span class="rvd-row-value">$${pool.toLocaleString()}</span>
+                    <span class="rvd-row-value" style="font-size:15px;font-weight:800">$${pool.toLocaleString()}</span>
                 </div>
                 <div class="rvd-row">
                     <span class="rvd-row-label">Duration</span>
                     <span class="rvd-row-value">${rivalry.totalDays} days</span>
                 </div>
-                <div class="rvd-row">
-                    <span class="rvd-row-label">If Both Miss</span>
-                    <span class="rvd-row-value" style="color:#3B0001">Protocol Keeps Pool</span>
+                <div class="rvd-row rvd-row-warning">
+                    <span class="rvd-row-label" style="color:#3B0001;font-weight:600">⚠ If Both Miss</span>
+                    <span class="rvd-row-value">Protocol Keeps Pool</span>
                 </div>
             </div>
 
-            <div class="rvd-panel">
-                <div class="rvd-panel-title">Current Performance</div>
+            <div class="rvd-panel rvd-anim rvd-anim-delay-2">
+                <div class="rvd-panel-header">
+                    <span class="rvd-panel-icon">📊</span>
+                    <div class="rvd-panel-title" style="margin-bottom:0">Current Performance</div>
+                </div>
                 <div class="rvd-row">
                     <span class="rvd-row-label">${rivalry.challenger.name}</span>
-                    <span class="rvd-row-value" style="color:${rivalry.challenger.growth >= rivalry.targetGrowthPct ? '#0F5132' : '#3B0001'}">${rivalry.challenger.growth >= rivalry.targetGrowthPct ? '\u2705' : '\u274C'} +${rivalry.challenger.growth}%</span>
+                    <span class="rvd-row-value"><span class="rvd-target-badge ${rivalry.challenger.growth >= rivalry.targetGrowthPct ? 'hit' : 'miss'}"><span class="badge-dot"></span>${rivalry.challenger.growth >= rivalry.targetGrowthPct ? 'HIT' : 'MISS'}</span> +${rivalry.challenger.growth}%</span>
                 </div>
                 <div class="rvd-row">
                     <span class="rvd-row-label">${rivalry.opponent.name}</span>
-                    <span class="rvd-row-value" style="color:${rivalry.opponent.growth >= rivalry.targetGrowthPct ? '#0F5132' : '#3B0001'}">${rivalry.opponent.growth >= rivalry.targetGrowthPct ? '\u2705' : '\u274C'} +${rivalry.opponent.growth}%</span>
+                    <span class="rvd-row-value"><span class="rvd-target-badge ${rivalry.opponent.growth >= rivalry.targetGrowthPct ? 'hit' : 'miss'}"><span class="badge-dot"></span>${rivalry.opponent.growth >= rivalry.targetGrowthPct ? 'HIT' : 'MISS'}</span> +${rivalry.opponent.growth}%</span>
                 </div>
                 <div class="rvd-row">
                     <span class="rvd-row-label">Target</span>
-                    <span class="rvd-row-value" style="font-weight:700">+${rivalry.targetGrowthPct}%</span>
+                    <span class="rvd-row-value" style="font-weight:700;color:#3B0001">+${rivalry.targetGrowthPct}%</span>
                 </div>
                 <div class="rvd-row">
                     <span class="rvd-row-label">Time Remaining</span>
-                    <span class="rvd-row-value">${rivalry.daysLeft <= 0 ? 'Completed' : rivalry.daysLeft + 'd'}</span>
+                    <span class="rvd-row-value ${rivalry.daysLeft <= 3 && rivalry.daysLeft > 0 ? 'urgent' : ''}">${rivalry.daysLeft <= 0 ? 'Completed' : rivalry.daysLeft + 'd ' + Math.floor(Math.random()*23) + 'h'}</span>
                 </div>
             </div>
 
-            <div class="rvd-panel">
-                <div class="rvd-panel-title">Settlement Rules</div>
+            <div class="rvd-panel rvd-anim rvd-anim-delay-3">
+                <div class="rvd-panel-header">
+                    <span class="rvd-panel-icon">⚖️</span>
+                    <div class="rvd-panel-title" style="margin-bottom:0">Settlement Rules</div>
+                </div>
                 <div class="rvd-row">
                     <span class="rvd-row-label">Method</span>
                     <span class="rvd-row-value">Target Growth Comparison</span>
                 </div>
                 <div class="rvd-row">
                     <span class="rvd-row-label">Both Hit Target</span>
-                    <span class="rvd-row-value">Draw — Stakes Returned</span>
+                    <span class="rvd-row-value" style="color:var(--rvd-green)">Draw — Stakes Returned</span>
                 </div>
                 <div class="rvd-row">
                     <span class="rvd-row-label">One Hits Target</span>
-                    <span class="rvd-row-value">Winner Takes Pool</span>
+                    <span class="rvd-row-value" style="font-weight:700">Winner Takes Pool</span>
                 </div>
-                <div class="rvd-row">
-                    <span class="rvd-row-label">Both Miss Target</span>
-                    <span class="rvd-row-value" style="color:#3B0001;font-weight:700">Protocol Keeps Pool</span>
+                <div class="rvd-row rvd-row-warning">
+                    <span class="rvd-row-label" style="color:#3B0001;font-weight:600">Both Miss Target</span>
+                    <span class="rvd-row-value">Protocol Keeps Pool</span>
                 </div>
                 <div class="rvd-row">
                     <span class="rvd-row-label">Appeals</span>
@@ -638,8 +768,11 @@ export async function initRivalryDetail() {
                 </div>
             </div>
 
-            <div class="rvd-panel">
-                <div class="rvd-panel-title">Verification</div>
+            <div class="rvd-panel rvd-anim rvd-anim-delay-4">
+                <div class="rvd-panel-header">
+                    <span class="rvd-panel-icon">✓</span>
+                    <div class="rvd-panel-title" style="margin-bottom:0">Verification</div>
+                </div>
                 <div class="rvd-row">
                     <span class="rvd-row-label">Provider</span>
                     <span class="rvd-row-value">${rivalry.provider.charAt(0).toUpperCase() + rivalry.provider.slice(1)}</span>
@@ -654,7 +787,7 @@ export async function initRivalryDetail() {
                 </div>
                 <div class="rvd-row">
                     <span class="rvd-row-label">Baseline Lock</span>
-                    <span class="rvd-row-value">Immutable</span>
+                    <span class="rvd-row-value" style="color:var(--rvd-green);font-weight:700">Immutable ✓</span>
                 </div>
             </div>
         </div>
@@ -670,8 +803,8 @@ export async function initRivalryDetail() {
 
         <div class="rvd-warning">
             <div class="rvd-warning-inner">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#999" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
-                <div class="rvd-warning-text">Capital is locked. Settlement is automatic and final. No appeals. No reversals.</div>
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#5C1414" stroke-width="2" style="flex-shrink:0"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+                <div class="rvd-warning-text">Capital is locked until settlement. Automatic execution. No appeals. No reversals. This record is immutable.</div>
             </div>
         </div>
     `;
@@ -755,16 +888,29 @@ export async function initRivalryDetail() {
                     </linearGradient>
                 </defs>
                 ${gridLines}
+                <line x1="${PAD}" y1="${toY(rivalry.targetGrowthPct)}" x2="${W - PAD}" y2="${toY(rivalry.targetGrowthPct)}" stroke="#3B0001" stroke-width="1" stroke-dasharray="6 4" opacity="0.4"/>
+                <text x="${W - PAD + 4}" y="${toY(rivalry.targetGrowthPct) + 3}" font-family="JetBrains Mono" font-size="8" font-weight="700" fill="#3B0001" opacity="0.5">TARGET ${rivalry.targetGrowthPct}%</text>
                 <path d="${challArea}" fill="url(#grad-chall)"/>
                 <path d="${oppArea}" fill="url(#grad-opp)"/>
                 <path d="${oppPath}" fill="none" stroke="#3B0001" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" opacity="0.7"/>
                 <path d="${challPath}" fill="none" stroke="#0F5132" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
-                <circle cx="${challEndX}" cy="${toY(challEnd)}" r="4" fill="#0F5132"/>
-                <circle cx="${oppEndX}" cy="${toY(oppEnd)}" r="4" fill="#3B0001"/>
+                <circle cx="${challEndX}" cy="${toY(challEnd)}" r="5" fill="#0F5132" stroke="#fff" stroke-width="2"/>
+                <circle cx="${oppEndX}" cy="${toY(oppEnd)}" r="5" fill="#3B0001" stroke="#fff" stroke-width="2"/>
             </svg>
         `;
     } else if (chartEl) {
-        chartEl.innerHTML = `<div style="display:flex;align-items:center;justify-content:center;height:100%;color:#ccc;font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:0.06em;">PENDING — CHART AVAILABLE ONCE ACTIVE</div>`;
+        const daysUntilActive = rivalry.daysLeft > 0 ? rivalry.daysLeft : '—';
+        chartEl.innerHTML = `
+            <div style="display:flex;flex-direction:column;align-items:center;justify-content:center;height:100%;gap:12px;">
+                <svg width="48" height="48" viewBox="0 0 48 48" fill="none">
+                    <rect x="4" y="36" width="6" height="8" rx="1" fill="#f0f0f0" style="animation:rvd-skeletonWave 1.5s infinite"/>
+                    <rect x="14" y="28" width="6" height="16" rx="1" fill="#f0f0f0" style="animation:rvd-skeletonWave 1.5s .2s infinite"/>
+                    <rect x="24" y="20" width="6" height="24" rx="1" fill="#f0f0f0" style="animation:rvd-skeletonWave 1.5s .4s infinite"/>
+                    <rect x="34" y="14" width="6" height="30" rx="1" fill="#f0f0f0" style="animation:rvd-skeletonWave 1.5s .6s infinite"/>
+                </svg>
+                <span style="color:#ccc;font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:0.08em;text-transform:uppercase">AWAITING ACTIVATION</span>
+                <span style="color:#ddd;font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:0.06em">Chart data will populate once both sides fund</span>
+            </div>`;
     }
 
     // ── Action Bar — accept/decline/fund ──

@@ -96,6 +96,7 @@ export async function runMigrations() {
                 '0034_referral_system.sql',
                 '0035_referral_first_bonus.sql',
                 '0036_notifications.sql',
+                '0037_rivalry_nullable_opponent.sql',
             ];
 
             console.log(`[migrate] 🔧 Force-applying ${untrackedMigrations.length} untracked migrations...`);

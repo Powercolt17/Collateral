@@ -1071,9 +1071,8 @@ export function renderOverview() {
                     <div class="eq-path-card rivalry anim-mech-card-2">
                         <div class="eq-path-icon">
                             <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
-                                <circle cx="11" cy="16" r="7" stroke="#5C1414" stroke-width="1.5" fill="none"/>
-                                <circle cx="21" cy="16" r="7" stroke="#5C1414" stroke-width="1.5" fill="none"/>
-                                <text x="16" y="19" text-anchor="middle" font-size="7" font-weight="800" font-family="JetBrains Mono" fill="#5C1414">VS</text>
+                                <circle cx="16" cy="16" r="14" fill="#111" stroke="none"/>
+                                <path d="M11 11l10 10M21 11l-10 10" stroke="#fff" stroke-width="2" stroke-linecap="round"/>
                             </svg>
                         </div>
                         <div class="eq-path-tag rivalry">Rivalry Contract</div>

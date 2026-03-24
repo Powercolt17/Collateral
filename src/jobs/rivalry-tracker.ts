@@ -11,10 +11,10 @@
 import { db } from '../db/client.js';
 import {
     rivalries, rivalryParticipants, rivalryMetricSnapshots,
-    connectedAccounts, rivalryLedgerEvents,
+    connectedAccounts, rivalryLedgerEvents, RivalryEventType
 } from '../db/schema.js';
 import { eq, and, isNotNull, isNull, sql } from 'drizzle-orm';
-import { getRivalryState, appendRivalryEvent, RivalryEventType } from '../services/rivalry.js';
+import { getRivalryState, appendRivalryEvent } from '../services/rivalry.js';
 import { randomUUID } from 'crypto';
 
 // =============================================================================

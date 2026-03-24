@@ -1070,8 +1070,8 @@ export function renderOverview() {
                     <!-- Rivalry Contract -->
                     <div class="eq-path-card rivalry anim-mech-card-2">
                         <div class="eq-path-icon">
-                            <svg width="32" height="32" viewBox="0 0 32 32">
-                                <text x="16" y="24" text-anchor="middle" font-size="26" fill="#5C1414">⚔</text>
+                            <svg width="44" height="44" viewBox="0 0 44 44">
+                                <text x="22" y="34" text-anchor="middle" font-size="38" font-weight="bold" fill="#5C1414" stroke="#5C1414" stroke-width="0.5">⚔</text>
                             </svg>
                         </div>
                         <div class="eq-path-tag rivalry">Rivalry Contract</div>

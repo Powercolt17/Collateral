@@ -610,18 +610,18 @@ export function renderFunding() {
                 <div class="cap-overview" data-reveal>
                     <div class="cap-stat">
                         <div class="cap-stat-lbl">Available Capital</div>
-                        <div class="cap-stat-val" id="available-balance">$0.00</div>
-                        <div class="cap-stat-sub">Undeployed. Ready to lock.</div>
+                        <div class="cap-stat-val" id="available-balance">—</div>
+                        <div class="cap-stat-sub" id="available-sub">Loading...</div>
                     </div>
                     <div class="cap-stat">
                         <div class="cap-stat-lbl">Locked in Contracts</div>
-                        <div class="cap-stat-val locked" id="locked-balance">$0.00</div>
-                        <div class="cap-stat-sub">Actively committed and at risk.</div>
+                        <div class="cap-stat-val locked" id="locked-balance">—</div>
+                        <div class="cap-stat-sub" id="locked-sub">Loading...</div>
                     </div>
                     <div class="cap-stat">
                         <div class="cap-stat-lbl">Pending Settlement</div>
-                        <div class="cap-stat-val pending" id="pending-payout">$0.00</div>
-                        <div class="cap-stat-sub">Released. Transfer in progress.</div>
+                        <div class="cap-stat-val pending" id="pending-payout">—</div>
+                        <div class="cap-stat-sub" id="pending-sub">Loading...</div>
                     </div>
                 </div>
 
@@ -908,9 +908,28 @@ export async function initFunding() {
             }
 
             if (billingStatus?.balances) {
-                availableBalanceEl.textContent = formatUSD(billingStatus.balances.availableBalanceUsdCents || 0);
-                lockedBalanceEl.textContent = formatUSD(billingStatus.balances.lockedBalanceUsdCents || 0);
-                pendingPayoutEl.textContent = formatUSD(billingStatus.balances.pendingPayoutUsdCents || 0);
+                const avail = billingStatus.balances.availableBalanceUsdCents || 0;
+                const locked = billingStatus.balances.lockedBalanceUsdCents || 0;
+                const pending = billingStatus.balances.pendingPayoutUsdCents || 0;
+                availableBalanceEl.textContent = formatUSD(avail);
+                lockedBalanceEl.textContent = formatUSD(locked);
+                pendingPayoutEl.textContent = formatUSD(pending);
+                const availSub = document.getElementById('available-sub');
+                const lockedSub = document.getElementById('locked-sub');
+                const pendingSub = document.getElementById('pending-sub');
+                if (availSub) availSub.textContent = avail > 0 ? 'Undeployed. Ready to lock.' : 'Deposit to begin.';
+                if (lockedSub) lockedSub.textContent = locked > 0 ? 'Actively committed and at risk.' : 'No active contracts.';
+                if (pendingSub) pendingSub.textContent = pending > 0 ? 'Released. Transfer in progress.' : 'No pending payouts.';
+            } else {
+                availableBalanceEl.textContent = '$0.00';
+                lockedBalanceEl.textContent = '$0.00';
+                pendingPayoutEl.textContent = '$0.00';
+                const availSub = document.getElementById('available-sub');
+                const lockedSub = document.getElementById('locked-sub');
+                const pendingSub = document.getElementById('pending-sub');
+                if (availSub) availSub.textContent = 'Deposit to begin.';
+                if (lockedSub) lockedSub.textContent = 'No active contracts.';
+                if (pendingSub) pendingSub.textContent = 'No pending payouts.';
             }
 
         } catch (err) {

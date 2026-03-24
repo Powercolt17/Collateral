@@ -3,10 +3,19 @@
 /* Override JetBrains Mono's slashed zero with a clean zero from system fonts */
 @font-face {
     font-family: 'JetBrains Mono';
-    src: local('Helvetica Neue'), local('Helvetica'), local('Arial');
+    src: local('Segoe UI'), local('Arial'), local('Helvetica Neue'), local('Helvetica'), local('Roboto'), local('SF Pro Display');
     unicode-range: U+0030;
     font-weight: 100 900;
     font-style: normal;
+    font-display: swap;
+}
+@font-face {
+    font-family: 'JetBrains Mono';
+    src: local('Segoe UI'), local('Arial'), local('Helvetica Neue'), local('Helvetica'), local('Roboto'), local('SF Pro Display');
+    unicode-range: U+0030;
+    font-weight: 100 900;
+    font-style: italic;
+    font-display: swap;
 }
 
 /* ================================================================
@@ -52,14 +61,15 @@
     --space-label-value: 8px;
 }
 
-/* ── Global Base ── */
+/* ── Global Base — Force clean zeros everywhere ── */
 *,
 *::before,
 *::after {
     box-sizing: border-box;
-    font-feature-settings: "zero" 0 !important;
-    -webkit-font-feature-settings: "zero" 0 !important;
-    -moz-font-feature-settings: "zero" 0 !important;
+    font-feature-settings: "zero" 0, "cv01" 0, "cv02" 0 !important;
+    -webkit-font-feature-settings: "zero" 0, "cv01" 0, "cv02" 0 !important;
+    -moz-font-feature-settings: "zero" 0, "cv01" 0, "cv02" 0 !important;
+    font-variant-numeric: normal !important;
 }
 
 html {

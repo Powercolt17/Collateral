@@ -159,11 +159,49 @@
         href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap"
         rel="stylesheet">
 
+    <!-- Override JetBrains Mono's slashed zero AFTER Google Fonts loads -->
+    <style>
+        @font-face {
+            font-family: 'JetBrains Mono';
+            src: local('Segoe UI'), local('Arial'), local('Helvetica Neue'), local('Helvetica'), local('Roboto'), local('SF Pro Display'), local('San Francisco');
+            unicode-range: U+0030;
+            font-weight: 100 900;
+            font-style: normal;
+            font-display: swap;
+        }
+        @font-face {
+            font-family: 'JetBrains Mono';
+            src: local('Segoe UI'), local('Arial'), local('Helvetica Neue'), local('Helvetica'), local('Roboto'), local('SF Pro Display'), local('San Francisco');
+            unicode-range: U+0030;
+            font-weight: 100 900;
+            font-style: italic;
+            font-display: swap;
+        }
+    </style>
+
     <!-- Stripe.js (required for card elements & payment confirmation) -->
     <script src="https://js.stripe.com/v3/" async></script>
 
     <!-- Lucide Icons (async to not block render) -->
     <script src="https://unpkg.com/lucide@latest" defer></script>
+
+    <!-- Force clean zeros: inject @font-face AFTER Google Fonts finishes loading -->
+    <script>
+        (function() {
+            var css = '@font-face{font-family:"JetBrains Mono";src:local("Segoe UI"),local("Arial"),local("Helvetica Neue"),local("Roboto"),local("SF Pro Display");unicode-range:U+0030;font-weight:100 900;font-style:normal;font-display:swap}@font-face{font-family:"JetBrains Mono";src:local("Segoe UI"),local("Arial"),local("Helvetica Neue"),local("Roboto"),local("SF Pro Display");unicode-range:U+0030;font-weight:100 900;font-style:italic;font-display:swap}';
+            function inject() {
+                var s = document.createElement('style');
+                s.textContent = css;
+                document.head.appendChild(s);
+            }
+            // Inject immediately AND again after all fonts load to guarantee last-rule-wins
+            inject();
+            if (document.fonts && document.fonts.ready) {
+                document.fonts.ready.then(function() { inject(); });
+            }
+            window.addEventListener('load', function() { inject(); });
+        })();
+    </script>
 
 </head>
 

@@ -89,6 +89,7 @@ export async function runMigrations() {
                 '0029_add_clerk_user_id.sql',
                 '0030_password_reset_tokens.sql',
                 '0030_rivalry_tables.sql',
+                '0031_rivalry_targets.sql',
                 '0031_update_tier_pricing.sql',
                 '0032_oracle_metric_tables.sql',
                 '0033_social_share_bonus.sql',
@@ -141,6 +142,8 @@ export async function runMigrations() {
                 { table: 'users', column: 'referral_first_bonus_used' },
                 { table: 'contracts', column: 'social_bonus_enabled' },
                 { table: 'contracts', column: 'market_instance_id' },
+                { table: 'rivalries', column: 'target_growth_pct' },
+                { table: 'rivalries', column: 'rivalry_tier' },
             ];
 
             for (const { table, column } of colChecks) {

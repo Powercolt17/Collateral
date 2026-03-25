@@ -1026,6 +1026,144 @@ export function renderOverview() {
             .revealed .anim-mech-card-4 {
                 animation-play-state: running;
             }
+
+            /* --- TIER SYSTEM SECTION --- */
+            .eq-tiers {
+                max-width: 1300px;
+                margin: 0 auto;
+                padding: 80px 32px;
+                border-top: 1px solid #f2f2f2;
+            }
+            .eq-tiers-header {
+                margin-bottom: 48px;
+            }
+            .eq-tiers-grid {
+                display: grid;
+                grid-template-columns: repeat(3, 1fr);
+                gap: 20px;
+            }
+            .eq-tier-card {
+                border: 1px solid #e8e8e8;
+                padding: 36px 32px;
+                display: flex;
+                flex-direction: column;
+                transition: border-color 0.3s, box-shadow 0.3s, transform 0.35s cubic-bezier(0.16,1,0.3,1);
+                position: relative;
+                overflow: hidden;
+            }
+            .eq-tier-card::before {
+                content: '';
+                position: absolute;
+                top: 0; left: 0;
+                width: 0; height: 3px;
+                transition: width 0.4s ease;
+            }
+            .eq-tier-card:hover {
+                transform: translateY(-4px);
+                box-shadow: 0 8px 32px rgba(0,0,0,0.05);
+            }
+            .eq-tier-card:hover::before { width: 100%; }
+            .eq-tier-card.standard::before { background: #166534; }
+            .eq-tier-card.standard:hover { border-color: #dcfce7; }
+            .eq-tier-card.advanced::before { background: #9a3412; }
+            .eq-tier-card.advanced:hover { border-color: #ffedd5; }
+            .eq-tier-card.elite::before { background: #5C1414; }
+            .eq-tier-card.elite:hover { border-color: #ffe4e6; }
+
+            .eq-tier-card-badge {
+                font-family: 'JetBrains Mono', monospace;
+                font-size: 10px;
+                font-weight: 700;
+                letter-spacing: 0.12em;
+                text-transform: uppercase;
+                padding: 4px 10px;
+                border-radius: 3px;
+                display: inline-block;
+                align-self: flex-start;
+                margin-bottom: 24px;
+            }
+            .eq-tier-card-badge.standard { background: #f0fdf4; color: #166534; border: 1px solid #dcfce7; }
+            .eq-tier-card-badge.advanced { background: #fff7ed; color: #9a3412; border: 1px solid #ffedd5; }
+            .eq-tier-card-badge.elite { background: #fff1f2; color: #9f1239; border: 1px solid #ffe4e6; }
+
+            .eq-tier-card-rate {
+                font-size: 48px;
+                font-weight: 500;
+                letter-spacing: -2px;
+                color: #111;
+                line-height: 1;
+            }
+            .eq-tier-card-rate-label {
+                font-family: 'JetBrains Mono', monospace;
+                font-size: 10px;
+                text-transform: uppercase;
+                letter-spacing: 1px;
+                color: #bbb;
+                margin-top: 6px;
+            }
+            .eq-tier-card-divider {
+                width: 100%;
+                height: 1px;
+                background: #f0f0f0;
+                margin: 24px 0;
+            }
+            .eq-tier-card-specs {
+                display: flex;
+                flex-direction: column;
+                gap: 12px;
+                margin-bottom: 20px;
+            }
+            .eq-tier-spec-row {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+            }
+            .eq-tier-spec-label {
+                font-family: 'JetBrains Mono', monospace;
+                font-size: 10px;
+                text-transform: uppercase;
+                letter-spacing: 0.5px;
+                color: #aaa;
+            }
+            .eq-tier-spec-value {
+                font-size: 14px;
+                font-weight: 600;
+                color: #111;
+                letter-spacing: -0.3px;
+            }
+            .eq-tier-card-note {
+                font-size: 13px;
+                color: #888;
+                line-height: 1.5;
+                margin-top: auto;
+                font-style: italic;
+            }
+            .eq-tiers-footer {
+                margin-top: 32px;
+                padding-top: 24px;
+                border-top: 1px solid #f0f0f0;
+            }
+            .eq-tiers-footer p {
+                font-size: 13px;
+                color: #999;
+                line-height: 1.7;
+                max-width: 720px;
+            }
+            .eq-tiers-footer strong { color: #555; }
+
+            /* Tier section responsive: Tablet */
+            @media (max-width: 1200px) {
+                .eq-tiers-grid { grid-template-columns: repeat(3, 1fr); gap: 16px; }
+                .eq-tier-card { padding: 28px 24px; }
+                .eq-tier-card-rate { font-size: 36px; }
+            }
+            /* Tier section responsive: Mobile */
+            @media (max-width: 768px) {
+                .eq-tiers { padding: 48px 20px; }
+                .eq-tiers-grid { grid-template-columns: 1fr; gap: 16px; }
+                .eq-tier-card { padding: 28px 24px; }
+                .eq-tier-card-rate { font-size: 40px; }
+            }
         </style>
 
         <div class="eq">
@@ -1124,6 +1262,90 @@ export function renderOverview() {
                         <div class="eq-mech-label">Settle</div>
                         <div class="eq-mech-desc">Variance is calculated against the target. Capital is released to the counterparty or returned to the staker.</div>
                     </div>
+                </div>
+            </section>
+
+            <!-- Section 2.75: Tier System -->
+            <section class="eq-tiers" data-reveal>
+                <div class="eq-tiers-header">
+                    <div class="eq-tag anim-mech-tag">Risk Architecture</div>
+                    <h2 class="eq-mechanism-title anim-mech-title">Three tiers. One <strong>protocol.</strong></h2>
+                    <p class="eq-paths-sub">Every contract — Solo or Rivalry — is governed by the same tier system. Higher tiers demand harder targets, shorter windows, and bigger stakes. The difficulty is algorithmic, not arbitrary.</p>
+                </div>
+
+                <div class="eq-tiers-grid">
+                    <!-- STANDARD -->
+                    <div class="eq-tier-card standard anim-mech-card-1">
+                        <div class="eq-tier-card-badge standard">STANDARD</div>
+                        <div class="eq-tier-card-rate">~30%</div>
+                        <div class="eq-tier-card-rate-label">designed success rate</div>
+                        <div class="eq-tier-card-divider"></div>
+                        <div class="eq-tier-card-specs">
+                            <div class="eq-tier-spec-row">
+                                <span class="eq-tier-spec-label">Stake Range</span>
+                                <span class="eq-tier-spec-value">$100 – $1,500</span>
+                            </div>
+                            <div class="eq-tier-spec-row">
+                                <span class="eq-tier-spec-label">Duration</span>
+                                <span class="eq-tier-spec-value">7 – 30 days</span>
+                            </div>
+                            <div class="eq-tier-spec-row">
+                                <span class="eq-tier-spec-label">Growth Target</span>
+                                <span class="eq-tier-spec-value">15% – 50%</span>
+                            </div>
+                        </div>
+                        <div class="eq-tier-card-note">Achievable targets for proven operators. Start here.</div>
+                    </div>
+
+                    <!-- ADVANCED -->
+                    <div class="eq-tier-card advanced anim-mech-card-2">
+                        <div class="eq-tier-card-badge advanced">ADVANCED</div>
+                        <div class="eq-tier-card-rate">~20%</div>
+                        <div class="eq-tier-card-rate-label">designed success rate</div>
+                        <div class="eq-tier-card-divider"></div>
+                        <div class="eq-tier-card-specs">
+                            <div class="eq-tier-spec-row">
+                                <span class="eq-tier-spec-label">Stake Range</span>
+                                <span class="eq-tier-spec-value">$250 – $3,000</span>
+                            </div>
+                            <div class="eq-tier-spec-row">
+                                <span class="eq-tier-spec-label">Duration</span>
+                                <span class="eq-tier-spec-value">7 – 21 days</span>
+                            </div>
+                            <div class="eq-tier-spec-row">
+                                <span class="eq-tier-spec-label">Growth Target</span>
+                                <span class="eq-tier-spec-value">35% – 100%</span>
+                            </div>
+                        </div>
+                        <div class="eq-tier-card-note">Compressed timelines. Steeper scaling. Serious capital.</div>
+                    </div>
+
+                    <!-- ELITE -->
+                    <div class="eq-tier-card elite anim-mech-card-3">
+                        <div class="eq-tier-card-badge elite">ELITE</div>
+                        <div class="eq-tier-card-rate">~10%</div>
+                        <div class="eq-tier-card-rate-label">designed success rate</div>
+                        <div class="eq-tier-card-divider"></div>
+                        <div class="eq-tier-card-specs">
+                            <div class="eq-tier-spec-row">
+                                <span class="eq-tier-spec-label">Stake Range</span>
+                                <span class="eq-tier-spec-value">$500 – $5,000</span>
+                            </div>
+                            <div class="eq-tier-spec-row">
+                                <span class="eq-tier-spec-label">Duration</span>
+                                <span class="eq-tier-spec-value">3 – 14 days</span>
+                            </div>
+                            <div class="eq-tier-spec-row">
+                                <span class="eq-tier-spec-label">Growth Target</span>
+                                <span class="eq-tier-spec-value">60% – 200%</span>
+                            </div>
+                        </div>
+                        <div class="eq-tier-card-note">Maximum exposure. Exponential scaling. Built for conviction.</div>
+                    </div>
+                </div>
+
+                <div class="eq-tiers-footer">
+                    <p>Targets are calculated algorithmically based on your current baseline, metric type, and account size. Larger accounts face nonlinear scaling — no starting from zero. The same tier system governs both <strong>Solo</strong> and <strong>Rivalry</strong> contracts.</p>
                 </div>
             </section>
 

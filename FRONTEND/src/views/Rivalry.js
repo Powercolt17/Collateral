@@ -331,7 +331,7 @@ export function renderRivalry() {
             }
             .rv-winner-badge.winner { background: #f0fdf4; color: #166534; border: 1px solid #dcfce7; }
             .rv-winner-badge.loser { background: #fef2f2; color: #991b1b; border: 1px solid #fecaca; }
-            .rv-winner-badge.forfeited { background: #fefce8; color: #854d0e; border: 1px solid #fef08a; }
+            .rv-winner-badge.forfeited { background: #fafafa; color: #666; border: 1px solid #e5e5e5; }
 
             /* Settled card glow for winner */
             .rv-card[data-status="settled"][data-result="won"] {

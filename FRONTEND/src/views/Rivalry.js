@@ -296,19 +296,51 @@ export function renderRivalry() {
                 width: 56px; flex-shrink: 0;
                 background: linear-gradient(180deg, #f0f0f0 0%, #e8e8e8 100%);
                 border-left: 1px solid #ebebeb; border-right: 1px solid #ebebeb;
+                flex-direction: column; gap: 4px;
             }
+            .rv-vs-divider svg { opacity: 0.35; }
             .rv-vs-text {
                 font-family: 'JetBrains Mono', monospace;
-                font-size: 12px; font-weight: 800; color: #bbb; letter-spacing: 0.08em;
+                font-size: 10px; font-weight: 800; color: #bbb; letter-spacing: 0.08em;
             }
 
             /* Momentum Bar */
             .rv-momentum {
-                height: 4px; display: flex; overflow: hidden;
-                margin-bottom: 16px; background: #f5f5f5; border-radius: 2px;
+                height: 8px; display: flex; overflow: hidden;
+                margin-bottom: 16px; background: #f5f5f5; border-radius: 4px;
+                position: relative;
             }
-            .rv-momentum-left { background: var(--rv-green); transition: width .6s var(--rv-ease); border-radius: 2px 0 0 2px; }
-            .rv-momentum-right { background: var(--rv-brand); transition: width .6s var(--rv-ease); border-radius: 0 2px 2px 0; }
+            .rv-momentum-left { background: linear-gradient(90deg, var(--rv-green), #34d399); transition: width .6s var(--rv-ease); border-radius: 4px 0 0 4px; }
+            .rv-momentum-right { background: linear-gradient(90deg, #ef4444, var(--rv-brand)); transition: width .6s var(--rv-ease); border-radius: 0 4px 4px 0; }
+            .rv-momentum-labels {
+                display: flex; justify-content: space-between; margin-top: -12px; margin-bottom: 16px;
+            }
+            .rv-momentum-pct {
+                font-family: 'JetBrains Mono', monospace;
+                font-size: 9px; font-weight: 700; letter-spacing: 0.04em;
+            }
+            .rv-momentum-pct.left { color: var(--rv-green); }
+            .rv-momentum-pct.right { color: var(--rv-brand); }
+
+            /* Winner/Loser Badge */
+            .rv-winner-badge {
+                display: inline-flex; align-items: center; gap: 4px;
+                font-family: 'JetBrains Mono', monospace;
+                font-size: 8px; font-weight: 800; letter-spacing: 0.1em;
+                text-transform: uppercase; padding: 3px 8px; border-radius: 2px;
+            }
+            .rv-winner-badge.winner { background: #f0fdf4; color: #166534; border: 1px solid #dcfce7; }
+            .rv-winner-badge.loser { background: #fef2f2; color: #991b1b; border: 1px solid #fecaca; }
+            .rv-winner-badge.forfeited { background: #fefce8; color: #854d0e; border: 1px solid #fef08a; }
+
+            /* Settled card glow for winner */
+            .rv-card[data-status="settled"][data-result="won"] {
+                border-left-color: var(--rv-green);
+            }
+            .rv-card[data-status="settled"][data-result="lost"] {
+                border-left-color: var(--rv-red); opacity: 0.75;
+            }
+            .rv-card[data-status="settled"][data-result="lost"]:hover { opacity: 1; }
 
             /* Card Action Buttons */
             .rv-card-actions {
@@ -676,18 +708,25 @@ export function renderRivalry() {
             /* ── Empty State ── */
             .rv-empty {
                 text-align: center; padding: 80px 20px;
-                border: 2px dashed #f0f0f0;
+                border: 1px solid #f0f0f0;
+                background: linear-gradient(135deg, #fff 0%, #fafafa 50%, rgba(59,0,1,0.015) 100%);
+                position: relative; overflow: hidden;
+            }
+            .rv-empty::before {
+                content: ''; position: absolute; inset: 0;
+                background: radial-gradient(ellipse at 50% 0%, rgba(59,0,1,0.03), transparent 70%);
+                pointer-events: none;
             }
             .rv-empty-icon {
-                width: 48px; height: 48px; margin: 0 auto 20px;
-                opacity: 0.2;
+                width: 56px; height: 56px; margin: 0 auto 24px;
+                opacity: 0.15;
             }
             .rv-empty-title {
-                font-size: 16px; font-weight: 500; color: #999;
-                margin-bottom: 8px;
+                font-size: 18px; font-weight: 500; color: #666;
+                margin-bottom: 8px; letter-spacing: -0.3px;
             }
             .rv-empty-sub {
-                font-size: 13px; color: #ccc; margin-bottom: 24px;
+                font-size: 13px; color: #aaa; margin-bottom: 28px; max-width: 360px; margin-left: auto; margin-right: auto; line-height: 1.6;
             }
 
             /* ── Hottest Rivalry Featured Card ── */
@@ -1193,14 +1232,31 @@ export async function initRivalry() {
             }
         }
 
+        // Winner/Loser badge for settled cards
+        let resultAttr = '';
+        let winnerBadge = '';
+        if (r.status === 'settled') {
+            const challWon = r.challenger.growth > r.opponent.growth;
+            const isDraw = r.challenger.growth === r.opponent.growth;
+            if (isDraw) {
+                winnerBadge = '<span class="rv-winner-badge forfeited">DRAW</span>';
+            } else {
+                winnerBadge = challWon
+                    ? '<span class="rv-winner-badge winner">CHALLENGER WON</span>'
+                    : '<span class="rv-winner-badge loser">OPPONENT WON</span>';
+                resultAttr = challWon ? 'data-result="won"' : 'data-result="lost"';
+            }
+        }
+
         return `
-            <div class="rv-card" data-status="${r.status}" data-id="${r.id}">
+            <div class="rv-card" data-status="${r.status}" data-id="${r.id}" ${resultAttr}>
                 <div class="rv-card-header">
                     <div class="rv-card-status ${statusClass}">
                         <span class="dot"></span>
                         ${statusLabel}
                     </div>
                     ${r.isOpen && r.status === 'pending' ? '<span class="rv-open-badge">🌐 OPEN</span>' : ''}
+                    ${winnerBadge}
                     <span class="rv-card-id">${shortId}</span>
                 </div>
                 <div class="rv-card-metric">${r.metric}</div>
@@ -1211,6 +1267,7 @@ export async function initRivalry() {
                         ${challGrowth}
                     </div>
                     <div class="rv-vs-divider">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#999" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="14.5 17.5 3 6 3 3 6 3 17.5 14.5"/><line x1="13" x2="19" y1="19" y2="13"/><line x1="16" x2="20" y1="16" y2="20"/><line x1="19" x2="21" y1="21" y2="19"/><polyline points="14.5 6.5 18 3 21 3 21 6 17.5 9.5"/><line x1="5" x2="9" y1="14" y2="18"/><line x1="7" x2="4" y1="17" y2="20"/><line x1="3" x2="5" y1="19" y2="21"/></svg>
                         <span class="rv-vs-text">VS</span>
                     </div>
                     <div class="rv-player right">
@@ -1257,11 +1314,18 @@ export async function initRivalry() {
         if (countLbl) countLbl.textContent = `${filtered.length} rivalr${filtered.length !== 1 ? 'ies' : 'y'}`;
 
         if (filtered.length === 0) {
+            const emptyMessages = {
+                active: { title: 'No active duels', sub: 'The arena is quiet. Issue the first challenge and put your metrics on the line.' },
+                pending: { title: 'No pending challenges', sub: 'All challenges have been accepted or expired. Time to issue a new one.' },
+                settled: { title: 'No settled rivalries', sub: 'No duels have concluded yet. Check back when active rivalries reach their deadline.' },
+                all: { title: 'No rivalries yet', sub: 'Be the first to challenge another operator. Lock capital, prove performance, take everything.' }
+            };
+            const msg = emptyMessages[activeFilter] || emptyMessages.all;
             grid.innerHTML = `
                 <div class="rv-empty" style="grid-column:1/-1;">
-                    <svg class="rv-empty-icon" viewBox="0 0 48 48" fill="none" stroke="#ccc" stroke-width="1.5" xmlns="http://www.w3.org/2000/svg"><line x1="8" y1="40" x2="24" y2="8"/><line x1="40" y1="40" x2="24" y2="8"/><line x1="12" y1="32" x2="36" y2="32"/></svg>
-                    <div class="rv-empty-title">No rivalries found</div>
-                    <div class="rv-empty-sub">${activeFilter === 'active' ? 'Issue a challenge to start the first duel.' : 'No rivalries match your current filter.'}</div>
+                    <svg class="rv-empty-icon" viewBox="0 0 24 24" fill="none" stroke="#bbb" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg"><polyline points="14.5 17.5 3 6 3 3 6 3 17.5 14.5"/><line x1="13" x2="19" y1="19" y2="13"/><line x1="16" x2="20" y1="16" y2="20"/><line x1="19" x2="21" y1="21" y2="19"/><polyline points="14.5 6.5 18 3 21 3 21 6 17.5 9.5"/><line x1="5" x2="9" y1="14" y2="18"/><line x1="7" x2="4" y1="17" y2="20"/><line x1="3" x2="5" y1="19" y2="21"/></svg>
+                    <div class="rv-empty-title">${msg.title}</div>
+                    <div class="rv-empty-sub">${msg.sub}</div>
                     <button class="rv-btn-challenge" onclick="document.getElementById('rv-challenge-modal').classList.add('open')" style="margin:0 auto;">
                         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:middle;margin-top:-2px;margin-right:4px"><polyline points="14.5 17.5 3 6 3 3 6 3 17.5 14.5"/><line x1="13" x2="19" y1="19" y2="13"/><line x1="16" x2="20" y1="16" y2="20"/><line x1="19" x2="21" y1="21" y2="19"/><polyline points="14.5 6.5 18 3 21 3 21 6 17.5 9.5"/><line x1="5" x2="9" y1="14" y2="18"/><line x1="7" x2="4" y1="17" y2="20"/><line x1="3" x2="5" y1="19" y2="21"/></svg> ISSUE CHALLENGE
                     </button>

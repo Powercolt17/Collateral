@@ -107,21 +107,20 @@ export function renderRivalry() {
             }
             .rv-hero-right { display: flex; gap: 12px; flex-shrink: 0; }
             .rv-btn-challenge {
-                height: 48px; padding: 0 36px;
-                background: #111; color: #fff; border: none;
-                font-size: 11px; font-weight: 700; letter-spacing: 0.1em;
+                height: 48px; padding: 0 40px;
+                background: #111; color: #fff; border: 1px solid #111;
+                font-size: 11px; font-weight: 800; letter-spacing: 0.15em;
                 font-family: 'JetBrains Mono', monospace;
                 text-transform: uppercase; cursor: pointer;
                 transition: all var(--rv-dur) var(--rv-ease);
                 display: flex; align-items: center; gap: 8px;
-                box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+                box-shadow: 0 4px 12px rgba(0,0,0,0.1);
             }
             .rv-btn-challenge:hover {
-                background: var(--rv-brand);
-                transform: scale(1.02);
-                box-shadow: 0 4px 16px rgba(59,0,1,0.15);
+                background: var(--rv-brand); border-color: var(--rv-brand);
+                box-shadow: 0 6px 20px rgba(59,0,1,0.25);
             }
-            .rv-btn-challenge:active { transform: scale(0.98); }
+            .rv-btn-challenge:active { transform: translateY(1px); }
 
             /* ── Stats Strip ── */
             .rv-stats {
@@ -147,9 +146,11 @@ export function renderRivalry() {
             }
             .rv-stat-lbl {
                 font-family: 'JetBrains Mono', monospace;
-                font-size: 9px; font-weight: 600; letter-spacing: 0.12em;
-                color: #bbb; text-transform: uppercase; margin-top: 8px;
+                font-size: 9px; font-weight: 700; letter-spacing: 0.15em;
+                color: #999; text-transform: uppercase; margin-top: 8px;
+                display: flex; align-items: center; justify-content: center; gap: 6px;
             }
+            @media (max-width: 768px) { .rv-stat-lbl { justify-content: flex-start; } }
 
             /* ── Controls ── */
             .rv-controls {
@@ -244,7 +245,7 @@ export function renderRivalry() {
                 .rv-card-status .dot { animation: rv-pulse 1.8s infinite; }
             }
             .rv-card-status.pending { color: var(--rv-amber); }
-            .rv-card-status.pending .dot { background: var(--rv-amber); animation: none; }
+            .rv-card-status.pending .dot { background: var(--rv-amber); animation: rv-pulse 2s infinite; }
             .rv-card-status.ended { color: var(--rv-muted); }
             .rv-card-status.ended .dot { background: var(--rv-muted); animation: none; }
             .rv-card-id {
@@ -301,7 +302,7 @@ export function renderRivalry() {
             .rv-vs-divider svg { opacity: 0.35; }
             .rv-vs-text {
                 font-family: 'JetBrains Mono', monospace;
-                font-size: 10px; font-weight: 800; color: #bbb; letter-spacing: 0.08em;
+                font-size: 10px; font-weight: 800; color: #999; letter-spacing: 0.1em;
             }
 
             /* Momentum Bar */
@@ -345,25 +346,26 @@ export function renderRivalry() {
             /* Card Action Buttons */
             .rv-card-actions {
                 display: flex; gap: 0; margin: 0 -28px; padding: 12px 0 0;
-                border-top: 1px solid #f0f0f0;
+                border-top: 1px solid #f0f0f0; background: #fafafa;
             }
             .rv-action-btn {
-                flex: 1; padding: 12px; border: none;
+                flex: 1; padding: 16px; border: none;
                 font-family: 'JetBrains Mono', monospace;
-                font-size: 10px; font-weight: 700; letter-spacing: 0.1em;
+                font-size: 10px; font-weight: 800; letter-spacing: 0.15em;
                 cursor: pointer; transition: all .15s var(--rv-ease);
                 text-transform: uppercase; display: flex; align-items: center;
-                justify-content: center; gap: 6px;
+                justify-content: center; gap: 8px; border-top: 1px solid transparent;
             }
             .rv-action-accept {
-                background: #111; color: #fff;
+                background: #111; color: #fff; border-top-color: #111;
             }
-            .rv-action-accept:hover { background: var(--rv-brand); }
+            .rv-action-accept:hover { background: var(--rv-brand); border-top-color: var(--rv-brand); }
             .rv-action-decline {
-                background: transparent; color: #999;
-                border-left: 1px solid #f0f0f0 !important;
+                background: transparent; color: #666;
+                border-left: 1px solid #e5e5e5 !important;
+                border-top-color: #e5e5e5;
             }
-            .rv-action-decline:hover { background: rgba(239,68,68,0.04); color: var(--rv-red); }
+            .rv-action-decline:hover { background: #fff; color: var(--rv-red); border-top-color: var(--rv-red); }
 
             /* Card Bottom */
             .rv-card-bottom {
@@ -371,12 +373,12 @@ export function renderRivalry() {
             }
             .rv-card-stake { display: flex; flex-direction: column; gap: 2px; }
             .rv-card-stake-val {
-                font-size: 20px; font-weight: 600; color: #111; letter-spacing: -0.5px;
+                font-size: 24px; font-weight: 700; color: #111; letter-spacing: -0.5px;
             }
             .rv-card-stake-lbl {
                 font-family: 'JetBrains Mono', monospace;
-                font-size: 8px; font-weight: 600; color: #bbb;
-                letter-spacing: 0.1em; text-transform: uppercase;
+                font-size: 8px; font-weight: 700; color: #999;
+                letter-spacing: 0.15em; text-transform: uppercase;
             }
             .rv-card-time {
                 font-family: 'JetBrains Mono', monospace;
@@ -909,16 +911,16 @@ export function renderRivalry() {
 
                     <div class="rv-stats">
                         <div class="rv-stat-group">
-                            <div class="rv-stat-val" id="rv-stat-active">0</div>
-                            <div class="rv-stat-lbl">Active Rivalries</div>
+                            <div class="rv-stat-val" id="rv-stat-active">--</div>
+                            <div class="rv-stat-lbl"><span class="dot" style="width:6px;height:6px;border-radius:50%;background:var(--rv-green);animation:rv-pulse 2s infinite;"></span> ACTIVE EXPOSURE</div>
                         </div>
                         <div class="rv-stat-group">
-                            <div class="rv-stat-val">$<span id="rv-stat-capital">0</span></div>
-                            <div class="rv-stat-lbl">Capital in Duels</div>
+                            <div class="rv-stat-val" style="color:var(--rv-brand);">$<span id="rv-stat-capital">--</span></div>
+                            <div class="rv-stat-lbl">SYSTEM TVL</div>
                         </div>
                         <div class="rv-stat-group">
-                            <div class="rv-stat-val">$<span id="rv-stat-largest">0</span></div>
-                            <div class="rv-stat-lbl">Largest Rivalry</div>
+                            <div class="rv-stat-val">$<span id="rv-stat-largest">--</span></div>
+                            <div class="rv-stat-lbl">PEAK CONTRACT</div>
                         </div>
                     </div>
                 </div>
@@ -1124,11 +1126,13 @@ export async function initRivalry() {
         const end = new Date(start.getTime() + (r.durationDays || 30) * 86400000);
         const daysLeft = Math.max(0, Math.ceil((end - now) / 86400000));
 
+        const metricName = METRIC_LABELS[r.metricType] || r.metricType || 'Revenue Growth';
+
         return {
             id: r.id,
             status: STATE_TO_STATUS[r.state] || 'active',
             state: r.state,
-            metric: METRIC_LABELS[r.metricType] || r.metricType || 'Revenue Growth',
+            metric: metricName,
             provider: PLATFORM_MAP[r.platform] || (r.platform || 'stripe').toLowerCase(),
             isOpen: !r.opponentUserId || r.opponentUsername === 'unknown' || !r.opponentUsername,
             challenger: {
@@ -1137,7 +1141,7 @@ export async function initRivalry() {
                 baseline: parseFloat(challPart?.baselineValue || 0),
             },
             opponent: {
-                name: r.opponentUserId ? ('@' + (r.opponentUsername || 'unknown')) : 'Open — Anyone',
+                name: r.opponentUserId ? ('@' + (r.opponentUsername || 'unknown')) : 'OPEN OPPONENT',
                 growth: parseFloat(oppPart?.growthPercent || oppPart?.currentDelta || 0),
                 baseline: parseFloat(oppPart?.baselineValue || 0),
             },
@@ -1200,22 +1204,34 @@ export async function initRivalry() {
     function renderCard(r) {
         const isLeadingChallenger = r.challenger.growth >= r.opponent.growth;
         const statusClass = r.status === 'pending' ? 'pending' : r.status === 'settled' ? 'ended' : '';
-        const statusLabel = r.status === 'pending' ? 'AWAITING ACCEPTANCE' : r.status === 'settled' ? 'SETTLED' : 'LIVE';
-        const timeLabel = r.status === 'settled' ? 'Completed' : r.daysLeft <= 1 ? `${r.daysLeft * 24}h left` : `${r.daysLeft}d left`;
+        const statusLabel = r.status === 'pending' ? 'FORMING' : r.status === 'settled' ? 'SETTLED' : 'LOCKED';
+        const timeLabel = r.status === 'settled' ? 'SETTLED' : r.daysLeft <= 1 ? `${r.daysLeft * 24}H REMAINING` : `${r.daysLeft}D REMAINING`;
         const timeUrgent = r.status !== 'settled' && r.daysLeft <= 3;
         const shortId = r.id.substring(0, 8);
 
         // Momentum bar percentages
         const totalGrowth = Math.abs(r.challenger.growth) + Math.abs(r.opponent.growth);
-        const leftPct = totalGrowth > 0 ? Math.round((Math.abs(r.challenger.growth) / totalGrowth) * 100) : 50;
-        const rightPct = 100 - leftPct;
+        let leftPct = 50;
+        let rightPct = 50;
+        
+        if (r.status === 'pending') {
+            // Leave at 50/50 but visual tension handled in CSS
+        } else if (totalGrowth === 0) {
+            // Visual tension for 0 vs 0 active state
+            leftPct = 50; rightPct = 50;
+        } else {
+            // Exaggerate the leader slightly for visual dominance
+            const rawLeft = (Math.abs(r.challenger.growth) / totalGrowth) * 100;
+            leftPct = isLeadingChallenger ? Math.min(rawLeft + 10, 95) : Math.max(rawLeft - 10, 5);
+            rightPct = 100 - leftPct;
+        }
 
         // Growth display
         const challGrowth = r.status === 'pending'
-            ? '<span class="rv-player-growth awaiting">Awaiting</span>'
+            ? '<span class="rv-player-growth awaiting">FORMING</span>'
             : `<span class="rv-player-growth ${isLeadingChallenger ? 'leading' : 'trailing'}">${r.challenger.growth > 0 ? '+' : ''}${r.challenger.growth}%</span>`;
         const oppGrowth = r.status === 'pending'
-            ? '<span class="rv-player-growth awaiting">Awaiting</span>'
+            ? '<span class="rv-player-growth awaiting">FORMING</span>'
             : `<span class="rv-player-growth ${!isLeadingChallenger ? 'leading' : 'trailing'}">${r.opponent.growth > 0 ? '+' : ''}${r.opponent.growth}%</span>`;
 
         // Lead dots
@@ -1226,9 +1242,9 @@ export async function initRivalry() {
         let actionsHtml = '';
         if (r.status === 'pending') {
             if (r.isOpen) {
-                actionsHtml = `<div class="rv-card-actions"><button class="rv-action-btn rv-action-accept" data-rivalry-id="${r.id}" onclick="event.stopPropagation();window.app.acceptRivalry('${r.id}')" style="flex:1;">⚡ ACCEPT OPEN CHALLENGE</button></div>`;
+                actionsHtml = `<div class="rv-card-actions"><button class="rv-action-btn rv-action-accept" data-rivalry-id="${r.id}" onclick="event.stopPropagation();window.app.acceptRivalry('${r.id}')" style="flex:1;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-top:-2px;"><polyline points="20 6 9 17 4 12"/></svg> EXECUTE ENTRY</button></div>`;
             } else {
-                actionsHtml = `<div class="rv-card-actions"><button class="rv-action-btn rv-action-accept" data-rivalry-id="${r.id}" onclick="event.stopPropagation();window.app.acceptRivalry('${r.id}')">✓ ACCEPT</button><button class="rv-action-btn rv-action-decline" data-rivalry-id="${r.id}" onclick="event.stopPropagation();window.app.declineRivalry('${r.id}')">✕ DECLINE</button></div>`;
+                actionsHtml = `<div class="rv-card-actions"><button class="rv-action-btn rv-action-accept" data-rivalry-id="${r.id}" onclick="event.stopPropagation();window.app.acceptRivalry('${r.id}')">EXECUTE</button><button class="rv-action-btn rv-action-decline" data-rivalry-id="${r.id}" onclick="event.stopPropagation();window.app.declineRivalry('${r.id}')">DECLINE</button></div>`;
             }
         }
 
@@ -1257,9 +1273,8 @@ export async function initRivalry() {
                     </div>
                     ${r.isOpen && r.status === 'pending' ? '<span class="rv-open-badge">🌐 OPEN</span>' : ''}
                     ${winnerBadge}
-                    <span class="rv-card-id">${shortId}</span>
                 </div>
-                <div class="rv-card-metric">${r.metric}</div>
+                <div class="rv-card-metric">${r.metric} <span style="color:#bbb;font-size:10px;font-family:'JetBrains Mono',monospace;margin-left:8px;">ID:${shortId}</span></div>
                 <div class="rv-versus">
                     <div class="rv-player">
                         <span class="rv-player-label">Challenger</span>
@@ -1284,10 +1299,12 @@ export async function initRivalry() {
                 <div class="rv-card-bottom">
                     <div class="rv-card-stake">
                         <span class="rv-card-stake-val">$${(r.stake * 2).toLocaleString()}</span>
-                        <span class="rv-card-stake-lbl">Combined Pool</span>
+                        <span class="rv-card-stake-lbl">CAPITAL EXPOSURE</span>
                     </div>
-                    <span class="rv-card-provider-pill" style="background:${getProviderColor(r.provider)}">${r.provider.toUpperCase()}</span>
-                    <span class="rv-card-time${timeUrgent ? ' urgent' : ''}">○ ${timeLabel}</span>
+                    <div style="display:flex;flex-direction:column;align-items:flex-end;gap:4px;">
+                        <span class="rv-card-provider-pill" style="background:${getProviderColor(r.provider)}">${r.provider.toUpperCase()}</span>
+                        <span class="rv-card-time${timeUrgent ? ' urgent' : ''}">${timeLabel}</span>
+                    </div>
                 </div>
                 ${actionsHtml}
             </div>
@@ -1362,8 +1379,20 @@ export async function initRivalry() {
         const activeRivalries = allRivalries.filter(r => r.status === 'active');
         if (activeRivalries.length === 0) { featured.innerHTML = ''; return; }
 
-        const hottest = activeRivalries.reduce((a, b) => a.stake > b.stake ? a : b);
-        const isLeading = hottest.challenger.growth >= hottest.opponent.growth;
+        const hot = activeRivalries.reduce((a, b) => a.stake > b.stake ? a : b);
+        const challWon = hot.challenger.growth > hot.opponent.growth;
+        const challDot = hot.status === 'settled' ? '' : `<span class="rv-lead-dot" style="background:${challWon ? 'var(--rv-green)' : 'var(--rv-red)'}"></span>`;
+        const oppDot = hot.status === 'settled' ? '' : `<span class="rv-lead-dot" style="background:${!challWon ? 'var(--rv-green)' : 'var(--rv-red)'}"></span>`;
+
+        const challGrowth = hot.status === 'pending'
+            ? '<span class="rv-featured-growth" style="color:#ccc;font-size:16px;font-family:\'JetBrains Mono\',monospace;letter-spacing:0.1em;text-transform:uppercase;">FORMING</span>'
+            : `<span class="rv-featured-growth" style="color:${challWon ? 'var(--rv-green)' : 'var(--rv-brand)'}">${hot.challenger.growth > 0 ? '+' : ''}${hot.challenger.growth}%</span>`;
+            
+        const oppGrowth = hot.status === 'pending'
+            ? '<span class="rv-featured-growth" style="color:#ccc;font-size:16px;font-family:\'JetBrains Mono\',monospace;letter-spacing:0.1em;text-transform:uppercase;">FORMING</span>'
+            : `<span class="rv-featured-growth" style="color:${!challWon ? 'var(--rv-green)' : 'var(--rv-brand)'}">${hot.opponent.growth > 0 ? '+' : ''}${hot.opponent.growth}%</span>`;
+
+        const timeLabel = hot.status === 'settled' ? 'SETTLED' : hot.daysLeft <= 1 ? `${hot.daysLeft * 24}H REMAINING` : `${hot.daysLeft}D REMAINING`;
 
         featured.innerHTML = `
             <div class="rv-featured-card">
@@ -1372,21 +1401,22 @@ export async function initRivalry() {
                     <div class="rv-featured-vs">
                         <div class="rv-featured-player">
                             <span class="rv-player-label">CHALLENGER</span>
-                            <span class="rv-featured-name">${hottest.challenger.name}</span>
-                            <span class="rv-featured-growth ${isLeading ? 'leading' : 'trailing'}">${hottest.challenger.growth > 0 ? '+' : ''}${hottest.challenger.growth}%</span>
+                            <span class="rv-featured-name">${challDot}${hot.challenger.name}</span>
+                            ${challGrowth}
                         </div>
-                        <div class="rv-vs-divider" style="height:60px;">
-                            <span class="rv-vs-text">VS</span>
+                        <div class="rv-vs-divider" style="background:transparent;border:none;width:40px;">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#ccc" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="14.5 17.5 3 6 3 3 6 3 17.5 14.5"/><line x1="13" x2="19" y1="19" y2="13"/><line x1="16" x2="20" y1="16" y2="20"/><line x1="19" x2="21" y1="21" y2="19"/><polyline points="14.5 6.5 18 3 21 3 21 6 17.5 9.5"/><line x1="5" x2="9" y1="14" y2="18"/><line x1="7" x2="4" y1="17" y2="20"/><line x1="3" x2="5" y1="19" y2="21"/></svg>
                         </div>
                         <div class="rv-featured-player right">
                             <span class="rv-player-label">OPPONENT</span>
-                            <span class="rv-featured-name">${hottest.opponent.name}</span>
-                            <span class="rv-featured-growth ${!isLeading ? 'leading' : 'trailing'}">${hottest.opponent.growth > 0 ? '+' : ''}${hottest.opponent.growth}%</span>
+                            <span class="rv-featured-name">${hot.opponent.name}${oppDot}</span>
+                            ${oppGrowth}
                         </div>
                     </div>
                     <div class="rv-featured-meta">
-                        <span class="rv-featured-pool">$${(hottest.stake * 2).toLocaleString()}</span>
-                        <span class="rv-featured-time">${hottest.daysLeft}d remaining · ${hottest.provider.toUpperCase()}</span>
+                        <span class="rv-card-stake-lbl" style="color:#bbb;margin-bottom:-4px;">CAPITAL EXPOSURE</span>
+                        <div class="rv-featured-pool">$${(hot.stake * 2).toLocaleString()}</div>
+                        <div class="rv-featured-time">○ ${timeLabel}</div>
                     </div>
                 </div>
             </div>

@@ -1063,12 +1063,12 @@ export function renderOverview() {
                 box-shadow: 0 8px 32px rgba(0,0,0,0.05);
             }
             .eq-tier-card:hover::before { width: 100%; }
-            .eq-tier-card.standard::before { background: #166534; }
-            .eq-tier-card.standard:hover { border-color: #dcfce7; }
-            .eq-tier-card.advanced::before { background: #9a3412; }
-            .eq-tier-card.advanced:hover { border-color: #ffedd5; }
-            .eq-tier-card.elite::before { background: #5C1414; }
-            .eq-tier-card.elite:hover { border-color: #ffe4e6; }
+            .eq-tier-card.pledge::before { background: #166534; }
+            .eq-tier-card.pledge:hover { border-color: #dcfce7; }
+            .eq-tier-card.stake::before { background: #9a3412; }
+            .eq-tier-card.stake:hover { border-color: #ffedd5; }
+            .eq-tier-card.allin::before { background: #5C1414; }
+            .eq-tier-card.allin:hover { border-color: #ffe4e6; }
 
             .eq-tier-card-badge {
                 font-family: 'JetBrains Mono', monospace;
@@ -1082,9 +1082,9 @@ export function renderOverview() {
                 align-self: flex-start;
                 margin-bottom: 24px;
             }
-            .eq-tier-card-badge.standard { background: #f0fdf4; color: #166534; border: 1px solid #dcfce7; }
-            .eq-tier-card-badge.advanced { background: #fff7ed; color: #9a3412; border: 1px solid #ffedd5; }
-            .eq-tier-card-badge.elite { background: #fff1f2; color: #9f1239; border: 1px solid #ffe4e6; }
+            .eq-tier-card-badge.pledge { background: #f0fdf4; color: #166534; border: 1px solid #dcfce7; }
+            .eq-tier-card-badge.stake { background: #fff7ed; color: #9a3412; border: 1px solid #ffedd5; }
+            .eq-tier-card-badge.allin { background: #fff1f2; color: #9f1239; border: 1px solid #ffe4e6; }
 
             .eq-tier-card-rate {
                 font-size: 48px;
@@ -1275,8 +1275,8 @@ export function renderOverview() {
 
                 <div class="eq-tiers-grid">
                     <!-- STANDARD -->
-                    <div class="eq-tier-card standard anim-mech-card-1">
-                        <div class="eq-tier-card-badge standard">STANDARD</div>
+                    <div class="eq-tier-card pledge anim-mech-card-1">
+                        <div class="eq-tier-card-badge pledge">PLEDGE</div>
                         <div class="eq-tier-card-rate">~30%</div>
                         <div class="eq-tier-card-rate-label">designed success rate</div>
                         <div class="eq-tier-card-divider"></div>
@@ -1298,8 +1298,8 @@ export function renderOverview() {
                     </div>
 
                     <!-- ADVANCED -->
-                    <div class="eq-tier-card advanced anim-mech-card-2">
-                        <div class="eq-tier-card-badge advanced">ADVANCED</div>
+                    <div class="eq-tier-card stake anim-mech-card-2">
+                        <div class="eq-tier-card-badge stake">STAKE</div>
                         <div class="eq-tier-card-rate">~20%</div>
                         <div class="eq-tier-card-rate-label">designed success rate</div>
                         <div class="eq-tier-card-divider"></div>
@@ -1321,8 +1321,8 @@ export function renderOverview() {
                     </div>
 
                     <!-- ELITE -->
-                    <div class="eq-tier-card elite anim-mech-card-3">
-                        <div class="eq-tier-card-badge elite">ELITE</div>
+                    <div class="eq-tier-card allin anim-mech-card-3">
+                        <div class="eq-tier-card-badge allin">ALL-IN</div>
                         <div class="eq-tier-card-rate">~10%</div>
                         <div class="eq-tier-card-rate-label">designed success rate</div>
                         <div class="eq-tier-card-divider"></div>

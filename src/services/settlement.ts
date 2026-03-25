@@ -462,6 +462,19 @@ export async function settleContract(
                 console.error('[Settlement] First-contract bonus check failed (non-blocking):', err.message);
             }
 
+            // 6b4. RECORD PROFIT (Add winnings to Available balance)
+            const profitCents = finalPayoutCents - contract.lockAmountUsdCents;
+            if (profitCents > 0) {
+                await appendAccountEvent({
+                    userId: contract.principalUserId,
+                    contractId,
+                    eventType: AccountEventType.SETTLEMENT_WIN,
+                    amountCents: profitCents,
+                    idempotencyKey: `win_${contractId}_${settlementStartedEvent.id}`,
+                    metadata: { outcome: 'SUCCESS', profitCents }
+                });
+            }
+
             // 6c. QUEUE PAYOUT
             await appendAccountEvent({
                 userId: contract.principalUserId,

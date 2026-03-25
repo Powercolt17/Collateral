@@ -223,21 +223,38 @@ export async function settleRivalry(
                 // ═══ BOTH MISSED TARGET ═══
                 // Protocol keeps entire pool — neither gets capital back
                 const protocolRevenue = pool;
+                const lockAmountCents = rivalry.stakePerSideCents;
 
-                // Loss event for challenger
+                // Unlock then Loss for challenger
+                await tx.insert(accountLedgerEvents).values({
+                    userId: challenger.userId,
+                    eventType: 'CAPITAL_UNLOCKED',
+                    amountCents: lockAmountCents,
+                    idempotencyKey: `rivalry:${rivalryId}:challenger:both_miss_unlock`,
+                    metadata: { rivalryId, outcome: 'BOTH_MISS' },
+                }).onConflictDoNothing();
+
                 await tx.insert(accountLedgerEvents).values({
                     userId: challenger.userId,
                     eventType: 'SETTLEMENT_LOSS',
-                    amountCents: 0,
+                    amountCents: lockAmountCents,
                     idempotencyKey: `rivalry:${rivalryId}:challenger:both_miss_loss`,
                     metadata: { rivalryId, outcome: 'BOTH_MISS', targetGrowthPct, actualGrowth: challengerGrowthPct },
                 }).onConflictDoNothing();
 
-                // Loss event for opponent
+                // Unlock then Loss for opponent
+                await tx.insert(accountLedgerEvents).values({
+                    userId: opponent.userId,
+                    eventType: 'CAPITAL_UNLOCKED',
+                    amountCents: lockAmountCents,
+                    idempotencyKey: `rivalry:${rivalryId}:opponent:both_miss_unlock`,
+                    metadata: { rivalryId, outcome: 'BOTH_MISS' },
+                }).onConflictDoNothing();
+
                 await tx.insert(accountLedgerEvents).values({
                     userId: opponent.userId,
                     eventType: 'SETTLEMENT_LOSS',
-                    amountCents: 0,
+                    amountCents: lockAmountCents,
                     idempotencyKey: `rivalry:${rivalryId}:opponent:both_miss_loss`,
                     metadata: { rivalryId, outcome: 'BOTH_MISS', targetGrowthPct, actualGrowth: opponentGrowthPct },
                 }).onConflictDoNothing();
@@ -288,21 +305,51 @@ export async function settleRivalry(
                 const loserRole = outcome === 'CHALLENGER_WINS' ? 'opponent' : 'challenger';
                 const protocolFeeCents = Math.floor(pool * protocolFeeBps / 10000);
                 const winnerPayout = pool - protocolFeeCents;
+                const lockAmountCents = rivalry.stakePerSideCents;
+                const profitCents = winnerPayout - lockAmountCents;
 
-                // Payout to winner
+                // Unlock for winner
                 await tx.insert(accountLedgerEvents).values({
                     userId: winnerId,
-                    eventType: 'SETTLEMENT_WIN',
-                    amountCents: winnerPayout,
-                    idempotencyKey: `rivalry:${rivalryId}:${winnerRole}:win`,
-                    metadata: { rivalryId, outcome: 'WIN', targetGrowthPct },
+                    eventType: 'CAPITAL_UNLOCKED',
+                    amountCents: lockAmountCents,
+                    idempotencyKey: `rivalry:${rivalryId}:${winnerRole}:unlock`,
+                    metadata: { rivalryId, outcome: 'WIN' },
                 }).onConflictDoNothing();
 
-                // Loss event for loser (no capital returned)
+                // Add profit to balance
+                if (profitCents > 0) {
+                    await tx.insert(accountLedgerEvents).values({
+                        userId: winnerId,
+                        eventType: 'SETTLEMENT_WIN',
+                        amountCents: profitCents,
+                        idempotencyKey: `rivalry:${rivalryId}:${winnerRole}:win`,
+                        metadata: { rivalryId, outcome: 'WIN', targetGrowthPct },
+                    }).onConflictDoNothing();
+                }
+
+                // Queue Payout for winner for FULL payout
+                await tx.insert(accountLedgerEvents).values({
+                    userId: winnerId,
+                    eventType: 'PAYOUT_QUEUED',
+                    amountCents: winnerPayout,
+                    idempotencyKey: `rivalry:${rivalryId}:${winnerRole}:payout_queued`,
+                    metadata: { rivalryId, outcome: 'WIN', targetGrowthPct, payoutQueued: true },
+                }).onConflictDoNothing();
+
+                // Unlock then Loss for loser (no capital returned)
+                await tx.insert(accountLedgerEvents).values({
+                    userId: loserId,
+                    eventType: 'CAPITAL_UNLOCKED',
+                    amountCents: lockAmountCents,
+                    idempotencyKey: `rivalry:${rivalryId}:${loserRole}:unlock`,
+                    metadata: { rivalryId, outcome: 'LOSS' },
+                }).onConflictDoNothing();
+
                 await tx.insert(accountLedgerEvents).values({
                     userId: loserId,
                     eventType: 'SETTLEMENT_LOSS',
-                    amountCents: 0,
+                    amountCents: lockAmountCents,
                     idempotencyKey: `rivalry:${rivalryId}:${loserRole}:loss`,
                     metadata: { rivalryId, outcome: 'LOSS', targetGrowthPct },
                 }).onConflictDoNothing();

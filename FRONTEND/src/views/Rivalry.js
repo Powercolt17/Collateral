@@ -863,7 +863,7 @@ export function renderRivalry() {
                         </div>
                         <div class="rv-hero-right">
                             <button class="rv-btn-challenge" id="rv-btn-issue">
-                        ⚔ ISSUE CHALLENGE
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:middle;margin-top:-2px;margin-right:6px"><polyline points="14.5 17.5 3 6 3 3 6 3 17.5 14.5"/><line x1="13" x2="19" y1="19" y2="13"/><line x1="16" x2="20" y1="16" y2="20"/><line x1="19" x2="21" y1="21" y2="19"/><polyline points="14.5 6.5 18 3 21 3 21 6 17.5 9.5"/><line x1="5" x2="9" y1="14" y2="18"/><line x1="7" x2="4" y1="17" y2="20"/><line x1="3" x2="5" y1="19" y2="21"/></svg> ISSUE CHALLENGE
                     </button>
                         </div>
                     </div>
@@ -1262,7 +1262,9 @@ export async function initRivalry() {
                     <svg class="rv-empty-icon" viewBox="0 0 48 48" fill="none" stroke="#ccc" stroke-width="1.5" xmlns="http://www.w3.org/2000/svg"><line x1="8" y1="40" x2="24" y2="8"/><line x1="40" y1="40" x2="24" y2="8"/><line x1="12" y1="32" x2="36" y2="32"/></svg>
                     <div class="rv-empty-title">No rivalries found</div>
                     <div class="rv-empty-sub">${activeFilter === 'active' ? 'Issue a challenge to start the first duel.' : 'No rivalries match your current filter.'}</div>
-                    <button class="rv-btn-challenge" onclick="document.getElementById('rv-challenge-modal').classList.add('open')" style="margin:0 auto;">⚔ ISSUE CHALLENGE</button>
+                    <button class="rv-btn-challenge" onclick="document.getElementById('rv-challenge-modal').classList.add('open')" style="margin:0 auto;">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:middle;margin-top:-2px;margin-right:4px"><polyline points="14.5 17.5 3 6 3 3 6 3 17.5 14.5"/><line x1="13" x2="19" y1="19" y2="13"/><line x1="16" x2="20" y1="16" y2="20"/><line x1="19" x2="21" y1="21" y2="19"/><polyline points="14.5 6.5 18 3 21 3 21 6 17.5 9.5"/><line x1="5" x2="9" y1="14" y2="18"/><line x1="7" x2="4" y1="17" y2="20"/><line x1="3" x2="5" y1="19" y2="21"/></svg> ISSUE CHALLENGE
+                    </button>
                 </div>
             `;
             return;

@@ -1036,13 +1036,13 @@ export function renderOverview() {
                 <p class="eq-hero-sub anim-sub">Stake against revenue, sales, or growth targets. Automatic verification. Final settlement. No appeals.</p>
                 <div class="eq-hero-actions anim-actions">
                     <button class="eq-btn-primary" onclick="document.getElementById('live-market').scrollIntoView({behavior:'smooth'})">Explore Market</button>
-                    <a href="#" class="eq-link-more">Learn more →</a>
+                    <a href="#" class="eq-link-more" onclick="document.getElementById('how-it-works').scrollIntoView({behavior:'smooth'}); return false;">Learn more →</a>
                 </div>
                 <div class="eq-hero-scroll anim-scroll-hint">Scroll</div>
             </div>
 
             <!-- Section 2: Two Contract Types -->
-            <section class="eq-paths" data-reveal>
+            <section class="eq-paths" id="how-it-works" data-reveal>
                 <div class="eq-paths-header">
                     <div class="eq-tag anim-mech-tag">Contract Types</div>
                     <h2 class="eq-mechanism-title anim-mech-title">Two ways to <strong>compete.</strong></h2>

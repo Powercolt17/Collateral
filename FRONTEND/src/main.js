@@ -386,8 +386,8 @@ window.app = {
         if (isSignup) {
             if (title) title.textContent = 'Create your account.';
             if (btn) btn.textContent = 'Create Account';
-            if (usernameField) usernameField.classList.remove('hidden');
-            if (referralField) referralField.classList.remove('hidden');
+            if (usernameField) { usernameField.classList.remove('hidden'); usernameField.style.display = 'flex'; }
+            if (referralField) { referralField.classList.remove('hidden'); referralField.style.display = 'flex'; }
             // Pre-fill referral code from localStorage (if came via link)
             const storedCode = api.getReferralCode ? api.getReferralCode() : null;
             if (storedCode) {
@@ -398,8 +398,8 @@ window.app = {
         } else {
             if (title) title.textContent = 'Sign in to lock capital.';
             if (btn) btn.textContent = 'Sign In';
-            if (usernameField) usernameField.classList.add('hidden');
-            if (referralField) referralField.classList.add('hidden');
+            if (usernameField) { usernameField.classList.add('hidden'); usernameField.style.display = 'none'; }
+            if (referralField) { referralField.classList.add('hidden'); referralField.style.display = 'none'; }
             if (toggleText) toggleText.innerHTML = 'New here? <button onclick="window.app.toggleAuthMode()" class="text-[#111] font-medium hover:underline bg-transparent border-none cursor-pointer p-0">Create account</button>';
         }
     },

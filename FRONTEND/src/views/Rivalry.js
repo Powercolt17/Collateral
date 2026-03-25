@@ -22,7 +22,7 @@ export function renderRivalry() {
             }
 
             .rv {
-                background: #fff;
+                background: rgba(59, 0, 1, 0.02);
                 min-height: calc(100vh - 72px);
                 font-family: 'Neue Haas Grotesk Display', 'Helvetica Neue', Helvetica, Arial, sans-serif;
                 color: #111;
@@ -43,7 +43,7 @@ export function renderRivalry() {
 
             /* ── Hero ── */
             .rv-hero {
-                background: #fff;
+                background: rgba(59, 0, 1, 0.02);
                 border-bottom: 1px solid #f0f0f0;
                 position: relative;
                 overflow: hidden;
@@ -260,7 +260,7 @@ export function renderRivalry() {
             /* Versus Strip */
             .rv-versus {
                 display: flex; align-items: stretch; gap: 0;
-                background: #fafafa; border: 1px solid #f0f0f0;
+                background: #fff; border: 1px solid #f0f0f0;
                 margin-bottom: 16px; overflow: hidden;
             }
             .rv-player {
@@ -294,7 +294,7 @@ export function renderRivalry() {
             .rv-vs-divider {
                 display: flex; align-items: center; justify-content: center;
                 width: 56px; flex-shrink: 0;
-                background: linear-gradient(180deg, #f0f0f0 0%, #e8e8e8 100%);
+                background: linear-gradient(180deg, rgba(59,0,1,0.02) 0%, rgba(59,0,1,0.04) 100%);
                 border-left: 1px solid #ebebeb; border-right: 1px solid #ebebeb;
                 flex-direction: column; gap: 4px;
             }
@@ -398,7 +398,7 @@ export function renderRivalry() {
 
             /* ── How It Works ── */
             .rv-mechanism {
-                background: #fafafa;
+                background: rgba(59, 0, 1, 0.03);
                 border-top: 3px solid var(--rv-brand);
                 border-bottom: 1px solid #f0f0f0;
                 padding: 64px 0; position: relative;

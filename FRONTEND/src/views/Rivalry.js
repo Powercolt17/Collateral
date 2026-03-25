@@ -22,7 +22,7 @@ export function renderRivalry() {
             }
 
             .rv {
-                background: rgba(59, 0, 1, 0.02);
+                background: rgba(59, 0, 1, 0.008);
                 min-height: calc(100vh - 72px);
                 font-family: 'Neue Haas Grotesk Display', 'Helvetica Neue', Helvetica, Arial, sans-serif;
                 color: #111;
@@ -43,7 +43,7 @@ export function renderRivalry() {
 
             /* ── Hero ── */
             .rv-hero {
-                background: rgba(59, 0, 1, 0.02);
+                background: rgba(59, 0, 1, 0.008);
                 border-bottom: 1px solid #f0f0f0;
                 position: relative;
                 overflow: hidden;
@@ -295,7 +295,7 @@ export function renderRivalry() {
             .rv-vs-divider {
                 display: flex; align-items: center; justify-content: center;
                 width: 56px; flex-shrink: 0;
-                background: linear-gradient(180deg, rgba(59,0,1,0.02) 0%, rgba(59,0,1,0.04) 100%);
+                background: linear-gradient(180deg, rgba(59,0,1,0.005) 0%, rgba(59,0,1,0.015) 100%);
                 border-left: 1px solid #ebebeb; border-right: 1px solid #ebebeb;
                 flex-direction: column; gap: 4px;
             }
@@ -400,7 +400,7 @@ export function renderRivalry() {
 
             /* ── How It Works ── */
             .rv-mechanism {
-                background: rgba(59, 0, 1, 0.03);
+                background: rgba(59, 0, 1, 0.012);
                 border-top: 3px solid var(--rv-brand);
                 border-bottom: 1px solid #f0f0f0;
                 padding: 64px 0; position: relative;

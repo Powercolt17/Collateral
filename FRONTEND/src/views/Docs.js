@@ -24,7 +24,7 @@ export function renderDocs() {
 
             /* ── Hero Header ── */
             .doc-top {
-                background: linear-gradient(135deg, #5C1414 0%, #7A1414 40%, #5E1010 100%);
+                background: linear-gradient(135deg, #3B0001 0%, #4A0000 40%, #2A0001 100%);
                 border-bottom: none;
                 position: relative;
                 overflow: hidden;
@@ -36,7 +36,7 @@ export function renderDocs() {
                 right: -20%;
                 width: 500px;
                 height: 500px;
-                background: radial-gradient(circle, rgba(255, 255, 255, 0.06) 0%, transparent 70%);
+                background: radial-gradient(circle, rgba(255, 255, 255, 0.04) 0%, transparent 70%);
                 pointer-events: none;
             }
             .doc-page-hdr {
@@ -95,7 +95,7 @@ export function renderDocs() {
                 font-weight: 700;
                 text-transform: uppercase;
                 letter-spacing: 2px;
-                color: #5C1414;
+                color: #3B0001;
                 margin: 0 0 10px;
                 padding: 0;
             }
@@ -124,9 +124,9 @@ export function renderDocs() {
                 background: rgba(59, 0, 1, 0.03);
             }
             .doc-nav-link.active {
-                color: #5C1414;
+                color: #3B0001;
                 font-weight: 600;
-                border-left-color: #5C1414;
+                border-left-color: #3B0001;
                 background: rgba(59, 0, 1, 0.06);
             }
 
@@ -162,7 +162,7 @@ export function renderDocs() {
                 top: 4px;
                 bottom: 4px;
                 width: 4px;
-                background: linear-gradient(180deg, #5C1414, #B52020);
+                background: linear-gradient(180deg, #3B0001, #5A0002);
                 border-radius: 2px;
             }
 
@@ -206,7 +206,7 @@ export function renderDocs() {
                 top: 12px;
                 width: 6px;
                 height: 6px;
-                background: #5C1414;
+                background: #3B0001;
                 border-radius: 50%;
             }
 
@@ -214,7 +214,7 @@ export function renderDocs() {
             .doc-rule-block {
                 background: linear-gradient(135deg, rgba(59, 0, 1, 0.05) 0%, rgba(59, 0, 1, 0.02) 100%);
                 border: 1px solid rgba(59, 0, 1, 0.15);
-                border-left: 3px solid #5C1414;
+                border-left: 3px solid #3B0001;
                 border-radius: 6px;
                 padding: 16px 20px;
                 margin: 18px 0;
@@ -222,7 +222,7 @@ export function renderDocs() {
             .doc-rule-text {
                 font-family: 'JetBrains Mono', monospace;
                 font-size: 11px;
-                color: #5C1414;
+                color: #3B0001;
                 text-transform: uppercase;
                 letter-spacing: 0.8px;
                 line-height: 1.7;
@@ -249,7 +249,7 @@ export function renderDocs() {
             .doc-step-num {
                 width: 36px;
                 height: 36px;
-                background: linear-gradient(135deg, #5C1414, #B52020);
+                background: linear-gradient(135deg, #3B0001, #5A0002);
                 border: none;
                 border-radius: 8px;
                 display: flex;
@@ -298,7 +298,7 @@ export function renderDocs() {
                 font-weight: 700;
                 text-transform: uppercase;
                 letter-spacing: 1.5px;
-                color: #5C1414;
+                color: #3B0001;
                 margin: 0 0 6px;
             }
             .doc-tier-desc {
@@ -332,7 +332,7 @@ export function renderDocs() {
                 color: #666;
                 line-height: 1.7;
                 padding-left: 16px;
-                border-left: 2px solid #5C1414;
+                border-left: 2px solid #3B0001;
             }
 
             /* ── Footer Notice ── */
@@ -347,7 +347,7 @@ export function renderDocs() {
                 margin-top: 32px;
             }
             .doc-divider-note-icon {
-                color: #5C1414;
+                color: #3B0001;
                 flex-shrink: 0;
             }
             .doc-divider-note-icon svg { width: 16px; height: 16px; }

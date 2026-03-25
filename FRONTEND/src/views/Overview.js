@@ -1277,8 +1277,8 @@ export function renderOverview() {
                     <!-- STANDARD -->
                     <div class="eq-tier-card pledge anim-mech-card-1">
                         <div class="eq-tier-card-badge pledge">PLEDGE</div>
-                        <div class="eq-tier-card-rate">~30%</div>
-                        <div class="eq-tier-card-rate-label">designed success rate</div>
+                        <div class="eq-tier-card-rate">1.5x</div>
+                        <div class="eq-tier-card-rate-label">peak multiplier</div>
                         <div class="eq-tier-card-divider"></div>
                         <div class="eq-tier-card-specs">
                             <div class="eq-tier-spec-row">
@@ -1300,8 +1300,8 @@ export function renderOverview() {
                     <!-- ADVANCED -->
                     <div class="eq-tier-card stake anim-mech-card-2">
                         <div class="eq-tier-card-badge stake">STAKE</div>
-                        <div class="eq-tier-card-rate">~20%</div>
-                        <div class="eq-tier-card-rate-label">designed success rate</div>
+                        <div class="eq-tier-card-rate">2.5x</div>
+                        <div class="eq-tier-card-rate-label">peak multiplier</div>
                         <div class="eq-tier-card-divider"></div>
                         <div class="eq-tier-card-specs">
                             <div class="eq-tier-spec-row">
@@ -1323,8 +1323,8 @@ export function renderOverview() {
                     <!-- ELITE -->
                     <div class="eq-tier-card allin anim-mech-card-3">
                         <div class="eq-tier-card-badge allin">ALL-IN</div>
-                        <div class="eq-tier-card-rate">~10%</div>
-                        <div class="eq-tier-card-rate-label">designed success rate</div>
+                        <div class="eq-tier-card-rate">4x</div>
+                        <div class="eq-tier-card-rate-label">peak multiplier</div>
                         <div class="eq-tier-card-divider"></div>
                         <div class="eq-tier-card-specs">
                             <div class="eq-tier-spec-row">

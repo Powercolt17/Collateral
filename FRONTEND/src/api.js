@@ -361,6 +361,14 @@ export async function getContractMetricPreview(contractId) {
     return get(`/v1/contracts/${contractId}/preview_baseline`);
 }
 
+export async function getProviderPreview(provider, metricKey) {
+    let url = `/v1/oracle/preview?provider=${encodeURIComponent(provider)}`;
+    if (metricKey) {
+        url += `&metric=${encodeURIComponent(metricKey)}`;
+    }
+    return get(url);
+}
+
 export async function getMarketFeed(params = {}) {
     const query = new URLSearchParams(params).toString();
     return getPublic(`/v1/market/contracts?${query}`);
@@ -615,6 +623,7 @@ export default {
     getContract,
     getContractMetric,
     getContractMetricPreview,
+    getProviderPreview,
     getMarketFeed,
     getMarketListings,
     getMarketContract,

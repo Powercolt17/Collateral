@@ -233,6 +233,98 @@ const oracleRoutes: FastifyPluginAsync = async (fastify) => {
             };
         }
     });
+
+    /**
+     * GET /v1/oracle/preview
+     * 
+     * Pings the live platform API for the currently logged-in user to fetch their
+     * current baseline metric for a specific provider.
+     * Does not require an existing contract. Used for Market Term Sheets.
+     */
+    fastify.get<{
+        Querystring: { provider: string; metric?: string };
+    }>('/v1/oracle/preview', async (request, reply) => {
+        const userId = request.userId;
+        const { provider, metric } = request.query;
+
+        if (!userId) {
+            reply.status(401);
+            return { error: 'Authentication required', code: 'AUTH_REQUIRED' };
+        }
+
+        const platform = provider.toUpperCase();
+        let currentBaseline = 0;
+        let metricKey = metric || 'unknown';
+
+        try {
+            if (platform === 'X') {
+                const { xAdapter } = await import('../adapters/x.js');
+                const baseline = await xAdapter.snapshotBaseline({ principalUserId: userId } as any);
+                currentBaseline = baseline.followers;
+                metricKey = 'followers';
+            } else if (platform === 'STRIPE') {
+                const { stripeRevenueAdapter } = await import('../adapters/stripe-revenue.js');
+                const { connectedAccounts } = await import('../db/schema.js');
+                const { and, eq } = await import('drizzle-orm');
+                const [account] = await db.select().from(connectedAccounts)
+                    .where(and(eq(connectedAccounts.userId, userId), eq(connectedAccounts.platform, 'STRIPE')))
+                    .limit(1);
+                
+                if (!account) {
+                    reply.status(400);
+                    return { error: 'Stripe account not connected', code: 'NOT_CONNECTED' };
+                }
+                
+                const baseline = await stripeRevenueAdapter.createV1BaselineSnapshot(
+                    account.externalAccountId,
+                    0,
+                    new Date(),
+                    'STEADY'
+                );
+                currentBaseline = baseline.baselineNetRevenueCents;
+                metricKey = 'revenue';
+            } else if (platform === 'SHOPIFY') {
+                const { shopifyAdapter } = await import('../adapters/shopify.js');
+                const baseline = await shopifyAdapter.snapshotBaseline(userId);
+                currentBaseline = baseline.netCents;
+                metricKey = 'shopify_revenue';
+            } else if (platform === 'AMAZON') {
+                const { amazonAdapter } = await import('../adapters/amazon-seller.js');
+                const baseline = await amazonAdapter.snapshotBaseline(userId);
+                currentBaseline = baseline.netCents;
+                metricKey = 'amazon_revenue';
+            } else if (platform === 'YOUTUBE') {
+                const { youtubeAdapter } = await import('../adapters/youtube.js');
+                const baseline = await youtubeAdapter.snapshotBaseline(userId);
+                if (metricKey === 'VIEWS' || metricKey === 'youtube_views') {
+                    currentBaseline = baseline.views30d;
+                    metricKey = 'youtube_views';
+                } else {
+                    currentBaseline = baseline.subscribers;
+                    metricKey = 'youtube_subscribers';
+                }
+            } else {
+                reply.status(400);
+                return { error: `Unsupported platform: ${platform}`, code: 'UNSUPPORTED_PLATFORM' };
+            }
+
+            return {
+                provider: platform,
+                metric_key: metricKey,
+                current_baseline: currentBaseline,
+                status: 'success'
+            };
+        } catch (err: any) {
+            console.error(`Generic preview baseline error for ${userId} on ${platform}:`, err);
+            reply.status(200);
+            return {
+                provider: platform,
+                status: 'error',
+                code: err?.code || 'FETCH_ERROR',
+                error: err.message || 'Failed to fetch live baseline'
+            };
+        }
+    });
 };
 
 export default oracleRoutes;

@@ -101,6 +101,17 @@ export function renderContractTermSheet(params) {
             .cts-tier-opt:hover { border-color: #d4d4d4; background: #f5f5f5; }
             .cts-tier-opt.active { border-color: #374151; background: #fff; color: #0a0a0a; box-shadow: 0 0 0 1px #374151; }
 
+            /* Live Metric Preview */
+            .cts-perf-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0; border: 1px solid #d4d4d4; overflow: hidden; margin-bottom: 12px; }
+            .cts-perf-item { padding: 16px 14px; border-right: 1px solid #e5e5e5; background: #fafafa; }
+            .cts-perf-item:last-child { border-right: none; }
+            .cts-perf-lbl { font-size: 9px; text-transform: uppercase; letter-spacing: 0.08em; color: #6b7280; font-family: 'JetBrains Mono', monospace; font-weight: 600; margin-bottom: 6px; }
+            .cts-perf-val { font-size: 15px; font-weight: 600; color: #111; letter-spacing: -0.01em; display: flex; align-items: center; gap: 8px; }
+            .cts-oracle-note { display: flex; align-items: center; gap: 8px; font-size: 12px; color: #888; margin-bottom: 24px; padding-left: 2px; }
+            .cts-oracle-note svg { width: 14px; height: 14px; }
+            .cts-pulse { animation: cts-pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite; }
+            @keyframes cts-pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.4; } }
+
             /* Loading */
             .cts-loading { display: flex; align-items: center; justify-content: center; min-height: 60vh; }
             .cts-spinner { width: 20px; height: 20px; border: 2px solid #e5e5e5; border-top-color: #374151; border-radius: 50%; animation: cts-spin 0.7s linear infinite; }
@@ -222,6 +233,24 @@ function showContent(c) {
             <div class="cts-objective">
                 Performance contract targeting ${targetHint} ${domain.toLowerCase()} growth within a ${windowDays}-day measurement window.
             </div>
+        </div>
+
+        <hr class="cts-div">
+
+        <!-- Section: Live Preview -->
+        <div class="cts-sh">Live Connected Metric</div>
+        <div class="cts-perf-grid" id="cts-live-metric-box">
+            <div class="cts-perf-item">
+                <div class="cts-perf-lbl">Your Live Baseline</div>
+                <div class="cts-perf-val" id="cts-live-baseline"><i data-lucide="loader-2" class="cts-pulse"></i></div>
+            </div>
+            <div class="cts-perf-item" style="background: #fffbea;">
+                <div class="cts-perf-lbl" style="color:#d97706;">Absolute Target Requirement</div>
+                <div class="cts-perf-val" id="cts-live-target" style="color:#b45309;"><i data-lucide="loader-2" class="cts-pulse"></i></div>
+            </div>
+        </div>
+        <div class="cts-oracle-note" id="cts-oracle-note">
+            <i data-lucide="activity"></i> Fetching live oracle data...
         </div>
 
         <hr class="cts-div">
@@ -422,8 +451,66 @@ function showContent(c) {
                 console.log('[TermSheet] No referral bonus available:', { firstBonusAvailable: stats?.firstBonusAvailable, wasReferred: stats?.wasReferred });
             }
         }).catch(err => { console.error('[TermSheet] Referral stats fetch failed:', err); });
+}
+
+    // Fetch Live Preview asynchronously
+    if (hasAuthToken()) {
+        const metricName = c.metric_key || c.metricKey || '';
+        
+        window.api.getProviderPreview(provider, metricName)
+            .then(data => {
+                const bEl = document.getElementById('cts-live-baseline');
+                const tEl = document.getElementById('cts-live-target');
+                const nEl = document.getElementById('cts-oracle-note');
+                
+                if (data.status === 'error') {
+                     bEl.innerHTML = '<span style="color:#ef4444;font-size:12px;">Not Connected</span>';
+                     tEl.innerHTML = '--';
+                     nEl.innerHTML = `<i data-lucide="alert-circle" style="color:#ef4444;"></i> <span style="color:#ef4444;">Please connect your ${displayProvider} account in Settings to view personalized target numbers.</span>`;
+                } else {
+                     const baseNum = data.current_baseline || 0;
+                     let isMonetary = provider === 'stripe' || provider === 'shopify' || provider === 'amazon';
+                     let absTarget = baseNum;
+                     
+                     const hintStr = targetHint.toString();
+                     if (hintStr.includes('%')) {
+                         const match = hintStr.match(/(\d+)%/);
+                         if (match) {
+                             const pct = parseFloat(match[1]);
+                             absTarget = Math.round(baseNum * (1 + (pct / 100)));
+                         }
+                     } else if (hintStr.includes('$')) {
+                         const match = hintStr.match(/\$(\d+(?:,\d+)?)/);
+                         if (match) {
+                             const valCents = parseInt(match[1].replace(/,/g, '')) * 100;
+                             absTarget = baseNum + valCents;
+                         }
+                     } else {
+                         const match = hintStr.match(/\+?([\d,]+)/);
+                         if (match) {
+                             const val = parseInt(match[1].replace(/,/g, ''));
+                             absTarget = baseNum + val;
+                         }
+                     }
+
+                     const formatVal = (v) => isMonetary ? '$' + (v/100).toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2}).replace('.00', '') : Math.round(v).toLocaleString('en-US');
+
+                     bEl.innerHTML = formatVal(baseNum);
+                     tEl.innerHTML = formatVal(absTarget);
+                     nEl.innerHTML = `<i data-lucide="check-circle" style="color:#16a34a;"></i> Oracle connection verified. Target will be formally locked at execution.`;
+                }
+                if (window.lucide) window.lucide.createIcons();
+            })
+            .catch(err => {
+                document.getElementById('cts-live-baseline').innerHTML = '--';
+                document.getElementById('cts-live-target').innerHTML = '--';
+                document.getElementById('cts-oracle-note').innerHTML = `<i data-lucide="alert-circle" style="color:#ef4444;"></i> Failed to query oracle`;
+                if (window.lucide) window.lucide.createIcons();
+            });
     } else {
-        console.log('[TermSheet] No auth token, skipping referral bonus check');
+        document.getElementById('cts-live-baseline').innerHTML = '<span style="color:#888;font-size:12px;">Sign in required</span>';
+        document.getElementById('cts-live-target').innerHTML = '--';
+        document.getElementById('cts-oracle-note').innerHTML = `<i data-lucide="lock"></i> Sign in to view your live connected baseline.`;
     }
 }
 

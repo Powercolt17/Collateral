@@ -44,10 +44,19 @@ export function renderStripeCallback() {
 }
 
 export async function initStripeCallback() {
-    const urlParams = new URLSearchParams(window.location.search);
+    // Hash-based SPA: params are inside the hash fragment, NOT in window.location.search
+    // URL: /#/stripe/callback?success=true&account=xxx
+    const hash = window.location.hash || '';
+    const qIdx = hash.indexOf('?');
+    const paramStr = qIdx !== -1 ? hash.substring(qIdx + 1) : '';
+    // Also check window.location.search as fallback (non-hash routers)
+    const urlParams = new URLSearchParams(paramStr || window.location.search);
+
     const success = urlParams.get('success');
     const account = urlParams.get('account');
     const error = urlParams.get('error');
+
+    console.log('[StripeCallback] Parsed params — success:', success, 'account:', account, 'error:', error, 'hash:', hash);
 
     const loadingEl = document.getElementById('stripe-callback-loading');
     const successEl = document.getElementById('stripe-callback-success');
@@ -76,6 +85,8 @@ export async function initStripeCallback() {
             'no_account_id': 'No account ID returned from Stripe. Please try again.',
             'server_error': 'Server error occurred. Please try again.',
             'access_denied': 'Access was denied. Please try again.',
+            'no_revenue': 'Your Stripe account has $0 in revenue. Process at least one payment to connect.',
+            'test_mode': 'Test mode Stripe accounts cannot be used. Connect a live Stripe account with real transactions.',
         };
 
         errorMessageEl.textContent = errorMessages[error] || `Connection failed: ${error}`;
@@ -114,7 +125,7 @@ export async function initStripeCallback() {
 
         // Auto-redirect after 2 seconds
         setTimeout(() => {
-            window.router.navigate('/contracts?step=source&connected=stripe');
+            window.router.navigate('/sources');
         }, 2000);
 
         return;

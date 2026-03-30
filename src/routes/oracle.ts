@@ -371,7 +371,6 @@ const oracleRoutes: FastifyPluginAsync = async (fastify) => {
 
                 metricKey = 'followers';
             } else if (platform === 'STRIPE') {
-                const { stripeRevenueAdapter } = await import('../adapters/stripe-revenue.js');
                 const { connectedAccounts } = await import('../db/schema.js');
                 const { and, eq } = await import('drizzle-orm');
                 const [account] = await db.select().from(connectedAccounts)
@@ -379,18 +378,51 @@ const oracleRoutes: FastifyPluginAsync = async (fastify) => {
                     .limit(1);
                 
                 if (!account) {
-                    reply.status(400);
-                    return { error: 'Stripe account not connected', code: 'NOT_CONNECTED' };
+                    reply.status(200);
+                    return { provider: 'STRIPE', status: 'error', code: 'NOT_CONNECTED', error: 'Stripe account not connected. Go to Sources to connect.' };
+                }
+
+                if (account.status === 'REVOKED') {
+                    reply.status(200);
+                    return { provider: 'STRIPE', status: 'error', code: 'RECONNECT_REQUIRED', error: 'Stripe connection expired. Please reconnect in Sources.' };
                 }
                 
-                const baseline = await stripeRevenueAdapter.createV1BaselineSnapshot(
-                    account.externalAccountId,
-                    0,
-                    new Date(),
-                    'STEADY'
-                );
-                currentBaseline = baseline.baselineNetRevenueCents;
-                metricKey = 'revenue';
+                // For preview: fetch raw baseline WITHOUT tier validation
+                // Tier eligibility is enforced at execution time, not preview
+                try {
+                    const { getRevenueClient, STRIPE_TIER_MINIMUM_BASELINE } = await import('../adapters/stripe-revenue.js');
+                    const client = getRevenueClient();
+                    const baselineResult = await client.getBaselineSnapshot(
+                        account.externalAccountId,
+                        new Date()
+                    );
+                    currentBaseline = baselineResult.netRevenue; // cents
+                    metricKey = 'revenue';
+
+                    // If below minimum, still return the baseline but flag it
+                    const minRequired = STRIPE_TIER_MINIMUM_BASELINE.STEADY; // $1,000 = 100000 cents
+                    if (currentBaseline < minRequired) {
+                        reply.status(200);
+                        return {
+                            provider: 'STRIPE',
+                            status: 'ok',
+                            current_baseline: currentBaseline,
+                            metric_key: 'revenue',
+                            warning: 'BASELINE_TOO_LOW',
+                            warning_message: `Your current 30-day Stripe revenue is $${(currentBaseline / 100).toFixed(2)}. Minimum required: $${(minRequired / 100).toFixed(2)}.`,
+                            minimum_required: minRequired,
+                        };
+                    }
+                } catch (stripeErr: any) {
+                    console.warn(`[Oracle Preview] Stripe baseline fetch failed:`, stripeErr.message);
+                    reply.status(200);
+                    return { 
+                        provider: 'STRIPE', 
+                        status: 'error', 
+                        code: 'FETCH_FAILED', 
+                        error: `Unable to fetch Stripe revenue data. ${stripeErr.message}` 
+                    };
+                }
             } else if (platform === 'SHOPIFY') {
                 const { shopifyAdapter } = await import('../adapters/shopify.js');
                 const baseline = await shopifyAdapter.snapshotBaseline(userId);

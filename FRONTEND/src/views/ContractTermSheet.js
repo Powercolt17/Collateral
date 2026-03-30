@@ -486,7 +486,7 @@ function showContent(c) {
                              absTarget = Math.round(baseNum * (1 + (pct / 100)));
                          }
                      } else if (hintStr.includes('$')) {
-                         const match = hintStr.match(/\$(\d+(?:,\d+)?)/);
+                         const match = hintStr.match(/\$([\d,]+)/);
                          if (match) {
                              const valCents = parseInt(match[1].replace(/,/g, '')) * 100;
                              absTarget = baseNum + valCents;
@@ -503,7 +503,16 @@ function showContent(c) {
 
                      bEl.innerHTML = formatVal(baseNum);
                      tEl.innerHTML = formatVal(absTarget);
-                     nEl.innerHTML = `<i data-lucide="check-circle" style="color:#16a34a;"></i> Oracle connection verified. Target will be formally locked at execution.`;
+
+                     // Check for warning (e.g., baseline too low for Stripe)
+                     if (data.warning === 'BASELINE_TOO_LOW') {
+                         bEl.innerHTML = `<span style="color:#d97706;">${formatVal(baseNum)}</span>`;
+                         tEl.innerHTML = `<span style="color:#d97706;">${formatVal(absTarget)}</span>`;
+                         const warnMsg = data.warning_message || `Your current revenue is below the minimum required for this contract.`;
+                         nEl.innerHTML = `<i data-lucide="alert-triangle" style="color:#d97706;"></i> <span style="color:#d97706;">${warnMsg}</span>`;
+                     } else {
+                         nEl.innerHTML = `<i data-lucide="check-circle" style="color:#16a34a;"></i> Oracle connection verified. Target will be formally locked at execution.`;
+                     }
                 }
                 if (window.lucide) window.lucide.createIcons();
             })

@@ -542,25 +542,43 @@ export async function initRivalryDetail() {
         const end = new Date(start.getTime() + (r.durationDays || 30) * 86400000);
         const daysLeft = Math.max(0, Math.ceil((end - now) / 86400000));
 
+        const targetPct = parseFloat(r.targetGrowthPct || r.rivalry?.targetGrowthPct || 15);
+        const challBaseline = parseFloat(challPart?.baselineValue || 0);
+        const oppBaseline = parseFloat(oppPart?.baselineValue || 0);
+        const challGrowth = parseFloat(challPart?.growthPercent || challPart?.percentageDelta || 0);
+        const oppGrowth = parseFloat(oppPart?.growthPercent || oppPart?.percentageDelta || 0);
+        const challCurrentValue = challBaseline > 0 ? Math.round(challBaseline * (1 + challGrowth / 100)) : 0;
+        const oppCurrentValue = oppBaseline > 0 ? Math.round(oppBaseline * (1 + oppGrowth / 100)) : 0;
+        const challTargetValue = challBaseline > 0 ? Math.round(challBaseline * (1 + targetPct / 100)) : 0;
+        const oppTargetValue = oppBaseline > 0 ? Math.round(oppBaseline * (1 + targetPct / 100)) : 0;
+        const prov = PLATFORM_MAP[r.platform] || (r.platform || 'stripe').toLowerCase();
+        const isMonetary = prov === 'stripe' || prov === 'shopify' || prov === 'amazon';
+
         return {
             id: r.id,
             status: STATE_TO_STATUS[r.state] || 'active',
             metric: METRIC_LABELS[r.metricType] || r.metricType || 'Revenue Growth',
-            provider: PLATFORM_MAP[r.platform] || (r.platform || 'stripe').toLowerCase(),
+            metricType: r.metricType || 'FOLLOWERS',
+            provider: prov,
+            isMonetary,
             challenger: {
                 name: '@' + (r.challengerUsername || 'unknown'),
-                growth: parseFloat(challPart?.growthPercent || challPart?.currentDelta || 0),
-                baseline: parseFloat(challPart?.baselineValue || 0),
+                growth: challGrowth,
+                baseline: challBaseline,
+                currentValue: challCurrentValue,
+                targetValue: challTargetValue,
             },
             opponent: {
                 name: '@' + (r.opponentUsername || 'unknown'),
-                growth: parseFloat(oppPart?.growthPercent || oppPart?.currentDelta || 0),
-                baseline: parseFloat(oppPart?.baselineValue || 0),
+                growth: oppGrowth,
+                baseline: oppBaseline,
+                currentValue: oppCurrentValue,
+                targetValue: oppTargetValue,
             },
             stake: (r.stakePerSideCents || 0) / 100,
             daysLeft,
             totalDays: r.durationDays || 30,
-            targetGrowthPct: parseFloat(r.targetGrowthPct || r.rivalry?.targetGrowthPct || 15),
+            targetGrowthPct: targetPct,
             rivalryTier: r.rivalryTier || r.rivalry?.rivalryTier || 'DUEL',
             metrics: r.metrics || [],
             _rawState: r.state,
@@ -604,6 +622,23 @@ export async function initRivalryDetail() {
         return c[p] || '#111';
     }
 
+    // Format metric values: monetary ($X.XX) vs count (X,XXX)
+    function fmtMetric(val) {
+        if (!val && val !== 0) return '--';
+        if (rivalry.isMonetary) return '$' + (val / 100).toLocaleString('en-US', { minimumFractionDigits: 0, maximumFractionDigits: 0 });
+        return Math.round(val).toLocaleString('en-US');
+    }
+    function metricUnit() {
+        const m = rivalry.metricType || '';
+        if (m.includes('SUBSCRIBER')) return 'subscribers';
+        if (m.includes('FOLLOWER')) return 'followers';
+        if (m.includes('VIEW')) return 'views';
+        if (m.includes('REVENUE')) return 'revenue';
+        if (m.includes('ORDER')) return 'orders';
+        if (m.includes('SALE')) return 'sales';
+        return 'metric';
+    }
+
     container.innerHTML = `
         <div class="rvd-hero">
             <div class="rvd-hero-inner">
@@ -623,6 +658,7 @@ export async function initRivalryDetail() {
                         </div>
                         <span class="rvd-player-growth ${isLeading ? 'leading' : 'trailing'}">${rivalry.challenger.growth > 0 ? '+' : ''}${rivalry.challenger.growth}%</span>
                         <span class="rvd-player-baseline"><span class="rvd-target-badge ${rivalry.challenger.growth >= rivalry.targetGrowthPct ? 'hit' : 'miss'}"><span class="badge-dot"></span>${rivalry.challenger.growth >= rivalry.targetGrowthPct ? 'ON TARGET' : 'BELOW TARGET'}</span> +${rivalry.targetGrowthPct}%</span>
+                        <span class="rvd-player-baseline" style="color:#666;margin-top:6px;">Current: <strong style="color:#111">${fmtMetric(rivalry.challenger.currentValue)}</strong> ${metricUnit()} · Target: <strong style="color:#3B0001">${fmtMetric(rivalry.challenger.targetValue)}</strong></span>
                     </div>
                     <div class="rvd-vs-center rvd-anim-vs">
                         <span class="rvd-vs-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:middle;margin-top:-2px"><polyline points="14.5 17.5 3 6 3 3 6 3 17.5 14.5"/><line x1="13" x2="19" y1="19" y2="13"/><line x1="16" x2="20" y1="16" y2="20"/><line x1="19" x2="21" y1="21" y2="19"/><polyline points="14.5 6.5 18 3 21 3 21 6 17.5 9.5"/><line x1="5" x2="9" y1="14" y2="18"/><line x1="7" x2="4" y1="17" y2="20"/><line x1="3" x2="5" y1="19" y2="21"/></svg></span>
@@ -639,6 +675,7 @@ export async function initRivalryDetail() {
                         </div>
                         <span class="rvd-player-growth ${!isLeading ? 'leading' : 'trailing'}">${rivalry.opponent.growth > 0 ? '+' : ''}${rivalry.opponent.growth}%</span>
                         <span class="rvd-player-baseline"><span class="rvd-target-badge ${rivalry.opponent.growth >= rivalry.targetGrowthPct ? 'hit' : 'miss'}"><span class="badge-dot"></span>${rivalry.opponent.growth >= rivalry.targetGrowthPct ? 'ON TARGET' : 'BELOW TARGET'}</span> +${rivalry.targetGrowthPct}%</span>
+                        <span class="rvd-player-baseline" style="color:#666;margin-top:6px;">Current: <strong style="color:#111">${fmtMetric(rivalry.opponent.currentValue)}</strong> ${metricUnit()} · Target: <strong style="color:#3B0001">${fmtMetric(rivalry.opponent.targetValue)}</strong></span>
                     </div>
                 </div>
 
@@ -729,11 +766,19 @@ export async function initRivalryDetail() {
                     <span class="rvd-row-value"><span class="rvd-target-badge ${rivalry.challenger.growth >= rivalry.targetGrowthPct ? 'hit' : 'miss'}"><span class="badge-dot"></span>${rivalry.challenger.growth >= rivalry.targetGrowthPct ? 'HIT' : 'MISS'}</span> +${rivalry.challenger.growth}%</span>
                 </div>
                 <div class="rvd-row">
+                    <span class="rvd-row-label" style="font-size:11px;color:#aaa">${rivalry.challenger.name} current</span>
+                    <span class="rvd-row-value" style="font-size:13px">${fmtMetric(rivalry.challenger.currentValue)} / ${fmtMetric(rivalry.challenger.targetValue)} ${metricUnit()}</span>
+                </div>
+                <div class="rvd-row">
                     <span class="rvd-row-label">${rivalry.opponent.name}</span>
                     <span class="rvd-row-value"><span class="rvd-target-badge ${rivalry.opponent.growth >= rivalry.targetGrowthPct ? 'hit' : 'miss'}"><span class="badge-dot"></span>${rivalry.opponent.growth >= rivalry.targetGrowthPct ? 'HIT' : 'MISS'}</span> +${rivalry.opponent.growth}%</span>
                 </div>
                 <div class="rvd-row">
-                    <span class="rvd-row-label">Target</span>
+                    <span class="rvd-row-label" style="font-size:11px;color:#aaa">${rivalry.opponent.name} current</span>
+                    <span class="rvd-row-value" style="font-size:13px">${fmtMetric(rivalry.opponent.currentValue)} / ${fmtMetric(rivalry.opponent.targetValue)} ${metricUnit()}</span>
+                </div>
+                <div class="rvd-row">
+                    <span class="rvd-row-label">Growth Target</span>
                     <span class="rvd-row-value" style="font-weight:700;color:#3B0001">+${rivalry.targetGrowthPct}%</span>
                 </div>
                 <div class="rvd-row">

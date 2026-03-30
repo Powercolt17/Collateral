@@ -309,14 +309,42 @@ const oracleRoutes: FastifyPluginAsync = async (fastify) => {
                 currentBaseline = baseline.netCents;
                 metricKey = 'amazon_revenue';
             } else if (platform === 'YOUTUBE') {
-                const { youtubeAdapter } = await import('../adapters/youtube.js');
-                const baseline = await youtubeAdapter.snapshotBaseline(userId);
-                if (metricKey === 'VIEWS' || metricKey === 'youtube_views') {
-                    currentBaseline = baseline.views30d;
-                    metricKey = 'youtube_views';
-                } else {
-                    currentBaseline = baseline.subscribers;
-                    metricKey = 'youtube_subscribers';
+                // Try live adapter first, fall back to stored metadata if token expired
+                const { connectedAccounts } = await import('../db/schema.js');
+                const { and: andOp, eq: eqOp } = await import('drizzle-orm');
+                const [ytAccount] = await db.select().from(connectedAccounts)
+                    .where(andOp(
+                        eqOp(connectedAccounts.userId, userId),
+                        eqOp(connectedAccounts.platform, 'YOUTUBE'),
+                        eqOp(connectedAccounts.status, 'ACTIVE')
+                    ))
+                    .limit(1);
+                
+                if (!ytAccount) {
+                    reply.status(200);
+                    return { provider: 'YOUTUBE', status: 'error', code: 'NOT_CONNECTED', error: 'YouTube account not connected. Go to Sources to connect your channel.' };
+                }
+
+                try {
+                    const { youtubeAdapter } = await import('../adapters/youtube.js');
+                    const baseline = await youtubeAdapter.snapshotBaseline(userId);
+                    if (metricKey === 'VIEWS' || metricKey === 'youtube_views' || metricKey === 'youtube_30day_views') {
+                        currentBaseline = baseline.views30d;
+                        metricKey = 'youtube_views';
+                    } else {
+                        currentBaseline = baseline.subscribers;
+                        metricKey = 'youtube_subscribers';
+                    }
+                } catch (ytErr: any) {
+                    // Fallback: use the subscriber count stored during OAuth connection
+                    console.warn(`[Oracle Preview] YouTube live API failed, falling back to stored metadata:`, ytErr.message);
+                    const meta = ytAccount.metadataJson as Record<string, any> | null;
+                    if (meta?.subscriberCount) {
+                        currentBaseline = meta.subscriberCount;
+                        metricKey = 'youtube_subscribers';
+                    } else {
+                        throw ytErr; // No fallback data, rethrow
+                    }
                 }
             } else {
                 reply.status(400);

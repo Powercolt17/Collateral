@@ -466,9 +466,10 @@ function showContent(c) {
                 const nEl = document.getElementById('cts-oracle-note');
                 
                 if (data.status === 'error') {
-                     bEl.innerHTML = '<span style="color:#ef4444;font-size:12px;">Oracle Error</span>';
+                     const isNotConnected = data.code === 'NOT_CONNECTED' || data.code === 'AUTH_REQUIRED';
+                     bEl.innerHTML = `<span style="color:#ef4444;font-size:12px;">${isNotConnected ? 'Not Connected' : 'Unavailable'}</span>`;
                      tEl.innerHTML = '--';
-                     const errMsg = data.error || `Please connect your ${displayProvider} account in Settings to view personalized target numbers.`;
+                     const errMsg = data.error || `Connect your ${displayProvider} account in Sources to see live data.`;
                      nEl.innerHTML = `<i data-lucide="alert-circle" style="color:#ef4444;"></i> <span style="color:#ef4444;">${errMsg}</span>`;
                 } else {
                      const baseNum = data.current_baseline || 0;

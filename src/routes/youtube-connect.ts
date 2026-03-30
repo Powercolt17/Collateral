@@ -343,6 +343,16 @@ async function youtubeConnectRoutes(fastify: FastifyInstance) {
 
             const metadata = account.metadataJson as Record<string, any> | null;
 
+            // If account was revoked/disconnected, report as not connected
+            if (account.status === 'REVOKED' || account.verificationStatus === 'UNVERIFIED') {
+                return reply.status(200).send({
+                    connected: false,
+                    revoked: true,
+                    verificationStatus: account.verificationStatus,
+                    message: 'YouTube connection expired. Please reconnect.',
+                });
+            }
+
             return reply.status(200).send({
                 connected: true,
                 channelId: account.externalAccountId,

@@ -344,6 +344,17 @@ const oracleRoutes: FastifyPluginAsync = async (fastify) => {
 
                 console.log(`[Oracle Preview] YouTube account found for user ${userId}: status=${ytAccount.status}, verified=${ytAccount.verificationStatus}, extId=${ytAccount.externalAccountId}`);
 
+                // Check if account is REVOKED or not VERIFIED
+                if (ytAccount.status === 'REVOKED' || ytAccount.verificationStatus !== 'VERIFIED') {
+                    reply.status(200);
+                    return { 
+                        provider: 'YOUTUBE', 
+                        status: 'error', 
+                        code: 'RECONNECT_REQUIRED', 
+                        error: 'YouTube connection expired. Please go to Sources and reconnect your YouTube channel.' 
+                    };
+                }
+
                 try {
                     const { youtubeAdapter } = await import('../adapters/youtube.js');
                     const baseline = await youtubeAdapter.snapshotBaseline(userId);

@@ -1005,10 +1005,10 @@ export async function initSources() {
                             ${lastSync}
                         </div>
                         <div class="src-conn-actions">
-                            <span class="src-badge-verified">
-                                <span class="v-dot"></span>
-                                VERIFIED
-                            </span>
+                            ${conn.status?.verificationStatus === 'VERIFIED' 
+                                ? `<span class="src-badge-verified"><span class="v-dot"></span>VERIFIED</span>`
+                                : `<span class="src-badge-verified" style="color:#d97706;"><span class="v-dot" style="background:#d97706;"></span>RECONNECT</span>`
+                            }
                             ${removeBtn}
                         </div>
                     </div>

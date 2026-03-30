@@ -467,7 +467,9 @@ function showContent(c) {
                 
                 if (data.status === 'error') {
                      const isNotConnected = data.code === 'NOT_CONNECTED' || data.code === 'AUTH_REQUIRED';
-                     bEl.innerHTML = `<span style="color:#ef4444;font-size:12px;">${isNotConnected ? 'Not Connected' : 'Unavailable'}</span>`;
+                     const isReconnect = data.code === 'RECONNECT_REQUIRED';
+                     const label = isNotConnected ? 'Not Connected' : isReconnect ? 'Reconnect Required' : 'Unavailable';
+                     bEl.innerHTML = `<span style="color:#ef4444;font-size:12px;">${label}</span>`;
                      tEl.innerHTML = '--';
                      const errMsg = data.error || `Connect your ${displayProvider} account in Sources to see live data.`;
                      nEl.innerHTML = `<i data-lucide="alert-circle" style="color:#ef4444;"></i> <span style="color:#ef4444;">${errMsg}</span>`;

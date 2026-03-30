@@ -1228,10 +1228,10 @@ export async function initRivalry() {
 
         // Growth display
         const challGrowth = r.status === 'pending'
-            ? '<span class="rv-player-growth awaiting">FORMING</span>'
+            ? '<span class="rv-player-growth awaiting" style="font-family:\'JetBrains Mono\',monospace;letter-spacing:0.1em;text-transform:uppercase;">FORMING</span>'
             : `<span class="rv-player-growth ${isLeadingChallenger ? 'leading' : 'trailing'}">${r.challenger.growth > 0 ? '+' : ''}${r.challenger.growth}%</span>`;
         const oppGrowth = r.status === 'pending'
-            ? '<span class="rv-player-growth awaiting">FORMING</span>'
+            ? '<span class="rv-player-growth awaiting" style="font-family:\'JetBrains Mono\',monospace;letter-spacing:0.1em;text-transform:uppercase;">FORMING</span>'
             : `<span class="rv-player-growth ${!isLeadingChallenger ? 'leading' : 'trailing'}">${r.opponent.growth > 0 ? '+' : ''}${r.opponent.growth}%</span>`;
 
         // Lead dots
@@ -1430,14 +1430,14 @@ export async function initRivalry() {
                 const res = await api.getRivalryStats();
                 if (res.ok && res.stats) {
                     const s = res.stats;
-                    if (statActive) statActive.textContent = s.activeRivalries || '—';
+                    if (statActive) statActive.textContent = s.activeRivalries !== undefined ? s.activeRivalries : '--';
                     if (statCapital) {
                         const c = (s.totalCapitalLockedCents || 0) / 100;
-                        statCapital.textContent = c === 0 ? '—' : c >= 1000 ? (c / 1000).toFixed(0) + 'k' : c.toLocaleString();
+                        statCapital.textContent = c === 0 ? '0' : c >= 1000 ? (c / 1000).toFixed(0) + 'k' : c.toLocaleString();
                     }
                     if (statLargest) {
                         const l = (s.largestPoolCents || 0) / 100;
-                        statLargest.textContent = l === 0 ? '—' : l >= 1000 ? (l / 1000).toFixed(0) + 'k' : l.toLocaleString();
+                        statLargest.textContent = l === 0 ? '0' : l >= 1000 ? (l / 1000).toFixed(0) + 'k' : l.toLocaleString();
                     }
                     return;
                 }
@@ -1450,7 +1450,7 @@ export async function initRivalry() {
         const stakes = allRivalries.map(r => r.stake * 2);
         const largest = stakes.length > 0 ? Math.max(...stakes) : 0;
 
-        if (statActive) statActive.textContent = active.length || '—';
+        if (statActive) statActive.textContent = active.length;
         if (statCapital) {
             statCapital.textContent = totalCapital === 0 ? '0' : totalCapital >= 1000 ? (totalCapital / 1000).toFixed(0) + 'k' : totalCapital.toLocaleString();
         }

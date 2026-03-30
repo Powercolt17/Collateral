@@ -468,30 +468,27 @@ export async function initContractDetail(params) {
             }, 2000);
         });
 
+        // Format Helper
+        const formatVal = (v) => {
+            if (platform === 'STRIPE' || platform === 'SHOPIFY' || platform === 'AMAZON') {
+                return formatCurrency(v).replace('.00', '');
+            }
+            return Math.round(v).toLocaleString('en-US');
+        };
+
         // Performance Metric
         let metricName = 'Follower Count';
-        if (platform === 'STRIPE') metricName = 'Monthly Revenue';
+        if (platform === 'STRIPE' || platform === 'SHOPIFY' || platform === 'AMAZON') metricName = 'Revenue';
+        if (platform === 'YOUTUBE' && c.metricType === 'VIEWS') metricName = '30d Views';
+        else if (platform === 'YOUTUBE') metricName = 'Subscribers';
         document.getElementById('cd-metric-name').textContent = metricName;
 
-        const threshold = c.targetValue ? Number(c.targetValue) : 50000;
-        document.getElementById('cd-metric-thresh').textContent = threshold.toLocaleString('en-US');
-
-        let hash = 0;
-        for (let i = 0; i < contractId.length; i++) { hash = ((hash << 5) - hash) + contractId.charCodeAt(i); hash |= 0; }
-        const pct = 70 + (Math.abs(hash % 28));
-        const val = Math.round(threshold * (pct / 100));
-
-        document.getElementById('cd-metric-val').textContent = val.toLocaleString('en-US');
-        document.getElementById('cd-progress-fill').style.width = pct + '%';
-        document.getElementById('cd-progress-pct').textContent = pct.toFixed(1) + '%';
-
-        if (pct >= 90) {
-            document.getElementById('cd-oracle-note').innerHTML = '<i data-lucide="triangle-alert"></i> Approaching threshold — settlement may trigger soon.';
-            document.getElementById('cd-oracle-note').style.color = '#752122';
-        } else {
-            document.getElementById('cd-oracle-note').innerHTML = '<i data-lucide="clock"></i> Oracle checks daily at 00:00 UTC.';
-            document.getElementById('cd-oracle-note').style.color = '#ccc';
-        }
+        // Default Loading State
+        document.getElementById('cd-metric-thresh').textContent = '--';
+        document.getElementById('cd-metric-val').textContent = '--';
+        document.getElementById('cd-progress-fill').style.width = '0%';
+        document.getElementById('cd-progress-pct').textContent = '...';
+        document.getElementById('cd-oracle-note').innerHTML = '<i data-lucide="loader-2"></i> Fetching live metric...';
 
         // State / Badge / Action
         const state = c.derivedState || c.state || 'CREATED';
@@ -500,6 +497,66 @@ export async function initContractDetail(params) {
         renderEventLog(events);
 
         if (window.lucide) window.lucide.createIcons();
+
+        // Fetch Live Metric Asynchronously
+        const isPending = ['CREATED', 'FUNDS_AUTHORIZED', 'PENDING'].includes(state);
+        
+        try {
+            let cur = 0;
+            let tgt = 0;
+            let pct = 0;
+            let isPreview = false;
+
+            if (isPending) {
+                const metricData = await window.api.getContractMetricPreview(contractId);
+                if (metricData.status === 'error') throw new Error(metricData.error);
+                
+                cur = metricData.current_baseline || 0;
+                tgt = metricData.projected_target || 0;
+                isPreview = true;
+                
+                document.getElementById('cd-progress-fill').style.width = '3%'; 
+                document.getElementById('cd-progress-pct').textContent = 'LIVE PREVIEW';
+                document.getElementById('cd-oracle-note').innerHTML = '<i data-lucide="activity"></i> Showing live connected account baseline.';
+                document.getElementById('cd-oracle-note').style.color = '#ccc';
+            } else {
+                const metricData = await window.api.getContractMetric(contractId);
+                cur = metricData.current_value || metricData.baseline_value || 0;
+                tgt = metricData.target_value || 0;
+                
+                // Active contracts return condition.threshold as target_value. If non-X, it's a delta.
+                if (platform !== 'X' && tgt > 0) {
+                    tgt = (metricData.baseline_value || 0) + tgt;
+                }
+
+                pct = metricData.progress_pct || 0;
+                
+                document.getElementById('cd-progress-fill').style.width = Math.min(100, Math.max(0, pct)) + '%';
+                document.getElementById('cd-progress-pct').textContent = pct.toFixed(1) + '%';
+                
+                if (pct >= 90) {
+                    document.getElementById('cd-oracle-note').innerHTML = '<i data-lucide="triangle-alert"></i> Approaching threshold — settlement may trigger soon.';
+                    document.getElementById('cd-oracle-note').style.color = '#752122';
+                } else {
+                    document.getElementById('cd-oracle-note').innerHTML = '<i data-lucide="clock"></i> Oracle checks daily at 00:00 UTC.';
+                    document.getElementById('cd-oracle-note').style.color = '#ccc';
+                }
+            }
+
+            document.getElementById('cd-metric-thresh').textContent = formatVal(tgt);
+            document.getElementById('cd-metric-val').textContent = formatVal(cur);
+            
+            if (window.lucide) window.lucide.createIcons();
+            
+        } catch (err) {
+            console.error('Failed to fetch metric:', err);
+            document.getElementById('cd-metric-thresh').textContent = '--';
+            document.getElementById('cd-metric-val').textContent = '--';
+            document.getElementById('cd-progress-pct').textContent = 'ERROR';
+            document.getElementById('cd-oracle-note').innerHTML = '<i data-lucide="alert-circle"></i> Failed to fetch live metric data';
+            document.getElementById('cd-oracle-note').style.color = '#ef4444';
+            if (window.lucide) window.lucide.createIcons();
+        }
     } catch (err) {
         showError(err.message);
     }

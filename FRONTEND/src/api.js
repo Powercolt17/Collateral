@@ -353,6 +353,14 @@ export async function getContract(contractId) {
     return get(`/v1/contracts/${contractId}`);
 }
 
+export async function getContractMetric(contractId) {
+    return get(`/v1/contracts/${contractId}/metric`);
+}
+
+export async function getContractMetricPreview(contractId) {
+    return get(`/v1/contracts/${contractId}/preview_baseline`);
+}
+
 export async function getMarketFeed(params = {}) {
     const query = new URLSearchParams(params).toString();
     return getPublic(`/v1/market/contracts?${query}`);
@@ -605,7 +613,8 @@ export default {
     createContract,
     getContracts,
     getContract,
-    getMarketFeed,
+    getContractMetric,
+    getContractMetricPreview,
     getMarketFeed,
     getMarketListings,
     getMarketContract,

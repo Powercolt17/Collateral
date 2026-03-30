@@ -129,6 +129,110 @@ const oracleRoutes: FastifyPluginAsync = async (fastify) => {
             status: 'active',
         };
     });
+
+    /**
+     * GET /v1/contracts/:id/preview_baseline
+     * 
+     * Pings the live platform API on-demand to fetch the CURRENT LIVE baseline
+     * and calculate the projected target before execution.
+     * Use ONLY for PENDING/CREATED contracts. Active contracts should use the cached /metric route.
+     */
+    fastify.get<{
+        Params: { id: string };
+    }>('/v1/contracts/:id/preview_baseline', async (request, reply) => {
+        const { id } = request.params;
+        const userId = request.userId;
+
+        if (!userId) {
+            reply.status(401);
+            return { error: 'Authentication required', code: 'AUTH_REQUIRED' };
+        }
+
+        const [contract] = await db.select().from(contracts).where(eq(contracts.id, id)).limit(1);
+        if (!contract) {
+            reply.status(404);
+            return { error: 'Contract not found', code: 'CONTRACT_NOT_FOUND' };
+        }
+        if (contract.principalUserId !== userId) {
+            reply.status(403);
+            return { error: 'Not authorized to view this contract', code: 'FORBIDDEN' };
+        }
+
+        const condition = contract.conditionJson as Record<string, any> | null;
+        let currentBaseline = 0;
+        let projectedTarget = 0;
+        let metricKey = 'unknown';
+
+        try {
+            if (contract.platform === 'X') {
+                const { xAdapter } = await import('../adapters/x.js');
+                const baseline = await xAdapter.snapshotBaseline(contract);
+                currentBaseline = baseline.followers;
+                projectedTarget = condition?.threshold ?? 0;
+                metricKey = 'followers';
+            } else if (contract.platform === 'STRIPE') {
+                const { stripeRevenueAdapter } = await import('../adapters/stripe-revenue.js');
+                const { connectedAccounts } = await import('../db/schema.js');
+                const { and } = await import('drizzle-orm');
+                const [account] = await db.select().from(connectedAccounts)
+                    .where(and(eq(connectedAccounts.userId, userId), eq(connectedAccounts.platform, 'STRIPE')))
+                    .limit(1);
+                
+                if (!account) throw new Error('Stripe account not connected');
+                
+                // For preview, grab the standard steady 30 day trailing baseline
+                const baseline = await stripeRevenueAdapter.createV1BaselineSnapshot(
+                    account.externalAccountId,
+                    condition?.threshold || 0,
+                    new Date(),
+                    'STEADY'
+                );
+                currentBaseline = baseline.baselineNetRevenueCents;
+                projectedTarget = currentBaseline + (condition?.threshold ?? 0);
+                metricKey = 'revenue';
+            } else if (contract.platform === 'SHOPIFY') {
+                const { shopifyAdapter } = await import('../adapters/shopify.js');
+                const baseline = await shopifyAdapter.snapshotBaseline(userId);
+                currentBaseline = baseline.netCents;
+                projectedTarget = currentBaseline + (condition?.thresholdCents || condition?.targetDeltaCents || 0);
+                metricKey = 'shopify_revenue';
+            } else if (contract.platform === 'AMAZON') {
+                const { amazonAdapter } = await import('../adapters/amazon-seller.js');
+                const baseline = await amazonAdapter.snapshotBaseline(userId);
+                currentBaseline = baseline.netCents;
+                projectedTarget = currentBaseline + (condition?.thresholdCents || condition?.targetDeltaCents || 0);
+                metricKey = 'amazon_revenue';
+            } else if (contract.platform === 'YOUTUBE') {
+                const { youtubeAdapter } = await import('../adapters/youtube.js');
+                const baseline = await youtubeAdapter.snapshotBaseline(userId);
+                if (contract.metricType === 'VIEWS') {
+                    currentBaseline = baseline.views30d;
+                    metricKey = 'youtube_views';
+                } else {
+                    currentBaseline = baseline.subscribers;
+                    metricKey = 'youtube_subscribers';
+                }
+                projectedTarget = currentBaseline + (condition?.threshold || condition?.targetDelta || 0);
+            }
+
+            return {
+                provider: contract.platform,
+                metric_key: metricKey,
+                current_baseline: currentBaseline,
+                projected_target: projectedTarget,
+                status: 'success'
+            };
+        } catch (err: any) {
+            console.error(`Preview baseline error for ${id}:`, err);
+            // Fail gracefully so UI displays a placeholder or error rather than crashing entirely
+            reply.status(200);
+            return {
+                provider: contract.platform,
+                status: 'error',
+                error: err.message || 'Failed to fetch live baseline'
+            };
+        }
+    });
 };
 
 export default oracleRoutes;

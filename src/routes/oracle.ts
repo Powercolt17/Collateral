@@ -256,6 +256,24 @@ const oracleRoutes: FastifyPluginAsync = async (fastify) => {
         let currentBaseline = 0;
         let metricKey = metric || 'unknown';
 
+        // DIAGNOSTIC: Log what we're looking for
+        console.log(`[Oracle Preview] userId=${userId}, provider=${platform}, metric=${metricKey}`);
+        
+        // DIAGNOSTIC: List all connected accounts for this user
+        try {
+            const { connectedAccounts: ca } = await import('../db/schema.js');
+            const { eq: eqDiag } = await import('drizzle-orm');
+            const allAccounts = await db.select({
+                platform: ca.platform,
+                status: ca.status,
+                extId: ca.externalAccountId,
+                verified: ca.verificationStatus,
+            }).from(ca).where(eqDiag(ca.userId, userId));
+            console.log(`[Oracle Preview] User ${userId} has ${allAccounts.length} connected accounts:`, JSON.stringify(allAccounts));
+        } catch (diagErr) {
+            console.error('[Oracle Preview] Diagnostic query failed:', diagErr);
+        }
+
         try {
             if (platform === 'X') {
                 const { getXClient } = await import('../adapters/x.js');
@@ -315,8 +333,7 @@ const oracleRoutes: FastifyPluginAsync = async (fastify) => {
                 const [ytAccount] = await db.select().from(connectedAccounts)
                     .where(andOp(
                         eqOp(connectedAccounts.userId, userId),
-                        eqOp(connectedAccounts.platform, 'YOUTUBE'),
-                        eqOp(connectedAccounts.status, 'ACTIVE')
+                        eqOp(connectedAccounts.platform, 'YOUTUBE')
                     ))
                     .limit(1);
                 
@@ -324,6 +341,8 @@ const oracleRoutes: FastifyPluginAsync = async (fastify) => {
                     reply.status(200);
                     return { provider: 'YOUTUBE', status: 'error', code: 'NOT_CONNECTED', error: 'YouTube account not connected. Go to Sources to connect your channel.' };
                 }
+
+                console.log(`[Oracle Preview] YouTube account found for user ${userId}: status=${ytAccount.status}, verified=${ytAccount.verificationStatus}, extId=${ytAccount.externalAccountId}`);
 
                 try {
                     const { youtubeAdapter } = await import('../adapters/youtube.js');

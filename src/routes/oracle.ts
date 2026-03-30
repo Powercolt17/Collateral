@@ -258,9 +258,24 @@ const oracleRoutes: FastifyPluginAsync = async (fastify) => {
 
         try {
             if (platform === 'X') {
-                const { xAdapter } = await import('../adapters/x.js');
-                const baseline = await xAdapter.snapshotBaseline({ principalUserId: userId } as any);
-                currentBaseline = baseline.followers;
+                const { getXClient } = await import('../adapters/x.js');
+                const { connectedAccounts } = await import('../db/schema.js');
+                const { and, eq } = await import('drizzle-orm');
+                const [xAccount] = await db.select().from(connectedAccounts)
+                    .where(and(
+                        eq(connectedAccounts.userId, userId),
+                        eq(connectedAccounts.platform, 'X'),
+                        eq(connectedAccounts.status, 'ACTIVE')
+                    ))
+                    .limit(1);
+                
+                if (!xAccount) {
+                    reply.status(200);
+                    return { provider: 'X', status: 'error', code: 'NOT_CONNECTED', error: 'X account not connected' };
+                }
+                
+                const client = getXClient();
+                currentBaseline = await client.getFollowers(xAccount.externalAccountId);
                 metricKey = 'followers';
             } else if (platform === 'STRIPE') {
                 const { stripeRevenueAdapter } = await import('../adapters/stripe-revenue.js');

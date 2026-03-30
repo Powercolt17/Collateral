@@ -451,7 +451,9 @@ function showContent(c) {
                 console.log('[TermSheet] No referral bonus available:', { firstBonusAvailable: stats?.firstBonusAvailable, wasReferred: stats?.wasReferred });
             }
         }).catch(err => { console.error('[TermSheet] Referral stats fetch failed:', err); });
-}
+    } else {
+        console.log('[TermSheet] No auth token, skipping referral bonus check');
+    }
 
     // Fetch Live Preview asynchronously
     if (hasAuthToken()) {
@@ -464,9 +466,10 @@ function showContent(c) {
                 const nEl = document.getElementById('cts-oracle-note');
                 
                 if (data.status === 'error') {
-                     bEl.innerHTML = '<span style="color:#ef4444;font-size:12px;">Not Connected</span>';
+                     bEl.innerHTML = '<span style="color:#ef4444;font-size:12px;">Oracle Error</span>';
                      tEl.innerHTML = '--';
-                     nEl.innerHTML = `<i data-lucide="alert-circle" style="color:#ef4444;"></i> <span style="color:#ef4444;">Please connect your ${displayProvider} account in Settings to view personalized target numbers.</span>`;
+                     const errMsg = data.error || `Please connect your ${displayProvider} account in Settings to view personalized target numbers.`;
+                     nEl.innerHTML = `<i data-lucide="alert-circle" style="color:#ef4444;"></i> <span style="color:#ef4444;">${errMsg}</span>`;
                 } else {
                      const baseNum = data.current_baseline || 0;
                      let isMonetary = provider === 'stripe' || provider === 'shopify' || provider === 'amazon';

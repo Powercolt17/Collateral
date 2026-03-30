@@ -276,14 +276,13 @@ const oracleRoutes: FastifyPluginAsync = async (fastify) => {
 
         try {
             if (platform === 'X') {
-                const { getXClient } = await import('../adapters/x.js');
                 const { connectedAccounts } = await import('../db/schema.js');
+                const { users } = await import('../db/schema.js');
                 const { and, eq } = await import('drizzle-orm');
                 const [xAccount] = await db.select().from(connectedAccounts)
                     .where(and(
                         eq(connectedAccounts.userId, userId),
-                        eq(connectedAccounts.platform, 'X'),
-                        eq(connectedAccounts.status, 'ACTIVE')
+                        eq(connectedAccounts.platform, 'X')
                     ))
                     .limit(1);
                 
@@ -291,9 +290,85 @@ const oracleRoutes: FastifyPluginAsync = async (fastify) => {
                     reply.status(200);
                     return { provider: 'X', status: 'error', code: 'NOT_CONNECTED', error: 'X account not connected' };
                 }
-                
-                const client = getXClient();
-                currentBaseline = await client.getFollowers(xAccount.externalAccountId);
+
+                if (xAccount.status === 'REVOKED') {
+                    reply.status(200);
+                    return { provider: 'X', status: 'error', code: 'RECONNECT_REQUIRED', error: 'X connection expired. Please reconnect in Sources.' };
+                }
+
+                // Strategy 1: Try X API v2 Bearer token (may 403 on Free tier)
+                let gotLive = false;
+                try {
+                    const { getXClient } = await import('../adapters/x.js');
+                    const client = getXClient();
+                    currentBaseline = await client.getFollowers(xAccount.externalAccountId);
+                    gotLive = true;
+                } catch (apiErr: any) {
+                    console.warn(`[Oracle Preview] X API v2 failed (${apiErr.message}), trying OAuth 1.0a fallback...`);
+                }
+
+                // Strategy 2: Use user's OAuth 1.0a tokens with v1.1 verify_credentials
+                if (!gotLive) {
+                    try {
+                        const [user] = await db.select({
+                            xAccessToken: users.xAccessToken,
+                            xAccessTokenSecret: users.xAccessTokenSecret,
+                        }).from(users).where(eq(users.id, userId)).limit(1);
+
+                        if (user?.xAccessToken && user?.xAccessTokenSecret) {
+                            const { createHmac, randomBytes } = await import('crypto');
+                            const consumerKey = process.env.X_API_KEY;
+                            const consumerSecret = process.env.X_API_SECRET;
+                            
+                            if (consumerKey && consumerSecret) {
+                                const verifyUrl = 'https://api.twitter.com/1.1/account/verify_credentials.json';
+                                const timestamp = Math.floor(Date.now() / 1000).toString();
+                                const nonce = randomBytes(16).toString('hex');
+
+                                const oauthParams: Record<string, string> = {
+                                    oauth_consumer_key: consumerKey,
+                                    oauth_nonce: nonce,
+                                    oauth_signature_method: 'HMAC-SHA1',
+                                    oauth_timestamp: timestamp,
+                                    oauth_token: user.xAccessToken,
+                                    oauth_version: '1.0',
+                                };
+
+                                // Build signature
+                                const percentEncode = (s: string) => encodeURIComponent(s).replace(/!/g,'%21').replace(/'/g,'%27').replace(/\(/g,'%28').replace(/\)/g,'%29').replace(/\*/g,'%2A');
+                                const sortedParams = Object.keys(oauthParams).sort().map(k => `${percentEncode(k)}=${percentEncode(oauthParams[k])}`).join('&');
+                                const sigBase = `GET&${percentEncode(verifyUrl)}&${percentEncode(sortedParams)}`;
+                                const sigKey = `${percentEncode(consumerSecret)}&${percentEncode(user.xAccessTokenSecret)}`;
+                                const sig = createHmac('sha1', sigKey).update(sigBase).digest('base64');
+                                oauthParams.oauth_signature = sig;
+
+                                const authHeader = 'OAuth ' + Object.keys(oauthParams).sort().map(k => `${percentEncode(k)}="${percentEncode(oauthParams[k])}"`).join(', ');
+
+                                const resp = await fetch(verifyUrl, { headers: { 'Authorization': authHeader } });
+                                if (resp.ok) {
+                                    const data = await resp.json() as { followers_count: number };
+                                    currentBaseline = data.followers_count;
+                                    gotLive = true;
+                                    console.log(`[Oracle Preview] X v1.1 verify_credentials success: ${currentBaseline} followers`);
+                                }
+                            }
+                        }
+                    } catch (v1Err: any) {
+                        console.warn(`[Oracle Preview] X v1.1 fallback failed:`, v1Err.message);
+                    }
+                }
+
+                // Strategy 3: Fall back to stored metadata from OAuth connection
+                if (!gotLive) {
+                    const meta = xAccount.metadataJson as Record<string, any> | null;
+                    if (meta?.followersCount) {
+                        currentBaseline = meta.followersCount;
+                        console.log(`[Oracle Preview] X using stored metadata: ${currentBaseline} followers`);
+                    } else {
+                        throw new Error('X API unavailable and no stored follower data');
+                    }
+                }
+
                 metricKey = 'followers';
             } else if (platform === 'STRIPE') {
                 const { stripeRevenueAdapter } = await import('../adapters/stripe-revenue.js');

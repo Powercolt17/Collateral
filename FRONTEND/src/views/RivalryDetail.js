@@ -658,7 +658,7 @@ export async function initRivalryDetail() {
                         </div>
                         <span class="rvd-player-growth ${isLeading ? 'leading' : 'trailing'}">${rivalry.challenger.growth > 0 ? '+' : ''}${rivalry.challenger.growth}%</span>
                         <span class="rvd-player-baseline"><span class="rvd-target-badge ${rivalry.challenger.growth >= rivalry.targetGrowthPct ? 'hit' : 'miss'}"><span class="badge-dot"></span>${rivalry.challenger.growth >= rivalry.targetGrowthPct ? 'ON TARGET' : 'BELOW TARGET'}</span> +${rivalry.targetGrowthPct}%</span>
-                        <span class="rvd-player-baseline" style="color:#666;margin-top:6px;">Current: <strong style="color:#111">${fmtMetric(rivalry.challenger.currentValue)}</strong> ${metricUnit()} · Target: <strong style="color:#3B0001">${fmtMetric(rivalry.challenger.targetValue)}</strong></span>
+                        <span class="rvd-player-baseline" data-live-role="challenger" style="color:#666;margin-top:6px;">Current: <strong style="color:#111">${fmtMetric(rivalry.challenger.currentValue)}</strong> ${metricUnit()} · Target: <strong style="color:#3B0001">${fmtMetric(rivalry.challenger.targetValue)}</strong></span>
                     </div>
                     <div class="rvd-vs-center rvd-anim-vs">
                         <span class="rvd-vs-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:middle;margin-top:-2px"><polyline points="14.5 17.5 3 6 3 3 6 3 17.5 14.5"/><line x1="13" x2="19" y1="19" y2="13"/><line x1="16" x2="20" y1="16" y2="20"/><line x1="19" x2="21" y1="21" y2="19"/><polyline points="14.5 6.5 18 3 21 3 21 6 17.5 9.5"/><line x1="5" x2="9" y1="14" y2="18"/><line x1="7" x2="4" y1="17" y2="20"/><line x1="3" x2="5" y1="19" y2="21"/></svg></span>
@@ -675,7 +675,7 @@ export async function initRivalryDetail() {
                         </div>
                         <span class="rvd-player-growth ${!isLeading ? 'leading' : 'trailing'}">${rivalry.opponent.growth > 0 ? '+' : ''}${rivalry.opponent.growth}%</span>
                         <span class="rvd-player-baseline"><span class="rvd-target-badge ${rivalry.opponent.growth >= rivalry.targetGrowthPct ? 'hit' : 'miss'}"><span class="badge-dot"></span>${rivalry.opponent.growth >= rivalry.targetGrowthPct ? 'ON TARGET' : 'BELOW TARGET'}</span> +${rivalry.targetGrowthPct}%</span>
-                        <span class="rvd-player-baseline" style="color:#666;margin-top:6px;">Current: <strong style="color:#111">${fmtMetric(rivalry.opponent.currentValue)}</strong> ${metricUnit()} · Target: <strong style="color:#3B0001">${fmtMetric(rivalry.opponent.targetValue)}</strong></span>
+                        <span class="rvd-player-baseline" data-live-role="opponent" style="color:#666;margin-top:6px;">Current: <strong style="color:#111">${fmtMetric(rivalry.opponent.currentValue)}</strong> ${metricUnit()} · Target: <strong style="color:#3B0001">${fmtMetric(rivalry.opponent.targetValue)}</strong></span>
                     </div>
                 </div>
 
@@ -767,7 +767,7 @@ export async function initRivalryDetail() {
                 </div>
                 <div class="rvd-row">
                     <span class="rvd-row-label" style="font-size:11px;color:#aaa">${rivalry.challenger.name} current</span>
-                    <span class="rvd-row-value" style="font-size:13px">${fmtMetric(rivalry.challenger.currentValue)} / ${fmtMetric(rivalry.challenger.targetValue)} ${metricUnit()}</span>
+                    <span class="rvd-row-value" data-perf-role="challenger" style="font-size:13px">${fmtMetric(rivalry.challenger.currentValue)} / ${fmtMetric(rivalry.challenger.targetValue)} ${metricUnit()}</span>
                 </div>
                 <div class="rvd-row">
                     <span class="rvd-row-label">${rivalry.opponent.name}</span>
@@ -775,7 +775,7 @@ export async function initRivalryDetail() {
                 </div>
                 <div class="rvd-row">
                     <span class="rvd-row-label" style="font-size:11px;color:#aaa">${rivalry.opponent.name} current</span>
-                    <span class="rvd-row-value" style="font-size:13px">${fmtMetric(rivalry.opponent.currentValue)} / ${fmtMetric(rivalry.opponent.targetValue)} ${metricUnit()}</span>
+                    <span class="rvd-row-value" data-perf-role="opponent" style="font-size:13px">${fmtMetric(rivalry.opponent.currentValue)} / ${fmtMetric(rivalry.opponent.targetValue)} ${metricUnit()}</span>
                 </div>
                 <div class="rvd-row">
                     <span class="rvd-row-label">Growth Target</span>
@@ -854,6 +854,66 @@ export async function initRivalryDetail() {
             </div>
         </div>
     `;
+
+    // ── Live Oracle Preview — Fetch real metrics for current user ──
+    // The oracle preview returns the logged-in user's live metric from their connected account.
+    // We use this to populate real numbers before the rivalry tracker snapshots baselines.
+    (async () => {
+        try {
+            // Get current user ID from appState (set during session hydration)
+            const currentUserId = window.appState?.userId;
+            if (!currentUserId) {
+                console.log('[RivalryDetail] No userId in appState, skipping oracle preview');
+                return;
+            }
+
+            // Determine if current user is challenger or opponent
+            let myRole = null;
+            if (currentUserId === rivalry._challengerUserId) myRole = 'challenger';
+            else if (currentUserId === rivalry._opponentUserId) myRole = 'opponent';
+            if (!myRole) {
+                console.log('[RivalryDetail] Current user is not a participant, skipping oracle');
+                return;
+            }
+
+            // Map rivalry metricType to oracle metric key
+            const METRIC_TO_KEY = {
+                SUBSCRIBERS: 'subscribers', FOLLOWERS: 'followers',
+                REVENUE: 'revenue', VIEWS: 'views',
+                GROSS_SALES: 'shopify_revenue', ORDER_COUNT: 'orders',
+            };
+            const oracleMetric = METRIC_TO_KEY[rivalry.metricType] || rivalry.metricType?.toLowerCase() || 'followers';
+
+            console.log(`[RivalryDetail] Fetching oracle preview: provider=${rivalry.provider}, metric=${oracleMetric}, role=${myRole}`);
+            const data = await api.getProviderPreview(rivalry.provider, oracleMetric);
+            console.log('[RivalryDetail] Oracle preview result:', data);
+
+            if (data && data.status !== 'error' && data.current_baseline !== undefined) {
+                const liveBaseline = data.current_baseline || 0;
+                const targetPct = rivalry.targetGrowthPct;
+                const liveTarget = Math.round(liveBaseline * (1 + targetPct / 100));
+                const fmtLive = (v) => {
+                    if (rivalry.isMonetary) return '$' + (v / 100).toLocaleString('en-US', { minimumFractionDigits: 0, maximumFractionDigits: 0 });
+                    return Math.round(v).toLocaleString('en-US');
+                };
+                const unit = metricUnit();
+
+                // Update hero card metric line for this user's role
+                document.querySelectorAll(`[data-live-role="${myRole}"]`).forEach(el => {
+                    el.innerHTML = `Current: <strong style="color:#111">${fmtLive(liveBaseline)}</strong> ${unit} · Target: <strong style="color:#3B0001">${fmtLive(liveTarget)}</strong>`;
+                });
+
+                // Update performance panel for this user's role
+                document.querySelectorAll(`[data-perf-role="${myRole}"]`).forEach(el => {
+                    el.textContent = `${fmtLive(liveBaseline)} / ${fmtLive(liveTarget)} ${unit}`;
+                });
+
+                console.log(`[RivalryDetail] ✅ Updated ${myRole} metrics: baseline=${liveBaseline}, target=${liveTarget}`);
+            }
+        } catch (err) {
+            console.warn('[RivalryDetail] Oracle preview fetch failed:', err.message);
+        }
+    })();
 
     // ── Render Performance Chart (SVG) — Uses Live Metric Data ──
     const chartEl = document.getElementById('rvd-perf-chart');

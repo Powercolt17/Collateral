@@ -175,30 +175,35 @@ export function renderRivalry() {
 
             /* ── Rivalry Card ── */
             .rv-card {
-                background: #fff; border: 1px solid #eee; padding: 36px 32px;
-                transition: all var(--rv-dur) var(--rv-ease);
+                background: #fff; border: 1px solid #eaeaea; padding: 0;
+                transition: all 0.3s var(--rv-ease);
                 cursor: pointer; position: relative; overflow: hidden;
             }
             .rv-card::before {
                 content: ''; position: absolute; top: 0; left: 0;
-                width: 0; height: 3px; background: var(--rv-brand);
-                transition: width 0.4s ease;
+                width: 3px; height: 0; background: var(--rv-brand);
+                transition: height 0.4s ease;
             }
-            .rv-card:hover::before { width: 100%; }
-            .rv-card:hover { background: #fafafa; }
-            .rv-card:active { transform: scale(0.995); }
+            .rv-card:hover::before { height: 100%; }
+            .rv-card:hover {
+                border-color: #ddd;
+                box-shadow: 0 8px 32px rgba(0,0,0,0.06);
+                transform: translateY(-3px);
+            }
+            .rv-card:active { transform: translateY(-1px); }
+            .rv-card-inner { padding: 28px 28px 0; }
             .rv-card-header {
                 display: flex; align-items: center; justify-content: space-between;
-                margin-bottom: 16px;
+                margin-bottom: 12px;
             }
             .rv-card-status {
                 font-family: 'JetBrains Mono', monospace;
-                font-size: 9px; font-weight: 700; letter-spacing: 0.5px;
+                font-size: 9px; font-weight: 700; letter-spacing: 1px;
                 text-transform: uppercase; color: #10b981;
                 display: flex; align-items: center; gap: 6px;
             }
             .rv-card-status .dot {
-                width: 4px; height: 4px; border-radius: 50%;
+                width: 5px; height: 5px; border-radius: 50%;
                 background: currentcolor;
             }
             @media(prefers-reduced-motion:no-preference){
@@ -208,61 +213,67 @@ export function renderRivalry() {
             .rv-card-status.ended { color: var(--rv-muted); }
             .rv-card-status.ended .dot { animation: none; }
             .rv-card-metric {
-                font-size: 18px; font-weight: 700; color: #111;
-                margin-bottom: 16px; letter-spacing: -0.5px;
+                font-size: 16px; font-weight: 700; color: #111;
+                margin-bottom: 20px; letter-spacing: -0.3px;
+                line-height: 1.3;
             }
+            .rv-card-metric span { font-weight: 400; }
 
-            /* Versus Strip */
+            /* Versus Strip — Clean two-column */
             .rv-versus {
-                display: flex; align-items: stretch; gap: 0;
-                border: 1px solid #f0f0f0;
-                margin-bottom: 16px; overflow: hidden;
+                display: grid; grid-template-columns: 1fr auto 1fr;
+                align-items: center;
+                margin-bottom: 20px;
             }
             .rv-player {
-                flex: 1; padding: 20px; display: flex;
-                flex-direction: column; gap: 4px;
+                display: flex; flex-direction: column; gap: 3px;
             }
-            .rv-player.right { text-align: right; border-left: 1px solid #f0f0f0; }
+            .rv-player.right { text-align: right; }
             .rv-player-label {
                 font-family: 'JetBrains Mono', monospace;
-                font-size: 8px; font-weight: 600; letter-spacing: 1px;
+                font-size: 8px; font-weight: 700; letter-spacing: 1.2px;
                 color: #bbb; text-transform: uppercase;
             }
             .rv-player-name {
                 font-family: 'JetBrains Mono', monospace;
-                font-size: 11px; font-weight: 600; color: #333; letter-spacing: 0.04em;
+                font-size: 11px; font-weight: 600; color: #333; letter-spacing: 0.02em;
                 display: flex; align-items: center; gap: 5px;
+                white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
             }
             .rv-player.right .rv-player-name { justify-content: flex-end; }
             .rv-lead-dot { width: 5px; height: 5px; border-radius: 50%; flex-shrink: 0; }
             .rv-player-growth {
-                font-size: 30px; font-weight: 500; color: #111;
-                letter-spacing: -1px; margin-top: 4px; line-height: 1.1;
+                font-size: 26px; font-weight: 500; color: #111;
+                letter-spacing: -1px; margin-top: 2px; line-height: 1.1;
             }
             .rv-player-growth.leading { color: var(--rv-green); }
             .rv-player-growth.trailing { color: var(--rv-brand); }
             @media(prefers-reduced-motion:no-preference){
-                .rv-player-growth.awaiting { animation: rv-pendingPulse 2s ease infinite; color: #ccc; }
+                .rv-player-growth.awaiting {
+                    animation: rv-pendingPulse 2.5s ease infinite;
+                    color: #ddd; font-size: 12px; font-weight: 700;
+                    letter-spacing: 2px;
+                    font-family: 'JetBrains Mono', monospace;
+                }
             }
             .rv-vs-divider {
                 display: flex; align-items: center; justify-content: center;
-                width: 56px; flex-shrink: 0;
-                background: #fafafa;
-                border-left: 1px solid #f0f0f0; border-right: 1px solid #f0f0f0;
-                flex-direction: column; gap: 4px;
+                width: 48px; flex-shrink: 0;
+                flex-direction: column; gap: 0;
+                padding: 0 4px;
             }
             .rv-vs-text {
                 font-family: 'JetBrains Mono', monospace;
-                font-size: 10px; font-weight: 800; color: #ccc; letter-spacing: 0.1em;
+                font-size: 9px; font-weight: 800; color: #ccc; letter-spacing: 0.15em;
             }
 
             /* Momentum Bar */
             .rv-momentum {
-                height: 6px; display: flex; overflow: hidden;
-                margin-bottom: 16px; background: #f5f5f5; border-radius: 3px;
+                height: 4px; display: flex; overflow: hidden;
+                margin: 0 28px 0; background: #f0f0f0; border-radius: 2px;
             }
-            .rv-momentum-left { background: linear-gradient(90deg, var(--rv-green), #34d399); transition: width .6s var(--rv-ease); border-radius: 3px 0 0 3px; }
-            .rv-momentum-right { background: linear-gradient(90deg, #ef4444, var(--rv-brand)); transition: width .6s var(--rv-ease); border-radius: 0 3px 3px 0; }
+            .rv-momentum-left { background: var(--rv-green); transition: width .6s var(--rv-ease); border-radius: 2px 0 0 2px; }
+            .rv-momentum-right { background: var(--rv-brand); transition: width .6s var(--rv-ease); border-radius: 0 2px 2px 0; }
 
             /* Winner/Loser Badge */
             .rv-winner-badge {
@@ -277,11 +288,10 @@ export function renderRivalry() {
 
             /* Card Action Buttons */
             .rv-card-actions {
-                display: flex; gap: 0; margin: 16px -32px -36px;
-                border-top: 1px solid #f0f0f0;
+                display: flex; gap: 0; border-top: 1px solid #f0f0f0;
             }
             .rv-action-btn {
-                flex: 1; padding: 16px; border: none;
+                flex: 1; padding: 14px; border: none;
                 font-family: 'JetBrains Mono', monospace;
                 font-size: 11px; font-weight: 700; letter-spacing: 1.5px;
                 cursor: pointer; transition: all .15s var(--rv-ease);
@@ -293,27 +303,29 @@ export function renderRivalry() {
             .rv-action-decline { background: #fff; color: #888; border-left: 1px solid #f0f0f0 !important; }
             .rv-action-decline:hover { color: var(--rv-red); }
 
-            /* Card Bottom */
+            /* Card Bottom — capital/time/provider */
             .rv-card-bottom {
-                display: flex; align-items: center; justify-content: space-between;
+                display: flex; align-items: flex-end; justify-content: space-between;
+                padding: 16px 28px 24px;
+                border-top: 1px solid #f5f5f5;
             }
             .rv-card-stake { display: flex; flex-direction: column; gap: 2px; }
-            .rv-card-stake-val { font-size: 24px; font-weight: 500; color: #111; letter-spacing: -1px; }
+            .rv-card-stake-val { font-size: 22px; font-weight: 500; color: #111; letter-spacing: -0.5px; }
             .rv-card-stake-lbl {
                 font-family: 'JetBrains Mono', monospace;
-                font-size: 9px; font-weight: 700; color: #ccc;
+                font-size: 8px; font-weight: 700; color: #ccc;
                 letter-spacing: 1px; text-transform: uppercase;
             }
             .rv-card-time {
                 font-family: 'JetBrains Mono', monospace;
-                font-size: 10px; color: var(--rv-muted); letter-spacing: 0.04em;
+                font-size: 9px; color: #bbb; letter-spacing: 0.5px;
             }
             .rv-card-time.urgent { color: var(--rv-red); font-weight: 700; }
             .rv-card-provider-pill {
-                display: inline-flex; align-items: center; padding: 3px 8px;
+                display: inline-flex; align-items: center; padding: 2px 7px;
                 font-family: 'JetBrains Mono', monospace;
-                font-size: 8px; font-weight: 700; letter-spacing: 0.5px;
-                color: #fff; text-transform: uppercase;
+                font-size: 7px; font-weight: 700; letter-spacing: 0.5px;
+                color: #fff; text-transform: uppercase; border-radius: 2px;
             }
             .rv-open-badge {
                 font-family: 'JetBrains Mono', monospace;
@@ -324,13 +336,13 @@ export function renderRivalry() {
 
             /* ── How It Works ── */
             .rv-mechanism {
-                background: #0d0d0d;
-                border-top: 1px solid var(--rv-border);
-                border-bottom: 1px solid var(--rv-border);
+                background: rgba(59, 0, 1, 0.012);
+                border-top: 3px solid var(--rv-brand);
+                border-bottom: 1px solid #f0f0f0;
                 padding: 64px 0; position: relative;
             }
             .rv-mechanism-inner {
-                max-width: 1440px; margin: 0 auto; padding: 0 64px;
+                max-width: 1300px; margin: 0 auto; padding: 0 32px;
             }
             .rv-mechanism-header {
                 display: flex; align-items: flex-end; justify-content: space-between;
@@ -338,40 +350,47 @@ export function renderRivalry() {
             }
             .rv-mechanism-tag {
                 font-family: 'JetBrains Mono', monospace;
-                font-size: 10px; font-weight: 700; letter-spacing: 0.12em;
-                color: #555; text-transform: uppercase; margin-bottom: 12px;
+                font-size: 10px; font-weight: 700; letter-spacing: 1.5px;
+                color: #ccc; text-transform: uppercase; margin-bottom: 12px;
             }
             .rv-mechanism-title {
-                font-size: 32px; font-weight: 300; color: #fff;
+                font-size: 32px; font-weight: 500; color: #111;
                 letter-spacing: -1px; margin: 0;
             }
-            .rv-mechanism-title strong { font-weight: 700; color: var(--rv-red); }
+            .rv-mechanism-title strong { font-weight: 800; }
             .rv-mechanism-grid {
                 display: grid; grid-template-columns: repeat(3, 1fr);
                 position: relative;
             }
+            .rv-mechanism-grid::before {
+                content: ''; position: absolute;
+                top: 40px; left: 10%; right: 10%; height: 1px;
+                background: linear-gradient(90deg, transparent, rgba(59,0,1,0.12) 20%, rgba(59,0,1,0.12) 80%, transparent);
+                z-index: 0;
+            }
             .rv-mech-card {
                 padding: 40px 32px;
-                border-right: 1px solid var(--rv-border);
+                border-right: 1px solid #e8e8e8;
                 transition: all .2s var(--rv-ease);
                 cursor: default; position: relative; z-index: 1;
             }
             .rv-mech-card:hover {
-                background: rgba(255,255,255,0.02); transform: translateY(-3px);
-                box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+                background: #fff; transform: translateY(-3px);
+                box-shadow: 0 6px 20px rgba(0,0,0,0.05);
             }
             .rv-mech-card:last-child { border-right: none; }
             .rv-mech-num {
                 font-size: 56px; font-weight: 200;
-                color: rgba(239,68,68,0.4);
+                color: rgba(59,0,1,0.6);
                 margin-bottom: 16px; line-height: 1;
+                font-family: 'Neue Haas Grotesk Display', 'Helvetica Neue', sans-serif;
             }
             .rv-mech-label {
-                font-size: 20px; font-weight: 600; color: #fff;
+                font-size: 20px; font-weight: 500; color: #111;
                 margin-bottom: 12px; letter-spacing: -0.3px;
             }
             .rv-mech-desc {
-                font-size: 14px; color: #666; line-height: 1.6;
+                font-size: 14px; color: #888; line-height: 1.6;
             }
 
             /* ── Stake Warning ── */
@@ -586,39 +605,38 @@ export function renderRivalry() {
 
             /* ── Hottest Rivalry Featured Card ── */
             .rv-featured {
-                max-width: 1440px;
+                max-width: 1300px;
                 margin: 0 auto;
-                padding: 0 64px;
+                padding: 0 32px;
             }
             .rv-featured-card {
-                background: var(--rv-card-bg);
-                border: 1px solid var(--rv-border);
+                background: #fff;
+                border: 1px solid #eaeaea;
                 padding: 32px 36px;
                 position: relative;
                 margin-bottom: 12px;
                 overflow: hidden;
-                border-radius: 10px;
             }
             .rv-featured-card::before {
                 content: '';
                 position: absolute;
-                top: 0; left: 0; right: 0;
-                height: 3px;
-                background: linear-gradient(90deg, #ef4444 0%, #dc2626 50%, #10b981 100%);
+                top: 0; left: 0;
+                width: 3px; height: 100%;
+                background: var(--rv-brand);
             }
             .rv-featured-tag {
                 font-family: 'JetBrains Mono', monospace;
                 font-size: 9px;
                 font-weight: 700;
-                letter-spacing: 0.14em;
+                letter-spacing: 1.2px;
                 text-transform: uppercase;
-                color: #ef4444;
+                color: var(--rv-brand);
                 margin-bottom: 16px;
                 display: flex;
                 align-items: center;
                 gap: 6px;
             }
-            .rv-featured-tag .fire { font-size: 12px; }
+            .rv-featured-tag .fire { display: none; }
             .rv-featured-row {
                 display: flex;
                 align-items: center;
@@ -719,10 +737,10 @@ export function renderRivalry() {
                 .rv-search-box { width: 100%; }
                 .rv-grid-container { padding: 0 20px 40px; }
                 .rv-grid { grid-template-columns: 1fr; }
-                .rv-card { padding: 20px; }
-                .rv-versus { flex-direction: column; }
-                .rv-player.right { text-align: left; border-left: none; border-top: 1px solid #f0f0f0; }
-                .rv-vs-divider { width: 100%; height: 32px; border-left: none; border-right: none; border-top: 1px solid #f0f0f0; border-bottom: 1px solid #f0f0f0; }
+                .rv-card-inner { padding: 20px 20px 0; }
+                .rv-versus { grid-template-columns: 1fr auto 1fr; }
+                .rv-momentum { margin: 0 20px; }
+                .rv-card-bottom { padding: 12px 20px 20px; }
                 .rv-mechanism { padding: 40px 0; }
                 .rv-mechanism-inner { padding: 0 20px; }
                 .rv-mechanism-grid { grid-template-columns: 1fr; }
@@ -730,7 +748,6 @@ export function renderRivalry() {
                 .rv-mech-card:last-child { border-bottom: none; }
                 .rv-mechanism-title { font-size: 24px; }
                 .rv-warning { padding: 28px 20px; }
-                .rv-card-actions { margin: 0 -20px -20px; }
             }
         </style>
 
@@ -1107,29 +1124,30 @@ export async function initRivalry() {
 
         return `
             <div class="rv-card" data-status="${r.status}" data-id="${r.id}" ${resultAttr}>
-                <div class="rv-card-header">
-                    <div class="rv-card-status ${statusClass}">
-                        <span class="dot"></span>
-                        ${statusLabel}
+                <div class="rv-card-inner">
+                    <div class="rv-card-header">
+                        <div class="rv-card-status ${statusClass}">
+                            <span class="dot"></span>
+                            ${statusLabel}
+                        </div>
+                        ${r.isOpen && r.status === 'pending' ? '<span class="rv-open-badge">OPEN</span>' : ''}
+                        ${winnerBadge}
                     </div>
-                    ${r.isOpen && r.status === 'pending' ? '<span class="rv-open-badge">OPEN</span>' : ''}
-                    ${winnerBadge}
-                </div>
-                <div class="rv-card-metric">${r.metric} <span style="color:#ccc;font-size:10px;font-family:'JetBrains Mono',monospace;margin-left:8px;">ID:${shortId}</span></div>
-                <div class="rv-versus">
-                    <div class="rv-player">
-                        <span class="rv-player-label">Challenger</span>
-                        <span class="rv-player-name">${challDot}${r.challenger.name}</span>
-                        ${challGrowth}
-                    </div>
-                    <div class="rv-vs-divider">
-                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#ccc" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="display:block;margin:0 auto;"><polyline points="14.5 17.5 3 6 3 3 6 3 17.5 14.5"/><line x1="13" x2="19" y1="19" y2="13"/><line x1="16" x2="20" y1="16" y2="20"/><line x1="19" x2="21" y1="21" y2="19"/><polyline points="14.5 6.5 18 3 21 3 21 6 17.5 9.5"/><line x1="5" x2="9" y1="14" y2="18"/><line x1="7" x2="4" y1="17" y2="20"/><line x1="3" x2="5" y1="19" y2="21"/></svg>
-                        <span class="rv-vs-text">VS</span>
-                    </div>
-                    <div class="rv-player right">
-                        <span class="rv-player-label">Opponent</span>
-                        <span class="rv-player-name">${r.opponent.name}${oppDot}</span>
-                        ${oppGrowth}
+                    <div class="rv-card-metric">${r.metric} <span style="color:#ccc;font-size:10px;font-family:'JetBrains Mono',monospace;margin-left:6px;">ID:${shortId}</span></div>
+                    <div class="rv-versus">
+                        <div class="rv-player">
+                            <span class="rv-player-label">Challenger</span>
+                            <span class="rv-player-name">${challDot}${r.challenger.name}</span>
+                            ${challGrowth}
+                        </div>
+                        <div class="rv-vs-divider">
+                            <span class="rv-vs-text">VS</span>
+                        </div>
+                        <div class="rv-player right">
+                            <span class="rv-player-label">Opponent</span>
+                            <span class="rv-player-name">${r.opponent.name}${oppDot}</span>
+                            ${oppGrowth}
+                        </div>
                     </div>
                 </div>
                 ${r.status !== 'pending' ? `

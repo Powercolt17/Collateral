@@ -968,6 +968,15 @@ export async function initRivalryDetail() {
                 };
                 const unit = metricUnit();
 
+                // Calculate live growth % (current vs baseline at rivalry start)
+                const rivalryBaseline = myRole === 'challenger' ? rivalry.challenger.baseline : rivalry.opponent.baseline;
+                let liveGrowthPct = 0;
+                if (rivalryBaseline > 0) {
+                    liveGrowthPct = ((liveBaseline - rivalryBaseline) / rivalryBaseline * 100);
+                }
+                const growthSign = liveGrowthPct >= 0 ? '+' : '';
+                const growthClass = liveGrowthPct >= 0 ? 'positive' : 'negative';
+
                 // Update hero card metric line for this user's role
                 document.querySelectorAll(`[data-live-role="${myRole}"]`).forEach(el => {
                     el.innerHTML = `Current: <strong style="color:#111">${fmtLive(liveBaseline)}</strong> ${unit} · Target: <strong style="color:#3B0001">${fmtLive(liveTarget)}</strong>`;
@@ -978,7 +987,23 @@ export async function initRivalryDetail() {
                     el.textContent = `${fmtLive(liveBaseline)} / ${fmtLive(liveTarget)} ${unit}`;
                 });
 
-                console.log(`[RivalryDetail] ✅ Updated ${myRole} metrics: baseline=${liveBaseline}, target=${liveTarget}`);
+                // Update chart metric cards with live data
+                const metricCardId = myRole === 'challenger' ? 'rvd-metric-chall' : 'rvd-metric-opp';
+                const metricCard = document.getElementById(metricCardId);
+                if (metricCard) {
+                    metricCard.querySelector('.rvd-chart-metric-value').textContent = fmtLive(liveBaseline);
+                    const changeEl = metricCard.querySelector('.rvd-chart-metric-change');
+                    if (changeEl) {
+                        changeEl.textContent = `${growthSign}${liveGrowthPct.toFixed(1)}%`;
+                        changeEl.className = `rvd-chart-metric-change ${growthClass}`;
+                    }
+                    const targetEl = metricCard.querySelector('.rvd-chart-metric-target');
+                    if (targetEl) {
+                        targetEl.textContent = `Target: ${fmtLive(liveTarget)} ${unit} (+${targetPct}%)`;
+                    }
+                }
+
+                console.log(`[RivalryDetail] ✅ Updated ${myRole} metrics: baseline=${liveBaseline}, target=${liveTarget}, growth=${liveGrowthPct.toFixed(1)}%`);
             }
         } catch (err) {
             console.warn('[RivalryDetail] Oracle preview fetch failed:', err.message);

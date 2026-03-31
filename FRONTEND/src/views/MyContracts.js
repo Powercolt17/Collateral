@@ -135,6 +135,66 @@ export function renderMyContracts() {
             @keyframes cl-spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
             @keyframes cl-pulse { 0%, 100% { opacity: 0.7; } 50% { opacity: 1; } }
             @keyframes myc-spin { to { transform: rotate(360deg); } }
+            @keyframes myc-dot-pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:.4;transform:scale(1.3)} }
+
+            /* ── Live Metric Column ── */
+            .myc-card-live {
+                min-width: 140px; max-width: 180px;
+                display: flex; align-items: center; justify-content: center;
+                padding: 0 12px; flex-shrink: 0;
+            }
+            .myc-live-loading {
+                display: flex; align-items: center; gap: 6px;
+                font-family: 'JetBrains Mono', monospace;
+                font-size: 9px; color: #bbb; letter-spacing: 0.5px;
+                text-transform: uppercase;
+            }
+            .myc-live-dot {
+                width: 6px; height: 6px; border-radius: 50%;
+                background: #10b981;
+                animation: myc-dot-pulse 1.5s ease infinite;
+            }
+            .myc-live-settled {
+                font-family: 'JetBrains Mono', monospace;
+                font-size: 9px; color: #999; letter-spacing: 0.5px;
+                text-transform: uppercase;
+            }
+            .myc-live-error {
+                font-family: 'JetBrains Mono', monospace;
+                font-size: 9px; color: #C41E24; letter-spacing: 0.5px;
+                text-transform: uppercase;
+            }
+            .myc-live-data {
+                display: flex; flex-direction: column; gap: 4px; width: 100%;
+            }
+            .myc-live-current {
+                display: flex; align-items: baseline; gap: 4px;
+            }
+            .myc-live-value {
+                font-size: 16px; font-weight: 700; color: #111;
+                letter-spacing: -0.3px;
+            }
+            .myc-live-unit {
+                font-family: 'JetBrains Mono', monospace;
+                font-size: 8px; font-weight: 600; color: #999;
+                text-transform: uppercase; letter-spacing: 0.5px;
+            }
+            .myc-live-progress {
+                display: flex; align-items: center; gap: 6px;
+            }
+            .myc-live-progress-bar {
+                flex: 1; height: 3px; background: #f0f0f0;
+                border-radius: 2px; overflow: hidden;
+            }
+            .myc-live-progress-fill {
+                height: 100%; border-radius: 2px;
+                transition: width 0.6s ease;
+            }
+            .myc-live-progress-label {
+                font-family: 'JetBrains Mono', monospace;
+                font-size: 8px; font-weight: 700;
+                letter-spacing: 0.3px; white-space: nowrap;
+            }
             
             @media (max-width: 768px) {
                 .myc-header { padding: 20px 16px 0; flex-direction: column; align-items: flex-start; gap: 16px; }
@@ -143,6 +203,7 @@ export function renderMyContracts() {
                 .myc-feed { padding: 16px 16px 60px; }
                 .myc-card { flex-direction: column; align-items: stretch; gap: 10px; }
                 .myc-card-right { text-align: left; padding-left: 0; flex-direction: row; align-items: baseline; gap: 10px; }
+                .myc-card-live { max-width: 100%; min-width: 0; padding: 8px 0 0; }
             }
         </style>
 
@@ -259,21 +320,42 @@ function renderContractList(container, contracts) {
             statusLabel = 'PENDING';
         }
 
+        const isActive = !['SETTLED', 'SETTLED_SUCCESS', 'PAYOUT_COMPLETE', 'FORFEITED', 'SETTLED_FAILURE'].includes(state);
+
         const iconMap = { 'twitter': 'twitter', 'x': 'twitter', 'stripe': 'credit-card', 'shopify': 'shopping-bag', 'amazon': 'package', 'github': 'github' };
         const lucideIcon = iconMap[c.platform?.toLowerCase()] || 'file-text';
 
+        // Metric label for each platform
+        const metricLabels = {
+            SUBSCRIBERS: 'subscribers', FOLLOWERS: 'followers', REVENUE: 'revenue',
+            VIEWS: 'views', GROSS_SALES: 'sales', ORDER_COUNT: 'orders',
+            IMPRESSIONS: 'impressions', COMMITS: 'commits', PRS_MERGED: 'PRs',
+            STARS_GAINED: 'stars',
+        };
+        const metricLabel = metricLabels[c.metricType] || c.metricType?.toLowerCase() || 'metric';
+
         return `
-            <a href="#/contracts/${c.id}" class="myc-card">
+            <a href="#/contracts/${c.id}" class="myc-card" data-contract-id="${c.id}" data-platform="${c.platform?.toLowerCase() || ''}" data-metric-type="${c.metricType || ''}" data-is-active="${isActive}" data-baseline="${c.baselineValue || 0}" data-target="${c.targetValue || 0}">
                 <div class="myc-card-left">
                     <div class="myc-card-icon"><i data-lucide="${lucideIcon}"></i></div>
                     <div class="myc-card-info">
                         <span class="myc-card-platform">${platform.charAt(0) + platform.slice(1).toLowerCase()} Performance</span>
-                        <span class="myc-card-id">CNTRCT-${c.id.slice(0, 5).toUpperCase()}</span>
+                        <span class="myc-card-id">CNTRCT-${c.id.slice(0, 5).toUpperCase()} · ${metricLabel}</span>
                     </div>
+                </div>
+                <div class="myc-card-live" data-live-id="${c.id}">
+                    ${isActive ? `
+                        <div class="myc-live-loading">
+                            <div class="myc-live-dot"></div>
+                            <span>Fetching live data...</span>
+                        </div>
+                    ` : `
+                        <span class="myc-live-settled">${statusLabel}</span>
+                    `}
                 </div>
                 <div class="myc-card-center">
                     <span class="myc-status-badge" style="background:transparent; border-color:#eee; color:#999; font-weight:500;">${riskTier}</span>
-                    <span class="myc-status-badge">${statusLabel}</span>
+                    <span class="myc-status-badge" style="color:${statusColor}">${statusLabel}</span>
                 </div>
                 <div class="myc-card-right">
                     <span class="myc-card-amount">${amount}</span>
@@ -284,4 +366,124 @@ function renderContractList(container, contracts) {
     }).join('');
 
     container.innerHTML = `<div class="myc-list">${listHtml}</div>`;
+
+    // ── Fetch live data for each active contract ──
+    fetchLiveMetrics(contracts);
+}
+
+async function fetchLiveMetrics(contracts) {
+    // Deduplicate provider+metric pairs to avoid redundant calls
+    const activeContracts = contracts.filter(c => {
+        const state = c.derivedState || c.state;
+        return !['SETTLED', 'SETTLED_SUCCESS', 'PAYOUT_COMPLETE', 'FORFEITED', 'SETTLED_FAILURE'].includes(state);
+    });
+
+    if (activeContracts.length === 0) return;
+
+    // We need to fetch per-provider since the oracle preview is user-scoped
+    const providersSeen = new Set();
+    const previewCache = {};
+
+    for (const c of activeContracts) {
+        const provider = (c.platform || '').toLowerCase();
+        const metricKey = mapMetricToKey(c.metricType);
+        const cacheKey = `${provider}:${metricKey}`;
+
+        if (providersSeen.has(cacheKey)) {
+            // Use cached result
+            updateCardWithLiveData(c, previewCache[cacheKey]);
+            continue;
+        }
+
+        providersSeen.add(cacheKey);
+
+        try {
+            const data = await window.api.getProviderPreview(provider, metricKey);
+            previewCache[cacheKey] = data;
+            updateCardWithLiveData(c, data);
+        } catch (err) {
+            console.warn(`[MyContracts] Live data fetch failed for ${provider}/${metricKey}:`, err.message);
+            updateCardWithError(c);
+        }
+    }
+}
+
+function mapMetricToKey(metricType) {
+    const map = {
+        SUBSCRIBERS: 'subscribers', FOLLOWERS: 'followers',
+        REVENUE: 'revenue', VIEWS: 'views',
+        GROSS_SALES: 'shopify_revenue', ORDER_COUNT: 'orders',
+        IMPRESSIONS: 'impressions', COMMITS: 'commits',
+        PRS_MERGED: 'prs_merged', STARS_GAINED: 'stars',
+    };
+    return map[metricType] || metricType?.toLowerCase() || 'followers';
+}
+
+function updateCardWithLiveData(contract, data) {
+    const el = document.querySelector(`[data-live-id="${contract.id}"]`);
+    if (!el) return;
+
+    if (!data || data.status === 'error') {
+        const code = data?.code || '';
+        const label = code === 'NOT_CONNECTED' ? 'Not Connected' : code === 'RECONNECT_REQUIRED' ? 'Reconnect' : 'Unavailable';
+        el.innerHTML = `<span class="myc-live-error">${label}</span>`;
+        return;
+    }
+
+    const currentValue = data.current_baseline || 0;
+    const provider = (contract.platform || '').toLowerCase();
+    const isMonetary = ['stripe', 'shopify', 'amazon'].includes(provider);
+
+    // Format values
+    const fmt = (v) => {
+        if (isMonetary) return '$' + (v / 100).toLocaleString('en-US', { minimumFractionDigits: 0, maximumFractionDigits: 0 });
+        return Math.round(v).toLocaleString('en-US');
+    };
+
+    // Calculate target from baseline + growth %
+    const baseline = parseFloat(contract.baselineValue || 0);
+    const target = parseFloat(contract.targetValue || 0);
+    const hasTarget = target > 0 && baseline > 0;
+
+    // Progress calculation
+    let progressPct = 0;
+    let progressColor = '#0F5132';
+    if (hasTarget && currentValue > baseline) {
+        const needed = target - baseline;
+        const achieved = currentValue - baseline;
+        progressPct = Math.min(100, Math.round((achieved / needed) * 100));
+    }
+    if (progressPct < 25) progressColor = '#C41E24';
+    else if (progressPct < 60) progressColor = '#d97706';
+
+    const metricLabels = {
+        SUBSCRIBERS: 'subs', FOLLOWERS: 'followers', REVENUE: 'rev',
+        VIEWS: 'views', GROSS_SALES: 'sales', ORDER_COUNT: 'orders',
+    };
+    const unit = metricLabels[contract.metricType] || '';
+
+    el.innerHTML = `
+        <div class="myc-live-data">
+            <div class="myc-live-current">
+                <span class="myc-live-value">${fmt(currentValue)}</span>
+                <span class="myc-live-unit">${unit}</span>
+            </div>
+            ${hasTarget ? `
+                <div class="myc-live-progress">
+                    <div class="myc-live-progress-bar">
+                        <div class="myc-live-progress-fill" style="width:${progressPct}%;background:${progressColor}"></div>
+                    </div>
+                    <span class="myc-live-progress-label" style="color:${progressColor}">${progressPct}% to target</span>
+                </div>
+            ` : `
+                <span class="myc-live-unit" style="color:#0F5132">LIVE</span>
+            `}
+        </div>
+    `;
+}
+
+function updateCardWithError(contract) {
+    const el = document.querySelector(`[data-live-id="${contract.id}"]`);
+    if (!el) return;
+    el.innerHTML = `<span class="myc-live-error">--</span>`;
 }

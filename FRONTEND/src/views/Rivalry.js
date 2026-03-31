@@ -8,27 +8,24 @@ export function renderRivalry() {
     return `
         <style>
             /* ============================================================
-               RIVALRY MODE — COMPETITIVE ARENA
-               Trading Terminal + Betting Exchange Aesthetic
+               RIVALRY MODE — HEAD-TO-HEAD DUELS
+               Institutional Design — Matching Collateral Homepage
                ============================================================ */
             :root {
                 --rv-ease: cubic-bezier(0.4, 0, 0.2, 1);
                 --rv-dur: 0.25s;
-                --rv-brand: #3B0001;
-                --rv-green: #10b981;
-                --rv-red: #ef4444;
-                --rv-amber: #f59e0b;
-                --rv-muted: #666;
-                --rv-bg: #0a0a0a;
-                --rv-card-bg: #111113;
-                --rv-border: #222;
+                --rv-brand: #5C1414;
+                --rv-green: #0F5132;
+                --rv-red: #EF4444;
+                --rv-amber: #F59E0B;
+                --rv-muted: #999;
             }
 
             .rv {
-                background: var(--rv-bg);
+                background: #fff;
                 min-height: calc(100vh - 72px);
-                font-family: 'Inter Tight', 'IBM Plex Sans', -apple-system, sans-serif;
-                color: #e5e5e5;
+                font-family: 'Neue Haas Grotesk Display', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+                color: #111;
                 display: flex;
                 flex-direction: column;
             }
@@ -40,166 +37,137 @@ export function renderRivalry() {
                 @keyframes rv-shimmer { 0%{background-position:-400px 0} 100%{background-position:400px 0} }
                 @keyframes rv-pendingPulse { 0%,100%{opacity:1} 50%{opacity:.55} }
                 @keyframes rv-aurora { 0%{background-position:0% 50%} 50%{background-position:100% 50%} 100%{background-position:0% 50%} }
-                @keyframes rv-glow-pulse { 0%,100%{box-shadow:0 0 20px rgba(239,68,68,0.3),0 0 40px rgba(239,68,68,0.1)} 50%{box-shadow:0 0 30px rgba(239,68,68,0.5),0 0 60px rgba(239,68,68,0.2)} }
-                @keyframes rv-tug { 0%{transform:translateX(-1px)} 50%{transform:translateX(1px)} 100%{transform:translateX(-1px)} }
-                @keyframes rv-ticker-scroll { from{transform:translateX(0)} to{transform:translateX(-50%)} }
-                @keyframes rv-count-up { from{opacity:0;transform:translateY(8px)} to{opacity:1;transform:translateY(0)} }
                 .rv-reveal { opacity:0; transform:translateY(16px); transition:opacity .5s var(--rv-ease), transform .5s var(--rv-ease); }
                 .rv-reveal.visible { opacity:1; transform:translateY(0); }
             }
 
-            /* ── Live Ticker ── */
-            .rv-ticker {
-                background: linear-gradient(90deg, #0f0f0f, #141414, #0f0f0f);
-                border-bottom: 1px solid var(--rv-border);
-                overflow: hidden; position: relative;
-            }
-            .rv-ticker-inner {
-                display: flex; align-items: center; justify-content: center;
-                gap: 20px; padding: 10px 24px;
-                font-family: 'JetBrains Mono', monospace; font-size: 11px;
-                color: #888; white-space: nowrap;
-            }
-            .rv-ticker-item { display: flex; align-items: center; gap: 6px; }
-            .rv-ticker-item strong { color: #fff; }
-            .rv-ticker-dot { width: 6px; height: 6px; border-radius: 50%; }
-            .rv-ticker-dot.live { background: var(--rv-green); animation: rv-pulse 2s infinite; }
-            .rv-ticker-sep { color: #333; }
-
             /* ── Hero ── */
             .rv-hero {
-                background: linear-gradient(135deg, #0a0a0a 0%, #1a0505 40%, #0a0a0a 100%);
-                border-bottom: 1px solid var(--rv-border);
+                background: #fff;
+                border-bottom: 1px solid #f0f0f0;
                 position: relative; overflow: hidden;
             }
-            .rv-hero::before {
-                content: ''; position: absolute; top: -50%; left: 30%;
-                width: 80%; height: 200%;
-                background: radial-gradient(ellipse at center, rgba(239,68,68,0.06) 0%, transparent 70%);
-                pointer-events: none;
-            }
             .rv-hero-inner {
-                max-width: 1440px; margin: 0 auto;
-                padding: 52px 64px 48px; position: relative;
+                max-width: 1300px; margin: 0 auto;
+                padding: 120px 32px 100px; position: relative;
+            }
+            .rv-breadcrumb {
+                display: flex; align-items: center; gap: 12px;
+                font-family: 'JetBrains Mono', monospace;
+                font-size: 10px; font-weight: 700; letter-spacing: 1.5px;
+                color: var(--rv-brand); text-transform: uppercase;
+                margin-bottom: 24px;
+            }
+            .rv-breadcrumb::before {
+                content: ''; width: 32px; height: 1px; background: var(--rv-brand);
             }
             .rv-hero-row {
-                display: flex; align-items: center;
+                display: flex; align-items: flex-start;
                 justify-content: space-between; gap: 48px;
             }
             .rv-hero-left { flex: 1; }
             .rv-hero-title {
-                font-size: 52px; font-weight: 300; color: #fff;
-                letter-spacing: -2px; margin: 0 0 16px; line-height: 1.08;
+                font-size: 84px; font-weight: 500; color: #111;
+                letter-spacing: -3.5px; margin: 0 0 40px; line-height: 0.95;
+                max-width: 900px;
             }
-            .rv-hero-title strong {
-                font-weight: 700; color: var(--rv-red);
-                background: linear-gradient(135deg, #ef4444, #dc2626);
-                -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-                background-clip: text;
-            }
+            .rv-hero-title strong { font-weight: 800; color: var(--rv-brand); }
             .rv-hero-sub {
-                font-size: 15px; color: #777; line-height: 1.6;
-                max-width: 480px; margin: 0;
+                font-size: 16px; color: #888; line-height: 1.6;
+                max-width: 480px; margin: 0 0 40px;
             }
-            .rv-hero-right { display: flex; gap: 12px; flex-shrink: 0; flex-direction: column; }
+            .rv-hero-right { display: flex; gap: 24px; flex-shrink: 0; align-items: center; }
             .rv-btn-challenge {
-                height: 52px; padding: 0 44px;
-                background: linear-gradient(135deg, #dc2626, #991b1b);
-                color: #fff; border: none;
-                font-size: 13px; font-weight: 800; letter-spacing: 0.12em;
-                font-family: 'JetBrains Mono', monospace;
-                text-transform: uppercase; cursor: pointer;
-                transition: all var(--rv-dur) var(--rv-ease);
-                display: flex; align-items: center; justify-content: center; gap: 8px;
-                border-radius: 6px;
+                background: var(--rv-brand); color: #fff; border: none;
+                padding: 18px 32px; font-size: 14px; font-weight: 700;
+                cursor: pointer; position: relative; overflow: hidden;
+                transition: transform 0.2s ease, box-shadow 0.2s ease;
             }
-            .rv-glow { animation: rv-glow-pulse 2s ease infinite; }
+            .rv-btn-challenge::after {
+                content: ''; position: absolute; top: -50%; left: -75%;
+                width: 50%; height: 200%;
+                background: linear-gradient(90deg, transparent, rgba(255,255,255,0.15), transparent);
+                transform: skewX(-25deg); transition: left 0.6s ease;
+            }
+            .rv-btn-challenge:hover::after { left: 125%; }
             .rv-btn-challenge:hover {
-                transform: translateY(-2px) scale(1.02);
-                box-shadow: 0 8px 30px rgba(239,68,68,0.4) !important;
+                transform: translateY(-2px);
+                box-shadow: 0 6px 20px rgba(92, 20, 20, 0.25);
             }
-            .rv-btn-challenge:active { transform: translateY(0) scale(0.98); }
-            .rv-btn-join {
-                height: 44px; padding: 0 32px;
-                background: transparent; color: #999;
-                border: 1px solid #333; border-radius: 6px;
-                font-size: 11px; font-weight: 700; letter-spacing: 0.1em;
-                font-family: 'JetBrains Mono', monospace;
-                text-transform: uppercase; cursor: pointer;
-                transition: all var(--rv-dur) var(--rv-ease);
-                display: flex; align-items: center; justify-content: center; gap: 6px;
+            .rv-btn-challenge:active { transform: translateY(0); }
+            .rv-btn-secondary {
+                color: #888; font-size: 14px; font-weight: 500;
+                background: none; border: none; cursor: pointer;
+                text-decoration: none;
             }
-            .rv-btn-join:hover { border-color: #666; color: #fff; background: rgba(255,255,255,0.03); }
+            .rv-btn-secondary:hover { color: #111; }
 
             /* ── Stats Strip ── */
             .rv-stats {
-                display: flex; gap: 0; margin-top: 32px;
-                border-top: 1px solid rgba(255,255,255,0.06);
+                display: flex; gap: 80px; margin-top: 0;
+                padding-top: 40px; border-top: 1px solid #f0f0f0;
             }
-            .rv-stat-group {
-                flex: 1; padding: 20px 0; text-align: center;
-                border-right: 1px solid rgba(255,255,255,0.06);
-            }
-            .rv-stat-group:last-child { border-right: none; }
+            .rv-stat-group { display: flex; flex-direction: column; gap: 8px; }
             .rv-stat-val {
-                font-size: 36px; font-weight: 300; color: #fff; letter-spacing: -1px;
-                line-height: 1; animation: rv-count-up 0.5s var(--rv-ease) both;
+                font-size: 42px; font-weight: 500; color: #111; letter-spacing: -1.5px;
+                display: flex; align-items: baseline; gap: 4px; line-height: 1;
+                transition: color 0.3s ease;
             }
+            .rv-stat-group:hover .rv-stat-val { color: var(--rv-brand); }
             .rv-stat-lbl {
                 font-family: 'JetBrains Mono', monospace;
-                font-size: 9px; font-weight: 700; letter-spacing: 0.15em;
-                color: #555; text-transform: uppercase; margin-top: 8px;
-                display: flex; align-items: center; justify-content: center; gap: 6px;
+                font-size: 10px; font-weight: 700; letter-spacing: 1px;
+                color: #bbb; text-transform: uppercase;
+                display: flex; align-items: center; gap: 6px;
             }
-            @media (max-width: 768px) { .rv-stat-lbl { justify-content: flex-start; } }
 
             /* ── Controls ── */
             .rv-controls {
-                max-width: 1440px; margin: 0 auto; padding: 24px 64px 0;
-                display: flex; align-items: center; justify-content: space-between;
-                gap: 24px; width: 100%; box-sizing: border-box;
+                max-width: 1300px; margin: 0 auto; padding: 0 32px;
+                display: flex; align-items: flex-end; justify-content: space-between;
+                border-bottom: 1px solid #f2f2f2; margin-bottom: 24px;
+                width: 100%; box-sizing: border-box;
             }
-            .rv-tabs { display: flex; gap: 8px; }
+            .rv-tabs { display: flex; gap: 32px; }
             .rv-tab {
-                background: rgba(255,255,255,0.03); border: 1px solid var(--rv-border);
-                border-radius: 6px; padding: 8px 16px;
+                padding: 12px 0; background: none; border: none;
                 font-family: 'JetBrains Mono', monospace;
-                font-size: 10px; font-weight: 700; letter-spacing: 0.06em;
-                text-transform: uppercase; color: #666; cursor: pointer;
-                transition: all .15s var(--rv-ease);
+                font-size: 11px; font-weight: 700; letter-spacing: 1px;
+                text-transform: uppercase; color: #bbb; cursor: pointer;
+                border-bottom: 2px solid transparent;
+                transition: all 0.2s;
             }
-            .rv-tab:hover { color: #ccc; border-color: #444; background: rgba(255,255,255,0.05); }
-            .rv-tab.active { color: #fff; background: rgba(239,68,68,0.15); border-color: rgba(239,68,68,0.3); }
+            .rv-tab:hover { color: #666; }
+            .rv-tab.active { color: #111; border-bottom-color: #111; }
             .rv-search-box {
-                height: 36px; padding: 0 14px; border: 1px solid var(--rv-border);
-                border-radius: 6px; font-size: 12px; color: #ccc; background: #111;
-                outline: none; width: 220px;
-                font-family: 'JetBrains Mono', monospace;
-                transition: border-color .15s, box-shadow .15s;
+                height: 38px; padding: 0 16px; border: 1px solid #eee;
+                font-size: 13px; color: #111; background: #fcfcfc;
+                outline: none; width: 240px;
+                font-family: 'Neue Haas Grotesk Display', sans-serif;
+                transition: border-color .15s;
+                margin-bottom: 12px;
             }
-            .rv-search-box:focus { border-color: var(--rv-red); box-shadow: 0 0 0 2px rgba(239,68,68,0.1); }
-            .rv-search-box::placeholder { color: #444; }
+            .rv-search-box:focus { border-color: var(--rv-brand); }
 
             /* ── Rivalry Cards Grid ── */
             .rv-grid-container {
-                max-width: 1440px; margin: 0 auto; padding: 24px 64px 60px;
+                max-width: 1300px; margin: 0 auto; padding: 0 32px 60px;
                 width: 100%; box-sizing: border-box;
             }
             .rv-count {
                 font-family: 'JetBrains Mono', monospace;
-                font-size: 10px; color: #444; margin-bottom: 16px;
+                font-size: 10px; color: #ccc; margin-bottom: 20px;
+                text-transform: uppercase; letter-spacing: 1px;
             }
-            .rv-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; }
+            .rv-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 24px; }
 
             /* ── Skeleton Cards ── */
             .rv-skeleton {
-                background: var(--rv-card-bg); border: 1px solid var(--rv-border); padding: 28px;
-                border-radius: 8px;
+                background: #fff; border: 1px solid #eee; padding: 28px;
             }
             .rv-skel-bar {
-                background: linear-gradient(90deg, #1a1a1a 0%, #222 40%, #1a1a1a 80%);
-                background-size: 800px 100%;
-                border-radius: 3px;
+                background: linear-gradient(90deg, #f5f5f5 0%, #ececec 40%, #f5f5f5 80%);
+                background-size: 800px 100%; border-radius: 3px;
             }
             @media(prefers-reduced-motion:no-preference){
                 .rv-skel-bar { animation: rv-shimmer 1.5s infinite linear; }
@@ -207,178 +175,134 @@ export function renderRivalry() {
 
             /* ── Rivalry Card ── */
             .rv-card {
-                background: var(--rv-card-bg); border: 1px solid var(--rv-border);
-                padding: 24px; border-radius: 10px;
-                transition: all 0.3s var(--rv-ease);
+                background: #fff; border: 1px solid #eee; padding: 36px 32px;
+                transition: all var(--rv-dur) var(--rv-ease);
                 cursor: pointer; position: relative; overflow: hidden;
-                box-shadow: 0 2px 8px rgba(0,0,0,0.3);
             }
-            .rv-card:hover {
-                border-color: #444;
-                box-shadow: 0 12px 40px rgba(0,0,0,0.5);
-                transform: translateY(-4px);
+            .rv-card::before {
+                content: ''; position: absolute; top: 0; left: 0;
+                width: 0; height: 3px; background: var(--rv-brand);
+                transition: width 0.4s ease;
             }
+            .rv-card:hover::before { width: 100%; }
+            .rv-card:hover { background: #fafafa; }
             .rv-card:active { transform: scale(0.995); }
-            /* Live card glow */
-            @media(prefers-reduced-motion:no-preference){
-                .rv-card[data-status="active"] {
-                    border-color: rgba(16,185,129,0.2);
-                    box-shadow: 0 2px 8px rgba(0,0,0,0.3), 0 0 20px rgba(16,185,129,0.05);
-                }
-                .rv-card[data-status="active"]:hover {
-                    border-color: rgba(16,185,129,0.4);
-                    box-shadow: 0 12px 40px rgba(0,0,0,0.5), 0 0 30px rgba(16,185,129,0.1);
-                }
-            }
-            .rv-card[data-status="pending"] { border-color: rgba(245,158,11,0.15); }
-            .rv-card[data-status="settled"] { opacity: 0.7; }
-            .rv-card[data-status="settled"]:hover { opacity: 1; }
             .rv-card-header {
                 display: flex; align-items: center; justify-content: space-between;
-                margin-bottom: 12px;
+                margin-bottom: 16px;
             }
             .rv-card-status {
                 font-family: 'JetBrains Mono', monospace;
-                font-size: 9px; font-weight: 800; letter-spacing: 0.12em;
-                text-transform: uppercase; color: var(--rv-green);
+                font-size: 9px; font-weight: 700; letter-spacing: 0.5px;
+                text-transform: uppercase; color: #10b981;
                 display: flex; align-items: center; gap: 6px;
             }
             .rv-card-status .dot {
-                width: 7px; height: 7px; border-radius: 50%;
-                background: var(--rv-green);
+                width: 4px; height: 4px; border-radius: 50%;
+                background: currentcolor;
             }
             @media(prefers-reduced-motion:no-preference){
                 .rv-card-status .dot { animation: rv-pulse 1.8s infinite; }
             }
             .rv-card-status.pending { color: var(--rv-amber); }
-            .rv-card-status.pending .dot { background: var(--rv-amber); animation: rv-pulse 2s infinite; }
             .rv-card-status.ended { color: var(--rv-muted); }
-            .rv-card-status.ended .dot { background: var(--rv-muted); animation: none; }
+            .rv-card-status.ended .dot { animation: none; }
             .rv-card-metric {
-                font-size: 15px; font-weight: 600; color: #fff;
-                margin-bottom: 14px; letter-spacing: -0.2px; line-height: 1.3;
+                font-size: 18px; font-weight: 700; color: #111;
+                margin-bottom: 16px; letter-spacing: -0.5px;
             }
 
             /* Versus Strip */
             .rv-versus {
                 display: flex; align-items: stretch; gap: 0;
-                background: rgba(255,255,255,0.02); border: 1px solid var(--rv-border);
-                margin-bottom: 14px; overflow: hidden; border-radius: 8px;
+                border: 1px solid #f0f0f0;
+                margin-bottom: 16px; overflow: hidden;
             }
             .rv-player {
-                flex: 1; padding: 16px 18px; display: flex;
+                flex: 1; padding: 20px; display: flex;
                 flex-direction: column; gap: 4px;
             }
-            .rv-player.right { text-align: right; border-left: 1px solid var(--rv-border); }
+            .rv-player.right { text-align: right; border-left: 1px solid #f0f0f0; }
             .rv-player-label {
                 font-family: 'JetBrains Mono', monospace;
-                font-size: 8px; font-weight: 700; letter-spacing: 0.12em;
-                color: #555; text-transform: uppercase;
+                font-size: 8px; font-weight: 600; letter-spacing: 1px;
+                color: #bbb; text-transform: uppercase;
             }
             .rv-player-name {
                 font-family: 'JetBrains Mono', monospace;
-                font-size: 12px; font-weight: 700; color: #fff; letter-spacing: 0.02em;
-                display: flex; align-items: center; gap: 6px;
+                font-size: 11px; font-weight: 600; color: #333; letter-spacing: 0.04em;
+                display: flex; align-items: center; gap: 5px;
             }
             .rv-player.right .rv-player-name { justify-content: flex-end; }
-            .rv-lead-dot {
-                width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0;
-            }
+            .rv-lead-dot { width: 5px; height: 5px; border-radius: 50%; flex-shrink: 0; }
             .rv-player-growth {
-                font-size: 28px; font-weight: 700; color: #fff;
+                font-size: 30px; font-weight: 500; color: #111;
                 letter-spacing: -1px; margin-top: 4px; line-height: 1.1;
             }
             .rv-player-growth.leading { color: var(--rv-green); }
-            .rv-player-growth.trailing { color: var(--rv-red); }
+            .rv-player-growth.trailing { color: var(--rv-brand); }
             @media(prefers-reduced-motion:no-preference){
-                .rv-player-growth.awaiting { animation: rv-pendingPulse 2s ease infinite; color: #444; font-size: 13px; letter-spacing: 0.1em; font-family: 'JetBrains Mono', monospace; }
+                .rv-player-growth.awaiting { animation: rv-pendingPulse 2s ease infinite; color: #ccc; }
             }
             .rv-vs-divider {
                 display: flex; align-items: center; justify-content: center;
-                width: 52px; flex-shrink: 0;
-                background: rgba(255,255,255,0.015);
-                border-left: 1px solid var(--rv-border); border-right: 1px solid var(--rv-border);
-                flex-direction: column; gap: 2px;
+                width: 56px; flex-shrink: 0;
+                background: #fafafa;
+                border-left: 1px solid #f0f0f0; border-right: 1px solid #f0f0f0;
+                flex-direction: column; gap: 4px;
             }
-            .rv-vs-divider svg { opacity: 0.4; }
             .rv-vs-text {
                 font-family: 'JetBrains Mono', monospace;
-                font-size: 12px; font-weight: 900; color: #ef4444; letter-spacing: 0.1em;
+                font-size: 10px; font-weight: 800; color: #ccc; letter-spacing: 0.1em;
             }
 
-            /* Tug-of-War Momentum Bar */
+            /* Momentum Bar */
             .rv-momentum {
                 height: 6px; display: flex; overflow: hidden;
-                margin-bottom: 14px; background: #1a1a1a; border-radius: 3px;
-                position: relative;
+                margin-bottom: 16px; background: #f5f5f5; border-radius: 3px;
             }
-            .rv-momentum-left {
-                background: linear-gradient(90deg, var(--rv-green), #34d399);
-                transition: width .6s var(--rv-ease); border-radius: 3px 0 0 3px;
-                animation: rv-tug 3s ease infinite;
-            }
-            .rv-momentum-right {
-                background: linear-gradient(90deg, #ef4444, #dc2626);
-                transition: width .6s var(--rv-ease); border-radius: 0 3px 3px 0;
-                animation: rv-tug 3s ease 0.3s infinite;
-            }
+            .rv-momentum-left { background: linear-gradient(90deg, var(--rv-green), #34d399); transition: width .6s var(--rv-ease); border-radius: 3px 0 0 3px; }
+            .rv-momentum-right { background: linear-gradient(90deg, #ef4444, var(--rv-brand)); transition: width .6s var(--rv-ease); border-radius: 0 3px 3px 0; }
 
             /* Winner/Loser Badge */
             .rv-winner-badge {
                 display: inline-flex; align-items: center; gap: 4px;
                 font-family: 'JetBrains Mono', monospace;
-                font-size: 8px; font-weight: 800; letter-spacing: 0.1em;
-                text-transform: uppercase; padding: 3px 10px; border-radius: 4px;
+                font-size: 8px; font-weight: 800; letter-spacing: 0.5px;
+                text-transform: uppercase; padding: 3px 8px;
             }
-            .rv-winner-badge.winner { background: rgba(16,185,129,0.15); color: #10b981; border: 1px solid rgba(16,185,129,0.3); }
-            .rv-winner-badge.loser { background: rgba(239,68,68,0.15); color: #ef4444; border: 1px solid rgba(239,68,68,0.3); }
-            .rv-winner-badge.forfeited { background: rgba(255,255,255,0.05); color: #666; border: 1px solid #333; }
-
-            /* Settled card glow for winner */
-            .rv-card[data-status="settled"][data-result="won"] {
-                border-color: rgba(16,185,129,0.3); opacity: 1;
-            }
-            .rv-card[data-status="settled"][data-result="lost"] {
-                border-color: rgba(239,68,68,0.2); opacity: 0.6;
-            }
-            .rv-card[data-status="settled"][data-result="lost"]:hover { opacity: 0.9; }
+            .rv-winner-badge.winner { background: #f0fdf4; color: #166534; border: 1px solid #dcfce7; }
+            .rv-winner-badge.loser { background: #fef2f2; color: #991b1b; border: 1px solid #fecaca; }
+            .rv-winner-badge.forfeited { background: #fafafa; color: #666; border: 1px solid #e5e5e5; }
 
             /* Card Action Buttons */
             .rv-card-actions {
-                display: flex; gap: 0; margin: 0 -24px -24px; padding: 0;
-                border-top: 1px solid var(--rv-border); background: rgba(255,255,255,0.02);
-                border-radius: 0 0 10px 10px; overflow: hidden;
+                display: flex; gap: 0; margin: 16px -32px -36px;
+                border-top: 1px solid #f0f0f0;
             }
             .rv-action-btn {
-                flex: 1; padding: 14px; border: none;
+                flex: 1; padding: 16px; border: none;
                 font-family: 'JetBrains Mono', monospace;
-                font-size: 11px; font-weight: 800; letter-spacing: 0.12em;
+                font-size: 11px; font-weight: 700; letter-spacing: 1.5px;
                 cursor: pointer; transition: all .15s var(--rv-ease);
                 text-transform: uppercase; display: flex; align-items: center;
                 justify-content: center; gap: 8px;
             }
-            .rv-action-accept {
-                background: linear-gradient(135deg, #dc2626, #991b1b); color: #fff;
-            }
-            .rv-action-accept:hover { background: linear-gradient(135deg, #ef4444, #dc2626); box-shadow: 0 4px 20px rgba(239,68,68,0.3); }
-            .rv-action-decline {
-                background: transparent; color: #666;
-                border-left: 1px solid var(--rv-border) !important;
-            }
-            .rv-action-decline:hover { background: rgba(239,68,68,0.1); color: var(--rv-red); }
+            .rv-action-accept { background: #0a0a0a; color: #fff; }
+            .rv-action-accept:hover { background: var(--rv-brand); }
+            .rv-action-decline { background: #fff; color: #888; border-left: 1px solid #f0f0f0 !important; }
+            .rv-action-decline:hover { color: var(--rv-red); }
 
             /* Card Bottom */
             .rv-card-bottom {
                 display: flex; align-items: center; justify-content: space-between;
             }
             .rv-card-stake { display: flex; flex-direction: column; gap: 2px; }
-            .rv-card-stake-val {
-                font-size: 26px; font-weight: 800; color: #fff; letter-spacing: -0.5px;
-            }
+            .rv-card-stake-val { font-size: 24px; font-weight: 500; color: #111; letter-spacing: -1px; }
             .rv-card-stake-lbl {
                 font-family: 'JetBrains Mono', monospace;
-                font-size: 8px; font-weight: 700; color: #555;
-                letter-spacing: 0.15em; text-transform: uppercase;
+                font-size: 9px; font-weight: 700; color: #ccc;
+                letter-spacing: 1px; text-transform: uppercase;
             }
             .rv-card-time {
                 font-family: 'JetBrains Mono', monospace;
@@ -388,14 +312,14 @@ export function renderRivalry() {
             .rv-card-provider-pill {
                 display: inline-flex; align-items: center; padding: 3px 8px;
                 font-family: 'JetBrains Mono', monospace;
-                font-size: 8px; font-weight: 700; letter-spacing: 0.08em;
-                color: #fff; text-transform: uppercase; border-radius: 4px;
+                font-size: 8px; font-weight: 700; letter-spacing: 0.5px;
+                color: #fff; text-transform: uppercase;
             }
             .rv-open-badge {
                 font-family: 'JetBrains Mono', monospace;
-                font-size: 8px; font-weight: 800; letter-spacing: 0.1em;
-                background: var(--rv-amber); color: #000; padding: 3px 10px;
-                text-transform: uppercase; border-radius: 4px;
+                font-size: 8px; font-weight: 700; letter-spacing: 0.5px;
+                background: #111; color: #fff; padding: 3px 8px;
+                text-transform: uppercase;
             }
 
             /* ── How It Works ── */
@@ -453,17 +377,18 @@ export function renderRivalry() {
             /* ── Stake Warning ── */
             .rv-warning {
                 max-width: 1440px; margin: 0 auto;
-                padding: 40px 64px; text-align: center;
+                max-width: 1300px; margin: 0 auto;
+                padding: 40px 32px; text-align: center;
             }
             .rv-warning-inner {
                 display: inline-flex; align-items: center; gap: 10px;
-                background: rgba(239,68,68,0.05); padding: 14px 28px;
-                border: 1px solid rgba(239,68,68,0.1); border-radius: 8px;
+                background: rgba(59,0,1,0.03); padding: 14px 28px;
+                border: 1px solid rgba(59,0,1,0.06);
             }
             .rv-warning-text {
                 font-family: 'JetBrains Mono', monospace;
-                font-size: 10px; font-weight: 600; letter-spacing: 0.1em;
-                color: #888; text-transform: uppercase;
+                font-size: 10px; font-weight: 600; letter-spacing: 1px;
+                color: #999; text-transform: uppercase;
             }
 
             /* ── Challenge Modal ── */
@@ -472,244 +397,178 @@ export function renderRivalry() {
             }
             .rv-modal-backdrop {
                 position: fixed; inset: 0;
-                background: rgba(0,0,0,0.7); backdrop-filter: blur(8px);
+                background: rgba(0,0,0,0.4); backdrop-filter: blur(6px);
                 z-index: 80; display: none;
                 align-items: center; justify-content: center;
             }
             .rv-modal-backdrop.open { display: flex; }
             .rv-modal-backdrop.open .rv-modal { animation: rv-modalIn .2s var(--rv-ease) both; }
             .rv-modal {
-                background: #141414;
+                background: #fff;
                 width: 480px;
                 max-width: 90vw;
                 max-height: 85vh;
                 overflow-y: auto;
-                border: 1px solid var(--rv-border);
+                border: 1px solid #eaeaea;
                 border-radius: 12px;
-                box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+                box-shadow: 0 20px 60px rgba(0,0,0,0.1);
                 padding: 36px;
             }
             .rv-modal-header {
-                display: flex;
-                align-items: center;
-                justify-content: space-between;
-                margin-bottom: 28px;
+                display: flex; align-items: center;
+                justify-content: space-between; margin-bottom: 28px;
             }
             .rv-modal-title {
-                font-size: 20px;
-                font-weight: 500;
-                color: #fff;
+                font-size: 20px; font-weight: 700; color: #111;
                 letter-spacing: -0.3px;
             }
             .rv-modal-close {
-                background: none;
-                border: none;
-                cursor: pointer;
-                padding: 4px;
-                color: #666;
-                font-size: 18px;
+                background: none; border: none; cursor: pointer;
+                padding: 4px; color: #999; font-size: 18px;
             }
-            .rv-modal-close:hover { color: #fff; }
-            .rv-form-group {
-                margin-bottom: 20px;
-            }
+            .rv-modal-close:hover { color: #333; }
+            .rv-form-group { margin-bottom: 20px; }
             .rv-form-label {
-                font-size: 12px;
-                font-weight: 500;
-                color: #888;
-                font-family: 'Inter Tight', 'IBM Plex Sans', sans-serif;
-                margin-bottom: 6px;
-                display: block;
+                font-size: 12px; font-weight: 500; color: #6B6B6B;
+                font-family: 'Neue Haas Grotesk Display', sans-serif;
+                margin-bottom: 6px; display: block;
             }
             .rv-form-input {
-                width: 100%;
-                height: 44px;
-                background: #1a1a1a;
-                border: 1px solid var(--rv-border);
-                border-radius: 8px;
-                padding: 0 14px;
-                font-size: 14px;
-                color: #e5e5e5;
-                outline: none;
+                width: 100%; height: 44px;
+                background: #fff; border: 1px solid #E5E5E5;
+                border-radius: 8px; padding: 0 14px; font-size: 14px;
+                color: #1A1A1A; outline: none;
                 transition: border-color 0.15s, box-shadow 0.15s;
-                font-family: 'Inter Tight', 'IBM Plex Sans', sans-serif;
+                font-family: 'Neue Haas Grotesk Display', sans-serif;
                 box-sizing: border-box;
             }
             .rv-form-input:focus {
-                border-color: var(--rv-red);
-                box-shadow: 0 0 0 2px rgba(239,68,68,0.15);
+                border-color: var(--rv-brand);
+                box-shadow: 0 0 0 2px rgba(92,20,20,0.08);
             }
             .rv-form-select {
-                width: 100%;
-                height: 44px;
-                background: #1a1a1a;
-                border: 1px solid var(--rv-border);
-                border-radius: 8px;
-                padding: 0 14px;
-                font-size: 14px;
-                color: #e5e5e5;
-                outline: none;
-                font-family: 'Inter Tight', 'IBM Plex Sans', sans-serif;
-                box-sizing: border-box;
-                cursor: pointer;
-                appearance: none;
-                background-image: url("data:image/svg+xml,%3Csvg width='10' height='6' viewBox='0 0 10 6' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 1l4 4 4-4' stroke='%23999' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+                width: 100%; height: 44px;
+                background: #fff; border: 1px solid #E5E5E5;
+                border-radius: 8px; padding: 0 14px; font-size: 14px;
+                color: #1A1A1A; outline: none;
+                font-family: 'Neue Haas Grotesk Display', sans-serif;
+                box-sizing: border-box; cursor: pointer; appearance: none;
+                background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%23999' stroke-width='2'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");
                 background-repeat: no-repeat;
                 background-position: right 14px center;
             }
             .rv-form-select:focus {
-                border-color: var(--rv-red);
-                box-shadow: 0 0 0 2px rgba(239,68,68,0.15);
+                border-color: var(--rv-brand);
+                box-shadow: 0 0 0 2px rgba(92,20,20,0.08);
             }
-            .rv-duration-pills {
-                display: flex;
-                gap: 8px;
-            }
+            .rv-duration-pills { display: flex; gap: 8px; }
             .rv-dur-pill {
-                flex: 1;
-                height: 40px;
-                border: 1px solid var(--rv-border);
-                border-radius: 8px;
-                background: #1a1a1a;
-                font-family: 'JetBrains Mono', monospace;
-                font-size: 11px;
-                font-weight: 600;
-                color: #999;
-                cursor: pointer;
-                transition: all 0.15s;
-                letter-spacing: 0.04em;
+                flex: 1; height: 40px;
+                border: 1px solid #e5e5e5; border-radius: 8px;
+                background: #fff; font-family: 'JetBrains Mono', monospace;
+                font-size: 11px; font-weight: 600; color: #999;
+                cursor: pointer; display: flex; align-items: center;
+                justify-content: center;
+                transition: all 0.15s; letter-spacing: 0.04em;
             }
-            .rv-dur-pill:hover { border-color: #444; color: #ccc; }
+            .rv-dur-pill:hover { border-color: #ccc; color: #666; }
             .rv-dur-pill.active {
-                background: #111;
-                color: #fff;
-                border-color: #111;
+                background: #111; color: #fff; border-color: #111;
             }
-            .rv-stake-pills {
-                display: grid;
-                grid-template-columns: repeat(4, 1fr);
-                gap: 6px;
-            }
+            .rv-stake-pills { display: flex; gap: 8px; flex-wrap: wrap; }
             .rv-stake-pill {
-                padding: 10px 8px;
-                background: #fff;
-                border: 1px solid #e5e5e5;
-                font-family: 'JetBrains Mono', monospace;
-                font-size: 11px;
-                font-weight: 600;
-                color: #666;
-                cursor: pointer;
-                transition: all 0.15s;
-                letter-spacing: 0.02em;
+                height: 40px; padding: 0 20px;
+                border: 1px solid #e5e5e5; border-radius: 8px;
+                background: #fff; font-family: 'JetBrains Mono', monospace;
+                font-size: 12px; font-weight: 700; color: #999;
+                cursor: pointer; display: flex; align-items: center;
+                justify-content: center; letter-spacing: 0.02em;
                 text-align: center;
             }
-            .rv-stake-pill:hover { border-color: #444; color: #ccc; }
+            .rv-stake-pill:hover { border-color: #999; color: #333; }
             .rv-stake-pill.active {
-                background: #111;
-                color: #fff;
-                border-color: #111;
+                background: #111; color: #fff; border-color: #111;
             }
             .rv-modal.high-stakes .rv-stake-pill.active {
                 background: var(--rv-brand);
-                border-color: var(--rv-red);
+                border-color: var(--rv-brand);
             }
             .rv-tier-pills {
                 display: flex; gap: 8px;
             }
             .rv-tier-pill {
-                flex: 1; display: flex; flex-direction: column;
-                align-items: center; gap: 2px;
-                padding: 12px 8px;
-                background: #fff;
-                border: 1px solid #e5e5e5;
-                cursor: pointer;
-                transition: all 0.15s;
-                text-align: center;
+                flex: 1; padding: 12px; border: 1px solid #e5e5e5;
+                border-radius: 8px; background: #fff; cursor: pointer;
+                transition: all 0.15s; text-align: center;
             }
-            .rv-tier-pill:hover { border-color: #444; }
+            .rv-tier-pill:hover { border-color: #999; }
             .rv-tier-pill.active {
                 background: #111; border-color: #111;
             }
-            .rv-tier-pill.active .rv-tier-name { color: #fff; }
-            .rv-tier-pill.active .rv-tier-target { color: rgba(255,255,255,0.7); }
+            .rv-tier-pill.active .rv-tier-name,
+            .rv-tier-pill.active .rv-tier-target { color: #fff; }
             .rv-tier-name {
                 font-family: 'JetBrains Mono', monospace;
                 font-size: 11px; font-weight: 800;
-                letter-spacing: 0.1em; color: #ccc;
+                letter-spacing: 0.1em; color: #333;
             }
             .rv-tier-target {
                 font-family: 'JetBrains Mono', monospace;
-                font-size: 10px; font-weight: 600;
-                color: #666; letter-spacing: 0.02em;
+                font-size: 10px; font-weight: 500;
+                color: #999; letter-spacing: 0.02em;
             }
             .rv-form-hint {
                 font-size: 11px;
                 color: #bbb;
-                margin-top: 6px;
                 font-family: 'JetBrains Mono', monospace;
             }
             .rv-modal-preview {
-                background: rgba(255,255,255,0.02);
-                border: 1px solid var(--rv-border);
-                padding: 20px; border-radius: 8px;
-                margin-bottom: 24px;
+                background: #fafafa; border: 1px solid #f0f0f0;
+                padding: 20px; margin-bottom: 24px;
             }
             .rv-preview-row {
-                display: flex;
+                display: flex; align-items: center;
                 justify-content: space-between;
-                align-items: center;
                 padding: 6px 0;
             }
             .rv-preview-label {
                 font-family: 'JetBrains Mono', monospace;
-                font-size: 9px;
-                font-weight: 600;
-                color: #555;
-                text-transform: uppercase;
+                font-size: 9px; font-weight: 600;
+                color: #bbb; text-transform: uppercase;
                 letter-spacing: 0.08em;
             }
             .rv-preview-value {
-                font-size: 13px;
-                font-weight: 500;
-                color: #fff;
+                font-size: 13px; font-weight: 500;
+                color: #111;
             }
             .rv-btn-submit {
-                width: 100%;
-                height: 46px;
-                background: linear-gradient(135deg, #dc2626, #991b1b);
-                color: #fff;
-                border: none;
-                border-radius: 8px;
-                font-size: 13px;
-                font-weight: 600;
-                letter-spacing: 0.06em;
-                font-family: 'JetBrains Mono', monospace;
+                width: 100%; height: 46px;
+                background: #111; color: #fff; border: none;
+                border-radius: 8px; font-family: 'JetBrains Mono', monospace;
+                font-size: 11px; font-weight: 800; letter-spacing: 0.1em;
                 text-transform: uppercase;
-                cursor: pointer;
-                transition: background 0.15s;
+                cursor: pointer; transition: background 0.15s;
             }
-            .rv-btn-submit:hover { box-shadow: 0 4px 20px rgba(239,68,68,0.3); }
+            .rv-btn-submit:hover { background: var(--rv-brand); }
             .rv-modal-footer {
-                text-align: center;
-                margin-top: 16px;
+                text-align: center; margin-top: 16px;
             }
             .rv-modal-footer-text {
                 font-family: 'JetBrains Mono', monospace;
-                font-size: 9px;
-                color: #555;
+                font-size: 9px; color: #ccc;
                 letter-spacing: 0.06em;
             }
 
             /* ── Empty State ── */
             .rv-empty {
                 text-align: center; padding: 80px 20px;
-                border: 1px solid var(--rv-border); border-radius: 10px;
-                background: var(--rv-card-bg);
+                border: 1px solid #f0f0f0;
+                background: linear-gradient(135deg, #fff 0%, #fafafa 50%, rgba(59,0,1,0.015) 100%);
                 position: relative; overflow: hidden;
             }
             .rv-empty::before {
                 content: ''; position: absolute; inset: 0;
-                background: radial-gradient(ellipse at 50% 0%, rgba(239,68,68,0.03), transparent 70%);
+                background: radial-gradient(ellipse at 50% 0%, rgba(59,0,1,0.03), transparent 70%);
                 pointer-events: none;
             }
             .rv-empty-icon {
@@ -717,11 +576,12 @@ export function renderRivalry() {
                 opacity: 0.15;
             }
             .rv-empty-title {
-                font-size: 18px; font-weight: 500; color: #ccc;
+                font-size: 18px; font-weight: 500; color: #666;
                 margin-bottom: 8px; letter-spacing: -0.3px;
             }
             .rv-empty-sub {
-                font-size: 13px; color: #666; margin-bottom: 28px; max-width: 360px; margin-left: auto; margin-right: auto; line-height: 1.6;
+                font-size: 13px; color: #aaa; margin-bottom: 28px;
+                max-width: 360px; margin-left: auto; margin-right: auto; line-height: 1.6;
             }
 
             /* ── Hottest Rivalry Featured Card ── */
@@ -781,12 +641,12 @@ export function renderRivalry() {
                 font-family: 'JetBrains Mono', monospace;
                 font-size: 14px;
                 font-weight: 600;
-                color: #fff;
+                color: #111;
                 letter-spacing: 0.02em;
             }
             .rv-featured-growth {
                 font-size: 28px;
-                font-weight: 700;
+                font-weight: 300;
                 letter-spacing: -0.5px;
             }
             .rv-featured-meta {
@@ -798,25 +658,25 @@ export function renderRivalry() {
             }
             .rv-featured-pool {
                 font-size: 22px;
-                font-weight: 700;
-                color: #fff;
+                font-weight: 500;
+                color: #111;
             }
             .rv-featured-time {
                 font-family: 'JetBrains Mono', monospace;
                 font-size: 10px;
-                color: #666;
+                color: #999;
             }
 
             /* ── Modal High Stakes Warning ── */
             .rv-modal.high-stakes {
-                border-color: rgba(239, 68, 68, 0.3);
+                border-color: rgba(92, 20, 20, 0.3);
             }
             .rv-modal-warning {
                 font-family: 'JetBrains Mono', monospace;
                 font-size: 10px;
                 font-weight: 600;
                 letter-spacing: 0.06em;
-                color: #3B0001;
+                color: var(--rv-brand);
                 text-align: center;
                 padding: 12px 0 0;
             }
@@ -825,48 +685,48 @@ export function renderRivalry() {
             @media (max-width: 1200px) {
                 .rv-grid { grid-template-columns: 1fr; }
                 .rv-mechanism-grid { grid-template-columns: repeat(3, 1fr); }
-                .rv-hero-inner { padding: 40px 32px; }
-                .rv-controls { padding: 24px 32px 0; }
-                .rv-grid-container { padding: 24px 32px 48px; }
+                .rv-hero-inner { padding: 80px 32px 60px; }
+                .rv-hero-title { font-size: 64px; letter-spacing: -2.5px; }
+                .rv-controls { padding: 0 32px; }
+                .rv-grid-container { padding: 0 32px 48px; }
                 .rv-mechanism-inner { padding: 0 32px; }
                 .rv-warning { padding: 32px; }
+                .rv-stats { gap: 48px; }
             }
 
             @media (max-width: 768px) {
-                .rv-ticker-inner { font-size: 10px; gap: 12px; padding: 8px 16px; }
-                .rv-hero-inner { padding: 32px 20px; }
+                .rv-hero-inner { padding: 48px 20px 40px; }
                 .rv-hero-row { flex-direction: column; align-items: flex-start; gap: 20px; }
-                .rv-hero-title { font-size: 32px; letter-spacing: -1px; }
+                .rv-hero-title { font-size: 48px; letter-spacing: -1.5px; }
                 .rv-hero-sub { font-size: 14px; }
-                .rv-hero-right { width: 100%; }
-                .rv-btn-challenge { width: 100%; }
-                .rv-btn-join { width: 100%; }
+                .rv-hero-right { width: 100%; flex-direction: column; }
+                .rv-btn-challenge { width: 100%; text-align: center; }
                 .rv-stats {
                     display: grid; grid-template-columns: repeat(3, 1fr);
-                    gap: 0; border: 1px solid var(--rv-border);
+                    gap: 0; border: 1px solid #f0f0f0;
                     border-radius: 8px; overflow: hidden; margin-top: 24px;
                 }
                 .rv-stat-group {
                     padding: 16px 12px; text-align: center;
-                    border-right: 1px solid var(--rv-border);
+                    border-right: 1px solid #f0f0f0;
                 }
                 .rv-stat-group:last-child { border-right: none; }
                 .rv-stat-val { font-size: 20px; letter-spacing: -0.5px; }
                 .rv-stat-lbl { font-size: 8px; }
-                .rv-controls { padding: 20px 20px 0; flex-direction: column; align-items: flex-start; gap: 12px; }
-                .rv-tabs { gap: 6px; overflow-x: auto; width: 100%; }
-                .rv-tab { white-space: nowrap; font-size: 9px; padding: 6px 12px; }
+                .rv-controls { padding: 0 20px; flex-direction: column; align-items: flex-start; gap: 12px; }
+                .rv-tabs { gap: 20px; overflow-x: auto; width: 100%; }
+                .rv-tab { white-space: nowrap; font-size: 10px; }
                 .rv-search-box { width: 100%; }
-                .rv-grid-container { padding: 20px 20px 40px; }
+                .rv-grid-container { padding: 0 20px 40px; }
                 .rv-grid { grid-template-columns: 1fr; }
                 .rv-card { padding: 20px; }
                 .rv-versus { flex-direction: column; }
-                .rv-player.right { text-align: left; border-left: none; border-top: 1px solid var(--rv-border); }
-                .rv-vs-divider { width: 100%; height: 32px; border-left: none; border-right: none; border-top: 1px solid var(--rv-border); border-bottom: 1px solid var(--rv-border); }
+                .rv-player.right { text-align: left; border-left: none; border-top: 1px solid #f0f0f0; }
+                .rv-vs-divider { width: 100%; height: 32px; border-left: none; border-right: none; border-top: 1px solid #f0f0f0; border-bottom: 1px solid #f0f0f0; }
                 .rv-mechanism { padding: 40px 0; }
                 .rv-mechanism-inner { padding: 0 20px; }
                 .rv-mechanism-grid { grid-template-columns: 1fr; }
-                .rv-mech-card { border-right: none; border-bottom: 1px solid var(--rv-border); padding: 28px 0; }
+                .rv-mech-card { border-right: none; border-bottom: 1px solid #e8e8e8; padding: 28px 0; }
                 .rv-mech-card:last-child { border-bottom: none; }
                 .rv-mechanism-title { font-size: 24px; }
                 .rv-warning { padding: 28px 20px; }
@@ -875,28 +735,18 @@ export function renderRivalry() {
         </style>
 
         <div class="rv">
-            <!-- Live Ticker -->
-            <div class="rv-ticker" id="rv-ticker">
-                <div class="rv-ticker-inner">
-                    <span class="rv-ticker-item"><span class="rv-ticker-dot live"></span> <strong id="rv-tick-active">0</strong> duels live now</span>
-                    <span class="rv-ticker-sep">·</span>
-                    <span class="rv-ticker-item">💰 <strong>$<span id="rv-tick-locked">0</span></strong> locked in active duels</span>
-                    <span class="rv-ticker-sep">·</span>
-                    <span class="rv-ticker-item">🏆 Largest pool: <strong>$<span id="rv-tick-largest">0</span></strong></span>
-                </div>
-            </div>
-
             <!-- Hero -->
             <div class="rv-hero">
                 <div class="rv-hero-inner">
+                    <div class="rv-breadcrumb">Rivalry Protocol</div>
                     <div class="rv-hero-row">
                         <div class="rv-hero-left">
-                            <h1 class="rv-hero-title">Duels. Win or<br>Lose <strong>Capital.</strong></h1>
-                            <p class="rv-hero-sub">Lock funds. Compete on verified metrics. Winner takes all. Loser forfeits everything.</p>
+                            <h1 class="rv-hero-title">Head-to-head<br><strong>duels.</strong></h1>
+                            <p class="rv-hero-sub">Lock capital against an opponent. Compete on verified metrics. Winner takes all. Loser forfeits everything.</p>
                         </div>
                         <div class="rv-hero-right">
-                            <button class="rv-btn-challenge rv-glow" id="rv-btn-issue">⚔ START A DUEL</button>
-                            <button class="rv-btn-join" onclick="document.querySelector('.rv-tab[data-filter=\\'pending\\']')?.click()">→ JOIN OPEN DUEL</button>
+                            <button class="rv-btn-challenge" id="rv-btn-issue">Start a Duel</button>
+                            <button class="rv-btn-secondary" onclick="document.querySelector('.rv-tab[data-filter=\\'pending\\']')?.click()">View open duels &rarr;</button>
                         </div>
                     </div>
 
@@ -920,10 +770,10 @@ export function renderRivalry() {
             <!-- Controls -->
             <div class="rv-controls">
                 <div class="rv-tabs" id="rv-tabs">
-                    <button class="rv-tab active" data-filter="all">ALL DUELS</button>
-                    <button class="rv-tab" data-filter="active">🔥 LIVE NOW</button>
-                    <button class="rv-tab" data-filter="pending">⚔ OPEN DUELS</button>
-                    <button class="rv-tab" data-filter="settled">🏆 COMPLETED</button>
+                    <button class="rv-tab active" data-filter="all">ALL</button>
+                    <button class="rv-tab" data-filter="active">LIVE</button>
+                    <button class="rv-tab" data-filter="pending">OPEN</button>
+                    <button class="rv-tab" data-filter="settled">COMPLETED</button>
                 </div>
                 <input type="text" class="rv-search-box" id="rv-search" placeholder="Search duels...">
             </div>
@@ -968,13 +818,13 @@ export function renderRivalry() {
             <!-- Warning -->
             <div class="rv-warning">
                 <div class="rv-warning-inner">
-                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#ef4444" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
-                    <div class="rv-warning-text">⚠ Both operators lock capital. Losing operator forfeits stake. No appeals. No reversals.</div>
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#999" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+                    <div class="rv-warning-text">Both operators lock capital. Losing operator forfeits stake. No appeals. No reversals.</div>
                 </div>
             </div>
 
             <!-- Featured Slot -->
-            <div class="rv-featured" id="rv-featured" style="max-width:1440px;margin:0 auto;padding:0 64px;"></div>
+            <div class="rv-featured" id="rv-featured" style="max-width:1300px;margin:0 auto;padding:0 32px;"></div>
         </div>
 
         <!-- Challenge Modal -->
@@ -1195,9 +1045,10 @@ export async function initRivalry() {
     function renderCard(r) {
         const isLeadingChallenger = r.challenger.growth >= r.opponent.growth;
         const statusClass = r.status === 'pending' ? 'pending' : r.status === 'settled' ? 'ended' : '';
-        const statusLabel = r.status === 'pending' ? 'OPEN' : r.status === 'settled' ? 'COMPLETED' : '🔥 LIVE';
-        const timeLabel = r.status === 'settled' ? 'SETTLED' : r.daysLeft <= 1 ? `⏱ ${r.daysLeft * 24}H LEFT` : `⏱ ${r.daysLeft}D LEFT`;
+        const statusLabel = r.status === 'pending' ? 'FORMING' : r.status === 'settled' ? 'SETTLED' : 'LOCKED';
+        const timeLabel = r.status === 'settled' ? 'SETTLED' : r.daysLeft <= 1 ? `${r.daysLeft * 24}H REMAINING` : `${r.daysLeft}D REMAINING`;
         const timeUrgent = r.status !== 'settled' && r.daysLeft <= 3;
+        const shortId = r.id.substring(0, 8);
 
         // Momentum bar percentages
         const totalGrowth = Math.abs(r.challenger.growth) + Math.abs(r.opponent.growth);
@@ -1232,9 +1083,9 @@ export async function initRivalry() {
         let actionsHtml = '';
         if (r.status === 'pending') {
             if (r.isOpen) {
-                actionsHtml = `<div class="rv-card-actions"><button class="rv-action-btn rv-action-accept" data-rivalry-id="${r.id}" onclick="event.stopPropagation();window.app.acceptRivalry('${r.id}')" style="flex:1;">⚔ JOIN DUEL</button></div>`;
+                actionsHtml = `<div class="rv-card-actions"><button class="rv-action-btn rv-action-accept" data-rivalry-id="${r.id}" onclick="event.stopPropagation();window.app.acceptRivalry('${r.id}')" style="flex:1;">ACCEPT</button></div>`;
             } else {
-                actionsHtml = `<div class="rv-card-actions"><button class="rv-action-btn rv-action-accept" data-rivalry-id="${r.id}" onclick="event.stopPropagation();window.app.acceptRivalry('${r.id}')">⚔ ACCEPT</button><button class="rv-action-btn rv-action-decline" data-rivalry-id="${r.id}" onclick="event.stopPropagation();window.app.declineRivalry('${r.id}')">DECLINE</button></div>`;
+                actionsHtml = `<div class="rv-card-actions"><button class="rv-action-btn rv-action-accept" data-rivalry-id="${r.id}" onclick="event.stopPropagation();window.app.acceptRivalry('${r.id}')">ACCEPT</button><button class="rv-action-btn rv-action-decline" data-rivalry-id="${r.id}" onclick="event.stopPropagation();window.app.declineRivalry('${r.id}')">DECLINE</button></div>`;
             }
         }
 
@@ -1261,10 +1112,10 @@ export async function initRivalry() {
                         <span class="dot"></span>
                         ${statusLabel}
                     </div>
-                    ${r.isOpen && r.status === 'pending' ? '<span class="rv-open-badge">🌐 OPEN</span>' : ''}
+                    ${r.isOpen && r.status === 'pending' ? '<span class="rv-open-badge">OPEN</span>' : ''}
                     ${winnerBadge}
                 </div>
-                <div class="rv-card-metric">${r.metric}</div>
+                <div class="rv-card-metric">${r.metric} <span style="color:#ccc;font-size:10px;font-family:'JetBrains Mono',monospace;margin-left:8px;">ID:${shortId}</span></div>
                 <div class="rv-versus">
                     <div class="rv-player">
                         <span class="rv-player-label">Challenger</span>
@@ -1272,7 +1123,7 @@ export async function initRivalry() {
                         ${challGrowth}
                     </div>
                     <div class="rv-vs-divider">
-                        <span style="font-size:16px">🔥</span>
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#ccc" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="display:block;margin:0 auto;"><polyline points="14.5 17.5 3 6 3 3 6 3 17.5 14.5"/><line x1="13" x2="19" y1="19" y2="13"/><line x1="16" x2="20" y1="16" y2="20"/><line x1="19" x2="21" y1="21" y2="19"/><polyline points="14.5 6.5 18 3 21 3 21 6 17.5 9.5"/><line x1="5" x2="9" y1="14" y2="18"/><line x1="7" x2="4" y1="17" y2="20"/><line x1="3" x2="5" y1="19" y2="21"/></svg>
                         <span class="rv-vs-text">VS</span>
                     </div>
                     <div class="rv-player right">
@@ -1288,8 +1139,8 @@ export async function initRivalry() {
                 </div>` : ''}
                 <div class="rv-card-bottom">
                     <div class="rv-card-stake">
-                        <span class="rv-card-stake-val">💰 $${(r.stake * 2).toLocaleString()}</span>
-                        <span class="rv-card-stake-lbl">AT STAKE</span>
+                        <span class="rv-card-stake-val">$${(r.stake * 2).toLocaleString()}</span>
+                        <span class="rv-card-stake-lbl">CAPITAL EXPOSURE</span>
                     </div>
                     <div style="display:flex;flex-direction:column;align-items:flex-end;gap:4px;">
                         <span class="rv-card-provider-pill" style="background:${getProviderColor(r.provider)}">${r.provider.toUpperCase()}</span>
@@ -1404,7 +1255,7 @@ export async function initRivalry() {
                         </div>
                     </div>
                     <div class="rv-featured-meta">
-                        <span class="rv-card-stake-lbl" style="color:#555;margin-bottom:-4px;">AT STAKE</span>
+                        <span class="rv-card-stake-lbl" style="color:#bbb;margin-bottom:-4px;">CAPITAL EXPOSURE</span>
                         <div class="rv-featured-pool">$${(hot.stake * 2).toLocaleString()}</div>
                         <div class="rv-featured-time">○ ${timeLabel}</div>
                     </div>

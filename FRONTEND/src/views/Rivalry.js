@@ -81,20 +81,15 @@ export function renderRivalry() {
                 background: var(--rv-brand); color: #fff; border: none;
                 padding: 18px 32px; font-size: 14px; font-weight: 700;
                 cursor: pointer; position: relative; overflow: hidden;
-                transition: transform 0.2s ease, box-shadow 0.2s ease;
+                transition: background 0.35s ease, transform 0.25s ease, box-shadow 0.3s ease, letter-spacing 0.35s ease;
             }
-            .rv-btn-challenge::after {
-                content: ''; position: absolute; top: -50%; left: -75%;
-                width: 50%; height: 200%;
-                background: linear-gradient(90deg, transparent, rgba(255,255,255,0.15), transparent);
-                transform: skewX(-25deg); transition: left 0.6s ease;
-            }
-            .rv-btn-challenge:hover::after { left: 125%; }
             .rv-btn-challenge:hover {
-                transform: translateY(-2px);
-                box-shadow: 0 6px 20px rgba(92, 20, 20, 0.25);
+                background: #6e1c1c;
+                transform: translateY(-1px);
+                box-shadow: 0 4px 16px rgba(92, 20, 20, 0.18);
+                letter-spacing: 0.5px;
             }
-            .rv-btn-challenge:active { transform: translateY(0); }
+            .rv-btn-challenge:active { transform: translateY(0); box-shadow: none; }
             .rv-btn-secondary {
                 color: #888; font-size: 14px; font-weight: 500;
                 background: none; border: none; cursor: pointer;

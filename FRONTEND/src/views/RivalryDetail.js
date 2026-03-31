@@ -196,46 +196,91 @@ export function renderRivalryDetail() {
                 .rvd-momentum-right.is-leader { animation: rvd-glow 2s infinite; }
             }
 
-            /* ── Performance Chart ── */
+            /* ── Performance Chart — Polymarket-style ── */
             .rvd-chart-section {
                 max-width: 1200px; margin: 0 auto; padding: 0 64px 8px;
             }
             .rvd-chart-panel {
-                background: #fafafa; border: 1px solid #f0f0f0;
-                padding: 28px;
-                box-shadow: 0 1px 4px rgba(0,0,0,0.03);
+                background: #fff; border: 1px solid #eaeaea;
+                overflow: hidden;
             }
             .rvd-chart-header {
                 display: flex; justify-content: space-between;
-                align-items: center; margin-bottom: 20px;
+                align-items: center; padding: 20px 28px 0;
             }
             .rvd-chart-title {
                 font-family: 'JetBrains Mono', monospace;
                 font-size: 9px; font-weight: 700;
-                letter-spacing: 0.12em; color: #bbb;
+                letter-spacing: 1.2px; color: #bbb;
                 text-transform: uppercase;
             }
-            .rvd-chart-legend { display: flex; gap: 16px; }
+            .rvd-chart-legend { display: flex; gap: 20px; align-items: center; }
             .rvd-chart-legend-item {
                 display: flex; align-items: center; gap: 6px;
                 font-family: 'JetBrains Mono', monospace;
-                font-size: 9px; font-weight: 600;
-                letter-spacing: 0.06em; color: #999;
+                font-size: 10px; font-weight: 600;
+                letter-spacing: 0.04em; color: #666;
             }
             .rvd-chart-legend-dot {
-                width: 8px; height: 8px; border-radius: 50%;
+                width: 10px; height: 3px; border-radius: 1px;
             }
+
+            /* Live metric value cards */
+            .rvd-chart-metrics {
+                display: grid; grid-template-columns: 1fr 1fr;
+                gap: 0; border-bottom: 1px solid #f0f0f0;
+            }
+            .rvd-chart-metric-card {
+                padding: 20px 28px;
+                display: flex; flex-direction: column; gap: 4px;
+            }
+            .rvd-chart-metric-card:first-child {
+                border-right: 1px solid #f0f0f0;
+            }
+            .rvd-chart-metric-card.right { text-align: right; }
+            .rvd-chart-metric-label {
+                font-family: 'JetBrains Mono', monospace;
+                font-size: 9px; font-weight: 700;
+                letter-spacing: 1px; color: #bbb;
+                text-transform: uppercase;
+            }
+            .rvd-chart-metric-name {
+                font-size: 13px; font-weight: 600; color: #333;
+                letter-spacing: -0.2px;
+            }
+            .rvd-chart-metric-row {
+                display: flex; align-items: baseline; gap: 10px;
+            }
+            .rvd-chart-metric-card.right .rvd-chart-metric-row {
+                justify-content: flex-end;
+            }
+            .rvd-chart-metric-value {
+                font-size: 28px; font-weight: 500; color: #111;
+                letter-spacing: -1px; line-height: 1.1;
+                font-family: 'Neue Haas Grotesk Display', 'Helvetica Neue', sans-serif;
+            }
+            .rvd-chart-metric-change {
+                font-family: 'JetBrains Mono', monospace;
+                font-size: 11px; font-weight: 700;
+                letter-spacing: 0.02em;
+            }
+            .rvd-chart-metric-change.positive { color: #0F5132; }
+            .rvd-chart-metric-change.negative { color: #C41E24; }
+            .rvd-chart-metric-target {
+                font-family: 'JetBrains Mono', monospace;
+                font-size: 9px; color: #bbb;
+                letter-spacing: 0.5px;
+            }
+
             .rvd-chart-canvas {
-                position: relative; height: 200px; width: 100%;
+                position: relative; height: 320px; width: 100%;
+                padding: 0 28px;
+                box-sizing: border-box;
             }
             .rvd-chart-canvas svg { width: 100%; height: 100%; }
-            .rvd-chart-gridline { stroke: #f0f0f0; stroke-width: 1; }
-            .rvd-chart-label {
-                font-family: 'JetBrains Mono', monospace;
-                font-size: 9px; fill: #ccc;
-            }
             .rvd-chart-footer {
-                display: flex; justify-content: space-between; margin-top: 8px;
+                display: flex; justify-content: space-between;
+                padding: 8px 28px 16px;
             }
             .rvd-chart-footer span {
                 font-family: 'JetBrains Mono', monospace;
@@ -500,7 +545,12 @@ export function renderRivalryDetail() {
                 .rvd-warning { padding: 0 20px 32px; }
                 .rvd-status-bar { flex-direction: column; align-items: flex-start; gap: 8px; padding: 12px 16px; }
                 .rvd-chart-section { padding: 0 20px 8px; }
-                .rvd-chart-canvas { height: 160px; }
+                .rvd-chart-canvas { height: 220px; padding: 0 16px; }
+                .rvd-chart-metrics { grid-template-columns: 1fr 1fr; }
+                .rvd-chart-metric-card { padding: 14px 16px; }
+                .rvd-chart-metric-value { font-size: 20px; }
+                .rvd-chart-header { padding: 16px 16px 0; }
+                .rvd-chart-footer { padding: 8px 16px 12px; }
                 .rvd-actions { padding: 0 20px 24px; flex-wrap: wrap; }
                 .rvd-action-btn { width: 100%; text-align: center; display: flex; align-items: center; justify-content: center; }
             }
@@ -710,7 +760,27 @@ export async function initRivalryDetail() {
                             <div class="rvd-chart-legend-dot" style="background:${!isLeading ? '#0F5132' : '#C41E24'}"></div>
                             ${rivalry.opponent.name}
                         </div>
-                        ${rivalry.status === 'active' ? `<div class="rvd-chart-legend-item" style="color:#0F5132;font-weight:600"><span style="width:6px;height:6px;border-radius:50%;background:#0F5132;display:inline-block;animation:rvd-skeletonWave 1s infinite;margin-right:4px"></span> LIVE</div>` : ''}
+                        ${rivalry.status === 'active' ? `<div class="rvd-chart-legend-item" style="color:#0F5132;font-weight:700"><span style="width:6px;height:6px;border-radius:50%;background:#0F5132;display:inline-block;animation:rvd-skeletonWave 1s infinite;margin-right:4px"></span> LIVE</div>` : ''}
+                    </div>
+                </div>
+                <div class="rvd-chart-metrics">
+                    <div class="rvd-chart-metric-card" id="rvd-metric-chall">
+                        <div class="rvd-chart-metric-label">Challenger</div>
+                        <div class="rvd-chart-metric-name">${rivalry.challenger.name}</div>
+                        <div class="rvd-chart-metric-row">
+                            <span class="rvd-chart-metric-value">${fmtMetric(rivalry.challenger.currentValue)}</span>
+                            <span class="rvd-chart-metric-change ${rivalry.challenger.growth >= 0 ? 'positive' : 'negative'}">${rivalry.challenger.growth >= 0 ? '+' : ''}${rivalry.challenger.growth}%</span>
+                        </div>
+                        <div class="rvd-chart-metric-target">Target: ${fmtMetric(rivalry.challenger.targetValue)} ${metricUnit()} (+${rivalry.targetGrowthPct}%)</div>
+                    </div>
+                    <div class="rvd-chart-metric-card right" id="rvd-metric-opp">
+                        <div class="rvd-chart-metric-label">Opponent</div>
+                        <div class="rvd-chart-metric-name">${rivalry.opponent.name}</div>
+                        <div class="rvd-chart-metric-row">
+                            <span class="rvd-chart-metric-value">${fmtMetric(rivalry.opponent.currentValue)}</span>
+                            <span class="rvd-chart-metric-change ${rivalry.opponent.growth >= 0 ? 'positive' : 'negative'}">${rivalry.opponent.growth >= 0 ? '+' : ''}${rivalry.opponent.growth}%</span>
+                        </div>
+                        <div class="rvd-chart-metric-target">Target: ${fmtMetric(rivalry.opponent.targetValue)} ${metricUnit()} (+${rivalry.targetGrowthPct}%)</div>
                     </div>
                 </div>
                 <div class="rvd-chart-canvas" id="rvd-perf-chart"></div>
@@ -960,7 +1030,7 @@ export async function initRivalryDetail() {
             return;
         }
 
-        const W = 800, H = 240, PAD_L = 50, PAD_R = 16, PAD_T = 16, PAD_B = 28;
+        const W = 900, H = 320, PAD_L = 50, PAD_R = 80, PAD_T = 20, PAD_B = 20;
 
         // Determine who's leading for color assignment
         const challCurrent = challPoints.length > 0 ? challPoints[challPoints.length - 1].pct : 0;
@@ -990,7 +1060,15 @@ export async function initRivalryDetail() {
 
         function buildPath(pts) {
             if (pts.length === 0) return '';
-            return pts.map((p, i) => `${i === 0 ? 'M' : 'L'}${toX(p.t.getTime()).toFixed(1)},${toY(p.pct).toFixed(1)}`).join(' ');
+            // Polymarket-style stepped line
+            let d = `M${toX(pts[0].t.getTime()).toFixed(1)},${toY(pts[0].pct).toFixed(1)}`;
+            for (let i = 1; i < pts.length; i++) {
+                const x = toX(pts[i].t.getTime()).toFixed(1);
+                const y = toY(pts[i].pct).toFixed(1);
+                const prevY = toY(pts[i-1].pct).toFixed(1);
+                d += ` L${x},${prevY} L${x},${y}`;
+            }
+            return d;
         }
         function buildAreaPath(pts) {
             if (pts.length === 0) return '';
@@ -1007,8 +1085,8 @@ export async function initRivalryDetail() {
         for (let i = 0; i <= gridCount; i++) {
             const pct = minPct + (range / gridCount) * i;
             const y = toY(pct);
-            gridSvg += `<line x1="${PAD_L}" y1="${y}" x2="${W - PAD_R}" y2="${y}" stroke="#f0f0f0" stroke-width="1"/>`;
-            gridSvg += `<text x="${PAD_L - 8}" y="${y + 4}" text-anchor="end" font-family="JetBrains Mono, monospace" font-size="9" fill="#bbb" font-weight="500">${pct.toFixed(0)}%</text>`;
+            gridSvg += `<line x1="${PAD_L}" y1="${y}" x2="${W - PAD_R}" y2="${y}" stroke="#f0f0f0" stroke-width="1" stroke-dasharray="4 4"/>`;
+            gridSvg += `<text x="${PAD_L - 8}" y="${y + 4}" text-anchor="end" font-family="JetBrains Mono, monospace" font-size="9" fill="#ccc" font-weight="500">${pct.toFixed(0)}%</text>`;
         }
 
         // Zero line
@@ -1033,14 +1111,20 @@ export async function initRivalryDetail() {
         if (challEnd) {
             const cx = toX(challEnd.t.getTime()).toFixed(1);
             const cy = toY(challEnd.pct).toFixed(1);
-            endDots += `<circle cx="${cx}" cy="${cy}" r="6" fill="${challColor}" stroke="#fff" stroke-width="2.5" filter="url(#dot-glow)"/>`;
-            endDots += `<text x="${parseFloat(cx) + 10}" y="${parseFloat(cy) + 4}" font-family="JetBrains Mono, monospace" font-size="10" font-weight="700" fill="${challColor}">${challEnd.pct >= 0 ? '+' : ''}${challEnd.pct.toFixed(1)}%</text>`;
+            // Extend line to right edge
+            endDots += `<line x1="${cx}" y1="${cy}" x2="${W - PAD_R}" y2="${cy}" stroke="${challColor}" stroke-width="1" stroke-dasharray="3 3" opacity="0.4"/>`;
+            endDots += `<circle cx="${cx}" cy="${cy}" r="5" fill="${challColor}" stroke="#fff" stroke-width="2" filter="url(#dot-glow)"/>`;
+            // Right-side label badge
+            endDots += `<rect x="${W - PAD_R + 4}" y="${parseFloat(cy) - 10}" width="68" height="20" rx="3" fill="${challColor}" opacity="0.9"/>`;
+            endDots += `<text x="${W - PAD_R + 38}" y="${parseFloat(cy) + 3.5}" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="9" font-weight="700" fill="#fff">${challEnd.pct >= 0 ? '+' : ''}${challEnd.pct.toFixed(1)}%</text>`;
         }
         if (oppEnd) {
             const cx = toX(oppEnd.t.getTime()).toFixed(1);
             const cy = toY(oppEnd.pct).toFixed(1);
-            endDots += `<circle cx="${cx}" cy="${cy}" r="6" fill="${oppColor}" stroke="#fff" stroke-width="2.5" filter="url(#dot-glow)"/>`;
-            endDots += `<text x="${parseFloat(cx) + 10}" y="${parseFloat(cy) + 4}" font-family="JetBrains Mono, monospace" font-size="10" font-weight="700" fill="${oppColor}">${oppEnd.pct >= 0 ? '+' : ''}${oppEnd.pct.toFixed(1)}%</text>`;
+            endDots += `<line x1="${cx}" y1="${cy}" x2="${W - PAD_R}" y2="${cy}" stroke="${oppColor}" stroke-width="1" stroke-dasharray="3 3" opacity="0.4"/>`;
+            endDots += `<circle cx="${cx}" cy="${cy}" r="5" fill="${oppColor}" stroke="#fff" stroke-width="2" filter="url(#dot-glow)"/>`;
+            endDots += `<rect x="${W - PAD_R + 4}" y="${parseFloat(cy) - 10}" width="68" height="20" rx="3" fill="${oppColor}" opacity="0.9"/>`;
+            endDots += `<text x="${W - PAD_R + 38}" y="${parseFloat(cy) + 3.5}" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="9" font-weight="700" fill="#fff">${oppEnd.pct >= 0 ? '+' : ''}${oppEnd.pct.toFixed(1)}%</text>`;
         }
 
         // Pulse animation on leading dot

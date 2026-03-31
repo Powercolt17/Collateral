@@ -1004,6 +1004,11 @@ export async function initRivalryDetail() {
                 }
 
                 console.log(`[RivalryDetail] ✅ Updated ${myRole} metrics: baseline=${liveBaseline}, target=${liveTarget}, growth=${liveGrowthPct.toFixed(1)}%`);
+
+                // Re-render chart with updated data so race bars reflect live values
+                if (chartEl && rivalry.status !== 'pending') {
+                    renderLiveChart(rivalry.metrics, rivalry._challengerUserId, rivalry._opponentUserId, rivalry.targetGrowthPct);
+                }
             }
         } catch (err) {
             console.warn('[RivalryDetail] Oracle preview fetch failed:', err.message);
@@ -1038,20 +1043,64 @@ export async function initRivalryDetail() {
         challPoints.sort((a, b) => a.t - b.t);
         oppPoints.sort((a, b) => a.t - b.t);
 
-        // If no data, show the skeleton
+        // If no time-series data, show race-to-target visualization using available baseline data
         if (challPoints.length === 0 && oppPoints.length === 0) {
+            // Use whatever data we have from rivalry baselines or oracle
+            const challGrowth = parseFloat(document.querySelector('#rvd-metric-chall .rvd-chart-metric-change')?.textContent || '0');
+            const oppGrowth = parseFloat(document.querySelector('#rvd-metric-opp .rvd-chart-metric-change')?.textContent || '0');
+            
+            const W = 900, H = 280, PAD_L = 50, PAD_R = 80;
+            const barH = 36, barGap = 24, startY = 60;
+            const maxPct = Math.max(targetPct, Math.abs(challGrowth), Math.abs(oppGrowth), 5);
+            const barWidth = W - PAD_L - PAD_R;
+            
+            const challW = Math.max(2, (Math.abs(challGrowth) / maxPct) * barWidth);
+            const oppW = Math.max(2, (Math.abs(oppGrowth) / maxPct) * barWidth);
+            const targetX = PAD_L + (targetPct / maxPct) * barWidth;
+            
+            const challColor = challGrowth >= oppGrowth ? '#0F5132' : '#C41E24';
+            const oppColor = oppGrowth >= challGrowth ? '#0F5132' : '#C41E24';
+
             chartEl.innerHTML = `
-                <div style="display:flex;flex-direction:column;align-items:center;justify-content:center;height:100%;gap:16px;">
-                    <div style="display:flex;align-items:flex-end;gap:10px;height:60px;">
-                        <div style="width:8px;height:20px;background:linear-gradient(180deg,#0F5132 0%,#0F513220 100%);border-radius:2px;animation:rvd-skeletonWave 1.5s infinite"></div>
-                        <div style="width:8px;height:36px;background:linear-gradient(180deg,#3B0001 0%,#3B000120 100%);border-radius:2px;animation:rvd-skeletonWave 1.5s .2s infinite"></div>
-                        <div style="width:8px;height:28px;background:linear-gradient(180deg,#0F5132 0%,#0F513220 100%);border-radius:2px;animation:rvd-skeletonWave 1.5s .4s infinite"></div>
-                        <div style="width:8px;height:48px;background:linear-gradient(180deg,#3B0001 0%,#3B000120 100%);border-radius:2px;animation:rvd-skeletonWave 1.5s .6s infinite"></div>
-                        <div style="width:8px;height:16px;background:linear-gradient(180deg,#0F5132 0%,#0F513220 100%);border-radius:2px;animation:rvd-skeletonWave 1.5s .8s infinite"></div>
-                    </div>
-                    <span style="color:#999;font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:0.08em;text-transform:uppercase">AWAITING METRIC DATA</span>
-                    <span style="color:#ccc;font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:0.06em">Live tracking begins once the duel is active</span>
-                </div>`;
+                <svg viewBox="0 0 ${W} ${H}" preserveAspectRatio="xMidYMid meet" style="width:100%;height:100%">
+                    <defs>
+                        <linearGradient id="grad-chall-bar" x1="0" y1="0" x2="1" y2="0">
+                            <stop offset="0%" stop-color="${challColor}" stop-opacity="0.9"/>
+                            <stop offset="100%" stop-color="${challColor}" stop-opacity="0.6"/>
+                        </linearGradient>
+                        <linearGradient id="grad-opp-bar" x1="0" y1="0" x2="1" y2="0">
+                            <stop offset="0%" stop-color="${oppColor}" stop-opacity="0.9"/>
+                            <stop offset="100%" stop-color="${oppColor}" stop-opacity="0.6"/>
+                        </linearGradient>
+                    </defs>
+                    
+                    <!-- Title -->
+                    <text x="${PAD_L}" y="30" font-family="JetBrains Mono, monospace" font-size="10" font-weight="700" fill="#bbb" letter-spacing="1.2px">RACE TO TARGET · +${targetPct}%</text>
+                    
+                    <!-- Challenger bar -->
+                    <text x="${PAD_L}" y="${startY - 6}" font-family="JetBrains Mono, monospace" font-size="9" fill="#888" font-weight="600" letter-spacing="0.5px">CHALLENGER</text>
+                    <rect x="${PAD_L}" y="${startY}" width="${barWidth}" height="${barH}" fill="#f5f5f5" rx="3"/>
+                    <rect x="${PAD_L}" y="${startY}" width="${challW}" height="${barH}" fill="url(#grad-chall-bar)" rx="3">
+                        <animate attributeName="width" from="0" to="${challW}" dur="0.8s" fill="freeze" calcMode="spline" keySplines="0.25 0.1 0.25 1"/>
+                    </rect>
+                    <text x="${PAD_L + challW + 8}" y="${startY + barH/2 + 4}" font-family="JetBrains Mono, monospace" font-size="12" font-weight="700" fill="${challColor}">${challGrowth >= 0 ? '+' : ''}${challGrowth.toFixed(1)}%</text>
+                    
+                    <!-- Opponent bar -->
+                    <text x="${PAD_L}" y="${startY + barH + barGap - 6}" font-family="JetBrains Mono, monospace" font-size="9" fill="#888" font-weight="600" letter-spacing="0.5px">OPPONENT</text>
+                    <rect x="${PAD_L}" y="${startY + barH + barGap}" width="${barWidth}" height="${barH}" fill="#f5f5f5" rx="3"/>
+                    <rect x="${PAD_L}" y="${startY + barH + barGap}" width="${oppW}" height="${barH}" fill="url(#grad-opp-bar)" rx="3">
+                        <animate attributeName="width" from="0" to="${oppW}" dur="0.8s" fill="freeze" calcMode="spline" keySplines="0.25 0.1 0.25 1"/>
+                    </rect>
+                    <text x="${PAD_L + oppW + 8}" y="${startY + barH + barGap + barH/2 + 4}" font-family="JetBrains Mono, monospace" font-size="12" font-weight="700" fill="${oppColor}">${oppGrowth >= 0 ? '+' : ''}${oppGrowth.toFixed(1)}%</text>
+                    
+                    <!-- Target line -->
+                    <line x1="${targetX}" y1="${startY - 14}" x2="${targetX}" y2="${startY + barH*2 + barGap + 10}" stroke="#3B0001" stroke-width="2" stroke-dasharray="6 4" opacity="0.5"/>
+                    <rect x="${targetX - 32}" y="${startY + barH*2 + barGap + 16}" width="64" height="18" rx="3" fill="#3B0001" opacity="0.85"/>
+                    <text x="${targetX}" y="${startY + barH*2 + barGap + 29}" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="8" font-weight="700" fill="#fff">+${targetPct}% TARGET</text>
+                    
+                    <!-- Bottom note -->
+                    <text x="${W/2}" y="${H - 20}" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="9" fill="#ccc" letter-spacing="0.5px">Time-series chart populates as metric snapshots accumulate</text>
+                </svg>`;
             return;
         }
 

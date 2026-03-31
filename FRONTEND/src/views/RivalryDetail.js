@@ -1138,63 +1138,85 @@ export async function initRivalryDetail() {
 
         // If no time-series data, show race-to-target visualization using available baseline data
         if (challPoints.length === 0 && oppPoints.length === 0) {
-            // Use whatever data we have from rivalry baselines or oracle
             const challGrowth = parseFloat(document.querySelector('#rvd-metric-chall .rvd-chart-metric-change')?.textContent || '0');
             const oppGrowth = parseFloat(document.querySelector('#rvd-metric-opp .rvd-chart-metric-change')?.textContent || '0');
             
-            const W = 900, H = 280, PAD_L = 50, PAD_R = 80;
-            const barH = 36, barGap = 24, startY = 60;
-            const maxPct = Math.max(targetPct, Math.abs(challGrowth), Math.abs(oppGrowth), 5);
-            const barWidth = W - PAD_L - PAD_R;
+            const W = 900, H = 320, PAD_L = 50, PAD_R = 80, PAD_T = 30, PAD_B = 30;
+            const plotW = W - PAD_L - PAD_R;
+            const plotH = H - PAD_T - PAD_B;
+            const maxY = Math.max(targetPct * 1.3, Math.abs(challGrowth) * 1.5, Math.abs(oppGrowth) * 1.5, 5);
             
-            const challW = Math.max(20, (Math.abs(challGrowth) / maxPct) * barWidth);
-            const oppW = Math.max(20, (Math.abs(oppGrowth) / maxPct) * barWidth);
-            const targetX = PAD_L + (targetPct / maxPct) * barWidth;
+            const toX = (dayFrac) => PAD_L + (dayFrac * plotW);
+            const toY = (pct) => PAD_T + plotH - (pct / maxY * plotH);
             
-            const challColor = challGrowth >= oppGrowth ? '#0F5132' : '#C41E24';
-            const oppColor = oppGrowth >= challGrowth ? '#0F5132' : '#C41E24';
-            const challName = rivalry.challenger.name.replace('@','');
-            const oppName = rivalry.opponent.name.replace('@','');
+            const challColor = '#0F5132';
+            const oppColor = '#3B0001';
+            const zeroY = toY(0);
+            const tgtY = toY(targetPct);
+            const challY = toY(Math.max(0, challGrowth));
+            const oppY = toY(Math.max(0, oppGrowth));
+
+            let gridSvg = '';
+            const gridSteps = [0, Math.round(targetPct/3), Math.round(targetPct*2/3), targetPct, Math.round(targetPct*1.2)].filter((v,i,a) => a.indexOf(v) === i);
+            gridSteps.forEach(pct => {
+                const y = toY(pct).toFixed(1);
+                gridSvg += `<line x1="${PAD_L}" y1="${y}" x2="${W - PAD_R}" y2="${y}" stroke="#f0f0f0" stroke-width="1"/>`;
+                if (pct !== targetPct) {
+                    gridSvg += `<text x="${W - PAD_R + 6}" y="${parseFloat(y) + 3}" font-family="JetBrains Mono, monospace" font-size="8" fill="#ddd">${pct > 0 ? '+' : ''}${pct}%</text>`;
+                }
+            });
+
+            let dayMarkers = '';
+            const daySteps = [0, Math.floor(rivalry.totalDays/4), Math.floor(rivalry.totalDays/2), Math.floor(rivalry.totalDays*3/4), rivalry.totalDays];
+            daySteps.forEach(d => {
+                const x = toX(d / rivalry.totalDays).toFixed(1);
+                dayMarkers += `<text x="${x}" y="${H - 8}" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="8" fill="#ddd">Day ${d}</text>`;
+                dayMarkers += `<line x1="${x}" y1="${PAD_T}" x2="${x}" y2="${H - PAD_B}" stroke="#f8f8f8" stroke-width="1"/>`;
+            });
+
+            const now = Date.now();
+            const startMs = new Date(rivalry._activatedAt).getTime();
+            const elapsed = Math.max(0, now - startMs);
+            const dayFrac = Math.min(1, elapsed / (rivalry.totalDays * 86400000));
+            const curX = toX(dayFrac).toFixed(1);
+            const endX = toX(1).toFixed(1);
+            const projTY = tgtY.toFixed(1);
 
             chartEl.innerHTML = `
                 <svg viewBox="0 0 ${W} ${H}" preserveAspectRatio="xMidYMid meet" style="width:100%;height:100%">
                     <defs>
-                        <linearGradient id="grad-chall-bar" x1="0" y1="0" x2="1" y2="0">
-                            <stop offset="0%" stop-color="${challColor}" stop-opacity="0.9"/>
-                            <stop offset="100%" stop-color="${challColor}" stop-opacity="0.6"/>
+                        <linearGradient id="g-chall-a" x1="0" y1="0" x2="0" y2="1">
+                            <stop offset="0%" stop-color="${challColor}" stop-opacity="0.12"/>
+                            <stop offset="100%" stop-color="${challColor}" stop-opacity="0.01"/>
                         </linearGradient>
-                        <linearGradient id="grad-opp-bar" x1="0" y1="0" x2="1" y2="0">
-                            <stop offset="0%" stop-color="${oppColor}" stop-opacity="0.9"/>
-                            <stop offset="100%" stop-color="${oppColor}" stop-opacity="0.6"/>
+                        <linearGradient id="g-opp-a" x1="0" y1="0" x2="0" y2="1">
+                            <stop offset="0%" stop-color="${oppColor}" stop-opacity="0.08"/>
+                            <stop offset="100%" stop-color="${oppColor}" stop-opacity="0.01"/>
                         </linearGradient>
+                        <filter id="dg2" x="-50%" y="-50%" width="200%" height="200%">
+                            <feGaussianBlur stdDeviation="3" result="g"/>
+                            <feMerge><feMergeNode in="g"/><feMergeNode in="SourceGraphic"/></feMerge>
+                        </filter>
                     </defs>
-                    
-                    <!-- Title -->
-                    <text x="${PAD_L}" y="30" font-family="JetBrains Mono, monospace" font-size="10" font-weight="700" fill="#bbb" letter-spacing="1.2px">RACE TO TARGET · +${targetPct}%</text>
-                    
-                    <!-- Challenger bar -->
-                    <text x="${PAD_L}" y="${startY - 6}" font-family="JetBrains Mono, monospace" font-size="9" fill="#888" font-weight="600" letter-spacing="0.5px">${challName.toUpperCase()}</text>
-                    <rect x="${PAD_L}" y="${startY}" width="${barWidth}" height="${barH}" fill="#f5f5f5" rx="3"/>
-                    <rect x="${PAD_L}" y="${startY}" width="${challW}" height="${barH}" fill="url(#grad-chall-bar)" rx="3">
-                        <animate attributeName="width" from="0" to="${challW}" dur="0.8s" fill="freeze" calcMode="spline" keySplines="0.25 0.1 0.25 1"/>
-                    </rect>
-                    <text x="${PAD_L + challW + 8}" y="${startY + barH/2 + 4}" font-family="JetBrains Mono, monospace" font-size="12" font-weight="700" fill="${challColor}">${challGrowth >= 0 ? '+' : ''}${challGrowth.toFixed(1)}%</text>
-                    
-                    <!-- Opponent bar -->
-                    <text x="${PAD_L}" y="${startY + barH + barGap - 6}" font-family="JetBrains Mono, monospace" font-size="9" fill="#888" font-weight="600" letter-spacing="0.5px">${oppName.toUpperCase()}</text>
-                    <rect x="${PAD_L}" y="${startY + barH + barGap}" width="${barWidth}" height="${barH}" fill="#f5f5f5" rx="3"/>
-                    <rect x="${PAD_L}" y="${startY + barH + barGap}" width="${oppW}" height="${barH}" fill="url(#grad-opp-bar)" rx="3">
-                        <animate attributeName="width" from="0" to="${oppW}" dur="0.8s" fill="freeze" calcMode="spline" keySplines="0.25 0.1 0.25 1"/>
-                    </rect>
-                    <text x="${PAD_L + oppW + 8}" y="${startY + barH + barGap + barH/2 + 4}" font-family="JetBrains Mono, monospace" font-size="12" font-weight="700" fill="${oppColor}">${oppGrowth >= 0 ? '+' : ''}${oppGrowth.toFixed(1)}%</text>
-                    
-                    <!-- Target line -->
-                    <line x1="${targetX}" y1="${startY - 14}" x2="${targetX}" y2="${startY + barH*2 + barGap + 10}" stroke="#3B0001" stroke-width="2" stroke-dasharray="6 4" opacity="0.5"/>
-                    <rect x="${targetX - 32}" y="${startY + barH*2 + barGap + 16}" width="64" height="18" rx="3" fill="#3B0001" opacity="0.85"/>
-                    <text x="${targetX}" y="${startY + barH*2 + barGap + 29}" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="8" font-weight="700" fill="#fff">+${targetPct}% TARGET</text>
-                    
-                    <!-- Bottom note -->
-                    <text x="${W/2}" y="${H - 20}" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="9" fill="#ccc" letter-spacing="0.5px">Time-series chart populates as metric snapshots accumulate</text>
+                    ${gridSvg}
+                    ${dayMarkers}
+                    <line x1="${PAD_L}" y1="${projTY}" x2="${W - PAD_R}" y2="${projTY}" stroke="#3B0001" stroke-width="1.5" stroke-dasharray="8 4" opacity="0.4"/>
+                    <rect x="${W - PAD_R + 2}" y="${tgtY - 9}" width="72" height="18" rx="2" fill="#3B0001" opacity="0.85"/>
+                    <text x="${W - PAD_R + 38}" y="${tgtY + 1}" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="8" font-weight="700" fill="#fff">+${targetPct}% TARGET</text>
+                    <line x1="${PAD_L}" y1="${zeroY.toFixed(1)}" x2="${W - PAD_R}" y2="${zeroY.toFixed(1)}" stroke="#e0e0e0" stroke-width="1"/>
+                    <text x="${W - PAD_R + 6}" y="${zeroY + 3}" font-family="JetBrains Mono, monospace" font-size="8" fill="#ccc">0%</text>
+                    <path d="M${PAD_L},${zeroY} L${curX},${challY} L${curX},${zeroY} Z" fill="url(#g-chall-a)"/>
+                    <line x1="${PAD_L}" y1="${zeroY}" x2="${curX}" y2="${challY}" stroke="${challColor}" stroke-width="2.5" stroke-linecap="round"/>
+                    <line x1="${curX}" y1="${challY}" x2="${endX}" y2="${projTY}" stroke="${challColor}" stroke-width="1" stroke-dasharray="4 4" opacity="0.3"/>
+                    <circle cx="${curX}" cy="${challY}" r="5" fill="${challColor}" stroke="#fff" stroke-width="2" filter="url(#dg2)"/>
+                    <rect x="${W - PAD_R + 2}" y="${challY - 9}" width="62" height="18" rx="2" fill="${challColor}" opacity="0.1"/>
+                    <text x="${W - PAD_R + 33}" y="${challY + 1}" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="8" font-weight="700" fill="${challColor}">${challGrowth >= 0 ? '+' : ''}${challGrowth.toFixed(1)}%</text>
+                    <path d="M${PAD_L},${zeroY} L${curX},${oppY} L${curX},${zeroY} Z" fill="url(#g-opp-a)"/>
+                    <line x1="${PAD_L}" y1="${zeroY}" x2="${curX}" y2="${oppY}" stroke="${oppColor}" stroke-width="2" stroke-linecap="round" opacity="0.7"/>
+                    <line x1="${curX}" y1="${oppY}" x2="${endX}" y2="${projTY}" stroke="${oppColor}" stroke-width="1" stroke-dasharray="4 4" opacity="0.2"/>
+                    <circle cx="${curX}" cy="${oppY}" r="4" fill="${oppColor}" stroke="#fff" stroke-width="2" opacity="0.8"/>
+                    <rect x="${W - PAD_R + 2}" y="${oppY + 8}" width="62" height="18" rx="2" fill="${oppColor}" opacity="0.08"/>
+                    <text x="${W - PAD_R + 33}" y="${oppY + 18}" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="8" font-weight="700" fill="${oppColor}">${oppGrowth >= 0 ? '+' : ''}${oppGrowth.toFixed(1)}%</text>
                 </svg>`;
             return;
         }

@@ -117,10 +117,11 @@ export function renderRivalryDetail() {
                 color: #111; letter-spacing: 0.02em;
             }
             .rvd-player-growth {
-                font-size: 64px; font-weight: 200;
-                letter-spacing: -3px; margin-top: 4px;
-                line-height: 1.0;
+                font-size: 28px; font-weight: 600;
+                letter-spacing: -1px; margin-top: 4px;
+                line-height: 1.2;
                 transition: color .3s;
+                font-family: 'JetBrains Mono', monospace;
             }
             .rvd-player-growth.leading {
                 color: var(--rvd-green);
@@ -131,6 +132,86 @@ export function renderRivalryDetail() {
                 font-size: 10px; color: #bbb;
                 letter-spacing: 0.04em; margin-top: 4px;
             }
+
+            /* ── Pool / Stakes Hero ── */
+            .rvd-pool-hero {
+                text-align: center; padding: 28px 0 20px;
+            }
+            .rvd-pool-label {
+                font-family: 'JetBrains Mono', monospace;
+                font-size: 9px; font-weight: 700;
+                letter-spacing: 1.5px; color: #bbb;
+                text-transform: uppercase; margin-bottom: 6px;
+            }
+            .rvd-pool-amount {
+                font-size: 56px; font-weight: 300;
+                letter-spacing: -2px; color: #111;
+                line-height: 1.0;
+            }
+            .rvd-pool-sub {
+                font-family: 'JetBrains Mono', monospace;
+                font-size: 10px; color: #999; letter-spacing: 0.06em;
+                margin-top: 6px;
+            }
+
+            /* ── Collateral Stake Bar ── */
+            .rvd-stake-bar {
+                display: flex; align-items: center;
+                gap: 0; margin-bottom: 20px;
+                border: 1px solid #f0f0f0;
+                overflow: hidden; height: 44px;
+            }
+            .rvd-stake-side {
+                flex: 1; display: flex; align-items: center;
+                justify-content: center; gap: 8px;
+                padding: 0 16px; height: 100%;
+                font-family: 'JetBrains Mono', monospace;
+                font-size: 11px; font-weight: 700;
+                letter-spacing: 0.04em;
+                transition: background .3s;
+            }
+            .rvd-stake-side.challenger {
+                background: rgba(15,81,50,0.06); color: #0F5132;
+                border-right: 2px solid #0F5132;
+            }
+            .rvd-stake-side.opponent {
+                background: rgba(59,0,1,0.04); color: var(--rvd-brand);
+                border-left: 2px solid var(--rvd-brand);
+            }
+            .rvd-stake-side .rvd-stake-icon {
+                width: 6px; height: 6px; border-radius: 50%;
+            }
+            .rvd-stake-side.challenger .rvd-stake-icon { background: #0F5132; }
+            .rvd-stake-side.opponent .rvd-stake-icon { background: var(--rvd-brand); }
+
+            /* ── Countdown Timer ── */
+            .rvd-countdown {
+                display: flex; align-items: center; justify-content: center;
+                gap: 4px; padding: 14px 0;
+                margin-bottom: 20px;
+                background: #fafafa; border: 1px solid #f0f0f0;
+            }
+            .rvd-countdown-unit {
+                display: flex; flex-direction: column; align-items: center;
+                min-width: 52px; padding: 0 8px;
+            }
+            .rvd-countdown-val {
+                font-size: 24px; font-weight: 600; color: #111;
+                letter-spacing: -0.5px; line-height: 1.2;
+                font-family: 'JetBrains Mono', monospace;
+            }
+            .rvd-countdown-label {
+                font-family: 'JetBrains Mono', monospace;
+                font-size: 7px; font-weight: 700;
+                letter-spacing: 1px; color: #ccc;
+                text-transform: uppercase;
+            }
+            .rvd-countdown-sep {
+                font-size: 20px; font-weight: 300; color: #ddd;
+                margin-top: -8px;
+            }
+            .rvd-countdown.urgent .rvd-countdown-val { color: #C41E24; }
+            .rvd-countdown.urgent { border-color: rgba(196,30,36,0.15); background: rgba(196,30,36,0.02); }
             .rvd-leader-tag {
                 font-family: 'JetBrains Mono', monospace;
                 font-size: 8px; font-weight: 700;
@@ -538,8 +619,15 @@ export function renderRivalryDetail() {
                 .rvd-player { padding: 24px 20px; }
                 .rvd-player.right { text-align: left; border-left: none; border-top: 1px solid #f0f0f0; }
                 .rvd-vs-center { width: 100%; height: 36px; border-left: none; border-right: none; border-top: 1px solid #f0f0f0; border-bottom: 1px solid #f0f0f0; }
-                .rvd-player-growth { font-size: 42px; letter-spacing: -1.5px; }
+                .rvd-player-growth { font-size: 22px; letter-spacing: -0.5px; }
                 .rvd-player-avatar { width: 28px; height: 28px; font-size: 11px; }
+                .rvd-pool-hero { padding: 20px 0 16px; }
+                .rvd-pool-amount { font-size: 38px; }
+                .rvd-stake-bar { flex-direction: column; height: auto; }
+                .rvd-stake-side { padding: 10px 16px; border: none !important; }
+                .rvd-stake-side.challenger { border-bottom: 1px solid #f0f0f0 !important; }
+                .rvd-countdown-val { font-size: 20px; }
+                .rvd-countdown-unit { min-width: 44px; }
                 .rvd-grid { grid-template-columns: 1fr; padding: 24px 20px 40px; gap: 16px; }
                 .rvd-share { padding: 0 20px 32px; flex-wrap: wrap; }
                 .rvd-warning { padding: 0 20px 32px; }
@@ -634,6 +722,7 @@ export async function initRivalryDetail() {
             _rawState: r.state,
             _challengerUserId: r.challengerUserId,
             _opponentUserId: r.opponentUserId,
+            _activatedAt: r.activatedAt || r.createdAt,
         };
     }
 
@@ -696,6 +785,12 @@ export async function initRivalryDetail() {
                     <a href="#/rivalry">Rivalry</a> <span>/ ${rivalry.id.substring(0, 12)}…</span>
                 </div>
 
+                <div class="rvd-pool-hero">
+                    <div class="rvd-pool-label">Total Pool At Stake</div>
+                    <div class="rvd-pool-amount">$${pool.toLocaleString()}</div>
+                    <div class="rvd-pool-sub">$${rivalry.stake.toLocaleString()} per side · ${rivalry.metric} · ${rivalry.totalDays} day window</div>
+                </div>
+
                 <div class="rvd-vs-strip">
                     <div class="rvd-player rvd-anim-left">
                         ${isLeading ? '<div class="rvd-leader-tag">LEADING</div>' : ''}
@@ -729,9 +824,42 @@ export async function initRivalryDetail() {
                     </div>
                 </div>
 
+                <div class="rvd-stake-bar">
+                    <div class="rvd-stake-side challenger">
+                        <span class="rvd-stake-icon"></span>
+                        $${rivalry.stake.toLocaleString()} LOCKED · ${rivalry.challenger.name}
+                    </div>
+                    <div class="rvd-stake-side opponent">
+                        $${rivalry.stake.toLocaleString()} LOCKED · ${rivalry.opponent.name}
+                        <span class="rvd-stake-icon"></span>
+                    </div>
+                </div>
+
                 <div class="rvd-momentum">
                     <div class="rvd-momentum-left ${isLeading ? 'is-leader' : ''}" style="width:${leftPct}%"></div>
                     <div class="rvd-momentum-right ${!isLeading ? 'is-leader' : ''}" style="width:${rightPct}%"></div>
+                </div>
+
+                <div class="rvd-countdown ${rivalry.daysLeft <= 3 && rivalry.status !== 'settled' ? 'urgent' : ''}" id="rvd-countdown">
+                    <div class="rvd-countdown-unit">
+                        <span class="rvd-countdown-val" id="rvd-cd-days">${rivalry.daysLeft}</span>
+                        <span class="rvd-countdown-label">Days</span>
+                    </div>
+                    <span class="rvd-countdown-sep">:</span>
+                    <div class="rvd-countdown-unit">
+                        <span class="rvd-countdown-val" id="rvd-cd-hours">00</span>
+                        <span class="rvd-countdown-label">Hours</span>
+                    </div>
+                    <span class="rvd-countdown-sep">:</span>
+                    <div class="rvd-countdown-unit">
+                        <span class="rvd-countdown-val" id="rvd-cd-mins">00</span>
+                        <span class="rvd-countdown-label">Mins</span>
+                    </div>
+                    <span class="rvd-countdown-sep">:</span>
+                    <div class="rvd-countdown-unit">
+                        <span class="rvd-countdown-val" id="rvd-cd-secs">00</span>
+                        <span class="rvd-countdown-label">Secs</span>
+                    </div>
                 </div>
 
                 <div class="rvd-status-bar">
@@ -1241,18 +1369,20 @@ export async function initRivalryDetail() {
     if (rivalry.status !== 'pending') {
         renderLiveChart(rivalry.metrics, rivalry._challengerUserId, rivalry._opponentUserId, rivalry.targetGrowthPct);
     } else if (chartEl) {
+        const W = 900, H = 220;
         chartEl.innerHTML = `
-            <div style="display:flex;flex-direction:column;align-items:center;justify-content:center;height:100%;gap:16px;">
-                <div style="display:flex;align-items:flex-end;gap:10px;height:60px;">
-                    <div style="width:8px;height:20px;background:linear-gradient(180deg,#0F5132 0%,#0F513220 100%);border-radius:2px;animation:rvd-skeletonWave 1.5s infinite"></div>
-                    <div style="width:8px;height:36px;background:linear-gradient(180deg,#3B0001 0%,#3B000120 100%);border-radius:2px;animation:rvd-skeletonWave 1.5s .2s infinite"></div>
-                    <div style="width:8px;height:28px;background:linear-gradient(180deg,#0F5132 0%,#0F513220 100%);border-radius:2px;animation:rvd-skeletonWave 1.5s .4s infinite"></div>
-                    <div style="width:8px;height:48px;background:linear-gradient(180deg,#3B0001 0%,#3B000120 100%);border-radius:2px;animation:rvd-skeletonWave 1.5s .6s infinite"></div>
-                    <div style="width:8px;height:16px;background:linear-gradient(180deg,#0F5132 0%,#0F513220 100%);border-radius:2px;animation:rvd-skeletonWave 1.5s .8s infinite"></div>
-                </div>
-                <span style="color:#999;font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:0.08em;text-transform:uppercase">AWAITING ACTIVATION</span>
-                <span style="color:#ccc;font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:0.06em">Chart data will populate once both sides fund</span>
-            </div>`;
+            <svg viewBox="0 0 ${W} ${H}" preserveAspectRatio="xMidYMid meet" style="width:100%;height:100%">
+                <text x="${W/2}" y="30" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="10" font-weight="700" fill="#ddd" letter-spacing="1.2px">AWAITING ACTIVATION</text>
+                <rect x="50" y="50" width="770" height="32" rx="3" fill="#f5f5f5"/>
+                <rect x="50" y="50" width="50" height="32" rx="3" fill="#e8e8e8" opacity="0.5">
+                    <animate attributeName="width" values="50;120;50" dur="2s" repeatCount="indefinite"/>
+                </rect>
+                <rect x="50" y="100" width="770" height="32" rx="3" fill="#f5f5f5"/>
+                <rect x="50" y="100" width="30" height="32" rx="3" fill="#e8e8e8" opacity="0.5">
+                    <animate attributeName="width" values="30;80;30" dur="2s" repeatCount="indefinite"/>
+                </rect>
+                <text x="${W/2}" y="${H - 20}" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="9" fill="#ddd" letter-spacing="0.5px">Chart activates once both sides fund their position</text>
+            </svg>`;
     }
 
     // ── Live Auto-Refresh (60s polling) ──
@@ -1377,5 +1507,45 @@ export async function initRivalryDetail() {
         actionsEl.innerHTML = `<span class="rvd-action-status">DUEL ACTIVE — ${rivalry.daysLeft}d REMAINING</span>`;
     } else if (actionsEl && rivalry.status === 'settled') {
         actionsEl.innerHTML = `<span class="rvd-action-status">SETTLED — FINAL</span>`;
+    }
+
+    // ── Live Countdown Timer ──
+    if (rivalry.status !== 'settled' && rivalry.daysLeft > 0) {
+        const start = new Date(rivalry._activatedAt || Date.now());
+        const endTime = new Date(start.getTime() + (rivalry.totalDays) * 86400000).getTime();
+
+        function updateCountdown() {
+            const now = Date.now();
+            const diff = Math.max(0, endTime - now);
+            const days = Math.floor(diff / 86400000);
+            const hours = Math.floor((diff % 86400000) / 3600000);
+            const mins = Math.floor((diff % 3600000) / 60000);
+            const secs = Math.floor((diff % 60000) / 1000);
+            const pad = (n) => String(n).padStart(2, '0');
+            
+            const dEl = document.getElementById('rvd-cd-days');
+            const hEl = document.getElementById('rvd-cd-hours');
+            const mEl = document.getElementById('rvd-cd-mins');
+            const sEl = document.getElementById('rvd-cd-secs');
+            if (dEl) dEl.textContent = days;
+            if (hEl) hEl.textContent = pad(hours);
+            if (mEl) mEl.textContent = pad(mins);
+            if (sEl) sEl.textContent = pad(secs);
+
+            // Urgency class
+            const cdEl = document.getElementById('rvd-countdown');
+            if (cdEl && days <= 3) cdEl.classList.add('urgent');
+
+            if (diff <= 0) {
+                clearInterval(cdInterval);
+                if (dEl) dEl.textContent = '0';
+                if (hEl) hEl.textContent = '00';
+                if (mEl) mEl.textContent = '00';
+                if (sEl) sEl.textContent = '00';
+            }
+        }
+        updateCountdown();
+        const cdInterval = setInterval(updateCountdown, 1000);
+        window.addEventListener('hashchange', () => clearInterval(cdInterval), { once: true });
     }
 }

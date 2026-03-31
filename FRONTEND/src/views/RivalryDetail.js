@@ -187,29 +187,29 @@ export function renderRivalryDetail() {
             /* ── Countdown Timer ── */
             .rvd-countdown {
                 display: flex; align-items: center; justify-content: center;
-                gap: 4px; padding: 14px 0;
+                gap: 0; padding: 0;
                 margin-bottom: 20px;
                 background: #fafafa; border: 1px solid #f0f0f0;
+                overflow: hidden;
             }
             .rvd-countdown-unit {
                 display: flex; flex-direction: column; align-items: center;
-                min-width: 52px; padding: 0 8px;
+                flex: 1; padding: 14px 0;
+                border-right: 1px solid #f0f0f0;
             }
+            .rvd-countdown-unit:last-child { border-right: none; }
             .rvd-countdown-val {
-                font-size: 24px; font-weight: 600; color: #111;
-                letter-spacing: -0.5px; line-height: 1.2;
+                font-size: 28px; font-weight: 700; color: #111;
+                letter-spacing: -0.5px; line-height: 1.1;
                 font-family: 'JetBrains Mono', monospace;
             }
             .rvd-countdown-label {
                 font-family: 'JetBrains Mono', monospace;
                 font-size: 7px; font-weight: 700;
-                letter-spacing: 1px; color: #ccc;
-                text-transform: uppercase;
+                letter-spacing: 1.2px; color: #ccc;
+                text-transform: uppercase; margin-top: 4px;
             }
-            .rvd-countdown-sep {
-                font-size: 20px; font-weight: 300; color: #ddd;
-                margin-top: -8px;
-            }
+            .rvd-countdown-sep { display: none; }
             .rvd-countdown.urgent .rvd-countdown-val { color: #C41E24; }
             .rvd-countdown.urgent { border-color: rgba(196,30,36,0.15); background: rgba(196,30,36,0.02); }
             .rvd-leader-tag {
@@ -922,10 +922,10 @@ export async function initRivalryDetail() {
             </div>
         </div>
 
-        <div class="rvd-grid">
+        <div class="rvd-grid" style="grid-template-columns: repeat(3, 1fr)">
             <div class="rvd-panel rvd-anim rvd-anim-delay-1">
                 <div class="rvd-panel-header">
-                    <span class="rvd-panel-icon">📋</span>
+                    <span class="rvd-panel-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg></span>
                     <div class="rvd-panel-title" style="margin-bottom:0">Contract Terms</div>
                 </div>
                 <div class="rvd-row">
@@ -948,46 +948,11 @@ export async function initRivalryDetail() {
                     <span class="rvd-row-label">Duration</span>
                     <span class="rvd-row-value">${rivalry.totalDays} days</span>
                 </div>
-                <div class="rvd-row rvd-row-warning">
-                    <span class="rvd-row-label" style="color:#3B0001;font-weight:600">⚠ If Both Miss</span>
-                    <span class="rvd-row-value">Protocol Keeps Pool</span>
-                </div>
             </div>
 
             <div class="rvd-panel rvd-anim rvd-anim-delay-2">
                 <div class="rvd-panel-header">
-                    <span class="rvd-panel-icon">📊</span>
-                    <div class="rvd-panel-title" style="margin-bottom:0">Current Performance</div>
-                </div>
-                <div class="rvd-row">
-                    <span class="rvd-row-label">${rivalry.challenger.name}</span>
-                    <span class="rvd-row-value"><span class="rvd-target-badge ${rivalry.challenger.growth >= rivalry.targetGrowthPct ? 'hit' : 'miss'}"><span class="badge-dot"></span>${rivalry.challenger.growth >= rivalry.targetGrowthPct ? 'HIT' : 'MISS'}</span> +${rivalry.challenger.growth}%</span>
-                </div>
-                <div class="rvd-row">
-                    <span class="rvd-row-label" style="font-size:11px;color:#aaa">${rivalry.challenger.name} current</span>
-                    <span class="rvd-row-value" data-perf-role="challenger" style="font-size:13px">${fmtMetric(rivalry.challenger.currentValue)} / ${fmtMetric(rivalry.challenger.targetValue)} ${metricUnit()}</span>
-                </div>
-                <div class="rvd-row">
-                    <span class="rvd-row-label">${rivalry.opponent.name}</span>
-                    <span class="rvd-row-value"><span class="rvd-target-badge ${rivalry.opponent.growth >= rivalry.targetGrowthPct ? 'hit' : 'miss'}"><span class="badge-dot"></span>${rivalry.opponent.growth >= rivalry.targetGrowthPct ? 'HIT' : 'MISS'}</span> +${rivalry.opponent.growth}%</span>
-                </div>
-                <div class="rvd-row">
-                    <span class="rvd-row-label" style="font-size:11px;color:#aaa">${rivalry.opponent.name} current</span>
-                    <span class="rvd-row-value" data-perf-role="opponent" style="font-size:13px">${fmtMetric(rivalry.opponent.currentValue)} / ${fmtMetric(rivalry.opponent.targetValue)} ${metricUnit()}</span>
-                </div>
-                <div class="rvd-row">
-                    <span class="rvd-row-label">Growth Target</span>
-                    <span class="rvd-row-value" style="font-weight:700;color:#3B0001">+${rivalry.targetGrowthPct}%</span>
-                </div>
-                <div class="rvd-row">
-                    <span class="rvd-row-label">Time Remaining</span>
-                    <span class="rvd-row-value ${rivalry.daysLeft <= 3 && rivalry.daysLeft > 0 ? 'urgent' : ''}">${rivalry.daysLeft <= 0 ? 'Completed' : rivalry.daysLeft + 'd ' + Math.floor(Math.random()*23) + 'h'}</span>
-                </div>
-            </div>
-
-            <div class="rvd-panel rvd-anim rvd-anim-delay-3">
-                <div class="rvd-panel-header">
-                    <span class="rvd-panel-icon">⚖️</span>
+                    <span class="rvd-panel-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3v18"/><path d="M3 7l9-4 9 4"/><path d="M3 7v4l9 4 9-4V7"/></svg></span>
                     <div class="rvd-panel-title" style="margin-bottom:0">Settlement Rules</div>
                 </div>
                 <div class="rvd-row">
@@ -1012,9 +977,9 @@ export async function initRivalryDetail() {
                 </div>
             </div>
 
-            <div class="rvd-panel rvd-anim rvd-anim-delay-4">
+            <div class="rvd-panel rvd-anim rvd-anim-delay-3">
                 <div class="rvd-panel-header">
-                    <span class="rvd-panel-icon">✓</span>
+                    <span class="rvd-panel-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg></span>
                     <div class="rvd-panel-title" style="margin-bottom:0">Verification</div>
                 </div>
                 <div class="rvd-row">
@@ -1182,12 +1147,14 @@ export async function initRivalryDetail() {
             const maxPct = Math.max(targetPct, Math.abs(challGrowth), Math.abs(oppGrowth), 5);
             const barWidth = W - PAD_L - PAD_R;
             
-            const challW = Math.max(2, (Math.abs(challGrowth) / maxPct) * barWidth);
-            const oppW = Math.max(2, (Math.abs(oppGrowth) / maxPct) * barWidth);
+            const challW = Math.max(20, (Math.abs(challGrowth) / maxPct) * barWidth);
+            const oppW = Math.max(20, (Math.abs(oppGrowth) / maxPct) * barWidth);
             const targetX = PAD_L + (targetPct / maxPct) * barWidth;
             
             const challColor = challGrowth >= oppGrowth ? '#0F5132' : '#C41E24';
             const oppColor = oppGrowth >= challGrowth ? '#0F5132' : '#C41E24';
+            const challName = rivalry.challenger.name.replace('@','');
+            const oppName = rivalry.opponent.name.replace('@','');
 
             chartEl.innerHTML = `
                 <svg viewBox="0 0 ${W} ${H}" preserveAspectRatio="xMidYMid meet" style="width:100%;height:100%">
@@ -1206,7 +1173,7 @@ export async function initRivalryDetail() {
                     <text x="${PAD_L}" y="30" font-family="JetBrains Mono, monospace" font-size="10" font-weight="700" fill="#bbb" letter-spacing="1.2px">RACE TO TARGET · +${targetPct}%</text>
                     
                     <!-- Challenger bar -->
-                    <text x="${PAD_L}" y="${startY - 6}" font-family="JetBrains Mono, monospace" font-size="9" fill="#888" font-weight="600" letter-spacing="0.5px">CHALLENGER</text>
+                    <text x="${PAD_L}" y="${startY - 6}" font-family="JetBrains Mono, monospace" font-size="9" fill="#888" font-weight="600" letter-spacing="0.5px">${challName.toUpperCase()}</text>
                     <rect x="${PAD_L}" y="${startY}" width="${barWidth}" height="${barH}" fill="#f5f5f5" rx="3"/>
                     <rect x="${PAD_L}" y="${startY}" width="${challW}" height="${barH}" fill="url(#grad-chall-bar)" rx="3">
                         <animate attributeName="width" from="0" to="${challW}" dur="0.8s" fill="freeze" calcMode="spline" keySplines="0.25 0.1 0.25 1"/>
@@ -1214,7 +1181,7 @@ export async function initRivalryDetail() {
                     <text x="${PAD_L + challW + 8}" y="${startY + barH/2 + 4}" font-family="JetBrains Mono, monospace" font-size="12" font-weight="700" fill="${challColor}">${challGrowth >= 0 ? '+' : ''}${challGrowth.toFixed(1)}%</text>
                     
                     <!-- Opponent bar -->
-                    <text x="${PAD_L}" y="${startY + barH + barGap - 6}" font-family="JetBrains Mono, monospace" font-size="9" fill="#888" font-weight="600" letter-spacing="0.5px">OPPONENT</text>
+                    <text x="${PAD_L}" y="${startY + barH + barGap - 6}" font-family="JetBrains Mono, monospace" font-size="9" fill="#888" font-weight="600" letter-spacing="0.5px">${oppName.toUpperCase()}</text>
                     <rect x="${PAD_L}" y="${startY + barH + barGap}" width="${barWidth}" height="${barH}" fill="#f5f5f5" rx="3"/>
                     <rect x="${PAD_L}" y="${startY + barH + barGap}" width="${oppW}" height="${barH}" fill="url(#grad-opp-bar)" rx="3">
                         <animate attributeName="width" from="0" to="${oppW}" dur="0.8s" fill="freeze" calcMode="spline" keySplines="0.25 0.1 0.25 1"/>

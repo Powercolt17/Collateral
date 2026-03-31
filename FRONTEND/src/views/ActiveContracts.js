@@ -958,10 +958,9 @@ function renderContractList(container, allContracts, filter) {
         var createdDate = c.createdAt ? formatDateShort(c.createdAt) : 'Jan 15, 2026';
         var endDate = c.endDate ? formatDateShort(c.endDate) : calculateEndDate(c.createdAt, c.durationDays || 90);
 
-        // Performance metric
         var metricName = getMetricName(c.platform);
-        var threshold = c.targetValue ? Number(c.targetValue).toLocaleString('en-US') : '50,000';
-        var currentVal = c.currentValue ? Number(c.currentValue).toLocaleString('en-US') : getDerivedCurrentValue(c.id, threshold);
+        var threshold = c.targetValue ? Number(c.targetValue).toLocaleString('en-US') : '—';
+        var currentVal = c.currentValue ? Number(c.currentValue).toLocaleString('en-US') : '—';
 
         // The summary row (header)
         var headerHtml = '<div class="act-card" data-card-idx="' + i + '">' +
@@ -1028,8 +1027,8 @@ function renderContractList(container, allContracts, filter) {
             '<div class="act-perf-col-value">' + threshold + '</div>' +
             '</div>' +
             '<div class="act-perf-col">' +
-            '<div class="act-perf-col-label">Current Value</div>' +
-            '<div class="act-perf-col-value green">' + currentVal + '</div>' +
+            '<div class="act-perf-col-label">Current (Live)</div>' +
+            '<div class="act-perf-col-value green" id="act-live-val-' + c.id + '">' + currentVal + '</div>' +
             '</div>' +
             '</div>' +
 
@@ -1081,6 +1080,15 @@ function renderContractList(container, allContracts, filter) {
 
             // Toggle this one
             wrap.classList.toggle('expanded');
+
+            // Fetch live oracle data when expanding
+            if (wrap.classList.contains('expanded')) {
+                var contractId = card.dataset.cardIdx;
+                var contract = allContracts[parseInt(contractId)];
+                if (contract) {
+                    fetchLiveOracleData(contract);
+                }
+            }
         });
     });
 }
@@ -1139,14 +1147,57 @@ function calculateEndDate(startIso, durationDays) {
 }
 
 function getDerivedCurrentValue(id, thresholdStr) {
-    // Generate a plausible current value based on the contract ID
-    var threshold = parseInt(thresholdStr.replace(/,/g, ''), 10) || 50000;
-    var hash = 0;
-    for (var i = 0; i < id.length; i++) {
-        hash = ((hash << 5) - hash) + id.charCodeAt(i);
-        hash |= 0;
+    return '—';
+}
+
+async function fetchLiveOracleData(contract) {
+    var liveEl = document.getElementById('act-live-val-' + contract.id);
+    if (!liveEl) return;
+    
+    // Show loading state
+    liveEl.innerHTML = '<span style="color:#bbb;font-size:11px;">Loading...</span>';
+    
+    var provider = (contract.platform || '').toLowerCase();
+    var metricMap = {
+        SUBSCRIBERS: 'subscribers', FOLLOWERS: 'followers',
+        REVENUE: 'revenue', VIEWS: 'views',
+        GROSS_SALES: 'shopify_revenue', ORDER_COUNT: 'orders',
+        IMPRESSIONS: 'impressions', COMMITS: 'commits',
+        PRS_MERGED: 'prs_merged', STARS_GAINED: 'stars',
+    };
+    var metricKey = metricMap[contract.metricType] || contract.metricType?.toLowerCase() || 'followers';
+    var isMonetary = ['stripe', 'shopify', 'amazon'].includes(provider);
+    
+    try {
+        var data = await window.api.getProviderPreview(provider, metricKey);
+        
+        if (data && data.status !== 'error' && data.current_baseline !== undefined) {
+            var val = data.current_baseline || 0;
+            var formatted;
+            if (isMonetary) {
+                formatted = '$' + (val / 100).toLocaleString('en-US', { minimumFractionDigits: 0, maximumFractionDigits: 0 });
+            } else {
+                formatted = Math.round(val).toLocaleString('en-US');
+            }
+            liveEl.textContent = formatted;
+            liveEl.style.color = '#16a34a';
+            
+            // Update progress bar if we have baseline and target
+            var baseline = parseFloat(contract.baselineValue || 0);
+            var target = parseFloat(contract.targetValue || 0);
+            if (target > 0 && baseline > 0) {
+                var pct = Math.min(100, Math.max(0, ((val - baseline) / (target - baseline)) * 100));
+                var progressFill = liveEl.closest('.act-detail-inner')?.querySelector('.act-detail-progress-fill');
+                var progressPct = liveEl.closest('.act-detail-inner')?.querySelector('.act-detail-progress-pct');
+                if (progressFill) progressFill.style.width = pct.toFixed(1) + '%';
+                if (progressPct) progressPct.textContent = pct.toFixed(1) + '%';
+            }
+        } else {
+            var errLabel = data?.code === 'NOT_CONNECTED' ? 'Not Connected' : data?.code === 'RECONNECT_REQUIRED' ? 'Reconnect' : 'Unavailable';
+            liveEl.innerHTML = '<span style="color:#C41E24;font-size:11px;">' + errLabel + '</span>';
+        }
+    } catch (err) {
+        console.warn('[ActiveContracts] Live data fetch failed:', err.message);
+        liveEl.innerHTML = '<span style="color:#999;font-size:11px;">—</span>';
     }
-    var pct = 0.7 + (Math.abs(hash % 28) / 100);
-    var val = Math.round(threshold * pct);
-    return val.toLocaleString('en-US');
 }

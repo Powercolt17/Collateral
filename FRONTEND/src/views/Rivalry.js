@@ -931,6 +931,10 @@ export function renderRivalry() {
                         <span class="rv-preview-value" id="rv-preview-target">+15%</span>
                     </div>
                     <div class="rv-preview-row">
+                        <span class="rv-preview-label">Platform Fee</span>
+                        <span class="rv-preview-value" style="color:#752122">12%</span>
+                    </div>
+                    <div class="rv-preview-row">
                         <span class="rv-preview-label">If Both Miss</span>
                         <span class="rv-preview-value" style="color:#3B0001">Protocol Keeps Pool</span>
                     </div>

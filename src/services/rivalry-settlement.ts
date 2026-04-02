@@ -7,9 +7,9 @@
  * Both participants face the SAME growth target.
  * Settlement compares each player's growth against the shared target.
  * 
- * Settlement rules:
- *   Both hit target  → DRAW (stakes returned, no fee)
- *   One hits target  → WINNER takes pool (minus 2% fee)
+ * Settlement rules (12% platform fee on all outcomes):
+ *   Both hit target  → DRAW (stakes returned minus 12% platform fee)
+ *   One hits target  → WINNER takes pool (minus 12% fee)
  *   Both miss target → BOTH_MISS (protocol keeps entire pool)
  * 
  * State is NEVER stored — derived from ledger events.
@@ -158,32 +158,56 @@ export async function settleRivalry(
 
     // Calculate payouts
     const pool = rivalry.stakePerSideCents * 2;
-    const protocolFeeBps = rivalry.protocolFeeBps || 200;
+    const protocolFeeBps = rivalry.protocolFeeBps || 1200;
 
     try {
         await db.transaction(async (tx) => {
             if (outcome === 'DRAW') {
                 // ═══ BOTH HIT TARGET ═══
-                // Stakes returned in full — no fee on draws
-                const returnPerSide = rivalry.stakePerSideCents;
+                // Platform fee applied, remainder split back evenly
+                const drawFeeCents = Math.floor(pool * protocolFeeBps / 10000);
+                const remainingPool = pool - drawFeeCents;
+                const returnPerSide = Math.floor(remainingPool / 2);
 
-                // Return capital to challenger
+                // Return capital (minus fee share) to challenger
                 await tx.insert(accountLedgerEvents).values({
                     userId: challenger.userId,
                     eventType: 'CAPITAL_UNLOCKED',
-                    amountCents: returnPerSide,
-                    idempotencyKey: `rivalry:${rivalryId}:challenger:draw_return`,
+                    amountCents: rivalry.stakePerSideCents,
+                    idempotencyKey: `rivalry:${rivalryId}:challenger:draw_unlock`,
                     metadata: { rivalryId, outcome: 'DRAW', targetGrowthPct, challengerGrowthPct },
                 }).onConflictDoNothing();
 
-                // Return capital to opponent
+                // Deduct fee from challenger's side
+                const feePerSide = rivalry.stakePerSideCents - returnPerSide;
+                if (feePerSide > 0) {
+                    await tx.insert(accountLedgerEvents).values({
+                        userId: challenger.userId,
+                        eventType: 'SETTLEMENT_LOSS',
+                        amountCents: feePerSide,
+                        idempotencyKey: `rivalry:${rivalryId}:challenger:draw_fee`,
+                        metadata: { rivalryId, outcome: 'DRAW', platformFee: true, feeBps: protocolFeeBps },
+                    }).onConflictDoNothing();
+                }
+
+                // Return capital (minus fee share) to opponent
                 await tx.insert(accountLedgerEvents).values({
                     userId: opponent.userId,
                     eventType: 'CAPITAL_UNLOCKED',
-                    amountCents: returnPerSide,
-                    idempotencyKey: `rivalry:${rivalryId}:opponent:draw_return`,
+                    amountCents: rivalry.stakePerSideCents,
+                    idempotencyKey: `rivalry:${rivalryId}:opponent:draw_unlock`,
                     metadata: { rivalryId, outcome: 'DRAW', targetGrowthPct, opponentGrowthPct },
                 }).onConflictDoNothing();
+
+                if (feePerSide > 0) {
+                    await tx.insert(accountLedgerEvents).values({
+                        userId: opponent.userId,
+                        eventType: 'SETTLEMENT_LOSS',
+                        amountCents: feePerSide,
+                        idempotencyKey: `rivalry:${rivalryId}:opponent:draw_fee`,
+                        metadata: { rivalryId, outcome: 'DRAW', platformFee: true, feeBps: protocolFeeBps },
+                    }).onConflictDoNothing();
+                }
 
                 // Update participant outcomes
                 await tx.update(rivalryParticipants)
@@ -202,7 +226,7 @@ export async function settleRivalry(
                     metadata: {
                         challengerGrowthPct, opponentGrowthPct, targetGrowthPct,
                         challengerHitTarget, opponentHitTarget,
-                        protocolFeeCents: 0, returnPerSide,
+                        protocolFeeCents: drawFeeCents, returnPerSide,
                     },
                 }, tx);
 
@@ -213,7 +237,7 @@ export async function settleRivalry(
                         settlementMetadata: {
                             outcome: 'DRAW', challengerGrowthPct, opponentGrowthPct,
                             targetGrowthPct, challengerHitTarget, opponentHitTarget,
-                            protocolFeeCents: 0,
+                            protocolFeeCents: drawFeeCents,
                         },
                         updatedAt: new Date(),
                     })
@@ -401,7 +425,7 @@ export async function settleRivalry(
             }
         });
 
-        const protocolFeeCents = outcome === 'DRAW' ? 0
+        const protocolFeeCents = outcome === 'DRAW' ? Math.floor(pool * protocolFeeBps / 10000)
             : outcome === 'BOTH_MISS' ? pool
             : Math.floor(pool * protocolFeeBps / 10000);
 

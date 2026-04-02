@@ -961,16 +961,20 @@ export async function initRivalryDetail() {
                     <span class="rvd-row-value">Target Growth Comparison</span>
                 </div>
                 <div class="rvd-row">
+                    <span class="rvd-row-label">Platform Fee</span>
+                    <span class="rvd-row-value" style="color:#752122;font-weight:700">12%</span>
+                </div>
+                <div class="rvd-row">
                     <span class="rvd-row-label">Both Hit Target</span>
-                    <span class="rvd-row-value" style="color:var(--rvd-green)">Draw — Stakes Returned</span>
+                    <span class="rvd-row-value" style="color:var(--rvd-green)">Draw — Stakes Returned (minus 12% fee)</span>
                 </div>
                 <div class="rvd-row">
                     <span class="rvd-row-label">One Hits Target</span>
-                    <span class="rvd-row-value" style="font-weight:700">Winner Takes Pool</span>
+                    <span class="rvd-row-value" style="font-weight:700">Winner Takes Pool (minus 12% fee)</span>
                 </div>
                 <div class="rvd-row rvd-row-warning">
                     <span class="rvd-row-label" style="color:#5C1A1B;font-weight:600">Both Miss Target</span>
-                    <span class="rvd-row-value">Protocol Keeps Pool</span>
+                    <span class="rvd-row-value">Protocol Keeps Entire Pool</span>
                 </div>
                 <div class="rvd-row">
                     <span class="rvd-row-label">Appeals</span>

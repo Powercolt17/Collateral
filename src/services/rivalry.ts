@@ -39,7 +39,7 @@ export const MIN_RIVALRY_STAKE_CENTS = 10000;  // $100 minimum per side
 export const MAX_RIVALRY_STAKE_CENTS = 10000000; // $100,000 maximum per side
 export const DEFAULT_ACCEPTANCE_TTL_HOURS = 72;
 export const DEFAULT_FUNDING_TTL_HOURS = 48;
-export const DEFAULT_PROTOCOL_FEE_BPS = 200; // 2%
+export const DEFAULT_PROTOCOL_FEE_BPS = 1200; // 12% platform fee
 export const TIE_MARGIN_PCT = 0.5; // 0.5% — within this, it's a draw
 
 // Rivalry Tiers — same target for both players

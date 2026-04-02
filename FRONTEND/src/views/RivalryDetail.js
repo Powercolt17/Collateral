@@ -144,8 +144,9 @@ export function renderRivalryDetail() {
                 text-transform: uppercase; margin-bottom: 6px;
             }
             .rvd-pool-amount {
-                font-size: 56px; font-weight: 300;
-                letter-spacing: -2px; color: #111;
+                font-family: 'Inter', -apple-system, sans-serif;
+                font-size: 52px; font-weight: 600;
+                letter-spacing: -1.5px; color: #111;
                 line-height: 1.0;
             }
             .rvd-pool-sub {

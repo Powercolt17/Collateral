@@ -735,7 +735,7 @@ export function renderLedger() {
                                     SYNCED
                                 </span>
                             </h1>
-                            <p class="ldg-hero-desc">Real-time execution log for all contract events, settlements, and capital flows.</p>
+                            <p class="ldg-hero-desc">Real-time execution log for all contract events, rivalry duels, settlements, and capital flows.</p>
                         </div>
                         <div class="ldg-hero-stats">
                             <div class="ldg-stat">
@@ -887,40 +887,54 @@ export async function initLedger() {
     }
 
     function formatEventType(type) {
-        return (type || '—').replace(/_/g, ' ');
+        if (!type) return '—';
+        // Clean up RIVALRY_ prefix for display
+        const cleaned = type.replace(/^RIVALRY_/, '');
+        return cleaned.replace(/_/g, ' ');
     }
 
     function getEventCategory(type) {
         if (['FUNDS_LOCKED', 'EXECUTION_CONFIRMED', 'FUNDS_AUTHORIZED', 'CONTRACT_CREATED', 'BASELINE_SNAPSHOTTED'].includes(type)) return 'execution';
-        if (['SETTLED_SUCCESS', 'SETTLEMENT_STARTED', 'SETTLEMENT_COMPLETE'].includes(type)) return 'settlement';
-        if (['SETTLED_FAILURE', 'VERIFICATION_FAILED'].includes(type)) return 'failure';
+        if (['SETTLED_SUCCESS', 'SETTLEMENT_STARTED', 'SETTLEMENT_COMPLETE', 'RIVALRY_SETTLED', 'RIVALRY_DRAW', 'RIVALRY_SETTLEMENT_STARTED'].includes(type)) return 'settlement';
+        if (['SETTLED_FAILURE', 'VERIFICATION_FAILED', 'RIVALRY_EXPIRED', 'RIVALRY_CANCELLED'].includes(type)) return 'failure';
         if (['FEE_COLLECTED'].includes(type)) return 'fee';
+        if (['RIVALRY_CREATED', 'RIVALRY_ACCEPTED', 'RIVALRY_BOTH_FUNDED', 'RIVALRY_ACTIVATED', 'RIVALRY_CHALLENGER_FUNDED', 'RIVALRY_OPPONENT_FUNDED', 'RIVALRY_VERIFIED', 'RIVALRY_VERIFICATION_STARTED'].includes(type)) return 'execution';
         return 'execution';
     }
 
     function getStatusClass(type) {
-        if (type.includes('SETTLED_SUCCESS') || type.includes('SETTLEMENT') || type.includes('VERIFICATION_SUCCEEDED')) return 'settlement';
-        if (type.includes('SETTLED_FAILURE') || type.includes('VERIFICATION_FAILED')) return 'failure';
+        if (type.includes('SETTLED_SUCCESS') || type.includes('SETTLEMENT') || type.includes('VERIFICATION_SUCCEEDED') || type === 'RIVALRY_SETTLED' || type === 'RIVALRY_DRAW') return 'settlement';
+        if (type.includes('SETTLED_FAILURE') || type.includes('VERIFICATION_FAILED') || type === 'RIVALRY_EXPIRED' || type === 'RIVALRY_CANCELLED') return 'failure';
         if (type.includes('FEE')) return 'fee';
-        if (type.includes('LOCKED')) return 'locked';
-        if (type.includes('EXECUTION_CONFIRMED')) return 'execution';
+        if (type.includes('LOCKED') || type === 'RIVALRY_BOTH_FUNDED' || type === 'RIVALRY_CHALLENGER_FUNDED' || type === 'RIVALRY_OPPONENT_FUNDED') return 'locked';
+        if (type.includes('EXECUTION_CONFIRMED') || type === 'RIVALRY_ACTIVATED') return 'execution';
+        if (type === 'RIVALRY_CREATED' || type === 'RIVALRY_ACCEPTED') return 'pending';
         return 'execution';
     }
 
     function getTagColor(type) {
-        if (type.includes('SETTLED_SUCCESS') || type.includes('SETTLEMENT') || type.includes('VERIFICATION_SUCCEEDED')) return '#16a34a';
-        if (type.includes('SETTLED_FAILURE') || type.includes('VERIFICATION_FAILED')) return '#752122';
+        if (type.includes('SETTLED_SUCCESS') || type.includes('SETTLEMENT') || type.includes('VERIFICATION_SUCCEEDED') || type === 'RIVALRY_SETTLED' || type === 'RIVALRY_DRAW') return '#16a34a';
+        if (type.includes('SETTLED_FAILURE') || type.includes('VERIFICATION_FAILED') || type === 'RIVALRY_EXPIRED' || type === 'RIVALRY_CANCELLED') return '#752122';
         if (type.includes('FEE')) return '#92400e';
-        if (type.includes('LOCKED') || type.includes('EXECUTION_CONFIRMED')) return '#111';
+        if (type.includes('LOCKED') || type.includes('EXECUTION_CONFIRMED') || type.includes('RIVALRY_ACTIVATED') || type.includes('RIVALRY_BOTH_FUNDED')) return '#111';
+        if (type.includes('RIVALRY_CREATED') || type.includes('RIVALRY_ACCEPTED')) return '#752122';
         return '#666';
     }
 
     function getStatusPill(type) {
         if (type.includes('SETTLED_SUCCESS') || type.includes('SETTLEMENT') || type.includes('VERIFICATION_SUCCEEDED')) return '<span class="ldg-status settled">SETTLED</span>';
+        if (type === 'RIVALRY_SETTLED') return '<span class="ldg-status settled">RIVALRY SETTLED</span>';
+        if (type === 'RIVALRY_DRAW') return '<span class="ldg-status settled">RIVALRY DRAW</span>';
         if (type.includes('SETTLED_FAILURE') || type.includes('VERIFICATION_FAILED')) return '<span class="ldg-status failed">FAILED</span>';
+        if (type === 'RIVALRY_EXPIRED') return '<span class="ldg-status failed">EXPIRED</span>';
+        if (type === 'RIVALRY_CANCELLED') return '<span class="ldg-status failed">CANCELLED</span>';
         if (type.includes('LOCKED') || type.includes('EXECUTION_CONFIRMED')) return '<span class="ldg-status locked">LOCKED</span>';
+        if (type === 'RIVALRY_BOTH_FUNDED') return '<span class="ldg-status locked">FUNDED</span>';
+        if (type === 'RIVALRY_ACTIVATED') return '<span class="ldg-status locked">ACTIVE</span>';
         if (type.includes('FEE')) return '<span class="ldg-status fee">FEE</span>';
         if (type.includes('AUTHORIZED') || type.includes('CREATED')) return '<span class="ldg-status pending">PENDING</span>';
+        if (type === 'RIVALRY_CREATED') return '<span class="ldg-status pending">CHALLENGE ISSUED</span>';
+        if (type === 'RIVALRY_ACCEPTED') return '<span class="ldg-status pending">ACCEPTED</span>';
         return '<span class="ldg-status locked">ACTIVE</span>';
     }
 
@@ -1058,8 +1072,9 @@ export async function initLedger() {
 
         list.innerHTML = pageItems.map((event, i) => {
             const globalIdx = (currentPage - 1) * perPage + i;
+            const isRivalry = event.sourceType === 'RIVALRY' || (event.eventType || '').startsWith('RIVALRY_');
             const contractShort = event.contractId
-                ? 'RCPT-' + event.contractId.slice(0, 4).toUpperCase()
+                ? (isRivalry ? 'RVL-' : 'RCPT-') + event.contractId.slice(0, 4).toUpperCase()
                 : '—';
             const statusClass = getStatusClass(event.eventType);
             const principal = event.principal || '—';
@@ -1099,8 +1114,12 @@ export async function initLedger() {
         if (!drawer || !body) return;
 
         const contractShort = event.contractId
-            ? 'RCPT-' + event.contractId.slice(0, 4).toUpperCase()
+            ? ((event.sourceType === 'RIVALRY' || (event.eventType || '').startsWith('RIVALRY_')) ? 'RVL-' : 'RCPT-') + event.contractId.slice(0, 4).toUpperCase()
             : '—';
+        const isRivalry = event.sourceType === 'RIVALRY' || (event.eventType || '').startsWith('RIVALRY_');
+        const viewLink = isRivalry
+            ? `<a class="ldg-drawer-link" style="margin-left:8px;" onclick="window.router.navigate('/rivalry/${event.contractId}')">VIEW →</a>`
+            : `<a class="ldg-drawer-link" style="margin-left:8px;" onclick="window.router.navigate('/contracts/${event.contractId}')">VIEW →</a>`;
 
         body.innerHTML = `
             <div class="ldg-drawer-row">
@@ -1117,7 +1136,7 @@ export async function initLedger() {
                 <span class="ldg-drawer-label">Contract</span>
                 <span class="ldg-drawer-value">
                     ${contractShort}
-                    ${event.contractId ? `<a class="ldg-drawer-link" style="margin-left:8px;" onclick="window.router.navigate('/contracts/${event.contractId}')">VIEW →</a>` : ''}
+                    ${event.contractId ? viewLink : ''}
                 </span>
             </div>
             <div class="ldg-drawer-row">

@@ -143,55 +143,79 @@ const contractRoutes: FastifyPluginAsync = async (fastify) => {
      */
     fastify.get('/v1/ledger', async (request, reply) => {
         try {
-            // Fetch recent events from contracts that have been executed (FUNDS_LOCKED or beyond)
-            // We'll get events that indicate execution or settlement
-            const publicEventTypes = [
-                EventType.FUNDS_LOCKED,
-                EventType.EXECUTION_CONFIRMED,
-                EventType.VERIFICATION_STARTED,
-                EventType.VERIFICATION_SUCCEEDED,
-                EventType.VERIFICATION_FAILED,
-                EventType.SETTLED_SUCCESS,
-                EventType.SETTLED_FAILURE,
-                EventType.SETTLEMENT_STARTED,
-                EventType.RECEIPT_ISSUED,
-            ];
+            // Fetch recent events from BOTH solo contracts and rivalries
+            // Uses UNION ALL to merge both event streams into one feed
+            const result = await db.execute(sql`
+                (
+                    SELECT
+                        le.id,
+                        le.contract_id AS "sourceId",
+                        'CONTRACT' AS "sourceType",
+                        le.event_type AS "eventType",
+                        le.timestamp_utc AS "timestampUtc",
+                        le.amount_usd_cents AS "amountUsdCents",
+                        le.event_hash AS "eventHash",
+                        le.actor,
+                        c.platform,
+                        c.principal_identity_username AS "principal",
+                        c.lock_amount_usd_cents AS "lockAmountUsdCents",
+                        c.risk_tier AS "riskTier"
+                    FROM ledger_events le
+                    INNER JOIN contracts c ON le.contract_id = c.id
+                    WHERE le.event_type IN (
+                        'FUNDS_LOCKED', 'EXECUTION_CONFIRMED',
+                        'VERIFICATION_STARTED', 'VERIFICATION_SUCCEEDED', 'VERIFICATION_FAILED',
+                        'SETTLED_SUCCESS', 'SETTLED_FAILURE', 'SETTLEMENT_STARTED', 'RECEIPT_ISSUED'
+                    )
+                )
+                UNION ALL
+                (
+                    SELECT
+                        rle.id,
+                        rle.rivalry_id AS "sourceId",
+                        'RIVALRY' AS "sourceType",
+                        rle.event_type AS "eventType",
+                        rle.timestamp_utc AS "timestampUtc",
+                        rle.amount_usd_cents AS "amountUsdCents",
+                        rle.event_hash AS "eventHash",
+                        rle.actor,
+                        r.platform,
+                        u.display_name AS "principal",
+                        r.stake_per_side_cents * 2 AS "lockAmountUsdCents",
+                        r.rivalry_tier AS "riskTier"
+                    FROM rivalry_ledger_events rle
+                    INNER JOIN rivalries r ON rle.rivalry_id = r.id
+                    INNER JOIN users u ON r.challenger_user_id = u.id
+                    WHERE rle.event_type IN (
+                        'RIVALRY_CREATED', 'RIVALRY_ACCEPTED', 'RIVALRY_BOTH_FUNDED',
+                        'RIVALRY_ACTIVATED', 'RIVALRY_VERIFICATION_STARTED', 'RIVALRY_VERIFIED',
+                        'RIVALRY_SETTLEMENT_STARTED', 'RIVALRY_SETTLED', 'RIVALRY_DRAW',
+                        'RIVALRY_CHALLENGER_FUNDED', 'RIVALRY_OPPONENT_FUNDED',
+                        'RIVALRY_EXPIRED', 'RIVALRY_CANCELLED'
+                    )
+                )
+                ORDER BY "timestampUtc" DESC
+                LIMIT 200
+            `);
 
-            // Get recent public events (last 200) with contract context
-            const events = await db
-                .select({
-                    id: ledgerEvents.id,
-                    contractId: ledgerEvents.contractId,
-                    eventType: ledgerEvents.eventType,
-                    timestampUtc: ledgerEvents.timestampUtc,
-                    amountUsdCents: ledgerEvents.amountUsdCents,
-                    eventHash: ledgerEvents.eventHash,
-                    actor: ledgerEvents.actor,
-                    // Contract context
-                    platform: contracts.platform,
-                    principalIdentityUsername: contracts.principalIdentityUsername,
-                    lockAmountUsdCents: contracts.lockAmountUsdCents,
-                    riskTier: contracts.riskTier,
-                })
-                .from(ledgerEvents)
-                .innerJoin(contracts, sql`${ledgerEvents.contractId} = ${contracts.id}`)
-                .where(inArray(ledgerEvents.eventType, publicEventTypes))
-                .orderBy(desc(ledgerEvents.timestampUtc))
-                .limit(200);
+            const rows = (result as any).rows || result;
 
             return {
-                events: events.map(event => ({
-                    id: event.id,
-                    contractId: event.contractId,
-                    eventType: event.eventType,
-                    timestamp: event.timestampUtc.toISOString(),
-                    amountUsdCents: event.amountUsdCents,
-                    eventHash: event.eventHash,
-                    actor: event.actor,
-                    platform: event.platform,
-                    principal: event.principalIdentityUsername,
-                    lockAmountUsdCents: event.lockAmountUsdCents,
-                    riskTier: event.riskTier,
+                events: rows.map((row: any) => ({
+                    id: row.id,
+                    contractId: row.sourceId,
+                    sourceType: row.sourceType,
+                    eventType: row.eventType,
+                    timestamp: row.timestampUtc instanceof Date
+                        ? row.timestampUtc.toISOString()
+                        : row.timestampUtc,
+                    amountUsdCents: row.amountUsdCents,
+                    eventHash: row.eventHash,
+                    actor: row.actor,
+                    platform: row.platform,
+                    principal: row.principal,
+                    lockAmountUsdCents: row.lockAmountUsdCents,
+                    riskTier: row.riskTier,
                 })),
             };
         } catch (error) {

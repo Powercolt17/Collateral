@@ -59,9 +59,9 @@ export function renderRivalryDetail() {
                 padding: 48px 64px 40px; position: relative;
             }
             .rvd-breadcrumb {
-                font-family: 'Inter', monospace;
-                font-size: 10px; font-weight: 700;
-                letter-spacing: 0.12em; color: #ccc;
+                font-family: 'Inter', -apple-system, sans-serif;
+                font-size: 11px; font-weight: 600;
+                letter-spacing: 0.1em; color: #888;
                 text-transform: uppercase; margin-bottom: 28px;
             }
             .rvd-breadcrumb a {
@@ -106,13 +106,13 @@ export function renderRivalryDetail() {
             .rvd-player-avatar.challenger { background: var(--rvd-green); }
             .rvd-player-avatar.opponent { background: var(--rvd-brand); }
             .rvd-player-label {
-                font-family: 'Inter', monospace;
-                font-size: 9px; font-weight: 700;
-                letter-spacing: 0.12em; color: #bbb;
+                font-family: 'Inter', -apple-system, sans-serif;
+                font-size: 10px; font-weight: 700;
+                letter-spacing: 0.1em; color: #777;
                 text-transform: uppercase;
             }
             .rvd-player-name {
-                font-family: 'Inter', monospace;
+                font-family: 'Inter', -apple-system, sans-serif;
                 font-size: 18px; font-weight: 600;
                 color: #111; letter-spacing: 0.02em;
             }
@@ -121,16 +121,16 @@ export function renderRivalryDetail() {
                 letter-spacing: -1px; margin-top: 4px;
                 line-height: 1.2;
                 transition: color .3s;
-                font-family: 'Inter', monospace;
+                font-family: 'Inter', -apple-system, sans-serif;
             }
             .rvd-player-growth.leading {
                 color: var(--rvd-green);
             }
             .rvd-player-growth.trailing { color: var(--rvd-brand); }
             .rvd-player-baseline {
-                font-family: 'Inter', monospace;
-                font-size: 10px; color: #bbb;
-                letter-spacing: 0.04em; margin-top: 4px;
+                font-family: 'Inter', -apple-system, sans-serif;
+                font-size: 11px; color: #777;
+                letter-spacing: 0.03em; margin-top: 4px;
             }
 
             /* ── Pool / Stakes Hero ── */
@@ -138,9 +138,9 @@ export function renderRivalryDetail() {
                 text-align: center; padding: 28px 0 20px;
             }
             .rvd-pool-label {
-                font-family: 'Inter', monospace;
-                font-size: 9px; font-weight: 700;
-                letter-spacing: 1.5px; color: #bbb;
+                font-family: 'Inter', -apple-system, sans-serif;
+                font-size: 11px; font-weight: 600;
+                letter-spacing: 1.2px; color: #777;
                 text-transform: uppercase; margin-bottom: 6px;
             }
             .rvd-pool-amount {
@@ -150,9 +150,9 @@ export function renderRivalryDetail() {
                 line-height: 1.0;
             }
             .rvd-pool-sub {
-                font-family: 'Inter', monospace;
-                font-size: 10px; color: #999; letter-spacing: 0.06em;
-                margin-top: 6px;
+                font-family: 'Inter', -apple-system, sans-serif;
+                font-size: 12px; color: #666; letter-spacing: 0.04em;
+                margin-top: 8px;
             }
 
             /* ── Collateral Stake Bar ── */
@@ -166,9 +166,9 @@ export function renderRivalryDetail() {
                 flex: 1; display: flex; align-items: center;
                 justify-content: center; gap: 8px;
                 padding: 0 16px; height: 100%;
-                font-family: 'Inter', monospace;
-                font-size: 11px; font-weight: 700;
-                letter-spacing: 0.04em;
+                font-family: 'Inter', -apple-system, sans-serif;
+                font-size: 12px; font-weight: 700;
+                letter-spacing: 0.03em;
                 transition: background .3s;
             }
             .rvd-stake-side.challenger {
@@ -200,23 +200,23 @@ export function renderRivalryDetail() {
             }
             .rvd-countdown-unit:last-child { border-right: none; }
             .rvd-countdown-val {
-                font-size: 28px; font-weight: 700; color: #111;
+                font-size: 32px; font-weight: 600; color: #111;
                 letter-spacing: -0.5px; line-height: 1.1;
-                font-family: 'Inter', monospace;
+                font-family: 'Inter', -apple-system, sans-serif;
             }
             .rvd-countdown-label {
-                font-family: 'Inter', monospace;
-                font-size: 7px; font-weight: 700;
-                letter-spacing: 1.2px; color: #ccc;
-                text-transform: uppercase; margin-top: 4px;
+                font-family: 'Inter', -apple-system, sans-serif;
+                font-size: 10px; font-weight: 600;
+                letter-spacing: 1px; color: #888;
+                text-transform: uppercase; margin-top: 6px;
             }
             .rvd-countdown-sep { display: none; }
             .rvd-countdown.urgent .rvd-countdown-val { color: #5C1A1B; }
             .rvd-countdown.urgent { border-color: rgba(196,30,36,0.15); background: rgba(196,30,36,0.02); }
             .rvd-leader-tag {
-                font-family: 'Inter', monospace;
-                font-size: 8px; font-weight: 700;
-                letter-spacing: 0.14em; text-transform: uppercase;
+                font-family: 'Inter', -apple-system, sans-serif;
+                font-size: 10px; font-weight: 700;
+                letter-spacing: 0.12em; text-transform: uppercase;
                 color: var(--rvd-green); margin-bottom: 4px;
                 display: inline-flex; align-items: center; gap: 5px;
             }
@@ -238,9 +238,9 @@ export function renderRivalryDetail() {
                 filter: drop-shadow(0 1px 2px rgba(59,0,1,0.15));
             }
             .rvd-vs-text {
-                font-family: 'Inter', monospace;
-                font-size: 9px; font-weight: 800;
-                color: #bbb; letter-spacing: 0.14em;
+                font-family: 'Inter', -apple-system, sans-serif;
+                font-size: 10px; font-weight: 700;
+                color: #888; letter-spacing: 0.12em;
             }
 
             /* Momentum Bar */
@@ -269,9 +269,9 @@ export function renderRivalryDetail() {
             .rvd-momentum-labels {
                 display: flex; justify-content: space-between;
                 margin-top: -20px; margin-bottom: 20px;
-                font-family: 'Inter', monospace;
-                font-size: 9px; font-weight: 700;
-                letter-spacing: 0.08em; color: #bbb;
+                font-family: 'Inter', -apple-system, sans-serif;
+                font-size: 11px; font-weight: 600;
+                letter-spacing: 0.06em; color: #666;
             }
             @media(prefers-reduced-motion:no-preference){
                 .rvd-momentum-left.is-leader { animation: rvd-glow 2s infinite; }
@@ -291,17 +291,17 @@ export function renderRivalryDetail() {
                 align-items: center; padding: 20px 28px 0;
             }
             .rvd-chart-title {
-                font-family: 'Inter', monospace;
-                font-size: 9px; font-weight: 700;
-                letter-spacing: 1.2px; color: #bbb;
+                font-family: 'Inter', -apple-system, sans-serif;
+                font-size: 12px; font-weight: 700;
+                letter-spacing: 1px; color: #555;
                 text-transform: uppercase;
             }
             .rvd-chart-legend { display: flex; gap: 20px; align-items: center; }
             .rvd-chart-legend-item {
                 display: flex; align-items: center; gap: 6px;
-                font-family: 'Inter', monospace;
-                font-size: 10px; font-weight: 600;
-                letter-spacing: 0.04em; color: #666;
+                font-family: 'Inter', -apple-system, sans-serif;
+                font-size: 12px; font-weight: 600;
+                letter-spacing: 0.03em; color: #444;
             }
             .rvd-chart-legend-dot {
                 width: 10px; height: 3px; border-radius: 1px;
@@ -321,9 +321,9 @@ export function renderRivalryDetail() {
             }
             .rvd-chart-metric-card.right { text-align: right; }
             .rvd-chart-metric-label {
-                font-family: 'Inter', monospace;
-                font-size: 9px; font-weight: 700;
-                letter-spacing: 1px; color: #bbb;
+                font-family: 'Inter', -apple-system, sans-serif;
+                font-size: 11px; font-weight: 700;
+                letter-spacing: 0.8px; color: #777;
                 text-transform: uppercase;
             }
             .rvd-chart-metric-name {
@@ -337,21 +337,21 @@ export function renderRivalryDetail() {
                 justify-content: flex-end;
             }
             .rvd-chart-metric-value {
-                font-size: 28px; font-weight: 500; color: #111;
+                font-size: 28px; font-weight: 600; color: #111;
                 letter-spacing: -1px; line-height: 1.1;
-                font-family: 'Neue Haas Grotesk Display', 'Helvetica Neue', sans-serif;
+                font-family: 'Inter', -apple-system, sans-serif;
             }
             .rvd-chart-metric-change {
-                font-family: 'Inter', monospace;
-                font-size: 11px; font-weight: 700;
+                font-family: 'Inter', -apple-system, sans-serif;
+                font-size: 13px; font-weight: 700;
                 letter-spacing: 0.02em;
             }
             .rvd-chart-metric-change.positive { color: #154726; }
             .rvd-chart-metric-change.negative { color: #5C1A1B; }
             .rvd-chart-metric-target {
-                font-family: 'Inter', monospace;
-                font-size: 9px; color: #bbb;
-                letter-spacing: 0.5px;
+                font-family: 'Inter', -apple-system, sans-serif;
+                font-size: 11px; color: #777;
+                letter-spacing: 0.3px;
             }
 
             .rvd-chart-canvas {
@@ -365,14 +365,14 @@ export function renderRivalryDetail() {
                 padding: 8px 28px 16px;
             }
             .rvd-chart-footer span {
-                font-family: 'Inter', monospace;
-                font-size: 9px; color: #ccc; letter-spacing: 0.04em;
+                font-family: 'Inter', -apple-system, sans-serif;
+                font-size: 11px; color: #888; letter-spacing: 0.03em;
             }
             .rvd-chart-pending {
                 display: flex; align-items: center; justify-content: center;
-                height: 100%; color: #ccc;
-                font-family: 'Inter', monospace;
-                font-size: 11px; letter-spacing: 0.06em;
+                height: 100%; color: #888;
+                font-family: 'Inter', -apple-system, sans-serif;
+                font-size: 13px; letter-spacing: 0.04em;
             }
 
             /* ── Status Bar ── */
@@ -386,9 +386,9 @@ export function renderRivalryDetail() {
                 border-radius: 2px;
             }
             .rvd-status-badge {
-                font-family: 'Inter', monospace;
-                font-size: 10px; font-weight: 700;
-                letter-spacing: 0.1em; text-transform: uppercase;
+                font-family: 'Inter', -apple-system, sans-serif;
+                font-size: 12px; font-weight: 700;
+                letter-spacing: 0.08em; text-transform: uppercase;
                 display: flex; align-items: center; gap: 8px;
             }
             .rvd-status-badge .dot {
@@ -408,25 +408,25 @@ export function renderRivalryDetail() {
             }
             .rvd-provider-pill {
                 display: inline-flex; align-items: center; padding: 4px 12px;
-                font-family: 'Inter', monospace;
-                font-size: 8px; font-weight: 700; letter-spacing: 0.08em;
+                font-family: 'Inter', -apple-system, sans-serif;
+                font-size: 10px; font-weight: 700; letter-spacing: 0.06em;
                 color: #fff; text-transform: uppercase; border-radius: 3px;
                 box-shadow: 0 2px 6px rgba(0,0,0,0.12);
             }
             .rvd-time {
-                font-family: 'Inter', monospace;
-                font-size: 11px; color: var(--rvd-muted);
-                letter-spacing: 0.04em;
+                font-family: 'Inter', -apple-system, sans-serif;
+                font-size: 13px; color: #666;
+                letter-spacing: 0.03em;
             }
             .rvd-time.urgent { color: var(--rvd-red); font-weight: 700; }
 
             /* ── Target Badge (replaces emoji) ── */
             .rvd-target-badge {
                 display: inline-flex; align-items: center; gap: 4px;
-                padding: 2px 8px; border-radius: 3px;
-                font-family: 'Inter', monospace;
-                font-size: 10px; font-weight: 700;
-                letter-spacing: 0.06em;
+                padding: 3px 10px; border-radius: 3px;
+                font-family: 'Inter', -apple-system, sans-serif;
+                font-size: 11px; font-weight: 700;
+                letter-spacing: 0.04em;
             }
             .rvd-target-badge.hit {
                 background: rgba(15,81,50,0.08); color: #154726;
@@ -480,11 +480,11 @@ export function renderRivalryDetail() {
                 transform: translateY(-2px);
             }
             .rvd-panel-title {
-                font-family: 'Inter', monospace;
-                font-size: 9px; font-weight: 700;
-                letter-spacing: 0.12em; color: var(--rvd-brand);
+                font-family: 'Inter', -apple-system, sans-serif;
+                font-size: 11px; font-weight: 700;
+                letter-spacing: 0.1em; color: var(--rvd-brand);
                 text-transform: uppercase; margin-bottom: 20px;
-                opacity: 0.6;
+                opacity: 0.8;
             }
             .rvd-row {
                 display: flex; justify-content: space-between;
@@ -492,10 +492,10 @@ export function renderRivalryDetail() {
                 border-bottom: 1px solid #f8f8f8;
             }
             .rvd-row:last-child { border-bottom: none; }
-            .rvd-row-label { font-size: 13px; color: #888; }
+            .rvd-row-label { font-size: 13px; color: #666; }
             .rvd-row-value {
                 font-size: 14px; font-weight: 600; color: #111;
-                font-family: 'Inter', monospace;
+                font-family: 'Inter', -apple-system, sans-serif;
                 letter-spacing: 0.02em;
             }
 

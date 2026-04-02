@@ -11,7 +11,7 @@ export function renderActiveContracts() {
             .act {
                 background: #fff;
                 min-height: calc(100vh - 72px);
-                font-family: 'Neue Haas Grotesk Display', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+                font-family: 'Inter', -apple-system, 'Helvetica Neue', Helvetica, Arial, sans-serif;
                 color: #111;
                 display: flex;
                 flex-direction: column;
@@ -31,11 +31,11 @@ export function renderActiveContracts() {
                 padding: 48px 64px 48px;
             }
             .act-breadcrumb {
-                font-family: 'Inter', monospace;
-                font-size: 10px;
-                font-weight: 700;
-                letter-spacing: 0.12em;
-                color: #ccc;
+                font-family: 'Inter', -apple-system, sans-serif;
+                font-size: 11px;
+                font-weight: 600;
+                letter-spacing: 0.1em;
+                color: #888;
                 text-transform: uppercase;
                 margin-bottom: 24px;
             }
@@ -52,7 +52,7 @@ export function renderActiveContracts() {
             .act-hero-left { flex: 1; }
             .act-hero-title {
                 font-size: 42px;
-                font-weight: 300;
+                font-weight: 600;
                 color: #111;
                 letter-spacing: -1.5px;
                 margin: 0;
@@ -87,17 +87,17 @@ export function renderActiveContracts() {
             }
             .act-stat-value {
                 font-size: 36px;
-                font-weight: 300;
+                font-weight: 600;
                 letter-spacing: -1px;
                 color: #111;
                 line-height: 1;
             }
             .act-stat-label {
-                font-family: 'Inter', monospace;
-                font-size: 9px;
+                font-family: 'Inter', -apple-system, sans-serif;
+                font-size: 11px;
                 font-weight: 600;
-                letter-spacing: 0.12em;
-                color: #ccc;
+                letter-spacing: 0.08em;
+                color: #777;
                 text-transform: uppercase;
                 margin-top: 8px;
             }
@@ -130,12 +130,12 @@ export function renderActiveContracts() {
                 margin-right: 32px;
                 font-size: 13px;
                 font-weight: 500;
-                color: #bbb;
+                color: #888;
                 background: none;
                 border: none;
                 border-bottom: 2px solid transparent;
                 cursor: pointer;
-                font-family: 'Neue Haas Grotesk Display', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+                font-family: 'Inter', -apple-system, 'Helvetica Neue', Helvetica, Arial, sans-serif;
                 text-transform: uppercase;
                 letter-spacing: 0.06em;
                 transition: color 0.15s;
@@ -148,12 +148,12 @@ export function renderActiveContracts() {
             }
 
             .act-controls-right {
-                font-family: 'Inter', monospace;
-                font-size: 10px;
-                font-weight: 700;
-                letter-spacing: 0.1em;
+                font-family: 'Inter', -apple-system, sans-serif;
+                font-size: 12px;
+                font-weight: 600;
+                letter-spacing: 0.08em;
                 text-transform: uppercase;
-                color: #e0e0e0;
+                color: #888;
             }
 
             /* ── List Area ── */
@@ -213,10 +213,10 @@ export function renderActiveContracts() {
                 color: #111;
             }
             .act-card-id {
-                font-family: 'Inter', monospace;
-                font-size: 10px;
-                color: #bbb;
-                letter-spacing: 0.05em;
+                font-family: 'Inter', -apple-system, sans-serif;
+                font-size: 11px;
+                color: #888;
+                letter-spacing: 0.04em;
             }
 
             .act-card-progress {
@@ -240,10 +240,10 @@ export function renderActiveContracts() {
                 background: #752122;
             }
             .act-progress-pct {
-                font-family: 'Inter', monospace;
-                font-size: 10px;
+                font-family: 'Inter', -apple-system, sans-serif;
+                font-size: 12px;
                 font-weight: 700;
-                color: #bbb;
+                color: #666;
                 width: 40px;
                 text-align: right;
             }
@@ -262,11 +262,11 @@ export function renderActiveContracts() {
                 align-items: center;
                 gap: 6px;
                 padding: 4px 10px;
-                font-family: 'Inter', monospace;
-                font-size: 9px;
+                font-family: 'Inter', -apple-system, sans-serif;
+                font-size: 11px;
                 font-weight: 700;
                 text-transform: uppercase;
-                letter-spacing: 0.1em;
+                letter-spacing: 0.08em;
             }
             .act-status-pill .dot { width: 5px; height: 5px; }
 
@@ -288,12 +288,12 @@ export function renderActiveContracts() {
                 gap: 8px;
             }
             .act-tag {
-                font-family: 'Inter', monospace;
-                font-size: 9px;
+                font-family: 'Inter', -apple-system, sans-serif;
+                font-size: 10px;
                 font-weight: 600;
                 text-transform: uppercase;
-                letter-spacing: 0.05em;
-                color: #bbb;
+                letter-spacing: 0.04em;
+                color: #777;
                 padding: 4px 8px;
                 border: 1px solid #f0f0f0;
                 background: #fff;
@@ -308,15 +308,15 @@ export function renderActiveContracts() {
                 gap: 4px;
             }
             .act-fin-main {
-                font-family: 'Neue Haas Grotesk Display', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+                font-family: 'Inter', -apple-system, sans-serif;
                 font-size: 16px;
                 font-weight: 600;
                 color: #111;
-                letter-spacing: -0.5px;
+                letter-spacing: -0.3px;
             }
             .act-fin-sub {
-                font-family: 'Inter', monospace;
-                font-size: 10px;
+                font-family: 'Inter', -apple-system, sans-serif;
+                font-size: 12px;
                 font-weight: 600;
                 color: #16a34a;
                 letter-spacing: 0;
@@ -345,8 +345,8 @@ export function renderActiveContracts() {
                 color: #d97706;
             }
             .act-footer-note-text {
-                font-size: 12px;
-                color: #bbb;
+                font-size: 13px;
+                color: #666;
             }
             .act-footer-note-icon svg { width: 18px; height: 18px; color: #ef4444; }
 
@@ -359,7 +359,7 @@ export function renderActiveContracts() {
                 font-size: 14px;
                 font-weight: 600;
                 color: #888;
-                font-family: 'Neue Haas Grotesk Display', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+                font-family: 'Inter', -apple-system, 'Helvetica Neue', Helvetica, Arial, sans-serif;
                 margin: 0 0 16px;
             }
 
@@ -374,11 +374,11 @@ export function renderActiveContracts() {
             @keyframes cl-spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
             @keyframes cl-pulse { 0%, 100% { opacity: 0.7; } 50% { opacity: 1; } }
             .act-loading-text {
-                font-family: 'Inter', monospace;
-                font-size: 10px;
-                color: #ccc;
+                font-family: 'Inter', -apple-system, sans-serif;
+                font-size: 12px;
+                color: #888;
                 text-transform: uppercase;
-                letter-spacing: 1px;
+                letter-spacing: 0.8px;
             }
 
             /* ── Responsive ── */
@@ -441,12 +441,12 @@ export function renderActiveContracts() {
             }
             .act-detail-item {}
             .act-detail-label {
-                font-family: 'Inter', monospace;
-                font-size: 9px;
+                font-family: 'Inter', -apple-system, sans-serif;
+                font-size: 11px;
                 font-weight: 600;
                 text-transform: uppercase;
-                letter-spacing: 0.12em;
-                color: #ccc;
+                letter-spacing: 0.08em;
+                color: #777;
                 margin-bottom: 6px;
             }
             .act-detail-value {
@@ -464,12 +464,12 @@ export function renderActiveContracts() {
             }
             .act-perf-header svg { width: 14px; height: 14px; color: #bbb; }
             .act-perf-label {
-                font-family: 'Inter', monospace;
-                font-size: 9px;
+                font-family: 'Inter', -apple-system, sans-serif;
+                font-size: 11px;
                 font-weight: 700;
                 text-transform: uppercase;
-                letter-spacing: 0.12em;
-                color: #ccc;
+                letter-spacing: 0.08em;
+                color: #666;
             }
 
             .act-perf-grid {
@@ -480,12 +480,12 @@ export function renderActiveContracts() {
             }
             .act-perf-col {}
             .act-perf-col-label {
-                font-family: 'Inter', monospace;
-                font-size: 9px;
+                font-family: 'Inter', -apple-system, sans-serif;
+                font-size: 11px;
                 font-weight: 600;
                 text-transform: uppercase;
-                letter-spacing: 0.12em;
-                color: #ccc;
+                letter-spacing: 0.08em;
+                color: #777;
                 margin-bottom: 6px;
             }
             .act-perf-col-value {
@@ -512,8 +512,8 @@ export function renderActiveContracts() {
             }
             .act-detail-progress-pct {
                 text-align: right;
-                font-family: 'Inter', monospace;
-                font-size: 11px;
+                font-family: 'Inter', -apple-system, sans-serif;
+                font-size: 12px;
                 font-weight: 700;
                 color: #752122;
                 margin-bottom: 20px;
@@ -528,10 +528,10 @@ export function renderActiveContracts() {
                 border-top: 1px solid #f0f0f0;
                 margin-bottom: 20px;
             }
-            .act-oracle-note svg { width: 14px; height: 14px; color: #ccc; flex-shrink: 0; }
+            .act-oracle-note svg { width: 14px; height: 14px; color: #999; flex-shrink: 0; }
             .act-oracle-note-text {
-                font-size: 12px;
-                color: #bbb;
+                font-size: 13px;
+                color: #666;
             }
 
             /* Action buttons */
@@ -542,10 +542,10 @@ export function renderActiveContracts() {
             }
             .act-btn {
                 padding: 10px 20px;
-                font-family: 'Inter', monospace;
-                font-size: 10px;
+                font-family: 'Inter', -apple-system, sans-serif;
+                font-size: 11px;
                 font-weight: 700;
-                letter-spacing: 0.08em;
+                letter-spacing: 0.06em;
                 text-transform: uppercase;
                 border: none;
                 cursor: pointer;
@@ -598,9 +598,9 @@ export function renderActiveContracts() {
             }
             .ctp-close:hover { color: #111; }
             .ctp-tag {
-                font-family: 'Inter', monospace;
-                font-size: 9px; font-weight: 700;
-                letter-spacing: 0.12em; text-transform: uppercase;
+                font-family: 'Inter', -apple-system, sans-serif;
+                font-size: 11px; font-weight: 700;
+                letter-spacing: 0.1em; text-transform: uppercase;
                 color: #752122; margin-bottom: 12px;
             }
             .ctp-title {
@@ -643,9 +643,9 @@ export function renderActiveContracts() {
             .ctp-card-icon.solo { background: #f5f5f5; }
             .ctp-card-icon.rivalry { background: #fef2f2; }
             .ctp-card-label {
-                font-family: 'Inter', monospace;
-                font-size: 10px; font-weight: 700;
-                letter-spacing: 0.1em; text-transform: uppercase;
+                font-family: 'Inter', -apple-system, sans-serif;
+                font-size: 11px; font-weight: 700;
+                letter-spacing: 0.08em; text-transform: uppercase;
                 margin-bottom: 8px;
             }
             .ctp-card.rivalry .ctp-card-label { color: #752122; }
@@ -655,14 +655,14 @@ export function renderActiveContracts() {
                 letter-spacing: -0.3px;
             }
             .ctp-card-desc {
-                font-size: 12px; color: #888;
+                font-size: 13px; color: #666;
                 line-height: 1.55; flex-grow: 1;
                 margin-bottom: 20px;
             }
             .ctp-card-go {
-                font-family: 'Inter', monospace;
-                font-size: 10px; font-weight: 700;
-                letter-spacing: 0.06em;
+                font-family: 'Inter', -apple-system, sans-serif;
+                font-size: 11px; font-weight: 700;
+                letter-spacing: 0.05em;
                 color: #111;
             }
             .ctp-card.rivalry .ctp-card-go { color: #752122; }

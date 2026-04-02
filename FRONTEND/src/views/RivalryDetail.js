@@ -1120,6 +1120,25 @@ export async function initRivalryDetail() {
         let challBaseline = null;
         let oppBaseline = null;
 
+        // --- TEMP MOCK DATA FOR DEMO ---
+        const _nowMs = Date.now();
+        const _dMs = 86400000;
+        challPoints.push(
+            { t: new Date(_nowMs - 14 * _dMs), v: 1000, pct: 0 },
+            { t: new Date(_nowMs - 10 * _dMs), v: 1020, pct: 2.0 },
+            { t: new Date(_nowMs - 7 * _dMs), v: 1050, pct: 5.0 },
+            { t: new Date(_nowMs - 4 * _dMs), v: 1085, pct: 8.5 },
+            { t: new Date(_nowMs), v: 1115, pct: 11.5 }
+        );
+        oppPoints.push(
+            { t: new Date(_nowMs - 14 * _dMs), v: 2000, pct: 0 },
+            { t: new Date(_nowMs - 11 * _dMs), v: 2040, pct: 2.0 },
+            { t: new Date(_nowMs - 8 * _dMs), v: 2160, pct: 8.0 },
+            { t: new Date(_nowMs - 3 * _dMs), v: 2180, pct: 9.0 },
+            { t: new Date(_nowMs), v: 2190, pct: 9.5 }
+        );
+        // -------------------------------
+
         (metricsData || []).forEach(m => {
             const val = parseFloat(m.metricValue || m.metric_value || 0);
             const ts = new Date(m.fetchedAt || m.fetched_at);

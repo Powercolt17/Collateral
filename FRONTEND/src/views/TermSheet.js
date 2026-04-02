@@ -42,14 +42,14 @@ export function renderTermSheet(params) {
             .ext-back:hover { border-color: #bbb; color: #333; }
             .ext-header-id {
                 font-size: 11px;
-                font-family: 'JetBrains Mono', monospace;
+                font-family: 'Inter', monospace;
                 color: #999;
                 letter-spacing: 0.5px;
             }
             .ext-header-status {
                 display: inline-flex; align-items: center; gap: 6px;
                 font-size: 11px; color: #065f46;
-                font-family: 'JetBrains Mono', monospace;
+                font-family: 'Inter', monospace;
                 text-transform: uppercase;
                 letter-spacing: 0.5px;
             }
@@ -112,7 +112,7 @@ export function renderTermSheet(params) {
                 text-transform: uppercase;
                 letter-spacing: 0.5px;
                 color: #555;
-                font-family: 'JetBrains Mono', monospace;
+                font-family: 'Inter', monospace;
                 margin: 0;
             }
             .ext-card-body { padding: 24px; }
@@ -136,7 +136,7 @@ export function renderTermSheet(params) {
                 color: #888;
                 text-transform: uppercase;
                 letter-spacing: 0.5px;
-                font-family: 'JetBrains Mono', monospace;
+                font-family: 'Inter', monospace;
                 font-weight: 500;
                 margin-bottom: 4px;
             }
@@ -157,7 +157,7 @@ export function renderTermSheet(params) {
             .ext-baseline-note {
                 font-size: 11px;
                 color: #999;
-                font-family: 'JetBrains Mono', monospace;
+                font-family: 'Inter', monospace;
                 padding: 12px 24px;
                 border-top: 1px solid #f0f0f0;
                 background: #fafafa;
@@ -178,7 +178,7 @@ export function renderTermSheet(params) {
                 text-transform: uppercase;
                 letter-spacing: 0.5px;
                 color: #752122;
-                font-family: 'JetBrains Mono', monospace;
+                font-family: 'Inter', monospace;
                 margin: 0 0 12px;
             }
             .ext-forfeit-text {
@@ -207,7 +207,7 @@ export function renderTermSheet(params) {
                 text-transform: uppercase;
                 letter-spacing: 0.5px;
                 color: #555;
-                font-family: 'JetBrains Mono', monospace;
+                font-family: 'Inter', monospace;
                 margin: 0 0 12px;
             }
             .ext-warning-list {
@@ -313,7 +313,7 @@ export function renderTermSheet(params) {
             .ext-footer-text {
                 font-size: 11px;
                 color: #bbb;
-                font-family: 'JetBrains Mono', monospace;
+                font-family: 'Inter', monospace;
                 letter-spacing: 0.3px;
             }
 
@@ -490,7 +490,7 @@ export function renderTermSheet(params) {
                             <div class="ext-grid-2">
                                 <div>
                                     <div class="ext-field-label">Snapshot ID</div>
-                                    <div class="ext-field-value small" id="ext-snap-id" style="font-family: 'JetBrains Mono', monospace; font-size: 12px; color: #888;">—</div>
+                                    <div class="ext-field-value small" id="ext-snap-id" style="font-family: 'Inter', monospace; font-size: 12px; color: #888;">—</div>
                                 </div>
                                 <div>
                                     <div class="ext-field-label">Measured Period</div>

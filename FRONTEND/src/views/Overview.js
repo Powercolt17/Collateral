@@ -24,7 +24,7 @@ export function renderOverview() {
                 display: flex;
                 align-items: center;
                 gap: 12px;
-                font-family: 'JetBrains Mono', monospace;
+                font-family: 'Inter', monospace;
                 font-size: 10px;
                 text-transform: uppercase;
                 letter-spacing: 1.5px;
@@ -105,7 +105,7 @@ export function renderOverview() {
                 right: 32px;
                 bottom: 100px;
                 writing-mode: vertical-rl;
-                font-family: 'JetBrains Mono', monospace;
+                font-family: 'Inter', monospace;
                 font-size: 9px;
                 color: #ccc;
                 letter-spacing: 3px;
@@ -189,7 +189,7 @@ export function renderOverview() {
                 font-size: 14px;
                 color: #ccc;
                 z-index: 2;
-                font-family: 'JetBrains Mono', monospace;
+                font-family: 'Inter', monospace;
             }
             .eq-mech-num {
                 font-family: 'Neue Haas Grotesk Display', sans-serif;
@@ -235,7 +235,7 @@ export function renderOverview() {
                 display: flex;
                 align-items: center;
                 gap: 8px;
-                font-family: 'JetBrains Mono', monospace;
+                font-family: 'Inter', monospace;
                 font-size: 10px;
                 color: #aaa;
                 text-transform: uppercase;
@@ -279,7 +279,7 @@ export function renderOverview() {
             }
             .eq-stat-val small { font-size: 14px; color: #ccc; font-weight: 400; letter-spacing: 0; }
             .eq-stat-lbl {
-                font-family: 'JetBrains Mono', monospace;
+                font-family: 'Inter', monospace;
                 font-size: 10px;
                 text-transform: uppercase;
                 letter-spacing: 1px;
@@ -298,7 +298,7 @@ export function renderOverview() {
             .eq-tabs { display: flex; gap: 32px; }
             .eq-tab {
                 padding: 12px 0;
-                font-family: 'JetBrains Mono', monospace;
+                font-family: 'Inter', monospace;
                 font-size: 11px;
                 font-weight: 700;
                 color: #bbb;
@@ -330,7 +330,7 @@ export function renderOverview() {
                 background: #fff;
                 border: 1px solid #eee;
                 padding: 10px 16px;
-                font-family: 'JetBrains Mono', monospace;
+                font-family: 'Inter', monospace;
                 font-size: 11px;
                 font-weight: 700;
                 text-transform: uppercase;
@@ -347,7 +347,7 @@ export function renderOverview() {
             }
             .eq-pills { display: flex; align-items: center; gap: 8px; }
             .eq-filter-lbl { 
-                font-family: 'JetBrains Mono', monospace; 
+                font-family: 'Inter', monospace; 
                 font-size: 10px; 
                 color: #ccc; 
                 text-transform: uppercase; 
@@ -369,7 +369,7 @@ export function renderOverview() {
                 display: flex;
                 align-items: center;
                 gap: 8px;
-                font-family: 'JetBrains Mono', monospace;
+                font-family: 'Inter', monospace;
                 font-size: 9px;
                 text-transform: uppercase;
                 color: #ccc;
@@ -408,7 +408,7 @@ export function renderOverview() {
             .eq-card-meta {
                 display: flex;
                 justify-content: space-between;
-                font-family: 'JetBrains Mono', monospace;
+                font-family: 'Inter', monospace;
                 font-size: 10px;
                 text-transform: uppercase;
                 letter-spacing: 0.5px;
@@ -431,7 +431,7 @@ export function renderOverview() {
                 margin-bottom: 8px;
             }
             .eq-provider-name {
-                font-family: 'JetBrains Mono', monospace;
+                font-family: 'Inter', monospace;
                 font-size: 10px;
                 text-transform: uppercase;
                 color: #888;
@@ -442,7 +442,7 @@ export function renderOverview() {
                 font-weight: 700;
                 border-radius: 2px;
                 text-transform: uppercase;
-                font-family: 'JetBrains Mono', monospace;
+                font-family: 'Inter', monospace;
                 letter-spacing: 0.5px;
             }
             .eq-tier-badge.controlled { background: #f0fdf4; color: #166534; border: 1px solid #dcfce7; }
@@ -453,7 +453,7 @@ export function renderOverview() {
                 display: flex;
                 align-items: center;
                 gap: 6px;
-                font-family: 'JetBrains Mono', monospace;
+                font-family: 'Inter', monospace;
                 font-size: 9px;
                 color: #10b981;
                 text-transform: uppercase;
@@ -470,7 +470,7 @@ export function renderOverview() {
             .eq-stake-val { font-size: 24px; font-weight: 500; letter-spacing: -1px; }
             .eq-stake-separator { width: 16px; height: 1px; background: #eee; }
             .eq-stake-lbl {
-                font-family: 'JetBrains Mono', monospace;
+                font-family: 'Inter', monospace;
                 font-size: 9px;
                 color: #ccc;
                 text-transform: uppercase;
@@ -544,7 +544,7 @@ export function renderOverview() {
             .eq-modal-title { font-size: 18px; font-weight: 700; color: #111; }
             .eq-modal-close { background: none; border: none; font-size: 18px; cursor: pointer; color: #888; padding: 4px 8px; }
             .eq-rule-divider {
-                font-family: 'JetBrains Mono', monospace;
+                font-family: 'Inter', monospace;
                 font-size: 10px;
                 text-transform: uppercase;
                 letter-spacing: 1px;
@@ -558,7 +558,7 @@ export function renderOverview() {
             .eq-rule-row { display: flex; align-items: center; gap: 10px; padding: 8px 0; font-size: 13px; color: #555; }
             .eq-rule-row input[type="checkbox"] { accent-color: #5C1414; }
             .eq-threshold-table { width: 100%; border-collapse: collapse; font-size: 12px; margin-top: 8px; }
-            .eq-threshold-table th { text-align: left; font-family: 'JetBrains Mono', monospace; font-size: 10px; text-transform: uppercase; letter-spacing: 0.5px; color: #aaa; padding: 8px 12px; border-bottom: 1px solid #f2f2f2; }
+            .eq-threshold-table th { text-align: left; font-family: 'Inter', monospace; font-size: 10px; text-transform: uppercase; letter-spacing: 0.5px; color: #aaa; padding: 8px 12px; border-bottom: 1px solid #f2f2f2; }
             .eq-threshold-table td { padding: 8px 12px; color: #555; border-bottom: 1px solid #f8f8f8; }
             .eq-threshold-table .tier-controlled { color: #166534; font-weight: 600; }
             .eq-threshold-table .tier-elevated { color: #9a3412; font-weight: 600; }
@@ -569,7 +569,7 @@ export function renderOverview() {
             .eq-slider-row { display: flex; align-items: center; gap: 12px; padding: 12px 0; }
             .eq-slider-label { font-size: 12px; color: #888; min-width: 80px; }
             .eq-slider { flex: 1; accent-color: #5C1414; }
-            .eq-slider-value { font-family: 'JetBrains Mono', monospace; font-size: 12px; color: #111; font-weight: 600; min-width: 60px; text-align: right; }
+            .eq-slider-value { font-family: 'Inter', monospace; font-size: 12px; color: #111; font-weight: 600; min-width: 60px; text-align: right; }
 
             /* --- STAKE WARNING --- */
             .eq-stake-warning { max-width: 1300px; margin: 0 auto; padding: 24px 32px; border-top: 1px solid #f2f2f2; }
@@ -605,7 +605,7 @@ export function renderOverview() {
             .eq-path-card.rivalry:hover { border-color: rgba(59,0,1,0.3); box-shadow: 0 8px 32px rgba(59,0,1,0.06); }
             .eq-path-icon { margin-bottom: 24px; }
             .eq-path-tag {
-                font-family: 'JetBrains Mono', monospace;
+                font-family: 'Inter', monospace;
                 font-size: 10px; font-weight: 700;
                 letter-spacing: 0.12em; text-transform: uppercase;
                 color: #111; margin-bottom: 12px;
@@ -626,7 +626,7 @@ export function renderOverview() {
             .eq-path-details { margin-bottom: 28px; }
             .eq-path-detail {
                 display: flex; align-items: center; gap: 10px;
-                font-family: 'JetBrains Mono', monospace;
+                font-family: 'Inter', monospace;
                 font-size: 11px; color: #555;
                 letter-spacing: 0.03em;
                 padding: 6px 0;
@@ -641,7 +641,7 @@ export function renderOverview() {
                 padding: 14px 24px;
                 background: #111; color: #fff;
                 border: none;
-                font-family: 'JetBrains Mono', monospace;
+                font-family: 'Inter', monospace;
                 font-size: 11px; font-weight: 700;
                 letter-spacing: 0.08em; text-transform: uppercase;
                 text-decoration: none; text-align: center;
@@ -1060,7 +1060,7 @@ export function renderOverview() {
             .eq-tier-card.allin:hover { border-color: #ffe4e6; }
 
             .eq-tier-card-badge {
-                font-family: 'JetBrains Mono', monospace;
+                font-family: 'Inter', monospace;
                 font-size: 10px;
                 font-weight: 700;
                 letter-spacing: 0.12em;
@@ -1083,7 +1083,7 @@ export function renderOverview() {
                 line-height: 1;
             }
             .eq-tier-card-rate-label {
-                font-family: 'JetBrains Mono', monospace;
+                font-family: 'Inter', monospace;
                 font-size: 10px;
                 text-transform: uppercase;
                 letter-spacing: 1px;
@@ -1108,7 +1108,7 @@ export function renderOverview() {
                 align-items: center;
             }
             .eq-tier-spec-label {
-                font-family: 'JetBrains Mono', monospace;
+                font-family: 'Inter', monospace;
                 font-size: 10px;
                 text-transform: uppercase;
                 letter-spacing: 0.5px;
@@ -1394,7 +1394,7 @@ export function renderOverview() {
 
             <!-- Contract Grid -->
             <div class="eq-grid-container" style="padding: 0 32px; max-width: 1440px; margin: 0 auto;">
-                <div style="font-family:'JetBrains Mono'; font-size: 10px; color: #ccc; margin-bottom: 24px;" id="eq-count-lbl">12 contracts</div>
+                <div style="font-family:'Inter'; font-size: 10px; color: #ccc; margin-bottom: 24px;" id="eq-count-lbl">12 contracts</div>
                 <div class="eq-grid" id="eq-grid">
                     <!-- Dynamic cards go here -->
                 </div>

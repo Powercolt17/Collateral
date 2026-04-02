@@ -1,6 +1,6 @@
 // =============================================================================
 // COLLATERAL MODAL — Professional modal system replacing browser alert/confirm
-// Matches site's institutional dark aesthetic with JetBrains Mono typography
+// Matches site's institutional dark aesthetic with Inter typography
 // =============================================================================
 
 const MODAL_CSS = `
@@ -30,7 +30,7 @@ const MODAL_CSS = `
 .cl-modal-icon.info { background: #f5f5f5; color: #1a1a1a; }
 .cl-modal-icon.confirm { background: #f5f5f5; color: #1a1a1a; }
 .cl-modal-title {
-    font-family: 'JetBrains Mono', monospace; font-size: 11px;
+    font-family: 'Inter', monospace; font-size: 11px;
     font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase;
     color: #1a1a1a;
 }
@@ -43,7 +43,7 @@ const MODAL_CSS = `
 }
 .cl-modal-btn {
     padding: 10px 20px; border: none; border-radius: 1px; cursor: pointer;
-    font-family: 'JetBrains Mono', monospace; font-size: 10px;
+    font-family: 'Inter', monospace; font-size: 10px;
     font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase;
     transition: all 0.15s ease;
 }

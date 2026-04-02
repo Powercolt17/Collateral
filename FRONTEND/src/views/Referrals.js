@@ -2,7 +2,7 @@
  * Referrals Page — Institutional Design
  *
  * Matches premium aesthetic: Sources.js / ActiveContracts.js / Funding.js
- * Sharp borders · JetBrains Mono labels · #752122 accent · No border-radius
+ * Sharp borders · Inter labels · #752122 accent · No border-radius
  */
 
 export function renderReferrals() {
@@ -31,7 +31,7 @@ export function renderReferrals() {
                 padding: 48px 64px 48px;
             }
             .ref-breadcrumb {
-                font-family: 'JetBrains Mono', monospace;
+                font-family: 'Inter', monospace;
                 font-size: 10px;
                 font-weight: 500;
                 letter-spacing: 0.15em;
@@ -88,7 +88,7 @@ export function renderReferrals() {
             }
             .ref-stat-value.accent { color: #752122; }
             .ref-stat-label {
-                font-family: 'JetBrains Mono', monospace;
+                font-family: 'Inter', monospace;
                 font-size: 9px;
                 font-weight: 600;
                 letter-spacing: 0.12em;
@@ -121,7 +121,7 @@ export function renderReferrals() {
                 border-bottom: 1px solid #f0f0f0;
             }
             .ref-section-title {
-                font-family: 'JetBrains Mono', monospace;
+                font-family: 'Inter', monospace;
                 font-size: 9px;
                 font-weight: 700;
                 text-transform: uppercase;
@@ -129,7 +129,7 @@ export function renderReferrals() {
                 color: #333;
             }
             .ref-section-sub {
-                font-family: 'JetBrains Mono', monospace;
+                font-family: 'Inter', monospace;
                 font-size: 10px;
                 color: #555;
             }
@@ -171,7 +171,7 @@ export function renderReferrals() {
                 display: inline-flex;
                 align-items: center;
                 padding: 2px 6px;
-                font-family: 'JetBrains Mono', monospace;
+                font-family: 'Inter', monospace;
                 font-size: 9px;
                 font-weight: 700;
                 text-transform: uppercase;
@@ -189,7 +189,7 @@ export function renderReferrals() {
             }
 
             .ref-tier-pct {
-                font-family: 'JetBrains Mono', monospace;
+                font-family: 'Inter', monospace;
                 font-size: 13px;
                 font-weight: 700;
                 color: #111;
@@ -205,7 +205,7 @@ export function renderReferrals() {
                 padding: 20px;
             }
             .ref-link-title {
-                font-family: 'JetBrains Mono', monospace;
+                font-family: 'Inter', monospace;
                 font-size: 9px;
                 font-weight: 700;
                 text-transform: uppercase;
@@ -222,7 +222,7 @@ export function renderReferrals() {
                 padding: 10px 14px;
                 border: 1px solid #333;
                 font-size: 13px;
-                font-family: 'JetBrains Mono', monospace;
+                font-family: 'Inter', monospace;
                 background: #1a1a1a;
                 color: #e5e5e5;
                 outline: none;
@@ -232,7 +232,7 @@ export function renderReferrals() {
                 background: #752122;
                 color: #fff;
                 border: none;
-                font-family: 'JetBrains Mono', monospace;
+                font-family: 'Inter', monospace;
                 font-size: 11px;
                 font-weight: 700;
                 letter-spacing: 1px;
@@ -313,12 +313,12 @@ export function renderReferrals() {
             }
             .ref-history-row:last-child { border-bottom: none; }
             .ref-history-date {
-                font-family: 'JetBrains Mono', monospace;
+                font-family: 'Inter', monospace;
                 font-size: 11px;
                 color: #666;
             }
             .ref-history-status {
-                font-family: 'JetBrains Mono', monospace;
+                font-family: 'Inter', monospace;
                 font-size: 9px;
                 font-weight: 700;
                 text-transform: uppercase;
@@ -376,7 +376,7 @@ export function renderReferrals() {
                 gap: 2px;
             }
             .ref-footer-lbl {
-                font-family: 'JetBrains Mono', monospace;
+                font-family: 'Inter', monospace;
                 font-size: 9px;
                 font-weight: 700;
                 text-transform: uppercase;
@@ -384,7 +384,7 @@ export function renderReferrals() {
                 color: #555;
             }
             .ref-footer-val {
-                font-family: 'JetBrains Mono', monospace;
+                font-family: 'Inter', monospace;
                 font-size: 10px;
                 color: #111;
             }
@@ -417,7 +417,7 @@ export function renderReferrals() {
             }
             @keyframes ref-spin { to { transform: rotate(360deg); } }
             .ref-loading-text {
-                font-family: 'JetBrains Mono', monospace;
+                font-family: 'Inter', monospace;
                 font-size: 10px;
                 font-weight: 500;
                 color: #ccc;

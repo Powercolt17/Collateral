@@ -59,7 +59,7 @@ export function renderRivalryDetail() {
                 padding: 48px 64px 40px; position: relative;
             }
             .rvd-breadcrumb {
-                font-family: 'JetBrains Mono', monospace;
+                font-family: 'Inter', monospace;
                 font-size: 10px; font-weight: 700;
                 letter-spacing: 0.12em; color: #ccc;
                 text-transform: uppercase; margin-bottom: 28px;
@@ -99,20 +99,20 @@ export function renderRivalryDetail() {
             .rvd-player-avatar {
                 width: 36px; height: 36px; border-radius: 50%;
                 display: flex; align-items: center; justify-content: center;
-                font-family: 'JetBrains Mono', monospace;
+                font-family: 'Inter', monospace;
                 font-size: 14px; font-weight: 800; color: #fff;
                 flex-shrink: 0;
             }
             .rvd-player-avatar.challenger { background: var(--rvd-green); }
             .rvd-player-avatar.opponent { background: var(--rvd-brand); }
             .rvd-player-label {
-                font-family: 'JetBrains Mono', monospace;
+                font-family: 'Inter', monospace;
                 font-size: 9px; font-weight: 700;
                 letter-spacing: 0.12em; color: #bbb;
                 text-transform: uppercase;
             }
             .rvd-player-name {
-                font-family: 'JetBrains Mono', monospace;
+                font-family: 'Inter', monospace;
                 font-size: 18px; font-weight: 600;
                 color: #111; letter-spacing: 0.02em;
             }
@@ -121,14 +121,14 @@ export function renderRivalryDetail() {
                 letter-spacing: -1px; margin-top: 4px;
                 line-height: 1.2;
                 transition: color .3s;
-                font-family: 'JetBrains Mono', monospace;
+                font-family: 'Inter', monospace;
             }
             .rvd-player-growth.leading {
                 color: var(--rvd-green);
             }
             .rvd-player-growth.trailing { color: var(--rvd-brand); }
             .rvd-player-baseline {
-                font-family: 'JetBrains Mono', monospace;
+                font-family: 'Inter', monospace;
                 font-size: 10px; color: #bbb;
                 letter-spacing: 0.04em; margin-top: 4px;
             }
@@ -138,7 +138,7 @@ export function renderRivalryDetail() {
                 text-align: center; padding: 28px 0 20px;
             }
             .rvd-pool-label {
-                font-family: 'JetBrains Mono', monospace;
+                font-family: 'Inter', monospace;
                 font-size: 9px; font-weight: 700;
                 letter-spacing: 1.5px; color: #bbb;
                 text-transform: uppercase; margin-bottom: 6px;
@@ -149,7 +149,7 @@ export function renderRivalryDetail() {
                 line-height: 1.0;
             }
             .rvd-pool-sub {
-                font-family: 'JetBrains Mono', monospace;
+                font-family: 'Inter', monospace;
                 font-size: 10px; color: #999; letter-spacing: 0.06em;
                 margin-top: 6px;
             }
@@ -165,7 +165,7 @@ export function renderRivalryDetail() {
                 flex: 1; display: flex; align-items: center;
                 justify-content: center; gap: 8px;
                 padding: 0 16px; height: 100%;
-                font-family: 'JetBrains Mono', monospace;
+                font-family: 'Inter', monospace;
                 font-size: 11px; font-weight: 700;
                 letter-spacing: 0.04em;
                 transition: background .3s;
@@ -201,10 +201,10 @@ export function renderRivalryDetail() {
             .rvd-countdown-val {
                 font-size: 28px; font-weight: 700; color: #111;
                 letter-spacing: -0.5px; line-height: 1.1;
-                font-family: 'JetBrains Mono', monospace;
+                font-family: 'Inter', monospace;
             }
             .rvd-countdown-label {
-                font-family: 'JetBrains Mono', monospace;
+                font-family: 'Inter', monospace;
                 font-size: 7px; font-weight: 700;
                 letter-spacing: 1.2px; color: #ccc;
                 text-transform: uppercase; margin-top: 4px;
@@ -213,7 +213,7 @@ export function renderRivalryDetail() {
             .rvd-countdown.urgent .rvd-countdown-val { color: #5C1A1B; }
             .rvd-countdown.urgent { border-color: rgba(196,30,36,0.15); background: rgba(196,30,36,0.02); }
             .rvd-leader-tag {
-                font-family: 'JetBrains Mono', monospace;
+                font-family: 'Inter', monospace;
                 font-size: 8px; font-weight: 700;
                 letter-spacing: 0.14em; text-transform: uppercase;
                 color: var(--rvd-green); margin-bottom: 4px;
@@ -237,7 +237,7 @@ export function renderRivalryDetail() {
                 filter: drop-shadow(0 1px 2px rgba(59,0,1,0.15));
             }
             .rvd-vs-text {
-                font-family: 'JetBrains Mono', monospace;
+                font-family: 'Inter', monospace;
                 font-size: 9px; font-weight: 800;
                 color: #bbb; letter-spacing: 0.14em;
             }
@@ -268,7 +268,7 @@ export function renderRivalryDetail() {
             .rvd-momentum-labels {
                 display: flex; justify-content: space-between;
                 margin-top: -20px; margin-bottom: 20px;
-                font-family: 'JetBrains Mono', monospace;
+                font-family: 'Inter', monospace;
                 font-size: 9px; font-weight: 700;
                 letter-spacing: 0.08em; color: #bbb;
             }
@@ -290,7 +290,7 @@ export function renderRivalryDetail() {
                 align-items: center; padding: 20px 28px 0;
             }
             .rvd-chart-title {
-                font-family: 'JetBrains Mono', monospace;
+                font-family: 'Inter', monospace;
                 font-size: 9px; font-weight: 700;
                 letter-spacing: 1.2px; color: #bbb;
                 text-transform: uppercase;
@@ -298,7 +298,7 @@ export function renderRivalryDetail() {
             .rvd-chart-legend { display: flex; gap: 20px; align-items: center; }
             .rvd-chart-legend-item {
                 display: flex; align-items: center; gap: 6px;
-                font-family: 'JetBrains Mono', monospace;
+                font-family: 'Inter', monospace;
                 font-size: 10px; font-weight: 600;
                 letter-spacing: 0.04em; color: #666;
             }
@@ -320,7 +320,7 @@ export function renderRivalryDetail() {
             }
             .rvd-chart-metric-card.right { text-align: right; }
             .rvd-chart-metric-label {
-                font-family: 'JetBrains Mono', monospace;
+                font-family: 'Inter', monospace;
                 font-size: 9px; font-weight: 700;
                 letter-spacing: 1px; color: #bbb;
                 text-transform: uppercase;
@@ -341,14 +341,14 @@ export function renderRivalryDetail() {
                 font-family: 'Neue Haas Grotesk Display', 'Helvetica Neue', sans-serif;
             }
             .rvd-chart-metric-change {
-                font-family: 'JetBrains Mono', monospace;
+                font-family: 'Inter', monospace;
                 font-size: 11px; font-weight: 700;
                 letter-spacing: 0.02em;
             }
             .rvd-chart-metric-change.positive { color: #154726; }
             .rvd-chart-metric-change.negative { color: #5C1A1B; }
             .rvd-chart-metric-target {
-                font-family: 'JetBrains Mono', monospace;
+                font-family: 'Inter', monospace;
                 font-size: 9px; color: #bbb;
                 letter-spacing: 0.5px;
             }
@@ -364,13 +364,13 @@ export function renderRivalryDetail() {
                 padding: 8px 28px 16px;
             }
             .rvd-chart-footer span {
-                font-family: 'JetBrains Mono', monospace;
+                font-family: 'Inter', monospace;
                 font-size: 9px; color: #ccc; letter-spacing: 0.04em;
             }
             .rvd-chart-pending {
                 display: flex; align-items: center; justify-content: center;
                 height: 100%; color: #ccc;
-                font-family: 'JetBrains Mono', monospace;
+                font-family: 'Inter', monospace;
                 font-size: 11px; letter-spacing: 0.06em;
             }
 
@@ -385,7 +385,7 @@ export function renderRivalryDetail() {
                 border-radius: 2px;
             }
             .rvd-status-badge {
-                font-family: 'JetBrains Mono', monospace;
+                font-family: 'Inter', monospace;
                 font-size: 10px; font-weight: 700;
                 letter-spacing: 0.1em; text-transform: uppercase;
                 display: flex; align-items: center; gap: 8px;
@@ -407,13 +407,13 @@ export function renderRivalryDetail() {
             }
             .rvd-provider-pill {
                 display: inline-flex; align-items: center; padding: 4px 12px;
-                font-family: 'JetBrains Mono', monospace;
+                font-family: 'Inter', monospace;
                 font-size: 8px; font-weight: 700; letter-spacing: 0.08em;
                 color: #fff; text-transform: uppercase; border-radius: 3px;
                 box-shadow: 0 2px 6px rgba(0,0,0,0.12);
             }
             .rvd-time {
-                font-family: 'JetBrains Mono', monospace;
+                font-family: 'Inter', monospace;
                 font-size: 11px; color: var(--rvd-muted);
                 letter-spacing: 0.04em;
             }
@@ -423,7 +423,7 @@ export function renderRivalryDetail() {
             .rvd-target-badge {
                 display: inline-flex; align-items: center; gap: 4px;
                 padding: 2px 8px; border-radius: 3px;
-                font-family: 'JetBrains Mono', monospace;
+                font-family: 'Inter', monospace;
                 font-size: 10px; font-weight: 700;
                 letter-spacing: 0.06em;
             }
@@ -479,7 +479,7 @@ export function renderRivalryDetail() {
                 transform: translateY(-2px);
             }
             .rvd-panel-title {
-                font-family: 'JetBrains Mono', monospace;
+                font-family: 'Inter', monospace;
                 font-size: 9px; font-weight: 700;
                 letter-spacing: 0.12em; color: var(--rvd-brand);
                 text-transform: uppercase; margin-bottom: 20px;
@@ -494,7 +494,7 @@ export function renderRivalryDetail() {
             .rvd-row-label { font-size: 13px; color: #888; }
             .rvd-row-value {
                 font-size: 14px; font-weight: 600; color: #111;
-                font-family: 'JetBrains Mono', monospace;
+                font-family: 'Inter', monospace;
                 letter-spacing: 0.02em;
             }
 
@@ -507,7 +507,7 @@ export function renderRivalryDetail() {
             .rvd-action-btn {
                 height: 52px; padding: 0 40px;
                 border: none; cursor: pointer;
-                font-family: 'JetBrains Mono', monospace;
+                font-family: 'Inter', monospace;
                 font-size: 11px; font-weight: 700;
                 letter-spacing: 0.1em; text-transform: uppercase;
                 transition: all .25s var(--rvd-ease);
@@ -547,7 +547,7 @@ export function renderRivalryDetail() {
             }
             .rvd-action-btn.fund:hover { background: var(--rvd-brand); box-shadow: 0 6px 24px rgba(59,0,1,0.25); }
             .rvd-action-status {
-                font-family: 'JetBrains Mono', monospace;
+                font-family: 'Inter', monospace;
                 font-size: 10px; font-weight: 600;
                 letter-spacing: 0.08em; color: var(--rvd-muted);
                 text-transform: uppercase;
@@ -562,7 +562,7 @@ export function renderRivalryDetail() {
             .rvd-share-btn {
                 height: 42px; padding: 0 28px;
                 border: 1px solid #e5e5e5; background: #fff;
-                font-family: 'JetBrains Mono', monospace;
+                font-family: 'Inter', monospace;
                 font-size: 10px; font-weight: 600;
                 letter-spacing: 0.08em; text-transform: uppercase;
                 color: #888; cursor: pointer;
@@ -589,7 +589,7 @@ export function renderRivalryDetail() {
                 border-radius: 2px;
             }
             .rvd-warning-text {
-                font-family: 'JetBrains Mono', monospace;
+                font-family: 'Inter', monospace;
                 font-size: 10px; font-weight: 600;
                 letter-spacing: 0.10em; color: #666;
                 text-transform: uppercase;
@@ -601,7 +601,7 @@ export function renderRivalryDetail() {
                 text-align: center; padding: 120px 20px; color: #ccc;
             }
             .rvd-loading-text {
-                font-family: 'JetBrains Mono', monospace;
+                font-family: 'Inter', monospace;
                 font-size: 12px; letter-spacing: 0.08em;
             }
             .rvd-skel-bar {
@@ -1164,7 +1164,7 @@ export async function initRivalryDetail() {
                 const y = toY(pct).toFixed(1);
                 gridSvg += `<line x1="${PAD_L}" y1="${y}" x2="${W - PAD_R}" y2="${y}" stroke="#f0f0f0" stroke-width="1"/>`;
                 if (pct !== targetPct) {
-                    gridSvg += `<text x="${W - PAD_R + 6}" y="${parseFloat(y) + 3}" font-family="JetBrains Mono, monospace" font-size="8" fill="#ddd">${pct > 0 ? '+' : ''}${pct}%</text>`;
+                    gridSvg += `<text x="${W - PAD_R + 6}" y="${parseFloat(y) + 3}" font-family="Inter, monospace" font-size="8" fill="#ddd">${pct > 0 ? '+' : ''}${pct}%</text>`;
                 }
             });
 
@@ -1172,7 +1172,7 @@ export async function initRivalryDetail() {
             const daySteps = [0, Math.floor(rivalry.totalDays/4), Math.floor(rivalry.totalDays/2), Math.floor(rivalry.totalDays*3/4), rivalry.totalDays];
             daySteps.forEach(d => {
                 const x = toX(d / rivalry.totalDays).toFixed(1);
-                dayMarkers += `<text x="${x}" y="${H - 8}" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="8" fill="#ddd">Day ${d}</text>`;
+                dayMarkers += `<text x="${x}" y="${H - 8}" text-anchor="middle" font-family="Inter, monospace" font-size="8" fill="#ddd">Day ${d}</text>`;
                 dayMarkers += `<line x1="${x}" y1="${PAD_T}" x2="${x}" y2="${H - PAD_B}" stroke="#f8f8f8" stroke-width="1"/>`;
             });
 
@@ -1204,21 +1204,21 @@ export async function initRivalryDetail() {
                     ${dayMarkers}
                     <line x1="${PAD_L}" y1="${projTY}" x2="${W - PAD_R}" y2="${projTY}" stroke="#5C1A1B" stroke-width="1.5" stroke-dasharray="8 4" opacity="0.4"/>
                     <rect x="${W - PAD_R + 2}" y="${tgtY - 9}" width="72" height="18" rx="2" fill="#5C1A1B" opacity="0.85"/>
-                    <text x="${W - PAD_R + 38}" y="${tgtY + 1}" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="8" font-weight="700" fill="#fff">+${targetPct}% TARGET</text>
+                    <text x="${W - PAD_R + 38}" y="${tgtY + 1}" text-anchor="middle" font-family="Inter, monospace" font-size="8" font-weight="700" fill="#fff">+${targetPct}% TARGET</text>
                     <line x1="${PAD_L}" y1="${zeroY.toFixed(1)}" x2="${W - PAD_R}" y2="${zeroY.toFixed(1)}" stroke="#e0e0e0" stroke-width="1"/>
-                    <text x="${W - PAD_R + 6}" y="${zeroY + 3}" font-family="JetBrains Mono, monospace" font-size="8" fill="#ccc">0%</text>
+                    <text x="${W - PAD_R + 6}" y="${zeroY + 3}" font-family="Inter, monospace" font-size="8" fill="#ccc">0%</text>
                     <path d="M${PAD_L},${zeroY} L${curX},${challY} L${curX},${zeroY} Z" fill="url(#g-chall-a)"/>
                     <line x1="${PAD_L}" y1="${zeroY}" x2="${curX}" y2="${challY}" stroke="${challColor}" stroke-width="2.5" stroke-linecap="round"/>
                     <line x1="${curX}" y1="${challY}" x2="${endX}" y2="${projTY}" stroke="${challColor}" stroke-width="1" stroke-dasharray="4 4" opacity="0.3"/>
                     <circle cx="${curX}" cy="${challY}" r="5" fill="${challColor}" stroke="#fff" stroke-width="2" filter="url(#dg2)"/>
                     <rect x="${W - PAD_R + 2}" y="${challY - 9}" width="62" height="18" rx="2" fill="${challColor}" opacity="0.1"/>
-                    <text x="${W - PAD_R + 33}" y="${challY + 1}" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="8" font-weight="700" fill="${challColor}">${challGrowth >= 0 ? '+' : ''}${challGrowth.toFixed(1)}%</text>
+                    <text x="${W - PAD_R + 33}" y="${challY + 1}" text-anchor="middle" font-family="Inter, monospace" font-size="8" font-weight="700" fill="${challColor}">${challGrowth >= 0 ? '+' : ''}${challGrowth.toFixed(1)}%</text>
                     <path d="M${PAD_L},${zeroY} L${curX},${oppY} L${curX},${zeroY} Z" fill="url(#g-opp-a)"/>
                     <line x1="${PAD_L}" y1="${zeroY}" x2="${curX}" y2="${oppY}" stroke="${oppColor}" stroke-width="2" stroke-linecap="round" opacity="0.7"/>
                     <line x1="${curX}" y1="${oppY}" x2="${endX}" y2="${projTY}" stroke="${oppColor}" stroke-width="1" stroke-dasharray="4 4" opacity="0.2"/>
                     <circle cx="${curX}" cy="${oppY}" r="4" fill="${oppColor}" stroke="#fff" stroke-width="2" opacity="0.8"/>
                     <rect x="${W - PAD_R + 2}" y="${oppY + 8}" width="62" height="18" rx="2" fill="${oppColor}" opacity="0.08"/>
-                    <text x="${W - PAD_R + 33}" y="${oppY + 18}" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="8" font-weight="700" fill="${oppColor}">${oppGrowth >= 0 ? '+' : ''}${oppGrowth.toFixed(1)}%</text>
+                    <text x="${W - PAD_R + 33}" y="${oppY + 18}" text-anchor="middle" font-family="Inter, monospace" font-size="8" font-weight="700" fill="${oppColor}">${oppGrowth >= 0 ? '+' : ''}${oppGrowth.toFixed(1)}%</text>
                 </svg>`;
             return;
         }
@@ -1279,7 +1279,7 @@ export async function initRivalryDetail() {
             const pct = minPct + (range / gridCount) * i;
             const y = toY(pct);
             gridSvg += `<line x1="${PAD_L}" y1="${y}" x2="${W - PAD_R}" y2="${y}" stroke="#f0f0f0" stroke-width="1" stroke-dasharray="4 4"/>`;
-            gridSvg += `<text x="${PAD_L - 8}" y="${y + 4}" text-anchor="end" font-family="JetBrains Mono, monospace" font-size="9" fill="#ccc" font-weight="500">${pct.toFixed(0)}%</text>`;
+            gridSvg += `<text x="${PAD_L - 8}" y="${y + 4}" text-anchor="end" font-family="Inter, monospace" font-size="9" fill="#ccc" font-weight="500">${pct.toFixed(0)}%</text>`;
         }
 
         // Zero line
@@ -1289,7 +1289,7 @@ export async function initRivalryDetail() {
         // Target line
         const targetY = toY(targetPct);
         gridSvg += `<line x1="${PAD_L}" y1="${targetY}" x2="${W - PAD_R}" y2="${targetY}" stroke="#5C1A1B" stroke-width="1" stroke-dasharray="6 4" opacity="0.5"/>`;
-        gridSvg += `<text x="${W - PAD_R + 4}" y="${targetY + 3}" font-family="JetBrains Mono, monospace" font-size="8" font-weight="700" fill="#5C1A1B" opacity="0.6">TARGET +${targetPct}%</text>`;
+        gridSvg += `<text x="${W - PAD_R + 4}" y="${targetY + 3}" font-family="Inter, monospace" font-size="8" font-weight="700" fill="#5C1A1B" opacity="0.6">TARGET +${targetPct}%</text>`;
 
         const challPath = buildPath(challPoints);
         const oppPath = buildPath(oppPoints);
@@ -1309,7 +1309,7 @@ export async function initRivalryDetail() {
             endDots += `<circle cx="${cx}" cy="${cy}" r="5" fill="${challColor}" stroke="#fff" stroke-width="2" filter="url(#dot-glow)"/>`;
             // Right-side label badge
             endDots += `<rect x="${W - PAD_R + 4}" y="${parseFloat(cy) - 10}" width="68" height="20" rx="3" fill="${challColor}" opacity="0.9"/>`;
-            endDots += `<text x="${W - PAD_R + 38}" y="${parseFloat(cy) + 3.5}" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="9" font-weight="700" fill="#fff">${challEnd.pct >= 0 ? '+' : ''}${challEnd.pct.toFixed(1)}%</text>`;
+            endDots += `<text x="${W - PAD_R + 38}" y="${parseFloat(cy) + 3.5}" text-anchor="middle" font-family="Inter, monospace" font-size="9" font-weight="700" fill="#fff">${challEnd.pct >= 0 ? '+' : ''}${challEnd.pct.toFixed(1)}%</text>`;
         }
         if (oppEnd) {
             const cx = toX(oppEnd.t.getTime()).toFixed(1);
@@ -1317,7 +1317,7 @@ export async function initRivalryDetail() {
             endDots += `<line x1="${cx}" y1="${cy}" x2="${W - PAD_R}" y2="${cy}" stroke="${oppColor}" stroke-width="1" stroke-dasharray="3 3" opacity="0.4"/>`;
             endDots += `<circle cx="${cx}" cy="${cy}" r="5" fill="${oppColor}" stroke="#fff" stroke-width="2" filter="url(#dot-glow)"/>`;
             endDots += `<rect x="${W - PAD_R + 4}" y="${parseFloat(cy) - 10}" width="68" height="20" rx="3" fill="${oppColor}" opacity="0.9"/>`;
-            endDots += `<text x="${W - PAD_R + 38}" y="${parseFloat(cy) + 3.5}" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="9" font-weight="700" fill="#fff">${oppEnd.pct >= 0 ? '+' : ''}${oppEnd.pct.toFixed(1)}%</text>`;
+            endDots += `<text x="${W - PAD_R + 38}" y="${parseFloat(cy) + 3.5}" text-anchor="middle" font-family="Inter, monospace" font-size="9" font-weight="700" fill="#fff">${oppEnd.pct >= 0 ? '+' : ''}${oppEnd.pct.toFixed(1)}%</text>`;
         }
 
         // Pulse animation on leading dot
@@ -1363,7 +1363,7 @@ export async function initRivalryDetail() {
         const W = 900, H = 220;
         chartEl.innerHTML = `
             <svg viewBox="0 0 ${W} ${H}" preserveAspectRatio="xMidYMid meet" style="width:100%;height:100%">
-                <text x="${W/2}" y="30" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="10" font-weight="700" fill="#ddd" letter-spacing="1.2px">AWAITING ACTIVATION</text>
+                <text x="${W/2}" y="30" text-anchor="middle" font-family="Inter, monospace" font-size="10" font-weight="700" fill="#ddd" letter-spacing="1.2px">AWAITING ACTIVATION</text>
                 <rect x="50" y="50" width="770" height="32" rx="3" fill="#f5f5f5"/>
                 <rect x="50" y="50" width="50" height="32" rx="3" fill="#e8e8e8" opacity="0.5">
                     <animate attributeName="width" values="50;120;50" dur="2s" repeatCount="indefinite"/>
@@ -1372,7 +1372,7 @@ export async function initRivalryDetail() {
                 <rect x="50" y="100" width="30" height="32" rx="3" fill="#e8e8e8" opacity="0.5">
                     <animate attributeName="width" values="30;80;30" dur="2s" repeatCount="indefinite"/>
                 </rect>
-                <text x="${W/2}" y="${H - 20}" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="9" fill="#ddd" letter-spacing="0.5px">Chart activates once both sides fund their position</text>
+                <text x="${W/2}" y="${H - 20}" text-anchor="middle" font-family="Inter, monospace" font-size="9" fill="#ddd" letter-spacing="0.5px">Chart activates once both sides fund their position</text>
             </svg>`;
     }
 
@@ -1389,7 +1389,7 @@ export async function initRivalryDetail() {
                     if (!liveTag) {
                         liveTag = document.createElement('span');
                         liveTag.className = 'rvd-live-refresh';
-                        liveTag.style.cssText = 'font-family:"JetBrains Mono",monospace;font-size:9px;color:#154726;letter-spacing:0.06em;display:flex;align-items:center;gap:4px;';
+                        liveTag.style.cssText = 'font-family:"Inter",monospace;font-size:9px;color:#154726;letter-spacing:0.06em;display:flex;align-items:center;gap:4px;';
                         legendEl.appendChild(liveTag);
                     }
                     liveTag.innerHTML = `<span style="width:6px;height:6px;border-radius:50%;background:#154726;display:inline-block;animation:rvd-skeletonWave 1s infinite"></span> LIVE · Refreshing...`;

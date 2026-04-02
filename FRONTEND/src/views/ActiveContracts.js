@@ -31,7 +31,7 @@ export function renderActiveContracts() {
                 padding: 48px 64px 48px;
             }
             .act-breadcrumb {
-                font-family: 'JetBrains Mono', monospace;
+                font-family: 'Inter', monospace;
                 font-size: 10px;
                 font-weight: 700;
                 letter-spacing: 0.12em;
@@ -93,7 +93,7 @@ export function renderActiveContracts() {
                 line-height: 1;
             }
             .act-stat-label {
-                font-family: 'JetBrains Mono', monospace;
+                font-family: 'Inter', monospace;
                 font-size: 9px;
                 font-weight: 600;
                 letter-spacing: 0.12em;
@@ -148,7 +148,7 @@ export function renderActiveContracts() {
             }
 
             .act-controls-right {
-                font-family: 'JetBrains Mono', monospace;
+                font-family: 'Inter', monospace;
                 font-size: 10px;
                 font-weight: 700;
                 letter-spacing: 0.1em;
@@ -213,7 +213,7 @@ export function renderActiveContracts() {
                 color: #111;
             }
             .act-card-id {
-                font-family: 'JetBrains Mono', monospace;
+                font-family: 'Inter', monospace;
                 font-size: 10px;
                 color: #bbb;
                 letter-spacing: 0.05em;
@@ -240,7 +240,7 @@ export function renderActiveContracts() {
                 background: #752122;
             }
             .act-progress-pct {
-                font-family: 'JetBrains Mono', monospace;
+                font-family: 'Inter', monospace;
                 font-size: 10px;
                 font-weight: 700;
                 color: #bbb;
@@ -262,7 +262,7 @@ export function renderActiveContracts() {
                 align-items: center;
                 gap: 6px;
                 padding: 4px 10px;
-                font-family: 'JetBrains Mono', monospace;
+                font-family: 'Inter', monospace;
                 font-size: 9px;
                 font-weight: 700;
                 text-transform: uppercase;
@@ -288,7 +288,7 @@ export function renderActiveContracts() {
                 gap: 8px;
             }
             .act-tag {
-                font-family: 'JetBrains Mono', monospace;
+                font-family: 'Inter', monospace;
                 font-size: 9px;
                 font-weight: 600;
                 text-transform: uppercase;
@@ -315,7 +315,7 @@ export function renderActiveContracts() {
                 letter-spacing: -0.5px;
             }
             .act-fin-sub {
-                font-family: 'JetBrains Mono', monospace;
+                font-family: 'Inter', monospace;
                 font-size: 10px;
                 font-weight: 600;
                 color: #16a34a;
@@ -374,7 +374,7 @@ export function renderActiveContracts() {
             @keyframes cl-spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
             @keyframes cl-pulse { 0%, 100% { opacity: 0.7; } 50% { opacity: 1; } }
             .act-loading-text {
-                font-family: 'JetBrains Mono', monospace;
+                font-family: 'Inter', monospace;
                 font-size: 10px;
                 color: #ccc;
                 text-transform: uppercase;
@@ -441,7 +441,7 @@ export function renderActiveContracts() {
             }
             .act-detail-item {}
             .act-detail-label {
-                font-family: 'JetBrains Mono', monospace;
+                font-family: 'Inter', monospace;
                 font-size: 9px;
                 font-weight: 600;
                 text-transform: uppercase;
@@ -464,7 +464,7 @@ export function renderActiveContracts() {
             }
             .act-perf-header svg { width: 14px; height: 14px; color: #bbb; }
             .act-perf-label {
-                font-family: 'JetBrains Mono', monospace;
+                font-family: 'Inter', monospace;
                 font-size: 9px;
                 font-weight: 700;
                 text-transform: uppercase;
@@ -480,7 +480,7 @@ export function renderActiveContracts() {
             }
             .act-perf-col {}
             .act-perf-col-label {
-                font-family: 'JetBrains Mono', monospace;
+                font-family: 'Inter', monospace;
                 font-size: 9px;
                 font-weight: 600;
                 text-transform: uppercase;
@@ -512,7 +512,7 @@ export function renderActiveContracts() {
             }
             .act-detail-progress-pct {
                 text-align: right;
-                font-family: 'JetBrains Mono', monospace;
+                font-family: 'Inter', monospace;
                 font-size: 11px;
                 font-weight: 700;
                 color: #752122;
@@ -542,7 +542,7 @@ export function renderActiveContracts() {
             }
             .act-btn {
                 padding: 10px 20px;
-                font-family: 'JetBrains Mono', monospace;
+                font-family: 'Inter', monospace;
                 font-size: 10px;
                 font-weight: 700;
                 letter-spacing: 0.08em;
@@ -598,7 +598,7 @@ export function renderActiveContracts() {
             }
             .ctp-close:hover { color: #111; }
             .ctp-tag {
-                font-family: 'JetBrains Mono', monospace;
+                font-family: 'Inter', monospace;
                 font-size: 9px; font-weight: 700;
                 letter-spacing: 0.12em; text-transform: uppercase;
                 color: #752122; margin-bottom: 12px;
@@ -643,7 +643,7 @@ export function renderActiveContracts() {
             .ctp-card-icon.solo { background: #f5f5f5; }
             .ctp-card-icon.rivalry { background: #fef2f2; }
             .ctp-card-label {
-                font-family: 'JetBrains Mono', monospace;
+                font-family: 'Inter', monospace;
                 font-size: 10px; font-weight: 700;
                 letter-spacing: 0.1em; text-transform: uppercase;
                 margin-bottom: 8px;
@@ -660,7 +660,7 @@ export function renderActiveContracts() {
                 margin-bottom: 20px;
             }
             .ctp-card-go {
-                font-family: 'JetBrains Mono', monospace;
+                font-family: 'Inter', monospace;
                 font-size: 10px; font-weight: 700;
                 letter-spacing: 0.06em;
                 color: #111;

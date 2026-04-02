@@ -224,7 +224,7 @@ export function renderHeader(currentRoute) {
                 border: 1px solid #e5e5e5;
                 background: #fff;
                 cursor: pointer;
-                font-family: 'JetBrains Mono', monospace;
+                font-family: 'Inter', monospace;
             }
             @media (min-width: 768px) {
                 .ch-dropdown { display: flex; }
@@ -267,7 +267,7 @@ export function renderHeader(currentRoute) {
                 background: #111111;
                 border: none;
                 cursor: pointer;
-                font-family: 'JetBrains Mono', monospace;
+                font-family: 'Inter', monospace;
                 letter-spacing: 0.5px;
                 text-transform: uppercase;
                 transition: background 0.12s;
@@ -319,7 +319,7 @@ export function renderHeader(currentRoute) {
                 .ch-user-label-wrap { display: flex; }
             }
             .ch-user-label-id {
-                font-family: 'JetBrains Mono', monospace;
+                font-family: 'Inter', monospace;
                 font-size: 11px;
                 font-weight: 700;
                 color: #111111;
@@ -327,7 +327,7 @@ export function renderHeader(currentRoute) {
                 line-height: 1;
             }
             .ch-user-label-role {
-                font-family: 'JetBrains Mono', monospace;
+                font-family: 'Inter', monospace;
                 font-size: 8px;
                 font-weight: 600;
                 text-transform: uppercase;
@@ -370,7 +370,7 @@ export function renderHeader(currentRoute) {
                 border: none;
                 border-bottom: 1px solid #F5F5F5;
                 cursor: pointer;
-                font-family: 'JetBrains Mono', monospace;
+                font-family: 'Inter', monospace;
                 transition: background 0.1s;
             }
             .ch-user-dropdown button:last-child { border-bottom: none; }
@@ -402,7 +402,7 @@ export function renderHeader(currentRoute) {
                 text-transform: uppercase;
                 letter-spacing: 1px;
                 color: #888;
-                font-family: 'JetBrains Mono', monospace;
+                font-family: 'Inter', monospace;
             }
             .ch-notif-item {
                 padding: 10px 14px;
@@ -426,13 +426,13 @@ export function renderHeader(currentRoute) {
             .ch-notif-icon.settle { background: #f0fdf4; color: #166534; }
             .ch-notif-icon.forfeit { background: #fef2f2; color: #991b1b; }
             .ch-notif-text { flex: 1; color: #444; font-weight: 500; }
-            .ch-notif-time { font-size: 10px; color: #999; font-family: 'JetBrains Mono', monospace; white-space: nowrap; }
+            .ch-notif-time { font-size: 10px; color: #999; font-family: 'Inter', monospace; white-space: nowrap; }
             .ch-notif-empty {
                 padding: 24px 14px;
                 text-align: center;
                 font-size: 11px;
                 color: #999;
-                font-family: 'JetBrains Mono', monospace;
+                font-family: 'Inter', monospace;
             }
             .ch-notif-badge {
                 position: absolute;
@@ -500,7 +500,7 @@ export function renderHeader(currentRoute) {
                 font-weight: 600;
                 letter-spacing: 0.12em;
                 color: #999;
-                font-family: 'JetBrains Mono', monospace;
+                font-family: 'Inter', monospace;
                 text-transform: uppercase;
             }
             .ch-mob-nav {
@@ -545,7 +545,7 @@ export function renderHeader(currentRoute) {
                 font-size: 10px;
                 font-weight: 500;
                 color: #999;
-                font-family: 'JetBrains Mono', monospace;
+                font-family: 'Inter', monospace;
                 text-transform: uppercase;
                 letter-spacing: 0.08em;
             }
@@ -564,7 +564,7 @@ export function renderHeader(currentRoute) {
                 font-size: 9px;
                 font-weight: 600;
                 color: #bbb;
-                font-family: 'JetBrains Mono', monospace;
+                font-family: 'Inter', monospace;
                 text-transform: uppercase;
                 letter-spacing: 0.1em;
             }
@@ -584,7 +584,7 @@ export function renderHeader(currentRoute) {
                 font-size: 10px;
                 color: #bbb;
                 text-decoration: none;
-                font-family: 'JetBrains Mono', monospace;
+                font-family: 'Inter', monospace;
                 letter-spacing: 0.04em;
             }
             .ch-mob-legal a:hover { color: #888; }

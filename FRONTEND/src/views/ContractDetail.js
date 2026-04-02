@@ -16,7 +16,7 @@ export function renderContractDetail(params) {
             /* Breadcrumb */
             .cd-breadcrumb { display: flex; align-items: center; gap: 8px; margin-bottom: 40px; }
             .cd-breadcrumb a, .cd-breadcrumb span {
-                font-size: 10px; font-family: 'JetBrains Mono', monospace;
+                font-size: 10px; font-family: 'Inter', monospace;
                 text-transform: uppercase; letter-spacing: 0.1em; color: #a3a3a3;
                 text-decoration: none; transition: color 150ms; cursor: pointer;
             }
@@ -62,7 +62,7 @@ export function renderContractDetail(params) {
             
             .cd-badge {
                 display: inline-flex; align-items: center; gap: 6px; padding: 4px 10px;
-                font-family: 'JetBrains Mono', monospace; font-size: 10px; font-weight: 700;
+                font-family: 'Inter', monospace; font-size: 10px; font-weight: 700;
                 text-transform: uppercase; letter-spacing: 0.1em;
             }
             .cd-badge .dot { width: 5px; height: 5px; border-radius: 50%; }
@@ -85,7 +85,7 @@ export function renderContractDetail(params) {
             .cd-stat { display: flex; flex-direction: column; align-items: flex-start; gap: 8px; }
             .cd-stat-val { font-size: 28px; font-weight: 400; letter-spacing: -0.5px; color: #111; line-height: 1; }
             .cd-stat-val.green { color: #16a34a; }
-            .cd-stat-lbl { font-family: 'JetBrains Mono', monospace; font-size: 9px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.12em; color: #ccc; }
+            .cd-stat-lbl { font-family: 'Inter', monospace; font-size: 9px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.12em; color: #ccc; }
 
             /* Layout */
             .cd-layout {
@@ -120,7 +120,7 @@ export function renderContractDetail(params) {
             }
             .cd-block-header {
                 display: flex; align-items: center; gap: 8px;
-                font-family: 'JetBrains Mono', monospace; font-size: 10px; font-weight: 700;
+                font-family: 'Inter', monospace; font-size: 10px; font-weight: 700;
                 text-transform: uppercase; letter-spacing: 0.12em; color: #bbb;
                 margin-bottom: 24px;
             }
@@ -137,7 +137,7 @@ export function renderContractDetail(params) {
             }
             @media (max-width: 600px) { .cd-details-grid { grid-template-columns: repeat(2, 1fr); } }
             .cd-detail-item { display: flex; flex-direction: column; gap: 8px; }
-            .cd-detail-lbl { font-family: 'JetBrains Mono', monospace; font-size: 9px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.12em; color: #ccc; }
+            .cd-detail-lbl { font-family: 'Inter', monospace; font-size: 9px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.12em; color: #ccc; }
             .cd-detail-val { font-size: 14px; font-weight: 500; color: #111; }
             .fw-bold { font-weight: 700 !important; }
 
@@ -145,11 +145,11 @@ export function renderContractDetail(params) {
                 display: flex; align-items: center; justify-content: space-between;
                 margin-top: 8px;
             }
-            .cd-hash-val { font-family: 'JetBrains Mono', monospace; font-size: 12px; color: #a3a3a3; word-break: break-all; }
+            .cd-hash-val { font-family: 'Inter', monospace; font-size: 12px; color: #a3a3a3; word-break: break-all; }
             .cd-copy-btn {
                 display: inline-flex; align-items: center; gap: 6px;
                 padding: 6px 12px; background: #fff; border: 1px solid #e5e5e5;
-                font-family: 'JetBrains Mono', monospace; font-size: 9px; font-weight: 700;
+                font-family: 'Inter', monospace; font-size: 9px; font-weight: 700;
                 text-transform: uppercase; letter-spacing: 0.1em; color: #888;
                 cursor: pointer; transition: all 150ms;
             }
@@ -164,7 +164,7 @@ export function renderContractDetail(params) {
                 margin-bottom: 16px;
             }
             .cd-perf-item { display: flex; flex-direction: column; gap: 8px; }
-            .cd-perf-lbl { font-family: 'JetBrains Mono', monospace; font-size: 9px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.12em; color: #ccc; }
+            .cd-perf-lbl { font-family: 'Inter', monospace; font-size: 9px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.12em; color: #ccc; }
             .cd-perf-val { font-size: 15px; font-weight: 600; color: #111; }
             .cd-perf-val.green { color: #752122; } /* Updated to match screenshot: red val */
 
@@ -179,7 +179,7 @@ export function renderContractDetail(params) {
                 height: 100%; background: #752122; transition: width 0.5s ease-out;
             }
             .cd-progress-pct {
-                font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 700; color: #111;
+                font-family: 'Inter', monospace; font-size: 11px; font-weight: 700; color: #111;
             }
             .cd-progress-note {
                 display: flex; align-items: center; gap: 8px;
@@ -209,7 +209,7 @@ export function renderContractDetail(params) {
             .cd-btn-wrap { display: flex; flex-direction: column; gap: 8px; }
             .cd-btn {
                 display: flex; align-items: center; justify-content: space-between;
-                padding: 14px 20px; font-family: 'JetBrains Mono', monospace; font-size: 10px; font-weight: 700;
+                padding: 14px 20px; font-family: 'Inter', monospace; font-size: 10px; font-weight: 700;
                 text-transform: uppercase; letter-spacing: 0.1em; color: #fff; background: #111;
                 border: none; cursor: pointer; text-decoration: none; transition: background 150ms;
             }
@@ -246,9 +246,9 @@ export function renderContractDetail(params) {
                 0%, 100% { opacity: 1; }
                 50% { opacity: 0.25; }
             }
-            .cd-event-name { font-family: 'JetBrains Mono', monospace; font-size: 10px; font-weight: 600; color: #111; letter-spacing: 0.06em; text-transform: uppercase; }
+            .cd-event-name { font-family: 'Inter', monospace; font-size: 10px; font-weight: 600; color: #111; letter-spacing: 0.06em; text-transform: uppercase; }
             .cd-event-name.future-text { color: #d4d4d4; font-weight: 500; }
-            .cd-event-time { font-family: 'JetBrains Mono', monospace; font-size: 9px; color: #bbb; letter-spacing: 0.02em; }
+            .cd-event-time { font-family: 'Inter', monospace; font-size: 9px; color: #bbb; letter-spacing: 0.02em; }
         </style>
 
         <div class="cd">

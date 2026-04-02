@@ -16,7 +16,7 @@
     <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Inter+Tight:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="canonical" href="https://collateral.market">
 
     <!-- Branding -->
@@ -154,52 +154,14 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="dns-prefetch" href="https://collateral-production.up.railway.app">
     <link
-        href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap"
+        href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@500;600;700&family=Inter:wght@400;500;600;700;800&display=swap"
         rel="stylesheet">
-
-    <!-- Override JetBrains Mono's slashed zero AFTER Google Fonts loads -->
-    <style>
-        @font-face {
-            font-family: 'JetBrains Mono';
-            src: local('Segoe UI'), local('Arial'), local('Helvetica Neue'), local('Helvetica'), local('Roboto'), local('SF Pro Display'), local('San Francisco');
-            unicode-range: U+0030;
-            font-weight: 100 900;
-            font-style: normal;
-            font-display: swap;
-        }
-        @font-face {
-            font-family: 'JetBrains Mono';
-            src: local('Segoe UI'), local('Arial'), local('Helvetica Neue'), local('Helvetica'), local('Roboto'), local('SF Pro Display'), local('San Francisco');
-            unicode-range: U+0030;
-            font-weight: 100 900;
-            font-style: italic;
-            font-display: swap;
-        }
-    </style>
 
     <!-- Stripe.js (required for card elements & payment confirmation) -->
     <script src="https://js.stripe.com/v3/" async></script>
 
     <!-- Lucide Icons (async to not block render) -->
     <script src="https://unpkg.com/lucide@latest" defer></script>
-
-    <!-- Force clean zeros: inject @font-face AFTER Google Fonts finishes loading -->
-    <script>
-        (function() {
-            var css = '@font-face{font-family:"JetBrains Mono";src:local("Segoe UI"),local("Arial"),local("Helvetica Neue"),local("Roboto"),local("SF Pro Display");unicode-range:U+0030;font-weight:100 900;font-style:normal;font-display:swap}@font-face{font-family:"JetBrains Mono";src:local("Segoe UI"),local("Arial"),local("Helvetica Neue"),local("Roboto"),local("SF Pro Display");unicode-range:U+0030;font-weight:100 900;font-style:italic;font-display:swap}';
-            function inject() {
-                var s = document.createElement('style');
-                s.textContent = css;
-                document.head.appendChild(s);
-            }
-            // Inject immediately AND again after all fonts load to guarantee last-rule-wins
-            inject();
-            if (document.fonts && document.fonts.ready) {
-                document.fonts.ready.then(function() { inject(); });
-            }
-            window.addEventListener('load', function() { inject(); });
-        })();
-    </script>
 
 </head>
 
@@ -254,7 +216,7 @@
             }
 
             #loading-screen .load-sub {
-                font-family: 'JetBrains Mono', monospace;
+                font-family: 'Inter', monospace;
                 font-size: 9px;
                 color: #bbb;
                 letter-spacing: 0.12em;
@@ -363,7 +325,7 @@
             <div style="display: flex; gap: 80px; flex-wrap: wrap;">
                 <div>
                     <div
-                        style="font-size: 10px; font-weight: 700; color: #666; letter-spacing: 1.5px; text-transform: uppercase; margin-bottom: 16px; font-family: 'JetBrains Mono', monospace;">
+                        style="font-size: 10px; font-weight: 700; color: #666; letter-spacing: 1.5px; text-transform: uppercase; margin-bottom: 16px; font-family: 'Inter', monospace;">
                         PLATFORM</div>
                     <div style="display: flex; flex-direction: column; gap: 12px;">
                         <a href="#" onclick="window.router.navigate('/overview'); return false;"
@@ -378,7 +340,7 @@
                 </div>
                 <div>
                     <div
-                        style="font-size: 10px; font-weight: 700; color: #666; letter-spacing: 1.5px; text-transform: uppercase; margin-bottom: 16px; font-family: 'JetBrains Mono', monospace;">
+                        style="font-size: 10px; font-weight: 700; color: #666; letter-spacing: 1.5px; text-transform: uppercase; margin-bottom: 16px; font-family: 'Inter', monospace;">
                         RESOURCES</div>
                     <div style="display: flex; flex-direction: column; gap: 12px;">
                         <a href="#" onclick="window.router.navigate('/docs'); return false;"
@@ -525,7 +487,7 @@
             <div style="display:flex;align-items:center;gap:16px;margin:20px 0;">
                 <div style="flex:1;height:1px;background:#E6E6E6;"></div>
                 <span
-                    style="font-size:12px;color:#8A8A8A;letter-spacing:0.12em;text-transform:uppercase;font-family:'JetBrains Mono',monospace;">OR</span>
+                    style="font-size:12px;color:#8A8A8A;letter-spacing:0.12em;text-transform:uppercase;font-family:'Inter',monospace;">OR</span>
                 <div style="flex:1;height:1px;background:#E6E6E6;"></div>
             </div>
 

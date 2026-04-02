@@ -53,12 +53,12 @@ function ensureModal() {
             }
             .exec-header-title {
                 font-size: 11px; font-weight: 600; color: #374151;
-                font-family: 'JetBrains Mono', 'JetBrains Mono', monospace;
+                font-family: 'Inter', 'Inter', monospace;
                 text-transform: uppercase; letter-spacing: 0.08em;
             }
             .exec-header-id {
                 font-size: 10px; color: #9ca3af;
-                font-family: 'JetBrains Mono', monospace;
+                font-family: 'Inter', monospace;
                 letter-spacing: 0.04em;
             }
 
@@ -72,7 +72,7 @@ function ensureModal() {
             }
             .exec-tier-label {
                 font-size: 11px; font-weight: 600; color: #374151;
-                font-family: 'JetBrains Mono', monospace;
+                font-family: 'Inter', monospace;
                 text-transform: uppercase; letter-spacing: 0.06em;
             }
             .exec-tier-badge {
@@ -110,7 +110,7 @@ function ensureModal() {
             .exec-outcome-label {
                 font-size: 11px; color: #6b7280;
                 text-transform: uppercase; letter-spacing: 0.06em;
-                font-family: 'JetBrains Mono', monospace; font-weight: 500;
+                font-family: 'Inter', monospace; font-weight: 500;
             }
             .exec-outcome-value {
                 font-size: 16px; font-weight: 700;
@@ -131,7 +131,7 @@ function ensureModal() {
             /* Escrow */
             .exec-escrow {
                 font-size: 10px; color: #9ca3af; text-align: center;
-                font-family: 'JetBrains Mono', monospace;
+                font-family: 'Inter', monospace;
                 letter-spacing: 0.02em;
                 margin-bottom: 16px;
             }
@@ -203,7 +203,7 @@ function ensureModal() {
                 background: #fef2f2; border: 1px solid #e5c5c5;
                 padding: 10px 14px; margin-top: 12px;
                 font-size: 11px; color: #752122;
-                font-family: 'JetBrains Mono', monospace;
+                font-family: 'Inter', monospace;
                 border-radius: 4px; display: none;
             }
 
@@ -213,12 +213,12 @@ function ensureModal() {
             .exec-success-title {
                 font-size: 11px; font-weight: 700; color: #166534;
                 text-transform: uppercase; letter-spacing: 0.06em;
-                font-family: 'JetBrains Mono', monospace;
+                font-family: 'Inter', monospace;
                 margin-bottom: 4px;
             }
             .exec-success-sub {
                 font-size: 10px; color: #9ca3af;
-                font-family: 'JetBrains Mono', monospace;
+                font-family: 'Inter', monospace;
             }
             .exec-success-actions {
                 display: flex; gap: 8px; margin-top: 16px;
@@ -491,12 +491,12 @@ function showSuccess(bodyEl, stake, multiplier, contractId) {
             <div style="background:#fafafa;border:1px solid #e5e5e5;border-radius:6px;padding:16px;margin:20px 0 12px;text-align:left;">
                 <div style="display:flex;align-items:center;gap:8px;margin-bottom:10px;">
                     <span style="font-size:16px;">🐦</span>
-                    <span style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.06em;font-family:'JetBrains Mono',monospace;color:#111;">Boost Your Payout</span>
+                    <span style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.06em;font-family:'Inter',monospace;color:#111;">Boost Your Payout</span>
                 </div>
                 <div style="font-size:12px;color:#374151;line-height:1.5;margin-bottom:12px;font-family:'Neue Haas Grotesk Display','Helvetica Neue',sans-serif;">
                     Share your contract on X to earn <strong>+5% extra profit</strong> if you succeed.
                 </div>
-                <div style="display:flex;gap:6px;font-size:10px;color:#6b7280;font-family:'JetBrains Mono',monospace;margin-bottom:14px;">
+                <div style="display:flex;gap:6px;font-size:10px;color:#6b7280;font-family:'Inter',monospace;margin-bottom:14px;">
                     <span>Normal: $${payout.toLocaleString()}</span>
                     <span>→</span>
                     <span style="color:#166534;font-weight:600;">Boosted: $${bonusPayout.toLocaleString()} (+$${bonusProfit.toLocaleString()})</span>
@@ -508,15 +508,15 @@ function showSuccess(bodyEl, stake, multiplier, contractId) {
             </div>
 
             <div id="exec-tweet-verify" style="display:none;background:#f0fdf4;border:1px solid #bbf7d0;border-radius:6px;padding:14px;margin-bottom:12px;text-align:left;">
-                <div style="font-size:11px;font-weight:600;color:#166534;margin-bottom:8px;font-family:'JetBrains Mono',monospace;text-transform:uppercase;letter-spacing:0.04em;">Paste Your Tweet URL</div>
-                <input id="exec-tweet-url" type="text" placeholder="https://x.com/you/status/..." style="width:100%;padding:8px 10px;border:1px solid #d4d4d4;border-radius:4px;font-size:12px;font-family:'JetBrains Mono',monospace;margin-bottom:8px;box-sizing:border-box;">
+                <div style="font-size:11px;font-weight:600;color:#166534;margin-bottom:8px;font-family:'Inter',monospace;text-transform:uppercase;letter-spacing:0.04em;">Paste Your Tweet URL</div>
+                <input id="exec-tweet-url" type="text" placeholder="https://x.com/you/status/..." style="width:100%;padding:8px 10px;border:1px solid #d4d4d4;border-radius:4px;font-size:12px;font-family:'Inter',monospace;margin-bottom:8px;box-sizing:border-box;">
                 <button id="exec-verify-tweet" style="width:100%;padding:8px;background:#166534;color:#fff;border:none;border-radius:4px;font-size:11px;font-weight:600;cursor:pointer;text-transform:uppercase;letter-spacing:0.04em;font-family:'Neue Haas Grotesk Display',sans-serif;">Verify & Activate Bonus</button>
-                <div id="exec-tweet-status" style="font-size:10px;color:#6b7280;margin-top:6px;font-family:'JetBrains Mono',monospace;display:none;"></div>
+                <div id="exec-tweet-status" style="font-size:10px;color:#6b7280;margin-top:6px;font-family:'Inter',monospace;display:none;"></div>
             </div>
 
             <div id="exec-bonus-confirmed" style="display:none;background:#f0fdf4;border:1px solid #bbf7d0;border-radius:6px;padding:12px;margin-bottom:12px;text-align:center;">
                 <div style="font-size:13px;font-weight:700;color:#166534;">🐦 +5% Bonus Activated</div>
-                <div style="font-size:10px;color:#6b7280;margin-top:4px;font-family:'JetBrains Mono',monospace;">Tweet must stay live until settlement</div>
+                <div style="font-size:10px;color:#6b7280;margin-top:4px;font-family:'Inter',monospace;">Tweet must stay live until settlement</div>
             </div>
 
             <div class="exec-success-actions">

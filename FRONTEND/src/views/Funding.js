@@ -59,7 +59,7 @@ export function renderFunding() {
                 font-size: 13px;
                 color: #666;
                 margin: 8px 0 0;
-                font-family: 'JetBrains Mono', monospace;
+                font-family: 'Inter', monospace;
                 letter-spacing: 0.2px;
             }
             .cap-deposit-btn {
@@ -73,7 +73,7 @@ export function renderFunding() {
                 border: none;
                 cursor: pointer;
                 transition: all 0.2s ease;
-                font-family: 'JetBrains Mono', monospace;
+                font-family: 'Inter', monospace;
                 white-space: nowrap;
                 flex-shrink: 0;
                 position: relative;
@@ -103,7 +103,7 @@ export function renderFunding() {
                 border-left: 3px solid #5C1414;
                 padding: 14px 18px;
                 margin-bottom: 24px;
-                font-family: 'JetBrains Mono', monospace;
+                font-family: 'Inter', monospace;
                 font-size: 11px;
                 color: #5C1414;
                 text-transform: uppercase;
@@ -144,7 +144,7 @@ export function renderFunding() {
             }
             .cap-stat:hover::before { width: 100%; }
             .cap-stat-lbl {
-                font-family: 'JetBrains Mono', monospace;
+                font-family: 'Inter', monospace;
                 font-size: 9px;
                 font-weight: 700;
                 text-transform: uppercase;
@@ -152,7 +152,7 @@ export function renderFunding() {
                 color: #5C1414;
             }
             .cap-stat-val {
-                font-family: 'JetBrains Mono', monospace;
+                font-family: 'Inter', monospace;
                 font-size: 28px;
                 font-weight: 700;
                 color: #111111;
@@ -199,7 +199,7 @@ export function renderFunding() {
                 background: #5C1414;
             }
             .cap-section-title {
-                font-family: 'JetBrains Mono', monospace;
+                font-family: 'Inter', monospace;
                 font-size: 10px;
                 font-weight: 700;
                 text-transform: uppercase;
@@ -235,7 +235,7 @@ export function renderFunding() {
                 gap: 10px;
             }
             .cap-row-detail {
-                font-family: 'JetBrains Mono', monospace;
+                font-family: 'Inter', monospace;
                 font-size: 11px;
                 color: #888;
             }
@@ -245,7 +245,7 @@ export function renderFunding() {
                 display: inline-flex;
                 align-items: center;
                 padding: 3px 8px;
-                font-family: 'JetBrains Mono', monospace;
+                font-family: 'Inter', monospace;
                 font-size: 9px;
                 font-weight: 700;
                 text-transform: uppercase;
@@ -270,7 +270,7 @@ export function renderFunding() {
 
             /* ── Action Links ── */
             .cap-action {
-                font-family: 'JetBrains Mono', monospace;
+                font-family: 'Inter', monospace;
                 font-size: 10px;
                 font-weight: 700;
                 text-transform: uppercase;
@@ -310,7 +310,7 @@ export function renderFunding() {
                 gap: 3px;
             }
             .cap-footer-lbl {
-                font-family: 'JetBrains Mono', monospace;
+                font-family: 'Inter', monospace;
                 font-size: 9px;
                 font-weight: 700;
                 text-transform: uppercase;
@@ -318,7 +318,7 @@ export function renderFunding() {
                 color: #bbb;
             }
             .cap-footer-val {
-                font-family: 'JetBrains Mono', monospace;
+                font-family: 'Inter', monospace;
                 font-size: 10px;
                 color: #666;
             }
@@ -382,7 +382,7 @@ export function renderFunding() {
                 background: #FCFCFC;
             }
             .cap-modal-title {
-                font-family: 'JetBrains Mono', monospace;
+                font-family: 'Inter', monospace;
                 font-size: 11px;
                 font-weight: 700;
                 text-transform: uppercase;
@@ -407,13 +407,13 @@ export function renderFunding() {
                 font-size: 12px;
                 color: #666;
                 margin-bottom: 20px;
-                font-family: 'JetBrains Mono', monospace;
+                font-family: 'Inter', monospace;
             }
             .cap-modal-footer {
                 padding: 14px 22px;
                 border-top: 1px solid #f0f0f0;
                 background: #FAFAFA;
-                font-family: 'JetBrains Mono', monospace;
+                font-family: 'Inter', monospace;
                 font-size: 10px;
                 color: #999;
                 text-align: center;
@@ -438,7 +438,7 @@ export function renderFunding() {
             .cap-error {
                 font-size: 11px;
                 color: #5C1414;
-                font-family: 'JetBrains Mono', monospace;
+                font-family: 'Inter', monospace;
                 margin-bottom: 12px;
                 display: none;
             }
@@ -457,7 +457,7 @@ export function renderFunding() {
                 border: none;
                 cursor: pointer;
                 transition: all 0.2s;
-                font-family: 'JetBrains Mono', monospace;
+                font-family: 'Inter', monospace;
                 border-radius: 3px;
             }
             .cap-btn-primary:hover {
@@ -478,7 +478,7 @@ export function renderFunding() {
                 border: none;
                 cursor: pointer;
                 transition: all 0.2s;
-                font-family: 'JetBrains Mono', monospace;
+                font-family: 'Inter', monospace;
                 margin-top: 8px;
                 border-radius: 3px;
             }
@@ -498,7 +498,7 @@ export function renderFunding() {
                 border: 1px solid #e5e5e5;
                 cursor: pointer;
                 transition: all 0.15s;
-                font-family: 'JetBrains Mono', monospace;
+                font-family: 'Inter', monospace;
                 border-radius: 3px;
             }
             .cap-btn-ghost:hover { border-color: #5C1414; color: #5C1414; }
@@ -509,7 +509,7 @@ export function renderFunding() {
             }
             .cap-input-lbl {
                 display: block;
-                font-family: 'JetBrains Mono', monospace;
+                font-family: 'Inter', monospace;
                 font-size: 9px;
                 font-weight: 700;
                 text-transform: uppercase;
@@ -526,7 +526,7 @@ export function renderFunding() {
                 top: 50%;
                 transform: translateY(-50%);
                 color: #5C1414;
-                font-family: 'JetBrains Mono', monospace;
+                font-family: 'Inter', monospace;
                 font-size: 18px;
                 font-weight: 700;
             }
@@ -535,7 +535,7 @@ export function renderFunding() {
                 padding: 14px 14px 14px 32px;
                 border: 1px solid #e5e5e5;
                 font-size: 24px;
-                font-family: 'JetBrains Mono', monospace;
+                font-family: 'Inter', monospace;
                 color: #111;
                 background: #FAFAFA;
                 box-sizing: border-box;
@@ -575,7 +575,7 @@ export function renderFunding() {
                 margin: 0 0 8px;
             }
             .cap-success-amt {
-                font-family: 'JetBrains Mono', monospace;
+                font-family: 'Inter', monospace;
                 font-size: 36px;
                 font-weight: 700;
                 color: #5C1414;
@@ -584,7 +584,7 @@ export function renderFunding() {
             .cap-success-sub {
                 font-size: 12px;
                 color: #888;
-                font-family: 'JetBrains Mono', monospace;
+                font-family: 'Inter', monospace;
                 margin-bottom: 24px;
             }
         </style>
@@ -674,7 +674,7 @@ export function renderFunding() {
                         </div>
                         <button class="cap-action" id="manage-payout-btn">CONFIGURE</button>
                     </div>
-                    <div style="padding: 10px 20px; font-family: 'JetBrains Mono', monospace; font-size: 10px; color: #bbb; border-top: 1px solid #f4f4f4;">
+                    <div style="padding: 10px 20px; font-family: 'Inter', monospace; font-size: 10px; color: #bbb; border-top: 1px solid #f4f4f4;">
                         Payouts execute only after contract settlement and clearance.
                     </div>
                 </div>
@@ -716,7 +716,7 @@ export function renderFunding() {
                         <div id="payment-request-button" style="margin-bottom:16px;"></div>
                         <div style="display:flex;align-items:center;gap:12px;margin-bottom:16px;">
                             <div style="flex:1;height:1px;background:#e5e5e5;"></div>
-                            <span style="font-family:'JetBrains Mono',monospace;font-size:10px;color:#aaa;text-transform:uppercase;letter-spacing:0.1em;">or enter card</span>
+                            <span style="font-family:'Inter',monospace;font-size:10px;color:#aaa;text-transform:uppercase;letter-spacing:0.1em;">or enter card</span>
                             <div style="flex:1;height:1px;background:#e5e5e5;"></div>
                         </div>
                     </div>
@@ -973,7 +973,7 @@ export async function initFunding() {
                     base: {
                         fontSize: '15px',
                         color: '#111',
-                        fontFamily: "'JetBrains Mono', monospace",
+                        fontFamily: "'Inter', monospace",
                         '::placeholder': { color: '#bbb' },
                     },
                     invalid: { color: '#752122' },

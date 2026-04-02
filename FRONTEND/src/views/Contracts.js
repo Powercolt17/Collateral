@@ -40,14 +40,14 @@ export function renderContracts() {
             .ext-back-btn:hover { border-color: #bbb; color: #333; }
             .ext-head-id {
                 font-size: 11px;
-                font-family: 'JetBrains Mono', monospace;
+                font-family: 'Inter', monospace;
                 color: #999;
                 letter-spacing: 0.5px;
             }
             .ext-head-status {
                 display: inline-flex; align-items: center; gap: 6px;
                 font-size: 11px; color: #065f46;
-                font-family: 'JetBrains Mono', monospace;
+                font-family: 'Inter', monospace;
                 text-transform: uppercase;
                 letter-spacing: 0.5px;
             }
@@ -110,7 +110,7 @@ export function renderContracts() {
                 text-transform: uppercase;
                 letter-spacing: 0.5px;
                 color: #555;
-                font-family: 'JetBrains Mono', monospace;
+                font-family: 'Inter', monospace;
                 margin: 0;
             }
             .ext-card-bd { padding: 24px; }
@@ -134,7 +134,7 @@ export function renderContracts() {
                 color: #888;
                 text-transform: uppercase;
                 letter-spacing: 0.5px;
-                font-family: 'JetBrains Mono', monospace;
+                font-family: 'Inter', monospace;
                 font-weight: 500;
                 margin-bottom: 4px;
             }
@@ -155,7 +155,7 @@ export function renderContracts() {
             .ext-base-note {
                 font-size: 11px;
                 color: #999;
-                font-family: 'JetBrains Mono', monospace;
+                font-family: 'Inter', monospace;
                 padding: 12px 24px;
                 border-top: 1px solid #f0f0f0;
                 background: #fafafa;
@@ -176,7 +176,7 @@ export function renderContracts() {
                 text-transform: uppercase;
                 letter-spacing: 0.5px;
                 color: #752122;
-                font-family: 'JetBrains Mono', monospace;
+                font-family: 'Inter', monospace;
                 margin: 0 0 12px;
             }
             .ext-forfeit-body {
@@ -205,7 +205,7 @@ export function renderContracts() {
                 text-transform: uppercase;
                 letter-spacing: 0.5px;
                 color: #555;
-                font-family: 'JetBrains Mono', monospace;
+                font-family: 'Inter', monospace;
                 margin: 0 0 12px;
             }
             .ext-warn-list {
@@ -296,7 +296,7 @@ export function renderContracts() {
                 font-size: 12px;
                 font-weight: 600;
                 color: #065f46;
-                font-family: 'JetBrains Mono', monospace;
+                font-family: 'Inter', monospace;
             }
 
             /* Acknowledgement */
@@ -380,7 +380,7 @@ export function renderContracts() {
             .ext-foot-text {
                 font-size: 11px;
                 color: #bbb;
-                font-family: 'JetBrains Mono', monospace;
+                font-family: 'Inter', monospace;
                 letter-spacing: 0.3px;
             }
 
@@ -398,7 +398,7 @@ export function renderContracts() {
             .ext-loading-text {
                 font-size: 12px;
                 color: #999;
-                font-family: 'JetBrains Mono', monospace;
+                font-family: 'Inter', monospace;
                 text-transform: uppercase;
                 letter-spacing: 0.5px;
             }
@@ -438,7 +438,7 @@ export function renderContracts() {
             }
             .enf-rule {
                 font-size: 10px; color: #bbb;
-                font-family: 'JetBrains Mono', monospace;
+                font-family: 'Inter', monospace;
                 letter-spacing: 0.5px;
                 text-transform: uppercase;
                 margin-bottom: 16px;
@@ -548,7 +548,7 @@ export function renderContracts() {
                             <div class="ext-grid">
                                 <div>
                                     <div class="ext-lbl">Snapshot ID</div>
-                                    <div class="ext-val sm" id="ext-snap-id" style="font-family:'JetBrains Mono',monospace;font-size:12px;color:#888;">—</div>
+                                    <div class="ext-val sm" id="ext-snap-id" style="font-family:'Inter',monospace;font-size:12px;color:#888;">—</div>
                                 </div>
                                 <div>
                                     <div class="ext-lbl">Measured Period</div>

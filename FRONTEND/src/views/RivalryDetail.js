@@ -10,8 +10,8 @@ export function renderRivalryDetail() {
             :root {
                 --rvd-ease: cubic-bezier(0.4, 0, 0.2, 1);
                 --rvd-dur: 0.25s;
-                --rvd-brand: #3B0001;
-                --rvd-green: #0F5132;
+                --rvd-brand: #5C1A1B;
+                --rvd-green: #154726;
                 --rvd-red: #EF4444;
                 --rvd-muted: #999;
             }
@@ -171,8 +171,8 @@ export function renderRivalryDetail() {
                 transition: background .3s;
             }
             .rvd-stake-side.challenger {
-                background: rgba(15,81,50,0.06); color: #0F5132;
-                border-right: 2px solid #0F5132;
+                background: rgba(15,81,50,0.06); color: #154726;
+                border-right: 2px solid #154726;
             }
             .rvd-stake-side.opponent {
                 background: rgba(59,0,1,0.04); color: var(--rvd-brand);
@@ -181,7 +181,7 @@ export function renderRivalryDetail() {
             .rvd-stake-side .rvd-stake-icon {
                 width: 6px; height: 6px; border-radius: 50%;
             }
-            .rvd-stake-side.challenger .rvd-stake-icon { background: #0F5132; }
+            .rvd-stake-side.challenger .rvd-stake-icon { background: #154726; }
             .rvd-stake-side.opponent .rvd-stake-icon { background: var(--rvd-brand); }
 
             /* ── Countdown Timer ── */
@@ -210,7 +210,7 @@ export function renderRivalryDetail() {
                 text-transform: uppercase; margin-top: 4px;
             }
             .rvd-countdown-sep { display: none; }
-            .rvd-countdown.urgent .rvd-countdown-val { color: #C41E24; }
+            .rvd-countdown.urgent .rvd-countdown-val { color: #5C1A1B; }
             .rvd-countdown.urgent { border-color: rgba(196,30,36,0.15); background: rgba(196,30,36,0.02); }
             .rvd-leader-tag {
                 font-family: 'JetBrains Mono', monospace;
@@ -261,7 +261,7 @@ export function renderRivalryDetail() {
                 background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3));
             }
             .rvd-momentum-right {
-                background: linear-gradient(90deg, #5a1718, #3B0001);
+                background: linear-gradient(90deg, #5a1718, #5C1A1B);
                 transition: width .8s var(--rvd-ease);
                 border-radius: 0 4px 4px 0;
             }
@@ -345,8 +345,8 @@ export function renderRivalryDetail() {
                 font-size: 11px; font-weight: 700;
                 letter-spacing: 0.02em;
             }
-            .rvd-chart-metric-change.positive { color: #0F5132; }
-            .rvd-chart-metric-change.negative { color: #C41E24; }
+            .rvd-chart-metric-change.positive { color: #154726; }
+            .rvd-chart-metric-change.negative { color: #5C1A1B; }
             .rvd-chart-metric-target {
                 font-family: 'JetBrains Mono', monospace;
                 font-size: 9px; color: #bbb;
@@ -428,16 +428,16 @@ export function renderRivalryDetail() {
                 letter-spacing: 0.06em;
             }
             .rvd-target-badge.hit {
-                background: rgba(15,81,50,0.08); color: #0F5132;
+                background: rgba(15,81,50,0.08); color: #154726;
             }
             .rvd-target-badge.miss {
-                background: rgba(59,0,1,0.06); color: #3B0001;
+                background: rgba(59,0,1,0.06); color: #5C1A1B;
             }
             .rvd-target-badge .badge-dot {
                 width: 5px; height: 5px; border-radius: 50%;
             }
-            .rvd-target-badge.hit .badge-dot { background: #0F5132; }
-            .rvd-target-badge.miss .badge-dot { background: #3B0001; }
+            .rvd-target-badge.hit .badge-dot { background: #154726; }
+            .rvd-target-badge.miss .badge-dot { background: #5C1A1B; }
 
             /* ── Panel Icons ── */
             .rvd-panel-header {
@@ -456,7 +456,7 @@ export function renderRivalryDetail() {
                 padding: 10px 12px !important;
             }
             .rvd-row-warning .rvd-row-value {
-                color: #3B0001; font-weight: 700;
+                color: #5C1A1B; font-weight: 700;
             }
 
             /* ── Detail Grid ── */
@@ -524,7 +524,7 @@ export function renderRivalryDetail() {
                 transform: none; box-shadow: none;
             }
             .rvd-action-btn.accept {
-                background: linear-gradient(135deg, #0F5132, #10b981);
+                background: linear-gradient(135deg, #154726, #10b981);
                 background-size: 200% 200%;
                 color: #fff;
             }
@@ -742,7 +742,7 @@ export async function initRivalryDetail() {
         container.innerHTML = `
             <div class="rvd-loading">
                 <div class="rvd-loading-text">RIVALRY NOT FOUND</div>
-                <a href="#/rivalry" style="color:#3B0001; font-size:13px; margin-top:16px; display:inline-block;">← Back to Rivalries</a>
+                <a href="#/rivalry" style="color:#5C1A1B; font-size:13px; margin-top:16px; display:inline-block;">← Back to Rivalries</a>
             </div>`;
         return;
     }
@@ -803,7 +803,7 @@ export async function initRivalryDetail() {
                         </div>
                         <span class="rvd-player-growth ${isLeading ? 'leading' : 'trailing'}">${rivalry.challenger.growth > 0 ? '+' : ''}${rivalry.challenger.growth}%</span>
                         <span class="rvd-player-baseline"><span class="rvd-target-badge ${rivalry.challenger.growth >= rivalry.targetGrowthPct ? 'hit' : 'miss'}"><span class="badge-dot"></span>${rivalry.challenger.growth >= rivalry.targetGrowthPct ? 'ON TARGET' : 'BELOW TARGET'}</span> +${rivalry.targetGrowthPct}%</span>
-                        <span class="rvd-player-baseline" data-live-role="challenger" style="color:#666;margin-top:6px;">Current: <strong style="color:#111">${fmtMetric(rivalry.challenger.currentValue)}</strong> ${metricUnit()} · Target: <strong style="color:#3B0001">${fmtMetric(rivalry.challenger.targetValue)}</strong></span>
+                        <span class="rvd-player-baseline" data-live-role="challenger" style="color:#666;margin-top:6px;">Current: <strong style="color:#111">${fmtMetric(rivalry.challenger.currentValue)}</strong> ${metricUnit()} · Target: <strong style="color:#5C1A1B">${fmtMetric(rivalry.challenger.targetValue)}</strong></span>
                     </div>
                     <div class="rvd-vs-center rvd-anim-vs">
                         <span class="rvd-vs-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:middle;margin-top:-2px"><polyline points="14.5 17.5 3 6 3 3 6 3 17.5 14.5"/><line x1="13" x2="19" y1="19" y2="13"/><line x1="16" x2="20" y1="16" y2="20"/><line x1="19" x2="21" y1="21" y2="19"/><polyline points="14.5 6.5 18 3 21 3 21 6 17.5 9.5"/><line x1="5" x2="9" y1="14" y2="18"/><line x1="7" x2="4" y1="17" y2="20"/><line x1="3" x2="5" y1="19" y2="21"/></svg></span>
@@ -820,7 +820,7 @@ export async function initRivalryDetail() {
                         </div>
                         <span class="rvd-player-growth ${!isLeading ? 'leading' : 'trailing'}">${rivalry.opponent.growth > 0 ? '+' : ''}${rivalry.opponent.growth}%</span>
                         <span class="rvd-player-baseline"><span class="rvd-target-badge ${rivalry.opponent.growth >= rivalry.targetGrowthPct ? 'hit' : 'miss'}"><span class="badge-dot"></span>${rivalry.opponent.growth >= rivalry.targetGrowthPct ? 'ON TARGET' : 'BELOW TARGET'}</span> +${rivalry.targetGrowthPct}%</span>
-                        <span class="rvd-player-baseline" data-live-role="opponent" style="color:#666;margin-top:6px;">Current: <strong style="color:#111">${fmtMetric(rivalry.opponent.currentValue)}</strong> ${metricUnit()} · Target: <strong style="color:#3B0001">${fmtMetric(rivalry.opponent.targetValue)}</strong></span>
+                        <span class="rvd-player-baseline" data-live-role="opponent" style="color:#666;margin-top:6px;">Current: <strong style="color:#111">${fmtMetric(rivalry.opponent.currentValue)}</strong> ${metricUnit()} · Target: <strong style="color:#5C1A1B">${fmtMetric(rivalry.opponent.targetValue)}</strong></span>
                     </div>
                 </div>
 
@@ -881,14 +881,14 @@ export async function initRivalryDetail() {
                     <div class="rvd-chart-title">Performance Over Time</div>
                     <div class="rvd-chart-legend">
                         <div class="rvd-chart-legend-item">
-                            <div class="rvd-chart-legend-dot" style="background:${isLeading ? '#0F5132' : '#C41E24'}"></div>
+                            <div class="rvd-chart-legend-dot" style="background:${isLeading ? '#154726' : '#5C1A1B'}"></div>
                             ${rivalry.challenger.name}
                         </div>
                         <div class="rvd-chart-legend-item">
-                            <div class="rvd-chart-legend-dot" style="background:${!isLeading ? '#0F5132' : '#C41E24'}"></div>
+                            <div class="rvd-chart-legend-dot" style="background:${!isLeading ? '#154726' : '#5C1A1B'}"></div>
                             ${rivalry.opponent.name}
                         </div>
-                        ${rivalry.status === 'active' ? `<div class="rvd-chart-legend-item" style="color:#0F5132;font-weight:700"><span style="width:6px;height:6px;border-radius:50%;background:#0F5132;display:inline-block;animation:rvd-skeletonWave 1s infinite;margin-right:4px"></span> LIVE</div>` : ''}
+                        ${rivalry.status === 'active' ? `<div class="rvd-chart-legend-item" style="color:#154726;font-weight:700"><span style="width:6px;height:6px;border-radius:50%;background:#154726;display:inline-block;animation:rvd-skeletonWave 1s infinite;margin-right:4px"></span> LIVE</div>` : ''}
                     </div>
                 </div>
                 <div class="rvd-chart-metrics">
@@ -934,7 +934,7 @@ export async function initRivalryDetail() {
                 </div>
                 <div class="rvd-row">
                     <span class="rvd-row-label">Growth Target</span>
-                    <span class="rvd-row-value" style="color:#3B0001;font-weight:700">+${rivalry.targetGrowthPct}%</span>
+                    <span class="rvd-row-value" style="color:#5C1A1B;font-weight:700">+${rivalry.targetGrowthPct}%</span>
                 </div>
                 <div class="rvd-row">
                     <span class="rvd-row-label">Stake Per Side</span>
@@ -968,7 +968,7 @@ export async function initRivalryDetail() {
                     <span class="rvd-row-value" style="font-weight:700">Winner Takes Pool</span>
                 </div>
                 <div class="rvd-row rvd-row-warning">
-                    <span class="rvd-row-label" style="color:#3B0001;font-weight:600">Both Miss Target</span>
+                    <span class="rvd-row-label" style="color:#5C1A1B;font-weight:600">Both Miss Target</span>
                     <span class="rvd-row-value">Protocol Keeps Pool</span>
                 </div>
                 <div class="rvd-row">
@@ -1072,7 +1072,7 @@ export async function initRivalryDetail() {
 
                 // Update hero card metric line for this user's role
                 document.querySelectorAll(`[data-live-role="${myRole}"]`).forEach(el => {
-                    el.innerHTML = `Current: <strong style="color:#111">${fmtLive(liveBaseline)}</strong> ${unit} · Target: <strong style="color:#3B0001">${fmtLive(liveTarget)}</strong>`;
+                    el.innerHTML = `Current: <strong style="color:#111">${fmtLive(liveBaseline)}</strong> ${unit} · Target: <strong style="color:#5C1A1B">${fmtLive(liveTarget)}</strong>`;
                 });
 
                 // Update performance panel for this user's role
@@ -1120,24 +1120,7 @@ export async function initRivalryDetail() {
         let challBaseline = null;
         let oppBaseline = null;
 
-        // --- TEMP MOCK DATA FOR DEMO ---
-        const _nowMs = Date.now();
-        const _dMs = 86400000;
-        challPoints.push(
-            { t: new Date(_nowMs - 14 * _dMs), v: 1000, pct: 0 },
-            { t: new Date(_nowMs - 10 * _dMs), v: 1020, pct: 2.0 },
-            { t: new Date(_nowMs - 7 * _dMs), v: 1050, pct: 5.0 },
-            { t: new Date(_nowMs - 4 * _dMs), v: 1085, pct: 8.5 },
-            { t: new Date(_nowMs), v: 1115, pct: 11.5 }
-        );
-        oppPoints.push(
-            { t: new Date(_nowMs - 14 * _dMs), v: 2000, pct: 0 },
-            { t: new Date(_nowMs - 11 * _dMs), v: 2040, pct: 2.0 },
-            { t: new Date(_nowMs - 8 * _dMs), v: 2160, pct: 8.0 },
-            { t: new Date(_nowMs - 3 * _dMs), v: 2180, pct: 9.0 },
-            { t: new Date(_nowMs), v: 2190, pct: 9.5 }
-        );
-        // -------------------------------
+
 
         (metricsData || []).forEach(m => {
             const val = parseFloat(m.metricValue || m.metric_value || 0);
@@ -1168,8 +1151,8 @@ export async function initRivalryDetail() {
             const toX = (dayFrac) => PAD_L + (dayFrac * plotW);
             const toY = (pct) => PAD_T + plotH - (pct / maxY * plotH);
             
-            const challColor = '#0F5132';
-            const oppColor = '#3B0001';
+            const challColor = '#154726';
+            const oppColor = '#5C1A1B';
             const zeroY = toY(0);
             const tgtY = toY(targetPct);
             const challY = toY(Math.max(0, challGrowth));
@@ -1219,8 +1202,8 @@ export async function initRivalryDetail() {
                     </defs>
                     ${gridSvg}
                     ${dayMarkers}
-                    <line x1="${PAD_L}" y1="${projTY}" x2="${W - PAD_R}" y2="${projTY}" stroke="#3B0001" stroke-width="1.5" stroke-dasharray="8 4" opacity="0.4"/>
-                    <rect x="${W - PAD_R + 2}" y="${tgtY - 9}" width="72" height="18" rx="2" fill="#3B0001" opacity="0.85"/>
+                    <line x1="${PAD_L}" y1="${projTY}" x2="${W - PAD_R}" y2="${projTY}" stroke="#5C1A1B" stroke-width="1.5" stroke-dasharray="8 4" opacity="0.4"/>
+                    <rect x="${W - PAD_R + 2}" y="${tgtY - 9}" width="72" height="18" rx="2" fill="#5C1A1B" opacity="0.85"/>
                     <text x="${W - PAD_R + 38}" y="${tgtY + 1}" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="8" font-weight="700" fill="#fff">+${targetPct}% TARGET</text>
                     <line x1="${PAD_L}" y1="${zeroY.toFixed(1)}" x2="${W - PAD_R}" y2="${zeroY.toFixed(1)}" stroke="#e0e0e0" stroke-width="1"/>
                     <text x="${W - PAD_R + 6}" y="${zeroY + 3}" font-family="JetBrains Mono, monospace" font-size="8" fill="#ccc">0%</text>
@@ -1247,11 +1230,11 @@ export async function initRivalryDetail() {
         const oppCurrent = oppPoints.length > 0 ? oppPoints[oppPoints.length - 1].pct : 0;
         const challLeading = challCurrent >= oppCurrent;
 
-        // Leader = green (#0F5132), trailer = red (#3B0001)
-        const challColor = challLeading ? '#0F5132' : '#C41E24';
-        const oppColor = !challLeading ? '#0F5132' : '#C41E24';
-        const challGradColor = challLeading ? '#0F5132' : '#C41E24';
-        const oppGradColor = !challLeading ? '#0F5132' : '#C41E24';
+        // Leader = green (#154726), trailer = red (#5C1A1B)
+        const challColor = challLeading ? '#154726' : '#5C1A1B';
+        const oppColor = !challLeading ? '#154726' : '#5C1A1B';
+        const challGradColor = challLeading ? '#154726' : '#5C1A1B';
+        const oppGradColor = !challLeading ? '#154726' : '#5C1A1B';
 
         // Combine all pct values for scale
         const allPcts = [...challPoints.map(p => p.pct), ...oppPoints.map(p => p.pct), 0, targetPct];
@@ -1305,8 +1288,8 @@ export async function initRivalryDetail() {
 
         // Target line
         const targetY = toY(targetPct);
-        gridSvg += `<line x1="${PAD_L}" y1="${targetY}" x2="${W - PAD_R}" y2="${targetY}" stroke="#3B0001" stroke-width="1" stroke-dasharray="6 4" opacity="0.5"/>`;
-        gridSvg += `<text x="${W - PAD_R + 4}" y="${targetY + 3}" font-family="JetBrains Mono, monospace" font-size="8" font-weight="700" fill="#3B0001" opacity="0.6">TARGET +${targetPct}%</text>`;
+        gridSvg += `<line x1="${PAD_L}" y1="${targetY}" x2="${W - PAD_R}" y2="${targetY}" stroke="#5C1A1B" stroke-width="1" stroke-dasharray="6 4" opacity="0.5"/>`;
+        gridSvg += `<text x="${W - PAD_R + 4}" y="${targetY + 3}" font-family="JetBrains Mono, monospace" font-size="8" font-weight="700" fill="#5C1A1B" opacity="0.6">TARGET +${targetPct}%</text>`;
 
         const challPath = buildPath(challPoints);
         const oppPath = buildPath(oppPoints);
@@ -1406,10 +1389,10 @@ export async function initRivalryDetail() {
                     if (!liveTag) {
                         liveTag = document.createElement('span');
                         liveTag.className = 'rvd-live-refresh';
-                        liveTag.style.cssText = 'font-family:"JetBrains Mono",monospace;font-size:9px;color:#0F5132;letter-spacing:0.06em;display:flex;align-items:center;gap:4px;';
+                        liveTag.style.cssText = 'font-family:"JetBrains Mono",monospace;font-size:9px;color:#154726;letter-spacing:0.06em;display:flex;align-items:center;gap:4px;';
                         legendEl.appendChild(liveTag);
                     }
-                    liveTag.innerHTML = `<span style="width:6px;height:6px;border-radius:50%;background:#0F5132;display:inline-block;animation:rvd-skeletonWave 1s infinite"></span> LIVE · Refreshing...`;
+                    liveTag.innerHTML = `<span style="width:6px;height:6px;border-radius:50%;background:#154726;display:inline-block;animation:rvd-skeletonWave 1s infinite"></span> LIVE · Refreshing...`;
                 }
 
                 const res = await api.getRivalryMetrics(id);
@@ -1421,7 +1404,7 @@ export async function initRivalryDetail() {
                 const liveTag = document.querySelector('.rvd-live-refresh');
                 if (liveTag) {
                     const now = new Date();
-                    liveTag.innerHTML = `<span style="width:6px;height:6px;border-radius:50%;background:#0F5132;display:inline-block;animation:rvd-skeletonWave 1s infinite"></span> LIVE · Updated ${now.toLocaleTimeString()}`;
+                    liveTag.innerHTML = `<span style="width:6px;height:6px;border-radius:50%;background:#154726;display:inline-block;animation:rvd-skeletonWave 1s infinite"></span> LIVE · Updated ${now.toLocaleTimeString()}`;
                 }
             } catch (err) {
                 console.warn('[RivalryDetail] Metric poll failed:', err.message);

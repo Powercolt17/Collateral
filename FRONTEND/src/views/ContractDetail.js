@@ -451,7 +451,7 @@ export async function initContractDetail(params) {
         const days = Math.ceil((end - start) / (1000 * 60 * 60 * 24)) || 90;
         document.getElementById('cd-duration').textContent = days + ' Days';
 
-        document.getElementById('cd-counterparty').textContent = c.counterparty || 'Byson';
+        document.getElementById('cd-counterparty').textContent = c.counterparty || 'Collateral Protocol';
         document.getElementById('cd-source').textContent = platformDisplay + ' API';
         document.getElementById('cd-start').textContent = formatDateShort(c.createdAt);
         document.getElementById('cd-end').textContent = formatDateShort(c.deadline || c.deadlineUtc);

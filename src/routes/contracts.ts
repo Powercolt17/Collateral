@@ -150,21 +150,21 @@ const contractRoutes: FastifyPluginAsync = async (fastify) => {
                 const result = await db.execute(sql`
                     (
                         SELECT
-                            le.id,
-                            le.contract_id AS "sourceId",
+                            le.id::text,
+                            le.contract_id::text AS "sourceId",
                             'CONTRACT' AS "sourceType",
-                            le.event_type AS "eventType",
+                            le.event_type::text AS "eventType",
                             le.timestamp_utc AS "timestampUtc",
                             le.amount_usd_cents AS "amountUsdCents",
                             le.event_hash AS "eventHash",
-                            le.actor,
-                            c.platform,
+                            le.actor::text,
+                            c.platform::text,
                             c.principal_identity_username AS "principal",
                             c.lock_amount_usd_cents AS "lockAmountUsdCents",
-                            c.risk_tier AS "riskTier"
+                            c.risk_tier::text AS "riskTier"
                         FROM ledger_events le
                         INNER JOIN contracts c ON le.contract_id = c.id
-                        WHERE le.event_type IN (
+                        WHERE le.event_type::text IN (
                             'FUNDS_LOCKED', 'EXECUTION_CONFIRMED',
                             'VERIFICATION_STARTED', 'VERIFICATION_SUCCEEDED', 'VERIFICATION_FAILED',
                             'SETTLED_SUCCESS', 'SETTLED_FAILURE', 'SETTLEMENT_STARTED', 'RECEIPT_ISSUED'
@@ -173,22 +173,22 @@ const contractRoutes: FastifyPluginAsync = async (fastify) => {
                     UNION ALL
                     (
                         SELECT
-                            rle.id,
-                            rle.rivalry_id AS "sourceId",
+                            rle.id::text,
+                            rle.rivalry_id::text AS "sourceId",
                             'RIVALRY' AS "sourceType",
-                            rle.event_type AS "eventType",
+                            rle.event_type::text AS "eventType",
                             rle.timestamp_utc AS "timestampUtc",
                             rle.amount_usd_cents AS "amountUsdCents",
                             rle.event_hash AS "eventHash",
-                            rle.actor,
-                            r.platform,
-                            u.display_name AS "principal",
-                            r.stake_per_side_cents * 2 AS "lockAmountUsdCents",
-                            r.rivalry_tier AS "riskTier"
+                            rle.actor::text,
+                            r.platform::text,
+                            COALESCE(u.display_name, 'unknown') AS "principal",
+                            (r.stake_per_side_cents * 2)::integer AS "lockAmountUsdCents",
+                            COALESCE(r.rivalry_tier, 'DUEL')::text AS "riskTier"
                         FROM rivalry_ledger_events rle
                         INNER JOIN rivalries r ON rle.rivalry_id = r.id
-                        INNER JOIN users u ON r.challenger_user_id = u.id
-                        WHERE rle.event_type IN (
+                        LEFT JOIN users u ON r.challenger_user_id = u.id
+                        WHERE rle.event_type::text IN (
                             'RIVALRY_CREATED', 'RIVALRY_ACCEPTED', 'RIVALRY_BOTH_FUNDED',
                             'RIVALRY_ACTIVATED', 'RIVALRY_VERIFICATION_STARTED', 'RIVALRY_VERIFIED',
                             'RIVALRY_SETTLEMENT_STARTED', 'RIVALRY_SETTLED', 'RIVALRY_DRAW',

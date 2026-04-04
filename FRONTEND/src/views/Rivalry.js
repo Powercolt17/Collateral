@@ -522,17 +522,47 @@ export function renderRivalry() {
             }
             .rv-tier-pill.active .rv-tier-name,
             .rv-tier-pill.active .rv-tier-target { color: #fff; }
-            .rv-tier-swords {
-                height: 0; width: 0; opacity: 0;
+            /* Tier severity indicator */
+            .rv-tier-severity {
+                display: flex; flex-direction: column; align-items: center;
+                max-height: 0; opacity: 0; overflow: hidden;
+                transition: all 240ms cubic-bezier(0.2, 0.8, 0.2, 1);
+                margin-top: 0;
+            }
+            .rv-tier-severity.visible {
+                max-height: 100px; opacity: 1; margin-top: 14px;
+            }
+            .rv-tier-severity img {
                 object-fit: contain;
                 transition: all 200ms cubic-bezier(0.2, 0.8, 0.2, 1);
-                margin-right: 8px;
             }
-            .rv-modal.tier-war .rv-tier-swords {
-                height: 22px; width: 22px; opacity: 0.6;
+            .rv-tier-severity-label {
+                font-family: 'Inter', monospace;
+                font-size: 9px; font-weight: 700;
+                letter-spacing: 0.14em;
+                text-transform: uppercase;
+                margin-top: 6px;
+                transition: all 200ms cubic-bezier(0.2, 0.8, 0.2, 1);
             }
-            .rv-modal.tier-blood .rv-tier-swords {
-                height: 26px; width: 26px; opacity: 0.8;
+            .rv-tier-severity.war img { height: 32px; width: 32px; }
+            .rv-tier-severity.war .rv-tier-severity-label { color: #8a5a5a; }
+            .rv-tier-severity.blood img { height: 40px; width: 40px; }
+            .rv-tier-severity.blood .rv-tier-severity-label { color: #7A1C1C; }
+            .rv-tier-severity .rv-tier-severity-line {
+                width: 40px; height: 1px; background: #e0d0d0;
+                margin-top: 4px;
+                transition: all 200ms cubic-bezier(0.2, 0.8, 0.2, 1);
+            }
+            .rv-tier-severity.blood .rv-tier-severity-line {
+                background: rgba(122,28,28,0.25); width: 50px;
+            }
+
+            /* Tier pill left accent bars */
+            .rv-tier-pill[data-tier="WAR"].active {
+                border-left: 3px solid #8b4444;
+            }
+            .rv-tier-pill[data-tier="BLOOD"].active {
+                border-left: 4px solid #7A1C1C;
             }
             .rv-tier-name {
                 font-family: 'Inter', monospace;
@@ -919,10 +949,7 @@ export function renderRivalry() {
         <div class="rv-modal-backdrop" id="rv-challenge-modal" onclick="if(event.target===this) this.classList.remove('open')">
             <div class="rv-modal">
                 <div class="rv-modal-header">
-                    <div style="display:flex;align-items:center;">
-                        <img src="/crossed-swords.png" alt="" class="rv-tier-swords">
-                        <span class="rv-modal-title">Issue Challenge</span>
-                    </div>
+                    <span class="rv-modal-title">Issue Challenge</span>
                     <button class="rv-modal-close" onclick="document.getElementById('rv-challenge-modal').classList.remove('open')">✕</button>
                 </div>
 
@@ -974,6 +1001,11 @@ export function renderRivalry() {
                         <button class="rv-tier-pill active" data-tier="DUEL" data-target="15"><span class="rv-tier-name">DUEL</span><span class="rv-tier-target">+15%</span></button>
                         <button class="rv-tier-pill" data-tier="WAR" data-target="25"><span class="rv-tier-name">WAR</span><span class="rv-tier-target">+25%</span></button>
                         <button class="rv-tier-pill" data-tier="BLOOD" data-target="40"><span class="rv-tier-name">BLOOD</span><span class="rv-tier-target">+40%</span></button>
+                    </div>
+                    <div class="rv-tier-severity" id="rv-tier-severity">
+                        <img src="/crossed-swords.png" alt="">
+                        <div class="rv-tier-severity-line"></div>
+                        <span class="rv-tier-severity-label" id="rv-severity-label"></span>
                     </div>
                     <div class="rv-form-hint">Both operators must hit this target or lose capital</div>
                 </div>
@@ -1516,6 +1548,20 @@ export async function initRivalry() {
                 modal.classList.add('tier-war');
             } else if (selectedTier === 'BLOOD') {
                 modal.classList.add('tier-blood');
+            }
+
+            // Severity indicator
+            const severity = document.getElementById('rv-tier-severity');
+            const severityLabel = document.getElementById('rv-severity-label');
+            if (severity) {
+                severity.classList.remove('visible', 'war', 'blood');
+                if (selectedTier === 'WAR') {
+                    severity.classList.add('visible', 'war');
+                    if (severityLabel) severityLabel.textContent = 'Elevated Risk';
+                } else if (selectedTier === 'BLOOD') {
+                    severity.classList.add('visible', 'blood');
+                    if (severityLabel) severityLabel.textContent = 'Maximum Risk — Total Forfeit';
+                }
             }
         });
     }

@@ -464,7 +464,7 @@ export function renderRivalryDetail() {
             .rvd-grid {
                 max-width: 1200px; margin: 0 auto;
                 padding: 32px 64px 48px;
-                display: grid; grid-template-columns: 1fr 1fr;
+                display: grid; grid-template-columns: repeat(3, 1fr);
                 gap: 20px;
             }
             .rvd-panel {
@@ -629,7 +629,7 @@ export function renderRivalryDetail() {
                 .rvd-stake-side.challenger { border-bottom: 1px solid #f0f0f0 !important; }
                 .rvd-countdown-val { font-size: 20px; }
                 .rvd-countdown-unit { min-width: 44px; }
-                .rvd-grid { grid-template-columns: 1fr; padding: 24px 20px 40px; gap: 16px; }
+                .rvd-grid { grid-template-columns: 1fr !important; padding: 24px 20px 40px; gap: 16px; }
                 .rvd-share { padding: 0 20px 32px; flex-wrap: wrap; }
                 .rvd-warning { padding: 0 20px 32px; }
                 .rvd-status-bar { flex-direction: column; align-items: flex-start; gap: 8px; padding: 12px 16px; }
@@ -638,10 +638,15 @@ export function renderRivalryDetail() {
                 .rvd-chart-metrics { grid-template-columns: 1fr 1fr; }
                 .rvd-chart-metric-card { padding: 14px 16px; }
                 .rvd-chart-metric-value { font-size: 20px; }
-                .rvd-chart-header { padding: 16px 16px 0; }
+                .rvd-chart-header { padding: 16px 16px 0; flex-wrap: wrap; gap: 8px; }
                 .rvd-chart-footer { padding: 8px 16px 12px; }
                 .rvd-actions { padding: 0 20px 24px; flex-wrap: wrap; }
                 .rvd-action-btn { width: 100%; text-align: center; display: flex; align-items: center; justify-content: center; }
+                .rvd-row { flex-wrap: wrap; gap: 2px; }
+                .rvd-row-value { word-break: break-word; text-align: right; max-width: 60%; }
+                .rvd-panel { padding: 20px 16px; }
+                .rvd-player.right .rvd-player-header { flex-direction: row; }
+                .rvd-vs-center { flex-direction: row; width: 100%; height: auto; padding: 8px 0; gap: 8px; }
             }
         </style>
 
@@ -955,7 +960,7 @@ export async function initRivalryDetail() {
             </div>
         </div>
 
-        <div class="rvd-grid" style="grid-template-columns: repeat(3, 1fr)">
+        <div class="rvd-grid">
             <div class="rvd-panel rvd-anim rvd-anim-delay-1">
                 <div class="rvd-panel-header">
                     <span class="rvd-panel-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg></span>

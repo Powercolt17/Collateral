@@ -804,6 +804,7 @@ export function renderLedger() {
                         <thead>
                             <tr>
                                 <th>Status</th>
+                                <th>Type</th>
                                 <th>Contract</th>
                                 <th>Platform</th>
                                 <th>Date</th>
@@ -811,10 +812,10 @@ export function renderLedger() {
                             </tr>
                         </thead>
                         <tbody id="ldg-list">
-                            <tr class="ldg-skeleton-row"><td colspan="5"></td></tr>
-                            <tr class="ldg-skeleton-row"><td colspan="5"></td></tr>
-                            <tr class="ldg-skeleton-row"><td colspan="5"></td></tr>
-                            <tr class="ldg-skeleton-row"><td colspan="5"></td></tr>
+                            <tr class="ldg-skeleton-row"><td colspan="6"></td></tr>
+                            <tr class="ldg-skeleton-row"><td colspan="6"></td></tr>
+                            <tr class="ldg-skeleton-row"><td colspan="6"></td></tr>
+                            <tr class="ldg-skeleton-row"><td colspan="6"></td></tr>
                         </tbody>
                     </table>
                 </div>
@@ -1058,7 +1059,7 @@ export async function initLedger() {
         if (pageItems.length === 0) {
             list.innerHTML = `
                 <tr>
-                    <td colspan="5">
+                    <td colspan="6">
                         <div class="ldg-empty">
                             <div class="ldg-empty-lbl">No Records</div>
                             <div class="ldg-empty-text">No events match your current filter set.</div>
@@ -1081,6 +1082,10 @@ export async function initLedger() {
             const statusClass = getStatusClass(event.eventType);
             const platform = event.platform || '—';
 
+            const typeBadge = isRivalry
+                ? '<span style="font-family:\'Inter\',monospace;font-size:9px;font-weight:700;letter-spacing:0.08em;padding:3px 8px;background:#fef2f2;color:#752122;border:1px solid #fecaca;">RIVALRY</span>'
+                : '<span style="font-family:\'Inter\',monospace;font-size:9px;font-weight:700;letter-spacing:0.08em;padding:3px 8px;background:#f5f5f5;color:#666;border:1px solid #e0e0e0;">SOLO</span>';
+
             return `
                 <tr data-index="${globalIdx}">
                     <td>
@@ -1089,6 +1094,7 @@ export async function initLedger() {
                             <span class="ldg-status-text ${statusClass}">${formatEventType(event.eventType)}</span>
                         </div>
                     </td>
+                    <td>${typeBadge}</td>
                     <td><a href="${contractLink}" class="ldg-rcpt" style="text-decoration:none;color:#111;" onclick="event.stopPropagation()">${contractShort}</a></td>
                     <td><span class="ldg-platform">${platform}</span></td>
                     <td><span class="ldg-date">${formatTimestamp(event.timestamp)}</span></td>

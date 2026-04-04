@@ -1092,12 +1092,16 @@ export async function initRivalry() {
         const challGrowth = isPending
             ? '<span class="rv-player-growth awaiting" style="font-family:\'Inter\',monospace;letter-spacing:0.1em;text-transform:uppercase;">FORMING</span>'
             : isAccepted
-            ? '<span class="rv-player-growth awaiting" style="font-family:\'Inter\',monospace;letter-spacing:0.1em;text-transform:uppercase;">FUND</span>'
+            ? (r.challFunded
+                ? '<span class="rv-player-growth" style="font-family:\'Inter\',monospace;letter-spacing:0.1em;text-transform:uppercase;color:#16a34a;font-size:13px;">✓ FUNDED</span>'
+                : '<span class="rv-player-growth awaiting" style="font-family:\'Inter\',monospace;letter-spacing:0.1em;text-transform:uppercase;color:#d97706;font-size:12px;">FUND REQUIRED</span>')
             : `<span class="rv-player-growth ${isLeadingChallenger ? 'leading' : 'trailing'}">${r.challenger.growth > 0 ? '+' : ''}${r.challenger.growth}%</span>`;
         const oppGrowth = isPending
             ? '<span class="rv-player-growth awaiting" style="font-family:\'Inter\',monospace;letter-spacing:0.1em;text-transform:uppercase;">FORMING</span>'
             : isAccepted
-            ? '<span class="rv-player-growth awaiting" style="font-family:\'Inter\',monospace;letter-spacing:0.1em;text-transform:uppercase;">FUND</span>'
+            ? (r.oppFunded
+                ? '<span class="rv-player-growth" style="font-family:\'Inter\',monospace;letter-spacing:0.1em;text-transform:uppercase;color:#16a34a;font-size:13px;">✓ FUNDED</span>'
+                : '<span class="rv-player-growth awaiting" style="font-family:\'Inter\',monospace;letter-spacing:0.1em;text-transform:uppercase;color:#d97706;font-size:12px;">FUND REQUIRED</span>')
             : `<span class="rv-player-growth ${!isLeadingChallenger ? 'leading' : 'trailing'}">${r.opponent.growth > 0 ? '+' : ''}${r.opponent.growth}%</span>`;
 
         // Lead dots

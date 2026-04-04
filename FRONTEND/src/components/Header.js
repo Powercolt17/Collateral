@@ -1,4 +1,4 @@
-// Header Component - Clearinghouse Terminal Nav
+// Header Component - Premium Clearinghouse Terminal Nav
 export function renderHeader(currentRoute) {
     const routes = [
         { path: '/overview', label: 'MARKET' },
@@ -24,8 +24,8 @@ export function renderHeader(currentRoute) {
         `;
     }).join('');
 
-    // Generate mobile navigation items
-    const mobileNavItems = routes.map(route => {
+    // Panel navigation items with staggered delay
+    const panelNavItems = routes.map((route, i) => {
         const isActive = currentRoute === route.path ||
             (route.path === '/contracts' && (currentRoute === '/contracts' || currentRoute.startsWith('/contracts/'))) ||
             (route.path === '/overview' && currentRoute === '/');
@@ -33,15 +33,36 @@ export function renderHeader(currentRoute) {
         return `
             <a href="#" 
                 onclick="window.app.closeMobileMenu(); window.router.navigate('${route.path}'); return false;" 
-                class="mobile-nav-link ${isActive ? 'active' : ''}">
+                class="pnl-nav-link ${isActive ? 'active' : ''}"
+                style="animation-delay: ${0.06 + i * 0.03}s">
+                <span class="pnl-nav-indicator"></span>
                 ${route.label}
             </a>
         `;
     }).join('');
 
+    const accountLinks = [
+        { path: '/profile', label: 'Profile', icon: 'user' },
+        { path: '/referrals', label: 'Referrals', icon: 'gift' },
+        { path: '/funding', label: 'Account Capital', icon: 'wallet' },
+        { path: '/docs', label: 'Documentation', icon: 'file-text' },
+    ];
+
+    const panelAccountItems = accountLinks.map((link, i) => `
+        <a href="#" 
+            onclick="window.app.closeMobileMenu(); window.router.navigate('${link.path}'); return false;" 
+            class="pnl-acct-link"
+            style="animation-delay: ${0.18 + i * 0.03}s">
+            <i data-lucide="${link.icon}" style="width:14px;height:14px;opacity:0.5;"></i>
+            ${link.label}
+        </a>
+    `).join('');
+
     return `
         <style>
-            /* Clearinghouse Header */
+            /* ══════════════════════════════════════════════════════════════
+               HEADER — INSTITUTIONAL CLEARINGHOUSE
+               ══════════════════════════════════════════════════════════════ */
             .ch-header {
                 width: 100%;
                 border-bottom: 1px solid #e5e5e5;
@@ -72,9 +93,7 @@ export function renderHeader(currentRoute) {
                 opacity: 0;
                 transition: opacity 0.5s ease;
             }
-            .ch-header.nav-scrolled::after {
-                opacity: 1;
-            }
+            .ch-header.nav-scrolled::after { opacity: 1; }
 
             /* ── Global Scroll Reveal ── */
             [data-reveal] {
@@ -91,26 +110,6 @@ export function renderHeader(currentRoute) {
             [data-reveal-delay="2"] { transition-delay: 0.2s; }
             [data-reveal-delay="3"] { transition-delay: 0.3s; }
 
-
-            /* ── Nav Link Underline Sweep ── */
-            .nav-link::after {
-                content: '';
-                position: absolute;
-                bottom: 0;
-                left: 50%;
-                width: 0;
-                height: 2px;
-                background: #5C1414;
-                transition: width 0.3s ease, left 0.3s ease;
-            }
-            .nav-link:hover::after {
-                width: 100%;
-                left: 0;
-            }
-            .nav-link.active::after {
-                width: 100%;
-                left: 0;
-            }
             .ch-header-inner {
                 width: 100%;
                 padding: 0 32px;
@@ -121,7 +120,6 @@ export function renderHeader(currentRoute) {
             }
 
             /* ── Wordmark ── */
-            /* ── New Institutional Wordmark — POWERFUL ── */
             .ch-logo {
                 display: inline-flex;
                 align-items: center;
@@ -146,7 +144,7 @@ export function renderHeader(currentRoute) {
                 margin: 0;
             }
 
-            /* Nav links */
+            /* ── Nav Links (desktop center) ── */
             .ch-nav {
                 display: none;
                 align-items: center;
@@ -158,7 +156,7 @@ export function renderHeader(currentRoute) {
                 .ch-nav { display: flex; }
             }
             .nav-link {
-                padding: 26px 4px; /* Height of header to create clickable area */
+                padding: 26px 4px;
                 font-size: 13px;
                 font-weight: 600;
                 color: #333333;
@@ -169,14 +167,34 @@ export function renderHeader(currentRoute) {
                 position: relative;
                 border-bottom: 2px solid transparent;
             }
+            .nav-link::after {
+                content: '';
+                position: absolute;
+                bottom: 0;
+                left: 50%;
+                width: 0;
+                height: 2px;
+                background: #5C1414;
+                transition: width 0.3s ease, left 0.3s ease;
+            }
+            .nav-link:hover::after { width: 100%; left: 0; }
             .nav-link:hover { color: #000000; }
             .nav-link.active {
                 color: #111111;
                 font-weight: 700;
                 border-bottom-color: #5C1414;
             }
+            .nav-link.active::after { width: 100%; left: 0; }
 
-            /* Search bar */
+            /* ── Right section ── */
+            .ch-right {
+                display: flex;
+                align-items: center;
+                gap: 12px;
+                margin-left: auto;
+            }
+
+            /* Search bar (desktop only) */
             .ch-search {
                 max-width: 280px;
                 width: 280px;
@@ -196,9 +214,7 @@ export function renderHeader(currentRoute) {
                 font-family: 'Inter', sans-serif;
                 color: #333;
             }
-            .ch-search input::placeholder {
-                color: #999;
-            }
+            .ch-search input::placeholder { color: #999; }
             .ch-search input:focus {
                 outline: none;
                 border-color: #ccc;
@@ -212,53 +228,52 @@ export function renderHeader(currentRoute) {
                 color: #999;
             }
 
-            /* Dropdowns */
-            .ch-dropdown {
-                display: none;
-                align-items: center;
-                gap: 4px;
-                padding: 6px 10px;
-                font-size: 11px;
-                font-weight: 500;
-                color: #666;
-                border: 1px solid #e5e5e5;
-                background: #fff;
-                cursor: pointer;
-                font-family: 'Inter', monospace;
-            }
-            @media (min-width: 768px) {
-                .ch-dropdown { display: flex; }
-            }
-            .ch-dropdown:hover { border-color: #ccc; }
-            .ch-dropdown-label { color: #999; font-weight: 400; }
-
-            /* Right section */
-            .ch-right {
+            /* ── Hamburger Button — Always Visible ── */
+            .ch-hamburger {
+                width: 40px;
+                height: 40px;
                 display: flex;
                 align-items: center;
-                gap: 12px;
-                margin-left: auto;
-            }
-
-            /* User icons */
-            .ch-icon-btn {
-                width: 36px;
-                height: 36px;
-                display: none;
-                align-items: center;
                 justify-content: center;
-                color: #666;
                 background: transparent;
-                border: none;
+                border: 1px solid transparent;
                 cursor: pointer;
-                transition: color 0.15s;
+                position: relative;
+                transition: border-color 0.2s, background 0.2s;
+                flex-shrink: 0;
             }
-            @media (min-width: 768px) {
-                .ch-icon-btn { display: flex; }
+            .ch-hamburger:hover {
+                border-color: #e5e5e5;
+                background: #fafafa;
             }
-            .ch-icon-btn:hover { color: #0a0a0a; }
+            .ch-hamburger-lines {
+                width: 18px;
+                height: 14px;
+                display: flex;
+                flex-direction: column;
+                justify-content: space-between;
+            }
+            .ch-hamburger-lines span {
+                display: block;
+                width: 100%;
+                height: 1.5px;
+                background: #333;
+                transition: transform 0.3s ease, opacity 0.3s ease, width 0.3s ease;
+                transform-origin: center;
+            }
+            .ch-hamburger-lines span:nth-child(2) { width: 12px; margin-left: auto; }
+            .ch-hamburger.open .ch-hamburger-lines span:nth-child(1) {
+                transform: translateY(6.25px) rotate(45deg);
+            }
+            .ch-hamburger.open .ch-hamburger-lines span:nth-child(2) {
+                opacity: 0;
+                width: 0;
+            }
+            .ch-hamburger.open .ch-hamburger-lines span:nth-child(3) {
+                transform: translateY(-6.25px) rotate(-45deg);
+            }
 
-            /* Connect button */
+            /* Connect button (header) — hidden when logged in or on mobile */
             .ch-connect {
                 padding: 8px 16px;
                 font-size: 11px;
@@ -274,114 +289,7 @@ export function renderHeader(currentRoute) {
             }
             .ch-connect:hover { background: #5C1414; }
 
-            /* Account badge — institutional (desktop only) */
-            .ch-user-menu {
-                position: relative;
-            }
-            @media (max-width: 767px) {
-                .ch-user-menu { display: none !important; }
-                .ch-icon-btn { display: none !important; }
-            }
-            .ch-user-btn {
-                display: flex;
-                align-items: center;
-                gap: 8px;
-                padding: 0;
-                background: transparent;
-                border: none;
-                cursor: pointer;
-            }
-            .ch-user-badge {
-                width: 32px;
-                height: 32px;
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                background: #fff;
-                border: 1px solid #E5E5E5;
-                transition: background 0.1s, border-color 0.1s;
-            }
-            .ch-user-btn:hover .ch-user-badge {
-                background: #F7F7F7;
-                border-color: #DCDCDC;
-            }
-            .ch-user-initials {
-                font-family: 'Neue Haas Grotesk Display', 'Helvetica Neue', Helvetica, Arial, sans-serif;
-                font-size: 12px;
-                font-weight: 700;
-                color: #111111;
-                letter-spacing: -0.3px;
-                line-height: 1;
-            }
-            .ch-user-label-wrap {
-                display: none;
-                flex-direction: column;
-                align-items: flex-start;
-                gap: 0;
-            }
-            @media (min-width: 1024px) {
-                .ch-user-label-wrap { display: flex; }
-            }
-            .ch-user-label-id {
-                font-family: 'Inter', monospace;
-                font-size: 11px;
-                font-weight: 700;
-                color: #111111;
-                letter-spacing: -0.2px;
-                line-height: 1;
-            }
-            .ch-user-label-role {
-                font-family: 'Inter', monospace;
-                font-size: 8px;
-                font-weight: 600;
-                text-transform: uppercase;
-                letter-spacing: 1.2px;
-                color: #8A8A8A;
-                line-height: 1;
-                margin-top: 3px;
-            }
-            .ch-user-chevron {
-                color: #CCCCCC;
-                transition: color 0.1s;
-            }
-            .ch-user-btn:hover .ch-user-chevron { color: #888; }
-
-            /* Account dropdown */
-            .ch-user-dropdown {
-                position: absolute;
-                right: 0;
-                top: 100%;
-                margin-top: 6px;
-                width: 200px;
-                background: #fff;
-                border: 1px solid #E5E5E5;
-                box-shadow: 0 4px 12px rgba(0,0,0,0.06);
-                display: none;
-                z-index: 100;
-            }
-            .ch-user-menu:hover .ch-user-dropdown,
-            .ch-user-menu.open .ch-user-dropdown { display: block; }
-            .ch-user-dropdown button {
-                width: 100%;
-                padding: 10px 14px;
-                font-size: 10px;
-                font-weight: 700;
-                text-align: left;
-                text-transform: uppercase;
-                letter-spacing: 0.5px;
-                color: #333333;
-                background: transparent;
-                border: none;
-                border-bottom: 1px solid #F5F5F5;
-                cursor: pointer;
-                font-family: 'Inter', monospace;
-                transition: background 0.1s;
-            }
-            .ch-user-dropdown button:last-child { border-bottom: none; }
-            .ch-user-dropdown button:hover { background: #FAFAFA; }
-            .ch-user-dropdown .signout { color: #5C1414; }
-
-            /* Notification dropdown */
+            /* Notification dropdown — desktop only */
             .ch-notif-wrap { position: relative; }
             .ch-notif-panel {
                 position: absolute;
@@ -447,232 +355,379 @@ export function renderHeader(currentRoute) {
                 display: none;
             }
             .ch-notif-wrap.has-items .ch-notif-badge { display: block; }
-
-            /* Mobile menu button */
-            .ch-mobile-btn {
-                display: flex;
-                flex-direction: column;
-                gap: 4px;
-                padding: 8px;
+            .ch-icon-btn {
+                width: 36px;
+                height: 36px;
+                display: none;
+                align-items: center;
+                justify-content: center;
+                color: #666;
                 background: transparent;
                 border: none;
                 cursor: pointer;
+                transition: color 0.15s;
             }
             @media (min-width: 768px) {
-                .ch-mobile-btn { display: none; }
+                .ch-icon-btn { display: flex; }
             }
-            .ch-mobile-btn span {
-                width: 20px;
-                height: 2px;
-                background: #333;
-                transition: all 0.2s;
-            }
+            .ch-icon-btn:hover { color: #0a0a0a; }
 
-            /* Mobile menu */
-            .ch-mobile-overlay {
+            /* ══════════════════════════════════════════════════════════════
+               SLIDE-OUT PANEL — UNIVERSAL (DESKTOP + MOBILE)
+               ══════════════════════════════════════════════════════════════ */
+            .pnl-overlay {
                 position: fixed;
                 inset: 0;
-                background: rgba(0,0,0,0.4);
-                backdrop-filter: blur(4px);
-                z-index: 40;
-                display: none;
+                background: rgba(10, 10, 10, 0.35);
+                backdrop-filter: blur(6px);
+                -webkit-backdrop-filter: blur(6px);
+                z-index: 90;
+                opacity: 0;
+                visibility: hidden;
+                transition: opacity 0.35s ease, visibility 0.35s ease;
             }
-            .ch-mobile-menu {
+            .pnl-overlay.open {
+                opacity: 1;
+                visibility: visible;
+            }
+
+            .pnl-drawer {
                 position: fixed;
                 top: 0;
                 right: 0;
-                width: 320px;
-                max-width: 85vw;
+                width: 380px;
+                max-width: 90vw;
                 height: 100%;
-                background: #fff;
-                z-index: 50;
+                background: #ffffff;
+                z-index: 100;
                 transform: translateX(100%);
-                transition: transform 0.3s ease;
+                transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
                 display: flex;
                 flex-direction: column;
+                box-shadow: -24px 0 80px rgba(0,0,0,0.08);
+                border-left: 1px solid #f0f0f0;
             }
-            .ch-mobile-menu.open { transform: translateX(0); }
-            .ch-mob-header {
+            .pnl-drawer.open {
+                transform: translateX(0);
+            }
+
+            /* Panel header */
+            .pnl-header {
                 display: flex;
                 justify-content: space-between;
                 align-items: center;
-                padding: 20px 24px;
+                padding: 24px 28px 20px;
                 border-bottom: 1px solid #f0f0f0;
+                flex-shrink: 0;
             }
-            .ch-mob-header-title {
-                font-size: 11px;
-                font-weight: 600;
-                letter-spacing: 0.12em;
-                color: #999;
+            .pnl-header-left {
+                display: flex;
+                align-items: center;
+                gap: 10px;
+            }
+            .pnl-header-logo {
+                width: 20px;
+                height: 20px;
+                opacity: 0.6;
+            }
+            .pnl-header-title {
                 font-family: 'Inter', monospace;
+                font-size: 9px;
+                font-weight: 700;
                 text-transform: uppercase;
+                letter-spacing: 2.5px;
+                color: #999;
             }
-            .ch-mob-nav {
-                flex: 1;
-                overflow-y: auto;
-                padding: 8px 0;
-            }
-            .mobile-nav-link {
+            .pnl-close {
+                width: 32px;
+                height: 32px;
                 display: flex;
                 align-items: center;
-                gap: 12px;
-                padding: 14px 24px;
-                font-size: 13px;
-                font-weight: 500;
-                color: #333;
-                text-decoration: none;
-                border-bottom: 1px solid #f8f8f8;
-                font-family: 'Inter Tight', 'IBM Plex Sans', sans-serif;
-                letter-spacing: 0.04em;
-                transition: background 0.12s, color 0.12s;
+                justify-content: center;
+                background: transparent;
+                border: 1px solid transparent;
+                cursor: pointer;
+                color: #999;
+                transition: all 0.15s;
             }
-            .mobile-nav-link:hover { background: #fafafa; }
-            .mobile-nav-link.active { color: #3B0001; font-weight: 600; background: #fdf8f8; }
-
-            /* ── Mobile account section ── */
-            .ch-mob-user {
-                display: flex;
-                align-items: center;
-                gap: 12px;
-                padding: 20px 24px;
-                border-bottom: 1px solid #f0f0f0;
+            .pnl-close:hover {
+                border-color: #e5e5e5;
                 background: #fafafa;
+                color: #333;
             }
-            .ch-mob-user-badge {
-                width: 36px;
-                height: 36px;
+
+            /* User identity card */
+            .pnl-user {
+                display: none;
+                align-items: center;
+                gap: 14px;
+                padding: 20px 28px;
+                background: linear-gradient(135deg, #fafafa 0%, #f7f5f5 100%);
+                border-bottom: 1px solid #f0f0f0;
+                flex-shrink: 0;
+            }
+            .pnl-user.visible { display: flex; }
+            .pnl-user-badge {
+                width: 40px;
+                height: 40px;
                 display: flex;
                 align-items: center;
                 justify-content: center;
                 background: #fff;
-                border: 1px solid #e5e5e5;
+                border: 1.5px solid #e5e5e5;
                 flex-shrink: 0;
             }
-            .ch-mob-user-initial {
+            .pnl-user-initial {
                 font-family: 'Neue Haas Grotesk Display', 'Helvetica Neue', Helvetica, Arial, sans-serif;
-                font-size: 14px;
+                font-size: 15px;
                 font-weight: 700;
                 color: #111;
             }
-            .ch-mob-user-info {
+            .pnl-user-info {
                 display: flex;
                 flex-direction: column;
-                gap: 2px;
+                gap: 3px;
+                min-width: 0;
             }
-            .ch-mob-user-name {
-                font-size: 13px;
+            .pnl-user-name {
+                font-size: 14px;
                 font-weight: 600;
                 color: #111;
-                font-family: 'Inter Tight', 'IBM Plex Sans', sans-serif;
+                font-family: 'Neue Haas Grotesk Display', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
             }
-            .ch-mob-user-role {
+            .pnl-user-role {
                 font-size: 9px;
                 font-weight: 600;
                 text-transform: uppercase;
-                letter-spacing: 1.2px;
-                color: #8a8a8a;
+                letter-spacing: 1.5px;
+                color: #aaa;
                 font-family: 'Inter', monospace;
             }
 
-            .ch-mob-divider {
-                height: 1px;
-                background: #f0f0f0;
-                margin: 0;
+            /* Panel scrollable body */
+            .pnl-body {
+                flex: 1;
+                overflow-y: auto;
+                padding: 0;
             }
-            .ch-mob-section-label {
+            .pnl-body::-webkit-scrollbar { width: 3px; }
+            .pnl-body::-webkit-scrollbar-track { background: transparent; }
+            .pnl-body::-webkit-scrollbar-thumb { background: #e5e5e5; }
+
+            /* Section label */
+            .pnl-section-label {
+                font-family: 'Inter', monospace;
                 font-size: 9px;
                 font-weight: 700;
                 text-transform: uppercase;
                 letter-spacing: 2px;
-                color: #bbb;
-                font-family: 'Inter', monospace;
-                padding: 16px 24px 8px;
+                color: #ccc;
+                padding: 20px 28px 10px;
             }
-            .ch-mob-signout {
+
+            /* Navigation links */
+            .pnl-nav-link {
+                display: flex;
+                align-items: center;
+                gap: 14px;
+                padding: 13px 28px;
+                font-size: 14px;
+                font-weight: 500;
+                color: #444;
+                text-decoration: none;
+                font-family: 'Neue Haas Grotesk Display', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+                letter-spacing: 0.02em;
+                transition: all 0.15s ease;
+                position: relative;
+                opacity: 0;
+                transform: translateX(12px);
+                animation: pnlSlideIn 0.35s ease forwards;
+            }
+            .pnl-nav-link:hover {
+                background: #fafafa;
+                color: #111;
+            }
+            .pnl-nav-link.active {
+                color: #111;
+                font-weight: 700;
+                background: #fdf8f8;
+            }
+            .pnl-nav-indicator {
+                width: 3px;
+                height: 3px;
+                background: #d4d4d4;
+                flex-shrink: 0;
+                transition: all 0.15s;
+            }
+            .pnl-nav-link.active .pnl-nav-indicator {
+                width: 4px;
+                height: 4px;
+                background: #5C1414;
+            }
+            .pnl-nav-link:hover .pnl-nav-indicator {
+                background: #888;
+            }
+
+            /* Divider */
+            .pnl-divider {
+                height: 1px;
+                background: #f0f0f0;
+                margin: 4px 28px;
+            }
+
+            /* Account links */
+            .pnl-acct-link {
+                display: flex;
+                align-items: center;
+                gap: 12px;
+                padding: 12px 28px;
+                font-size: 13px;
+                font-weight: 500;
+                color: #555;
+                text-decoration: none;
+                font-family: 'Neue Haas Grotesk Display', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+                transition: all 0.15s ease;
+                opacity: 0;
+                transform: translateX(12px);
+                animation: pnlSlideIn 0.35s ease forwards;
+            }
+            .pnl-acct-link:hover {
+                background: #fafafa;
+                color: #111;
+            }
+
+            /* Sign out */
+            .pnl-signout {
                 display: flex;
                 align-items: center;
                 gap: 12px;
                 width: 100%;
-                padding: 14px 24px;
-                font-size: 13px;
+                padding: 14px 28px;
+                font-size: 12px;
                 font-weight: 600;
                 color: #5C1414;
-                text-decoration: none;
                 background: transparent;
                 border: none;
                 border-top: 1px solid #f0f0f0;
-                font-family: 'Inter Tight', 'IBM Plex Sans', sans-serif;
-                letter-spacing: 0.04em;
+                font-family: 'Inter', monospace;
+                letter-spacing: 0.06em;
+                text-transform: uppercase;
                 cursor: pointer;
                 text-align: left;
                 transition: background 0.12s;
+                margin-top: auto;
+                flex-shrink: 0;
             }
-            .ch-mob-signout:hover { background: #fdf8f8; }
+            .pnl-signout:hover { background: #fdf8f8; }
 
-            .ch-mob-footer {
-                border-top: 1px solid #f0f0f0;
-                padding: 20px 24px;
-                background: #fafafa;
+            /* Connect button in panel */
+            .pnl-connect-section {
+                padding: 20px 28px;
+                flex-shrink: 0;
             }
-            .ch-mob-status {
+            .pnl-connect-btn {
+                width: 100%;
+                padding: 14px 24px;
+                font-size: 12px;
+                font-weight: 700;
+                color: #fff;
+                background: #111;
+                border: none;
+                cursor: pointer;
+                font-family: 'Inter', monospace;
+                letter-spacing: 0.5px;
+                text-transform: uppercase;
+                transition: background 0.15s;
+            }
+            .pnl-connect-btn:hover { background: #5C1414; }
+
+            /* Panel footer */
+            .pnl-footer {
+                border-top: 1px solid #f0f0f0;
+                padding: 20px 28px;
+                background: #fafafa;
+                flex-shrink: 0;
+            }
+            .pnl-status {
                 display: flex;
                 align-items: center;
-                gap: 6px;
+                gap: 8px;
                 margin-bottom: 16px;
             }
-            .ch-mob-status-dot {
-                width: 6px;
-                height: 6px;
+            .pnl-status-dot {
+                width: 5px;
+                height: 5px;
                 border-radius: 50%;
                 background: #22c55e;
+                box-shadow: 0 0 6px rgba(34, 197, 94, 0.4);
             }
-            .ch-mob-status-text {
+            .pnl-status-text {
                 font-size: 10px;
                 font-weight: 500;
-                color: #999;
-                font-family: 'Inter', monospace;
-                text-transform: uppercase;
-                letter-spacing: 0.08em;
-            }
-            .ch-mob-meta {
-                display: grid;
-                grid-template-columns: 1fr 1fr;
-                gap: 12px;
-                margin-bottom: 16px;
-            }
-            .ch-mob-meta-item {
-                display: flex;
-                flex-direction: column;
-                gap: 2px;
-            }
-            .ch-mob-meta-label {
-                font-size: 9px;
-                font-weight: 600;
-                color: #bbb;
+                color: #aaa;
                 font-family: 'Inter', monospace;
                 text-transform: uppercase;
                 letter-spacing: 0.1em;
             }
-            .ch-mob-meta-value {
-                font-size: 12px;
+            .pnl-meta {
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+                gap: 10px;
+                margin-bottom: 16px;
+            }
+            .pnl-meta-item {
+                display: flex;
+                flex-direction: column;
+                gap: 2px;
+            }
+            .pnl-meta-label {
+                font-size: 8px;
+                font-weight: 700;
+                color: #ccc;
+                font-family: 'Inter', monospace;
+                text-transform: uppercase;
+                letter-spacing: 0.12em;
+            }
+            .pnl-meta-value {
+                font-size: 11px;
                 font-weight: 500;
-                color: #555;
+                color: #777;
                 font-family: 'Inter Tight', 'IBM Plex Sans', sans-serif;
             }
-            .ch-mob-legal {
+            .pnl-legal {
                 display: flex;
                 gap: 16px;
                 padding-top: 12px;
                 border-top: 1px solid #eee;
             }
-            .ch-mob-legal a {
+            .pnl-legal a {
                 font-size: 10px;
-                color: #bbb;
+                color: #ccc;
                 text-decoration: none;
                 font-family: 'Inter', monospace;
                 letter-spacing: 0.04em;
+                transition: color 0.12s;
             }
-            .ch-mob-legal a:hover { color: #888; }
+            .pnl-legal a:hover { color: #888; }
+
+            @keyframes pnlSlideIn {
+                to { opacity: 1; transform: translateX(0); }
+            }
+
+            /* ── Mobile overrides ── */
+            @media (max-width: 767px) {
+                .ch-header-inner { padding: 0 16px; gap: 0; }
+                .ch-icon-btn { display: none !important; }
+                .ch-notif-wrap { display: none !important; }
+                #btn-auth { display: none !important; }
+                .pnl-drawer { width: 100%; max-width: 100%; border-left: none; }
+            }
+            @media (max-width: 480px) {
+                .ch-logo-wordmark { font-size: 13px; letter-spacing: 0.1em; }
+            }
         </style>
 
         <header class="ch-header">
@@ -689,7 +744,7 @@ export function renderHeader(currentRoute) {
                     <span class="ch-logo-wordmark">COLLATERAL</span>
                 </a>
 
-                <!-- Nav Links -->
+                <!-- Nav Links (desktop) -->
                 <nav class="ch-nav">
                     ${navItems}
                 </nav>
@@ -702,7 +757,7 @@ export function renderHeader(currentRoute) {
                         <input type="text" id="global-search" placeholder="Search RCPT or Provider..." onkeydown="if(event.key==='Enter'){const q=this.value.trim();if(q){window.router.navigate('/contracts');setTimeout(()=>{const s=document.getElementById('ac-search');if(s){s.value=q;s.dispatchEvent(new Event('input'));}},200);}this.blur();}">
                     </div>
 
-                    <!-- Notification Bell -->
+                    <!-- Notification Bell (desktop only) -->
                     <div class="ch-notif-wrap" id="notif-wrap">
                         <button class="ch-icon-btn" onclick="window.app.toggleNotifications(event)">
                             <i data-lucide="bell" style="width: 18px; height: 18px;"></i>
@@ -715,124 +770,95 @@ export function renderHeader(currentRoute) {
                             </div>
                         </div>
                     </div>
-                    <button class="ch-icon-btn" onclick="window.router.navigate('/profile')">
-                        <i data-lucide="user" style="width: 18px; height: 18px;"></i>
-                    </button>
 
-                    <!-- Connect / User Button -->
-                    <button onclick="window.app.handleAuthClick()" id="btn-auth" class="ch-connect">
-                        CONNECT
-                    </button>
-
-                    <!-- Authenticated Account Badge (hidden by default) -->
-                    <div id="user-menu" class="ch-user-menu hidden">
-                        <button id="user-menu-btn" onclick="window.app.toggleMenuPersistence(event)" class="ch-user-btn">
-                            <div class="ch-user-badge">
-                                <span class="ch-user-initials" id="menu-initial">U</span>
-                            </div>
-                            <div class="ch-user-label-wrap">
-                                <span class="ch-user-label-id" id="menu-username">OPERATOR</span>
-                                <span class="ch-user-label-role">CLEARING ACCOUNT</span>
-                            </div>
-                            <i data-lucide="chevron-down" class="ch-user-chevron" style="width: 12px; height: 12px;"></i>
-                        </button>
-                        <div id="user-dropdown-content" class="ch-user-dropdown">
-                            <button onclick="window.router.navigate('/profile')">Profile</button>
-                            <button onclick="window.router.navigate('/contracts')">Active</button>
-                            <button onclick="window.router.navigate('/referrals')">Referrals</button>
-                            <button onclick="window.router.navigate('/funding')">Account Capital</button>
-                            <button onclick="window.router.navigate('/docs')">Docs</button>
-                            <button onclick="window.app.handleSignOut()" class="signout">SIGN OUT</button>
+                    <!-- Hamburger — Always Visible -->
+                    <button id="mobile-menu-btn" onclick="window.app.toggleMobileMenu()" class="ch-hamburger" aria-label="Menu">
+                        <div class="ch-hamburger-lines">
+                            <span></span>
+                            <span></span>
+                            <span></span>
                         </div>
-                    </div>
-
-                    <!-- Mobile Menu Button -->
-                    <button id="mobile-menu-btn" onclick="window.app.toggleMobileMenu()" class="ch-mobile-btn" aria-label="Menu">
-                        <span id="hamburger-line-1"></span>
-                        <span id="hamburger-line-2"></span>
-                        <span id="hamburger-line-3"></span>
                     </button>
                 </div>
             </div>
         </header>
 
-        <!-- Mobile Menu Overlay -->
-        <div id="mobile-menu-overlay" class="ch-mobile-overlay" onclick="window.app.closeMobileMenu()"></div>
+        <!-- Panel Overlay -->
+        <div id="mobile-menu-overlay" class="pnl-overlay" onclick="window.app.closeMobileMenu()"></div>
 
-        <!-- Mobile Menu -->
-        <div id="mobile-menu" class="ch-mobile-menu">
-            <div class="ch-mob-header">
-                <div style="display:flex;align-items:center;gap:8px;">
-                    <svg viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg" style="width:18px;height:18px;"><circle cx="22" cy="22" r="13.2" stroke="#3B0001" stroke-width="1.7"/><line x1="22" y1="13.5" x2="22" y2="30.5" stroke="#3B0001" stroke-width="1.3" stroke-linecap="round"/><ellipse cx="22" cy="22" rx="20.8" ry="5.8" stroke="#3B0001" stroke-width="0.85" fill="none" transform="rotate(-27 22 22)"/></svg>
-                    <span class="ch-mob-header-title">Navigation</span>
+        <!-- Slide-Out Panel -->
+        <div id="mobile-menu" class="pnl-drawer">
+            <div class="pnl-header">
+                <div class="pnl-header-left">
+                    <svg viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg" class="pnl-header-logo"><circle cx="22" cy="22" r="13.2" stroke="#3B0001" stroke-width="1.7"/><line x1="22" y1="13.5" x2="22" y2="30.5" stroke="#3B0001" stroke-width="1.3" stroke-linecap="round"/><ellipse cx="22" cy="22" rx="20.8" ry="5.8" stroke="#3B0001" stroke-width="0.85" fill="none" transform="rotate(-27 22 22)"/></svg>
+                    <span class="pnl-header-title">Menu</span>
                 </div>
-                <button onclick="window.app.closeMobileMenu()" style="background:none;border:none;cursor:pointer;padding:4px;">
-                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#999" stroke-width="2" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+                <button onclick="window.app.closeMobileMenu()" class="pnl-close" aria-label="Close">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
                 </button>
             </div>
 
             <!-- User Identity (shown when logged in) -->
-            <div id="mobile-user-section" class="hidden">
-                <div class="ch-mob-user">
-                    <div class="ch-mob-user-badge">
-                        <span class="ch-mob-user-initial" id="mobile-menu-initial">U</span>
-                    </div>
-                    <div class="ch-mob-user-info">
-                        <span class="ch-mob-user-name" id="mobile-menu-username">@user</span>
-                        <span class="ch-mob-user-role">CLEARING ACCOUNT</span>
-                    </div>
+            <div id="mobile-user-section" class="pnl-user">
+                <div class="pnl-user-badge">
+                    <span class="pnl-user-initial" id="mobile-menu-initial">U</span>
+                </div>
+                <div class="pnl-user-info">
+                    <span class="pnl-user-name" id="mobile-menu-username">@user</span>
+                    <span class="pnl-user-role">Clearing Account</span>
                 </div>
             </div>
 
-            <nav class="ch-mob-nav">
-                <div class="ch-mob-section-label">Navigation</div>
-                ${mobileNavItems}
-            </nav>
+            <div class="pnl-body">
+                <!-- Navigation -->
+                <div class="pnl-section-label">Navigation</div>
+                ${panelNavItems}
 
-            <!-- Account Links (shown when logged in) -->
-            <div id="mobile-account-links" class="hidden">
-                <div class="ch-mob-divider"></div>
-                <div class="ch-mob-section-label">Account</div>
-                <nav class="ch-mob-nav">
-                    <a href="#" onclick="window.app.closeMobileMenu(); window.router.navigate('/profile'); return false;" class="mobile-nav-link">PROFILE</a>
-                    <a href="#" onclick="window.app.closeMobileMenu(); window.router.navigate('/referrals'); return false;" class="mobile-nav-link">REFERRALS</a>
-                    <a href="#" onclick="window.app.closeMobileMenu(); window.router.navigate('/funding'); return false;" class="mobile-nav-link">ACCOUNT CAPITAL</a>
-                    <a href="#" onclick="window.app.closeMobileMenu(); window.router.navigate('/docs'); return false;" class="mobile-nav-link">DOCS</a>
-                </nav>
-                <button onclick="window.app.closeMobileMenu(); window.app.handleSignOut()" class="ch-mob-signout">SIGN OUT</button>
+                <!-- Account Links (shown when logged in) -->
+                <div id="mobile-account-links" style="display:none;">
+                    <div class="pnl-divider"></div>
+                    <div class="pnl-section-label">Account</div>
+                    ${panelAccountItems}
+                </div>
             </div>
 
-            <!-- Connect button (shown when NOT logged in) -->
-            <div id="mobile-connect-section" style="padding:0 24px 16px;">
-                <button onclick="window.app.closeMobileMenu(); window.app.handleAuthClick()" id="btn-auth-mobile" class="ch-connect" style="width:100%;height:44px;border-radius:8px;font-family:'Inter Tight','IBM Plex Sans',sans-serif;font-size:13px;font-weight:500;letter-spacing:0.06em;">
+            <!-- Sign Out (shown when logged in) -->
+            <button id="pnl-signout-btn" onclick="window.app.closeMobileMenu(); window.app.handleSignOut()" class="pnl-signout" style="display:none;">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+                Sign Out
+            </button>
+
+            <!-- Connect (shown when NOT logged in) -->
+            <div id="mobile-connect-section" class="pnl-connect-section">
+                <button onclick="window.app.closeMobileMenu(); window.app.handleAuthClick()" id="btn-auth-mobile" class="pnl-connect-btn">
                     CONNECT
                 </button>
             </div>
 
-            <div class="ch-mob-footer">
-                <div class="ch-mob-status">
-                    <div class="ch-mob-status-dot"></div>
-                    <span class="ch-mob-status-text">All systems operational</span>
+            <div class="pnl-footer">
+                <div class="pnl-status">
+                    <div class="pnl-status-dot"></div>
+                    <span class="pnl-status-text">All systems operational</span>
                 </div>
-                <div class="ch-mob-meta">
-                    <div class="ch-mob-meta-item">
-                        <span class="ch-mob-meta-label">Protocol</span>
-                        <span class="ch-mob-meta-value">v1.0</span>
+                <div class="pnl-meta">
+                    <div class="pnl-meta-item">
+                        <span class="pnl-meta-label">Protocol</span>
+                        <span class="pnl-meta-value">v1.0</span>
                     </div>
-                    <div class="ch-mob-meta-item">
-                        <span class="ch-mob-meta-label">Network</span>
-                        <span class="ch-mob-meta-value">Mainnet</span>
+                    <div class="pnl-meta-item">
+                        <span class="pnl-meta-label">Network</span>
+                        <span class="pnl-meta-value">Mainnet</span>
                     </div>
-                    <div class="ch-mob-meta-item">
-                        <span class="ch-mob-meta-label">Settlement</span>
-                        <span class="ch-mob-meta-value">USD</span>
+                    <div class="pnl-meta-item">
+                        <span class="pnl-meta-label">Settlement</span>
+                        <span class="pnl-meta-value">USD</span>
                     </div>
-                    <div class="ch-mob-meta-item">
-                        <span class="ch-mob-meta-label">Uptime</span>
-                        <span class="ch-mob-meta-value">99.9%</span>
+                    <div class="pnl-meta-item">
+                        <span class="pnl-meta-label">Uptime</span>
+                        <span class="pnl-meta-value">99.9%</span>
                     </div>
                 </div>
-                <div class="ch-mob-legal">
+                <div class="pnl-legal">
                     <a href="/#/terms" onclick="window.app.closeMobileMenu()">Terms</a>
                     <a href="/#/docs" onclick="window.app.closeMobileMenu()">Docs</a>
                     <a href="https://x.com/collaboralcap" target="_blank">X / Twitter</a>

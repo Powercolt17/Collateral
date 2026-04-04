@@ -1135,10 +1135,11 @@ window.app = {
         btn.innerHTML = 'Add Card';
         btn.onclick = () => window.app.addCard();
     },
-    // Mobile Menu Functions
+    // Panel Menu Functions (universal — desktop + mobile)
     toggleMobileMenu: function () {
         const menu = document.getElementById('mobile-menu');
         const overlay = document.getElementById('mobile-menu-overlay');
+        const btn = document.getElementById('mobile-menu-btn');
 
         if (!menu || !overlay) return;
 
@@ -1147,34 +1148,40 @@ window.app = {
         if (isOpen) {
             window.app.closeMobileMenu();
         } else {
-            // Open menu
             menu.classList.add('open');
-            overlay.style.display = 'block';
+            overlay.classList.add('open');
+            if (btn) btn.classList.add('open');
             document.body.style.overflow = 'hidden';
+            // Re-init lucide icons in panel
+            if (window.lucide) setTimeout(() => window.lucide.createIcons(), 50);
         }
     },
     closeMobileMenu: function () {
         const menu = document.getElementById('mobile-menu');
         const overlay = document.getElementById('mobile-menu-overlay');
+        const btn = document.getElementById('mobile-menu-btn');
 
         if (!menu || !overlay) return;
 
         menu.classList.remove('open');
-        overlay.style.display = 'none';
+        overlay.classList.remove('open');
+        if (btn) btn.classList.remove('open');
         document.body.style.overflow = '';
     },
     updateMobileAuthUI: function () {
         const mobileUserSection = document.getElementById('mobile-user-section');
         const mobileAccountLinks = document.getElementById('mobile-account-links');
         const mobileConnectSection = document.getElementById('mobile-connect-section');
+        const signoutBtn = document.getElementById('pnl-signout-btn');
         const mobileInitial = document.getElementById('mobile-menu-initial');
         const mobileUsername = document.getElementById('mobile-menu-username');
 
         if (appState.isLoggedIn) {
-            // Show user identity + account links, hide connect button
-            if (mobileUserSection) mobileUserSection.classList.remove('hidden');
-            if (mobileAccountLinks) mobileAccountLinks.classList.remove('hidden');
-            if (mobileConnectSection) mobileConnectSection.classList.add('hidden');
+            // Show user identity + account links + sign out, hide connect
+            if (mobileUserSection) mobileUserSection.classList.add('visible');
+            if (mobileAccountLinks) mobileAccountLinks.style.display = 'block';
+            if (signoutBtn) signoutBtn.style.display = 'flex';
+            if (mobileConnectSection) mobileConnectSection.style.display = 'none';
 
             if (mobileInitial && appState.displayName) {
                 mobileInitial.textContent = appState.displayName.charAt(0).toUpperCase();
@@ -1183,10 +1190,11 @@ window.app = {
                 mobileUsername.textContent = '@' + appState.username;
             }
         } else {
-            // Hide user identity + account links, show connect button
-            if (mobileUserSection) mobileUserSection.classList.add('hidden');
-            if (mobileAccountLinks) mobileAccountLinks.classList.add('hidden');
-            if (mobileConnectSection) mobileConnectSection.classList.remove('hidden');
+            // Hide user identity + account links + sign out, show connect
+            if (mobileUserSection) mobileUserSection.classList.remove('visible');
+            if (mobileAccountLinks) mobileAccountLinks.style.display = 'none';
+            if (signoutBtn) signoutBtn.style.display = 'none';
+            if (mobileConnectSection) mobileConnectSection.style.display = 'block';
         }
     },
     setupPayout: async function () {
@@ -1375,39 +1383,17 @@ function updateAuthUI() {
     if (!appState.sessionHydrated) return;
 
     const btnAuth = document.getElementById('btn-auth');
-    const userMenu = document.getElementById('user-menu');
-    const userMenuBtn = document.getElementById('user-menu-btn');
-    const menuUsername = document.getElementById('menu-username');
-    const menuInitial = document.getElementById('menu-initial');
 
-    if (appState.isLoggedIn && btnAuth && userMenu) {
-        // Hide Sign In button - remove desktop-auth class to prevent CSS !important override
-        btnAuth.classList.add('hidden');
-        btnAuth.classList.remove('desktop-auth');
-
-        // Show user menu
-        userMenu.classList.remove('hidden');
-        if (userMenuBtn) userMenuBtn.classList.add('desktop-auth');
-
-        // Show @username ONLY - NO fallback to displayName or email
-        if (menuUsername) {
-            menuUsername.innerText = appState.username ? '@' + appState.username : '@—';
-        }
-        if (menuInitial && appState.displayName) {
-            menuInitial.textContent = appState.displayName.charAt(0).toUpperCase();
-        }
+    if (appState.isLoggedIn) {
+        // Hide header CONNECT button when logged in
+        if (btnAuth) btnAuth.classList.add('hidden');
         console.log('[Auth] UI updated, showing:', appState.username);
-    } else if (btnAuth && userMenu) {
-        // Show Sign In button
-        btnAuth.classList.remove('hidden');
-        btnAuth.classList.add('desktop-auth');
-
-        // Hide user menu
-        userMenu.classList.add('hidden');
-        if (userMenuBtn) userMenuBtn.classList.remove('desktop-auth');
+    } else {
+        // Show header CONNECT button when logged out
+        if (btnAuth) btnAuth.classList.remove('hidden');
     }
 
-    // Also update mobile auth UI
+    // Update panel auth state (user card, account links, sign out)
     if (window.app && window.app.updateMobileAuthUI) {
         window.app.updateMobileAuthUI();
     }

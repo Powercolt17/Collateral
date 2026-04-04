@@ -182,12 +182,12 @@ const contractRoutes: FastifyPluginAsync = async (fastify) => {
                             rle.event_hash AS "eventHash",
                             rle.actor::text,
                             r.platform::text,
-                            COALESCE(u.display_name, 'unknown') AS "principal",
+                            COALESCE(i.username, 'unknown') AS "principal",
                             (r.stake_per_side_cents * 2)::integer AS "lockAmountUsdCents",
                             COALESCE(r.rivalry_tier, 'DUEL')::text AS "riskTier"
                         FROM rivalry_ledger_events rle
                         INNER JOIN rivalries r ON rle.rivalry_id = r.id
-                        LEFT JOIN users u ON r.challenger_user_id = u.id
+                        LEFT JOIN identities i ON r.challenger_user_id = i.user_id AND i.status = 'ACTIVE'
                         WHERE rle.event_type::text IN (
                             'RIVALRY_CREATED', 'RIVALRY_ACCEPTED', 'RIVALRY_BOTH_FUNDED',
                             'RIVALRY_ACTIVATED', 'RIVALRY_VERIFICATION_STARTED', 'RIVALRY_VERIFIED',

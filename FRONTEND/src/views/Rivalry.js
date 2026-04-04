@@ -640,7 +640,6 @@ export function renderRivalry() {
                 transition: all 240ms cubic-bezier(0.2, 0.8, 0.2, 1);
             }
             .rv-modal.tier-blood .rv-modal-header {
-                background: rgba(92,20,20,0.03);
                 border-bottom-color: rgba(122,28,28,0.2);
                 transition: all 200ms cubic-bezier(0.2, 0.8, 0.2, 1);
             }

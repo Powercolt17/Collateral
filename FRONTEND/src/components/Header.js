@@ -462,26 +462,27 @@ export function renderHeader(currentRoute) {
                 align-items: center;
                 gap: 14px;
                 padding: 20px 28px;
-                background: linear-gradient(135deg, #fafafa 0%, #f7f5f5 100%);
+                background: linear-gradient(135deg, #faf9f9 0%, #f5f2f2 100%);
                 border-bottom: 1px solid #f0f0f0;
+                border-left: 3px solid #5C1414;
                 flex-shrink: 0;
             }
             .pnl-user.visible { display: flex; }
             .pnl-user-badge {
-                width: 40px;
-                height: 40px;
+                width: 42px;
+                height: 42px;
                 display: flex;
                 align-items: center;
                 justify-content: center;
-                background: #fff;
-                border: 1.5px solid #e5e5e5;
+                background: #111;
+                border: none;
                 flex-shrink: 0;
             }
             .pnl-user-initial {
                 font-family: 'Neue Haas Grotesk Display', 'Helvetica Neue', Helvetica, Arial, sans-serif;
                 font-size: 15px;
                 font-weight: 700;
-                color: #111;
+                color: #fff;
             }
             .pnl-user-info {
                 display: flex;
@@ -533,27 +534,30 @@ export function renderHeader(currentRoute) {
                 display: flex;
                 align-items: center;
                 gap: 14px;
-                padding: 13px 28px;
+                padding: 14px 28px;
                 font-size: 14px;
                 font-weight: 500;
-                color: #444;
+                color: #555;
                 text-decoration: none;
                 font-family: 'Neue Haas Grotesk Display', 'Helvetica Neue', Helvetica, Arial, sans-serif;
-                letter-spacing: 0.02em;
+                letter-spacing: 0.04em;
                 transition: all 0.15s ease;
                 position: relative;
                 opacity: 0;
                 transform: translateX(12px);
                 animation: pnlSlideIn 0.35s ease forwards;
+                border-left: 3px solid transparent;
             }
             .pnl-nav-link:hover {
                 background: #fafafa;
                 color: #111;
+                border-left-color: #e5e5e5;
             }
             .pnl-nav-link.active {
                 color: #111;
                 font-weight: 700;
-                background: #fdf8f8;
+                background: linear-gradient(90deg, #fdf5f5 0%, #fff 100%);
+                border-left-color: #5C1414;
             }
             .pnl-nav-indicator {
                 width: 3px;
@@ -563,9 +567,10 @@ export function renderHeader(currentRoute) {
                 transition: all 0.15s;
             }
             .pnl-nav-link.active .pnl-nav-indicator {
-                width: 4px;
-                height: 4px;
+                width: 5px;
+                height: 5px;
                 background: #5C1414;
+                box-shadow: 0 0 4px rgba(92, 20, 20, 0.3);
             }
             .pnl-nav-link:hover .pnl-nav-indicator {
                 background: #888;
@@ -604,24 +609,25 @@ export function renderHeader(currentRoute) {
                 display: flex;
                 align-items: center;
                 gap: 12px;
-                width: 100%;
-                padding: 14px 28px;
-                font-size: 12px;
+                width: calc(100% - 56px);
+                margin: 12px 28px 4px;
+                padding: 12px 16px;
+                font-size: 11px;
                 font-weight: 600;
                 color: #5C1414;
-                background: transparent;
-                border: none;
-                border-top: 1px solid #f0f0f0;
+                background: #fef8f8;
+                border: 1px solid #f0e5e5;
                 font-family: 'Inter', monospace;
                 letter-spacing: 0.06em;
                 text-transform: uppercase;
                 cursor: pointer;
                 text-align: left;
-                transition: background 0.12s;
-                margin-top: auto;
-                flex-shrink: 0;
+                transition: all 0.15s;
             }
-            .pnl-signout:hover { background: #fdf8f8; }
+            .pnl-signout:hover {
+                background: #fdf0f0;
+                border-color: #e5d0d0;
+            }
 
             /* Connect button in panel */
             .pnl-connect-section {
@@ -819,20 +825,20 @@ export function renderHeader(currentRoute) {
                     <div class="pnl-divider"></div>
                     <div class="pnl-section-label">Account</div>
                     ${panelAccountItems}
+
+                    <!-- Sign Out -->
+                    <button id="pnl-signout-btn" onclick="window.app.closeMobileMenu(); window.app.handleSignOut()" class="pnl-signout" style="display:none;">
+                        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+                        Sign Out
+                    </button>
                 </div>
-            </div>
 
-            <!-- Sign Out (shown when logged in) -->
-            <button id="pnl-signout-btn" onclick="window.app.closeMobileMenu(); window.app.handleSignOut()" class="pnl-signout" style="display:none;">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
-                Sign Out
-            </button>
-
-            <!-- Connect (shown when NOT logged in) -->
-            <div id="mobile-connect-section" class="pnl-connect-section">
-                <button onclick="window.app.closeMobileMenu(); window.app.handleAuthClick()" id="btn-auth-mobile" class="pnl-connect-btn">
-                    CONNECT
-                </button>
+                <!-- Connect (shown when NOT logged in) -->
+                <div id="mobile-connect-section" class="pnl-connect-section">
+                    <button onclick="window.app.closeMobileMenu(); window.app.handleAuthClick()" id="btn-auth-mobile" class="pnl-connect-btn">
+                        CONNECT
+                    </button>
+                </div>
             </div>
 
             <div class="pnl-footer">

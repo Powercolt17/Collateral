@@ -194,15 +194,6 @@
         display: none !important;
     }
 
-    /* Hide header-bar CONNECT button and notification bell on mobile — they live in hamburger now */
-    #btn-auth {
-        display: none !important;
-    }
-
-    .ch-notif-wrap {
-        display: none !important;
-    }
-
     /* ── Footer ── */
     #global-footer>div:first-child {
         flex-direction: column !important;

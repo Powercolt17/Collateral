@@ -811,7 +811,6 @@ export function renderHeader(currentRoute) {
                 </div>
                 <div class="pnl-user-info">
                     <span class="pnl-user-name" id="mobile-menu-username">@user</span>
-                    <span class="pnl-user-role">Clearing Account</span>
                 </div>
             </div>
 

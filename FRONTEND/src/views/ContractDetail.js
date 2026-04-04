@@ -218,48 +218,42 @@ export function renderContractDetail(params) {
             .cd-btn-outline:hover { background: #fafafa; color: #111; border-color: #e5e5e5; }
             .cd-btn svg { width: 14px; height: 14px; color: #a3a3a3; }
 
-            /* Event Log — Premium Timeline */
-            .cd-timeline { position: relative; padding-left: 32px; margin-left: 6px; }
+            /* Event Log — Clean Timeline */
+            .cd-timeline { position: relative; padding-left: 28px; margin-left: 4px; }
             .cd-timeline::before {
-                content: ''; position: absolute; left: 5px; top: 0; bottom: 0;
-                width: 2px; background: linear-gradient(to bottom, #5C1414 0%, #e5e5e5 100%);
+                content: ''; position: absolute; left: 4px; top: 0; bottom: 0;
+                width: 1px; background: #e5e5e5;
             }
             .cd-event {
-                position: relative; padding: 16px 0; display: flex; align-items: flex-start;
-                gap: 0; transition: all 0.15s;
+                position: relative; padding: 0 0 20px 0;
             }
             .cd-event:last-child { padding-bottom: 0; }
             .cd-event-dot {
-                position: absolute; left: -32px; top: 18px;
-                width: 12px; height: 12px; border-radius: 50%;
-                background: #5C1414; border: 3px solid #fff;
-                box-shadow: 0 0 0 2px #5C1414;
-                z-index: 1;
-            }
-            .cd-event-dot.done {
-                background: #16a34a; box-shadow: 0 0 0 2px #16a34a;
+                position: absolute; left: -28px; top: 14px;
+                width: 9px; height: 9px;
+                background: #16a34a;
+                z-index: 1; flex-shrink: 0;
             }
             .cd-event-dot.pending {
-                background: #5C1414; box-shadow: 0 0 0 2px #5C1414;
-                animation: cd-pulse-ring 2s ease-in-out infinite;
+                background: #5C1414;
+                animation: cd-pulse 2s ease-in-out infinite;
             }
             .cd-event-dot.future {
-                background: #fff; border: 3px solid #e5e5e5;
-                box-shadow: 0 0 0 2px #e5e5e5;
+                background: #e5e5e5;
             }
-            @keyframes cd-pulse-ring {
-                0%, 100% { box-shadow: 0 0 0 2px #5C1414; }
-                50% { box-shadow: 0 0 0 2px #5C1414, 0 0 0 6px rgba(92,20,20,0.15); }
+            @keyframes cd-pulse {
+                0%, 100% { opacity: 1; }
+                50% { opacity: 0.3; }
             }
             .cd-event-content {
-                flex: 1; display: flex; flex-direction: column; gap: 4px;
-                padding: 12px 16px; background: #fafafa; border: 1px solid #f0f0f0;
-                transition: all 0.15s; cursor: default;
+                display: flex; flex-direction: column; gap: 6px;
+                padding: 10px 14px; border-left: 2px solid transparent;
+                transition: background 0.12s;
             }
-            .cd-event:hover .cd-event-content { background: #f5f5f5; border-color: #e5e5e5; }
-            .cd-event-content.done { background: #fff; border-color: #e8e8e8; }
-            .cd-event-content.pending { background: #fdfafa; border-color: #f0e0e0; }
-            .cd-event-content.future { background: #fcfcfc; border-color: #f0f0f0; opacity: 0.6; }
+            .cd-event-content.done { border-left-color: #16a34a; background: #fafffe; }
+            .cd-event-content.pending { border-left-color: #5C1414; background: #fdfafa; }
+            .cd-event-content.future { border-left-color: #e5e5e5; background: #fcfcfc; opacity: 0.5; }
+            .cd-event:hover .cd-event-content { background: #f8f8f8; }
             .cd-event-top {
                 display: flex; justify-content: space-between; align-items: center;
             }
@@ -271,14 +265,14 @@ export function renderContractDetail(params) {
             .cd-event-chip {
                 font-family: 'Inter', monospace; font-size: 8px; font-weight: 700;
                 letter-spacing: 0.08em; text-transform: uppercase;
-                padding: 3px 8px; border-radius: 2px;
+                padding: 2px 6px;
             }
             .cd-event-chip.done { background: #f0fdf4; color: #16a34a; }
             .cd-event-chip.pending { background: #fef2f2; color: #5C1414; }
-            .cd-event-chip.future { background: #f5f5f5; color: #ccc; }
+            .cd-event-chip.future { background: #f5f5f5; color: #d4d4d4; }
             .cd-event-time {
-                font-family: 'Inter', monospace; font-size: 10px; color: #999;
-                letter-spacing: 0.02em; margin-top: 2px;
+                font-family: 'Inter', monospace; font-size: 10px; color: #aaa;
+                letter-spacing: 0.02em;
             }
             .cd-event-time.future-text { color: #ddd; }
         </style>

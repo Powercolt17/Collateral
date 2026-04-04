@@ -521,9 +521,17 @@ export async function fundRivalry(rivalryId: string, userId: string): Promise<vo
         const allFunded = allParticipants.every(p => p.funded || p.userId === userId);
 
         if (allFunded) {
+            const now = new Date();
+            const deadline = new Date(now.getTime() + rivalry.durationDays * 86400000);
+
             await tx
                 .update(rivalries)
-                .set({ fundedAt: new Date(), updatedAt: new Date() })
+                .set({
+                    fundedAt: now,
+                    activatedAt: now,
+                    deadlineUtc: deadline,
+                    updatedAt: now,
+                })
                 .where(eq(rivalries.id, rivalryId));
 
             await appendRivalryEvent(rivalryId, {
@@ -532,6 +540,18 @@ export async function fundRivalry(rivalryId: string, userId: string): Promise<vo
                 amountUsdCents: rivalry.stakePerSideCents * 2,
                 externalRef: `rivalry:${rivalryId}:both_funded`,
                 metadata: { totalPoolCents: rivalry.stakePerSideCents * 2 },
+            }, tx);
+
+            // Auto-activate immediately — don't wait for background tracker
+            await appendRivalryEvent(rivalryId, {
+                actor: 'SYSTEM',
+                eventType: RivalryEventType.RIVALRY_ACTIVATED,
+                externalRef: `rivalry:${rivalryId}:activated`,
+                metadata: {
+                    activatedAt: now.toISOString(),
+                    deadlineUtc: deadline.toISOString(),
+                    durationDays: rivalry.durationDays,
+                },
             }, tx);
         }
     });

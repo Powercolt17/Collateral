@@ -693,13 +693,21 @@ export async function initRivalryDetail() {
         const prov = PLATFORM_MAP[r.platform] || (r.platform || 'stripe').toLowerCase();
         const isMonetary = prov === 'stripe' || prov === 'shopify' || prov === 'amazon';
 
+        const isActive = ['BOTH_FUNDED','ACTIVE','VERIFYING','VERIFIED','SETTLING'].includes(r.state);
+        const challFunded = !!challPart?.funded;
+        const oppFunded = !!oppPart?.funded;
+
         return {
             id: r.id,
             status: STATE_TO_STATUS[r.state] || 'active',
+            state: r.state,
             metric: METRIC_LABELS[r.metricType] || r.metricType || 'Revenue Growth',
             metricType: r.metricType || 'FOLLOWERS',
             provider: prov,
             isMonetary,
+            isActive,
+            challFunded,
+            oppFunded,
             challenger: {
                 name: '@' + (r.challengerUsername || 'unknown'),
                 growth: challGrowth,
@@ -715,7 +723,7 @@ export async function initRivalryDetail() {
                 targetValue: oppTargetValue,
             },
             stake: (r.stakePerSideCents || 0) / 100,
-            daysLeft,
+            daysLeft: isActive ? daysLeft : r.durationDays || 30,
             totalDays: r.durationDays || 30,
             targetGrowthPct: targetPct,
             rivalryTier: r.rivalryTier || r.rivalry?.rivalryTier || 'DUEL',
@@ -752,8 +760,11 @@ export async function initRivalryDetail() {
     const totalGrowth = Math.abs(rivalry.challenger.growth) + Math.abs(rivalry.opponent.growth);
     const leftPct = totalGrowth > 0 ? Math.round((Math.abs(rivalry.challenger.growth) / totalGrowth) * 100) : 50;
     const rightPct = 100 - leftPct;
-    const statusClass = rivalry.status === 'active' ? 'live' : rivalry.status === 'pending' ? 'pending' : 'ended';
-    const statusLabel = rivalry.status === 'active' ? 'LIVE' : rivalry.status === 'pending' ? 'PENDING' : 'SETTLED';
+    const isPending = rivalry.state === 'CHALLENGE_ISSUED';
+    const isAccepted = rivalry.state === 'ACCEPTED';
+    const isPreActive = isPending || isAccepted;
+    const statusClass = rivalry.isActive ? 'live' : isPreActive ? 'pending' : 'ended';
+    const statusLabel = rivalry.isActive ? 'LIVE' : isPending ? 'AWAITING OPPONENT' : isAccepted ? 'AWAITING FUNDS' : 'SETTLED';
     const timeLabel = rivalry.daysLeft <= 0 ? 'Completed' : `${rivalry.daysLeft}d remaining of ${rivalry.totalDays}d`;
     const pool = rivalry.stake * 2;
 
@@ -828,13 +839,22 @@ export async function initRivalryDetail() {
                 <div class="rvd-stake-bar">
                     <div class="rvd-stake-side challenger">
                         <span class="rvd-stake-icon"></span>
-                        $${rivalry.stake.toLocaleString()} LOCKED · ${rivalry.challenger.name}
+                        $${rivalry.stake.toLocaleString()} ${rivalry.challFunded ? 'LOCKED' : 'PENDING'} · ${rivalry.challenger.name}
                     </div>
                     <div class="rvd-stake-side opponent">
-                        $${rivalry.stake.toLocaleString()} LOCKED · ${rivalry.opponent.name}
+                        $${rivalry.stake.toLocaleString()} ${rivalry.oppFunded ? 'LOCKED' : 'PENDING'} · ${rivalry.opponent.name}
                         <span class="rvd-stake-icon"></span>
                     </div>
                 </div>
+                ${isPreActive ? `
+                <div style="display:flex;gap:12px;margin-top:16px;">
+                    ${isPending ? `
+                        <button onclick="window.app.acceptRivalry('${rivalry.id}')" style="flex:1;padding:16px;background:#111;color:#fff;border:none;font-family:'Inter',monospace;font-size:11px;font-weight:800;letter-spacing:0.1em;cursor:pointer;">ACCEPT CHALLENGE</button>
+                        <button onclick="window.app.declineRivalry('${rivalry.id}')" style="flex:1;padding:16px;background:#fff;color:#111;border:1px solid #e5e5e5;font-family:'Inter',monospace;font-size:11px;font-weight:800;letter-spacing:0.1em;cursor:pointer;">DECLINE</button>
+                    ` : `
+                        <button onclick="window.app.fundRivalry('${rivalry.id}')" style="flex:1;padding:16px;background:#111;color:#fff;border:none;font-family:'Inter',monospace;font-size:11px;font-weight:800;letter-spacing:0.1em;cursor:pointer;">FUND YOUR SIDE &mdash; $${rivalry.stake.toLocaleString()}</button>
+                    `}
+                </div>` : ''}
 
                 <div class="rvd-momentum">
                     <div class="rvd-momentum-left ${isLeading ? 'is-leader' : ''}" style="width:${leftPct}%"></div>

@@ -218,63 +218,50 @@ export function renderContractDetail(params) {
             .cd-btn-outline:hover { background: #fafafa; color: #111; border-color: #e5e5e5; }
             .cd-btn svg { width: 14px; height: 14px; color: #a3a3a3; }
 
-            /* Event Log — Clean Timeline */
-            .cd-timeline { position: relative; padding-left: 28px; margin-left: 4px; }
+            /* Event Log — Compact */
+            .cd-timeline { position: relative; padding-left: 22px; }
             .cd-timeline::before {
-                content: ''; position: absolute; left: 4px; top: 0; bottom: 0;
+                content: ''; position: absolute; left: 3px; top: 6px; bottom: 6px;
                 width: 1px; background: #e5e5e5;
             }
             .cd-event {
-                position: relative; padding: 0 0 20px 0;
+                position: relative; display: flex; align-items: center;
+                justify-content: space-between; padding: 10px 0;
+                border-bottom: 1px solid #f5f5f5;
             }
-            .cd-event:last-child { padding-bottom: 0; }
+            .cd-event:last-child { border-bottom: none; }
             .cd-event-dot {
-                position: absolute; left: -28px; top: 14px;
-                width: 9px; height: 9px;
-                background: #16a34a;
-                z-index: 1; flex-shrink: 0;
+                position: absolute; left: -22px; top: 50%; transform: translateY(-50%);
+                width: 7px; height: 7px;
+                background: #16a34a; border-radius: 0;
+                z-index: 1;
             }
             .cd-event-dot.pending {
                 background: #5C1414;
-                animation: cd-pulse 2s ease-in-out infinite;
+                animation: cd-pulse 1.8s ease-in-out infinite;
             }
-            .cd-event-dot.future {
-                background: #e5e5e5;
-            }
+            .cd-event-dot.future { background: #e0e0e0; }
             @keyframes cd-pulse {
                 0%, 100% { opacity: 1; }
-                50% { opacity: 0.3; }
+                50% { opacity: 0.25; }
             }
-            .cd-event-content {
-                display: flex; flex-direction: column; gap: 6px;
-                padding: 10px 14px; border-left: 2px solid transparent;
-                transition: background 0.12s;
-            }
-            .cd-event-content.done { border-left-color: #16a34a; background: #fafffe; }
-            .cd-event-content.pending { border-left-color: #5C1414; background: #fdfafa; }
-            .cd-event-content.future { border-left-color: #e5e5e5; background: #fcfcfc; opacity: 0.5; }
-            .cd-event:hover .cd-event-content { background: #f8f8f8; }
-            .cd-event-top {
-                display: flex; justify-content: space-between; align-items: center;
-            }
+            .cd-event-left { display: flex; align-items: center; gap: 10px; }
             .cd-event-name {
-                font-family: 'Inter', monospace; font-size: 11px; font-weight: 700;
-                color: #111; letter-spacing: 0.06em; text-transform: uppercase;
+                font-family: 'Inter', monospace; font-size: 11px; font-weight: 600;
+                color: #111; letter-spacing: 0.04em; text-transform: uppercase;
             }
-            .cd-event-name.future-text { color: #ccc; font-weight: 500; }
+            .cd-event-name.future-text { color: #ccc; font-weight: 400; }
             .cd-event-chip {
                 font-family: 'Inter', monospace; font-size: 8px; font-weight: 700;
-                letter-spacing: 0.08em; text-transform: uppercase;
-                padding: 2px 6px;
+                letter-spacing: 0.06em; text-transform: uppercase; padding: 2px 6px;
             }
-            .cd-event-chip.done { background: #f0fdf4; color: #16a34a; }
-            .cd-event-chip.pending { background: #fef2f2; color: #5C1414; }
-            .cd-event-chip.future { background: #f5f5f5; color: #d4d4d4; }
+            .cd-event-chip.done { color: #16a34a; }
+            .cd-event-chip.pending { color: #5C1414; }
+            .cd-event-chip.future { color: #d4d4d4; }
             .cd-event-time {
-                font-family: 'Inter', monospace; font-size: 10px; color: #aaa;
-                letter-spacing: 0.02em;
+                font-family: 'Inter', monospace; font-size: 10px; color: #bbb;
+                letter-spacing: 0.02em; white-space: nowrap;
             }
-            .cd-event-time.future-text { color: #ddd; }
         </style>
 
         <div class="cd">
@@ -675,43 +662,35 @@ function renderEventLog(events) {
     steps.forEach(function (step, idx) {
         var dotClass = 'cd-event-dot';
         var nameClass = 'cd-event-name';
-        var contentClass = 'cd-event-content';
         var chipClass = 'cd-event-chip';
         var chipLabel = '';
         var timeStr = '';
-        var timeClass = 'cd-event-time';
 
         if (step.done) {
             dotClass = 'cd-event-dot done';
-            contentClass = 'cd-event-content done';
             chipClass = 'cd-event-chip done';
-            chipLabel = 'COMPLETE';
+            chipLabel = '✓';
             timeStr = step.time ? formatDateTimeForEvent(step.time) : '';
         } else if (idx === pendingIdx) {
             dotClass = 'cd-event-dot pending';
-            contentClass = 'cd-event-content pending';
             chipClass = 'cd-event-chip pending';
             chipLabel = 'PENDING';
-            timeStr = 'Waiting...';
+            timeStr = '—';
         } else {
             dotClass = 'cd-event-dot future';
             nameClass = 'cd-event-name future-text';
-            contentClass = 'cd-event-content future';
             chipClass = 'cd-event-chip future';
-            chipLabel = 'AWAITING';
-            timeStr = '—';
-            timeClass = 'cd-event-time future-text';
+            chipLabel = '—';
+            timeStr = '';
         }
 
         html += '<div class="cd-event">' +
             '<div class="' + dotClass + '"></div>' +
-            '<div class="' + contentClass + '">' +
-            '<div class="cd-event-top">' +
+            '<div class="cd-event-left">' +
             '<span class="' + nameClass + '">' + step.label + '</span>' +
             '<span class="' + chipClass + '">' + chipLabel + '</span>' +
             '</div>' +
-            '<span class="' + timeClass + '">' + timeStr + '</span>' +
-            '</div>' +
+            '<span class="cd-event-time">' + timeStr + '</span>' +
             '</div>';
     });
     html += '</div>';

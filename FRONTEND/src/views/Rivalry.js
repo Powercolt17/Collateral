@@ -546,7 +546,7 @@ export function renderRivalry() {
                 margin-top: 0;
             }
             .rv-tier-severity.visible {
-                max-height: 100px; opacity: 1; margin-top: 14px;
+                max-height: 100px; opacity: 1; margin-top: 14px; margin-bottom: 10px;
             }
             .rv-tier-severity img {
                 object-fit: contain;

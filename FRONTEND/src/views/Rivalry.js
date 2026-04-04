@@ -1060,8 +1060,11 @@ export async function initRivalry() {
 
     function renderCard(r) {
         const isLeadingChallenger = r.challenger.growth >= r.opponent.growth;
-        const statusClass = r.status === 'pending' ? 'pending' : r.status === 'settled' ? 'ended' : '';
-        const statusLabel = r.status === 'pending' ? 'FORMING' : r.status === 'settled' ? 'SETTLED' : 'LOCKED';
+        const isPending = r.state === 'CHALLENGE_ISSUED';
+        const isAccepted = r.state === 'ACCEPTED';
+        const isPreActive = isPending || isAccepted;
+        const statusClass = isPreActive ? 'pending' : r.status === 'settled' ? 'ended' : '';
+        const statusLabel = isPending ? 'FORMING' : isAccepted ? 'AWAITING FUNDS' : r.status === 'settled' ? 'SETTLED' : 'LOCKED';
         const timeLabel = r.status === 'settled' ? 'SETTLED' : r.daysLeft <= 1 ? `${r.daysLeft * 24}H REMAINING` : `${r.daysLeft}D REMAINING`;
         const timeUrgent = r.status !== 'settled' && r.daysLeft <= 3;
         const shortId = r.id.substring(0, 8);
@@ -1071,38 +1074,42 @@ export async function initRivalry() {
         let leftPct = 50;
         let rightPct = 50;
         
-        if (r.status === 'pending') {
+        if (isPreActive) {
             // Leave at 50/50 but visual tension handled in CSS
         } else if (totalGrowth === 0) {
-            // Visual tension for 0 vs 0 active state
             leftPct = 50; rightPct = 50;
         } else {
-            // Exaggerate the leader slightly for visual dominance
             const rawLeft = (Math.abs(r.challenger.growth) / totalGrowth) * 100;
             leftPct = isLeadingChallenger ? Math.min(rawLeft + 10, 95) : Math.max(rawLeft - 10, 5);
             rightPct = 100 - leftPct;
         }
 
         // Growth display
-        const challGrowth = r.status === 'pending'
+        const challGrowth = isPending
             ? '<span class="rv-player-growth awaiting" style="font-family:\'Inter\',monospace;letter-spacing:0.1em;text-transform:uppercase;">FORMING</span>'
+            : isAccepted
+            ? '<span class="rv-player-growth awaiting" style="font-family:\'Inter\',monospace;letter-spacing:0.1em;text-transform:uppercase;">FUND</span>'
             : `<span class="rv-player-growth ${isLeadingChallenger ? 'leading' : 'trailing'}">${r.challenger.growth > 0 ? '+' : ''}${r.challenger.growth}%</span>`;
-        const oppGrowth = r.status === 'pending'
+        const oppGrowth = isPending
             ? '<span class="rv-player-growth awaiting" style="font-family:\'Inter\',monospace;letter-spacing:0.1em;text-transform:uppercase;">FORMING</span>'
+            : isAccepted
+            ? '<span class="rv-player-growth awaiting" style="font-family:\'Inter\',monospace;letter-spacing:0.1em;text-transform:uppercase;">FUND</span>'
             : `<span class="rv-player-growth ${!isLeadingChallenger ? 'leading' : 'trailing'}">${r.opponent.growth > 0 ? '+' : ''}${r.opponent.growth}%</span>`;
 
         // Lead dots
-        const challDot = r.status !== 'pending' ? `<span class="rv-lead-dot" style="background:${isLeadingChallenger ? 'var(--rv-green)' : 'var(--rv-red)'}"></span>` : '';
-        const oppDot = r.status !== 'pending' ? `<span class="rv-lead-dot" style="background:${!isLeadingChallenger ? 'var(--rv-green)' : 'var(--rv-red)'}"></span>` : '';
+        const challDot = !isPreActive ? `<span class="rv-lead-dot" style="background:${isLeadingChallenger ? 'var(--rv-green)' : 'var(--rv-red)'}"></span>` : '';
+        const oppDot = !isPreActive ? `<span class="rv-lead-dot" style="background:${!isLeadingChallenger ? 'var(--rv-green)' : 'var(--rv-red)'}"></span>` : '';
 
-        // Action buttons
+        // Action buttons — different per state
         let actionsHtml = '';
-        if (r.status === 'pending') {
+        if (isPending) {
             if (r.isOpen) {
                 actionsHtml = `<div class="rv-card-actions"><button class="rv-action-btn rv-action-accept" data-rivalry-id="${r.id}" onclick="event.stopPropagation();window.app.acceptRivalry('${r.id}')" style="flex:1;">ACCEPT</button></div>`;
             } else {
                 actionsHtml = `<div class="rv-card-actions"><button class="rv-action-btn rv-action-accept" data-rivalry-id="${r.id}" onclick="event.stopPropagation();window.app.acceptRivalry('${r.id}')">ACCEPT</button><button class="rv-action-btn rv-action-decline" data-rivalry-id="${r.id}" onclick="event.stopPropagation();window.app.declineRivalry('${r.id}')">DECLINE</button></div>`;
             }
+        } else if (isAccepted) {
+            actionsHtml = `<div class="rv-card-actions"><button class="rv-action-btn rv-action-accept" data-rivalry-id="${r.id}" onclick="event.stopPropagation();window.app.fundRivalry('${r.id}')" style="flex:1;">FUND YOUR SIDE</button></div>`;
         }
 
         // Winner/Loser badge for settled cards
@@ -1149,7 +1156,7 @@ export async function initRivalry() {
                         </div>
                     </div>
                 </div>
-                ${r.status !== 'pending' ? `
+                ${!isPreActive ? `
                 <div class="rv-momentum">
                     <div class="rv-momentum-left" style="width:${leftPct}%"></div>
                     <div class="rv-momentum-right" style="width:${rightPct}%"></div>

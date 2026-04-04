@@ -777,6 +777,19 @@ window.app = {
             }
         } catch (err) { showAlert('Failed to decline challenge: ' + err.message, { type: 'error' }); }
     },
+    fundRivalry: async function (id) {
+        if (!appState.isLoggedIn) { window.app.openAccessModal(); return; }
+        if (!(await showConfirm('Fund your side of this rivalry? Capital will be locked immediately.', { title: 'Fund Rivalry', confirmText: 'FUND & LOCK CAPITAL' }))) return;
+        try {
+            const res = await api.fundRivalry(id);
+            if (res.ok) {
+                await showAlert('Capital locked! The duel will activate once both sides are funded.', { type: 'success', title: 'Capital Locked' });
+                window.location.reload();
+            } else {
+                showAlert('Failed to fund: ' + (res.error || 'Unknown error'), { type: 'error' });
+            }
+        } catch (err) { showAlert('Failed to fund rivalry: ' + err.message, { type: 'error' }); }
+    },
     connectSource: async function (source) {
         const btn = document.getElementById(source + '-btn');
         if (!btn) return;

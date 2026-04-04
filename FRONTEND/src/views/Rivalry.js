@@ -1557,10 +1557,10 @@ export async function initRivalry() {
                 severity.classList.remove('visible', 'war', 'blood');
                 if (selectedTier === 'WAR') {
                     severity.classList.add('visible', 'war');
-                    if (severityLabel) severityLabel.textContent = 'Elevated Risk';
+                    if (severityLabel) severityLabel.textContent = 'Prove your conviction';
                 } else if (selectedTier === 'BLOOD') {
                     severity.classList.add('visible', 'blood');
-                    if (severityLabel) severityLabel.textContent = 'Maximum Risk — Total Forfeit';
+                    if (severityLabel) severityLabel.textContent = 'No mercy. No appeals.';
                 }
             }
         });

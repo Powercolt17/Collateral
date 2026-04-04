@@ -182,12 +182,14 @@ const contractRoutes: FastifyPluginAsync = async (fastify) => {
                             rle.event_hash AS "eventHash",
                             rle.actor::text,
                             r.platform::text,
-                            COALESCE(i.username, 'unknown') AS "principal",
+                            COALESCE(
+                                (SELECT i.username FROM identities i WHERE i.user_id = r.challenger_user_id AND i.status = 'ACTIVE' LIMIT 1),
+                                'unknown'
+                            ) AS "principal",
                             (r.stake_per_side_cents * 2)::integer AS "lockAmountUsdCents",
-                            COALESCE(r.rivalry_tier, 'DUEL')::text AS "riskTier"
+                            'DUEL'::text AS "riskTier"
                         FROM rivalry_ledger_events rle
                         INNER JOIN rivalries r ON rle.rivalry_id = r.id
-                        LEFT JOIN identities i ON r.challenger_user_id = i.user_id AND i.status = 'ACTIVE'
                         WHERE rle.event_type::text IN (
                             'RIVALRY_CREATED', 'RIVALRY_ACCEPTED', 'RIVALRY_BOTH_FUNDED',
                             'RIVALRY_ACTIVATED', 'RIVALRY_VERIFICATION_STARTED', 'RIVALRY_VERIFIED',
@@ -202,7 +204,7 @@ const contractRoutes: FastifyPluginAsync = async (fastify) => {
                 rows = (result as any).rows || result;
             } catch (unionErr: any) {
                 // Fallback: rivalry tables may not exist yet
-                console.warn('[Ledger] Rivalry table not available, falling back to solo events:', unionErr.message);
+                console.error('[Ledger] UNION failed — full error:', unionErr.message, unionErr.stack);
                 const result = await db.execute(sql`
                     SELECT
                         le.id,

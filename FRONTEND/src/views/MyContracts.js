@@ -234,7 +234,7 @@ export function renderMyContracts() {
                 </div>
                 <div class="myc-metric">
                     <div class="myc-metric-value" id="myc-avg-risk">—</div>
-                    <div class="myc-metric-label">Avg Risk Tier</div>
+                    <div class="myc-metric-label">Total Payout</div>
                 </div>
             </div>
 
@@ -269,17 +269,14 @@ export async function initMyContracts() {
         const wins = terminal.filter(c => ['SETTLED', 'SETTLED_SUCCESS', 'PAYOUT_COMPLETE'].includes(c.derivedState || c.state)).length;
         const rate = terminal.length > 0 ? (wins / terminal.length * 100).toFixed(1) + '%' : '100%';
 
-        // Risk average
-        const tierMap = { 'CONSERVATIVE': 1, 'STANDARD': 2, 'AGGRESSIVE': 3 };
-        const tierLabels = ['—', 'CONSERVATIVE', 'STANDARD', 'AGGRESSIVE'];
-        const totalTier = contracts.length > 0 ? contracts.reduce((sum, c) => sum + (tierMap[c.riskTier?.toUpperCase()] || 2), 0) : 0;
-        const avgTier = contracts.length > 0 ? tierLabels[Math.round(totalTier / contracts.length)] : '—';
+        // Total payout
+        const totalPayout = contracts.reduce((sum, c) => sum + (c.payoutAmountUsdCents || 0), 0);
 
         // Update Summary
         document.getElementById('myc-total-locked').textContent = '$' + (totalLocked / 100).toLocaleString('en-US', { minimumFractionDigits: 0 });
         document.getElementById('myc-active-count').textContent = activeCount.toString();
         document.getElementById('myc-settle-rate').textContent = rate;
-        document.getElementById('myc-avg-risk').textContent = avgTier;
+        document.getElementById('myc-avg-risk').textContent = '$' + (totalPayout / 100).toLocaleString('en-US', { minimumFractionDigits: 0 });
 
         if (contracts.length === 0) {
             container.innerHTML = `
@@ -354,7 +351,6 @@ function renderContractList(container, contracts) {
                     `}
                 </div>
                 <div class="myc-card-center">
-                    <span class="myc-status-badge" style="background:transparent; border-color:#eee; color:#999; font-weight:500;">${riskTier}</span>
                     <span class="myc-status-badge" style="color:${statusColor}">${statusLabel}</span>
                 </div>
                 <div class="myc-card-right">

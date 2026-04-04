@@ -694,10 +694,6 @@ export function renderActiveContracts() {
                                 <span class="act-stat-value" id="act-payout-total">&mdash;</span>
                                 <span class="act-stat-label">Potential</span>
                             </div>
-                            <div class="act-stat">
-                                <span class="act-stat-value" id="act-avg-risk">&mdash;</span>
-                                <span class="act-stat-label">Avg Risk Tier</span>
-                            </div>
                         </div>
                     </div>
                 </div>
@@ -829,7 +825,7 @@ function hydrateSummary(contracts) {
     const deployedEl = document.getElementById('act-deployed');
     const activeEl = document.getElementById('act-active-count');
     const payoutEl = document.getElementById('act-payout-total');
-    const riskEl = document.getElementById('act-avg-risk');
+    const riskEl = null;
 
     if (!deployedEl) return;
 
@@ -841,19 +837,9 @@ function hydrateSummary(contracts) {
     const totalPayout = activeContracts.reduce((sum, c) => sum + (c.payoutAmountUsdCents || 0), 0);
     const activeCount = activeContracts.length;
 
-    // Average risk tier
-    const tierMap = { 'CONSERVATIVE': 1, 'STANDARD': 2, 'AGGRESSIVE': 3 };
-    const tierLabels = ['—', 'CONSERVATIVE', 'STANDARD', 'AGGRESSIVE'];
-    let avgTier = '—';
-    if (activeCount > 0) {
-        const totalTier = activeContracts.reduce((sum, c) => sum + (tierMap[c.riskTier?.toUpperCase()] || 2), 0);
-        avgTier = tierLabels[Math.round(totalTier / activeCount)] || 'STANDARD';
-    }
-
     deployedEl.textContent = (totalLocked / 100).toLocaleString('en-US', { style: 'currency', currency: 'USD', minimumFractionDigits: 0 });
     activeEl.textContent = activeCount.toString();
     payoutEl.textContent = (totalPayout / 100).toLocaleString('en-US', { style: 'currency', currency: 'USD', minimumFractionDigits: 0 });
-    riskEl.textContent = avgTier;
 }
 
 function getDerivedProgress(id) {
@@ -944,8 +930,7 @@ function renderContractList(container, allContracts, filter) {
         }
 
         var tagLabel = isSettled ? 'SETTLED' : (isPending ? 'PENDING' : 'LEDGER');
-        var tagsHtml = '<div class="act-tag">' + riskTier + '</div>' +
-            '<div class="act-tag">' + tagLabel + '</div>';
+        var tagsHtml = '<div class="act-tag">' + tagLabel + '</div>';
 
         // Counterparty data
         var counterparty = c.counterparty || 'Collateral Protocol';
@@ -998,8 +983,8 @@ function renderContractList(container, allContracts, filter) {
             '<div class="act-detail-value">' + dataSourceLabel + '</div>' +
             '</div>' +
             '<div class="act-detail-item">' +
-            '<div class="act-detail-label">Risk Tier</div>' +
-            '<div class="act-detail-value" style="font-weight:700;">' + riskTier + '</div>' +
+            '<div class="act-detail-label">Capital Locked</div>' +
+            '<div class="act-detail-value" style="font-weight:700;">' + amount + '</div>' +
             '</div>' +
             '<div class="act-detail-item">' +
             '<div class="act-detail-label">Contract Period</div>' +

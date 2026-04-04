@@ -233,7 +233,7 @@ export function renderContractDetail(params) {
             .cd-event-dot {
                 position: absolute; left: -22px; top: 50%; transform: translateY(-50%);
                 width: 7px; height: 7px;
-                background: #16a34a; border-radius: 0;
+                background: #0F5132; border-radius: 0;
                 z-index: 1;
             }
             .cd-event-dot.pending {
@@ -255,7 +255,7 @@ export function renderContractDetail(params) {
                 font-family: 'Inter', monospace; font-size: 8px; font-weight: 700;
                 letter-spacing: 0.06em; text-transform: uppercase; padding: 2px 6px;
             }
-            .cd-event-chip.done { color: #16a34a; }
+            .cd-event-chip.done { color: #0F5132; }
             .cd-event-chip.pending { color: #5C1414; }
             .cd-event-chip.future { color: #d4d4d4; }
             .cd-event-time {
@@ -319,10 +319,6 @@ export function renderContractDetail(params) {
                                 <div class="cd-detail-item">
                                     <div class="cd-detail-lbl">PLATFORM</div>
                                     <div class="cd-detail-val" id="cd-platform"></div>
-                                </div>
-                                <div class="cd-detail-item">
-                                    <div class="cd-detail-lbl">RISK TIER</div>
-                                    <div class="cd-detail-val fw-bold" id="cd-tier"></div>
                                 </div>
                                 <div class="cd-detail-item">
                                     <div class="cd-detail-lbl">DEADLINE</div>
@@ -456,7 +452,7 @@ export async function initContractDetail(params) {
 
         // Grid Details
         document.getElementById('cd-platform').textContent = platformDisplay;
-        document.getElementById('cd-tier').textContent = (c.riskTier || 'STANDARD').toUpperCase();
+        document.getElementById('cd-deadline').textContent = formatDate(c.deadline || c.deadlineUtc);
         document.getElementById('cd-deadline').textContent = formatDate(c.deadline || c.deadlineUtc);
 
         const start = new Date(c.createdAt || Date.now());

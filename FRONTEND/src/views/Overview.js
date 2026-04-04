@@ -1198,20 +1198,31 @@ export function renderOverview() {
                     <div class="eq-path-card rivalry anim-mech-card-2">
                         <div class="eq-path-icon">
                             <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <!-- Left sword (bottom-left to top-right) -->
-                                <line x1="5" y1="27" x2="23" y2="9" stroke="#5C1414" stroke-width="1.8" stroke-linecap="round"/>
-                                <line x1="23" y1="9" x2="27" y2="5" stroke="#5C1414" stroke-width="2.2" stroke-linecap="round"/>
-                                <!-- Left sword guard -->
-                                <line x1="20" y1="14" x2="26" y2="8" stroke="#5C1414" stroke-width="1.8" stroke-linecap="round" transform="rotate(90 23 11)"/>
-                                <!-- Left sword pommel -->
-                                <circle cx="4" cy="28" r="1.2" fill="#5C1414"/>
-                                <!-- Right sword (bottom-right to top-left) -->
-                                <line x1="27" y1="27" x2="9" y2="9" stroke="#5C1414" stroke-width="1.8" stroke-linecap="round"/>
-                                <line x1="9" y1="9" x2="5" y2="5" stroke="#5C1414" stroke-width="2.2" stroke-linecap="round"/>
-                                <!-- Right sword guard -->
-                                <line x1="6" y1="8" x2="12" y2="14" stroke="#5C1414" stroke-width="1.8" stroke-linecap="round" transform="rotate(90 9 11)"/>
-                                <!-- Right sword pommel -->
-                                <circle cx="28" cy="28" r="1.2" fill="#5C1414"/>
+                                <!-- Left blade (bottom-left → top-right) -->
+                                <path d="M5.5 26.5L22 10" stroke="#5C1414" stroke-width="1.5" stroke-linecap="round"/>
+                                <path d="M22 10L26.5 5.5" stroke="#5C1414" stroke-width="2" stroke-linecap="round"/>
+                                <!-- Left blade tip -->
+                                <path d="M26.5 5.5L28 4" stroke="#5C1414" stroke-width="1" stroke-linecap="round"/>
+                                <!-- Left crossguard -->
+                                <rect x="19.5" y="10" width="7" height="1.6" rx="0.8" transform="rotate(-45 19.5 10)" fill="#5C1414"/>
+                                <!-- Left grip wrap detail -->
+                                <line x1="9" y1="23" x2="7.5" y2="24.5" stroke="#5C1414" stroke-width="2.4" stroke-linecap="round" opacity="0.6"/>
+                                <line x1="7" y1="25" x2="5.5" y2="26.5" stroke="#5C1414" stroke-width="2.4" stroke-linecap="round" opacity="0.4"/>
+                                <!-- Left pommel -->
+                                <circle cx="4.5" cy="27.5" r="1.5" fill="#5C1414"/>
+
+                                <!-- Right blade (bottom-right → top-left) -->
+                                <path d="M26.5 26.5L10 10" stroke="#5C1414" stroke-width="1.5" stroke-linecap="round"/>
+                                <path d="M10 10L5.5 5.5" stroke="#5C1414" stroke-width="2" stroke-linecap="round"/>
+                                <!-- Right blade tip -->
+                                <path d="M5.5 5.5L4 4" stroke="#5C1414" stroke-width="1" stroke-linecap="round"/>
+                                <!-- Right crossguard -->
+                                <rect x="7" y="10" width="7" height="1.6" rx="0.8" transform="rotate(45 7 10)" fill="#5C1414"/>
+                                <!-- Right grip wrap detail -->
+                                <line x1="23" y1="23" x2="24.5" y2="24.5" stroke="#5C1414" stroke-width="2.4" stroke-linecap="round" opacity="0.6"/>
+                                <line x1="25" y1="25" x2="26.5" y2="26.5" stroke="#5C1414" stroke-width="2.4" stroke-linecap="round" opacity="0.4"/>
+                                <!-- Right pommel -->
+                                <circle cx="27.5" cy="27.5" r="1.5" fill="#5C1414"/>
                             </svg>
                         </div>
                         <div class="eq-path-tag rivalry">Rivalry Contract</div>

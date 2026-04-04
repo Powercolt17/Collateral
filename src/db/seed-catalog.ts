@@ -234,72 +234,9 @@ const TEMPLATES = [
         tierOptions: TIER_OPTIONS
     },
 
-    // --- AMAZON (Commerce) - 7 Templates ---
-    // Revenue
-    {
-        slug: 'amazon-revenue-14d',
-        title: 'Amazon Revenue Growth (14d)',
-        category: 'commerce',
-        provider: 'AMAZON',
-        description: 'Increase Amazon Marketplace revenue over 14 days.',
-        rules: { metricKey: 'amazon_revenue', window_days: 14 },
-        tierOptions: TIER_OPTIONS
-    },
-    {
-        slug: 'amazon-revenue-30d',
-        title: 'Amazon Revenue Growth (30d)',
-        category: 'commerce',
-        provider: 'AMAZON',
-        description: 'Increase Amazon Marketplace revenue over 30 days.',
-        rules: { metricKey: 'amazon_revenue', window_days: 30 },
-        tierOptions: TIER_OPTIONS
-    },
-    {
-        slug: 'amazon-revenue-60d',
-        title: 'Amazon Revenue Growth (60d)',
-        category: 'commerce',
-        provider: 'AMAZON',
-        description: 'Increase Amazon Marketplace revenue over 60 days.',
-        rules: { metricKey: 'amazon_revenue', window_days: 60 },
-        tierOptions: TIER_OPTIONS
-    },
-    {
-        slug: 'amazon-revenue-90d',
-        title: 'Amazon Revenue Growth (90d)',
-        category: 'commerce',
-        provider: 'AMAZON',
-        description: 'Increase Amazon Marketplace revenue over 90 days.',
-        rules: { metricKey: 'amazon_revenue', window_days: 90 },
-        tierOptions: TIER_OPTIONS
-    },
-    // Units Sold
-    {
-        slug: 'amazon-units-sold-14d',
-        title: 'Units Sold Growth (14d)',
-        category: 'commerce',
-        provider: 'AMAZON',
-        description: 'Increase Amazon FBA units sold over 14 days.',
-        rules: { metricKey: 'amazon_units_sold', window_days: 14 },
-        tierOptions: TIER_OPTIONS
-    },
-    {
-        slug: 'amazon-units-sold-30d',
-        title: 'Units Sold Growth (30d)',
-        category: 'commerce',
-        provider: 'AMAZON',
-        description: 'Increase Amazon FBA units sold over 30 days.',
-        rules: { metricKey: 'amazon_units_sold', window_days: 30 },
-        tierOptions: TIER_OPTIONS
-    },
-    {
-        slug: 'amazon-units-sold-60d',
-        title: 'Units Sold Growth (60d)',
-        category: 'commerce',
-        provider: 'AMAZON',
-        description: 'Increase Amazon FBA units sold over 60 days.',
-        rules: { metricKey: 'amazon_units_sold', window_days: 60 },
-        tierOptions: TIER_OPTIONS
-    },
+
+    // --- AMAZON (Coming Soon — templates disabled until SP-API approved) ---
+
     // --- YOUTUBE (Creator) - 8 Templates ---
     {
         slug: 'youtube-subscriber-growth-7d',

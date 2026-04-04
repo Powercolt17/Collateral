@@ -145,6 +145,9 @@ export async function getMarketFeed(options: MarketFeedOptions = {}): Promise<Ma
     // condition: fundingCloseAt > now
     conditions.push(gt(marketContractInstances.fundingCloseAt, new Date()));
 
+    // 5. Exclude AMAZON (not live yet — Coming Soon)
+    conditions.push(sql`${contractTemplates.provider} != 'AMAZON'`);
+
     if (conditions.length > 0) {
         query.where(and(...conditions));
     }

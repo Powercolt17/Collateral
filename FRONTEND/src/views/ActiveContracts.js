@@ -765,26 +765,7 @@ export function renderActiveContracts() {
                     </a>
                     <a href="/#/rivalry" class="ctp-card rivalry" onclick="document.getElementById('ctp-overlay').classList.remove('open')">
                         <div class="ctp-card-icon rivalry">
-                            <svg width="20" height="20" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <path d="M10 54 L12.5 51.5 L48 16 L50 14 L52 12 L54 10 L52.5 8.5 L50 11 L48 13 L14 48 L11.5 50.5 Z" fill="#752122" opacity="0.9"/>
-                                <path d="M13 51 L49 15" stroke="#8a2a2b" stroke-width="0.5" opacity="0.5"/>
-                                <path d="M54 10 L57 7 L55.5 5.5 L52.5 8.5 Z" fill="#752122"/>
-                                <path d="M20.5 42 Q17 38.5 14 41 Q12.5 42.5 14.5 44 L15.5 43 Q14 42 15 41 Q17 39.5 19.5 43 Z" fill="#752122"/>
-                                <path d="M22 43.5 Q25.5 47 28.5 44.5 Q30 43 28 41.5 L27 42.5 Q28.5 43.5 27.5 44.5 Q25.5 46 23 42.5 Z" fill="#752122"/>
-                                <line x1="13" y1="49" x2="11.5" y2="50.5" stroke="#4a1010" stroke-width="1.8" stroke-linecap="round" opacity="0.4"/>
-                                <line x1="11" y1="51" x2="9.5" y2="52.5" stroke="#4a1010" stroke-width="1.8" stroke-linecap="round" opacity="0.3"/>
-                                <circle cx="8" cy="56" r="2.5" fill="#752122"/>
-                                <circle cx="8" cy="56" r="1.2" fill="#4a1010" opacity="0.3"/>
-                                <path d="M54 54 L51.5 51.5 L16 16 L14 14 L12 12 L10 10 L11.5 8.5 L14 11 L16 13 L50 48 L52.5 50.5 Z" fill="#752122" opacity="0.9"/>
-                                <path d="M51 51 L15 15" stroke="#8a2a2b" stroke-width="0.5" opacity="0.5"/>
-                                <path d="M10 10 L7 7 L8.5 5.5 L11.5 8.5 Z" fill="#752122"/>
-                                <path d="M43.5 42 Q47 38.5 50 41 Q51.5 42.5 49.5 44 L48.5 43 Q50 42 49 41 Q47 39.5 44.5 43 Z" fill="#752122"/>
-                                <path d="M42 43.5 Q38.5 47 35.5 44.5 Q34 43 36 41.5 L37 42.5 Q35.5 43.5 36.5 44.5 Q38.5 46 41 42.5 Z" fill="#752122"/>
-                                <line x1="51" y1="49" x2="52.5" y2="50.5" stroke="#4a1010" stroke-width="1.8" stroke-linecap="round" opacity="0.4"/>
-                                <line x1="53" y1="51" x2="54.5" y2="52.5" stroke="#4a1010" stroke-width="1.8" stroke-linecap="round" opacity="0.3"/>
-                                <circle cx="56" cy="56" r="2.5" fill="#752122"/>
-                                <circle cx="56" cy="56" r="1.2" fill="#4a1010" opacity="0.3"/>
-                            </svg>
+                            <img src="/crossed-swords.png" alt="Crossed Swords" width="20" height="20" style="object-fit:contain;" />
                         </div>
                         <div class="ctp-card-label">Rivalry Contract</div>
                         <div class="ctp-card-heading">Challenge an opponent</div>

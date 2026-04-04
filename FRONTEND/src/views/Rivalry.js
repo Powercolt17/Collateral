@@ -524,19 +524,19 @@ export function renderRivalry() {
             .rv-tier-pill.active .rv-tier-target { color: #fff; }
             .rv-tier-icon {
                 display: block; margin: 0 auto 4px;
-                height: 0; width: 16px; opacity: 0;
+                height: 0; width: 18px; opacity: 0;
                 object-fit: contain;
+                mix-blend-mode: screen;
                 transition: all 200ms cubic-bezier(0.2, 0.8, 0.2, 1);
             }
             .rv-tier-pill.active .rv-tier-icon {
-                opacity: 0.85;
-                filter: brightness(0) invert(1);
+                opacity: 1;
             }
             .rv-tier-pill[data-tier="WAR"].active .rv-tier-icon {
-                height: 16px;
+                height: 18px;
             }
             .rv-tier-pill[data-tier="BLOOD"].active .rv-tier-icon {
-                height: 20px; width: 20px;
+                height: 22px; width: 22px;
             }
             .rv-tier-name {
                 font-family: 'Inter', monospace;

@@ -166,8 +166,7 @@ const contractRoutes: FastifyPluginAsync = async (fastify) => {
                         INNER JOIN contracts c ON le.contract_id = c.id
                         WHERE le.event_type::text IN (
                             'FUNDS_LOCKED', 'EXECUTION_CONFIRMED',
-                            'VERIFICATION_STARTED', 'VERIFICATION_SUCCEEDED', 'VERIFICATION_FAILED',
-                            'SETTLED_SUCCESS', 'SETTLED_FAILURE', 'SETTLEMENT_STARTED', 'RECEIPT_ISSUED'
+                            'SETTLED_SUCCESS', 'SETTLED_FAILURE'
                         )
                     )
                     UNION ALL
@@ -191,11 +190,8 @@ const contractRoutes: FastifyPluginAsync = async (fastify) => {
                         FROM rivalry_ledger_events rle
                         INNER JOIN rivalries r ON rle.rivalry_id = r.id
                         WHERE rle.event_type::text IN (
-                            'RIVALRY_CREATED', 'RIVALRY_ACCEPTED', 'RIVALRY_BOTH_FUNDED',
-                            'RIVALRY_ACTIVATED', 'RIVALRY_VERIFICATION_STARTED', 'RIVALRY_VERIFIED',
-                            'RIVALRY_SETTLEMENT_STARTED', 'RIVALRY_SETTLED', 'RIVALRY_DRAW',
-                            'RIVALRY_CHALLENGER_FUNDED', 'RIVALRY_OPPONENT_FUNDED',
-                            'RIVALRY_EXPIRED', 'RIVALRY_CANCELLED'
+                            'RIVALRY_CREATED', 'RIVALRY_ACCEPTED',
+                            'RIVALRY_SETTLED', 'RIVALRY_DRAW'
                         )
                     )
                     ORDER BY "timestampUtc" DESC
@@ -223,8 +219,7 @@ const contractRoutes: FastifyPluginAsync = async (fastify) => {
                     INNER JOIN contracts c ON le.contract_id = c.id
                     WHERE le.event_type IN (
                         'FUNDS_LOCKED', 'EXECUTION_CONFIRMED',
-                        'VERIFICATION_STARTED', 'VERIFICATION_SUCCEEDED', 'VERIFICATION_FAILED',
-                        'SETTLED_SUCCESS', 'SETTLED_FAILURE', 'SETTLEMENT_STARTED', 'RECEIPT_ISSUED'
+                        'SETTLED_SUCCESS', 'SETTLED_FAILURE'
                     )
                     ORDER BY le.timestamp_utc DESC
                     LIMIT 200

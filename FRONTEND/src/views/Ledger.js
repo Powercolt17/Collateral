@@ -804,18 +804,17 @@ export function renderLedger() {
                         <thead>
                             <tr>
                                 <th>Status</th>
-                                <th>Principal</th>
+                                <th>Contract</th>
                                 <th>Platform</th>
-                                <th>Receipt</th>
                                 <th>Date</th>
                                 <th>Amount</th>
                             </tr>
                         </thead>
                         <tbody id="ldg-list">
-                            <tr class="ldg-skeleton-row"><td colspan="6"></td></tr>
-                            <tr class="ldg-skeleton-row"><td colspan="6"></td></tr>
-                            <tr class="ldg-skeleton-row"><td colspan="6"></td></tr>
-                            <tr class="ldg-skeleton-row"><td colspan="6"></td></tr>
+                            <tr class="ldg-skeleton-row"><td colspan="5"></td></tr>
+                            <tr class="ldg-skeleton-row"><td colspan="5"></td></tr>
+                            <tr class="ldg-skeleton-row"><td colspan="5"></td></tr>
+                            <tr class="ldg-skeleton-row"><td colspan="5"></td></tr>
                         </tbody>
                     </table>
                 </div>
@@ -1059,7 +1058,7 @@ export async function initLedger() {
         if (pageItems.length === 0) {
             list.innerHTML = `
                 <tr>
-                    <td colspan="6">
+                    <td colspan="5">
                         <div class="ldg-empty">
                             <div class="ldg-empty-lbl">No Records</div>
                             <div class="ldg-empty-text">No events match your current filter set.</div>
@@ -1076,8 +1075,10 @@ export async function initLedger() {
             const contractShort = event.contractId
                 ? (isRivalry ? 'RVL-' : 'RCPT-') + event.contractId.slice(0, 4).toUpperCase()
                 : '—';
+            const contractLink = event.contractId
+                ? (isRivalry ? `#/rivalry/${event.contractId}` : `#/contracts/${event.contractId}`)
+                : '#';
             const statusClass = getStatusClass(event.eventType);
-            const principal = event.principal || '—';
             const platform = event.platform || '—';
 
             return `
@@ -1088,9 +1089,8 @@ export async function initLedger() {
                             <span class="ldg-status-text ${statusClass}">${formatEventType(event.eventType)}</span>
                         </div>
                     </td>
-                    <td><span class="ldg-principal">${principal}</span></td>
+                    <td><a href="${contractLink}" class="ldg-rcpt" style="text-decoration:none;color:#111;" onclick="event.stopPropagation()">${contractShort}</a></td>
                     <td><span class="ldg-platform">${platform}</span></td>
-                    <td><span class="ldg-rcpt">${contractShort}</span></td>
                     <td><span class="ldg-date">${formatTimestamp(event.timestamp)}</span></td>
                     <td><span class="ldg-amount">${formatCurrency(event.amountUsdCents)}</span></td>
                 </tr>

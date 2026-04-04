@@ -1197,15 +1197,21 @@ export function renderOverview() {
                     <!-- Rivalry Contract -->
                     <div class="eq-path-card rivalry anim-mech-card-2">
                         <div class="eq-path-icon">
-                            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#5C1414" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-                                <polyline points="14.5 17.5 3 6 3 3 6 3 17.5 14.5"/>
-                                <line x1="13" x2="19" y1="19" y2="13"/>
-                                <line x1="16" x2="20" y1="16" y2="20"/>
-                                <line x1="19" x2="21" y1="21" y2="19"/>
-                                <polyline points="14.5 6.5 18 3 21 3 21 6 17.5 9.5"/>
-                                <line x1="5" x2="9" y1="14" y2="18"/>
-                                <line x1="7" x2="4" y1="17" y2="20"/>
-                                <line x1="3" x2="5" y1="19" y2="21"/>
+                            <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <!-- Left sword (bottom-left to top-right) -->
+                                <line x1="5" y1="27" x2="23" y2="9" stroke="#5C1414" stroke-width="1.8" stroke-linecap="round"/>
+                                <line x1="23" y1="9" x2="27" y2="5" stroke="#5C1414" stroke-width="2.2" stroke-linecap="round"/>
+                                <!-- Left sword guard -->
+                                <line x1="20" y1="14" x2="26" y2="8" stroke="#5C1414" stroke-width="1.8" stroke-linecap="round" transform="rotate(90 23 11)"/>
+                                <!-- Left sword pommel -->
+                                <circle cx="4" cy="28" r="1.2" fill="#5C1414"/>
+                                <!-- Right sword (bottom-right to top-left) -->
+                                <line x1="27" y1="27" x2="9" y2="9" stroke="#5C1414" stroke-width="1.8" stroke-linecap="round"/>
+                                <line x1="9" y1="9" x2="5" y2="5" stroke="#5C1414" stroke-width="2.2" stroke-linecap="round"/>
+                                <!-- Right sword guard -->
+                                <line x1="6" y1="8" x2="12" y2="14" stroke="#5C1414" stroke-width="1.8" stroke-linecap="round" transform="rotate(90 9 11)"/>
+                                <!-- Right sword pommel -->
+                                <circle cx="28" cy="28" r="1.2" fill="#5C1414"/>
                             </svg>
                         </div>
                         <div class="eq-path-tag rivalry">Rivalry Contract</div>

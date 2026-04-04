@@ -765,9 +765,15 @@ export function renderActiveContracts() {
                     </a>
                     <a href="/#/rivalry" class="ctp-card rivalry" onclick="document.getElementById('ctp-overlay').classList.remove('open')">
                         <div class="ctp-card-icon rivalry">
-                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#752122" stroke-width="1.5">
-                                <circle cx="9" cy="12" r="5"/>
-                                <circle cx="15" cy="12" r="5"/>
+                            <svg width="20" height="20" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <line x1="5" y1="27" x2="23" y2="9" stroke="#752122" stroke-width="1.8" stroke-linecap="round"/>
+                                <line x1="23" y1="9" x2="27" y2="5" stroke="#752122" stroke-width="2.2" stroke-linecap="round"/>
+                                <line x1="20" y1="14" x2="26" y2="8" stroke="#752122" stroke-width="1.8" stroke-linecap="round" transform="rotate(90 23 11)"/>
+                                <circle cx="4" cy="28" r="1.2" fill="#752122"/>
+                                <line x1="27" y1="27" x2="9" y2="9" stroke="#752122" stroke-width="1.8" stroke-linecap="round"/>
+                                <line x1="9" y1="9" x2="5" y2="5" stroke="#752122" stroke-width="2.2" stroke-linecap="round"/>
+                                <line x1="6" y1="8" x2="12" y2="14" stroke="#752122" stroke-width="1.8" stroke-linecap="round" transform="rotate(90 9 11)"/>
+                                <circle cx="28" cy="28" r="1.2" fill="#752122"/>
                             </svg>
                         </div>
                         <div class="ctp-card-label">Rivalry Contract</div>

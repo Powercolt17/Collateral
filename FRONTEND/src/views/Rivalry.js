@@ -427,6 +427,22 @@ export function renderRivalry() {
                 border-radius: 12px;
                 box-shadow: 0 20px 60px rgba(0,0,0,0.1);
                 padding: 36px;
+                position: relative;
+                transition: background 240ms cubic-bezier(0.2, 0.8, 0.2, 1);
+            }
+            /* Top accent bar */
+            .rv-modal::before {
+                content: '';
+                position: absolute; top: 0; left: 0; right: 0;
+                height: 0; border-radius: 12px 12px 0 0;
+                background: transparent;
+                transition: all 200ms cubic-bezier(0.2, 0.8, 0.2, 1);
+            }
+            .rv-modal.tier-war::before {
+                height: 3px; background: #8b4444;
+            }
+            .rv-modal.tier-blood::before {
+                height: 4px; background: #7A1C1C;
             }
             .rv-modal-header {
                 display: flex; align-items: center;
@@ -534,6 +550,7 @@ export function renderRivalry() {
             }
             .rv-tier-severity img {
                 object-fit: contain;
+                mix-blend-mode: multiply;
                 transition: all 200ms cubic-bezier(0.2, 0.8, 0.2, 1);
             }
             .rv-tier-severity-label {
@@ -563,6 +580,10 @@ export function renderRivalry() {
             }
             .rv-tier-pill[data-tier="BLOOD"].active {
                 border-left: 4px solid #7A1C1C;
+                padding: 14px 12px;
+            }
+            .rv-tier-pill[data-tier="BLOOD"].active .rv-tier-name {
+                font-size: 12px;
             }
             .rv-tier-name {
                 font-family: 'Inter', monospace;
@@ -614,6 +635,7 @@ export function renderRivalry() {
 
             .rv-modal.tier-blood {
                 border-color: #7A1C1C;
+                background: #fdfafa;
                 box-shadow: 0 20px 60px rgba(0,0,0,0.12), inset 0 1px 3px rgba(92,20,20,0.08);
                 transition: all 240ms cubic-bezier(0.2, 0.8, 0.2, 1);
             }

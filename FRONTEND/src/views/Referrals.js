@@ -440,6 +440,17 @@ export function renderReferrals() {
                 .ref-step:last-child { border-bottom: none; }
                 .ref-footer { flex-wrap: wrap; gap: 20px; }
             }
+            @media (max-width: 480px) {
+                .ref-hero-title { font-size: 28px; letter-spacing: -1px; }
+                .ref-hero-desc { font-size: 13px; }
+                .ref-stat-value { font-size: 28px; }
+                .ref-link-row { flex-direction: column; }
+                .ref-link-btn { width: 100%; justify-content: center; }
+                .ref-link-input { font-size: 11px; }
+                .ref-step { padding: 20px 16px; }
+                .ref-bonus { flex-direction: column; gap: 8px; }
+                .ref-tier-row { padding: 14px 16px; }
+            }
         </style>
 
         <div class="ref">

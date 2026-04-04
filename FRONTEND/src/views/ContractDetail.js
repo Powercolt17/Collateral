@@ -107,7 +107,29 @@ export function renderContractDetail(params) {
                 .cd-col-right { padding-left: 0; border-top: 1px solid #f0f0f0; margin-top: 40px; padding-top: 40px; }
             }
             @media (max-width: 768px) {
-                .cd-top-header { flex-direction: column; gap: 32px; }
+                .cd { padding: 24px 20px 80px; }
+                .cd-top-header { flex-direction: column; gap: 24px; padding-bottom: 24px; margin-bottom: 24px; }
+                .cd-top-right { gap: 24px; padding-right: 0; }
+                .cd-title { font-size: 24px; }
+                .cd-stat-val { font-size: 22px; }
+                .cd-details-grid { grid-template-columns: repeat(2, 1fr); gap: 20px; }
+                .cd-block { margin-bottom: 28px; }
+                .cd-block.line-top { padding-top: 28px; }
+                .cd-hash-row { flex-direction: column; align-items: flex-start; gap: 10px; }
+                .cd-perf-grid { grid-template-columns: 1fr 1fr 1fr; gap: 12px; }
+            }
+            @media (max-width: 480px) {
+                .cd { padding: 16px 16px 60px; }
+                .cd-top-left { gap: 14px; }
+                .cd-brand-icon { width: 44px; height: 44px; }
+                .cd-title { font-size: 20px; }
+                .cd-stat-val { font-size: 20px; }
+                .cd-stat-lbl { font-size: 8px; }
+                .cd-details-grid { grid-template-columns: 1fr 1fr; gap: 16px; }
+                .cd-perf-grid { grid-template-columns: 1fr; gap: 16px; }
+                .cd-btn { padding: 12px 16px; font-size: 9px; }
+                .cd-breadcrumb { margin-bottom: 24px; }
+                .cd-subtitle { font-size: 12px; }
             }
 
             /* Block Common */

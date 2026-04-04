@@ -345,6 +345,16 @@ export function renderFunding() {
                 .cap-footer { flex-wrap: wrap; gap: 20px; }
                 .cap-hdr-title { font-size: 26px; }
                 .cap-deposit-btn { width: 100%; text-align: center; }
+                .cap-row { flex-wrap: wrap; gap: 12px; }
+            }
+            @media (max-width: 480px) {
+                .cap-inner { padding: 24px 16px 80px; }
+                .cap-stat { padding: 20px 16px; }
+                .cap-stat-val { font-size: 22px; }
+                .cap-hdr-title { font-size: 22px; }
+                .cap-row { padding: 16px; }
+                .cap-section-hdr { padding: 14px 16px; }
+                .cap-footer { gap: 16px; }
             }
 
             /* ===================================================

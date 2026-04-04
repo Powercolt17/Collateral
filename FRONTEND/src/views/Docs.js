@@ -400,6 +400,21 @@ export function renderDocs() {
                 .doc-section-title { font-size: 22px; }
                 .doc-page-hdr { padding: 32px 0 28px; }
             }
+            @media (max-width: 480px) {
+                .doc-container { padding: 0 16px; }
+                .doc-page-title { font-size: 22px; }
+                .doc-page-sub { font-size: 11px; letter-spacing: 1.5px; }
+                .doc-page-hdr { padding: 24px 0 20px; }
+                .doc-section { margin-bottom: 32px; padding-bottom: 32px; }
+                .doc-section-title { font-size: 18px; padding-left: 14px; }
+                .doc-step { padding: 12px 14px; gap: 12px; }
+                .doc-step-num { width: 28px; height: 28px; font-size: 10px; }
+                .doc-faq { padding: 12px 14px; }
+                .doc-rule-block { padding: 12px 14px; }
+                .doc-tier { padding: 12px 14px; }
+                .doc-p { font-size: 14px; }
+                .doc-divider-note { padding: 12px 14px; flex-direction: column; gap: 8px; }
+            }
         </style>
 
         <div class="doc">

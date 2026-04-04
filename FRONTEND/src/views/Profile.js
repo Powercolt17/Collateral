@@ -218,14 +218,24 @@ export function renderProfile() {
                 .prf-metrics{grid-template-columns:repeat(2,1fr)}
                 .prf-grid{grid-template-columns:1fr}
                 .prf-header-inner{flex-direction:column;gap:16px}
-                .prf-tabs{overflow-x:auto;padding:0 16px}
+                .prf-tabs{overflow-x:auto;padding:0 16px;-webkit-overflow-scrolling:touch}
                 .prf-provider-grid{grid-template-columns:1fr}
+                .prf-stat-grid{grid-template-columns:repeat(2,1fr)}
             }
             @media(max-width:500px){
                 .prf-metrics{grid-template-columns:1fr 1fr}
                 .prf-header{padding:20px 16px 0}
                 .prf-content{padding:0 16px 60px}
                 .prf-tabs{padding:0 12px}
+                .prf-mc-value{font-size:20px}
+                .prf-mc{padding:14px 16px}
+                .prf-tab{padding:12px 12px;font-size:11px}
+                .prf-cx{padding:12px 14px}
+                .prf-cx-stake{font-size:14px}
+                .prf-stat-grid{grid-template-columns:1fr 1fr}
+                .prf-pcard{padding:16px}
+                .prf-cta.full{font-size:11px;height:42px}
+                .prf-score-row{flex-direction:column;gap:12px}
             }
 
             .tab-panel.hidden{display:none}

@@ -522,20 +522,17 @@ export function renderRivalry() {
             }
             .rv-tier-pill.active .rv-tier-name,
             .rv-tier-pill.active .rv-tier-target { color: #fff; }
-            .rv-tier-icon {
-                display: block; margin: 0 auto 4px;
-                height: 0; width: 18px; opacity: 0;
-                color: inherit;
+            .rv-tier-swords {
+                height: 0; width: 0; opacity: 0;
+                object-fit: contain;
                 transition: all 200ms cubic-bezier(0.2, 0.8, 0.2, 1);
+                margin-right: 8px;
             }
-            .rv-tier-pill.active .rv-tier-icon {
-                opacity: 0.7;
+            .rv-modal.tier-war .rv-tier-swords {
+                height: 22px; width: 22px; opacity: 0.6;
             }
-            .rv-tier-pill[data-tier="WAR"].active .rv-tier-icon {
-                height: 18px;
-            }
-            .rv-tier-pill[data-tier="BLOOD"].active .rv-tier-icon {
-                height: 22px; width: 22px;
+            .rv-modal.tier-blood .rv-tier-swords {
+                height: 26px; width: 26px; opacity: 0.8;
             }
             .rv-tier-name {
                 font-family: 'Inter', monospace;
@@ -922,7 +919,10 @@ export function renderRivalry() {
         <div class="rv-modal-backdrop" id="rv-challenge-modal" onclick="if(event.target===this) this.classList.remove('open')">
             <div class="rv-modal">
                 <div class="rv-modal-header">
-                    <span class="rv-modal-title">Issue Challenge</span>
+                    <div style="display:flex;align-items:center;">
+                        <img src="/crossed-swords.png" alt="" class="rv-tier-swords">
+                        <span class="rv-modal-title">Issue Challenge</span>
+                    </div>
                     <button class="rv-modal-close" onclick="document.getElementById('rv-challenge-modal').classList.remove('open')">✕</button>
                 </div>
 
@@ -972,8 +972,8 @@ export function renderRivalry() {
                     <label class="rv-form-label">Rivalry Tier</label>
                     <div class="rv-tier-pills" id="rv-tier-pills">
                         <button class="rv-tier-pill active" data-tier="DUEL" data-target="15"><span class="rv-tier-name">DUEL</span><span class="rv-tier-target">+15%</span></button>
-                        <button class="rv-tier-pill" data-tier="WAR" data-target="25"><svg class="rv-tier-icon" viewBox="0 0 24 24" fill="currentColor"><path d="M6.2 2.44l11.9 11.9-1.4 1.4 1.4 1.42.7-.72 1.42 1.42-3.54 3.54-1.42-1.42.72-.7-1.42-1.42-1.4 1.4-1.42-1.4L2.44 6.2l1.42-1.42L6.2 2.44zm10.1 1.94l1.42-1.42 3.54 3.54-1.42 1.42-3.54-3.54zM13.37 7.1L10.6 4.34l1.42-1.42 2.75 2.76-1.4 1.42z"/></svg><span class="rv-tier-name">WAR</span><span class="rv-tier-target">+25%</span></button>
-                        <button class="rv-tier-pill" data-tier="BLOOD" data-target="40"><svg class="rv-tier-icon" viewBox="0 0 24 24" fill="currentColor"><path d="M6.2 2.44l11.9 11.9-1.4 1.4 1.4 1.42.7-.72 1.42 1.42-3.54 3.54-1.42-1.42.72-.7-1.42-1.42-1.4 1.4-1.42-1.4L2.44 6.2l1.42-1.42L6.2 2.44zm10.1 1.94l1.42-1.42 3.54 3.54-1.42 1.42-3.54-3.54zM13.37 7.1L10.6 4.34l1.42-1.42 2.75 2.76-1.4 1.42z"/></svg><span class="rv-tier-name">BLOOD</span><span class="rv-tier-target">+40%</span></button>
+                        <button class="rv-tier-pill" data-tier="WAR" data-target="25"><span class="rv-tier-name">WAR</span><span class="rv-tier-target">+25%</span></button>
+                        <button class="rv-tier-pill" data-tier="BLOOD" data-target="40"><span class="rv-tier-name">BLOOD</span><span class="rv-tier-target">+40%</span></button>
                     </div>
                     <div class="rv-form-hint">Both operators must hit this target or lose capital</div>
                 </div>

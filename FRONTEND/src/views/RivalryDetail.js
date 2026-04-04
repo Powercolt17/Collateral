@@ -846,15 +846,27 @@ export async function initRivalryDetail() {
                         <span class="rvd-stake-icon"></span>
                     </div>
                 </div>
-                ${isPreActive ? `
-                <div style="display:flex;gap:12px;margin-top:16px;">
-                    ${isPending ? `
-                        <button onclick="window.app.acceptRivalry('${rivalry.id}')" style="flex:1;padding:16px;background:#111;color:#fff;border:none;font-family:'Inter',monospace;font-size:11px;font-weight:800;letter-spacing:0.1em;cursor:pointer;">ACCEPT CHALLENGE</button>
-                        <button onclick="window.app.declineRivalry('${rivalry.id}')" style="flex:1;padding:16px;background:#fff;color:#111;border:1px solid #e5e5e5;font-family:'Inter',monospace;font-size:11px;font-weight:800;letter-spacing:0.1em;cursor:pointer;">DECLINE</button>
-                    ` : `
-                        <button onclick="window.app.fundRivalry('${rivalry.id}')" style="flex:1;padding:16px;background:#111;color:#fff;border:none;font-family:'Inter',monospace;font-size:11px;font-weight:800;letter-spacing:0.1em;cursor:pointer;">FUND YOUR SIDE &mdash; $${rivalry.stake.toLocaleString()}</button>
-                    `}
-                </div>` : ''}
+                ${isPreActive ? (() => {
+                    const myUserId = window.appState?.userId;
+                    const iAmChallenger = myUserId && rivalry._challengerUserId === myUserId;
+                    const iAmOpponent = myUserId && rivalry._opponentUserId === myUserId;
+                    const myFunded = (iAmChallenger && rivalry.challFunded) || (iAmOpponent && rivalry.oppFunded);
+
+                    if (isPending) {
+                        return `<div style="display:flex;gap:12px;margin-top:16px;">
+                            <button onclick="window.app.acceptRivalry('${rivalry.id}')" style="flex:1;padding:16px;background:#111;color:#fff;border:none;font-family:'Inter',monospace;font-size:11px;font-weight:800;letter-spacing:0.1em;cursor:pointer;">ACCEPT CHALLENGE</button>
+                            <button onclick="window.app.declineRivalry('${rivalry.id}')" style="flex:1;padding:16px;background:#fff;color:#111;border:1px solid #e5e5e5;font-family:'Inter',monospace;font-size:11px;font-weight:800;letter-spacing:0.1em;cursor:pointer;">DECLINE</button>
+                        </div>`;
+                    } else if (myFunded) {
+                        return `<div style="display:flex;gap:12px;margin-top:16px;">
+                            <div style="flex:1;padding:16px;background:#f8f8f8;color:#999;border:1px solid #e5e5e5;text-align:center;font-family:'Inter',monospace;font-size:11px;font-weight:800;letter-spacing:0.1em;">YOUR SIDE IS FUNDED — WAITING FOR OPPONENT</div>
+                        </div>`;
+                    } else {
+                        return `<div style="display:flex;gap:12px;margin-top:16px;">
+                            <button onclick="window.app.fundRivalry('${rivalry.id}')" style="flex:1;padding:16px;background:#111;color:#fff;border:none;font-family:'Inter',monospace;font-size:11px;font-weight:800;letter-spacing:0.1em;cursor:pointer;">FUND YOUR SIDE &mdash; $${rivalry.stake.toLocaleString()}</button>
+                        </div>`;
+                    }
+                })() : ''}
 
                 <div class="rvd-momentum">
                     <div class="rvd-momentum-left ${isLeading ? 'is-leader' : ''}" style="width:${leftPct}%"></div>

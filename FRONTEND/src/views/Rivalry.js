@@ -1005,6 +1005,10 @@ export async function initRivalry() {
             stake: (r.stakePerSideCents || 0) / 100,
             daysLeft,
             totalDays: r.durationDays || 30,
+            challFunded: !!challPart?.funded,
+            oppFunded: !!oppPart?.funded,
+            challengerUserId: r.challengerUserId,
+            opponentUserId: r.opponentUserId,
         };
     }
 
@@ -1109,7 +1113,15 @@ export async function initRivalry() {
                 actionsHtml = `<div class="rv-card-actions"><button class="rv-action-btn rv-action-accept" data-rivalry-id="${r.id}" onclick="event.stopPropagation();window.app.acceptRivalry('${r.id}')">ACCEPT</button><button class="rv-action-btn rv-action-decline" data-rivalry-id="${r.id}" onclick="event.stopPropagation();window.app.declineRivalry('${r.id}')">DECLINE</button></div>`;
             }
         } else if (isAccepted) {
-            actionsHtml = `<div class="rv-card-actions"><button class="rv-action-btn rv-action-accept" data-rivalry-id="${r.id}" onclick="event.stopPropagation();window.app.fundRivalry('${r.id}')" style="flex:1;">FUND YOUR SIDE</button></div>`;
+            const myUserId = window.appState?.userId;
+            const iAmChallenger = myUserId && r.challengerUserId === myUserId;
+            const iAmOpponent = myUserId && r.opponentUserId === myUserId;
+            const myFunded = (iAmChallenger && r.challFunded) || (iAmOpponent && r.oppFunded);
+            if (myFunded) {
+                actionsHtml = `<div class="rv-card-actions"><div style="flex:1;padding:10px 16px;background:#f8f8f8;color:#999;text-align:center;font-family:'Inter',monospace;font-size:10px;font-weight:700;letter-spacing:0.08em;border:1px solid #eee;">WAITING FOR OPPONENT</div></div>`;
+            } else {
+                actionsHtml = `<div class="rv-card-actions"><button class="rv-action-btn rv-action-accept" data-rivalry-id="${r.id}" onclick="event.stopPropagation();window.app.fundRivalry('${r.id}')" style="flex:1;">FUND YOUR SIDE</button></div>`;
+            }
         }
 
         // Winner/Loser badge for settled cards

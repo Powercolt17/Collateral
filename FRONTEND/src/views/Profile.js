@@ -20,19 +20,19 @@ export function renderProfile() {
             .prf-tabs{display:flex;gap:0;padding:0 32px;border-bottom:1px solid #DCDCDC;background:#fff;position:sticky;top:56px;z-index:40}
             .prf-tab{padding:14px 18px;font-size:12px;font-weight:600;color:#444444;background:transparent;border:none;border-bottom:2px solid transparent;cursor:pointer;font-family:'Neue Haas Grotesk Display', 'Helvetica Neue', Helvetica, Arial, sans-serif,sans-serif;text-transform:uppercase;letter-spacing:0.3px;transition:color 0.12s;white-space:nowrap}
             .prf-tab:hover{color:#111111}
-            .prf-tab.active{color:#111111;font-weight:700;border-bottom-color:#921818}
+            .prf-tab.active{color:#111111;font-weight:700;border-bottom-color:#5C1414}
             .prf-tab-count{font-size:10px;background:#f3f4f6;color:#444444;padding:1px 6px;border-radius:999px;margin-left:6px;font-family:'Inter',monospace;font-weight:600}
-            .prf-tab.active .prf-tab-count{background:#fef2f2;color:#921818}
+            .prf-tab.active .prf-tab-count{background:#fef2f2;color:#5C1414}
 
             /* Metric Cards Row */
             .prf-metrics{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;max-width:1120px;margin:24px auto 0;padding:0 32px}
             .prf-mc{background:#fff;border:1px solid #DCDCDC;padding:20px 22px;position:relative;overflow:hidden;transition:all 0.15s}
             .prf-mc::after{content:'';position:absolute;top:14px;bottom:14px;left:0;width:3px;background:#f0f0f0;border-radius:0 2px 2px 0;transition:background 0.15s}
             .prf-mc:hover{border-color:#bbb;box-shadow:0 4px 12px rgba(0,0,0,0.04)}
-            .prf-mc:hover::after{background:#921818}
+            .prf-mc:hover::after{background:#5C1414}
             .prf-mc-label{font-size:10px;color:#6B6B6B;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;font-family:'Inter',monospace;margin-bottom:10px}
             .prf-mc-value{font-size:26px;font-weight:700;color:#111111;letter-spacing:-0.5px}
-            .prf-mc-value.red{color:#921818}
+            .prf-mc-value.red{color:#5C1414}
             .prf-mc-sub{font-size:10px;color:#8A8A8A;font-family:'Inter',monospace;margin-top:6px}
 
             /* Content */
@@ -50,11 +50,11 @@ export function renderProfile() {
             .prf-badge{font-size:10px;font-weight:600;height:22px;display:inline-flex;align-items:center;padding:0 8px;border-radius:4px;font-family:'Inter',monospace;letter-spacing:0.4px;text-transform:uppercase;line-height:1;white-space:nowrap}
             .prf-badge.active,.prf-badge.connected,.prf-badge.settled-success{background:#f0fdf4;color:#15803d}
             .prf-badge.locked,.prf-badge.elevated{background:#fff7ed;color:#9a3412}
-            .prf-badge.forfeited,.prf-badge.maximum,.prf-badge.disconnected{background:#fef2f2;color:#921818}
+            .prf-badge.forfeited,.prf-badge.maximum,.prf-badge.disconnected{background:#fef2f2;color:#5C1414}
             .prf-badge.settled,.prf-badge.controlled{background:#f5f5f5;color:#444444}
             .prf-badge.verifying,.prf-badge.limited{background:#eff6ff;color:#1e40af}
             .prf-badge.pending{background:#fefce8;color:#854d0e}
-            .prf-badge.suspended{background:#fef2f2;color:#921818;border:1px solid #fecaca}
+            .prf-badge.suspended{background:#fef2f2;color:#5C1414;border:1px solid #fecaca}
             .prf-badge.unverified{background:#f5f5f5;color:#9ca3af}
 
             /* Stat Grid */
@@ -92,14 +92,14 @@ export function renderProfile() {
             .prf-score-bar{height:5px;background:#f0f0f0;overflow:hidden}
             .prf-score-fill{height:100%;transition:width 0.6s ease-out}
             .prf-score-fill.green{background:#15803d}
-            .prf-score-fill.red{background:#921818}
+            .prf-score-fill.red{background:#5C1414}
             .prf-score-fill.blue{background:#1e40af}
 
             /* Contract mini cards */
             .prf-cx{padding:16px 22px;border-bottom:1px solid #E5E5E5;cursor:pointer;transition:all 0.12s;position:relative;overflow:hidden}
             .prf-cx::after{content:'';position:absolute;top:12px;bottom:12px;left:0;width:3px;background:transparent;border-radius:0 2px 2px 0;transition:background 0.12s}
             .prf-cx:hover{background:#fafafa}
-            .prf-cx:hover::after{background:#921818}
+            .prf-cx:hover::after{background:#5C1414}
             .prf-cx:last-child{border-bottom:none}
             .prf-cx-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px}
             .prf-cx-id{font-size:10px;color:#8A8A8A;font-family:'Inter',monospace;letter-spacing:0.5px}
@@ -108,7 +108,7 @@ export function renderProfile() {
             .prf-cx-mi{font-size:11px;color:#6B6B6B;font-family:'Inter',monospace}
             .prf-cx-stake{font-size:15px;font-weight:700;color:#111111;letter-spacing:-0.3px;margin-left:auto}
             .prf-cx-progress{height:3px;background:#f0f0f0;margin-top:10px;overflow:hidden}
-            .prf-cx-progress-fill{height:100%;background:#921818;transition:width 0.4s}
+            .prf-cx-progress-fill{height:100%;background:#5C1414;transition:width 0.4s}
             .prf-cx-actions{display:flex;gap:8px;margin-top:12px}
 
             /* Provider dot */
@@ -128,10 +128,10 @@ export function renderProfile() {
             .prf-pill.active{background:#fff;color:#111;border-color:#111;font-weight:600}
 
             /* CTA */
-            .prf-cta{display:inline-flex;align-items:center;justify-content:center;gap:6px;padding:0 20px;height:44px;font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:0.5px;font-family:'Neue Haas Grotesk Display', 'Helvetica Neue', Helvetica, Arial, sans-serif,sans-serif;border-radius:8px;cursor:pointer;transition:all 150ms ease;background:#ffffff;color:#111111;border:1px solid #e5e5e5;box-shadow:none}
-            .prf-cta:hover{border-color:#7f1d1d;color:#7f1d1d;transform:translateY(-1px)}
-            .prf-cta:active{background:#7f1d1d;color:#ffffff;border-color:#7f1d1d;box-shadow:inset 0 2px 4px rgba(0,0,0,0.2);transform:translateY(0)}
-            .prf-cta:focus-visible{outline:2px solid rgba(127,29,29,0.4);outline-offset:2px}
+            .prf-cta{display:inline-flex;align-items:center;justify-content:center;gap:6px;padding:0 20px;height:44px;font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:0.5px;font-family:'Neue Haas Grotesk Display', 'Helvetica Neue', Helvetica, Arial, sans-serif,sans-serif;border-radius:0;cursor:pointer;transition:all 150ms ease;background:#ffffff;color:#111111;border:1px solid #e5e5e5;box-shadow:none}
+            .prf-cta:hover{border-color:#5C1414;color:#5C1414;transform:translateY(-1px)}
+            .prf-cta:active{background:#5C1414;color:#ffffff;border-color:#5C1414;box-shadow:inset 0 2px 4px rgba(0,0,0,0.2);transform:translateY(0)}
+            .prf-cta:focus-visible{outline:2px solid rgba(92,20,20,0.4);outline-offset:2px}
             .prf-cta.sm{height:32px;font-size:11px;padding:0 14px}
             .prf-cta.ghost{background:#fff;color:#555;border:1px solid #e5e5e5;box-shadow:none}
             .prf-cta.ghost:hover{border-color:#bbb;color:#111;background:#fafafa;transform:none}
@@ -142,7 +142,7 @@ export function renderProfile() {
             .prf-pcard{border:1px solid #DCDCDC;padding:20px;transition:all 0.12s;position:relative;overflow:hidden}
             .prf-pcard::after{content:'';position:absolute;top:14px;bottom:14px;left:0;width:3px;background:transparent;border-radius:0 2px 2px 0;transition:background 0.12s}
             .prf-pcard:hover{border-color:#bbb;box-shadow:0 4px 12px rgba(0,0,0,0.04)}
-            .prf-pcard:hover::after{background:#921818}
+            .prf-pcard:hover::after{background:#5C1414}
             .prf-pcard.disconnected{opacity:0.6}
             .prf-pcard-icon{width:40px;height:40px;display:flex;align-items:center;justify-content:center;margin-bottom:14px;font-weight:700;font-size:16px;color:#fff}
             .prf-pcard-name{font-size:14px;font-weight:700;color:#111111;margin-bottom:4px}
@@ -342,7 +342,7 @@ export function renderProfile() {
                                 </div>
                             </div>
                             <!-- CTA -->
-                            <button class="prf-cta full" style="margin-top:18px;height:48px;font-size:13px" onclick="window.router.navigate('/overview')">Execute Contract →</button>
+                            <button class="prf-cta full" style="margin-top:18px;height:48px;font-size:13px;background:#5C1414;color:#fff;border-color:#5C1414;font-weight:700;letter-spacing:1px" onclick="window.router.navigate('/contracts/execute')">Execute Contract →</button>
                         </div>
                     </div>
                     <!-- System status micro footer -->
@@ -639,7 +639,18 @@ export async function initProfile() {
 
         // Identity Panel
         const accId = $('id-account');
-        if (accId && profile.user?.id) accId.innerHTML = 'USR-' + profile.user.id.substring(0, 5) + ' <i data-lucide="copy" style="width:11px;height:11px;color:#d4d4d4;cursor:pointer"></i>';
+        if (accId && profile.user?.id) {
+            const shortId = 'USR-' + profile.user.id.substring(0, 8).toUpperCase();
+            accId.innerHTML = shortId + ' <i data-lucide="copy" style="width:11px;height:11px;color:#d4d4d4;cursor:pointer" id="copy-account-id"></i>';
+            setTimeout(() => {
+                const copyIcon = document.getElementById('copy-account-id');
+                if (copyIcon) copyIcon.addEventListener('click', () => {
+                    navigator.clipboard.writeText(shortId);
+                    copyIcon.style.color = '#5C1414';
+                    setTimeout(() => { copyIcon.style.color = '#d4d4d4'; }, 1200);
+                });
+            }, 50);
+        }
         const stripeId = $('id-stripe');
         if (stripeId) stripeId.innerHTML = profile.stripeConnection?.connected ? '<span class="prf-badge connected">Connected</span>' : '<span class="prf-badge disconnected">Not connected</span>';
         const createdId = $('id-created');

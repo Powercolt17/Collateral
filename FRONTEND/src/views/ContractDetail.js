@@ -22,14 +22,14 @@ export function renderContractDetail(params) {
             }
             .cd-breadcrumb a:hover { color: #111; }
             .cd-breadcrumb .cd-bc-sep { font-size: 10px; color: #d4d4d4; }
-            .cd-breadcrumb .cd-bc-current { color: #752122; font-weight: 700; }
+            .cd-breadcrumb .cd-bc-current { color: #5C1414; font-weight: 700; }
 
             /* Loading & Error */
             .cd-loading { display: flex; align-items: center; justify-content: center; min-height: 50vh; }
             @keyframes cl-spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
             @keyframes cl-pulse { 0%, 100% { opacity: 0.7; } 50% { opacity: 1; } }
             .cd-error { text-align: center; padding: 60px 40px; }
-            .cd-error-msg { font-size: 14px; color: #752122; margin-bottom: 20px; }
+            .cd-error-msg { font-size: 14px; color: #5C1414; margin-bottom: 20px; }
             
             .cd-hidden { display: none !important; }
 
@@ -52,7 +52,7 @@ export function renderContractDetail(params) {
                 background: #fdfafa;
                 border-radius: 8px;
                 display: flex; align-items: center; justify-content: center;
-                color: #752122;
+                color: #5C1414;
             }
             .cd-brand-icon svg { width: 24px; height: 24px; }
             .cd-title-area { display: flex; flex-direction: column; gap: 6px; }
@@ -166,7 +166,7 @@ export function renderContractDetail(params) {
             .cd-perf-item { display: flex; flex-direction: column; gap: 8px; }
             .cd-perf-lbl { font-family: 'Inter', monospace; font-size: 9px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.12em; color: #ccc; }
             .cd-perf-val { font-size: 15px; font-weight: 600; color: #111; }
-            .cd-perf-val.green { color: #752122; } /* Updated to match screenshot: red val */
+            .cd-perf-val.green { color: #5C1414; } /* Updated to match screenshot: red val */
 
             .cd-progress {
                 display: flex; align-items: center; gap: 16px;
@@ -176,7 +176,7 @@ export function renderContractDetail(params) {
                 flex: 1; height: 6px; background: #f0f0f0;
             }
             .cd-progress-fill {
-                height: 100%; background: #752122; transition: width 0.5s ease-out;
+                height: 100%; background: #5C1414; transition: width 0.5s ease-out;
             }
             .cd-progress-pct {
                 font-family: 'Inter', monospace; font-size: 11px; font-weight: 700; color: #111;
@@ -218,37 +218,69 @@ export function renderContractDetail(params) {
             .cd-btn-outline:hover { background: #fafafa; color: #111; border-color: #e5e5e5; }
             .cd-btn svg { width: 14px; height: 14px; color: #a3a3a3; }
 
-            /* Event Log */
-            .cd-timeline { position: relative; padding-left: 20px; margin-left: 4px; }
+            /* Event Log — Premium Timeline */
+            .cd-timeline { position: relative; padding-left: 32px; margin-left: 6px; }
             .cd-timeline::before {
-                content: ''; position: absolute; left: 3px; top: 4px; bottom: 4px;
-                width: 1px; background: #222;
+                content: ''; position: absolute; left: 5px; top: 0; bottom: 0;
+                width: 2px; background: linear-gradient(to bottom, #5C1414 0%, #e5e5e5 100%);
             }
-            .cd-event { position: relative; padding-bottom: 28px; display: flex; justify-content: space-between; align-items: center; }
+            .cd-event {
+                position: relative; padding: 16px 0; display: flex; align-items: flex-start;
+                gap: 0; transition: all 0.15s;
+            }
             .cd-event:last-child { padding-bottom: 0; }
             .cd-event-dot {
-                position: absolute; left: -20px; top: 50%; transform: translateY(-50%);
-                width: 7px; height: 7px; border-radius: 50%;
-                background: #752122; border: 2px solid #fff;
-                box-shadow: 0 0 0 1px #752122;
+                position: absolute; left: -32px; top: 18px;
+                width: 12px; height: 12px; border-radius: 50%;
+                background: #5C1414; border: 3px solid #fff;
+                box-shadow: 0 0 0 2px #5C1414;
                 z-index: 1;
             }
+            .cd-event-dot.done {
+                background: #16a34a; box-shadow: 0 0 0 2px #16a34a;
+            }
             .cd-event-dot.pending {
-                background: #752122; border-color: #fff;
-                box-shadow: 0 0 0 1px #752122;
-                animation: cd-blink 1.5s ease-in-out infinite;
+                background: #5C1414; box-shadow: 0 0 0 2px #5C1414;
+                animation: cd-pulse-ring 2s ease-in-out infinite;
             }
             .cd-event-dot.future {
-                background: #fff; border-color: #fff;
-                box-shadow: 0 0 0 1px #d4d4d4;
+                background: #fff; border: 3px solid #e5e5e5;
+                box-shadow: 0 0 0 2px #e5e5e5;
             }
-            @keyframes cd-blink {
-                0%, 100% { opacity: 1; }
-                50% { opacity: 0.25; }
+            @keyframes cd-pulse-ring {
+                0%, 100% { box-shadow: 0 0 0 2px #5C1414; }
+                50% { box-shadow: 0 0 0 2px #5C1414, 0 0 0 6px rgba(92,20,20,0.15); }
             }
-            .cd-event-name { font-family: 'Inter', monospace; font-size: 10px; font-weight: 600; color: #111; letter-spacing: 0.06em; text-transform: uppercase; }
-            .cd-event-name.future-text { color: #d4d4d4; font-weight: 500; }
-            .cd-event-time { font-family: 'Inter', monospace; font-size: 9px; color: #bbb; letter-spacing: 0.02em; }
+            .cd-event-content {
+                flex: 1; display: flex; flex-direction: column; gap: 4px;
+                padding: 12px 16px; background: #fafafa; border: 1px solid #f0f0f0;
+                transition: all 0.15s; cursor: default;
+            }
+            .cd-event:hover .cd-event-content { background: #f5f5f5; border-color: #e5e5e5; }
+            .cd-event-content.done { background: #fff; border-color: #e8e8e8; }
+            .cd-event-content.pending { background: #fdfafa; border-color: #f0e0e0; }
+            .cd-event-content.future { background: #fcfcfc; border-color: #f0f0f0; opacity: 0.6; }
+            .cd-event-top {
+                display: flex; justify-content: space-between; align-items: center;
+            }
+            .cd-event-name {
+                font-family: 'Inter', monospace; font-size: 11px; font-weight: 700;
+                color: #111; letter-spacing: 0.06em; text-transform: uppercase;
+            }
+            .cd-event-name.future-text { color: #ccc; font-weight: 500; }
+            .cd-event-chip {
+                font-family: 'Inter', monospace; font-size: 8px; font-weight: 700;
+                letter-spacing: 0.08em; text-transform: uppercase;
+                padding: 3px 8px; border-radius: 2px;
+            }
+            .cd-event-chip.done { background: #f0fdf4; color: #16a34a; }
+            .cd-event-chip.pending { background: #fef2f2; color: #5C1414; }
+            .cd-event-chip.future { background: #f5f5f5; color: #ccc; }
+            .cd-event-time {
+                font-family: 'Inter', monospace; font-size: 10px; color: #999;
+                letter-spacing: 0.02em; margin-top: 2px;
+            }
+            .cd-event-time.future-text { color: #ddd; }
         </style>
 
         <div class="cd">
@@ -536,7 +568,7 @@ export async function initContractDetail(params) {
                 
                 if (pct >= 90) {
                     document.getElementById('cd-oracle-note').innerHTML = '<i data-lucide="triangle-alert"></i> Approaching threshold — settlement may trigger soon.';
-                    document.getElementById('cd-oracle-note').style.color = '#752122';
+                    document.getElementById('cd-oracle-note').style.color = '#5C1414';
                 } else {
                     document.getElementById('cd-oracle-note').innerHTML = '<i data-lucide="clock"></i> Oracle checks daily at 00:00 UTC.';
                     document.getElementById('cd-oracle-note').style.color = '#ccc';
@@ -649,28 +681,43 @@ function renderEventLog(events) {
     steps.forEach(function (step, idx) {
         var dotClass = 'cd-event-dot';
         var nameClass = 'cd-event-name';
+        var contentClass = 'cd-event-content';
+        var chipClass = 'cd-event-chip';
+        var chipLabel = '';
         var timeStr = '';
+        var timeClass = 'cd-event-time';
 
         if (step.done) {
-            // Completed: solid red circle
-            dotClass = 'cd-event-dot';
+            dotClass = 'cd-event-dot done';
+            contentClass = 'cd-event-content done';
+            chipClass = 'cd-event-chip done';
+            chipLabel = 'COMPLETE';
             timeStr = step.time ? formatDateTimeForEvent(step.time) : '';
         } else if (idx === pendingIdx) {
-            // Next step: blinking red
             dotClass = 'cd-event-dot pending';
-            nameClass = 'cd-event-name';
-            timeStr = 'PENDING';
+            contentClass = 'cd-event-content pending';
+            chipClass = 'cd-event-chip pending';
+            chipLabel = 'PENDING';
+            timeStr = 'Waiting...';
         } else {
-            // Future: gray circle
             dotClass = 'cd-event-dot future';
             nameClass = 'cd-event-name future-text';
+            contentClass = 'cd-event-content future';
+            chipClass = 'cd-event-chip future';
+            chipLabel = 'AWAITING';
             timeStr = '—';
+            timeClass = 'cd-event-time future-text';
         }
 
         html += '<div class="cd-event">' +
             '<div class="' + dotClass + '"></div>' +
+            '<div class="' + contentClass + '">' +
+            '<div class="cd-event-top">' +
             '<span class="' + nameClass + '">' + step.label + '</span>' +
-            '<span class="cd-event-time">' + timeStr + '</span>' +
+            '<span class="' + chipClass + '">' + chipLabel + '</span>' +
+            '</div>' +
+            '<span class="' + timeClass + '">' + timeStr + '</span>' +
+            '</div>' +
             '</div>';
     });
     html += '</div>';

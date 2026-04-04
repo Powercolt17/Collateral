@@ -513,7 +513,8 @@ export function renderRivalry() {
             .rv-tier-pill {
                 flex: 1; padding: 12px; border: 1px solid #e5e5e5;
                 border-radius: 8px; background: #fff; cursor: pointer;
-                transition: all 0.15s; text-align: center;
+                transition: all 0.25s cubic-bezier(0.4,0,0.2,1); text-align: center;
+                position: relative; overflow: hidden;
             }
             .rv-tier-pill:hover { border-color: #999; }
             .rv-tier-pill.active {
@@ -525,11 +526,120 @@ export function renderRivalry() {
                 font-family: 'Inter', monospace;
                 font-size: 11px; font-weight: 800;
                 letter-spacing: 0.1em; color: #333;
+                display: block;
             }
             .rv-tier-target {
                 font-family: 'Inter', monospace;
                 font-size: 10px; font-weight: 500;
                 color: #999; letter-spacing: 0.02em;
+                display: block;
+            }
+
+            /* ── WAR tier animations ── */
+            @keyframes rv-war-pulse {
+                0%, 100% { box-shadow: 0 0 0 0 rgba(139,0,0,0); border-color: #8b0000; }
+                50% { box-shadow: 0 0 20px 4px rgba(139,0,0,0.3); border-color: #a00; }
+            }
+            @keyframes rv-war-bg {
+                0%, 100% { background: linear-gradient(135deg, #1a0000, #2a0a0a); }
+                50% { background: linear-gradient(135deg, #2a0a0a, #3a1010); }
+            }
+            .rv-tier-pill[data-tier="WAR"].active {
+                background: linear-gradient(135deg, #1a0000, #2a0a0a);
+                border-color: #8b0000;
+                animation: rv-war-pulse 2s ease-in-out infinite;
+            }
+            .rv-tier-pill[data-tier="WAR"].active .rv-tier-name { color: #ff4444; }
+            .rv-tier-pill[data-tier="WAR"].active .rv-tier-target { color: rgba(255,100,100,0.7); }
+
+            /* Modal WAR state */
+            .rv-modal.tier-war {
+                border: 1.5px solid rgba(139,0,0,0.4);
+                box-shadow: 0 0 40px rgba(139,0,0,0.15), inset 0 0 60px rgba(139,0,0,0.03);
+                transition: all 0.4s cubic-bezier(0.4,0,0.2,1);
+            }
+            .rv-modal.tier-war .rv-modal-header {
+                background: linear-gradient(135deg, rgba(139,0,0,0.08), rgba(139,0,0,0.02));
+                border-bottom-color: rgba(139,0,0,0.15);
+            }
+
+            /* ── BLOOD tier animations ── */
+            @keyframes rv-blood-glow {
+                0%, 100% { box-shadow: 0 0 30px 8px rgba(180,0,0,0.25), inset 0 0 30px rgba(180,0,0,0.05); border-color: #b00; }
+                25% { box-shadow: 0 0 50px 12px rgba(200,0,0,0.35), inset 0 0 40px rgba(200,0,0,0.08); border-color: #c00; }
+                50% { box-shadow: 0 0 35px 6px rgba(160,0,0,0.2), inset 0 0 25px rgba(160,0,0,0.04); border-color: #900; }
+                75% { box-shadow: 0 0 55px 14px rgba(220,0,0,0.4), inset 0 0 50px rgba(220,0,0,0.1); border-color: #d00; }
+            }
+            @keyframes rv-blood-flicker {
+                0%, 100% { opacity: 1; }
+                92% { opacity: 1; }
+                93% { opacity: 0.7; }
+                94% { opacity: 1; }
+                96% { opacity: 0.85; }
+                97% { opacity: 1; }
+            }
+            @keyframes rv-blood-ember {
+                0% { transform: translateY(0) scale(1); opacity: 0.8; }
+                100% { transform: translateY(-60px) scale(0); opacity: 0; }
+            }
+            @keyframes rv-blood-text {
+                0%, 100% { text-shadow: 0 0 8px rgba(255,0,0,0.3); }
+                50% { text-shadow: 0 0 20px rgba(255,0,0,0.6), 0 0 40px rgba(255,0,0,0.2); }
+            }
+            @keyframes rv-shake {
+                0%, 100% { transform: translateX(0); }
+                10% { transform: translateX(-3px) rotate(-0.3deg); }
+                20% { transform: translateX(3px) rotate(0.3deg); }
+                30% { transform: translateX(-2px) rotate(-0.2deg); }
+                40% { transform: translateX(2px) rotate(0.2deg); }
+                50% { transform: translateX(-1px); }
+                60% { transform: translateX(1px); }
+                70% { transform: translateX(0); }
+            }
+            .rv-tier-pill[data-tier="BLOOD"].active {
+                background: linear-gradient(135deg, #2a0000, #4a0000);
+                border-color: #b00;
+                animation: rv-blood-glow 3s ease-in-out infinite, rv-blood-flicker 4s linear infinite;
+            }
+            .rv-tier-pill[data-tier="BLOOD"].active .rv-tier-name {
+                color: #ff2222;
+                animation: rv-blood-text 2s ease-in-out infinite;
+            }
+            .rv-tier-pill[data-tier="BLOOD"].active .rv-tier-target { color: rgba(255,80,80,0.8); }
+
+            /* Modal BLOOD state */
+            .rv-modal.tier-blood {
+                border: 2px solid rgba(180,0,0,0.5);
+                box-shadow: 0 0 60px rgba(180,0,0,0.2), 0 0 120px rgba(180,0,0,0.08);
+                transition: all 0.4s cubic-bezier(0.4,0,0.2,1);
+            }
+            .rv-modal.tier-blood::before {
+                content: ''; position: absolute; inset: 0; pointer-events: none; z-index: 0;
+                background: radial-gradient(ellipse at 50% 0%, rgba(180,0,0,0.08) 0%, transparent 60%),
+                            radial-gradient(ellipse at 50% 100%, rgba(180,0,0,0.06) 0%, transparent 50%);
+            }
+            .rv-modal.tier-blood .rv-modal-header {
+                background: linear-gradient(135deg, rgba(180,0,0,0.12), rgba(100,0,0,0.04));
+                border-bottom-color: rgba(180,0,0,0.2);
+            }
+            .rv-modal.tier-blood .rv-modal-title {
+                color: #cc0000;
+                animation: rv-blood-text 2.5s ease-in-out infinite;
+            }
+            .rv-modal.tier-blood .rv-form-hint {
+                color: rgba(180,80,80,0.6);
+            }
+            /* Ember particles container */
+            .rv-blood-embers {
+                position: absolute; bottom: 0; left: 0; right: 0; height: 100%;
+                pointer-events: none; overflow: hidden; z-index: 0;
+            }
+            .rv-ember {
+                position: absolute; bottom: -4px;
+                width: 3px; height: 3px; border-radius: 50%;
+                background: #ff3333;
+                animation: rv-blood-ember 2.5s ease-out infinite;
+                opacity: 0;
             }
             .rv-form-hint {
                 font-size: 11px;
@@ -1426,6 +1536,45 @@ export async function initRivalry() {
             selectedTier = pill.dataset.tier;
             selectedTarget = parseInt(pill.dataset.target);
             updatePreview();
+
+            // ── Tier animation system ──
+            const modal = document.querySelector('.rv-modal');
+            if (!modal) return;
+
+            // Clear previous tier states
+            modal.classList.remove('tier-war', 'tier-blood');
+            const existingEmbers = modal.querySelector('.rv-blood-embers');
+            if (existingEmbers) existingEmbers.remove();
+
+            if (selectedTier === 'WAR') {
+                // WAR: aggressive entrance shake + persistent glow
+                modal.classList.add('tier-war');
+                modal.style.animation = 'rv-shake 0.5s ease-out';
+                setTimeout(() => { modal.style.animation = ''; }, 500);
+
+            } else if (selectedTier === 'BLOOD') {
+                // BLOOD: intense shake + blood vignette + floating ember particles
+                modal.classList.add('tier-blood');
+                modal.style.animation = 'rv-shake 0.6s ease-out';
+                setTimeout(() => { modal.style.animation = ''; }, 600);
+
+                // Spawn floating ember particles
+                const emberContainer = document.createElement('div');
+                emberContainer.className = 'rv-blood-embers';
+                for (let i = 0; i < 12; i++) {
+                    const ember = document.createElement('div');
+                    ember.className = 'rv-ember';
+                    ember.style.left = (Math.random() * 100) + '%';
+                    ember.style.animationDelay = (Math.random() * 3) + 's';
+                    ember.style.animationDuration = (1.5 + Math.random() * 2) + 's';
+                    ember.style.width = (2 + Math.random() * 3) + 'px';
+                    ember.style.height = ember.style.width;
+                    ember.style.opacity = '1';
+                    emberContainer.appendChild(ember);
+                }
+                modal.style.position = 'relative';
+                modal.appendChild(emberContainer);
+            }
         });
     }
 

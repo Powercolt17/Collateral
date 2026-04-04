@@ -870,7 +870,7 @@ export function renderRivalry() {
                         <option value="subscriber_growth">Subscriber Growth (YouTube)</option>
                         <option value="views_growth">Views Growth (YouTube)</option>
                         <option value="sales_growth">Sales Growth (Shopify)</option>
-                        <option value="order_growth">Order Growth (Amazon)</option>
+                        <option value="order_growth" disabled>Order Growth (Amazon) — Coming Soon</option>
                     </select>
                 </div>
 

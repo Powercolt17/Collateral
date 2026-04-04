@@ -791,20 +791,21 @@ export async function initProfile() {
                 { name: 'X / Twitter', key: 'x', connected: profile.xConnection?.connected, detail: profile.xConnection?.connected ? '@' + profile.xConnection.xUsername : 'Not connected', scopes: 'Read: followers, engagement' },
                 { name: 'Stripe', key: 'stripe', connected: profile.stripeConnection?.connected, detail: profile.stripeConnection?.connected ? 'Account linked' : 'Not setup', scopes: 'Read: revenue, charges' },
                 { name: 'Shopify', key: 'shopify', connected: !!profile.shopifyConnection?.connected, detail: profile.shopifyConnection?.connected ? (profile.shopifyConnection.shop || 'Store linked') : 'Not connected', scopes: 'Read: orders, revenue' },
-                { name: 'Amazon', key: 'amazon', connected: !!profile.amazonConnection?.connected, detail: profile.amazonConnection?.connected ? (profile.amazonConnection.sellerId || 'Account linked') : 'Not connected', scopes: 'Read: sales data' },
+                { name: 'Amazon', key: 'amazon', connected: false, detail: 'Coming Soon', scopes: 'Read: sales data', comingSoon: true },
                 { name: 'YouTube', key: 'youtube', connected: !!profile.youtubeConnection?.connected, detail: profile.youtubeConnection?.connected ? (profile.youtubeConnection.channelTitle || 'Channel linked') : 'Not connected', scopes: 'Read: subscribers, views' }
             ];
             srcGrid.innerHTML = sources.map(s => {
-                const statusBadge = s.connected ? '<span class="prf-badge connected">Connected</span>' : '<span class="prf-badge disconnected">Disconnected</span>';
+                const statusBadge = s.comingSoon ? '<span class="prf-badge disconnected" style="opacity:0.5">Coming Soon</span>' : s.connected ? '<span class="prf-badge connected">Connected</span>' : '<span class="prf-badge disconnected">Disconnected</span>';
                 const logo = brandLogos[s.key] || s.key[0].toUpperCase();
-                return `<div class="prf-pcard ${s.connected ? '' : 'disconnected'}">
+                const cardStyle = s.comingSoon ? 'opacity:0.4; filter:grayscale(100%); pointer-events:none;' : '';
+                return `<div class="prf-pcard ${s.connected ? '' : 'disconnected'}" style="${cardStyle}">
                     <div class="prf-pcard-icon" style="background:#f5f5f5;display:flex;align-items:center;justify-content:center;border-radius:10px;">${logo}</div>
                     <div class="prf-pcard-name">${s.name}</div>
                     <div style="margin-bottom:8px">${statusBadge}</div>
                     <div class="prf-pcard-scope">${s.scopes}</div>
                     <div class="prf-pcard-scope">${s.connected ? 'Detail: ' + s.detail : ''}</div>
                     <div class="prf-pcard-actions">
-                        ${s.connected
+                        ${s.comingSoon ? '' : s.connected
                         ? '<button class="prf-cta ghost sm" onclick="event.stopPropagation();window.router.navigate(\'/sources\')">Manage</button><button class="prf-cta ghost sm" onclick="event.stopPropagation();document.getElementById(\'rules-modal\').classList.add(\'open\')">Rules</button>'
                         : '<button class="prf-cta sm" onclick="event.stopPropagation();window.router.navigate(\'/sources\')">Connect →</button>'}
                     </div>

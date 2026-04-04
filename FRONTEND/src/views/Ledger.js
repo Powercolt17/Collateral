@@ -782,7 +782,7 @@ export function renderLedger() {
                     <button class="ldg-pill" data-provider="X">X</button>
                     <button class="ldg-pill" data-provider="STRIPE">Stripe</button>
                     <button class="ldg-pill" data-provider="SHOPIFY">Shopify</button>
-                    <button class="ldg-pill" data-provider="AMAZON">Amazon</button>
+                    <button class="ldg-pill" data-provider="YOUTUBE">YouTube</button>
                     <div class="ldg-filter-divider"></div>
                     <span class="ldg-filter-label">Period</span>
                     <button class="ldg-pill active" data-time="all">ALL</button>

@@ -123,6 +123,42 @@ export function renderContractTermSheet(params) {
             /* Two-col subsection grid */
             .cts-subsections { display: grid; grid-template-columns: 1fr 1fr; gap: 16px 32px; }
             @media (max-width: 640px) { .cts-subsections { grid-template-columns: 1fr; } }
+
+            /* Ineligibility Banner */
+            .cts-ineligible-banner {
+                display: none;
+                padding: 16px 20px;
+                background: #fef2f2;
+                border: 1px solid #fecaca;
+                margin-bottom: 20px;
+            }
+            .cts-ineligible-banner.visible { display: block; }
+            .cts-ineligible-hdr {
+                display: flex; align-items: center; gap: 8px;
+                font-size: 11px; font-weight: 700; text-transform: uppercase;
+                letter-spacing: 0.06em; color: #991b1b;
+                font-family: 'Inter', monospace; margin-bottom: 8px;
+            }
+            .cts-ineligible-hdr svg { width: 16px; height: 16px; flex-shrink: 0; }
+            .cts-ineligible-text {
+                font-size: 13px; color: #7f1d1d; line-height: 1.5;
+            }
+            .cts-ineligible-cta {
+                display: inline-flex; align-items: center; gap: 6px;
+                margin-top: 12px; padding: 8px 16px;
+                font-size: 11px; font-weight: 600; text-transform: uppercase;
+                letter-spacing: 0.06em; color: #752122;
+                background: #fff; border: 1px solid #fecaca;
+                cursor: pointer; font-family: 'Inter', monospace;
+                transition: all 150ms;
+            }
+            .cts-ineligible-cta:hover { background: #fef2f2; border-color: #991b1b; }
+
+            .cts-lock-btn:disabled {
+                background: #d4d4d4; color: #9ca3af;
+                cursor: not-allowed; box-shadow: none;
+            }
+            .cts-lock-btn:disabled:hover { background: #d4d4d4; box-shadow: none; }
         </style>
 
         <div class="cts">
@@ -248,6 +284,14 @@ function showContent(c) {
                 <div class="cts-perf-lbl" style="color:#d97706;">Absolute Target Requirement</div>
                 <div class="cts-perf-val" id="cts-live-target" style="color:#b45309;"><i data-lucide="loader-2" class="cts-pulse"></i></div>
             </div>
+        </div>
+        <div class="cts-ineligible-banner" id="cts-ineligible-banner">
+            <div class="cts-ineligible-hdr">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+                Minimum Requirements Not Met
+            </div>
+            <div class="cts-ineligible-text" id="cts-ineligible-text"></div>
+            <button class="cts-ineligible-cta" onclick="window.router.navigate('/sources')">Go to Sources →</button>
         </div>
         <div class="cts-oracle-note" id="cts-oracle-note">
             <i data-lucide="activity"></i> Fetching live oracle data...
@@ -504,12 +548,32 @@ function showContent(c) {
                      bEl.innerHTML = formatVal(baseNum);
                      tEl.innerHTML = formatVal(absTarget);
 
-                     // Check for warning (e.g., baseline too low for Stripe)
+                     // Check for warning (e.g., baseline too low)
                      if (data.warning === 'BASELINE_TOO_LOW') {
-                         bEl.innerHTML = `<span style="color:#d97706;">${formatVal(baseNum)}</span>`;
-                         tEl.innerHTML = `<span style="color:#d97706;">${formatVal(absTarget)}</span>`;
-                         const warnMsg = data.warning_message || `Your current revenue is below the minimum required for this contract.`;
-                         nEl.innerHTML = `<i data-lucide="alert-triangle" style="color:#d97706;"></i> <span style="color:#d97706;">${warnMsg}</span>`;
+                         bEl.innerHTML = `<span style="color:#dc2626;font-weight:700;">${formatVal(baseNum)}</span>`;
+                         tEl.innerHTML = `<span style="color:#dc2626;">${formatVal(absTarget)}</span>`;
+
+                         // Style the metric box red
+                         const metricBox = document.getElementById('cts-live-metric-box');
+                         if (metricBox) metricBox.style.borderColor = '#fca5a5';
+                         const perfItems = metricBox?.querySelectorAll('.cts-perf-item');
+                         if (perfItems) perfItems.forEach(el => { el.style.background = '#fef2f2'; });
+
+                         const warnMsg = data.warning_message || `Your current baseline is below the minimum required for this contract.`;
+                         nEl.innerHTML = `<i data-lucide="alert-triangle" style="color:#dc2626;"></i> <span style="color:#dc2626;font-weight:500;">${warnMsg}</span>`;
+
+                         // Show ineligibility banner
+                         const banner = document.getElementById('cts-ineligible-banner');
+                         const bannerText = document.getElementById('cts-ineligible-text');
+                         if (banner) banner.classList.add('visible');
+                         if (bannerText) bannerText.textContent = warnMsg;
+
+                         // Disable the LOCK button
+                         const lockBtnRef = document.getElementById('cts-lock-btn');
+                         if (lockBtnRef) {
+                             lockBtnRef.disabled = true;
+                             lockBtnRef.textContent = 'INELIGIBLE — REQUIREMENTS NOT MET';
+                         }
                      } else {
                          nEl.innerHTML = `<i data-lucide="check-circle" style="color:#16a34a;"></i> Oracle connection verified. Target will be formally locked at execution.`;
                      }

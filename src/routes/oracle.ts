@@ -370,6 +370,21 @@ const oracleRoutes: FastifyPluginAsync = async (fastify) => {
                 }
 
                 metricKey = 'followers';
+
+                // Minimum baseline check for X: require at least 75 followers
+                const X_MIN_FOLLOWERS = 75;
+                if (currentBaseline < X_MIN_FOLLOWERS) {
+                    reply.status(200);
+                    return {
+                        provider: 'X',
+                        status: 'ok',
+                        current_baseline: currentBaseline,
+                        metric_key: 'followers',
+                        warning: 'BASELINE_TOO_LOW',
+                        warning_message: `Your account has ${currentBaseline} followers. Minimum required: ${X_MIN_FOLLOWERS} followers. Grow your audience before executing a contract.`,
+                        minimum_required: X_MIN_FOLLOWERS,
+                    };
+                }
             } else if (platform === 'STRIPE') {
                 const { connectedAccounts } = await import('../db/schema.js');
                 const { and, eq } = await import('drizzle-orm');
@@ -482,6 +497,23 @@ const oracleRoutes: FastifyPluginAsync = async (fastify) => {
                     } else {
                         throw ytErr; // No fallback data, rethrow
                     }
+                }
+                // Minimum baseline check for YouTube
+                const YT_MIN_SUBS = 50;
+                const YT_MIN_VIEWS = 500;
+                const ytMin = metricKey === 'youtube_views' ? YT_MIN_VIEWS : YT_MIN_SUBS;
+                const ytNoun = metricKey === 'youtube_views' ? '30-day views' : 'subscribers';
+                if (currentBaseline < ytMin) {
+                    reply.status(200);
+                    return {
+                        provider: 'YOUTUBE',
+                        status: 'ok',
+                        current_baseline: currentBaseline,
+                        metric_key: metricKey,
+                        warning: 'BASELINE_TOO_LOW',
+                        warning_message: `Your channel has ${currentBaseline.toLocaleString()} ${ytNoun}. Minimum required: ${ytMin.toLocaleString()}.`,
+                        minimum_required: ytMin,
+                    };
                 }
             } else {
                 reply.status(400);

@@ -274,9 +274,13 @@ export function renderHeader(currentRoute) {
             }
             .ch-connect:hover { background: #5C1414; }
 
-            /* Account badge — institutional */
+            /* Account badge — institutional (desktop only) */
             .ch-user-menu {
                 position: relative;
+            }
+            @media (max-width: 767px) {
+                .ch-user-menu { display: none !important; }
+                .ch-icon-btn { display: none !important; }
             }
             .ch-user-btn {
                 display: flex;
@@ -524,6 +528,87 @@ export function renderHeader(currentRoute) {
             }
             .mobile-nav-link:hover { background: #fafafa; }
             .mobile-nav-link.active { color: #3B0001; font-weight: 600; background: #fdf8f8; }
+
+            /* ── Mobile account section ── */
+            .ch-mob-user {
+                display: flex;
+                align-items: center;
+                gap: 12px;
+                padding: 20px 24px;
+                border-bottom: 1px solid #f0f0f0;
+                background: #fafafa;
+            }
+            .ch-mob-user-badge {
+                width: 36px;
+                height: 36px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                background: #fff;
+                border: 1px solid #e5e5e5;
+                flex-shrink: 0;
+            }
+            .ch-mob-user-initial {
+                font-family: 'Neue Haas Grotesk Display', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+                font-size: 14px;
+                font-weight: 700;
+                color: #111;
+            }
+            .ch-mob-user-info {
+                display: flex;
+                flex-direction: column;
+                gap: 2px;
+            }
+            .ch-mob-user-name {
+                font-size: 13px;
+                font-weight: 600;
+                color: #111;
+                font-family: 'Inter Tight', 'IBM Plex Sans', sans-serif;
+            }
+            .ch-mob-user-role {
+                font-size: 9px;
+                font-weight: 600;
+                text-transform: uppercase;
+                letter-spacing: 1.2px;
+                color: #8a8a8a;
+                font-family: 'Inter', monospace;
+            }
+
+            .ch-mob-divider {
+                height: 1px;
+                background: #f0f0f0;
+                margin: 0;
+            }
+            .ch-mob-section-label {
+                font-size: 9px;
+                font-weight: 700;
+                text-transform: uppercase;
+                letter-spacing: 2px;
+                color: #bbb;
+                font-family: 'Inter', monospace;
+                padding: 16px 24px 8px;
+            }
+            .ch-mob-signout {
+                display: flex;
+                align-items: center;
+                gap: 12px;
+                width: 100%;
+                padding: 14px 24px;
+                font-size: 13px;
+                font-weight: 600;
+                color: #5C1414;
+                text-decoration: none;
+                background: transparent;
+                border: none;
+                border-top: 1px solid #f0f0f0;
+                font-family: 'Inter Tight', 'IBM Plex Sans', sans-serif;
+                letter-spacing: 0.04em;
+                cursor: pointer;
+                text-align: left;
+                transition: background 0.12s;
+            }
+            .ch-mob-signout:hover { background: #fdf8f8; }
+
             .ch-mob-footer {
                 border-top: 1px solid #f0f0f0;
                 padding: 20px 24px;
@@ -686,11 +771,39 @@ export function renderHeader(currentRoute) {
                 </button>
             </div>
 
+            <!-- User Identity (shown when logged in) -->
+            <div id="mobile-user-section" class="hidden">
+                <div class="ch-mob-user">
+                    <div class="ch-mob-user-badge">
+                        <span class="ch-mob-user-initial" id="mobile-menu-initial">U</span>
+                    </div>
+                    <div class="ch-mob-user-info">
+                        <span class="ch-mob-user-name" id="mobile-menu-username">@user</span>
+                        <span class="ch-mob-user-role">CLEARING ACCOUNT</span>
+                    </div>
+                </div>
+            </div>
+
             <nav class="ch-mob-nav">
+                <div class="ch-mob-section-label">Navigation</div>
                 ${mobileNavItems}
             </nav>
 
-            <div style="padding:0 24px 16px;">
+            <!-- Account Links (shown when logged in) -->
+            <div id="mobile-account-links" class="hidden">
+                <div class="ch-mob-divider"></div>
+                <div class="ch-mob-section-label">Account</div>
+                <nav class="ch-mob-nav">
+                    <a href="#" onclick="window.app.closeMobileMenu(); window.router.navigate('/profile'); return false;" class="mobile-nav-link">PROFILE</a>
+                    <a href="#" onclick="window.app.closeMobileMenu(); window.router.navigate('/referrals'); return false;" class="mobile-nav-link">REFERRALS</a>
+                    <a href="#" onclick="window.app.closeMobileMenu(); window.router.navigate('/funding'); return false;" class="mobile-nav-link">ACCOUNT CAPITAL</a>
+                    <a href="#" onclick="window.app.closeMobileMenu(); window.router.navigate('/docs'); return false;" class="mobile-nav-link">DOCS</a>
+                </nav>
+                <button onclick="window.app.closeMobileMenu(); window.app.handleSignOut()" class="ch-mob-signout">SIGN OUT</button>
+            </div>
+
+            <!-- Connect button (shown when NOT logged in) -->
+            <div id="mobile-connect-section" style="padding:0 24px 16px;">
                 <button onclick="window.app.closeMobileMenu(); window.app.handleAuthClick()" id="btn-auth-mobile" class="ch-connect" style="width:100%;height:44px;border-radius:8px;font-family:'Inter Tight','IBM Plex Sans',sans-serif;font-size:13px;font-weight:500;letter-spacing:0.06em;">
                     CONNECT
                 </button>

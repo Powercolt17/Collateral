@@ -1164,25 +1164,29 @@ window.app = {
         document.body.style.overflow = '';
     },
     updateMobileAuthUI: function () {
-        const mobileAuthBtn = document.getElementById('btn-auth-mobile');
         const mobileUserSection = document.getElementById('mobile-user-section');
+        const mobileAccountLinks = document.getElementById('mobile-account-links');
+        const mobileConnectSection = document.getElementById('mobile-connect-section');
         const mobileInitial = document.getElementById('mobile-menu-initial');
         const mobileUsername = document.getElementById('mobile-menu-username');
 
         if (appState.isLoggedIn) {
-            if (mobileAuthBtn) mobileAuthBtn.classList.add('hidden');
-            if (mobileUserSection) {
-                mobileUserSection.classList.remove('hidden');
-                if (mobileInitial && appState.displayName) {
-                    mobileInitial.textContent = appState.displayName.charAt(0).toUpperCase();
-                }
-                if (mobileUsername && appState.username) {
-                    mobileUsername.textContent = '@' + appState.username;
-                }
+            // Show user identity + account links, hide connect button
+            if (mobileUserSection) mobileUserSection.classList.remove('hidden');
+            if (mobileAccountLinks) mobileAccountLinks.classList.remove('hidden');
+            if (mobileConnectSection) mobileConnectSection.classList.add('hidden');
+
+            if (mobileInitial && appState.displayName) {
+                mobileInitial.textContent = appState.displayName.charAt(0).toUpperCase();
+            }
+            if (mobileUsername && appState.username) {
+                mobileUsername.textContent = '@' + appState.username;
             }
         } else {
-            if (mobileAuthBtn) mobileAuthBtn.classList.remove('hidden');
+            // Hide user identity + account links, show connect button
             if (mobileUserSection) mobileUserSection.classList.add('hidden');
+            if (mobileAccountLinks) mobileAccountLinks.classList.add('hidden');
+            if (mobileConnectSection) mobileConnectSection.classList.remove('hidden');
         }
     },
     setupPayout: async function () {

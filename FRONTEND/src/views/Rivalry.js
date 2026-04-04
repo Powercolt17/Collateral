@@ -534,112 +534,140 @@ export function renderRivalry() {
                 color: #999; letter-spacing: 0.02em;
                 display: block;
             }
-
-            /* ── WAR tier animations ── */
-            @keyframes rv-war-pulse {
-                0%, 100% { box-shadow: 0 0 0 0 rgba(139,0,0,0); border-color: #8b0000; }
-                50% { box-shadow: 0 0 20px 4px rgba(139,0,0,0.3); border-color: #a00; }
+            /* ── WAR tier ── */
+            @keyframes rv-war-heartbeat {
+                0%, 100% { box-shadow: 0 0 15px rgba(180,0,0,0.15); }
+                15% { box-shadow: 0 0 30px rgba(180,0,0,0.35); }
+                30% { box-shadow: 0 0 15px rgba(180,0,0,0.15); }
+                45% { box-shadow: 0 0 25px rgba(180,0,0,0.28); }
+                60% { box-shadow: 0 0 15px rgba(180,0,0,0.15); }
             }
-            @keyframes rv-war-bg {
-                0%, 100% { background: linear-gradient(135deg, #1a0000, #2a0a0a); }
-                50% { background: linear-gradient(135deg, #2a0a0a, #3a1010); }
+            @keyframes rv-impact {
+                0% { transform: scale(1); }
+                5% { transform: scale(1.02) rotate(-0.5deg); }
+                10% { transform: scale(0.99) rotate(0.3deg); }
+                15% { transform: scale(1.01) rotate(-0.2deg); }
+                25% { transform: scale(1); }
             }
             .rv-tier-pill[data-tier="WAR"].active {
-                background: linear-gradient(135deg, #1a0000, #2a0a0a);
-                border-color: #8b0000;
-                animation: rv-war-pulse 2s ease-in-out infinite;
+                background: linear-gradient(145deg, #1a0000 0%, #330808 50%, #1a0000 100%);
+                border: 2px solid #8b0000;
+                animation: rv-war-heartbeat 2s ease-in-out infinite;
             }
-            .rv-tier-pill[data-tier="WAR"].active .rv-tier-name { color: #ff4444; }
-            .rv-tier-pill[data-tier="WAR"].active .rv-tier-target { color: rgba(255,100,100,0.7); }
+            .rv-tier-pill[data-tier="WAR"].active .rv-tier-name {
+                color: #ff4444; font-size: 12px;
+            }
+            .rv-tier-pill[data-tier="WAR"].active .rv-tier-target { color: rgba(255,120,120,0.8); }
 
-            /* Modal WAR state */
             .rv-modal.tier-war {
-                border: 1.5px solid rgba(139,0,0,0.4);
-                box-shadow: 0 0 40px rgba(139,0,0,0.15), inset 0 0 60px rgba(139,0,0,0.03);
-                transition: all 0.4s cubic-bezier(0.4,0,0.2,1);
+                border: 1.5px solid rgba(160,0,0,0.35);
+                animation: rv-war-heartbeat 2.5s ease-in-out infinite;
             }
             .rv-modal.tier-war .rv-modal-header {
-                background: linear-gradient(135deg, rgba(139,0,0,0.08), rgba(139,0,0,0.02));
-                border-bottom-color: rgba(139,0,0,0.15);
+                background: linear-gradient(90deg, rgba(139,0,0,0.06) 0%, rgba(139,0,0,0.12) 50%, rgba(139,0,0,0.06) 100%);
+                border-bottom: 1px solid rgba(139,0,0,0.2);
+            }
+            .rv-modal.tier-war .rv-modal-title { color: #8b0000; }
+
+            /* ── BLOOD tier ── */
+            @keyframes rv-blood-border-crawl {
+                0% { border-color: rgba(180,0,0,0.4); box-shadow: 0 0 30px rgba(180,0,0,0.15); }
+                25% { border-color: rgba(220,0,0,0.6); box-shadow: 0 0 50px rgba(200,0,0,0.3); }
+                50% { border-color: rgba(160,0,0,0.35); box-shadow: 0 0 25px rgba(160,0,0,0.12); }
+                75% { border-color: rgba(200,0,0,0.55); box-shadow: 0 0 45px rgba(200,0,0,0.25); }
+            }
+            @keyframes rv-blood-drip {
+                0% { transform: translateY(-100%) scaleY(0); opacity: 0; }
+                10% { transform: translateY(-80%) scaleY(0.3); opacity: 0.7; }
+                50% { transform: translateY(20%) scaleY(1); opacity: 0.5; }
+                80% { transform: translateY(60%) scaleY(0.8); opacity: 0.3; }
+                100% { transform: translateY(100%) scaleY(0.4); opacity: 0; }
+            }
+            @keyframes rv-flash-red {
+                0% { opacity: 0.6; }
+                100% { opacity: 0; }
+            }
+            @keyframes rv-blood-text-glow {
+                0%, 100% { text-shadow: 0 0 10px rgba(255,0,0,0.4), 0 0 30px rgba(255,0,0,0.1); color: #cc0000; }
+                50% { text-shadow: 0 0 20px rgba(255,0,0,0.7), 0 0 50px rgba(255,0,0,0.25), 0 0 80px rgba(255,0,0,0.1); color: #ff0000; }
+            }
+            @keyframes rv-micro-tremor {
+                0%, 100% { transform: translate(0, 0); }
+                25% { transform: translate(0.5px, -0.3px); }
+                50% { transform: translate(-0.5px, 0.3px); }
+                75% { transform: translate(0.3px, 0.5px); }
+            }
+            @keyframes rv-impact {
+                0% { transform: scale(1); }
+                5% { transform: scale(1.03) rotate(-0.5deg); }
+                10% { transform: scale(0.98) rotate(0.4deg); }
+                15% { transform: scale(1.015) rotate(-0.2deg); }
+                20% { transform: scale(0.995) rotate(0.1deg); }
+                30% { transform: scale(1); }
             }
 
-            /* ── BLOOD tier animations ── */
-            @keyframes rv-blood-glow {
-                0%, 100% { box-shadow: 0 0 30px 8px rgba(180,0,0,0.25), inset 0 0 30px rgba(180,0,0,0.05); border-color: #b00; }
-                25% { box-shadow: 0 0 50px 12px rgba(200,0,0,0.35), inset 0 0 40px rgba(200,0,0,0.08); border-color: #c00; }
-                50% { box-shadow: 0 0 35px 6px rgba(160,0,0,0.2), inset 0 0 25px rgba(160,0,0,0.04); border-color: #900; }
-                75% { box-shadow: 0 0 55px 14px rgba(220,0,0,0.4), inset 0 0 50px rgba(220,0,0,0.1); border-color: #d00; }
-            }
-            @keyframes rv-blood-flicker {
-                0%, 100% { opacity: 1; }
-                92% { opacity: 1; }
-                93% { opacity: 0.7; }
-                94% { opacity: 1; }
-                96% { opacity: 0.85; }
-                97% { opacity: 1; }
-            }
-            @keyframes rv-blood-ember {
-                0% { transform: translateY(0) scale(1); opacity: 0.8; }
-                100% { transform: translateY(-60px) scale(0); opacity: 0; }
-            }
-            @keyframes rv-blood-text {
-                0%, 100% { text-shadow: 0 0 8px rgba(255,0,0,0.3); }
-                50% { text-shadow: 0 0 20px rgba(255,0,0,0.6), 0 0 40px rgba(255,0,0,0.2); }
-            }
-            @keyframes rv-shake {
-                0%, 100% { transform: translateX(0); }
-                10% { transform: translateX(-3px) rotate(-0.3deg); }
-                20% { transform: translateX(3px) rotate(0.3deg); }
-                30% { transform: translateX(-2px) rotate(-0.2deg); }
-                40% { transform: translateX(2px) rotate(0.2deg); }
-                50% { transform: translateX(-1px); }
-                60% { transform: translateX(1px); }
-                70% { transform: translateX(0); }
-            }
             .rv-tier-pill[data-tier="BLOOD"].active {
-                background: linear-gradient(135deg, #2a0000, #4a0000);
-                border-color: #b00;
-                animation: rv-blood-glow 3s ease-in-out infinite, rv-blood-flicker 4s linear infinite;
+                background: linear-gradient(145deg, #2a0000, #500000, #2a0000);
+                background-size: 200% 200%;
+                border: 2px solid #cc0000;
+                animation: rv-blood-border-crawl 3s ease-in-out infinite;
             }
             .rv-tier-pill[data-tier="BLOOD"].active .rv-tier-name {
-                color: #ff2222;
-                animation: rv-blood-text 2s ease-in-out infinite;
+                color: #ff1111; font-size: 12px;
+                animation: rv-blood-text-glow 2s ease-in-out infinite;
             }
-            .rv-tier-pill[data-tier="BLOOD"].active .rv-tier-target { color: rgba(255,80,80,0.8); }
+            .rv-tier-pill[data-tier="BLOOD"].active .rv-tier-target { color: rgba(255,80,80,0.9); }
 
-            /* Modal BLOOD state */
             .rv-modal.tier-blood {
-                border: 2px solid rgba(180,0,0,0.5);
-                box-shadow: 0 0 60px rgba(180,0,0,0.2), 0 0 120px rgba(180,0,0,0.08);
-                transition: all 0.4s cubic-bezier(0.4,0,0.2,1);
-            }
-            .rv-modal.tier-blood::before {
-                content: ''; position: absolute; inset: 0; pointer-events: none; z-index: 0;
-                background: radial-gradient(ellipse at 50% 0%, rgba(180,0,0,0.08) 0%, transparent 60%),
-                            radial-gradient(ellipse at 50% 100%, rgba(180,0,0,0.06) 0%, transparent 50%);
+                border: 2px solid rgba(200,0,0,0.5);
+                animation: rv-blood-border-crawl 4s ease-in-out infinite, rv-micro-tremor 0.15s linear infinite;
+                overflow: visible;
             }
             .rv-modal.tier-blood .rv-modal-header {
-                background: linear-gradient(135deg, rgba(180,0,0,0.12), rgba(100,0,0,0.04));
-                border-bottom-color: rgba(180,0,0,0.2);
+                background: linear-gradient(90deg, rgba(180,0,0,0.1) 0%, rgba(220,0,0,0.18) 50%, rgba(180,0,0,0.1) 100%);
+                border-bottom: 1px solid rgba(200,0,0,0.3);
             }
             .rv-modal.tier-blood .rv-modal-title {
-                color: #cc0000;
-                animation: rv-blood-text 2.5s ease-in-out infinite;
+                animation: rv-blood-text-glow 2.5s ease-in-out infinite;
             }
-            .rv-modal.tier-blood .rv-form-hint {
-                color: rgba(180,80,80,0.6);
+
+            /* Blood drips */
+            .rv-blood-drips {
+                position: absolute; top: 0; left: 0; right: 0; height: 100%;
+                pointer-events: none; z-index: 10; overflow: hidden;
             }
-            /* Ember particles container */
-            .rv-blood-embers {
-                position: absolute; bottom: 0; left: 0; right: 0; height: 100%;
-                pointer-events: none; overflow: hidden; z-index: 0;
+            .rv-drip {
+                position: absolute; top: 0;
+                width: 3px; background: linear-gradient(180deg, #cc0000 0%, rgba(200,0,0,0.3) 70%, transparent 100%);
+                border-radius: 0 0 3px 3px;
+                animation: rv-blood-drip 4s ease-in forwards;
             }
-            .rv-ember {
-                position: absolute; bottom: -4px;
-                width: 3px; height: 3px; border-radius: 50%;
-                background: #ff3333;
-                animation: rv-blood-ember 2.5s ease-out infinite;
-                opacity: 0;
+
+            /* Full-screen flash */
+            .rv-screen-flash {
+                position: fixed; inset: 0; z-index: 99999;
+                pointer-events: none;
+                animation: rv-flash-red 0.5s ease-out forwards;
+            }
+
+            /* Blood warning banner */
+            .rv-blood-warning {
+                background: linear-gradient(90deg, rgba(180,0,0,0.08), rgba(180,0,0,0.15), rgba(180,0,0,0.08));
+                border: 1px solid rgba(180,0,0,0.2);
+                border-left: 3px solid #cc0000;
+                padding: 10px 14px;
+                margin-top: 12px;
+                font-family: 'Inter', monospace;
+                font-size: 10px; font-weight: 600;
+                letter-spacing: 0.06em; color: #990000;
+                text-transform: uppercase;
+                animation: rv-blood-text-glow 3s ease-in-out infinite;
+            }
+
+            /* Canvas particle layer */
+            .rv-particle-canvas {
+                position: absolute; inset: 0;
+                pointer-events: none; z-index: 0;
             }
             .rv-form-hint {
                 font-size: 11px;
@@ -1527,6 +1555,65 @@ export async function initRivalry() {
     }
     if (metricSelect) metricSelect.addEventListener('change', updatePreview);
 
+    // ── Blood particle system (canvas-based) ──
+    let bloodParticleRAF = null;
+    function startBloodParticles(modal) {
+        stopBloodParticles();
+        const canvas = document.createElement('canvas');
+        canvas.className = 'rv-particle-canvas';
+        canvas.width = modal.offsetWidth;
+        canvas.height = modal.offsetHeight;
+        modal.style.position = 'relative';
+        modal.appendChild(canvas);
+        const ctx = canvas.getContext('2d');
+
+        const particles = [];
+        for (let i = 0; i < 40; i++) {
+            particles.push({
+                x: Math.random() * canvas.width,
+                y: canvas.height + Math.random() * 20,
+                vx: (Math.random() - 0.5) * 0.8,
+                vy: -(0.5 + Math.random() * 1.5),
+                size: 1 + Math.random() * 2.5,
+                life: 0.5 + Math.random() * 0.5,
+                maxLife: 0.5 + Math.random() * 0.5,
+                hue: Math.random() > 0.3 ? 0 : 20 + Math.random() * 20,
+            });
+        }
+
+        function drawFrame() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            for (const p of particles) {
+                p.x += p.vx;
+                p.y += p.vy;
+                p.vy *= 0.998;
+                p.life -= 0.003;
+                if (p.life <= 0) {
+                    p.x = Math.random() * canvas.width;
+                    p.y = canvas.height + 5;
+                    p.life = p.maxLife;
+                    p.vy = -(0.5 + Math.random() * 1.5);
+                }
+                const alpha = Math.min(p.life / p.maxLife, 1) * 0.7;
+                ctx.beginPath();
+                ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+                ctx.fillStyle = `hsla(${p.hue}, 100%, 50%, ${alpha})`;
+                ctx.fill();
+                // Glow
+                ctx.beginPath();
+                ctx.arc(p.x, p.y, p.size * 3, 0, Math.PI * 2);
+                ctx.fillStyle = `hsla(${p.hue}, 100%, 50%, ${alpha * 0.15})`;
+                ctx.fill();
+            }
+            bloodParticleRAF = requestAnimationFrame(drawFrame);
+        }
+        drawFrame();
+    }
+    function stopBloodParticles() {
+        if (bloodParticleRAF) cancelAnimationFrame(bloodParticleRAF);
+        bloodParticleRAF = null;
+    }
+
     if (tierPills) {
         tierPills.addEventListener('click', (e) => {
             const pill = e.target.closest('.rv-tier-pill');
@@ -1537,43 +1624,88 @@ export async function initRivalry() {
             selectedTarget = parseInt(pill.dataset.target);
             updatePreview();
 
-            // ── Tier animation system ──
             const modal = document.querySelector('.rv-modal');
+            const backdrop = document.getElementById('rv-challenge-modal');
+            const titleEl = modal?.querySelector('.rv-modal-title');
             if (!modal) return;
 
-            // Clear previous tier states
+            // ── Reset everything ──
             modal.classList.remove('tier-war', 'tier-blood');
-            const existingEmbers = modal.querySelector('.rv-blood-embers');
-            if (existingEmbers) existingEmbers.remove();
+            modal.querySelectorAll('.rv-blood-drips, .rv-particle-canvas, .rv-blood-warning').forEach(el => el.remove());
+            stopBloodParticles();
+            if (backdrop) backdrop.style.background = '';
+            if (titleEl) titleEl.textContent = 'Issue Challenge';
+            const submitBtn2 = document.getElementById('rv-btn-submit');
+            if (submitBtn2) { submitBtn2.style.background = ''; submitBtn2.style.boxShadow = ''; }
 
             if (selectedTier === 'WAR') {
-                // WAR: aggressive entrance shake + persistent glow
+                // ━━ WAR: Impact flash + heartbeat modal ━━
                 modal.classList.add('tier-war');
-                modal.style.animation = 'rv-shake 0.5s ease-out';
-                setTimeout(() => { modal.style.animation = ''; }, 500);
+                modal.style.animation = 'rv-impact 0.4s ease-out';
+                setTimeout(() => { modal.style.animation = ''; }, 400);
+
+                // Darken backdrop
+                if (backdrop) backdrop.style.background = 'rgba(20,0,0,0.65)';
+
+                // Quick orange/red screen flash
+                const flash = document.createElement('div');
+                flash.className = 'rv-screen-flash';
+                flash.style.background = 'radial-gradient(ellipse at center, rgba(255,60,0,0.25) 0%, rgba(180,0,0,0.15) 50%, transparent 80%)';
+                document.body.appendChild(flash);
+                setTimeout(() => flash.remove(), 500);
 
             } else if (selectedTier === 'BLOOD') {
-                // BLOOD: intense shake + blood vignette + floating ember particles
+                // ━━ BLOOD: Full theatrical experience ━━
                 modal.classList.add('tier-blood');
-                modal.style.animation = 'rv-shake 0.6s ease-out';
-                setTimeout(() => { modal.style.animation = ''; }, 600);
 
-                // Spawn floating ember particles
-                const emberContainer = document.createElement('div');
-                emberContainer.className = 'rv-blood-embers';
-                for (let i = 0; i < 12; i++) {
-                    const ember = document.createElement('div');
-                    ember.className = 'rv-ember';
-                    ember.style.left = (Math.random() * 100) + '%';
-                    ember.style.animationDelay = (Math.random() * 3) + 's';
-                    ember.style.animationDuration = (1.5 + Math.random() * 2) + 's';
-                    ember.style.width = (2 + Math.random() * 3) + 'px';
-                    ember.style.height = ember.style.width;
-                    ember.style.opacity = '1';
-                    emberContainer.appendChild(ember);
+                // 1. Full-screen blood flash
+                const flash = document.createElement('div');
+                flash.className = 'rv-screen-flash';
+                flash.style.background = 'radial-gradient(ellipse at center, rgba(200,0,0,0.4) 0%, rgba(120,0,0,0.3) 40%, rgba(60,0,0,0.2) 70%, transparent 100%)';
+                document.body.appendChild(flash);
+                setTimeout(() => flash.remove(), 600);
+
+                // 2. Impact shake
+                modal.style.animation = 'rv-impact 0.5s ease-out';
+                setTimeout(() => { modal.style.animation = ''; }, 500);
+
+                // 3. Blood-tinted backdrop
+                if (backdrop) backdrop.style.background = 'rgba(40,0,0,0.75)';
+
+                // 4. Animated blood drips from top of modal
+                const dripsContainer = document.createElement('div');
+                dripsContainer.className = 'rv-blood-drips';
+                const dripPositions = [8, 18, 33, 52, 67, 78, 91];
+                dripPositions.forEach((left, i) => {
+                    const drip = document.createElement('div');
+                    drip.className = 'rv-drip';
+                    drip.style.left = left + '%';
+                    drip.style.height = (30 + Math.random() * 60) + 'px';
+                    drip.style.animationDelay = (i * 0.3 + Math.random() * 0.5) + 's';
+                    drip.style.animationDuration = (3 + Math.random() * 2) + 's';
+                    drip.style.opacity = (0.3 + Math.random() * 0.4).toString();
+                    dripsContainer.appendChild(drip);
+                });
+                modal.appendChild(dripsContainer);
+
+                // 5. Canvas particle fire system
+                requestAnimationFrame(() => startBloodParticles(modal));
+
+                // 6. Transform title
+                if (titleEl) titleEl.textContent = 'Declare Blood Pact';
+
+                // 7. Turn submit button blood red
+                if (submitBtn2) {
+                    submitBtn2.style.background = 'linear-gradient(135deg, #660000, #aa0000, #660000)';
+                    submitBtn2.style.boxShadow = '0 0 20px rgba(180,0,0,0.3)';
                 }
-                modal.style.position = 'relative';
-                modal.appendChild(emberContainer);
+
+                // 8. Add dramatic warning
+                const warning = document.createElement('div');
+                warning.className = 'rv-blood-warning';
+                warning.textContent = '⚠ Both operators must hit +40% or forfeit everything. No mercy. No appeals.';
+                const tierGroup = tierPills.closest('.rv-form-group');
+                if (tierGroup) tierGroup.appendChild(warning);
             }
         });
     }

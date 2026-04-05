@@ -471,12 +471,14 @@ export function renderHeader(currentRoute) {
             .pnl-user-badge {
                 width: 42px;
                 height: 42px;
+                border-radius: 50%;
                 display: flex;
                 align-items: center;
                 justify-content: center;
                 background: #111;
                 border: none;
                 flex-shrink: 0;
+                overflow: hidden;
             }
             .pnl-user-initial {
                 font-family: 'Neue Haas Grotesk Display', 'Helvetica Neue', Helvetica, Arial, sans-serif;
@@ -488,6 +490,7 @@ export function renderHeader(currentRoute) {
                 width: 100%;
                 height: 100%;
                 object-fit: cover;
+                border-radius: 50%;
                 display: none;
             }
             .pnl-user-info {

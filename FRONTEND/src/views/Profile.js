@@ -5,12 +5,12 @@ export function renderProfile() {
     return `
         <style>
             /* ===== PROFILE TERMINAL — INSTITUTIONAL DESIGN ===== */
-            .prf{background:#fafafa;min-height:calc(100vh - 64px);font-family:'DM Serif Display', 'Helvetica Neue', Helvetica, Arial, sans-serif,-apple-system,sans-serif;color:#111;font-variant-numeric:tabular-nums}
+            .prf{background:#fafafa;min-height:calc(100vh - 64px);font-family:'Sora', 'Helvetica Neue', Helvetica, Arial, sans-serif,-apple-system,sans-serif;color:#111;font-variant-numeric:tabular-nums}
 
             /* Header */
             .prf-header{background:#fff;border-bottom:1px solid #DCDCDC;padding:32px 32px 0}
             .prf-header-inner{max-width:1120px;margin:0 auto;display:flex;justify-content:space-between;align-items:flex-start;gap:16px;padding-bottom:24px}
-            .prf-name{font-size:26px;font-weight:700;color:#111111;font-family:'DM Serif Display', 'Helvetica Neue', Helvetica, Arial, sans-serif,sans-serif;letter-spacing:-0.5px;margin:0 0 6px;display:flex;align-items:center;gap:10px}
+            .prf-name{font-size:26px;font-weight:700;color:#111111;font-family:'Sora', 'Helvetica Neue', Helvetica, Arial, sans-serif,sans-serif;letter-spacing:-0.5px;margin:0 0 6px;display:flex;align-items:center;gap:10px}
             .prf-hash{font-size:11px;color:#8A8A8A;font-family:'JetBrains Mono', monospace;letter-spacing:0.5px;text-transform:uppercase;display:flex;align-items:center;gap:8px}
             .prf-header-actions{display:flex;gap:8px;flex-shrink:0;align-items:center}
             .prf-btn-ghost{display:inline-flex;align-items:center;gap:6px;padding:10px 16px;background:#fff;border:1px solid #E5E5E5;cursor:pointer;font-size:11px;font-weight:700;color:#444444;text-transform:uppercase;letter-spacing:0.5px;font-family:'JetBrains Mono', monospace;transition:all 0.12s}
@@ -18,7 +18,7 @@ export function renderProfile() {
 
             /* Tabs */
             .prf-tabs{display:flex;gap:0;padding:0 32px;border-bottom:1px solid #DCDCDC;background:#fff;position:sticky;top:56px;z-index:40}
-            .prf-tab{padding:14px 18px;font-size:12px;font-weight:600;color:#444444;background:transparent;border:none;border-bottom:2px solid transparent;cursor:pointer;font-family:'DM Serif Display', 'Helvetica Neue', Helvetica, Arial, sans-serif,sans-serif;text-transform:uppercase;letter-spacing:0.3px;transition:color 0.12s;white-space:nowrap}
+            .prf-tab{padding:14px 18px;font-size:12px;font-weight:600;color:#444444;background:transparent;border:none;border-bottom:2px solid transparent;cursor:pointer;font-family:'Sora', 'Helvetica Neue', Helvetica, Arial, sans-serif,sans-serif;text-transform:uppercase;letter-spacing:0.3px;transition:color 0.12s;white-space:nowrap}
             .prf-tab:hover{color:#111111}
             .prf-tab.active{color:#111111;font-weight:700;border-bottom-color:#5C1414}
             .prf-tab-count{font-size:10px;background:#f3f4f6;color:#444444;padding:1px 6px;border-radius:999px;margin-left:6px;font-family:'JetBrains Mono', monospace;font-weight:600}
@@ -112,7 +112,7 @@ export function renderProfile() {
             .prf-cx-actions{display:flex;gap:8px;margin-top:12px}
 
             /* Provider dot */
-            .prf-prov{display:inline-flex;align-items:center;gap:5px;font-size:12px;color:#4b5563;font-family:'DM Serif Display', 'Helvetica Neue', Helvetica, Arial, sans-serif,sans-serif}
+            .prf-prov{display:inline-flex;align-items:center;gap:5px;font-size:12px;color:#4b5563;font-family:'Sora', 'Helvetica Neue', Helvetica, Arial, sans-serif,sans-serif}
             .prf-prov-dot{width:6px;height:6px;border-radius:50%}
             .prf-prov-dot.stripe{background:#635bff}
             .prf-prov-dot.x{background:#0a0a0a}
@@ -123,12 +123,12 @@ export function renderProfile() {
             /* Filter Bar */
             .prf-filters{display:flex;gap:6px;padding:14px 22px;border-bottom:1px solid #f0f0f0;flex-wrap:wrap;align-items:center;background:#fafafa}
             .prf-filter-label{font-size:10px;color:#9ca3af;text-transform:uppercase;font-family:'JetBrains Mono', monospace;margin-right:4px;font-weight:600;letter-spacing:0.5px}
-            .prf-pill{padding:5px 12px;font-size:11px;color:#4b5563;background:#fff;font-weight:500;border:1px solid #e5e5e5;border-radius:999px;cursor:pointer;transition:all 0.15s;font-family:'DM Serif Display', 'Helvetica Neue', Helvetica, Arial, sans-serif,sans-serif}
+            .prf-pill{padding:5px 12px;font-size:11px;color:#4b5563;background:#fff;font-weight:500;border:1px solid #e5e5e5;border-radius:999px;cursor:pointer;transition:all 0.15s;font-family:'Sora', 'Helvetica Neue', Helvetica, Arial, sans-serif,sans-serif}
             .prf-pill:hover{border-color:#ccc;color:#111}
             .prf-pill.active{background:#fff;color:#111;border-color:#111;font-weight:600}
 
             /* CTA */
-            .prf-cta{display:inline-flex;align-items:center;justify-content:center;gap:6px;padding:0 20px;height:44px;font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:0.5px;font-family:'DM Serif Display', 'Helvetica Neue', Helvetica, Arial, sans-serif,sans-serif;border-radius:0;cursor:pointer;transition:all 150ms ease;background:#ffffff;color:#111111;border:1px solid #e5e5e5;box-shadow:none}
+            .prf-cta{display:inline-flex;align-items:center;justify-content:center;gap:6px;padding:0 20px;height:44px;font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:0.5px;font-family:'Sora', 'Helvetica Neue', Helvetica, Arial, sans-serif,sans-serif;border-radius:0;cursor:pointer;transition:all 150ms ease;background:#ffffff;color:#111111;border:1px solid #e5e5e5;box-shadow:none}
             .prf-cta:hover{border-color:#5C1414;color:#5C1414;transform:translateY(-1px)}
             .prf-cta:active{background:#5C1414;color:#ffffff;border-color:#5C1414;box-shadow:inset 0 2px 4px rgba(0,0,0,0.2);transform:translateY(0)}
             .prf-cta:focus-visible{outline:2px solid rgba(92,20,20,0.4);outline-offset:2px}
@@ -206,7 +206,7 @@ export function renderProfile() {
             .prf-avatar-wrap:hover .prf-avatar-overlay{opacity:1}
             .prf-avatar{width:80px;height:80px;border-radius:50%;display:flex;align-items:center;justify-content:center;background:#111;overflow:hidden;border:2px solid #e5e5e5;transition:border-color 0.15s}
             .prf-avatar-wrap:hover .prf-avatar{border-color:#5C1414}
-            .prf-avatar-initial{font-family:'DM Serif Display','Helvetica Neue',sans-serif;font-size:28px;font-weight:700;color:#fff}
+            .prf-avatar-initial{font-family:'Sora','Helvetica Neue',sans-serif;font-size:28px;font-weight:700;color:#fff}
             .prf-avatar-img{width:100%;height:100%;object-fit:cover;image-rendering:auto}
             .prf-avatar-overlay{position:absolute;inset:0;background:rgba(0,0,0,0.45);display:flex;align-items:center;justify-content:center;opacity:0;transition:opacity 0.15s;border-radius:50%}
             .prf-avatar-overlay svg{color:#fff;opacity:0.9}

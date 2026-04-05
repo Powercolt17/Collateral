@@ -17,7 +17,7 @@ export function renderFunding() {
             .cap {
                 background: #FAFAFA;
                 min-height: calc(100vh - 72px);
-                font-family: 'DM Serif Display', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+                font-family: 'Sora', 'Helvetica Neue', Helvetica, Arial, sans-serif;
                 color: #111;
             }
 

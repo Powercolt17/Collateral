@@ -7,7 +7,7 @@ export function renderPrivacy() {
             .legal-page {
                 background: #fff;
                 min-height: 100vh;
-                font-family: 'DM Serif Display', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+                font-family: 'Sora', 'Helvetica Neue', Helvetica, Arial, sans-serif;
                 color: #111;
                 padding: 80px 32px 120px;
             }

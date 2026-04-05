@@ -14,7 +14,7 @@ export function renderReferrals() {
             .ref {
                 background: #fafafa;
                 min-height: calc(100vh - 72px);
-                font-family: 'DM Serif Display', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+                font-family: 'Sora', 'Helvetica Neue', Helvetica, Arial, sans-serif;
                 color: #111;
                 display: flex;
                 flex-direction: column;
@@ -508,7 +508,7 @@ export function initReferrals() {
                     </div>
                     <div style="font-size:16px;font-weight:600;color:#1a1a1a;margin-bottom:8px;">Sign in to view referrals</div>
                     <div style="font-size:13px;color:#999;max-width:360px;margin:0 auto 24px;">Create an account or sign in to access your referral dashboard and share your link.</div>
-                    <button onclick="window.app.openAccessModal()" style="background:#1a1a1a;color:#fff;border:none;padding:10px 28px;font-size:13px;font-weight:500;cursor:pointer;letter-spacing:0.02em;font-family:'DM Serif Display',sans-serif;">Sign In</button>
+                    <button onclick="window.app.openAccessModal()" style="background:#1a1a1a;color:#fff;border:none;padding:10px 28px;font-size:13px;font-weight:500;cursor:pointer;letter-spacing:0.02em;font-family:'Sora',sans-serif;">Sign In</button>
                 </div>
             `;
         }

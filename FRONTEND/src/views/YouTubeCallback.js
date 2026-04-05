@@ -5,7 +5,7 @@
 export function renderYouTubeCallback() {
     return `
         <style>
-            .yt-cb { min-height: 100vh; background: #fafafa; display: flex; align-items: center; justify-content: center; font-family: 'DM Serif Display', 'Helvetica Neue', Helvetica, Arial, sans-serif; }
+            .yt-cb { min-height: 100vh; background: #fafafa; display: flex; align-items: center; justify-content: center; font-family: 'Sora', 'Helvetica Neue', Helvetica, Arial, sans-serif; }
             .yt-cb-card { background: #fff; border: 1px solid #e5e5e5; border-radius: 12px; padding: 40px 32px; max-width: 420px; width: 100%; text-align: center; }
             @keyframes cl-spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
             @keyframes cl-pulse { 0%, 100% { opacity: 0.7; } 50% { opacity: 1; } }

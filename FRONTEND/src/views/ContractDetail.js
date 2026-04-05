@@ -6,7 +6,7 @@ export function renderContractDetail(params) {
                 max-width: 1200px;
                 margin: 0 auto;
                 padding: 40px 40px 100px;
-                font-family: 'DM Serif Display', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+                font-family: 'Sora', 'Helvetica Neue', Helvetica, Arial, sans-serif;
                 color: #111;
                 background: #fff;
                 min-height: calc(100vh - 72px);

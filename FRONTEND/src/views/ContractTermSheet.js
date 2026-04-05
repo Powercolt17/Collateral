@@ -7,7 +7,7 @@ import { openExecutionModal } from './ExecutionModal.js';
 export function renderContractTermSheet(params) {
     return `
         <style>
-            .cts { max-width: 1120px; margin: 0 auto; padding: 32px 24px 80px; font-family: 'DM Serif Display', 'Helvetica Neue', Helvetica, Arial, sans-serif; color: #111; }
+            .cts { max-width: 1120px; margin: 0 auto; padding: 32px 24px 80px; font-family: 'Sora', 'Helvetica Neue', Helvetica, Arial, sans-serif; color: #111; }
 
             /* Breadcrumb */
             .cts-breadcrumb { display: flex; align-items: center; gap: 6px; margin-bottom: 28px; }
@@ -78,7 +78,7 @@ export function renderContractTermSheet(params) {
                 background: #752122; color: #fff;
                 font-size: 12px; font-weight: 600;
                 text-transform: uppercase; letter-spacing: 0.06em;
-                font-family: 'DM Serif Display', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+                font-family: 'Sora', 'Helvetica Neue', Helvetica, Arial, sans-serif;
                 cursor: pointer;
                 transition: background 180ms ease, transform 100ms ease, box-shadow 180ms ease;
                 box-shadow: 0 1px 3px rgba(0,0,0,0.08);

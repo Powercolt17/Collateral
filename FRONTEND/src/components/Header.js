@@ -138,7 +138,7 @@ export function renderHeader(currentRoute) {
                 font-weight: 700;
                 color: #111111;
                 letter-spacing: 0.14em;
-                font-family: 'Plus Jakarta Sans', 'IBM Plex Sans', 'DM Serif Display', 'Helvetica Neue', -apple-system, sans-serif;
+                font-family: 'Sora', 'IBM Plex Sans', 'Sora', 'Helvetica Neue', -apple-system, sans-serif;
                 text-transform: uppercase;
                 line-height: 1;
                 margin: 0;
@@ -161,7 +161,7 @@ export function renderHeader(currentRoute) {
                 font-weight: 600;
                 color: #333333;
                 text-decoration: none;
-                font-family: 'DM Serif Display', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+                font-family: 'Sora', 'Helvetica Neue', Helvetica, Arial, sans-serif;
                 letter-spacing: 0.1px;
                 transition: color 0.12s;
                 position: relative;
@@ -481,7 +481,7 @@ export function renderHeader(currentRoute) {
                 overflow: hidden;
             }
             .pnl-user-initial {
-                font-family: 'DM Serif Display', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+                font-family: 'Sora', 'Helvetica Neue', Helvetica, Arial, sans-serif;
                 font-size: 15px;
                 font-weight: 700;
                 color: #fff;
@@ -503,7 +503,7 @@ export function renderHeader(currentRoute) {
                 font-size: 14px;
                 font-weight: 600;
                 color: #111;
-                font-family: 'DM Serif Display', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+                font-family: 'Sora', 'Helvetica Neue', Helvetica, Arial, sans-serif;
                 white-space: nowrap;
                 overflow: hidden;
                 text-overflow: ellipsis;
@@ -548,7 +548,7 @@ export function renderHeader(currentRoute) {
                 font-weight: 500;
                 color: #555;
                 text-decoration: none;
-                font-family: 'DM Serif Display', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+                font-family: 'Sora', 'Helvetica Neue', Helvetica, Arial, sans-serif;
                 letter-spacing: 0.04em;
                 transition: all 0.15s ease;
                 position: relative;
@@ -602,7 +602,7 @@ export function renderHeader(currentRoute) {
                 font-weight: 500;
                 color: #555;
                 text-decoration: none;
-                font-family: 'DM Serif Display', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+                font-family: 'Sora', 'Helvetica Neue', Helvetica, Arial, sans-serif;
                 transition: all 0.15s ease;
                 opacity: 0;
                 transform: translateX(12px);
@@ -710,7 +710,7 @@ export function renderHeader(currentRoute) {
                 font-size: 11px;
                 font-weight: 500;
                 color: #777;
-                font-family: 'Plus Jakarta Sans', 'IBM Plex Sans', sans-serif;
+                font-family: 'Sora', 'IBM Plex Sans', sans-serif;
             }
             .pnl-legal {
                 display: flex;

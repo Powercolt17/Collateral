@@ -14,7 +14,7 @@ export function renderOverview() {
             .eq {
                 background: #fff;
                 min-height: 100vh;
-                font-family: 'DM Serif Display', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+                font-family: 'Sora', 'Helvetica Neue', Helvetica, Arial, sans-serif;
                 color: #111;
                 padding-bottom: 100px;
             }
@@ -64,7 +64,7 @@ export function renderOverview() {
                 max-width: 480px;
                 line-height: 1.6;
                 margin-bottom: 40px;
-                font-family: 'DM Serif Display', sans-serif;
+                font-family: 'Sora', sans-serif;
             }
             .eq-hero-actions {
                 display: flex;
@@ -192,7 +192,7 @@ export function renderOverview() {
                 font-family: 'JetBrains Mono', monospace;
             }
             .eq-mech-num {
-                font-family: 'DM Serif Display', sans-serif;
+                font-family: 'Sora', sans-serif;
                 font-size: 80px;
                 font-weight: 700;
                 color: #e0e0e0;
@@ -324,7 +324,7 @@ export function renderOverview() {
                 padding: 10px 16px;
                 font-size: 13px;
                 width: 240px;
-                font-family: 'DM Serif Display', sans-serif;
+                font-family: 'Sora', sans-serif;
             }
             .eq-btn-rules {
                 background: #fff;

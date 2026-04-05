@@ -24,7 +24,7 @@ export function renderRivalry() {
             .rv {
                 background: #fff;
                 min-height: calc(100vh - 72px);
-                font-family: 'DM Serif Display', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+                font-family: 'Sora', 'Helvetica Neue', Helvetica, Arial, sans-serif;
                 color: #111;
                 display: flex;
                 flex-direction: column;
@@ -138,7 +138,7 @@ export function renderRivalry() {
                 height: 38px; padding: 0 16px; border: 1px solid #eee;
                 font-size: 13px; color: #111; background: #fcfcfc;
                 outline: none; width: 240px;
-                font-family: 'DM Serif Display', sans-serif;
+                font-family: 'Sora', sans-serif;
                 transition: border-color .15s;
                 margin-bottom: 12px;
             }
@@ -378,7 +378,7 @@ export function renderRivalry() {
                 font-size: 56px; font-weight: 200;
                 color: rgba(59,0,1,0.6);
                 margin-bottom: 16px; line-height: 1;
-                font-family: 'DM Serif Display', 'Helvetica Neue', sans-serif;
+                font-family: 'Sora', 'Helvetica Neue', sans-serif;
             }
             .rv-mech-label {
                 font-size: 20px; font-weight: 500; color: #111;
@@ -460,7 +460,7 @@ export function renderRivalry() {
             .rv-form-group { margin-bottom: 20px; }
             .rv-form-label {
                 font-size: 12px; font-weight: 500; color: #6B6B6B;
-                font-family: 'DM Serif Display', sans-serif;
+                font-family: 'Sora', sans-serif;
                 margin-bottom: 6px; display: block;
             }
             .rv-form-input {
@@ -469,7 +469,7 @@ export function renderRivalry() {
                 border-radius: 8px; padding: 0 14px; font-size: 14px;
                 color: #1A1A1A; outline: none;
                 transition: border-color 0.15s, box-shadow 0.15s;
-                font-family: 'DM Serif Display', sans-serif;
+                font-family: 'Sora', sans-serif;
                 box-sizing: border-box;
             }
             .rv-form-input:focus {
@@ -481,7 +481,7 @@ export function renderRivalry() {
                 background: #fff; border: 1px solid #E5E5E5;
                 border-radius: 8px; padding: 0 14px; font-size: 14px;
                 color: #1A1A1A; outline: none;
-                font-family: 'DM Serif Display', sans-serif;
+                font-family: 'Sora', sans-serif;
                 box-sizing: border-box; cursor: pointer; appearance: none;
                 background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%23999' stroke-width='2'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");
                 background-repeat: no-repeat;

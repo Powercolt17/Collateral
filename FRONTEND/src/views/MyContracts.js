@@ -7,7 +7,7 @@ export function renderMyContracts() {
             .myc {
                 background: #fff;
                 min-height: calc(100vh - 72px);
-                font-family: 'DM Serif Display', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+                font-family: 'Sora', 'Helvetica Neue', Helvetica, Arial, sans-serif;
                 color: #111;
             }
 
@@ -49,7 +49,7 @@ export function renderMyContracts() {
                 text-transform: uppercase;
                 letter-spacing: 0.8px;
                 cursor: pointer;
-                font-family: 'DM Serif Display', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+                font-family: 'Sora', 'Helvetica Neue', Helvetica, Arial, sans-serif;
                 transition: border-color 0.1s;
             }
             .myc-btn-secondary:hover { border-color: #aaa; }

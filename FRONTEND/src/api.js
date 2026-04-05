@@ -482,14 +482,14 @@ export async function uploadAvatar(file) {
     });
 
     // PATCH identity with photoUrl
-    return patch('/v1/identity/me', { photoUrl: dataUri });
+    return patch('/identity/me', { photoUrl: dataUri });
 }
 
 /**
  * Remove profile picture.
  */
 export async function removeAvatar() {
-    return patch('/v1/identity/me', { photoUrl: null });
+    return patch('/identity/me', { photoUrl: null });
 }
 
 // --- LEDGER ---

@@ -201,6 +201,16 @@ export function renderProfile() {
             .prf-footer{max-width:1120px;margin:0 auto;padding:24px 32px;display:flex;align-items:center;gap:8px;font-size:10px;color:#d4d4d4;font-family:'Inter',monospace;text-transform:uppercase;letter-spacing:0.5px}
             .prf-footer-dot{width:5px;height:5px;background:#22c55e;border-radius:50%}
 
+            /* Profile Avatar */
+            .prf-avatar-wrap{position:relative;width:56px;height:56px;flex-shrink:0;cursor:pointer}
+            .prf-avatar-wrap:hover .prf-avatar-overlay{opacity:1}
+            .prf-avatar{width:56px;height:56px;display:flex;align-items:center;justify-content:center;background:#111;overflow:hidden;border:2px solid #e5e5e5;transition:border-color 0.15s}
+            .prf-avatar-wrap:hover .prf-avatar{border-color:#5C1414}
+            .prf-avatar-initial{font-family:'Neue Haas Grotesk Display','Helvetica Neue',sans-serif;font-size:20px;font-weight:700;color:#fff}
+            .prf-avatar-img{width:100%;height:100%;object-fit:cover}
+            .prf-avatar-overlay{position:absolute;inset:0;background:rgba(0,0,0,0.5);display:flex;align-items:center;justify-content:center;opacity:0;transition:opacity 0.15s;border-radius:0}
+            .prf-avatar-overlay svg{color:#fff;opacity:0.9}
+
             /* Modal */
             .prf-modal-bg{position:fixed;inset:0;background:rgba(0,0,0,0.4);z-index:100;display:none;justify-content:center;align-items:center;backdrop-filter:blur(2px)}
             .prf-modal-bg.open{display:flex}
@@ -245,15 +255,27 @@ export function renderProfile() {
             <!-- Header -->
             <div class="prf-header" data-reveal>
                 <div class="prf-header-inner">
-                    <div>
-                        <h1 class="prf-name">
-                            <span id="identity-name">—</span>
-                            <span class="prf-badge active" id="identity-status-badge">Active</span>
-                        </h1>
-                        <div class="prf-hash">
-                            <span>Identity Record</span>
-                            <span style="color:#d4d4d4">·</span>
-                            <span id="identity-hash">USR-00000</span>
+                    <div style="display:flex;align-items:center;gap:18px">
+                        <!-- Avatar Upload -->
+                        <div class="prf-avatar-wrap" id="avatar-upload-trigger" title="Change profile picture">
+                            <div class="prf-avatar" id="profile-avatar">
+                                <span class="prf-avatar-initial" id="profile-avatar-initial">—</span>
+                            </div>
+                            <div class="prf-avatar-overlay">
+                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>
+                            </div>
+                            <input type="file" id="avatar-file-input" accept="image/jpeg,image/png,image/webp" style="display:none" />
+                        </div>
+                        <div>
+                            <h1 class="prf-name">
+                                <span id="identity-name">—</span>
+                                <span class="prf-badge active" id="identity-status-badge">Active</span>
+                            </h1>
+                            <div class="prf-hash">
+                                <span>Identity Record</span>
+                                <span style="color:#d4d4d4">·</span>
+                                <span id="identity-hash">USR-00000</span>
+                            </div>
                         </div>
                     </div>
                     <div class="prf-header-actions">
@@ -578,6 +600,61 @@ export async function initProfile() {
         if (nameEl) nameEl.textContent = profile.identity?.displayName || profile.identity?.username || 'unclaimed';
         const hashEl = $('identity-hash');
         if (hashEl && profile.user?.id) hashEl.textContent = 'USR-' + profile.user.id.substring(0, 8).toUpperCase();
+
+        // ── AVATAR ──
+        const avatarEl = $('profile-avatar');
+        const avatarInitial = $('profile-avatar-initial');
+        if (avatarEl) {
+            const name = profile.identity?.displayName || profile.identity?.username || '?';
+            if (profile.identity?.photoUrl) {
+                avatarEl.innerHTML = `<img class="prf-avatar-img" src="${profile.identity.photoUrl}" alt="" />`;
+            } else if (avatarInitial) {
+                avatarInitial.textContent = name.charAt(0).toUpperCase();
+            }
+        }
+
+        // Avatar upload handler
+        const avatarTrigger = $('avatar-upload-trigger');
+        const avatarInput = $('avatar-file-input');
+        if (avatarTrigger && avatarInput) {
+            avatarTrigger.addEventListener('click', (e) => {
+                if (e.target.closest('input')) return;
+                avatarInput.click();
+            });
+            avatarInput.addEventListener('change', async (e) => {
+                const file = e.target.files?.[0];
+                if (!file) return;
+                try {
+                    // Show uploading state
+                    const avatarDiv = $('profile-avatar');
+                    if (avatarDiv) avatarDiv.style.opacity = '0.5';
+
+                    const result = await window.api.uploadAvatar(file);
+                    console.log('[Profile] Avatar uploaded:', result);
+
+                    // Update avatar display immediately
+                    if (avatarDiv && result.identity?.photoUrl) {
+                        avatarDiv.innerHTML = `<img class="prf-avatar-img" src="${result.identity.photoUrl}" alt="" />`;
+                        avatarDiv.style.opacity = '1';
+                    }
+
+                    // Update appState and re-hydrate panel
+                    window.appState.photoUrl = result.identity?.photoUrl;
+                    if (window.app?.updateMobileAuthUI) window.app.updateMobileAuthUI();
+
+                    // Store in localStorage
+                    const stored = window.api.getStoredUser() || {};
+                    stored.photoUrl = result.identity?.photoUrl;
+                    window.api.setStoredUser(stored);
+                } catch (err) {
+                    console.error('[Profile] Avatar upload failed:', err);
+                    const avatarDiv = $('profile-avatar');
+                    if (avatarDiv) avatarDiv.style.opacity = '1';
+                    alert(err.message || 'Failed to upload image');
+                }
+                avatarInput.value = ''; // Reset for re-upload
+            });
+        }
 
         // ── KPI METRICS ──
         const rate = settled.length > 0 ? ((wins.length / settled.length) * 100).toFixed(1) : '—';

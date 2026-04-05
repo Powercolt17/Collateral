@@ -133,6 +133,16 @@ async function get(path) {
     return handleResponse(response);
 }
 
+// PATCH helper
+async function patch(path, body) {
+    const response = await fetch(`${API_BASE_URL}${path}`, {
+        method: 'PATCH',
+        headers: getHeaders(),
+        body: JSON.stringify(body),
+    });
+    return handleResponse(response);
+}
+
 // GET helper for unauthenticated endpoints
 async function getPublic(path) {
     const response = await fetch(`${API_BASE_URL}${path}`, {
@@ -445,6 +455,43 @@ export async function getProfile() {
     return get('/v1/me/profile');
 }
 
+// --- AVATAR UPLOAD ---
+
+/**
+ * Upload a profile picture.
+ * Reads the file client-side as base64, then PATCHes identity.
+ * Max 2MB, JPEG/PNG/WebP only.
+ */
+export async function uploadAvatar(file) {
+    // Validate type
+    const allowed = ['image/jpeg', 'image/png', 'image/webp'];
+    if (!allowed.includes(file.type)) {
+        throw new Error('Invalid file type. Use JPEG, PNG, or WebP.');
+    }
+    // Validate size (2MB)
+    if (file.size > 2 * 1024 * 1024) {
+        throw new Error('Image must be under 2MB.');
+    }
+
+    // Read as base64 data URI
+    const dataUri = await new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.onload = () => resolve(reader.result);
+        reader.onerror = () => reject(new Error('Failed to read file'));
+        reader.readAsDataURL(file);
+    });
+
+    // PATCH identity with photoUrl
+    return patch('/v1/identity/me', { photoUrl: dataUri });
+}
+
+/**
+ * Remove profile picture.
+ */
+export async function removeAvatar() {
+    return patch('/v1/identity/me', { photoUrl: null });
+}
+
 // --- LEDGER ---
 
 export async function getLedgerEvents(contractId) {
@@ -649,6 +696,10 @@ export default {
     getConnectedAccounts,
     getConnectionStatus,
     getProfile,
+
+    // Avatar
+    uploadAvatar,
+    removeAvatar,
 
     // Ledger
     getLedgerEvents,

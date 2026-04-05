@@ -173,6 +173,7 @@ async function bootFastify() {
     try {
         const fastify = Fastify({
             logger: { level: 'info' },
+            bodyLimit: 4 * 1024 * 1024, // 4MB — supports base64 avatar uploads
             serverFactory: (handler) => {
                 // Capture the Fastify handler, reuse the existing server
                 fastifyHandler = handler;

@@ -146,7 +146,7 @@ const identityRoutes: FastifyPluginAsync = async (fastify) => {
         Querystring: { userId: string };
         Body: { bio?: string; photoUrl?: string; displayName?: string };
     }>('/identity/me', async (request, reply) => {
-        const { userId } = request.query;
+        const userId = (request as any).userId || request.query?.userId;
         const { bio, photoUrl, displayName } = request.body;
 
         if (!userId) {

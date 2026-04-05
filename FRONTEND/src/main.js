@@ -49,6 +49,7 @@ const appState = {
     displayName: storedUser?.displayName || null,
     username: storedUser?.username || null, // stored WITHOUT @ prefix
     userId: storedUser?.userId || null,
+    photoUrl: storedUser?.photoUrl || null,
     connectedSources: {
         twitter: false,
         github: false,
@@ -83,6 +84,7 @@ async function hydrateSession() {
         appState.userId = profile.user?.id ?? null;
         appState.displayName = profile.identity?.displayName ?? null;
         appState.username = profile.identity?.username ?? null;
+        appState.photoUrl = profile.identity?.photoUrl ?? null;
 
         // Hydrate connected sources from profile (canonical)
         // Show connected even if not yet verified (verified shown separately in UI)
@@ -105,6 +107,7 @@ async function hydrateSession() {
             userId: profile.user?.id,
             displayName: appState.displayName,
             username: appState.username,
+            photoUrl: appState.photoUrl,
         });
 
         console.log('[Session] ✅ Hydrated from DB:', {
@@ -1175,6 +1178,8 @@ window.app = {
         const signoutBtn = document.getElementById('pnl-signout-btn');
         const mobileInitial = document.getElementById('mobile-menu-initial');
         const mobileUsername = document.getElementById('mobile-menu-username');
+        const mobileAvatar = document.getElementById('mobile-menu-avatar');
+        const mobileBadge = document.querySelector('.pnl-user-badge');
 
         if (appState.isLoggedIn) {
             // Show user identity + account links + sign out, hide connect
@@ -1188,6 +1193,18 @@ window.app = {
             }
             if (mobileUsername && appState.username) {
                 mobileUsername.textContent = '@' + appState.username;
+            }
+
+            // Show avatar image if available, hide initial
+            if (appState.photoUrl && mobileAvatar) {
+                mobileAvatar.src = appState.photoUrl;
+                mobileAvatar.style.display = 'block';
+                if (mobileInitial) mobileInitial.style.display = 'none';
+                if (mobileBadge) mobileBadge.style.background = 'transparent';
+            } else {
+                if (mobileAvatar) mobileAvatar.style.display = 'none';
+                if (mobileInitial) mobileInitial.style.display = '';
+                if (mobileBadge) mobileBadge.style.background = '#111';
             }
         } else {
             // Hide user identity + account links + sign out, show connect

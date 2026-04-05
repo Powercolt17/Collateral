@@ -484,6 +484,12 @@ export function renderHeader(currentRoute) {
                 font-weight: 700;
                 color: #fff;
             }
+            .pnl-user-avatar {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+                display: none;
+            }
             .pnl-user-info {
                 display: flex;
                 flex-direction: column;
@@ -808,6 +814,7 @@ export function renderHeader(currentRoute) {
             <div id="mobile-user-section" class="pnl-user">
                 <div class="pnl-user-badge">
                     <span class="pnl-user-initial" id="mobile-menu-initial">U</span>
+                    <img class="pnl-user-avatar" id="mobile-menu-avatar" alt="" />
                 </div>
                 <div class="pnl-user-info">
                     <span class="pnl-user-name" id="mobile-menu-username">@user</span>

@@ -135,7 +135,7 @@ export function renderHeader(currentRoute) {
             }
             .ch-logo-wordmark {
                 font-size: 15.5px;
-                font-weight: 500;
+                font-weight: 700;
                 color: #111111;
                 letter-spacing: 0.14em;
                 font-family: 'Inter Tight', 'IBM Plex Sans', 'Neue Haas Grotesk Display', 'Helvetica Neue', -apple-system, sans-serif;

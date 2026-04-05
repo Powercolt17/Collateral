@@ -60,7 +60,7 @@ export function renderDocs() {
                 font-size: 13px;
                 color: rgba(255, 255, 255, 0.7);
                 margin: 12px 0 0;
-                font-family: 'Inter', monospace;
+                font-family: 'JetBrains Mono', monospace;
                 font-weight: 500;
                 letter-spacing: 2px;
                 text-transform: uppercase;
@@ -90,7 +90,7 @@ export function renderDocs() {
                 margin-bottom: 28px;
             }
             .doc-nav-label {
-                font-family: 'Inter', monospace;
+                font-family: 'JetBrains Mono', monospace;
                 font-size: 9px;
                 font-weight: 700;
                 text-transform: uppercase;
@@ -220,7 +220,7 @@ export function renderDocs() {
                 margin: 18px 0;
             }
             .doc-rule-text {
-                font-family: 'Inter', monospace;
+                font-family: 'JetBrains Mono', monospace;
                 font-size: 11px;
                 color: #3B0001;
                 text-transform: uppercase;
@@ -255,7 +255,7 @@ export function renderDocs() {
                 display: flex;
                 align-items: center;
                 justify-content: center;
-                font-family: 'Inter', monospace;
+                font-family: 'JetBrains Mono', monospace;
                 font-size: 12px;
                 font-weight: 700;
                 color: #FFFFFF;
@@ -293,7 +293,7 @@ export function renderDocs() {
                 box-shadow: 0 4px 12px rgba(59, 0, 1, 0.08);
             }
             .doc-tier-name {
-                font-family: 'Inter', monospace;
+                font-family: 'JetBrains Mono', monospace;
                 font-size: 11px;
                 font-weight: 700;
                 text-transform: uppercase;
@@ -352,7 +352,7 @@ export function renderDocs() {
             }
             .doc-divider-note-icon svg { width: 16px; height: 16px; }
             .doc-divider-note-text {
-                font-family: 'Inter', monospace;
+                font-family: 'JetBrains Mono', monospace;
                 font-size: 11px;
                 color: #777;
                 text-transform: uppercase;

@@ -705,7 +705,7 @@ window.app = {
             let html = '';
             if (hasUnread) {
                 html += `<div class="ch-notif-item" style="justify-content:center;border-bottom:1px solid #eee;" onclick="window.app.markAllRead()">
-                    <span style="font-size:10px;font-family:'Inter',monospace;color:#752122;letter-spacing:0.05em;cursor:pointer;">MARK ALL READ</span>
+                    <span style="font-size:10px;font-family:'JetBrains Mono', monospace;color:#752122;letter-spacing:0.05em;cursor:pointer;">MARK ALL READ</span>
                 </div>`;
             }
             html += notifs.map(n => {
@@ -716,7 +716,7 @@ window.app = {
                     <div class="ch-notif-icon ${cls}">${icon}</div>
                     <div style="flex:1;min-width:0;">
                         <div class="ch-notif-text">${n.title}</div>
-                        ${n.body ? `<div style="font-size:10px;color:#999;margin-top:2px;font-family:'Inter',monospace;">${n.body}</div>` : ''}
+                        ${n.body ? `<div style="font-size:10px;color:#999;margin-top:2px;font-family:'JetBrains Mono', monospace;">${n.body}</div>` : ''}
                     </div>
                     <span class="ch-notif-time">${timeAgo(n.createdAt)}</span>
                 </div>`;

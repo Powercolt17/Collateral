@@ -24,7 +24,7 @@ export function renderRivalry() {
             .rv {
                 background: #fff;
                 min-height: calc(100vh - 72px);
-                font-family: 'Neue Haas Grotesk Display', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+                font-family: 'DM Serif Display', 'Helvetica Neue', Helvetica, Arial, sans-serif;
                 color: #111;
                 display: flex;
                 flex-direction: column;
@@ -53,7 +53,7 @@ export function renderRivalry() {
             }
             .rv-breadcrumb {
                 display: flex; align-items: center; gap: 12px;
-                font-family: 'Inter', monospace;
+                font-family: 'JetBrains Mono', monospace;
                 font-size: 10px; font-weight: 700; letter-spacing: 1.5px;
                 color: var(--rv-brand); text-transform: uppercase;
                 margin-bottom: 24px;
@@ -110,7 +110,7 @@ export function renderRivalry() {
             }
             .rv-stat-group:hover .rv-stat-val { color: var(--rv-brand); }
             .rv-stat-lbl {
-                font-family: 'Inter', monospace;
+                font-family: 'JetBrains Mono', monospace;
                 font-size: 10px; font-weight: 700; letter-spacing: 1px;
                 color: #bbb; text-transform: uppercase;
                 display: flex; align-items: center; gap: 6px;
@@ -126,7 +126,7 @@ export function renderRivalry() {
             .rv-tabs { display: flex; gap: 32px; }
             .rv-tab {
                 padding: 12px 0; background: none; border: none;
-                font-family: 'Inter', monospace;
+                font-family: 'JetBrains Mono', monospace;
                 font-size: 11px; font-weight: 700; letter-spacing: 1px;
                 text-transform: uppercase; color: #bbb; cursor: pointer;
                 border-bottom: 2px solid transparent;
@@ -138,7 +138,7 @@ export function renderRivalry() {
                 height: 38px; padding: 0 16px; border: 1px solid #eee;
                 font-size: 13px; color: #111; background: #fcfcfc;
                 outline: none; width: 240px;
-                font-family: 'Neue Haas Grotesk Display', sans-serif;
+                font-family: 'DM Serif Display', sans-serif;
                 transition: border-color .15s;
                 margin-bottom: 12px;
             }
@@ -150,7 +150,7 @@ export function renderRivalry() {
                 width: 100%; box-sizing: border-box;
             }
             .rv-count {
-                font-family: 'Inter', monospace;
+                font-family: 'JetBrains Mono', monospace;
                 font-size: 10px; color: #ccc; margin-bottom: 20px;
                 text-transform: uppercase; letter-spacing: 1px;
             }
@@ -192,7 +192,7 @@ export function renderRivalry() {
                 margin-bottom: 12px;
             }
             .rv-card-status {
-                font-family: 'Inter', monospace;
+                font-family: 'JetBrains Mono', monospace;
                 font-size: 9px; font-weight: 700; letter-spacing: 1px;
                 text-transform: uppercase; color: #10b981;
                 display: flex; align-items: center; gap: 6px;
@@ -225,12 +225,12 @@ export function renderRivalry() {
             }
             .rv-player.right { text-align: right; }
             .rv-player-label {
-                font-family: 'Inter', monospace;
+                font-family: 'JetBrains Mono', monospace;
                 font-size: 8px; font-weight: 700; letter-spacing: 1.2px;
                 color: #bbb; text-transform: uppercase;
             }
             .rv-player-name {
-                font-family: 'Inter', monospace;
+                font-family: 'JetBrains Mono', monospace;
                 font-size: 11px; font-weight: 600; color: #333; letter-spacing: 0.02em;
                 display: flex; align-items: center; gap: 5px;
                 white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
@@ -248,7 +248,7 @@ export function renderRivalry() {
                     animation: rv-pendingPulse 2.5s ease infinite;
                     color: #ddd; font-size: 12px; font-weight: 700;
                     letter-spacing: 2px;
-                    font-family: 'Inter', monospace;
+                    font-family: 'JetBrains Mono', monospace;
                 }
             }
             .rv-vs-divider {
@@ -258,7 +258,7 @@ export function renderRivalry() {
                 padding: 0 4px;
             }
             .rv-vs-text {
-                font-family: 'Inter', monospace;
+                font-family: 'JetBrains Mono', monospace;
                 font-size: 9px; font-weight: 800; color: #ccc; letter-spacing: 0.15em;
             }
 
@@ -273,7 +273,7 @@ export function renderRivalry() {
             /* Winner/Loser Badge */
             .rv-winner-badge {
                 display: inline-flex; align-items: center; gap: 4px;
-                font-family: 'Inter', monospace;
+                font-family: 'JetBrains Mono', monospace;
                 font-size: 8px; font-weight: 800; letter-spacing: 0.5px;
                 text-transform: uppercase; padding: 3px 8px;
             }
@@ -287,7 +287,7 @@ export function renderRivalry() {
             }
             .rv-action-btn {
                 flex: 1; padding: 14px; border: none;
-                font-family: 'Inter', monospace;
+                font-family: 'JetBrains Mono', monospace;
                 font-size: 11px; font-weight: 700; letter-spacing: 1.5px;
                 cursor: pointer; transition: all .15s var(--rv-ease);
                 text-transform: uppercase; display: flex; align-items: center;
@@ -307,23 +307,23 @@ export function renderRivalry() {
             .rv-card-stake { display: flex; flex-direction: column; gap: 2px; }
             .rv-card-stake-val { font-size: 22px; font-weight: 500; color: #111; letter-spacing: -0.5px; }
             .rv-card-stake-lbl {
-                font-family: 'Inter', monospace;
+                font-family: 'JetBrains Mono', monospace;
                 font-size: 8px; font-weight: 700; color: #ccc;
                 letter-spacing: 1px; text-transform: uppercase;
             }
             .rv-card-time {
-                font-family: 'Inter', monospace;
+                font-family: 'JetBrains Mono', monospace;
                 font-size: 9px; color: #bbb; letter-spacing: 0.5px;
             }
             .rv-card-time.urgent { color: var(--rv-red); font-weight: 700; }
             .rv-card-provider-pill {
                 display: inline-flex; align-items: center; padding: 2px 7px;
-                font-family: 'Inter', monospace;
+                font-family: 'JetBrains Mono', monospace;
                 font-size: 7px; font-weight: 700; letter-spacing: 0.5px;
                 color: #fff; text-transform: uppercase; border-radius: 2px;
             }
             .rv-open-badge {
-                font-family: 'Inter', monospace;
+                font-family: 'JetBrains Mono', monospace;
                 font-size: 8px; font-weight: 700; letter-spacing: 0.5px;
                 background: #111; color: #fff; padding: 3px 8px;
                 text-transform: uppercase;
@@ -344,7 +344,7 @@ export function renderRivalry() {
                 margin-bottom: 48px;
             }
             .rv-mechanism-tag {
-                font-family: 'Inter', monospace;
+                font-family: 'JetBrains Mono', monospace;
                 font-size: 10px; font-weight: 700; letter-spacing: 1.5px;
                 color: #ccc; text-transform: uppercase; margin-bottom: 12px;
             }
@@ -378,7 +378,7 @@ export function renderRivalry() {
                 font-size: 56px; font-weight: 200;
                 color: rgba(59,0,1,0.6);
                 margin-bottom: 16px; line-height: 1;
-                font-family: 'Neue Haas Grotesk Display', 'Helvetica Neue', sans-serif;
+                font-family: 'DM Serif Display', 'Helvetica Neue', sans-serif;
             }
             .rv-mech-label {
                 font-size: 20px; font-weight: 500; color: #111;
@@ -400,7 +400,7 @@ export function renderRivalry() {
                 border: 1px solid rgba(59,0,1,0.06);
             }
             .rv-warning-text {
-                font-family: 'Inter', monospace;
+                font-family: 'JetBrains Mono', monospace;
                 font-size: 10px; font-weight: 600; letter-spacing: 1px;
                 color: #999; text-transform: uppercase;
             }
@@ -460,7 +460,7 @@ export function renderRivalry() {
             .rv-form-group { margin-bottom: 20px; }
             .rv-form-label {
                 font-size: 12px; font-weight: 500; color: #6B6B6B;
-                font-family: 'Neue Haas Grotesk Display', sans-serif;
+                font-family: 'DM Serif Display', sans-serif;
                 margin-bottom: 6px; display: block;
             }
             .rv-form-input {
@@ -469,7 +469,7 @@ export function renderRivalry() {
                 border-radius: 8px; padding: 0 14px; font-size: 14px;
                 color: #1A1A1A; outline: none;
                 transition: border-color 0.15s, box-shadow 0.15s;
-                font-family: 'Neue Haas Grotesk Display', sans-serif;
+                font-family: 'DM Serif Display', sans-serif;
                 box-sizing: border-box;
             }
             .rv-form-input:focus {
@@ -481,7 +481,7 @@ export function renderRivalry() {
                 background: #fff; border: 1px solid #E5E5E5;
                 border-radius: 8px; padding: 0 14px; font-size: 14px;
                 color: #1A1A1A; outline: none;
-                font-family: 'Neue Haas Grotesk Display', sans-serif;
+                font-family: 'DM Serif Display', sans-serif;
                 box-sizing: border-box; cursor: pointer; appearance: none;
                 background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%23999' stroke-width='2'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");
                 background-repeat: no-repeat;
@@ -495,7 +495,7 @@ export function renderRivalry() {
             .rv-dur-pill {
                 flex: 1; height: 40px;
                 border: 1px solid #e5e5e5; border-radius: 8px;
-                background: #fff; font-family: 'Inter', monospace;
+                background: #fff; font-family: 'JetBrains Mono', monospace;
                 font-size: 11px; font-weight: 600; color: #999;
                 cursor: pointer; display: flex; align-items: center;
                 justify-content: center;
@@ -509,7 +509,7 @@ export function renderRivalry() {
             .rv-stake-pill {
                 height: 40px; padding: 0 20px;
                 border: 1px solid #e5e5e5; border-radius: 8px;
-                background: #fff; font-family: 'Inter', monospace;
+                background: #fff; font-family: 'JetBrains Mono', monospace;
                 font-size: 12px; font-weight: 700; color: #999;
                 cursor: pointer; display: flex; align-items: center;
                 justify-content: center; letter-spacing: 0.02em;
@@ -554,7 +554,7 @@ export function renderRivalry() {
                 transition: all 200ms cubic-bezier(0.2, 0.8, 0.2, 1);
             }
             .rv-tier-severity-label {
-                font-family: 'Inter', monospace;
+                font-family: 'JetBrains Mono', monospace;
                 font-size: 9px; font-weight: 700;
                 letter-spacing: 0.14em;
                 text-transform: uppercase;
@@ -586,14 +586,14 @@ export function renderRivalry() {
                 font-size: 12px;
             }
             .rv-tier-name {
-                font-family: 'Inter', monospace;
+                font-family: 'JetBrains Mono', monospace;
                 font-size: 11px; font-weight: 800;
                 letter-spacing: 0.1em; color: #333;
                 display: block;
                 transition: all 200ms cubic-bezier(0.2, 0.8, 0.2, 1);
             }
             .rv-tier-target {
-                font-family: 'Inter', monospace;
+                font-family: 'JetBrains Mono', monospace;
                 font-size: 10px; font-weight: 500;
                 color: #999; letter-spacing: 0.02em;
                 display: block;
@@ -661,7 +661,7 @@ export function renderRivalry() {
             .rv-form-hint {
                 font-size: 11px;
                 color: #bbb;
-                font-family: 'Inter', monospace;
+                font-family: 'JetBrains Mono', monospace;
             }
             .rv-modal-preview {
                 background: #fafafa; border: 1px solid #f0f0f0;
@@ -673,7 +673,7 @@ export function renderRivalry() {
                 padding: 6px 0;
             }
             .rv-preview-label {
-                font-family: 'Inter', monospace;
+                font-family: 'JetBrains Mono', monospace;
                 font-size: 9px; font-weight: 600;
                 color: #bbb; text-transform: uppercase;
                 letter-spacing: 0.08em;
@@ -685,7 +685,7 @@ export function renderRivalry() {
             .rv-btn-submit {
                 width: 100%; height: 46px;
                 background: #111; color: #fff; border: none;
-                border-radius: 8px; font-family: 'Inter', monospace;
+                border-radius: 8px; font-family: 'JetBrains Mono', monospace;
                 font-size: 11px; font-weight: 800; letter-spacing: 0.1em;
                 text-transform: uppercase;
                 cursor: pointer; transition: background 0.15s;
@@ -695,7 +695,7 @@ export function renderRivalry() {
                 text-align: center; margin-top: 16px;
             }
             .rv-modal-footer-text {
-                font-family: 'Inter', monospace;
+                font-family: 'JetBrains Mono', monospace;
                 font-size: 9px; color: #ccc;
                 letter-spacing: 0.06em;
             }
@@ -747,7 +747,7 @@ export function renderRivalry() {
                 background: var(--rv-brand);
             }
             .rv-featured-tag {
-                font-family: 'Inter', monospace;
+                font-family: 'JetBrains Mono', monospace;
                 font-size: 9px;
                 font-weight: 700;
                 letter-spacing: 1.2px;
@@ -778,7 +778,7 @@ export function renderRivalry() {
             }
             .rv-featured-player.right { text-align: right; }
             .rv-featured-name {
-                font-family: 'Inter', monospace;
+                font-family: 'JetBrains Mono', monospace;
                 font-size: 14px;
                 font-weight: 600;
                 color: #111;
@@ -802,7 +802,7 @@ export function renderRivalry() {
                 color: #111;
             }
             .rv-featured-time {
-                font-family: 'Inter', monospace;
+                font-family: 'JetBrains Mono', monospace;
                 font-size: 10px;
                 color: #999;
             }
@@ -812,7 +812,7 @@ export function renderRivalry() {
                 border-color: rgba(92, 20, 20, 0.3);
             }
             .rv-modal-warning {
-                font-family: 'Inter', monospace;
+                font-family: 'JetBrains Mono', monospace;
                 font-size: 10px;
                 font-weight: 600;
                 letter-spacing: 0.06em;
@@ -977,8 +977,8 @@ export function renderRivalry() {
                 <div class="rv-form-group">
                     <label class="rv-form-label">Challenge Type</label>
                     <div class="rv-challenge-type-toggle" id="rv-challenge-type" style="display:flex;gap:0;border:1px solid #e5e5e5;overflow:hidden;margin-bottom:8px;">
-                        <button class="rv-type-btn active" data-type="direct" style="flex:1;padding:10px 16px;background:#1a1a1a;color:#fff;border:none;font-family:'Inter',monospace;font-size:10px;letter-spacing:0.08em;cursor:pointer;font-weight:700;text-transform:uppercase;transition:all 0.15s;">✉ Direct Challenge</button>
-                        <button class="rv-type-btn" data-type="open" style="flex:1;padding:10px 16px;background:#fff;color:#666;border:none;border-left:1px solid #e5e5e5;font-family:'Inter',monospace;font-size:10px;letter-spacing:0.08em;cursor:pointer;font-weight:700;text-transform:uppercase;transition:all 0.15s;">🌐 Open Challenge</button>
+                        <button class="rv-type-btn active" data-type="direct" style="flex:1;padding:10px 16px;background:#1a1a1a;color:#fff;border:none;font-family:'JetBrains Mono', monospace;font-size:10px;letter-spacing:0.08em;cursor:pointer;font-weight:700;text-transform:uppercase;transition:all 0.15s;">✉ Direct Challenge</button>
+                        <button class="rv-type-btn" data-type="open" style="flex:1;padding:10px 16px;background:#fff;color:#666;border:none;border-left:1px solid #e5e5e5;font-family:'JetBrains Mono', monospace;font-size:10px;letter-spacing:0.08em;cursor:pointer;font-weight:700;text-transform:uppercase;transition:all 0.15s;">🌐 Open Challenge</button>
                     </div>
                     <div class="rv-form-hint" id="rv-type-hint">Send to a specific operator</div>
                 </div>
@@ -1254,7 +1254,7 @@ export async function initRivalry() {
             const iAmOpponent = myUserId && r.opponentUserId === myUserId;
             const myFunded = (iAmChallenger && r.challFunded) || (iAmOpponent && r.oppFunded);
             if (myFunded) {
-                actionsHtml = `<div class="rv-card-actions"><div style="flex:1;padding:10px 16px;background:#f8f8f8;color:#999;text-align:center;font-family:'Inter',monospace;font-size:10px;font-weight:700;letter-spacing:0.08em;border:1px solid #eee;">WAITING FOR OPPONENT</div></div>`;
+                actionsHtml = `<div class="rv-card-actions"><div style="flex:1;padding:10px 16px;background:#f8f8f8;color:#999;text-align:center;font-family:'JetBrains Mono', monospace;font-size:10px;font-weight:700;letter-spacing:0.08em;border:1px solid #eee;">WAITING FOR OPPONENT</div></div>`;
             } else {
                 actionsHtml = `<div class="rv-card-actions"><button class="rv-action-btn rv-action-accept" data-rivalry-id="${r.id}" onclick="event.stopPropagation();window.app.fundRivalry('${r.id}')" style="flex:1;">FUND YOUR SIDE</button></div>`;
             }
@@ -1287,7 +1287,7 @@ export async function initRivalry() {
                         ${r.isOpen && r.status === 'pending' ? '<span class="rv-open-badge">OPEN</span>' : ''}
                         ${winnerBadge}
                     </div>
-                    <div class="rv-card-metric">${r.metric} <span style="color:#ccc;font-size:10px;font-family:'Inter',monospace;margin-left:6px;">ID:${shortId}</span></div>
+                    <div class="rv-card-metric">${r.metric} <span style="color:#ccc;font-size:10px;font-family:'JetBrains Mono', monospace;margin-left:6px;">ID:${shortId}</span></div>
                     <div class="rv-versus">
                         <div class="rv-player">
                             <span class="rv-player-label">Challenger</span>
@@ -1369,7 +1369,7 @@ export async function initRivalry() {
         // Empty state
         if (filtered.length === 0) {
             grid.innerHTML = `<div style="grid-column:1/-1;text-align:center;padding:60px 20px;">
-                <div style="font-family:'Inter',monospace;font-size:11px;font-weight:700;letter-spacing:0.12em;color:#ccc;text-transform:uppercase;margin-bottom:12px;">No rivalries found</div>
+                <div style="font-family:'JetBrains Mono', monospace;font-size:11px;font-weight:700;letter-spacing:0.12em;color:#ccc;text-transform:uppercase;margin-bottom:12px;">No rivalries found</div>
                 <div style="font-size:13px;color:#999;">${activeFilter === 'active' ? 'No active duels right now. Issue a challenge to start one.' : activeFilter === 'pending' ? 'No pending challenges.' : activeFilter === 'settled' ? 'No settled rivalries yet.' : 'No rivalries have been created yet.'}</div>
             </div>`;
         }

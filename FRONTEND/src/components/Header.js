@@ -138,7 +138,7 @@ export function renderHeader(currentRoute) {
                 font-weight: 700;
                 color: #111111;
                 letter-spacing: 0.14em;
-                font-family: 'Inter Tight', 'IBM Plex Sans', 'Neue Haas Grotesk Display', 'Helvetica Neue', -apple-system, sans-serif;
+                font-family: 'Plus Jakarta Sans', 'IBM Plex Sans', 'DM Serif Display', 'Helvetica Neue', -apple-system, sans-serif;
                 text-transform: uppercase;
                 line-height: 1;
                 margin: 0;
@@ -161,7 +161,7 @@ export function renderHeader(currentRoute) {
                 font-weight: 600;
                 color: #333333;
                 text-decoration: none;
-                font-family: 'Neue Haas Grotesk Display', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+                font-family: 'DM Serif Display', 'Helvetica Neue', Helvetica, Arial, sans-serif;
                 letter-spacing: 0.1px;
                 transition: color 0.12s;
                 position: relative;
@@ -282,7 +282,7 @@ export function renderHeader(currentRoute) {
                 background: #111111;
                 border: none;
                 cursor: pointer;
-                font-family: 'Inter', monospace;
+                font-family: 'JetBrains Mono', monospace;
                 letter-spacing: 0.5px;
                 text-transform: uppercase;
                 transition: background 0.12s;
@@ -314,7 +314,7 @@ export function renderHeader(currentRoute) {
                 text-transform: uppercase;
                 letter-spacing: 1px;
                 color: #888;
-                font-family: 'Inter', monospace;
+                font-family: 'JetBrains Mono', monospace;
             }
             .ch-notif-item {
                 padding: 10px 14px;
@@ -338,13 +338,13 @@ export function renderHeader(currentRoute) {
             .ch-notif-icon.settle { background: #f0fdf4; color: #166534; }
             .ch-notif-icon.forfeit { background: #fef2f2; color: #991b1b; }
             .ch-notif-text { flex: 1; color: #444; font-weight: 500; }
-            .ch-notif-time { font-size: 10px; color: #999; font-family: 'Inter', monospace; white-space: nowrap; }
+            .ch-notif-time { font-size: 10px; color: #999; font-family: 'JetBrains Mono', monospace; white-space: nowrap; }
             .ch-notif-empty {
                 padding: 24px 14px;
                 text-align: center;
                 font-size: 11px;
                 color: #999;
-                font-family: 'Inter', monospace;
+                font-family: 'JetBrains Mono', monospace;
             }
             .ch-notif-badge {
                 position: absolute;
@@ -431,7 +431,7 @@ export function renderHeader(currentRoute) {
                 opacity: 0.6;
             }
             .pnl-header-title {
-                font-family: 'Inter', monospace;
+                font-family: 'JetBrains Mono', monospace;
                 font-size: 9px;
                 font-weight: 700;
                 text-transform: uppercase;
@@ -481,7 +481,7 @@ export function renderHeader(currentRoute) {
                 overflow: hidden;
             }
             .pnl-user-initial {
-                font-family: 'Neue Haas Grotesk Display', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+                font-family: 'DM Serif Display', 'Helvetica Neue', Helvetica, Arial, sans-serif;
                 font-size: 15px;
                 font-weight: 700;
                 color: #fff;
@@ -503,7 +503,7 @@ export function renderHeader(currentRoute) {
                 font-size: 14px;
                 font-weight: 600;
                 color: #111;
-                font-family: 'Neue Haas Grotesk Display', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+                font-family: 'DM Serif Display', 'Helvetica Neue', Helvetica, Arial, sans-serif;
                 white-space: nowrap;
                 overflow: hidden;
                 text-overflow: ellipsis;
@@ -514,7 +514,7 @@ export function renderHeader(currentRoute) {
                 text-transform: uppercase;
                 letter-spacing: 1.5px;
                 color: #aaa;
-                font-family: 'Inter', monospace;
+                font-family: 'JetBrains Mono', monospace;
             }
 
             /* Panel scrollable body */
@@ -529,7 +529,7 @@ export function renderHeader(currentRoute) {
 
             /* Section label */
             .pnl-section-label {
-                font-family: 'Inter', monospace;
+                font-family: 'JetBrains Mono', monospace;
                 font-size: 9px;
                 font-weight: 700;
                 text-transform: uppercase;
@@ -548,7 +548,7 @@ export function renderHeader(currentRoute) {
                 font-weight: 500;
                 color: #555;
                 text-decoration: none;
-                font-family: 'Neue Haas Grotesk Display', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+                font-family: 'DM Serif Display', 'Helvetica Neue', Helvetica, Arial, sans-serif;
                 letter-spacing: 0.04em;
                 transition: all 0.15s ease;
                 position: relative;
@@ -602,7 +602,7 @@ export function renderHeader(currentRoute) {
                 font-weight: 500;
                 color: #555;
                 text-decoration: none;
-                font-family: 'Neue Haas Grotesk Display', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+                font-family: 'DM Serif Display', 'Helvetica Neue', Helvetica, Arial, sans-serif;
                 transition: all 0.15s ease;
                 opacity: 0;
                 transform: translateX(12px);
@@ -626,7 +626,7 @@ export function renderHeader(currentRoute) {
                 color: #5C1414;
                 background: #fef8f8;
                 border: 1px solid #f0e5e5;
-                font-family: 'Inter', monospace;
+                font-family: 'JetBrains Mono', monospace;
                 letter-spacing: 0.06em;
                 text-transform: uppercase;
                 cursor: pointer;
@@ -652,7 +652,7 @@ export function renderHeader(currentRoute) {
                 background: #111;
                 border: none;
                 cursor: pointer;
-                font-family: 'Inter', monospace;
+                font-family: 'JetBrains Mono', monospace;
                 letter-spacing: 0.5px;
                 text-transform: uppercase;
                 transition: background 0.15s;
@@ -683,7 +683,7 @@ export function renderHeader(currentRoute) {
                 font-size: 10px;
                 font-weight: 500;
                 color: #aaa;
-                font-family: 'Inter', monospace;
+                font-family: 'JetBrains Mono', monospace;
                 text-transform: uppercase;
                 letter-spacing: 0.1em;
             }
@@ -702,7 +702,7 @@ export function renderHeader(currentRoute) {
                 font-size: 8px;
                 font-weight: 700;
                 color: #ccc;
-                font-family: 'Inter', monospace;
+                font-family: 'JetBrains Mono', monospace;
                 text-transform: uppercase;
                 letter-spacing: 0.12em;
             }
@@ -710,7 +710,7 @@ export function renderHeader(currentRoute) {
                 font-size: 11px;
                 font-weight: 500;
                 color: #777;
-                font-family: 'Inter Tight', 'IBM Plex Sans', sans-serif;
+                font-family: 'Plus Jakarta Sans', 'IBM Plex Sans', sans-serif;
             }
             .pnl-legal {
                 display: flex;
@@ -722,7 +722,7 @@ export function renderHeader(currentRoute) {
                 font-size: 10px;
                 color: #ccc;
                 text-decoration: none;
-                font-family: 'Inter', monospace;
+                font-family: 'JetBrains Mono', monospace;
                 letter-spacing: 0.04em;
                 transition: color 0.12s;
             }

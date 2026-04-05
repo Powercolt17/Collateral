@@ -7,7 +7,7 @@ export function renderMyContracts() {
             .myc {
                 background: #fff;
                 min-height: calc(100vh - 72px);
-                font-family: 'Neue Haas Grotesk Display', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+                font-family: 'DM Serif Display', 'Helvetica Neue', Helvetica, Arial, sans-serif;
                 color: #111;
             }
 
@@ -31,7 +31,7 @@ export function renderMyContracts() {
                 font-size: 11px;
                 color: #999;
                 margin: 4px 0 0;
-                font-family: 'Inter', monospace;
+                font-family: 'JetBrains Mono', monospace;
                 text-transform: uppercase;
                 letter-spacing: 0.5px;
             }
@@ -49,7 +49,7 @@ export function renderMyContracts() {
                 text-transform: uppercase;
                 letter-spacing: 0.8px;
                 cursor: pointer;
-                font-family: 'Neue Haas Grotesk Display', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+                font-family: 'DM Serif Display', 'Helvetica Neue', Helvetica, Arial, sans-serif;
                 transition: border-color 0.1s;
             }
             .myc-btn-secondary:hover { border-color: #aaa; }
@@ -77,7 +77,7 @@ export function renderMyContracts() {
                 margin-bottom: 4px;
             }
             .myc-metric-label {
-                font-family: 'Inter', monospace;
+                font-family: 'JetBrains Mono', monospace;
                 font-size: 9px;
                 font-weight: 700;
                 text-transform: uppercase;
@@ -117,18 +117,18 @@ export function renderMyContracts() {
 
             .myc-card-info { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
             .myc-card-platform { font-size: 14px; font-weight: 700; color: #111; }
-            .myc-card-id { font-family: 'Inter', monospace; font-size: 10px; color: #999; }
+            .myc-card-id { font-family: 'JetBrains Mono', monospace; font-size: 10px; color: #999; }
 
             .myc-card-center { display: flex; align-items: center; gap: 8px; flex-shrink: 0; }
             .myc-status-badge {
-                font-family: 'Inter', monospace; font-size: 9px; font-weight: 700;
+                font-family: 'JetBrains Mono', monospace; font-size: 9px; font-weight: 700;
                 text-transform: uppercase; letter-spacing: 0.5px; padding: 4px 10px;
                 border: 1px solid #ddd; background: #fff; color: #555;
             }
 
             .myc-card-right { text-align: right; display: flex; flex-direction: column; gap: 2px; padding-left: 24px; }
             .myc-card-amount { font-size: 22px; font-weight: 700; color: #111; letter-spacing: -0.5px; }
-            .myc-card-status-text { font-size: 12px; font-weight: 600; font-family: 'Inter', monospace; }
+            .myc-card-status-text { font-size: 12px; font-weight: 600; font-family: 'JetBrains Mono', monospace; }
 
             /* Loading & Empty */
             .myc-loading { display: flex; flex-direction: column; align-items: center; padding: 80px 0; gap: 16px; }
@@ -145,7 +145,7 @@ export function renderMyContracts() {
             }
             .myc-live-loading {
                 display: flex; align-items: center; gap: 6px;
-                font-family: 'Inter', monospace;
+                font-family: 'JetBrains Mono', monospace;
                 font-size: 9px; color: #bbb; letter-spacing: 0.5px;
                 text-transform: uppercase;
             }
@@ -155,12 +155,12 @@ export function renderMyContracts() {
                 animation: myc-dot-pulse 1.5s ease infinite;
             }
             .myc-live-settled {
-                font-family: 'Inter', monospace;
+                font-family: 'JetBrains Mono', monospace;
                 font-size: 9px; color: #999; letter-spacing: 0.5px;
                 text-transform: uppercase;
             }
             .myc-live-error {
-                font-family: 'Inter', monospace;
+                font-family: 'JetBrains Mono', monospace;
                 font-size: 9px; color: #C41E24; letter-spacing: 0.5px;
                 text-transform: uppercase;
             }
@@ -175,7 +175,7 @@ export function renderMyContracts() {
                 letter-spacing: -0.3px;
             }
             .myc-live-unit {
-                font-family: 'Inter', monospace;
+                font-family: 'JetBrains Mono', monospace;
                 font-size: 8px; font-weight: 600; color: #999;
                 text-transform: uppercase; letter-spacing: 0.5px;
             }
@@ -191,7 +191,7 @@ export function renderMyContracts() {
                 transition: width 0.6s ease;
             }
             .myc-live-progress-label {
-                font-family: 'Inter', monospace;
+                font-family: 'JetBrains Mono', monospace;
                 font-size: 8px; font-weight: 700;
                 letter-spacing: 0.3px; white-space: nowrap;
             }
@@ -245,7 +245,7 @@ export function renderMyContracts() {
                             <svg style="position:absolute;top:0;left:0;width:100%;height:100%" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="32" cy="32" r="15.5" stroke="#3B0001" stroke-width="2"/><line x1="32" y1="19.5" x2="32" y2="44.5" stroke="#3B0001" stroke-width="1.5" stroke-linecap="round" style="animation:cl-pulse 1.6s ease-in-out infinite"/></svg>
                             <svg style="position:absolute;top:0;left:0;width:100%;height:100%;animation:cl-spin 2.4s linear infinite;transform-origin:center center" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg"><ellipse cx="32" cy="32" rx="26.5" ry="7.5" stroke="#3B0001" stroke-width="1.1" fill="none" transform="rotate(-27 32 32)"/></svg>
                         </div>
-                        <p style="font-family:'Inter',monospace; font-size:10px; color:#888; text-transform:uppercase;">Retrieving personal record...</p>
+                        <p style="font-family:'JetBrains Mono', monospace; font-size:10px; color:#888; text-transform:uppercase;">Retrieving personal record...</p>
                     </div>
                 </div>
             </div>
@@ -281,7 +281,7 @@ export async function initMyContracts() {
         if (contracts.length === 0) {
             container.innerHTML = `
                 <div style="text-align:center; padding: 60px 0;">
-                    <div style="font-family:'Inter',monospace; font-size:11px; color:#888; text-transform:uppercase; margin-bottom:16px;">No contracts in record</div>
+                    <div style="font-family:'JetBrains Mono', monospace; font-size:11px; color:#888; text-transform:uppercase; margin-bottom:16px;">No contracts in record</div>
                     <button class="myc-btn-secondary" style="background:#111; color:#fff; border:none;" onclick="window.router.navigate('/overview')">Create First Contract</button>
                 </div>
             `;
@@ -290,7 +290,7 @@ export async function initMyContracts() {
         }
     } catch (err) {
         console.error('[MyContracts] Error:', err);
-        container.innerHTML = `<div style="text-align:center; padding:40px; color:#752122; font-family:'Inter',monospace; font-size:12px;">SYSTEM_RECORD_ERROR: ${err.message}</div>`;
+        container.innerHTML = `<div style="text-align:center; padding:40px; color:#752122; font-family:'JetBrains Mono', monospace; font-size:12px;">SYSTEM_RECORD_ERROR: ${err.message}</div>`;
     }
 
     if (window.lucide) window.lucide.createIcons();

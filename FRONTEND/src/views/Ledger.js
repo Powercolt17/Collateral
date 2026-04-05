@@ -11,7 +11,7 @@ export function renderLedger() {
             .ldg {
                 background: #fff;
                 min-height: calc(100vh - 72px);
-                font-family: 'Neue Haas Grotesk Display', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+                font-family: 'DM Serif Display', 'Helvetica Neue', Helvetica, Arial, sans-serif;
                 color: #111;
                 display: flex;
                 flex-direction: column;
@@ -55,7 +55,7 @@ export function renderLedger() {
                 display: inline-flex;
                 align-items: center;
                 gap: 6px;
-                font-family: 'Inter', monospace;
+                font-family: 'JetBrains Mono', monospace;
                 font-size: 9px;
                 font-weight: 700;
                 letter-spacing: 0.12em;
@@ -104,7 +104,7 @@ export function renderLedger() {
                 line-height: 1;
             }
             .ldg-stat-label {
-                font-family: 'Inter', monospace;
+                font-family: 'JetBrains Mono', monospace;
                 font-size: 9px;
                 font-weight: 600;
                 letter-spacing: 0.12em;
@@ -146,7 +146,7 @@ export function renderLedger() {
                 border: none;
                 border-bottom: 2px solid transparent;
                 cursor: pointer;
-                font-family: 'Neue Haas Grotesk Display', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+                font-family: 'DM Serif Display', 'Helvetica Neue', Helvetica, Arial, sans-serif;
                 text-transform: uppercase;
                 letter-spacing: 0.06em;
                 transition: color 0.15s;
@@ -169,7 +169,7 @@ export function renderLedger() {
                 border: 1px solid #e5e5e5;
                 outline: none;
                 width: 180px;
-                font-family: 'Neue Haas Grotesk Display', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+                font-family: 'DM Serif Display', 'Helvetica Neue', Helvetica, Arial, sans-serif;
                 color: #333;
                 background: #fafafa;
                 transition: border-color 0.15s;
@@ -182,7 +182,7 @@ export function renderLedger() {
                 align-items: center;
                 gap: 6px;
                 padding: 8px 14px;
-                font-family: 'Inter', monospace;
+                font-family: 'JetBrains Mono', monospace;
                 font-size: 10px;
                 font-weight: 700;
                 letter-spacing: 0.1em;
@@ -206,7 +206,7 @@ export function renderLedger() {
                 flex-wrap: wrap;
             }
             .ldg-filter-label {
-                font-family: 'Inter', monospace;
+                font-family: 'JetBrains Mono', monospace;
                 font-size: 10px;
                 font-weight: 700;
                 color: #bbb;
@@ -229,7 +229,7 @@ export function renderLedger() {
                 border: 1px solid #e5e5e5;
                 cursor: pointer;
                 transition: all 0.15s;
-                font-family: 'Neue Haas Grotesk Display', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+                font-family: 'DM Serif Display', 'Helvetica Neue', Helvetica, Arial, sans-serif;
             }
             .ldg-pill:hover { border-color: #ccc; color: #666; }
             .ldg-pill.active {
@@ -238,7 +238,7 @@ export function renderLedger() {
                 border-color: #111;
             }
             .ldg-sort-inline {
-                font-family: 'Inter', monospace;
+                font-family: 'JetBrains Mono', monospace;
                 font-size: 10px;
                 font-weight: 700;
                 color: #bbb;
@@ -255,7 +255,7 @@ export function renderLedger() {
                 border: 1px solid #e5e5e5;
                 background: #fff;
                 cursor: pointer;
-                font-family: 'Neue Haas Grotesk Display', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+                font-family: 'DM Serif Display', 'Helvetica Neue', Helvetica, Arial, sans-serif;
                 color: #333;
                 outline: none;
                 font-weight: 500;
@@ -271,7 +271,7 @@ export function renderLedger() {
                 border-collapse: collapse;
             }
             .ldg-table thead th {
-                font-family: 'Inter', monospace;
+                font-family: 'JetBrains Mono', monospace;
                 font-size: 9px;
                 font-weight: 700;
                 text-transform: uppercase;
@@ -317,7 +317,7 @@ export function renderLedger() {
             .ldg-status-dot.fee { background: #92400e; }
 
             .ldg-status-text {
-                font-family: 'Inter', monospace;
+                font-family: 'JetBrains Mono', monospace;
                 font-size: 11px;
                 font-weight: 700;
                 text-transform: uppercase;
@@ -331,7 +331,7 @@ export function renderLedger() {
 
             /* Receipt cell */
             .ldg-rcpt {
-                font-family: 'Inter', monospace;
+                font-family: 'JetBrains Mono', monospace;
                 font-size: 12px;
                 font-weight: 700;
                 color: #111;
@@ -346,7 +346,7 @@ export function renderLedger() {
 
             /* Platform cell */
             .ldg-platform {
-                font-family: 'Inter', monospace;
+                font-family: 'JetBrains Mono', monospace;
                 font-size: 11px;
                 font-weight: 600;
                 color: #999;
@@ -376,7 +376,7 @@ export function renderLedger() {
                 padding: 64px 20px;
             }
             .ldg-empty-lbl {
-                font-family: 'Inter', monospace;
+                font-family: 'JetBrains Mono', monospace;
                 font-size: 10px;
                 font-weight: 700;
                 text-transform: uppercase;
@@ -398,7 +398,7 @@ export function renderLedger() {
                 margin-top: 8px;
             }
             .ldg-page-info {
-                font-family: 'Inter', monospace;
+                font-family: 'JetBrains Mono', monospace;
                 font-size: 10px;
                 font-weight: 500;
                 color: #ccc;
@@ -457,7 +457,7 @@ export function renderLedger() {
                 gap: 12px;
             }
             .ldg-footer-label {
-                font-family: 'Inter', monospace;
+                font-family: 'JetBrains Mono', monospace;
                 font-size: 10px;
                 font-weight: 500;
                 letter-spacing: 0.1em;
@@ -479,7 +479,7 @@ export function renderLedger() {
                 background: #16a34a;
             }
             .ldg-footer-text {
-                font-family: 'Inter', monospace;
+                font-family: 'JetBrains Mono', monospace;
                 font-size: 10px;
                 font-weight: 600;
                 letter-spacing: 0.05em;
@@ -487,7 +487,7 @@ export function renderLedger() {
                 text-transform: uppercase;
             }
             .ldg-footer-count {
-                font-family: 'Inter', monospace;
+                font-family: 'JetBrains Mono', monospace;
                 font-size: 10px;
                 font-weight: 500;
                 color: #ccc;
@@ -545,7 +545,7 @@ export function renderLedger() {
                 border-bottom: 1px solid #f0f0f0;
             }
             .ldg-drawer-title {
-                font-family: 'Inter', monospace;
+                font-family: 'JetBrains Mono', monospace;
                 font-size: 10px;
                 font-weight: 700;
                 text-transform: uppercase;
@@ -573,7 +573,7 @@ export function renderLedger() {
             }
             .ldg-drawer-row:last-child { border-bottom: none; }
             .ldg-drawer-label {
-                font-family: 'Inter', monospace;
+                font-family: 'JetBrains Mono', monospace;
                 font-size: 9px;
                 font-weight: 700;
                 text-transform: uppercase;
@@ -591,7 +591,7 @@ export function renderLedger() {
                 word-break: break-all;
             }
             .ldg-drawer-value.mono {
-                font-family: 'Inter', monospace;
+                font-family: 'JetBrains Mono', monospace;
                 font-size: 10px;
                 color: #666;
             }
@@ -603,14 +603,14 @@ export function renderLedger() {
                 background: #fafafa;
                 border: 1px solid #e5e5e5;
                 cursor: pointer;
-                font-family: 'Inter', monospace;
+                font-family: 'JetBrains Mono', monospace;
                 text-transform: uppercase;
                 letter-spacing: 0.05em;
                 transition: all 0.1s;
             }
             .ldg-copy-btn:hover { border-color: #ccc; color: #111; }
             .ldg-drawer-section {
-                font-family: 'Inter', monospace;
+                font-family: 'JetBrains Mono', monospace;
                 font-size: 9px;
                 font-weight: 700;
                 text-transform: uppercase;
@@ -629,7 +629,7 @@ export function renderLedger() {
                 color: #752122;
                 text-decoration: none;
                 cursor: pointer;
-                font-family: 'Inter', monospace;
+                font-family: 'JetBrains Mono', monospace;
                 text-transform: uppercase;
                 letter-spacing: 0.05em;
                 transition: color 0.1s;
@@ -639,7 +639,7 @@ export function renderLedger() {
                 background: #0a0a0a;
                 color: #a3a3a3;
                 padding: 14px;
-                font-family: 'Inter', monospace;
+                font-family: 'JetBrains Mono', monospace;
                 font-size: 10px;
                 line-height: 1.6;
                 overflow-x: auto;
@@ -659,7 +659,7 @@ export function renderLedger() {
                 background: #fafafa;
                 border: 1px solid #e5e5e5;
                 cursor: pointer;
-                font-family: 'Inter', monospace;
+                font-family: 'JetBrains Mono', monospace;
                 text-transform: uppercase;
                 letter-spacing: 0.08em;
                 transition: all 0.1s;
@@ -668,7 +668,7 @@ export function renderLedger() {
             .ldg-json-toggle:hover { border-color: #ccc; color: #111; }
 
             /* Status pills for drawer */
-            .ldg-status { display: inline-flex; align-items: center; padding: 3px 8px; font-family: 'Inter', monospace; font-size: 9px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; white-space: nowrap; }
+            .ldg-status { display: inline-flex; align-items: center; padding: 3px 8px; font-family: 'JetBrains Mono', monospace; font-size: 9px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; white-space: nowrap; }
             .ldg-status.locked    { background: #f5f5f5; color: #666; border: 1px solid #e0e0e0; }
             .ldg-status.settled   { background: #f0fdf4; color: #16a34a; border: 1px solid #bbf7d0; }
             .ldg-status.failed    { background: #fef2f2; color: #752122; border: 1px solid #fecaca; }
@@ -1130,7 +1130,7 @@ export async function initLedger() {
         body.innerHTML = `
             <div class="ldg-drawer-row">
                 <span class="ldg-drawer-label">Event Type</span>
-                <span class="ldg-drawer-value" style="color: ${getTagColor(event.eventType)}; font-weight: 700; font-family: 'Inter', monospace; font-size:11px;">
+                <span class="ldg-drawer-value" style="color: ${getTagColor(event.eventType)}; font-weight: 700; font-family: 'JetBrains Mono', monospace; font-size:11px;">
                     ${formatEventType(event.eventType)}
                 </span>
             </div>
@@ -1147,7 +1147,7 @@ export async function initLedger() {
             </div>
             <div class="ldg-drawer-row">
                 <span class="ldg-drawer-label">Amount</span>
-                <span class="ldg-drawer-value" style="font-family:'Inter',monospace; font-size:18px; font-weight:700; letter-spacing:-0.5px;">
+                <span class="ldg-drawer-value" style="font-family:'JetBrains Mono', monospace; font-size:18px; font-weight:700; letter-spacing:-0.5px;">
                     ${formatCurrency(event.amountUsdCents)}
                 </span>
             </div>

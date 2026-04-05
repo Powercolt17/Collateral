@@ -18,7 +18,7 @@ export function renderRivalryDetail() {
             .rvd {
                 background: #fff;
                 min-height: calc(100vh - 72px);
-                font-family: 'Neue Haas Grotesk Display', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+                font-family: 'DM Serif Display', 'Helvetica Neue', Helvetica, Arial, sans-serif;
                 color: #111;
             }
 
@@ -99,7 +99,7 @@ export function renderRivalryDetail() {
             .rvd-player-avatar {
                 width: 36px; height: 36px; border-radius: 50%;
                 display: flex; align-items: center; justify-content: center;
-                font-family: 'Inter', monospace;
+                font-family: 'JetBrains Mono', monospace;
                 font-size: 14px; font-weight: 800; color: #fff;
                 flex-shrink: 0;
             }
@@ -508,7 +508,7 @@ export function renderRivalryDetail() {
             .rvd-action-btn {
                 height: 52px; padding: 0 40px;
                 border: none; cursor: pointer;
-                font-family: 'Inter', monospace;
+                font-family: 'JetBrains Mono', monospace;
                 font-size: 11px; font-weight: 700;
                 letter-spacing: 0.1em; text-transform: uppercase;
                 transition: all .25s var(--rvd-ease);
@@ -548,7 +548,7 @@ export function renderRivalryDetail() {
             }
             .rvd-action-btn.fund:hover { background: var(--rvd-brand); box-shadow: 0 6px 24px rgba(59,0,1,0.25); }
             .rvd-action-status {
-                font-family: 'Inter', monospace;
+                font-family: 'JetBrains Mono', monospace;
                 font-size: 10px; font-weight: 600;
                 letter-spacing: 0.08em; color: var(--rvd-muted);
                 text-transform: uppercase;
@@ -563,7 +563,7 @@ export function renderRivalryDetail() {
             .rvd-share-btn {
                 height: 42px; padding: 0 28px;
                 border: 1px solid #e5e5e5; background: #fff;
-                font-family: 'Inter', monospace;
+                font-family: 'JetBrains Mono', monospace;
                 font-size: 10px; font-weight: 600;
                 letter-spacing: 0.08em; text-transform: uppercase;
                 color: #888; cursor: pointer;
@@ -590,7 +590,7 @@ export function renderRivalryDetail() {
                 border-radius: 2px;
             }
             .rvd-warning-text {
-                font-family: 'Inter', monospace;
+                font-family: 'JetBrains Mono', monospace;
                 font-size: 10px; font-weight: 600;
                 letter-spacing: 0.10em; color: #666;
                 text-transform: uppercase;
@@ -602,7 +602,7 @@ export function renderRivalryDetail() {
                 text-align: center; padding: 120px 20px; color: #ccc;
             }
             .rvd-loading-text {
-                font-family: 'Inter', monospace;
+                font-family: 'JetBrains Mono', monospace;
                 font-size: 12px; letter-spacing: 0.08em;
             }
             .rvd-skel-bar {
@@ -859,16 +859,16 @@ export async function initRivalryDetail() {
 
                     if (isPending) {
                         return `<div style="display:flex;gap:12px;margin-top:16px;">
-                            <button onclick="window.app.acceptRivalry('${rivalry.id}')" style="flex:1;padding:16px;background:#111;color:#fff;border:none;font-family:'Inter',monospace;font-size:11px;font-weight:800;letter-spacing:0.1em;cursor:pointer;">ACCEPT CHALLENGE</button>
-                            <button onclick="window.app.declineRivalry('${rivalry.id}')" style="flex:1;padding:16px;background:#fff;color:#111;border:1px solid #e5e5e5;font-family:'Inter',monospace;font-size:11px;font-weight:800;letter-spacing:0.1em;cursor:pointer;">DECLINE</button>
+                            <button onclick="window.app.acceptRivalry('${rivalry.id}')" style="flex:1;padding:16px;background:#111;color:#fff;border:none;font-family:'JetBrains Mono', monospace;font-size:11px;font-weight:800;letter-spacing:0.1em;cursor:pointer;">ACCEPT CHALLENGE</button>
+                            <button onclick="window.app.declineRivalry('${rivalry.id}')" style="flex:1;padding:16px;background:#fff;color:#111;border:1px solid #e5e5e5;font-family:'JetBrains Mono', monospace;font-size:11px;font-weight:800;letter-spacing:0.1em;cursor:pointer;">DECLINE</button>
                         </div>`;
                     } else if (myFunded) {
                         return `<div style="display:flex;gap:12px;margin-top:16px;">
-                            <div style="flex:1;padding:16px;background:#f8f8f8;color:#999;border:1px solid #e5e5e5;text-align:center;font-family:'Inter',monospace;font-size:11px;font-weight:800;letter-spacing:0.1em;">YOUR SIDE IS FUNDED — WAITING FOR OPPONENT</div>
+                            <div style="flex:1;padding:16px;background:#f8f8f8;color:#999;border:1px solid #e5e5e5;text-align:center;font-family:'JetBrains Mono', monospace;font-size:11px;font-weight:800;letter-spacing:0.1em;">YOUR SIDE IS FUNDED — WAITING FOR OPPONENT</div>
                         </div>`;
                     } else {
                         return `<div style="display:flex;gap:12px;margin-top:16px;">
-                            <button onclick="window.app.fundRivalry('${rivalry.id}')" style="flex:1;padding:16px;background:#111;color:#fff;border:none;font-family:'Inter',monospace;font-size:11px;font-weight:800;letter-spacing:0.1em;cursor:pointer;">FUND YOUR SIDE &mdash; $${rivalry.stake.toLocaleString()}</button>
+                            <button onclick="window.app.fundRivalry('${rivalry.id}')" style="flex:1;padding:16px;background:#111;color:#fff;border:none;font-family:'JetBrains Mono', monospace;font-size:11px;font-weight:800;letter-spacing:0.1em;cursor:pointer;">FUND YOUR SIDE &mdash; $${rivalry.stake.toLocaleString()}</button>
                         </div>`;
                     }
                 })() : ''}

@@ -27,7 +27,7 @@ export function renderSources() {
                 padding: 48px 64px 48px;
             }
             .src-breadcrumb {
-                font-family: 'Inter', monospace;
+                font-family: 'JetBrains Mono', monospace;
                 font-size: 10px;
                 font-weight: 500;
                 letter-spacing: 0.15em;
@@ -87,7 +87,7 @@ export function renderSources() {
                 line-height: 1;
             }
             .src-stat-label {
-                font-family: 'Inter', monospace;
+                font-family: 'JetBrains Mono', monospace;
                 font-size: 9px;
                 font-weight: 600;
                 letter-spacing: 0.12em;
@@ -132,7 +132,7 @@ export function renderSources() {
                 display: flex;
                 align-items: center;
                 justify-content: space-between;
-                font-family: 'Inter', monospace;
+                font-family: 'JetBrains Mono', monospace;
                 font-size: 10px;
                 font-weight: 600;
                 letter-spacing: 0.15em;
@@ -220,7 +220,7 @@ export function renderSources() {
                 letter-spacing: -0.5px;
             }
             .src-conn-metric-label {
-                font-family: 'Inter', monospace;
+                font-family: 'JetBrains Mono', monospace;
                 font-size: 9px;
                 color: #ccc;
                 text-transform: uppercase;
@@ -247,7 +247,7 @@ export function renderSources() {
                 justify-content: flex-end;
             }
             .src-badge-verified {
-                font-family: 'Inter', monospace;
+                font-family: 'JetBrains Mono', monospace;
                 font-size: 10px;
                 font-weight: 700;
                 letter-spacing: 0.1em;
@@ -267,7 +267,7 @@ export function renderSources() {
                 flex-shrink: 0;
             }
             .src-btn-remove {
-                font-family: 'Inter', monospace;
+                font-family: 'JetBrains Mono', monospace;
                 font-size: 10px;
                 font-weight: 700;
                 letter-spacing: 0.1em;
@@ -357,7 +357,7 @@ export function renderSources() {
                 color: #111;
             }
             .src-prov-category {
-                font-family: 'Inter', monospace;
+                font-family: 'JetBrains Mono', monospace;
                 font-size: 9px;
                 font-weight: 600;
                 text-transform: uppercase;
@@ -380,7 +380,7 @@ export function renderSources() {
 
             .src-prov-btn {
                 align-self: flex-start;
-                font-family: 'Inter', monospace;
+                font-family: 'JetBrains Mono', monospace;
                 font-size: 11px;
                 font-weight: 700;
                 letter-spacing: 0.1em;
@@ -398,7 +398,7 @@ export function renderSources() {
                 display: flex;
                 align-items: center;
                 gap: 6px;
-                font-family: 'Inter', monospace;
+                font-family: 'JetBrains Mono', monospace;
                 font-size: 10px;
                 font-weight: 600;
                 letter-spacing: 0.1em;
@@ -448,7 +448,7 @@ export function renderSources() {
                 gap: 12px;
             }
             .src-status-footer-label {
-                font-family: 'Inter', monospace;
+                font-family: 'JetBrains Mono', monospace;
                 font-size: 10px;
                 font-weight: 500;
                 letter-spacing: 0.1em;
@@ -470,7 +470,7 @@ export function renderSources() {
                 background: #16a34a;
             }
             .src-status-footer-text {
-                font-family: 'Inter', monospace;
+                font-family: 'JetBrains Mono', monospace;
                 font-size: 10px;
                 font-weight: 600;
                 letter-spacing: 0.05em;
@@ -478,7 +478,7 @@ export function renderSources() {
                 text-transform: uppercase;
             }
             .src-status-footer-right {
-                font-family: 'Inter', monospace;
+                font-family: 'JetBrains Mono', monospace;
                 font-size: 10px;
                 font-weight: 500;
                 color: #ccc;
@@ -521,7 +521,7 @@ export function renderSources() {
                 margin: 0;
             }
             .src-modal-provider {
-                font-family: 'Inter', monospace;
+                font-family: 'JetBrains Mono', monospace;
                 font-size: 10px;
                 font-weight: 600;
                 color: #ccc;
@@ -536,7 +536,7 @@ export function renderSources() {
                 margin-bottom: 20px;
             }
             .src-modal-label {
-                font-family: 'Inter', monospace;
+                font-family: 'JetBrains Mono', monospace;
                 font-size: 10px;
                 font-weight: 600;
                 text-transform: uppercase;
@@ -570,7 +570,7 @@ export function renderSources() {
                 gap: 12px;
             }
             .src-modal-cancel {
-                font-family: 'Inter', monospace;
+                font-family: 'JetBrains Mono', monospace;
                 font-size: 11px;
                 font-weight: 600;
                 text-transform: uppercase;
@@ -584,7 +584,7 @@ export function renderSources() {
             }
             .src-modal-cancel:hover { border-color: #ccc; }
             .src-modal-proceed {
-                font-family: 'Inter', monospace;
+                font-family: 'JetBrains Mono', monospace;
                 font-size: 11px;
                 font-weight: 600;
                 text-transform: uppercase;
@@ -621,7 +621,7 @@ export function renderSources() {
                 line-height: 1.5;
             }
             .src-shopify-input-label {
-                font-family: 'Inter', monospace;
+                font-family: 'JetBrains Mono', monospace;
                 font-size: 10px;
                 font-weight: 600;
                 text-transform: uppercase;
@@ -648,7 +648,7 @@ export function renderSources() {
                 flex: 1;
                 padding: 12px 14px;
                 font-size: 14px;
-                font-family: 'Inter', monospace;
+                font-family: 'JetBrains Mono', monospace;
                 color: #111;
                 border: none;
                 background: transparent;
@@ -659,7 +659,7 @@ export function renderSources() {
                 color: #ccc;
             }
             .src-shopify-suffix {
-                font-family: 'Inter', monospace;
+                font-family: 'JetBrains Mono', monospace;
                 font-size: 13px;
                 color: #999;
                 padding-right: 14px;
@@ -697,7 +697,7 @@ export function renderSources() {
             }
             @keyframes src-spin { to { transform: rotate(360deg); } }
             .src-loading-text {
-                font-family: 'Inter', monospace;
+                font-family: 'JetBrains Mono', monospace;
                 font-size: 10px;
                 font-weight: 500;
                 color: #ccc;

@@ -10,7 +10,7 @@ import { eq } from 'drizzle-orm';
 async function updateOwnerIdentity() {
     const OWNER_EMAIL = 'support@collateral.market';
     const NEW_DISPLAY_NAME = 'The System';
-    const NEW_USERNAME = 'system';
+    const NEW_USERNAME = 'thesystem';
 
     console.log(`[Owner] Looking up ${OWNER_EMAIL}...`);
 

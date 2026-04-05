@@ -933,7 +933,7 @@ function renderContractList(container, allContracts, filter) {
         var tagsHtml = '<div class="act-tag">' + tagLabel + '</div>';
 
         // Counterparty data
-        var counterparty = c.counterparty || 'Collateral Protocol';
+        var counterparty = c.counterparty || 'The System';
         var dataSourceLabel = getDataSourceLabel(c.platform);
 
         // Contract period

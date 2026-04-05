@@ -480,7 +480,7 @@ export function renderOverview() {
             .eq-card-cta {
                 background: #0a0a0a;
                 color: #fff;
-                border: none;
+                border: 1px solid transparent;
                 padding: 16px;
                 font-size: 11px;
                 font-weight: 700;
@@ -491,22 +491,42 @@ export function renderOverview() {
                 margin-top: auto;
                 position: relative;
                 overflow: hidden;
-                transition: background 0.2s ease;
+                transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+                transform: translateY(0);
+                box-shadow: 0 2px 8px rgba(0,0,0,0.1);
             }
-            .eq-card-cta:hover { background: #5C1414; }
+            .eq-card-cta:hover {
+                background: #5C1414;
+                transform: translateY(-3px);
+                box-shadow: 0 8px 30px rgba(92,20,20,0.35), 0 0 0 1px rgba(92,20,20,0.15);
+                letter-spacing: 2.5px;
+            }
+            .eq-card-cta:active {
+                transform: translateY(0px) scale(0.97);
+                box-shadow: 0 2px 8px rgba(92,20,20,0.2);
+                transition: all 0.08s ease;
+            }
             .eq-card-cta::after {
                 content: '';
                 position: absolute;
                 top: -50%;
-                left: -75%;
-                width: 50%;
+                left: -100%;
+                width: 60%;
                 height: 200%;
-                background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
+                background: linear-gradient(90deg, transparent, rgba(255,255,255,0.15), transparent);
                 transform: skewX(-25deg);
-                transition: left 0.5s ease;
+                transition: left 0.6s cubic-bezier(0.16, 1, 0.3, 1);
             }
             .eq-card-cta:hover::after {
-                left: 125%;
+                left: 150%;
+            }
+            @keyframes executePulse {
+                0%, 100% { box-shadow: 0 8px 30px rgba(92,20,20,0.35), 0 0 0 1px rgba(92,20,20,0.15); }
+                50% { box-shadow: 0 8px 30px rgba(92,20,20,0.5), 0 0 0 2px rgba(92,20,20,0.25); }
+            }
+            .eq-card-cta:hover {
+                animation: executePulse 2s ease-in-out infinite;
+                animation-delay: 0.3s;
             }
             .eq-card-footer {
                 font-size: 10px;
@@ -1240,7 +1260,7 @@ export function renderOverview() {
                     <div class="eq-mech-card anim-mech-card-4">
                         <div class="eq-mech-num">04</div>
                         <div class="eq-mech-label">Settle</div>
-                        <div class="eq-mech-desc">Variance is calculated against the target. Capital is released to the counterparty or returned to the staker.</div>
+                        <div class="eq-mech-desc">Variance is calculated against the target. Capital is released to The System or returned to the staker.</div>
                     </div>
                 </div>
             </section>

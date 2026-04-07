@@ -371,10 +371,13 @@ export async function getContractMetricPreview(contractId) {
     return get(`/v1/contracts/${contractId}/preview_baseline`);
 }
 
-export async function getProviderPreview(provider, metricKey) {
+export async function getProviderPreview(provider, metricKey, tier) {
     let url = `/v1/oracle/preview?provider=${encodeURIComponent(provider)}`;
     if (metricKey) {
         url += `&metric=${encodeURIComponent(metricKey)}`;
+    }
+    if (tier) {
+        url += `&tier=${encodeURIComponent(tier)}`;
     }
     return get(url);
 }

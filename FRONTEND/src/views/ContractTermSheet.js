@@ -500,10 +500,17 @@ function showContent(c) {
     }
 
     // Fetch Live Preview asynchronously
-    if (hasAuthToken()) {
+    const fetchLivePreview = (tierOverride) => {
+        if (!hasAuthToken()) {
+            document.getElementById('cts-live-baseline').innerHTML = '<span style="color:#888;font-size:12px;">Sign in required</span>';
+            document.getElementById('cts-live-target').innerHTML = '--';
+            document.getElementById('cts-oracle-note').innerHTML = `<i data-lucide="lock"></i> Sign in to view your live connected baseline.`;
+            return;
+        }
         const metricName = c.metric_key || c.metricKey || '';
+        const effectiveTier = tierOverride || tier;
         
-        window.api.getProviderPreview(provider, metricName)
+        window.api.getProviderPreview(provider, metricName, effectiveTier)
             .then(data => {
                 const bEl = document.getElementById('cts-live-baseline');
                 const tEl = document.getElementById('cts-live-target');
@@ -575,6 +582,21 @@ function showContent(c) {
                              lockBtnRef.textContent = 'INELIGIBLE — REQUIREMENTS NOT MET';
                          }
                      } else {
+                         // Clear any previous warning state
+                         const metricBox = document.getElementById('cts-live-metric-box');
+                         if (metricBox) metricBox.style.borderColor = '#d4d4d4';
+                         const perfItems = metricBox?.querySelectorAll('.cts-perf-item');
+                         if (perfItems) perfItems.forEach((el, i) => { el.style.background = i === 1 ? '#fffbea' : '#fafafa'; });
+
+                         const banner = document.getElementById('cts-ineligible-banner');
+                         if (banner) banner.classList.remove('visible');
+
+                         const lockBtnRef = document.getElementById('cts-lock-btn');
+                         if (lockBtnRef) {
+                             lockBtnRef.disabled = false;
+                             lockBtnRef.textContent = `LOCK $${currentStake.toLocaleString()} CAPITAL →`;
+                         }
+
                          nEl.innerHTML = `<i data-lucide="check-circle" style="color:#16a34a;"></i> Oracle connection verified. Target will be formally locked at execution.`;
                      }
                 }
@@ -586,11 +608,9 @@ function showContent(c) {
                 document.getElementById('cts-oracle-note').innerHTML = `<i data-lucide="alert-circle" style="color:#ef4444;"></i> Failed to query oracle`;
                 if (window.lucide) window.lucide.createIcons();
             });
-    } else {
-        document.getElementById('cts-live-baseline').innerHTML = '<span style="color:#888;font-size:12px;">Sign in required</span>';
-        document.getElementById('cts-live-target').innerHTML = '--';
-        document.getElementById('cts-oracle-note').innerHTML = `<i data-lucide="lock"></i> Sign in to view your live connected baseline.`;
-    }
+    };
+
+    fetchLivePreview(tier);
 }
 
 function buildTierSteps(min, max) {

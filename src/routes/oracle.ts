@@ -242,10 +242,10 @@ const oracleRoutes: FastifyPluginAsync = async (fastify) => {
      * Does not require an existing contract. Used for Market Term Sheets.
      */
     fastify.get<{
-        Querystring: { provider: string; metric?: string };
+        Querystring: { provider: string; metric?: string; tier?: string };
     }>('/v1/oracle/preview', async (request, reply) => {
         const userId = request.userId;
-        const { provider, metric } = request.query;
+        const { provider, metric, tier } = request.query;
 
         if (!userId) {
             reply.status(401);
@@ -371,9 +371,14 @@ const oracleRoutes: FastifyPluginAsync = async (fastify) => {
 
                 metricKey = 'followers';
 
-                // Minimum baseline check for X
-                const { X_ELIGIBILITY_THRESHOLDS } = await import('../adapters/x-eligibility.js');
-                const X_MIN_FOLLOWERS = X_ELIGIBILITY_THRESHOLDS.MIN_FOLLOWERS;
+                // Minimum baseline check for X — tier-specific
+                const { MINIMUM_BASELINES: MB_X } = await import('../services/contract-calculator.js');
+                const tierKey = tier === 'elevated' || tier === 'ELEVATED' || tier === 'ADVANCED'
+                    ? 'ADVANCED'
+                    : tier === 'maximum' || tier === 'MAXIMUM' || tier === 'ELITE'
+                        ? 'ELITE'
+                        : 'STANDARD';
+                const X_MIN_FOLLOWERS = MB_X.X.FOLLOWERS[tierKey];
                 if (currentBaseline < X_MIN_FOLLOWERS) {
                     reply.status(200);
                     return {
@@ -499,10 +504,15 @@ const oracleRoutes: FastifyPluginAsync = async (fastify) => {
                         throw ytErr; // No fallback data, rethrow
                     }
                 }
-                // Minimum baseline check for YouTube
+                // Minimum baseline check for YouTube — tier-specific
                 const { MINIMUM_BASELINES } = await import('../services/contract-calculator.js');
-                const YT_MIN_SUBS = MINIMUM_BASELINES.YOUTUBE.SUBSCRIBERS.STANDARD;
-                const YT_MIN_VIEWS = MINIMUM_BASELINES.YOUTUBE.VIEWS.STANDARD;
+                const ytTierKey = tier === 'elevated' || tier === 'ELEVATED' || tier === 'ADVANCED'
+                    ? 'ADVANCED'
+                    : tier === 'maximum' || tier === 'MAXIMUM' || tier === 'ELITE'
+                        ? 'ELITE'
+                        : 'STANDARD';
+                const YT_MIN_SUBS = MINIMUM_BASELINES.YOUTUBE.SUBSCRIBERS[ytTierKey];
+                const YT_MIN_VIEWS = MINIMUM_BASELINES.YOUTUBE.VIEWS[ytTierKey];
                 const ytMin = metricKey === 'youtube_views' ? YT_MIN_VIEWS : YT_MIN_SUBS;
                 const ytNoun = metricKey === 'youtube_views' ? '30-day views' : 'subscribers';
                 if (currentBaseline < ytMin) {

@@ -3,39 +3,247 @@
 
 export function renderXCallback() {
     return `
-        <div class="min-h-screen bg-neutral-50 flex items-center justify-center">
-            <div class="bg-white border border-neutral-200 rounded-lg p-8 max-w-md w-full text-center">
+        <style>
+            .cb-page {
+                min-height: calc(100vh - 72px);
+                background: #fafafa;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                font-family: 'Sora', 'Inter', -apple-system, sans-serif;
+                position: relative;
+                overflow: hidden;
+            }
+            .cb-page::before {
+                content: '';
+                position: absolute;
+                top: -40%;
+                left: -20%;
+                width: 140%;
+                height: 140%;
+                background: radial-gradient(ellipse at center, rgba(92,20,20,0.03) 0%, transparent 70%);
+                pointer-events: none;
+            }
+            .cb-card {
+                position: relative;
+                background: #fff;
+                border: 1px solid #eaeaea;
+                width: 100%;
+                max-width: 480px;
+                padding: 56px 48px 48px;
+                text-align: center;
+                box-shadow: 0 4px 24px rgba(0,0,0,0.04), 0 1px 3px rgba(0,0,0,0.03);
+                animation: cbSlideUp 0.5s cubic-bezier(0.16, 1, 0.3, 1) both;
+            }
+            @keyframes cbSlideUp {
+                from { opacity: 0; transform: translateY(16px); }
+                to { opacity: 1; transform: translateY(0); }
+            }
+            .cb-icon-wrap {
+                width: 72px;
+                height: 72px;
+                margin: 0 auto 28px;
+                position: relative;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+            .cb-icon-ring {
+                position: absolute;
+                inset: 0;
+                border-radius: 50%;
+                border: 2px solid #e8f4ed;
+                animation: cbRingPulse 2s ease-in-out infinite;
+            }
+            @keyframes cbRingPulse {
+                0%, 100% { transform: scale(1); opacity: 1; }
+                50% { transform: scale(1.08); opacity: 0.6; }
+            }
+            .cb-icon-circle {
+                width: 56px;
+                height: 56px;
+                border-radius: 50%;
+                background: linear-gradient(135deg, #f0faf4, #e2f5ea);
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                animation: cbFadeIn 0.6s 0.2s both;
+            }
+            @keyframes cbFadeIn {
+                from { opacity: 0; transform: scale(0.8); }
+                to { opacity: 1; transform: scale(1); }
+            }
+            .cb-icon-circle svg {
+                width: 24px;
+                height: 24px;
+                color: #1a8a4a;
+            }
+            .cb-checkmark {
+                stroke-dasharray: 30;
+                stroke-dashoffset: 30;
+                animation: cbCheck 0.5s 0.5s ease forwards;
+            }
+            @keyframes cbCheck {
+                to { stroke-dashoffset: 0; }
+            }
+            .cb-status-label {
+                font-family: 'JetBrains Mono', monospace;
+                font-size: 10px;
+                font-weight: 600;
+                letter-spacing: 0.15em;
+                text-transform: uppercase;
+                color: #1a8a4a;
+                margin-bottom: 10px;
+                animation: cbFadeIn 0.4s 0.3s both;
+            }
+            .cb-title {
+                font-size: 22px;
+                font-weight: 700;
+                color: #111;
+                margin: 0 0 8px;
+                letter-spacing: -0.5px;
+                animation: cbFadeIn 0.4s 0.35s both;
+            }
+            .cb-username {
+                font-family: 'JetBrains Mono', monospace;
+                font-size: 14px;
+                font-weight: 500;
+                color: #5C1414;
+                margin-bottom: 8px;
+                animation: cbFadeIn 0.4s 0.4s both;
+            }
+            .cb-desc {
+                font-size: 13px;
+                color: #999;
+                line-height: 1.7;
+                margin-bottom: 32px;
+                animation: cbFadeIn 0.4s 0.45s both;
+            }
+            .cb-divider {
+                width: 48px;
+                height: 1px;
+                background: #eee;
+                margin: 0 auto 32px;
+                animation: cbFadeIn 0.4s 0.5s both;
+            }
+            .cb-btn {
+                display: inline-flex;
+                align-items: center;
+                gap: 8px;
+                padding: 14px 36px;
+                background: #0a0a0a;
+                color: #fff;
+                font-family: 'JetBrains Mono', monospace;
+                font-size: 11px;
+                font-weight: 700;
+                letter-spacing: 0.12em;
+                text-transform: uppercase;
+                border: none;
+                cursor: pointer;
+                transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+                position: relative;
+                overflow: hidden;
+                animation: cbFadeIn 0.4s 0.55s both;
+            }
+            .cb-btn:hover {
+                background: #5C1414;
+                transform: translateY(-2px);
+                box-shadow: 0 6px 20px rgba(92,20,20,0.25);
+            }
+            .cb-btn:active {
+                transform: translateY(0) scale(0.97);
+                transition: all 0.08s ease;
+            }
+            .cb-btn::after {
+                content: '';
+                position: absolute;
+                top: -50%;
+                left: -100%;
+                width: 60%;
+                height: 200%;
+                background: linear-gradient(90deg, transparent, rgba(255,255,255,0.12), transparent);
+                transform: skewX(-25deg);
+                transition: left 0.5s ease;
+            }
+            .cb-btn:hover::after { left: 150%; }
+            .cb-btn svg { width: 14px; height: 14px; }
+            .cb-footer {
+                margin-top: 28px;
+                font-family: 'JetBrains Mono', monospace;
+                font-size: 9px;
+                color: #ccc;
+                text-transform: uppercase;
+                letter-spacing: 0.1em;
+                animation: cbFadeIn 0.4s 0.6s both;
+            }
+
+            /* Error state */
+            .cb-error-icon {
+                width: 56px;
+                height: 56px;
+                border-radius: 50%;
+                background: linear-gradient(135deg, #fef2f2, #fde8e8);
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+            .cb-error-icon svg { width: 24px; height: 24px; color: #b91c1c; }
+            .cb-error-ring {
+                position: absolute;
+                inset: 0;
+                border-radius: 50%;
+                border: 2px solid #fde8e8;
+            }
+        </style>
+        <div class="cb-page">
+            <div class="cb-card">
                 <div id="x-callback-loading">
-                    <div class="w-12 h-12 border-4 border-neutral-200 border-t-neutral-800 rounded-full animate-spin mx-auto mb-4"></div>
-                    <h2 class="text-lg font-semibold text-neutral-800 mb-2">Processing X Connection</h2>
-                    <p class="text-sm text-neutral-500">Please wait...</p>
+                    <div class="cb-icon-wrap">
+                        <div style="width:20px;height:20px;border:2px solid #eee;border-top-color:#111;border-radius:50%;animation:src-spin 0.7s linear infinite;"></div>
+                    </div>
+                    <div class="cb-status-label">Verifying</div>
+                    <h2 class="cb-title">Processing X Connection</h2>
+                    <p class="cb-desc">Establishing authority binding...</p>
                 </div>
-                
+
                 <div id="x-callback-success" class="hidden">
-                    <div class="w-14 h-14 bg-[#E8F4ED] rounded-full flex items-center justify-center mx-auto mb-4">
-                        <svg class="w-7 h-7 text-[#1F7A4D]" viewBox="0 0 24 24" fill="currentColor">
-                            <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
-                        </svg>
+                    <div class="cb-icon-wrap">
+                        <div class="cb-icon-ring"></div>
+                        <div class="cb-icon-circle">
+                            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                                <path class="cb-checkmark" d="M5 13l4 4L19 7"/>
+                            </svg>
+                        </div>
                     </div>
-                    <h2 class="text-lg font-semibold text-neutral-800 mb-2">X Account Connected</h2>
-                    <p id="x-username-display" class="text-sm text-[#1F7A4D] font-mono mb-4"></p>
-                    <p class="text-xs text-neutral-500 mb-6">Authority binding established. You can now proceed with contract creation.</p>
-                    <button onclick="window.router.navigate('/contracts')" class="px-6 py-3 bg-neutral-900 text-white text-sm font-medium uppercase tracking-wide rounded hover:bg-neutral-800 transition-colors">
+                    <div class="cb-status-label">Binding Established</div>
+                    <h2 class="cb-title">X Account Connected</h2>
+                    <p id="x-username-display" class="cb-username"></p>
+                    <p class="cb-desc">Authority binding verified. Your X metrics are now available for contract verification.</p>
+                    <div class="cb-divider"></div>
+                    <button onclick="window.router.navigate('/contracts')" class="cb-btn">
                         Continue to Contracts
+                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
                     </button>
+                    <div class="cb-footer">Read-only access · Encrypted at rest</div>
                 </div>
-                
+
                 <div id="x-callback-error" class="hidden">
-                    <div class="w-14 h-14 bg-red-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                        <svg class="w-7 h-7 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
-                        </svg>
+                    <div class="cb-icon-wrap">
+                        <div class="cb-error-ring"></div>
+                        <div class="cb-error-icon">
+                            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M6 18L18 6M6 6l12 12"/>
+                            </svg>
+                        </div>
                     </div>
-                    <h2 class="text-lg font-semibold text-neutral-800 mb-2">Connection Failed</h2>
-                    <p id="x-error-message" class="text-sm text-red-600 mb-2"></p>
-                    <p id="x-error-hint" class="text-xs text-neutral-500 mb-6"></p>
-                    <button onclick="window.router.navigate('/contracts')" class="px-6 py-3 bg-neutral-900 text-white text-sm font-medium uppercase tracking-wide rounded hover:bg-neutral-800 transition-colors">
+                    <div class="cb-status-label" style="color:#b91c1c;">Connection Failed</div>
+                    <h2 class="cb-title">Unable to Connect</h2>
+                    <p id="x-error-message" class="cb-username" style="color:#b91c1c;"></p>
+                    <p id="x-error-hint" class="cb-desc"></p>
+                    <div class="cb-divider"></div>
+                    <button onclick="window.router.navigate('/sources')" class="cb-btn">
                         Try Again
+                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 4v6h6M23 20v-6h-6"/><path d="M20.49 9A9 9 0 005.64 5.64L1 10m22 4l-4.64 4.36A9 9 0 013.51 15"/></svg>
                     </button>
                 </div>
             </div>

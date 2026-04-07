@@ -14,33 +14,62 @@ import { seedCatalog } from '../db/seed-catalog.js';
 // TARGET HINT COMPUTATION (serve-time, not DB-dependent)
 // =============================================================================
 
-function computeTargetPct(metricKey: string, tier: string): number {
+function computeTargetPct(metricKey: string, tier: string, windowDays: number): number {
     const t = (tier || 'controlled').toLowerCase();
     const isRevenue = metricKey.startsWith('stripe') || metricKey === 'shopify_net_sales' || metricKey === 'amazon_revenue';
     const isFollowers = metricKey.startsWith('x') || metricKey === 'youtube_subscribers';
     const isViews = metricKey === 'youtube_30day_views';
+    const isOrders = metricKey === 'shopify_order_volume';
 
-    // Targets calibrated to win rates: PLEDGE ~30%, STAKE ~20%, ALL-IN ~10%
-    if (t === 'controlled' || t === 'pledge') {
-        if (isRevenue) return 30;
-        if (isFollowers) return 25;
-        if (isViews) return 40;
-        return 20; // orders/units
-    } else if (t === 'elevated' || t === 'stake') {
-        if (isRevenue) return 60;
-        if (isFollowers) return 50;
-        if (isViews) return 75;
-        return 40; // orders/units
-    } else { // maximum / all-in
-        if (isRevenue) return 100;
-        if (isFollowers) return 100;
-        if (isViews) return 150;
-        return 75; // orders/units
+    // Per-source, per-duration calibration matching seed-catalog.ts
+    // Failure rates: Pledge 70% / Stake 80% / All In 90%
+    if (windowDays <= 14) {
+        // 14-DAY SPRINT
+        if (t === 'controlled' || t === 'pledge') {
+            if (isRevenue) return 30;
+            if (isFollowers) return 25;
+            if (isViews) return 40;
+            if (isOrders) return 25;
+            return 25;
+        } else if (t === 'elevated' || t === 'stake') {
+            if (isRevenue) return 45;
+            if (isFollowers) return 35;
+            if (isViews) return 60;
+            if (isOrders) return 35;
+            return 35;
+        } else {
+            if (isRevenue) return 65;
+            if (isFollowers) return 50;
+            if (isViews) return 90;
+            if (isOrders) return 50;
+            return 50;
+        }
+    } else {
+        // 30-DAY MARATHON
+        if (t === 'controlled' || t === 'pledge') {
+            if (isRevenue) return 50;
+            if (isFollowers) return 40;
+            if (isViews) return 60;
+            if (isOrders) return 40;
+            return 40;
+        } else if (t === 'elevated' || t === 'stake') {
+            if (isRevenue) return 70;
+            if (isFollowers) return 55;
+            if (isViews) return 85;
+            if (isOrders) return 55;
+            return 55;
+        } else {
+            if (isRevenue) return 100;
+            if (isFollowers) return 75;
+            if (isViews) return 130;
+            if (isOrders) return 75;
+            return 75;
+        }
     }
 }
 
 function computeTargetHint(metricKey: string, tier: string, windowDays: number): string {
-    const pct = computeTargetPct(metricKey, tier);
+    const pct = computeTargetPct(metricKey, tier, windowDays);
     const noun = metricKey.includes('revenue') || metricKey.includes('sales') ? 'revenue' :
         metricKey.includes('followers') ? 'followers' :
             metricKey.includes('subscribers') ? 'subscribers' :

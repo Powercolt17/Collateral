@@ -4,7 +4,7 @@
  * SECURITY-CRITICAL: Enforces hard eligibility gates for X contracts.
  * 
  * ELIGIBILITY RULES (ALL must pass):
- * - Followers >= 500
+ * - Followers >= 1,000
  * - Account age >= 90 days
  * - Protected = false
  * - tweet_count >= 50

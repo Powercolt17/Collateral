@@ -692,7 +692,7 @@ export const marketContractInstances = pgTable('market_contract_instances', {
     instanceTermsJson: jsonb('instance_terms_json'),
     // Smart Tier Fields
     tier: contractTierEnum('tier').default('controlled').notNull(),
-    multiplier: varchar('multiplier', { length: 10 }).notNull().default('1.5'), // Using varchar to strict decimal parsing issues, or numeric
+    multiplier: varchar('multiplier', { length: 10 }).notNull().default('1.75'), // Using varchar to strict decimal parsing issues, or numeric
     // actually, let's use proper numeric type if possible, or simple float. Drizzle 'decimal' stringifies.
     // user said "multiplier numeric: 1.5 / 2.5 / 4.0". 
     // I'll use doublePrecision/real or decimal.

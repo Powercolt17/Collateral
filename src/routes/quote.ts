@@ -33,11 +33,11 @@ async function quoteRoutes(fastify: FastifyInstance) {
                 const platform = body?.platform as string;
                 const windowDays = typeof body?.windowDays === 'number' ? body.windowDays : 30;
 
-                if (platform === 'STRIPE' && windowDays < 30) {
+                if (platform === 'STRIPE' && windowDays < 14) {
                     return reply.status(400).send({
                         ok: false,
                         code: 'WINDOW_TOO_SHORT',
-                        error: `Minimum windowDays for STRIPE is 30. Got ${windowDays}.`,
+                        error: `Minimum windowDays for STRIPE is 14. Got ${windowDays}.`,
                     });
                 }
                 if (platform === 'X' && windowDays < 14) {
@@ -79,21 +79,27 @@ async function quoteRoutes(fastify: FastifyInstance) {
                 tiers: [
                     {
                         tier: 'STANDARD',
+                        label: 'Pledge',
                         targetWinRate: 0.30,
-                        description: 'Achievable with focused effort',
-                        multiplier: 1.0,
+                        failRate: '70%',
+                        description: 'Looks achievable — 70% fail',
+                        payoutMultiplier: 1.75,
                     },
                     {
                         tier: 'ADVANCED',
+                        label: 'Stake',
                         targetWinRate: 0.20,
-                        description: 'Challenging but realistic',
-                        multiplier: 1.35,
+                        failRate: '80%',
+                        description: 'Brutal grind — 80% fail',
+                        payoutMultiplier: 2.5,
                     },
                     {
                         tier: 'ELITE',
+                        label: 'All In',
                         targetWinRate: 0.10,
-                        description: 'High difficulty, high stakes',
-                        multiplier: 1.90,
+                        failRate: '90%',
+                        description: 'Near impossible — 90% fail',
+                        payoutMultiplier: 4.0,
                     },
                 ],
             });

@@ -58,7 +58,7 @@ export interface XEligibilityResult {
 // =============================================================================
 
 export const X_ELIGIBILITY_THRESHOLDS = {
-    MIN_FOLLOWERS: 500,          // 500 followers minimum
+    MIN_FOLLOWERS: 1_000,        // 1,000 followers minimum
     MIN_ACCOUNT_AGE_DAYS: 90,    // 90 days minimum
     MIN_TWEET_COUNT: 50,         // 50 tweets minimum
 } as const;

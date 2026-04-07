@@ -13,7 +13,7 @@ import { eq, and, gt } from 'drizzle-orm';
 // - Tiers: Controlled (1.5x), Elevated (2.5x), Maximum (4.0x)
 
 const TIER_OPTIONS = {
-    controlled: 1.5,
+    controlled: 1.75,
     elevated: 2.5,
     maximum: 4.0
 };
@@ -334,22 +334,25 @@ function getPolicyForTier(metricKey: string, tier: string, windowDays: number) {
 
     let targetPct = 0;
 
-    // Targets calibrated to win rates: Controlled ~30%, Elevated ~20%, Maximum ~10%
+    // Targets calibrated for BRUTAL failure rates:
+    // Pledge (controlled) → 70% fail / 30% win
+    // Stake (elevated)    → 80% fail / 20% win
+    // All In (maximum)    → 90% fail / 10% win
     if (tier === 'controlled') {
-        if (isStripe || isShopifySales || isAmazonRev) { targetPct = 30; }
+        if (isStripe || isShopifySales || isAmazonRev) { targetPct = 25; }
         else if (isX || isYouTubeSubs) { targetPct = 25; }
-        else if (isYouTubeViews) { targetPct = 40; }
+        else if (isYouTubeViews) { targetPct = 35; }
         else { targetPct = 20; } // Vol/Units
     } else if (tier === 'elevated') {
-        if (isStripe || isShopifySales || isAmazonRev) { targetPct = 60; }
+        if (isStripe || isShopifySales || isAmazonRev) { targetPct = 35; }
+        else if (isX || isYouTubeSubs) { targetPct = 35; }
+        else if (isYouTubeViews) { targetPct = 50; }
+        else { targetPct = 30; }
+    } else { // maximum — All In
+        if (isStripe || isShopifySales || isAmazonRev) { targetPct = 50; }
         else if (isX || isYouTubeSubs) { targetPct = 50; }
-        else if (isYouTubeViews) { targetPct = 75; }
-        else { targetPct = 40; }
-    } else { // maximum
-        if (isStripe || isShopifySales || isAmazonRev) { targetPct = 100; }
-        else if (isX || isYouTubeSubs) { targetPct = 100; }
-        else if (isYouTubeViews) { targetPct = 150; }
-        else { targetPct = 75; }
+        else if (isYouTubeViews) { targetPct = 80; }
+        else { targetPct = 45; }
     }
 
     return {
@@ -459,13 +462,13 @@ export async function seedCatalog() {
             // Smart Stake Ladder Configuration
             let minStake = 10000;   // $100
             let maxStake = 150000;  // $1,500
-            let multiplier = 1.5;
+            let multiplier = 1.75;
             let feeBps = 200;      // 2%
 
             if (tier === 'controlled') {
                 minStake = 10000;    // $100
                 maxStake = 150000;   // $1,500
-                multiplier = 1.5;
+                multiplier = 1.75;
                 feeBps = 200;       // 2%
             } else if (tier === 'elevated') {
                 minStake = 25000;   // $250

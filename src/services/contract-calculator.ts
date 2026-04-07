@@ -70,15 +70,15 @@ export function calculateQuote(input: QuoteInput) {
 
     const { baseline, windowDays, tier } = input;
 
-    // Final locked growth targets
-    let multiplier = 1.20; // Controlled: 20% growth
+    // Final locked growth targets — calibrated for 70/80/90 failure rates
+    let multiplier = 1.25; // Pledge: +25% growth → ~30% win rate
     let risk = 'CONTROLLED';
 
     if (tier === 'ADVANCED') {
-        multiplier = 1.30;  // Elevated: 30% growth
+        multiplier = 1.35;  // Stake: +35% growth → ~20% win rate
         risk = 'ELEVATED';
     } else if (tier === 'ELITE') {
-        multiplier = 1.45;  // Maximum: 45% growth
+        multiplier = 1.50;  // All In: +50% growth → ~8-10% win rate
         risk = 'MAXIMUM';
     }
 
@@ -95,8 +95,8 @@ export function calculateQuote(input: QuoteInput) {
             growthPercent: growthPct,
             impliedDailyGrowth: growth / windowDays,
             riskLevel: risk,
-            // Target failure rates for UI display
-            winProbability: tier === 'ELITE' ? 0.10 : tier === 'ADVANCED' ? 0.20 : 0.25
+            // Target failure rates for UI display (70% / 80% / 90%)
+            winProbability: tier === 'ELITE' ? 0.10 : tier === 'ADVANCED' ? 0.20 : 0.30
         }
     };
 }
@@ -108,35 +108,35 @@ export function calculateQuote(input: QuoteInput) {
 export const MINIMUM_BASELINES = {
     STRIPE: {
         REVENUE: {
-            STANDARD: 100_000,   // $1,000/mo — matches Controlled tier
-            ADVANCED: 500_000,   // $5,000/mo — matches Elevated tier
-            ELITE: 1_000_000     // $10,000/mo — matches Maximum tier
+            STANDARD: 100_000,   // $1,000/mo — Pledge tier
+            ADVANCED: 500_000,   // $5,000/mo — Stake tier
+            ELITE: 2_000_000     // $20,000/mo — All In tier
         }
     },
     X: {
         FOLLOWERS: {
-            STANDARD: 500,       // 500 followers — Controlled tier
-            ADVANCED: 2_000,     // 2K followers — Elevated tier
-            ELITE: 5_000         // 5K followers — Maximum tier
+            STANDARD: 1_000,     // 1K followers — Pledge tier
+            ADVANCED: 2_500,     // 2.5K followers — Stake tier
+            ELITE: 7_500         // 7.5K followers — All In tier
         }
     },
     SHOPIFY: {
         REVENUE: {
-            STANDARD: 100_000,   // $1,000/mo — matches Controlled tier
-            ADVANCED: 500_000,   // $5,000/mo — matches Elevated tier
-            ELITE: 1_000_000     // $10,000/mo — matches Maximum tier
+            STANDARD: 100_000,   // $1,000/mo — Pledge tier
+            ADVANCED: 500_000,   // $5,000/mo — Stake tier
+            ELITE: 2_000_000     // $20,000/mo — All In tier
         }
     },
     YOUTUBE: {
         SUBSCRIBERS: {
-            STANDARD: 1_000,     // 1K subs — Controlled tier
-            ADVANCED: 10_000,    // 10K subs — Elevated tier
-            ELITE: 100_000       // 100K subs — Maximum tier
+            STANDARD: 1_000,     // 1K subs — Pledge tier
+            ADVANCED: 10_000,    // 10K subs — Stake tier
+            ELITE: 100_000       // 100K subs — All In tier
         },
         VIEWS: {
-            STANDARD: 10_000,    // 10K 30d views — Controlled tier
-            ADVANCED: 100_000,   // 100K 30d views — Elevated tier
-            ELITE: 1_000_000     // 1M 30d views — Maximum tier
+            STANDARD: 10_000,    // 10K 30d views — Pledge tier
+            ADVANCED: 100_000,   // 100K 30d views — Stake tier
+            ELITE: 1_000_000     // 1M 30d views — All In tier
         }
     }
 } as const;

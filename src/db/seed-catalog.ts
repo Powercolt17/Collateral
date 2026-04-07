@@ -5,12 +5,13 @@ import { contractTemplates, marketContractInstances, marketStatsCache } from './
 import { eq, and, gt } from 'drizzle-orm';
 
 // =============================================================================
-// STRICT TEMPLATE CATALOG (30 Items)
+// STRICT TEMPLATE CATALOG (12 Templates — Sprint & Marathon only)
 // =============================================================================
 // Rules:
-// - Verified Providers Only: STRIPE, X, SHOPIFY, AMAZON
-// - Metrics: Revenue/Followers/Sales/Units only. No vanity metrics.
-// - Tiers: Controlled (1.5x), Elevated (2.5x), Maximum (4.0x)
+// - Verified Providers Only: STRIPE, X, SHOPIFY, YOUTUBE
+// - Metrics: Revenue/Followers/Sales/Subs/Views only. No vanity metrics.
+// - Durations: 14-day (Sprint) and 30-day (Marathon) only.
+// - Tiers: Pledge (1.75x), Stake (2.5x), All In (4.0x)
 
 const TIER_OPTIONS = {
     controlled: 1.75,
@@ -19,16 +20,7 @@ const TIER_OPTIONS = {
 };
 
 const TEMPLATES = [
-    // --- STRIPE (Finance) - 7 Templates ---
-    {
-        slug: 'stripe-revenue-growth-7d',
-        title: 'Net Revenue Growth (7d)',
-        category: 'finance',
-        provider: 'STRIPE',
-        description: 'Increase Stripe net revenue over 7 days compared to baseline.',
-        rules: { metricKey: 'stripe_net_revenue', window_days: 7 },
-        tierOptions: TIER_OPTIONS
-    },
+    // --- STRIPE (Finance) ---
     {
         slug: 'stripe-revenue-growth-14d',
         title: 'Net Revenue Growth (14d)',
@@ -47,53 +39,8 @@ const TEMPLATES = [
         rules: { metricKey: 'stripe_net_revenue', window_days: 30 },
         tierOptions: TIER_OPTIONS
     },
-    {
-        slug: 'stripe-revenue-growth-45d',
-        title: 'Net Revenue Growth (45d)',
-        category: 'finance',
-        provider: 'STRIPE',
-        description: 'Increase Stripe net revenue over 45 days compared to baseline.',
-        rules: { metricKey: 'stripe_net_revenue', window_days: 45 },
-        tierOptions: TIER_OPTIONS
-    },
-    {
-        slug: 'stripe-revenue-growth-60d',
-        title: 'Net Revenue Growth (60d)',
-        category: 'finance',
-        provider: 'STRIPE',
-        description: 'Increase Stripe net revenue over 60 days compared to baseline.',
-        rules: { metricKey: 'stripe_net_revenue', window_days: 60 },
-        tierOptions: TIER_OPTIONS
-    },
-    {
-        slug: 'stripe-revenue-growth-90d',
-        title: 'Net Revenue Growth (90d)',
-        category: 'finance',
-        provider: 'STRIPE',
-        description: 'Increase Stripe net revenue over 90 days compared to baseline.',
-        rules: { metricKey: 'stripe_net_revenue', window_days: 90 },
-        tierOptions: TIER_OPTIONS
-    },
-    {
-        slug: 'stripe-revenue-growth-180d',
-        title: 'Net Revenue Growth (180d)',
-        category: 'finance',
-        provider: 'STRIPE',
-        description: 'Increase Stripe net revenue over 6 months compared to baseline.',
-        rules: { metricKey: 'stripe_net_revenue', window_days: 180 },
-        tierOptions: TIER_OPTIONS
-    },
 
-    // --- X / TWITTER (Social) - 7 Templates ---
-    {
-        slug: 'x-follower-growth-7d',
-        title: 'Follower Growth (7d)',
-        category: 'social',
-        provider: 'X',
-        description: 'Grow your X audience count over 7 days.',
-        rules: { metricKey: 'x_followers', window_days: 7 },
-        tierOptions: TIER_OPTIONS
-    },
+    // --- X / TWITTER (Social) ---
     {
         slug: 'x-follower-growth-14d',
         title: 'Follower Growth (14d)',
@@ -101,15 +48,6 @@ const TEMPLATES = [
         provider: 'X',
         description: 'Grow your X audience count over 14 days.',
         rules: { metricKey: 'x_followers', window_days: 14 },
-        tierOptions: TIER_OPTIONS
-    },
-    {
-        slug: 'x-follower-growth-21d',
-        title: 'Follower Growth (21d)',
-        category: 'social',
-        provider: 'X',
-        description: 'Grow your X audience count over 21 days.',
-        rules: { metricKey: 'x_followers', window_days: 21 },
         tierOptions: TIER_OPTIONS
     },
     {
@@ -121,45 +59,8 @@ const TEMPLATES = [
         rules: { metricKey: 'x_followers', window_days: 30 },
         tierOptions: TIER_OPTIONS
     },
-    {
-        slug: 'x-follower-growth-45d',
-        title: 'Follower Growth (45d)',
-        category: 'social',
-        provider: 'X',
-        description: 'Grow your X audience count over 45 days.',
-        rules: { metricKey: 'x_followers', window_days: 45 },
-        tierOptions: TIER_OPTIONS
-    },
-    {
-        slug: 'x-follower-growth-60d',
-        title: 'Follower Growth (60d)',
-        category: 'social',
-        provider: 'X',
-        description: 'Grow your X audience count over 60 days.',
-        rules: { metricKey: 'x_followers', window_days: 60 },
-        tierOptions: TIER_OPTIONS
-    },
-    {
-        slug: 'x-follower-growth-90d',
-        title: 'Follower Growth (90d)',
-        category: 'social',
-        provider: 'X',
-        description: 'Grow your X audience count over 90 days.',
-        rules: { metricKey: 'x_followers', window_days: 90 },
-        tierOptions: TIER_OPTIONS
-    },
 
-    // --- SHOPIFY (Commerce) - 9 Templates ---
-    // Net Sales
-    {
-        slug: 'shopify-net-sales-7d',
-        title: 'Store Net Sales (7d)',
-        category: 'commerce',
-        provider: 'SHOPIFY',
-        description: 'Increase Shopify Net Sales over 7 days.',
-        rules: { metricKey: 'shopify_net_sales', window_days: 7 },
-        tierOptions: TIER_OPTIONS
-    },
+    // --- SHOPIFY (Commerce) ---
     {
         slug: 'shopify-net-sales-14d',
         title: 'Store Net Sales (14d)',
@@ -179,25 +80,6 @@ const TEMPLATES = [
         tierOptions: TIER_OPTIONS
     },
     {
-        slug: 'shopify-net-sales-60d',
-        title: 'Store Net Sales (60d)',
-        category: 'commerce',
-        provider: 'SHOPIFY',
-        description: 'Increase Shopify Net Sales over 60 days.',
-        rules: { metricKey: 'shopify_net_sales', window_days: 60 },
-        tierOptions: TIER_OPTIONS
-    },
-    {
-        slug: 'shopify-net-sales-90d',
-        title: 'Store Net Sales (90d)',
-        category: 'commerce',
-        provider: 'SHOPIFY',
-        description: 'Increase Shopify Net Sales over 90 days.',
-        rules: { metricKey: 'shopify_net_sales', window_days: 90 },
-        tierOptions: TIER_OPTIONS
-    },
-    // Order Volume
-    {
         slug: 'shopify-order-volume-14d',
         title: 'Order Volume Growth (14d)',
         category: 'commerce',
@@ -215,38 +97,8 @@ const TEMPLATES = [
         rules: { metricKey: 'shopify_order_volume', window_days: 30 },
         tierOptions: TIER_OPTIONS
     },
-    {
-        slug: 'shopify-order-volume-60d',
-        title: 'Order Volume Growth (60d)',
-        category: 'commerce',
-        provider: 'SHOPIFY',
-        description: 'Increase total order count over 60 days.',
-        rules: { metricKey: 'shopify_order_volume', window_days: 60 },
-        tierOptions: TIER_OPTIONS
-    },
-    {
-        slug: 'shopify-order-volume-90d',
-        title: 'Order Volume Growth (90d)',
-        category: 'commerce',
-        provider: 'SHOPIFY',
-        description: 'Increase total order count over 90 days.',
-        rules: { metricKey: 'shopify_order_volume', window_days: 90 },
-        tierOptions: TIER_OPTIONS
-    },
 
-
-    // --- AMAZON (Coming Soon — templates disabled until SP-API approved) ---
-
-    // --- YOUTUBE (Creator) - 8 Templates ---
-    {
-        slug: 'youtube-subscriber-growth-7d',
-        title: 'Subscriber Growth (7d)',
-        category: 'social',
-        provider: 'YOUTUBE',
-        description: 'Grow your YouTube subscriber count over 7 days.',
-        rules: { metricKey: 'youtube_subscribers', window_days: 7 },
-        tierOptions: TIER_OPTIONS
-    },
+    // --- YOUTUBE (Creator) ---
     {
         slug: 'youtube-subscriber-growth-14d',
         title: 'Subscriber Growth (14d)',
@@ -266,24 +118,6 @@ const TEMPLATES = [
         tierOptions: TIER_OPTIONS
     },
     {
-        slug: 'youtube-subscriber-growth-60d',
-        title: 'Subscriber Growth (60d)',
-        category: 'social',
-        provider: 'YOUTUBE',
-        description: 'Grow your YouTube subscriber count over 60 days.',
-        rules: { metricKey: 'youtube_subscribers', window_days: 60 },
-        tierOptions: TIER_OPTIONS
-    },
-    {
-        slug: 'youtube-views-growth-7d',
-        title: '30-Day Views Growth (7d)',
-        category: 'social',
-        provider: 'YOUTUBE',
-        description: 'Grow your YouTube 30-day view count over 7 days.',
-        rules: { metricKey: 'youtube_30day_views', window_days: 7 },
-        tierOptions: TIER_OPTIONS
-    },
-    {
         slug: 'youtube-views-growth-14d',
         title: '30-Day Views Growth (14d)',
         category: 'social',
@@ -299,15 +133,6 @@ const TEMPLATES = [
         provider: 'YOUTUBE',
         description: 'Grow your YouTube 30-day view count over 30 days.',
         rules: { metricKey: 'youtube_30day_views', window_days: 30 },
-        tierOptions: TIER_OPTIONS
-    },
-    {
-        slug: 'youtube-views-growth-60d',
-        title: '30-Day Views Growth (60d)',
-        category: 'social',
-        provider: 'YOUTUBE',
-        description: 'Grow your YouTube 30-day view count over 60 days.',
-        rules: { metricKey: 'youtube_30day_views', window_days: 60 },
         tierOptions: TIER_OPTIONS
     }
 ];
@@ -327,32 +152,77 @@ function getPolicyForTier(metricKey: string, tier: string, windowDays: number) {
     const isX = metricKey.startsWith('x');
     const isShopifySales = metricKey === 'shopify_net_sales';
     const isShopifyVolume = metricKey === 'shopify_order_volume';
-    const isAmazonRev = metricKey === 'amazon_revenue';
-    const isAmazonUnits = metricKey === 'amazon_units_sold';
     const isYouTubeSubs = metricKey === 'youtube_subscribers';
     const isYouTubeViews = metricKey === 'youtube_30day_views';
 
     let targetPct = 0;
 
-    // Targets calibrated for BRUTAL failure rates:
-    // Pledge (controlled) → 70% fail / 30% win
-    // Stake (elevated)    → 80% fail / 20% win
-    // All In (maximum)    → 90% fail / 10% win
-    if (tier === 'controlled') {
-        if (isStripe || isShopifySales || isAmazonRev) { targetPct = 25; }
-        else if (isX || isYouTubeSubs) { targetPct = 25; }
-        else if (isYouTubeViews) { targetPct = 35; }
-        else { targetPct = 20; } // Vol/Units
-    } else if (tier === 'elevated') {
-        if (isStripe || isShopifySales || isAmazonRev) { targetPct = 35; }
-        else if (isX || isYouTubeSubs) { targetPct = 35; }
-        else if (isYouTubeViews) { targetPct = 50; }
-        else { targetPct = 30; }
-    } else { // maximum — All In
-        if (isStripe || isShopifySales || isAmazonRev) { targetPct = 50; }
-        else if (isX || isYouTubeSubs) { targetPct = 50; }
-        else if (isYouTubeViews) { targetPct = 80; }
-        else { targetPct = 45; }
+    // =========================================================================
+    // GROWTH TARGETS — per-source calibration for 70/80/90% failure rates
+    //
+    // Design philosophy: "Looks achievable. They sign up. They fail."
+    //
+    // Revenue (Stripe/Shopify): HARDER targets — one big sale can spike 50%
+    // Followers/Subs (X/YT):   BASE targets — pure daily grind, no shortcuts
+    // Views (YouTube):         HARDEST targets — most volatile, one video = 10x
+    // Order Volume:            SAME AS followers — hard to manipulate count
+    //
+    // 14-day Sprint: Lower % but brutal daily rate
+    // 30-day Marathon: Higher % — users think they have time, they don't
+    // =========================================================================
+
+    if (windowDays <= 14) {
+        // =====================
+        // 14-DAY SPRINT
+        // =====================
+        if (tier === 'controlled') {
+            // PLEDGE — looks easy, 70% fail
+            if (isX)                              { targetPct = 25; }  // +25% followers
+            else if (isYouTubeSubs)               { targetPct = 25; }  // +25% subs
+            else if (isStripe || isShopifySales)   { targetPct = 30; }  // +30% revenue (easier to spike)
+            else if (isYouTubeViews)              { targetPct = 40; }  // +40% views (most volatile)
+            else if (isShopifyVolume)             { targetPct = 25; }  // +25% orders
+        } else if (tier === 'elevated') {
+            // STAKE — brutal, 80% fail
+            if (isX)                              { targetPct = 35; }  // +35% followers
+            else if (isYouTubeSubs)               { targetPct = 35; }  // +35% subs
+            else if (isStripe || isShopifySales)   { targetPct = 45; }  // +45% revenue
+            else if (isYouTubeViews)              { targetPct = 60; }  // +60% views
+            else if (isShopifyVolume)             { targetPct = 35; }  // +35% orders
+        } else {
+            // ALL IN — insane, 90% fail
+            if (isX)                              { targetPct = 50; }  // +50% followers
+            else if (isYouTubeSubs)               { targetPct = 50; }  // +50% subs
+            else if (isStripe || isShopifySales)   { targetPct = 65; }  // +65% revenue
+            else if (isYouTubeViews)              { targetPct = 90; }  // +90% views
+            else if (isShopifyVolume)             { targetPct = 50; }  // +50% orders
+        }
+    } else {
+        // =====================
+        // 30-DAY MARATHON
+        // =====================
+        if (tier === 'controlled') {
+            // PLEDGE — "I have a whole month" → 70% still fail
+            if (isX)                              { targetPct = 40; }  // +40% followers
+            else if (isYouTubeSubs)               { targetPct = 40; }  // +40% subs
+            else if (isStripe || isShopifySales)   { targetPct = 50; }  // +50% revenue
+            else if (isYouTubeViews)              { targetPct = 60; }  // +60% views
+            else if (isShopifyVolume)             { targetPct = 40; }  // +40% orders
+        } else if (tier === 'elevated') {
+            // STAKE — "month gives me buffer" → 80% fail anyway
+            if (isX)                              { targetPct = 55; }  // +55% followers
+            else if (isYouTubeSubs)               { targetPct = 55; }  // +55% subs
+            else if (isStripe || isShopifySales)   { targetPct = 70; }  // +70% revenue
+            else if (isYouTubeViews)              { targetPct = 85; }  // +85% views
+            else if (isShopifyVolume)             { targetPct = 55; }  // +55% orders
+        } else {
+            // ALL IN — "all or nothing for 30 days" → 90% fail
+            if (isX)                              { targetPct = 75; }  // +75% followers
+            else if (isYouTubeSubs)               { targetPct = 75; }  // +75% subs
+            else if (isStripe || isShopifySales)   { targetPct = 100; } // +100% revenue (DOUBLE IT)
+            else if (isYouTubeViews)              { targetPct = 130; } // +130% views
+            else if (isShopifyVolume)             { targetPct = 75; }  // +75% orders
+        }
     }
 
     return {

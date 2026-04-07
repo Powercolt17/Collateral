@@ -4,8 +4,8 @@
  * SECURITY-CRITICAL: Enforces hard eligibility gates for X contracts.
  * 
  * ELIGIBILITY RULES (ALL must pass):
- * - Followers >= 10,000
- * - Account age >= 180 days
+ * - Followers >= 500
+ * - Account age >= 90 days
  * - Protected = false
  * - tweet_count >= 50
  * 
@@ -54,18 +54,18 @@ export interface XEligibilityResult {
 }
 
 // =============================================================================
-// CONSTANTS (Hardcoded thresholds - lowered for testing)
+// CONSTANTS — PRODUCTION THRESHOLDS
 // =============================================================================
 
 export const X_ELIGIBILITY_THRESHOLDS = {
-    MIN_FOLLOWERS: 0,        // TESTING: was 10_000
-    MIN_ACCOUNT_AGE_DAYS: 0, // TESTING: was 180
-    MIN_TWEET_COUNT: 0,      // TESTING: was 50
+    MIN_FOLLOWERS: 500,          // 500 followers minimum
+    MIN_ACCOUNT_AGE_DAYS: 90,    // 90 days minimum
+    MIN_TWEET_COUNT: 50,         // 50 tweets minimum
 } as const;
 
 export const X_DELTA_FLOOR = {
-    ABSOLUTE_MIN: 0,    // TESTING: was 500
-    PERCENTAGE: 0.00,   // TESTING: was 0.05 (5%)
+    ABSOLUTE_MIN: 100,     // Minimum 100 new followers required
+    PERCENTAGE: 0.05,      // Or 5% of baseline, whichever is higher
 } as const;
 
 // =============================================================================

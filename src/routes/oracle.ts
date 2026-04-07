@@ -371,8 +371,9 @@ const oracleRoutes: FastifyPluginAsync = async (fastify) => {
 
                 metricKey = 'followers';
 
-                // Minimum baseline check for X: require at least 75 followers
-                const X_MIN_FOLLOWERS = 75;
+                // Minimum baseline check for X
+                const { X_ELIGIBILITY_THRESHOLDS } = await import('../adapters/x-eligibility.js');
+                const X_MIN_FOLLOWERS = X_ELIGIBILITY_THRESHOLDS.MIN_FOLLOWERS;
                 if (currentBaseline < X_MIN_FOLLOWERS) {
                     reply.status(200);
                     return {
@@ -499,8 +500,9 @@ const oracleRoutes: FastifyPluginAsync = async (fastify) => {
                     }
                 }
                 // Minimum baseline check for YouTube
-                const YT_MIN_SUBS = 50;
-                const YT_MIN_VIEWS = 500;
+                const { MINIMUM_BASELINES } = await import('../services/contract-calculator.js');
+                const YT_MIN_SUBS = MINIMUM_BASELINES.YOUTUBE.SUBSCRIBERS.STANDARD;
+                const YT_MIN_VIEWS = MINIMUM_BASELINES.YOUTUBE.VIEWS.STANDARD;
                 const ytMin = metricKey === 'youtube_views' ? YT_MIN_VIEWS : YT_MIN_SUBS;
                 const ytNoun = metricKey === 'youtube_views' ? '30-day views' : 'subscribers';
                 if (currentBaseline < ytMin) {

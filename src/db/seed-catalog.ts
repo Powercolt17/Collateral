@@ -298,7 +298,7 @@ export async function seedCatalog() {
 
     let activeCount = currentOpen.length;
     let createdCount = 0;
-    const TARGET_OPEN = 20;
+    const TARGET_OPEN = 36;  // 12 templates × 3 tiers = full catalog
 
     console.log(`[Seed] Found ${activeCount} active listings. Target ${TARGET_OPEN}.`);
 

@@ -250,6 +250,86 @@ const contractRoutes: FastifyPluginAsync = async (fastify) => {
             reply.status(500);
             return { error: 'Failed to fetch ledger events' };
         }
+    /**
+     * GET /v1/results
+     * Public results feed — settled contracts and rivalries
+     * Powers: Public Results page (/results) in Aura
+     * No authentication required.
+     */
+    fastify.get('/v1/results', async (request, reply) => {
+        try {
+            const result = await db.execute(sql`
+                (
+                    SELECT
+                        c.id,
+                        'CONTRACT' AS "sourceType",
+                        c.platform,
+                        c.principal_identity_username AS "principal",
+                        c.lock_amount_usd_cents AS "stakeCents",
+                        c.risk_tier AS "riskTier",
+                        ci.current_state AS "outcome",
+                        ci.updated_at AS "settledAt",
+                        CASE
+                            WHEN ci.current_state = 'SETTLED_SUCCESS' THEN 'WIN'
+                            WHEN ci.current_state = 'SETTLED_FAILURE' THEN 'LOSS'
+                            ELSE 'PENDING'
+                        END AS "result"
+                    FROM contracts c
+                    INNER JOIN contract_index ci ON ci.contract_id = c.id
+                    WHERE ci.current_state IN ('SETTLED_SUCCESS', 'SETTLED_FAILURE')
+                )
+                UNION ALL
+                (
+                    SELECT
+                        r.id,
+                        'RIVALRY' AS "sourceType",
+                        r.platform,
+                        u.display_name AS "principal",
+                        r.stake_per_side_cents * 2 AS "stakeCents",
+                        r.rivalry_tier AS "riskTier",
+                        r.status AS "outcome",
+                        r.settled_at AS "settledAt",
+                        CASE
+                            WHEN r.status = 'SETTLED' THEN 'WIN'
+                            WHEN r.status = 'DRAW' THEN 'DRAW'
+                            WHEN r.status = 'BOTH_MISS' THEN 'BOTH_MISS'
+                            ELSE 'PENDING'
+                        END AS "result"
+                    FROM rivalries r
+                    INNER JOIN users u ON r.challenger_user_id = u.id
+                    WHERE r.status IN ('SETTLED', 'DRAW', 'BOTH_MISS')
+                )
+                ORDER BY "settledAt" DESC NULLS LAST
+                LIMIT 100
+            `);
+
+            const rows = (result as any).rows || result;
+
+            return {
+                results: rows.map((row: any) => {
+                    // Anonymize username: show first 3 chars + ***
+                    const name = row.principal || 'Anonymous';
+                    const anonymized = name.length > 3 ? name.slice(0, 3) + '***' : name;
+
+                    return {
+                        id: row.id,
+                        sourceType: row.sourceType,
+                        platform: row.platform,
+                        principal: anonymized,
+                        stakeCents: row.stakeCents,
+                        riskTier: row.riskTier,
+                        result: row.result,
+                        settledAt: row.settledAt instanceof Date
+                            ? row.settledAt.toISOString()
+                            : row.settledAt,
+                    };
+                }),
+            };
+        } catch (error) {
+            console.error('[Results] Error:', error);
+            reply.status(500);
+            return { error: 'Failed to fetch results' };
+        }
     });
 };
 

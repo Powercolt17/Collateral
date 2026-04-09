@@ -333,6 +333,37 @@ const contractRoutes: FastifyPluginAsync = async (fastify) => {
             return { error: 'Failed to fetch results' };
         }
     });
+
+    /**
+     * POST /v1/admin/reseed
+     * Nuke stale market listings and reseed with correct terms.
+     * Hit this once after deploy: POST https://collateral-production.up.railway.app/v1/admin/reseed
+     */
+    fastify.post('/v1/admin/reseed', async (request, reply) => {
+        try {
+            // Nuke old listings
+            await db.execute(sql`DELETE FROM market_stats_cache`);
+            await db.execute(sql`DELETE FROM market_contract_instances`);
+            await db.execute(sql`DELETE FROM contract_templates`);
+
+            // Re-seed fresh
+            const { seedCatalog } = await import('../db/seed-catalog.js');
+            await seedCatalog();
+
+            // Verify
+            const countResult = await db.execute(sql`
+                SELECT count(*) as total FROM market_contract_instances
+                WHERE status = 'published' AND funding_close_at > NOW()
+            `);
+            const total = (countResult as any).rows?.[0]?.total || 0;
+
+            return { success: true, message: `Reseeded. ${total} active listings live.` };
+        } catch (error) {
+            console.error('[Admin Reseed] Error:', error);
+            reply.status(500);
+            return { error: 'Reseed failed: ' + (error as any).message };
+        }
+    });
 };
 
 export default contractRoutes;

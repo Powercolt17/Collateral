@@ -250,6 +250,8 @@ const contractRoutes: FastifyPluginAsync = async (fastify) => {
             reply.status(500);
             return { error: 'Failed to fetch ledger events' };
         }
+    });
+
     /**
      * GET /v1/results
      * Public results feed — settled contracts and rivalries

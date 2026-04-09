@@ -1507,6 +1507,107 @@ export function initOverview() {
 
     if (!grid) return;
 
+    // ===================================================================
+    // FIRST-VISIT ONBOARDING OVERLAY
+    // ===================================================================
+    if (!localStorage.getItem('collateral_onboarded')) {
+        const overlay = document.createElement('div');
+        overlay.id = 'onboard-overlay';
+        overlay.innerHTML = `
+            <style>
+                #onboard-overlay {
+                    position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+                    background: rgba(0,0,0,0.7); z-index: 9999;
+                    display: flex; align-items: center; justify-content: center;
+                    backdrop-filter: blur(4px); animation: obFadeIn 0.3s ease;
+                }
+                @keyframes obFadeIn { from { opacity: 0; } to { opacity: 1; } }
+                .ob-card {
+                    background: #fff; max-width: 520px; width: 90%; padding: 48px 40px;
+                    position: relative;
+                }
+                .ob-close {
+                    position: absolute; top: 16px; right: 16px; background: none; border: none;
+                    font-size: 20px; color: #999; cursor: pointer; padding: 4px 8px;
+                }
+                .ob-close:hover { color: #111; }
+                .ob-title {
+                    font-family: 'Inter', sans-serif; font-size: 24px; font-weight: 700;
+                    color: #111; margin: 0 0 8px; letter-spacing: -0.3px;
+                }
+                .ob-subtitle {
+                    font-size: 14px; color: #999; margin: 0 0 32px;
+                }
+                .ob-steps { display: flex; flex-direction: column; gap: 20px; margin-bottom: 32px; }
+                .ob-step {
+                    display: flex; align-items: flex-start; gap: 16px;
+                }
+                .ob-step-num {
+                    width: 32px; height: 32px; flex-shrink: 0;
+                    display: flex; align-items: center; justify-content: center;
+                    background: #111; color: #fff; font-size: 13px; font-weight: 800;
+                    font-family: 'Inter', sans-serif;
+                }
+                .ob-step-title { font-size: 14px; font-weight: 700; color: #111; margin: 0 0 2px; }
+                .ob-step-desc { font-size: 12px; color: #888; margin: 0; line-height: 1.5; }
+                .ob-cta {
+                    display: block; width: 100%; padding: 14px; background: #111; color: #fff;
+                    font-family: 'Inter', sans-serif; font-size: 13px; font-weight: 700;
+                    letter-spacing: 0.06em; text-transform: uppercase; text-align: center;
+                    border: none; cursor: pointer; transition: background 150ms;
+                }
+                .ob-cta:hover { background: #000; }
+                .ob-skip {
+                    display: block; width: 100%; margin-top: 8px; padding: 10px;
+                    background: none; border: none; color: #bbb; font-size: 11px;
+                    cursor: pointer; text-align: center;
+                }
+                .ob-skip:hover { color: #666; }
+            </style>
+            <div class="ob-card">
+                <button class="ob-close" id="ob-close">&times;</button>
+                <div class="ob-title">Welcome to Collateral</div>
+                <div class="ob-subtitle">Lock capital against measurable outcomes. Here's how it works:</div>
+                <div class="ob-steps">
+                    <div class="ob-step">
+                        <div class="ob-step-num">1</div>
+                        <div>
+                            <div class="ob-step-title">Connect a Data Source</div>
+                            <div class="ob-step-desc">Link your Stripe, Shopify, YouTube, or X account. We read metrics — never post or modify.</div>
+                        </div>
+                    </div>
+                    <div class="ob-step">
+                        <div class="ob-step-num">2</div>
+                        <div>
+                            <div class="ob-step-title">Pick a Contract</div>
+                            <div class="ob-step-desc">Choose a growth target, stake amount, and duration. Higher risk = higher payout.</div>
+                        </div>
+                    </div>
+                    <div class="ob-step">
+                        <div class="ob-step-num">3</div>
+                        <div>
+                            <div class="ob-step-title">Lock Capital</div>
+                            <div class="ob-step-desc">Your money is locked until the deadline. Hit the target and earn up to 4x. Miss it and the protocol keeps it.</div>
+                        </div>
+                    </div>
+                </div>
+                <button class="ob-cta" id="ob-start">Browse Contracts</button>
+                <button class="ob-skip" id="ob-skip">I already know how this works</button>
+            </div>
+        `;
+        document.body.appendChild(overlay);
+        const dismiss = () => {
+            localStorage.setItem('collateral_onboarded', '1');
+            overlay.style.opacity = '0';
+            overlay.style.transition = 'opacity 0.2s ease';
+            setTimeout(() => overlay.remove(), 200);
+        };
+        document.getElementById('ob-close')?.addEventListener('click', dismiss);
+        document.getElementById('ob-start')?.addEventListener('click', dismiss);
+        document.getElementById('ob-skip')?.addEventListener('click', dismiss);
+        overlay.addEventListener('click', (e) => { if (e.target === overlay) dismiss(); });
+    }
+
     // Stats start at 0 until API data loads
     if (statCapital) statCapital.textContent = '0';
     if (statContracts) statContracts.textContent = '0';

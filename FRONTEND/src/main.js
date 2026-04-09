@@ -30,6 +30,7 @@ import { renderPrivacy, initPrivacy } from './views/Privacy.js';
 import { renderForgotPassword, initForgotPassword } from './views/ForgotPassword.js';
 import { renderResetPassword, initResetPassword } from './views/ResetPassword.js';
 import { renderReferrals, initReferrals } from './views/Referrals.js';
+import { renderResults, initResults } from './views/Results.js';
 import './views/PreLaunch.css';
 import './index.css';
 import './mobile.css';
@@ -39,6 +40,33 @@ import api from './api.js';
 // Global error handlers for debugging
 window.addEventListener('error', (e) => console.error('[GlobalError]', e.error || e.message));
 window.addEventListener('unhandledrejection', (e) => console.error('[UnhandledPromise]', e.reason));
+
+// ============================================================================
+// UTM TRACKING — capture ad attribution from URL params
+// ============================================================================
+(function captureUTM() {
+    try {
+        const params = new URLSearchParams(window.location.search);
+        const utmKeys = ['utm_source', 'utm_medium', 'utm_campaign', 'utm_content', 'utm_term'];
+        const utm = {};
+        let hasUTM = false;
+        utmKeys.forEach(k => {
+            const v = params.get(k);
+            if (v) { utm[k] = v; hasUTM = true; }
+        });
+        if (hasUTM) {
+            utm.landed_at = new Date().toISOString();
+            utm.landing_page = window.location.hash || '/';
+            localStorage.setItem('collateral_utm', JSON.stringify(utm));
+            console.log('[UTM] Captured:', utm);
+            // Clean URL without reloading
+            if (window.history.replaceState) {
+                const clean = window.location.pathname + window.location.hash;
+                window.history.replaceState({}, '', clean);
+            }
+        }
+    } catch (e) { /* silent */ }
+})();
 
 // App state - initialized from localStorage (NO email derivation ever)
 const storedUser = api.getStoredUser();
@@ -199,6 +227,7 @@ const routes = PRE_LAUNCH_MODE ? [
     { path: '/forgot-password', render: renderForgotPassword, init: initForgotPassword },
     { path: '/reset-password', render: renderResetPassword, init: initResetPassword },
     { path: '/referrals', render: renderReferrals, init: initReferrals },
+    { path: '/results', render: renderResults, init: initResults },
     {
         path: '/r/:code', render: () => '<div></div>', init: (params) => {
             // Store referral code and redirect to signup

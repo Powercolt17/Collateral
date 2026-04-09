@@ -505,6 +505,10 @@ export async function getPublicLedger() {
     return getPublic('/v1/ledger');
 }
 
+export async function getPublicResults() {
+    return getPublic('/v1/results');
+}
+
 // --- PAYOUTS (Stripe Connect Express for Payouts) ---
 
 // Start Stripe Connect Express onboarding for payouts
@@ -707,6 +711,7 @@ export default {
     // Ledger
     getLedgerEvents,
     getPublicLedger,
+    getPublicResults,
 
     // Payouts (Stripe Connect Express)
     startPayoutOnboard,

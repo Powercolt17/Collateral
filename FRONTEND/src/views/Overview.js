@@ -1718,7 +1718,7 @@ export function initOverview() {
         if (platform === 'amazon') dotClass = 'amazon';
 
         const tierUpper = tier.toUpperCase();
-        const multiplier = tierUpper === 'MAXIMUM' ? 4.0 : tierUpper === 'ELEVATED' ? 2.5 : 1.5;
+        const multiplier = c.multiplier || (tierUpper === 'MAXIMUM' ? 4.0 : tierUpper === 'ELEVATED' ? 2.5 : 1.7);
 
         // Scarcity or urgent closing
         let isClosingSoon = timeLeftMs < 1000 * 60 * 60 * 24;
@@ -1868,7 +1868,7 @@ export function initOverview() {
         const provider = (cardEl.dataset.provider || 'x').toLowerCase();
 
         const tierUpper = tier.toUpperCase();
-        const multiplier = tierUpper === 'MAXIMUM' ? 4.0 : tierUpper === 'ELEVATED' ? 2.5 : 1.5;
+        const multiplier = tierUpper === 'MAXIMUM' ? 4.0 : tierUpper === 'ELEVATED' ? 2.5 : 1.7;
 
         return {
             id,

@@ -240,6 +240,21 @@ export function renderContractDetail(params) {
             .cd-btn-outline:hover { background: #fafafa; color: #111; border-color: #e5e5e5; }
             .cd-btn svg { width: 14px; height: 14px; color: #a3a3a3; }
 
+            /* Share CTA */
+            .cd-share-bar {
+                display: flex; gap: 8px; margin-top: 12px;
+            }
+            .cd-share-btn {
+                flex: 1; display: flex; align-items: center; justify-content: center; gap: 8px;
+                padding: 12px 16px; font-family: 'Inter', sans-serif; font-size: 12px; font-weight: 600;
+                border: 1px solid #e5e5e5; background: #fff; color: #111; cursor: pointer;
+                transition: all 150ms; letter-spacing: 0.02em;
+            }
+            .cd-share-btn:hover { background: #fafafa; border-color: #ccc; }
+            .cd-share-btn.twitter { background: #0f1419; color: #fff; border-color: #0f1419; }
+            .cd-share-btn.twitter:hover { background: #000; }
+            .cd-share-btn svg { width: 14px; height: 14px; }
+
             /* Event Log — Compact */
             .cd-timeline { position: relative; padding-left: 22px; }
             .cd-timeline::before {
@@ -422,6 +437,16 @@ export function renderContractDetail(params) {
                                     <i data-lucide="arrow-up-right"></i>
                                 </a>
                             </div>
+                            <div class="cd-share-bar" id="cd-share-bar">
+                                <button class="cd-share-btn twitter" id="cd-share-x">
+                                    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+                                    Share on X
+                                </button>
+                                <button class="cd-share-btn" id="cd-share-copy">
+                                    <i data-lucide="link" style="width:14px;height:14px;"></i>
+                                    Copy Link
+                                </button>
+                            </div>
                         </div>
 
                         <div class="cd-block line-top" style="margin-bottom:0;">
@@ -528,6 +553,27 @@ export async function initContractDetail(params) {
         renderEventLog(events);
 
         if (window.lucide) window.lucide.createIcons();
+
+        // Share functionality
+        const shareUrl = `https://collateral.market/#/contracts/${contractId}`;
+        const lockUsd = (c.lockAmountUsdCents / 100).toLocaleString('en-US', { maximumFractionDigits: 0 });
+        const tweetText = state === 'SETTLED_SUCCESS'
+            ? `I just won $${lockUsd} on @CollateralMkt by hitting my ${platformDisplay} growth target. Put your money where your mouth is.`
+            : `I just locked $${lockUsd} on my ${platformDisplay} growth on @CollateralMkt. ${days} days to hit the target or I lose it all.`;
+
+        document.getElementById('cd-share-x')?.addEventListener('click', () => {
+            window.open(`https://twitter.com/intent/tweet?text=${encodeURIComponent(tweetText)}&url=${encodeURIComponent(shareUrl)}`, '_blank');
+        });
+        document.getElementById('cd-share-copy')?.addEventListener('click', () => {
+            navigator.clipboard.writeText(shareUrl);
+            const btn = document.getElementById('cd-share-copy');
+            btn.innerHTML = '<i data-lucide="check" style="width:14px;height:14px;"></i> Copied!';
+            if (window.lucide) window.lucide.createIcons();
+            setTimeout(() => {
+                btn.innerHTML = '<i data-lucide="link" style="width:14px;height:14px;"></i> Copy Link';
+                if (window.lucide) window.lucide.createIcons();
+            }, 2000);
+        });
 
         // Fetch Live Metric Asynchronously
         const isPending = ['CREATED', 'FUNDS_AUTHORIZED', 'PENDING'].includes(state);

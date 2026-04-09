@@ -189,12 +189,17 @@ export async function login(email, password) {
 export async function signup(email, password, username, displayName = null) {
     console.log('[API] signup called:', { email, username, displayName });
 
+    // Attach UTM attribution if present
+    let utmData = null;
+    try { utmData = JSON.parse(localStorage.getItem('collateral_utm') || 'null'); } catch(e) {}
+
     const data = await postPublic('/v1/auth/signup', {
         email,
         password,
         username,
         displayName: displayName || username,
-        referralCode: getReferralCode() || undefined
+        referralCode: getReferralCode() || undefined,
+        utm: utmData || undefined
     });
     console.log('[API] signup response:', data);
 

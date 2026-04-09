@@ -18,7 +18,7 @@ async function main() {
     const templatesDeleted = await db.execute(sql`DELETE FROM contract_templates`);
     console.log('   Cleared all templates');
 
-    console.log('🌱 Step 2: Re-seeding fresh catalog (12 templates × 3 tiers = 36 listings)...');
+    console.log('🌱 Step 2: Re-seeding fresh catalog (16 templates × 3 tiers = 48 listings)...');
     await seedCatalog();
 
     // Verify

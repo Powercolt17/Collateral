@@ -11,10 +11,10 @@ import { eq, and, gt } from 'drizzle-orm';
 // - Verified Providers Only: STRIPE, X, SHOPIFY, YOUTUBE
 // - Metrics: Revenue/Followers/Sales/Subs/Views only. No vanity metrics.
 // - Durations: 14-day (Sprint) and 30-day (Marathon) only.
-// - Tiers: Pledge (1.75x), Stake (2.5x), All In (4.0x)
+// - Tiers: Pledge (1.7x), Stake (2.5x), All In (4.0x)  ← matches house-edge-policy.ts
 
 const TIER_OPTIONS = {
-    controlled: 1.75,
+    controlled: 1.7,
     elevated: 2.5,
     maximum: 4.0
 };
@@ -134,7 +134,45 @@ const TEMPLATES = [
         description: 'Grow your YouTube 30-day view count over 30 days.',
         rules: { metricKey: 'youtube_30day_views', window_days: 30 },
         tierOptions: TIER_OPTIONS
-    }
+    },
+
+    // --- STRIPE (Additional Finance) ---
+    {
+        slug: 'stripe-charge-volume-14d',
+        title: 'Charge Volume Growth (14d)',
+        category: 'finance',
+        provider: 'STRIPE',
+        description: 'Increase total Stripe charge count over 14 days.',
+        rules: { metricKey: 'stripe_charge_volume', window_days: 14 },
+        tierOptions: TIER_OPTIONS
+    },
+    {
+        slug: 'stripe-charge-volume-30d',
+        title: 'Charge Volume Growth (30d)',
+        category: 'finance',
+        provider: 'STRIPE',
+        description: 'Increase total Stripe charge count over 30 days.',
+        rules: { metricKey: 'stripe_charge_volume', window_days: 30 },
+        tierOptions: TIER_OPTIONS
+    },
+    {
+        slug: 'stripe-mrr-growth-14d',
+        title: 'Monthly Recurring Revenue (14d)',
+        category: 'finance',
+        provider: 'STRIPE',
+        description: 'Grow Stripe MRR (subscriptions) over 14 days.',
+        rules: { metricKey: 'stripe_mrr', window_days: 14 },
+        tierOptions: TIER_OPTIONS
+    },
+    {
+        slug: 'stripe-mrr-growth-30d',
+        title: 'Monthly Recurring Revenue (30d)',
+        category: 'finance',
+        provider: 'STRIPE',
+        description: 'Grow Stripe MRR (subscriptions) over 30 days.',
+        rules: { metricKey: 'stripe_mrr', window_days: 30 },
+        tierOptions: TIER_OPTIONS
+    },
 ];
 
 // =============================================================================
@@ -298,7 +336,7 @@ export async function seedCatalog() {
 
     let activeCount = currentOpen.length;
     let createdCount = 0;
-    const TARGET_OPEN = 36;  // 12 templates × 3 tiers = full catalog
+    const TARGET_OPEN = 48;  // 16 templates × 3 tiers = full catalog
 
     console.log(`[Seed] Found ${activeCount} active listings. Target ${TARGET_OPEN}.`);
 
@@ -329,26 +367,26 @@ export async function seedCatalog() {
             const rules = t.rulesJson as any;
             const tierOptions = t.tierOptionsJson as any;
 
-            // Smart Stake Ladder Configuration
+            // Smart Stake Ladder — matches house-edge-policy.ts EXACTLY
             let minStake = 10000;   // $100
-            let maxStake = 150000;  // $1,500
-            let multiplier = 1.75;
+            let maxStake = 250000;  // $2,500
+            let multiplier = 1.7;
             let feeBps = 200;      // 2%
 
             if (tier === 'controlled') {
                 minStake = 10000;    // $100
-                maxStake = 150000;   // $1,500
-                multiplier = 1.75;
+                maxStake = 250000;   // $2,500  ← STAKE_CAPS.STANDARD
+                multiplier = 1.7;    // ← PAYOUT_MULTIPLIERS.STANDARD
                 feeBps = 200;       // 2%
             } else if (tier === 'elevated') {
                 minStake = 25000;   // $250
-                maxStake = 300000;  // $3,000
-                multiplier = 2.5;
+                maxStake = 500000;  // $5,000  ← STAKE_CAPS.ADVANCED
+                multiplier = 2.5;   // ← PAYOUT_MULTIPLIERS.ADVANCED
                 feeBps = 300;       // 3%
             } else if (tier === 'maximum') {
                 minStake = 50000;   // $500
-                maxStake = 500000;  // $5,000
-                multiplier = 4.0;
+                maxStake = 1000000; // $10,000 ← STAKE_CAPS.ELITE
+                multiplier = 4.0;   // ← PAYOUT_MULTIPLIERS.ELITE
                 feeBps = 500;       // 5%
             }
 

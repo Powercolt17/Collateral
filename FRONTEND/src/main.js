@@ -226,7 +226,6 @@ const routes = PRE_LAUNCH_MODE ? [
     { path: '/forgot-password', render: renderForgotPassword, init: initForgotPassword },
     { path: '/reset-password', render: renderResetPassword, init: initResetPassword },
     { path: '/referrals', render: renderReferrals, init: initReferrals },
-    { path: '/results', render: renderResults, init: initResults },
     {
         path: '/r/:code', render: () => '<div></div>', init: (params) => {
             // Store referral code and redirect to signup

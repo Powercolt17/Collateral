@@ -249,7 +249,7 @@ const rivalryRoutes: FastifyPluginAsync = async (fastify) => {
     // =========================================================================
     // GET /v1/rivalries/:id/events — Rivalry ledger events
     // =========================================================================
-    fastify.get<{ Params: { id: string } }>('/v1/rivalries/:id/events', { preHandler: requireAuth }, async (request, reply) => {
+    fastify.get<{ Params: { id: string } }>('/v1/rivalries/:id/events', async (request, reply) => {
         try {
             const events = await getRivalryEvents(request.params.id);
             return { ok: true, events };
@@ -262,7 +262,7 @@ const rivalryRoutes: FastifyPluginAsync = async (fastify) => {
     // =========================================================================
     // GET /v1/rivalries/:id/metrics — Live metric snapshots
     // =========================================================================
-    fastify.get<{ Params: { id: string } }>('/v1/rivalries/:id/metrics', { preHandler: requireAuth }, async (request, reply) => {
+    fastify.get<{ Params: { id: string } }>('/v1/rivalries/:id/metrics', async (request, reply) => {
         try {
             const metrics = await db
                 .select()

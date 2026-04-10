@@ -249,7 +249,7 @@ const rivalryRoutes: FastifyPluginAsync = async (fastify) => {
     // =========================================================================
     // GET /v1/rivalries/:id/events — Rivalry ledger events
     // =========================================================================
-    fastify.get<{ Params: { id: string } }>('/v1/rivalries/:id/events', async (request, reply) => {
+    fastify.get<{ Params: { id: string } }>('/v1/rivalries/:id/events', { preHandler: requireAuth }, async (request, reply) => {
         try {
             const events = await getRivalryEvents(request.params.id);
             return { ok: true, events };
@@ -262,7 +262,7 @@ const rivalryRoutes: FastifyPluginAsync = async (fastify) => {
     // =========================================================================
     // GET /v1/rivalries/:id/metrics — Live metric snapshots
     // =========================================================================
-    fastify.get<{ Params: { id: string } }>('/v1/rivalries/:id/metrics', async (request, reply) => {
+    fastify.get<{ Params: { id: string } }>('/v1/rivalries/:id/metrics', { preHandler: requireAuth }, async (request, reply) => {
         try {
             const metrics = await db
                 .select()
@@ -316,6 +316,14 @@ const rivalryRoutes: FastifyPluginAsync = async (fastify) => {
     // POST /v1/rivalries/:id/settle — Trigger settlement (admin/cron)
     // =========================================================================
     fastify.post<{ Params: { id: string } }>('/v1/rivalries/:id/settle', async (request, reply) => {
+        // Admin-only: require API key
+        const adminKey = request.headers['x-admin-key'];
+        const isValid = adminKey === process.env.ADMIN_API_KEY;
+        if (!isValid) {
+            reply.status(403);
+            return { error: 'Unauthorized: Admin access required' };
+        }
+
         try {
             const result = await settleRivalry(request.params.id);
             if (!result.success) {

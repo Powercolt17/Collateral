@@ -340,6 +340,14 @@ const contractRoutes: FastifyPluginAsync = async (fastify) => {
      * Hit this once after deploy: POST https://collateral-production.up.railway.app/v1/admin/reseed
      */
     fastify.post('/v1/admin/reseed', async (request, reply) => {
+        // Admin-only: require API key
+        const adminKey = request.headers['x-admin-key'];
+        const isValid = adminKey === process.env.ADMIN_API_KEY;
+        if (!isValid) {
+            reply.status(403);
+            return { error: 'Unauthorized: Admin access required' };
+        }
+
         try {
             // Nuke old listings
             await db.execute(sql`DELETE FROM market_stats_cache`);

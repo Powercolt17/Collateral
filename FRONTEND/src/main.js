@@ -30,7 +30,6 @@ import { renderPrivacy, initPrivacy } from './views/Privacy.js';
 import { renderForgotPassword, initForgotPassword } from './views/ForgotPassword.js';
 import { renderResetPassword, initResetPassword } from './views/ResetPassword.js';
 import { renderReferrals, initReferrals } from './views/Referrals.js';
-import { renderResults, initResults } from './views/Results.js';
 import './views/PreLaunch.css';
 import './index.css';
 import './mobile.css';

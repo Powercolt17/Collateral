@@ -5,7 +5,6 @@ export function renderHeader(currentRoute) {
         { path: '/contracts', label: 'ACTIVE' },
         { path: '/rivalry', label: 'RIVALRY' },
         { path: '/ledger', label: 'LEDGER' },
-        { path: '/results', label: 'RESULTS' },
         { path: '/sources', label: 'SOURCES' }
     ];
 

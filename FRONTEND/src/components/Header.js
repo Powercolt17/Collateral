@@ -766,11 +766,12 @@ export function renderHeader(currentRoute) {
 
                 <!-- Right Section -->
                 <div class="ch-right">
-                    <!-- Search Bar -->
-                    <div class="ch-search">
+                    <!-- Search Bar (logged in) / Connect Button (logged out) -->
+                    <div class="ch-search" id="header-search-area">
                         <i data-lucide="search" class="ch-search-icon" style="width: 16px; height: 16px;"></i>
                         <input type="text" id="global-search" placeholder="Search RCPT or Provider..." onkeydown="if(event.key==='Enter'){const q=this.value.trim();if(q){window.router.navigate('/contracts');setTimeout(()=>{const s=document.getElementById('ac-search');if(s){s.value=q;s.dispatchEvent(new Event('input'));}},200);}this.blur();}">
                     </div>
+                    <button class="ch-connect" id="btn-auth" onclick="window.app.openAccessModal()" style="display:none;">CONNECT</button>
 
                     <!-- Notification Bell (desktop only) -->
                     <div class="ch-notif-wrap" id="notif-wrap">

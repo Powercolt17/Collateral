@@ -747,7 +747,7 @@ export function renderActiveContracts() {
                 <div class="ctp-title">Choose your <strong>path.</strong></div>
                 <div class="ctp-sub">Select a contract type to get started.</div>
                 <div class="ctp-grid">
-                    <a href="/#/contracts/execute" class="ctp-card" onclick="document.getElementById('ctp-overlay').classList.remove('open')">
+                    <a href="/contracts/execute" class="ctp-card" onclick="document.getElementById('ctp-overlay').classList.remove('open')">
                         <div class="ctp-card-icon solo">
                             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#111" stroke-width="1.5">
                                 <circle cx="12" cy="12" r="10"/>
@@ -759,7 +759,7 @@ export function renderActiveContracts() {
                         <div class="ctp-card-desc">Stake capital against your own performance targets. Hit the metric — keep everything.</div>
                         <div class="ctp-card-go">CREATE SOLO &rarr;</div>
                     </a>
-                    <a href="/#/rivalry" class="ctp-card rivalry" onclick="document.getElementById('ctp-overlay').classList.remove('open')">
+                    <a href="/rivalry" class="ctp-card rivalry" onclick="document.getElementById('ctp-overlay').classList.remove('open')">
                         <div class="ctp-card-icon rivalry">
                             <img src="/crossed-swords.png" alt="Crossed Swords" width="20" height="20" style="object-fit:contain;" />
                         </div>

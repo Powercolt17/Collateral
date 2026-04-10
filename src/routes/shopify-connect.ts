@@ -164,26 +164,26 @@ async function shopifyConnectRoutes(fastify: FastifyInstance) {
 
             // Validate params
             if (!code || !state || !shop) {
-                return reply.redirect(`${FRONTEND_URL}/#/shopify/callback?error=missing_params`);
+                return reply.redirect(`${FRONTEND_URL}/shopify/callback?error=missing_params`);
             }
 
             // Verify HMAC signature from Shopify
             if (SHOPIFY_API_SECRET && query.hmac) {
                 if (!verifyHmac(query, SHOPIFY_API_SECRET)) {
                     console.error('[Shopify Connect] HMAC verification failed');
-                    return reply.redirect(`${FRONTEND_URL}/#/shopify/callback?error=hmac_invalid`);
+                    return reply.redirect(`${FRONTEND_URL}/shopify/callback?error=hmac_invalid`);
                 }
             }
 
             // Verify state token
             const stateData = oauthStates.get(state);
             if (!stateData) {
-                return reply.redirect(`${FRONTEND_URL}/#/shopify/callback?error=invalid_state`);
+                return reply.redirect(`${FRONTEND_URL}/shopify/callback?error=invalid_state`);
             }
 
             if (Date.now() > stateData.expiresAt) {
                 oauthStates.delete(state);
-                return reply.redirect(`${FRONTEND_URL}/#/shopify/callback?error=state_expired`);
+                return reply.redirect(`${FRONTEND_URL}/shopify/callback?error=state_expired`);
             }
 
             const userId = stateData.userId;
@@ -191,11 +191,11 @@ async function shopifyConnectRoutes(fastify: FastifyInstance) {
 
             // Validate shop domain
             if (!isValidShopDomain(shop)) {
-                return reply.redirect(`${FRONTEND_URL}/#/shopify/callback?error=invalid_shop`);
+                return reply.redirect(`${FRONTEND_URL}/shopify/callback?error=invalid_shop`);
             }
 
             if (!SHOPIFY_API_KEY || !SHOPIFY_API_SECRET) {
-                return reply.redirect(`${FRONTEND_URL}/#/shopify/callback?error=config_error`);
+                return reply.redirect(`${FRONTEND_URL}/shopify/callback?error=config_error`);
             }
 
             try {
@@ -219,7 +219,7 @@ async function shopifyConnectRoutes(fastify: FastifyInstance) {
 
                 if (!tokenResponse.ok || tokenData.error || !tokenData.access_token) {
                     console.error('[Shopify Connect] Token exchange failed:', tokenData);
-                    return reply.redirect(`${FRONTEND_URL}/#/shopify/callback?error=${encodeURIComponent(tokenData.error || 'exchange_failed')}`);
+                    return reply.redirect(`${FRONTEND_URL}/shopify/callback?error=${encodeURIComponent(tokenData.error || 'exchange_failed')}`);
                 }
 
                 // Validate the shop by calling /admin/api/2024-01/shop.json
@@ -252,7 +252,7 @@ async function shopifyConnectRoutes(fastify: FastifyInstance) {
 
                 if (globallyVerified && globallyVerified.userId !== userId) {
                     console.log(`[Shopify Connect] BLOCKED: Shop ${shop} already verified by user ${globallyVerified.userId}`);
-                    return reply.redirect(`${FRONTEND_URL}/#/shopify/callback?error=${encodeURIComponent('This Shopify store is already connected to another Collateral account')}`);
+                    return reply.redirect(`${FRONTEND_URL}/shopify/callback?error=${encodeURIComponent('This Shopify store is already connected to another Collateral account')}`);
                 }
 
                 // Upsert connected account
@@ -298,11 +298,11 @@ async function shopifyConnectRoutes(fastify: FastifyInstance) {
 
                 console.log(`[Shopify Connect] User ${userId} connected shop ${shop} (${shopName})`);
 
-                return reply.redirect(`${FRONTEND_URL}/#/shopify/callback?success=true&shop=${encodeURIComponent(shop)}`);
+                return reply.redirect(`${FRONTEND_URL}/shopify/callback?success=true&shop=${encodeURIComponent(shop)}`);
 
             } catch (err: any) {
                 console.error('[Shopify Connect] Callback error:', err);
-                return reply.redirect(`${FRONTEND_URL}/#/shopify/callback?error=server_error`);
+                return reply.redirect(`${FRONTEND_URL}/shopify/callback?error=server_error`);
             }
         }
     );

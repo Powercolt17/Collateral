@@ -258,7 +258,7 @@ const routes = PRE_LAUNCH_MODE ? [
         // X callback: has success= param (from our backend redirect)
         if (params.has('success') || params.has('username')) {
             console.log('[OAuth] Intercepting X callback at root, redirecting to hash route');
-            window.location.replace(origin + '/#/x/callback' + search);
+            window.location.replace(origin + '/x/callback' + search);
             return;
         }
 
@@ -283,40 +283,40 @@ const routes = PRE_LAUNCH_MODE ? [
 
             if (isStateMatch && isRecent) {
                 console.log('[OAuth] Intercepting Stripe callback at root, redirecting to hash route');
-                window.location.replace(origin + '/#/stripe/callback' + search);
+                window.location.replace(origin + '/stripe/callback' + search);
                 return;
             }
 
             // State mismatch or expired: route to error page (not silent fallthrough)
             if (!isStateMatch) {
                 console.warn('[OAuth] Stripe state mismatch.', { stored: storedFlow.state, incoming: incomingState });
-                window.location.replace(origin + '/#/stripe/callback?error=state_mismatch');
+                window.location.replace(origin + '/stripe/callback?error=state_mismatch');
                 return;
             }
 
             if (!isRecent) {
                 console.warn('[OAuth] Stripe OAuth flow expired.');
-                window.location.replace(origin + '/#/stripe/callback?error=session_expired');
+                window.location.replace(origin + '/stripe/callback?error=session_expired');
                 return;
             }
         }
     }
 
-    // Referral link redirect: /r/:code → /#/r/:code
+    // Referral link redirect: /r/:code → /r/:code
     const refMatch = pathname.match(/^\/r\/([a-zA-Z0-9_-]+)\/?$/);
     if (refMatch) {
         console.log('[Referral] Intercepting', pathname, ', redirecting to hash route');
-        window.location.replace(origin + '/#/r/' + refMatch[1]);
+        window.location.replace(origin + '/r/' + refMatch[1]);
         return;
     }
 
     // Map of path-based OAuth callbacks to hash routes
     const map = {
-        '/x/callback': '/#/x/callback',
-        '/stripe/callback': '/#/stripe/callback',
-        '/shopify/callback': '/#/shopify/callback',
-        '/amazon/callback': '/#/amazon/callback',
-        '/youtube/callback': '/#/youtube/callback',
+        '/x/callback': '/x/callback',
+        '/stripe/callback': '/stripe/callback',
+        '/shopify/callback': '/shopify/callback',
+        '/amazon/callback': '/amazon/callback',
+        '/youtube/callback': '/youtube/callback',
     };
 
     const dest = map[pathname];
@@ -544,8 +544,8 @@ window.app = {
             }
             await window.Clerk.client.signIn.authenticateWithRedirect({
                 strategy: 'oauth_google',
-                redirectUrl: window.location.origin + '/#/sso-callback',
-                redirectUrlComplete: window.location.origin + '/#/overview',
+                redirectUrl: window.location.origin + '/sso-callback',
+                redirectUrlComplete: window.location.origin + '/overview',
             });
         } catch (err) {
             console.error('[Auth] Google sign-in failed:', err);
@@ -556,8 +556,8 @@ window.app = {
                     await window.Clerk.signOut();
                     await window.Clerk.client.signIn.authenticateWithRedirect({
                         strategy: 'oauth_google',
-                        redirectUrl: window.location.origin + '/#/sso-callback',
-                        redirectUrlComplete: window.location.origin + '/#/overview',
+                        redirectUrl: window.location.origin + '/sso-callback',
+                        redirectUrlComplete: window.location.origin + '/overview',
                     });
                 } catch (retryErr) {
                     console.error('[Auth] Google retry also failed:', retryErr);
@@ -582,8 +582,8 @@ window.app = {
             }
             await window.Clerk.client.signIn.authenticateWithRedirect({
                 strategy: 'oauth_apple',
-                redirectUrl: window.location.origin + '/#/sso-callback',
-                redirectUrlComplete: window.location.origin + '/#/overview',
+                redirectUrl: window.location.origin + '/sso-callback',
+                redirectUrlComplete: window.location.origin + '/overview',
             });
         } catch (err) {
             console.error('[Auth] Apple sign-in failed:', err);
@@ -594,8 +594,8 @@ window.app = {
                     await window.Clerk.signOut();
                     await window.Clerk.client.signIn.authenticateWithRedirect({
                         strategy: 'oauth_apple',
-                        redirectUrl: window.location.origin + '/#/sso-callback',
-                        redirectUrlComplete: window.location.origin + '/#/overview',
+                        redirectUrl: window.location.origin + '/sso-callback',
+                        redirectUrlComplete: window.location.origin + '/overview',
                     });
                 } catch (retryErr) {
                     console.error('[Auth] Apple retry also failed:', retryErr);
@@ -606,7 +606,7 @@ window.app = {
         }
     },
     _handleSSOCallback: async function () {
-        // Called when Clerk redirects back to /#/sso-callback after OAuth
+        // Called when Clerk redirects back to /sso-callback after OAuth
         try {
             if (!window.Clerk) {
                 // Clerk not loaded yet — wait for it

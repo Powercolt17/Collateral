@@ -288,7 +288,7 @@ const authRoutes: FastifyPluginAsync = async (fastify) => {
             console.log(`[Auth] Forgot-password: Token stored in DB. Expires ${expiresAt.toISOString()}`);
 
             const appUrl = process.env.APP_URL || process.env.FRONTEND_URL || 'https://collateral.market';
-            const resetUrl = `${appUrl}/#/reset-password?token=${resetToken}`;
+            const resetUrl = `${appUrl}/reset-password?token=${resetToken}`;
             console.log(`[Auth] Forgot-password: Reset URL = ${resetUrl}`);
 
             // Send reset email with full error surfacing

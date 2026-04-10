@@ -141,30 +141,30 @@ async function youtubeConnectRoutes(fastify: FastifyInstance) {
             // Handle denied access
             if (error) {
                 console.log(`[YouTube Connect] OAuth error: ${error}`);
-                return reply.redirect(`${FRONTEND_URL}/#/youtube/callback?error=${encodeURIComponent(error)}`);
+                return reply.redirect(`${FRONTEND_URL}/youtube/callback?error=${encodeURIComponent(error)}`);
             }
 
             // Validate params
             if (!code || !state) {
-                return reply.redirect(`${FRONTEND_URL}/#/youtube/callback?error=missing_params`);
+                return reply.redirect(`${FRONTEND_URL}/youtube/callback?error=missing_params`);
             }
 
             // Verify state token
             const stateData = oauthStates.get(state);
             if (!stateData) {
-                return reply.redirect(`${FRONTEND_URL}/#/youtube/callback?error=invalid_state`);
+                return reply.redirect(`${FRONTEND_URL}/youtube/callback?error=invalid_state`);
             }
 
             if (Date.now() > stateData.expiresAt) {
                 oauthStates.delete(state);
-                return reply.redirect(`${FRONTEND_URL}/#/youtube/callback?error=state_expired`);
+                return reply.redirect(`${FRONTEND_URL}/youtube/callback?error=state_expired`);
             }
 
             const userId = stateData.userId;
             oauthStates.delete(state);
 
             if (!GOOGLE_CLIENT_ID || !GOOGLE_CLIENT_SECRET) {
-                return reply.redirect(`${FRONTEND_URL}/#/youtube/callback?error=config_error`);
+                return reply.redirect(`${FRONTEND_URL}/youtube/callback?error=config_error`);
             }
 
             try {
@@ -192,7 +192,7 @@ async function youtubeConnectRoutes(fastify: FastifyInstance) {
 
                 if (!tokenResponse.ok || tokenData.error || !tokenData.access_token) {
                     console.error('[YouTube Connect] Token exchange failed:', tokenData);
-                    return reply.redirect(`${FRONTEND_URL}/#/youtube/callback?error=${encodeURIComponent(tokenData.error || 'exchange_failed')}`);
+                    return reply.redirect(`${FRONTEND_URL}/youtube/callback?error=${encodeURIComponent(tokenData.error || 'exchange_failed')}`);
                 }
 
                 // Fetch YouTube channel info
@@ -227,7 +227,7 @@ async function youtubeConnectRoutes(fastify: FastifyInstance) {
                 }
 
                 if (!channelId) {
-                    return reply.redirect(`${FRONTEND_URL}/#/youtube/callback?error=${encodeURIComponent('No YouTube channel found for this Google account')}`);
+                    return reply.redirect(`${FRONTEND_URL}/youtube/callback?error=${encodeURIComponent('No YouTube channel found for this Google account')}`);
                 }
 
                 const now = new Date();
@@ -248,7 +248,7 @@ async function youtubeConnectRoutes(fastify: FastifyInstance) {
 
                 if (globallyVerified && globallyVerified.userId !== userId) {
                     console.log(`[YouTube Connect] BLOCKED: Channel ${channelId} already verified by user ${globallyVerified.userId}`);
-                    return reply.redirect(`${FRONTEND_URL}/#/youtube/callback?error=${encodeURIComponent('This YouTube channel is already connected to another Collateral account')}`);
+                    return reply.redirect(`${FRONTEND_URL}/youtube/callback?error=${encodeURIComponent('This YouTube channel is already connected to another Collateral account')}`);
                 }
 
                 // Upsert connected account
@@ -297,11 +297,11 @@ async function youtubeConnectRoutes(fastify: FastifyInstance) {
 
                 console.log(`[YouTube Connect] User ${userId} connected channel ${channelId} (${channelTitle}, ${subscriberCount} subs)`);
 
-                return reply.redirect(`${FRONTEND_URL}/#/youtube/callback?success=true&channel=${encodeURIComponent(channelTitle)}`);
+                return reply.redirect(`${FRONTEND_URL}/youtube/callback?success=true&channel=${encodeURIComponent(channelTitle)}`);
 
             } catch (err: any) {
                 console.error('[YouTube Connect] Callback error:', err);
-                return reply.redirect(`${FRONTEND_URL}/#/youtube/callback?error=server_error`);
+                return reply.redirect(`${FRONTEND_URL}/youtube/callback?error=server_error`);
             }
         }
     );

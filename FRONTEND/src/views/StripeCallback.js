@@ -89,7 +89,7 @@ export function renderStripeCallback() {
 
 export async function initStripeCallback() {
     // Hash-based SPA: params are inside the hash fragment, NOT in window.location.search
-    // URL: /#/stripe/callback?success=true&account=xxx
+    // URL: /stripe/callback?success=true&account=xxx
     const hash = window.location.hash || '';
     const qIdx = hash.indexOf('?');
     const paramStr = qIdx !== -1 ? hash.substring(qIdx + 1) : '';

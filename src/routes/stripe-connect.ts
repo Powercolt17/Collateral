@@ -154,23 +154,23 @@ async function stripeConnectRoutes(fastify: FastifyInstance) {
             // Handle Stripe error
             if (error) {
                 console.error('[Stripe Connect] OAuth error:', error, error_description);
-                return reply.redirect(`${FRONTEND_URL}/#/stripe/callback?error=${encodeURIComponent(error)}`);
+                return reply.redirect(`${FRONTEND_URL}/stripe/callback?error=${encodeURIComponent(error)}`);
             }
 
             // Validate params
             if (!code || !state) {
-                return reply.redirect(`${FRONTEND_URL}/#/stripe/callback?error=missing_params`);
+                return reply.redirect(`${FRONTEND_URL}/stripe/callback?error=missing_params`);
             }
 
             // Verify state token and get user ID
             const stateData = oauthStates.get(state);
             if (!stateData) {
-                return reply.redirect(`${FRONTEND_URL}/#/stripe/callback?error=invalid_state`);
+                return reply.redirect(`${FRONTEND_URL}/stripe/callback?error=invalid_state`);
             }
 
             if (Date.now() > stateData.expiresAt) {
                 oauthStates.delete(state);
-                return reply.redirect(`${FRONTEND_URL}/#/stripe/callback?error=state_expired`);
+                return reply.redirect(`${FRONTEND_URL}/stripe/callback?error=state_expired`);
             }
 
             const userId = stateData.userId;
@@ -178,7 +178,7 @@ async function stripeConnectRoutes(fastify: FastifyInstance) {
 
             // Exchange code for connected account ID
             if (!STRIPE_SECRET_KEY) {
-                return reply.redirect(`${FRONTEND_URL}/#/stripe/callback?error=config_error`);
+                return reply.redirect(`${FRONTEND_URL}/stripe/callback?error=config_error`);
             }
 
             try {
@@ -202,12 +202,12 @@ async function stripeConnectRoutes(fastify: FastifyInstance) {
 
                 if (!tokenResponse.ok || tokenData.error) {
                     console.error('[Stripe Connect] Token exchange failed:', tokenData);
-                    return reply.redirect(`${FRONTEND_URL}/#/stripe/callback?error=${encodeURIComponent(tokenData.error || 'exchange_failed')}`);
+                    return reply.redirect(`${FRONTEND_URL}/stripe/callback?error=${encodeURIComponent(tokenData.error || 'exchange_failed')}`);
                 }
 
                 const stripeAccountId = tokenData.stripe_user_id;
                 if (!stripeAccountId) {
-                    return reply.redirect(`${FRONTEND_URL}/#/stripe/callback?error=no_account_id`);
+                    return reply.redirect(`${FRONTEND_URL}/stripe/callback?error=no_account_id`);
                 }
 
                 const now = new Date();
@@ -227,7 +227,7 @@ async function stripeConnectRoutes(fastify: FastifyInstance) {
 
                 if (globallyVerified && globallyVerified.userId !== userId) {
                     console.log(`[Stripe Connect] BLOCKED: Stripe ${stripeAccountId} already verified by user ${globallyVerified.userId}`);
-                    return reply.redirect(`${FRONTEND_URL}/#/stripe/callback?error=${encodeURIComponent('This Stripe account is already connected to another Collateral account')}`);
+                    return reply.redirect(`${FRONTEND_URL}/stripe/callback?error=${encodeURIComponent('This Stripe account is already connected to another Collateral account')}`);
                 }
 
                 // Upsert connected account
@@ -268,11 +268,11 @@ async function stripeConnectRoutes(fastify: FastifyInstance) {
                 console.log(`[Stripe Connect] User ${userId} connected account ${stripeAccountId} via GET callback`);
 
                 // Redirect to frontend with success
-                return reply.redirect(`${FRONTEND_URL}/#/stripe/callback?success=true&account=${encodeURIComponent(stripeAccountId)}`);
+                return reply.redirect(`${FRONTEND_URL}/stripe/callback?success=true&account=${encodeURIComponent(stripeAccountId)}`);
 
             } catch (err: any) {
                 console.error('[Stripe Connect] Callback error:', err);
-                return reply.redirect(`${FRONTEND_URL}/#/stripe/callback?error=server_error`);
+                return reply.redirect(`${FRONTEND_URL}/stripe/callback?error=server_error`);
             }
         }
     );

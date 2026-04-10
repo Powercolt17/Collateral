@@ -126,29 +126,29 @@ async function amazonConnectRoutes(fastify: FastifyInstance) {
 
             if (error) {
                 console.error('[Amazon Connect] OAuth error:', error);
-                return reply.redirect(`${FRONTEND_URL}/#/amazon/callback?error=${encodeURIComponent(error)}`);
+                return reply.redirect(`${FRONTEND_URL}/amazon/callback?error=${encodeURIComponent(error)}`);
             }
 
             if (!spapi_oauth_code || !state || !selling_partner_id) {
-                return reply.redirect(`${FRONTEND_URL}/#/amazon/callback?error=missing_params`);
+                return reply.redirect(`${FRONTEND_URL}/amazon/callback?error=missing_params`);
             }
 
             // Verify state token
             const stateData = oauthStates.get(state);
             if (!stateData) {
-                return reply.redirect(`${FRONTEND_URL}/#/amazon/callback?error=invalid_state`);
+                return reply.redirect(`${FRONTEND_URL}/amazon/callback?error=invalid_state`);
             }
 
             if (Date.now() > stateData.expiresAt) {
                 oauthStates.delete(state);
-                return reply.redirect(`${FRONTEND_URL}/#/amazon/callback?error=state_expired`);
+                return reply.redirect(`${FRONTEND_URL}/amazon/callback?error=state_expired`);
             }
 
             const userId = stateData.userId;
             oauthStates.delete(state);
 
             if (!AMAZON_CLIENT_ID || !AMAZON_CLIENT_SECRET) {
-                return reply.redirect(`${FRONTEND_URL}/#/amazon/callback?error=config_error`);
+                return reply.redirect(`${FRONTEND_URL}/amazon/callback?error=config_error`);
             }
 
             try {
@@ -177,7 +177,7 @@ async function amazonConnectRoutes(fastify: FastifyInstance) {
 
                 if (!tokenResponse.ok || tokenData.error || !tokenData.refresh_token) {
                     console.error('[Amazon Connect] Token exchange failed:', tokenData);
-                    return reply.redirect(`${FRONTEND_URL}/#/amazon/callback?error=${encodeURIComponent(tokenData.error || 'exchange_failed')}`);
+                    return reply.redirect(`${FRONTEND_URL}/amazon/callback?error=${encodeURIComponent(tokenData.error || 'exchange_failed')}`);
                 }
 
                 const now = new Date();
@@ -197,7 +197,7 @@ async function amazonConnectRoutes(fastify: FastifyInstance) {
 
                 if (globallyVerified && globallyVerified.userId !== userId) {
                     console.log(`[Amazon Connect] BLOCKED: Seller ${selling_partner_id} already verified by user ${globallyVerified.userId}`);
-                    return reply.redirect(`${FRONTEND_URL}/#/amazon/callback?error=${encodeURIComponent('This Amazon seller account is already connected to another Collateral account')}`);
+                    return reply.redirect(`${FRONTEND_URL}/amazon/callback?error=${encodeURIComponent('This Amazon seller account is already connected to another Collateral account')}`);
                 }
 
                 // Upsert connected account
@@ -239,11 +239,11 @@ async function amazonConnectRoutes(fastify: FastifyInstance) {
 
                 console.log(`[Amazon Connect] User ${userId} connected seller ${selling_partner_id}`);
 
-                return reply.redirect(`${FRONTEND_URL}/#/amazon/callback?success=true&seller=${encodeURIComponent(selling_partner_id)}`);
+                return reply.redirect(`${FRONTEND_URL}/amazon/callback?success=true&seller=${encodeURIComponent(selling_partner_id)}`);
 
             } catch (err: any) {
                 console.error('[Amazon Connect] Callback error:', err);
-                return reply.redirect(`${FRONTEND_URL}/#/amazon/callback?error=server_error`);
+                return reply.redirect(`${FRONTEND_URL}/amazon/callback?error=server_error`);
             }
         }
     );

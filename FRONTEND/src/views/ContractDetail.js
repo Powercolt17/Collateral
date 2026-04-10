@@ -555,7 +555,7 @@ export async function initContractDetail(params) {
         if (window.lucide) window.lucide.createIcons();
 
         // Share functionality
-        const shareUrl = `https://collateral.market/#/contracts/${contractId}`;
+        const shareUrl = `https://collateral.market/contracts/${contractId}`;
         const lockUsd = (c.lockAmountUsdCents / 100).toLocaleString('en-US', { maximumFractionDigits: 0 });
         const tweetText = state === 'SETTLED_SUCCESS'
             ? `I just won $${lockUsd} on @CollateralMkt by hitting my ${platformDisplay} growth target. Put your money where your mouth is.`

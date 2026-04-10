@@ -875,8 +875,8 @@ export function renderHeader(currentRoute) {
                     </div>
                 </div>
                 <div class="pnl-legal">
-                    <a href="/#/terms" onclick="window.app.closeMobileMenu()">Terms</a>
-                    <a href="/#/docs" onclick="window.app.closeMobileMenu()">Docs</a>
+                    <a href="/terms" onclick="window.app.closeMobileMenu()">Terms</a>
+                    <a href="/docs" onclick="window.app.closeMobileMenu()">Docs</a>
                     <a href="https://x.com/collaboralcap" target="_blank">X / Twitter</a>
                 </div>
             </div>

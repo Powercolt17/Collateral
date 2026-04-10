@@ -866,7 +866,7 @@ export async function initProfile() {
                                 <div><div class="prf-sr-detail-label">Contract ID</div><div class="prf-sr-detail-val" style="font-family:'JetBrains Mono', monospace;font-size:10px">${c.id}</div></div>
                                 <div><div class="prf-sr-detail-label">State</div><div class="prf-sr-detail-val"><span class="prf-badge ${cls}">${st}</span></div></div>
                             </div>
-                            <button class="prf-cta ghost sm" onclick="event.stopPropagation();navigator.clipboard.writeText(window.location.origin+'/#/contracts/${c.id}')">
+                            <button class="prf-cta ghost sm" onclick="event.stopPropagation();navigator.clipboard.writeText(window.location.origin+'/contracts/${c.id}')">
                                 <i data-lucide="link" style="width:11px;height:11px"></i> Copy receipt link
                             </button>
                         </div>

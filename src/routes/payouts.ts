@@ -114,8 +114,8 @@ const payoutRoutes: FastifyPluginAsync = async (fastify) => {
             // Create onboarding link
             const accountLink = await stripe.accountLinks.create({
                 account: stripeAccountId,
-                refresh_url: `${APP_PUBLIC_URL}/#/funding?connect_refresh=true`,
-                return_url: `${APP_PUBLIC_URL}/#/funding?connect_return=true`,
+                refresh_url: `${APP_PUBLIC_URL}/funding?connect_refresh=true`,
+                return_url: `${APP_PUBLIC_URL}/funding?connect_return=true`,
                 type: 'account_onboarding',
             });
 
@@ -210,8 +210,8 @@ const payoutRoutes: FastifyPluginAsync = async (fastify) => {
             // Create onboarding link
             const accountLink = await stripe.accountLinks.create({
                 account: stripeAccountId,
-                refresh_url: `${APP_PUBLIC_URL}/#/funding?connect_refresh=true`,
-                return_url: `${APP_PUBLIC_URL}/#/funding?connect_return=true`,
+                refresh_url: `${APP_PUBLIC_URL}/funding?connect_refresh=true`,
+                return_url: `${APP_PUBLIC_URL}/funding?connect_return=true`,
                 type: 'account_onboarding',
             });
 

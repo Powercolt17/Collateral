@@ -372,6 +372,30 @@ const contractRoutes: FastifyPluginAsync = async (fastify) => {
             return { error: 'Reseed failed: ' + (error as any).message };
         }
     });
+
+    /**
+     * POST /v1/admin/seed-activity
+     * Populate the site with simulated contracts + rivalries for social proof.
+     * Requires x-admin-key header.
+     */
+    fastify.post('/v1/admin/seed-activity', async (request, reply) => {
+        const adminKey = request.headers['x-admin-key'];
+        const isValid = adminKey === process.env.ADMIN_API_KEY;
+        if (!isValid) {
+            reply.status(403);
+            return { error: 'Unauthorized: Admin access required' };
+        }
+
+        try {
+            const { seedSimulatedActivity } = await import('../db/seed-activity.js');
+            const result = await seedSimulatedActivity();
+            return { success: true, ...result };
+        } catch (error) {
+            console.error('[Admin Seed Activity] Error:', error);
+            reply.status(500);
+            return { error: 'Seed activity failed: ' + (error as any).message };
+        }
+    });
 };
 
 export default contractRoutes;

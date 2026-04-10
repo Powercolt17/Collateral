@@ -1427,14 +1427,17 @@ function updateAuthUI() {
     if (!appState.sessionHydrated) return;
 
     const btnAuth = document.getElementById('btn-auth');
+    const searchArea = document.getElementById('header-search-area');
 
     if (appState.isLoggedIn) {
-        // Hide header CONNECT button when logged in
-        if (btnAuth) btnAuth.classList.add('hidden');
+        // Logged in: show search, hide connect button
+        if (btnAuth) btnAuth.style.display = 'none';
+        if (searchArea) searchArea.style.display = '';
         console.log('[Auth] UI updated, showing:', appState.username);
     } else {
-        // Show header CONNECT button when logged out
-        if (btnAuth) btnAuth.classList.remove('hidden');
+        // Logged out: hide search, show connect button
+        if (btnAuth) btnAuth.style.display = '';
+        if (searchArea) searchArea.style.display = 'none';
     }
 
     // Update panel auth state (user card, account links, sign out)

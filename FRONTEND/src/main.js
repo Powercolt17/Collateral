@@ -206,7 +206,7 @@ const routes = PRE_LAUNCH_MODE ? [
     { path: '/sources', render: renderSources, init: initSources },
     { path: '/contracts/execute', render: renderContracts, init: initContracts },
     { path: '/contracts/:id', render: renderContractDetail, init: initContractDetail },
-    { path: '/market/:id', render: () => '<div></div>', init: (params) => { window.location.hash = '/contract/' + (params?.id || ''); } },
+    { path: '/market/:id', render: () => '<div></div>', init: (params) => { window.router.navigate('/contract/' + (params?.id || '')); } },
     { path: '/contract/:id', render: renderContractTermSheet, init: initContractTermSheet },
     { path: '/profile', render: renderProfile, init: initProfile },
     { path: '/settings', render: renderProfile, init: initProfile }, // Redirect settings to profile

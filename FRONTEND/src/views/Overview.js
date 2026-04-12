@@ -1905,7 +1905,7 @@ export function initOverview() {
             e.preventDefault();
             e.stopPropagation();
             const id = card.dataset.id;
-            if (id) window.location.hash = '/contract/' + id;
+            if (id) window.router.navigate('/contract/' + id);
         }
     });
 

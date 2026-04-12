@@ -121,7 +121,7 @@ export default async function marketRoutes(fastify: FastifyInstance) {
 
         // For now, simple check - allow if in dev mode or with header
         const adminKey = request.headers['x-admin-key'];
-        if (process.env.NODE_ENV === 'production' && adminKey !== process.env.ADMIN_API_KEY) {
+        if (adminKey !== process.env.ADMIN_API_KEY) {
             return reply.status(403).send({ error: 'Unauthorized: Admin access required' });
         }
 
@@ -142,7 +142,7 @@ export default async function marketRoutes(fastify: FastifyInstance) {
         const body = ExpireInstanceBodySchema.parse(request.body);
 
         const adminKey = request.headers['x-admin-key'];
-        if (process.env.NODE_ENV === 'production' && adminKey !== process.env.ADMIN_API_KEY) {
+        if (adminKey !== process.env.ADMIN_API_KEY) {
             return reply.status(403).send({ error: 'Unauthorized: Admin access required' });
         }
 

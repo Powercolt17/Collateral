@@ -9,13 +9,10 @@ const usersRoutes: FastifyPluginAsync = async (fastify) => {
     /**
      * GET /users/me
      * Current session user info
-     * Note: In production, this would use session/JWT authentication
-     * For now, we accept a userId query param for development
+     * Uses JWT-authenticated userId — NOT query params
      */
-    fastify.get<{
-        Querystring: { userId?: string };
-    }>('/users/me', async (request, reply) => {
-        const { userId } = request.query;
+    fastify.get('/users/me', async (request, reply) => {
+        const userId = (request as any).userId;
 
         if (!userId) {
             reply.status(401);
@@ -60,10 +57,8 @@ const usersRoutes: FastifyPluginAsync = async (fastify) => {
      * GET /users/me/contracts
      * Current user's contracts with derived state
      */
-    fastify.get<{
-        Querystring: { userId?: string };
-    }>('/users/me/contracts', async (request, reply) => {
-        const { userId } = request.query;
+    fastify.get('/users/me/contracts', async (request, reply) => {
+        const userId = (request as any).userId;
 
         if (!userId) {
             reply.status(401);
@@ -382,6 +377,13 @@ const usersRoutes: FastifyPluginAsync = async (fastify) => {
     }>('/users/:id/stripe-connect', async (request, reply) => {
         const { id } = request.params;
         const { stripeConnectedAccountId } = request.body;
+        const userId = (request as any).userId;
+
+        // Must be authenticated and can only update own record
+        if (!userId || userId !== id) {
+            reply.status(403);
+            return { error: 'Not authorized' };
+        }
 
         if (!stripeConnectedAccountId) {
             reply.status(400);

@@ -584,7 +584,7 @@ function showSuccess(bodyEl, stake, multiplier, contractId) {
 
     bodyEl.querySelector('#exec-view-receipt').addEventListener('click', () => {
         closeExecutionModal();
-        window.location.hash = '/contracts/' + contractId;
+        window.router.navigate('/contracts/' + contractId);
     });
 
     bodyEl.querySelector('#exec-return-market').addEventListener('click', () => {

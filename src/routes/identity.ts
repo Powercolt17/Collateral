@@ -20,13 +20,17 @@ const identityRoutes: FastifyPluginAsync = async (fastify) => {
      */
     fastify.post<{
         Body: {
-            userId: string;
             username: string;
             displayName?: string;
             bio?: string;
         };
     }>('/identity/claim', async (request, reply) => {
-        const { userId, username, displayName, bio } = request.body;
+        const userId = (request as any).userId;
+        if (!userId) {
+            reply.status(401);
+            return { error: 'Authentication required' };
+        }
+        const { username, displayName, bio } = request.body;
 
         // Normalize username
         const normalizedUsername = username.toLowerCase().trim();
@@ -103,10 +107,8 @@ const identityRoutes: FastifyPluginAsync = async (fastify) => {
      * GET /identity/me
      * Get current user's identity
      */
-    fastify.get<{
-        Querystring: { userId: string };
-    }>('/identity/me', async (request, reply) => {
-        const { userId } = request.query;
+    fastify.get('/identity/me', async (request, reply) => {
+        const userId = (request as any).userId;
 
         if (!userId) {
             reply.status(401);

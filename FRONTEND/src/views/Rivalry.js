@@ -1378,7 +1378,7 @@ export async function initRivalry() {
         grid.querySelectorAll('.rv-card').forEach(card => {
             card.addEventListener('click', () => {
                 const id = card.dataset.id;
-                if (id) window.location.hash = '/rivalry/' + id;
+                if (id) window.router.navigate('/rivalry/' + id);
             });
         });
     }

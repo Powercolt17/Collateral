@@ -155,9 +155,9 @@ async function hydrateSession() {
 
             // Force redirect off protected route if on one
             const protectedPaths = ['/contracts', '/my-contracts', '/profile', '/funding'];
-            const hashPath = (window.location.hash || '').replace(/^#/, '');
-            if (protectedPaths.some(pr => hashPath === pr || hashPath.startsWith(pr + '/'))) {
-                window.location.hash = '/overview';
+            const currentPath = window.location.pathname || '';
+            if (protectedPaths.some(pr => currentPath === pr || currentPath.startsWith(pr + '/'))) {
+                window.router.navigate('/overview');
                 // Show login modal after redirect
                 setTimeout(() => window.app.openAccessModal(), 100);
             }
@@ -233,7 +233,7 @@ const routes = PRE_LAUNCH_MODE ? [
                 api.setReferralCode(params.code);
                 console.log('[Referral] Stored referral code:', params.code);
             }
-            window.location.hash = '/overview';
+            window.router.navigate('/overview');
             setTimeout(() => window.app.openAccessModal(), 300);
         }
     }
@@ -1477,7 +1477,7 @@ router.onRouteChange = function (route, path) {
         // Show login modal and stay on current page
         window.app.openAccessModal();
         // Redirect to overview
-        window.location.hash = '/overview';
+        window.router.navigate('/overview');
         return;
     }
 
@@ -1514,7 +1514,7 @@ const isOAuthLanding =
     (defaultSearch.includes('success=') || defaultSearch.includes('code=') || defaultSearch.includes('state='));
 
 if (!window.location.hash && !isOAuthLanding) {
-    window.location.hash = '/overview';
+    // Router handles default route via handleRoute()
 }
 
 // Hydrate session from backend on app init

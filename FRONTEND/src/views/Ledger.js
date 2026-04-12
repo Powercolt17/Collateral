@@ -1076,9 +1076,9 @@ export async function initLedger() {
             const contractShort = event.contractId
                 ? (isRivalry ? 'RVL-' : 'RCPT-') + event.contractId.slice(0, 4).toUpperCase()
                 : '—';
-            const contractLink = event.contractId
-                ? (isRivalry ? `#/rivalry/${event.contractId}` : `#/contracts/${event.contractId}`)
-                : '#';
+            const contractPath = event.contractId
+                ? (isRivalry ? `/rivalry/${event.contractId}` : `/contracts/${event.contractId}`)
+                : '';
             const statusClass = getStatusClass(event.eventType);
             const platform = event.platform || '—';
 
@@ -1095,7 +1095,7 @@ export async function initLedger() {
                         </div>
                     </td>
                     <td>${typeBadge}</td>
-                    <td><a href="${contractLink}" class="ldg-rcpt" style="text-decoration:none;color:#111;" onclick="event.stopPropagation()">${contractShort}</a></td>
+                    <td><a href="#" class="ldg-rcpt" style="text-decoration:none;color:#111;" onclick="event.stopPropagation();event.preventDefault();${contractPath ? `window.router.navigate('${contractPath}')` : ''}">${contractShort}</a></td>
                     <td><span class="ldg-platform">${platform}</span></td>
                     <td><span class="ldg-date">${formatTimestamp(event.timestamp)}</span></td>
                     <td><span class="ldg-amount">${formatCurrency(event.amountUsdCents)}</span></td>

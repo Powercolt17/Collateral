@@ -2,8 +2,14 @@
  * Seed Simulated Activity — Populates the site with realistic-looking
  * solo contracts and rivalries so the platform appears active.
  * 
+ * Vibe: "Up and coming" — enough activity to look credible,
+ * not so much it looks fake. Think ~25 settled solos, 8 rivalries,
+ * a few in-flight contracts, and a believable ledger.
+ * 
  * Run via admin endpoint: POST /v1/admin/seed-activity
  * Requires x-admin-key header
+ * 
+ * IDEMPOTENT: Checks for existing sim_ users before creating.
  */
 
 import 'dotenv/config';
@@ -12,108 +18,196 @@ import { sql } from 'drizzle-orm';
 import { createHash, randomUUID } from 'crypto';
 
 // ============================================================================
-// FAKE USERS (sim_ prefix to identify simulated accounts)
+// REALISTIC FAKE USERS — diverse, believable handles
 // ============================================================================
 const SIM_USERS = [
-    { handle: 'marcusfitz', display: 'Marcus Fitzgerald' },
-    { handle: 'chelseadev', display: 'Chelsea Park' },
-    { handle: 'jakevoss', display: 'Jake Voss' },
-    { handle: 'itsnataliex', display: 'Natalie Chen' },
-    { handle: 'tylerbrooks', display: 'Tyler Brooks' },
-    { handle: 'aminadotcom', display: 'Amina Okafor' },
-    { handle: 'ryanx01', display: 'Ryan Xu' },
-    { handle: 'clodigital', display: 'Chloe Deschamps' },
-    { handle: 'devinmakes', display: 'Devin Morales' },
-    { handle: 'sarabizops', display: 'Sara Kim' },
-    { handle: 'miloelabs', display: 'Milo Edwards' },
-    { handle: 'priyabuilds', display: 'Priya Sharma' },
+    { handle: 'marcusfitz',     display: 'Marcus Fitzgerald',  avatar: null },
+    { handle: 'chelseadev',     display: 'Chelsea Park',       avatar: null },
+    { handle: 'jakevoss',       display: 'Jake Voss',          avatar: null },
+    { handle: 'itsnataliex',    display: 'Natalie Chen',       avatar: null },
+    { handle: 'tylerbrooks',    display: 'Tyler Brooks',       avatar: null },
+    { handle: 'aminadotcom',    display: 'Amina Okafor',       avatar: null },
+    { handle: 'ryanx01',        display: 'Ryan Xu',            avatar: null },
+    { handle: 'clodigital',     display: 'Chloe Deschamps',    avatar: null },
+    { handle: 'devinmakes',     display: 'Devin Morales',      avatar: null },
+    { handle: 'sarabizops',     display: 'Sara Kim',           avatar: null },
+    { handle: 'miloelabs',      display: 'Milo Edwards',       avatar: null },
+    { handle: 'priyabuilds',    display: 'Priya Sharma',       avatar: null },
+    { handle: 'andrejcodes',    display: 'Andrej Petrov',      avatar: null },
+    { handle: 'lilydao',        display: 'Lily Nakamura',      avatar: null },
+    { handle: 'maxfoundr',      display: 'Max Alvarado',       avatar: null },
+    { handle: 'emmaburke',      display: 'Emma Burke',         avatar: null },
 ];
 
-// Platforms and metrics for realistic contracts
-const CONTRACT_SCENARIOS = [
-    { platform: 'X', metric: 'FOLLOWERS', metricKey: 'x_followers', label: 'Follower Growth' },
-    { platform: 'STRIPE', metric: 'REVENUE', metricKey: 'stripe_net_revenue', label: 'Net Revenue Growth' },
-    { platform: 'YOUTUBE', metric: 'SUBSCRIBERS', metricKey: 'youtube_subscribers', label: 'Subscriber Growth' },
-    { platform: 'YOUTUBE', metric: 'VIEWS', metricKey: 'youtube_views', label: 'Views Growth' },
-    { platform: 'SHOPIFY', metric: 'REVENUE', metricKey: 'shopify_net_sales', label: 'Store Net Sales' },
-    { platform: 'X', metric: 'FOLLOWERS', metricKey: 'x_followers', label: 'Follower Growth' },
-    { platform: 'STRIPE', metric: 'REVENUE', metricKey: 'stripe_net_revenue', label: 'Revenue Growth' },
-    { platform: 'SHOPIFY', metric: 'ORDER_COUNT', metricKey: 'shopify_order_volume', label: 'Order Volume' },
+// Realistic contract titles aligned with actual catalog templates
+const SOLO_SCENARIOS = [
+    // Stripe / Revenue
+    { platform: 'STRIPE', metric: 'REVENUE', metricKey: 'stripe_net_revenue', title: 'Net Revenue Growth (14d)', windowDays: 14, category: 'finance' },
+    { platform: 'STRIPE', metric: 'REVENUE', metricKey: 'stripe_net_revenue', title: 'Net Revenue Growth (30d)', windowDays: 30, category: 'finance' },
+    { platform: 'STRIPE', metric: 'REVENUE', metricKey: 'stripe_mrr', title: 'Monthly Recurring Revenue (14d)', windowDays: 14, category: 'finance' },
+    { platform: 'STRIPE', metric: 'REVENUE', metricKey: 'stripe_mrr', title: 'Monthly Recurring Revenue (30d)', windowDays: 30, category: 'finance' },
+    { platform: 'STRIPE', metric: 'CHARGE_VOLUME', metricKey: 'stripe_charge_volume', title: 'Charge Volume Growth (30d)', windowDays: 30, category: 'finance' },
+    // X / Followers
+    { platform: 'X', metric: 'FOLLOWERS', metricKey: 'x_followers', title: 'Follower Growth (14d)', windowDays: 14, category: 'social' },
+    { platform: 'X', metric: 'FOLLOWERS', metricKey: 'x_followers', title: 'Follower Growth (30d)', windowDays: 30, category: 'social' },
+    // YouTube
+    { platform: 'YOUTUBE', metric: 'SUBSCRIBERS', metricKey: 'youtube_subscribers', title: 'Subscriber Growth (14d)', windowDays: 14, category: 'social' },
+    { platform: 'YOUTUBE', metric: 'SUBSCRIBERS', metricKey: 'youtube_subscribers', title: 'Subscriber Growth (30d)', windowDays: 30, category: 'social' },
+    { platform: 'YOUTUBE', metric: 'VIEWS', metricKey: 'youtube_30day_views', title: '30-Day Views Growth (30d)', windowDays: 30, category: 'social' },
+    // Shopify
+    { platform: 'SHOPIFY', metric: 'GROSS_SALES', metricKey: 'shopify_net_sales', title: 'Store Net Sales (14d)', windowDays: 14, category: 'commerce' },
+    { platform: 'SHOPIFY', metric: 'GROSS_SALES', metricKey: 'shopify_net_sales', title: 'Store Net Sales (30d)', windowDays: 30, category: 'commerce' },
+    { platform: 'SHOPIFY', metric: 'ORDER_COUNT', metricKey: 'shopify_order_volume', title: 'Order Volume Growth (14d)', windowDays: 14, category: 'commerce' },
 ];
 
 const TIERS = ['STANDARD', 'ADVANCED', 'ELITE'] as const;
+const TIER_DB_MAP = { STANDARD: 'controlled', ADVANCED: 'elevated', ELITE: 'maximum' };
 const TIER_MULTIPLIERS = { STANDARD: 1.7, ADVANCED: 2.5, ELITE: 4.0 };
-const TIER_LABELS = { STANDARD: 'controlled', ADVANCED: 'elevated', ELITE: 'maximum' };
 
-function randomBetween(min: number, max: number) {
-    return Math.floor(Math.random() * (max - min + 1)) + min;
-}
+// Stake ranges per tier (cents)
+const STAKE_RANGES: Record<string, [number, number]> = {
+    STANDARD: [10000, 150000],   // $100 - $1,500
+    ADVANCED: [25000, 300000],   // $250 - $3,000
+    ELITE:    [50000, 500000],   // $500 - $5,000
+};
 
-function daysAgo(days: number): Date {
-    return new Date(Date.now() - days * 86400000);
-}
+function rand(min: number, max: number) { return Math.floor(Math.random() * (max - min + 1)) + min; }
+function pick<T>(arr: T[]): T { return arr[Math.floor(Math.random() * arr.length)]; }
+function daysAgo(days: number): Date { return new Date(Date.now() - days * 86400000); }
+function hoursAgo(hours: number): Date { return new Date(Date.now() - hours * 3600000); }
+function hashEvent(data: string): string { return createHash('sha256').update(data).digest('hex'); }
 
-function hashEvent(data: string): string {
-    return createHash('sha256').update(data).digest('hex');
-}
-
+// ============================================================================
+// MAIN SEED FUNCTION
+// ============================================================================
 export async function seedSimulatedActivity() {
-    console.log('[Seed Activity] Starting simulated activity seeding...');
+    console.log('[Seed Activity] 🌱 Starting simulated activity seeding...');
+
+    // Check if already seeded (check for sim users AND their contracts)
+    const existing = await db.execute(sql`
+        SELECT count(*) as cnt FROM users WHERE email LIKE '%@collateral.internal'
+    `);
+    const existingCount = Number((existing as any).rows?.[0]?.cnt || (existing as any)[0]?.cnt || 0);
+    
+    // Also check if contracts were created (users might exist from a failed partial run)
+    let contractCount = 0;
+    if (existingCount > 5) {
+        const contractCheck = await db.execute(sql`
+            SELECT count(*) as cnt FROM contracts c
+            JOIN users u ON c.principal_user_id = u.id
+            WHERE u.email LIKE '%@collateral.internal'
+        `);
+        contractCount = Number((contractCheck as any).rows?.[0]?.cnt || (contractCheck as any)[0]?.cnt || 0);
+    }
+
+    if (existingCount > 5 && contractCount > 10) {
+        console.log(`[Seed Activity] Already seeded (${existingCount} sim users, ${contractCount} contracts). Skipping.`);
+        return {
+            users: existingCount,
+            contracts: contractCount,
+            rivalries: 0,
+            activeRivalries: 0,
+            skipped: true,
+        };
+    }
 
     // 1. Create simulated users
     const userIds: string[] = [];
     for (const u of SIM_USERS) {
         const id = randomUUID();
+        const createdDaysAgo = rand(14, 75); // Accounts 2-10 weeks old
         await db.execute(sql`
             INSERT INTO users (id, email, x_username, created_at)
-            VALUES (${id}, ${'sim_' + u.handle + '@collateral.internal'}, ${u.handle}, ${daysAgo(randomBetween(30, 90)).toISOString()})
+            VALUES (${id}, ${'sim_' + u.handle + '@collateral.internal'}, ${u.handle}, ${daysAgo(createdDaysAgo).toISOString()})
             ON CONFLICT DO NOTHING
         `);
         userIds.push(id);
     }
-    console.log(`[Seed Activity] Created ${userIds.length} simulated users`);
+    console.log(`[Seed Activity] ✅ Created ${userIds.length} simulated users`);
 
     // 2. Create identities for simulated users
     for (let i = 0; i < userIds.length; i++) {
         await db.execute(sql`
-            INSERT INTO identities (id, user_id, display_name, username, avatar_url, status, created_at)
-            VALUES (${randomUUID()}, ${userIds[i]}, ${SIM_USERS[i].display}, ${SIM_USERS[i].handle}, NULL, 'ACTIVE', NOW())
+            INSERT INTO identities (id, user_id, display_name, username, photo_url, status, created_at, updated_at)
+            VALUES (${randomUUID()}, ${userIds[i]}, ${SIM_USERS[i].display}, ${SIM_USERS[i].handle}, NULL, 'ACTIVE', NOW(), NOW())
             ON CONFLICT DO NOTHING
         `);
     }
 
-    // 3. Create settled solo contracts (mix of wins and losses)
+    // =========================================================================
+    // 3. SETTLED SOLO CONTRACTS — Mix of wins (28%) and losses (72%)
+    //    Spread across last 5-45 days for believable timeline
+    // =========================================================================
     const contractIds: string[] = [];
-    const numContracts = 18; // 18 settled contracts
 
-    for (let i = 0; i < numContracts; i++) {
+    // Define specific, believable contracts (not random slop)
+    const SETTLED_CONTRACTS = [
+        // --- Recent losses (most common — house edge) ---
+        { userIdx: 0, scenario: 0,  tier: 'STANDARD', win: false, daysBack: 3,  stakeCents: 25000 },   // Marcus lost $250 on Stripe revenue 14d
+        { userIdx: 3, scenario: 5,  tier: 'STANDARD', win: false, daysBack: 4,  stakeCents: 15000 },   // Natalie lost $150 on X followers 14d
+        { userIdx: 7, scenario: 7,  tier: 'STANDARD', win: false, daysBack: 5,  stakeCents: 10000 },   // Chloe lost $100 on YT subs 14d
+        { userIdx: 1, scenario: 1,  tier: 'ADVANCED', win: false, daysBack: 6,  stakeCents: 50000 },   // Chelsea lost $500 on Stripe revenue 30d
+        { userIdx: 4, scenario: 6,  tier: 'STANDARD', win: false, daysBack: 7,  stakeCents: 20000 },   // Tyler lost $200 on X followers 30d
+        
+        // --- A couple wins — shows it's possible ---
+        { userIdx: 2, scenario: 5,  tier: 'STANDARD', win: true,  daysBack: 7,  stakeCents: 10000 },   // Jake WON $170 on X followers 14d
+        { userIdx: 5, scenario: 10, tier: 'STANDARD', win: true,  daysBack: 8,  stakeCents: 30000 },   // Amina WON $510 on Shopify 14d
+
+        // --- Older settled contracts ---
+        { userIdx: 8, scenario: 3,  tier: 'ADVANCED', win: false, daysBack: 10, stakeCents: 75000 },   // Devin lost $750 on MRR 30d
+        { userIdx: 6, scenario: 9,  tier: 'STANDARD', win: false, daysBack: 11, stakeCents: 15000 },   // Ryan lost $150 on YT views 30d
+        { userIdx: 9, scenario: 11, tier: 'STANDARD', win: false, daysBack: 12, stakeCents: 20000 },   // Sara lost $200 on Shopify 30d
+        { userIdx: 10, scenario: 0, tier: 'ADVANCED', win: true,  daysBack: 13, stakeCents: 40000 },   // Milo WON $1000 on Stripe 14d
+        { userIdx: 11, scenario: 8, tier: 'STANDARD', win: false, daysBack: 14, stakeCents: 10000 },   // Priya lost $100 on YT subs 30d
+        
+        // --- Even older — platform's early days ---
+        { userIdx: 0, scenario: 6,  tier: 'STANDARD', win: false, daysBack: 18, stakeCents: 10000 },   // Marcus lost $100 on X 30d (tried again)
+        { userIdx: 12, scenario: 1, tier: 'STANDARD', win: true,  daysBack: 20, stakeCents: 15000 },   // Andrej WON $255 on Stripe 30d
+        { userIdx: 3, scenario: 2,  tier: 'STANDARD', win: false, daysBack: 22, stakeCents: 25000 },   // Natalie lost $250 on MRR 14d
+        { userIdx: 13, scenario: 5, tier: 'STANDARD', win: false, daysBack: 24, stakeCents: 10000 },   // Lily lost $100 on X 14d
+        { userIdx: 14, scenario: 10, tier: 'STANDARD', win: false, daysBack: 26, stakeCents: 20000 },  // Max lost $200 on Shopify 14d
+        
+        // --- Elite tier (rare, big money, all losses) ---
+        { userIdx: 1, scenario: 1,  tier: 'ELITE', win: false, daysBack: 15, stakeCents: 200000 },     // Chelsea lost $2,000 on Stripe 30d ALL-IN
+        { userIdx: 10, scenario: 6, tier: 'ELITE', win: false, daysBack: 28, stakeCents: 100000 },     // Milo lost $1,000 on X 30d ALL-IN
+
+        // --- A few more ADVANCED tier ---
+        { userIdx: 15, scenario: 4, tier: 'ADVANCED', win: false, daysBack: 16, stakeCents: 60000 },   // Emma lost $600 on charge volume 30d
+        { userIdx: 2, scenario: 11, tier: 'ADVANCED', win: true,  daysBack: 19, stakeCents: 30000 },   // Jake WON $750 on Shopify 30d
+        { userIdx: 7, scenario: 8, tier: 'ADVANCED', win: false, daysBack: 25, stakeCents: 45000 },    // Chloe lost $450 on YT subs 30d
+        
+        // --- Very early contracts (30+ days ago) --- 
+        { userIdx: 4, scenario: 0, tier: 'STANDARD', win: true,  daysBack: 32, stakeCents: 10000 },    // Tyler WON $170 on Stripe 14d (early adopter)
+        { userIdx: 8, scenario: 5, tier: 'STANDARD', win: false, daysBack: 35, stakeCents: 10000 },    // Devin lost $100 on X 14d
+        { userIdx: 5, scenario: 12, tier: 'STANDARD', win: false, daysBack: 38, stakeCents: 15000 },   // Amina lost $150 on order volume 14d
+    ];
+
+    for (const def of SETTLED_CONTRACTS) {
         const cid = randomUUID();
         contractIds.push(cid);
 
-        const userIdx = i % userIds.length;
-        const userId = userIds[userIdx];
-        const username = SIM_USERS[userIdx].handle;
-        const scenario = CONTRACT_SCENARIOS[i % CONTRACT_SCENARIOS.length];
-        const tier = TIERS[i % 3];
-        const isWin = Math.random() < 0.30; // 30% win rate matches house edge
-        const daysBack = randomBetween(3, 28);
-        const windowDays = i % 2 === 0 ? 14 : 30;
-        const lockCents = [10000, 15000, 25000, 50000, 75000, 100000][i % 6];
-        const payoutCents = Math.round(lockCents * TIER_MULTIPLIERS[tier]);
-        const createdAt = daysAgo(daysBack + windowDays);
-        const deadline = daysAgo(daysBack);
-        const settledAt = new Date(deadline.getTime() + 3600000); // 1h after deadline
+        const userId = userIds[def.userIdx];
+        const username = SIM_USERS[def.userIdx].handle;
+        const scenario = SOLO_SCENARIOS[def.scenario];
+        const tier = def.tier as typeof TIERS[number];
+        const windowDays = scenario.windowDays;
+        const stakeCents = def.stakeCents;
+        const payoutCents = Math.round(stakeCents * TIER_MULTIPLIERS[tier]);
+
+        const createdAt = daysAgo(def.daysBack + windowDays);
+        const deadline = daysAgo(def.daysBack);
+        const settledAt = new Date(deadline.getTime() + rand(1, 4) * 3600000);
 
         // Baseline values
-        const baselineValue = scenario.metric === 'REVENUE'
-            ? randomBetween(100000, 500000) // $1k-$5k
-            : randomBetween(1000, 50000); // followers/subs
+        const baselineValue = scenario.metric === 'REVENUE' || scenario.metric === 'CHARGE_VOLUME' || scenario.metric === 'GROSS_SALES'
+            ? rand(80000, 600000) // $800-$6k or 800-6000 charges
+            : rand(800, 45000);   // followers/subs
 
-        const targetPct = tier === 'STANDARD' ? 25 : tier === 'ADVANCED' ? 35 : 50;
+        const targetPct = tier === 'STANDARD' ? rand(20, 30) : tier === 'ADVANCED' ? rand(30, 45) : rand(45, 70);
         const targetValue = Math.round(baselineValue * (1 + targetPct / 100));
-        const finalValue = isWin
-            ? Math.round(targetValue * (1 + Math.random() * 0.1)) // exceeded
-            : Math.round(baselineValue * (1 + Math.random() * (targetPct / 100) * 0.7)); // fell short
+        const finalValue = def.win
+            ? Math.round(targetValue * (1 + Math.random() * 0.12))
+            : Math.round(baselineValue * (1 + Math.random() * (targetPct / 100) * 0.65));
 
         // Insert contract
         await db.execute(sql`
@@ -127,32 +221,46 @@ export async function seedSimulatedActivity() {
                 ${scenario.platform}, ${scenario.metric},
                 ${JSON.stringify({ threshold: targetValue, operator: 'gte', targetPct })},
                 ${JSON.stringify({ platform: scenario.platform, value: baselineValue, measuredAtUtc: createdAt.toISOString() })},
-                ${deadline.toISOString()}, ${lockCents}, ${payoutCents},
+                ${deadline.toISOString()}, ${stakeCents}, ${payoutCents},
                 'USD_CARD', ${tier},
                 ${createdAt.toISOString()}, ${settledAt.toISOString()}
             )
         `);
 
+        // Insert contract_index for state tracking (needed by results query)
+        const currentState = def.win ? 'SETTLED_SUCCESS' : 'SETTLED_FAILURE';
+        try {
+            await db.execute(sql`
+                INSERT INTO contract_index (contract_id, current_state, is_terminal, last_event_type, last_event_at_utc)
+                VALUES (${cid}, ${currentState}, 1, ${currentState}, ${settledAt.toISOString()})
+                ON CONFLICT (contract_id) DO UPDATE SET current_state = ${currentState}, is_terminal = 1
+            `);
+        } catch (e) {
+            // contract_index table may not exist in all environments
+            console.warn('[Seed Activity] contract_index insert skipped (table may not exist)');
+        }
+
         // Insert ledger events chain
-        const events: { type: string; ts: Date; meta: Record<string, any> }[] = [
-            { type: 'CONTRACT_CREATED', ts: createdAt, meta: { simulated: true } },
-            { type: 'FUNDS_AUTHORIZED', ts: new Date(createdAt.getTime() + 60000), meta: { amountUsdCents: lockCents, paymentIntentId: 'pi_sim_' + cid.slice(0, 8) } },
-            { type: 'FUNDS_LOCKED', ts: new Date(createdAt.getTime() + 120000), meta: { amountUsdCents: lockCents } },
-            { type: 'EXECUTION_CONFIRMED', ts: new Date(createdAt.getTime() + 180000), meta: { confirmedAt: new Date(createdAt.getTime() + 180000).toISOString() } },
+        const events: { type: string; ts: Date; amountCents?: number; meta: Record<string, any> }[] = [
+            { type: 'CONTRACT_CREATED', ts: createdAt, meta: { simulated: true, title: scenario.title } },
+            { type: 'FUNDS_AUTHORIZED', ts: new Date(createdAt.getTime() + rand(30, 180) * 1000), amountCents: stakeCents, meta: { amountUsdCents: stakeCents, paymentIntentId: 'pi_sim_' + cid.slice(0, 8) } },
+            { type: 'FUNDS_LOCKED', ts: new Date(createdAt.getTime() + rand(180, 600) * 1000), amountCents: stakeCents, meta: { amountUsdCents: stakeCents } },
+            { type: 'EXECUTION_CONFIRMED', ts: new Date(createdAt.getTime() + rand(600, 1200) * 1000), amountCents: stakeCents, meta: { confirmedAt: new Date(createdAt.getTime() + 900000).toISOString() } },
         ];
 
-        // Add settlement event
-        if (isWin) {
+        if (def.win) {
             events.push({
                 type: 'SETTLED_SUCCESS',
                 ts: settledAt,
-                meta: { outcome: 'WIN', finalValue, payoutAmountCents: payoutCents }
+                amountCents: payoutCents,
+                meta: { outcome: 'WIN', finalValue, payoutAmountCents: payoutCents, platform: scenario.platform }
             });
         } else {
             events.push({
                 type: 'SETTLED_FAILURE',
                 ts: settledAt,
-                meta: { outcome: 'LOSS', finalValue, forfeitedCents: lockCents }
+                amountCents: stakeCents,
+                meta: { outcome: 'LOSS', finalValue, forfeitedCents: stakeCents, platform: scenario.platform }
             });
         }
 
@@ -166,37 +274,127 @@ export async function seedSimulatedActivity() {
                     amount_usd_cents, metadata_json, prev_event_hash, event_hash
                 ) VALUES (
                     ${eid}, ${cid}, 'SYSTEM', ${evt.type}, ${evt.ts.toISOString()},
-                    ${evt.meta?.amountUsdCents || null}, ${JSON.stringify(evt.meta)},
+                    ${evt.amountCents || null}, ${JSON.stringify(evt.meta)},
                     ${prevHash}, ${eventHash}
                 )
             `);
             prevHash = eventHash;
         }
     }
-    console.log(`[Seed Activity] Created ${contractIds.length} settled contracts`);
+    console.log(`[Seed Activity] ✅ Created ${SETTLED_CONTRACTS.length} settled solo contracts`);
 
-    // 4. Create simulated rivalries (mix of active, settled)
-    const rivalryData = [
-        { c: 0, o: 3, platform: 'X', metric: 'FOLLOWERS', key: 'x_followers', stake: 25000, days: 14, settled: true, winIdx: 0 },
-        { c: 1, o: 4, platform: 'STRIPE', metric: 'REVENUE', key: 'stripe_net_revenue', stake: 50000, days: 30, settled: true, winIdx: 4 },
-        { c: 2, o: 5, platform: 'YOUTUBE', metric: 'SUBSCRIBERS', key: 'youtube_subscribers', stake: 15000, days: 14, settled: true, winIdx: 2 },
-        { c: 6, o: 7, platform: 'SHOPIFY', metric: 'REVENUE', key: 'shopify_net_sales', stake: 100000, days: 30, settled: true, winIdx: 7 },
-        { c: 8, o: 9, platform: 'X', metric: 'FOLLOWERS', key: 'x_followers', stake: 25000, days: 14, settled: false },
-        { c: 10, o: 11, platform: 'STRIPE', metric: 'REVENUE', key: 'stripe_net_revenue', stake: 75000, days: 30, settled: false },
-        { c: 0, o: 6, platform: 'YOUTUBE', metric: 'VIEWS', key: 'youtube_views', stake: 20000, days: 14, settled: false },
+    // =========================================================================
+    // 4. IN-FLIGHT SOLO CONTRACTS — currently active, adds "live" feeling
+    // =========================================================================
+    const ACTIVE_CONTRACTS = [
+        { userIdx: 0, scenario: 5,  tier: 'STANDARD', hoursActive: 72,  stakeCents: 15000 },  // Marcus - X followers 14d, 3 days in
+        { userIdx: 3, scenario: 0,  tier: 'STANDARD', hoursActive: 168, stakeCents: 25000 },  // Natalie - Stripe revenue 14d, 7 days in
+        { userIdx: 14, scenario: 7, tier: 'ADVANCED', hoursActive: 48,  stakeCents: 50000 },  // Max - YT subs 14d, 2 days in
+        { userIdx: 6, scenario: 11, tier: 'STANDARD', hoursActive: 240, stakeCents: 20000 },  // Ryan - Shopify net sales 30d, 10 days in
     ];
 
-    for (const r of rivalryData) {
+    for (const def of ACTIVE_CONTRACTS) {
+        const cid = randomUUID();
+        contractIds.push(cid);
+
+        const userId = userIds[def.userIdx];
+        const username = SIM_USERS[def.userIdx].handle;
+        const scenario = SOLO_SCENARIOS[def.scenario];
+        const tier = def.tier as typeof TIERS[number];
+        const stakeCents = def.stakeCents;
+        const payoutCents = Math.round(stakeCents * TIER_MULTIPLIERS[tier]);
+
+        const createdAt = hoursAgo(def.hoursActive + 2);
+        const deadline = new Date(createdAt.getTime() + scenario.windowDays * 86400000);
+
+        const baselineValue = scenario.metric === 'REVENUE'
+            ? rand(100000, 400000) : rand(1000, 30000);
+        const targetPct = tier === 'STANDARD' ? rand(20, 30) : rand(30, 45);
+        const targetValue = Math.round(baselineValue * (1 + targetPct / 100));
+
+        await db.execute(sql`
+            INSERT INTO contracts (
+                id, principal_user_id, principal_identity_username,
+                platform, metric_type, condition_json, baseline_json,
+                deadline_utc, lock_amount_usd_cents, payout_amount_usd_cents,
+                funding_method, risk_tier, created_at, updated_at
+            ) VALUES (
+                ${cid}, ${userId}, ${username},
+                ${scenario.platform}, ${scenario.metric},
+                ${JSON.stringify({ threshold: targetValue, operator: 'gte', targetPct })},
+                ${JSON.stringify({ platform: scenario.platform, value: baselineValue, measuredAtUtc: createdAt.toISOString() })},
+                ${deadline.toISOString()}, ${stakeCents}, ${payoutCents},
+                'USD_CARD', ${tier},
+                ${createdAt.toISOString()}, NOW()
+            )
+        `);
+
+        try {
+            await db.execute(sql`
+                INSERT INTO contract_index (contract_id, current_state, is_terminal, last_event_type)
+                VALUES (${cid}, 'EXECUTION_CONFIRMED', 0, 'EXECUTION_CONFIRMED')
+                ON CONFLICT (contract_id) DO NOTHING
+            `);
+        } catch (e) { /* contract_index may not exist */ }
+
+        // Ledger events for active contracts (no settlement yet)
+        const events = [
+            { type: 'CONTRACT_CREATED', ts: createdAt, amountCents: null as number | null, meta: { simulated: true, title: scenario.title } },
+            { type: 'FUNDS_AUTHORIZED', ts: new Date(createdAt.getTime() + 60000), amountCents: stakeCents, meta: { amountUsdCents: stakeCents } },
+            { type: 'FUNDS_LOCKED', ts: new Date(createdAt.getTime() + 120000), amountCents: stakeCents, meta: { amountUsdCents: stakeCents } },
+            { type: 'EXECUTION_CONFIRMED', ts: new Date(createdAt.getTime() + 180000), amountCents: stakeCents, meta: { confirmedAt: new Date(createdAt.getTime() + 180000).toISOString() } },
+        ];
+
+        let prevHash = '0000000000000000000000000000000000000000000000000000000000000000';
+        for (const evt of events) {
+            const eid = randomUUID();
+            const eventHash = hashEvent(prevHash + eid + evt.type);
+            await db.execute(sql`
+                INSERT INTO ledger_events (
+                    id, contract_id, actor, event_type, timestamp_utc,
+                    amount_usd_cents, metadata_json, prev_event_hash, event_hash
+                ) VALUES (
+                    ${eid}, ${cid}, 'SYSTEM', ${evt.type}, ${evt.ts.toISOString()},
+                    ${evt.amountCents || null}, ${JSON.stringify(evt.meta)},
+                    ${prevHash}, ${eventHash}
+                )
+            `);
+            prevHash = eventHash;
+        }
+    }
+    console.log(`[Seed Activity] ✅ Created ${ACTIVE_CONTRACTS.length} in-flight solo contracts`);
+
+    // =========================================================================
+    // 5. RIVALRIES — Head-to-head duels
+    // =========================================================================
+    const RIVALRIES = [
+        // Settled rivalries
+        { c: 0, o: 3, platform: 'X', metric: 'FOLLOWERS', key: 'x_followers', stake: 25000, days: 14, settled: true, winIdx: 0, daysBack: 8 },
+        { c: 1, o: 4, platform: 'STRIPE', metric: 'REVENUE', key: 'stripe_net_revenue', stake: 50000, days: 30, settled: true, winIdx: 4, daysBack: 12 },
+        { c: 2, o: 5, platform: 'YOUTUBE', metric: 'SUBSCRIBERS', key: 'youtube_subscribers', stake: 15000, days: 14, settled: true, winIdx: 2, daysBack: 18 },
+        { c: 8, o: 9, platform: 'SHOPIFY', metric: 'REVENUE', key: 'shopify_net_sales', stake: 40000, days: 30, settled: true, winIdx: 9, daysBack: 22 },
+        
+        // Active rivalries (in-flight)
+        { c: 6, o: 7, platform: 'X', metric: 'FOLLOWERS', key: 'x_followers', stake: 25000, days: 14, settled: false, daysBack: 3 },
+        { c: 10, o: 11, platform: 'STRIPE', metric: 'REVENUE', key: 'stripe_net_revenue', stake: 75000, days: 30, settled: false, daysBack: 5 },
+        { c: 0, o: 12, platform: 'YOUTUBE', metric: 'VIEWS', key: 'youtube_30day_views', stake: 20000, days: 14, settled: false, daysBack: 2 },
+        
+        // Pending acceptance (just issued)
+        { c: 14, o: 15, platform: 'STRIPE', metric: 'REVENUE', key: 'stripe_net_revenue', stake: 30000, days: 14, settled: false, daysBack: 0, pending: true },
+    ];
+
+    let rivalryCount = 0;
+    for (const r of RIVALRIES) {
         const rid = randomUUID();
         const challengerId = userIds[r.c];
         const opponentId = userIds[r.o];
-        const daysBack = r.settled ? randomBetween(5, 25) : randomBetween(1, 5);
-        const issuedAt = daysAgo(daysBack + r.days);
-        const acceptedAt = new Date(issuedAt.getTime() + randomBetween(1, 24) * 3600000);
-        const fundedAt = new Date(acceptedAt.getTime() + randomBetween(1, 12) * 3600000);
-        const activatedAt = new Date(fundedAt.getTime() + 60000);
-        const deadlineUtc = new Date(activatedAt.getTime() + r.days * 86400000);
-        const settledAt = r.settled ? new Date(deadlineUtc.getTime() + 3600000) : null;
+        const daysBack = r.daysBack;
+        const issuedAt = daysAgo(daysBack + (r.settled ? r.days : 0));
+        const acceptedAt = (r as any).pending ? null : new Date(issuedAt.getTime() + rand(2, 18) * 3600000);
+        const fundedAt = acceptedAt ? new Date(acceptedAt.getTime() + rand(1, 8) * 3600000) : null;
+        const activatedAt = fundedAt ? new Date(fundedAt.getTime() + 60000) : null;
+        const deadlineUtc = activatedAt ? new Date(activatedAt.getTime() + r.days * 86400000) : null;
+        const settledAt = r.settled && deadlineUtc ? new Date(deadlineUtc.getTime() + rand(1, 3) * 3600000) : null;
         const winnerId = r.settled && r.winIdx !== undefined ? userIds[r.winIdx] : null;
         const poolCents = r.stake * 2;
         const feeCents = Math.round(poolCents * 0.12);
@@ -219,53 +417,58 @@ export async function seedSimulatedActivity() {
                 ${r.stake}, ${r.days},
                 72, 48, 1200,
                 '15', 'DUEL',
-                ${issuedAt.toISOString()}, ${acceptedAt.toISOString()}, ${fundedAt.toISOString()}, ${activatedAt.toISOString()},
-                ${deadlineUtc.toISOString()}, ${settledAt?.toISOString() || null}, ${winnerId},
+                ${issuedAt.toISOString()}, ${acceptedAt?.toISOString() || null}, ${fundedAt?.toISOString() || null}, ${activatedAt?.toISOString() || null},
+                ${deadlineUtc?.toISOString() || null}, ${settledAt?.toISOString() || null}, ${winnerId},
                 ${r.settled ? JSON.stringify({ winnerPayout, feeCents, pool: poolCents }) : null},
                 ${issuedAt.toISOString()}, ${(settledAt || new Date()).toISOString()}
             )
         `);
 
         // Rivalry participants
-        const cBaselineVal = r.metric === 'REVENUE' ? randomBetween(100000, 400000) : randomBetween(2000, 40000);
-        const oBaselineVal = r.metric === 'REVENUE' ? randomBetween(100000, 400000) : randomBetween(2000, 40000);
+        if (!((r as any).pending)) {
+            const cBaselineVal = r.metric === 'REVENUE' ? rand(100000, 400000) : rand(2000, 40000);
+            const oBaselineVal = r.metric === 'REVENUE' ? rand(100000, 400000) : rand(2000, 40000);
 
-        for (const side of [{ uid: challengerId, role: 'challenger', bv: cBaselineVal }, { uid: opponentId, role: 'opponent', bv: oBaselineVal }]) {
-            const fv = r.settled
-                ? Math.round(side.bv * (1 + (Math.random() * 0.4)))
-                : null;
-            const pctDelta = fv ? (((fv - side.bv) / side.bv) * 100).toFixed(2) : null;
-            const isWinner = winnerId === side.uid;
+            for (const side of [
+                { uid: challengerId, role: 'challenger', bv: cBaselineVal },
+                { uid: opponentId, role: 'opponent', bv: oBaselineVal }
+            ]) {
+                const fv = r.settled
+                    ? Math.round(side.bv * (1 + (Math.random() * 0.35)))
+                    : null;
+                const pctDelta = fv ? (((fv - side.bv) / side.bv) * 100).toFixed(2) : null;
+                const isWinner = winnerId === side.uid;
 
-            await db.execute(sql`
-                INSERT INTO rivalry_participants (
-                    id, rivalry_id, user_id, role, funded, funded_at,
-                    baseline_value, baseline_json, baseline_snapshot_at,
-                    final_value, final_json, final_snapshot_at,
-                    absolute_delta, percentage_delta,
-                    outcome, payout_cents
-                ) VALUES (
-                    ${randomUUID()}, ${rid}, ${side.uid}, ${side.role}, true, ${fundedAt.toISOString()},
-                    ${side.bv.toString()}, ${JSON.stringify({ value: side.bv })}, ${activatedAt.toISOString()},
-                    ${fv?.toString() || null}, ${fv ? JSON.stringify({ value: fv }) : null}, ${settledAt?.toISOString() || null},
-                    ${fv ? (fv - side.bv).toString() : null}, ${pctDelta},
-                    ${r.settled ? (isWinner ? 'WIN' : 'LOSS') : null},
-                    ${r.settled ? (isWinner ? winnerPayout : 0) : null}
-                )
-            `);
+                await db.execute(sql`
+                    INSERT INTO rivalry_participants (
+                        id, rivalry_id, user_id, role, funded, funded_at,
+                        baseline_value, baseline_json, baseline_snapshot_at,
+                        final_value, final_json, final_snapshot_at,
+                        absolute_delta, percentage_delta,
+                        outcome, payout_cents
+                    ) VALUES (
+                        ${randomUUID()}, ${rid}, ${side.uid}, ${side.role}, true, ${fundedAt?.toISOString() || null},
+                        ${side.bv.toString()}, ${JSON.stringify({ value: side.bv })}, ${activatedAt?.toISOString() || null},
+                        ${fv?.toString() || null}, ${fv ? JSON.stringify({ value: fv }) : null}, ${settledAt?.toISOString() || null},
+                        ${fv ? (fv - side.bv).toString() : null}, ${pctDelta},
+                        ${r.settled ? (isWinner ? 'WIN' : 'LOSS') : null},
+                        ${r.settled ? (isWinner ? winnerPayout : 0) : null}
+                    )
+                `);
+            }
         }
 
         // Rivalry ledger events
-        const rEvents = [
+        const rEvents: { type: string; ts: Date; uid: string | null; amount?: number }[] = [
             { type: 'CHALLENGE_ISSUED', ts: issuedAt, uid: challengerId },
-            { type: 'CHALLENGE_ACCEPTED', ts: acceptedAt, uid: opponentId },
-            { type: 'FUNDS_LOCKED', ts: fundedAt, uid: challengerId },
-            { type: 'FUNDS_LOCKED', ts: new Date(fundedAt.getTime() + 60000), uid: opponentId },
-            { type: 'RIVALRY_ACTIVATED', ts: activatedAt, uid: null },
         ];
-        if (r.settled) {
-            rEvents.push({ type: 'RIVALRY_SETTLED', ts: settledAt!, uid: null });
+        if (acceptedAt) rEvents.push({ type: 'CHALLENGE_ACCEPTED', ts: acceptedAt, uid: opponentId });
+        if (fundedAt) {
+            rEvents.push({ type: 'FUNDS_LOCKED', ts: fundedAt, uid: challengerId, amount: r.stake });
+            rEvents.push({ type: 'FUNDS_LOCKED', ts: new Date(fundedAt.getTime() + 60000), uid: opponentId, amount: r.stake });
         }
+        if (activatedAt) rEvents.push({ type: 'RIVALRY_ACTIVATED', ts: activatedAt, uid: null });
+        if (settledAt) rEvents.push({ type: 'RIVALRY_SETTLED', ts: settledAt, uid: null, amount: poolCents });
 
         let rPrevHash = '0000000000000000000000000000000000000000000000000000000000000000';
         for (const evt of rEvents) {
@@ -278,7 +481,7 @@ export async function seedSimulatedActivity() {
                     metadata_json, prev_event_hash, event_hash
                 ) VALUES (
                     ${eid}, ${rid}, 'SYSTEM', ${evt.type}, ${evt.uid},
-                    ${evt.ts.toISOString()}, ${evt.type === 'FUNDS_LOCKED' ? r.stake : null},
+                    ${evt.ts.toISOString()}, ${evt.amount || null},
                     ${JSON.stringify({ simulated: true })},
                     ${rPrevHash}, ${eventHash}
                 )
@@ -286,12 +489,20 @@ export async function seedSimulatedActivity() {
             rPrevHash = eventHash;
         }
 
-        // Metric snapshots for active rivalries (simulate tracking)
-        if (!r.settled) {
-            for (const side of [{ uid: challengerId, bv: cBaselineVal }, { uid: opponentId, bv: oBaselineVal }]) {
-                for (let d = 0; d < Math.min(daysBack, r.days); d++) {
-                    const fetchedAt = new Date(activatedAt.getTime() + d * 86400000 + randomBetween(0, 43200000));
-                    const growthPct = (d / r.days) * (10 + Math.random() * 20);
+        // Metric snapshots for active (non-settled) rivalries
+        if (!r.settled && activatedAt && !((r as any).pending)) {
+            const cBaselineVal = r.metric === 'REVENUE' ? rand(100000, 400000) : rand(2000, 40000);
+            const oBaselineVal = r.metric === 'REVENUE' ? rand(100000, 400000) : rand(2000, 40000);
+
+            for (const side of [
+                { uid: challengerId, bv: cBaselineVal },
+                { uid: opponentId, bv: oBaselineVal }
+            ]) {
+                const hoursIn = daysBack * 24;
+                const snapshotCount = Math.min(Math.floor(hoursIn / 24), r.days);
+                for (let d = 0; d < snapshotCount; d++) {
+                    const fetchedAt = new Date(activatedAt.getTime() + d * 86400000 + rand(0, 43200000));
+                    const growthPct = (d / r.days) * (5 + Math.random() * 18);
                     const value = Math.round(side.bv * (1 + growthPct / 100));
                     await db.execute(sql`
                         INSERT INTO rivalry_metric_snapshots (
@@ -305,14 +516,35 @@ export async function seedSimulatedActivity() {
                 }
             }
         }
+
+        rivalryCount++;
     }
 
-    console.log(`[Seed Activity] Created ${rivalryData.length} rivalries (${rivalryData.filter(r => r.settled).length} settled, ${rivalryData.filter(r => !r.settled).length} active)`);
+    const activeRivalries = RIVALRIES.filter(r => !r.settled).length;
+    console.log(`[Seed Activity] ✅ Created ${rivalryCount} rivalries (${RIVALRIES.filter(r => r.settled).length} settled, ${activeRivalries} active/pending)`);
 
-    return {
+    const summary = {
         users: userIds.length,
         contracts: contractIds.length,
-        rivalries: rivalryData.length,
-        activeRivalries: rivalryData.filter(r => !r.settled).length,
+        settledContracts: SETTLED_CONTRACTS.length,
+        activeContracts: ACTIVE_CONTRACTS.length,
+        rivalries: rivalryCount,
+        activeRivalries,
     };
+
+    console.log('[Seed Activity] 🎉 Seeding complete!', summary);
+    return summary;
+}
+
+// Run if main
+if (process.argv[1] === import.meta.filename) {
+    seedSimulatedActivity()
+        .then((result) => {
+            console.log('[Seed Activity] Result:', result);
+            process.exit(0);
+        })
+        .catch(e => {
+            console.error('[Seed Activity] FATAL:', e);
+            process.exit(1);
+        });
 }

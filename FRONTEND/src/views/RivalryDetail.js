@@ -799,7 +799,7 @@ export async function initRivalryDetail() {
         <div class="rvd-hero">
             <div class="rvd-hero-inner">
                 <div class="rvd-breadcrumb">
-                    <a href="#/rivalry">Rivalry</a> <span>/ ${rivalry.id.substring(0, 12)}…</span>
+                    <a href="#" onclick="event.preventDefault();window.router.navigate('/rivalry')">Rivalry</a> <span>/ ${rivalry.id.substring(0, 12)}…</span>
                 </div>
 
                 <div class="rvd-pool-hero">
@@ -1487,7 +1487,7 @@ export async function initRivalryDetail() {
                 e.target.disabled = true; e.target.textContent = 'DECLINING...';
                 try {
                     const res = await api.declineRivalry(id);
-                    if (res.ok) { await showAlert('Challenge declined.', { type: 'info', title: 'Declined' }); window.location.hash = '/rivalry'; }
+                    if (res.ok) { await showAlert('Challenge declined.', { type: 'info', title: 'Declined' }); window.router.navigate('/rivalry'); }
                     else showAlert(res.error || 'Failed to decline', { type: 'error' });
                 } catch (err) { showAlert('Error: ' + err.message, { type: 'error' }); }
                 e.target.disabled = false; e.target.textContent = 'DECLINE';

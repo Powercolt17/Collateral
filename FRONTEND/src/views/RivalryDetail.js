@@ -689,8 +689,8 @@ export async function initRivalryDetail() {
         const targetPct = parseFloat(r.targetGrowthPct || r.rivalry?.targetGrowthPct || 15);
         const challBaseline = parseFloat(challPart?.baselineValue || 0);
         const oppBaseline = parseFloat(oppPart?.baselineValue || 0);
-        const challGrowth = parseFloat(challPart?.growthPercent || challPart?.percentageDelta || 0);
-        const oppGrowth = parseFloat(oppPart?.growthPercent || oppPart?.percentageDelta || 0);
+        const challGrowth = parseFloat(challPart?.percentageDelta || challPart?.percentage_delta || challPart?.growthPercent || 0);
+        const oppGrowth = parseFloat(oppPart?.percentageDelta || oppPart?.percentage_delta || oppPart?.growthPercent || 0);
         const challCurrentValue = challBaseline > 0 ? Math.round(challBaseline * (1 + challGrowth / 100)) : 0;
         const oppCurrentValue = oppBaseline > 0 ? Math.round(oppBaseline * (1 + oppGrowth / 100)) : 0;
         const challTargetValue = challBaseline > 0 ? Math.round(challBaseline * (1 + targetPct / 100)) : 0;
@@ -756,7 +756,7 @@ export async function initRivalryDetail() {
         container.innerHTML = `
             <div class="rvd-loading">
                 <div class="rvd-loading-text">RIVALRY NOT FOUND</div>
-                <a href="#/rivalry" style="color:#5C1A1B; font-size:13px; margin-top:16px; display:inline-block;">← Back to Rivalries</a>
+                <a href="#" onclick="event.preventDefault();window.router.navigate('/rivalry')" style="color:#5C1A1B; font-size:13px; margin-top:16px; display:inline-block;">← Back to Rivalries</a>
             </div>`;
         return;
     }

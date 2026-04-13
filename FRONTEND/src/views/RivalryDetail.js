@@ -1421,7 +1421,7 @@ export async function initRivalryDetail(params) {
     // ── Live Auto-Refresh (60s polling) ──
     if (rivalry.status === 'active' && rivalry._rawState && !['SETTLED','DRAW','DECLINED','EXPIRED','CANCELLED'].includes(rivalry._rawState)) {
         let pollCount = 0;
-        const pollInterval = setInterval(async () => {
+        window._rvdPollInterval = setInterval(async () => {
             pollCount++;
             try {
                 // Update the LIVE badge
@@ -1452,9 +1452,6 @@ export async function initRivalryDetail(params) {
                 console.warn('[RivalryDetail] Metric poll failed:', err.message);
             }
         }, 60000); // 60 seconds
-
-        // Cleanup on navigation
-        window.addEventListener('hashchange', () => clearInterval(pollInterval), { once: true });
     }
 
     // ── Action Bar — accept/decline/fund ──
@@ -1543,6 +1540,10 @@ export async function initRivalryDetail(params) {
     }
 
     // ── Live Countdown Timer ──
+    // Clear any previous countdown/poll intervals (prevents stacking on re-render)
+    if (window._rvdCdInterval) { clearInterval(window._rvdCdInterval); window._rvdCdInterval = null; }
+    if (window._rvdPollInterval) { clearInterval(window._rvdPollInterval); window._rvdPollInterval = null; }
+
     if (rivalry.status !== 'settled' && rivalry.daysLeft > 0) {
         // Use canonical deadline from API — never recompute
         const endTime = rivalry._deadlineUtc ? new Date(rivalry._deadlineUtc).getTime() : new Date(new Date(rivalry._activatedAt || Date.now()).getTime() + (rivalry.totalDays) * 86400000).getTime();
@@ -1570,7 +1571,8 @@ export async function initRivalryDetail(params) {
             if (cdEl && days <= 3) cdEl.classList.add('urgent');
 
             if (diff <= 0) {
-                clearInterval(cdInterval);
+                clearInterval(window._rvdCdInterval);
+                window._rvdCdInterval = null;
                 if (dEl) dEl.textContent = '0';
                 if (hEl) hEl.textContent = '00';
                 if (mEl) mEl.textContent = '00';
@@ -1578,7 +1580,6 @@ export async function initRivalryDetail(params) {
             }
         }
         updateCountdown();
-        const cdInterval = setInterval(updateCountdown, 1000);
-        window.addEventListener('hashchange', () => clearInterval(cdInterval), { once: true });
+        window._rvdCdInterval = setInterval(updateCountdown, 1000);
     }
 }

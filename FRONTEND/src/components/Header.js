@@ -128,8 +128,8 @@ export function renderHeader(currentRoute) {
                 gap: 3px;
             }
             .ch-logo-icon {
-                width: 34px;
-                height: 34px;
+                width: 28px;
+                height: 28px;
                 flex-shrink: 0;
                 position: relative;
             }
@@ -750,25 +750,11 @@ export function renderHeader(currentRoute) {
                 <!-- Logo -->
                 <a href="#" onclick="window.router.navigate('/overview'); return false;" class="ch-logo">
                     <div class="ch-logo-icon">
-                        <svg viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:100%;">
-                            <defs>
-                                <clipPath id="hdr-ring-clip">
-                                    <rect x="-55" y="1" width="110" height="54"/>
-                                </clipPath>
-                            </defs>
-                            <g transform="translate(60, 60)">
-                                <!-- Back ring (behind node) -->
-                                <ellipse cx="0" cy="0" rx="46" ry="11" fill="none" stroke="#5C1A1B" stroke-width="3.5" transform="rotate(-32)" opacity="0.2"/>
-                                <!-- The Node — locked capital -->
-                                <circle cx="0" cy="0" r="18" fill="#5C1A1B"/>
-                                <circle cx="0" cy="0" r="18" fill="none" stroke="#3B0001" stroke-width="2"/>
-                                <!-- Inner lock lines — crosshair = target locked -->
-                                <line x1="0" y1="-9" x2="0" y2="9" stroke="#ffffff" stroke-width="1.5" opacity="0.3"/>
-                                <line x1="-9" y1="0" x2="9" y2="0" stroke="#ffffff" stroke-width="1.5" opacity="0.3"/>
-                                <!-- Front ring — the binding band -->
-                                <g clip-path="url(#hdr-ring-clip)">
-                                    <ellipse cx="0" cy="0" rx="46" ry="11" fill="none" stroke="#5C1A1B" stroke-width="5" transform="rotate(-32)"/>
-                                </g>
+                        <svg viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:100%;overflow:visible;">
+                            <g transform="translate(40,40)">
+                                <ellipse cx="0" cy="0" rx="18" ry="10.5" fill="none" stroke="#752122" stroke-width="3.2" transform="rotate(-18)"/>
+                                <circle cx="10" cy="-6" r="3.2" fill="#752122"/>
+                                <rect x="-20" y="-1.2" width="6" height="2.4" fill="white" transform="rotate(-18)"/>
                             </g>
                         </svg>
                     </div>
@@ -822,7 +808,7 @@ export function renderHeader(currentRoute) {
         <div id="mobile-menu" class="pnl-drawer">
             <div class="pnl-header">
                 <div class="pnl-header-left">
-                    <svg viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg" class="pnl-header-logo"><defs><clipPath id="pnl-ring-clip"><rect x="-55" y="1" width="110" height="54"/></clipPath></defs><g transform="translate(60, 60)"><ellipse cx="0" cy="0" rx="46" ry="11" fill="none" stroke="#5C1A1B" stroke-width="3.5" transform="rotate(-32)" opacity="0.2"/><circle cx="0" cy="0" r="18" fill="#5C1A1B"/><circle cx="0" cy="0" r="18" fill="none" stroke="#3B0001" stroke-width="2"/><line x1="0" y1="-9" x2="0" y2="9" stroke="#ffffff" stroke-width="1.5" opacity="0.3"/><line x1="-9" y1="0" x2="9" y2="0" stroke="#ffffff" stroke-width="1.5" opacity="0.3"/><g clip-path="url(#pnl-ring-clip)"><ellipse cx="0" cy="0" rx="46" ry="11" fill="none" stroke="#5C1A1B" stroke-width="5" transform="rotate(-32)"/></g></g></svg>
+                    <svg viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg" class="pnl-header-logo" style="overflow:visible;"><g transform="translate(40,40)"><ellipse cx="0" cy="0" rx="18" ry="10.5" fill="none" stroke="#752122" stroke-width="3.2" transform="rotate(-18)"/><circle cx="10" cy="-6" r="3.2" fill="#752122"/><rect x="-20" y="-1.2" width="6" height="2.4" fill="white" transform="rotate(-18)"/></g></svg>
                     <span class="pnl-header-title">Menu</span>
                 </div>
                 <button onclick="window.app.closeMobileMenu()" class="pnl-close" aria-label="Close">

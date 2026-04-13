@@ -750,11 +750,16 @@ export function renderHeader(currentRoute) {
                 <!-- Logo -->
                 <a href="#" onclick="window.router.navigate('/overview'); return false;" class="ch-logo">
                     <div class="ch-logo-icon">
-                        <svg viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:100%;overflow:visible;">
-                            <g transform="translate(40,40)">
-                                <ellipse cx="0" cy="0" rx="18" ry="10.5" fill="none" stroke="#752122" stroke-width="3.2" transform="rotate(-18)"/>
-                                <circle cx="10" cy="-6" r="3.2" fill="#752122"/>
-                                <rect x="-20" y="-1.2" width="6" height="2.4" fill="white" transform="rotate(-18)"/>
+                        <svg viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:100%;overflow:visible;">
+                            <defs>
+                                <mask id="hdr-ringCut">
+                                    <rect width="100%" height="100%" fill="white"/>
+                                    <rect x="2.5" y="19.4" width="6.8" height="2.6" rx="1.3" fill="black" transform="rotate(-18 2.5 19.4)"/>
+                                </mask>
+                            </defs>
+                            <g transform="translate(10,2)">
+                                <ellipse cx="12" cy="20" rx="11.5" ry="6.6" transform="rotate(-18 12 20)" fill="none" stroke="#752122" stroke-width="2.8" mask="url(#hdr-ringCut)" stroke-linecap="round"/>
+                                <circle cx="18.8" cy="15.8" r="3.1" fill="#752122"/>
                             </g>
                         </svg>
                     </div>
@@ -808,7 +813,7 @@ export function renderHeader(currentRoute) {
         <div id="mobile-menu" class="pnl-drawer">
             <div class="pnl-header">
                 <div class="pnl-header-left">
-                    <svg viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg" class="pnl-header-logo" style="overflow:visible;"><g transform="translate(40,40)"><ellipse cx="0" cy="0" rx="18" ry="10.5" fill="none" stroke="#752122" stroke-width="3.2" transform="rotate(-18)"/><circle cx="10" cy="-6" r="3.2" fill="#752122"/><rect x="-20" y="-1.2" width="6" height="2.4" fill="white" transform="rotate(-18)"/></g></svg>
+                    <svg viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg" class="pnl-header-logo" style="overflow:visible;"><defs><mask id="pnl-ringCut"><rect width="100%" height="100%" fill="white"/><rect x="2.5" y="19.4" width="6.8" height="2.6" rx="1.3" fill="black" transform="rotate(-18 2.5 19.4)"/></mask></defs><g transform="translate(10,2)"><ellipse cx="12" cy="20" rx="11.5" ry="6.6" transform="rotate(-18 12 20)" fill="none" stroke="#752122" stroke-width="2.8" mask="url(#pnl-ringCut)" stroke-linecap="round"/><circle cx="18.8" cy="15.8" r="3.1" fill="#752122"/></g></svg>
                     <span class="pnl-header-title">Menu</span>
                 </div>
                 <button onclick="window.app.closeMobileMenu()" class="pnl-close" aria-label="Close">

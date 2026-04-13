@@ -119,19 +119,11 @@ export function renderHeader(currentRoute) {
                 gap: 64px;
             }
 
-            /* ── Wordmark ── */
             .ch-logo {
                 display: inline-flex;
                 align-items: center;
                 text-decoration: none;
                 flex-shrink: 0;
-                gap: 10px;
-            }
-            .ch-logo-icon {
-                width: 36px;
-                height: 36px;
-                flex-shrink: 0;
-                position: relative;
             }
             .ch-logo-wordmark {
                 font-size: 15.5px;
@@ -749,22 +741,6 @@ export function renderHeader(currentRoute) {
             <div class="ch-header-inner">
                 <!-- Logo -->
                 <a href="#" onclick="window.router.navigate('/overview'); return false;" class="ch-logo">
-                    <div class="ch-logo-icon">
-                        <svg viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:100%;">
-                            <defs>
-                                <clipPath id="hdr-ring-clip">
-                                    <rect x="-50" y="0" width="100" height="50"/>
-                                </clipPath>
-                            </defs>
-                            <g transform="translate(60, 60)">
-                                <ellipse cx="0" cy="0" rx="40" ry="12" fill="none" stroke="#8b2a2a" stroke-width="3" transform="rotate(-25)" opacity="0.35"/>
-                                <circle cx="0" cy="0" r="22" fill="#ffffff" stroke="#8b2a2a" stroke-width="3.5"/>
-                                <g clip-path="url(#hdr-ring-clip)">
-                                    <ellipse cx="0" cy="0" rx="40" ry="12" fill="none" stroke="#8b2a2a" stroke-width="3" transform="rotate(-25)"/>
-                                </g>
-                            </g>
-                        </svg>
-                    </div>
                     <span class="ch-logo-wordmark">COLLATERAL</span>
                 </a>
 
@@ -815,7 +791,6 @@ export function renderHeader(currentRoute) {
         <div id="mobile-menu" class="pnl-drawer">
             <div class="pnl-header">
                 <div class="pnl-header-left">
-                    <svg viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg" class="pnl-header-logo"><defs><clipPath id="pnl-ring-clip"><rect x="-50" y="0" width="100" height="50"/></clipPath></defs><g transform="translate(60, 60)"><ellipse cx="0" cy="0" rx="40" ry="12" fill="none" stroke="#8b2a2a" stroke-width="3" transform="rotate(-25)" opacity="0.35"/><circle cx="0" cy="0" r="22" fill="#ffffff" stroke="#8b2a2a" stroke-width="3.5"/><g clip-path="url(#pnl-ring-clip)"><ellipse cx="0" cy="0" rx="40" ry="12" fill="none" stroke="#8b2a2a" stroke-width="3" transform="rotate(-25)"/></g></g></svg>
                     <span class="pnl-header-title">Menu</span>
                 </div>
                 <button onclick="window.app.closeMobileMenu()" class="pnl-close" aria-label="Close">

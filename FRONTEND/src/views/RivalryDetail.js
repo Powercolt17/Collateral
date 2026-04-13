@@ -658,13 +658,12 @@ export function renderRivalryDetail() {
     `;
 }
 
-export async function initRivalryDetail() {
+export async function initRivalryDetail(params) {
     const container = document.getElementById('rvd-container');
     if (!container) return;
 
-    // Extract rivalry ID from hash-based URL (#/rivalry/RV-001)
-    const hash = window.location.hash || '';
-    const id = hash.replace('#', '').split('/rivalry/')[1] || '';
+    // Extract rivalry ID from router params (History API) or fallback to pathname
+    const id = params?.id || window.location.pathname.split('/rivalry/')[1] || '';
 
     // ── Maps ──
     const STATE_TO_STATUS = {

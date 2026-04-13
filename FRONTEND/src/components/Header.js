@@ -125,20 +125,20 @@ export function renderHeader(currentRoute) {
                 align-items: center;
                 text-decoration: none;
                 flex-shrink: 0;
-                gap: 4px;
+                gap: 2px;
             }
             .ch-logo-icon {
-                width: 48px;
-                height: 48px;
+                width: 38px;
+                height: 38px;
                 flex-shrink: 0;
                 position: relative;
             }
             .ch-logo-wordmark {
-                font-size: 15.5px;
-                font-weight: 700;
-                color: #111111;
-                letter-spacing: 0.14em;
-                font-family: 'Sora', 'IBM Plex Sans', 'Sora', 'Helvetica Neue', -apple-system, sans-serif;
+                font-size: 16px;
+                font-weight: 800;
+                color: #0a0a0a;
+                letter-spacing: 0.08em;
+                font-family: 'Sora', 'IBM Plex Sans', 'Helvetica Neue', -apple-system, sans-serif;
                 text-transform: uppercase;
                 line-height: 1;
                 margin: 0;
@@ -753,14 +753,19 @@ export function renderHeader(currentRoute) {
                         <svg viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:100%;">
                             <defs>
                                 <clipPath id="hdr-ring-clip">
-                                    <rect x="-50" y="0" width="100" height="50"/>
+                                    <rect x="-55" y="0" width="110" height="55"/>
                                 </clipPath>
                             </defs>
                             <g transform="translate(60, 60)">
-                                <ellipse cx="0" cy="0" rx="40" ry="12" fill="none" stroke="#5C1A1B" stroke-width="3.5" transform="rotate(-25)" opacity="0.35"/>
-                                <circle cx="0" cy="0" r="22" fill="#ffffff" stroke="#5C1A1B" stroke-width="4"/>
+                                <!-- Back ring shadow -->
+                                <ellipse cx="0" cy="0" rx="44" ry="13" fill="none" stroke="#5C1A1B" stroke-width="4" transform="rotate(-35)" opacity="0.25"/>
+                                <!-- Filled planet body — the locked node -->
+                                <circle cx="0" cy="0" r="20" fill="#5C1A1B" stroke="none"/>
+                                <!-- Planet edge highlight -->
+                                <circle cx="0" cy="0" r="20" fill="none" stroke="#3B0001" stroke-width="2.5"/>
+                                <!-- Front ring (clipped to bottom half) -->
                                 <g clip-path="url(#hdr-ring-clip)">
-                                    <ellipse cx="0" cy="0" rx="40" ry="12" fill="none" stroke="#5C1A1B" stroke-width="3.5" transform="rotate(-25)"/>
+                                    <ellipse cx="0" cy="0" rx="44" ry="13" fill="none" stroke="#5C1A1B" stroke-width="5" transform="rotate(-35)"/>
                                 </g>
                             </g>
                         </svg>
@@ -815,7 +820,7 @@ export function renderHeader(currentRoute) {
         <div id="mobile-menu" class="pnl-drawer">
             <div class="pnl-header">
                 <div class="pnl-header-left">
-                    <svg viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg" class="pnl-header-logo"><defs><clipPath id="pnl-ring-clip"><rect x="-50" y="0" width="100" height="50"/></clipPath></defs><g transform="translate(60, 60)"><ellipse cx="0" cy="0" rx="40" ry="12" fill="none" stroke="#5C1A1B" stroke-width="3.5" transform="rotate(-25)" opacity="0.35"/><circle cx="0" cy="0" r="22" fill="#ffffff" stroke="#5C1A1B" stroke-width="4"/><g clip-path="url(#pnl-ring-clip)"><ellipse cx="0" cy="0" rx="40" ry="12" fill="none" stroke="#5C1A1B" stroke-width="3.5" transform="rotate(-25)"/></g></g></svg>
+                    <svg viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg" class="pnl-header-logo"><defs><clipPath id="pnl-ring-clip"><rect x="-55" y="0" width="110" height="55"/></clipPath></defs><g transform="translate(60, 60)"><ellipse cx="0" cy="0" rx="44" ry="13" fill="none" stroke="#5C1A1B" stroke-width="4" transform="rotate(-35)" opacity="0.25"/><circle cx="0" cy="0" r="20" fill="#5C1A1B" stroke="none"/><circle cx="0" cy="0" r="20" fill="none" stroke="#3B0001" stroke-width="2.5"/><g clip-path="url(#pnl-ring-clip)"><ellipse cx="0" cy="0" rx="44" ry="13" fill="none" stroke="#5C1A1B" stroke-width="5" transform="rotate(-35)"/></g></g></svg>
                     <span class="pnl-header-title">Menu</span>
                 </div>
                 <button onclick="window.app.closeMobileMenu()" class="pnl-close" aria-label="Close">

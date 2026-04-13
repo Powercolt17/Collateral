@@ -128,8 +128,8 @@ export function renderHeader(currentRoute) {
                 gap: 10px;
             }
             .ch-logo-icon {
-                width: 36px;
-                height: 36px;
+                width: 32px;
+                height: 32px;
                 flex-shrink: 0;
                 position: relative;
             }
@@ -757,10 +757,10 @@ export function renderHeader(currentRoute) {
                                 </clipPath>
                             </defs>
                             <g transform="translate(60, 60)">
-                                <ellipse cx="0" cy="0" rx="40" ry="12" fill="none" stroke="#8b2a2a" stroke-width="3" transform="rotate(-25)" opacity="0.35"/>
-                                <circle cx="0" cy="0" r="22" fill="#ffffff" stroke="#8b2a2a" stroke-width="3.5"/>
+                                <ellipse cx="0" cy="0" rx="40" ry="12" fill="none" stroke="#5C1A1B" stroke-width="3.5" transform="rotate(-25)" opacity="0.35"/>
+                                <circle cx="0" cy="0" r="22" fill="#ffffff" stroke="#5C1A1B" stroke-width="4"/>
                                 <g clip-path="url(#hdr-ring-clip)">
-                                    <ellipse cx="0" cy="0" rx="40" ry="12" fill="none" stroke="#8b2a2a" stroke-width="3" transform="rotate(-25)"/>
+                                    <ellipse cx="0" cy="0" rx="40" ry="12" fill="none" stroke="#5C1A1B" stroke-width="3.5" transform="rotate(-25)"/>
                                 </g>
                             </g>
                         </svg>
@@ -815,7 +815,7 @@ export function renderHeader(currentRoute) {
         <div id="mobile-menu" class="pnl-drawer">
             <div class="pnl-header">
                 <div class="pnl-header-left">
-                    <svg viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg" class="pnl-header-logo"><defs><clipPath id="pnl-ring-clip"><rect x="-50" y="0" width="100" height="50"/></clipPath></defs><g transform="translate(60, 60)"><ellipse cx="0" cy="0" rx="40" ry="12" fill="none" stroke="#8b2a2a" stroke-width="3" transform="rotate(-25)" opacity="0.35"/><circle cx="0" cy="0" r="22" fill="#ffffff" stroke="#8b2a2a" stroke-width="3.5"/><g clip-path="url(#pnl-ring-clip)"><ellipse cx="0" cy="0" rx="40" ry="12" fill="none" stroke="#8b2a2a" stroke-width="3" transform="rotate(-25)"/></g></g></svg>
+                    <svg viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg" class="pnl-header-logo"><defs><clipPath id="pnl-ring-clip"><rect x="-50" y="0" width="100" height="50"/></clipPath></defs><g transform="translate(60, 60)"><ellipse cx="0" cy="0" rx="40" ry="12" fill="none" stroke="#5C1A1B" stroke-width="3.5" transform="rotate(-25)" opacity="0.35"/><circle cx="0" cy="0" r="22" fill="#ffffff" stroke="#5C1A1B" stroke-width="4"/><g clip-path="url(#pnl-ring-clip)"><ellipse cx="0" cy="0" rx="40" ry="12" fill="none" stroke="#5C1A1B" stroke-width="3.5" transform="rotate(-25)"/></g></g></svg>
                     <span class="pnl-header-title">Menu</span>
                 </div>
                 <button onclick="window.app.closeMobileMenu()" class="pnl-close" aria-label="Close">

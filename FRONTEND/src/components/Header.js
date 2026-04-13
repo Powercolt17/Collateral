@@ -122,10 +122,10 @@ export function renderHeader(currentRoute) {
             /* ── Wordmark ── */
             .ch-logo {
                 display: inline-flex;
-                align-items: center;
+                align-items: flex-end;
                 text-decoration: none;
                 flex-shrink: 0;
-                gap: 6px;
+                gap: 4px;
             }
             .ch-logo-icon {
                 width: 48px;

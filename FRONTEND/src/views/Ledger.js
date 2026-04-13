@@ -1095,7 +1095,7 @@ export async function initLedger() {
                         </div>
                     </td>
                     <td>${typeBadge}</td>
-                    <td><a href="#" class="ldg-rcpt" style="text-decoration:none;color:#111;" onclick="event.stopPropagation();event.preventDefault();${contractPath ? `window.router.navigate('${contractPath}')` : ''}">${contractShort}</a></td>
+                    <td>${isRivalry && contractPath ? `<a href="#" class="ldg-rcpt" style="text-decoration:none;color:#111;" onclick="event.stopPropagation();event.preventDefault();window.router.navigate('${contractPath}')">${contractShort}</a>` : `<span class="ldg-rcpt" style="color:#999;cursor:default;">${contractShort}</span>`}</td>
                     <td><span class="ldg-platform">${platform}</span></td>
                     <td><span class="ldg-date">${formatTimestamp(event.timestamp)}</span></td>
                     <td><span class="ldg-amount">${formatCurrency(event.amountUsdCents)}</span></td>
@@ -1125,7 +1125,7 @@ export async function initLedger() {
         const isRivalry = event.sourceType === 'RIVALRY' || (event.eventType || '').startsWith('RIVALRY_');
         const viewLink = isRivalry
             ? `<a class="ldg-drawer-link" style="margin-left:8px;" onclick="window.router.navigate('/rivalry/${event.contractId}')">VIEW →</a>`
-            : `<a class="ldg-drawer-link" style="margin-left:8px;" onclick="window.router.navigate('/contracts/${event.contractId}')">VIEW →</a>`;
+            : '';
 
         body.innerHTML = `
             <div class="ldg-drawer-row">

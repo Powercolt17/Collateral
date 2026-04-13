@@ -795,6 +795,14 @@ export async function initRivalryDetail(params) {
         return 'metric';
     }
 
+    // Pre-compute countdown values for template (prevents flicker)
+    const _cdEndTime = rivalry._deadlineUtc ? new Date(rivalry._deadlineUtc).getTime() : new Date(new Date(rivalry._activatedAt || Date.now()).getTime() + (rivalry.totalDays) * 86400000).getTime();
+    const _cdDiff = Math.max(0, _cdEndTime - Date.now());
+    const _cdDays = Math.floor(_cdDiff / 86400000);
+    const _cdHours = String(Math.floor((_cdDiff % 86400000) / 3600000)).padStart(2, '0');
+    const _cdMins = String(Math.floor((_cdDiff % 3600000) / 60000)).padStart(2, '0');
+    const _cdSecs = String(Math.floor((_cdDiff % 60000) / 1000)).padStart(2, '0');
+
     container.innerHTML = `
         <div class="rvd-hero">
             <div class="rvd-hero-inner">
@@ -880,22 +888,22 @@ export async function initRivalryDetail(params) {
 
                 <div class="rvd-countdown ${rivalry.daysLeft <= 3 && rivalry.status !== 'settled' ? 'urgent' : ''}" id="rvd-countdown">
                     <div class="rvd-countdown-unit">
-                        <span class="rvd-countdown-val" id="rvd-cd-days">${rivalry.daysLeft}</span>
+                        <span class="rvd-countdown-val" id="rvd-cd-days">${_cdDays}</span>
                         <span class="rvd-countdown-label">Days</span>
                     </div>
                     <span class="rvd-countdown-sep">:</span>
                     <div class="rvd-countdown-unit">
-                        <span class="rvd-countdown-val" id="rvd-cd-hours">00</span>
+                        <span class="rvd-countdown-val" id="rvd-cd-hours">${_cdHours}</span>
                         <span class="rvd-countdown-label">Hours</span>
                     </div>
                     <span class="rvd-countdown-sep">:</span>
                     <div class="rvd-countdown-unit">
-                        <span class="rvd-countdown-val" id="rvd-cd-mins">00</span>
+                        <span class="rvd-countdown-val" id="rvd-cd-mins">${_cdMins}</span>
                         <span class="rvd-countdown-label">Mins</span>
                     </div>
                     <span class="rvd-countdown-sep">:</span>
                     <div class="rvd-countdown-unit">
-                        <span class="rvd-countdown-val" id="rvd-cd-secs">00</span>
+                        <span class="rvd-countdown-val" id="rvd-cd-secs">${_cdSecs}</span>
                         <span class="rvd-countdown-label">Secs</span>
                     </div>
                 </div>

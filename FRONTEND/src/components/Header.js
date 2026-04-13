@@ -750,19 +750,19 @@ export function renderHeader(currentRoute) {
                 <!-- Logo -->
                 <a href="#" onclick="window.router.navigate('/overview'); return false;" class="ch-logo">
                     <div class="ch-logo-icon">
-                        <svg viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:100%;">
+                        <svg viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:100%;">
                             <defs>
-                                <clipPath id="hdr-planet-clip">
-                                    <rect x="0" y="0" width="44" height="44"/>
-                                    <circle cx="22" cy="22" r="10.5"/>
+                                <clipPath id="hdr-ring-clip">
+                                    <rect x="-50" y="0" width="100" height="50"/>
                                 </clipPath>
                             </defs>
-                            <!-- Ring behind planet -->
-                            <ellipse cx="22" cy="22" rx="20" ry="7" stroke="#3B0001" stroke-width="1.2" fill="none" transform="rotate(-30 22 22)" clip-path="url(#hdr-planet-clip)" style="clip-rule:evenodd;"/>
-                            <!-- Planet body -->
-                            <circle cx="22" cy="22" r="10.5" stroke="#3B0001" stroke-width="1.8" fill="none"/>
-                            <!-- Ring in front of planet (bottom-right arc) -->
-                            <path d="M 30.5 27.5 A 20 7 -30 0 1 7.2 30.8" stroke="#3B0001" stroke-width="1.2" fill="none"/>
+                            <g transform="translate(60, 60)">
+                                <ellipse cx="0" cy="0" rx="40" ry="12" fill="none" stroke="#8b2a2a" stroke-width="3" transform="rotate(-25)" opacity="0.35"/>
+                                <circle cx="0" cy="0" r="22" fill="#ffffff" stroke="#8b2a2a" stroke-width="3.5"/>
+                                <g clip-path="url(#hdr-ring-clip)">
+                                    <ellipse cx="0" cy="0" rx="40" ry="12" fill="none" stroke="#8b2a2a" stroke-width="3" transform="rotate(-25)"/>
+                                </g>
+                            </g>
                         </svg>
                     </div>
                     <span class="ch-logo-wordmark">COLLATERAL</span>
@@ -815,7 +815,7 @@ export function renderHeader(currentRoute) {
         <div id="mobile-menu" class="pnl-drawer">
             <div class="pnl-header">
                 <div class="pnl-header-left">
-                    <svg viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg" class="pnl-header-logo"><defs><clipPath id="pnl-planet-clip"><rect x="0" y="0" width="44" height="44"/><circle cx="22" cy="22" r="10.5"/></clipPath></defs><ellipse cx="22" cy="22" rx="20" ry="7" stroke="#3B0001" stroke-width="1.2" fill="none" transform="rotate(-30 22 22)" clip-path="url(#pnl-planet-clip)" style="clip-rule:evenodd;"/><circle cx="22" cy="22" r="10.5" stroke="#3B0001" stroke-width="1.8" fill="none"/><path d="M 30.5 27.5 A 20 7 -30 0 1 7.2 30.8" stroke="#3B0001" stroke-width="1.2" fill="none"/></svg>
+                    <svg viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg" class="pnl-header-logo"><defs><clipPath id="pnl-ring-clip"><rect x="-50" y="0" width="100" height="50"/></clipPath></defs><g transform="translate(60, 60)"><ellipse cx="0" cy="0" rx="40" ry="12" fill="none" stroke="#8b2a2a" stroke-width="3" transform="rotate(-25)" opacity="0.35"/><circle cx="0" cy="0" r="22" fill="#ffffff" stroke="#8b2a2a" stroke-width="3.5"/><g clip-path="url(#pnl-ring-clip)"><ellipse cx="0" cy="0" rx="40" ry="12" fill="none" stroke="#8b2a2a" stroke-width="3" transform="rotate(-25)"/></g></g></svg>
                     <span class="pnl-header-title">Menu</span>
                 </div>
                 <button onclick="window.app.closeMobileMenu()" class="pnl-close" aria-label="Close">

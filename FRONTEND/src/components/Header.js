@@ -751,9 +751,8 @@ export function renderHeader(currentRoute) {
                 <a href="#" onclick="window.router.navigate('/overview'); return false;" class="ch-logo">
                     <div class="ch-logo-icon">
                         <svg viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:100%;">
-                            <circle cx="22" cy="22" r="13.2" stroke="#3B0001" stroke-width="1.7"/>
-                            <line x1="22" y1="13.5" x2="22" y2="30.5" stroke="#3B0001" stroke-width="1.3" stroke-linecap="round"/>
-                            <ellipse cx="22" cy="22" rx="20.8" ry="5.8" stroke="#3B0001" stroke-width="0.85" fill="none" transform="rotate(-27 22 22)"/>
+                            <circle cx="22" cy="22" r="11" stroke="#3B0001" stroke-width="1.8"/>
+                            <ellipse cx="22" cy="22" rx="20" ry="6.5" stroke="#3B0001" stroke-width="1.1" fill="none" transform="rotate(-25 22 22)"/>
                         </svg>
                     </div>
                     <span class="ch-logo-wordmark">COLLATERAL</span>
@@ -806,7 +805,7 @@ export function renderHeader(currentRoute) {
         <div id="mobile-menu" class="pnl-drawer">
             <div class="pnl-header">
                 <div class="pnl-header-left">
-                    <svg viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg" class="pnl-header-logo"><circle cx="22" cy="22" r="13.2" stroke="#3B0001" stroke-width="1.7"/><line x1="22" y1="13.5" x2="22" y2="30.5" stroke="#3B0001" stroke-width="1.3" stroke-linecap="round"/><ellipse cx="22" cy="22" rx="20.8" ry="5.8" stroke="#3B0001" stroke-width="0.85" fill="none" transform="rotate(-27 22 22)"/></svg>
+                    <svg viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg" class="pnl-header-logo"><circle cx="22" cy="22" r="11" stroke="#3B0001" stroke-width="1.8"/><ellipse cx="22" cy="22" rx="20" ry="6.5" stroke="#3B0001" stroke-width="1.1" fill="none" transform="rotate(-25 22 22)"/></svg>
                     <span class="pnl-header-title">Menu</span>
                 </div>
                 <button onclick="window.app.closeMobileMenu()" class="pnl-close" aria-label="Close">

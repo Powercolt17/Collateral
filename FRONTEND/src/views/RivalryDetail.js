@@ -681,8 +681,8 @@ export async function initRivalryDetail(params) {
         const challPart = r.participants?.find(p => p.role === 'challenger');
         const oppPart = r.participants?.find(p => p.role === 'opponent');
         const now = new Date();
-        const start = new Date(r.activatedAt || r.createdAt);
-        const end = new Date(start.getTime() + (r.durationDays || 30) * 86400000);
+        // Use the canonical deadline from the API (not recomputed)
+        const end = r.deadlineUtc ? new Date(r.deadlineUtc) : new Date((new Date(r.activatedAt || r.createdAt)).getTime() + (r.durationDays || 30) * 86400000);
         const daysLeft = Math.max(0, Math.ceil((end - now) / 86400000));
 
         const targetPct = parseFloat(r.targetGrowthPct || r.rivalry?.targetGrowthPct || 15);
@@ -736,6 +736,7 @@ export async function initRivalryDetail(params) {
             _challengerUserId: r.challengerUserId,
             _opponentUserId: r.opponentUserId,
             _activatedAt: r.activatedAt || r.createdAt,
+            _deadlineUtc: r.deadlineUtc,
         };
     }
 
@@ -1543,8 +1544,8 @@ export async function initRivalryDetail(params) {
 
     // ── Live Countdown Timer ──
     if (rivalry.status !== 'settled' && rivalry.daysLeft > 0) {
-        const start = new Date(rivalry._activatedAt || Date.now());
-        const endTime = new Date(start.getTime() + (rivalry.totalDays) * 86400000).getTime();
+        // Use canonical deadline from API — never recompute
+        const endTime = rivalry._deadlineUtc ? new Date(rivalry._deadlineUtc).getTime() : new Date(new Date(rivalry._activatedAt || Date.now()).getTime() + (rivalry.totalDays) * 86400000).getTime();
 
         function updateCountdown() {
             const now = Date.now();

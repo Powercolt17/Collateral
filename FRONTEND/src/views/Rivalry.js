@@ -1111,8 +1111,7 @@ export async function initRivalry() {
         const challPart = r.participants?.find(p => p.role === 'challenger');
         const oppPart = r.participants?.find(p => p.role === 'opponent');
         const now = new Date();
-        const start = new Date(r.activatedAt || r.createdAt);
-        const end = new Date(start.getTime() + (r.durationDays || 30) * 86400000);
+        const end = r.deadlineUtc ? new Date(r.deadlineUtc) : new Date((new Date(r.activatedAt || r.createdAt)).getTime() + (r.durationDays || 30) * 86400000);
         const daysLeft = Math.max(0, Math.ceil((end - now) / 86400000));
 
         const metricName = METRIC_LABELS[r.metricType] || r.metricType || 'Revenue Growth';

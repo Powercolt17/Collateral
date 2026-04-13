@@ -128,8 +128,8 @@ export function renderHeader(currentRoute) {
                 gap: 10px;
             }
             .ch-logo-icon {
-                width: 32px;
-                height: 32px;
+                width: 40px;
+                height: 40px;
                 flex-shrink: 0;
                 position: relative;
             }

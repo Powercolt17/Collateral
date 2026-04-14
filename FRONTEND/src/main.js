@@ -474,6 +474,12 @@ window.app = {
                 appState.userId = result.user?.id;
 
                 console.log('[Auth] ✅ Signed up as:', appState.displayName);
+
+                // X (Twitter) Pixel — track signup conversion
+                if (typeof twq === 'function') {
+                    twq('event', 'tw-rbwqr-rbx5u', {});
+                }
+
                 window.app.closeAccessModal();
                 updateAuthUI();
             } catch (err) {

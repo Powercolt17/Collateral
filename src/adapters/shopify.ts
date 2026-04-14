@@ -631,6 +631,28 @@ export function resetShopifyClient() {
 }
 
 // =============================================================================
+// TOKEN RESOLUTION
+// =============================================================================
+
+/**
+ * Resolve Shopify access token from connected account.
+ * The connect route stores the token in metadataJson.accessToken,
+ * but we also check accessTokenEnc for backwards compatibility.
+ */
+function resolveAccessToken(account: ConnectedAccount): string {
+    // Primary: dedicated column
+    if (account.accessTokenEnc) {
+        return account.accessTokenEnc;
+    }
+    // Fallback: stored in metadataJson during OAuth
+    const meta = account.metadataJson as Record<string, any> | null;
+    if (meta?.accessToken) {
+        return meta.accessToken;
+    }
+    return '';
+}
+
+// =============================================================================
 // CONNECTED ACCOUNT HELPERS
 // =============================================================================
 
@@ -697,7 +719,7 @@ export const shopifyAdapter: CommerceAdapter = {
 
         const credentials: ShopifyCredentials = {
             shopDomain: account.externalAccountId,
-            accessToken: account.accessTokenEnc || '',
+            accessToken: resolveAccessToken(account),
         };
 
         if (!credentials.accessToken) {
@@ -726,7 +748,7 @@ export const shopifyAdapter: CommerceAdapter = {
 
         const credentials: ShopifyCredentials = {
             shopDomain: account.externalAccountId,
-            accessToken: account.accessTokenEnc || '',
+            accessToken: resolveAccessToken(account),
         };
 
         if (!credentials.accessToken) {
@@ -771,7 +793,7 @@ export const shopifyAdapter: CommerceAdapter = {
 
         const credentials: ShopifyCredentials = {
             shopDomain: account.externalAccountId,
-            accessToken: account.accessTokenEnc || '',
+            accessToken: resolveAccessToken(account),
         };
 
         if (!credentials.accessToken) {
@@ -838,7 +860,7 @@ export const shopifyAdapter: CommerceAdapter = {
 
         const credentials: ShopifyCredentials = {
             shopDomain: account.externalAccountId,
-            accessToken: account.accessTokenEnc || '',
+            accessToken: resolveAccessToken(account),
         };
 
         if (!credentials.accessToken) {

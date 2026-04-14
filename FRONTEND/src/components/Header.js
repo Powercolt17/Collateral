@@ -125,19 +125,24 @@ export function renderHeader(currentRoute) {
                 flex-direction: column;
                 text-decoration: none;
                 flex-shrink: 0;
-                gap: 0px;
+                gap: 0;
+                transition: transform 0.2s ease;
+            }
+            .ch-logo:hover {
+                transform: scale(1.04);
             }
             .ch-logo-icon {
-                width: 38px;
-                height: 38px;
+                width: 42px;
+                height: 42px;
                 flex-shrink: 0;
-                margin-bottom: -2px;
+                margin-bottom: -3px;
+                filter: drop-shadow(0 1px 2px rgba(92, 20, 20, 0.08));
             }
             .ch-logo-wordmark {
-                font-size: 12.5px;
-                font-weight: 700;
+                font-size: 11px;
+                font-weight: 800;
                 color: #111111;
-                letter-spacing: 0.16em;
+                letter-spacing: 0.22em;
                 font-family: 'Sora', 'IBM Plex Sans', 'Helvetica Neue', -apple-system, sans-serif;
                 text-transform: uppercase;
                 line-height: 1;
@@ -741,8 +746,8 @@ export function renderHeader(currentRoute) {
                 .pnl-drawer { width: 100%; max-width: 100%; border-left: none; }
             }
             @media (max-width: 480px) {
-                .ch-logo-wordmark { font-size: 10px; letter-spacing: 0.12em; }
-                .ch-logo-icon { width: 30px; height: 30px; }
+                .ch-logo-wordmark { font-size: 9px; letter-spacing: 0.18em; }
+                .ch-logo-icon { width: 34px; height: 34px; }
             }
         </style>
 

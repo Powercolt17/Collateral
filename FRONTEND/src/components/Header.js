@@ -122,20 +122,21 @@ export function renderHeader(currentRoute) {
             .ch-logo {
                 display: inline-flex;
                 align-items: center;
+                flex-direction: column;
                 text-decoration: none;
                 flex-shrink: 0;
-                gap: 10px;
+                gap: 2px;
             }
             .ch-logo-icon {
-                width: 36px;
-                height: 36px;
+                width: 28px;
+                height: 28px;
                 flex-shrink: 0;
             }
             .ch-logo-wordmark {
-                font-size: 15.5px;
+                font-size: 10px;
                 font-weight: 700;
                 color: #111111;
-                letter-spacing: 0.14em;
+                letter-spacing: 0.18em;
                 font-family: 'Sora', 'IBM Plex Sans', 'Helvetica Neue', -apple-system, sans-serif;
                 text-transform: uppercase;
                 line-height: 1;
@@ -739,8 +740,8 @@ export function renderHeader(currentRoute) {
                 .pnl-drawer { width: 100%; max-width: 100%; border-left: none; }
             }
             @media (max-width: 480px) {
-                .ch-logo-wordmark { font-size: 13px; letter-spacing: 0.1em; }
-                .ch-logo-icon { width: 28px; height: 28px; }
+                .ch-logo-wordmark { font-size: 8px; letter-spacing: 0.14em; }
+                .ch-logo-icon { width: 24px; height: 24px; }
             }
         </style>
 

@@ -135,11 +135,11 @@ export function renderHeader(currentRoute) {
                 width: 42px;
                 height: 42px;
                 flex-shrink: 0;
-                margin-bottom: -3px;
+                margin-bottom: -5px;
                 filter: drop-shadow(0 1px 2px rgba(92, 20, 20, 0.08));
             }
             .ch-logo-wordmark {
-                font-size: 11px;
+                font-size: 13px;
                 font-weight: 800;
                 color: #111111;
                 letter-spacing: 0.22em;

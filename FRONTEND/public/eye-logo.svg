@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 80" fill="none">
+  <!-- Eye outline — angular left corner, smooth curves, pointed right -->
+  <path d="M6 40 L26 18 Q48 4 68 6 Q88 8 100 20 L114 40 L100 60 Q88 72 68 74 Q48 76 26 62 Z"
+    stroke="#5C1414" stroke-width="7" stroke-linejoin="round" fill="none"/>
+  <!-- Saturn ring — diagonal ellipse threading through the eye -->
+  <ellipse cx="60" cy="40" rx="52" ry="13"
+    transform="rotate(-32 60 40)"
+    stroke="#5C1414" stroke-width="6.5" fill="none"/>
+  <!-- Iris circle -->
+  <circle cx="60" cy="40" r="17" stroke="#5C1414" stroke-width="6.5" fill="none"/>
+  <!-- Pupil — filled -->
+  <circle cx="60" cy="40" r="9" fill="#5C1414"/>
+</svg>

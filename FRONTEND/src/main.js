@@ -64,6 +64,12 @@ window.addEventListener('unhandledrejection', (e) => console.error('[UnhandledPr
                 window.history.replaceState({}, '', clean);
             }
         }
+        // Also capture ?ref= referral parameter from ad URLs
+        const refParam = params.get('ref');
+        if (refParam) {
+            api.setReferralCode(refParam);
+            console.log('[Referral] Captured from URL param:', refParam);
+        }
     } catch (e) { /* silent */ }
 })();
 

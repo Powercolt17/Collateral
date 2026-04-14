@@ -124,11 +124,17 @@ export function renderHeader(currentRoute) {
                 align-items: center;
                 text-decoration: none;
                 flex-shrink: 0;
+                gap: 10px;
+            }
+            .ch-logo-icon {
+                width: 30px;
+                height: 30px;
+                flex-shrink: 0;
             }
             .ch-logo-wordmark {
                 font-size: 15.5px;
                 font-weight: 700;
-                color: #5C1414;
+                color: #111111;
                 letter-spacing: 0.14em;
                 font-family: 'Sora', 'IBM Plex Sans', 'Helvetica Neue', -apple-system, sans-serif;
                 text-transform: uppercase;
@@ -734,6 +740,7 @@ export function renderHeader(currentRoute) {
             }
             @media (max-width: 480px) {
                 .ch-logo-wordmark { font-size: 13px; letter-spacing: 0.1em; }
+                .ch-logo-icon { width: 24px; height: 24px; }
             }
         </style>
 
@@ -741,6 +748,16 @@ export function renderHeader(currentRoute) {
             <div class="ch-header-inner">
                 <!-- Logo -->
                 <a href="#" onclick="window.router.navigate('/overview'); return false;" class="ch-logo">
+                    <svg class="ch-logo-icon" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <!-- Eye outline -->
+                        <path d="M30 100 C30 100 65 40 100 40 C135 40 170 100 170 100 C170 100 135 160 100 160 C65 160 30 100 30 100Z" stroke="#5C1414" stroke-width="10" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+                        <!-- Iris circle -->
+                        <circle cx="100" cy="100" r="28" stroke="#5C1414" stroke-width="9" fill="none"/>
+                        <!-- Pupil -->
+                        <circle cx="100" cy="100" r="12" fill="#5C1414"/>
+                        <!-- Saturn ring -->
+                        <ellipse cx="100" cy="100" rx="75" ry="22" transform="rotate(-30 100 100)" stroke="#5C1414" stroke-width="8" fill="none"/>
+                    </svg>
                     <span class="ch-logo-wordmark">COLLATERAL</span>
                 </a>
 

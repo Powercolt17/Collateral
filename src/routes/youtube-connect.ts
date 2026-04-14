@@ -9,7 +9,7 @@
  * 4. POST /v1/connect/youtube/disconnect - Remove connection
  * 
  * Requires: GOOGLE_CLIENT_ID, GOOGLE_CLIENT_SECRET env vars
- * Scopes: youtube.readonly, yt-analytics.readonly
+ * Scopes: youtube.readonly
  */
 
 import { FastifyInstance, FastifyRequest, FastifyReply } from 'fastify';
@@ -35,7 +35,6 @@ const YOUTUBE_DATA_API = 'https://www.googleapis.com/youtube/v3';
 
 const YOUTUBE_SCOPES = [
     'https://www.googleapis.com/auth/youtube.readonly',
-    'https://www.googleapis.com/auth/yt-analytics.readonly',
 ].join(' ');
 
 // OAuth state tokens (in production, use Redis or DB)

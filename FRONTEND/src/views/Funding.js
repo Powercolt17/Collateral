@@ -1156,6 +1156,12 @@ export async function initFunding() {
             if (result.error) throw new Error(result.error);
             closeModal(addFundsModal);
             await loadBillingStatus();
+
+            // X (Twitter) Pixel — track successful funding/purchase conversion
+            if (typeof twq === 'function') {
+                twq('event', 'tw-rbwqr-rbx5x', {});
+            }
+
             showSuccessModal(amount);
         } catch (err) {
             addFundsErrorEl.textContent = err.message || 'Deposit failed. Retry.';

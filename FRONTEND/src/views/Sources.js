@@ -803,6 +803,15 @@ export function renderSources() {
                             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0110 0v4"></path></svg>
                             <span>Connection is secured via OAuth 2.0. Credentials are never stored.</span>
                         </div>
+                        <div class="src-modal-google-notice" id="src-modal-google-notice" style="display:none; margin-top: 16px; padding: 14px 16px; background: #fffbeb; border: 1px solid #fde68a; font-size: 12px; color: #92400e; line-height: 1.6;">
+                            <div style="display:flex; align-items:center; gap:8px; margin-bottom:8px; font-weight:700; font-size:11px; text-transform:uppercase; letter-spacing:0.05em;">
+                                <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="#d97706" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+                                Google Verification Notice
+                            </div>
+                            Google will display a warning that says <strong>"Google hasn't verified this app."</strong> This is expected &mdash; our verification is in progress.
+                            <br/><br/>
+                            <strong>To continue:</strong> Click <strong>"Advanced"</strong> → then <strong>"Go to collateral-production... (unsafe)"</strong>. Your data is fully protected via OAuth 2.0.
+                        </div>
                     </div>
                     <div class="src-modal-footer">
                         <button class="src-modal-cancel" onclick="window.closeSrcModal()">CANCEL</button>
@@ -1101,6 +1110,12 @@ export async function initSources() {
         if (provEl) provEl.textContent = `${prov.id.toUpperCase()} DATA SOURCE`;
         if (accessEl) accessEl.textContent = prov.access || '';
         if (purposeEl) purposeEl.textContent = prov.purpose || '';
+
+        // Show Google verification notice only for YouTube
+        const googleNotice = document.getElementById('src-modal-google-notice');
+        if (googleNotice) {
+            googleNotice.style.display = prov.id === 'youtube' ? 'block' : 'none';
+        }
 
         if (proceedBtn) {
             proceedBtn.onclick = async () => {

@@ -1159,7 +1159,7 @@ export async function initFunding() {
 
             // X (Twitter) Pixel — track successful funding/purchase conversion
             if (typeof twq === 'function') {
-                twq('event', 'tw-rbwqr-rbx5x', {});
+                twq('event', 'tw-rbwqr-rbx5z', {});
             }
 
             showSuccessModal(amount);

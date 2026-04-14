@@ -477,7 +477,7 @@ window.app = {
 
                 // X (Twitter) Pixel — track signup conversion
                 if (typeof twq === 'function') {
-                    twq('event', 'tw-rbwqr-rbx5u', {});
+                    twq('event', 'tw-rbwqr-rbx5x', {});
                 }
 
                 window.app.closeAccessModal();

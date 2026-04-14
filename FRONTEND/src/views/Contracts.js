@@ -1253,6 +1253,8 @@ export function initContracts() {
 
             if (lockRes.contract?.derivedState === 'LOCKED') {
                 releaseFlowLock();
+                // X Pixel — Create Contract conversion
+                if (typeof twq === 'function') twq('event', 'tw-rbwqr-rbx5u', {});
                 setTimeout(() => window.router.navigate('/contracts/' + contractId), 1000);
                 return;
             }
@@ -1266,6 +1268,8 @@ export function initContracts() {
                 }
                 if (lockedRes.contract?.derivedState === 'LOCKED') {
                     releaseFlowLock();
+                    // X Pixel — Create Contract conversion
+                    if (typeof twq === 'function') twq('event', 'tw-rbwqr-rbx5u', {});
                     setTimeout(() => window.router.navigate('/contracts/' + contractId), 1000);
                     return;
                 }
@@ -1315,6 +1319,9 @@ export function initContracts() {
             if (btnText) btnText.textContent = 'CONTRACT EXECUTED';
             if (statusLabel) statusLabel.textContent = 'COMPLETE';
             execBtn.style.background = '#065f46';
+
+            // X Pixel — Create Contract conversion
+            if (typeof twq === 'function') twq('event', 'tw-rbwqr-rbx5u', {});
 
             setTimeout(() => window.router.navigate('/contracts/' + contractId), 1500);
 

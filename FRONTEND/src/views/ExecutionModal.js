@@ -463,6 +463,9 @@ async function runExecution(contractData, stake, multiplier, btnEl, bodyEl) {
             await window.api.executeContract(realContractId);
         }
 
+        // X Pixel — Create Contract conversion
+        if (typeof twq === 'function') twq('event', 'tw-rbwqr-rbx5u', {});
+
         showSuccess(bodyEl, stake, multiplier, realContractId || id);
 
     } catch (err) {

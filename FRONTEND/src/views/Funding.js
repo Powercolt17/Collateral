@@ -654,18 +654,7 @@ export function renderFunding() {
                         <button class="cap-action" id="manage-card-btn">UPDATE</button>
                     </div>
 
-                    <!-- Bank Source -->
-                    <div class="cap-row" id="source-bank">
-                        <div class="cap-row-left">
-                            <div class="cap-row-label">
-                                <i data-lucide="landmark" style="width:14px;height:14px;color:#999;"></i>
-                                Bank Account
-                                <span class="cap-badge required" id="bank-badge">REQUIRED</span>
-                            </div>
-                            <div class="cap-row-detail" id="bank-status">Not configured</div>
-                        </div>
-                        <button class="cap-action" id="manage-bank-btn">CONFIGURE</button>
-                    </div>
+
                 </div>
 
                 <!-- Payout Destinations -->

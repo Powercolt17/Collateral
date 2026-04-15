@@ -16,6 +16,7 @@ import { runReconciliationJob } from './reconciliation.js';
 import { runOracleRefreshJob } from '../jobs/oracle-refresh.js';
 import { runRivalryTrackerJob } from '../jobs/rivalry-tracker.js';
 import { runRivalryCronJobs } from '../jobs/rivalry-cron.js';
+import { runSimProgressJob, runSimSoloProgressJob } from '../jobs/sim-progress.js';
 import {
     isVerificationEnabled,
     isSettlementEnabled,
@@ -39,6 +40,7 @@ export interface SchedulerResult {
     oracleRefresh: JobResult | null;
     rivalryTracker: JobResult | null;
     rivalryCron: JobResult | null;
+    simProgress: JobResult | null;
     totalDurationMs: number;
 }
 
@@ -216,6 +218,30 @@ export async function runScheduledJobs(): Promise<SchedulerResult> {
         }
     }
 
+    // 7. Simulated Progress (ONLY updates @collateral.internal demo data)
+    let simProgressResult: JobResult | null = null;
+    {
+        const jobStart = Date.now();
+        try {
+            const rivalryResult = await runSimProgressJob();
+            const soloResult = await runSimSoloProgressJob();
+            const durationMs = Date.now() - jobStart;
+
+            simProgressResult = {
+                jobType: 'RIVALRY_TRACKER' as any,
+                processed: rivalryResult.updated + soloResult.updated,
+                succeeded: rivalryResult.snapshots + soloResult.updated,
+                failed: 0,
+                skipped: rivalryResult.skipped,
+                durationMs,
+                skipReasons: { locked: 0, retryScheduled: 0, terminal: 0 },
+            };
+            console.log(`✅ SimProgress: ${rivalryResult.updated} rivalry participants, ${soloResult.updated} solo contracts updated`);
+        } catch (err: any) {
+            console.error('❌ SimProgress job error:', err.message);
+        }
+    }
+
     const totalDurationMs = Date.now() - startTime;
     console.log(`✅ Scheduled job run complete in ${totalDurationMs}ms`);
 
@@ -226,6 +252,7 @@ export async function runScheduledJobs(): Promise<SchedulerResult> {
         oracleRefresh: oracleResult,
         rivalryTracker: rivalryTrackerResult,
         rivalryCron: rivalryCronResult,
+        simProgress: simProgressResult,
         totalDurationMs,
     };
 }

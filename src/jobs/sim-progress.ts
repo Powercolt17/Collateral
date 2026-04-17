@@ -9,40 +9,15 @@
  * - Some contracts trend toward hitting target (win)
  * - Some contracts stall or grow too slowly (lose)
  * - Growth has natural noise, day/night variance, and occasional plateaus
- * - Runs every 30 minutes via scheduler
+ * - Runs every scheduler cycle via scheduler
  * 
+ * Also ensures simulated rivalries never expire — keeps deadlines rolling forward.
  * When real users start creating contracts, this job ignores them entirely.
  */
 
 import { db } from '../db/client.js';
 import { sql } from 'drizzle-orm';
 import { randomUUID, createHash } from 'crypto';
-
-// =============================================================================
-// TYPES
-// =============================================================================
-
-interface SimRivalry {
-    id: string;
-    platform: string;
-    metric_key: string;
-    metric_type: string;
-    target_growth_pct: string;
-    duration_days: number;
-    activated_at: Date;
-    deadline_utc: Date;
-    challenger_user_id: string;
-    opponent_user_id: string;
-}
-
-interface SimParticipant {
-    id: string;
-    rivalry_id: string;
-    user_id: string;
-    role: string;
-    baseline_value: string;
-    percentage_delta: string | null;
-}
 
 // =============================================================================
 // OUTCOME ASSIGNMENT
@@ -100,15 +75,94 @@ function calculateTargetGrowthAtTime(
 }
 
 // =============================================================================
+// STEP 0: KEEP SIMULATED RIVALRIES ALIVE
+// Extends deadlines and un-settles any that the cron auto-settled
+// =============================================================================
+
+async function keepSimRivalriesAlive(): Promise<number> {
+    let fixed = 0;
+    
+    try {
+        // Find ALL sim rivalries that were activated (including auto-settled ones)
+        const simRivalries = await db.execute(sql`
+            SELECT r.id, r.activated_at, r.deadline_utc, r.settled_at, r.duration_days
+            FROM rivalries r
+            JOIN users u_c ON r.challenger_user_id = u_c.id
+            JOIN users u_o ON r.opponent_user_id = u_o.id
+            WHERE r.activated_at IS NOT NULL
+              AND u_c.email LIKE '%@collateral.internal'
+              AND u_o.email LIKE '%@collateral.internal'
+        `);
+        
+        const rows = (simRivalries as any).rows || simRivalries;
+        const now = new Date();
+        
+        for (const r of rows) {
+            const deadline = new Date(r.deadline_utc);
+            const durationMs = (r.duration_days || 14) * 86400000;
+            
+            // If deadline is in the past or within 2 days, push it forward
+            if (deadline.getTime() < now.getTime() + 2 * 86400000) {
+                // Set new activation to ~30% through the contract period ago
+                // so it looks like we're partway through
+                const newActivatedAt = new Date(now.getTime() - durationMs * 0.3);
+                const newDeadline = new Date(newActivatedAt.getTime() + durationMs);
+                
+                await db.execute(sql`
+                    UPDATE rivalries
+                    SET activated_at = ${newActivatedAt.toISOString()},
+                        deadline_utc = ${newDeadline.toISOString()},
+                        settled_at = NULL,
+                        winner_user_id = NULL,
+                        settlement_metadata = NULL,
+                        updated_at = ${now.toISOString()}
+                    WHERE id = ${r.id}
+                `);
+                
+                // Also reset participant outcomes so they look in-progress
+                await db.execute(sql`
+                    UPDATE rivalry_participants
+                    SET outcome = NULL,
+                        payout_cents = NULL,
+                        final_snapshot_at = NULL
+                    WHERE rivalry_id = ${r.id}
+                `);
+                
+                // Remove any RIVALRY_SETTLED events for this rivalry
+                await db.execute(sql`
+                    DELETE FROM rivalry_ledger_events
+                    WHERE rivalry_id = ${r.id}
+                      AND event_type = 'RIVALRY_SETTLED'
+                `);
+                
+                fixed++;
+                console.log(`[SimProgress] 🔄 Reset rivalry ${r.id.slice(0,8)} — new deadline: ${newDeadline.toISOString()}`);
+            }
+        }
+        
+        if (fixed > 0) {
+            console.log(`[SimProgress] 🔄 Reset ${fixed} expired/near-expired simulated rivalries`);
+        }
+    } catch (err: any) {
+        console.error('[SimProgress] keepAlive error:', err.message);
+    }
+    
+    return fixed;
+}
+
+// =============================================================================
 // MAIN JOB
 // =============================================================================
 
-export async function runSimProgressJob(): Promise<{ updated: number; snapshots: number; skipped: number }> {
+export async function runSimProgressJob(): Promise<{ updated: number; snapshots: number; skipped: number; reset: number }> {
     console.log('[SimProgress] Starting simulated progress update...');
     
     let updated = 0;
     let snapshots = 0;
     let skipped = 0;
+    
+    // Step 0: Ensure sim rivalries haven't expired
+    const reset = await keepSimRivalriesAlive();
     
     try {
         // 1. Find all ACTIVE rivalries owned by simulated users (@collateral.internal)
@@ -130,7 +184,7 @@ export async function runSimProgressJob(): Promise<{ updated: number; snapshots:
         
         if (!rows || rows.length === 0) {
             console.log('[SimProgress] No active simulated rivalries found. Skipping.');
-            return { updated: 0, snapshots: 0, skipped: 0 };
+            return { updated: 0, snapshots: 0, skipped: 0, reset };
         }
         
         console.log(`[SimProgress] Found ${rows.length} active simulated rivalries`);
@@ -190,36 +244,42 @@ export async function runSimProgressJob(): Promise<{ updated: number; snapshots:
                 updated++;
                 
                 // Insert a new metric snapshot (the chart data source)
-                const snapId = randomUUID();
-                const hash = createHash('sha256')
-                    .update(JSON.stringify({ value: currentValue, ts: now.toISOString() }))
-                    .digest('hex')
-                    .slice(0, 16);
-                
-                await db.execute(sql`
-                    INSERT INTO rivalry_metric_snapshots (
-                        id, rivalry_id, user_id, provider, metric_key,
-                        metric_value, fetched_at, created_at
-                    ) VALUES (
-                        ${snapId}, ${rivalryId}, ${part.user_id}, ${rivalry.platform}, ${rivalry.metric_key},
-                        ${currentValue.toString()}, ${now.toISOString()}, ${now.toISOString()}
-                    )
+                // But limit to 1 snapshot per hour to avoid flooding
+                const recentSnap = await db.execute(sql`
+                    SELECT id FROM rivalry_metric_snapshots
+                    WHERE rivalry_id = ${rivalryId}
+                      AND user_id = ${part.user_id}
+                      AND fetched_at > ${new Date(now.getTime() - 3600000).toISOString()}
+                    LIMIT 1
                 `);
                 
-                snapshots++;
+                const recentRows = (recentSnap as any).rows || recentSnap;
+                if (!recentRows || recentRows.length === 0) {
+                    const snapId = randomUUID();
+                    await db.execute(sql`
+                        INSERT INTO rivalry_metric_snapshots (
+                            id, rivalry_id, user_id, provider, metric_key,
+                            metric_value, fetched_at, created_at
+                        ) VALUES (
+                            ${snapId}, ${rivalryId}, ${part.user_id}, ${rivalry.platform}, ${rivalry.metric_key},
+                            ${currentValue.toString()}, ${now.toISOString()}, ${now.toISOString()}
+                        )
+                    `);
+                    snapshots++;
+                }
                 
                 const statusIcon = outcome === 'WIN' ? '📈' : '📉';
                 console.log(`[SimProgress] ${statusIcon} ${part.role} in ${rivalryId.slice(0,8)}: ${growthPct.toFixed(1)}% growth (target: ${targetPct}%, elapsed: ${(elapsedRatio * 100).toFixed(0)}%, outcome: ${outcome})`);
             }
         }
         
-        console.log(`[SimProgress] ✅ Complete — ${updated} participants updated, ${snapshots} snapshots created, ${skipped} skipped`);
+        console.log(`[SimProgress] ✅ Complete — ${updated} participants updated, ${snapshots} snapshots, ${skipped} skipped, ${reset} reset`);
         
     } catch (err: any) {
         console.error('[SimProgress] Error:', err.message);
     }
     
-    return { updated, snapshots, skipped };
+    return { updated, snapshots, skipped, reset };
 }
 
 // =============================================================================

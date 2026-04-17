@@ -12,7 +12,7 @@
 
 import { db } from '../db/client.js';
 import { rivalries } from '../db/schema.js';
-import { eq, and, isNotNull, isNull, lte } from 'drizzle-orm';
+import { eq, and, isNotNull, isNull, lte, sql } from 'drizzle-orm';
 import { settleRivalry } from '../services/rivalry-settlement.js';
 import { expireStaleRivalries, cancelUnfundedRivalries, getRivalryState } from '../services/rivalry.js';
 
@@ -62,6 +62,18 @@ async function autoSettleExpiredRivalries(): Promise<{ settled: number; errors: 
 
     for (const rivalry of pastDeadline) {
         try {
+            // Skip simulated rivalries — their lifecycle is managed by sim-progress job
+            const simCheck = await db.execute(
+                sql`
+                    SELECT 1 FROM users WHERE id = ${rivalry.challengerUserId} AND email LIKE '%@collateral.internal' LIMIT 1
+                `
+            );
+            const simRows = (simCheck as any).rows || simCheck;
+            if (simRows && simRows.length > 0) {
+                console.log(`[RivalryCron] Skipping simulated rivalry ${rivalry.id}`);
+                continue;
+            }
+
             const state = await getRivalryState(rivalry.id);
 
             // Only settle if in an active/verified state

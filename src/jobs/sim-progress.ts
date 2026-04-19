@@ -85,7 +85,9 @@ async function keepSimRivalriesAlive(): Promise<number> {
     try {
         // Find ALL sim rivalries that were activated (including auto-settled ones)
         const simRivalries = await db.execute(sql`
-            SELECT r.id, r.activated_at, r.deadline_utc, r.settled_at, r.duration_days
+            SELECT r.id, r.activated_at, r.deadline_utc, r.settled_at, r.duration_days,
+                   r.platform, r.metric_key, r.target_growth_pct,
+                   r.challenger_user_id, r.opponent_user_id
             FROM rivalries r
             JOIN users u_c ON r.challenger_user_id = u_c.id
             JOIN users u_o ON r.opponent_user_id = u_o.id
@@ -99,13 +101,13 @@ async function keepSimRivalriesAlive(): Promise<number> {
         
         for (const r of rows) {
             const deadline = new Date(r.deadline_utc);
-            const durationMs = (r.duration_days || 14) * 86400000;
+            const durationDays = r.duration_days || 14;
+            const durationMs = durationDays * 86400000;
             
             // If deadline is in the past or within 2 days, push it forward
             if (deadline.getTime() < now.getTime() + 2 * 86400000) {
-                // Set new activation to ~30% through the contract period ago
-                // so it looks like we're partway through
-                const newActivatedAt = new Date(now.getTime() - durationMs * 0.3);
+                // Set new activation to ~40% through the contract period ago
+                const newActivatedAt = new Date(now.getTime() - durationMs * 0.4);
                 const newDeadline = new Date(newActivatedAt.getTime() + durationMs);
                 
                 await db.execute(sql`
@@ -119,7 +121,7 @@ async function keepSimRivalriesAlive(): Promise<number> {
                     WHERE id = ${r.id}
                 `);
                 
-                // Also reset participant outcomes so they look in-progress
+                // Reset participant outcomes
                 await db.execute(sql`
                     UPDATE rivalry_participants
                     SET outcome = NULL,
@@ -128,15 +130,73 @@ async function keepSimRivalriesAlive(): Promise<number> {
                     WHERE rivalry_id = ${r.id}
                 `);
                 
-                // Remove any RIVALRY_SETTLED events for this rivalry
+                // Remove settled events
                 await db.execute(sql`
                     DELETE FROM rivalry_ledger_events
                     WHERE rivalry_id = ${r.id}
                       AND event_type = 'RIVALRY_SETTLED'
                 `);
                 
+                // CRITICAL: Clear ALL old metric snapshots and backfill with clean historical data
+                await db.execute(sql`
+                    DELETE FROM rivalry_metric_snapshots
+                    WHERE rivalry_id = ${r.id}
+                `);
+                
+                // Get participants for backfill
+                const parts = await db.execute(sql`
+                    SELECT id, user_id, role, baseline_value
+                    FROM rivalry_participants
+                    WHERE rivalry_id = ${r.id}
+                `);
+                const partRows = (parts as any).rows || parts;
+                const targetPct = parseFloat(r.target_growth_pct || '15');
+                
+                // Generate daily historical snapshots from activation to now
+                const daysElapsed = Math.floor((now.getTime() - newActivatedAt.getTime()) / 86400000);
+                
+                for (const part of partRows) {
+                    const baseline = parseFloat(part.baseline_value || '0');
+                    if (baseline <= 0) continue;
+                    
+                    const outcome = getOutcomeForParticipant(r.id, part.role);
+                    
+                    for (let d = 0; d <= daysElapsed; d++) {
+                        const dayRatio = d / durationDays;
+                        const growthPct = calculateTargetGrowthAtTime(outcome, targetPct, dayRatio);
+                        const value = Math.round(baseline * (1 + growthPct / 100));
+                        
+                        // Timestamp: activation + d days + random 0-12 hours
+                        const snapshotTime = new Date(newActivatedAt.getTime() + d * 86400000 + Math.random() * 43200000);
+                        
+                        await db.execute(sql`
+                            INSERT INTO rivalry_metric_snapshots (
+                                id, rivalry_id, user_id, provider, metric_key,
+                                metric_value, fetched_at, created_at
+                            ) VALUES (
+                                ${randomUUID()}, ${r.id}, ${part.user_id}, ${r.platform}, ${r.metric_key},
+                                ${value.toString()}, ${snapshotTime.toISOString()}, ${snapshotTime.toISOString()}
+                            )
+                        `);
+                    }
+                    
+                    // Update participant with latest growth
+                    const latestRatio = daysElapsed / durationDays;
+                    const latestGrowth = calculateTargetGrowthAtTime(outcome, targetPct, latestRatio);
+                    const latestValue = Math.round(baseline * (1 + latestGrowth / 100));
+                    
+                    await db.execute(sql`
+                        UPDATE rivalry_participants
+                        SET percentage_delta = ${latestGrowth.toFixed(2)},
+                            absolute_delta = ${(latestValue - baseline).toString()},
+                            final_value = ${latestValue.toString()},
+                            final_json = ${JSON.stringify({ value: latestValue, simulated: true, updatedAt: now.toISOString() })}
+                        WHERE id = ${part.id}
+                    `);
+                }
+                
                 fixed++;
-                console.log(`[SimProgress] 🔄 Reset rivalry ${r.id.slice(0,8)} — new deadline: ${newDeadline.toISOString()}`);
+                console.log(`[SimProgress] 🔄 Reset rivalry ${r.id.slice(0,8)} — backfilled ${daysElapsed} days of data, new deadline: ${newDeadline.toISOString()}`);
             }
         }
         

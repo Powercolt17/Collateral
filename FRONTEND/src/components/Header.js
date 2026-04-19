@@ -122,24 +122,15 @@ export function renderHeader(currentRoute) {
             .ch-logo {
                 display: inline-flex;
                 align-items: center;
-                flex-direction: column;
                 text-decoration: none;
                 flex-shrink: 0;
-                gap: 0;
                 transition: transform 0.2s ease;
             }
             .ch-logo:hover {
                 transform: scale(1.04);
             }
-            .ch-logo-icon {
-                width: 42px;
-                height: 42px;
-                flex-shrink: 0;
-                margin-bottom: -5px;
-                filter: drop-shadow(0 1px 2px rgba(92, 20, 20, 0.08));
-            }
             .ch-logo-wordmark {
-                font-size: 13px;
+                font-size: 14px;
                 font-weight: 800;
                 color: #111111;
                 letter-spacing: 0.22em;
@@ -746,8 +737,7 @@ export function renderHeader(currentRoute) {
                 .pnl-drawer { width: 100%; max-width: 100%; border-left: none; }
             }
             @media (max-width: 480px) {
-                .ch-logo-wordmark { font-size: 9px; letter-spacing: 0.18em; }
-                .ch-logo-icon { width: 34px; height: 34px; }
+                .ch-logo-wordmark { font-size: 11px; letter-spacing: 0.18em; }
             }
         </style>
 
@@ -755,7 +745,6 @@ export function renderHeader(currentRoute) {
             <div class="ch-header-inner">
                 <!-- Logo -->
                 <a href="#" onclick="window.router.navigate('/overview'); return false;" class="ch-logo">
-                    <img class="ch-logo-icon" src="/eye-logo-transparent.png" alt="Collateral" />
                     <span class="ch-logo-wordmark">COLLATERAL</span>
                 </a>
 

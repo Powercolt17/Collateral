@@ -16,7 +16,6 @@ import { runReconciliationJob } from './reconciliation.js';
 import { runOracleRefreshJob } from '../jobs/oracle-refresh.js';
 import { runRivalryTrackerJob } from '../jobs/rivalry-tracker.js';
 import { runRivalryCronJobs } from '../jobs/rivalry-cron.js';
-import { runSimProgressJob, runSimSoloProgressJob } from '../jobs/sim-progress.js';
 import {
     isVerificationEnabled,
     isSettlementEnabled,
@@ -223,6 +222,7 @@ export async function runScheduledJobs(): Promise<SchedulerResult> {
     {
         const jobStart = Date.now();
         try {
+            const { runSimProgressJob, runSimSoloProgressJob } = await import('../jobs/sim-progress.js');
             const rivalryResult = await runSimProgressJob();
             const soloResult = await runSimSoloProgressJob();
             const durationMs = Date.now() - jobStart;

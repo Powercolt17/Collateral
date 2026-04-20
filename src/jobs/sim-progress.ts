@@ -31,44 +31,49 @@ function getOutcomeForParticipant(rivalryId: string, role: string): 'WIN' | 'LOS
     return (num % 100) < 35 ? 'WIN' : 'LOSE';
 }
 
-// =============================================================================
-// GROWTH CURVE GENERATOR
-// Creates realistic organic growth with noise
-// =============================================================================
+// Deterministic pseudo-random based on a seed string (0.0 to 1.0)
+function seededRandom(seed: string): number {
+    const hash = createHash('md5').update(seed).digest();
+    return (hash.readUInt16BE(0) % 10000) / 10000;
+}
 
 function calculateTargetGrowthAtTime(
     outcome: 'WIN' | 'LOSE',
     targetPct: number,
     elapsedRatio: number, // 0.0 to 1.0 (how far through the contract)
+    seed: string = '', // deterministic seed (rivalryId + role + day)
 ): number {
     // Clamp elapsed ratio
     const t = Math.min(1.0, Math.max(0, elapsedRatio));
     
+    // Deterministic random values based on seed
+    const r1 = seededRandom(seed + ':r1');
+    const r2 = seededRandom(seed + ':r2');
+    const r3 = seededRandom(seed + ':r3');
+    
     if (outcome === 'WIN') {
         // Winners: S-curve growth that ends above target
-        // Slow start → accelerate → reach target near end
         const sCurve = 1 / (1 + Math.exp(-8 * (t - 0.5))); // Sigmoid
-        const finalPct = targetPct * (1.02 + Math.random() * 0.15); // 2-17% above target
+        const finalPct = targetPct * (1.02 + r1 * 0.15); // 2-17% above target
         const basePct = sCurve * finalPct;
         
-        // Add noise: ±2% of current value
-        const noise = (Math.random() - 0.5) * targetPct * 0.06;
+        // Add small deterministic noise
+        const noise = (r2 - 0.5) * targetPct * 0.04;
         return Math.max(0, basePct + noise);
     } else {
         // Losers: Start growing but plateau or stall
-        // Fast initial growth that tapers off before reaching target
-        const peakRatio = 0.4 + Math.random() * 0.25; // Plateau at 40-65% of target
+        const peakRatio = 0.4 + r1 * 0.25; // Plateau at 40-65% of target
         const peakPct = targetPct * peakRatio;
         
         // Quick rise then plateau
-        const rise = Math.sqrt(Math.min(t * 2.5, 1.0)); // Fast initial, then flat
+        const rise = Math.sqrt(Math.min(t * 2.5, 1.0));
         const basePct = rise * peakPct;
         
-        // Add noise
-        const noise = (Math.random() - 0.5) * targetPct * 0.04;
+        // Add small deterministic noise
+        const noise = (r2 - 0.5) * targetPct * 0.03;
         
-        // Occasional small dips (bad days)
-        const dip = Math.random() < 0.15 ? -(targetPct * 0.02) : 0;
+        // Occasional deterministic dips
+        const dip = r3 < 0.15 ? -(targetPct * 0.015) : 0;
         
         return Math.max(0, basePct + noise + dip);
     }
@@ -168,11 +173,13 @@ async function keepSimRivalriesAlive(): Promise<number> {
                     
                     for (let d = 0; d <= daysElapsed; d++) {
                         const dayRatio = d / durationDays;
-                        const growthPct = calculateTargetGrowthAtTime(outcome, targetPct, dayRatio);
+                        const daySeed = `${r.id}:${part.role}:d${d}`;
+                        const growthPct = calculateTargetGrowthAtTime(outcome, targetPct, dayRatio, daySeed);
                         const value = Math.round(baseline * (1 + growthPct / 100));
                         
-                        // Timestamp: activation + d days + random 0-12 hours
-                        const snapshotTime = new Date(newActivatedAt.getTime() + d * 86400000 + Math.random() * 43200000);
+                        // Deterministic timestamp offset per day
+                        const hourOffset = seededRandom(`${r.id}:${part.role}:t${d}`) * 12;
+                        const snapshotTime = new Date(newActivatedAt.getTime() + d * 86400000 + hourOffset * 3600000);
                         
                         await db.execute(sql`
                             INSERT INTO rivalry_metric_snapshots (
@@ -187,7 +194,7 @@ async function keepSimRivalriesAlive(): Promise<number> {
                     
                     // Update participant with latest growth
                     const latestRatio = daysElapsed / durationDays;
-                    const latestGrowth = calculateTargetGrowthAtTime(outcome, targetPct, latestRatio);
+                    const latestGrowth = calculateTargetGrowthAtTime(outcome, targetPct, latestRatio, `${r.id}:${part.role}:d${daysElapsed}`);
                     const latestValue = Math.round(baseline * (1 + latestGrowth / 100));
                     
                     await db.execute(sql`
@@ -226,80 +233,88 @@ export async function runSimProgressJob(): Promise<{ updated: number; snapshots:
     let snapshots = 0;
     let skipped = 0;
     
-    // Step 0a: Clean up clustered/duplicate snapshots (keep max 1 per day per user per rivalry)
+    // Step 0a: Nuke ALL sim rivalry snapshots and regenerate clean daily data
     try {
-        await db.execute(sql`
-            DELETE FROM rivalry_metric_snapshots
-            WHERE id IN (
-                SELECT rms.id FROM rivalry_metric_snapshots rms
-                JOIN rivalries r ON rms.rivalry_id = r.id
-                JOIN users u ON r.challenger_user_id = u.id
-                WHERE u.email LIKE '%@collateral.internal'
-                  AND rms.id NOT IN (
-                    SELECT DISTINCT ON (sub.rivalry_id, sub.user_id, DATE(sub.fetched_at))
-                           sub.id
-                    FROM rivalry_metric_snapshots sub
-                    ORDER BY sub.rivalry_id, sub.user_id, DATE(sub.fetched_at), sub.fetched_at DESC
-                  )
-            )
+        // Get all sim rivalries
+        const simRivalries = await db.execute(sql`
+            SELECT r.id, r.platform, r.metric_key, r.target_growth_pct,
+                   r.activated_at, r.deadline_utc, r.duration_days
+            FROM rivalries r
+            JOIN users u ON r.challenger_user_id = u.id
+            WHERE u.email LIKE '%@collateral.internal'
+              AND r.activated_at IS NOT NULL
+              AND r.settled_at IS NULL
         `);
-        console.log('[SimProgress] 🧹 Cleaned up duplicate snapshots');
-    } catch (err: any) {
-        // Non-fatal — DISTINCT ON may not work on all Postgres versions, try simpler approach
-        console.log('[SimProgress] Using fallback cleanup...');
-        try {
-            // Fallback: For each sim rivalry, keep only snapshots that are >12h apart
-            const simRivalryIds = await db.execute(sql`
-                SELECT DISTINCT r.id as rivalry_id
-                FROM rivalries r
-                JOIN users u ON r.challenger_user_id = u.id
-                WHERE u.email LIKE '%@collateral.internal'
-                  AND r.activated_at IS NOT NULL
+        const simRows = (simRivalries as any).rows || simRivalries;
+        
+        for (const rivalry of simRows) {
+            // Count existing snapshots
+            const countResult = await db.execute(sql`
+                SELECT COUNT(*) as cnt FROM rivalry_metric_snapshots
+                WHERE rivalry_id = ${rivalry.id}
             `);
-            const rIds = (simRivalryIds as any).rows || simRivalryIds;
+            const countRows = (countResult as any).rows || countResult;
+            const existingCount = parseInt(countRows[0]?.cnt || '0');
             
-            for (const { rivalry_id } of rIds) {
-                // Get all snapshots ordered by time
-                const allSnaps = await db.execute(sql`
-                    SELECT id, user_id, fetched_at FROM rivalry_metric_snapshots
-                    WHERE rivalry_id = ${rivalry_id}
-                    ORDER BY user_id, fetched_at ASC
+            const activatedAt = new Date(rivalry.activated_at);
+            const now = new Date();
+            const durationDays = rivalry.duration_days || 14;
+            const daysElapsed = Math.floor((now.getTime() - activatedAt.getTime()) / 86400000);
+            
+            // Expected: ~2 snapshots per day (1 per participant)
+            // If we have way more than expected, nuke and rebuild
+            const expectedMax = (daysElapsed + 1) * 2 * 1.5; // 1.5x buffer
+            
+            if (existingCount > expectedMax || existingCount > daysElapsed * 4) {
+                console.log(`[SimProgress] 🧹 Rivalry ${rivalry.id.slice(0,8)} has ${existingCount} snapshots (expected ~${Math.round(expectedMax)}). Rebuilding...`);
+                
+                // Delete ALL snapshots
+                await db.execute(sql`
+                    DELETE FROM rivalry_metric_snapshots WHERE rivalry_id = ${rivalry.id}
                 `);
-                const snaps = (allSnaps as any).rows || allSnaps;
                 
-                // Keep snapshots that are at least 12 hours apart per user
-                const toDelete: string[] = [];
-                let lastKept: Record<string, number> = {};
+                // Get participants
+                const parts = await db.execute(sql`
+                    SELECT id, user_id, role, baseline_value
+                    FROM rivalry_participants WHERE rivalry_id = ${rivalry.id}
+                `);
+                const partRows = (parts as any).rows || parts;
+                const targetPct = parseFloat(rivalry.target_growth_pct || '15');
                 
-                for (const snap of snaps) {
-                    const key = snap.user_id;
-                    const ts = new Date(snap.fetched_at).getTime();
+                // Regenerate clean daily snapshots
+                for (const part of partRows) {
+                    const baseline = parseFloat(part.baseline_value || '0');
+                    if (baseline <= 0) continue;
                     
-                    if (!lastKept[key] || ts - lastKept[key] > 12 * 3600000) {
-                        lastKept[key] = ts;
-                    } else {
-                        toDelete.push(snap.id);
-                    }
-                }
-                
-                // Batch delete in chunks
-                for (let i = 0; i < toDelete.length; i += 50) {
-                    const chunk = toDelete.slice(i, i + 50);
-                    if (chunk.length > 0) {
+                    const outcome = getOutcomeForParticipant(rivalry.id, part.role);
+                    
+                    for (let d = 0; d <= daysElapsed; d++) {
+                        const dayRatio = d / durationDays;
+                        const daySeed = `${rivalry.id}:${part.role}:d${d}`;
+                        const growthPct = calculateTargetGrowthAtTime(outcome, targetPct, dayRatio, daySeed);
+                        const value = Math.round(baseline * (1 + growthPct / 100));
+                        
+                        // One snapshot per day at a consistent time (activation + d days + 6-hour offset)
+                        const snapshotTime = new Date(activatedAt.getTime() + d * 86400000 + 6 * 3600000);
+                        
                         await db.execute(sql`
-                            DELETE FROM rivalry_metric_snapshots
-                            WHERE id = ANY(${chunk})
+                            INSERT INTO rivalry_metric_snapshots (
+                                id, rivalry_id, user_id, provider, metric_key,
+                                metric_value, fetched_at, created_at
+                            ) VALUES (
+                                ${randomUUID()}, ${rivalry.id}, ${part.user_id}, ${rivalry.platform}, ${rivalry.metric_key},
+                                ${value.toString()}, ${snapshotTime.toISOString()}, ${snapshotTime.toISOString()}
+                            )
                         `);
+                        snapshots++;
                     }
                 }
                 
-                if (toDelete.length > 0) {
-                    console.log(`[SimProgress] 🧹 Removed ${toDelete.length} clustered snapshots from rivalry ${rivalry_id.slice(0,8)}`);
-                }
+                console.log(`[SimProgress] ✅ Rebuilt ${daysElapsed + 1} clean daily snapshots for rivalry ${rivalry.id.slice(0,8)}`);
             }
-        } catch (err2: any) {
-            console.error('[SimProgress] Cleanup fallback error:', err2.message);
         }
+    } catch (err: any) {
+        console.error('[SimProgress] Snapshot cleanup error:', err.message);
     }
     
     // Step 0b: Ensure sim rivalries haven't expired
@@ -368,7 +383,9 @@ export async function runSimProgressJob(): Promise<{ updated: number; snapshots:
                 const outcome = getOutcomeForParticipant(rivalryId, part.role);
                 
                 // Calculate current growth percentage
-                const growthPct = calculateTargetGrowthAtTime(outcome, targetPct, elapsedRatio);
+                // Use day-level seed for deterministic output
+                const dayNum = Math.floor(elapsedRatio * (rivalry.duration_days || 14));
+                const growthPct = calculateTargetGrowthAtTime(outcome, targetPct, elapsedRatio, `${rivalryId}:${part.role}:d${dayNum}`);
                 const currentValue = Math.round(baseline * (1 + growthPct / 100));
                 const absoluteDelta = currentValue - baseline;
                 
@@ -467,7 +484,8 @@ export async function runSimSoloProgressJob(): Promise<{ updated: number }> {
             
             // Use contract ID to deterministically decide outcome
             const outcome = getOutcomeForParticipant(contract.id, 'solo');
-            const growthPct = calculateTargetGrowthAtTime(outcome, targetPct, elapsedRatio);
+            const dayNum = Math.floor(elapsedRatio * (contract.duration_days || 14));
+            const growthPct = calculateTargetGrowthAtTime(outcome, targetPct, elapsedRatio, `${contract.id}:solo:d${dayNum}`);
             const currentValue = Math.round(baseVal * (1 + growthPct / 100));
             
             // Store in condition_json as currentValue for frontend

@@ -226,7 +226,83 @@ export async function runSimProgressJob(): Promise<{ updated: number; snapshots:
     let snapshots = 0;
     let skipped = 0;
     
-    // Step 0: Ensure sim rivalries haven't expired
+    // Step 0a: Clean up clustered/duplicate snapshots (keep max 1 per day per user per rivalry)
+    try {
+        await db.execute(sql`
+            DELETE FROM rivalry_metric_snapshots
+            WHERE id IN (
+                SELECT rms.id FROM rivalry_metric_snapshots rms
+                JOIN rivalries r ON rms.rivalry_id = r.id
+                JOIN users u ON r.challenger_user_id = u.id
+                WHERE u.email LIKE '%@collateral.internal'
+                  AND rms.id NOT IN (
+                    SELECT DISTINCT ON (sub.rivalry_id, sub.user_id, DATE(sub.fetched_at))
+                           sub.id
+                    FROM rivalry_metric_snapshots sub
+                    ORDER BY sub.rivalry_id, sub.user_id, DATE(sub.fetched_at), sub.fetched_at DESC
+                  )
+            )
+        `);
+        console.log('[SimProgress] 🧹 Cleaned up duplicate snapshots');
+    } catch (err: any) {
+        // Non-fatal — DISTINCT ON may not work on all Postgres versions, try simpler approach
+        console.log('[SimProgress] Using fallback cleanup...');
+        try {
+            // Fallback: For each sim rivalry, keep only snapshots that are >12h apart
+            const simRivalryIds = await db.execute(sql`
+                SELECT DISTINCT r.id as rivalry_id
+                FROM rivalries r
+                JOIN users u ON r.challenger_user_id = u.id
+                WHERE u.email LIKE '%@collateral.internal'
+                  AND r.activated_at IS NOT NULL
+            `);
+            const rIds = (simRivalryIds as any).rows || simRivalryIds;
+            
+            for (const { rivalry_id } of rIds) {
+                // Get all snapshots ordered by time
+                const allSnaps = await db.execute(sql`
+                    SELECT id, user_id, fetched_at FROM rivalry_metric_snapshots
+                    WHERE rivalry_id = ${rivalry_id}
+                    ORDER BY user_id, fetched_at ASC
+                `);
+                const snaps = (allSnaps as any).rows || allSnaps;
+                
+                // Keep snapshots that are at least 12 hours apart per user
+                const toDelete: string[] = [];
+                let lastKept: Record<string, number> = {};
+                
+                for (const snap of snaps) {
+                    const key = snap.user_id;
+                    const ts = new Date(snap.fetched_at).getTime();
+                    
+                    if (!lastKept[key] || ts - lastKept[key] > 12 * 3600000) {
+                        lastKept[key] = ts;
+                    } else {
+                        toDelete.push(snap.id);
+                    }
+                }
+                
+                // Batch delete in chunks
+                for (let i = 0; i < toDelete.length; i += 50) {
+                    const chunk = toDelete.slice(i, i + 50);
+                    if (chunk.length > 0) {
+                        await db.execute(sql`
+                            DELETE FROM rivalry_metric_snapshots
+                            WHERE id = ANY(${chunk})
+                        `);
+                    }
+                }
+                
+                if (toDelete.length > 0) {
+                    console.log(`[SimProgress] 🧹 Removed ${toDelete.length} clustered snapshots from rivalry ${rivalry_id.slice(0,8)}`);
+                }
+            }
+        } catch (err2: any) {
+            console.error('[SimProgress] Cleanup fallback error:', err2.message);
+        }
+    }
+    
+    // Step 0b: Ensure sim rivalries haven't expired
     const reset = await keepSimRivalriesAlive();
     
     try {
@@ -309,12 +385,12 @@ export async function runSimProgressJob(): Promise<{ updated: number; snapshots:
                 updated++;
                 
                 // Insert a new metric snapshot (the chart data source)
-                // But limit to 1 snapshot per hour to avoid flooding
+                // Limit to 1 snapshot per 24 hours for clean daily chart points
                 const recentSnap = await db.execute(sql`
                     SELECT id FROM rivalry_metric_snapshots
                     WHERE rivalry_id = ${rivalryId}
                       AND user_id = ${part.user_id}
-                      AND fetched_at > ${new Date(now.getTime() - 3600000).toISOString()}
+                      AND fetched_at > ${new Date(now.getTime() - 86400000).toISOString()}
                     LIMIT 1
                 `);
                 

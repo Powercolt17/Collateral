@@ -152,17 +152,22 @@ server.listen(PORT, '0.0.0.0', () => {
                 console.error('[startup] ⚠️ Seed failed (continuing):', err);
             }
 
-            // Now check schema
-            const { checkSchema } = await import('./db/guard.js');
-            await checkSchema();
+            // Now check schema (non-fatal — server should still boot)
+            try {
+                const { checkSchema } = await import('./db/guard.js');
+                await checkSchema();
+            } catch (err) {
+                console.error('[startup] ⚠️ Schema check failed (DB may be unavailable):', err);
+            }
 
-            // Now boot app
+            // Now boot app regardless — DB will reconnect when available
             bootFastify();
         })
         .catch(err => {
             console.error('[startup] ❌ Boot Sequence Failed (Migration/Schema).', err);
-            // Fail fast so Railway restarts the container
-            process.exit(1);
+            // Still boot Fastify — health endpoint already running, routes will fail gracefully
+            console.error('[startup] ⚠️ Attempting to boot Fastify anyway...');
+            bootFastify();
         });
 });
 

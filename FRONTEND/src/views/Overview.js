@@ -1392,7 +1392,6 @@ export function renderOverview() {
                     <div class="eq-pills" id="eq-filters">
                         <span class="eq-filter-lbl">Domain</span>
                         <button class="eq-pill active" data-category="all">All</button>
-                        <button class="eq-pill" data-category="sales">Sales</button>
                         <button class="eq-pill" data-category="social">Social</button>
                         <button class="eq-pill" data-category="commerce">Commerce</button>
                         <button class="eq-pill" data-category="finance">Finance</button>

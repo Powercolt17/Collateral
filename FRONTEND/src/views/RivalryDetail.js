@@ -1380,8 +1380,11 @@ export async function initRivalryDetail(params) {
             pulseSvg = `<circle cx="${px}" cy="${py}" r="6" fill="none" stroke="${pulseColor}" stroke-width="2" opacity="0.4"><animate attributeName="r" from="6" to="18" dur="2s" repeatCount="indefinite"/><animate attributeName="opacity" from="0.4" to="0" dur="2s" repeatCount="indefinite"/></circle>`;
         }
 
+        // Crosshair elements (hidden by default, shown on hover/touch)
+        const crosshairId = 'rvd-crosshair-' + Date.now();
+
         chartEl.innerHTML = `
-            <svg viewBox="0 0 ${W} ${H}" preserveAspectRatio="xMidYMid meet" style="width:100%;height:100%">
+            <svg viewBox="0 0 ${W} ${H}" preserveAspectRatio="xMidYMid meet" style="width:100%;height:100%" id="${crosshairId}-svg">
                 <defs>
                     <linearGradient id="grad-chall-live" x1="0" y1="0" x2="0" y2="1">
                         <stop offset="0%" stop-color="${challGradColor}" stop-opacity="0.15"/>
@@ -1403,7 +1406,160 @@ export async function initRivalryDetail(params) {
                 ${challPath ? `<path d="${challPath}" fill="none" stroke="${challColor}" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>` : ''}
                 ${pulseSvg}
                 ${endDots}
+                <!-- Crosshair group (hidden by default) -->
+                <g id="${crosshairId}-group" style="display:none">
+                    <line id="${crosshairId}-line" x1="0" y1="${PAD_T}" x2="0" y2="${H - PAD_B}" stroke="#999" stroke-width="1" stroke-dasharray="3 3" opacity="0.6"/>
+                    <circle id="${crosshairId}-dot-c" r="4" fill="${challColor}" stroke="#fff" stroke-width="2"/>
+                    <circle id="${crosshairId}-dot-o" r="4" fill="${oppColor}" stroke="#fff" stroke-width="2"/>
+                    <!-- Tooltip background + text for challenger -->
+                    <rect id="${crosshairId}-tip-c-bg" rx="3" ry="3" fill="${challColor}" opacity="0.92"/>
+                    <text id="${crosshairId}-tip-c-txt" font-family="Inter, monospace" font-size="9" font-weight="700" fill="#fff" text-anchor="middle"/>
+                    <!-- Tooltip background + text for opponent -->
+                    <rect id="${crosshairId}-tip-o-bg" rx="3" ry="3" fill="${oppColor}" opacity="0.92"/>
+                    <text id="${crosshairId}-tip-o-txt" font-family="Inter, monospace" font-size="9" font-weight="700" fill="#fff" text-anchor="middle"/>
+                    <!-- Day label -->
+                    <rect id="${crosshairId}-day-bg" rx="2" ry="2" fill="#333" opacity="0.85"/>
+                    <text id="${crosshairId}-day-txt" font-family="Inter, monospace" font-size="8" font-weight="600" fill="#fff" text-anchor="middle"/>
+                </g>
+                <!-- Invisible overlay to capture mouse/touch -->
+                <rect id="${crosshairId}-overlay" x="${PAD_L}" y="${PAD_T}" width="${W - PAD_L - PAD_R}" height="${H - PAD_T - PAD_B}" fill="transparent" style="cursor:crosshair"/>
             </svg>`;
+
+        // Crosshair interaction logic
+        const svgEl = document.getElementById(`${crosshairId}-svg`);
+        const overlay = document.getElementById(`${crosshairId}-overlay`);
+        const crossGroup = document.getElementById(`${crosshairId}-group`);
+        const crossLine = document.getElementById(`${crosshairId}-line`);
+        const dotC = document.getElementById(`${crosshairId}-dot-c`);
+        const dotO = document.getElementById(`${crosshairId}-dot-o`);
+        const tipCBg = document.getElementById(`${crosshairId}-tip-c-bg`);
+        const tipCTxt = document.getElementById(`${crosshairId}-tip-c-txt`);
+        const tipOBg = document.getElementById(`${crosshairId}-tip-o-bg`);
+        const tipOTxt = document.getElementById(`${crosshairId}-tip-o-txt`);
+        const dayBg = document.getElementById(`${crosshairId}-day-bg`);
+        const dayTxt = document.getElementById(`${crosshairId}-day-txt`);
+
+        if (overlay && crossGroup) {
+            // Lookup: given an SVG x, find the nearest time and interpolate pct for each series
+            function getValuesAtX(svgX) {
+                // Convert SVG x back to timestamp
+                const plotW = W - PAD_L - PAD_R;
+                const frac = Math.max(0, Math.min(1, (svgX - PAD_L) / plotW));
+                const t = tMin + frac * tRange;
+
+                // Find interpolated pct for each player using stepped line (last known value before t)
+                function getSteppedPct(pts) {
+                    if (pts.length === 0) return null;
+                    let lastPct = pts[0].pct;
+                    for (let i = 0; i < pts.length; i++) {
+                        if (pts[i].t.getTime() <= t) {
+                            lastPct = pts[i].pct;
+                        } else break;
+                    }
+                    return lastPct;
+                }
+
+                const cPct = getSteppedPct(challPoints);
+                const oPct = getSteppedPct(oppPoints);
+                
+                // Calculate day number
+                const startMs = new Date(rivalry._activatedAt).getTime();
+                const dayNum = Math.max(0, (t - startMs) / 86400000);
+
+                return { cPct, oPct, dayNum, svgX: Math.max(PAD_L, Math.min(W - PAD_R, svgX)) };
+            }
+
+            function showCrosshair(svgX) {
+                const vals = getValuesAtX(svgX);
+                crossGroup.style.display = '';
+                crossLine.setAttribute('x1', vals.svgX);
+                crossLine.setAttribute('x2', vals.svgX);
+
+                if (vals.cPct !== null) {
+                    const cy = toY(vals.cPct);
+                    dotC.setAttribute('cx', vals.svgX);
+                    dotC.setAttribute('cy', cy);
+                    dotC.style.display = '';
+                    const label = `${vals.cPct >= 0 ? '+' : ''}${vals.cPct.toFixed(1)}%`;
+                    tipCTxt.textContent = label;
+                    const tipW = Math.max(52, label.length * 7 + 12);
+                    const tipX = vals.svgX;
+                    const tipY = cy - 22;
+                    tipCBg.setAttribute('x', tipX - tipW/2);
+                    tipCBg.setAttribute('y', tipY - 6);
+                    tipCBg.setAttribute('width', tipW);
+                    tipCBg.setAttribute('height', 18);
+                    tipCTxt.setAttribute('x', tipX);
+                    tipCTxt.setAttribute('y', tipY + 7);
+                    tipCBg.style.display = '';
+                    tipCTxt.style.display = '';
+                } else {
+                    dotC.style.display = 'none';
+                    tipCBg.style.display = 'none';
+                    tipCTxt.style.display = 'none';
+                }
+
+                if (vals.oPct !== null) {
+                    const oy = toY(vals.oPct);
+                    dotO.setAttribute('cx', vals.svgX);
+                    dotO.setAttribute('cy', oy);
+                    dotO.style.display = '';
+                    const label = `${vals.oPct >= 0 ? '+' : ''}${vals.oPct.toFixed(1)}%`;
+                    tipOTxt.textContent = label;
+                    const tipW = Math.max(52, label.length * 7 + 12);
+                    const tipX = vals.svgX;
+                    const tipY = oy + 16;
+                    tipOBg.setAttribute('x', tipX - tipW/2);
+                    tipOBg.setAttribute('y', tipY - 6);
+                    tipOBg.setAttribute('width', tipW);
+                    tipOBg.setAttribute('height', 18);
+                    tipOTxt.setAttribute('x', tipX);
+                    tipOTxt.setAttribute('y', tipY + 7);
+                    tipOBg.style.display = '';
+                    tipOTxt.style.display = '';
+                } else {
+                    dotO.style.display = 'none';
+                    tipOBg.style.display = 'none';
+                    tipOTxt.style.display = 'none';
+                }
+
+                // Day label at bottom
+                const dayLabel = `Day ${vals.dayNum.toFixed(1)}`;
+                dayTxt.textContent = dayLabel;
+                const dayW = Math.max(48, dayLabel.length * 6 + 10);
+                dayBg.setAttribute('x', vals.svgX - dayW/2);
+                dayBg.setAttribute('y', H - PAD_B + 2);
+                dayBg.setAttribute('width', dayW);
+                dayBg.setAttribute('height', 16);
+                dayTxt.setAttribute('x', vals.svgX);
+                dayTxt.setAttribute('y', H - PAD_B + 13);
+            }
+
+            function hideCrosshair() {
+                crossGroup.style.display = 'none';
+            }
+
+            function getSvgX(clientX) {
+                const rect = svgEl.getBoundingClientRect();
+                const scaleX = W / rect.width;
+                return (clientX - rect.left) * scaleX;
+            }
+
+            // Desktop: mousemove + mouseleave
+            overlay.addEventListener('mousemove', (e) => showCrosshair(getSvgX(e.clientX)));
+            overlay.addEventListener('mouseleave', hideCrosshair);
+
+            // Mobile: touchstart + touchmove + touchend
+            overlay.addEventListener('touchstart', (e) => {
+                e.preventDefault();
+                if (e.touches.length > 0) showCrosshair(getSvgX(e.touches[0].clientX));
+            }, { passive: false });
+            overlay.addEventListener('touchmove', (e) => {
+                e.preventDefault();
+                if (e.touches.length > 0) showCrosshair(getSvgX(e.touches[0].clientX));
+            }, { passive: false });
+            overlay.addEventListener('touchend', hideCrosshair);
+        }
     }
 
     // Initial render

@@ -130,11 +130,16 @@ async function keepSimRivalriesAlive(): Promise<number> {
                     WHERE rivalry_id = ${r.id}
                 `);
                 
-                // Remove settled events
+                // Remove ALL terminal/post-activation events that cause state derivation crashes
                 await db.execute(sql`
                     DELETE FROM rivalry_ledger_events
                     WHERE rivalry_id = ${r.id}
-                      AND event_type = 'RIVALRY_SETTLED'
+                      AND event_type IN (
+                        'RIVALRY_SETTLED', 'RIVALRY_EXPIRED', 'RIVALRY_CANCELLED',
+                        'RIVALRY_VERIFICATION_STARTED', 'RIVALRY_VERIFIED',
+                        'RIVALRY_SETTLEMENT_STARTED', 'RIVALRY_DRAW',
+                        'RIVALRY_CAPITAL_RETURNED'
+                      )
                 `);
                 
                 // CRITICAL: Clear ALL old metric snapshots and backfill with clean historical data

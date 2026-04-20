@@ -588,34 +588,40 @@ export async function listRivalries(options: {
     // Derive state for each and filter
     const results = [];
     for (const rivalry of allRivalries) {
-        const state = await getRivalryState(rivalry.id);
-        if (status && state !== status) continue;
+        try {
+            const state = await getRivalryState(rivalry.id);
+            if (status && state !== status) continue;
 
-        // PUBLIC LISTING PRIVACY: Hide directed pending challenges from non-participants
-        // Only open challenges (opponentUserId is null) should be publicly visible while pending
-        if (!userId && rivalry.opponentUserId && (state === 'CHALLENGE_ISSUED')) {
-            continue; // Skip directed pending challenges in public feed
+            // PUBLIC LISTING PRIVACY: Hide directed pending challenges from non-participants
+            // Only open challenges (opponentUserId is null) should be publicly visible while pending
+            if (!userId && rivalry.opponentUserId && (state === 'CHALLENGE_ISSUED')) {
+                continue; // Skip directed pending challenges in public feed
+            }
+
+            const participants = await db
+                .select()
+                .from(rivalryParticipants)
+                .where(eq(rivalryParticipants.rivalryId, rivalry.id));
+
+            // Get usernames
+            const challengerIdentity = await db.select().from(identities).where(eq(identities.userId, rivalry.challengerUserId)).then(r => r[0]);
+            const opponentIdentity = rivalry.opponentUserId
+                ? await db.select().from(identities).where(eq(identities.userId, rivalry.opponentUserId)).then(r => r[0])
+                : null;
+
+            results.push({
+                ...rivalry,
+                state,
+                challengerUsername: challengerIdentity?.username || 'unknown',
+                opponentUsername: opponentIdentity?.username || null,
+                participants,
+                poolCents: rivalry.stakePerSideCents * 2,
+            });
+        } catch (err: any) {
+            // Skip rivalries with corrupted state (e.g. invalid transitions from sim resets)
+            console.warn(`[listRivalries] Skipping rivalry ${rivalry.id} — state derivation error: ${err.message}`);
+            continue;
         }
-
-        const participants = await db
-            .select()
-            .from(rivalryParticipants)
-            .where(eq(rivalryParticipants.rivalryId, rivalry.id));
-
-        // Get usernames
-        const challengerIdentity = await db.select().from(identities).where(eq(identities.userId, rivalry.challengerUserId)).then(r => r[0]);
-        const opponentIdentity = rivalry.opponentUserId
-            ? await db.select().from(identities).where(eq(identities.userId, rivalry.opponentUserId)).then(r => r[0])
-            : null;
-
-        results.push({
-            ...rivalry,
-            state,
-            challengerUsername: challengerIdentity?.username || 'unknown',
-            opponentUsername: opponentIdentity?.username || null,
-            participants,
-            poolCents: rivalry.stakePerSideCents * 2,
-        });
     }
 
     return { rivalries: results, total: results.length };

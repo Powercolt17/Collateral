@@ -5,7 +5,7 @@
 // HARD GATE: Minimum baseline required per tier — no starting from zero
 // EVERY BUTTON IS LIVE — tabs, pills, CTAs, modal, search, sort
 
-import { getMarketListings, hasAuthToken } from '../api.js';
+import { getMarketListings, hasAuthToken, getRivalryStats } from '../api.js';
 import { openExecutionModal } from './ExecutionModal.js';
 
 export function renderOverview() {
@@ -1767,34 +1767,43 @@ export function initOverview() {
     function updateStats(stats) {
         if (!stats) return;
 
-        // Capital locked
-        if (statCapital) {
-            const tvl = Number(stats.tvlUsd) || 0;
-            if (tvl >= 1_000_000) {
-                statCapital.textContent = (tvl / 1_000_000).toFixed(1) + 'M';
-            } else if (tvl >= 1_000) {
-                statCapital.textContent = (tvl / 1_000).toFixed(0) + 'k';
-            } else {
-                statCapital.textContent = tvl.toLocaleString();
-            }
-        }
-
         // Active contracts
         if (statContracts) {
             statContracts.textContent = stats.activeCount || '0';
         }
 
-        // Volume 24h
-        if (statPool) {
-            const vol = Number(stats.volume24hUsd) || 0;
-            if (vol >= 1_000_000) {
-                statPool.textContent = (vol / 1_000_000).toFixed(1) + 'M';
-            } else if (vol >= 1_000) {
-                statPool.textContent = (vol / 1_000).toFixed(0) + 'k';
-            } else {
-                statPool.textContent = vol.toLocaleString();
+        // Capital locked & Volume: pull from rivalry stats (this works NOW)
+        fetchRivalryCapital();
+    }
+
+    async function fetchRivalryCapital() {
+        try {
+            const res = await getRivalryStats();
+            if (!res.ok || !res.stats) return;
+            const capital = (res.stats.totalCapitalLockedCents || 0) / 100;
+            const largest = (res.stats.largestPoolCents || 0) / 100;
+
+            if (statCapital) {
+                if (capital >= 1_000_000) {
+                    statCapital.textContent = (capital / 1_000_000).toFixed(1) + 'M';
+                } else if (capital >= 1_000) {
+                    statCapital.textContent = (capital / 1_000).toFixed(1) + 'k';
+                } else {
+                    statCapital.textContent = capital.toLocaleString();
+                }
             }
-        }
+
+            // Use largest pool as volume proxy
+            if (statPool) {
+                if (largest >= 1_000_000) {
+                    statPool.textContent = (largest / 1_000_000).toFixed(1) + 'M';
+                } else if (largest >= 1_000) {
+                    statPool.textContent = (largest / 1_000).toFixed(1) + 'k';
+                } else {
+                    statPool.textContent = largest.toLocaleString();
+                }
+            }
+        } catch (_) { /* silent */ }
     }
 
     function updateTime() {

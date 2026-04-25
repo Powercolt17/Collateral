@@ -2,6 +2,8 @@
 // Route: /#/go
 // No header/nav — focused single-CTA conversion flow
 
+import { getPublicLedger } from '../api.js';
+
 export function renderLanding() {
     return `
         <style>
@@ -436,9 +438,7 @@ export function initLanding() {
 
 async function fetchLandingStats() {
     try {
-        const res = await fetch('/v1/ledger');
-        if (!res.ok) return;
-        const events = await res.json();
+        const events = await getPublicLedger();
         if (!Array.isArray(events) || events.length === 0) return;
 
         // Count unique contracts/rivalries

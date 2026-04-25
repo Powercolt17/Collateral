@@ -5,7 +5,7 @@
 // HARD GATE: Minimum baseline required per tier — no starting from zero
 // EVERY BUTTON IS LIVE — tabs, pills, CTAs, modal, search, sort
 
-import { getMarketListings, hasAuthToken } from '../api.js';
+import { getMarketListings, hasAuthToken, getPublicLedger } from '../api.js';
 import { openExecutionModal } from './ExecutionModal.js';
 
 export function renderOverview() {
@@ -1806,9 +1806,7 @@ export function initOverview() {
 
     async function supplementFromLedger() {
         try {
-            const res = await fetch('/v1/ledger');
-            if (!res.ok) return;
-            const events = await res.json();
+            const events = await getPublicLedger();
             if (!Array.isArray(events) || events.length === 0) return;
 
             let totalCents = 0;

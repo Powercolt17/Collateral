@@ -5,7 +5,7 @@
 // HARD GATE: Minimum baseline required per tier — no starting from zero
 // EVERY BUTTON IS LIVE — tabs, pills, CTAs, modal, search, sort
 
-import { getMarketListings, hasAuthToken, getPublicLedger } from '../api.js';
+import { getMarketListings, hasAuthToken } from '../api.js';
 import { openExecutionModal } from './ExecutionModal.js';
 
 export function renderOverview() {
@@ -1774,7 +1774,7 @@ export function initOverview() {
                 statCapital.textContent = (tvl / 1_000_000).toFixed(1) + 'M';
             } else if (tvl >= 1_000) {
                 statCapital.textContent = (tvl / 1_000).toFixed(0) + 'k';
-            } else if (tvl > 0) {
+            } else {
                 statCapital.textContent = tvl.toLocaleString();
             }
         }
@@ -1791,52 +1791,10 @@ export function initOverview() {
                 statPool.textContent = (vol / 1_000_000).toFixed(1) + 'M';
             } else if (vol >= 1_000) {
                 statPool.textContent = (vol / 1_000).toFixed(0) + 'k';
-            } else if (vol > 0) {
+            } else {
                 statPool.textContent = vol.toLocaleString();
             }
         }
-
-        // If TVL and Volume are both 0, supplement from public ledger
-        const tvl = Number(stats.tvlUsd) || 0;
-        const vol = Number(stats.volume24hUsd) || 0;
-        if (tvl === 0 && vol === 0) {
-            supplementFromLedger();
-        }
-    }
-
-    async function supplementFromLedger() {
-        try {
-            const events = await getPublicLedger();
-            if (!Array.isArray(events) || events.length === 0) return;
-
-            let totalCents = 0;
-            let vol24hCents = 0;
-            const now24h = Date.now() - 86400000;
-
-            events.forEach(e => {
-                if (e.eventType === 'FUNDS_LOCKED' || e.eventType === 'EXECUTION_CONFIRMED' ||
-                    e.eventType === 'RIVALRY_CREATED' || e.eventType === 'RIVALRY_ACCEPTED') {
-                    const amt = Math.abs(e.amountUsdCents || e.lockAmountUsdCents || 0);
-                    totalCents += amt;
-                    if (new Date(e.timestampUtc).getTime() > now24h) {
-                        vol24hCents += amt;
-                    }
-                }
-            });
-
-            if (statCapital && totalCents > 0) {
-                const dollars = totalCents / 100;
-                statCapital.textContent = dollars >= 1000
-                    ? (dollars / 1000).toFixed(0) + 'k'
-                    : dollars.toLocaleString();
-            }
-            if (statPool && vol24hCents > 0) {
-                const dollars = vol24hCents / 100;
-                statPool.textContent = dollars >= 1000
-                    ? (dollars / 1000).toFixed(0) + 'k'
-                    : dollars.toLocaleString();
-            }
-        } catch (_) { /* silent */ }
     }
 
     function updateTime() {

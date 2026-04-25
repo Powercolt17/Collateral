@@ -271,48 +271,47 @@ export async function getGlobalStats() {
             .leftJoin(marketStatsCache, eq(marketContractInstances.id, marketStatsCache.instanceId))
             .where(eq(marketContractInstances.status, 'published'));
 
-        // Real TVL: sum from actively locked contracts
-        let totalLockedCents = 0;
+        // TVL: sum all rivalry capital (stake_per_side_cents * 2 for both sides)
+        let rivalryCapitalCents = 0;
         try {
-            const tvlResult = await db.execute(sql`
-                SELECT coalesce(sum(c.lock_amount_usd_cents), 0) AS total_locked
-                FROM contracts c
-                INNER JOIN contract_index ci ON ci.contract_id = c.id
-                WHERE ci.current_state IN ('LOCKED', 'VERIFYING', 'SETTLING', 'PAYOUT_PENDING')
+            const r = await db.execute(sql`
+                SELECT coalesce(sum(stake_per_side_cents * 2), 0) AS total
+                FROM rivalries
+                WHERE activated_at IS NOT NULL
             `);
-            totalLockedCents = Number((tvlResult as any).rows?.[0]?.total_locked || 0);
-        } catch (tvlErr) {
-            console.warn('[Market] TVL query failed (non-fatal):', (tvlErr as any).message);
+            rivalryCapitalCents = Number((r as any).rows?.[0]?.total || 0);
+        } catch (_) {}
+
+        // Also sum any real solo contract locks
+        let soloCapitalCents = 0;
+        try {
+            const s = await db.execute(sql`
+                SELECT coalesce(sum(lock_amount_usd_cents), 0) AS total
+                FROM contracts
+                WHERE lock_amount_usd_cents > 0
+            `);
+            soloCapitalCents = Number((s as any).rows?.[0]?.total || 0);
+        } catch (_) {}
+
+        const totalCapitalCents = rivalryCapitalCents + soloCapitalCents;
+
+        // Volume 24h: rivalry capital activated in last 24h
+        let volume24hCents = Number(stats?.volume24h || 0);
+        if (volume24hCents === 0) {
+            try {
+                const v = await db.execute(sql`
+                    SELECT coalesce(sum(stake_per_side_cents * 2), 0) AS total
+                    FROM rivalries
+                    WHERE activated_at > NOW() - INTERVAL '24 hours'
+                `);
+                volume24hCents = Number((v as any).rows?.[0]?.total || 0);
+            } catch (_) {}
         }
-
-        // Cumulative TVL: all capital ever committed (ledger events)
-        let cumulativeLockedCents = 0;
-        try {
-            const ledgerResult = await db.execute(sql`
-                SELECT coalesce(sum(abs(amount_usd_cents)), 0) AS total
-                FROM ledger_events
-                WHERE event_type IN ('FUNDS_LOCKED', 'EXECUTION_CONFIRMED')
-            `);
-            cumulativeLockedCents = Number((ledgerResult as any).rows?.[0]?.total || 0);
-        } catch (_) { /* rivalry table may not exist */ }
-
-        // Also count rivalry capital
-        try {
-            const rivalryResult = await db.execute(sql`
-                SELECT coalesce(sum(abs(amount_usd_cents)), 0) AS total
-                FROM rivalry_ledger_events
-                WHERE event_type IN ('RIVALRY_CREATED', 'RIVALRY_ACCEPTED')
-            `);
-            cumulativeLockedCents += Number((rivalryResult as any).rows?.[0]?.total || 0);
-        } catch (_) { /* rivalry table may not exist */ }
-
-        // Use the higher of active TVL or cumulative TVL
-        const displayTvl = Math.max(totalLockedCents, cumulativeLockedCents);
 
         return {
             activeCount: Number(stats?.activeCount || 0),
-            volume24hUsd: Number(stats?.volume24h || 0) / 100,
-            tvlUsd: displayTvl / 100,
+            volume24hUsd: volume24hCents / 100,
+            tvlUsd: totalCapitalCents / 100,
         };
     } catch (err) {
         console.error('[Market] getGlobalStats failed:', (err as any).message);

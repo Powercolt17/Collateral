@@ -166,6 +166,30 @@
     <!-- Lucide Icons (async to not block render) -->
     <script src="https://unpkg.com/lucide@latest" defer></script>
 
+    <!-- Google Analytics 4 (GA4) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-JV0Y35K5HQ"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-JV0Y35K5HQ', { send_page_view: false });
+
+      // SPA page view helper — call window.trackPageView(path) on route changes
+      window.trackPageView = function(path) {
+        gtag('event', 'page_view', {
+          page_path: path || window.location.hash.replace('#', '') || '/',
+          page_title: document.title
+        });
+      };
+      // Track initial page load
+      window.addEventListener('load', function() { window.trackPageView(); });
+
+      // GA4 custom event helper
+      window.trackEvent = function(eventName, params) {
+        gtag('event', eventName, params || {});
+      };
+    </script>
+
     <!-- X (Twitter) Pixel Base Code -->
     <script>
     !function(e,t,n,s,u,a){e.twq||(s=e.twq=function(){s.exe?s.exe.apply(s,arguments):s.queue.push(arguments);

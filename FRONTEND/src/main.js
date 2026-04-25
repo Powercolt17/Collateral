@@ -164,6 +164,7 @@ async function hydrateSession() {
             const currentPath = window.location.pathname || '';
             if (protectedPaths.some(pr => currentPath === pr || currentPath.startsWith(pr + '/'))) {
                 window.router.navigate('/overview');
+                if (window.trackEvent) window.trackEvent('login', { method: 'google' });
                 // Show login modal after redirect
                 setTimeout(() => window.app.openAccessModal(), 100);
             }
@@ -484,6 +485,7 @@ window.app = {
                 // X (Twitter) Pixel — track signup conversion
                 if (typeof twq === 'function') {
                     twq('event', 'tw-rbwqr-rbx5x', {});
+                    if (window.trackEvent) window.trackEvent('sign_up', { method: 'email' });
                 }
 
                 window.app.closeAccessModal();
@@ -1463,6 +1465,8 @@ const protectedRoutes = ['/contracts', '/contracts/execute', '/my-contracts', '/
 
 // Route change handler
 router.onRouteChange = function (route, path) {
+    // GA4: Track SPA page view on every route change
+    if (window.trackPageView) window.trackPageView(path);
     // Pre-launch mode: hide header, footer, and status bar
     if (PRE_LAUNCH_MODE) {
         const headerMount = document.getElementById('header-mount');

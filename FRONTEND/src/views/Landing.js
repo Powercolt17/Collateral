@@ -2,7 +2,7 @@
 // Route: /#/go
 // No header/nav — focused single-CTA conversion flow
 
-import { getPublicLedger } from '../api.js';
+import api from '../api.js';
 
 export function renderLanding() {
     return `
@@ -438,39 +438,20 @@ export function initLanding() {
 
 async function fetchLandingStats() {
     try {
-        const events = await getPublicLedger();
-        if (!Array.isArray(events) || events.length === 0) return;
-
-        // Count unique contracts/rivalries
-        const uniqueSources = new Set();
-        let totalLockedCents = 0;
-        let rivalryCount = 0;
-
-        events.forEach(e => {
-            uniqueSources.add(e.sourceId);
-
-            // Sum locked amounts from FUNDS_LOCKED and RIVALRY_CREATED events
-            if (e.eventType === 'FUNDS_LOCKED' || e.eventType === 'RIVALRY_CREATED' || e.eventType === 'EXECUTION_CONFIRMED') {
-                totalLockedCents += Math.abs(e.amountUsdCents || e.lockAmountUsdCents || 0);
-            }
-
-            if (e.sourceType === 'RIVALRY') rivalryCount++;
-        });
+        const res = await api.getRivalryStats();
+        if (!res.ok || !res.stats) return;
 
         const contractsEl = document.getElementById('lp-stat-contracts');
         const tvlEl = document.getElementById('lp-stat-tvl');
-        const sourcesEl = document.getElementById('lp-stat-sources');
 
-        if (contractsEl) contractsEl.textContent = uniqueSources.size.toLocaleString();
+        const total = res.stats.totalRivalries || 0;
+        const capital = (res.stats.totalCapitalLockedCents || 0) / 100;
+
+        if (contractsEl) contractsEl.textContent = total.toLocaleString();
         if (tvlEl) {
-            const dollars = totalLockedCents / 100;
-            tvlEl.textContent = dollars >= 1000
-                ? '$' + (dollars / 1000).toFixed(1) + 'k'
-                : '$' + Math.round(dollars).toLocaleString();
-        }
-        // Show rivalry count if any
-        if (sourcesEl && rivalryCount > 0) {
-            // Keep "4" for verified sources — it's correct
+            tvlEl.textContent = capital >= 1000
+                ? '$' + (capital / 1000).toFixed(1) + 'k'
+                : '$' + Math.round(capital).toLocaleString();
         }
     } catch (_) {
         // Silent — show dashes as fallback

@@ -30,6 +30,7 @@ import { renderPrivacy, initPrivacy } from './views/Privacy.js';
 import { renderForgotPassword, initForgotPassword } from './views/ForgotPassword.js';
 import { renderResetPassword, initResetPassword } from './views/ResetPassword.js';
 import { renderReferrals, initReferrals } from './views/Referrals.js';
+import { renderLanding, initLanding } from './views/Landing.js';
 import './views/PreLaunch.css';
 import './index.css';
 import './mobile.css';
@@ -205,6 +206,7 @@ const routes = PRE_LAUNCH_MODE ? [
     { path: '/contract/:id', render: renderPreLaunch, init: initPreLaunch },
 ] : [
     // Normal mode: full app
+    { path: '/go', render: renderLanding, init: initLanding },
     { path: '/overview', render: renderOverview, init: initOverview },
     { path: '/rivalry', render: renderRivalry, init: initRivalry },
     { path: '/rivalry/:id', render: renderRivalryDetail, init: initRivalryDetail },
@@ -1497,12 +1499,22 @@ router.onRouteChange = function (route, path) {
         return;
     }
 
-    // Render header with current route
+    // Landing page: no header, clean full-page layout
     const headerMount = document.getElementById('header-mount');
+    const appMount = document.getElementById('app');
+    if (path === '/go') {
+        headerMount.innerHTML = '';
+        appMount.classList.remove('pt-16');
+        appMount.innerHTML = route.render(route.params);
+        if (route.init) setTimeout(() => route.init(route.params), 0);
+        return;
+    }
+
+    // Render header with current route
+    appMount.classList.add('pt-16');
     headerMount.innerHTML = renderHeader(path);
 
     // Render view content
-    const appMount = document.getElementById('app');
     appMount.innerHTML = route.render(route.params);
 
     // Initialize view (pass route params for parameterized routes like /receipts/:id)

@@ -1469,6 +1469,8 @@ const protectedRoutes = ['/contracts', '/contracts/execute', '/my-contracts', '/
 router.onRouteChange = function (route, path) {
     // GA4: Track SPA page view on every route change
     if (window.trackPageView) window.trackPageView(path);
+    // Cleanup rivalry poll if navigating away
+    if (window._rivalryPollCleanup) window._rivalryPollCleanup();
     // Pre-launch mode: hide header, footer, and status bar
     if (PRE_LAUNCH_MODE) {
         const headerMount = document.getElementById('header-mount');

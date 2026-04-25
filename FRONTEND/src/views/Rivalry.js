@@ -1721,6 +1721,26 @@ export async function initRivalry() {
     renderGrid();
     updatePreview();
 
+    // ── Auto-refresh rivalry data every 60s ──
+    const rivalryPollInterval = setInterval(async () => {
+        try {
+            const res = await api.getRivalries({ limit: 50 });
+            if (res.ok && res.rivalries && res.rivalries.length > 0) {
+                allRivalries = res.rivalries.map(transformRivalry);
+                updateStats();
+                renderFeatured();
+                renderGrid();
+                console.log('[Rivalry] Auto-refreshed rivalry data');
+            }
+        } catch (_) { /* silent */ }
+    }, 60000);
+
+    // Cleanup on route change
+    window._rivalryPollCleanup = () => {
+        clearInterval(rivalryPollInterval);
+        window._rivalryPollCleanup = null;
+    };
+
     // ── How It Works scroll-reveal ──
     if ('IntersectionObserver' in window) {
         const mechCards = document.querySelectorAll('.rv-mech-card');

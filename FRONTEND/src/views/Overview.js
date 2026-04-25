@@ -5,7 +5,7 @@
 // HARD GATE: Minimum baseline required per tier — no starting from zero
 // EVERY BUTTON IS LIVE — tabs, pills, CTAs, modal, search, sort
 
-import { getMarketListings, hasAuthToken, getRivalryStats } from '../api.js';
+import api, { getMarketListings, hasAuthToken } from '../api.js';
 import { openExecutionModal } from './ExecutionModal.js';
 
 export function renderOverview() {
@@ -1778,7 +1778,7 @@ export function initOverview() {
 
     async function fetchRivalryCapital() {
         try {
-            const res = await getRivalryStats();
+            const res = await api.getRivalryStats();
             if (!res.ok || !res.stats) return;
             const capital = (res.stats.totalCapitalLockedCents || 0) / 100;
             const largest = (res.stats.largestPoolCents || 0) / 100;

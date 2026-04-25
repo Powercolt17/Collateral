@@ -436,17 +436,41 @@ export function initLanding() {
 
 async function fetchLandingStats() {
     try {
-        const res = await fetch('/v1/stats');
-        if (res.ok) {
-            const data = await res.json();
-            const contracts = document.getElementById('lp-stat-contracts');
-            const tvl = document.getElementById('lp-stat-tvl');
-            if (contracts && data.totalContracts != null) {
-                contracts.textContent = data.totalContracts.toLocaleString();
+        const res = await fetch('/v1/ledger');
+        if (!res.ok) return;
+        const events = await res.json();
+        if (!Array.isArray(events) || events.length === 0) return;
+
+        // Count unique contracts/rivalries
+        const uniqueSources = new Set();
+        let totalLockedCents = 0;
+        let rivalryCount = 0;
+
+        events.forEach(e => {
+            uniqueSources.add(e.sourceId);
+
+            // Sum locked amounts from FUNDS_LOCKED and RIVALRY_CREATED events
+            if (e.eventType === 'FUNDS_LOCKED' || e.eventType === 'RIVALRY_CREATED' || e.eventType === 'EXECUTION_CONFIRMED') {
+                totalLockedCents += Math.abs(e.amountUsdCents || e.lockAmountUsdCents || 0);
             }
-            if (tvl && data.totalValueLocked != null) {
-                tvl.textContent = '$' + Math.round(data.totalValueLocked).toLocaleString();
-            }
+
+            if (e.sourceType === 'RIVALRY') rivalryCount++;
+        });
+
+        const contractsEl = document.getElementById('lp-stat-contracts');
+        const tvlEl = document.getElementById('lp-stat-tvl');
+        const sourcesEl = document.getElementById('lp-stat-sources');
+
+        if (contractsEl) contractsEl.textContent = uniqueSources.size.toLocaleString();
+        if (tvlEl) {
+            const dollars = totalLockedCents / 100;
+            tvlEl.textContent = dollars >= 1000
+                ? '$' + (dollars / 1000).toFixed(1) + 'k'
+                : '$' + Math.round(dollars).toLocaleString();
+        }
+        // Show rivalry count if any
+        if (sourcesEl && rivalryCount > 0) {
+            // Keep "4" for verified sources — it's correct
         }
     } catch (_) {
         // Silent — show dashes as fallback

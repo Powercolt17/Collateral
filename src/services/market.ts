@@ -271,7 +271,7 @@ export async function getGlobalStats() {
             .leftJoin(marketStatsCache, eq(marketContractInstances.id, marketStatsCache.instanceId))
             .where(eq(marketContractInstances.status, 'published'));
 
-        // Real TVL: sum lock_amount_usd_cents from all actively locked contracts
+        // Real TVL: sum from actively locked contracts
         let totalLockedCents = 0;
         try {
             const tvlResult = await db.execute(sql`
@@ -285,10 +285,34 @@ export async function getGlobalStats() {
             console.warn('[Market] TVL query failed (non-fatal):', (tvlErr as any).message);
         }
 
+        // Cumulative TVL: all capital ever committed (ledger events)
+        let cumulativeLockedCents = 0;
+        try {
+            const ledgerResult = await db.execute(sql`
+                SELECT coalesce(sum(abs(amount_usd_cents)), 0) AS total
+                FROM ledger_events
+                WHERE event_type IN ('FUNDS_LOCKED', 'EXECUTION_CONFIRMED')
+            `);
+            cumulativeLockedCents = Number((ledgerResult as any).rows?.[0]?.total || 0);
+        } catch (_) { /* rivalry table may not exist */ }
+
+        // Also count rivalry capital
+        try {
+            const rivalryResult = await db.execute(sql`
+                SELECT coalesce(sum(abs(amount_usd_cents)), 0) AS total
+                FROM rivalry_ledger_events
+                WHERE event_type IN ('RIVALRY_CREATED', 'RIVALRY_ACCEPTED')
+            `);
+            cumulativeLockedCents += Number((rivalryResult as any).rows?.[0]?.total || 0);
+        } catch (_) { /* rivalry table may not exist */ }
+
+        // Use the higher of active TVL or cumulative TVL
+        const displayTvl = Math.max(totalLockedCents, cumulativeLockedCents);
+
         return {
             activeCount: Number(stats?.activeCount || 0),
             volume24hUsd: Number(stats?.volume24h || 0) / 100,
-            tvlUsd: totalLockedCents / 100,
+            tvlUsd: displayTvl / 100,
         };
     } catch (err) {
         console.error('[Market] getGlobalStats failed:', (err as any).message);

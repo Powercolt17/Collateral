@@ -41,7 +41,7 @@ function calculateTargetGrowthAtTime(
     outcome: 'WIN' | 'LOSE',
     targetPct: number,
     elapsedRatio: number, // 0.0 to 1.0 (how far through the contract)
-    seed: string = '', // deterministic seed (rivalryId + role + day)
+    seed: string = '', // deterministic seed (rivalryId + role + hour)
 ): number {
     // Clamp elapsed ratio
     const t = Math.min(1.0, Math.max(0, elapsedRatio));
@@ -50,6 +50,12 @@ function calculateTargetGrowthAtTime(
     const r1 = seededRandom(seed + ':r1');
     const r2 = seededRandom(seed + ':r2');
     const r3 = seededRandom(seed + ':r3');
+    const r4 = seededRandom(seed + ':r4');
+    
+    // Time-of-day engagement modifier (social/revenue peaks 9am-10pm)
+    const hourOfDay = (r4 * 24) | 0;
+    const isActiveHours = hourOfDay >= 9 && hourOfDay <= 22;
+    const engagementMod = isActiveHours ? (0.95 + r4 * 0.1) : (0.75 + r4 * 0.15);
     
     if (outcome === 'WIN') {
         // Winners: S-curve growth that ends above target
@@ -57,9 +63,13 @@ function calculateTargetGrowthAtTime(
         const finalPct = targetPct * (1.02 + r1 * 0.15); // 2-17% above target
         const basePct = sCurve * finalPct;
         
-        // Add small deterministic noise
-        const noise = (r2 - 0.5) * targetPct * 0.04;
-        return Math.max(0, basePct + noise);
+        // Noise varies per hour seed — creates realistic micro-movement
+        const noise = (r2 - 0.5) * targetPct * 0.06;
+        
+        // Small momentum bursts (viral moments / ad pushes)
+        const burst = r3 > 0.92 ? targetPct * 0.02 : 0;
+        
+        return Math.max(0, (basePct + noise + burst) * engagementMod);
     } else {
         // Losers: Start growing but plateau or stall
         const peakRatio = 0.4 + r1 * 0.25; // Plateau at 40-65% of target
@@ -69,13 +79,13 @@ function calculateTargetGrowthAtTime(
         const rise = Math.sqrt(Math.min(t * 2.5, 1.0));
         const basePct = rise * peakPct;
         
-        // Add small deterministic noise
-        const noise = (r2 - 0.5) * targetPct * 0.03;
+        // Noise creates realistic stalling/flickering near plateau
+        const noise = (r2 - 0.5) * targetPct * 0.05;
         
-        // Occasional deterministic dips
-        const dip = r3 < 0.15 ? -(targetPct * 0.015) : 0;
+        // Occasional dips (stalled growth, unfollows, refunds)
+        const dip = r3 < 0.2 ? -(targetPct * 0.025) : 0;
         
-        return Math.max(0, basePct + noise + dip);
+        return Math.max(0, (basePct + noise + dip) * engagementMod);
     }
 }
 
@@ -383,9 +393,20 @@ export async function runSimProgressJob(): Promise<{ updated: number; snapshots:
                 const outcome = getOutcomeForParticipant(rivalryId, part.role);
                 
                 // Calculate current growth percentage
-                // Use day-level seed for deterministic output
-                const dayNum = Math.floor(elapsedRatio * (rivalry.duration_days || 14));
-                const growthPct = calculateTargetGrowthAtTime(outcome, targetPct, elapsedRatio, `${rivalryId}:${part.role}:d${dayNum}`);
+                // Use hour-level seed with interpolation for smooth, realistic updates
+                const totalHours = (rivalry.duration_days || 14) * 24;
+                const hourNum = Math.floor(elapsedRatio * totalHours);
+                const hourFraction = (elapsedRatio * totalHours) - hourNum;
+                
+                // Interpolate between current hour and next hour for smooth transitions
+                const currentSeed = `${rivalryId}:${part.role}:h${hourNum}`;
+                const nextSeed = `${rivalryId}:${part.role}:h${hourNum + 1}`;
+                const currentGrowth = calculateTargetGrowthAtTime(outcome, targetPct, elapsedRatio, currentSeed);
+                const nextElapsed = Math.min(1.0, elapsedRatio + 1 / totalHours);
+                const nextGrowth = calculateTargetGrowthAtTime(outcome, targetPct, nextElapsed, nextSeed);
+                
+                // Smooth linear interpolation between hourly anchor points
+                const growthPct = currentGrowth + (nextGrowth - currentGrowth) * hourFraction;
                 const currentValue = Math.round(baseline * (1 + growthPct / 100));
                 const absoluteDelta = currentValue - baseline;
                 
@@ -402,12 +423,12 @@ export async function runSimProgressJob(): Promise<{ updated: number; snapshots:
                 updated++;
                 
                 // Insert a new metric snapshot (the chart data source)
-                // Limit to 1 snapshot per 24 hours for clean daily chart points
+                // Limit to 1 snapshot per 4 hours for smooth, realistic chart curves
                 const recentSnap = await db.execute(sql`
                     SELECT id FROM rivalry_metric_snapshots
                     WHERE rivalry_id = ${rivalryId}
                       AND user_id = ${part.user_id}
-                      AND fetched_at > ${new Date(now.getTime() - 86400000).toISOString()}
+                      AND fetched_at > ${new Date(now.getTime() - 4 * 3600000).toISOString()}
                     LIMIT 1
                 `);
                 

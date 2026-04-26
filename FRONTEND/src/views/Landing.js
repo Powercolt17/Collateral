@@ -194,6 +194,65 @@ export function renderLanding() {
                 font-size: 11px; color: #aaa; letter-spacing: 1px; text-transform: uppercase;
             }
 
+            /* ── Sticky mobile CTA ── */
+            .lp-sticky-bar {
+                display: none; position: fixed; bottom: 0; left: 0; right: 0;
+                background: #fff; border-top: 1px solid #eee;
+                padding: 12px 20px; z-index: 90;
+                box-shadow: 0 -4px 20px rgba(0,0,0,0.06);
+            }
+            .lp-sticky-bar button {
+                width: 100%; background: #5C1414; color: #fff;
+                padding: 16px; border: none; font-size: 14px;
+                font-weight: 700; letter-spacing: 1px; text-transform: uppercase;
+                cursor: pointer; font-family: 'Sora', sans-serif;
+            }
+            @media (max-width: 768px) {
+                .lp-sticky-bar { display: block; }
+                .lp-footer { padding-bottom: 80px !important; }
+            }
+
+            /* ── Exit intent popup ── */
+            .lp-exit-overlay {
+                display: none; position: fixed; inset: 0; z-index: 200;
+                background: rgba(0,0,0,0.5); backdrop-filter: blur(4px);
+                align-items: center; justify-content: center;
+            }
+            .lp-exit-overlay.show { display: flex; }
+            .lp-exit-box {
+                background: #fff; max-width: 420px; width: 90%; padding: 48px 36px;
+                text-align: center; position: relative;
+                animation: lp-fadeIn 0.3s ease;
+            }
+            .lp-exit-close {
+                position: absolute; top: 16px; right: 16px;
+                background: none; border: none; font-size: 20px; color: #aaa;
+                cursor: pointer; line-height: 1;
+            }
+            .lp-exit-close:hover { color: #111; }
+            .lp-exit-headline {
+                font-size: 24px; font-weight: 800; color: #111;
+                margin-bottom: 12px; letter-spacing: -0.5px;
+            }
+            .lp-exit-headline strong { color: #5C1414; }
+            .lp-exit-sub {
+                font-size: 14px; color: #777; line-height: 1.6;
+                margin-bottom: 28px;
+            }
+            .lp-exit-cta {
+                display: inline-block; background: #5C1414; color: #fff;
+                padding: 16px 40px; border: none; font-size: 14px;
+                font-weight: 700; letter-spacing: 1px; text-transform: uppercase;
+                cursor: pointer; width: 100%; font-family: 'Sora', sans-serif;
+                transition: background 0.3s;
+            }
+            .lp-exit-cta:hover { background: #6e1c1c; }
+            .lp-exit-skip {
+                display: block; margin-top: 16px; font-size: 12px;
+                color: #bbb; cursor: pointer; background: none; border: none;
+                font-family: 'JetBrains Mono', monospace;
+            }
+
             @keyframes lp-fadeIn { from{opacity:0;transform:translateY(8px)} to{opacity:1;transform:translateY(0)} }
 
             /* ── How it works ── */
@@ -528,10 +587,14 @@ export function renderLanding() {
                 </button>
             </div>
 
-            <!-- Testimonial -->
+            <!-- Testimonials -->
             <div class="lp-quote-block">
                 <div class="lp-quote">"I put $500 on myself to hit my revenue goal. No coach, no accountability partner — just me and a deadline. Crushed it in 11 days and walked away with $2,000. Best bet I ever made was on myself."</div>
                 <div class="lp-quote-author">Beta Creator · Stripe Revenue Contract</div>
+            </div>
+            <div class="lp-quote-block" style="padding-top:0;border-top:none;">
+                <div class="lp-quote">"My friend challenged me to a follower growth duel. We both locked $250. I won by 3% and took home $500. Honestly the competition was more motivating than any course I've paid for."</div>
+                <div class="lp-quote-author">Beta Creator · X Followers Rivalry</div>
             </div>
 
             <!-- FAQ — kill objections -->
@@ -559,6 +622,22 @@ export function renderLanding() {
             <div class="lp-ticker" id="lp-ticker">
                 <div><span class="lp-ticker-dot"></span> <span id="lp-ticker-text"></span></div>
                 <div class="lp-ticker-time" id="lp-ticker-time"></div>
+            </div>
+
+            <!-- Sticky mobile CTA -->
+            <div class="lp-sticky-bar" id="lp-sticky">
+                <button onclick="window.app.openAccessModal()">Start a Contract — It's Free →</button>
+            </div>
+
+            <!-- Exit intent popup -->
+            <div class="lp-exit-overlay" id="lp-exit">
+                <div class="lp-exit-box">
+                    <button class="lp-exit-close" id="lp-exit-close">×</button>
+                    <div class="lp-exit-headline">Wait — are you <strong>serious</strong> about growth?</div>
+                    <div class="lp-exit-sub">Most people talk about hitting their goals. Collateral makes you put money on it. Start free — no card, no risk, just accountability.</div>
+                    <button class="lp-exit-cta" onclick="window.app.openAccessModal()">I'm Ready to Commit →</button>
+                    <button class="lp-exit-skip" id="lp-exit-skip">No thanks, I'll keep making excuses</button>
+                </div>
             </div>
 
             <!-- Footer -->
@@ -611,6 +690,37 @@ export function initLanding() {
     // First show after 5s, then every 12s
     setTimeout(showTicker, 5000);
     setInterval(showTicker, 12000);
+
+    // Exit-intent popup (desktop: mouse leaves top, mobile: after 45s)
+    let exitShown = false;
+    const exitOverlay = document.getElementById('lp-exit');
+    const exitClose = document.getElementById('lp-exit-close');
+    const exitSkip = document.getElementById('lp-exit-skip');
+
+    function showExit() {
+        if (exitShown || !exitOverlay) return;
+        exitShown = true;
+        exitOverlay.classList.add('show');
+        if (window.trackEvent) window.trackEvent('exit_intent_shown', { page: 'landing' });
+    }
+    function hideExit() {
+        if (exitOverlay) exitOverlay.classList.remove('show');
+    }
+
+    // Desktop: mouse leaves viewport
+    document.addEventListener('mouseleave', (e) => {
+        if (e.clientY < 5) showExit();
+    });
+    // Mobile: show after 45s if still on page
+    setTimeout(() => {
+        if (window.innerWidth <= 768) showExit();
+    }, 45000);
+
+    if (exitClose) exitClose.addEventListener('click', hideExit);
+    if (exitSkip) exitSkip.addEventListener('click', hideExit);
+    if (exitOverlay) exitOverlay.addEventListener('click', (e) => {
+        if (e.target === exitOverlay) hideExit();
+    });
 }
 
 async function fetchLandingStats() {

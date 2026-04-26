@@ -707,9 +707,11 @@ export function initLanding() {
         if (exitOverlay) exitOverlay.classList.remove('show');
     }
 
-    // Desktop: mouse leaves viewport
+    // Desktop: mouse leaves viewport (armed after 10s so it doesn't fire on load)
+    let exitArmed = false;
+    setTimeout(() => { exitArmed = true; }, 10000);
     document.addEventListener('mouseleave', (e) => {
-        if (e.clientY < 5) showExit();
+        if (exitArmed && e.clientY < 5) showExit();
     });
     // Mobile: show after 45s if still on page
     setTimeout(() => {

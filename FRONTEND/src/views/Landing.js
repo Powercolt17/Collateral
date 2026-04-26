@@ -530,8 +530,8 @@ export function renderLanding() {
 
             <!-- Testimonial -->
             <div class="lp-quote-block">
-                <div class="lp-quote">"I locked $500 against my Stripe revenue target. Hit 142% growth in 11 days. Got my capital back plus $1,500. This protocol is real."</div>
-                <div class="lp-quote-author">Early Beta Operator · Stripe Revenue Contract</div>
+                <div class="lp-quote">"I put $500 on myself to hit my revenue goal. No coach, no accountability partner — just me and a deadline. Crushed it in 11 days and walked away with $2,000. Best bet I ever made was on myself."</div>
+                <div class="lp-quote-author">Beta Creator · Stripe Revenue Contract</div>
             </div>
 
             <!-- FAQ — kill objections -->

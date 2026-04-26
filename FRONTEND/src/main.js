@@ -31,6 +31,7 @@ import { renderForgotPassword, initForgotPassword } from './views/ForgotPassword
 import { renderResetPassword, initResetPassword } from './views/ResetPassword.js';
 import { renderReferrals, initReferrals } from './views/Referrals.js';
 import { renderLanding, initLanding } from './views/Landing.js';
+import { renderOnboarding, initOnboarding, shouldShowOnboarding, completeOnboarding } from './views/Onboarding.js';
 import './views/PreLaunch.css';
 import './index.css';
 import './mobile.css';
@@ -207,6 +208,7 @@ const routes = PRE_LAUNCH_MODE ? [
 ] : [
     // Normal mode: full app
     { path: '/go', render: renderLanding, init: initLanding },
+    { path: '/welcome', render: renderOnboarding, init: initOnboarding },
     { path: '/overview', render: renderOverview, init: initOverview },
     { path: '/rivalry', render: renderRivalry, init: initRivalry },
     { path: '/rivalry/:id', render: renderRivalryDetail, init: initRivalryDetail },
@@ -492,6 +494,11 @@ window.app = {
 
                 window.app.closeAccessModal();
                 updateAuthUI();
+
+                // Redirect new signups to onboarding wizard
+                if (shouldShowOnboarding()) {
+                    window.router.navigate('/welcome');
+                }
             } catch (err) {
                 window.app._showAuthError(err.message || 'Account creation failed.');
             } finally {

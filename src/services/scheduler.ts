@@ -242,6 +242,27 @@ export async function runScheduledJobs(): Promise<SchedulerResult> {
         }
     }
 
+    // 8. Drip emails for incomplete onboarding
+    let dripResult: JobResult | null = null;
+    {
+        const jobStart = Date.now();
+        try {
+            const { runDripEmailJob } = await import('../jobs/drip-emails.js');
+            const result = await runDripEmailJob();
+            dripResult = {
+                jobType: 'RIVALRY_TRACKER' as any, // reuse type since observability doesn't have DRIP_EMAIL yet
+                processed: result.sent + result.skipped,
+                succeeded: result.sent,
+                failed: result.errors,
+                skipped: result.skipped,
+                durationMs: result.durationMs,
+                skipReasons: { locked: 0, retryScheduled: 0, terminal: 0 },
+            };
+        } catch (err: any) {
+            console.error('❌ Drip email job error:', err.message);
+        }
+    }
+
     const totalDurationMs = Date.now() - startTime;
     console.log(`✅ Scheduled job run complete in ${totalDurationMs}ms`);
 

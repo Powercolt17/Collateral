@@ -32,6 +32,7 @@ import { renderResetPassword, initResetPassword } from './views/ResetPassword.js
 import { renderReferrals, initReferrals } from './views/Referrals.js';
 import { renderLanding, initLanding } from './views/Landing.js';
 import { renderOnboarding, initOnboarding, shouldShowOnboarding, completeOnboarding } from './views/Onboarding.js';
+import { renderSEOLanding, initSEOLanding } from './views/SEOLanding.js';
 import './views/PreLaunch.css';
 import './index.css';
 import './mobile.css';
@@ -208,6 +209,10 @@ const routes = PRE_LAUNCH_MODE ? [
 ] : [
     // Normal mode: full app
     { path: '/go', render: renderLanding, init: initLanding },
+    { path: '/go/stripe', render: (p) => renderSEOLanding({ platform: 'stripe' }), init: initSEOLanding },
+    { path: '/go/x', render: (p) => renderSEOLanding({ platform: 'x' }), init: initSEOLanding },
+    { path: '/go/shopify', render: (p) => renderSEOLanding({ platform: 'shopify' }), init: initSEOLanding },
+    { path: '/go/youtube', render: (p) => renderSEOLanding({ platform: 'youtube' }), init: initSEOLanding },
     { path: '/welcome', render: renderOnboarding, init: initOnboarding },
     { path: '/overview', render: renderOverview, init: initOverview },
     { path: '/rivalry', render: renderRivalry, init: initRivalry },

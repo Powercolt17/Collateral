@@ -217,7 +217,7 @@ export function renderOnboarding() {
                     <button class="ob-btn-skip" id="ob-skip-2">Skip — I'll add it when I'm ready</button>
                 </div>
 
-                <!-- Step 4: Create Contract -->
+                <!-- Step 4: Create Contract + Referral -->
                 <div class="ob-step" data-ob-step="3">
                     <div class="ob-icon">🚀</div>
                     <div class="ob-title">You're ready.</div>
@@ -230,6 +230,24 @@ export function renderOnboarding() {
 
                     <button class="ob-btn-primary" id="ob-go-market">Browse Contracts →</button>
                     <button class="ob-btn-skip" id="ob-go-rivalry">Or start a Rivalry duel instead</button>
+
+                    <!-- Referral invite -->
+                    <div style="margin-top:40px;padding-top:32px;border-top:1px solid #f0f0f0;">
+                        <div style="font-size:11px;font-family:'JetBrains Mono',monospace;letter-spacing:1.5px;text-transform:uppercase;color:#aaa;margin-bottom:16px;">── Invite & Earn</div>
+                        <div style="font-size:14px;color:#555;line-height:1.6;margin-bottom:20px;">
+                            Share your referral link and earn a <strong style="color:#5C1414;">profit boost</strong> on every contract. 
+                            The more people you refer, the higher your payout multiplier.
+                        </div>
+                        <div style="display:flex;gap:8px;align-items:center;" id="ob-ref-row">
+                            <input type="text" id="ob-ref-link" readonly 
+                                style="flex:1;padding:14px;border:1px solid #eee;font-family:'JetBrains Mono',monospace;font-size:12px;color:#555;background:#fafafa;outline:none;"
+                                value="Loading...">
+                            <button id="ob-ref-copy" 
+                                style="padding:14px 20px;background:#111;color:#fff;border:none;font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;cursor:pointer;font-family:'Sora',sans-serif;white-space:nowrap;">
+                                Copy
+                            </button>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -304,6 +322,36 @@ export function initOnboarding() {
     if (window.trackEvent) {
         window.trackEvent('onboarding_started');
     }
+
+    // Referral link — fetch user's code and populate
+    const refInput = document.getElementById('ob-ref-link');
+    const refCopy = document.getElementById('ob-ref-copy');
+
+    (async () => {
+        try {
+            const api = (await import('../api.js')).default;
+            const profile = await api.getProfile();
+            if (profile?.ok && profile.user?.referralCode) {
+                const link = `${window.location.origin}/#/r/${profile.user.referralCode}`;
+                if (refInput) refInput.value = link;
+            } else {
+                if (refInput) refInput.value = 'Sign in to get your link';
+            }
+        } catch {
+            if (refInput) refInput.value = 'collateral.market';
+        }
+    })();
+
+    if (refCopy) refCopy.addEventListener('click', () => {
+        const input = document.getElementById('ob-ref-link');
+        if (input) {
+            navigator.clipboard.writeText(input.value).then(() => {
+                refCopy.textContent = 'Copied!';
+                setTimeout(() => { refCopy.textContent = 'Copy'; }, 2000);
+                if (window.trackEvent) window.trackEvent('referral_link_copied', { source: 'onboarding' });
+            });
+        }
+    });
 }
 
 export function completeOnboarding() {

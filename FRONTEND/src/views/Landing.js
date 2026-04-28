@@ -1,674 +1,465 @@
-// Landing Page — Dedicated ad traffic conversion page
+// Landing Page — Rewritten for cold X ad traffic conversion
 // Route: /#/go
-// No header/nav — focused single-CTA conversion flow
+// Optimized for: 5-second comprehension, immediate CTA, zero jargon above fold
+// Based on Clarity data: 28s active, 1.4 pages/session, 53% scroll, 7.69% dead clicks
 
 import api from '../api.js';
 
 export function renderLanding() {
     return `
         <style>
+            /* ── Base ── */
             .lp {
-                background: #fff;
-                min-height: 100vh;
-                font-family: 'Sora', 'Helvetica Neue', Helvetica, Arial, sans-serif;
-                color: #111;
-                overflow-x: hidden;
+                min-height: 100vh; background: #fff; color: #111;
+                font-family: 'Sora', sans-serif; overflow-x: hidden;
             }
-
-            /* ── Minimal top bar ── */
-            .lp-topbar {
-                padding: 24px 40px;
-                display: flex;
-                align-items: center;
-                justify-content: space-between;
-            }
-            .lp-logo {
-                font-family: 'Sora', sans-serif;
-                font-weight: 800;
-                font-size: 15px;
-                letter-spacing: 3px;
-                color: #5C1414;
-                text-transform: uppercase;
-            }
-            .lp-topbar-cta {
-                font-family: 'JetBrains Mono', monospace;
-                font-size: 11px;
-                letter-spacing: 1px;
-                color: #5C1414;
-                text-decoration: none;
-                border: 1px solid #5C1414;
-                padding: 10px 20px;
-                cursor: pointer;
-                background: none;
-                transition: all 0.3s ease;
-                text-transform: uppercase;
-            }
-            .lp-topbar-cta:hover {
-                background: #5C1414;
-                color: #fff;
-            }
+            .lp *, .lp *::before, .lp *::after { box-sizing: border-box; }
 
             /* ── Hero ── */
             .lp-hero {
-                max-width: 900px;
-                margin: 0 auto;
-                padding: 80px 40px 60px;
-                text-align: center;
+                text-align: center; padding: 80px 24px 48px;
+                max-width: 680px; margin: 0 auto;
             }
-            .lp-eyebrow {
-                font-family: 'JetBrains Mono', monospace;
-                font-size: 11px;
-                letter-spacing: 3px;
-                text-transform: uppercase;
-                color: #5C1414;
-                margin-bottom: 28px;
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                gap: 12px;
+            .lp-h1 {
+                font-size: 52px; font-weight: 900; color: #111;
+                letter-spacing: -2px; line-height: 1.1; margin: 0 0 20px;
             }
-            .lp-eyebrow::before, .lp-eyebrow::after {
-                content: '';
-                width: 28px;
-                height: 1px;
-                background: #5C1414;
-                opacity: 0.4;
+            .lp-h1 strong { color: #5C1414; }
+            .lp-sub {
+                font-size: 18px; color: #666; line-height: 1.7;
+                margin: 0 0 36px; max-width: 520px; margin-left: auto; margin-right: auto;
             }
-            .lp-headline {
-                font-size: clamp(40px, 7vw, 72px);
-                font-weight: 500;
-                line-height: 1.0;
-                letter-spacing: -2.5px;
-                margin-bottom: 28px;
-                color: #111;
+            .lp-cta-row { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+            .lp-cta-primary {
+                padding: 18px 40px; background: #5C1414; color: #fff;
+                font-size: 14px; font-weight: 700; letter-spacing: 1px;
+                text-transform: uppercase; border: none; cursor: pointer;
+                font-family: 'Sora', sans-serif; transition: background 0.3s;
             }
-            .lp-headline strong {
-                font-weight: 800;
-                color: #5C1414;
+            .lp-cta-primary:hover { background: #6e1c1c; }
+            .lp-cta-secondary {
+                padding: 18px 40px; background: transparent; color: #111;
+                font-size: 14px; font-weight: 700; letter-spacing: 1px;
+                text-transform: uppercase; border: 2px solid #ddd; cursor: pointer;
+                font-family: 'Sora', sans-serif; transition: all 0.3s;
             }
-            .lp-subline {
-                font-size: 17px;
-                color: #777;
-                line-height: 1.7;
-                max-width: 560px;
-                margin: 0 auto 48px;
-            }
-            .lp-hero-cta {
-                display: inline-block;
-                background: #5C1414;
-                color: #fff;
-                padding: 20px 48px;
-                font-size: 14px;
-                font-weight: 700;
-                border: none;
-                cursor: pointer;
-                letter-spacing: 1px;
-                text-transform: uppercase;
-                transition: all 0.35s ease;
-                position: relative;
-                overflow: hidden;
-            }
-            .lp-hero-cta:hover {
-                background: #6e1c1c;
-                transform: translateY(-2px);
-                box-shadow: 0 8px 32px rgba(92, 20, 20, 0.25);
-                letter-spacing: 1.5px;
-            }
-            .lp-hero-cta:active {
-                transform: translateY(0);
-            }
-            .lp-trust-line {
-                margin-top: 20px;
-                font-family: 'JetBrains Mono', monospace;
-                font-size: 10px;
-                color: #bbb;
-                letter-spacing: 1.5px;
-                text-transform: uppercase;
-            }
+            .lp-cta-secondary:hover { border-color: #111; }
 
-            /* ── Live activity ticker ── */
-            .lp-ticker {
-                position: fixed; bottom: 20px; left: 20px;
-                background: #fff; border: 1px solid #eee;
-                padding: 14px 20px; border-radius: 4px;
-                box-shadow: 0 4px 24px rgba(0,0,0,0.08);
-                font-size: 13px; color: #333; z-index: 100;
-                transform: translateY(100px); opacity: 0;
-                transition: all 0.4s cubic-bezier(.4,0,.2,1);
-                max-width: 320px;
+            /* ── Example contracts ── */
+            .lp-examples {
+                max-width: 960px; margin: 0 auto; padding: 0 24px 60px;
             }
-            .lp-ticker.show { transform: translateY(0); opacity: 1; }
-            .lp-ticker-dot {
-                display: inline-block; width: 8px; height: 8px;
-                background: #22c55e; border-radius: 50%;
-                margin-right: 8px; animation: lp-pulse 2s infinite;
+            .lp-examples-tag {
+                font-family: 'JetBrains Mono', monospace; font-size: 10px;
+                letter-spacing: 2px; text-transform: uppercase; color: #aaa;
+                margin-bottom: 24px; text-align: center;
             }
-            .lp-ticker-time {
-                font-family: 'JetBrains Mono', monospace;
-                font-size: 10px; color: #aaa; margin-top: 4px;
+            .lp-cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+            .lp-card {
+                border: 1px solid #eee; padding: 28px 24px; cursor: pointer;
+                transition: all 0.2s ease; position: relative;
             }
-            @keyframes lp-pulse { 0%,100%{opacity:1} 50%{opacity:.4} }
+            .lp-card:hover { border-color: #5C1414; transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0,0,0,0.06); }
+            .lp-card-platform {
+                font-family: 'JetBrains Mono', monospace; font-size: 10px;
+                letter-spacing: 1.5px; text-transform: uppercase; color: #999;
+                margin-bottom: 12px;
+            }
+            .lp-card-target {
+                font-size: 18px; font-weight: 800; color: #111;
+                margin-bottom: 16px; letter-spacing: -0.3px;
+            }
+            .lp-card-meta { display: flex; flex-direction: column; gap: 8px; margin-bottom: 20px; }
+            .lp-card-row {
+                display: flex; justify-content: space-between; font-size: 13px;
+            }
+            .lp-card-label { color: #999; }
+            .lp-card-value { color: #111; font-weight: 600; }
+            .lp-card-value.green { color: #15803d; }
+            .lp-card-cta {
+                display: block; width: 100%; padding: 14px; background: #111; color: #fff;
+                font-size: 12px; font-weight: 700; letter-spacing: 1px;
+                text-transform: uppercase; text-align: center; border: none;
+                cursor: pointer; font-family: 'Sora', sans-serif;
+                transition: background 0.2s;
+            }
+            .lp-card-cta:hover { background: #5C1414; }
 
-            /* ── Urgency badge ── */
-            .lp-urgency {
-                display: inline-flex; align-items: center; gap: 8px;
-                background: #fef2f2; border: 1px solid #fecaca;
-                color: #991b1b; padding: 8px 16px; border-radius: 4px;
+            /* ── How it works ── */
+            .lp-how {
+                background: #fafafa; border-top: 1px solid #f0f0f0;
+                border-bottom: 1px solid #f0f0f0;
+                padding: 64px 24px;
+            }
+            .lp-how-inner { max-width: 800px; margin: 0 auto; }
+            .lp-how-tag {
+                font-family: 'JetBrains Mono', monospace; font-size: 10px;
+                letter-spacing: 2px; text-transform: uppercase; color: #aaa;
+                margin-bottom: 32px; text-align: center;
+            }
+            .lp-steps { display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; }
+            .lp-step { text-align: center; cursor: pointer; }
+            .lp-step:hover .lp-step-num { color: #5C1414; }
+            .lp-step-num {
+                font-size: 36px; font-weight: 900; color: #ddd;
+                margin-bottom: 12px; transition: color 0.3s;
                 font-family: 'JetBrains Mono', monospace;
-                font-size: 11px; letter-spacing: 0.5px;
-                margin-bottom: 24px; animation: lp-fadeIn 0.6s ease;
             }
-            .lp-urgency-dot {
-                width: 6px; height: 6px; background: #dc2626;
-                border-radius: 50%; animation: lp-pulse 1.5s infinite;
-            }
+            .lp-step-title { font-size: 14px; font-weight: 700; color: #111; margin-bottom: 6px; }
+            .lp-step-desc { font-size: 12px; color: #888; line-height: 1.6; }
 
-            /* ── FAQ ── */
-            .lp-faq { max-width: 700px; margin: 0 auto; padding: 80px 40px; border-top: 1px solid #f0f0f0; }
-            .lp-faq-item {
-                border-bottom: 1px solid #eee; padding: 24px 0; cursor: pointer;
+            /* ── Trust ── */
+            .lp-trust {
+                text-align: center; padding: 48px 24px;
+                max-width: 600px; margin: 0 auto;
             }
-            .lp-faq-q {
-                font-size: 16px; font-weight: 700; color: #111;
-                display: flex; justify-content: space-between; align-items: center;
+            .lp-trust-text {
+                font-size: 15px; color: #777; line-height: 1.7;
+                border: 1px solid #f0f0f0; padding: 24px 32px;
+                background: #fafafa;
             }
-            .lp-faq-q::after { content: '+'; font-size: 20px; color: #aaa; transition: transform 0.3s; }
-            .lp-faq-item.open .lp-faq-q::after { transform: rotate(45deg); }
-            .lp-faq-a {
-                max-height: 0; overflow: hidden; transition: max-height 0.3s ease;
-                font-size: 14px; color: #777; line-height: 1.7;
-            }
-            .lp-faq-item.open .lp-faq-a { max-height: 200px; padding-top: 12px; }
+            .lp-trust-text strong { color: #111; }
 
             /* ── Testimonial ── */
             .lp-quote-block {
-                max-width: 700px; margin: 0 auto; padding: 60px 40px;
-                text-align: center; border-top: 1px solid #f0f0f0;
+                max-width: 600px; margin: 0 auto; padding: 48px 24px;
+                text-align: center;
             }
             .lp-quote {
-                font-size: 20px; font-style: italic; color: #444;
+                font-size: 18px; font-style: italic; color: #444;
                 line-height: 1.7; margin-bottom: 16px;
             }
             .lp-quote-author {
                 font-family: 'JetBrains Mono', monospace;
-                font-size: 11px; color: #aaa; letter-spacing: 1px; text-transform: uppercase;
+                font-size: 10px; color: #aaa; letter-spacing: 1.5px; text-transform: uppercase;
             }
 
+            /* ── Bottom CTA ── */
+            .lp-bottom {
+                background: #111; color: #fff; text-align: center;
+                padding: 80px 24px;
+            }
+            .lp-bottom-h2 {
+                font-size: 36px; font-weight: 800; margin-bottom: 16px;
+                letter-spacing: -1px;
+            }
+            .lp-bottom-sub { font-size: 15px; color: #888; margin-bottom: 36px; }
+            .lp-bottom-btn {
+                padding: 18px 48px; background: #5C1414; color: #fff;
+                font-size: 14px; font-weight: 700; letter-spacing: 1px;
+                text-transform: uppercase; border: none; cursor: pointer;
+                font-family: 'Sora', sans-serif;
+            }
+
+            /* ── FAQ ── */
+            .lp-faq { max-width: 600px; margin: 0 auto; padding: 64px 24px; }
+            .lp-faq-tag {
+                font-family: 'JetBrains Mono', monospace; font-size: 10px;
+                letter-spacing: 2px; text-transform: uppercase; color: #aaa;
+                margin-bottom: 24px;
+            }
+            .lp-faq-item { border-bottom: 1px solid #f0f0f0; }
+            .lp-faq-q {
+                padding: 20px 0; font-size: 15px; font-weight: 600; color: #111;
+                cursor: pointer; display: flex; justify-content: space-between; align-items: center;
+            }
+            .lp-faq-q::after { content: '+'; font-size: 20px; color: #ccc; transition: transform 0.2s; }
+            .lp-faq-item.open .lp-faq-q::after { content: '−'; }
+            .lp-faq-a {
+                max-height: 0; overflow: hidden; transition: max-height 0.3s ease;
+                font-size: 13px; color: #777; line-height: 1.7;
+            }
+            .lp-faq-item.open .lp-faq-a { max-height: 200px; padding-bottom: 20px; }
+
             /* ── Sticky mobile CTA ── */
-            .lp-sticky-bar {
+            .lp-sticky {
                 display: none; position: fixed; bottom: 0; left: 0; right: 0;
                 background: #fff; border-top: 1px solid #eee;
                 padding: 12px 20px; z-index: 90;
                 box-shadow: 0 -4px 20px rgba(0,0,0,0.06);
             }
-            .lp-sticky-bar button {
+            .lp-sticky button {
                 width: 100%; background: #5C1414; color: #fff;
-                padding: 16px; border: none; font-size: 14px;
+                padding: 16px; border: none; font-size: 13px;
                 font-weight: 700; letter-spacing: 1px; text-transform: uppercase;
                 cursor: pointer; font-family: 'Sora', sans-serif;
-            }
-            @media (max-width: 768px) {
-                .lp-sticky-bar { display: block; }
-                .lp-footer { padding-bottom: 80px !important; }
-            }
-
-            /* ── Exit intent popup ── */
-            .lp-exit-overlay {
-                display: none; position: fixed; inset: 0; z-index: 200;
-                background: rgba(0,0,0,0.5); backdrop-filter: blur(4px);
-                align-items: center; justify-content: center;
-            }
-            .lp-exit-overlay.show { display: flex; }
-            .lp-exit-box {
-                background: #fff; max-width: 420px; width: 90%; padding: 48px 36px;
-                text-align: center; position: relative;
-                animation: lp-fadeIn 0.3s ease;
-            }
-            .lp-exit-close {
-                position: absolute; top: 16px; right: 16px;
-                background: none; border: none; font-size: 20px; color: #aaa;
-                cursor: pointer; line-height: 1;
-            }
-            .lp-exit-close:hover { color: #111; }
-            .lp-exit-headline {
-                font-size: 24px; font-weight: 800; color: #111;
-                margin-bottom: 12px; letter-spacing: -0.5px;
-            }
-            .lp-exit-headline strong { color: #5C1414; }
-            .lp-exit-sub {
-                font-size: 14px; color: #777; line-height: 1.6;
-                margin-bottom: 28px;
-            }
-            .lp-exit-cta {
-                display: inline-block; background: #5C1414; color: #fff;
-                padding: 16px 40px; border: none; font-size: 14px;
-                font-weight: 700; letter-spacing: 1px; text-transform: uppercase;
-                cursor: pointer; width: 100%; font-family: 'Sora', sans-serif;
-                transition: background 0.3s;
-            }
-            .lp-exit-cta:hover { background: #6e1c1c; }
-            .lp-exit-skip {
-                display: block; margin-top: 16px; font-size: 12px;
-                color: #bbb; cursor: pointer; background: none; border: none;
-                font-family: 'JetBrains Mono', monospace;
-            }
-
-            @keyframes lp-fadeIn { from{opacity:0;transform:translateY(8px)} to{opacity:1;transform:translateY(0)} }
-
-            /* ── How it works ── */
-            .lp-how {
-                max-width: 1100px;
-                margin: 0 auto;
-                padding: 80px 40px;
-                border-top: 1px solid #f0f0f0;
-            }
-            .lp-section-tag {
-                font-family: 'JetBrains Mono', monospace;
-                font-size: 10px;
-                letter-spacing: 2px;
-                text-transform: uppercase;
-                color: #5C1414;
-                margin-bottom: 48px;
-                display: flex;
-                align-items: center;
-                gap: 12px;
-            }
-            .lp-section-tag::before {
-                content: '';
-                width: 24px;
-                height: 1px;
-                background: #5C1414;
-            }
-            .lp-steps {
-                display: grid;
-                grid-template-columns: repeat(3, 1fr);
-                gap: 0;
-                border-top: 1px solid #eee;
-            }
-            .lp-step {
-                padding: 48px 36px;
-                border-right: 1px solid #eee;
-                position: relative; cursor: pointer;
-                transition: background 0.3s ease, transform 0.3s ease;
-            }
-            .lp-step:last-child { border-right: none; }
-            .lp-step:hover {
-                background: #fafafa;
-                transform: translateY(-4px);
-            }
-            .lp-step::before {
-                content: '';
-                position: absolute;
-                top: 0; left: 0;
-                width: 0; height: 3px;
-                background: #5C1414;
-                transition: width 0.4s ease;
-            }
-            .lp-step:hover::before { width: 100%; }
-            .lp-step-num {
-                font-family: 'Sora', sans-serif;
-                font-size: 64px;
-                font-weight: 700;
-                color: #f0eded;
-                line-height: 0.85;
-                margin-bottom: 28px;
-            }
-            .lp-step-title {
-                font-size: 18px;
-                font-weight: 700;
-                margin-bottom: 12px;
-                color: #111;
-            }
-            .lp-step-desc {
-                font-size: 14px;
-                color: #888;
-                line-height: 1.6;
-            }
-
-            /* ── Social proof / stats ── */
-            .lp-proof {
-                max-width: 1100px;
-                margin: 0 auto;
-                padding: 80px 40px;
-                border-top: 1px solid #f0f0f0;
-            }
-            .lp-stats {
-                display: grid;
-                grid-template-columns: repeat(4, 1fr);
-                gap: 0;
-                border: 1px solid #eee;
-            }
-            .lp-stat {
-                padding: 40px 32px;
-                border-right: 1px solid #eee;
-                text-align: center;
-                transition: background 0.3s;
-            }
-            .lp-stat:last-child { border-right: none; }
-            .lp-stat:hover { background: #fafafa; }
-            .lp-stat-val {
-                font-size: 36px;
-                font-weight: 800;
-                color: #5C1414;
-                margin-bottom: 8px;
-                font-family: 'Sora', sans-serif;
-            }
-            .lp-stat-label {
-                font-family: 'JetBrains Mono', monospace;
-                font-size: 10px;
-                letter-spacing: 1.5px;
-                text-transform: uppercase;
-                color: #aaa;
-            }
-
-            /* ── Sources bar ── */
-            .lp-sources {
-                max-width: 1100px;
-                margin: 0 auto;
-                padding: 60px 40px;
-                text-align: center;
-                border-top: 1px solid #f0f0f0;
-            }
-            .lp-sources-label {
-                font-family: 'JetBrains Mono', monospace;
-                font-size: 10px;
-                letter-spacing: 2px;
-                text-transform: uppercase;
-                color: #ccc;
-                margin-bottom: 32px;
-            }
-            .lp-sources-logos {
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                gap: 48px;
-                flex-wrap: wrap;
-            }
-            .lp-source-item {
-                font-family: 'Sora', sans-serif;
-                font-size: 16px;
-                font-weight: 600;
-                color: #ccc;
-                letter-spacing: 0.5px;
-                transition: color 0.3s;
-            }
-            .lp-source-item:hover { color: #5C1414; }
-
-            /* ── Bottom CTA ── */
-            .lp-bottom-cta {
-                padding: 100px 40px;
-                text-align: center;
-                border-top: 1px solid #f0f0f0;
-                background: #fafafa;
-            }
-            .lp-bottom-headline {
-                font-size: clamp(28px, 4vw, 44px);
-                font-weight: 500;
-                letter-spacing: -1.5px;
-                margin-bottom: 16px;
-                color: #111;
-            }
-            .lp-bottom-headline strong {
-                font-weight: 800;
-                color: #5C1414;
-            }
-            .lp-bottom-sub {
-                font-size: 15px;
-                color: #888;
-                margin-bottom: 40px;
-                max-width: 460px;
-                margin-left: auto;
-                margin-right: auto;
-                line-height: 1.6;
             }
 
             /* ── Footer ── */
             .lp-footer {
-                padding: 32px 40px;
-                text-align: center;
-                font-family: 'JetBrains Mono', monospace;
-                font-size: 10px;
-                color: #ccc;
-                letter-spacing: 1.5px;
-                text-transform: uppercase;
+                text-align: center; padding: 32px; font-size: 11px; color: #ccc;
+                font-family: 'JetBrains Mono', monospace; letter-spacing: 0.5px;
             }
+
+            /* ── Ticker ── */
+            .lp-ticker {
+                position: fixed; bottom: 24px; left: 24px; z-index: 80;
+                background: #111; color: #fff; padding: 12px 20px;
+                font-size: 12px; display: flex; align-items: center; gap: 10px;
+                opacity: 0; transform: translateY(10px);
+                transition: opacity 0.3s, transform 0.3s;
+                max-width: 360px;
+            }
+            .lp-ticker.show { opacity: 1; transform: translateY(0); }
+            .lp-ticker-dot { width: 6px; height: 6px; background: #22c55e; border-radius: 50%; flex-shrink: 0; }
+            .lp-ticker-time { font-size: 10px; color: #888; margin-left: auto; white-space: nowrap; }
 
             /* ── Mobile ── */
             @media (max-width: 768px) {
-                .lp-topbar { padding: 16px 20px; }
-                .lp-topbar-cta { padding: 8px 14px; font-size: 10px; }
-                .lp-logo { font-size: 13px; letter-spacing: 2px; }
-
-                .lp-hero { padding: 40px 20px 32px; }
-                .lp-headline { font-size: 32px; letter-spacing: -1.5px; margin-bottom: 20px; }
-                .lp-subline { font-size: 14px; margin-bottom: 32px; }
-                .lp-eyebrow { font-size: 9px; letter-spacing: 2px; margin-bottom: 20px; }
-                .lp-hero-cta { padding: 18px 36px; width: 100%; font-size: 13px; }
-                .lp-trust-line { font-size: 9px; }
-
-                .lp-urgency {
-                    font-size: 9px; padding: 6px 12px;
-                    margin-bottom: 16px; text-align: center;
-                    flex-wrap: wrap; justify-content: center;
-                }
-
-                .lp-steps { grid-template-columns: 1fr; }
-                .lp-step { border-right: none; border-bottom: 1px solid #eee; padding: 32px 24px; }
-                .lp-step:last-child { border-bottom: none; }
-                .lp-step-num { font-size: 48px; margin-bottom: 20px; }
-                .lp-step-title { font-size: 16px; }
-                .lp-step-desc { font-size: 13px; }
-
-                .lp-stats { grid-template-columns: repeat(2, 1fr); }
-                .lp-stat { border-bottom: 1px solid #eee; padding: 28px 20px; }
-                .lp-stat:nth-child(odd) { border-right: 1px solid #eee; }
-                .lp-stat:nth-child(even) { border-right: none; }
-                .lp-stat:nth-last-child(-n+2) { border-bottom: none; }
-                .lp-stat-val { font-size: 28px; }
-                .lp-stat-label { font-size: 9px; }
-
-                .lp-how, .lp-proof, .lp-sources { padding: 48px 20px; }
-                .lp-section-tag { font-size: 9px; margin-bottom: 32px; }
-                .lp-sources-logos { gap: 20px; }
-                .lp-source-item { font-size: 14px; }
-
-                .lp-bottom-cta { padding: 60px 20px; }
-                .lp-bottom-headline { font-size: 24px; letter-spacing: -1px; }
-                .lp-bottom-sub { font-size: 14px; margin-bottom: 28px; }
-
-                .lp-quote-block { padding: 48px 20px; }
+                .lp-hero { padding: 60px 20px 36px; }
+                .lp-h1 { font-size: 34px; letter-spacing: -1px; }
+                .lp-sub { font-size: 16px; margin-bottom: 28px; }
+                .lp-cta-row { flex-direction: column; align-items: stretch; }
+                .lp-cta-primary, .lp-cta-secondary { width: 100%; text-align: center; }
+                .lp-cards { grid-template-columns: 1fr; }
+                .lp-steps { grid-template-columns: repeat(2, 1fr); gap: 20px; }
+                .lp-bottom-h2 { font-size: 28px; }
+                .lp-sticky { display: block; }
+                .lp-footer { padding-bottom: 80px; }
+                .lp-ticker { display: none !important; }
+                .lp-trust-text { padding: 20px; font-size: 14px; }
                 .lp-quote { font-size: 16px; }
-                .lp-quote-author { font-size: 10px; }
-
-                .lp-faq { padding: 48px 20px; }
-                .lp-faq-q { font-size: 14px; }
-                .lp-faq-a { font-size: 13px; }
-
-                .lp-ticker {
-                    left: 12px; right: 12px; bottom: 12px;
-                    max-width: none; font-size: 12px; padding: 12px 16px;
-                }
-
-                .lp-footer { padding: 24px 20px; font-size: 9px; }
             }
         </style>
 
         <div class="lp">
-            <!-- Top bar -->
-            <div class="lp-topbar">
-                <div class="lp-logo">Collateral</div>
-                <button class="lp-topbar-cta" onclick="window.app.openAccessModal()">Sign Up Free</button>
-            </div>
-
-            <!-- Hero -->
+            <!-- ═══ HERO ═══ -->
             <div class="lp-hero">
-                <div class="lp-urgency"><div class="lp-urgency-dot"></div> <span id="lp-live-count">12</span> creators online now · <span id="lp-spots-left">6</span> contract slots closing today</div>
-                <div class="lp-eyebrow">Performance Contract Protocol</div>
-                <h1 class="lp-headline">
-                    Put your <strong>money</strong> where your <strong>metrics</strong> are
-                </h1>
-                <p class="lp-subline">
-                    Lock capital against real growth targets — Stripe revenue, X followers, Shopify sales. 
-                    Hit your number, get paid. Miss it, lose your deposit. No excuses.
+                <h1 class="lp-h1">Pick a goal.<br><strong>Put money behind it.</strong></h1>
+                <p class="lp-sub">
+                    Hit your target and get paid. Miss it and lose the contract. 
+                    Collateral verifies the result automatically.
                 </p>
-                <button class="lp-hero-cta" id="lp-main-cta" onclick="window.app.openAccessModal()">
-                    Start a Contract →
-                </button>
-                <div class="lp-trust-line">Free to sign up · No card required · Cancel anytime</div>
+                <div class="lp-cta-row">
+                    <button class="lp-cta-primary" id="lp-hero-cta" onclick="window.app.openAccessModal()">
+                        Create Your First Contract
+                    </button>
+                    <button class="lp-cta-secondary" id="lp-see-examples" onclick="document.getElementById('lp-example-section').scrollIntoView({behavior:'smooth'})">
+                        See Example Contracts
+                    </button>
+                </div>
             </div>
 
-            <!-- How it works -->
+            <!-- ═══ EXAMPLE CONTRACTS ═══ -->
+            <div class="lp-examples" id="lp-example-section">
+                <div class="lp-examples-tag">Example Contracts</div>
+                <div class="lp-cards">
+                    <!-- Card 1: Stripe -->
+                    <div class="lp-card" onclick="window.app.openAccessModal(); if(window.trackEvent) window.trackEvent('example_contract_click', {contract:'stripe_revenue'});">
+                        <div class="lp-card-platform">Stripe Revenue</div>
+                        <div class="lp-card-target">Grow revenue by 20%</div>
+                        <div class="lp-card-meta">
+                            <div class="lp-card-row">
+                                <span class="lp-card-label">Deadline</span>
+                                <span class="lp-card-value">30 days</span>
+                            </div>
+                            <div class="lp-card-row">
+                                <span class="lp-card-label">You lock</span>
+                                <span class="lp-card-value">$500</span>
+                            </div>
+                            <div class="lp-card-row">
+                                <span class="lp-card-label">You earn</span>
+                                <span class="lp-card-value green">$1,250</span>
+                            </div>
+                        </div>
+                        <button class="lp-card-cta">Start This Contract →</button>
+                    </div>
+
+                    <!-- Card 2: X -->
+                    <div class="lp-card" onclick="window.app.openAccessModal(); if(window.trackEvent) window.trackEvent('example_contract_click', {contract:'x_followers'});">
+                        <div class="lp-card-platform">X (Twitter)</div>
+                        <div class="lp-card-target">Gain 1,000 followers</div>
+                        <div class="lp-card-meta">
+                            <div class="lp-card-row">
+                                <span class="lp-card-label">Deadline</span>
+                                <span class="lp-card-value">14 days</span>
+                            </div>
+                            <div class="lp-card-row">
+                                <span class="lp-card-label">You lock</span>
+                                <span class="lp-card-value">$250</span>
+                            </div>
+                            <div class="lp-card-row">
+                                <span class="lp-card-label">You earn</span>
+                                <span class="lp-card-value green">$625</span>
+                            </div>
+                        </div>
+                        <button class="lp-card-cta">Start This Contract →</button>
+                    </div>
+
+                    <!-- Card 3: Shopify -->
+                    <div class="lp-card" onclick="window.app.openAccessModal(); if(window.trackEvent) window.trackEvent('example_contract_click', {contract:'shopify_sales'});">
+                        <div class="lp-card-platform">Shopify</div>
+                        <div class="lp-card-target">Hit $5,000 in sales</div>
+                        <div class="lp-card-meta">
+                            <div class="lp-card-row">
+                                <span class="lp-card-label">Deadline</span>
+                                <span class="lp-card-value">30 days</span>
+                            </div>
+                            <div class="lp-card-row">
+                                <span class="lp-card-label">You lock</span>
+                                <span class="lp-card-value">$300</span>
+                            </div>
+                            <div class="lp-card-row">
+                                <span class="lp-card-label">You earn</span>
+                                <span class="lp-card-value green">$750</span>
+                            </div>
+                        </div>
+                        <button class="lp-card-cta">Start This Contract →</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ═══ HOW IT WORKS ═══ -->
             <div class="lp-how">
-                <div class="lp-section-tag">How It Works</div>
-                <div class="lp-steps">
-                    <div class="lp-step" onclick="window.app.openAccessModal()">
-                        <div class="lp-step-num">01</div>
-                        <div class="lp-step-title">Connect Your Source</div>
-                        <div class="lp-step-desc">Link Stripe, X, Shopify, or Amazon. We read your real metrics — no screenshots, no self-reporting.</div>
-                    </div>
-                    <div class="lp-step" onclick="window.app.openAccessModal()">
-                        <div class="lp-step-num">02</div>
-                        <div class="lp-step-title">Set Your Target</div>
-                        <div class="lp-step-desc">Choose a growth target and lock capital against it. Pledge, Stake, or go All-In — higher risk, higher reward.</div>
-                    </div>
-                    <div class="lp-step" onclick="window.app.openAccessModal()">
-                        <div class="lp-step-num">03</div>
-                        <div class="lp-step-title">Results Decide</div>
-                        <div class="lp-step-desc">The protocol verifies your performance automatically at settlement. Hit it — capital returns plus payout. Miss it — forfeited.</div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Stats -->
-            <div class="lp-proof">
-                <div class="lp-section-tag">Protocol Metrics</div>
-                <div class="lp-stats" id="lp-stats-grid" style="cursor:pointer;" onclick="window.app.openAccessModal()">
-                    <div class="lp-stat">
-                        <div class="lp-stat-val" id="lp-stat-contracts">—</div>
-                        <div class="lp-stat-label">Contracts Executed</div>
-                    </div>
-                    <div class="lp-stat">
-                        <div class="lp-stat-val" id="lp-stat-tvl">—</div>
-                        <div class="lp-stat-label">Total Value Locked</div>
-                    </div>
-                    <div class="lp-stat">
-                        <div class="lp-stat-val" id="lp-stat-sources">4</div>
-                        <div class="lp-stat-label">Verified Sources</div>
-                    </div>
-                    <div class="lp-stat">
-                        <div class="lp-stat-val" id="lp-stat-settlement">14d</div>
-                        <div class="lp-stat-label">Avg Settlement</div>
+                <div class="lp-how-inner">
+                    <div class="lp-how-tag">How It Works</div>
+                    <div class="lp-steps">
+                        <div class="lp-step" onclick="window.app.openAccessModal()">
+                            <div class="lp-step-num">01</div>
+                            <div class="lp-step-title">Pick a target</div>
+                            <div class="lp-step-desc">Revenue, followers, sales — choose a real metric to hit.</div>
+                        </div>
+                        <div class="lp-step" onclick="window.app.openAccessModal()">
+                            <div class="lp-step-num">02</div>
+                            <div class="lp-step-title">Lock money</div>
+                            <div class="lp-step-desc">Put $25 to $25,000 behind your goal. Real stakes.</div>
+                        </div>
+                        <div class="lp-step" onclick="window.app.openAccessModal()">
+                            <div class="lp-step-num">03</div>
+                            <div class="lp-step-title">Connect source</div>
+                            <div class="lp-step-desc">Link Stripe, X, Shopify, or Amazon. We verify automatically.</div>
+                        </div>
+                        <div class="lp-step" onclick="window.app.openAccessModal()">
+                            <div class="lp-step-num">04</div>
+                            <div class="lp-step-title">Get paid</div>
+                            <div class="lp-step-desc">Hit the target = payout. Miss it = you lose the contract.</div>
+                        </div>
                     </div>
                 </div>
             </div>
 
-            <!-- Sources -->
-            <div class="lp-sources">
-                <div class="lp-sources-label">Verified Integrations</div>
-                <div class="lp-sources-logos" style="cursor:pointer;" onclick="window.app.openAccessModal()">
-                    <span class="lp-source-item">Stripe</span>
-                    <span class="lp-source-item">X (Twitter)</span>
-                    <span class="lp-source-item">Shopify</span>
-                    <span class="lp-source-item">Amazon</span>
+            <!-- ═══ TRUST ═══ -->
+            <div class="lp-trust">
+                <div class="lp-trust-text">
+                    <strong>No screenshots. No manual claims.</strong><br>
+                    Results are checked automatically through your connected accounts. 
+                    The protocol verifies everything — you just focus on hitting your number.
                 </div>
             </div>
 
-            <!-- Bottom CTA -->
-            <div class="lp-bottom-cta">
-                <h2 class="lp-bottom-headline">
-                    Stop talking about growth.<br><strong>Prove it.</strong>
-                </h2>
-                <p class="lp-bottom-sub">
-                    Lock capital against your next milestone. 
-                    The protocol doesn't care about your excuses.
-                </p>
-                <button class="lp-hero-cta" onclick="window.app.openAccessModal()">
-                    Create Your First Contract →
-                </button>
-            </div>
-
-            <!-- Testimonials -->
+            <!-- ═══ TESTIMONIAL ═══ -->
             <div class="lp-quote-block">
                 <div class="lp-quote">"I put $500 on myself to hit my revenue goal. No coach, no accountability partner — just me and a deadline. Crushed it in 11 days and walked away with $2,000. Best bet I ever made was on myself."</div>
                 <div class="lp-quote-author">Beta Creator · Stripe Revenue Contract</div>
             </div>
 
-            <!-- FAQ — kill objections -->
+            <!-- ═══ FAQ ═══ -->
             <div class="lp-faq">
-                <div class="lp-section-tag">Common Questions</div>
+                <div class="lp-faq-tag">Common Questions</div>
                 <div class="lp-faq-item" id="lp-faq-1">
-                    <div class="lp-faq-q">What happens to my money if I miss my target?</div>
-                    <div class="lp-faq-a">Your locked capital is forfeited. That's the point — real stakes create real accountability. The protocol enforces consequences automatically.</div>
+                    <div class="lp-faq-q">What happens if I miss my target?</div>
+                    <div class="lp-faq-a">You lose the money you locked. That's the point — real consequences drive real performance.</div>
                 </div>
                 <div class="lp-faq-item" id="lp-faq-2">
-                    <div class="lp-faq-q">How are metrics verified?</div>
-                    <div class="lp-faq-a">We connect directly to Stripe, X, Shopify, and Amazon via OAuth. No screenshots, no self-reporting. The oracle reads your real data at settlement.</div>
+                    <div class="lp-faq-q">How do you verify results?</div>
+                    <div class="lp-faq-a">We connect directly to Stripe, X, Shopify, or Amazon via read-only OAuth. No screenshots, no self-reporting. Everything is verified automatically at deadline.</div>
                 </div>
                 <div class="lp-faq-item" id="lp-faq-3">
-                    <div class="lp-faq-q">Is my money safe?</div>
-                    <div class="lp-faq-a">Capital is held in escrow through Stripe. Payouts are processed automatically on settlement day. We never touch your funds directly.</div>
+                    <div class="lp-faq-q">What's the minimum to start?</div>
+                    <div class="lp-faq-a">$25. You can lock anywhere from $25 to $25,000 depending on how serious you are.</div>
                 </div>
                 <div class="lp-faq-item" id="lp-faq-4">
-                    <div class="lp-faq-q">What's the minimum to start?</div>
-                    <div class="lp-faq-a">Contracts start at $5. You choose your stake level — Pledge, Stake, or All-In. Higher risk = higher multiplier.</div>
+                    <div class="lp-faq-q">Is my data safe?</div>
+                    <div class="lp-faq-a">We use read-only access. We never post, modify, or store raw data. Your accounts are yours.</div>
+                </div>
+                <div class="lp-faq-item" id="lp-faq-5">
+                    <div class="lp-faq-q">How much can I earn?</div>
+                    <div class="lp-faq-a">Up to 2.5x your locked amount, depending on the contract difficulty tier you choose.</div>
                 </div>
             </div>
 
-            <!-- Live activity ticker -->
+            <!-- ═══ BOTTOM CTA ═══ -->
+            <div class="lp-bottom">
+                <div class="lp-bottom-h2">Stop planning.<br>Start proving.</div>
+                <div class="lp-bottom-sub">Free to sign up. Lock capital when you're ready.</div>
+                <button class="lp-bottom-btn" onclick="window.app.openAccessModal(); if(window.trackEvent) window.trackEvent('bottom_cta_click');">
+                    Create Your First Contract →
+                </button>
+            </div>
+
+            <!-- ═══ STICKY MOBILE CTA ═══ -->
+            <div class="lp-sticky">
+                <button onclick="window.app.openAccessModal()">Create Your First Contract →</button>
+            </div>
+
+            <!-- ═══ TICKER ═══ -->
             <div class="lp-ticker" id="lp-ticker">
-                <div><span class="lp-ticker-dot"></span> <span id="lp-ticker-text"></span></div>
-                <div class="lp-ticker-time" id="lp-ticker-time"></div>
+                <span class="lp-ticker-dot"></span>
+                <span id="lp-ticker-text"></span>
+                <span class="lp-ticker-time" id="lp-ticker-time"></span>
             </div>
 
-            <!-- Sticky mobile CTA -->
-            <div class="lp-sticky-bar" id="lp-sticky">
-                <button onclick="window.app.openAccessModal()">Start a Contract — It's Free →</button>
-            </div>
-
-            <!-- Exit intent popup -->
-            <div class="lp-exit-overlay" id="lp-exit">
-                <div class="lp-exit-box">
-                    <button class="lp-exit-close" id="lp-exit-close">×</button>
-                    <div class="lp-exit-headline">Wait — are you <strong>serious</strong> about growth?</div>
-                    <div class="lp-exit-sub">Most people talk about hitting their goals. Collateral makes you put money on it. Start free — no card, no risk, just accountability.</div>
-                    <button class="lp-exit-cta" onclick="window.app.openAccessModal()">I'm Ready to Commit →</button>
-                    <button class="lp-exit-skip" id="lp-exit-skip">No thanks, I'll keep making excuses</button>
-                </div>
-            </div>
-
-            <!-- Footer -->
+            <!-- ═══ FOOTER ═══ -->
             <div class="lp-footer">
-                Collateral.market · Performance Contract Protocol · © 2026
+                Collateral.market · © 2026
             </div>
         </div>
     `;
 }
 
 export function initLanding() {
-    // GA4: track landing page view specifically
-    if (window.trackEvent) {
-        window.trackEvent('landing_page_view', { source: 'ad_traffic' });
+    // ── UTM PRESERVATION ──
+    const urlParams = new URLSearchParams(window.location.search);
+    const utmData = {};
+    ['utm_source', 'utm_campaign', 'utm_medium', 'utm_content', 'utm_term'].forEach(key => {
+        const val = urlParams.get(key);
+        if (val) utmData[key] = val;
+    });
+    if (Object.keys(utmData).length > 0) {
+        sessionStorage.setItem('collateral_utm', JSON.stringify(utmData));
     }
 
-    // Fetch live stats from API
-    fetchLandingStats();
+    // ── ANALYTICS: landing page view ──
+    if (window.trackEvent) {
+        window.trackEvent('landing_page_view', {
+            source: utmData.utm_source || 'direct',
+            campaign: utmData.utm_campaign || 'none',
+            medium: utmData.utm_medium || 'none',
+        });
+    }
 
-    // FAQ accordion
+    // ── HERO CTA tracking ──
+    const heroCta = document.getElementById('lp-hero-cta');
+    if (heroCta) {
+        heroCta.addEventListener('click', () => {
+            if (window.trackEvent) window.trackEvent('hero_create_contract_click', utmData);
+        });
+    }
+
+    // ── See Examples tracking ──
+    const seeExamples = document.getElementById('lp-see-examples');
+    if (seeExamples) {
+        seeExamples.addEventListener('click', () => {
+            if (window.trackEvent) window.trackEvent('see_examples_click');
+        });
+    }
+
+    // ── FAQ accordion ──
     document.querySelectorAll('.lp-faq-item').forEach(item => {
         item.querySelector('.lp-faq-q').addEventListener('click', () => {
             item.classList.toggle('open');
         });
     });
 
-    // Live activity ticker — cycles social proof notifications
+    // ── LIVE TICKER ──
     const tickerMsgs = [
-        { text: 'A creator just locked $300 on a Follower Growth contract', time: '2 min ago' },
-        { text: 'Rivalry settled — @growthops won $1,200 in X followers duel', time: '8 min ago' },
-        { text: 'New All-In contract: $500 locked on Shopify revenue', time: '14 min ago' },
-        { text: 'A Stripe revenue contract just hit 127% — payout confirmed', time: '22 min ago' },
-        { text: '3 new creators joined in the last hour', time: '31 min ago' },
-        { text: '$2,000 rivalry pool created — X Followers (14d)', time: '45 min ago' },
+        { text: 'A creator just locked $300 on a revenue contract', time: '2 min ago' },
+        { text: 'Rivalry settled — someone won $1,200 in X followers duel', time: '8 min ago' },
+        { text: 'New Shopify sales contract created — $500 locked', time: '14 min ago' },
+        { text: '$2,400 payout confirmed on a 30-day Stripe contract', time: '22 min ago' },
+        { text: 'Creator hit 142% of their follower target', time: '31 min ago' },
     ];
+
     let tickerIdx = 0;
     const ticker = document.getElementById('lp-ticker');
     const tickerText = document.getElementById('lp-ticker-text');
@@ -683,74 +474,20 @@ export function initLanding() {
         setTimeout(() => { ticker.classList.remove('show'); }, 4000);
         tickerIdx++;
     }
-    // First show after 5s, then every 12s
-    setTimeout(showTicker, 5000);
-    setInterval(showTicker, 12000);
+    setTimeout(showTicker, 8000);
+    setInterval(showTicker, 15000);
 
-    // Exit-intent popup (desktop: mouse leaves top, mobile: after 45s)
-    let exitShown = false;
-    const exitOverlay = document.getElementById('lp-exit');
-    const exitClose = document.getElementById('lp-exit-close');
-    const exitSkip = document.getElementById('lp-exit-skip');
-
-    function showExit() {
-        if (exitShown || !exitOverlay) return;
-        exitShown = true;
-        exitOverlay.classList.add('show');
-        if (window.trackEvent) window.trackEvent('exit_intent_shown', { page: 'landing' });
-    }
-    function hideExit() {
-        if (exitOverlay) exitOverlay.classList.remove('show');
-    }
-
-    // Desktop: mouse leaves viewport (armed after 30s AND 30% scroll depth)
-    let exitArmed = false;
-    let hasScrolled30 = false;
-    setTimeout(() => { exitArmed = true; }, 30000);
-    window.addEventListener('scroll', () => {
-        const scrollPct = window.scrollY / (document.body.scrollHeight - window.innerHeight);
-        if (scrollPct > 0.3) hasScrolled30 = true;
-    });
-    document.addEventListener('mouseleave', (e) => {
-        if (exitArmed && hasScrolled30 && e.clientY < 5) showExit();
-    });
-    // Mobile: show after 60s if still on page
-    setTimeout(() => {
-        if (window.innerWidth <= 768) showExit();
-    }, 60000);
-
-    if (exitClose) exitClose.addEventListener('click', hideExit);
-    if (exitSkip) exitSkip.addEventListener('click', hideExit);
-    if (exitOverlay) exitOverlay.addEventListener('click', (e) => {
-        if (e.target === exitOverlay) hideExit();
-    });
+    // ── LIVE STATS (fetch real data) ──
+    fetchLandingStats();
 }
 
 async function fetchLandingStats() {
     try {
         const res = await api.getRivalryStats();
         if (!res.ok || !res.stats) return;
-
-        const contractsEl = document.getElementById('lp-stat-contracts');
-        const tvlEl = document.getElementById('lp-stat-tvl');
-
-        const total = res.stats.totalRivalries || 0;
-        const active = res.stats.activeRivalries || 0;
-        const capital = (res.stats.totalCapitalLockedCents || 0) / 100;
-
-        if (contractsEl) contractsEl.textContent = (total + 144).toLocaleString();
-        if (tvlEl) {
-            tvlEl.textContent = capital >= 1000
-                ? '$' + (capital / 1000).toFixed(1) + 'k'
-                : '$' + Math.round(capital).toLocaleString();
-        }
-
-        // Update urgency with live data
-        const liveCount = document.getElementById('lp-live-count');
-        const spotsLeft = document.getElementById('lp-spots-left');
-        if (liveCount) liveCount.textContent = (8 + Math.floor(Math.random() * 7)).toString();
-        if (spotsLeft) spotsLeft.textContent = Math.max(2, 8 - active).toString();
-    } catch (_) {
-        // Silent — show defaults as fallback
+        // Stats are available but we don't show them above fold anymore
+        // They could be used for ticker messages or future sections
+    } catch (err) {
+        console.warn('[Landing] Stats fetch failed:', err.message);
     }
 }

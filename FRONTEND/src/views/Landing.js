@@ -118,7 +118,6 @@ export function renderLanding() {
                 <p class="lp-sub">Hit the target and get paid. Miss it and lose the contract. Collateral verifies the result automatically through Stripe, X, Shopify, and Amazon.</p>
                 <div class="lp-ctas">
                     <button class="lp-btn-p" id="lp-hero-cta" onclick="window.app.openAccessModal()">Create Your First Contract</button>
-                    <button class="lp-btn-s" id="lp-see-ex" onclick="document.getElementById('lp-ex').scrollIntoView({behavior:'smooth'})">See Example Contracts</button>
                 </div>
                 <div class="lp-tl">Free to sign up. Lock capital only when you're ready.</div>
             </div>

@@ -44,17 +44,16 @@ export function renderLanding() {
             .lp-mid{text-align:center;padding:40px 24px;max-width:560px;margin:0 auto}
             .lp-mid-t{font-size:15px;color:#666;margin-bottom:20px}.lp-mid-t strong{color:#111}
 
-            .lp-how{background:#0a0a0a;color:#fff;padding:80px 24px;border-top:3px solid #5C1414}
+            .lp-how{background:#fff;padding:72px 24px;border-top:1px solid #eee;border-bottom:1px solid #eee}
             .lp-how-in{max-width:900px;margin:0 auto}
-            .lp-how-tag{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:2.5px;text-transform:uppercase;color:#444;margin-bottom:48px;text-align:center}
+            .lp-how-tag{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:2.5px;text-transform:uppercase;color:#bbb;margin-bottom:48px;text-align:center}
             .lp-steps{display:grid;grid-template-columns:repeat(4,1fr);gap:0}
-            .lp-step{text-align:center;padding:32px 20px;cursor:pointer;transition:background .3s;border-right:1px solid rgba(255,255,255,.06);position:relative}
+            .lp-step{text-align:center;padding:32px 20px;cursor:pointer;transition:background .3s;border-right:1px solid #f0f0f0;position:relative}
             .lp-step:last-child{border-right:none}
-            .lp-step:hover{background:rgba(92,20,20,.08)}
-            .s-num{font-size:42px;font-weight:900;color:#5C1414;opacity:.7;margin-bottom:16px;font-family:'JetBrains Mono',monospace;transition:opacity .3s}
-            .lp-step:hover .s-num{opacity:1}
-            .s-title{font-size:15px;font-weight:700;color:#fff;margin-bottom:10px}
-            .s-desc{font-size:13px;color:#aaa;line-height:1.7}
+            .lp-step:hover{background:#fafafa}
+            .s-num{font-size:42px;font-weight:900;color:#5C1414;margin-bottom:16px;font-family:'JetBrains Mono',monospace;transition:opacity .3s}
+            .s-title{font-size:15px;font-weight:700;color:#111;margin-bottom:10px}
+            .s-desc{font-size:13px;color:#777;line-height:1.7}
 
             .lp-clarity{text-align:center;padding:32px 24px;max-width:620px;margin:0 auto}
             .lp-clarity-text{font-size:13px;color:#999;font-family:'JetBrains Mono',monospace;letter-spacing:.3px;line-height:1.7;border:1px solid #f0f0f0;padding:20px 28px;background:#fafafa}
@@ -104,7 +103,7 @@ export function renderLanding() {
                 .lp-btn-p,.lp-btn-s{width:100%;text-align:center}
                 .lp-cards{grid-template-columns:1fr}
                 .lp-steps{grid-template-columns:repeat(2,1fr);gap:0}
-                .lp-step{border-right:none;border-bottom:1px solid rgba(255,255,255,.06)}
+                .lp-step{border-right:none;border-bottom:1px solid #f0f0f0}
                 .lp-step:last-child{border-bottom:none}
                 .lp-trust{grid-template-columns:1fr}
                 .lp-bot-h{font-size:26px}

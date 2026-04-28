@@ -44,16 +44,17 @@ export function renderLanding() {
             .lp-mid{text-align:center;padding:40px 24px;max-width:560px;margin:0 auto}
             .lp-mid-t{font-size:15px;color:#666;margin-bottom:20px}.lp-mid-t strong{color:#111}
 
-            .lp-how{background:#0a0a0a;color:#fff;padding:72px 24px;border-top:3px solid #5C1414}
-            .lp-how-in{max-width:860px;margin:0 auto}
-            .lp-how-tag{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:2px;text-transform:uppercase;color:#555;margin-bottom:40px;text-align:center}
-            .lp-steps{display:grid;grid-template-columns:repeat(4,1fr);gap:24px}
-            .lp-step{text-align:center;padding:20px 10px;cursor:pointer;transition:background .3s;border-radius:4px}
-            .lp-step:hover{background:rgba(255,255,255,.03)}
-            .s-num{font-size:30px;font-weight:900;color:#2a2a2a;margin-bottom:14px;font-family:'JetBrains Mono',monospace;transition:color .3s}
-            .lp-step:hover .s-num{color:#5C1414}
-            .s-title{font-size:14px;font-weight:700;color:#f0f0f0;margin-bottom:8px}
-            .s-desc{font-size:12px;color:#888;line-height:1.65}
+            .lp-how{background:#0a0a0a;color:#fff;padding:80px 24px;border-top:3px solid #5C1414}
+            .lp-how-in{max-width:900px;margin:0 auto}
+            .lp-how-tag{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:2.5px;text-transform:uppercase;color:#444;margin-bottom:48px;text-align:center}
+            .lp-steps{display:grid;grid-template-columns:repeat(4,1fr);gap:0}
+            .lp-step{text-align:center;padding:32px 20px;cursor:pointer;transition:background .3s;border-right:1px solid rgba(255,255,255,.06);position:relative}
+            .lp-step:last-child{border-right:none}
+            .lp-step:hover{background:rgba(92,20,20,.08)}
+            .s-num{font-size:42px;font-weight:900;color:#5C1414;opacity:.7;margin-bottom:16px;font-family:'JetBrains Mono',monospace;transition:opacity .3s}
+            .lp-step:hover .s-num{opacity:1}
+            .s-title{font-size:15px;font-weight:700;color:#fff;margin-bottom:10px}
+            .s-desc{font-size:13px;color:#aaa;line-height:1.7}
 
             .lp-clarity{text-align:center;padding:32px 24px;max-width:620px;margin:0 auto}
             .lp-clarity-text{font-size:13px;color:#999;font-family:'JetBrains Mono',monospace;letter-spacing:.3px;line-height:1.7;border:1px solid #f0f0f0;padding:20px 28px;background:#fafafa}

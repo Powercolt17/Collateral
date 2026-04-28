@@ -9,9 +9,7 @@ export function renderLanding() {
             @keyframes lpUp{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:translateY(0)}}
             .lp-fade{opacity:0;transform:translateY(18px);transition:opacity .5s,transform .5s}.lp-fade.vis{opacity:1;transform:none}
 
-            .lp-brand{text-align:center;padding:28px 0 0;display:flex;align-items:center;justify-content:center;gap:8px}
-            .lp-brand-bar{width:3px;height:16px;background:#5C1414}
-            .lp-brand-name{font-size:11px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:#111}
+            .lp-brand{text-align:center;padding:32px 0 0;font-size:11px;font-weight:800;letter-spacing:.2em;color:#5C1414;font-family:'Sora',sans-serif}
 
             .lp-hero{text-align:center;padding:32px 24px 28px;max-width:660px;margin:0 auto;animation:lpUp .7s ease both}
             .lp-h1{font-size:46px;font-weight:900;color:#111;letter-spacing:-2px;line-height:1.08;margin:0 0 16px}
@@ -114,7 +112,7 @@ export function renderLanding() {
             }
         </style>
         <div class="lp">
-            <div class="lp-brand"><div class="lp-brand-bar"></div><div class="lp-brand-name">Collateral</div></div>
+            <div class="lp-brand">COLLATERAL</div>
 
             <div class="lp-hero">
                 <h1 class="lp-h1">Pick a target.<br><strong>Put money behind it.</strong></h1>

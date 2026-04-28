@@ -288,7 +288,7 @@ export function renderLanding() {
             .lp-step {
                 padding: 48px 36px;
                 border-right: 1px solid #eee;
-                position: relative;
+                position: relative; cursor: pointer;
                 transition: background 0.3s ease, transform 0.3s ease;
             }
             .lp-step:last-child { border-right: none; }
@@ -521,17 +521,17 @@ export function renderLanding() {
             <div class="lp-how">
                 <div class="lp-section-tag">How It Works</div>
                 <div class="lp-steps">
-                    <div class="lp-step">
+                    <div class="lp-step" onclick="window.app.openAccessModal()">
                         <div class="lp-step-num">01</div>
                         <div class="lp-step-title">Connect Your Source</div>
                         <div class="lp-step-desc">Link Stripe, X, Shopify, or Amazon. We read your real metrics — no screenshots, no self-reporting.</div>
                     </div>
-                    <div class="lp-step">
+                    <div class="lp-step" onclick="window.app.openAccessModal()">
                         <div class="lp-step-num">02</div>
                         <div class="lp-step-title">Set Your Target</div>
                         <div class="lp-step-desc">Choose a growth target and lock capital against it. Pledge, Stake, or go All-In — higher risk, higher reward.</div>
                     </div>
-                    <div class="lp-step">
+                    <div class="lp-step" onclick="window.app.openAccessModal()">
                         <div class="lp-step-num">03</div>
                         <div class="lp-step-title">Results Decide</div>
                         <div class="lp-step-desc">The protocol verifies your performance automatically at settlement. Hit it — capital returns plus payout. Miss it — forfeited.</div>
@@ -542,7 +542,7 @@ export function renderLanding() {
             <!-- Stats -->
             <div class="lp-proof">
                 <div class="lp-section-tag">Protocol Metrics</div>
-                <div class="lp-stats" id="lp-stats-grid">
+                <div class="lp-stats" id="lp-stats-grid" style="cursor:pointer;" onclick="window.app.openAccessModal()">
                     <div class="lp-stat">
                         <div class="lp-stat-val" id="lp-stat-contracts">—</div>
                         <div class="lp-stat-label">Contracts Executed</div>
@@ -565,7 +565,7 @@ export function renderLanding() {
             <!-- Sources -->
             <div class="lp-sources">
                 <div class="lp-sources-label">Verified Integrations</div>
-                <div class="lp-sources-logos">
+                <div class="lp-sources-logos" style="cursor:pointer;" onclick="window.app.openAccessModal()">
                     <span class="lp-source-item">Stripe</span>
                     <span class="lp-source-item">X (Twitter)</span>
                     <span class="lp-source-item">Shopify</span>
@@ -703,16 +703,21 @@ export function initLanding() {
         if (exitOverlay) exitOverlay.classList.remove('show');
     }
 
-    // Desktop: mouse leaves viewport (armed after 10s so it doesn't fire on load)
+    // Desktop: mouse leaves viewport (armed after 30s AND 30% scroll depth)
     let exitArmed = false;
-    setTimeout(() => { exitArmed = true; }, 10000);
-    document.addEventListener('mouseleave', (e) => {
-        if (exitArmed && e.clientY < 5) showExit();
+    let hasScrolled30 = false;
+    setTimeout(() => { exitArmed = true; }, 30000);
+    window.addEventListener('scroll', () => {
+        const scrollPct = window.scrollY / (document.body.scrollHeight - window.innerHeight);
+        if (scrollPct > 0.3) hasScrolled30 = true;
     });
-    // Mobile: show after 45s if still on page
+    document.addEventListener('mouseleave', (e) => {
+        if (exitArmed && hasScrolled30 && e.clientY < 5) showExit();
+    });
+    // Mobile: show after 60s if still on page
     setTimeout(() => {
         if (window.innerWidth <= 768) showExit();
-    }, 45000);
+    }, 60000);
 
     if (exitClose) exitClose.addEventListener('click', hideExit);
     if (exitSkip) exitSkip.addEventListener('click', hideExit);

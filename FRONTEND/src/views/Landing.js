@@ -80,7 +80,7 @@ export function renderLanding() {
             .lp-bot{background:#0a0a0a;color:#fff;text-align:center;padding:80px 24px 40px}
             .lp-bot-h{font-size:34px;font-weight:800;margin-bottom:12px;letter-spacing:-1px;line-height:1.15}
             .lp-bot-sub{font-size:15px;color:#888;margin-bottom:10px}
-            .lp-bot-trust{font-size:11px;color:#444;font-family:'JetBrains Mono',monospace;letter-spacing:.5px;margin-bottom:32px}
+            .lp-bot-trust{font-size:12px;color:#999;font-family:'JetBrains Mono',monospace;letter-spacing:.5px;margin-bottom:32px}
             .lp-bot-btn{padding:18px 48px;background:#5C1414;color:#fff;font-size:13px;font-weight:700;letter-spacing:1px;text-transform:uppercase;border:none;cursor:pointer;font-family:'Sora',sans-serif;transition:all .3s;box-shadow:0 2px 16px rgba(92,20,20,.25)}
             .lp-bot-btn:hover{background:#7a1e1e;transform:translateY(-1px);box-shadow:0 6px 24px rgba(92,20,20,.4)}
             .lp-bot-foot{margin-top:56px;padding-top:28px;border-top:1px solid rgba(255,255,255,.06);font-size:12px;color:#555;line-height:1.6}
@@ -89,8 +89,7 @@ export function renderLanding() {
             .lp-stick{display:none;position:fixed;bottom:0;left:0;right:0;background:#fff;border-top:1px solid #eee;padding:12px 20px;z-index:90;box-shadow:0 -4px 16px rgba(0,0,0,.06)}
             .lp-stick button{width:100%;background:#5C1414;color:#fff;padding:16px;border:none;font-size:12px;font-weight:700;letter-spacing:1px;text-transform:uppercase;cursor:pointer;font-family:'Sora',sans-serif}
 
-            .lp-foot{text-align:center;padding:32px 24px;font-size:12px;color:#999;line-height:1.6}
-            .lp-foot-line{font-size:10px;color:#ccc;font-family:'JetBrains Mono',monospace;letter-spacing:.5px;margin-top:8px}
+
 
             .lp-tick{position:fixed;bottom:24px;left:24px;z-index:80;background:#111;color:#fff;padding:12px 20px;font-size:12px;display:flex;align-items:center;gap:10px;opacity:0;transform:translateY(10px);transition:opacity .3s,transform .3s;max-width:340px}
             .lp-tick.show{opacity:1;transform:translateY(0)}
@@ -104,7 +103,9 @@ export function renderLanding() {
                 .lp-ctas{flex-direction:column;align-items:stretch}
                 .lp-btn-p,.lp-btn-s{width:100%;text-align:center}
                 .lp-cards{grid-template-columns:1fr}
-                .lp-steps{grid-template-columns:repeat(2,1fr);gap:16px}
+                .lp-steps{grid-template-columns:repeat(2,1fr);gap:0}
+                .lp-step{border-right:none;border-bottom:1px solid rgba(255,255,255,.06)}
+                .lp-step:last-child{border-bottom:none}
                 .lp-trust{grid-template-columns:1fr}
                 .lp-bot-h{font-size:26px}
                 .lp-stick{display:block}
@@ -135,7 +136,7 @@ export function renderLanding() {
                             <div class="c-row"><span class="c-lbl">Target</span><span class="c-val">Grow revenue by 20%</span></div>
                             <div class="c-row"><span class="c-lbl">Deadline</span><span class="c-val">30 days</span></div>
                             <div class="c-row"><span class="c-lbl">Lock</span><span class="c-val">$250 – $5,000</span></div>
-                            <div class="c-row"><span class="c-lbl">Payout</span><span class="c-val grn">Up to 2.5x</span></div>
+                            <div class="c-row"><span class="c-lbl">Potential payout</span><span class="c-val grn">Up to 2.5x</span></div>
                         </div>
                         <button class="c-btn" onclick="event.stopPropagation();window.app.openAccessModal();if(window.trackEvent)window.trackEvent('example_start_contract_click',{card_type:'stripe',button_location:'card'})">Start This Contract →</button>
                     </div>
@@ -146,7 +147,7 @@ export function renderLanding() {
                             <div class="c-row"><span class="c-lbl">Target</span><span class="c-val">Gain 1,000 followers</span></div>
                             <div class="c-row"><span class="c-lbl">Deadline</span><span class="c-val">14 days</span></div>
                             <div class="c-row"><span class="c-lbl">Lock</span><span class="c-val">$100 – $2,500</span></div>
-                            <div class="c-row"><span class="c-lbl">Payout</span><span class="c-val grn">Up to 4x</span></div>
+                            <div class="c-row"><span class="c-lbl">Potential payout</span><span class="c-val grn">Up to 4x</span></div>
                         </div>
                         <button class="c-btn" onclick="event.stopPropagation();window.app.openAccessModal();if(window.trackEvent)window.trackEvent('example_start_contract_click',{card_type:'x',button_location:'card'})">Start This Contract →</button>
                     </div>
@@ -157,7 +158,7 @@ export function renderLanding() {
                             <div class="c-row"><span class="c-lbl">Target</span><span class="c-val">Hit $5,000 in sales</span></div>
                             <div class="c-row"><span class="c-lbl">Deadline</span><span class="c-val">30 days</span></div>
                             <div class="c-row"><span class="c-lbl">Lock</span><span class="c-val">$250 – $3,000</span></div>
-                            <div class="c-row"><span class="c-lbl">Payout</span><span class="c-val grn">Up to 2.5x</span></div>
+                            <div class="c-row"><span class="c-lbl">Potential payout</span><span class="c-val grn">Up to 2.5x</span></div>
                         </div>
                         <button class="c-btn" onclick="event.stopPropagation();window.app.openAccessModal();if(window.trackEvent)window.trackEvent('example_start_contract_click',{card_type:'shopify',button_location:'card'})">Start This Contract →</button>
                     </div>
@@ -165,7 +166,7 @@ export function renderLanding() {
             </div>
 
             <div class="lp-mid lp-fade">
-                <div class="lp-mid-t">Start with <strong>$25</strong>. Create your first contract in under <strong>60 seconds</strong>.</div>
+                <div class="lp-mid-t">Start free. Lock money only when you're ready.</div>
                 <button class="lp-btn-p" id="lp-mid-cta" onclick="window.app.openAccessModal()">Create Your First Contract →</button>
             </div>
 

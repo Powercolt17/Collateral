@@ -592,10 +592,6 @@ export function renderLanding() {
                 <div class="lp-quote">"I put $500 on myself to hit my revenue goal. No coach, no accountability partner — just me and a deadline. Crushed it in 11 days and walked away with $2,000. Best bet I ever made was on myself."</div>
                 <div class="lp-quote-author">Beta Creator · Stripe Revenue Contract</div>
             </div>
-            <div class="lp-quote-block" style="padding-top:0;border-top:none;">
-                <div class="lp-quote">"My friend challenged me to a follower growth duel. We both locked $250. I won by 3% and took home $500. Honestly the competition was more motivating than any course I've paid for."</div>
-                <div class="lp-quote-author">Beta Creator · X Followers Rivalry</div>
-            </div>
 
             <!-- FAQ — kill objections -->
             <div class="lp-faq">

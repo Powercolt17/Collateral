@@ -77,12 +77,14 @@ export function renderLanding() {
             .fq-a{max-height:0;overflow:hidden;transition:max-height .3s;font-size:13px;color:#666;line-height:1.7}
             .fq.open .fq-a{max-height:200px;padding-bottom:16px}
 
-            .lp-bot{background:#0a0a0a;color:#fff;text-align:center;padding:72px 24px}
-            .lp-bot-h{font-size:32px;font-weight:800;margin-bottom:10px;letter-spacing:-1px;line-height:1.15}
-            .lp-bot-sub{font-size:14px;color:#888;margin-bottom:12px}
-            .lp-bot-trust{font-size:11px;color:#555;font-family:'JetBrains Mono',monospace;letter-spacing:.5px;margin-bottom:28px}
-            .lp-bot-btn{padding:18px 44px;background:#5C1414;color:#fff;font-size:13px;font-weight:700;letter-spacing:1px;text-transform:uppercase;border:none;cursor:pointer;font-family:'Sora',sans-serif;transition:all .3s;box-shadow:0 2px 12px rgba(92,20,20,.2)}
-            .lp-bot-btn:hover{background:#7a1e1e;transform:translateY(-1px);box-shadow:0 4px 20px rgba(92,20,20,.35)}
+            .lp-bot{background:#0a0a0a;color:#fff;text-align:center;padding:80px 24px 40px}
+            .lp-bot-h{font-size:34px;font-weight:800;margin-bottom:12px;letter-spacing:-1px;line-height:1.15}
+            .lp-bot-sub{font-size:15px;color:#888;margin-bottom:10px}
+            .lp-bot-trust{font-size:11px;color:#444;font-family:'JetBrains Mono',monospace;letter-spacing:.5px;margin-bottom:32px}
+            .lp-bot-btn{padding:18px 48px;background:#5C1414;color:#fff;font-size:13px;font-weight:700;letter-spacing:1px;text-transform:uppercase;border:none;cursor:pointer;font-family:'Sora',sans-serif;transition:all .3s;box-shadow:0 2px 16px rgba(92,20,20,.25)}
+            .lp-bot-btn:hover{background:#7a1e1e;transform:translateY(-1px);box-shadow:0 6px 24px rgba(92,20,20,.4)}
+            .lp-bot-foot{margin-top:56px;padding-top:28px;border-top:1px solid rgba(255,255,255,.06);font-size:12px;color:#555;line-height:1.6}
+            .lp-bot-copy{font-size:10px;color:#333;font-family:'JetBrains Mono',monospace;letter-spacing:.5px;margin-top:8px}
 
             .lp-stick{display:none;position:fixed;bottom:0;left:0;right:0;background:#fff;border-top:1px solid #eee;padding:12px 20px;z-index:90;box-shadow:0 -4px 16px rgba(0,0,0,.06)}
             .lp-stick button{width:100%;background:#5C1414;color:#fff;padding:16px;border:none;font-size:12px;font-weight:700;letter-spacing:1px;text-transform:uppercase;cursor:pointer;font-family:'Sora',sans-serif}
@@ -207,15 +209,14 @@ export function renderLanding() {
                 <div class="lp-bot-sub">Create a free account. Lock capital only when you're ready.</div>
                 <div class="lp-bot-trust">Free account. Real deadline. Verified result.</div>
                 <button class="lp-bot-btn" id="lp-final-cta" onclick="window.app.openAccessModal()">Create Your First Contract →</button>
+                <div class="lp-bot-foot">
+                    Collateral turns measurable goals into contracts with real stakes.
+                    <div class="lp-bot-copy">Collateral.market · © 2026</div>
+                </div>
             </div>
 
             <div class="lp-stick"><button onclick="window.app.openAccessModal()">Create Your First Contract →</button></div>
             <div class="lp-tick" id="lp-tick"><span class="tk-dot"></span><span id="tk-t"></span><span class="tk-time" id="tk-d"></span></div>
-
-            <div class="lp-foot">
-                Collateral turns measurable goals into contracts with real stakes.
-                <div class="lp-foot-line">Collateral.market · © 2026</div>
-            </div>
         </div>
     `;
 }

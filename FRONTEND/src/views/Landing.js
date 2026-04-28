@@ -24,19 +24,31 @@ export function renderLanding() {
             .lp-examples { max-width:1000px;margin:0 auto;padding:8px 24px 48px; }
             .lp-ex-tag { font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:2px;text-transform:uppercase;color:#bbb;margin-bottom:20px;text-align:center; }
             .lp-cards { display:grid;grid-template-columns:repeat(3,1fr);gap:16px; }
-            .lp-card { border:2px solid #e8e8e8;padding:28px 24px;cursor:pointer;transition:all .25s;position:relative; }
-            .lp-card:hover { border-color:#5C1414;transform:translateY(-3px);box-shadow:0 12px 32px rgba(92,20,20,.08); }
-            .lp-card-platform { font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:1.5px;text-transform:uppercase;color:#5C1414;margin-bottom:10px;font-weight:600; }
-            .lp-card-target { font-size:19px;font-weight:800;color:#111;margin-bottom:16px;letter-spacing:-.3px; }
-            .lp-card-meta { display:flex;flex-direction:column;gap:8px;margin-bottom:14px; }
-            .lp-card-row { display:flex;justify-content:space-between;font-size:13px; }
-            .lp-card-label { color:#999; }
-            .lp-card-value { color:#111;font-weight:600; }
-            .lp-card-value.green { color:#15803d; }
-            .lp-card-verify { font-size:10px;color:#999;font-family:'JetBrains Mono',monospace;letter-spacing:.5px;margin-bottom:16px;display:flex;align-items:center;gap:6px; }
-            .lp-card-verify::before { content:'✓';color:#15803d;font-weight:700; }
-            .lp-card-cta { display:block;width:100%;padding:14px;background:#111;color:#fff;font-size:12px;font-weight:700;letter-spacing:1px;text-transform:uppercase;text-align:center;border:none;cursor:pointer;font-family:'Sora',sans-serif;transition:background .2s; }
-            .lp-card-cta:hover { background:#5C1414; }
+            .lp-card { border:1px solid #e5e5e5;padding:0;cursor:pointer;transition:all .25s;position:relative;display:flex;flex-direction:column; }
+            .lp-card:hover { border-color:#111;transform:translateY(-3px);box-shadow:0 12px 32px rgba(0,0,0,.08); }
+            .mc-header { display:flex;justify-content:space-between;align-items:center;padding:16px 20px 0; }
+            .mc-badge { font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:1.5px;text-transform:uppercase;color:#888;font-weight:600; }
+            .mc-rcpt { font-family:'JetBrains Mono',monospace;font-size:9px;color:#ccc;letter-spacing:1px; }
+            .mc-time { font-family:'JetBrains Mono',monospace;font-size:9px;color:#aaa;display:flex;align-items:center;gap:5px; }
+            .mc-time-dot { width:5px;height:5px;background:#22c55e;border-radius:50%;display:inline-block; }
+            .mc-title { font-size:20px;font-weight:800;color:#111;padding:12px 20px 10px;letter-spacing:-.3px; }
+            .mc-tags { display:flex;align-items:center;gap:8px;padding:0 20px;margin-bottom:6px; }
+            .mc-platform-dot { width:6px;height:6px;border-radius:50%;background:#111; }
+            .mc-platform-name { font-family:'JetBrains Mono',monospace;font-size:10px;color:#666;text-transform:uppercase;letter-spacing:1px; }
+            .mc-tier { font-family:'JetBrains Mono',monospace;font-size:9px;font-weight:700;letter-spacing:1px;text-transform:uppercase;padding:2px 8px;border-radius:2px; }
+            .mc-tier.allin { background:#5C1414;color:#fff; }
+            .mc-tier.stake { background:#f0f0f0;color:#111; }
+            .mc-verified { display:flex;align-items:center;gap:5px;padding:0 20px 16px;font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:1px;text-transform:uppercase;color:#15803d;font-weight:600; }
+            .mc-verified-dot { width:5px;height:5px;background:#15803d;border-radius:50%; }
+            .mc-nums { display:flex;justify-content:space-between;align-items:flex-end;padding:0 20px 20px;border-top:1px solid #f0f0f0;padding-top:16px; }
+            .mc-stake-range { font-size:28px;font-weight:900;color:#111;letter-spacing:-1px;line-height:1.1; }
+            .mc-stake-label { font-family:'JetBrains Mono',monospace;font-size:8px;color:#aaa;letter-spacing:1.5px;text-transform:uppercase;margin-top:4px; }
+            .mc-mult { text-align:right; }
+            .mc-mult-val { font-size:28px;font-weight:900;color:#111;letter-spacing:-1px; }
+            .mc-mult-label { font-family:'JetBrains Mono',monospace;font-size:8px;color:#aaa;letter-spacing:1.5px;text-transform:uppercase;text-align:right; }
+            .lp-card-cta { display:block;width:100%;padding:16px;background:#111;color:#fff;font-size:13px;font-weight:800;letter-spacing:1.5px;text-transform:uppercase;text-align:center;border:none;cursor:pointer;font-family:'Sora',sans-serif;transition:background .2s; }
+            .lp-card-cta:hover { background:#222; }
+            .mc-lock-note { text-align:center;padding:10px 20px 16px;font-size:10px;color:#ccc;font-family:'JetBrains Mono',monospace;letter-spacing:.5px; }
 
             /* Mid CTA */
             .lp-mid-cta { text-align:center;padding:40px 24px;max-width:600px;margin:0 auto; }
@@ -126,44 +138,67 @@ export function renderLanding() {
                 <div class="lp-ex-tag">Example Contracts</div>
                 <div class="lp-cards">
                     <div class="lp-card" onclick="window.app.openAccessModal();if(window.trackEvent)window.trackEvent('example_card_click',{c:'stripe'})">
-                        <div class="lp-card-platform">Stripe Revenue</div>
-                        <div class="lp-card-target">Grow revenue by 20%</div>
-                        <div class="lp-card-meta">
-                            <div class="lp-card-row"><span class="lp-card-label">Deadline</span><span class="lp-card-value">30 days</span></div>
-                            <div class="lp-card-row"><span class="lp-card-label">You lock</span><span class="lp-card-value">$500</span></div>
-                            <div class="lp-card-row"><span class="lp-card-label">You earn</span><span class="lp-card-value green">$1,250</span></div>
+                        <div class="mc-header">
+                            <span class="mc-badge">Open Market</span>
+                            <span class="mc-rcpt">RCPT-A7F2</span>
+                            <span class="mc-time"><span class="mc-time-dot"></span> 30D LEFT</span>
                         </div>
-                        <div class="lp-card-verify">Verified automatically with Stripe</div>
-                        <button class="lp-card-cta" onclick="event.stopPropagation();window.app.openAccessModal();if(window.trackEvent)window.trackEvent('example_start_contract_click',{c:'stripe'})">Start This Contract →</button>
+                        <div class="mc-title">Revenue Growth (30d)</div>
+                        <div class="mc-tags">
+                            <span class="mc-platform-dot"></span>
+                            <span class="mc-platform-name">Stripe</span>
+                            <span class="mc-tier allin">ALL-IN</span>
+                        </div>
+                        <div class="mc-verified"><span class="mc-verified-dot"></span> Terms Verified</div>
+                        <div class="mc-nums">
+                            <div><div class="mc-stake-range">$250 –<br>$5,000</div><div class="mc-stake-label">Stake Capacity</div></div>
+                            <div class="mc-mult"><div class="mc-mult-val">2.5x</div><div class="mc-mult-label">Yield<br>Multiplier</div></div>
+                        </div>
+                        <div class="mc-lock-note">Capital is locked until settlement.</div>
                     </div>
                     <div class="lp-card" onclick="window.app.openAccessModal();if(window.trackEvent)window.trackEvent('example_card_click',{c:'x'})">
-                        <div class="lp-card-platform">X (Twitter)</div>
-                        <div class="lp-card-target">Gain 1,000 followers</div>
-                        <div class="lp-card-meta">
-                            <div class="lp-card-row"><span class="lp-card-label">Deadline</span><span class="lp-card-value">14 days</span></div>
-                            <div class="lp-card-row"><span class="lp-card-label">You lock</span><span class="lp-card-value">$250</span></div>
-                            <div class="lp-card-row"><span class="lp-card-label">You earn</span><span class="lp-card-value green">$625</span></div>
+                        <div class="mc-header">
+                            <span class="mc-badge">Open Market</span>
+                            <span class="mc-rcpt">RCPT-F599</span>
+                            <span class="mc-time"><span class="mc-time-dot"></span> 14D LEFT</span>
                         </div>
-                        <div class="lp-card-verify">Verified automatically with X</div>
-                        <button class="lp-card-cta" onclick="event.stopPropagation();window.app.openAccessModal();if(window.trackEvent)window.trackEvent('example_start_contract_click',{c:'x'})">Start This Contract →</button>
+                        <div class="mc-title">Follower Growth (14d)</div>
+                        <div class="mc-tags">
+                            <span class="mc-platform-dot"></span>
+                            <span class="mc-platform-name">X</span>
+                            <span class="mc-tier allin">ALL-IN</span>
+                        </div>
+                        <div class="mc-verified"><span class="mc-verified-dot"></span> Terms Verified</div>
+                        <div class="mc-nums">
+                            <div><div class="mc-stake-range">$500 –<br>$5,000</div><div class="mc-stake-label">Stake Capacity</div></div>
+                            <div class="mc-mult"><div class="mc-mult-val">4x</div><div class="mc-mult-label">Yield<br>Multiplier</div></div>
+                        </div>
+                        <div class="mc-lock-note">Capital is locked until settlement.</div>
                     </div>
                     <div class="lp-card" onclick="window.app.openAccessModal();if(window.trackEvent)window.trackEvent('example_card_click',{c:'shopify'})">
-                        <div class="lp-card-platform">Shopify</div>
-                        <div class="lp-card-target">Hit $5,000 in sales</div>
-                        <div class="lp-card-meta">
-                            <div class="lp-card-row"><span class="lp-card-label">Deadline</span><span class="lp-card-value">30 days</span></div>
-                            <div class="lp-card-row"><span class="lp-card-label">You lock</span><span class="lp-card-value">$300</span></div>
-                            <div class="lp-card-row"><span class="lp-card-label">You earn</span><span class="lp-card-value green">$750</span></div>
+                        <div class="mc-header">
+                            <span class="mc-badge">Open Market</span>
+                            <span class="mc-rcpt">RCPT-BAF0</span>
+                            <span class="mc-time"><span class="mc-time-dot"></span> 30D LEFT</span>
                         </div>
-                        <div class="lp-card-verify">Verified automatically with Shopify</div>
-                        <button class="lp-card-cta" onclick="event.stopPropagation();window.app.openAccessModal();if(window.trackEvent)window.trackEvent('example_start_contract_click',{c:'shopify'})">Start This Contract →</button>
+                        <div class="mc-title">Order Volume Growth (30d)</div>
+                        <div class="mc-tags">
+                            <span class="mc-platform-dot"></span>
+                            <span class="mc-platform-name">Shopify</span>
+                            <span class="mc-tier stake">STAKE</span>
+                        </div>
+                        <div class="mc-verified"><span class="mc-verified-dot"></span> Terms Verified</div>
+                        <div class="mc-nums">
+                            <div><div class="mc-stake-range">$250 –<br>$3,000</div><div class="mc-stake-label">Stake Capacity</div></div>
+                            <div class="mc-mult"><div class="mc-mult-val">2.5x</div><div class="mc-mult-label">Yield<br>Multiplier</div></div>
+                        </div>
+                        <div class="mc-lock-note">Capital is locked until settlement.</div>
                     </div>
                 </div>
             </div>
 
             <div class="lp-mid-cta">
                 <div class="lp-mid-text">Start with <strong>$25</strong>. Create your first contract in under <strong>60 seconds</strong>.</div>
-                <button class="lp-cta-primary" onclick="window.app.openAccessModal();if(window.trackEvent)window.trackEvent('midpage_create_contract_click')">Create Your First Contract</button>
             </div>
 
             <div class="lp-how">

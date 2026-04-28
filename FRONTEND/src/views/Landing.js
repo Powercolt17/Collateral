@@ -8,14 +8,24 @@ export function renderLanding() {
             .lp { min-height:100vh;background:#fff;color:#111;font-family:'Sora',sans-serif;overflow-x:hidden; }
             .lp *,.lp *::before,.lp *::after { box-sizing:border-box; }
 
-            /* Hero — tight, no wasted space */
-            .lp-hero { text-align:center;padding:56px 24px 32px;max-width:680px;margin:0 auto; }
+            /* Fade-in animation */
+            @keyframes lpFadeUp { from { opacity:0;transform:translateY(16px); } to { opacity:1;transform:translateY(0); } }
+            .lp-fade { opacity:0;transform:translateY(16px);transition:opacity .6s ease,transform .6s ease; }
+            .lp-fade.visible { opacity:1;transform:translateY(0); }
+
+            /* Brand mark */
+            .lp-brand { text-align:center;padding:28px 0 0;display:flex;align-items:center;justify-content:center;gap:8px; }
+            .lp-brand-bar { width:3px;height:16px;background:#5C1414; }
+            .lp-brand-text { font-size:11px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:#111; }
+
+            /* Hero */
+            .lp-hero { text-align:center;padding:36px 24px 32px;max-width:680px;margin:0 auto;animation:lpFadeUp .7s ease both; }
             .lp-h1 { font-size:48px;font-weight:900;color:#111;letter-spacing:-2px;line-height:1.08;margin:0 0 16px; }
             .lp-h1 strong { color:#5C1414; }
             .lp-sub { font-size:17px;color:#555;line-height:1.7;margin:0 auto 28px;max-width:520px; }
             .lp-cta-row { display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-bottom:14px; }
-            .lp-cta-primary { padding:16px 36px;background:#5C1414;color:#fff;font-size:13px;font-weight:700;letter-spacing:1px;text-transform:uppercase;border:none;cursor:pointer;font-family:'Sora',sans-serif;transition:background .3s; }
-            .lp-cta-primary:hover { background:#7a1e1e; }
+            .lp-cta-primary { padding:16px 36px;background:#5C1414;color:#fff;font-size:13px;font-weight:700;letter-spacing:1px;text-transform:uppercase;border:none;cursor:pointer;font-family:'Sora',sans-serif;transition:all .3s;box-shadow:0 2px 12px rgba(92,20,20,.2); }
+            .lp-cta-primary:hover { background:#7a1e1e;box-shadow:0 4px 20px rgba(92,20,20,.35);transform:translateY(-1px); }
             .lp-cta-secondary { padding:16px 36px;background:transparent;color:#111;font-size:13px;font-weight:700;letter-spacing:1px;text-transform:uppercase;border:2px solid #ddd;cursor:pointer;font-family:'Sora',sans-serif;transition:all .3s; }
             .lp-cta-secondary:hover { border-color:#111; }
             .lp-trust-line { font-size:12px;color:#aaa;font-family:'JetBrains Mono',monospace;letter-spacing:.5px; }
@@ -24,8 +34,8 @@ export function renderLanding() {
             .lp-examples { max-width:1000px;margin:0 auto;padding:8px 24px 48px; }
             .lp-ex-tag { font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:2px;text-transform:uppercase;color:#bbb;margin-bottom:20px;text-align:center; }
             .lp-cards { display:grid;grid-template-columns:repeat(3,1fr);gap:16px; }
-            .lp-card { border:1px solid #e5e5e5;padding:0;cursor:pointer;transition:all .25s;position:relative;display:flex;flex-direction:column; }
-            .lp-card:hover { border-color:#111;transform:translateY(-3px);box-shadow:0 12px 32px rgba(0,0,0,.08); }
+            .lp-card { border:1px solid #e5e5e5;padding:0;cursor:pointer;transition:all .3s cubic-bezier(.4,0,.2,1);position:relative;display:flex;flex-direction:column;box-shadow:0 1px 4px rgba(0,0,0,.04); }
+            .lp-card:hover { border-color:#5C1414;transform:translateY(-4px);box-shadow:0 16px 40px rgba(92,20,20,.1); }
             .mc-header { display:flex;justify-content:space-between;align-items:center;padding:16px 20px 0; }
             .mc-badge { font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:1.5px;text-transform:uppercase;color:#888;font-weight:600; }
             .mc-rcpt { font-family:'JetBrains Mono',monospace;font-size:9px;color:#ccc;letter-spacing:1px; }
@@ -56,14 +66,16 @@ export function renderLanding() {
             .lp-mid-text strong { color:#111; }
 
             /* How it works */
-            .lp-how { background:#111;color:#fff;padding:64px 24px;border-top:4px solid #5C1414; }
+            .lp-how { background:#0a0a0a;color:#fff;padding:72px 24px;border-top:4px solid #5C1414;position:relative; }
+            .lp-how::before { content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,rgba(92,20,20,.4),transparent); }
             .lp-how-inner { max-width:880px;margin:0 auto; }
-            .lp-how-tag { font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:2px;text-transform:uppercase;color:#666;margin-bottom:36px;text-align:center; }
+            .lp-how-tag { font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:2px;text-transform:uppercase;color:#555;margin-bottom:40px;text-align:center; }
             .lp-steps { display:grid;grid-template-columns:repeat(4,1fr);gap:28px; }
-            .lp-step { text-align:center;cursor:pointer; }
+            .lp-step { text-align:center;cursor:pointer;padding:20px 12px;transition:background .3s;border-radius:4px; }
+            .lp-step:hover { background:rgba(255,255,255,.04); }
             .lp-step:hover .lp-step-num { color:#5C1414; }
-            .lp-step-num { font-size:32px;font-weight:900;color:#333;margin-bottom:12px;transition:color .3s;font-family:'JetBrains Mono',monospace; }
-            .lp-step-title { font-size:14px;font-weight:700;color:#fff;margin-bottom:6px; }
+            .lp-step-num { font-size:32px;font-weight:900;color:#2a2a2a;margin-bottom:14px;transition:color .3s;font-family:'JetBrains Mono',monospace; }
+            .lp-step-title { font-size:14px;font-weight:700;color:#eee;margin-bottom:8px; }
             .lp-step-desc { font-size:12px;color:#999;line-height:1.6; }
 
             /* Trust blocks */
@@ -124,6 +136,10 @@ export function renderLanding() {
         </style>
 
         <div class="lp">
+            <div class="lp-brand">
+                <div class="lp-brand-bar"></div>
+                <div class="lp-brand-text">Collateral</div>
+            </div>
             <div class="lp-hero">
                 <h1 class="lp-h1">Pick a target.<br><strong>Put money behind it.</strong></h1>
                 <p class="lp-sub">Hit the target and get paid. Miss it and lose the contract. Collateral verifies the result automatically through Stripe, X, Shopify, and Amazon.</p>
@@ -134,7 +150,7 @@ export function renderLanding() {
                 <div class="lp-trust-line">Free to sign up. Lock capital only when you're ready.</div>
             </div>
 
-            <div class="lp-examples" id="lp-ex">
+            <div class="lp-examples lp-fade" id="lp-ex">
                 <div class="lp-ex-tag">Example Contracts</div>
                 <div class="lp-cards">
                     <div class="lp-card" onclick="window.app.openAccessModal();if(window.trackEvent)window.trackEvent('example_card_click',{c:'stripe'})">
@@ -201,7 +217,7 @@ export function renderLanding() {
                 <div class="lp-mid-text">Start with <strong>$25</strong>. Create your first contract in under <strong>60 seconds</strong>.</div>
             </div>
 
-            <div class="lp-how">
+            <div class="lp-how lp-fade">
                 <div class="lp-how-inner">
                     <div class="lp-how-tag">How It Works</div>
                     <div class="lp-steps">
@@ -229,7 +245,7 @@ export function renderLanding() {
                 </div>
             </div>
 
-            <div class="lp-trust-section">
+            <div class="lp-trust-section lp-fade">
                 <div class="lp-trust-box">
                     <div class="lp-trust-h">No screenshots. No manual claims.</div>
                     <div class="lp-trust-p">Collateral checks connected accounts automatically. The result is based on real data, not trust.</div>
@@ -240,7 +256,7 @@ export function renderLanding() {
                 </div>
             </div>
 
-            <div class="lp-proof-section">
+            <div class="lp-proof-section lp-fade">
                 <div class="lp-proof-h">Built for people who are done negotiating with themselves.</div>
                 <div class="lp-proof-p">If the target matters, make the deadline real. Collateral turns vague ambition into a contract with money attached.</div>
             </div>
@@ -322,4 +338,10 @@ export function initLanding() {
     const tk = document.getElementById('lp-ticker'), tt = document.getElementById('lp-ticker-text'), td = document.getElementById('lp-ticker-time');
     function showT() { if(!tk||!tt) return; const m=msgs[ti%msgs.length]; tt.textContent=m.t; if(td) td.textContent=m.d; tk.classList.add('show'); setTimeout(()=>tk.classList.remove('show'),4000); ti++; }
     setTimeout(showT, 8000); setInterval(showT, 15000);
+
+    // Scroll fade-in
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); } });
+    }, { threshold: 0.15 });
+    document.querySelectorAll('.lp-fade').forEach(el => observer.observe(el));
 }

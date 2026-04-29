@@ -36,7 +36,7 @@ const referralRoutes: FastifyPluginAsync = async (fastify) => {
     /**
      * GET /r/:code
      * Public endpoint — validates referral code exists
-     * Frontend uses this to confirm the referral link is valid
+     * Checks CREATOR slugs first, then falls through to user referral codes
      */
     fastify.get<{
         Params: { code: string };
@@ -48,10 +48,34 @@ const referralRoutes: FastifyPluginAsync = async (fastify) => {
             return { valid: false, error: 'Invalid referral code' };
         }
 
+        // Check creator slugs first (priority over user referral codes)
+        try {
+            const { isCreatorSlug, recordClick } = await import('../services/creator-referral.js');
+            const isCreator = await isCreatorSlug(code);
+            if (isCreator) {
+                // Record click (fire-and-forget)
+                recordClick(code, {
+                    userAgent: request.headers['user-agent'],
+                    ip: request.ip,
+                }).catch(() => {});
+
+                return {
+                    valid: true,
+                    type: 'creator',
+                    code: code.toLowerCase(),
+                };
+            }
+        } catch (err: any) {
+            // Creator table may not exist yet (migration pending), continue to user lookup
+            console.warn('[Referral] Creator lookup failed (non-blocking):', err.message);
+        }
+
+        // Fall through to user referral code lookup
         const referrerId = await lookupReferrer(code);
 
         return {
             valid: !!referrerId,
+            type: referrerId ? 'user' : undefined,
             code: code.toLowerCase(),
         };
     });

@@ -141,6 +141,18 @@ const authRoutes: FastifyPluginAsync = async (fastify) => {
             } catch (err: any) {
                 console.error('[Auth] Referral tracking failed (non-blocking):', err.message);
             }
+
+            // CREATOR REFERRAL: Also check if the code is a creator slug
+            try {
+                const { isCreatorSlug, recordSignup } = await import('../services/creator-referral.js');
+                const isCreator = await isCreatorSlug(referralCode);
+                if (isCreator) {
+                    await recordSignup(referralCode, userId);
+                    console.log(`🎨 Creator referral signup: ${referralCode} → ${userId}`);
+                }
+            } catch (err: any) {
+                console.warn('[Auth] Creator referral tracking failed (non-blocking):', err.message);
+            }
         }
 
         // EMAIL: Welcome notification (fire-and-forget)

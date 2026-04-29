@@ -1,22 +1,22 @@
 /**
  * Onboarding Drip Email Job
  * 
- * Runs as part of the scheduler cycle. Finds users who:
- * 1. Signed up 1+ hours ago but have no contracts (Nudge 1)
- * 2. Signed up 24+ hours ago, still no contracts (Nudge 2) 
- * 3. Signed up 72+ hours ago, still no contracts (Final push)
+ * Sends exactly 3 emails to users who sign up but never create a contract:
+ *   Drip 1: 1+ hours after signup
+ *   Drip 2: 24+ hours after signup
+ *   Drip 3: 72+ hours after signup (final — explicitly tells them no more emails)
  * 
- * Uses a simple drip_emails_sent jsonb column on users to track which
- * drip stage has been sent. Falls back to checking contracts table.
+ * Uses `drip_stage_sent` column on users table to track progress.
+ * A user will NEVER receive more than 3 onboarding emails total.
+ * Each drip is sent exactly once — the column is updated immediately after send.
  * 
- * All sends are fire-and-forget — failures never block.
+ * If a user creates a contract at any point, they are excluded from all future drips.
  */
 
 import { db } from '../db/client.js';
-import { users, contracts, connectedAccounts, identities } from '../db/schema.js';
-import { eq, sql, and, lt, isNull } from 'drizzle-orm';
+import { users, identities } from '../db/schema.js';
+import { eq, sql, and, lt } from 'drizzle-orm';
 
-// Lazy import email service to avoid circular deps
 async function getSafeSend() {
     const { Resend } = await import('resend');
     const RESEND_API_KEY = process.env.RESEND_API_KEY;
@@ -43,10 +43,7 @@ function baseTemplate(title: string, body: string): string {
 <body style="margin:0;padding:0;background:#f5f5f5;font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;">
     <div style="max-width:560px;margin:0 auto;padding:40px 20px;">
         <div style="text-align:left;margin-bottom:32px;">
-            <div style="display:inline-flex;align-items:center;gap:8px;">
-                <div style="width:3px;height:18px;background:#752122;display:inline-block;vertical-align:middle;"></div>
-                <span style="font-size:13px;font-weight:800;color:#111;letter-spacing:0.08em;text-transform:uppercase;vertical-align:middle;">COLLATERAL</span>
-            </div>
+            <span style="font-size:13px;font-weight:800;color:#5C1414;letter-spacing:0.12em;text-transform:uppercase;">COLLATERAL</span>
         </div>
         <div style="background:#ffffff;border:1px solid #e5e5e5;padding:40px 32px;margin-bottom:24px;">
             <h1 style="font-size:22px;font-weight:700;color:#111;letter-spacing:-0.3px;margin:0 0 24px 0;line-height:1.3;">
@@ -56,7 +53,6 @@ function baseTemplate(title: string, body: string): string {
         </div>
         <div style="text-align:center;padding:16px 0;">
             <p style="font-size:11px;color:#999;margin:0;line-height:1.6;">
-                This is an automated message from Collateral Protocol.<br>
                 <a href="${DOMAIN}" style="color:#752122;text-decoration:none;">collateral.market</a>
             </p>
         </div>
@@ -65,7 +61,7 @@ function baseTemplate(title: string, body: string): string {
 </html>`;
 }
 
-// Nudge 1: 1 hour after signup — gentle reminder
+// Nudge 1: 1 hour after signup
 function drip1Email(username: string): { subject: string; html: string } {
     return {
         subject: "You signed up — now what?",
@@ -90,7 +86,7 @@ function drip1Email(username: string): { subject: string; html: string } {
     };
 }
 
-// Nudge 2: 24 hours — create urgency
+// Nudge 2: 24 hours
 function drip2Email(username: string): { subject: string; html: string } {
     return {
         subject: "Still thinking about it?",
@@ -112,7 +108,7 @@ function drip2Email(username: string): { subject: string; html: string } {
     };
 }
 
-// Nudge 3: 72 hours — final push
+// Nudge 3: 72 hours — final, explicitly says no more emails
 function drip3Email(username: string): { subject: string; html: string } {
     return {
         subject: "Last reminder from Collateral",
@@ -164,31 +160,53 @@ export async function runDripEmailJob(): Promise<DripJobResult> {
     }
 
     try {
-        // Find users who signed up but have NO contracts
-        // We use a subquery to check for absence of contracts
-        const usersWithoutContracts = await db
+        // Find users who:
+        // 1. Have an email
+        // 2. Signed up 1+ hours ago
+        // 3. Have NO contracts
+        // 4. Haven't completed all 3 drip stages yet (drip_stage_sent < 3)
+        const eligibleUsers = await db
             .select({
                 id: users.id,
                 email: users.email,
                 createdAt: users.createdAt,
+                dripStageSent: users.dripStageSent,
             })
             .from(users)
             .where(
                 and(
-                    // Has an email
                     sql`${users.email} IS NOT NULL`,
-                    // Signed up at least 1 hour ago
                     lt(users.createdAt, sql`NOW() - INTERVAL '1 hour'`),
-                    // No contracts at all
+                    sql`COALESCE(${users.dripStageSent}, 0) < 3`,
                     sql`NOT EXISTS (SELECT 1 FROM contracts WHERE contracts.principal_user_id = ${users.id})`
                 )
             )
-            .limit(50); // Process 50 at a time to avoid overload
+            .limit(20); // Small batch to avoid overload
 
-        for (const user of usersWithoutContracts) {
+        for (const user of eligibleUsers) {
             if (!user.email) { skipped++; continue; }
 
             try {
+                const currentStage = user.dripStageSent ?? 0;
+                const hoursSinceSignup = (Date.now() - new Date(user.createdAt).getTime()) / (1000 * 60 * 60);
+
+                // Determine which drip is next based on tracking column
+                let emailData: { subject: string; html: string } | null = null;
+                let nextStage = 0;
+
+                if (currentStage === 0 && hoursSinceSignup >= 1) {
+                    // Ready for drip 1
+                    nextStage = 1;
+                } else if (currentStage === 1 && hoursSinceSignup >= 24) {
+                    // Ready for drip 2
+                    nextStage = 2;
+                } else if (currentStage === 2 && hoursSinceSignup >= 72) {
+                    // Ready for drip 3 (final)
+                    nextStage = 3;
+                }
+
+                if (nextStage === 0) { skipped++; continue; }
+
                 // Get username
                 const [identity] = await db
                     .select({ username: identities.username })
@@ -197,29 +215,10 @@ export async function runDripEmailJob(): Promise<DripJobResult> {
                     .limit(1);
 
                 const username = identity?.username || 'there';
-                const hoursSinceSignup = (Date.now() - new Date(user.createdAt).getTime()) / (1000 * 60 * 60);
 
-                // Determine which drip to send based on a simple tracking key
-                // We store sent drips in a tracking mechanism using localStorage-like approach
-                // but server-side, we'll use a simple check: 
-                // - 1-2 hours: drip 1
-                // - 24-48 hours: drip 2  
-                // - 72-96 hours: drip 3
-                // Outside these windows = already sent or not yet due
-
-                let emailData: { subject: string; html: string } | null = null;
-                let dripStage = '';
-
-                if (hoursSinceSignup >= 1 && hoursSinceSignup < 2) {
-                    emailData = drip1Email(username);
-                    dripStage = 'drip_1';
-                } else if (hoursSinceSignup >= 24 && hoursSinceSignup < 25) {
-                    emailData = drip2Email(username);
-                    dripStage = 'drip_2';
-                } else if (hoursSinceSignup >= 72 && hoursSinceSignup < 73) {
-                    emailData = drip3Email(username);
-                    dripStage = 'drip_3';
-                }
+                if (nextStage === 1) emailData = drip1Email(username);
+                else if (nextStage === 2) emailData = drip2Email(username);
+                else if (nextStage === 3) emailData = drip3Email(username);
 
                 if (!emailData) { skipped++; continue; }
 
@@ -233,10 +232,15 @@ export async function runDripEmailJob(): Promise<DripJobResult> {
 
                 const { data, error } = result as any;
                 if (error) {
-                    console.error(`[DripEmail] ❌ Failed ${dripStage} → ${user.email}:`, error);
+                    console.error(`[DripEmail] ❌ Failed drip_${nextStage} → ${user.email}:`, error);
                     errors++;
                 } else {
-                    console.log(`[DripEmail] ✅ Sent ${dripStage} → ${user.email} (id: ${data?.id})`);
+                    // CRITICAL: Update the tracking column IMMEDIATELY after successful send
+                    await db.update(users)
+                        .set({ dripStageSent: nextStage })
+                        .where(eq(users.id, user.id));
+
+                    console.log(`[DripEmail] ✅ Sent drip_${nextStage} → ${user.email} (id: ${data?.id})`);
                     sent++;
                 }
             } catch (err: any) {

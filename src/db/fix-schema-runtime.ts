@@ -90,6 +90,14 @@ export async function fixSchemaDrift() {
             console.log(`[schema-fix] ⚠️ Tier pricing update skipped: ${e.message}`);
         }
 
+        // 7. Drip email tracking column on users
+        try {
+            await db.execute(sql`ALTER TABLE "users" ADD COLUMN IF NOT EXISTS "drip_stage_sent" integer DEFAULT 0`);
+            console.log('[schema-fix] ✅ Drip email tracking column ensured.');
+        } catch (e: any) {
+            console.log(`[schema-fix] ⚠️ Drip column skipped: ${e.message}`);
+        }
+
         console.log('[schema-fix] ✅ Runtime Schema Fix Complete.');
     } catch (err) {
         console.error('[schema-fix] ❌ Failed to run runtime schema fix:', err);

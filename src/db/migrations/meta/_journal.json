@@ -169,6 +169,13 @@
       "when": 1771043161918,
       "tag": "0023_sparkling_obadiah_stane",
       "breakpoints": true
+    },
+    {
+      "idx": 24,
+      "version": "7",
+      "when": 1777438204436,
+      "tag": "0024_narrow_bruce_banner",
+      "breakpoints": true
     }
   ]
 }

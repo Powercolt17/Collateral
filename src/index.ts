@@ -37,6 +37,7 @@ import referralRoutes from './routes/referrals.js';
 import rivalryRoutes from './routes/rivalry.js';
 import notificationRoutes from './routes/notifications.js';
 import adminSnapshotRoutes from './routes/admin-snapshots.js';
+import creatorReferralRoutes from './routes/creator-referrals.js';
 
 const PORT = parseInt(process.env.PORT || '3000', 10);
 
@@ -312,6 +313,7 @@ async function bootFastify() {
         await safeRegister('rivalry', rivalryRoutes);
         await safeRegister('notifications', notificationRoutes);
         await safeRegister('admin-snapshots', adminSnapshotRoutes);
+        await safeRegister('creator-referrals', creatorReferralRoutes);
 
         console.log('[startup] All routes queued, calling ready()...');
 

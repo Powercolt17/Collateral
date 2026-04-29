@@ -199,6 +199,8 @@ export const users = pgTable('users', {
     referralCount: integer('referral_count').default(0),
     referralBoostPct: integer('referral_boost_pct').default(0),
     referralFirstBonusUsed: boolean('referral_first_bonus_used').default(false),
+    // Drip email tracking: 0=none, 1=nudge1 sent, 2=nudge2 sent, 3=final sent
+    dripStageSent: integer('drip_stage_sent').default(0),
     createdAt: timestamp('created_at', { withTimezone: true }).defaultNow().notNull(),
 }, (table) => [
     uniqueIndex('idx_users_x_user_id').on(table.xUserId),
@@ -949,3 +951,82 @@ export const notifications = pgTable('notifications', {
 
 export type Notification = typeof notifications.$inferSelect;
 export type NewNotification = typeof notifications.$inferInsert;
+
+// =============================================================================
+// CREATOR REFERRAL TRACKING (Outreach Partner Program)
+// =============================================================================
+// Separate from user-to-user referrals. Tracks paid creator partnerships
+// where creators earn a flat bonus per qualified funded contract.
+
+// Creator tier enum
+export const creatorTierEnum = pgEnum('creator_tier', ['A_LIST', 'STANDARD']);
+
+// Creator status enum
+export const creatorStatusEnum = pgEnum('creator_status', [
+    'DRAFT',
+    'READY',
+    'ACTIVE',
+    'PAUSED',
+    'COMPLETED'
+]);
+
+// Creator conversion event type enum
+export const creatorConversionEventEnum = pgEnum('creator_conversion_event', [
+    'CLICKED',
+    'SIGNED_UP',
+    'FUNDED_CONTRACT',
+    'PENDING_REVIEW',
+    'APPROVED',
+    'REJECTED',
+    'PAID'
+]);
+
+// Creator partner registry
+export const creatorReferrals = pgTable('creator_referrals', {
+    id: uuid('id').primaryKey().defaultRandom(),
+    name: varchar('name', { length: 255 }).notNull(),
+    slug: varchar('slug', { length: 100 }).notNull().unique(),
+    platform: varchar('platform', { length: 50 }).notNull().default('X'),
+    handle: varchar('handle', { length: 255 }).notNull(),
+    tier: creatorTierEnum('tier').notNull().default('STANDARD'),
+    bonusRateCents: integer('bonus_rate_cents').notNull().default(1000), // $10 default
+    postFeeCents: integer('post_fee_cents').default(0),
+    followerCount: integer('follower_count'),
+    score: integer('score'), // 1-10 quality score
+    status: creatorStatusEnum('status').notNull().default('DRAFT'),
+    notes: text('notes'),
+    createdAt: timestamp('created_at', { withTimezone: true }).defaultNow().notNull(),
+    updatedAt: timestamp('updated_at', { withTimezone: true }).defaultNow().notNull(),
+}, (table) => ({
+    slugIdx: uniqueIndex('idx_creator_referrals_slug').on(table.slug),
+    statusIdx: index('idx_creator_referrals_status').on(table.status),
+    tierIdx: index('idx_creator_referrals_tier').on(table.tier),
+}));
+
+// Per-conversion tracking events
+export const creatorConversions = pgTable('creator_conversions', {
+    id: uuid('id').primaryKey().defaultRandom(),
+    creatorId: uuid('creator_id').references(() => creatorReferrals.id).notNull(),
+    userId: uuid('user_id').references(() => users.id),
+    contractId: uuid('contract_id').references(() => contracts.id),
+    eventType: creatorConversionEventEnum('event_type').notNull(),
+    stakeAmountCents: integer('stake_amount_cents'),
+    bonusAmountCents: integer('bonus_amount_cents'),
+    rejectionReason: text('rejection_reason'),
+    metadataJson: jsonb('metadata_json'), // IP hash, user agent, etc.
+    createdAt: timestamp('created_at', { withTimezone: true }).defaultNow().notNull(),
+    reviewedAt: timestamp('reviewed_at', { withTimezone: true }),
+    paidAt: timestamp('paid_at', { withTimezone: true }),
+}, (table) => ({
+    creatorIdx: index('idx_creator_conversions_creator').on(table.creatorId),
+    userIdx: index('idx_creator_conversions_user').on(table.userId),
+    eventTypeIdx: index('idx_creator_conversions_event').on(table.eventType),
+    creatorEventIdx: index('idx_creator_conversions_creator_event').on(table.creatorId, table.eventType),
+}));
+
+// Type exports
+export type CreatorReferral = typeof creatorReferrals.$inferSelect;
+export type NewCreatorReferral = typeof creatorReferrals.$inferInsert;
+
+export type CreatorConversion = typeof creatorConversions.$inferSelect;
+export type NewCreatorConversion = typeof creatorConversions.$inferInsert;

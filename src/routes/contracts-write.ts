@@ -820,6 +820,15 @@ const contractWriteRoutes: FastifyPluginAsync = async (fastify) => {
                     .catch(err => console.error('[Referral] Activation failed (non-blocking):', err.message));
             }).catch(() => { });
 
+            // CREATOR REFERRAL: Track funded contract for creator outreach program (fire-and-forget)
+            import('../services/creator-referral.js').then(({ recordFundedContract }) => {
+                recordFundedContract(principalUserId, contract.id, contract.lockAmountUsdCents)
+                    .then(result => {
+                        if (result.recorded) console.log(`🎨 Creator referral funded contract recorded for user ${principalUserId}`);
+                    })
+                    .catch(err => console.error('[CreatorRef] Funded contract tracking failed (non-blocking):', err.message));
+            }).catch(() => { });
+
             return {
                 ok: true,
                 contractId: contract.id,

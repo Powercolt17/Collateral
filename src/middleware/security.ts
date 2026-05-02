@@ -34,8 +34,12 @@ const RATE_LIMITS: Record<string, { max: number; windowSec: number }> = {
     // Auth — aggressive protection
     '/v1/auth/signin': { max: 10, windowSec: 60 },
     '/v1/auth/signup': { max: 5, windowSec: 60 },
+    '/v1/auth/login': { max: 10, windowSec: 60 },
+    '/v1/auth/forgot-password': { max: 3, windowSec: 60 },
+    '/v1/auth/reset-password': { max: 5, windowSec: 60 },
     '/auth/signin': { max: 10, windowSec: 60 },
     '/auth/signup': { max: 5, windowSec: 60 },
+    '/auth/login': { max: 5, windowSec: 60 },
 
     // Contract execution — real money, be strict
     '/v1/contracts/create': { max: 10, windowSec: 60 },

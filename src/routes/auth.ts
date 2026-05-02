@@ -396,8 +396,9 @@ const authRoutes: FastifyPluginAsync = async (fastify) => {
     fastify.post<{
         Body: { email?: string; passkeyId?: string; displayName?: string };
     }>('/auth/login', async (request, reply) => {
-        // Guard: Only allow in development
-        if (process.env.NODE_ENV === 'production') {
+        // Guard: Only allow in explicit development mode
+        // Default to BLOCKED if NODE_ENV is missing or anything other than 'development'
+        if (process.env.NODE_ENV !== 'development') {
             reply.status(410);
             return { ok: false, error: 'This endpoint is deprecated. Use /v1/auth/login' };
         }

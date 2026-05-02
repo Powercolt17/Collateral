@@ -759,6 +759,7 @@ window.app = {
                 return { icon: '⚡', cls: 'exec' };
             };
 
+            const esc = (s) => s ? s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;') : '';
             let html = '';
             if (hasUnread) {
                 html += `<div class="ch-notif-item" style="justify-content:center;border-bottom:1px solid #eee;" onclick="window.app.markAllRead()">
@@ -772,8 +773,8 @@ window.app = {
                 return `<div class="ch-notif-item" style="${unreadStyle}" onclick="${link}document.getElementById('notif-wrap').classList.remove('open');${n.read ? '' : `api.markNotificationRead('${n.id}');`}">
                     <div class="ch-notif-icon ${cls}">${icon}</div>
                     <div style="flex:1;min-width:0;">
-                        <div class="ch-notif-text">${n.title}</div>
-                        ${n.body ? `<div style="font-size:10px;color:#999;margin-top:2px;font-family:'JetBrains Mono', monospace;">${n.body}</div>` : ''}
+                        <div class="ch-notif-text">${esc(n.title)}</div>
+                        ${n.body ? `<div style="font-size:10px;color:#999;margin-top:2px;font-family:'JetBrains Mono', monospace;">${esc(n.body)}</div>` : ''}
                     </div>
                     <span class="ch-notif-time">${timeAgo(n.createdAt)}</span>
                 </div>`;

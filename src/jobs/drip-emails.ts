@@ -153,6 +153,16 @@ export async function runDripEmailJob(): Promise<DripJobResult> {
     const start = Date.now();
     let sent = 0, skipped = 0, errors = 0;
 
+    // ============================================================
+    // KILL SWITCH — Drip emails are DISABLED until manually re-enabled.
+    // Too many users were getting spammed because the tracking column
+    // didn't exist in prod yet. Set DRIP_EMAILS_ENABLED=true to re-enable.
+    // ============================================================
+    if (process.env.DRIP_EMAILS_ENABLED !== 'true') {
+        console.log('[DripEmail] ⏸️ Drip emails DISABLED (set DRIP_EMAILS_ENABLED=true to enable)');
+        return { sent: 0, skipped: 0, errors: 0, durationMs: Date.now() - start };
+    }
+
     const emailClient = await getSafeSend();
     if (!emailClient) {
         console.log('[DripEmail] ⚠️ No RESEND_API_KEY — skipping drip job');

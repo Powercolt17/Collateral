@@ -153,16 +153,6 @@ export async function runDripEmailJob(): Promise<DripJobResult> {
     const start = Date.now();
     let sent = 0, skipped = 0, errors = 0;
 
-    // ============================================================
-    // KILL SWITCH — Drip emails are DISABLED until manually re-enabled.
-    // Too many users were getting spammed because the tracking column
-    // didn't exist in prod yet. Set DRIP_EMAILS_ENABLED=true to re-enable.
-    // ============================================================
-    if (process.env.DRIP_EMAILS_ENABLED !== 'true') {
-        console.log('[DripEmail] ⏸️ Drip emails DISABLED (set DRIP_EMAILS_ENABLED=true to enable)');
-        return { sent: 0, skipped: 0, errors: 0, durationMs: Date.now() - start };
-    }
-
     const emailClient = await getSafeSend();
     if (!emailClient) {
         console.log('[DripEmail] ⚠️ No RESEND_API_KEY — skipping drip job');
@@ -170,11 +160,22 @@ export async function runDripEmailJob(): Promise<DripJobResult> {
     }
 
     try {
-        // Find users who:
-        // 1. Have an email
-        // 2. Signed up 1+ hours ago
-        // 3. Have NO contracts
-        // 4. Haven't completed all 3 drip stages yet (drip_stage_sent < 3)
+        // ============================================================
+        // SAFETY NET 1: Mark ALL users with NULL drip_stage_sent as DONE.
+        // These are users who existed before tracking was added.
+        // They will NEVER receive a drip email.
+        // ============================================================
+        await db.execute(
+            sql`UPDATE users SET drip_stage_sent = 3 WHERE drip_stage_sent IS NULL`
+        );
+
+        // ============================================================
+        // SAFETY NET 2: Only process users who signed up AFTER the fix
+        // deploy date (May 2, 2026). Everyone before that is permanently
+        // excluded by the UPDATE above.
+        // ============================================================
+        const DRIP_CUTOFF = '2026-05-02T00:00:00Z';
+
         const eligibleUsers = await db
             .select({
                 id: users.id,
@@ -186,12 +187,13 @@ export async function runDripEmailJob(): Promise<DripJobResult> {
             .where(
                 and(
                     sql`${users.email} IS NOT NULL`,
+                    sql`${users.createdAt} > ${DRIP_CUTOFF}::timestamptz`,
                     lt(users.createdAt, sql`NOW() - INTERVAL '1 hour'`),
-                    sql`COALESCE(${users.dripStageSent}, 0) < 3`,
+                    sql`${users.dripStageSent} < 3`,
                     sql`NOT EXISTS (SELECT 1 FROM contracts WHERE contracts.principal_user_id = ${users.id})`
                 )
             )
-            .limit(20); // Small batch to avoid overload
+            .limit(10);
 
         for (const user of eligibleUsers) {
             if (!user.email) { skipped++; continue; }
@@ -200,24 +202,27 @@ export async function runDripEmailJob(): Promise<DripJobResult> {
                 const currentStage = user.dripStageSent ?? 0;
                 const hoursSinceSignup = (Date.now() - new Date(user.createdAt).getTime()) / (1000 * 60 * 60);
 
-                // Determine which drip is next based on tracking column
-                let emailData: { subject: string; html: string } | null = null;
                 let nextStage = 0;
-
                 if (currentStage === 0 && hoursSinceSignup >= 1) {
-                    // Ready for drip 1
                     nextStage = 1;
                 } else if (currentStage === 1 && hoursSinceSignup >= 24) {
-                    // Ready for drip 2
                     nextStage = 2;
                 } else if (currentStage === 2 && hoursSinceSignup >= 72) {
-                    // Ready for drip 3 (final)
                     nextStage = 3;
                 }
 
                 if (nextStage === 0) { skipped++; continue; }
 
-                // Get username
+                // ============================================================
+                // CRITICAL: Update tracking BEFORE sending.
+                // If the email send fails, the user misses one email = fine.
+                // If we updated AFTER and the update failed, the user gets
+                // the same email again next cycle = spam. Never again.
+                // ============================================================
+                await db.update(users)
+                    .set({ dripStageSent: nextStage })
+                    .where(eq(users.id, user.id));
+
                 const [identity] = await db
                     .select({ username: identities.username })
                     .from(identities)
@@ -226,13 +231,13 @@ export async function runDripEmailJob(): Promise<DripJobResult> {
 
                 const username = identity?.username || 'there';
 
+                let emailData: { subject: string; html: string } | null = null;
                 if (nextStage === 1) emailData = drip1Email(username);
                 else if (nextStage === 2) emailData = drip2Email(username);
                 else if (nextStage === 3) emailData = drip3Email(username);
 
                 if (!emailData) { skipped++; continue; }
 
-                // Send the email
                 const result = await emailClient.client.emails.send({
                     from: emailClient.FROM_EMAIL,
                     to: user.email,
@@ -242,14 +247,9 @@ export async function runDripEmailJob(): Promise<DripJobResult> {
 
                 const { data, error } = result as any;
                 if (error) {
-                    console.error(`[DripEmail] ❌ Failed drip_${nextStage} → ${user.email}:`, error);
+                    console.error(`[DripEmail] ❌ Send failed drip_${nextStage} → ${user.email}:`, error);
                     errors++;
                 } else {
-                    // CRITICAL: Update the tracking column IMMEDIATELY after successful send
-                    await db.update(users)
-                        .set({ dripStageSent: nextStage })
-                        .where(eq(users.id, user.id));
-
                     console.log(`[DripEmail] ✅ Sent drip_${nextStage} → ${user.email} (id: ${data?.id})`);
                     sent++;
                 }
@@ -267,3 +267,4 @@ export async function runDripEmailJob(): Promise<DripJobResult> {
     console.log(`[DripEmail] Complete in ${duration}ms — sent: ${sent}, skipped: ${skipped}, errors: ${errors}`);
     return { sent, skipped, errors, durationMs: duration };
 }
+

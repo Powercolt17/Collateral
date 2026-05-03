@@ -161,6 +161,14 @@ server.listen(PORT, '0.0.0.0', () => {
                 console.error('[startup] ⚠️ Schema check failed (DB may be unavailable):', err);
             }
 
+            // Seed simulated activity (makes platform look alive with fresh data)
+            try {
+                const { refreshSimulatedActivity } = await import('./db/refresh-activity.js');
+                await refreshSimulatedActivity();
+            } catch (err) {
+                console.error('[startup] ⚠️ Activity seed failed (continuing):', err);
+            }
+
             // Now boot app regardless — DB will reconnect when available
             bootFastify();
         })

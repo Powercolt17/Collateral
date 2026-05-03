@@ -197,5 +197,33 @@ const opsRoutes: FastifyPluginAsync = async (fastify) => {
             };
         }
     });
+
+    /**
+     * POST /ops/refresh-activity
+     * 
+     * Wipe stale simulated activity and re-seed with fresh timestamps.
+     * Makes the platform look alive with recent contracts and rivalries.
+     */
+    fastify.post('/ops/refresh-activity', async (request, reply) => {
+        if (!verifyOpsToken(request)) {
+            reply.status(401);
+            return { error: 'Invalid or missing OPS_TOKEN' };
+        }
+
+        try {
+            const { refreshSimulatedActivity } = await import('../db/refresh-activity.js');
+            const result = await refreshSimulatedActivity();
+            return {
+                success: true,
+                ...result,
+            };
+        } catch (err: any) {
+            reply.status(500);
+            return {
+                success: false,
+                error: err.message,
+            };
+        }
+    });
 };
 export default opsRoutes;

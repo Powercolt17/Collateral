@@ -105,8 +105,6 @@ export function renderLanding() {
                 .lp-step:last-child{border-bottom:none}
                 .lp-trust{grid-template-columns:1fr}
                 .lp-bot-h{font-size:26px}
-                .lp-stick{display:block}
-                .lp-foot{padding-bottom:80px}
                 .lp-tick{display:none!important}
                 .lp-proof-h{font-size:19px}
             }

@@ -50,7 +50,8 @@ async function run() {
 
     // Show total count
     const total = await db.execute(sql`SELECT COUNT(*) as count FROM creator_referrals`);
-    console.log(`[Seed] Total creators in DB: ${(total.rows || total)[0]?.count}`);
+    const rows = Array.isArray(total) ? total : (total as any).rows ?? [];
+    console.log(`[Seed] Total creators in DB: ${rows[0]?.count}`);
 
     process.exit(0);
 }

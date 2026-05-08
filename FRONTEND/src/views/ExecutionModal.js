@@ -463,8 +463,10 @@ async function runExecution(contractData, stake, multiplier, btnEl, bodyEl) {
             await window.api.executeContract(realContractId);
         }
 
-        // X Pixel — Create Contract conversion
+        // Conversion tracking — Contract Execution
         if (typeof twq === 'function') twq('event', 'tw-rbwqr-rbx5u', {});
+        if (typeof gtag === 'function') gtag('event', 'conversion', { send_to: 'AW-18147195908/contract_executed', value: stake, currency: 'USD' });
+        if (typeof fbq === 'function') fbq('track', 'Purchase', { value: stake, currency: 'USD' });
 
         showSuccess(bodyEl, stake, multiplier, realContractId || id);
 

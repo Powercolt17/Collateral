@@ -1146,10 +1146,10 @@ export async function initFunding() {
             closeModal(addFundsModal);
             await loadBillingStatus();
 
-            // X (Twitter) Pixel — track successful funding/purchase conversion
-            if (typeof twq === 'function') {
-                twq('event', 'tw-rbwqr-rbx5z', {});
-            }
+            // Conversion tracking — Capital Deposited
+            if (typeof twq === 'function') twq('event', 'tw-rbwqr-rbx5z', {});
+            if (typeof gtag === 'function') gtag('event', 'conversion', { send_to: 'AW-18147195908/funds_deposited', value: amount, currency: 'USD' });
+            if (typeof fbq === 'function') fbq('track', 'AddPaymentInfo');
 
             showSuccessModal(amount);
         } catch (err) {

@@ -493,11 +493,11 @@ window.app = {
 
                 console.log('[Auth] ✅ Signed up as:', appState.displayName);
 
-                // X (Twitter) Pixel — track signup conversion
-                if (typeof twq === 'function') {
-                    twq('event', 'tw-rbwqr-rbx5x', {});
-                    if (window.trackEvent) window.trackEvent('sign_up', { method: 'email' });
-                }
+                // Conversion tracking — Signup
+                if (typeof twq === 'function') twq('event', 'tw-rbwqr-rbx5x', {});
+                if (window.trackEvent) window.trackEvent('sign_up', { method: 'email' });
+                if (typeof gtag === 'function') gtag('event', 'conversion', { send_to: 'AW-18147195908/signup' });
+                if (typeof fbq === 'function') fbq('track', 'CompleteRegistration');
 
                 window.app.closeAccessModal();
                 updateAuthUI();

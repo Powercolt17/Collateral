@@ -212,6 +212,14 @@ export function initLanding() {
 
     if(window.trackEvent) window.trackEvent('go_page_view',{source:utm.utm_source||'direct',campaign:utm.utm_campaign||'none',medium:utm.utm_medium||'none'});
 
+    // Auto-open signup modal for unauthenticated visitors from ads
+    if (!window.appState?.isLoggedIn) {
+        sessionStorage.setItem('collateral_go_flow', '1');
+        setTimeout(() => {
+            if (window.app?.openAccessModal) window.app.openAccessModal();
+        }, 600);
+    }
+
     document.getElementById('lp-hero-cta')?.addEventListener('click',()=>{if(window.trackEvent)window.trackEvent('hero_create_contract_click',utm)});
     document.getElementById('lp-see-ex')?.addEventListener('click',()=>{if(window.trackEvent)window.trackEvent('hero_see_examples_click')});
     document.getElementById('lp-mid-cta')?.addEventListener('click',()=>{if(window.trackEvent)window.trackEvent('midpage_create_contract_click',{button_location:'midpage',...utm})});

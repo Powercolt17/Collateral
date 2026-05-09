@@ -503,8 +503,11 @@ window.app = {
                 window.app.closeAccessModal();
                 updateAuthUI();
 
-                // Redirect new signups to onboarding wizard
-                if (shouldShowOnboarding()) {
+                // If user came from /go ad flow, send straight to funding
+                if (sessionStorage.getItem('collateral_go_flow') === '1') {
+                    sessionStorage.removeItem('collateral_go_flow');
+                    window.router.navigate('/funding');
+                } else if (shouldShowOnboarding()) {
                     window.router.navigate('/welcome');
                 }
             } catch (err) {
@@ -531,6 +534,12 @@ window.app = {
                 console.log('[Auth] ✅ Signed in as:', appState.displayName);
                 window.app.closeAccessModal();
                 updateAuthUI();
+
+                // If user came from /go ad flow, send to funding
+                if (sessionStorage.getItem('collateral_go_flow') === '1') {
+                    sessionStorage.removeItem('collateral_go_flow');
+                    window.router.navigate('/funding');
+                }
             } catch (err) {
                 window.app._showAuthError(err.message || 'Invalid email or password.');
             } finally {

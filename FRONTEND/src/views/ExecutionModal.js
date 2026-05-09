@@ -393,6 +393,9 @@ export function openExecutionModal(contractData) {
     renderBody();
     modal.classList.add('open');
 
+    // TikTok funnel — AddToCart (user opened execution modal)
+    if (typeof ttq !== 'undefined') ttq.track('AddToCart', { content_id: id, content_name: title || goal });
+
     // Fetch referral bonus asynchronously and re-render if available
     if (window.api && window.api.getReferralStats && window.appState?.isLoggedIn) {
         window.api.getReferralStats().then(stats => {
@@ -435,6 +438,9 @@ async function runExecution(contractData, stake, multiplier, btnEl, bodyEl) {
     btnEl.classList.add('executing');
     btnEl.innerHTML = '<span style="display:inline-flex;align-items:center;gap:8px;"><span style="width:12px;height:12px;border:2px solid rgba(255,255,255,0.25);border-top-color:#fff;border-radius:50%;animation:exec-spin 0.7s linear infinite;display:inline-block;"></span>Processing</span>';
 
+    // TikTok funnel — InitiateCheckout
+    if (typeof ttq !== 'undefined') ttq.track('InitiateCheckout', { value: stake, currency: 'USD' });
+
     const errorEl = bodyEl.querySelector('#exec-error-msg');
 
     try {
@@ -467,7 +473,7 @@ async function runExecution(contractData, stake, multiplier, btnEl, bodyEl) {
         if (typeof twq === 'function') twq('event', 'tw-rbwqr-rbx5u', {});
         if (typeof gtag === 'function') gtag('event', 'conversion', { send_to: 'AW-18147195908/contract_executed', value: stake, currency: 'USD' });
         if (typeof fbq === 'function') fbq('track', 'Purchase', { value: stake, currency: 'USD' });
-        if (typeof ttq !== 'undefined') ttq.track('PlaceAnOrder', { value: stake, currency: 'USD' });
+        if (typeof ttq !== 'undefined') ttq.track('CompletePayment', { value: stake, currency: 'USD' });
 
         showSuccess(bodyEl, stake, multiplier, realContractId || id);
 

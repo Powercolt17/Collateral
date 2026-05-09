@@ -602,6 +602,9 @@ export async function initTermSheet(params) {
         loadingEl.style.display = 'none';
         contentEl.style.display = 'block';
 
+        // TikTok funnel — ViewContent
+        if (typeof ttq !== 'undefined') ttq.track('ViewContent', { content_id: templateId, content_name: template.title || 'Contract' });
+
     } catch (err) {
         console.error('[Execution] Error:', err);
         loadingEl.style.display = 'none';

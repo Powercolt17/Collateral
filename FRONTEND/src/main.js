@@ -503,10 +503,9 @@ window.app = {
                 window.app.closeAccessModal();
                 updateAuthUI();
 
-                // If user came from /go ad flow, send straight to funding
+                // If user came from /go ad flow, stay on page — CTAs will route to /funding
                 if (sessionStorage.getItem('collateral_go_flow') === '1') {
-                    sessionStorage.removeItem('collateral_go_flow');
-                    window.router.navigate('/funding');
+                    // Stay on /go — don't redirect, let them browse contracts
                 } else if (shouldShowOnboarding()) {
                     window.router.navigate('/welcome');
                 }
@@ -535,10 +534,9 @@ window.app = {
                 window.app.closeAccessModal();
                 updateAuthUI();
 
-                // If user came from /go ad flow, send to funding
+                // If user came from /go ad flow, stay on page — CTAs will route to /funding
                 if (sessionStorage.getItem('collateral_go_flow') === '1') {
-                    sessionStorage.removeItem('collateral_go_flow');
-                    window.router.navigate('/funding');
+                    // Stay on /go — let them browse
                 }
             } catch (err) {
                 window.app._showAuthError(err.message || 'Invalid email or password.');

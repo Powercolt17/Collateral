@@ -220,10 +220,33 @@ export function initLanding() {
         }, 600);
     }
 
-    document.getElementById('lp-hero-cta')?.addEventListener('click',()=>{if(window.trackEvent)window.trackEvent('hero_create_contract_click',utm)});
-    document.getElementById('lp-see-ex')?.addEventListener('click',()=>{if(window.trackEvent)window.trackEvent('hero_see_examples_click')});
-    document.getElementById('lp-mid-cta')?.addEventListener('click',()=>{if(window.trackEvent)window.trackEvent('midpage_create_contract_click',{button_location:'midpage',...utm})});
-    document.getElementById('lp-final-cta')?.addEventListener('click',()=>{if(window.trackEvent)window.trackEvent('final_create_contract_click',{button_location:'footer',...utm})});
+    // Helper: if signed in, go to /funding. If not, open signup modal.
+    function goAction() {
+        if (window.appState?.isLoggedIn) {
+            sessionStorage.removeItem('collateral_go_flow');
+            window.router.navigate('/funding');
+        } else {
+            window.app.openAccessModal();
+        }
+    }
+
+    // Rewire all CTA buttons to use goAction
+    document.getElementById('lp-hero-cta')?.addEventListener('click',(e)=>{e.preventDefault();e.stopPropagation();goAction();if(window.trackEvent)window.trackEvent('hero_create_contract_click',utm)});
+    document.getElementById('lp-final-cta')?.addEventListener('click',(e)=>{e.preventDefault();e.stopPropagation();goAction();if(window.trackEvent)window.trackEvent('final_create_contract_click',{button_location:'footer',...utm})});
+
+    // Rewire all card clicks and card buttons
+    document.querySelectorAll('.lp-card').forEach(card => {
+        card.onclick = (e) => { goAction(); if(window.trackEvent)window.trackEvent('example_card_click',{card_type:card.dataset.card}); };
+    });
+    document.querySelectorAll('.c-btn').forEach(btn => {
+        btn.onclick = (e) => { e.stopPropagation(); goAction(); if(window.trackEvent)window.trackEvent('example_start_contract_click',{button_location:'card'}); };
+    });
+
+    // Rewire "How It Works" step clicks
+    document.querySelectorAll('.lp-step').forEach(step => { step.onclick = () => goAction(); });
+
+    // Rewire sticky bar and bottom CTA
+    document.querySelector('.lp-stick button')?.addEventListener('click',(e)=>{e.preventDefault();goAction()});
 
     document.querySelectorAll('.fq').forEach(item=>{
         item.querySelector('.fq-q')?.addEventListener('click',()=>{

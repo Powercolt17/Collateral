@@ -688,8 +688,8 @@ export async function initRivalryDetail(params) {
         const targetPct = parseFloat(r.targetGrowthPct || r.rivalry?.targetGrowthPct || 15);
         const challBaseline = parseFloat(challPart?.baselineValue || 0);
         const oppBaseline = parseFloat(oppPart?.baselineValue || 0);
-        const challGrowth = parseFloat(challPart?.percentageDelta || challPart?.percentage_delta || challPart?.growthPercent || 0);
-        const oppGrowth = parseFloat(oppPart?.percentageDelta || oppPart?.percentage_delta || oppPart?.growthPercent || 0);
+        const challGrowth = Math.max(0, parseFloat(challPart?.percentageDelta || challPart?.percentage_delta || challPart?.growthPercent || 0));
+        const oppGrowth = Math.max(0, parseFloat(oppPart?.percentageDelta || oppPart?.percentage_delta || oppPart?.growthPercent || 0));
         const challCurrentValue = challBaseline > 0 ? Math.round(challBaseline * (1 + challGrowth / 100)) : 0;
         const oppCurrentValue = oppBaseline > 0 ? Math.round(oppBaseline * (1 + oppGrowth / 100)) : 0;
         const challTargetValue = challBaseline > 0 ? Math.round(challBaseline * (1 + targetPct / 100)) : 0;
@@ -1177,10 +1177,10 @@ export async function initRivalryDetail(params) {
             const ts = new Date(m.fetchedAt || m.fetched_at);
             if (m.userId === challUserId || m.user_id === challUserId) {
                 if (challBaseline === null) challBaseline = val;
-                challPoints.push({ t: ts, v: val, pct: challBaseline ? ((val - challBaseline) / challBaseline) * 100 : 0 });
+                challPoints.push({ t: ts, v: val, pct: challBaseline ? Math.max(0, ((val - challBaseline) / challBaseline) * 100) : 0 });
             } else if (m.userId === oppUserId || m.user_id === oppUserId) {
                 if (oppBaseline === null) oppBaseline = val;
-                oppPoints.push({ t: ts, v: val, pct: oppBaseline ? ((val - oppBaseline) / oppBaseline) * 100 : 0 });
+                oppPoints.push({ t: ts, v: val, pct: oppBaseline ? Math.max(0, ((val - oppBaseline) / oppBaseline) * 100) : 0 });
             }
         });
 
@@ -1190,8 +1190,8 @@ export async function initRivalryDetail(params) {
 
         // If no time-series data, show race-to-target visualization using available baseline data
         if (challPoints.length === 0 && oppPoints.length === 0) {
-            const challGrowth = parseFloat(document.querySelector('#rvd-metric-chall .rvd-chart-metric-change')?.textContent || '0');
-            const oppGrowth = parseFloat(document.querySelector('#rvd-metric-opp .rvd-chart-metric-change')?.textContent || '0');
+            const challGrowth = Math.max(0, parseFloat(document.querySelector('#rvd-metric-chall .rvd-chart-metric-change')?.textContent || '0'));
+            const oppGrowth = Math.max(0, parseFloat(document.querySelector('#rvd-metric-opp .rvd-chart-metric-change')?.textContent || '0'));
             
             const W = 900, H = 320, PAD_L = 50, PAD_R = 80, PAD_T = 30, PAD_B = 30;
             const plotW = W - PAD_L - PAD_R;
@@ -1288,7 +1288,7 @@ export async function initRivalryDetail(params) {
 
         // Combine all pct values for scale
         const allPcts = [...challPoints.map(p => p.pct), ...oppPoints.map(p => p.pct), 0, targetPct];
-        const minPct = Math.min(...allPcts) - 2;
+        const minPct = Math.max(0, Math.min(...allPcts) - 1);
         const maxPct = Math.max(...allPcts) + 2;
         const range = maxPct - minPct || 1;
 

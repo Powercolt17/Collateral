@@ -498,6 +498,7 @@ window.app = {
                 if (window.trackEvent) window.trackEvent('sign_up', { method: 'email' });
                 if (typeof gtag === 'function') gtag('event', 'conversion', { send_to: 'AW-18147195908/signup' });
                 if (typeof fbq === 'function') fbq('track', 'CompleteRegistration');
+                if (typeof ttq !== 'undefined') ttq.track('CompleteRegistration');
 
                 window.app.closeAccessModal();
                 updateAuthUI();

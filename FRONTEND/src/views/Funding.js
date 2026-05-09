@@ -1150,6 +1150,7 @@ export async function initFunding() {
             if (typeof twq === 'function') twq('event', 'tw-rbwqr-rbx5z', {});
             if (typeof gtag === 'function') gtag('event', 'conversion', { send_to: 'AW-18147195908/funds_deposited', value: amount, currency: 'USD' });
             if (typeof fbq === 'function') fbq('track', 'AddPaymentInfo');
+            if (typeof ttq !== 'undefined') ttq.track('AddPaymentInfo');
 
             showSuccessModal(amount);
         } catch (err) {

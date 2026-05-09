@@ -96,17 +96,21 @@ export function renderLanding() {
             @media(max-width:768px){
                 .lp-hero{padding:28px 20px 24px}
                 .lp-h1{font-size:32px;letter-spacing:-1px}
-                .lp-sub{font-size:15px;margin-bottom:24px}
+                .lp-sub{font-size:14px;margin-bottom:20px}
                 .lp-ctas{flex-direction:column;align-items:stretch}
                 .lp-btn-p,.lp-btn-s{width:100%;text-align:center}
                 .lp-cards{grid-template-columns:1fr}
                 .lp-steps{grid-template-columns:repeat(2,1fr);gap:0}
                 .lp-step{border-right:none;border-bottom:1px solid #f0f0f0}
                 .lp-step:last-child{border-bottom:none}
+                .s-desc{display:none}
+                .s-num{font-size:28px;margin-bottom:8px}
+                .lp-step{padding:20px 16px}
                 .lp-trust{grid-template-columns:1fr}
                 .lp-bot-h{font-size:26px}
                 .lp-tick{display:none!important}
-                .lp-proof-h{font-size:19px}
+                .lp-mid{padding:28px 24px}
+                .lp-how{padding:48px 24px}
             }
         </style>
         <div class="lp">
@@ -114,11 +118,11 @@ export function renderLanding() {
 
             <div class="lp-hero">
                 <h1 class="lp-h1">Pick a target.<br><strong>Put money behind it.</strong></h1>
-                <p class="lp-sub">Hit the target and get paid. Miss it and lose the contract. Collateral verifies the result automatically through Stripe, X, Shopify, and Amazon.</p>
+                <p class="lp-sub">Hit your target, get paid. Miss it, lose the money. Results verified automatically.</p>
                 <div class="lp-ctas">
-                    <button class="lp-btn-p" id="lp-hero-cta" onclick="window.app.openAccessModal()">Create Your First Contract</button>
+                    <button class="lp-btn-p" id="lp-hero-cta" onclick="window.app.openAccessModal()">Get Started Free</button>
                 </div>
-                <div class="lp-tl">Free to sign up. Lock capital only when you're ready.</div>
+                <div class="lp-tl">No cost to sign up. Lock money only when you're ready.</div>
             </div>
 
             <div class="lp-ex lp-fade" id="lp-ex">
@@ -131,7 +135,7 @@ export function renderLanding() {
                             <div class="c-row"><span class="c-lbl">Target</span><span class="c-val">Grow revenue by 20%</span></div>
                             <div class="c-row"><span class="c-lbl">Deadline</span><span class="c-val">30 days</span></div>
                             <div class="c-row"><span class="c-lbl">Lock</span><span class="c-val">$250 – $5,000</span></div>
-                            <div class="c-row"><span class="c-lbl">Potential payout</span><span class="c-val grn">Up to 2.5x</span></div>
+                            <div class="c-row"><span class="c-lbl">Payout</span><span class="c-val grn">Up to 2.5x</span></div>
                         </div>
                         <button class="c-btn" onclick="event.stopPropagation();window.app.openAccessModal();if(window.trackEvent)window.trackEvent('example_start_contract_click',{card_type:'stripe',button_location:'card'})">Start This Contract →</button>
                     </div>
@@ -142,7 +146,7 @@ export function renderLanding() {
                             <div class="c-row"><span class="c-lbl">Target</span><span class="c-val">Gain 1,000 followers</span></div>
                             <div class="c-row"><span class="c-lbl">Deadline</span><span class="c-val">14 days</span></div>
                             <div class="c-row"><span class="c-lbl">Lock</span><span class="c-val">$100 – $2,500</span></div>
-                            <div class="c-row"><span class="c-lbl">Potential payout</span><span class="c-val grn">Up to 4x</span></div>
+                            <div class="c-row"><span class="c-lbl">Payout</span><span class="c-val grn">Up to 4x</span></div>
                         </div>
                         <button class="c-btn" onclick="event.stopPropagation();window.app.openAccessModal();if(window.trackEvent)window.trackEvent('example_start_contract_click',{card_type:'x',button_location:'card'})">Start This Contract →</button>
                     </div>
@@ -153,65 +157,48 @@ export function renderLanding() {
                             <div class="c-row"><span class="c-lbl">Target</span><span class="c-val">Hit $5,000 in sales</span></div>
                             <div class="c-row"><span class="c-lbl">Deadline</span><span class="c-val">30 days</span></div>
                             <div class="c-row"><span class="c-lbl">Lock</span><span class="c-val">$250 – $3,000</span></div>
-                            <div class="c-row"><span class="c-lbl">Potential payout</span><span class="c-val grn">Up to 2.5x</span></div>
+                            <div class="c-row"><span class="c-lbl">Payout</span><span class="c-val grn">Up to 2.5x</span></div>
                         </div>
                         <button class="c-btn" onclick="event.stopPropagation();window.app.openAccessModal();if(window.trackEvent)window.trackEvent('example_start_contract_click',{card_type:'shopify',button_location:'card'})">Start This Contract →</button>
                     </div>
                 </div>
             </div>
 
-            <div class="lp-mid lp-fade">
-                <div class="lp-mid-t">Start free. Lock money only when you're ready.</div>
-                <button class="lp-btn-p" id="lp-mid-cta" onclick="window.app.openAccessModal()">Create Your First Contract →</button>
-            </div>
-
             <div class="lp-how lp-fade">
                 <div class="lp-how-in">
                     <div class="lp-how-tag">How It Works</div>
                     <div class="lp-steps">
-                        <div class="lp-step" onclick="window.app.openAccessModal()"><div class="s-num">01</div><div class="s-title">Pick a target</div><div class="s-desc">Choose a real number to hit: revenue, followers, sales, or orders.</div></div>
-                        <div class="lp-step" onclick="window.app.openAccessModal()"><div class="s-num">02</div><div class="s-title">Lock money</div><div class="s-desc">Put $25 to $25,000 behind the target.</div></div>
-                        <div class="lp-step" onclick="window.app.openAccessModal()"><div class="s-num">03</div><div class="s-title">Connect source</div><div class="s-desc">Link Stripe, X, Shopify, or Amazon so the result can be verified.</div></div>
-                        <div class="lp-step" onclick="window.app.openAccessModal()"><div class="s-num">04</div><div class="s-title">Get paid or lose it</div><div class="s-desc">Hit the target and collect the payout. Miss it and lose the contract.</div></div>
+                        <div class="lp-step" onclick="window.app.openAccessModal()"><div class="s-num">01</div><div class="s-title">Pick a target</div><div class="s-desc">Revenue, followers, sales, or orders.</div></div>
+                        <div class="lp-step" onclick="window.app.openAccessModal()"><div class="s-num">02</div><div class="s-title">Lock money</div><div class="s-desc">$25 to $25,000 behind the target.</div></div>
+                        <div class="lp-step" onclick="window.app.openAccessModal()"><div class="s-num">03</div><div class="s-title">Connect source</div><div class="s-desc">Link Stripe, X, Shopify, or Amazon.</div></div>
+                        <div class="lp-step" onclick="window.app.openAccessModal()"><div class="s-num">04</div><div class="s-title">Get paid or lose it</div><div class="s-desc">Hit it → collect. Miss it → forfeit.</div></div>
                     </div>
                 </div>
             </div>
 
-            <div class="lp-clarity lp-fade">
-                <div class="lp-clarity-text">No screenshots. No manual claims. No fake progress. Results are checked automatically through connected accounts.</div>
-            </div>
-
             <div class="lp-trust lp-fade">
-                <div class="lp-tb"><div class="lp-tb-h">No screenshots. No manual claims.</div><div class="lp-tb-p">Collateral checks connected accounts automatically. The result is based on real data, not trust.</div></div>
-                <div class="lp-tb"><div class="lp-tb-h">You stay in control.</div><div class="lp-tb-p">Signing up is free. You only lock money when you choose a contract.</div></div>
-            </div>
-
-            <div class="lp-proof lp-fade">
-                <div class="lp-proof-h">Built for people who are done negotiating with themselves.</div>
-                <div class="lp-proof-p">If the target matters, make the deadline real. Collateral turns vague ambition into a contract with money attached.</div>
+                <div class="lp-tb"><div class="lp-tb-h">Verified automatically.</div><div class="lp-tb-p">No screenshots. No manual claims. Connected accounts are checked directly.</div></div>
+                <div class="lp-tb"><div class="lp-tb-h">Free to start.</div><div class="lp-tb-p">Sign up costs nothing. You only lock money when you choose a contract.</div></div>
             </div>
 
             <div class="lp-faq lp-fade">
                 <div class="lp-faq-tag">Questions</div>
-                <div class="fq open"><div class="fq-q">What happens if I miss my target?</div><div class="fq-a">You lose the contract. That is the point: the deadline has real consequences.</div></div>
-                <div class="fq"><div class="fq-q">Do I have to pay to sign up?</div><div class="fq-a">No. Creating an account is free. You only lock money when you choose a contract.</div></div>
-                <div class="fq"><div class="fq-q">How are results verified?</div><div class="fq-a">Collateral checks connected accounts like Stripe, X, Shopify, and Amazon automatically. No screenshots or manual proof.</div></div>
-                <div class="fq"><div class="fq-q">What is the minimum to start?</div><div class="fq-a">You can start with $25 on supported contracts.</div></div>
-                <div class="fq"><div class="fq-q">What sources can I connect?</div><div class="fq-a">Stripe, X, Shopify, and Amazon are supported or planned verification sources depending on the contract type.</div></div>
+                <div class="fq open"><div class="fq-q">What happens if I miss my target?</div><div class="fq-a">You lose the money you locked. That's the point.</div></div>
+                <div class="fq"><div class="fq-q">Do I have to pay to sign up?</div><div class="fq-a">No. Signing up is free. You only lock money when you pick a contract.</div></div>
+                <div class="fq"><div class="fq-q">How are results verified?</div><div class="fq-a">Collateral checks your connected accounts (Stripe, X, Shopify, Amazon) automatically.</div></div>
             </div>
 
             <div class="lp-bot">
                 <div class="lp-bot-h">Stop planning.<br>Start proving.</div>
-                <div class="lp-bot-sub">Create a free account. Lock capital only when you're ready.</div>
-                <div class="lp-bot-trust">Free account. Real deadline. Verified result.</div>
-                <button class="lp-bot-btn" id="lp-final-cta" onclick="window.app.openAccessModal()">Create Your First Contract →</button>
+                <div class="lp-bot-trust">Free account · Real deadline · Verified result</div>
+                <button class="lp-bot-btn" id="lp-final-cta" onclick="window.app.openAccessModal()">Get Started Free →</button>
                 <div class="lp-bot-foot">
-                    Collateral turns measurable goals into contracts with real stakes.
+                    Collateral turns goals into contracts with real stakes.
                     <div class="lp-bot-copy">Collateral.market · © 2026</div>
                 </div>
             </div>
 
-            <div class="lp-stick"><button onclick="window.app.openAccessModal()">Create Your First Contract →</button></div>
+            <div class="lp-stick"><button onclick="window.app.openAccessModal()">Get Started Free →</button></div>
             <div class="lp-tick" id="lp-tick"><span class="tk-dot"></span><span id="tk-t"></span><span class="tk-time" id="tk-d"></span></div>
         </div>
     `;

@@ -214,7 +214,6 @@ export function initLanding() {
 
     // Auto-open signup modal for unauthenticated visitors from ads
     if (!window.appState?.isLoggedIn) {
-        sessionStorage.setItem('collateral_go_flow', '1');
         setTimeout(() => {
             if (window.app?.openAccessModal) window.app.openAccessModal();
         }, 600);

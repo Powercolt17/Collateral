@@ -356,6 +356,13 @@ setTimeout(() => {
     setTimeout(() => { if (ls) ls.remove(); }, 600);
 }, 600);
 
+// Helper: check if user is currently on /go landing page
+function _isOnGoPage() {
+    const h = window.location.hash || '';
+    const p = window.location.pathname || '';
+    return h === '#/go' || h.startsWith('#/go?') || p === '/go' || p.startsWith('/go?');
+}
+
 // App methods exposed globally
 window.app = {
     openAccessModal: function () {
@@ -503,11 +510,9 @@ window.app = {
                 window.app.closeAccessModal();
                 updateAuthUI();
 
-                // If user came from /go ad flow, stay on page — CTAs will route to /funding
-                if (sessionStorage.getItem('collateral_go_flow') === '1') {
-                    // Stay on /go — don't redirect, let them browse contracts
-                } else if (shouldShowOnboarding()) {
-                    window.router.navigate('/welcome');
+                // If on /go page, stay there. Otherwise normal onboarding.
+                if (!_isOnGoPage()) {
+                    if (shouldShowOnboarding()) window.router.navigate('/welcome');
                 }
             } catch (err) {
                 window.app._showAuthError(err.message || 'Account creation failed.');
@@ -534,10 +539,8 @@ window.app = {
                 window.app.closeAccessModal();
                 updateAuthUI();
 
-                // If user came from /go ad flow, stay on page — CTAs will route to /funding
-                if (sessionStorage.getItem('collateral_go_flow') === '1') {
-                    // Stay on /go — let them browse
-                }
+                // If on /go page, stay there
+                // (otherwise user is already on whatever page they were on)
             } catch (err) {
                 window.app._showAuthError(err.message || 'Invalid email or password.');
             } finally {
@@ -572,18 +575,21 @@ window.app = {
             const refInput = document.getElementById('auth-referral-code')?.value?.trim();
             if (refInput) api.setReferralCode(refInput);
             window.app.closeAccessModal();
+            const _goFlow = _isOnGoPage();
+            if (_goFlow) sessionStorage.setItem('collateral_go_flow', '1');
             // If Clerk already has a session, exchange it directly
             if (window.Clerk.session) {
                 console.log('[Auth] Clerk session exists, exchanging token...');
                 await window.app._exchangeClerkToken();
                 updateAuthUI();
-                window.router.navigate(sessionStorage.getItem('collateral_go_flow') === '1' ? '/go' : '/overview');
+                window.router.navigate(_goFlow ? '/go' : '/overview');
+                sessionStorage.removeItem('collateral_go_flow');
                 return;
             }
             await window.Clerk.client.signIn.authenticateWithRedirect({
                 strategy: 'oauth_google',
                 redirectUrl: window.location.origin + '/sso-callback',
-                redirectUrlComplete: window.location.origin + (sessionStorage.getItem('collateral_go_flow') === '1' ? '/go' : '/overview'),
+                redirectUrlComplete: window.location.origin + (_goFlow ? '/go' : '/overview'),
             });
         } catch (err) {
             console.error('[Auth] Google sign-in failed:', err);
@@ -595,7 +601,7 @@ window.app = {
                     await window.Clerk.client.signIn.authenticateWithRedirect({
                         strategy: 'oauth_google',
                         redirectUrl: window.location.origin + '/sso-callback',
-                        redirectUrlComplete: window.location.origin + (sessionStorage.getItem('collateral_go_flow') === '1' ? '/go' : '/overview'),
+                        redirectUrlComplete: window.location.origin + (_goFlow ? '/go' : '/overview'),
                     });
                 } catch (retryErr) {
                     console.error('[Auth] Google retry also failed:', retryErr);
@@ -610,18 +616,21 @@ window.app = {
             if (!window.Clerk) { showAlert('OAuth not available. Please use email/password or refresh.', { type: 'warning', title: 'OAuth Unavailable' }); return; }
             console.log('[Auth] Starting Apple OAuth via Clerk...');
             window.app.closeAccessModal();
+            const _goFlow = _isOnGoPage();
+            if (_goFlow) sessionStorage.setItem('collateral_go_flow', '1');
             // If Clerk already has a session, exchange it directly
             if (window.Clerk.session) {
                 console.log('[Auth] Clerk session exists, exchanging token...');
                 await window.app._exchangeClerkToken();
                 updateAuthUI();
-                window.router.navigate(sessionStorage.getItem('collateral_go_flow') === '1' ? '/go' : '/overview');
+                window.router.navigate(_goFlow ? '/go' : '/overview');
+                sessionStorage.removeItem('collateral_go_flow');
                 return;
             }
             await window.Clerk.client.signIn.authenticateWithRedirect({
                 strategy: 'oauth_apple',
                 redirectUrl: window.location.origin + '/sso-callback',
-                redirectUrlComplete: window.location.origin + (sessionStorage.getItem('collateral_go_flow') === '1' ? '/go' : '/overview'),
+                redirectUrlComplete: window.location.origin + (_goFlow ? '/go' : '/overview'),
             });
         } catch (err) {
             console.error('[Auth] Apple sign-in failed:', err);
@@ -633,7 +642,7 @@ window.app = {
                     await window.Clerk.client.signIn.authenticateWithRedirect({
                         strategy: 'oauth_apple',
                         redirectUrl: window.location.origin + '/sso-callback',
-                        redirectUrlComplete: window.location.origin + (sessionStorage.getItem('collateral_go_flow') === '1' ? '/go' : '/overview'),
+                        redirectUrlComplete: window.location.origin + (_goFlow ? '/go' : '/overview'),
                     });
                 } catch (retryErr) {
                     console.error('[Auth] Apple retry also failed:', retryErr);
@@ -654,8 +663,12 @@ window.app = {
                     await new Promise(r => setTimeout(r, 200));
                     attempts++;
                 }
-                if (!window.Clerk) { console.error('[Auth] Clerk never loaded'); window.router.navigate(sessionStorage.getItem('collateral_go_flow') === '1' ? '/go' : '/overview'); return; }
+                if (!window.Clerk) { console.error('[Auth] Clerk never loaded'); window.router.navigate('/overview'); return; }
             }
+
+            // Read and clear go_flow flag ONCE
+            const wasGoFlow = sessionStorage.getItem('collateral_go_flow') === '1';
+            sessionStorage.removeItem('collateral_go_flow');
 
             console.log('[Auth] Processing SSO callback...');
             await window.Clerk.handleRedirectCallback();
@@ -666,10 +679,11 @@ window.app = {
             } else {
                 console.log('[Auth] No session after SSO callback');
             }
-            window.router.navigate(sessionStorage.getItem('collateral_go_flow') === '1' ? '/go' : '/overview');
+            window.router.navigate(wasGoFlow ? '/go' : '/overview');
         } catch (err) {
             console.error('[Auth] SSO callback failed:', err);
-            window.router.navigate(sessionStorage.getItem('collateral_go_flow') === '1' ? '/go' : '/overview');
+            sessionStorage.removeItem('collateral_go_flow');
+            window.router.navigate('/overview');
         }
     },
     _exchangeClerkToken: async function () {

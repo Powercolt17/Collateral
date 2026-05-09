@@ -1125,12 +1125,12 @@ export async function initRivalry() {
             isOpen: !r.opponentUserId || r.opponentUsername === 'unknown' || !r.opponentUsername,
             challenger: {
                 name: '@' + (r.challengerUsername || 'unknown'),
-                growth: parseFloat(challPart?.percentageDelta || challPart?.percentage_delta || challPart?.growthPercent || challPart?.currentDelta || 0),
+                growth: Math.max(0, parseFloat(challPart?.percentageDelta || challPart?.percentage_delta || challPart?.growthPercent || challPart?.currentDelta || 0)),
                 baseline: parseFloat(challPart?.baselineValue || 0),
             },
             opponent: {
                 name: r.opponentUserId ? ('@' + (r.opponentUsername || 'unknown')) : 'OPEN OPPONENT',
-                growth: parseFloat(oppPart?.percentageDelta || oppPart?.percentage_delta || oppPart?.growthPercent || oppPart?.currentDelta || 0),
+                growth: Math.max(0, parseFloat(oppPart?.percentageDelta || oppPart?.percentage_delta || oppPart?.growthPercent || oppPart?.currentDelta || 0)),
                 baseline: parseFloat(oppPart?.baselineValue || 0),
             },
             stake: (r.stakePerSideCents || 0) / 100,

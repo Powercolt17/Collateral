@@ -688,8 +688,10 @@ export async function initRivalryDetail(params) {
         const targetPct = parseFloat(r.targetGrowthPct || r.rivalry?.targetGrowthPct || 15);
         const challBaseline = parseFloat(challPart?.baselineValue || 0);
         const oppBaseline = parseFloat(oppPart?.baselineValue || 0);
-        const challGrowth = Math.max(0, parseFloat(challPart?.percentageDelta || challPart?.percentage_delta || challPart?.growthPercent || 0));
-        const oppGrowth = Math.max(0, parseFloat(oppPart?.percentageDelta || oppPart?.percentage_delta || oppPart?.growthPercent || 0));
+        const challGrowthRaw = parseFloat(challPart?.percentageDelta || challPart?.percentage_delta || challPart?.growthPercent || 0);
+        const oppGrowthRaw = parseFloat(oppPart?.percentageDelta || oppPart?.percentage_delta || oppPart?.growthPercent || 0);
+        const challGrowth = challGrowthRaw < 0 ? 0 : challGrowthRaw;
+        const oppGrowth = oppGrowthRaw < 0 ? 0 : oppGrowthRaw;
         const challCurrentValue = challBaseline > 0 ? Math.round(challBaseline * (1 + challGrowth / 100)) : 0;
         const oppCurrentValue = oppBaseline > 0 ? Math.round(oppBaseline * (1 + oppGrowth / 100)) : 0;
         const challTargetValue = challBaseline > 0 ? Math.round(challBaseline * (1 + targetPct / 100)) : 0;

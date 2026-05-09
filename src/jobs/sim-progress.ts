@@ -69,7 +69,9 @@ function calculateTargetGrowthAtTime(
         // Small momentum bursts (viral moments / ad pushes)
         const burst = r3 > 0.92 ? targetPct * 0.02 : 0;
         
-        return Math.max(0, (basePct + noise + burst) * engagementMod);
+        const raw = Math.max(0, (basePct + noise + burst) * engagementMod);
+        // Minimum floor: once time has elapsed, always show at least small growth
+        return t > 0.01 ? Math.max(0.1 + r1 * 0.3, raw) : raw;
     } else {
         // Losers: Start growing but plateau or stall
         const peakRatio = 0.4 + r1 * 0.25; // Plateau at 40-65% of target
@@ -83,9 +85,11 @@ function calculateTargetGrowthAtTime(
         const noise = (r2 - 0.5) * targetPct * 0.05;
         
         // Occasional dips (stalled growth, unfollows, refunds)
-        const dip = r3 < 0.2 ? -(targetPct * 0.025) : 0;
+        const dip = r3 < 0.2 ? -(targetPct * 0.015) : 0;
         
-        return Math.max(0, (basePct + noise + dip) * engagementMod);
+        const raw = Math.max(0, (basePct + noise + dip) * engagementMod);
+        // Minimum floor: losers also always show some positive movement
+        return t > 0.01 ? Math.max(0.05 + r1 * 0.2, raw) : raw;
     }
 }
 

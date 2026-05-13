@@ -180,8 +180,26 @@ async function keepSimRivalriesAlive(): Promise<number> {
                 const daysElapsed = Math.floor((now.getTime() - newActivatedAt.getTime()) / 86400000);
                 
                 for (const part of partRows) {
-                    const baseline = parseFloat(part.baseline_value || '0');
-                    if (baseline <= 0) continue;
+                    let baseline = parseFloat(part.baseline_value || '0');
+                    if (baseline <= 0) {
+                        const platform = (r.platform || '').toUpperCase();
+                        const seed = seededRandom(`${r.id}:${part.role}:baseline`);
+                        if (platform === 'STRIPE' || platform === 'SHOPIFY' || platform === 'AMAZON') {
+                            baseline = Math.round(150000 + seed * 400000);
+                        } else if (platform === 'X') {
+                            baseline = Math.round(5000 + seed * 20000);
+                        } else if (platform === 'YOUTUBE') {
+                            baseline = Math.round(10000 + seed * 40000);
+                        } else {
+                            baseline = Math.round(10000 + seed * 30000);
+                        }
+                        await db.execute(sql`
+                            UPDATE rivalry_participants
+                            SET baseline_value = ${baseline.toString()},
+                                baseline_json = ${JSON.stringify({ value: baseline, autoAssigned: true })}
+                            WHERE id = ${part.id}
+                        `);
+                    }
                     
                     const outcome = getOutcomeForParticipant(r.id, part.role);
                     
@@ -297,8 +315,26 @@ export async function runSimProgressJob(): Promise<{ updated: number; snapshots:
                 
                 // Regenerate clean daily snapshots
                 for (const part of partRows) {
-                    const baseline = parseFloat(part.baseline_value || '0');
-                    if (baseline <= 0) continue;
+                    let baseline = parseFloat(part.baseline_value || '0');
+                    if (baseline <= 0) {
+                        const platform = (rivalry.platform || '').toUpperCase();
+                        const seed = seededRandom(`${rivalry.id}:${part.role}:baseline`);
+                        if (platform === 'STRIPE' || platform === 'SHOPIFY' || platform === 'AMAZON') {
+                            baseline = Math.round(150000 + seed * 400000);
+                        } else if (platform === 'X') {
+                            baseline = Math.round(5000 + seed * 20000);
+                        } else if (platform === 'YOUTUBE') {
+                            baseline = Math.round(10000 + seed * 40000);
+                        } else {
+                            baseline = Math.round(10000 + seed * 30000);
+                        }
+                        await db.execute(sql`
+                            UPDATE rivalry_participants
+                            SET baseline_value = ${baseline.toString()},
+                                baseline_json = ${JSON.stringify({ value: baseline, autoAssigned: true })}
+                            WHERE id = ${part.id}
+                        `);
+                    }
                     
                     const outcome = getOutcomeForParticipant(rivalry.id, part.role);
                     
@@ -382,15 +418,31 @@ export async function runSimProgressJob(): Promise<{ updated: number; snapshots:
             const parts = (participants as any).rows || participants;
             
             for (const part of parts) {
-                if (!part.baseline_value) {
-                    skipped++;
-                    continue;
-                }
+                let baseline = parseFloat(part.baseline_value || '0');
                 
-                const baseline = parseFloat(part.baseline_value);
-                if (baseline <= 0) {
-                    skipped++;
-                    continue;
+                // Auto-assign baseline if missing — prevents 0% display
+                if (!baseline || baseline <= 0) {
+                    // Generate a realistic baseline based on platform
+                    const platform = (rivalry.platform || '').toUpperCase();
+                    const seed = seededRandom(`${rivalryId}:${part.role}:baseline`);
+                    if (platform === 'STRIPE' || platform === 'SHOPIFY' || platform === 'AMAZON') {
+                        baseline = Math.round(150000 + seed * 400000); // $1,500 - $5,500 in cents
+                    } else if (platform === 'X') {
+                        baseline = Math.round(5000 + seed * 20000); // 5k - 25k followers
+                    } else if (platform === 'YOUTUBE') {
+                        baseline = Math.round(10000 + seed * 40000); // 10k - 50k subs
+                    } else {
+                        baseline = Math.round(10000 + seed * 30000);
+                    }
+                    
+                    // Persist the baseline so it sticks
+                    await db.execute(sql`
+                        UPDATE rivalry_participants
+                        SET baseline_value = ${baseline.toString()},
+                            baseline_json = ${JSON.stringify({ value: baseline, autoAssigned: true })}
+                        WHERE id = ${part.id}
+                    `);
+                    console.log(`[SimProgress] 🔧 Auto-assigned baseline ${baseline} for ${part.role} in ${rivalryId.slice(0,8)}`);
                 }
                 
                 // Get predetermined outcome for this participant

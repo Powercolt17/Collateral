@@ -360,7 +360,7 @@ setTimeout(() => {
 function _isOnGoPage() {
     const h = window.location.hash || '';
     const p = window.location.pathname || '';
-    return h === '#/go' || h.startsWith('#/go?') || p === '/go' || p.startsWith('/go?');
+    return h === '#/go' || h.startsWith('#/go/') || h.startsWith('#/go?') || p === '/go' || p.startsWith('/go/') || p.startsWith('/go?');
 }
 
 // App methods exposed globally
@@ -1541,7 +1541,7 @@ router.onRouteChange = function (route, path) {
     // Landing page: no header, clean full-page layout
     const headerMount = document.getElementById('header-mount');
     const appMount = document.getElementById('app');
-    if (path === '/go') {
+    if (path === '/go' || path.startsWith('/go/')) {
         headerMount.innerHTML = '';
         appMount.classList.remove('pt-16');
         appMount.innerHTML = route.render(route.params);

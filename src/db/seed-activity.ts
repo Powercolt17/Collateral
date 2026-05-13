@@ -425,10 +425,11 @@ export async function seedSimulatedActivity() {
         `);
 
         // Rivalry participants
-        if (!((r as any).pending)) {
-            const cBaselineVal = r.metric === 'REVENUE' ? rand(100000, 400000) : rand(2000, 40000);
-            const oBaselineVal = r.metric === 'REVENUE' ? rand(100000, 400000) : rand(2000, 40000);
+        // Generate baselines ONCE — shared between participants and snapshots
+        const cBaselineVal = r.metric === 'REVENUE' ? rand(100000, 400000) : rand(2000, 40000);
+        const oBaselineVal = r.metric === 'REVENUE' ? rand(100000, 400000) : rand(2000, 40000);
 
+        if (!((r as any).pending)) {
             for (const side of [
                 { uid: challengerId, role: 'challenger', bv: cBaselineVal },
                 { uid: opponentId, role: 'opponent', bv: oBaselineVal }
@@ -496,10 +497,8 @@ export async function seedSimulatedActivity() {
         }
 
         // Metric snapshots for active (non-settled) rivalries
+        // Uses the SAME baselines as participants above
         if (!r.settled && activatedAt && !((r as any).pending)) {
-            const cBaselineVal = r.metric === 'REVENUE' ? rand(100000, 400000) : rand(2000, 40000);
-            const oBaselineVal = r.metric === 'REVENUE' ? rand(100000, 400000) : rand(2000, 40000);
-
             for (const side of [
                 { uid: challengerId, bv: cBaselineVal },
                 { uid: opponentId, bv: oBaselineVal }
@@ -508,7 +507,8 @@ export async function seedSimulatedActivity() {
                 const snapshotCount = Math.min(Math.floor(hoursIn / 24), r.days);
                 for (let d = 0; d < snapshotCount; d++) {
                     const fetchedAt = new Date(activatedAt.getTime() + d * 86400000 + rand(0, 43200000));
-                    const growthPct = (d / r.days) * (5 + Math.random() * 18);
+                    // Cap growth to realistic range: 0-15% over the full period
+                    const growthPct = (d / Math.max(r.days, 1)) * (2 + Math.random() * 10);
                     const value = Math.round(side.bv * (1 + growthPct / 100));
                     await db.execute(sql`
                         INSERT INTO rivalry_metric_snapshots (

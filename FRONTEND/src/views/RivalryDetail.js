@@ -1172,21 +1172,28 @@ export async function initRivalryDetail(params) {
         let challBaseline = null;
         let oppBaseline = null;
 
+        // Sort metrics by timestamp FIRST so we get the correct baselines
+        const sortedMetrics = (metricsData || []).slice().sort((a, b) => {
+            const ta = new Date(a.fetchedAt || a.fetched_at).getTime();
+            const tb = new Date(b.fetchedAt || b.fetched_at).getTime();
+            return ta - tb;
+        });
 
-
-        (metricsData || []).forEach(m => {
+        sortedMetrics.forEach(m => {
             const val = parseFloat(m.metricValue || m.metric_value || 0);
             const ts = new Date(m.fetchedAt || m.fetched_at);
             if (m.userId === challUserId || m.user_id === challUserId) {
                 if (challBaseline === null) challBaseline = val;
-                challPoints.push({ t: ts, v: val, pct: challBaseline ? Math.max(0, ((val - challBaseline) / challBaseline) * 100) : 0 });
+                const rawPct = challBaseline ? ((val - challBaseline) / challBaseline) * 100 : 0;
+                challPoints.push({ t: ts, v: val, pct: Math.max(0, Math.min(rawPct, 100)) });
             } else if (m.userId === oppUserId || m.user_id === oppUserId) {
                 if (oppBaseline === null) oppBaseline = val;
-                oppPoints.push({ t: ts, v: val, pct: oppBaseline ? Math.max(0, ((val - oppBaseline) / oppBaseline) * 100) : 0 });
+                const rawPct = oppBaseline ? ((val - oppBaseline) / oppBaseline) * 100 : 0;
+                oppPoints.push({ t: ts, v: val, pct: Math.max(0, Math.min(rawPct, 100)) });
             }
         });
 
-        // Sort by timestamp
+        // Already sorted above, but ensure order is correct
         challPoints.sort((a, b) => a.t - b.t);
         oppPoints.sort((a, b) => a.t - b.t);
 

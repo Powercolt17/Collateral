@@ -380,7 +380,7 @@ export async function seedSimulatedActivity() {
         { c: 0, o: 12, platform: 'YOUTUBE', metric: 'VIEWS', key: 'youtube_30day_views', stake: 20000, days: 14, settled: false, daysBack: 2 },
         
         // Pending acceptance (just issued)
-        { c: 14, o: 15, platform: 'STRIPE', metric: 'REVENUE', key: 'stripe_net_revenue', stake: 30000, days: 14, settled: false, daysBack: 0, pending: true },
+        { c: 14, o: 15, platform: 'STRIPE', metric: 'REVENUE', key: 'stripe_net_revenue', stake: 30000, days: 14, settled: false, daysBack: 1 },
     ];
 
     let rivalryCount = 0;
@@ -458,17 +458,23 @@ export async function seedSimulatedActivity() {
             }
         }
 
-        // Rivalry ledger events
+        // Rivalry ledger events — must use correct RivalryEventType constants
         const rEvents: { type: string; ts: Date; uid: string | null; amount?: number }[] = [
-            { type: 'CHALLENGE_ISSUED', ts: issuedAt, uid: challengerId },
+            { type: 'RIVALRY_CREATED', ts: issuedAt, uid: challengerId },
         ];
-        if (acceptedAt) rEvents.push({ type: 'CHALLENGE_ACCEPTED', ts: acceptedAt, uid: opponentId });
+        if (acceptedAt) rEvents.push({ type: 'RIVALRY_ACCEPTED', ts: acceptedAt, uid: opponentId });
         if (fundedAt) {
-            rEvents.push({ type: 'FUNDS_LOCKED', ts: fundedAt, uid: challengerId, amount: r.stake });
-            rEvents.push({ type: 'FUNDS_LOCKED', ts: new Date(fundedAt.getTime() + 60000), uid: opponentId, amount: r.stake });
+            rEvents.push({ type: 'RIVALRY_CHALLENGER_FUNDED', ts: fundedAt, uid: challengerId, amount: r.stake });
+            rEvents.push({ type: 'RIVALRY_OPPONENT_FUNDED', ts: new Date(fundedAt.getTime() + 30000), uid: opponentId, amount: r.stake });
+            rEvents.push({ type: 'RIVALRY_BOTH_FUNDED', ts: new Date(fundedAt.getTime() + 60000), uid: null, amount: r.stake * 2 });
         }
         if (activatedAt) rEvents.push({ type: 'RIVALRY_ACTIVATED', ts: activatedAt, uid: null });
-        if (settledAt) rEvents.push({ type: 'RIVALRY_SETTLED', ts: settledAt, uid: null, amount: poolCents });
+        if (settledAt) {
+            rEvents.push({ type: 'RIVALRY_VERIFICATION_STARTED', ts: new Date(settledAt.getTime() - 3600000), uid: null });
+            rEvents.push({ type: 'RIVALRY_VERIFIED', ts: new Date(settledAt.getTime() - 1800000), uid: null });
+            rEvents.push({ type: 'RIVALRY_SETTLEMENT_STARTED', ts: new Date(settledAt.getTime() - 600000), uid: null });
+            rEvents.push({ type: 'RIVALRY_SETTLED', ts: settledAt, uid: null, amount: poolCents });
+        }
 
         let rPrevHash = '0000000000000000000000000000000000000000000000000000000000000000';
         for (const evt of rEvents) {

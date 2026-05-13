@@ -123,6 +123,7 @@ const rivalryRoutes: FastifyPluginAsync = async (fastify) => {
     // =========================================================================
     fastify.get('/v1/rivalries/stats', async (request, reply) => {
         try {
+            const { getRivalryState } = await import('../services/rivalry.js');
             const allRivalries = await db.select().from(rivalries);
 
             // Count by state (we derive state per rivalry)
@@ -132,16 +133,20 @@ const rivalryRoutes: FastifyPluginAsync = async (fastify) => {
             let totalSettled = 0;
 
             for (const r of allRivalries) {
-                const { getRivalryState } = await import('../services/rivalry.js');
-                const state = await getRivalryState(r.id);
                 const pool = r.stakePerSideCents * 2;
+                try {
+                    const state = await getRivalryState(r.id);
 
-                if (state === 'ACTIVE' || state === 'VERIFYING' || state === 'BOTH_FUNDED') {
-                    active++;
-                    totalCapitalCents += pool;
-                }
-                if (state === 'SETTLED' || state === 'DRAW') {
-                    totalSettled++;
+                    if (state === 'ACTIVE' || state === 'VERIFYING' || state === 'BOTH_FUNDED') {
+                        active++;
+                        totalCapitalCents += pool;
+                    }
+                    if (state === 'SETTLED' || state === 'DRAW') {
+                        totalSettled++;
+                    }
+                } catch (stateErr) {
+                    // Skip this rivalry if state derivation fails
+                    console.warn(`[stats] Failed to derive state for rivalry ${r.id}:`, stateErr);
                 }
                 if (pool > largestPoolCents) {
                     largestPoolCents = pool;

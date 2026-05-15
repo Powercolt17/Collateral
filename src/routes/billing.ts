@@ -159,11 +159,23 @@ const billingRoutes: FastifyPluginAsync = async (fastify) => {
                 }
             }
 
-            // Get user info and connect status
-            // Funding page must reflect connect_accounts table, not users table
-            const [connectAccount] = await db.select().from(connectAccounts).where(eq(connectAccounts.userId, userId));
+            // Get connect account — wrap to prevent cascade failure
+            let connectAccount: any = null;
+            try {
+                const [ca] = await db.select().from(connectAccounts).where(eq(connectAccounts.userId, userId));
+                connectAccount = ca || null;
+            } catch (caErr: any) {
+                console.warn('[Billing] connect_accounts query failed:', caErr.message);
+            }
+
             // Get identity status (for potential freeze)
-            const [identity] = await db.select().from(identities).where(eq(identities.userId, userId));
+            let identity: any = null;
+            try {
+                const [id] = await db.select().from(identities).where(eq(identities.userId, userId));
+                identity = id || null;
+            } catch (idErr: any) {
+                console.warn('[Billing] identities query failed:', idErr.message);
+            }
 
             // Compute derived balances from account ledger events
             const derivedBalances = await computeBalances(userId);

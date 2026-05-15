@@ -933,7 +933,19 @@ export async function initFunding() {
 
         } catch (err) {
             console.error('[Capital] Error loading billing status:', err);
-            cardStatusEl.textContent = 'Error loading';
+            // Set ALL fields to defaults so nothing stays stuck at "Loading..."
+            if (cardStatusEl) cardStatusEl.textContent = 'Not configured';
+            if (cardBadgeEl) cardBadgeEl.innerHTML = '<span class="cap-badge required">REQUIRED</span>';
+            if (payoutStatusEl) payoutStatusEl.textContent = 'Not configured';
+            if (availableBalanceEl) availableBalanceEl.textContent = '$0.00';
+            if (lockedBalanceEl) lockedBalanceEl.textContent = '$0.00';
+            if (pendingPayoutEl) pendingPayoutEl.textContent = '$0.00';
+            const availSub = document.getElementById('available-sub');
+            const lockedSub = document.getElementById('locked-sub');
+            const pendingSub = document.getElementById('pending-sub');
+            if (availSub) availSub.textContent = 'Deposit to begin.';
+            if (lockedSub) lockedSub.textContent = 'No active contracts.';
+            if (pendingSub) pendingSub.textContent = 'No pending payouts.';
         }
     }
 

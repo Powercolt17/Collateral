@@ -212,12 +212,7 @@ export function initLanding() {
 
     if(window.trackEvent) window.trackEvent('go_page_view',{source:utm.utm_source||'direct',campaign:utm.utm_campaign||'none',medium:utm.utm_medium||'none'});
 
-    // Auto-open signup modal for unauthenticated visitors from ads
-    if (!window.appState?.isLoggedIn) {
-        setTimeout(() => {
-            if (window.app?.openAccessModal) window.app.openAccessModal();
-        }, 600);
-    }
+    // Let unauthenticated visitors browse the page freely — modal opens on CTA click
 
     // Helper: if signed in, go to /funding. If not, open signup modal.
     function goAction() {

@@ -374,13 +374,13 @@ export async function seedSimulatedActivity() {
         { c: 2, o: 5, platform: 'YOUTUBE', metric: 'SUBSCRIBERS', key: 'youtube_subscribers', stake: 15000, days: 14, settled: true, winIdx: 2, daysBack: 18 },
         { c: 8, o: 9, platform: 'SHOPIFY', metric: 'REVENUE', key: 'shopify_net_sales', stake: 40000, days: 30, settled: true, winIdx: 9, daysBack: 22 },
         
-        // Active rivalries (in-flight)
-        { c: 6, o: 7, platform: 'X', metric: 'FOLLOWERS', key: 'x_followers', stake: 25000, days: 14, settled: false, daysBack: 3 },
-        { c: 10, o: 11, platform: 'STRIPE', metric: 'REVENUE', key: 'stripe_net_revenue', stake: 75000, days: 30, settled: false, daysBack: 5 },
-        { c: 0, o: 12, platform: 'YOUTUBE', metric: 'VIEWS', key: 'youtube_30day_views', stake: 20000, days: 14, settled: false, daysBack: 2 },
+        // Active rivalries (in-flight) — daysBack high enough to show meaningful growth
+        { c: 6, o: 7, platform: 'X', metric: 'FOLLOWERS', key: 'x_followers', stake: 25000, days: 14, settled: false, daysBack: 6 },
+        { c: 10, o: 11, platform: 'STRIPE', metric: 'REVENUE', key: 'stripe_net_revenue', stake: 75000, days: 30, settled: false, daysBack: 10 },
+        { c: 0, o: 12, platform: 'YOUTUBE', metric: 'VIEWS', key: 'youtube_30day_views', stake: 20000, days: 14, settled: false, daysBack: 5 },
         
-        // Pending acceptance (just issued)
-        { c: 14, o: 15, platform: 'STRIPE', metric: 'REVENUE', key: 'stripe_net_revenue', stake: 30000, days: 14, settled: false, daysBack: 1 },
+        // Recently activated
+        { c: 14, o: 15, platform: 'STRIPE', metric: 'REVENUE', key: 'stripe_net_revenue', stake: 30000, days: 14, settled: false, daysBack: 4 },
     ];
 
     let rivalryCount = 0;
@@ -431,13 +431,26 @@ export async function seedSimulatedActivity() {
 
         if (!((r as any).pending)) {
             for (const side of [
-                { uid: challengerId, role: 'challenger', bv: cBaselineVal },
-                { uid: opponentId, role: 'opponent', bv: oBaselineVal }
+                { uid: challengerId, role: 'challenger', bv: cBaselineVal, growthSeed: Math.random() },
+                { uid: opponentId, role: 'opponent', bv: oBaselineVal, growthSeed: Math.random() }
             ]) {
-                const fv = r.settled
-                    ? Math.round(side.bv * (1 + (Math.random() * 0.35)))
-                    : null;
-                const pctDelta = fv ? (((fv - side.bv) / side.bv) * 100).toFixed(2) : null;
+                let fv: number | null;
+                let pctDelta: string | null;
+
+                if (r.settled) {
+                    // Settled: final growth between 5-35%
+                    fv = Math.round(side.bv * (1 + (Math.random() * 0.35)));
+                    pctDelta = (((fv - side.bv) / side.bv) * 100).toFixed(2);
+                } else {
+                    // Active: compute current growth based on how far through the rivalry we are
+                    const elapsed = daysBack;
+                    const progress = Math.min(elapsed / Math.max(r.days, 1), 0.95);
+                    // Growth: 1-12% range, proportional to progress with some randomness
+                    const growthRate = (1 + side.growthSeed * 11) * progress;
+                    fv = Math.round(side.bv * (1 + growthRate / 100));
+                    pctDelta = growthRate.toFixed(2);
+                }
+
                 const isWinner = winnerId === side.uid;
 
                 await db.execute(sql`
@@ -450,8 +463,8 @@ export async function seedSimulatedActivity() {
                     ) VALUES (
                         ${randomUUID()}, ${rid}, ${side.uid}, ${side.role}, true, ${fundedAt?.toISOString() || null},
                         ${side.bv.toString()}, ${JSON.stringify({ value: side.bv })}, ${activatedAt?.toISOString() || null},
-                        ${fv?.toString() || null}, ${fv ? JSON.stringify({ value: fv }) : null}, ${settledAt?.toISOString() || null},
-                        ${fv ? (fv - side.bv).toString() : null}, ${pctDelta},
+                        ${fv.toString()}, ${JSON.stringify({ value: fv, simulated: true })}, ${r.settled ? settledAt?.toISOString() || null : new Date().toISOString()},
+                        ${(fv - side.bv).toString()}, ${pctDelta},
                         ${r.settled ? (isWinner ? 'WIN' : 'LOSS') : null},
                         ${r.settled ? (isWinner ? winnerPayout : 0) : null}
                     )

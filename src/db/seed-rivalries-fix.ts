@@ -210,14 +210,15 @@ export async function fixRivalryData() {
         // Insert participants with growth data
         const challCurrentGrowth = r.settled ? (r as any).challFinalGrowth : r.challGrowthRate;
         const oppCurrentGrowth = r.settled ? (r as any).oppFinalGrowth : r.oppGrowthRate;
-        const challFinalValue = r.settled ? Math.round(r.challBaseline * (1 + challCurrentGrowth / 100)) : null;
-        const oppFinalValue = r.settled ? Math.round(r.oppBaseline * (1 + oppCurrentGrowth / 100)) : null;
+        // Always compute final values — even for active rivalries (shows current progress)
+        const challFinalValue = Math.round(r.challBaseline * (1 + challCurrentGrowth / 100));
+        const oppFinalValue = Math.round(r.oppBaseline * (1 + oppCurrentGrowth / 100));
 
         for (const side of [
             { uid: challengerId, role: 'challenger', bv: r.challBaseline, growth: challCurrentGrowth, fv: challFinalValue },
             { uid: opponentId, role: 'opponent', bv: r.oppBaseline, growth: oppCurrentGrowth, fv: oppFinalValue }
         ]) {
-            const absDelta = side.fv ? (side.fv - side.bv) : Math.round(side.bv * side.growth / 100);
+            const absDelta = side.fv - side.bv;
             const isWinner = winnerId === side.uid;
             await db.execute(sql`
                 INSERT INTO rivalry_participants (
@@ -230,8 +231,8 @@ export async function fixRivalryData() {
                     ${randomUUID()}, ${rid}, ${side.uid}, ${side.role}, true,
                     ${side.role === 'challenger' ? challFundedAt.toISOString() : oppFundedAt.toISOString()},
                     ${side.bv.toString()}, ${JSON.stringify({ value: side.bv })}, ${activatedAt.toISOString()},
-                    ${side.fv?.toString() || null}, ${side.fv ? JSON.stringify({ value: side.fv }) : null},
-                    ${settledAt?.toISOString() || null},
+                    ${side.fv.toString()}, ${JSON.stringify({ value: side.fv, simulated: true })},
+                    ${settledAt?.toISOString() || new Date().toISOString()},
                     ${absDelta.toString()}, ${side.growth.toFixed(2)},
                     ${r.settled ? (isWinner ? 'WIN' : 'LOSS') : null},
                     ${r.settled ? (isWinner ? winnerPayout : 0) : null}

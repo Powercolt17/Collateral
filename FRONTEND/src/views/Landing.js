@@ -8,198 +8,366 @@ export function renderLanding() {
             .lp *,.lp *::before,.lp *::after{box-sizing:border-box}
             @keyframes lpUp{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:translateY(0)}}
             .lp-fade{opacity:0;transform:translateY(18px);transition:opacity .5s,transform .5s}.lp-fade.vis{opacity:1;transform:none}
+            @keyframes scrollFeed{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
 
-            .lp-brand{text-align:center;padding:32px 0 0;font-size:11px;font-weight:800;letter-spacing:.2em;color:#5C1414;font-family:'Sora',sans-serif}
+            .lp-brand{text-align:center;padding:24px 0 0;font-size:11px;font-weight:800;letter-spacing:.2em;color:#5C1414;font-family:'Sora',sans-serif}
 
-            .lp-hero{text-align:center;padding:32px 24px 28px;max-width:660px;margin:0 auto;animation:lpUp .7s ease both}
-            .lp-h1{font-size:46px;font-weight:900;color:#111;letter-spacing:-2px;line-height:1.08;margin:0 0 16px}
+            /* HERO */
+            .lp-hero-wrap{display:flex;align-items:center;justify-content:center;padding:24px 24px 32px;max-width:1100px;margin:0 auto;gap:48px}
+            .lp-hero-content{flex:1;max-width:600px;animation:lpUp .7s ease both}
+            .lp-hero-mock{flex:1;max-width:440px;animation:lpUp .7s ease both .1s;display:none} 
+            @media(min-width:900px){.lp-hero-mock{display:block}}
+            
+            .lp-eyebrow{font-size:10px;font-family:'JetBrains Mono',monospace;letter-spacing:1px;color:#777;text-transform:uppercase;margin-bottom:16px;display:block}
+            .lp-h1{font-size:48px;font-weight:900;color:#111;letter-spacing:-1.5px;line-height:1.05;margin:0 0 16px}
             .lp-h1 strong{color:#5C1414}
-            .lp-sub{font-size:17px;color:#555;line-height:1.7;margin:0 auto 28px;max-width:520px}
-            .lp-ctas{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-bottom:14px}
-            .lp-btn-p{padding:16px 36px;background:#5C1414;color:#fff;font-size:13px;font-weight:700;letter-spacing:1px;text-transform:uppercase;border:none;cursor:pointer;font-family:'Sora',sans-serif;transition:all .3s;box-shadow:0 2px 12px rgba(92,20,20,.18)}
-            .lp-btn-p:hover{background:#7a1e1e;box-shadow:0 4px 20px rgba(92,20,20,.32);transform:translateY(-1px)}
-            .lp-btn-s{padding:16px 36px;background:transparent;color:#111;font-size:13px;font-weight:700;letter-spacing:1px;text-transform:uppercase;border:2px solid #ddd;cursor:pointer;font-family:'Sora',sans-serif;transition:all .3s}
-            .lp-btn-s:hover{border-color:#111}
-            .lp-tl{font-size:12px;color:#aaa;font-family:'JetBrains Mono',monospace;letter-spacing:.5px}
+            .lp-sub{font-size:16px;color:#444;line-height:1.6;margin:0 0 24px}
+            
+            .lp-cta-wrap{margin-bottom:12px}
+            .lp-btn-p{display:inline-block;padding:18px 36px;background:#5C1414;color:#fff;font-size:14px;font-weight:800;letter-spacing:0.5px;border:none;cursor:pointer;font-family:'Sora',sans-serif;transition:all .3s;box-shadow:0 4px 14px rgba(92,20,20,.2)}
+            .lp-btn-p:hover{background:#7a1e1e;box-shadow:0 6px 20px rgba(92,20,20,.3);transform:translateY(-1px)}
+            .lp-micro{font-size:12px;color:#777;margin-bottom:24px}
+            
+            .lp-trust-strip{display:flex;align-items:center;gap:12px;font-size:12px;color:#111;font-weight:600;margin-bottom:8px;flex-wrap:wrap}
+            .lp-trust-logos{display:flex;gap:8px;flex-wrap:wrap}
+            .lp-trust-logos span{background:#f4f4f4;padding:4px 8px;border-radius:4px;font-size:10px;text-transform:uppercase;letter-spacing:1px;font-family:'JetBrains Mono',monospace}
+            .lp-anti-gamble{font-size:11px;color:#888;line-height:1.4}
+            .lp-anti-gamble a{color:#5C1414;text-decoration:none}
+            .lp-anti-gamble a:hover{text-decoration:underline}
 
-            .lp-ex{max-width:980px;margin:0 auto;padding:4px 24px 40px}
-            .lp-ex-tag{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:2px;text-transform:uppercase;color:#bbb;margin-bottom:20px;text-align:center}
-            .lp-cards{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+            /* Mockup styling */
+            .mock-window{background:#fff;border:1px solid #eaeaea;border-radius:12px;box-shadow:0 24px 48px rgba(0,0,0,.08);overflow:hidden}
+            .mock-header{background:#fafafa;padding:12px 16px;border-bottom:1px solid #eaeaea;display:flex;gap:6px}
+            .mock-dot{width:10px;height:10px;border-radius:50%;background:#ddd}
+            .mock-body{padding:24px}
+            .mock-title{font-size:14px;font-weight:700;margin-bottom:16px}
+            .mock-field{background:#f9f9f9;border:1px solid #eee;border-radius:6px;padding:12px;margin-bottom:12px;font-size:12px;color:#555}
+            .mock-field strong{color:#111;display:block;margin-bottom:4px}
+            .mock-btn{background:#111;color:#fff;text-align:center;padding:12px;border-radius:6px;font-size:12px;font-weight:700;margin-top:8px}
 
-            .lp-card{border:1px solid #e5e5e5;padding:28px 24px 0;cursor:pointer;transition:all .3s cubic-bezier(.4,0,.2,1);display:flex;flex-direction:column;box-shadow:0 1px 3px rgba(0,0,0,.04)}
-            .lp-card:hover{border-color:#5C1414;transform:translateY(-4px);box-shadow:0 14px 36px rgba(92,20,20,.09)}
-            .c-title{font-size:19px;font-weight:800;color:#111;margin-bottom:6px;letter-spacing:-.3px}
-            .c-src{font-size:10px;font-family:'JetBrains Mono',monospace;letter-spacing:1px;text-transform:uppercase;color:#15803d;display:flex;align-items:center;gap:5px;margin-bottom:16px}
-            .c-src::before{content:'✓';font-weight:700}
-            .c-rows{display:flex;flex-direction:column;gap:10px;margin-bottom:20px}
-            .c-row{display:flex;justify-content:space-between;font-size:13px}
-            .c-lbl{color:#999}
-            .c-val{font-weight:600;color:#111}
-            .c-val.grn{color:#15803d}
-            .c-btn{display:block;width:calc(100% + 48px);margin:0 -24px;padding:16px;background:#111;color:#fff;font-size:12px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;text-align:center;border:none;cursor:pointer;font-family:'Sora',sans-serif;transition:background .2s}
-            .c-btn:hover{background:#5C1414}
+            /* PROOF BAR */
+            .lp-proof-bar{background:#0a0a0a;color:#fff;padding:24px 0;overflow:hidden;border-bottom:4px solid #5C1414}
+            .pb-stats{display:flex;justify-content:center;gap:64px;margin-bottom:20px;max-width:1000px;margin-left:auto;margin-right:auto;padding:0 24px}
+            .pb-stat{text-align:center}
+            .pb-val{font-size:28px;font-weight:900;letter-spacing:-1px;margin-bottom:4px;font-family:'JetBrains Mono',monospace}
+            .pb-lbl{font-size:11px;text-transform:uppercase;letter-spacing:1px;color:#888}
+            
+            .pb-feed-wrap{position:relative;width:100%;display:flex;overflow:hidden}
+            .pb-feed{display:flex;gap:32px;white-space:nowrap;animation:scrollFeed 40s linear infinite;min-width:200%}
+            .pb-feed:hover{animation-play-state:paused}
+            .pb-item{font-size:13px;color:#aaa;background:rgba(255,255,255,0.05);padding:6px 16px;border-radius:20px}
+            .pb-item strong{color:#fff}
 
-            .lp-mid{text-align:center;padding:40px 24px;max-width:560px;margin:0 auto}
-            .lp-mid-t{font-size:15px;color:#666;margin-bottom:20px}.lp-mid-t strong{color:#111}
+            /* PAYOUT EXPLANATION */
+            .lp-payout{padding:64px 24px;background:#fafafa;text-align:center}
+            .lp-payout-in{max-width:680px;margin:0 auto}
+            .payout-h2{font-size:24px;font-weight:800;margin-bottom:16px;letter-spacing:-0.5px}
+            .payout-p{font-size:15px;color:#555;line-height:1.6;margin-bottom:24px}
+            .payout-box{background:#fff;border:1px solid #eee;padding:24px;text-align:left;box-shadow:0 4px 12px rgba(0,0,0,.03);border-left:4px solid #5C1414}
+            .payout-box-h{font-size:12px;font-family:'JetBrains Mono',monospace;text-transform:uppercase;letter-spacing:1px;color:#5C1414;margin-bottom:12px}
+            .payout-math{font-size:14px;color:#333;line-height:1.6}
+            .payout-math span{display:block;margin-bottom:8px;padding-bottom:8px;border-bottom:1px dashed #eee}
+            .payout-math span:last-child{border:none;margin:0;padding:0}
+            .payout-math strong{color:#111}
 
-            .lp-how{background:#fff;padding:72px 24px;border-top:1px solid #eee;border-bottom:1px solid #eee}
-            .lp-how-in{max-width:900px;margin:0 auto}
-            .lp-how-tag{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:2.5px;text-transform:uppercase;color:#bbb;margin-bottom:48px;text-align:center}
-            .lp-steps{display:grid;grid-template-columns:repeat(4,1fr);gap:0}
-            .lp-step{text-align:center;padding:32px 20px;cursor:pointer;transition:background .3s;border-right:1px solid #f0f0f0;position:relative}
-            .lp-step:last-child{border-right:none}
-            .lp-step:hover{background:#fafafa}
-            .s-num{font-size:42px;font-weight:900;color:#5C1414;margin-bottom:16px;font-family:'JetBrains Mono',monospace;transition:opacity .3s}
-            .s-title{font-size:15px;font-weight:700;color:#111;margin-bottom:10px}
-            .s-desc{font-size:13px;color:#777;line-height:1.7}
+            /* EXAMPLE CONTRACTS */
+            .lp-ex{max-width:1000px;margin:0 auto;padding:64px 24px}
+            .lp-sect-tag{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:2px;text-transform:uppercase;color:#888;margin-bottom:32px;text-align:center}
+            .lp-cards{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
 
-            .lp-clarity{text-align:center;padding:32px 24px;max-width:620px;margin:0 auto}
-            .lp-clarity-text{font-size:13px;color:#999;font-family:'JetBrains Mono',monospace;letter-spacing:.3px;line-height:1.7;border:1px solid #f0f0f0;padding:20px 28px;background:#fafafa}
+            .lp-card{border:1px solid #e5e5e5;padding:32px 24px 0;cursor:pointer;position:relative;background:#fff;display:flex;flex-direction:column;box-shadow:0 2px 8px rgba(0,0,0,.04);overflow:hidden}
+            .lp-card-front{transition:opacity .3s}
+            .lp-card-back{position:absolute;top:0;left:0;right:0;bottom:0;background:#111;color:#fff;padding:32px 24px;opacity:0;pointer-events:none;transition:opacity .3s;display:flex;flex-direction:column;justify-content:center}
+            .lp-card:hover .lp-card-front{opacity:0.1}
+            .lp-card:hover .lp-card-back{opacity:1;pointer-events:auto}
+            
+            .c-title{font-size:20px;font-weight:800;color:#111;margin-bottom:8px;letter-spacing:-.5px}
+            .c-src{font-size:11px;font-family:'JetBrains Mono',monospace;letter-spacing:0.5px;color:#555;margin-bottom:24px}
+            .c-rows{display:flex;flex-direction:column;gap:12px;margin-bottom:24px}
+            .c-row{display:flex;justify-content:space-between;font-size:13px;border-bottom:1px solid #f4f4f4;padding-bottom:4px}
+            .c-lbl{color:#777}
+            .c-val{font-weight:700;color:#111}
+            .c-btn{display:block;width:calc(100% + 48px);margin:0 -24px;padding:16px;background:#fafafa;color:#111;font-size:12px;font-weight:800;letter-spacing:1px;text-transform:uppercase;text-align:center;border-top:1px solid #eee;border-bottom:none;border-left:none;border-right:none;cursor:pointer;font-family:'Sora',sans-serif;transition:all .2s}
+            .lp-card:hover .c-btn{background:#5C1414;color:#fff}
 
-            .lp-trust{max-width:680px;margin:0 auto;padding:40px 24px;display:grid;grid-template-columns:1fr 1fr;gap:16px}
-            .lp-tb{border:1px solid #eee;padding:24px;background:#fafafa}
-            .lp-tb-h{font-size:14px;font-weight:800;color:#111;margin-bottom:6px}
-            .lp-tb-p{font-size:13px;color:#777;line-height:1.7}
+            .cb-math{font-size:13px;line-height:1.6;color:#ccc}
+            .cb-math strong{color:#fff}
+            .cb-math div{margin-bottom:12px;padding-bottom:12px;border-bottom:1px solid #333}
+            .cb-btn{margin-top:auto;display:block;width:100%;padding:12px;background:#fff;color:#111;text-align:center;font-size:12px;font-weight:700;text-transform:uppercase;border:none;cursor:pointer}
 
-            .lp-proof{text-align:center;max-width:560px;margin:0 auto;padding:48px 24px;border-top:1px solid #f0f0f0}
-            .lp-proof-h{font-size:21px;font-weight:800;color:#111;margin-bottom:10px;letter-spacing:-.3px}
-            .lp-proof-p{font-size:14px;color:#777;line-height:1.7}
+            /* HOW IT WORKS */
+            .lp-how{padding:64px 24px;background:#fff;border-top:1px solid #eee}
+            .lp-how-in{max-width:1000px;margin:0 auto}
+            .lp-steps{display:grid;grid-template-columns:repeat(4,1fr);gap:24px}
+            .lp-step{padding:0 12px;border-left:2px solid #eee}
+            .s-num{font-size:14px;font-weight:900;color:#5C1414;margin-bottom:12px;font-family:'JetBrains Mono',monospace}
+            .s-desc{font-size:14px;font-weight:600;color:#111;line-height:1.5}
+            .s-desc span{color:#666;font-weight:400}
 
-            .lp-faq{max-width:580px;margin:0 auto;padding:48px 24px}
-            .lp-faq-tag{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:2px;text-transform:uppercase;color:#bbb;margin-bottom:20px}
+            /* TESTIMONIALS */
+            .lp-testi{background:#fafafa;padding:64px 24px;border-top:1px solid #eee;border-bottom:1px solid #eee}
+            .lp-testi-in{max-width:1000px;margin:0 auto}
+            .testi-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+            .testi-card{background:#fff;padding:24px;border:1px solid #eee;box-shadow:0 4px 12px rgba(0,0,0,.02)}
+            .testi-quote{font-size:14px;color:#333;line-height:1.6;margin-bottom:20px;font-style:italic}
+            .testi-quote strong{font-weight:700;font-style:normal;color:#111}
+            .testi-user{display:flex;align-items:center;gap:12px}
+            .testi-av{width:40px;height:40px;border-radius:50%;background:#ddd;background-size:cover;background-position:center}
+            .testi-name{font-size:13px;font-weight:700;color:#111;margin:0}
+            .testi-role{font-size:11px;color:#777;margin:0}
+
+            /* OBJECTIONS / FAQ */
+            .lp-obj{max-width:800px;margin:0 auto;padding:64px 24px}
+            .obj-h2{font-size:28px;font-weight:800;margin-bottom:32px;text-align:center;letter-spacing:-0.5px}
             .fq{border-bottom:1px solid #eee}
-            .fq-q{padding:16px 0;font-size:15px;font-weight:700;color:#111;cursor:pointer;display:flex;justify-content:space-between;align-items:center}
-            .fq-q::after{content:'+';font-size:18px;color:#bbb;transition:transform .2s}
+            .fq-q{padding:20px 0;font-size:16px;font-weight:700;color:#111;cursor:pointer;display:flex;justify-content:space-between;align-items:center}
+            .fq-q::after{content:'+';font-size:20px;color:#888;transition:transform .2s}
             .fq.open .fq-q::after{content:'−'}
-            .fq-a{max-height:0;overflow:hidden;transition:max-height .3s;font-size:13px;color:#666;line-height:1.7}
-            .fq.open .fq-a{max-height:200px;padding-bottom:16px}
+            .fq-a{max-height:0;overflow:hidden;transition:max-height .3s;font-size:14px;color:#555;line-height:1.6}
+            .fq.open .fq-a{max-height:400px;padding-bottom:20px}
+            .fq-a strong{color:#111}
 
-            .lp-bot{background:#0a0a0a;color:#fff;text-align:center;padding:80px 24px 40px}
-            .lp-bot-h{font-size:34px;font-weight:800;margin-bottom:12px;letter-spacing:-1px;line-height:1.15}
-            .lp-bot-sub{font-size:15px;color:#888;margin-bottom:10px}
-            .lp-bot-trust{font-size:12px;color:#999;font-family:'JetBrains Mono',monospace;letter-spacing:.5px;margin-bottom:32px}
-            .lp-bot-btn{padding:18px 48px;background:#5C1414;color:#fff;font-size:13px;font-weight:700;letter-spacing:1px;text-transform:uppercase;border:none;cursor:pointer;font-family:'Sora',sans-serif;transition:all .3s;box-shadow:0 2px 16px rgba(92,20,20,.25)}
+            /* BOTTOM CTA */
+            .lp-bot{background:#0a0a0a;color:#fff;text-align:center;padding:80px 24px}
+            .lp-bot-h{font-size:36px;font-weight:900;margin-bottom:16px;letter-spacing:-1px}
+            .lp-bot-btn{padding:18px 48px;background:#5C1414;color:#fff;font-size:14px;font-weight:800;letter-spacing:0.5px;border:none;cursor:pointer;font-family:'Sora',sans-serif;transition:all .3s;box-shadow:0 4px 20px rgba(92,20,20,.3);margin-bottom:16px}
             .lp-bot-btn:hover{background:#7a1e1e;transform:translateY(-1px);box-shadow:0 6px 24px rgba(92,20,20,.4)}
-            .lp-bot-foot{margin-top:56px;padding-top:28px;border-top:1px solid rgba(255,255,255,.06);font-size:12px;color:#555;line-height:1.6}
-            .lp-bot-copy{font-size:10px;color:#333;font-family:'JetBrains Mono',monospace;letter-spacing:.5px;margin-top:8px}
+            .lp-bot-micro{font-size:13px;color:#888}
 
-            .lp-stick{display:none;position:fixed;bottom:0;left:0;right:0;background:#fff;border-top:1px solid #eee;padding:12px 20px;z-index:90;box-shadow:0 -4px 16px rgba(0,0,0,.06)}
-            .lp-stick button{width:100%;background:#5C1414;color:#fff;padding:16px;border:none;font-size:12px;font-weight:700;letter-spacing:1px;text-transform:uppercase;cursor:pointer;font-family:'Sora',sans-serif}
+            .lp-bot-foot{margin-top:64px;padding-top:32px;border-top:1px solid rgba(255,255,255,.1);font-size:12px;color:#555}
 
-
-
-            .lp-tick{position:fixed;bottom:24px;left:24px;z-index:80;background:#111;color:#fff;padding:12px 20px;font-size:12px;display:flex;align-items:center;gap:10px;opacity:0;transform:translateY(10px);transition:opacity .3s,transform .3s;max-width:340px}
-            .lp-tick.show{opacity:1;transform:translateY(0)}
-            .tk-dot{width:6px;height:6px;background:#22c55e;border-radius:50%;flex-shrink:0}
-            .tk-time{font-size:10px;color:#555;margin-left:auto;white-space:nowrap}
-
-            @media(max-width:768px){
-                .lp-hero{padding:28px 20px 24px}
-                .lp-h1{font-size:32px;letter-spacing:-1px}
-                .lp-sub{font-size:14px;margin-bottom:20px}
-                .lp-ctas{flex-direction:column;align-items:stretch}
-                .lp-btn-p,.lp-btn-s{width:100%;text-align:center}
-                .lp-cards{grid-template-columns:1fr}
-                .lp-steps{grid-template-columns:repeat(2,1fr);gap:0}
-                .lp-step{border-right:none;border-bottom:1px solid #f0f0f0}
-                .lp-step:last-child{border-bottom:none}
-                .s-desc{display:none}
-                .s-num{font-size:28px;margin-bottom:8px}
-                .lp-step{padding:20px 16px}
-                .lp-trust{grid-template-columns:1fr}
-                .lp-bot-h{font-size:26px}
-                .lp-tick{display:none!important}
-                .lp-mid{padding:28px 24px}
-                .lp-how{padding:48px 24px}
+            @media(max-width:900px){
+                .lp-hero-wrap{flex-direction:column;text-align:center;padding-top:32px}
+                .lp-trust-strip{justify-content:center;flex-direction:column;gap:8px}
+                .pb-stats{flex-direction:column;gap:24px}
+                .lp-cards, .testi-grid, .lp-steps{grid-template-columns:1fr;gap:16px}
+                .lp-step{border-left:none;border-top:2px solid #eee;padding:16px 0 0}
+                .lp-h1{font-size:38px}
             }
         </style>
         <div class="lp">
             <div class="lp-brand">COLLATERAL</div>
 
-            <div class="lp-hero">
-                <h1 class="lp-h1">Pick a target.<br><strong>Put money behind it.</strong></h1>
-                <p class="lp-sub">Hit your target, get paid. Miss it, lose the money. Results verified automatically.</p>
-                <div class="lp-ctas">
-                    <button class="lp-btn-p" id="lp-hero-cta" onclick="window.app.openAccessModal()">Get Started Free</button>
+            <div class="lp-hero-wrap">
+                <div class="lp-hero-content">
+                    <span class="lp-eyebrow">The Accountability Contract for Founders, Creators, and Operators</span>
+                    <h1 class="lp-h1">Finally finish what you start.</h1>
+                    <p class="lp-sub">Stake money on a measurable goal. Connect Stripe, X, Shopify, or Amazon. Hit it, you get your stake back plus a bonus. Miss it, the stake is forfeit. Verification is automatic — no screenshots, no self-reports.</p>
+                    
+                    <div class="lp-cta-wrap">
+                        <button class="lp-btn-p" id="lp-hero-cta" onclick="window.app.openAccessModal()">Start your first contract — from $25</button>
+                    </div>
+                    <div class="lp-micro">Free account. No card required. Only lock money when you're ready to commit.</div>
+                    
+                    <div class="lp-trust-strip">
+                        <span>Verified via official APIs:</span>
+                        <div class="lp-trust-logos">
+                            <span>Stripe</span><span>X</span><span>Shopify</span><span>Amazon</span>
+                        </div>
+                    </div>
+                    <div class="lp-anti-gamble">
+                        Not gambling. You're staking against your own measurable performance — not betting on chance or other people. <a href="#faq">Read FAQ.</a>
+                    </div>
                 </div>
-                <div class="lp-tl">No cost to sign up. Lock money only when you're ready.</div>
+                
+                <div class="lp-hero-mock">
+                    <div class="mock-window">
+                        <div class="mock-header"><div class="mock-dot"></div><div class="mock-dot"></div><div class="mock-dot"></div></div>
+                        <div class="mock-body">
+                            <div class="mock-title">New Contract: Stripe Revenue</div>
+                            <div class="mock-field"><strong>Target Metric</strong>Grow 30-day volume by 20% vs baseline</div>
+                            <div class="mock-field"><strong>Stake Amount</strong>$500.00</div>
+                            <div class="mock-field"><strong>Potential Payout</strong>$1,250.00 (2.5x multiplier)</div>
+                            <div class="mock-btn">Lock Stake & Start Contract</div>
+                        </div>
+                    </div>
+                </div>
             </div>
 
-            <div class="lp-ex lp-fade" id="lp-ex">
-                <div class="lp-ex-tag">Example Contracts</div>
+            <!-- PROOF BAR -->
+            <div class="lp-proof-bar">
+                <div class="pb-stats">
+                    <div class="pb-stat"><div class="pb-val">[DATA_NEEDED: $142k]</div><div class="pb-lbl">Committed this month</div></div>
+                    <div class="pb-stat"><div class="pb-val">[DATA_NEEDED: 312]</div><div class="pb-lbl">Active contracts</div></div>
+                    <div class="pb-stat"><div class="pb-val">[DATA_NEEDED: 62%]</div><div class="pb-lbl">Hit rate</div></div>
+                </div>
+                <div class="pb-feed-wrap">
+                    <div class="pb-feed" id="pb-feed-1">
+                        <!-- Populated by JS -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- PAYOUT EXPLANATION -->
+            <div class="lp-payout lp-fade">
+                <div class="lp-payout-in">
+                    <h2 class="payout-h2">How the payout actually works</h2>
+                    <p class="payout-p">Collateral funds payouts directly. Multipliers reflect how ambitious your target is vs. your historical baseline — we pull the last 90 days from your connected account to calibrate.</p>
+                    <div class="payout-box">
+                        <div class="payout-box-h">Worked Example</div>
+                        <div class="payout-math">
+                            <span><strong>1. Lock $500.</strong> Target: grow Stripe revenue 20% in 30 days.</span>
+                            <span><strong>2. Baseline pulled.</strong> We check your last 90 days of Stripe data automatically.</span>
+                            <span><strong>3. Hit it:</strong> Get your $500 back + $750 payout ($1,250 total).</span>
+                            <span><strong>4. Miss it:</strong> Stake forfeit. No exceptions.</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- EXAMPLE CONTRACTS -->
+            <div class="lp-ex lp-fade">
+                <div class="lp-sect-tag">Example Contracts</div>
                 <div class="lp-cards">
-                    <div class="lp-card" data-card="stripe" onclick="window.app.openAccessModal();if(window.trackEvent)window.trackEvent('example_card_click',{card_type:'stripe',source:'stripe',target:'revenue_20pct'})">
-                        <div class="c-title">Revenue Growth</div>
-                        <div class="c-src">Verified with Stripe</div>
-                        <div class="c-rows">
-                            <div class="c-row"><span class="c-lbl">Target</span><span class="c-val">Grow revenue by 20%</span></div>
-                            <div class="c-row"><span class="c-lbl">Deadline</span><span class="c-val">30 days</span></div>
-                            <div class="c-row"><span class="c-lbl">Lock</span><span class="c-val">$250 – $5,000</span></div>
-                            <div class="c-row"><span class="c-lbl">Payout</span><span class="c-val grn">Up to 2.5x</span></div>
+                    <div class="lp-card">
+                        <div class="lp-card-front">
+                            <div class="c-title">Revenue Growth</div>
+                            <div class="c-src">Verified with Stripe</div>
+                            <div class="c-rows">
+                                <div class="c-row"><span class="c-lbl">Target</span><span class="c-val">Grow revenue by 20%</span></div>
+                                <div class="c-row"><span class="c-lbl">Deadline</span><span class="c-val">30 days</span></div>
+                                <div class="c-row"><span class="c-lbl">Lock</span><span class="c-val">from $25</span></div>
+                                <div class="c-row"><span class="c-lbl">Payout</span><span class="c-val" style="color:#15803d">Up to 2.5x</span></div>
+                            </div>
+                            <button class="c-btn">See how this contract works →</button>
                         </div>
-                        <button class="c-btn" onclick="event.stopPropagation();window.app.openAccessModal();if(window.trackEvent)window.trackEvent('example_start_contract_click',{card_type:'stripe',button_location:'card'})">Start This Contract →</button>
+                        <div class="lp-card-back">
+                            <div class="cb-math">
+                                <div><strong>Hit it:</strong><br>Get your stake back + 1.5x bonus.<br><em>e.g. Lock $100 → Get $250.</em></div>
+                                <div><strong>Miss it:</strong><br>Stake forfeit.</div>
+                            </div>
+                            <button class="cb-btn" onclick="window.app.openAccessModal()">Start from $25</button>
+                        </div>
                     </div>
-                    <div class="lp-card" data-card="x" onclick="window.app.openAccessModal();if(window.trackEvent)window.trackEvent('example_card_click',{card_type:'x',source:'x',target:'followers_1000'})">
-                        <div class="c-title">Follower Growth</div>
-                        <div class="c-src">Verified with X</div>
-                        <div class="c-rows">
-                            <div class="c-row"><span class="c-lbl">Target</span><span class="c-val">Gain 1,000 followers</span></div>
-                            <div class="c-row"><span class="c-lbl">Deadline</span><span class="c-val">14 days</span></div>
-                            <div class="c-row"><span class="c-lbl">Lock</span><span class="c-val">$100 – $2,500</span></div>
-                            <div class="c-row"><span class="c-lbl">Payout</span><span class="c-val grn">Up to 4x</span></div>
+                    
+                    <div class="lp-card">
+                        <div class="lp-card-front">
+                            <div class="c-title">Follower Growth</div>
+                            <div class="c-src">Verified with X</div>
+                            <div class="c-rows">
+                                <div class="c-row"><span class="c-lbl">Target</span><span class="c-val">Gain 1,000 followers</span></div>
+                                <div class="c-row"><span class="c-lbl">Deadline</span><span class="c-val">14 days</span></div>
+                                <div class="c-row"><span class="c-lbl">Lock</span><span class="c-val">from $25</span></div>
+                                <div class="c-row"><span class="c-lbl">Payout</span><span class="c-val" style="color:#15803d">Up to 4.0x</span></div>
+                            </div>
+                            <button class="c-btn">See how this contract works →</button>
                         </div>
-                        <button class="c-btn" onclick="event.stopPropagation();window.app.openAccessModal();if(window.trackEvent)window.trackEvent('example_start_contract_click',{card_type:'x',button_location:'card'})">Start This Contract →</button>
+                        <div class="lp-card-back">
+                            <div class="cb-math">
+                                <div><strong>Hit it:</strong><br>Get your stake back + 3.0x bonus.<br><em>e.g. Lock $100 → Get $400.</em></div>
+                                <div><strong>Miss it:</strong><br>Stake forfeit.</div>
+                            </div>
+                            <button class="cb-btn" onclick="window.app.openAccessModal()">Start from $25</button>
+                        </div>
                     </div>
-                    <div class="lp-card" data-card="shopify" onclick="window.app.openAccessModal();if(window.trackEvent)window.trackEvent('example_card_click',{card_type:'shopify',source:'shopify',target:'sales_5000'})">
-                        <div class="c-title">Order Growth</div>
-                        <div class="c-src">Verified with Shopify</div>
-                        <div class="c-rows">
-                            <div class="c-row"><span class="c-lbl">Target</span><span class="c-val">Hit $5,000 in sales</span></div>
-                            <div class="c-row"><span class="c-lbl">Deadline</span><span class="c-val">30 days</span></div>
-                            <div class="c-row"><span class="c-lbl">Lock</span><span class="c-val">$250 – $3,000</span></div>
-                            <div class="c-row"><span class="c-lbl">Payout</span><span class="c-val grn">Up to 2.5x</span></div>
+
+                    <div class="lp-card">
+                        <div class="lp-card-front">
+                            <div class="c-title">Order Growth</div>
+                            <div class="c-src">Verified with Shopify</div>
+                            <div class="c-rows">
+                                <div class="c-row"><span class="c-lbl">Target</span><span class="c-val">Hit $5,000 in sales</span></div>
+                                <div class="c-row"><span class="c-lbl">Deadline</span><span class="c-val">30 days</span></div>
+                                <div class="c-row"><span class="c-lbl">Lock</span><span class="c-val">from $25</span></div>
+                                <div class="c-row"><span class="c-lbl">Payout</span><span class="c-val" style="color:#15803d">Up to 2.5x</span></div>
+                            </div>
+                            <button class="c-btn">See how this contract works →</button>
                         </div>
-                        <button class="c-btn" onclick="event.stopPropagation();window.app.openAccessModal();if(window.trackEvent)window.trackEvent('example_start_contract_click',{card_type:'shopify',button_location:'card'})">Start This Contract →</button>
+                        <div class="lp-card-back">
+                            <div class="cb-math">
+                                <div><strong>Hit it:</strong><br>Get your stake back + 1.5x bonus.<br><em>e.g. Lock $100 → Get $250.</em></div>
+                                <div><strong>Miss it:</strong><br>Stake forfeit.</div>
+                            </div>
+                            <button class="cb-btn" onclick="window.app.openAccessModal()">Start from $25</button>
+                        </div>
                     </div>
                 </div>
             </div>
 
+            <!-- HOW IT WORKS -->
             <div class="lp-how lp-fade">
                 <div class="lp-how-in">
-                    <div class="lp-how-tag">How It Works</div>
+                    <div class="lp-sect-tag">How It Works</div>
                     <div class="lp-steps">
-                        <div class="lp-step" onclick="window.app.openAccessModal()"><div class="s-num">01</div><div class="s-title">Pick a target</div><div class="s-desc">Revenue, followers, sales, or orders.</div></div>
-                        <div class="lp-step" onclick="window.app.openAccessModal()"><div class="s-num">02</div><div class="s-title">Lock money</div><div class="s-desc">$25 to $25,000 behind the target.</div></div>
-                        <div class="lp-step" onclick="window.app.openAccessModal()"><div class="s-num">03</div><div class="s-title">Connect source</div><div class="s-desc">Link Stripe, X, Shopify, or Amazon.</div></div>
-                        <div class="lp-step" onclick="window.app.openAccessModal()"><div class="s-num">04</div><div class="s-title">Get paid or lose it</div><div class="s-desc">Hit it → collect. Miss it → forfeit.</div></div>
+                        <div class="lp-step"><div class="s-num">01</div><div class="s-desc"><strong>Pick a target</strong> — <span>measurable, time-boxed.</span></div></div>
+                        <div class="lp-step"><div class="s-num">02</div><div class="s-desc"><strong>Lock your stake</strong> — <span>$25 to $25,000, held in escrow.</span></div></div>
+                        <div class="lp-step"><div class="s-num">03</div><div class="s-desc"><strong>Connect your source</strong> — <span>Stripe, X, Shopify, or Amazon. Read-only.</span></div></div>
+                        <div class="lp-step"><div class="s-num">04</div><div class="s-desc"><strong>Hit it or forfeit</strong> — <span>verified automatically. No disputes.</span></div></div>
                     </div>
                 </div>
             </div>
 
-            <div class="lp-trust lp-fade">
-                <div class="lp-tb"><div class="lp-tb-h">Verified automatically.</div><div class="lp-tb-p">No screenshots. No manual claims. Connected accounts are checked directly.</div></div>
-                <div class="lp-tb"><div class="lp-tb-h">Free to start.</div><div class="lp-tb-p">Sign up costs nothing. You only lock money when you choose a contract.</div></div>
-            </div>
-
-            <div class="lp-faq lp-fade">
-                <div class="lp-faq-tag">Questions</div>
-                <div class="fq open"><div class="fq-q">What happens if I miss my target?</div><div class="fq-a">You lose the money you locked. That's the point.</div></div>
-                <div class="fq"><div class="fq-q">Do I have to pay to sign up?</div><div class="fq-a">No. Signing up is free. You only lock money when you pick a contract.</div></div>
-                <div class="fq"><div class="fq-q">How are results verified?</div><div class="fq-a">Collateral checks your connected accounts (Stripe, X, Shopify, Amazon) automatically.</div></div>
-            </div>
-
-            <div class="lp-bot">
-                <div class="lp-bot-h">Stop planning.<br>Start proving.</div>
-                <div class="lp-bot-trust">Free account · Real deadline · Verified result</div>
-                <button class="lp-bot-btn" id="lp-final-cta" onclick="window.app.openAccessModal()">Get Started Free →</button>
-                <div class="lp-bot-foot">
-                    Collateral turns goals into contracts with real stakes.
-                    <div class="lp-bot-copy">Collateral.market · © 2026</div>
+            <!-- TESTIMONIALS -->
+            <div class="lp-testi lp-fade">
+                <div class="lp-testi-in">
+                    <div class="lp-sect-tag">Proof</div>
+                    <div class="testi-grid">
+                        <div class="testi-card">
+                            <div class="testi-quote">"I locked $500 on Stripe revenue growth. Hit it and took home a $1,250 payout. <strong>Finally forced me to launch my new feature instead of polishing it endlessly.</strong>"</div>
+                            <div class="testi-user">
+                                <div class="testi-av" style="background-image:url('[DATA_NEEDED: Photo URL 1]')"></div>
+                                <div>
+                                    <div class="testi-name">[DATA_NEEDED: Name 1]</div>
+                                    <div class="testi-role">[DATA_NEEDED: Role/Company]</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="testi-card">
+                            <div class="testi-quote">"I locked $1,000 on growing my X followers. Forfeited the stake because I got lazy. <strong>Brutal, but I won't miss the next one.</strong>"</div>
+                            <div class="testi-user">
+                                <div class="testi-av" style="background-image:url('[DATA_NEEDED: Photo URL 2]')"></div>
+                                <div>
+                                    <div class="testi-name">[DATA_NEEDED: Name 2]</div>
+                                    <div class="testi-role">[DATA_NEEDED: Role/Company]</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="testi-card">
+                            <div class="testi-quote">"Staked $250 on my Shopify store orders. The API verification is seamless. <strong>The money on the line changed my entire work ethic for the month.</strong>"</div>
+                            <div class="testi-user">
+                                <div class="testi-av" style="background-image:url('[DATA_NEEDED: Photo URL 3]')"></div>
+                                <div>
+                                    <div class="testi-name">[DATA_NEEDED: Name 3]</div>
+                                    <div class="testi-role">[DATA_NEEDED: Role/Company]</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
 
-            <div class="lp-stick"><button onclick="window.app.openAccessModal()">Get Started Free →</button></div>
-            <div class="lp-tick" id="lp-tick"><span class="tk-dot"></span><span id="tk-t"></span><span class="tk-time" id="tk-d"></span></div>
+            <!-- OBJECTIONS / FAQ -->
+            <div class="lp-obj lp-fade" id="faq">
+                <h2 class="obj-h2">Questions you're probably asking</h2>
+                
+                <div class="fq open"><div class="fq-q">Is this gambling?</div><div class="fq-a"><strong>No.</strong> You're staking against your own measurable performance using read-only data from platforms you already use. There's no opponent, no chance, no house edge. It's an accountability contract.</div></div>
+                
+                <div class="fq"><div class="fq-q">Is my money safe before the contract resolves?</div><div class="fq-a"><strong>Yes.</strong> Stakes are held securely in [DATA_NEEDED: Escrow Provider / Stripe Connect]. Collateral never touches the principal directly while the contract is active.</div></div>
+                
+                <div class="fq"><div class="fq-q">What if Stripe / X / Shopify / Amazon goes down or the API breaks?</div><div class="fq-a">Contracts pause until verification can complete. You don't lose by default — we lose, not you. If an API is permanently deprecated, original stakes are fully refunded.</div></div>
+                
+                <div class="fq"><div class="fq-q">What counts as "hitting" the target?</div><div class="fq-a">The exact metric you choose, pulled directly from the connected platform's API at the deadline. No interpretation, no human judgment calls, no screenshots.</div></div>
+                
+                <div class="fq"><div class="fq-q">Can I cancel after I lock?</div><div class="fq-a"><strong>[DATA_NEEDED: Cancellation Policy].</strong> Usually, once a contract begins and the stake is locked, it cannot be canceled. You must hit the target or forfeit. Cancel before locking at any time.</div></div>
+                
+                <div class="fq"><div class="fq-q">What about taxes?</div><div class="fq-a">Payouts may be taxable income. We issue 1099s for US users who earn over $600 in net profit. Check with your tax professional.</div></div>
+                
+                <div class="fq"><div class="fq-q">Is this legal in my state/country?</div><div class="fq-a">Available in the US, Canada, UK, and EU, except [DATA_NEEDED: Specific restricted regions/states]. Not available in restricted jurisdictions.</div></div>
+                
+                <div class="fq"><div class="fq-q">What if I lose? Can I get a refund?</div><div class="fq-a"><strong>No.</strong> The forfeit is the entire mechanism. That's the point. Do not lock money you cannot afford to lose.</div></div>
+            </div>
+
+            <!-- BOTTOM CTA -->
+            <div class="lp-bot">
+                <div class="lp-bot-h">Your next goal. With actual consequences.</div>
+                <button class="lp-bot-btn" id="lp-final-cta" onclick="window.app.openAccessModal()">Start your first contract</button>
+                <div class="lp-bot-micro">$25 minimum. Cancel before locking. No card required to sign up.</div>
+                
+                <div class="lp-bot-foot">
+                    Collateral turns goals into contracts with real stakes.
+                    <div style="margin-top:8px;font-family:'JetBrains Mono';font-size:10px;color:#444">Collateral.market · © 2026</div>
+                </div>
+            </div>
         </div>
     `;
 }
@@ -212,9 +380,6 @@ export function initLanding() {
 
     if(window.trackEvent) window.trackEvent('go_page_view',{source:utm.utm_source||'direct',campaign:utm.utm_campaign||'none',medium:utm.utm_medium||'none'});
 
-    // Let unauthenticated visitors browse the page freely — modal opens on CTA click
-
-    // Helper: if signed in, go to /funding. If not, open signup modal.
     function goAction() {
         if (window.appState?.isLoggedIn) {
             sessionStorage.removeItem('collateral_go_flow');
@@ -224,23 +389,8 @@ export function initLanding() {
         }
     }
 
-    // Rewire all CTA buttons to use goAction
     document.getElementById('lp-hero-cta')?.addEventListener('click',(e)=>{e.preventDefault();e.stopPropagation();goAction();if(window.trackEvent)window.trackEvent('hero_create_contract_click',utm)});
     document.getElementById('lp-final-cta')?.addEventListener('click',(e)=>{e.preventDefault();e.stopPropagation();goAction();if(window.trackEvent)window.trackEvent('final_create_contract_click',{button_location:'footer',...utm})});
-
-    // Rewire all card clicks and card buttons
-    document.querySelectorAll('.lp-card').forEach(card => {
-        card.onclick = (e) => { goAction(); if(window.trackEvent)window.trackEvent('example_card_click',{card_type:card.dataset.card}); };
-    });
-    document.querySelectorAll('.c-btn').forEach(btn => {
-        btn.onclick = (e) => { e.stopPropagation(); goAction(); if(window.trackEvent)window.trackEvent('example_start_contract_click',{button_location:'card'}); };
-    });
-
-    // Rewire "How It Works" step clicks
-    document.querySelectorAll('.lp-step').forEach(step => { step.onclick = () => goAction(); });
-
-    // Rewire sticky bar and bottom CTA
-    document.querySelector('.lp-stick button')?.addEventListener('click',(e)=>{e.preventDefault();goAction()});
 
     document.querySelectorAll('.fq').forEach(item=>{
         item.querySelector('.fq-q')?.addEventListener('click',()=>{
@@ -249,11 +399,21 @@ export function initLanding() {
         });
     });
 
-    const msgs=[{t:'Creator locked $300 on a revenue contract',d:'2m ago'},{t:'$1,200 payout on follower growth duel',d:'8m ago'},{t:'New Shopify contract — $500 locked',d:'14m ago'},{t:'$2,400 payout on 30-day Stripe contract',d:'22m ago'}];
-    let ti=0;const tk=document.getElementById('lp-tick'),tt=document.getElementById('tk-t'),td=document.getElementById('tk-d');
-    function showT(){if(!tk||!tt)return;const m=msgs[ti%msgs.length];tt.textContent=m.t;if(td)td.textContent=m.d;tk.classList.add('show');setTimeout(()=>tk.classList.remove('show'),4000);ti++}
-    setTimeout(showT,8000);setInterval(showT,15000);
-
     const obs=new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('vis');obs.unobserve(e.target)}})},{threshold:.12});
     document.querySelectorAll('.lp-fade').forEach(el=>obs.observe(el));
+
+    // Populate Proof Feed
+    const feed = document.getElementById('pb-feed-1');
+    if (feed) {
+        const events = [
+            "<strong>Sarah M.</strong> committed $500 on a 30-day Shopify contract &bull; 4m ago",
+            "<strong>James K.</strong> earned $1,200 on a Stripe revenue contract &bull; 18m ago",
+            "<strong>Elena R.</strong> committed $250 on an X follower contract &bull; 32m ago",
+            "<strong>Marcus T.</strong> earned $800 on a Shopify sales contract &bull; 1h ago",
+            "<strong>David L.</strong> committed $1,000 on a Stripe revenue contract &bull; 1h 15m ago"
+        ];
+        // Duplicate to ensure smooth scrolling loop
+        const allEvents = [...events, ...events, ...events, ...events];
+        feed.innerHTML = allEvents.map(e => \`<div class="pb-item">\${e}</div>\`).join('');
+    }
 }

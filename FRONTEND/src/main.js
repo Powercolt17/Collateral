@@ -510,9 +510,11 @@ window.app = {
                 window.app.closeAccessModal();
                 updateAuthUI();
 
-                // If on /go page, stay there. Otherwise normal onboarding.
-                if (!_isOnGoPage()) {
-                    if (shouldShowOnboarding()) window.router.navigate('/welcome');
+                // Always navigate to overview after signup (even from /go)
+                if (shouldShowOnboarding()) {
+                    window.router.navigate('/welcome');
+                } else {
+                    window.router.navigate('/overview');
                 }
             } catch (err) {
                 window.app._showAuthError(err.message || 'Account creation failed.');
@@ -539,8 +541,10 @@ window.app = {
                 window.app.closeAccessModal();
                 updateAuthUI();
 
-                // If on /go page, stay there
-                // (otherwise user is already on whatever page they were on)
+                // Always go to overview after login (even from /go)
+                if (_isOnGoPage()) {
+                    window.router.navigate('/overview');
+                }
             } catch (err) {
                 window.app._showAuthError(err.message || 'Invalid email or password.');
             } finally {
@@ -582,14 +586,14 @@ window.app = {
                 console.log('[Auth] Clerk session exists, exchanging token...');
                 await window.app._exchangeClerkToken();
                 updateAuthUI();
-                window.router.navigate(_goFlow ? '/go' : '/overview');
+                window.router.navigate('/overview');
                 sessionStorage.removeItem('collateral_go_flow');
                 return;
             }
             await window.Clerk.client.signIn.authenticateWithRedirect({
                 strategy: 'oauth_google',
                 redirectUrl: window.location.origin + '/sso-callback',
-                redirectUrlComplete: window.location.origin + (_goFlow ? '/go' : '/overview'),
+                redirectUrlComplete: window.location.origin + '/overview',
             });
         } catch (err) {
             console.error('[Auth] Google sign-in failed:', err);
@@ -601,7 +605,7 @@ window.app = {
                     await window.Clerk.client.signIn.authenticateWithRedirect({
                         strategy: 'oauth_google',
                         redirectUrl: window.location.origin + '/sso-callback',
-                        redirectUrlComplete: window.location.origin + (_goFlow ? '/go' : '/overview'),
+                        redirectUrlComplete: window.location.origin + '/overview',
                     });
                 } catch (retryErr) {
                     console.error('[Auth] Google retry also failed:', retryErr);
@@ -623,14 +627,14 @@ window.app = {
                 console.log('[Auth] Clerk session exists, exchanging token...');
                 await window.app._exchangeClerkToken();
                 updateAuthUI();
-                window.router.navigate(_goFlow ? '/go' : '/overview');
+                window.router.navigate('/overview');
                 sessionStorage.removeItem('collateral_go_flow');
                 return;
             }
             await window.Clerk.client.signIn.authenticateWithRedirect({
                 strategy: 'oauth_apple',
                 redirectUrl: window.location.origin + '/sso-callback',
-                redirectUrlComplete: window.location.origin + (_goFlow ? '/go' : '/overview'),
+                redirectUrlComplete: window.location.origin + '/overview',
             });
         } catch (err) {
             console.error('[Auth] Apple sign-in failed:', err);
@@ -642,7 +646,7 @@ window.app = {
                     await window.Clerk.client.signIn.authenticateWithRedirect({
                         strategy: 'oauth_apple',
                         redirectUrl: window.location.origin + '/sso-callback',
-                        redirectUrlComplete: window.location.origin + (_goFlow ? '/go' : '/overview'),
+                        redirectUrlComplete: window.location.origin + '/overview',
                     });
                 } catch (retryErr) {
                     console.error('[Auth] Apple retry also failed:', retryErr);
@@ -679,7 +683,7 @@ window.app = {
             } else {
                 console.log('[Auth] No session after SSO callback');
             }
-            window.router.navigate(wasGoFlow ? '/go' : '/overview');
+            window.router.navigate('/overview');
         } catch (err) {
             console.error('[Auth] SSO callback failed:', err);
             sessionStorage.removeItem('collateral_go_flow');

@@ -40,7 +40,7 @@ export const landingCSS = `
 .lcard-src{font-family:'Inter',monospace;font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;color:var(--t3)}
 .lcard-tier{font-family:'Inter',monospace;font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:1px;padding:2px 6px}
 .tier-pledge{color:var(--g);background:rgba(21,128,61,.06);border:1px solid rgba(21,128,61,.15)}
-.tier-stake{color:var(--g);background:rgba(21,128,61,.06);border:1px solid rgba(21,128,61,.15)}
+.tier-stake{color:#B45309;background:rgba(180,83,9,.06);border:1px solid rgba(180,83,9,.15)}
 .tier-allin{color:var(--r);background:rgba(92,20,20,.05);border:1px solid rgba(92,20,20,.12)}
 .lcard-title{font-family:'Inter Tight',sans-serif;font-size:15px;font-weight:600;color:var(--t1);margin-bottom:4px;letter-spacing:-.2px}
 .lcard-target{font-size:11px;color:var(--t2);margin-bottom:16px}
@@ -67,8 +67,8 @@ export const landingCSS = `
 /* ═══ SOURCES ═══ */
 .lsources{padding:32px 0;border-top:1px solid var(--d);border-bottom:1px solid var(--d);background:var(--p)}
 .lsources-in{display:flex;align-items:center;justify-content:center;gap:32px;flex-wrap:wrap}
-.lsrc{font-family:'Inter',monospace;font-size:11px;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;color:var(--t3);padding:6px 16px;border:1px solid var(--d);transition:border-color .15s}
-.lsrc:hover{border-color:#bbb}
+.lsrc-logo{display:flex;align-items:center;opacity:.45;transition:opacity .2s;padding:0 8px}
+.lsrc-logo:hover{opacity:.7}
 
 /* ═══ CONTRACT TYPES ═══ */
 .ltypes{padding:80px 0}

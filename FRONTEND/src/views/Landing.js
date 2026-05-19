@@ -44,13 +44,71 @@ export function renderLanding() {
                             <div class="lpcard-src">Stripe Integration</div>
                             <div class="lpcard-title">Stripe Revenue Growth</div>
                             <div class="lpcard-row"><span class="k">Stake</span><span class="v">$250</span></div>
+                            <div class="lpcard-row"><span class="k">Multiplier</span><span class="v">4x</span></div>
                             <div class="lpcard-row"><span class="k">Target</span><span class="v">+20% in 30 days</span></div>
                             <div class="lpcard-row"><span class="k">Source</span><span class="v">Stripe API</span></div>
                             <div class="lpcard-outcome">
                                 <div class="lpcard-outcome-title">Outcome</div>
-                                <div class="lpcard-outcome-item success"><span class="dot"></span> Hit target &rarr; get paid</div>
-                                <div class="lpcard-outcome-item failure"><span class="dot"></span> Miss target &rarr; stake forfeited</div>
+                                <div class="lpcard-outcome-item success"><span class="dot"></span> If you hit: You get $1,000</div>
+                                <div class="lpcard-outcome-item failure"><span class="dot"></span> If you miss: Stake forfeited</div>
                             </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ═══ LIVE CONTRACT EXAMPLES ═══ -->
+            <div class="lcontracts" id="contracts">
+                <div class="lw" data-r>
+                    <div class="lred-dash"><span class="lmono">Open Contracts</span></div>
+                    <div class="lcards">
+                        <div class="lcard">
+                            <div class="lcard-top">
+                                <span class="lcard-src">Stripe</span>
+                                <span class="lcard-tier tier-stake">Stake</span>
+                            </div>
+                            <div class="lcard-title">Revenue Growth</div>
+                            <div class="lcard-target">Grow revenue 20% in 30 days</div>
+                            <div class="lcard-row"><span class="k">Stake</span><span class="v">$250 – $3,000</span></div>
+                            <div class="lcard-row"><span class="k">Multiplier</span><span class="v">2.5x</span></div>
+                            <div class="lcard-row"><span class="k">Window</span><span class="v">30 days</span></div>
+                            <div class="lcard-btn"><button class="lp-cta-btn" data-source="STRIPE" data-tier="stake" data-capital="250">Start Contract</button></div>
+                        </div>
+                        <div class="lcard">
+                            <div class="lcard-top">
+                                <span class="lcard-src">X / Twitter</span>
+                                <span class="lcard-tier tier-allin">All-In</span>
+                            </div>
+                            <div class="lcard-title">Follower Growth</div>
+                            <div class="lcard-target">Gain 1,000 followers in 14 days</div>
+                            <div class="lcard-row"><span class="k">Stake</span><span class="v">$500 – $5,000</span></div>
+                            <div class="lcard-row"><span class="k">Multiplier</span><span class="v">4x</span></div>
+                            <div class="lcard-row"><span class="k">Window</span><span class="v">14 days</span></div>
+                            <div class="lcard-btn"><button class="lp-cta-btn" data-source="X" data-tier="all_in" data-capital="500">Start Contract</button></div>
+                        </div>
+                        <div class="lcard">
+                            <div class="lcard-top">
+                                <span class="lcard-src">Shopify</span>
+                                <span class="lcard-tier tier-pledge">Pledge</span>
+                            </div>
+                            <div class="lcard-title">Store Sales</div>
+                            <div class="lcard-target">Hit $5,000 net sales in 30 days</div>
+                            <div class="lcard-row"><span class="k">Stake</span><span class="v">$100 – $1,500</span></div>
+                            <div class="lcard-row"><span class="k">Multiplier</span><span class="v">1.5x</span></div>
+                            <div class="lcard-row"><span class="k">Window</span><span class="v">30 days</span></div>
+                            <div class="lcard-btn"><button class="lp-cta-btn" data-source="SHOPIFY" data-tier="pledge" data-capital="100">Start Contract</button></div>
+                        </div>
+                        <div class="lcard">
+                            <div class="lcard-top">
+                                <span class="lcard-src">YouTube</span>
+                                <span class="lcard-tier tier-stake">Stake</span>
+                            </div>
+                            <div class="lcard-title">Subscriber Growth</div>
+                            <div class="lcard-target">Gain 500 subscribers in 30 days</div>
+                            <div class="lcard-row"><span class="k">Stake</span><span class="v">$250 – $3,000</span></div>
+                            <div class="lcard-row"><span class="k">Multiplier</span><span class="v">1.7x</span></div>
+                            <div class="lcard-row"><span class="k">Window</span><span class="v">30 days</span></div>
+                            <div class="lcard-btn"><button class="lp-cta-btn" data-source="YOUTUBE" data-tier="stake" data-capital="250">Start Contract</button></div>
                         </div>
                     </div>
                 </div>
@@ -79,63 +137,6 @@ export function renderLanding() {
                         <img class="logo-x" src="https://cdn.simpleicons.org/x/555555" alt="X">
                         <img class="logo-shopify" src="https://www.vectorlogo.zone/logos/shopify/shopify-ar21.svg" alt="Shopify">
                         <img class="logo-youtube" src="https://www.vectorlogo.zone/logos/youtube/youtube-ar21.svg" alt="YouTube">
-                    </div>
-                </div>
-            </div>
-
-            <!-- ═══ LIVE CONTRACT EXAMPLES ═══ -->
-            <div class="lcontracts" id="contracts">
-                <div class="lw" data-r>
-                    <div class="lred-dash"><span class="lmono">Open Contracts</span></div>
-                    <div class="lcards">
-                        <div class="lcard">
-                            <div class="lcard-top">
-                                <span class="lcard-src">Stripe</span>
-                                <span class="lcard-tier tier-stake">Stake</span>
-                            </div>
-                            <div class="lcard-title">Revenue Growth</div>
-                            <div class="lcard-target">Grow revenue 20% in 30 days</div>
-                            <div class="lcard-row"><span class="k">Stake</span><span class="v">$250 – $3,000</span></div>
-                            <div class="lcard-row"><span class="k">Multiplier</span><span class="v">2.5x</span></div>
-                            <div class="lcard-row"><span class="k">Window</span><span class="v">30 days</span></div>
-                            <div class="lcard-btn"><button class="lp-cta-btn">Start Contract</button></div>
-                        </div>
-                        <div class="lcard">
-                            <div class="lcard-top">
-                                <span class="lcard-src">X / Twitter</span>
-                                <span class="lcard-tier tier-allin">All-In</span>
-                            </div>
-                            <div class="lcard-title">Follower Growth</div>
-                            <div class="lcard-target">Gain 1,000 followers in 14 days</div>
-                            <div class="lcard-row"><span class="k">Stake</span><span class="v">$500 – $5,000</span></div>
-                            <div class="lcard-row"><span class="k">Multiplier</span><span class="v">4x</span></div>
-                            <div class="lcard-row"><span class="k">Window</span><span class="v">14 days</span></div>
-                            <div class="lcard-btn"><button class="lp-cta-btn">Start Contract</button></div>
-                        </div>
-                        <div class="lcard">
-                            <div class="lcard-top">
-                                <span class="lcard-src">Shopify</span>
-                                <span class="lcard-tier tier-pledge">Pledge</span>
-                            </div>
-                            <div class="lcard-title">Store Sales</div>
-                            <div class="lcard-target">Hit $5,000 net sales in 30 days</div>
-                            <div class="lcard-row"><span class="k">Stake</span><span class="v">$100 – $1,500</span></div>
-                            <div class="lcard-row"><span class="k">Multiplier</span><span class="v">1.5x</span></div>
-                            <div class="lcard-row"><span class="k">Window</span><span class="v">30 days</span></div>
-                            <div class="lcard-btn"><button class="lp-cta-btn">Start Contract</button></div>
-                        </div>
-                        <div class="lcard">
-                            <div class="lcard-top">
-                                <span class="lcard-src">YouTube</span>
-                                <span class="lcard-tier tier-stake">Stake</span>
-                            </div>
-                            <div class="lcard-title">Subscriber Growth</div>
-                            <div class="lcard-target">Gain 500 subscribers in 30 days</div>
-                            <div class="lcard-row"><span class="k">Stake</span><span class="v">$250 – $3,000</span></div>
-                            <div class="lcard-row"><span class="k">Multiplier</span><span class="v">1.7x</span></div>
-                            <div class="lcard-row"><span class="k">Window</span><span class="v">30 days</span></div>
-                            <div class="lcard-btn"><button class="lp-cta-btn">Start Contract</button></div>
-                        </div>
                     </div>
                 </div>
             </div>
@@ -219,7 +220,7 @@ export function renderLanding() {
                         <div class="lex-row"><span class="k">You stake</span><span class="v">$500</span></div>
                         <div class="lex-row"><span class="k">Target</span><span class="v">+20% Stripe revenue in 30 days</span></div>
                         <div class="lex-row"><span class="k">Verified by</span><span class="v">Stripe API</span></div>
-                        <div class="lex-row"><span class="k">If you hit</span><span class="v green">Payout released</span></div>
+                        <div class="lex-row"><span class="k">If you hit</span><span class="v green">You get paid</span></div>
                         <div class="lex-row"><span class="k">If you miss</span><span class="v red">Stake forfeited</span></div>
                     </div>
                 </div>
@@ -292,11 +293,14 @@ export function initLanding() {
     if (Object.keys(utm).length) sessionStorage.setItem('collateral_utm', JSON.stringify(utm));
     if (window.trackEvent) window.trackEvent('go_page_view', { source: utm.utm_source || 'direct', campaign: utm.utm_campaign || 'none' });
 
-    function goAction() {
+    function goAction(targetUrl = '/contracts/execute') {
         if (window.appState?.isLoggedIn) {
             sessionStorage.removeItem('collateral_go_flow');
-            window.router.navigate('/funding');
+            sessionStorage.removeItem('collateral_go_target');
+            window.router.navigate(targetUrl);
         } else {
+            sessionStorage.setItem('collateral_go_flow', '1');
+            sessionStorage.setItem('collateral_go_target', targetUrl);
             window.app.openAccessModal();
         }
     }
@@ -310,8 +314,16 @@ export function initLanding() {
     });
     document.querySelectorAll('.lp-cta-btn').forEach(btn => {
         btn.addEventListener('click', (e) => {
-            e.preventDefault(); e.stopPropagation(); goAction();
-            if (window.trackEvent) window.trackEvent('cta_click', { button: 'inline', ...utm });
+            e.preventDefault(); e.stopPropagation();
+            const source = btn.getAttribute('data-source');
+            const tier = btn.getAttribute('data-tier');
+            const capital = btn.getAttribute('data-capital');
+            let targetUrl = '/contracts/execute';
+            if (source && tier && capital) {
+                targetUrl = `/contracts/execute?source=${source}&tier=${tier}&capital=${capital}`;
+            }
+            goAction(targetUrl);
+            if (window.trackEvent) window.trackEvent('cta_click', { button: 'inline', source, tier, capital, ...utm });
         });
     });
 

@@ -510,8 +510,12 @@ window.app = {
                 window.app.closeAccessModal();
                 updateAuthUI();
 
-                // Always navigate to overview after signup (even from /go)
-                if (shouldShowOnboarding()) {
+                // Always navigate to target or overview after signup
+                const goTarget = sessionStorage.getItem('collateral_go_target');
+                if (goTarget) {
+                    sessionStorage.removeItem('collateral_go_target');
+                    window.router.navigate(goTarget);
+                } else if (shouldShowOnboarding()) {
                     window.router.navigate('/welcome');
                 } else {
                     window.router.navigate('/overview');
@@ -541,8 +545,12 @@ window.app = {
                 window.app.closeAccessModal();
                 updateAuthUI();
 
-                // Always go to overview after login (even from /go)
-                if (_isOnGoPage()) {
+                // Always go to target or overview after login (even from /go)
+                const goTarget = sessionStorage.getItem('collateral_go_target');
+                if (goTarget) {
+                    sessionStorage.removeItem('collateral_go_target');
+                    window.router.navigate(goTarget);
+                } else if (_isOnGoPage()) {
                     window.router.navigate('/overview');
                 }
             } catch (err) {
@@ -586,7 +594,13 @@ window.app = {
                 console.log('[Auth] Clerk session exists, exchanging token...');
                 await window.app._exchangeClerkToken();
                 updateAuthUI();
-                window.router.navigate('/overview');
+                const goTarget = sessionStorage.getItem('collateral_go_target');
+                if (goTarget) {
+                    sessionStorage.removeItem('collateral_go_target');
+                    window.router.navigate(goTarget);
+                } else {
+                    window.router.navigate('/overview');
+                }
                 sessionStorage.removeItem('collateral_go_flow');
                 return;
             }
@@ -627,7 +641,13 @@ window.app = {
                 console.log('[Auth] Clerk session exists, exchanging token...');
                 await window.app._exchangeClerkToken();
                 updateAuthUI();
-                window.router.navigate('/overview');
+                const goTarget = sessionStorage.getItem('collateral_go_target');
+                if (goTarget) {
+                    sessionStorage.removeItem('collateral_go_target');
+                    window.router.navigate(goTarget);
+                } else {
+                    window.router.navigate('/overview');
+                }
                 sessionStorage.removeItem('collateral_go_flow');
                 return;
             }
@@ -683,7 +703,13 @@ window.app = {
             } else {
                 console.log('[Auth] No session after SSO callback');
             }
-            window.router.navigate('/overview');
+            const goTarget = sessionStorage.getItem('collateral_go_target');
+            if (goTarget) {
+                sessionStorage.removeItem('collateral_go_target');
+                window.router.navigate(goTarget);
+            } else {
+                window.router.navigate('/overview');
+            }
         } catch (err) {
             console.error('[Auth] SSO callback failed:', err);
             sessionStorage.removeItem('collateral_go_flow');

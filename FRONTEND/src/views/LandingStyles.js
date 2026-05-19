@@ -21,8 +21,14 @@ export const landingCSS = `
 
 /* ═══ HERO ═══ */
 .lhero{padding:100px 0 56px}
-.lh1{font-family:'Inter Tight',sans-serif;font-weight:400;font-size:clamp(36px,6vw,64px);line-height:.92;letter-spacing:-1px;color:var(--t1);margin:0 0 20px;max-width:680px}
+.lh1{font-family:'Inter Tight',sans-serif;font-weight:400;font-size:clamp(36px,6vw,64px);line-height:.92;letter-spacing:-1px;color:var(--t1);margin:0 0 20px;max-width:850px}
 .lh1 em{font-style:normal;color:var(--r);font-weight:500;letter-spacing:-1.5px}
+.lh-nobrk{display:inline}
+.lh-br{display:none}
+@media(min-width:768px){
+  .lh-nobrk{white-space:nowrap}
+  .lh-br{display:block}
+}
 .lsub{font-size:17px;color:var(--t2);line-height:1.6;margin:0 0 28px;max-width:520px;letter-spacing:-.2px}
 .lctas{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:12px}
 .lbtn{height:48px;padding:0 28px;font-size:12px;font-weight:600;letter-spacing:.6px;text-transform:uppercase;border:none;cursor:pointer;display:inline-flex;align-items:center;gap:8px;transition:all .15s;font-family:'Inter',sans-serif}

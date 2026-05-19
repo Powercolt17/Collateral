@@ -20,7 +20,8 @@ export function renderLanding() {
                 <div class="lhero" data-r>
                     <div class="launch-badge">Launch Offer — First contract match up to $250</div>
                     <h1 class="lh1">
-                        Put money behind the goal<br>you keep saying you'll <em>hit.</em>
+                        <span class="lh-nobrk">Put money behind the goal</span><br class="lh-br">
+                        <span class="lh-nobrk">you keep saying you'll <em>hit.</em></span>
                     </h1>
                     <p class="lsub">
                         Create a performance contract tied to real metrics — revenue, followers, views, sales, or launches. Hit the target and get paid. Miss it and lose the stake.

@@ -42,23 +42,23 @@ export const landingCSS = `
 
 /* ═══ LIVE CONTRACTS ═══ */
 .lcontracts{padding:56px 0 64px;background:var(--p);border-top:1px solid var(--d);border-bottom:1px solid var(--d)}
-.lcards{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
-.lcard{border:1px solid var(--d);padding:20px;display:flex;flex-direction:column;transition:border-color .15s,box-shadow .15s}
-.lcard:hover{border-color:#bbb;box-shadow:0 4px 12px rgba(0,0,0,.04)}
-.lcard-top{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:12px}
-.lcard-src{font-family:'Inter',monospace;font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;color:var(--t3)}
-.lcard-tier{font-family:'Inter',monospace;font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:1px;padding:2px 6px}
+.lcards{display:grid;grid-template-columns:repeat(4,1fr);gap:24px}
+.lcard{border:1px solid var(--d);padding:28px 24px;display:flex;flex-direction:column;transition:border-color .15s,box-shadow .15s;background:var(--p)}
+.lcard:hover{border-color:#bbb;box-shadow:0 4px 16px rgba(0,0,0,.04)}
+.lcard-top{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:16px}
+.lcard-src{font-family:'Inter',monospace;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;color:var(--t3)}
+.lcard-tier{font-family:'Inter',monospace;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:1px;padding:3px 8px}
 .tier-pledge{color:var(--g);background:rgba(21,128,61,.06);border:1px solid rgba(21,128,61,.15)}
 .tier-stake{color:#B45309;background:rgba(180,83,9,.06);border:1px solid rgba(180,83,9,.15)}
 .tier-allin{color:var(--r);background:rgba(92,20,20,.05);border:1px solid rgba(92,20,20,.12)}
-.lcard-title{font-family:'Inter Tight',sans-serif;font-size:15px;font-weight:600;color:var(--t1);margin-bottom:4px;letter-spacing:-.2px}
-.lcard-target{font-size:11px;color:var(--t2);margin-bottom:16px}
-.lcard-row{display:flex;justify-content:space-between;font-size:11px;padding:5px 0;border-bottom:1px solid rgba(229,229,229,.5)}
+.lcard-title{font-family:'Inter Tight',sans-serif;font-size:19px;font-weight:600;color:var(--t1);margin-bottom:6px;letter-spacing:-.3px}
+.lcard-target{font-size:13px;color:var(--t2);margin-bottom:24px;line-height:1.4}
+.lcard-row{display:flex;justify-content:space-between;font-size:12px;padding:8px 0;border-bottom:1px solid rgba(229,229,229,.5)}
 .lcard-row:last-of-type{border:none}
 .lcard-row .k{color:var(--t3)}
 .lcard-row .v{font-weight:600;color:var(--t1)}
-.lcard-btn{margin-top:auto;padding-top:16px}
-.lcard-btn button{width:100%;height:40px;background:var(--t1);color:#fff;font-size:10px;font-weight:600;letter-spacing:1px;text-transform:uppercase;border:none;cursor:pointer;transition:background .15s}
+.lcard-btn{margin-top:auto;padding-top:20px}
+.lcard-btn button{width:100%;height:44px;background:var(--t1);color:#fff;font-size:11px;font-weight:600;letter-spacing:1px;text-transform:uppercase;border:none;cursor:pointer;transition:background .15s}
 .lcard-btn button:hover{background:var(--r)}
 
 /* ═══ HOW IT WORKS ═══ */

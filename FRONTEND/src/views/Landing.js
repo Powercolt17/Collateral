@@ -128,18 +128,10 @@ export function renderLanding() {
             <div class="lsources">
                 <div class="lsources-in">
                     <span class="lmono" style="color:var(--t2)">Verified via official APIs</span>
-                    <span class="lsrc-logo">
-                        <svg height="20" viewBox="0 0 60 25" fill="#444"><path d="M5 4.8C5 3.5 6.1 3 7.5 3c2.5 0 5.6 1.3 8.1 3.5V1.2C13.3.4 11 0 8.7 0 3.5 0 0 2.7 0 7.2c0 7 9.7 5.9 9.7 8.9 0 1.5-1.3 2-3.1 2-2.7 0-6.2-1.5-8.9-3.6v5.4C0 21.5 2.5 23 6.6 23c5.3 0 8-2.8 8-7.2C14.6 8.3 5 9.6 5 4.8zm14.3-4.5l-4.5.9v20.6h4.5V.3zm6.1 5.5l-.3-1.5h-4.2v17.5h4.5v-11.9c1.1-1.4 2.9-1.1 3.5-.9V4.3c-.6-.2-2.8-.7-3.5 1.5zm7.5-1.8c1.6 0 2.8.7 3.4 2.2l3.5-1.5C38.8 2.2 36.5.9 34 .9 28.2.9 24 5.6 24 11.8s4.2 10.9 10 10.9c2.6 0 4.8-1 6-3.3l-3.5-1.5c-.6 1.4-1.8 2.1-3.4 2.1-2.5 0-4.5-2-4.5-5.4v-1.5c0-3.3 2-5.3 4.5-5.3zM55.5 0c-1.7 0-2.8.8-3.5 1.8l-.2-1.5h-4.2v23.5l4.5-.9v-5.7c.7.6 1.7 1 2.9 1C59 18.2 62 14.8 62 9 62 3.6 59.1 0 55.5 0zm-1 14.5c-1.3 0-2-.5-2.5-1.2V7c.5-.7 1.2-1.3 2.5-1.3 2 0 3.3 2 3.3 4.4s-1.3 4.4-3.3 4.4z" transform="scale(0.95)"/></svg>
-                    </span>
-                    <span class="lsrc-logo">
-                        <svg height="18" viewBox="0 0 24 24" fill="#444"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
-                    </span>
-                    <span class="lsrc-logo">
-                        <svg height="20" viewBox="0 0 109 124" fill="#444"><path d="M74.7 0L54.5 11.8 34.3 0 0 19.7v64.9l34.3 19.7 20.2-11.8 20.2 11.8 34.3-19.7V19.7L74.7 0zM68 46.2L54.5 54 41 46.2V30.5L54.5 22.7 68 30.5v15.7z" transform="scale(0.85)"/></svg>
-                    </span>
-                    <span class="lsrc-logo">
-                        <svg height="18" viewBox="0 0 24 24" fill="#444"><path d="M23.5 6.19a3.02 3.02 0 00-2.12-2.14C19.5 3.5 12 3.5 12 3.5s-7.5 0-9.38.55A3.02 3.02 0 00.5 6.19 31.6 31.6 0 000 12a31.6 31.6 0 00.5 5.81 3.02 3.02 0 002.12 2.14c1.87.55 9.38.55 9.38.55s7.5 0 9.38-.55a3.02 3.02 0 002.12-2.14A31.6 31.6 0 0024 12a31.6 31.6 0 00-.5-5.81zM9.55 15.57V8.43L15.82 12l-6.27 3.57z"/></svg>
-                    </span>
+                    <span class="lsrc-logo"><img src="https://cdn.simpleicons.org/stripe/666666" alt="Stripe" height="22"></span>
+                    <span class="lsrc-logo"><img src="https://cdn.simpleicons.org/x/666666" alt="X" height="18"></span>
+                    <span class="lsrc-logo"><img src="https://cdn.simpleicons.org/shopify/666666" alt="Shopify" height="22"></span>
+                    <span class="lsrc-logo"><img src="https://cdn.simpleicons.org/youtube/666666" alt="YouTube" height="20"></span>
                 </div>
             </div>
 

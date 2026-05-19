@@ -47,7 +47,16 @@ export function renderLanding() {
                         <img class="logo-x" src="https://cdn.simpleicons.org/x/555555" alt="X">
                         <img class="logo-shopify" src="https://www.vectorlogo.zone/logos/shopify/shopify-ar21.svg" alt="Shopify">
                         <img class="logo-youtube" src="https://www.vectorlogo.zone/logos/youtube/youtube-ar21.svg" alt="YouTube">
-                        <!-- Duplicate for infinite wrap -->
+                        <img class="logo-stripe" src="https://www.vectorlogo.zone/logos/stripe/stripe-ar21.svg" alt="Stripe">
+                        <img class="logo-x" src="https://cdn.simpleicons.org/x/555555" alt="X">
+                        <img class="logo-shopify" src="https://www.vectorlogo.zone/logos/shopify/shopify-ar21.svg" alt="Shopify">
+                        <img class="logo-youtube" src="https://www.vectorlogo.zone/logos/youtube/youtube-ar21.svg" alt="YouTube">
+                    </div>
+                    <div class="lmarquee-slide">
+                        <img class="logo-stripe" src="https://www.vectorlogo.zone/logos/stripe/stripe-ar21.svg" alt="Stripe">
+                        <img class="logo-x" src="https://cdn.simpleicons.org/x/555555" alt="X">
+                        <img class="logo-shopify" src="https://www.vectorlogo.zone/logos/shopify/shopify-ar21.svg" alt="Shopify">
+                        <img class="logo-youtube" src="https://www.vectorlogo.zone/logos/youtube/youtube-ar21.svg" alt="YouTube">
                         <img class="logo-stripe" src="https://www.vectorlogo.zone/logos/stripe/stripe-ar21.svg" alt="Stripe">
                         <img class="logo-x" src="https://cdn.simpleicons.org/x/555555" alt="X">
                         <img class="logo-shopify" src="https://www.vectorlogo.zone/logos/shopify/shopify-ar21.svg" alt="Shopify">

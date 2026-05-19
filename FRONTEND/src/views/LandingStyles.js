@@ -101,8 +101,8 @@ export const landingCSS = `
 .lmini-cta-micro{font-size:11px;color:var(--t3);margin-top:12px;font-weight:500;text-transform:uppercase;letter-spacing:1.5px}
 
 /* ═══ LOGO MARQUEE CAROUSEL ═══ */
-.lmarquee{padding:16px 0;border-top:1px solid var(--d);border-bottom:1px solid var(--d);background:var(--p);overflow:hidden;position:relative}
-.lmarquee-label{text-align:center;margin-bottom:10px}
+.lmarquee{padding:32px 0;border-top:1px solid var(--d);border-bottom:1px solid var(--d);background:var(--p);overflow:hidden;position:relative}
+.lmarquee-label{text-align:center;margin-bottom:16px}
 .lmarquee-track{display:flex;overflow:hidden;width:100%;position:relative}
 .lmarquee-track::before,.lmarquee-track::after{content:'';position:absolute;top:0;bottom:0;width:100px;z-index:2;pointer-events:none}
 .lmarquee-track::before{left:0;background:linear-gradient(to right,var(--p),transparent)}
@@ -110,19 +110,19 @@ export const landingCSS = `
 .lmarquee-slide{display:flex;align-items:center;gap:180px;padding:4px 180px 4px 0;animation:marquee 28s linear infinite;flex-shrink:0}
 .lmarquee-slide img{opacity:.55;transition:opacity .3s;flex-shrink:0;filter:grayscale(1)}
 .lmarquee-slide img:hover{opacity:.9}
-.lmarquee-slide img.logo-stripe{height:42px}
-.lmarquee-slide img.logo-x{height:28px;margin:0 8px}
-.lmarquee-slide img.logo-shopify{height:44px}
-.lmarquee-slide img.logo-youtube{height:38px}
+.lmarquee-slide img.logo-stripe{height:50px}
+.lmarquee-slide img.logo-x{height:34px;margin:0 8px}
+.lmarquee-slide img.logo-shopify{height:52px}
+.lmarquee-slide img.logo-youtube{height:44px}
 @keyframes marquee{0%{transform:translateX(0)}100%{transform:translateX(-100%)}}
 
 @media(max-width:767px){
-  .lmarquee{padding:12px 0}
+  .lmarquee{padding:20px 0}
   .lmarquee-slide{gap:100px;padding-right:100px;animation-duration:18s}
-  .lmarquee-slide img.logo-stripe{height:30px}
-  .lmarquee-slide img.logo-x{height:20px;margin:0 6px}
-  .lmarquee-slide img.logo-shopify{height:32px}
-  .lmarquee-slide img.logo-youtube{height:28px}
+  .lmarquee-slide img.logo-stripe{height:36px}
+  .lmarquee-slide img.logo-x{height:24px;margin:0 6px}
+  .lmarquee-slide img.logo-shopify{height:38px}
+  .lmarquee-slide img.logo-youtube{height:32px}
 }
 
 /* ═══ CONTRACT TYPES ═══ */

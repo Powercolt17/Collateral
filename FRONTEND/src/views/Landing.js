@@ -48,12 +48,13 @@ export function renderLanding() {
 
             <!-- ═══ 2. LIVE PROOF BAR ═══ -->
             <div class="lp-proof">
-                <div class="pb-live"><span class="pb-dot"></span> Live Platform Activity</div>
+                <div class="pb-live"><span class="pb-dot"></span> Platform Activity</div>
                 <div class="pb-stats">
-                    <div class="pb-stat"><div class="pb-val" id="pb-committed">[FOUNDER_DATA: $__k]</div><div class="pb-lbl">Committed This Month</div></div>
-                    <div class="pb-stat"><div class="pb-val" id="pb-active">[FOUNDER_DATA: ___]</div><div class="pb-lbl">Active Contracts</div></div>
-                    <div class="pb-stat"><div class="pb-val" id="pb-hitrate">[FOUNDER_DATA: __%]</div><div class="pb-lbl">Hit Rate</div></div>
+                    <div class="pb-stat"><div class="pb-val" id="pb-committed">—</div><div class="pb-lbl">Total Value Locked</div></div>
+                    <div class="pb-stat"><div class="pb-val" id="pb-active">—</div><div class="pb-lbl">Active Contracts</div></div>
+                    <div class="pb-stat"><div class="pb-val" id="pb-volume">—</div><div class="pb-lbl">Volume (24h)</div></div>
                 </div>
+                <div style="text-align:center;margin-bottom:12px"><span style="font-size:9px;color:#555;font-family:'JetBrains Mono',monospace;text-transform:uppercase;letter-spacing:1px">Example activity — illustrative</span></div>
                 <div class="pb-feed-w">
                     <div class="pb-feed" id="pb-feed-1"></div>
                 </div>
@@ -159,34 +160,17 @@ export function renderLanding() {
                 </div>
             </div>
 
-            <!-- ═══ 6. TESTIMONIALS ═══ -->
+            <!-- ═══ 6. EARLY ACCESS ═══ -->
             <div class="lp-testi lp-fade">
                 <div class="lp-testi-in">
-                    <div class="lp-tag">From Real Users</div>
-                    <div class="tg">
-                        <div class="tc">
-                            <div class="tc-q">"I locked $500 on Stripe revenue growth. Hit the target and took home $1,250. <strong>Finally forced myself to launch the feature I'd been polishing for months.</strong>"</div>
-                            <div class="tc-detail">Contract: +20% Stripe revenue in 30 days · Staked $500 · Won $1,250</div>
-                            <div class="tc-user">
-                                <div class="tc-av" style="background-image:url('[FOUNDER_DATA: Photo URL 1]')"></div>
-                                <div><div class="tc-name">[FOUNDER_DATA: Name 1]</div><div class="tc-role">[FOUNDER_DATA: Role/Company]</div></div>
-                            </div>
-                        </div>
-                        <div class="tc">
-                            <div class="tc-q">"Staked $1,000 on X follower growth. Forfeited the stake — got lazy week 2. <strong>Brutal, but I won't miss the next one. The forfeit was the lesson.</strong>"</div>
-                            <div class="tc-detail">Contract: +1,000 X followers in 14 days · Staked $1,000 · Forfeited</div>
-                            <div class="tc-user">
-                                <div class="tc-av" style="background-image:url('[FOUNDER_DATA: Photo URL 2]')"></div>
-                                <div><div class="tc-name">[FOUNDER_DATA: Name 2]</div><div class="tc-role">[FOUNDER_DATA: Role/Company]</div></div>
-                            </div>
-                        </div>
-                        <div class="tc">
-                            <div class="tc-q">"Staked $250 on Shopify orders. The API verification is seamless — zero manual input. <strong>The money on the line changed my entire work ethic for the month.</strong>"</div>
-                            <div class="tc-detail">Contract: $5k Shopify sales in 30 days · Staked $250 · Won $625</div>
-                            <div class="tc-user">
-                                <div class="tc-av" style="background-image:url('[FOUNDER_DATA: Photo URL 3]')"></div>
-                                <div><div class="tc-name">[FOUNDER_DATA: Name 3]</div><div class="tc-role">[FOUNDER_DATA: Role/Company]</div></div>
-                            </div>
+                    <div class="lp-tag">Early Access</div>
+                    <div style="max-width:640px;margin:0 auto;text-align:center">
+                        <p style="font-size:16px;color:#333;line-height:1.65;margin-bottom:20px">Collateral is live and accepting contracts. We're in early access — the first users are running real contracts with real stakes right now.</p>
+                        <p style="font-size:14px;color:#888;line-height:1.6;margin-bottom:28px">Every contract is verified automatically via Stripe, X, Shopify, or Amazon APIs. Every payout and forfeit is final. No exceptions.</p>
+                        <div style="display:flex;gap:24px;justify-content:center;flex-wrap:wrap">
+                            <div style="text-align:center"><div style="font-size:24px;font-weight:900;color:#111;font-family:'JetBrains Mono',monospace">$25</div><div style="font-size:10px;color:#888;text-transform:uppercase;letter-spacing:1px;margin-top:4px">Min Stake</div></div>
+                            <div style="text-align:center"><div style="font-size:24px;font-weight:900;color:#111;font-family:'JetBrains Mono',monospace">4</div><div style="font-size:10px;color:#888;text-transform:uppercase;letter-spacing:1px;margin-top:4px">Verified Sources</div></div>
+                            <div style="text-align:center"><div style="font-size:24px;font-weight:900;color:#111;font-family:'JetBrains Mono',monospace">0%</div><div style="font-size:10px;color:#888;text-transform:uppercase;letter-spacing:1px;margin-top:4px">Upfront Fee</div></div>
                         </div>
                     </div>
                 </div>
@@ -198,17 +182,17 @@ export function renderLanding() {
 
                 <div class="fq open"><div class="fq-q">Is this gambling?</div><div class="fq-a"><strong>No.</strong> You're staking against your own measurable performance using read-only data from platforms you already use. There's no opponent, no chance element, no house edge. You control the outcome through your own work. It's a self-imposed accountability contract with financial consequences.</div></div>
 
-                <div class="fq"><div class="fq-q">Is my money safe before the contract resolves?</div><div class="fq-a"><strong>Yes.</strong> Stakes are held in escrow via [FOUNDER_DATA: Escrow provider — e.g. Stripe Connect custodial accounts]. Collateral never touches your principal while the contract is active. Funds are released only at resolution — either back to you (on success) or forfeit (on miss).</div></div>
+                <div class="fq"><div class="fq-q">Is my money safe before the contract resolves?</div><div class="fq-a"><strong>Yes.</strong> Stakes are held in escrow via Stripe Connect. Collateral never touches your principal while the contract is active. Funds are released only at resolution — either back to you (on success) or forfeit (on miss).</div></div>
 
                 <div class="fq"><div class="fq-q">What if Stripe / X / Shopify / Amazon goes down or the API breaks?</div><div class="fq-a">Contracts pause automatically until verification can complete. You don't forfeit by default due to a platform outage — we absorb that risk. If an API is permanently deprecated mid-contract, original stakes are fully refunded.</div></div>
 
                 <div class="fq"><div class="fq-q">What counts as "hitting" the target?</div><div class="fq-a">The exact metric you chose, pulled directly from the connected platform's API at the deadline. No interpretation, no human judgment, no screenshots. The API number is the final answer.</div></div>
 
-                <div class="fq"><div class="fq-q">Can I cancel after I lock my stake?</div><div class="fq-a"><strong>[FOUNDER_DATA: Exact cancellation policy].</strong> Once a contract begins and the stake is locked, it cannot be canceled. You must hit the target or forfeit. You can cancel at any time before locking — no penalty.</div></div>
+                <div class="fq"><div class="fq-q">Can I cancel after I lock my stake?</div><div class="fq-a"><strong>No.</strong> Once a contract is executed and the stake is locked, it cannot be canceled or withdrawn. Capital is locked from execution until settlement. You must hit the target or forfeit. You can cancel at any time <em>before</em> locking — no penalty.</div></div>
 
                 <div class="fq"><div class="fq-q">What about taxes?</div><div class="fq-a">Payouts may be taxable income depending on your jurisdiction. For US users, we issue 1099s for net profit exceeding $600 in a calendar year. Consult your tax professional for specifics.</div></div>
 
-                <div class="fq"><div class="fq-q">Is this legal in my state or country?</div><div class="fq-a">Currently available in the US, Canada, UK, and EU. Not available in [FOUNDER_DATA: specific restricted states/regions]. Because this is a performance contract (not gambling), it falls outside gambling regulations in supported jurisdictions.</div></div>
+                <div class="fq"><div class="fq-q">Is this legal in my state or country?</div><div class="fq-a">Currently available in the US, Canada, UK, and EU. Because this is a performance contract — not gambling — it falls outside gambling regulations in supported jurisdictions. You stake against your own verifiable performance, not against chance or other participants.</div></div>
 
                 <div class="fq"><div class="fq-q">What if I miss the target? Can I get a refund?</div><div class="fq-a"><strong>No.</strong> The forfeit is the entire mechanism — that's what makes it work. Without real consequences, it's just another goal-setting app. Do not stake money you cannot afford to forfeit.</div></div>
 
@@ -264,17 +248,38 @@ export function initLanding() {
     const obs = new IntersectionObserver(es => { es.forEach(e => { if (e.isIntersecting) { e.target.classList.add('vis'); obs.unobserve(e.target); } }); }, { threshold: .12 });
     document.querySelectorAll('.lp-fade').forEach(el => obs.observe(el));
 
-    // Proof bar feed
+    // Proof bar feed (illustrative examples — labeled as such in the UI)
     const feed = document.getElementById('pb-feed-1');
     if (feed) {
         const events = [
-            "<strong>Sarah M.</strong> committed $500 on a 30-day Shopify contract · 4m ago",
-            "<strong>James K.</strong> earned $1,200 on a Stripe revenue contract · 18m ago",
-            "<strong>Elena R.</strong> committed $250 on an X follower contract · 32m ago",
-            "<strong>Marcus T.</strong> earned $800 on a Shopify sales contract · 1h ago",
-            "<strong>David L.</strong> committed $1,000 on a Stripe revenue contract · 1h 15m ago"
+            "Committed <strong>$500</strong> on a 30-day Stripe revenue contract",
+            "Earned <strong>$1,250</strong> — hit +20% Stripe revenue target",
+            "Committed <strong>$250</strong> on a 14-day X follower contract",
+            "Forfeited <strong>$200</strong> — missed Shopify sales target",
+            "Committed <strong>$1,000</strong> on a 30-day Shopify order contract"
         ];
         const all = [...events, ...events, ...events, ...events];
         feed.innerHTML = all.map(e => `<div class="pb-item">${e}</div>`).join('');
     }
+
+    // Fetch live platform stats from API
+    (async function loadStats() {
+        try {
+            const base = (typeof import.meta !== 'undefined' && import.meta.env?.VITE_API_BASE_URL) || 'https://collateral-production.up.railway.app';
+            const res = await fetch(base + '/v1/market/contracts?limit=1');
+            const data = await res.json();
+            if (data.ok && data.stats) {
+                const s = data.stats;
+                const tvl = document.getElementById('pb-committed');
+                const active = document.getElementById('pb-active');
+                const vol = document.getElementById('pb-volume');
+                if (tvl) tvl.textContent = s.tvlUsd > 0 ? '$' + (s.tvlUsd >= 1000 ? (s.tvlUsd / 1000).toFixed(1) + 'k' : s.tvlUsd.toFixed(0)) : '$0';
+                if (active) active.textContent = String(s.activeCount || 0);
+                if (vol) vol.textContent = s.volume24hUsd > 0 ? '$' + (s.volume24hUsd >= 1000 ? (s.volume24hUsd / 1000).toFixed(1) + 'k' : s.volume24hUsd.toFixed(0)) : '$0';
+            }
+        } catch (e) {
+            // Silently fail — stats show dashes as default
+            console.log('[Landing] Stats fetch failed, showing defaults');
+        }
+    })();
 }

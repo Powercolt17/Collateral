@@ -64,11 +64,17 @@ export const landingCSS = `
 .lstep-h{font-family:'Inter Tight',sans-serif;font-size:14px;font-weight:600;color:var(--t1);margin-bottom:8px;text-transform:uppercase;letter-spacing:.3px}
 .lstep-p{font-size:13px;color:var(--t2);line-height:1.55}
 
-/* ═══ SOURCES ═══ */
-.lsources{padding:32px 0;border-top:1px solid var(--d);border-bottom:1px solid var(--d);background:var(--p)}
-.lsources-in{display:flex;align-items:center;justify-content:center;gap:32px;flex-wrap:wrap}
-.lsrc-logo{display:flex;align-items:center;opacity:.45;transition:opacity .2s;padding:0 8px}
-.lsrc-logo:hover{opacity:.7}
+/* ═══ LOGO MARQUEE CAROUSEL ═══ */
+.lmarquee{padding:28px 0;border-top:1px solid var(--d);border-bottom:1px solid var(--d);background:var(--p);overflow:hidden;position:relative}
+.lmarquee-label{text-align:center;margin-bottom:16px}
+.lmarquee-track{overflow:hidden;width:100%;position:relative}
+.lmarquee-track::before,.lmarquee-track::after{content:'';position:absolute;top:0;bottom:0;width:80px;z-index:2;pointer-events:none}
+.lmarquee-track::before{left:0;background:linear-gradient(to right,var(--p),transparent)}
+.lmarquee-track::after{right:0;background:linear-gradient(to left,var(--p),transparent)}
+.lmarquee-slide{display:flex;align-items:center;gap:80px;animation:marquee 20s linear infinite;width:max-content;padding:8px 0}
+.lmarquee-slide img{opacity:.5;transition:opacity .3s;flex-shrink:0}
+.lmarquee-slide img:hover{opacity:.8}
+@keyframes marquee{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
 
 /* ═══ CONTRACT TYPES ═══ */
 .ltypes{padding:80px 0}

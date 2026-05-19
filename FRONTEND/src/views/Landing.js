@@ -32,6 +32,23 @@ export function renderLanding() {
                 </div>
             </div>
 
+            <!-- ═══ LOGO CAROUSEL ═══ -->
+            <div class="lmarquee">
+                <div class="lmarquee-label"><span class="lmono">Verified via official APIs</span></div>
+                <div class="lmarquee-track">
+                    <div class="lmarquee-slide">
+                        <img src="https://cdn.simpleicons.org/stripe/555555" alt="Stripe" height="32">
+                        <img src="https://cdn.simpleicons.org/x/555555" alt="X" height="28">
+                        <img src="https://cdn.simpleicons.org/shopify/555555" alt="Shopify" height="34">
+                        <img src="https://cdn.simpleicons.org/youtube/555555" alt="YouTube" height="30">
+                        <img src="https://cdn.simpleicons.org/stripe/555555" alt="Stripe" height="32">
+                        <img src="https://cdn.simpleicons.org/x/555555" alt="X" height="28">
+                        <img src="https://cdn.simpleicons.org/shopify/555555" alt="Shopify" height="34">
+                        <img src="https://cdn.simpleicons.org/youtube/555555" alt="YouTube" height="30">
+                    </div>
+                </div>
+            </div>
+
             <!-- ═══ LIVE CONTRACT EXAMPLES ═══ -->
             <div class="lcontracts" id="contracts">
                 <div class="lw" data-r>
@@ -123,17 +140,6 @@ export function renderLanding() {
 
             <!-- CTA ROW -->
             <div class="lcta-row"><button class="lbtn lbtn-r lp-cta-btn">Start Contract</button></div>
-
-            <!-- ═══ VERIFIED SOURCES ═══ -->
-            <div class="lsources">
-                <div class="lsources-in">
-                    <span class="lmono" style="color:var(--t2)">Verified via official APIs</span>
-                    <span class="lsrc-logo"><img src="https://cdn.simpleicons.org/stripe/666666" alt="Stripe" height="22"></span>
-                    <span class="lsrc-logo"><img src="https://cdn.simpleicons.org/x/666666" alt="X" height="18"></span>
-                    <span class="lsrc-logo"><img src="https://cdn.simpleicons.org/shopify/666666" alt="Shopify" height="22"></span>
-                    <span class="lsrc-logo"><img src="https://cdn.simpleicons.org/youtube/666666" alt="YouTube" height="20"></span>
-                </div>
-            </div>
 
             <!-- ═══ CONTRACT TYPES ═══ -->
             <div class="lw">

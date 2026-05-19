@@ -42,8 +42,9 @@ export const landingCSS = `
 
 /* ═══ LIVE CONTRACTS ═══ */
 .lcontracts{padding:56px 0 64px;background:var(--p);border-top:1px solid var(--d);border-bottom:1px solid var(--d)}
-.lcards{display:grid;grid-template-columns:repeat(4,1fr);gap:24px}
-.lcard{border:1px solid var(--d);padding:28px 24px;display:flex;flex-direction:column;transition:border-color .15s,box-shadow .15s;background:var(--p)}
+.lcontracts .lw{max-width:1280px}
+.lcards{display:grid;grid-template-columns:repeat(4,1fr);gap:32px}
+.lcard{border:1px solid var(--d);padding:36px 32px;display:flex;flex-direction:column;transition:border-color .15s,box-shadow .15s;background:var(--p)}
 .lcard:hover{border-color:#bbb;box-shadow:0 4px 16px rgba(0,0,0,.04)}
 .lcard-top{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:16px}
 .lcard-src{font-family:'Inter',monospace;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;color:var(--t3)}
@@ -138,7 +139,8 @@ export const landingCSS = `
 /* ═══ RESPONSIVE ═══ */
 @media(max-width:768px){
 .lhero{padding:80px 0 40px}
-.lcards{grid-template-columns:1fr 1fr;gap:12px}
+.lcards{grid-template-columns:1fr 1fr;gap:20px}
+.lcard{padding:28px 24px}
 .lsteps{grid-template-columns:1fr 1fr}
 .lstep{border-right:none;border-bottom:1px solid var(--d)}
 .lstep:nth-child(2){border-right:1px solid var(--d)}
@@ -148,7 +150,8 @@ export const landingCSS = `
 .lctas{flex-direction:column}.lbtn{width:100%;justify-content:center}
 }
 @media(max-width:480px){
-.lcards{grid-template-columns:1fr}
+.lcards{grid-template-columns:1fr;gap:16px}
+.lcard{padding:24px 20px}
 .lsteps{grid-template-columns:1fr}
 .lstep{border-right:none!important}
 }

@@ -22,19 +22,37 @@ export function renderLanding() {
 
             <!-- ═══ HERO ═══ -->
             <div class="lw">
-                <div class="lhero" data-r>
-                    <h1 class="lh1">
-                        <span class="lh-nobrk">Put money behind the goal</span><br class="lh-br">
-                        <span class="lh-nobrk">you keep saying you'll <em>hit.</em></span>
-                    </h1>
-                    <p class="lsub">
-                        Create a performance contract tied to real metrics — revenue, followers, views, sales, or launches. Hit the target and get paid. Miss it and lose the stake.
-                    </p>
-                    <div class="lctas">
-                        <button class="lbtn lbtn-r" id="lp-hero-cta">Start Contract</button>
-                        <button class="lbtn lbtn-g" onclick="document.getElementById('contracts').scrollIntoView({behavior:'smooth'})">See Live Contracts</button>
+                <div class="lhero-grid" data-r>
+                    <div class="lhero-left">
+                        <h1 class="lh1">
+                            <span class="lh-nobrk">Put money behind the goal</span><br class="lh-br">
+                            <span class="lh-nobrk">you keep saying you'll <em>hit.</em></span>
+                        </h1>
+                        <p class="lsub">
+                            Create a performance contract tied to real metrics — revenue, followers, views, sales, or launches. Hit the target and get paid. Miss it and lose the stake.
+                        </p>
+                        <div class="lctas">
+                            <button class="lbtn lbtn-r" id="lp-hero-cta">Start Contract</button>
+                            <button class="lbtn lbtn-g" onclick="document.getElementById('contracts').scrollIntoView({behavior:'smooth'})">See Live Contracts</button>
+                        </div>
+                        <div class="lcta-match">Create your first contract. We’ll match up to $250.</div>
+                        <div class="ltrust-bar">Not gambling. No odds. No chance. Verified performance only.</div>
                     </div>
-                    <div class="lcta-micro">Create your first contract. We'll match up to $250.</div>
+                    <div class="lhero-right">
+                        <div class="lpreview-card">
+                            <div class="lpcard-badge">Example Contract</div>
+                            <div class="lpcard-src">Stripe Integration</div>
+                            <div class="lpcard-title">Stripe Revenue Growth</div>
+                            <div class="lpcard-row"><span class="k">Stake</span><span class="v">$250</span></div>
+                            <div class="lpcard-row"><span class="k">Target</span><span class="v">+20% in 30 days</span></div>
+                            <div class="lpcard-row"><span class="k">Source</span><span class="v">Stripe API</span></div>
+                            <div class="lpcard-outcome">
+                                <div class="lpcard-outcome-title">Outcome</div>
+                                <div class="lpcard-outcome-item success"><span class="dot"></span> Hit target &rarr; get paid</div>
+                                <div class="lpcard-outcome-item failure"><span class="dot"></span> Miss target &rarr; stake forfeited</div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
 

@@ -77,9 +77,13 @@ export const landingCSS = `
 .lmarquee-track::before,.lmarquee-track::after{content:'';position:absolute;top:0;bottom:0;width:80px;z-index:2;pointer-events:none}
 .lmarquee-track::before{left:0;background:linear-gradient(to right,var(--p),transparent)}
 .lmarquee-track::after{right:0;background:linear-gradient(to left,var(--p),transparent)}
-.lmarquee-slide{display:flex;align-items:center;gap:80px;animation:marquee 20s linear infinite;width:max-content;padding:8px 0;color:#555}
-.lmarquee-slide > div{opacity:.4;transition:opacity .3s;flex-shrink:0}
-.lmarquee-slide > div:hover{opacity:.8}
+.lmarquee-slide{display:flex;align-items:center;gap:120px;animation:marquee 25s linear infinite;width:max-content;padding:8px 0}
+.lmarquee-slide img{opacity:.4;transition:opacity .3s;flex-shrink:0;filter:grayscale(1)}
+.lmarquee-slide img:hover{opacity:.85}
+.lmarquee-slide img.logo-stripe{height:34px}
+.lmarquee-slide img.logo-x{height:22px;margin:0 6px}
+.lmarquee-slide img.logo-shopify{height:36px}
+.lmarquee-slide img.logo-youtube{height:30px}
 @keyframes marquee{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
 
 /* ═══ CONTRACT TYPES ═══ */

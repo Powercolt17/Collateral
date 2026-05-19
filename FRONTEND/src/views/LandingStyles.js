@@ -3,8 +3,11 @@ export const landingCSS = `
 .lp{--bg:#F9F9F9;--p:#FFF;--t1:#111;--t2:#444;--t3:#888;--d:#E5E5E5;--r:#5C1414;--rh:#6B1212;--g:#15803D;min-height:100vh;background:var(--bg);color:var(--t1);font-family:'Inter',sans-serif;-webkit-font-smoothing:antialiased;overflow-x:hidden}
 .lp *{box-sizing:border-box}
 
+/* Promo Bar */
+.lpromo-bar{position:fixed;top:0;left:0;right:0;height:32px;background:var(--r);color:#fff;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:600;letter-spacing:1px;text-transform:uppercase;z-index:100;font-family:'Inter',sans-serif}
+
 /* Nav */
-.ln{position:fixed;top:0;left:0;right:0;z-index:50;background:rgba(249,249,249,.92);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-bottom:1px solid var(--d)}
+.ln{position:fixed;top:32px;left:0;right:0;z-index:50;background:rgba(249,249,249,.92);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-bottom:1px solid var(--d)}
 .ln-in{max-width:1080px;margin:0 auto;padding:0 24px;height:56px;display:flex;justify-content:space-between;align-items:center}
 .ln-brand{font-family:'Inter Tight',sans-serif;font-size:13px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--t1);text-decoration:none}
 .ln-cta{background:var(--r);color:#fff;font-size:11px;font-weight:600;letter-spacing:.8px;text-transform:uppercase;padding:9px 20px;border:none;cursor:pointer;transition:background .15s}
@@ -20,7 +23,7 @@ export const landingCSS = `
 [data-r].v{opacity:1;transform:none}
 
 /* ═══ HERO ═══ */
-.lhero{padding:100px 0 56px}
+.lhero{padding:132px 0 56px}
 .lh1{font-family:'Inter Tight',sans-serif;font-weight:400;font-size:clamp(36px,6vw,64px);line-height:.92;letter-spacing:-1px;color:var(--t1);margin:0 0 20px;max-width:850px}
 .lh1 em{font-style:normal;color:var(--r);font-weight:500;letter-spacing:-1.5px}
 .lh-nobrk{display:inline}

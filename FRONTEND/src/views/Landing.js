@@ -7,6 +7,11 @@ export function renderLanding() {
         <style>${landingCSS}</style>
         <div class="lp">
 
+            <!-- PROMO BAR -->
+            <div class="lpromo-bar">
+                Launch Offer — First contract match up to $250
+            </div>
+
             <!-- NAV -->
             <nav class="ln">
                 <div class="ln-in">
@@ -18,7 +23,6 @@ export function renderLanding() {
             <!-- ═══ HERO ═══ -->
             <div class="lw">
                 <div class="lhero" data-r>
-                    <div class="launch-badge">Launch Offer — First contract match up to $250</div>
                     <h1 class="lh1">
                         <span class="lh-nobrk">Put money behind the goal</span><br class="lh-br">
                         <span class="lh-nobrk">you keep saying you'll <em>hit.</em></span>

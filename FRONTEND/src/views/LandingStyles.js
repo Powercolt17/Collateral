@@ -10,8 +10,8 @@ export const landingCSS = `
 .ln{position:fixed;top:32px;left:0;right:0;z-index:50;background:rgba(249,249,249,.92);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-bottom:1px solid var(--d)}
 .ln-in{max-width:1080px;margin:0 auto;padding:0 24px;height:56px;display:flex;justify-content:space-between;align-items:center}
 .ln-brand{font-family:'Inter Tight',sans-serif;font-size:13px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--t1);text-decoration:none}
-.ln-cta{background:var(--r);color:#fff;font-size:11px;font-weight:600;letter-spacing:.8px;text-transform:uppercase;padding:9px 20px;border:none;cursor:pointer;transition:background .15s}
-.ln-cta:hover{background:var(--rh)}
+.ln-cta{background:var(--r) !important;color:#fff !important;font-size:11px;font-weight:600;letter-spacing:.8px;text-transform:uppercase;padding:9px 20px;border:none;cursor:pointer;transition:background .15s}
+.ln-cta:hover{background:var(--rh) !important}
 
 /* Shared */
 .lw{max-width:1080px;margin:0 auto;padding:0 24px;position:relative;z-index:1}
@@ -35,7 +35,7 @@ export const landingCSS = `
 .lsub{font-size:17px;color:var(--t2);line-height:1.6;margin:0 0 28px;max-width:540px;letter-spacing:-.2px}
 .lctas{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:12px}
 .lbtn{height:48px;padding:0 28px;font-size:12px;font-weight:600;letter-spacing:.6px;text-transform:uppercase;border:none;cursor:pointer;display:inline-flex;align-items:center;gap:8px;transition:all .15s;font-family:'Inter',sans-serif}
-.lbtn-r{background:var(--r);color:#fff;box-shadow:0 2px 8px rgba(92,20,20,.15)}.lbtn-r:hover{background:var(--rh);box-shadow:0 4px 16px rgba(92,20,20,.2);transform:translateY(-1px)}
+.lbtn-r{background:var(--r) !important;color:#fff !important;box-shadow:0 2px 8px rgba(92,20,20,.15)}.lbtn-r:hover{background:var(--rh) !important;box-shadow:0 4px 16px rgba(92,20,20,.2);transform:translateY(-1px)}
 .lbtn-g{background:var(--p);color:var(--t2);border:1px solid var(--d)}.lbtn-g:hover{border-color:#bbb;color:var(--t1)}
 .lcta-match{font-size:14px;color:var(--t1);margin-top:16px;font-weight:700;display:flex;align-items:center;gap:8px;letter-spacing:-.1px}
 .lcta-match::before{content:'';width:6px;height:6px;border-radius:50%;background:var(--r)}
@@ -85,12 +85,12 @@ export const landingCSS = `
 /* ═══ HOW IT WORKS ═══ */
 .lhow{padding:48px 0}
 .lhow-h{font-family:'Inter Tight',sans-serif;font-size:clamp(24px,3.5vw,36px);font-weight:400;letter-spacing:-.5px;margin-bottom:8px}
-.lhow-h strong{font-weight:700}
+.lhow-h strong{font-weight:700;color:var(--r)}
 .lhow-sub{font-size:14px;color:var(--t2);margin-bottom:32px;max-width:480px}
 .lsteps{display:grid;grid-template-columns:repeat(4,1fr);gap:0;background:var(--p);border:1px solid var(--d)}
 .lstep{padding:32px 24px;border-right:1px solid var(--d)}
 .lstep:last-child{border-right:none}
-.lstep-num{font-family:'Inter Tight',sans-serif;font-size:48px;font-weight:700;color:rgba(17,17,17,.05);line-height:1;margin-bottom:16px}
+.lstep-num{font-family:'Inter Tight',sans-serif;font-size:48px;font-weight:700;color:var(--r) !important;opacity:0.25;line-height:1;margin-bottom:16px}
 .lstep-h{font-family:'Inter Tight',sans-serif;font-size:14px;font-weight:600;color:var(--t1);margin-bottom:8px;text-transform:uppercase;letter-spacing:.3px}
 .lstep-p{font-size:13px;color:var(--t2);line-height:1.55}
 
@@ -155,7 +155,7 @@ export const landingCSS = `
 .lfoot-h{font-family:'Inter Tight',sans-serif;font-size:clamp(24px,4vw,36px);font-weight:400;color:#fff;letter-spacing:-.5px;line-height:1.1;margin-bottom:8px}
 .lfoot-h em{font-style:normal;color:var(--r);font-weight:500}
 .lfoot-sub{font-size:14px;color:rgba(255,255,255,.85);font-weight:600;margin-bottom:24px}
-.lfoot-btn{display:inline-flex;height:48px;padding:0 32px;align-items:center;background:var(--r);color:#fff;font-size:12px;font-weight:600;letter-spacing:.6px;text-transform:uppercase;border:none;cursor:pointer;transition:all .15s}.lfoot-btn:hover{background:var(--rh)}
+.lfoot-btn{display:inline-flex;height:48px;padding:0 32px;align-items:center;background:var(--r) !important;color:#fff !important;font-size:12px;font-weight:600;letter-spacing:.6px;text-transform:uppercase;border:none;cursor:pointer;transition:all .15s}.lfoot-btn:hover{background:var(--rh) !important}
 .lfoot-micro{font-size:12px;color:rgba(255,255,255,.6);margin-top:16px;font-weight:500;letter-spacing:.5px}
 .lfoot-line{margin-top:48px;padding-top:20px;border-top:1px solid rgba(255,255,255,.06);font-size:10px;color:rgba(255,255,255,.15);font-family:'Inter',monospace;text-transform:uppercase;letter-spacing:1.5px}
 

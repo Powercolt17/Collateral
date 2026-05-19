@@ -157,7 +157,7 @@ export function renderLanding() {
                         <div class="lstep">
                             <div class="lstep-num">02</div>
                             <div class="lstep-h">Lock the stake</div>
-                            <div class="lstep-p">Commit capital before the clock starts. No backing out once the contract is live.</div>
+                            <div class="lstep-p">Commit capital before the clock starts. <strong style="color:var(--r);font-weight:600">No backing out</strong> once the contract is live.</div>
                         </div>
                         <div class="lstep">
                             <div class="lstep-num">03</div>
@@ -167,7 +167,7 @@ export function renderLanding() {
                         <div class="lstep">
                             <div class="lstep-num">04</div>
                             <div class="lstep-h">Settle automatically</div>
-                            <div class="lstep-p">Hit the target and get paid. Miss it and the stake is forfeited. Final. No exceptions.</div>
+                            <div class="lstep-p">Hit the target and get paid. Miss it and the stake is <strong style="color:var(--r);font-weight:600">forfeited</strong>. Final. No exceptions.</div>
                         </div>
                     </div>
                 </div>

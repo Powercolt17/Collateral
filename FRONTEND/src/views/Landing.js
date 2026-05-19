@@ -172,27 +172,34 @@ export function renderLanding() {
                 </div>
             </div>
 
-            <!-- CTA ROW -->
-            <div class="lcta-row"><button class="lbtn lbtn-r lp-cta-btn">Start Contract</button></div>
+            <!-- MINI CTA BLOCK -->
+            <div class="lw">
+                <div class="lmini-cta" data-r>
+                    <h3 class="lmini-cta-h">Ready to back your first goal?</h3>
+                    <p class="lmini-cta-p">Create your first performance contract. We’ll match up to $250.</p>
+                    <button class="lbtn lbtn-r lp-cta-btn">Start Contract</button>
+                    <div class="lmini-cta-micro">No odds. No chance. Verified performance only.</div>
+                </div>
+            </div>
 
             <!-- ═══ CONTRACT TYPES ═══ -->
             <div class="lw">
                 <div class="ltypes" data-r>
                     <div class="lred-dash"><span class="lmono">Contract Types</span></div>
-                    <h2 class="lhow-h" style="margin-bottom:32px">Two ways to <strong>compete.</strong></h2>
+                    <h2 class="lhow-h" style="margin-bottom:32px">Choose your <strong>contract type.</strong></h2>
 
                     <div class="ltypes-grid">
                         <div class="ltype">
                             <div class="ltype-badge" style="color:var(--t1);background:rgba(17,17,17,.04);border:1px solid var(--d)">Solo</div>
                             <div class="ltype-h">You vs. your target.</div>
-                            <div class="ltype-p">Set a measurable performance target tied to a connected data source. Lock your stake. If you hit the target by the deadline, you get your capital back plus a bonus. If you miss, the stake is forfeited.</div>
-                            <div class="ltype-detail">Best for: Revenue goals, follower milestones, launch deadlines, sales targets. You compete against yourself.</div>
+                            <div class="ltype-p">Set a measurable target tied to a connected data source. Lock your stake. Hit the deadline target and receive the payout. Miss it, and the stake is forfeited.</div>
+                            <div class="ltype-detail"><strong>Best for:</strong> Revenue goals, follower milestones, launch deadlines, sales targets.</div>
                         </div>
                         <div class="ltype">
                             <div class="ltype-badge" style="color:var(--r);background:rgba(92,20,20,.04);border:1px solid rgba(92,20,20,.15)">Rivalry</div>
                             <div class="ltype-h">You vs. another operator.</div>
-                            <div class="ltype-p">Both participants lock equal stakes on the same metric. The one who outperforms the other takes the entire pot. Verified by the same connected data sources. Winner takes all.</div>
-                            <div class="ltype-detail">Best for: Head-to-head growth sprints, competitive accountability, high-stakes challenges between founders or creators.</div>
+                            <div class="ltype-p">Both participants lock equal stakes on the same metric. The operator with the strongest verified performance wins the pool.</div>
+                            <div class="ltype-detail"><strong>Best for:</strong> Founder sprints, creator growth challenges, sales competitions, operator accountability.</div>
                         </div>
                     </div>
                 </div>
@@ -205,25 +212,24 @@ export function renderLanding() {
                 <div class="lex" data-r>
                     <div class="lred-dash"><span class="lmono">Payout Example</span></div>
                     <h2 class="lhow-h" style="margin-bottom:8px">How the money gets <strong>decided.</strong></h2>
-                    <p class="lhow-sub">No vague promises. Here's the exact math.</p>
+                    <p class="lhow-sub">Terms are locked before the contract starts. Settlement is based on connected source data.</p>
 
                     <div class="lex-box">
                         <div class="lex-head"><span class="lmono" style="color:var(--r);font-weight:700">Stripe Revenue — Stake Tier</span></div>
                         <div class="lex-row"><span class="k">You stake</span><span class="v">$500</span></div>
-                        <div class="lex-row"><span class="k">Target</span><span class="v">Grow Stripe revenue 20% in 30 days</span></div>
-                        <div class="lex-row"><span class="k">Baseline</span><span class="v">Pulled automatically via API (read-only)</span></div>
-                        <div class="lex-row"><span class="k">Hit the target</span><span class="v green">$500 back + $750 bonus = $1,250</span></div>
-                        <div class="lex-row"><span class="k">Miss the target</span><span class="v red">$500 forfeited. No refund.</span></div>
-                    </div>
-
-                    <div style="margin-top:24px;padding-top:16px;border-top:1px solid var(--d)">
-                        <p class="lmono" style="line-height:1.6;max-width:520px">Payouts funded by platform capital. Multipliers reflect target difficulty vs. your baseline. Harder targets earn higher payouts.</p>
+                        <div class="lex-row"><span class="k">Target</span><span class="v">+20% Stripe revenue in 30 days</span></div>
+                        <div class="lex-row"><span class="k">Verified by</span><span class="v">Stripe API</span></div>
+                        <div class="lex-row"><span class="k">If you hit</span><span class="v green">Payout released</span></div>
+                        <div class="lex-row"><span class="k">If you miss</span><span class="v red">Stake forfeited</span></div>
                     </div>
                 </div>
             </div>
 
             <!-- CTA ROW -->
-            <div class="lcta-row"><button class="lbtn lbtn-r lp-cta-btn">Back Your Goal</button></div>
+            <div class="lcta-row">
+                <button class="lbtn lbtn-r lp-cta-btn">Start Contract</button>
+                <div class="lcta-row-sub">Start your first performance contract. Match available up to $250.</div>
+            </div>
 
             <!-- ═══ FAQ ═══ -->
             <div class="lw">
@@ -231,24 +237,48 @@ export function renderLanding() {
                     <div class="lred-dash"><span class="lmono">Common Questions</span></div>
                     <h2 class="lhow-h" style="margin-bottom:28px">No fine print. Just <strong>answers.</strong></h2>
                     <div class="lfaq-wrap">
-                        <div class="fq open"><div class="fq-q">Is this gambling?</div><div class="fq-a"><strong>No.</strong> You stake against your own performance, verified by APIs you already use. No chance, no odds, no opponent required, no house edge. The outcome is 100% determined by your own work.</div></div>
-                        <div class="fq"><div class="fq-q">Where is the money held?</div><div class="fq-a">Stakes are held in escrow via <strong>Stripe Connect</strong>. Collateral never touches your funds while the contract is active. Funds are released only at settlement.</div></div>
-                        <div class="fq"><div class="fq-q">What if an API goes down during my contract?</div><div class="fq-a">Contracts pause automatically. You don't forfeit due to a platform outage. If a source is permanently unavailable, stakes are fully refunded.</div></div>
-                        <div class="fq"><div class="fq-q">How is the target verified?</div><div class="fq-a">The exact metric, pulled directly from the platform API at the deadline. No screenshots, no self-reports, no human judgment. The API number is the final answer.</div></div>
-                        <div class="fq"><div class="fq-q">Can I cancel after locking?</div><div class="fq-a"><strong>No.</strong> Once the stake is locked, the contract is live. Capital is locked from execution to settlement. You can cancel anytime <em>before</em> locking.</div></div>
-                        <div class="fq"><div class="fq-q">What data do you access?</div><div class="fq-a">Read-only access to the single metric your contract measures. We never access payment details, customer data, DMs, or anything outside the contract metric. Revoke anytime.</div></div>
-                        <div class="fq"><div class="fq-q">Is this legal?</div><div class="fq-a">Available in the US, Canada, UK, and EU. This is a performance contract, not gambling. You stake against your own verifiable output, not against chance.</div></div>
-                        <div class="fq"><div class="fq-q">Can I get a refund if I miss?</div><div class="fq-a"><strong>No.</strong> The forfeit is the mechanism. Without consequences, it's just another goal tracker. Only stake what you can afford to lose.</div></div>
+                        <div class="fq open">
+                            <div class="fq-q">Is this gambling?</div>
+                            <div class="fq-a">No. You stake against your own performance, verified by APIs you already use. No chance, no odds, no opponent required. The outcome is determined by your verified work.</div>
+                        </div>
+                        <div class="fq">
+                            <div class="fq-q">Where is the money held?</div>
+                            <div class="fq-a">Stakes are held in escrow via Stripe Connect. Collateral never touches your funds while the contract is active. Funds are released only at settlement.</div>
+                        </div>
+                        <div class="fq">
+                            <div class="fq-q">How is the target verified?</div>
+                            <div class="fq-a">The exact metric is pulled directly from the platform API at the deadline. No screenshots, no self-reports, no human judgment. The API data is final.</div>
+                        </div>
+                        <div class="fq">
+                            <div class="fq-q">Can I cancel after locking?</div>
+                            <div class="fq-a">No. Once the stake is locked, the contract is live. Capital is locked from execution to settlement. You can cancel anytime before locking.</div>
+                        </div>
+                        <div class="fq">
+                            <div class="fq-q">Can I get a refund if I miss?</div>
+                            <div class="fq-a">No. The forfeit is the mechanism. Without consequences, it's just another goal tracker. Only stake what you can afford.</div>
+                        </div>
+                        <div class="fq">
+                            <div class="fq-q">What happens if an API goes down?</div>
+                            <div class="fq-a">Contracts pause automatically. You don't forfeit due to a platform outage. If a source is permanently unavailable, stakes are fully refunded.</div>
+                        </div>
+                        <div class="fq">
+                            <div class="fq-q">What data do you access?</div>
+                            <div class="fq-a">Read-only access to the single metric your contract measures. We never access payment details, customer data, or DMs.</div>
+                        </div>
+                        <div class="fq">
+                            <div class="fq-q">Is this legal?</div>
+                            <div class="fq-a">Yes. Available in the US, Canada, UK, and EU. This is a performance contract, not gambling. You stake against your own verifiable output.</div>
+                        </div>
                     </div>
                 </div>
             </div>
 
             <!-- ═══ FINAL CTA ═══ -->
             <div class="lfoot">
-                <h2 class="lfoot-h">Put money behind the goal<br>you keep saying you'll <em>hit.</em></h2>
-                <div class="lfoot-sub">Free account. Lock capital only when you're ready.</div>
+                <h2 class="lfoot-h">Put money behind the goal<br>you keep saying you'll <em style="color:var(--r);font-style:normal;font-weight:700">hit.</em></h2>
+                <div class="lfoot-sub">Create your first performance contract. We’ll match up to $250.</div>
                 <button class="lfoot-btn" id="lp-final-cta">Start Contract</button>
-                <div class="lfoot-micro">Stripe · X · Shopify · YouTube</div>
+                <div class="lfoot-micro">No odds. No chance. Verified performance only.</div>
                 <div class="lfoot-line">Collateral.market · © 2026</div>
             </div>
         </div>

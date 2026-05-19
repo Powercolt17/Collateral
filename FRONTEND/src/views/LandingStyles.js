@@ -83,16 +83,22 @@ export const landingCSS = `
 .lcard-btn button:hover{background:var(--r)}
 
 /* ═══ HOW IT WORKS ═══ */
-.lhow{padding:80px 0}
+.lhow{padding:48px 0}
 .lhow-h{font-family:'Inter Tight',sans-serif;font-size:clamp(24px,3.5vw,36px);font-weight:400;letter-spacing:-.5px;margin-bottom:8px}
 .lhow-h strong{font-weight:700}
-.lhow-sub{font-size:14px;color:var(--t2);margin-bottom:48px;max-width:480px}
+.lhow-sub{font-size:14px;color:var(--t2);margin-bottom:32px;max-width:480px}
 .lsteps{display:grid;grid-template-columns:repeat(4,1fr);gap:0;background:var(--p);border:1px solid var(--d)}
 .lstep{padding:32px 24px;border-right:1px solid var(--d)}
 .lstep:last-child{border-right:none}
 .lstep-num{font-family:'Inter Tight',sans-serif;font-size:48px;font-weight:700;color:rgba(17,17,17,.05);line-height:1;margin-bottom:16px}
 .lstep-h{font-family:'Inter Tight',sans-serif;font-size:14px;font-weight:600;color:var(--t1);margin-bottom:8px;text-transform:uppercase;letter-spacing:.3px}
 .lstep-p{font-size:13px;color:var(--t2);line-height:1.55}
+
+/* Mini CTA Block */
+.lmini-cta{text-align:center;background:var(--p);border:1px solid var(--d);padding:48px 32px;margin:32px auto 48px;max-width:640px}
+.lmini-cta-h{font-family:'Inter Tight',sans-serif;font-size:24px;font-weight:600;margin-bottom:8px;letter-spacing:-.4px;color:var(--t1)}
+.lmini-cta-p{font-size:14px;color:var(--t2);margin-bottom:24px}
+.lmini-cta-micro{font-size:11px;color:var(--t3);margin-top:12px;font-weight:500;text-transform:uppercase;letter-spacing:1.5px}
 
 /* ═══ LOGO MARQUEE CAROUSEL ═══ */
 .lmarquee{padding:36px 0;border-top:1px solid var(--d);border-bottom:1px solid var(--d);background:var(--p);overflow:hidden;position:relative}
@@ -120,7 +126,7 @@ export const landingCSS = `
 }
 
 /* ═══ CONTRACT TYPES ═══ */
-.ltypes{padding:80px 0}
+.ltypes{padding:48px 0}
 .ltypes-grid{display:grid;grid-template-columns:1fr 1fr;gap:24px}
 .ltype{background:var(--p);border:1px solid var(--d);padding:32px}
 .ltype-badge{font-family:'Inter',monospace;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;margin-bottom:16px;display:inline-block;padding:3px 10px}
@@ -129,7 +135,7 @@ export const landingCSS = `
 .ltype-detail{font-size:12px;color:var(--t3);line-height:1.5;padding-top:16px;border-top:1px solid var(--d)}
 
 /* ═══ EXAMPLE ═══ */
-.lex{padding:80px 0}
+.lex{padding:48px 0}
 .lex-box{background:var(--p);border:1px solid var(--d);max-width:540px}
 .lex-head{background:var(--bg);border-bottom:1px solid var(--d);padding:14px 24px}
 .lex-row{display:flex;justify-content:space-between;padding:12px 24px;font-size:13px;border-bottom:1px solid rgba(229,229,229,.4)}
@@ -140,12 +146,12 @@ export const landingCSS = `
 .lex-row .v.red{color:var(--r)}
 
 /* ═══ FAQ ═══ */
-.lfaq{padding:80px 0}
+.lfaq{padding:48px 0}
 .lfaq-wrap{max-width:640px}
 .fq{border-bottom:1px solid var(--d)}.fq-q{padding:18px 0;font-family:'Inter Tight',sans-serif;font-size:15px;font-weight:600;color:var(--t1);cursor:pointer;display:flex;justify-content:space-between;align-items:center;user-select:none}.fq-q::after{content:'+';font-size:16px;color:var(--t3)}.fq.open .fq-q::after{content:'\\2212'}.fq-a{max-height:0;overflow:hidden;transition:max-height .3s;font-size:13px;color:var(--t2);line-height:1.6}.fq.open .fq-a{max-height:400px;padding-bottom:18px}.fq-a strong{color:var(--t1);font-weight:600}
 
 /* ═══ FINAL CTA ═══ */
-.lfoot{background:var(--t1);text-align:center;padding:80px 24px}
+.lfoot{background:var(--t1);text-align:center;padding:64px 24px}
 .lfoot-h{font-family:'Inter Tight',sans-serif;font-size:clamp(24px,4vw,36px);font-weight:400;color:#fff;letter-spacing:-.5px;line-height:1.1;margin-bottom:8px}
 .lfoot-h em{font-style:normal;color:var(--r);font-weight:500}
 .lfoot-sub{font-size:13px;color:rgba(255,255,255,.4);margin-bottom:24px}
@@ -154,7 +160,8 @@ export const landingCSS = `
 .lfoot-line{margin-top:48px;padding-top:20px;border-top:1px solid rgba(255,255,255,.06);font-size:10px;color:rgba(255,255,255,.15);font-family:'Inter',monospace;text-transform:uppercase;letter-spacing:1.5px}
 
 /* Inline CTA row */
-.lcta-row{padding:32px 0;text-align:center;border-top:1px solid var(--d)}
+.lcta-row{padding:32px 0 40px;text-align:center;border-top:1px solid var(--d)}
+.lcta-row-sub{font-size:12px;color:var(--t2);margin-top:12px;font-weight:600;letter-spacing:.2px}
 
 /* ═══ RESPONSIVE ═══ */
 @media(max-width:768px){

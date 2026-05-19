@@ -1,17 +1,17 @@
 // Landing Styles — pixel-for-pixel match with overview.html
 // Uses same tokens, same type scale, same spacing rhythm
 export const landingCSS = `
-/* ── Tokens ── */
+/* ── Tokens (from index.css) ── */
 .lp {
-    --bg: #F7F7F6;
+    --bg: #F9F9F9;
     --panel: #FFFFFF;
-    --t1: #0E0E11;
-    --t2: #6B6E76;
-    --t3: #B0B2B8;
-    --div: #D9DBE1;
-    --red: #921818;
-    --red-h: #751212;
-    --green: #1F7A4D;
+    --t1: #111111;
+    --t2: #444444;
+    --t3: #8A8A8A;
+    --div: #E5E5E5;
+    --red: #5C1414;
+    --red-h: #6B1212;
+    --green: #15803D;
     --gold: #A18239;
     --gold-wash: rgba(161,130,57,.06);
     min-height: 100vh;
@@ -25,18 +25,8 @@ export const landingCSS = `
 }
 .lp *, .lp *::before, .lp *::after { box-sizing: border-box; }
 
-/* ── Background (exact overview match) ── */
-.lp-grid {
-    position: fixed; inset: 0; pointer-events: none; z-index: 0;
-    background-size: 40px 40px;
-    background-image:
-        linear-gradient(to right, rgba(14,14,17,.03) 1px, transparent 1px),
-        linear-gradient(to bottom, rgba(14,14,17,.03) 1px, transparent 1px);
-}
-.lp-noise {
-    position: fixed; inset: 0; pointer-events: none; z-index: 0; opacity: .02;
-    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
-}
+/* ── Background (clean, no grid) ── */
+.lp-grid, .lp-noise { display: none; }
 
 /* ── Scroll Reveal (exact overview easing) ── */
 .lp [data-reveal] {
@@ -56,19 +46,19 @@ export const landingCSS = `
 .lp-display { font-family: 'Inter Tight', sans-serif; }
 .lp-mono { font-family: 'Inter', monospace; font-size: 10px; font-weight: 500; text-transform: uppercase; letter-spacing: 1.8px; color: var(--t2); }
 .lp-section-h { font-family: 'Inter Tight', sans-serif; font-size: 18px; font-weight: 600; text-transform: uppercase; letter-spacing: -.2px; color: var(--red); margin-bottom: 8px; }
-.lp-section-hr { width: 100%; height: 1px; background: rgba(146,24,24,.2); margin-bottom: 32px; }
+.lp-section-hr { width: 100%; height: 1px; background: rgba(92,20,20,.2); margin-bottom: 32px; }
 
 /* ═══ NAV BAR ═══ */
 .lp-nav {
     position: fixed; top: 0; left: 0; right: 0; z-index: 50;
     border-bottom: 1px solid var(--div);
-    background: rgba(247,247,246,.95);
+    background: rgba(249,249,249,.95);
     backdrop-filter: blur(12px) saturate(180%);
     -webkit-backdrop-filter: blur(12px) saturate(180%);
 }
 .lp-nav::after {
     content: ''; position: absolute; bottom: -1px; left: 0; width: 100%; height: 2px;
-    background: linear-gradient(90deg, transparent 0%, #921818 50%, transparent 100%);
+    background: linear-gradient(90deg, transparent 0%, #5C1414 50%, transparent 100%);
 }
 .lp-nav-in {
     max-width: 960px; margin: 0 auto; padding: 0 24px;
@@ -80,12 +70,12 @@ export const landingCSS = `
     text-transform: uppercase; color: var(--t1); text-decoration: none;
 }
 .lp-nav-cta {
-    background: var(--t1); color: #fff;
+    background: var(--red); color: #fff;
     font-size: 11px; font-weight: 500; letter-spacing: 1.2px; text-transform: uppercase;
     padding: 8px 20px; border: none; cursor: pointer;
     border-radius: 2px; transition: background .2s;
 }
-.lp-nav-cta:hover { background: #1E1F23; }
+.lp-nav-cta:hover { background: var(--red-h); }
 
 /* ═══ HERO ═══ */
 .lp-hero {
@@ -94,7 +84,7 @@ export const landingCSS = `
 }
 .lp-hero::before {
     content: ''; position: absolute; left: -16px; top: 0; bottom: 0; width: 1px;
-    background: var(--div); display: none;
+    background: var(--red); display: none;
 }
 @media(min-width:768px) { .lp-hero::before { display: block; } }
 
@@ -103,7 +93,7 @@ export const landingCSS = `
     font-weight: 400;
     font-size: clamp(42px, 7vw, 72px);
     line-height: .9;
-    letter-spacing: -1px;
+    letter-spacing: -1.5px;
     color: var(--t1);
     margin: 0 0 24px;
     max-width: 720px;

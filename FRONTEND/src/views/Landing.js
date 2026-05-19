@@ -78,22 +78,22 @@ export function renderLanding() {
                     <div style="background:var(--panel);border:1px solid var(--div);border-radius:2px;overflow:hidden">
                         <div class="lp-steps" style="padding:48px 32px">
                             <div class="lp-step">
-                                <div style="font-family:'Inter Tight',sans-serif;font-size:56px;font-weight:700;color:rgba(14,14,17,.06);line-height:1;margin-bottom:12px">01</div>
+                                <div style="font-family:'Inter Tight',sans-serif;font-size:56px;font-weight:700;color:rgba(17,17,17,.06);line-height:1;margin-bottom:12px">01</div>
                                 <div class="lp-step-h">Commit</div>
                                 <div class="lp-step-p">Stake capital against specific, measurable performance targets. Define the metric, set the threshold, lock the funds.</div>
                             </div>
                             <div class="lp-step">
-                                <div style="font-family:'Inter Tight',sans-serif;font-size:56px;font-weight:700;color:rgba(14,14,17,.06);line-height:1;margin-bottom:12px">02</div>
+                                <div style="font-family:'Inter Tight',sans-serif;font-size:56px;font-weight:700;color:rgba(17,17,17,.06);line-height:1;margin-bottom:12px">02</div>
                                 <div class="lp-step-h">Monitor</div>
                                 <div class="lp-step-p">Metrics are tracked in real-time through verified data adapters connected to authoritative sources.</div>
                             </div>
                             <div class="lp-step">
-                                <div style="font-family:'Inter Tight',sans-serif;font-size:56px;font-weight:700;color:rgba(14,14,17,.06);line-height:1;margin-bottom:12px">03</div>
+                                <div style="font-family:'Inter Tight',sans-serif;font-size:56px;font-weight:700;color:rgba(17,17,17,.06);line-height:1;margin-bottom:12px">03</div>
                                 <div class="lp-step-h">Verify</div>
                                 <div class="lp-step-p">Automated oracle verification at the deadline. Deterministic. Transparent. No appeals process.</div>
                             </div>
                             <div class="lp-step">
-                                <div style="font-family:'Inter Tight',sans-serif;font-size:56px;font-weight:700;color:rgba(14,14,17,.06);line-height:1;margin-bottom:12px">04</div>
+                                <div style="font-family:'Inter Tight',sans-serif;font-size:56px;font-weight:700;color:rgba(17,17,17,.06);line-height:1;margin-bottom:12px">04</div>
                                 <div class="lp-step-h">Settle</div>
                                 <div class="lp-step-p">Variance is calculated against the target. Capital is released to the system or returned to the staker.</div>
                             </div>

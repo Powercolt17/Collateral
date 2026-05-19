@@ -21,8 +21,8 @@ export function renderLanding() {
             <div class="lp-w">
                 <div class="lp-hero" data-reveal>
                     <h1 class="lp-h1">
-                        MAKE YOUR GOALS<br>
-                        <em>EXPENSIVE TO MISS.</em>
+                        Make your goals<br>
+                        expensive to <em>miss.</em>
                     </h1>
 
                     <div class="lp-hero-body">
@@ -229,7 +229,7 @@ export function renderLanding() {
 
             <!-- ═══ FINAL CTA ═══ -->
             <div class="lp-foot">
-                <h2 class="lp-foot-h">LOCK CAPITAL<br><em>ON YOUR PERFORMANCE.</em></h2>
+                <h2 class="lp-foot-h">Put your money where<br>your <em>goals</em> are.</h2>
                 <div class="lp-foot-sub">$25 minimum. No card required to sign up.</div>
                 <button class="lp-foot-btn" id="lp-final-cta">Execute Contract</button>
                 <div class="lp-foot-micro">Stripe · X · Shopify · Amazon</div>

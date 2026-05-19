@@ -93,7 +93,7 @@ export const landingCSS = `
     font-weight: 400;
     font-size: clamp(42px, 7vw, 72px);
     line-height: .9;
-    letter-spacing: -1.5px;
+    letter-spacing: -1px;
     color: var(--t1);
     margin: 0 0 24px;
     max-width: 720px;

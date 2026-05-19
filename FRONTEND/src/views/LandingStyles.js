@@ -28,8 +28,8 @@ export const landingCSS = `
 .lbtn{height:48px;padding:0 28px;font-size:12px;font-weight:600;letter-spacing:.6px;text-transform:uppercase;border:none;cursor:pointer;display:inline-flex;align-items:center;gap:8px;transition:all .15s;font-family:'Inter',sans-serif}
 .lbtn-r{background:var(--r);color:#fff;box-shadow:0 2px 8px rgba(92,20,20,.15)}.lbtn-r:hover{background:var(--rh);box-shadow:0 4px 16px rgba(92,20,20,.2);transform:translateY(-1px)}
 .lbtn-g{background:var(--p);color:var(--t2);border:1px solid var(--d)}.lbtn-g:hover{border-color:#bbb;color:var(--t1)}
-.ltrust{font-size:11px;color:var(--t3);letter-spacing:.3px;line-height:1.5;max-width:440px}
-.ltrust strong{color:var(--t1);font-weight:600}
+.launch-badge{display:inline-flex;align-items:center;height:26px;padding:0 12px;font-family:'Inter',monospace;font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--r);background:rgba(92,20,20,.05);border:1px solid rgba(92,20,20,.12);border-radius:4px;margin-bottom:20px}
+.lcta-micro{font-size:11px;color:var(--t3);margin-top:12px;font-weight:500;letter-spacing:.3px}
 
 /* ═══ LIVE CONTRACTS ═══ */
 .lcontracts{padding:56px 0 64px;background:var(--p);border-top:1px solid var(--d);border-bottom:1px solid var(--d)}
@@ -71,9 +71,9 @@ export const landingCSS = `
 .lmarquee-track::before,.lmarquee-track::after{content:'';position:absolute;top:0;bottom:0;width:80px;z-index:2;pointer-events:none}
 .lmarquee-track::before{left:0;background:linear-gradient(to right,var(--p),transparent)}
 .lmarquee-track::after{right:0;background:linear-gradient(to left,var(--p),transparent)}
-.lmarquee-slide{display:flex;align-items:center;gap:80px;animation:marquee 20s linear infinite;width:max-content;padding:8px 0}
-.lmarquee-slide img{opacity:.5;transition:opacity .3s;flex-shrink:0}
-.lmarquee-slide img:hover{opacity:.8}
+.lmarquee-slide{display:flex;align-items:center;gap:80px;animation:marquee 20s linear infinite;width:max-content;padding:8px 0;color:#555}
+.lmarquee-slide > div{opacity:.4;transition:opacity .3s;flex-shrink:0}
+.lmarquee-slide > div:hover{opacity:.8}
 @keyframes marquee{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
 
 /* ═══ CONTRACT TYPES ═══ */

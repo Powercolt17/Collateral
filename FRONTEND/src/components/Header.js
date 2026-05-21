@@ -129,6 +129,14 @@ export function renderHeader(currentRoute) {
             .ch-logo:hover {
                 transform: scale(1.04);
             }
+            .ch-logo-svg {
+                width: 22px;
+                height: 22px;
+                color: #5C1414;
+                margin-right: 10px;
+                fill: currentColor;
+                flex-shrink: 0;
+            }
             .ch-logo-wordmark {
                 font-size: 14px;
                 font-weight: 800;
@@ -745,6 +753,11 @@ export function renderHeader(currentRoute) {
             <div class="ch-header-inner">
                 <!-- Logo -->
                 <a href="#" onclick="window.router.navigate('/overview'); return false;" class="ch-logo">
+                    <svg class="ch-logo-svg" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                        <polygon points="48,14 18,44 20,44 20,56 18,56 48,86 48,70 32,50 48,30" fill="currentColor"/>
+                        <rect x="42" y="42" width="16" height="16" fill="currentColor"/>
+                        <polygon points="52,14 82,44 80,44 80,56 82,56 52,86 52,70 68,50 52,30" fill="currentColor"/>
+                    </svg>
                     <span class="ch-logo-wordmark">COLLATERAL</span>
                 </a>
 

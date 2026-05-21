@@ -30,8 +30,9 @@ export const landingCSS = `
 
 /* Nav */
 .ln{position:fixed;top:32px;left:0;right:0;z-index:50;background:rgba(249,249,249,.92);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-bottom:1px solid var(--d)}
-.ln-in{max-width:1080px;margin:0 auto;padding:0 24px;height:56px;display:flex;justify-content:space-between;align-items:center}
-.ln-brand{font-family:'Inter Tight',sans-serif;font-size:13px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--t1);text-decoration:none}
+.ln-in{max-width:none;width:100%;padding:0 40px;height:56px;display:flex;justify-content:space-between;align-items:center}
+.ln-brand{font-family:'Inter Tight',sans-serif;font-size:13px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--t1);text-decoration:none;display:inline-flex;align-items:center;gap:10px}
+.ln-logo{width:22px;height:22px;color:var(--r);fill:currentColor;flex-shrink:0}
 .ln-cta{background:var(--r) !important;color:#fff !important;font-size:11px;font-weight:600;letter-spacing:.8px;text-transform:uppercase;padding:9px 20px;border:none;cursor:pointer;transition:all .3s cubic-bezier(.16, 1, 0.3, 1)}
 .ln-cta:hover{background:var(--rh) !important;transform:scale(1.02)}
 .ln-cta::after{content:'→';opacity:0;transform:translateX(-6px);transition:all .25s cubic-bezier(.16, 1, 0.3, 1);display:inline-block;width:0;margin-left:0}
@@ -213,6 +214,7 @@ export const landingCSS = `
 
 /* ═══ RESPONSIVE ═══ */
 @media(max-width:768px){
+  .ln-in{padding:0 20px}
   .lstats-inner{flex-wrap:wrap}
   .lstat{flex:0 0 50%;padding:16px 12px}
   .lstat-sep{display:none}

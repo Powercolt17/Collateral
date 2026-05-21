@@ -1,8 +1,8 @@
-<svg width="340" height="44" viewBox="0 0 340 44" fill="none" xmlns="http://www.w3.org/2000/svg">
-  <g transform="translate(10, 10) scale(0.24)" fill="#5C1414">
+<svg width="400" height="52" viewBox="0 0 400 52" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <g transform="translate(10, 10) scale(0.32)" fill="#5C1414">
     <polygon points="45,5 10,40 20,40 20,60 10,60 45,95 45,67 28,50 45,33"/>
     <rect x="40" y="40" width="20" height="20"/>
     <polygon points="55,5 90,40 80,40 80,60 90,60 55,95 55,67 72,50 55,33"/>
   </g>
-  <text x="46" y="27" fill="#111111" font-family="'Sora', 'Inter Tight', 'IBM Plex Sans', -apple-system, sans-serif" font-size="14" font-weight="800" letter-spacing="0.22em">COLLATERAL</text>
+  <text x="56" y="34" fill="#111111" font-family="'Sora', 'Inter Tight', 'IBM Plex Sans', -apple-system, sans-serif" font-size="18" font-weight="800" letter-spacing="0.22em">COLLΛTERΛL</text>
 </svg>

@@ -130,15 +130,15 @@ export function renderHeader(currentRoute) {
                 transform: scale(1.04);
             }
             .ch-logo-svg {
-                width: 22px;
-                height: 22px;
+                width: 32px;
+                height: 32px;
                 color: #5C1414;
-                margin-right: 10px;
+                margin-right: 12px;
                 fill: currentColor;
                 flex-shrink: 0;
             }
             .ch-logo-wordmark {
-                font-size: 14px;
+                font-size: 18px;
                 font-weight: 800;
                 color: #111111;
                 letter-spacing: 0.22em;
@@ -758,7 +758,7 @@ export function renderHeader(currentRoute) {
                         <rect x="40" y="40" width="20" height="20" fill="currentColor"/>
                         <polygon points="55,5 90,40 80,40 80,60 90,60 55,95 55,67 72,50 55,33" fill="currentColor"/>
                     </svg>
-                    <span class="ch-logo-wordmark">COLLATERAL</span>
+                    <span class="ch-logo-wordmark">COLLΛTERΛL</span>
                 </a>
 
                 <!-- Nav Links (desktop) -->

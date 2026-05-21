@@ -21,7 +21,7 @@ export function renderLanding() {
                             <rect x="40" y="40" width="20" height="20" fill="currentColor"/>
                             <polygon points="55,5 90,40 80,40 80,60 90,60 55,95 55,67 72,50 55,33" fill="currentColor"/>
                         </svg>
-                        COLLATERAL
+                        COLLΛTERΛL
                     </a>
                     <button class="ln-cta" id="lp-nav-cta">Start Contract</button>
                 </div>

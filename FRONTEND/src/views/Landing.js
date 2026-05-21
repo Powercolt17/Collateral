@@ -22,23 +22,23 @@ export function renderLanding() {
 
             <!-- ═══ HERO ═══ -->
             <div class="lw">
-                <div class="lhero-grid" data-r>
+                <div class="lhero-grid">
                     <div class="lhero-left">
-                        <h1 class="lh1">
+                        <h1 class="lh1 animate-fade-in-up">
                             <span class="lh-nobrk">Put money behind the goal</span><br class="lh-br">
                             <span class="lh-nobrk">you keep saying you'll <em>hit.</em></span>
                         </h1>
-                        <p class="lsub">
+                        <p class="lsub animate-fade-in-up delay-1">
                             Lock capital against your growth targets. Hit the target and get paid. Miss it and forfeit the stake. Verified by official APIs.
                         </p>
-                        <div class="lctas">
+                        <div class="lctas animate-fade-in-up delay-2">
                             <button class="lbtn lbtn-r" id="lp-hero-cta">Start Contract</button>
                             <button class="lbtn lbtn-g" onclick="document.getElementById('contracts').scrollIntoView({behavior:'smooth'})">See Live Contracts</button>
                         </div>
-                        <div class="lcta-match">First contract match up to $250.</div>
-                        <div class="ltrust-bar">No odds. No gambling. Verified performance only.</div>
+                        <div class="lcta-match animate-fade-in-up delay-2">First contract match up to $250.</div>
+                        <div class="ltrust-bar animate-fade-in-up delay-3">No odds. No gambling. Verified performance only.</div>
                     </div>
-                    <div class="lhero-right">
+                    <div class="lhero-right animate-scale-in delay-1">
                         <div class="lpreview-card">
                             <div class="lpcard-header">
                                 <div class="lpcard-type">Performance Contract</div>
@@ -65,18 +65,18 @@ export function renderLanding() {
             <div class="lstats">
                 <div class="lstats-inner">
                     <div class="lstat">
-                        <div class="lstat-val" data-count="4">0</div>
+                        <div class="lstat-val"><span data-count="4">0</span></div>
                         <div class="lstat-label">Platform Integrations</div>
                     </div>
                     <div class="lstat-sep"></div>
                     <div class="lstat">
-                        <div class="lstat-val">$25 – $25K</div>
-                        <div class="lstat-label">Stake Range</div>
+                        <div class="lstat-val"><span data-count="340">0</span>+</div>
+                        <div class="lstat-label">Contracts Executed</div>
                     </div>
                     <div class="lstat-sep"></div>
                     <div class="lstat">
-                        <div class="lstat-val">Up to 4×</div>
-                        <div class="lstat-label">Payout Multiplier</div>
+                        <div class="lstat-val"><span data-count="98">0</span>%</div>
+                        <div class="lstat-label">Settlement Success</div>
                     </div>
                     <div class="lstat-sep"></div>
                     <div class="lstat">

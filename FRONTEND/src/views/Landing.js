@@ -19,7 +19,7 @@ export function renderLanding() {
             <nav class="ln">
                 <div class="ln-in">
                     <a class="ln-brand" href="/">
-                        <img src="/logo-official.png" alt="Collateral Logo" style="height: 32px; object-fit: contain; mix-blend-mode: multiply;" />
+                        <img src="/logo-official.png" alt="Collateral Logo" style="height: 28px; width: auto; display: block; mix-blend-mode: multiply;" />
                     </a>
                     <button class="ln-cta" id="lp-nav-cta">Start Contract</button>
                 </div>

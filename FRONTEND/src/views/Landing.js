@@ -7,6 +7,9 @@ export function renderLanding() {
         <style>${landingCSS}</style>
         <div class="lp">
 
+            <!-- LOADING BAR -->
+            <div class="lloading-bar" id="lp-loading-bar"></div>
+
             <!-- PROMO BAR -->
             <div class="lpromo-bar">
                 Launch Offer — First contract match up to $250
@@ -88,10 +91,10 @@ export function renderLanding() {
 
             <!-- ═══ LIVE CONTRACT EXAMPLES ═══ -->
             <div class="lcontracts" id="contracts">
-                <div class="lw" data-r>
+                <div class="lw">
                     <div class="lred-dash"><span class="lmono">Open Contracts</span></div>
                     <div class="lcards">
-                        <div class="lcard">
+                        <div class="lcard" data-r>
                             <div class="lcard-top">
                                 <span class="lcard-src">Stripe</span>
                                 <span class="lcard-tier tier-stake">Stake</span>
@@ -103,7 +106,7 @@ export function renderLanding() {
                             <div class="lcard-row"><span class="k">Window</span><span class="v">30 days</span></div>
                             <div class="lcard-btn"><button class="lp-cta-btn" data-source="STRIPE" data-tier="stake" data-capital="250">Start Contract</button></div>
                         </div>
-                        <div class="lcard">
+                        <div class="lcard" data-r>
                             <div class="lcard-top">
                                 <span class="lcard-src">X / Twitter</span>
                                 <span class="lcard-tier tier-allin">All-In</span>
@@ -115,7 +118,7 @@ export function renderLanding() {
                             <div class="lcard-row"><span class="k">Window</span><span class="v">14 days</span></div>
                             <div class="lcard-btn"><button class="lp-cta-btn" data-source="X" data-tier="all_in" data-capital="500">Start Contract</button></div>
                         </div>
-                        <div class="lcard">
+                        <div class="lcard" data-r>
                             <div class="lcard-top">
                                 <span class="lcard-src">Shopify</span>
                                 <span class="lcard-tier tier-pledge">Pledge</span>
@@ -127,7 +130,7 @@ export function renderLanding() {
                             <div class="lcard-row"><span class="k">Window</span><span class="v">30 days</span></div>
                             <div class="lcard-btn"><button class="lp-cta-btn" data-source="SHOPIFY" data-tier="pledge" data-capital="100">Start Contract</button></div>
                         </div>
-                        <div class="lcard">
+                        <div class="lcard" data-r>
                             <div class="lcard-top">
                                 <span class="lcard-src">YouTube</span>
                                 <span class="lcard-tier tier-stake">Stake</span>
@@ -144,7 +147,7 @@ export function renderLanding() {
             </div>
 
             <!-- ═══ LOGO CAROUSEL ═══ -->
-            <div class="lmarquee">
+            <div class="lmarquee" data-r>
                 <div class="lmarquee-label"><span class="lmono">Verified via official APIs</span></div>
                 <div class="lmarquee-track">
                     <div class="lmarquee-slide">
@@ -292,6 +295,25 @@ export function renderLanding() {
 }
 
 export function initLanding() {
+    // Fade in page container
+    setTimeout(() => {
+        document.querySelector('.lp')?.classList.add('v');
+    }, 50);
+
+    // Animate progress loading bar
+    const bar = document.getElementById('lp-loading-bar');
+    if (bar) {
+        bar.style.width = '30%';
+        setTimeout(() => { bar.style.width = '70%'; }, 100);
+        setTimeout(() => {
+            bar.style.width = '100%';
+            setTimeout(() => {
+                bar.style.opacity = '0';
+                setTimeout(() => { bar.style.display = 'none'; }, 300);
+            }, 150);
+        }, 450);
+    }
+
     const p = new URLSearchParams(window.location.search);
     const utm = {};
     ['utm_source','utm_campaign','utm_medium','utm_content','utm_term'].forEach(k => { const v = p.get(k); if (v) utm[k] = v; });

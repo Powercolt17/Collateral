@@ -753,12 +753,7 @@ export function renderHeader(currentRoute) {
             <div class="ch-header-inner">
                 <!-- Logo -->
                 <a href="#" onclick="window.router.navigate('/overview'); return false;" class="ch-logo">
-                    <svg class="ch-logo-svg" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-                        <polygon points="45,5 10,40 20,40 20,60 10,60 45,95 45,67 28,50 45,33" fill="currentColor"/>
-                        <rect x="40" y="40" width="20" height="20" fill="currentColor"/>
-                        <polygon points="55,5 90,40 80,40 80,60 90,60 55,95 55,67 72,50 55,33" fill="currentColor"/>
-                    </svg>
-                    <span class="ch-logo-wordmark">COLLΛTERΛL</span>
+                    <img src="/logo-official.png" alt="Collateral Logo" style="height: 28px; object-fit: contain;" />
                 </a>
 
                 <!-- Nav Links (desktop) -->

@@ -16,12 +16,7 @@ export function renderLanding() {
             <nav class="ln">
                 <div class="ln-in">
                     <a class="ln-brand" href="/">
-                        <svg class="ln-logo" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-                            <polygon points="45,5 10,40 20,40 20,60 10,60 45,95 45,67 28,50 45,33" fill="currentColor"/>
-                            <rect x="40" y="40" width="20" height="20" fill="currentColor"/>
-                            <polygon points="55,5 90,40 80,40 80,60 90,60 55,95 55,67 72,50 55,33" fill="currentColor"/>
-                        </svg>
-                        COLLΛTERΛL
+                        <img src="/logo-official.png" alt="Collateral Logo" style="height: 32px; object-fit: contain;" />
                     </a>
                     <button class="ln-cta" id="lp-nav-cta">Start Contract</button>
                 </div>

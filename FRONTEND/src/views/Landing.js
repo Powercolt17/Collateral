@@ -40,18 +40,37 @@ export function renderLanding() {
                     </div>
                     <div class="lhero-right">
                         <div class="lpreview-card">
-                            <div class="lpcard-badge">Example Contract</div>
-                            <div class="lpcard-src">Stripe Integration</div>
-                            <div class="lpcard-title">Stripe Revenue Growth</div>
-                            <div class="lpcard-row"><span class="k">Stake</span><span class="v">$250</span></div>
-                            <div class="lpcard-row"><span class="k">Multiplier</span><span class="v">4x</span></div>
-                            <div class="lpcard-row"><span class="k">Target</span><span class="v">+20% in 30 days</span></div>
-                            <div class="lpcard-row"><span class="k">Source</span><span class="v">Stripe API</span></div>
-                            <div class="lpcard-outcome">
-                                <div class="lpcard-outcome-title">Outcome</div>
-                                <div class="lpcard-outcome-item success"><span class="dot"></span> If you hit: You get $1,000</div>
-                                <div class="lpcard-outcome-item failure"><span class="dot"></span> If you miss: Stake forfeited</div>
+                            <div class="lpcard-header">
+                                <div class="lpcard-header-left">
+                                    <div class="lpcard-type">Performance Contract</div>
+                                    <div class="lpcard-id">CTR-2026-00847</div>
+                                </div>
+                                <div class="lpcard-status"><span class="lpcard-status-dot"></span>Live</div>
                             </div>
+                            <div class="lpcard-divider"></div>
+                            <div class="lpcard-meta-row">
+                                <div class="lpcard-meta"><span class="lpcard-meta-label">Integration</span><span class="lpcard-meta-val">Stripe API</span></div>
+                                <div class="lpcard-meta"><span class="lpcard-meta-label">Contract Type</span><span class="lpcard-meta-val">Solo</span></div>
+                            </div>
+                            <div class="lpcard-title">Revenue Growth Target</div>
+                            <div class="lpcard-subtitle">+20% MRR increase within 30-day window</div>
+                            <div class="lpcard-terms">
+                                <div class="lpcard-term"><span class="lpcard-term-k">Capital Locked</span><span class="lpcard-term-v">$250.00</span></div>
+                                <div class="lpcard-term"><span class="lpcard-term-k">Payout Multiplier</span><span class="lpcard-term-v lpcard-term-highlight">4.0×</span></div>
+                                <div class="lpcard-term"><span class="lpcard-term-k">Max Payout</span><span class="lpcard-term-v lpcard-term-green">$1,000.00</span></div>
+                                <div class="lpcard-term"><span class="lpcard-term-k">Settlement Window</span><span class="lpcard-term-v">30 Days</span></div>
+                                <div class="lpcard-term"><span class="lpcard-term-k">Verification</span><span class="lpcard-term-v">Stripe Revenue API</span></div>
+                            </div>
+                            <div class="lpcard-progress">
+                                <div class="lpcard-progress-header"><span class="lpcard-progress-label">Progress</span><span class="lpcard-progress-pct">64%</span></div>
+                                <div class="lpcard-progress-track"><div class="lpcard-progress-fill" style="width:64%"></div></div>
+                                <div class="lpcard-progress-detail"><span>12.8% of 20% target</span><span>18 days left</span></div>
+                            </div>
+                            <div class="lpcard-outcome">
+                                <div class="lpcard-outcome-row lpcard-outcome-hit"><span class="lpcard-outcome-icon">↑</span><span class="lpcard-outcome-text">Hit target</span><span class="lpcard-outcome-result">+ $1,000.00</span></div>
+                                <div class="lpcard-outcome-row lpcard-outcome-miss"><span class="lpcard-outcome-icon">↓</span><span class="lpcard-outcome-text">Miss target</span><span class="lpcard-outcome-result">− $250.00</span></div>
+                            </div>
+                            <div class="lpcard-footer">Verified & settled automatically · No manual review</div>
                         </div>
                     </div>
                 </div>

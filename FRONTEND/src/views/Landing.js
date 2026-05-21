@@ -20,9 +20,9 @@ export function renderLanding() {
                 <div class="ln-in">
                     <a class="ln-brand" href="/">
                         <svg class="ln-logo" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-                            <polygon points="48,14 18,44 20,44 20,56 18,56 48,86 48,70 32,50 48,30" fill="currentColor"/>
+                            <polygon points="48,10 16,42 24,42 24,58 16,58 48,90 48,68 30,50 48,32" fill="currentColor"/>
                             <rect x="42" y="42" width="16" height="16" fill="currentColor"/>
-                            <polygon points="52,14 82,44 80,44 80,56 82,56 52,86 52,70 68,50 52,30" fill="currentColor"/>
+                            <polygon points="52,10 84,42 76,42 76,58 84,58 52,90 52,68 70,50 52,32" fill="currentColor"/>
                         </svg>
                         COLLATERAL
                     </a>

@@ -78,7 +78,7 @@ export const landingCSS = `
 
 
 /* ═══ SOCIAL PROOF STATS ═══ */
-.lstats{background:var(--p);padding:0;border-top:1px solid var(--d);border-bottom:1px solid var(--d)}
+.lstats{background:var(--bg);padding:0;border-top:1px solid var(--d);border-bottom:none}
 .lstats-inner{max-width:1080px;margin:0 auto;display:flex;align-items:center;justify-content:center;width:100%;padding:0 24px}
 .lstat{flex:1;text-align:center;padding:24px 16px}
 .lstat-val{font-family:'SF Mono','Fira Code','Consolas',monospace;font-size:22px;font-weight:700;color:var(--t1);letter-spacing:-.5px;margin-bottom:4px}

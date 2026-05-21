@@ -61,7 +61,7 @@ export const landingCSS = `
 .lpcard-outcome-item.failure .dot{width:6px;height:6px;border-radius:50%;background:var(--r)}
 
 /* ═══ LIVE CONTRACTS ═══ */
-.lcontracts{padding:40px 0 64px;background:var(--p);border-top:1px solid var(--d);border-bottom:1px solid var(--d)}
+.lcontracts{padding:40px 0 64px;background:var(--p);border-top:1px solid var(--d)}
 .lcontracts .lw{max-width:1280px}
 .lcards{display:grid;grid-template-columns:repeat(4,1fr);gap:32px}
 .lcard{border:1px solid var(--d);padding:36px 32px;display:flex;flex-direction:column;transition:border-color .15s,box-shadow .15s;background:var(--p)}

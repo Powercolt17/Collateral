@@ -21,8 +21,15 @@ export const landingCSS = `
 .delay-3 { animation-delay: 360ms; }
 .delay-4 { animation-delay: 480ms; }
 
+/* Promo Bar */
+@keyframes promoPulse {
+  0%, 100% { opacity: 0.95; }
+  50% { opacity: 1; text-shadow: 0 0 10px rgba(255,255,255,0.45); }
+}
+.lpromo-bar{position:fixed;top:0;left:0;right:0;height:32px;background:var(--r);color:#fff;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:600;letter-spacing:1px;text-transform:uppercase;z-index:60;animation:promoPulse 3s infinite alternate}
+
 /* Nav */
-.ln{position:fixed;top:0;left:0;right:0;z-index:50;background:var(--bg);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px)}
+.ln{position:fixed;top:32px;left:0;right:0;z-index:50;background:var(--bg);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px)}
 .ln-in{max-width:none;width:100%;padding:0 48px;height:72px;display:flex;justify-content:space-between;align-items:center}
 .ln-brand{font-family:'Inter Tight',sans-serif;font-size:16px;font-weight:800;letter-spacing:3.5px;text-transform:uppercase;color:var(--t1);text-decoration:none;display:inline-flex;align-items:center;gap:14px}
 .ln-logo{width:32px;height:32px;color:var(--r);fill:currentColor;flex-shrink:0}

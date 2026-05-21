@@ -10,13 +10,16 @@ export function renderLanding() {
             <!-- LOADING BAR -->
             <div class="lloading-bar" id="lp-loading-bar"></div>
 
-            <!-- PROMO BAR REMOVED -->
+            <!-- PROMO BAR -->
+            <div class="lpromo-bar">
+                Launch Offer — First contract match up to $250
+            </div>
 
             <!-- NAV -->
             <nav class="ln">
                 <div class="ln-in">
                     <a class="ln-brand" href="/">
-                        <img src="/logo-official.png" alt="Collateral Logo" style="height: 32px; object-fit: contain;" />
+                        <img src="/logo-official.png" alt="Collateral Logo" style="height: 32px; object-fit: contain; mix-blend-mode: multiply;" />
                     </a>
                     <button class="ln-cta" id="lp-nav-cta">Start Contract</button>
                 </div>

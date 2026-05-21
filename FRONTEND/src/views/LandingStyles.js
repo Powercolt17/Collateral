@@ -44,56 +44,30 @@ export const landingCSS = `
 
 /* ═══ PREVIEW CONTRACT CARD ═══ */
 .lhero-right{display:flex;justify-content:center;align-items:center}
-.lpreview-card{background:var(--p);border:1px solid var(--d);width:100%;max-width:380px;box-shadow:0 1px 3px rgba(0,0,0,.04),0 12px 40px rgba(0,0,0,.06);position:relative;overflow:hidden}
+.lpreview-card{background:var(--p);border:1px solid var(--d);width:100%;max-width:340px;box-shadow:0 1px 3px rgba(0,0,0,.04),0 12px 40px rgba(0,0,0,.06);position:relative;overflow:hidden}
 .lpreview-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--r),#8B2020,var(--r))}
 
-/* Card Header */
-.lpcard-header{display:flex;justify-content:space-between;align-items:flex-start;padding:20px 24px 0}
-.lpcard-header-left{display:flex;flex-direction:column;gap:2px}
-.lpcard-type{font-family:'Inter Tight',sans-serif;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1.8px;color:var(--t1)}
-.lpcard-id{font-family:'SF Mono','Fira Code','Consolas',monospace;font-size:10px;color:var(--t3);letter-spacing:.5px;font-weight:500}
-.lpcard-status{display:inline-flex;align-items:center;gap:6px;font-family:'Inter',sans-serif;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--g);background:rgba(21,128,61,.06);border:1px solid rgba(21,128,61,.15);padding:4px 10px;border-radius:2px}
-.lpcard-status-dot{width:6px;height:6px;border-radius:50%;background:var(--g);animation:statusPulse 2s ease-in-out infinite}
+.lpcard-header{display:flex;justify-content:space-between;align-items:center;padding:16px 20px 0}
+.lpcard-type{font-family:'Inter Tight',sans-serif;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:1.8px;color:var(--t1)}
+.lpcard-status{display:inline-flex;align-items:center;gap:5px;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--g);background:rgba(21,128,61,.06);border:1px solid rgba(21,128,61,.15);padding:3px 8px;border-radius:2px}
+.lpcard-status-dot{width:5px;height:5px;border-radius:50%;background:var(--g);animation:statusPulse 2s ease-in-out infinite}
 @keyframes statusPulse{0%,100%{opacity:1;box-shadow:0 0 0 0 rgba(21,128,61,.4)}50%{opacity:.7;box-shadow:0 0 0 4px rgba(21,128,61,0)}}
+.lpcard-divider{height:1px;background:var(--d);margin:12px 20px}
+.lpcard-title{font-family:'Inter Tight',sans-serif;font-size:18px;font-weight:700;color:var(--t1);padding:0 20px 14px;letter-spacing:-.3px}
 
-/* Divider */
-.lpcard-divider{height:1px;background:var(--d);margin:16px 24px}
-
-/* Meta Row */
-.lpcard-meta-row{display:flex;gap:24px;padding:0 24px 16px}
-.lpcard-meta{display:flex;flex-direction:column;gap:2px}
-.lpcard-meta-label{font-family:'Inter',monospace;font-size:9px;font-weight:600;text-transform:uppercase;letter-spacing:1.5px;color:var(--t3)}
-.lpcard-meta-val{font-family:'Inter',sans-serif;font-size:13px;font-weight:600;color:var(--t1)}
-
-/* Title Block */
-.lpcard-title{font-family:'Inter Tight',sans-serif;font-size:20px;font-weight:700;color:var(--t1);padding:0 24px;margin-bottom:4px;letter-spacing:-.3px}
-.lpcard-subtitle{font-size:12px;color:var(--t2);padding:0 24px;margin-bottom:20px;font-weight:500}
-
-/* Terms Grid */
-.lpcard-terms{padding:0 24px 20px}
-.lpcard-term{display:flex;justify-content:space-between;align-items:center;padding:9px 0;border-bottom:1px solid rgba(229,229,229,.5)}
+.lpcard-terms{padding:0 20px 16px}
+.lpcard-term{display:flex;justify-content:space-between;align-items:center;padding:7px 0;border-bottom:1px solid rgba(229,229,229,.5)}
 .lpcard-term:last-child{border-bottom:none}
 .lpcard-term-k{font-size:12px;color:var(--t3);font-weight:500}
 .lpcard-term-v{font-size:13px;font-weight:700;color:var(--t1);font-family:'SF Mono','Fira Code','Consolas',monospace;letter-spacing:-.2px}
-.lpcard-term-highlight{color:var(--t1);background:rgba(17,17,17,.04);padding:2px 8px;border-radius:2px;font-weight:800}
-.lpcard-term-green{color:var(--g)}
+.lpcard-term-highlight{color:var(--t1);background:rgba(17,17,17,.04);padding:2px 6px;border-radius:2px;font-weight:800}
 
-/* Progress Bar */
-.lpcard-progress{background:var(--bg);border-top:1px solid var(--d);border-bottom:1px solid var(--d);padding:16px 24px}
-.lpcard-progress-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px}
-.lpcard-progress-label{font-family:'Inter',monospace;font-size:9px;font-weight:600;text-transform:uppercase;letter-spacing:1.5px;color:var(--t3)}
-.lpcard-progress-pct{font-family:'SF Mono','Fira Code','Consolas',monospace;font-size:14px;font-weight:800;color:var(--t1)}
-.lpcard-progress-track{height:6px;background:rgba(229,229,229,.6);border-radius:3px;overflow:hidden}
-.lpcard-progress-fill{height:100%;background:linear-gradient(90deg,var(--r),#9B2C2C);border-radius:3px;transition:width 1.5s cubic-bezier(.16,1,.3,1)}
-.lpcard-progress-detail{display:flex;justify-content:space-between;margin-top:6px;font-size:10px;color:var(--t3);font-weight:500}
-
-/* Outcome Block */
-.lpcard-outcome{padding:16px 24px}
-.lpcard-outcome-row{display:flex;align-items:center;gap:10px;padding:8px 12px;margin-bottom:6px;border-radius:2px;font-size:12px;font-weight:600}
+.lpcard-outcome{padding:12px 20px 16px;border-top:1px solid var(--d)}
+.lpcard-outcome-row{display:flex;align-items:center;gap:8px;padding:6px 10px;margin-bottom:4px;border-radius:2px;font-size:12px;font-weight:600}
 .lpcard-outcome-row:last-child{margin-bottom:0}
 .lpcard-outcome-hit{background:rgba(21,128,61,.04);border:1px solid rgba(21,128,61,.1)}
 .lpcard-outcome-miss{background:rgba(92,20,20,.03);border:1px solid rgba(92,20,20,.08)}
-.lpcard-outcome-icon{font-size:14px;font-weight:700;line-height:1}
+.lpcard-outcome-icon{font-size:13px;font-weight:700;line-height:1}
 .lpcard-outcome-hit .lpcard-outcome-icon{color:var(--g)}
 .lpcard-outcome-miss .lpcard-outcome-icon{color:var(--r)}
 .lpcard-outcome-text{flex:1;color:var(--t2);font-weight:500}
@@ -101,8 +75,6 @@ export const landingCSS = `
 .lpcard-outcome-hit .lpcard-outcome-result{color:var(--g)}
 .lpcard-outcome-miss .lpcard-outcome-result{color:var(--r)}
 
-/* Card Footer */
-.lpcard-footer{padding:12px 24px;background:rgba(17,17,17,.02);border-top:1px solid var(--d);font-size:10px;color:var(--t3);text-align:center;font-weight:500;letter-spacing:.3px}
 
 
 /* ═══ LIVE CONTRACTS ═══ */

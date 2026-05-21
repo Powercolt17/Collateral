@@ -78,12 +78,12 @@ export const landingCSS = `
 
 
 /* ═══ SOCIAL PROOF STATS ═══ */
-.lstats{background:var(--t1);padding:0;border-bottom:1px solid rgba(255,255,255,.06)}
-.lstats-inner{max-width:1080px;margin:0 auto;display:flex;align-items:center;justify-content:center}
+.lstats{background:var(--p);padding:0;border-top:1px solid var(--d);border-bottom:1px solid var(--d)}
+.lstats-inner{max-width:1080px;margin:0 auto;display:flex;align-items:center;justify-content:center;width:100%;padding:0 24px}
 .lstat{flex:1;text-align:center;padding:24px 16px}
-.lstat-val{font-family:'SF Mono','Fira Code','Consolas',monospace;font-size:20px;font-weight:800;color:#fff;letter-spacing:-.5px;margin-bottom:4px}
-.lstat-label{font-family:'Inter',monospace;font-size:9px;font-weight:600;text-transform:uppercase;letter-spacing:1.5px;color:rgba(255,255,255,.4)}
-.lstat-sep{width:1px;height:40px;background:rgba(255,255,255,.08);flex-shrink:0}
+.lstat-val{font-family:'SF Mono','Fira Code','Consolas',monospace;font-size:22px;font-weight:700;color:var(--t1);letter-spacing:-.5px;margin-bottom:4px}
+.lstat-label{font-family:'Inter',monospace;font-size:9px;font-weight:600;text-transform:uppercase;letter-spacing:1.5px;color:var(--t3)}
+.lstat-sep{width:1px;height:32px;background:var(--d);flex-shrink:0}
 
 /* ═══ LIVE CONTRACTS ═══ */
 .lcontracts{padding:40px 0 64px;background:var(--p);border-top:1px solid var(--d)}

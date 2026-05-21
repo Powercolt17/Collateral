@@ -48,7 +48,7 @@ export const landingCSS = `
 [data-r].v{opacity:1;transform:none}
 
 /* ═══ HERO ═══ */
-.lhero-grid{display:grid;grid-template-columns:1.25fr 0.75fr;gap:64px;align-items:center;padding:120px 0 40px}
+.lhero-grid{display:grid;grid-template-columns:1.25fr 0.75fr;gap:64px;align-items:center;padding:150px 0 40px}
 .lh1{font-family:'Inter Tight',sans-serif;font-weight:400;font-size:clamp(36px,5.5vw,56px);line-height:.95;letter-spacing:-0.5px;color:var(--t1);margin:0 0 20px;max-width:850px}
 .lh1 em{font-style:normal;color:var(--r);font-weight:500;letter-spacing:-0.5px}
 .lh-nobrk{display:inline}
@@ -218,7 +218,7 @@ export const landingCSS = `
   .lstats-inner{flex-wrap:wrap}
   .lstat{flex:0 0 50%;padding:16px 12px}
   .lstat-sep{display:none}
-  .lhero-grid{grid-template-columns:1fr;gap:32px;padding:80px 0 24px}
+  .lhero-grid{grid-template-columns:1fr;gap:32px;padding:130px 0 24px}
   .lhero-right{display:none}
   .lh1{font-size:clamp(32px, 8vw, 44px);line-height:1.0}
   .lsub{font-size:15px;margin-bottom:20px}

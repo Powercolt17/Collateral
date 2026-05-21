@@ -61,6 +61,31 @@ export function renderLanding() {
                 </div>
             </div>
 
+            <!-- ═══ SOCIAL PROOF STATS ═══ -->
+            <div class="lstats">
+                <div class="lstats-inner">
+                    <div class="lstat">
+                        <div class="lstat-val" data-count="4">0</div>
+                        <div class="lstat-label">Platform Integrations</div>
+                    </div>
+                    <div class="lstat-sep"></div>
+                    <div class="lstat">
+                        <div class="lstat-val">$25 – $25K</div>
+                        <div class="lstat-label">Stake Range</div>
+                    </div>
+                    <div class="lstat-sep"></div>
+                    <div class="lstat">
+                        <div class="lstat-val">Up to 4×</div>
+                        <div class="lstat-label">Payout Multiplier</div>
+                    </div>
+                    <div class="lstat-sep"></div>
+                    <div class="lstat">
+                        <div class="lstat-val">Stripe</div>
+                        <div class="lstat-label">Secured Escrow</div>
+                    </div>
+                </div>
+            </div>
+
             <!-- ═══ LIVE CONTRACT EXAMPLES ═══ -->
             <div class="lcontracts" id="contracts">
                 <div class="lw" data-r>
@@ -210,31 +235,7 @@ export function renderLanding() {
                 </div>
             </div>
 
-            <div class="lw"><div class="lhr"></div></div>
 
-            <!-- ═══ WORKED EXAMPLE ═══ -->
-            <div class="lw">
-                <div class="lex" data-r>
-                    <div class="lred-dash"><span class="lmono">Payout Example</span></div>
-                    <h2 class="lhow-h" style="margin-bottom:8px">How the money gets <strong>decided.</strong></h2>
-                    <p class="lhow-sub">Settlement is automated based on verified API data.</p>
-
-                    <div class="lex-box">
-                        <div class="lex-head"><span class="lmono" style="color:var(--r);font-weight:700">Stripe Revenue Example</span></div>
-                        <div class="lex-row"><span class="k">Your Stake</span><span class="v">$500</span></div>
-                        <div class="lex-row"><span class="k">Target</span><span class="v">+20% revenue (30 days)</span></div>
-                        <div class="lex-row"><span class="k">Verification</span><span class="v">Stripe API</span></div>
-                        <div class="lex-row"><span class="k">If you hit</span><span class="v green">Receive payout</span></div>
-                        <div class="lex-row"><span class="k">If you miss</span><span class="v red">Stake forfeited</span></div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- CTA ROW -->
-            <div class="lcta-row">
-                <button class="lbtn lbtn-r lp-cta-btn">Start Contract</button>
-                <div class="lcta-row-sub">Start your first performance contract. Match available up to $250.</div>
-            </div>
 
             <!-- ═══ FAQ ═══ -->
             <div class="lw">
@@ -341,4 +342,26 @@ export function initLanding() {
         entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('v'); obs.unobserve(e.target); } });
     }, { threshold: 0.08, rootMargin: '0px 0px -40px 0px' });
     document.querySelectorAll('.lp [data-r]').forEach(el => obs.observe(el));
+
+    // Count-up animation for stats
+    const countEls = document.querySelectorAll('[data-count]');
+    if (countEls.length) {
+        const countObs = new IntersectionObserver((entries) => {
+            entries.forEach(e => {
+                if (e.isIntersecting) {
+                    const el = e.target;
+                    const target = parseInt(el.dataset.count, 10);
+                    let current = 0;
+                    const step = Math.max(1, Math.floor(target / 30));
+                    const interval = setInterval(() => {
+                        current += step;
+                        if (current >= target) { current = target; clearInterval(interval); }
+                        el.textContent = current;
+                    }, 40);
+                    countObs.unobserve(el);
+                }
+            });
+        }, { threshold: 0.5 });
+        countEls.forEach(el => countObs.observe(el));
+    }
 }

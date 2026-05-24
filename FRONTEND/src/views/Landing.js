@@ -5,6 +5,7 @@ import { landingCSS } from './LandingStyles.js';
 export function renderLanding() {
     return `
         <style>${landingCSS}</style>
+        <style>@media(max-width:768px){.lp .ldesktop-proof{display:none!important}}</style>
         <div class="lp">
 
             <!-- LOADING BAR -->
@@ -40,6 +41,8 @@ export function renderLanding() {
                             <button class="lbtn lbtn-r" id="lp-hero-cta">Start Your Contract</button>
                             <button class="lbtn lbtn-g" onclick="document.getElementById('contracts').scrollIntoView({behavior:'smooth'})">See Live Contracts</button>
                         </div>
+                        <div class="lcta-match ldesktop-proof animate-fade-in-up delay-2">First contract matched up to $250</div>
+                        <div class="ltrust-bar ldesktop-proof animate-fade-in-up delay-3">API-verified · Funds in escrow · Auto-settled</div>
                     </div>
                     <div class="lhero-right animate-scale-in delay-1">
                         <div class="lpreview-card">

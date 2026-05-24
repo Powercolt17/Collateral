@@ -62,7 +62,7 @@ export const landingCSS = `
   .lh-nobrk{white-space:nowrap}
   .lh-br{display:block}
 }
-.lsub{font-size:20px;color:var(--t2);line-height:1.5;margin:0 0 40px;max-width:520px;letter-spacing:-.2px}
+.lsub{font-size:20px;color:var(--t2);line-height:1.5;margin:0 0 40px;max-width:680px;letter-spacing:-.2px}
 .lctas{display:flex;gap:16px;flex-wrap:wrap;margin-bottom:16px}
 .lbtn{height:56px;padding:0 32px;font-size:13px;font-weight:700;letter-spacing:1px;text-transform:uppercase;border:none;border-radius:4px;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;gap:8px;transition:all .4s cubic-bezier(.16, 1, 0.3, 1);font-family:'Inter',sans-serif;position:relative;overflow:hidden}
 .lbtn-r{background:var(--r) !important;color:#fff !important;box-shadow:0 8px 24px -6px rgba(92,20,20,.4)}

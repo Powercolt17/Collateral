@@ -40,8 +40,8 @@ export function renderLanding() {
                             <button class="lbtn lbtn-r" id="lp-hero-cta">Start Your Contract</button>
                             <button class="lbtn lbtn-g" onclick="document.getElementById('contracts').scrollIntoView({behavior:'smooth'})">See Live Contracts</button>
                         </div>
-                        <div class="lcta-match animate-fade-in-up delay-2">First contract matched up to $250 · 340 contracts settled · 98% paid out</div>
-                        <div class="ltrust-bar animate-fade-in-up delay-3">API-verified across Stripe, Shopify, and more. Funds held in escrow. Automatic settlement.</div>
+                        <div class="lcta-match animate-fade-in-up delay-2">First contract matched up to $250</div>
+                        <div class="ltrust-bar animate-fade-in-up delay-3">API-verified · Funds in escrow · Auto-settled</div>
                     </div>
                     <div class="lhero-right animate-scale-in delay-1">
                         <div class="lpreview-card">

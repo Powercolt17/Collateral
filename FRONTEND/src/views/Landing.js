@@ -12,7 +12,7 @@ export function renderLanding() {
 
             <!-- PROMO BAR -->
             <div class="lpromo-bar">
-                $250 first-contract match
+                Launch Offer — First contract match up to $250
             </div>
 
             <!-- NAV -->
@@ -30,31 +30,35 @@ export function renderLanding() {
                 <div class="lhero-grid">
                     <div class="lhero-left">
                         <h1 class="lh1 animate-fade-in-up">
-                            Back your <em>goal.</em>
+                            <span class="lh-nobrk">Make your next goal</span><br class="lh-br">
+                            <span class="lh-nobrk">expensive to <em>ignore.</em></span>
                         </h1>
                         <p class="lsub animate-fade-in-up delay-1">
-                            Hit it, get paid. Miss it, forfeit. Verified by APIs.
+                            Lock a stake to a verified metric. Hit the target, unlock payout. Miss it, and settlement is automatic.
                         </p>
                         <div class="lctas animate-fade-in-up delay-2">
                             <button class="lbtn lbtn-r" id="lp-hero-cta">Start Contract</button>
+                            <button class="lbtn lbtn-g" onclick="document.getElementById('contracts').scrollIntoView({behavior:'smooth'})">See Contracts</button>
                         </div>
+                        <div class="lcta-match animate-fade-in-up delay-2">First contract match up to $250.</div>
+                        <div class="ltrust-bar animate-fade-in-up delay-3">API verified. Automatic settlement.</div>
                     </div>
                     <div class="lhero-right animate-scale-in delay-1">
                         <div class="lpreview-card">
                             <div class="lpcard-header">
-                                <div class="lpcard-type">Contract</div>
+                                <div class="lpcard-type">Performance Contract</div>
                                 <div class="lpcard-status"><span class="lpcard-status-dot"></span>Live</div>
                             </div>
                             <div class="lpcard-divider"></div>
-                            <div class="lpcard-title">Stripe Growth</div>
+                            <div class="lpcard-title">Stripe Revenue Growth</div>
                             <div class="lpcard-terms">
                                 <div class="lpcard-term"><span class="lpcard-term-k">Stake</span><span class="lpcard-term-v">$250.00</span></div>
-                                <div class="lpcard-term"><span class="lpcard-term-k">Target</span><span class="lpcard-term-v">+20% / 30d</span></div>
-                                <div class="lpcard-term"><span class="lpcard-term-k">Payout</span><span class="lpcard-term-v lpcard-term-highlight">4.0×</span></div>
-                                <div class="lpcard-term"><span class="lpcard-term-k">Source</span><span class="lpcard-term-v">Stripe</span></div>
+                                <div class="lpcard-term"><span class="lpcard-term-k">Target</span><span class="lpcard-term-v">+20% in 30 days</span></div>
+                                <div class="lpcard-term"><span class="lpcard-term-k">Multiplier</span><span class="lpcard-term-v lpcard-term-highlight">4.0×</span></div>
+                                <div class="lpcard-term"><span class="lpcard-term-k">Verification</span><span class="lpcard-term-v">Stripe API</span></div>
                             </div>
                             <div class="lpcard-outcome">
-                                <div class="lpcard-outcome-row lpcard-outcome-hit"><span class="lpcard-outcome-icon">↑</span><span class="lpcard-outcome-text">Win</span><span class="lpcard-outcome-result">+$1,000</span></div>
+                                <div class="lpcard-outcome-row lpcard-outcome-hit"><span class="lpcard-outcome-icon">↑</span><span class="lpcard-outcome-text">Hit</span><span class="lpcard-outcome-result">+$1,000</span></div>
                                 <div class="lpcard-outcome-row lpcard-outcome-miss"><span class="lpcard-outcome-icon">↓</span><span class="lpcard-outcome-text">Miss</span><span class="lpcard-outcome-result">−$250</span></div>
                             </div>
                         </div>
@@ -67,22 +71,22 @@ export function renderLanding() {
                 <div class="lstats-inner">
                     <div class="lstat">
                         <div class="lstat-val"><span data-count="4">0</span></div>
-                        <div class="lstat-label">Platforms</div>
+                        <div class="lstat-label">Platform Integrations</div>
                     </div>
                     <div class="lstat-sep"></div>
                     <div class="lstat">
                         <div class="lstat-val"><span data-count="340">0</span>+</div>
-                        <div class="lstat-label">Contracts</div>
+                        <div class="lstat-label">Contracts Executed</div>
                     </div>
                     <div class="lstat-sep"></div>
                     <div class="lstat">
                         <div class="lstat-val"><span data-count="98">0</span>%</div>
-                        <div class="lstat-label">Settled</div>
+                        <div class="lstat-label">Settlement Success</div>
                     </div>
                     <div class="lstat-sep"></div>
                     <div class="lstat">
                         <div class="lstat-val">Stripe</div>
-                        <div class="lstat-label">Escrow</div>
+                        <div class="lstat-label">Secured Escrow</div>
                     </div>
                 </div>
             </div>

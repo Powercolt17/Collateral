@@ -22,11 +22,16 @@ export const landingCSS = `
 .delay-4 { animation-delay: 480ms; }
 
 /* Promo Bar */
-@keyframes promoPulse {
-  0%, 100% { opacity: 0.95; }
-  50% { opacity: 1; text-shadow: 0 0 10px rgba(255,255,255,0.45); }
+@keyframes promoShine {
+  0% { background-position: 200% center; }
+  100% { background-position: -200% center; }
 }
-.lpromo-bar{position:fixed;top:0;left:0;right:0;height:32px;background:var(--r);color:#fff;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:600;letter-spacing:1px;text-transform:uppercase;z-index:60;animation:promoPulse 3s infinite alternate}
+@keyframes promoSweep {
+  0% { transform: translateX(-150%) skewX(-15deg); }
+  30%, 100% { transform: translateX(250%) skewX(-15deg); }
+}
+.lpromo-bar{position:fixed;top:0;left:0;right:0;height:32px;background:linear-gradient(90deg, var(--r), #8B2020, #a12323, #8B2020, var(--r));background-size:200% auto;color:#fff;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;z-index:60;animation:promoShine 5s linear infinite;overflow:hidden;text-shadow:0 1px 2px rgba(0,0,0,.2)}
+.lpromo-bar::before{content:'';position:absolute;top:0;left:-50%;width:50%;height:100%;background:linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);animation:promoSweep 4s cubic-bezier(0.4, 0, 0.2, 1) infinite;pointer-events:none}
 
 /* Nav */
 .ln{position:fixed;top:32px;left:0;right:0;z-index:50;background:var(--bg);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px)}
@@ -72,13 +77,36 @@ export const landingCSS = `
 .ltrust-bar::before{content:'✓';color:var(--g);font-weight:bold;font-size:12px}
 
 /* ═══ PREVIEW CONTRACT CARD ═══ */
-@keyframes floatCard {
-  0%, 100% { transform: translateY(0) rotate(-1deg); }
-  50% { transform: translateY(-16px) rotate(1deg); }
+@keyframes premiumFloat {
+  0% { 
+    transform: perspective(1200px) rotateX(3deg) rotateY(-4deg) rotateZ(1deg) translateY(0);
+    box-shadow: -20px 20px 60px -12px rgba(0,0,0,0.06), 0 0 0 1px rgba(0,0,0,0.03);
+  }
+  50% { 
+    transform: perspective(1200px) rotateX(-2deg) rotateY(3deg) rotateZ(-1deg) translateY(-18px);
+    box-shadow: -10px 40px 80px -15px rgba(0,0,0,0.12), 0 0 0 1px rgba(0,0,0,0.03);
+  }
+  100% { 
+    transform: perspective(1200px) rotateX(3deg) rotateY(-4deg) rotateZ(1deg) translateY(0);
+    box-shadow: -20px 20px 60px -12px rgba(0,0,0,0.06), 0 0 0 1px rgba(0,0,0,0.03);
+  }
 }
-.lhero-right{display:flex;justify-content:center;align-items:center}
-.lpreview-card{background:var(--p);border:1px solid rgba(0,0,0,0.06);width:100%;max-width:400px;box-shadow:0 24px 64px -12px rgba(0,0,0,.1), 0 0 0 1px rgba(0,0,0,.02);position:relative;overflow:hidden;border-radius:12px;animation:floatCard 7s ease-in-out infinite;transform-origin:center;will-change:transform}
-.lpreview-card::before{content:'';position:absolute;top:0;left:0;right:0;height:4px;background:linear-gradient(90deg,var(--r),#8B2020,var(--r))}
+@keyframes heroGlow {
+  0%, 100% { transform: scale(1); opacity: 0.6; }
+  50% { transform: scale(1.15); opacity: 0.3; }
+}
+@keyframes cardSheen {
+  0% { transform: translateX(-100%) skewX(-20deg); opacity: 0; }
+  15% { opacity: 0; }
+  30% { opacity: 1; }
+  60% { transform: translateX(100%) skewX(-20deg); opacity: 0; }
+  100% { transform: translateX(100%) skewX(-20deg); opacity: 0; }
+}
+.lhero-right{display:flex;justify-content:center;align-items:center;position:relative;perspective:1200px}
+.lhero-right::before{content:'';position:absolute;width:400px;height:400px;background:radial-gradient(circle, rgba(92,20,20,0.06) 0%, transparent 65%);z-index:0;animation:heroGlow 8s ease-in-out infinite;border-radius:50%}
+.lpreview-card{background:var(--p);border:1px solid rgba(0,0,0,0.05);width:100%;max-width:400px;position:relative;overflow:hidden;border-radius:14px;animation:premiumFloat 8s ease-in-out infinite;transform-style:preserve-3d;will-change:transform,box-shadow;z-index:1}
+.lpreview-card::before{content:'';position:absolute;top:0;left:0;right:0;height:4px;background:linear-gradient(90deg,var(--r),#8B2020,var(--r));z-index:10}
+.lpreview-card::after{content:'';position:absolute;top:0;left:-50%;width:150%;height:100%;background:linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.6) 50%, transparent 100%);z-index:5;animation:cardSheen 8s ease-in-out infinite;pointer-events:none}
 
 .lpcard-header{display:flex;justify-content:space-between;align-items:center;padding:16px 20px 0}
 .lpcard-type{font-family:'Inter Tight',sans-serif;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:1.8px;color:var(--t1)}

@@ -83,29 +83,23 @@ export const landingCSS = `
 
 /* ═══ PREVIEW CONTRACT CARD ═══ */
 @keyframes premiumFloat {
-  0% { 
-    transform: perspective(1200px) rotateX(3deg) rotateY(-4deg) rotateZ(1deg) translateY(0);
-    box-shadow: -20px 20px 60px -12px rgba(0,0,0,0.06), 0 0 0 1px rgba(0,0,0,0.03);
+  0%, 100% { 
+    transform: translateY(0);
+    box-shadow: 0 12px 40px -12px rgba(0,0,0,0.06), 0 0 0 1px rgba(0,0,0,0.03);
   }
   50% { 
-    transform: perspective(1200px) rotateX(-2deg) rotateY(3deg) rotateZ(-1deg) translateY(-18px);
-    box-shadow: -10px 40px 80px -15px rgba(0,0,0,0.12), 0 0 0 1px rgba(0,0,0,0.03);
-  }
-  100% { 
-    transform: perspective(1200px) rotateX(3deg) rotateY(-4deg) rotateZ(1deg) translateY(0);
-    box-shadow: -20px 20px 60px -12px rgba(0,0,0,0.06), 0 0 0 1px rgba(0,0,0,0.03);
+    transform: translateY(-6px);
+    box-shadow: 0 24px 50px -16px rgba(0,0,0,0.1), 0 0 0 1px rgba(0,0,0,0.03);
   }
 }
 @keyframes heroGlow {
-  0%, 100% { transform: scale(1); opacity: 0.6; }
-  50% { transform: scale(1.15); opacity: 0.3; }
+  0%, 100% { transform: scale(1); opacity: 0.3; }
+  50% { transform: scale(1.05); opacity: 0.5; }
 }
 @keyframes cardSheen {
-  0% { transform: translateX(-100%) skewX(-20deg); opacity: 0; }
-  15% { opacity: 0; }
-  30% { opacity: 1; }
-  60% { transform: translateX(100%) skewX(-20deg); opacity: 0; }
-  100% { transform: translateX(100%) skewX(-20deg); opacity: 0; }
+  0%, 20% { transform: translateX(-150%) skewX(-20deg); opacity: 0; }
+  25% { opacity: 0.4; }
+  30%, 100% { transform: translateX(150%) skewX(-20deg); opacity: 0; }
 }
 .lhero-right{display:flex;justify-content:center;align-items:center;position:relative;perspective:1200px}
 .lhero-right::before{content:'';position:absolute;width:400px;height:400px;background:radial-gradient(circle, rgba(92,20,20,0.06) 0%, transparent 65%);z-index:0;animation:heroGlow 8s ease-in-out infinite;border-radius:50%}

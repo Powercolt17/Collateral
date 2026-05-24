@@ -140,23 +140,44 @@ export const landingCSS = `
 /* ═══ FLOATING BADGES ═══ */
 .lbadge-glass {
     position: absolute;
-    background: rgba(255, 255, 255, 0.7);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
-    border: 1px solid rgba(0, 0, 0, 0.05);
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
-    padding: 8px 16px;
-    border-radius: 30px;
-    font-family: 'Inter Tight', sans-serif;
-    font-size: 13px;
-    font-weight: 700;
-    color: var(--t1);
+    background: rgba(17, 17, 17, 0.85);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.05);
+    padding: 8px 12px;
+    border-radius: 6px;
     z-index: 20;
     animation: premiumFloat 6s ease-in-out infinite;
     display: flex;
     align-items: center;
     gap: 8px;
     pointer-events: none;
+}
+.lbadge-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    animation: pulseDot 2s infinite;
+}
+@keyframes pulseDot {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.5; transform: scale(0.8); }
+}
+.lbadge-num {
+    font-family: 'SF Mono', 'Fira Code', 'Consolas', monospace;
+    font-size: 13px;
+    font-weight: 700;
+    color: #FFF;
+    letter-spacing: -0.2px;
+}
+.lbadge-txt {
+    font-family: 'Inter Tight', sans-serif;
+    font-size: 11px;
+    font-weight: 600;
+    color: rgba(255, 255, 255, 0.6);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
 }
 
 /* ═══ LIVE CONTRACTS ═══ */

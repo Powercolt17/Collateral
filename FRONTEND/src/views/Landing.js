@@ -55,11 +55,15 @@ export function renderLanding() {
                     </div>
                     <div class="lhero-right animate-scale-in delay-1">
                         <!-- Floating Glass Badges -->
-                        <div class="lbadge-glass" style="top: -10px; left: -30px; animation-delay: 0s;">
-                            <span style="color: #22c55e;">🟢</span> 340+ Contracts Executed
+                        <div class="lbadge-glass" style="top: -15px; right: -40px; animation-delay: 0s;">
+                            <span class="lbadge-dot" style="background:#22c55e;box-shadow:0 0 8px rgba(34,197,94,0.6)"></span>
+                            <span class="lbadge-num">340+</span>
+                            <span class="lbadge-txt">Contracts Executed</span>
                         </div>
-                        <div class="lbadge-glass" style="bottom: -20px; right: -40px; animation-delay: 2s;">
-                            <span style="color: #3b82f6;">🛡️</span> 98% Settlement Success
+                        <div class="lbadge-glass" style="bottom: -20px; left: -30px; animation-delay: 2s;">
+                            <span class="lbadge-dot" style="background:#3b82f6;box-shadow:0 0 8px rgba(59,130,246,0.6)"></span>
+                            <span class="lbadge-num">98%</span>
+                            <span class="lbadge-txt">Settlement Success</span>
                         </div>
                         
                         <div class="lpreview-card">

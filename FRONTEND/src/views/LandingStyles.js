@@ -140,11 +140,11 @@ export const landingCSS = `
 /* ═══ FLOATING BADGES ═══ */
 .lbadge-glass {
     position: absolute;
-    background: rgba(17, 17, 17, 0.85);
+    background: rgba(92, 20, 20, 0.95);
     backdrop-filter: blur(16px);
     -webkit-backdrop-filter: blur(16px);
-    border: 1px solid rgba(255, 255, 255, 0.08);
-    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    box-shadow: 0 12px 32px rgba(92, 20, 20, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.1);
     padding: 8px 12px;
     border-radius: 6px;
     z-index: 20;
@@ -175,7 +175,7 @@ export const landingCSS = `
     font-family: 'Inter Tight', sans-serif;
     font-size: 11px;
     font-weight: 600;
-    color: rgba(255, 255, 255, 0.6);
+    color: #FFF;
     text-transform: uppercase;
     letter-spacing: 0.5px;
 }

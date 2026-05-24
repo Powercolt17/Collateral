@@ -202,10 +202,10 @@ export const users = pgTable('users', {
     // Drip email tracking: 0=none, 1=nudge1 sent, 2=nudge2 sent, 3=final sent
     dripStageSent: integer('drip_stage_sent').default(0),
     createdAt: timestamp('created_at', { withTimezone: true }).defaultNow().notNull(),
-}, (table) => [
-    uniqueIndex('idx_users_x_user_id').on(table.xUserId),
-    uniqueIndex('idx_users_clerk_user_id').on(table.clerkUserId),
-]);
+}, (table) => ({
+    xUserIdIdx: uniqueIndex('idx_users_x_user_id').on(table.xUserId),
+    clerkUserIdIdx: uniqueIndex('idx_users_clerk_user_id').on(table.clerkUserId),
+}));
 
 // REFERRAL TRACKING TABLE
 export const referrals = pgTable('referrals', {
@@ -215,10 +215,10 @@ export const referrals = pgTable('referrals', {
     status: varchar('status', { length: 20 }).default('PENDING').notNull(),
     createdAt: timestamp('created_at', { withTimezone: true }).defaultNow().notNull(),
     activatedAt: timestamp('activated_at', { withTimezone: true }),
-}, (table) => [
-    uniqueIndex('idx_referrals_referred').on(table.referredUserId),
-    index('idx_referrals_referrer').on(table.referrerUserId),
-]);
+}, (table) => ({
+    referredIdx: uniqueIndex('idx_referrals_referred').on(table.referredUserId),
+    referrerIdx: index('idx_referrals_referrer').on(table.referrerUserId),
+}));
 
 export const identities = pgTable('identities', {
     id: uuid('id').primaryKey().defaultRandom(),
@@ -230,9 +230,9 @@ export const identities = pgTable('identities', {
     status: identityStatusEnum('status').default('ACTIVE').notNull(),
     createdAt: timestamp('created_at', { withTimezone: true }).defaultNow().notNull(),
     updatedAt: timestamp('updated_at', { withTimezone: true }).defaultNow().notNull(),
-}, (table) => [
-    uniqueIndex('identities_username_idx').on(table.username),
-]);
+}, (table) => ({
+    usernameIdx: uniqueIndex('identities_username_idx').on(table.username),
+}));
 
 export const connectedAccounts = pgTable('connected_accounts', {
     id: uuid('id').primaryKey().defaultRandom(),

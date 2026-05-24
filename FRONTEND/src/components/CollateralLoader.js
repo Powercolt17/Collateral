@@ -1,20 +1,20 @@
 /**
- * Collateral Branded Loader — Saturn orbital ring animation
+ * Collateral Branded Loader — Premium Text Shimmer
  * Returns inline SVG HTML for loading states.
  *
- * @param {number} size - Pixel size of the loader (default 24)
+ * @param {number} size - Pixel size of the loader (default 140)
  * @returns {string} HTML string
  */
-export function collateralSpinner(size = 24) {
+export function collateralSpinner(size = 140) {
     return `
-        <div style="position:relative;width:${size}px;height:${size}px;display:inline-block;">
-            <svg style="position:absolute;top:0;left:0;width:100%;height:100%" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <circle cx="32" cy="32" r="15.5" stroke="#3B0001" stroke-width="2"/>
-                <line x1="32" y1="19.5" x2="32" y2="44.5" stroke="#3B0001" stroke-width="1.5" stroke-linecap="round" style="animation:cl-pulse 1.6s ease-in-out infinite"/>
-            </svg>
-            <svg style="position:absolute;top:0;left:0;width:100%;height:100%;animation:cl-spin 2.4s linear infinite;transform-origin:center center" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <ellipse cx="32" cy="32" rx="26.5" ry="7.5" stroke="#3B0001" stroke-width="1.1" fill="none" transform="rotate(-27 32 32)"/>
-            </svg>
+        <div style="position:relative;width:${size}px;display:inline-flex;justify-content:center;">
+            <img src="/logo.svg" alt="Loading..." style="width:100%;height:auto;
+                -webkit-mask-image: linear-gradient(110deg, rgba(0,0,0,0.15) 35%, rgba(0,0,0,1) 50%, rgba(0,0,0,0.15) 65%);
+                -webkit-mask-size: 200% 100%;
+                mask-image: linear-gradient(110deg, rgba(0,0,0,0.15) 35%, rgba(0,0,0,1) 50%, rgba(0,0,0,0.15) 65%);
+                mask-size: 200% 100%;
+                animation: cl-shimmer 2.5s infinite ease-in-out;
+            " />
         </div>`;
 }
 
@@ -26,8 +26,8 @@ export function collateralSpinner(size = 24) {
 export function collateralFullLoader(message = '') {
     return `
         <div style="display:flex;flex-direction:column;align-items:center;justify-content:center;padding:80px 0;">
-            ${collateralSpinner(48)}
-            ${message ? `<div style="font-family:'JetBrains Mono', monospace;font-size:9px;color:#bbb;letter-spacing:0.12em;text-transform:uppercase;margin-top:20px;">${message}</div>` : ''}
+            ${collateralSpinner(160)}
+            ${message ? `<div style="font-family:'JetBrains Mono', monospace;font-size:10px;color:#888;letter-spacing:0.15em;text-transform:uppercase;margin-top:24px;animation:cl-pulse-text 2s ease-in-out infinite;">${message}</div>` : ''}
         </div>`;
 }
 
@@ -38,13 +38,13 @@ export function collateralFullLoader(message = '') {
 export function collateralLoaderStyles() {
     return `
         <style>
-            @keyframes cl-spin {
-                from { transform: rotate(0deg); }
-                to   { transform: rotate(360deg); }
+            @keyframes cl-shimmer {
+                0% { -webkit-mask-position: 100% 0; mask-position: 100% 0; }
+                100% { -webkit-mask-position: 0% 0; mask-position: 0% 0; }
             }
-            @keyframes cl-pulse {
-                0%, 100% { opacity: 0.7; }
-                50%      { opacity: 1; }
+            @keyframes cl-pulse-text {
+                0%, 100% { opacity: 0.3; }
+                50% { opacity: 0.7; }
             }
         </style>`;
 }

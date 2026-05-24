@@ -34,14 +34,14 @@ export function renderLanding() {
                             <span class="lh-nobrk">expensive to <em>ignore.</em></span>
                         </h1>
                         <p class="lsub animate-fade-in-up delay-1">
-                            Lock a stake to a verified metric. Hit the target, unlock payout. Miss it, and settlement is automatic.
+                            Stake capital against a verified metric. Hit your target, get paid up to 4x. Miss it, lose the stake — settlement is automatic.
                         </p>
                         <div class="lctas animate-fade-in-up delay-2">
-                            <button class="lbtn lbtn-r" id="lp-hero-cta">Start Contract</button>
-                            <button class="lbtn lbtn-g" onclick="document.getElementById('contracts').scrollIntoView({behavior:'smooth'})">See Contracts</button>
+                            <button class="lbtn lbtn-r" id="lp-hero-cta">Start Your Contract</button>
+                            <button class="lbtn lbtn-g" onclick="document.getElementById('contracts').scrollIntoView({behavior:'smooth'})">See Live Contracts</button>
                         </div>
-                        <div class="lcta-match animate-fade-in-up delay-2">First contract match up to $250.</div>
-                        <div class="ltrust-bar animate-fade-in-up delay-3">API verified. Automatic settlement.</div>
+                        <div class="lcta-match animate-fade-in-up delay-2">First contract matched up to $250 · 340 contracts settled · 98% paid out</div>
+                        <div class="ltrust-bar animate-fade-in-up delay-3">API-verified across Stripe, Shopify, and more. Funds held in escrow. Automatic settlement.</div>
                     </div>
                     <div class="lhero-right animate-scale-in delay-1">
                         <div class="lpreview-card">

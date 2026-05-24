@@ -42,6 +42,11 @@ export const landingCSS = `
 .ln-cta:hover{background:var(--rh) !important;transform:scale(1.02)}
 .ln-cta::after{content:'→';opacity:0;transform:translateX(-6px);transition:all .25s cubic-bezier(.16, 1, 0.3, 1);display:inline-block;width:0;margin-left:0}
 .ln-cta:hover::after{opacity:1;transform:translateX(0);width:auto;margin-left:8px}
+.ch-hamburger { width: 40px; height: 40px; display: flex; align-items: center; justify-content: center; background: transparent; border: 1px solid transparent; cursor: pointer; position: relative; transition: border-color 0.2s, background 0.2s; flex-shrink: 0; margin-left: 16px; }
+.ch-hamburger:hover { border-color: #e5e5e5; background: #fafafa; }
+.ch-hamburger-lines { width: 18px; height: 14px; display: flex; flex-direction: column; justify-content: space-between; }
+.ch-hamburger-lines span { display: block; width: 100%; height: 1.5px; background: #333; transition: transform 0.3s ease, opacity 0.3s ease, width 0.3s ease; transform-origin: center; }
+.ch-hamburger-lines span:nth-child(2) { width: 12px; margin-left: auto; }
 
 /* Shared */
 .lw{max-width:1080px;margin:0 auto;padding:0 24px;position:relative;z-index:1}

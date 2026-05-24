@@ -22,7 +22,16 @@ export function renderLanding() {
                     <a class="ln-brand" href="/">
                         <img src="/logo-official.png" alt="Collateral Logo" style="height: 28px; width: auto; display: block; mix-blend-mode: multiply;" />
                     </a>
-                    <button class="ln-cta" id="lp-nav-cta">Start Contract</button>
+                    <div style="display:flex; align-items:center;">
+                        <button class="ln-cta" id="lp-nav-cta">Start Contract</button>
+                        <button class="ch-hamburger" id="lp-hamburger" aria-label="Menu" onclick="window.app.openAccessModal()">
+                            <div class="ch-hamburger-lines">
+                                <span></span>
+                                <span></span>
+                                <span></span>
+                            </div>
+                        </button>
+                    </div>
                 </div>
             </nav>
 

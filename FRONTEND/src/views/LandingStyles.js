@@ -214,12 +214,15 @@ export const landingCSS = `
 /* ═══ RESPONSIVE ═══ */
 @media(max-width:768px){
   .ln-in{padding:0 20px}
-  .lstats-inner{flex-wrap:wrap}
-  .lstat{flex:0 0 50%;padding:16px 12px}
+  .ln-cta{padding:8px 14px; font-size:10px; letter-spacing:0.5px}
+  .lstats-inner{flex-wrap:wrap; padding:0 12px}
+  .lstat{flex:0 0 50%;padding:12px 8px}
+  .lstat-val{font-size:18px; margin-bottom:2px}
+  .lstat-label{font-size:8px; letter-spacing:1px}
   .lstat-sep{display:none}
   .lhero-grid{grid-template-columns:1fr;gap:32px;padding:130px 0 24px}
   .lhero-right{display:none}
-  .lh1{font-size:clamp(32px, 8vw, 44px);line-height:1.0}
+  .lh1{font-size:clamp(38px, 11vw, 48px);line-height:1.05;letter-spacing:-1px}
   .lsub{font-size:15px;margin-bottom:20px}
   .lcards{grid-template-columns:1fr 1fr;gap:16px}
   .lcard{padding:20px;min-height:auto}

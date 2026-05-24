@@ -54,6 +54,14 @@ export function renderLanding() {
                         <div class="ltrust-bar ldesktop-proof animate-fade-in-up delay-3">API-verified · Funds in escrow · Auto-settled</div>
                     </div>
                     <div class="lhero-right animate-scale-in delay-1">
+                        <!-- Floating Glass Badges -->
+                        <div class="lbadge-glass" style="top: -10px; left: -30px; animation-delay: 0s;">
+                            <span style="color: #22c55e;">🟢</span> 340+ Contracts Executed
+                        </div>
+                        <div class="lbadge-glass" style="bottom: -20px; right: -40px; animation-delay: 2s;">
+                            <span style="color: #3b82f6;">🛡️</span> 98% Settlement Success
+                        </div>
+                        
                         <div class="lpreview-card">
                             <div class="lpcard-header">
                                 <div class="lpcard-type">Performance Contract</div>
@@ -76,30 +84,7 @@ export function renderLanding() {
                 </div>
             </div>
 
-            <!-- ═══ SOCIAL PROOF STATS ═══ -->
-            <div class="lstats">
-                <div class="lstats-inner">
-                    <div class="lstat">
-                        <div class="lstat-val"><span data-count="4">0</span></div>
-                        <div class="lstat-label">Platform Integrations</div>
-                    </div>
-                    <div class="lstat-sep"></div>
-                    <div class="lstat">
-                        <div class="lstat-val"><span data-count="340">0</span>+</div>
-                        <div class="lstat-label">Contracts Executed</div>
-                    </div>
-                    <div class="lstat-sep"></div>
-                    <div class="lstat">
-                        <div class="lstat-val"><span data-count="98">0</span>%</div>
-                        <div class="lstat-label">Settlement Success</div>
-                    </div>
-                    <div class="lstat-sep"></div>
-                    <div class="lstat">
-                        <div class="lstat-val">Stripe</div>
-                        <div class="lstat-label">Secured Escrow</div>
-                    </div>
-                </div>
-            </div>
+
 
             <!-- ═══ LIVE CONTRACT EXAMPLES ═══ -->
             <div class="lcontracts" id="contracts">

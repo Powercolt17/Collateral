@@ -137,16 +137,27 @@ export const landingCSS = `
 
 
 
-/* ═══ SOCIAL PROOF STATS ═══ */
-.lstats{background:#FAFAFA;border-top:1px solid rgba(0,0,0,0.03);border-bottom:1px solid rgba(0,0,0,0.03);position:relative;z-index:2}
-.lstats-inner{max-width:1120px;margin:0 auto;padding:64px 32px;display:flex;justify-content:space-between;align-items:center;gap:24px}
-.lstat{background:#FFF;border:1px solid rgba(0,0,0,0.06);border-radius:12px;box-shadow:0 8px 24px -6px rgba(0,0,0,0.04), 0 1px 3px rgba(0,0,0,0.02);padding:36px 24px;text-align:center;flex:1;transition:all 0.3s cubic-bezier(0.16, 1, 0.3, 1);position:relative;overflow:hidden}
-.lstat:hover{transform:translateY(-4px);box-shadow:0 16px 40px -8px rgba(0,0,0,0.08), 0 1px 3px rgba(0,0,0,0.02);border-color:rgba(0,0,0,0.1)}
-.lstat::before{content:'';position:absolute;top:0;left:0;right:0;height:4px;background:linear-gradient(90deg,transparent,rgba(92,20,20,0.0),transparent);transition:all 0.3s}
-.lstat:hover::before{background:linear-gradient(90deg,var(--r),#8B2020,var(--r))}
-.lstat-val{font-family:'JetBrains Mono',monospace;font-size:32px;font-weight:700;color:var(--t1);margin-bottom:8px;letter-spacing:-1px}
-.lstat-label{font-size:10px;font-weight:700;color:var(--t2);text-transform:uppercase;letter-spacing:1px}
-.lstat-sep{display:none}
+/* ═══ FLOATING BADGES ═══ */
+.lbadge-glass {
+    position: absolute;
+    background: rgba(255, 255, 255, 0.7);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(0, 0, 0, 0.05);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
+    padding: 8px 16px;
+    border-radius: 30px;
+    font-family: 'Inter Tight', sans-serif;
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--t1);
+    z-index: 20;
+    animation: premiumFloat 6s ease-in-out infinite;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    pointer-events: none;
+}
 
 /* ═══ LIVE CONTRACTS ═══ */
 .lcontracts{padding:40px 0 64px;background:var(--p);border-top:1px solid var(--d)}
@@ -249,11 +260,6 @@ export const landingCSS = `
 @media(max-width:768px){
   .ln-in{padding:0 20px}
   .ln-cta{padding:8px 14px; font-size:10px; letter-spacing:0.5px}
-  .lstats-inner{flex-wrap:wrap; padding:40px 20px; gap:16px}
-  .lstat{flex:0 0 calc(50% - 8px); padding:24px 16px}
-  .lstat-val{font-size:24px; margin-bottom:4px}
-  .lstat-label{font-size:9px; letter-spacing:1px}
-  .lstat-sep{display:none}
   .lhero-grid{grid-template-columns:1fr;gap:32px;padding:130px 0 24px}
   .lhero-right{display:none}
   .lh1{font-size:clamp(38px, 11vw, 48px);line-height:1.05;letter-spacing:-1px}

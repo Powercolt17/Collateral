@@ -1,5 +1,5 @@
 /**
- * Collateral Branded Loader — Premium Text Shimmer
+ * Collateral Branded Loader — Premium Text Fill
  * Returns inline SVG HTML for loading states.
  *
  * @param {number} size - Pixel size of the loader (default 140)
@@ -7,13 +7,12 @@
  */
 export function collateralSpinner(size = 140) {
     return `
-        <div style="position:relative;width:${size}px;display:inline-flex;justify-content:center;">
-            <img src="/logo.svg" alt="Loading..." style="width:100%;height:auto;
-                -webkit-mask-image: linear-gradient(110deg, rgba(0,0,0,0.15) 35%, rgba(0,0,0,1) 50%, rgba(0,0,0,0.15) 65%);
-                -webkit-mask-size: 200% 100%;
-                mask-image: linear-gradient(110deg, rgba(0,0,0,0.15) 35%, rgba(0,0,0,1) 50%, rgba(0,0,0,0.15) 65%);
-                mask-size: 200% 100%;
-                animation: cl-shimmer 2.5s infinite ease-in-out;
+        <div style="position:relative;width:${size}px;aspect-ratio:217/44;display:inline-flex;justify-content:center;">
+            <img src="/logo.svg" alt="" style="position:absolute;top:0;left:0;width:100%;height:100%;opacity:0.15;" />
+            <img src="/logo.svg" alt="Loading..." style="position:absolute;top:0;left:0;width:100%;height:100%;
+                clip-path: inset(0 100% 0 0);
+                -webkit-clip-path: inset(0 100% 0 0);
+                animation: cl-fill 2.5s cubic-bezier(0.34, 1.56, 0.64, 1) infinite;
             " />
         </div>`;
 }
@@ -38,9 +37,11 @@ export function collateralFullLoader(message = '') {
 export function collateralLoaderStyles() {
     return `
         <style>
-            @keyframes cl-shimmer {
-                0% { -webkit-mask-position: 100% 0; mask-position: 100% 0; }
-                100% { -webkit-mask-position: 0% 0; mask-position: 0% 0; }
+            @keyframes cl-fill {
+                0% { clip-path: inset(0 100% 0 0); -webkit-clip-path: inset(0 100% 0 0); opacity: 0; }
+                5% { clip-path: inset(0 100% 0 0); -webkit-clip-path: inset(0 100% 0 0); opacity: 1; }
+                50%, 80% { clip-path: inset(0 0 0 0); -webkit-clip-path: inset(0 0 0 0); opacity: 1; }
+                100% { clip-path: inset(0 0 0 0); -webkit-clip-path: inset(0 0 0 0); opacity: 0; }
             }
             @keyframes cl-pulse-text {
                 0%, 100% { opacity: 0.3; }

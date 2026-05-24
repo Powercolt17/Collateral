@@ -48,22 +48,22 @@ export const landingCSS = `
 [data-r].v{opacity:1;transform:none}
 
 /* ═══ HERO ═══ */
-.lhero-grid{display:grid;grid-template-columns:1.25fr 0.75fr;gap:64px;align-items:center;padding:150px 0 40px}
-.lh1{font-family:'Inter Tight',sans-serif;font-weight:400;font-size:clamp(36px,5.5vw,56px);line-height:.95;letter-spacing:-0.5px;color:var(--t1);margin:0 0 20px;max-width:850px}
-.lh1 em{font-style:normal;color:var(--r);font-weight:500;letter-spacing:-0.5px}
+.lhero-grid{display:grid;grid-template-columns:1.1fr 0.9fr;gap:48px;align-items:center;padding:160px 0 80px}
+.lh1{font-family:'Inter Tight',sans-serif;font-weight:400;font-size:clamp(48px,6vw,72px);line-height:.95;letter-spacing:-1.5px;color:var(--t1);margin:0 0 24px;max-width:600px}
+.lh1 em{font-style:normal;color:var(--r);font-weight:600;letter-spacing:-1.5px}
 .lh-nobrk{display:inline}
 .lh-br{display:none}
 @media(min-width:768px){
   .lh-nobrk{white-space:nowrap}
   .lh-br{display:block}
 }
-.lsub{font-size:17px;color:var(--t2);line-height:1.6;margin:0 0 28px;max-width:540px;letter-spacing:-.2px}
-.lctas{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:12px}
-.lbtn{height:48px;padding:0 28px;font-size:12px;font-weight:600;letter-spacing:.6px;text-transform:uppercase;border:none;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;gap:8px;transition:all .3s cubic-bezier(.16, 1, 0.3, 1);font-family:'Inter',sans-serif;position:relative;overflow:hidden}
-.lbtn-r{background:var(--r) !important;color:#fff !important;box-shadow:0 2px 8px rgba(92,20,20,.15)}
-.lbtn-r:hover{background:var(--rh) !important;box-shadow:0 4px 16px rgba(92,20,20,.2);transform:translateY(-1px) scale(1.02)}
-.lbtn-r::after{content:'→';opacity:0;transform:translateX(-6px);transition:all .25s cubic-bezier(.16, 1, 0.3, 1);display:inline-block;width:0;margin-left:0}
-.lbtn-r:hover::after{opacity:1;transform:translateX(0);width:auto;margin-left:8px}
+.lsub{font-size:20px;color:var(--t2);line-height:1.5;margin:0 0 40px;max-width:520px;letter-spacing:-.2px}
+.lctas{display:flex;gap:16px;flex-wrap:wrap;margin-bottom:16px}
+.lbtn{height:56px;padding:0 32px;font-size:13px;font-weight:700;letter-spacing:1px;text-transform:uppercase;border:none;border-radius:4px;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;gap:8px;transition:all .4s cubic-bezier(.16, 1, 0.3, 1);font-family:'Inter',sans-serif;position:relative;overflow:hidden}
+.lbtn-r{background:var(--r) !important;color:#fff !important;box-shadow:0 8px 24px -6px rgba(92,20,20,.4)}
+.lbtn-r:hover{background:var(--rh) !important;box-shadow:0 12px 32px -8px rgba(92,20,20,.6);transform:translateY(-2px) scale(1.02)}
+.lbtn-r::after{content:'→';opacity:0;transform:translateX(-8px);transition:all .3s cubic-bezier(.16, 1, 0.3, 1);display:inline-block;width:0;margin-left:0}
+.lbtn-r:hover::after{opacity:1;transform:translateX(0);width:auto;margin-left:10px}
 .lbtn-g{background:var(--p);color:var(--t2);border:1px solid var(--d)}
 .lbtn-g:hover{border-color:#bbb;color:var(--t1);transform:translateY(-1px)}
 .lcta-match{font-size:14px;color:var(--t1);margin-top:16px;font-weight:700;display:flex;align-items:center;gap:8px;letter-spacing:-.1px}
@@ -72,9 +72,13 @@ export const landingCSS = `
 .ltrust-bar::before{content:'✓';color:var(--g);font-weight:bold;font-size:12px}
 
 /* ═══ PREVIEW CONTRACT CARD ═══ */
+@keyframes floatCard {
+  0%, 100% { transform: translateY(0) rotate(-1deg); }
+  50% { transform: translateY(-16px) rotate(1deg); }
+}
 .lhero-right{display:flex;justify-content:center;align-items:center}
-.lpreview-card{background:var(--p);border:1px solid var(--d);width:100%;max-width:340px;box-shadow:0 1px 3px rgba(0,0,0,.04),0 12px 40px rgba(0,0,0,.06);position:relative;overflow:hidden}
-.lpreview-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--r),#8B2020,var(--r))}
+.lpreview-card{background:var(--p);border:1px solid rgba(0,0,0,0.06);width:100%;max-width:400px;box-shadow:0 24px 64px -12px rgba(0,0,0,.1), 0 0 0 1px rgba(0,0,0,.02);position:relative;overflow:hidden;border-radius:12px;animation:floatCard 7s ease-in-out infinite;transform-origin:center;will-change:transform}
+.lpreview-card::before{content:'';position:absolute;top:0;left:0;right:0;height:4px;background:linear-gradient(90deg,var(--r),#8B2020,var(--r))}
 
 .lpcard-header{display:flex;justify-content:space-between;align-items:center;padding:16px 20px 0}
 .lpcard-type{font-family:'Inter Tight',sans-serif;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:1.8px;color:var(--t1)}
@@ -223,7 +227,8 @@ export const landingCSS = `
   .lhero-grid{grid-template-columns:1fr;gap:32px;padding:130px 0 24px}
   .lhero-right{display:none}
   .lh1{font-size:clamp(38px, 11vw, 48px);line-height:1.05;letter-spacing:-1px}
-  .lsub{font-size:15px;margin-bottom:20px}
+  .lsub{font-size:16px;margin-bottom:24px}
+  .lbtn{height:48px;padding:0 24px;font-size:11px}
   .lcards{grid-template-columns:1fr 1fr;gap:16px}
   .lcard{padding:20px;min-height:auto}
   .lcard-title{font-size:17px;margin-bottom:4px}

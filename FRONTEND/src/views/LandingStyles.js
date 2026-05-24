@@ -279,6 +279,7 @@ export const landingCSS = `
 
 /* ═══ RESPONSIVE ═══ */
 @media(max-width:768px){
+  .lhide-mobile{display:none !important}
   .ln-in{padding:0 20px}
   .ln-cta{padding:8px 14px; font-size:10px; letter-spacing:0.5px}
   .lhero-grid{grid-template-columns:1fr;gap:32px;padding:130px 0 24px}

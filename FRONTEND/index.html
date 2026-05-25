@@ -313,14 +313,32 @@
             }
         </style>
 
-        <div style="position:relative;width:180px;aspect-ratio:217/44;display:flex;justify-content:center;animation:cl-fadeIn 600ms cubic-bezier(0.16, 1, 0.3, 1) both;">
-            <img src="/logo-official.png" alt="" style="position:absolute;top:0;left:0;width:100%;height:100%;opacity:0.15;" />
-            <img src="/logo-official.png" alt="Collateral" style="position:absolute;top:0;left:0;width:100%;height:100%;
-                clip-path: inset(0 100% 0 0);
-                -webkit-clip-path: inset(0 100% 0 0);
-                animation: cl-fill 2.5s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
-            " />
+        <div style="position:relative;display:flex;justify-content:center;align-items:center;animation:cl-fadeIn 600ms cubic-bezier(0.16, 1, 0.3, 1) both;height:44px;">
+            <span class="logo-wordmark" style="opacity:0.15;margin:0;padding:0;">COLLATERAL</span>
+            <span class="logo-wordmark cl-decode-text cl-loop-decode" data-target="COLLATERAL" style="position:absolute;top:50%;left:50%;transform:translate(-50%, -50%);margin:0;padding:0;white-space:nowrap;color:#5C1414;" id="initial-loader-wordmark">COLLATERAL</span>
         </div>
+        <script>
+            (function(){
+                var el = document.getElementById('initial-loader-wordmark');
+                if(el) el.classList.add('decoded');
+                var chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789@#$%&*';
+                var target = 'COLLATERAL';
+                var iters = 0;
+                var maxIters = 15;
+                var iv = setInterval(function(){
+                    if(!el) return clearInterval(iv);
+                    el.innerText = target.split('').map(function(l, i) {
+                        return i < iters/1.5 ? target[i] : chars[Math.floor(Math.random()*chars.length)];
+                    }).join('');
+                    if(iters >= maxIters * 1.5) {
+                        clearInterval(iv);
+                        el.innerText = target;
+                        setTimeout(function(){ el.classList.remove('decoded'); }, 2000);
+                    }
+                    iters++;
+                }, 50);
+            })();
+        </script>
 
         <div class="load-sub" id="load-sub-text" style="opacity:0;transition:opacity 0.8s ease;">Initializing Protocol</div>
         <script>setTimeout(function () { var el = document.getElementById('load-sub-text'); if (el) el.style.opacity = '1'; }, 1500);</script>

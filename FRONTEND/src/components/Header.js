@@ -753,7 +753,7 @@ export function renderHeader(currentRoute) {
             <div class="ch-header-inner">
                 <!-- Logo -->
                 <a href="#" onclick="window.router.navigate('/overview'); return false;" class="ch-logo">
-                    <img src="/logo-official.png" alt="Collateral Logo" style="height: 28px; width: auto; display: block; mix-blend-mode: multiply;" />
+                    <span class="logo-wordmark">COLLATERAL</span>
                 </a>
 
                 <!-- Nav Links (desktop) -->

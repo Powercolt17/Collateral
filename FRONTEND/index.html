@@ -160,6 +160,31 @@
         href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&family=IBM+Plex+Sans:wght@500;600;700&display=swap"
         rel="stylesheet">
 
+    <style>
+        @font-face {
+            font-family: 'Jolana';
+            src: url('/Jolana.ttf') format('truetype');
+            font-weight: normal;
+            font-style: normal;
+            font-display: swap;
+        }
+        .logo-wordmark {
+            font-family: 'Jolana', 'Sora', sans-serif;
+            font-size: 26px;
+            color: #111111;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+            line-height: 1;
+            display: inline-block;
+        }
+        .logo-wordmark-light {
+            color: #FFFFFF;
+            opacity: 0.9;
+        }
+        .ch-logo { text-decoration: none !important; }
+        .ln-brand { text-decoration: none !important; }
+    </style>
+
     <!-- Stripe.js (required for card elements & payment confirmation) -->
     <script src="https://js.stripe.com/v3/" async></script>
 
@@ -372,8 +397,7 @@
             <!-- Left: Branding -->
             <div style="max-width: 340px;">
                 <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 24px;">
-                    <img src="/logo-official.png" alt="Collateral"
-                        style="height:36px;width:auto;filter:brightness(0) invert(1);opacity:0.9;" />
+                    <span class="logo-wordmark logo-wordmark-light">COLLATERAL</span>
                 </div>
                 <p style="font-size: 14px; line-height: 1.8; color: rgba(255,255,255,0.45); margin: 0; font-weight: 400;">
                     Capital committed to measurable outcomes.

@@ -9,10 +9,7 @@ export function collateralSpinner(size = 140) {
     return `
         <div style="position:relative;width:${size}px;display:inline-flex;justify-content:center;align-items:center;">
             <span class="logo-wordmark" style="opacity:0.15;font-size:calc(${size}px * 0.16);margin:0;padding:0;">COLLATERAL</span>
-            <span class="logo-wordmark" style="position:absolute;top:50%;left:50%;transform:translate(-50%, -50%);font-size:calc(${size}px * 0.16);margin:0;padding:0;
-                clip-path: inset(0 100% 0 0);
-                -webkit-clip-path: inset(0 100% 0 0);
-                animation: cl-fill 2.5s cubic-bezier(0.34, 1.56, 0.64, 1) infinite;
+            <span class="logo-wordmark cl-decode-text cl-loop-decode" data-target="COLLATERAL" style="position:absolute;top:50%;left:50%;transform:translate(-50%, -50%);font-size:calc(${size}px * 0.16);margin:0;padding:0;
                 white-space: nowrap;
                 color: #5C1414;
             ">COLLATERAL</span>

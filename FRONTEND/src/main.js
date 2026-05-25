@@ -1672,3 +1672,36 @@ if (api.hasAuthToken()) {
 setInterval(() => {
     if (api.hasAuthToken()) window.app.pollNotificationCount();
 }, 30000);
+
+// --- Terminal Decoder Animation ---
+function runDecoderAnimation() {
+    const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789@#$%&*';
+    document.querySelectorAll('.cl-decode-text:not(.decoded)').forEach(el => {
+        el.classList.add('decoded');
+        const targetText = el.getAttribute('data-target') || 'COLLATERAL';
+        let iterations = 0;
+        const maxIterations = 15;
+        const interval = setInterval(() => {
+            el.innerText = targetText.split('').map((letter, index) => {
+                if(index < iterations / 1.5) {
+                    return targetText[index];
+                }
+                return chars[Math.floor(Math.random() * chars.length)];
+            }).join('');
+            
+            if(iterations >= maxIterations * 1.5) {
+                clearInterval(interval);
+                el.innerText = targetText;
+                
+                // Restart animation loop for the loader specifically
+                if(el.classList.contains('cl-loop-decode')) {
+                    setTimeout(() => {
+                        el.classList.remove('decoded');
+                    }, 2000);
+                }
+            }
+            iterations++;
+        }, 50);
+    });
+}
+setInterval(runDecoderAnimation, 100);

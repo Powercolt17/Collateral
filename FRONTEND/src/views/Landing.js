@@ -83,19 +83,7 @@ export function renderLanding() {
             <!-- ═══ LIVE TICKER ═══ -->
             <div class="lticker">
                 <div class="lticker-track">
-                    <!-- Set 1 -->
-                    <div class="lticker-item"><span class="lticker-time">2m ago</span> <span class="lticker-action">Operator #4921 locked</span> <span class="lticker-amt locked">$5,000</span> <span class="lticker-action">against Stripe MRR target</span></div>
-                    <div class="lticker-item"><span class="lticker-time">14m ago</span> <span class="lticker-action">Operator #8812 missed YouTube target.</span> <span class="lticker-amt negative">-$1,000</span> <span class="lticker-action">forfeited</span></div>
-                    <div class="lticker-item"><span class="lticker-time">42m ago</span> <span class="lticker-action">Operator #9122 hit X follower target.</span> <span class="lticker-amt positive">+$500</span> <span class="lticker-action">returned</span></div>
-                    <div class="lticker-item"><span class="lticker-time">1h ago</span> <span class="lticker-action">Operator #1105 locked</span> <span class="lticker-amt locked">$2,500</span> <span class="lticker-action">against Shopify sales target</span></div>
-                    <div class="lticker-item"><span class="lticker-time">3h ago</span> <span class="lticker-action">Operator #3319 hit Stripe MRR target.</span> <span class="lticker-amt positive">+$10,000</span> <span class="lticker-action">returned</span></div>
-                    
-                    <!-- Set 2 (Duplicate for infinite scroll) -->
-                    <div class="lticker-item"><span class="lticker-time">2m ago</span> <span class="lticker-action">Operator #4921 locked</span> <span class="lticker-amt locked">$5,000</span> <span class="lticker-action">against Stripe MRR target</span></div>
-                    <div class="lticker-item"><span class="lticker-time">14m ago</span> <span class="lticker-action">Operator #8812 missed YouTube target.</span> <span class="lticker-amt negative">-$1,000</span> <span class="lticker-action">forfeited</span></div>
-                    <div class="lticker-item"><span class="lticker-time">42m ago</span> <span class="lticker-action">Operator #9122 hit X follower target.</span> <span class="lticker-amt positive">+$500</span> <span class="lticker-action">returned</span></div>
-                    <div class="lticker-item"><span class="lticker-time">1h ago</span> <span class="lticker-action">Operator #1105 locked</span> <span class="lticker-amt locked">$2,500</span> <span class="lticker-action">against Shopify sales target</span></div>
-                    <div class="lticker-item"><span class="lticker-time">3h ago</span> <span class="lticker-action">Operator #3319 hit Stripe MRR target.</span> <span class="lticker-amt positive">+$10,000</span> <span class="lticker-action">returned</span></div>
+                    <!-- Dynamic data populated via initLanding() -->
                 </div>
             </div>
 
@@ -399,6 +387,59 @@ export function initLanding() {
             }, 150);
         }, 450);
     }
+
+    // Populate live ticker with real mock data
+    setTimeout(async () => {
+        try {
+            const response = await window.api.getPublicLedger();
+            if (response && response.events && response.events.length > 0) {
+                const track = document.querySelector('.lticker-track');
+                if (!track) return;
+                
+                const timeAgo = (iso) => {
+                    const diff = Math.floor((new Date() - new Date(iso)) / 60000);
+                    if (diff < 1) return 'just now';
+                    if (diff < 60) return `${diff}m ago`;
+                    const h = Math.floor(diff / 60);
+                    if (h < 24) return `${h}h ago`;
+                    return `${Math.floor(h/24)}d ago`;
+                };
+
+                const formatAmt = (amt) => '$' + parseInt(amt, 10).toLocaleString();
+
+                const recentEvents = response.events.slice(0, 5);
+                let itemsHtml = '';
+                
+                recentEvents.forEach(e => {
+                    let amtClass = 'locked';
+                    let amtPrefix = '';
+                    let sourceName = (e.source === 'X' ? 'X follower' : (e.source === 'YOUTUBE' ? 'YouTube' : (e.source === 'SHOPIFY' ? 'Shopify sales' : 'Stripe MRR')));
+                    let actionText = `against ${sourceName} target`;
+                    let shortId = e.user_id ? e.user_id.substring(e.user_id.length - 4) : '4092';
+                    let preAction = `Operator #${shortId} locked`;
+                    
+                    if (e.event_type === 'SETTLED_WIN' || e.event_type === 'WITHDRAWN') {
+                        amtClass = 'positive';
+                        amtPrefix = '+';
+                        preAction = `Operator #${shortId} hit ${sourceName} target.`;
+                        actionText = 'returned';
+                    } else if (e.event_type === 'SETTLED_LOSS') {
+                        amtClass = 'negative';
+                        amtPrefix = '-';
+                        preAction = `Operator #${shortId} missed ${sourceName} target.`;
+                        actionText = 'forfeited';
+                    }
+
+                    itemsHtml += `<div class="lticker-item"><span class="lticker-time">${timeAgo(e.created_at)}</span> <span class="lticker-action">${preAction}</span> <span class="lticker-amt ${amtClass}">${amtPrefix}${formatAmt(e.amount)}</span> <span class="lticker-action">${actionText}</span></div>`;
+                });
+                
+                // Duplicate for infinite scroll loop
+                track.innerHTML = itemsHtml + itemsHtml;
+            }
+        } catch (err) {
+            console.error('Failed to load ledger ticker data', err);
+        }
+    }, 100);
 
     const p = new URLSearchParams(window.location.search);
     const utm = {};

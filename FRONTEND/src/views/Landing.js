@@ -408,27 +408,25 @@ export function initLanding() {
                     
                     let amtClass = 'locked';
                     let amtPrefix = '';
+                    let preAction = 'Operator @' + (e.username || 'User');
+                    let actionText = 'locked';
+                    let amtRaw = e.stake_amount || 0;
                     
-                    let p = e.platform || 'API';
-                    let sourceName = (p === 'X' || p === 'TWITTER' ? 'X follower' : (p === 'YOUTUBE' ? 'YouTube' : (p === 'SHOPIFY' ? 'Shopify sales' : 'Stripe MRR')));
-                    let actionText = `against ${sourceName} target`;
-                    let shortId = e.principal ? e.principal : 'User';
-                    let preAction = `Operator @${shortId} locked`;
-                    
-                    let type = e.eventType || '';
-                    if (type.includes('SUCCESS') || type.includes('WIN')) {
+                    if (e.event_type === 'CONTRACT_CREATED') {
+                        actionText = `against ${e.platform || 'API'} target`;
+                    } else if (e.event_type === 'CONTRACT_SETTLED_WIN') {
+                        actionText = `won on ${e.platform || 'API'} target`;
                         amtClass = 'positive';
                         amtPrefix = '+';
-                        preAction = `Operator @${shortId} hit ${sourceName} target.`;
-                        actionText = 'returned';
-                    } else if (type.includes('FAIL') || type.includes('LOSS')) {
+                        amtRaw = e.payout_amount || 0;
+                    } else if (e.event_type === 'CONTRACT_SETTLED_LOSS') {
+                        preAction = 'Operator @' + (e.username || 'User') + ' missed ' + (e.platform || 'API') + ' target';
+                        actionText = 'lost';
                         amtClass = 'negative';
                         amtPrefix = '-';
-                        preAction = `Operator @${shortId} missed ${sourceName} target.`;
-                        actionText = 'forfeited';
+                        amtRaw = e.stake_amount || 0;
                     }
-
-                    let amtRaw = e.amountUsdCents || e.lockAmountUsdCents || 0;
+                    
                     let displayAmt = formatAmt(amtRaw / 100);
 
                     const toast = document.createElement('div');

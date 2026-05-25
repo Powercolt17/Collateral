@@ -54,18 +54,6 @@ export function renderLanding() {
                         <div class="ltrust-bar ldesktop-proof animate-fade-in-up delay-3">API-verified · Funds in escrow · Auto-settled</div>
                     </div>
                     <div class="lhero-right animate-scale-in delay-1">
-                        <!-- Floating Glass Badges -->
-                        <div class="lbadge-glass" style="top: -15px; right: -40px; animation-delay: 0s;">
-                            <span class="lbadge-dot" style="background:#22c55e;box-shadow:0 0 8px rgba(34,197,94,0.6)"></span>
-                            <span class="lbadge-num">340+</span>
-                            <span class="lbadge-txt">Contracts Executed</span>
-                        </div>
-                        <div class="lbadge-glass" style="bottom: -20px; left: -30px; animation-delay: 2s;">
-                            <span class="lbadge-dot" style="background:#3b82f6;box-shadow:0 0 8px rgba(59,130,246,0.6)"></span>
-                            <span class="lbadge-num">98%</span>
-                            <span class="lbadge-txt">Settlement Success</span>
-                        </div>
-                        
                         <div class="lpreview-card">
                             <div class="lpcard-header">
                                 <div class="lpcard-type">Performance Contract</div>
@@ -143,6 +131,22 @@ export function renderLanding() {
                             <div class="lcard-row"><span class="k">Window</span><span class="v">30 days</span></div>
                             <div class="lcard-btn"><button class="lp-cta-btn" data-source="YOUTUBE" data-tier="stake" data-capital="250">Start Contract</button></div>
                         </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ═══ TERMINAL STATS ═══ -->
+            <div class="lw" style="padding-top: 64px; text-align: center;">
+                <div style="display: flex; gap: 24px; justify-content: center; flex-wrap: wrap; margin-bottom: 32px;" data-r>
+                    <div style="display: flex; align-items: center; gap: 12px; background: rgba(17,17,17,0.85); padding: 12px 20px; border-radius: 6px; border: 1px solid rgba(255,255,255,0.05); backdrop-filter: blur(8px);">
+                        <span style="width: 6px; height: 6px; background: #22c55e; border-radius: 50%; box-shadow: 0 0 8px rgba(34,197,94,0.6);"></span>
+                        <span style="font-family: 'Sora', sans-serif; font-weight: 700; color: #FFF; font-size: 14px;">340+</span>
+                        <span style="font-family: 'JetBrains Mono', monospace; font-size: 10px; font-weight: 700; color: rgba(255,255,255,0.5); text-transform: uppercase; letter-spacing: 0.1em;">Contracts Executed</span>
+                    </div>
+                    <div style="display: flex; align-items: center; gap: 12px; background: rgba(17,17,17,0.85); padding: 12px 20px; border-radius: 6px; border: 1px solid rgba(255,255,255,0.05); backdrop-filter: blur(8px);">
+                        <span style="width: 6px; height: 6px; background: #3b82f6; border-radius: 50%; box-shadow: 0 0 8px rgba(59,130,246,0.6);"></span>
+                        <span style="font-family: 'Sora', sans-serif; font-weight: 700; color: #FFF; font-size: 14px;">98%</span>
+                        <span style="font-family: 'JetBrains Mono', monospace; font-size: 10px; font-weight: 700; color: rgba(255,255,255,0.5); text-transform: uppercase; letter-spacing: 0.1em;">Settlement Success</span>
                     </div>
                 </div>
             </div>

@@ -411,24 +411,30 @@ export function initLanding() {
                 recentEvents.forEach(e => {
                     let amtClass = 'locked';
                     let amtPrefix = '';
-                    let sourceName = (e.source === 'X' ? 'X follower' : (e.source === 'YOUTUBE' ? 'YouTube' : (e.source === 'SHOPIFY' ? 'Shopify sales' : 'Stripe MRR')));
-                    let actionText = `against ${sourceName} target`;
-                    let shortId = e.user_id ? e.user_id.substring(e.user_id.length - 4) : '4092';
-                    let preAction = `Operator #${shortId} locked`;
                     
-                    if (e.event_type === 'SETTLED_WIN' || e.event_type === 'WITHDRAWN') {
+                    let p = e.platform || 'API';
+                    let sourceName = (p === 'X' || p === 'TWITTER' ? 'X follower' : (p === 'YOUTUBE' ? 'YouTube' : (p === 'SHOPIFY' ? 'Shopify sales' : 'Stripe MRR')));
+                    let actionText = `against ${sourceName} target`;
+                    let shortId = e.principal ? e.principal : 'User';
+                    let preAction = `Operator @${shortId} locked`;
+                    
+                    let type = e.eventType || '';
+                    if (type.includes('SUCCESS') || type.includes('WIN')) {
                         amtClass = 'positive';
                         amtPrefix = '+';
-                        preAction = `Operator #${shortId} hit ${sourceName} target.`;
+                        preAction = `Operator @${shortId} hit ${sourceName} target.`;
                         actionText = 'returned';
-                    } else if (e.event_type === 'SETTLED_LOSS') {
+                    } else if (type.includes('FAIL') || type.includes('LOSS')) {
                         amtClass = 'negative';
                         amtPrefix = '-';
-                        preAction = `Operator #${shortId} missed ${sourceName} target.`;
+                        preAction = `Operator @${shortId} missed ${sourceName} target.`;
                         actionText = 'forfeited';
                     }
 
-                    itemsHtml += `<div class="lticker-item"><span class="lticker-time">${timeAgo(e.created_at)}</span> <span class="lticker-action">${preAction}</span> <span class="lticker-amt ${amtClass}">${amtPrefix}${formatAmt(e.amount)}</span> <span class="lticker-action">${actionText}</span></div>`;
+                    let amtRaw = e.amountUsdCents || e.lockAmountUsdCents || 0;
+                    let displayAmt = formatAmt(amtRaw / 100);
+
+                    itemsHtml += `<div class="lticker-item"><span class="lticker-time">${timeAgo(e.timestamp || e.created_at || new Date().toISOString())}</span> <span class="lticker-action">${preAction}</span> <span class="lticker-amt ${amtClass}">${amtPrefix}${displayAmt}</span> <span class="lticker-action">${actionText}</span></div>`;
                 });
                 
                 // Duplicate for infinite scroll loop

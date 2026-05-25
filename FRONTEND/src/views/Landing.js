@@ -36,6 +36,7 @@ export function renderLanding() {
             </nav>
 
             <!-- ═══ HERO ═══ -->
+            <div class="lhero-section">
             <div class="lw">
                 <div class="lhero-grid">
                     <div class="lhero-left">
@@ -74,6 +75,7 @@ export function renderLanding() {
                         </div>
                     </div>
                 </div>
+            </div>
             </div>
 
 

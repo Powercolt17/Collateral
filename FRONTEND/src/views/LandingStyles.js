@@ -343,6 +343,9 @@ export const landingCSS = `
 .pnl-nav-link:hover { background: #fafafa; color: #111; border-left-color: #e5e5e5; }
 .pnl-nav-indicator { width: 3px; height: 3px; background: #d4d4d4; flex-shrink: 0; transition: all 0.15s; }
 .pnl-nav-link:hover .pnl-nav-indicator { background: #888; }
+.pnl-connect-section { padding: 20px 28px; flex-shrink: 0; }
+.pnl-connect-btn { width: 100%; padding: 14px 24px; font-size: 12px; font-weight: 700; color: #fff; background: #111; border: none; cursor: pointer; font-family: 'JetBrains Mono', monospace; letter-spacing: 0.5px; text-transform: uppercase; transition: background 0.15s; }
+.pnl-connect-btn:hover { background: #5C1414; }
 .pnl-footer { border-top: 1px solid #f0f0f0; padding: 20px 28px; background: #fafafa; flex-shrink: 0; }
 .pnl-status { display: flex; align-items: center; gap: 8px; margin-bottom: 16px; }
 .pnl-status-dot { width: 5px; height: 5px; border-radius: 50%; background: #22c55e; box-shadow: 0 0 6px rgba(34,197,94,0.4); }

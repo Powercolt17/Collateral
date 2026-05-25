@@ -44,7 +44,7 @@ export function renderLanding() {
                             <span class="lh-nobrk">expensive to <em>ignore.</em></span>
                         </h1>
                         <p class="lsub animate-fade-in-up delay-1">
-                            Stake a verified goal. Hit it for up to 4x. Miss it, lose the stake. <span class="lhide-mobile">Capital is locked in escrow and settlement is determined entirely by automated platform data.</span>
+                            Stake a verified goal. Hit it for up to 4x. Miss it, lose the stake. <span class="lhide-mobile">Capital is escrowed and settled automatically by verified API data.</span>
                         </p>
                         <div class="lctas animate-fade-in-up delay-2">
                             <button class="lbtn lbtn-r" id="lp-hero-cta">Start Your Contract</button>

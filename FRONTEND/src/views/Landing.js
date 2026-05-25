@@ -24,7 +24,7 @@ export function renderLanding() {
                     </a>
                     <div style="display:flex; align-items:center;">
                         <button class="ln-cta" id="lp-nav-cta">Start Contract</button>
-                        <button class="ch-hamburger" id="lp-hamburger" aria-label="Menu" onclick="window.app.openAccessModal()">
+                        <button class="ch-hamburger" id="mobile-menu-btn" aria-label="Menu" onclick="window.app.toggleMobileMenu()">
                             <div class="ch-hamburger-lines">
                                 <span></span>
                                 <span></span>
@@ -291,6 +291,49 @@ export function renderLanding() {
                 <div class="lfoot-micro">No odds. Verified performance only.</div>
                 <div class="lfoot-line">Collateral.market · © 2026</div>
             </div>
+
+            <!-- Landing Mobile Menu Overlay & Drawer -->
+            <div id="mobile-menu-overlay" class="pnl-overlay" onclick="window.app.closeMobileMenu()"></div>
+            <div id="mobile-menu" class="pnl-drawer">
+                <div class="pnl-header">
+                    <div class="pnl-header-left">
+                        <span class="pnl-header-title">Menu</span>
+                    </div>
+                    <button onclick="window.app.closeMobileMenu()" class="pnl-close" aria-label="Close">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+                    </button>
+                </div>
+                <div class="pnl-body">
+                    <div class="pnl-section-label">Navigation</div>
+                    <a href="#" onclick="window.app.closeMobileMenu(); window.app.openAccessModal(); return false;" class="pnl-nav-link" style="animation-delay: 0.06s"><span class="pnl-nav-indicator"></span>MARKET</a>
+                    <a href="#" onclick="window.app.closeMobileMenu(); window.app.openAccessModal(); return false;" class="pnl-nav-link" style="animation-delay: 0.09s"><span class="pnl-nav-indicator"></span>ACTIVE</a>
+                    <a href="#" onclick="window.app.closeMobileMenu(); window.app.openAccessModal(); return false;" class="pnl-nav-link" style="animation-delay: 0.12s"><span class="pnl-nav-indicator"></span>RIVALRY</a>
+                    <a href="#" onclick="window.app.closeMobileMenu(); window.app.openAccessModal(); return false;" class="pnl-nav-link" style="animation-delay: 0.15s"><span class="pnl-nav-indicator"></span>LEDGER</a>
+                    <a href="#" onclick="window.app.closeMobileMenu(); window.app.openAccessModal(); return false;" class="pnl-nav-link" style="animation-delay: 0.18s"><span class="pnl-nav-indicator"></span>SOURCES</a>
+                </div>
+                <div class="pnl-footer">
+                    <div class="pnl-status">
+                        <div class="pnl-status-dot"></div>
+                        <span class="pnl-status-text">All systems operational</span>
+                    </div>
+                    <div class="pnl-meta">
+                        <div class="pnl-meta-item">
+                            <span class="pnl-meta-label">Protocol</span>
+                            <span class="pnl-meta-value">v1.0</span>
+                        </div>
+                        <div class="pnl-meta-item">
+                            <span class="pnl-meta-label">Network</span>
+                            <span class="pnl-meta-value">Mainnet</span>
+                        </div>
+                    </div>
+                    <div class="pnl-legal">
+                        <a href="/terms" onclick="window.app.closeMobileMenu()">Terms</a>
+                        <a href="/docs" onclick="window.app.closeMobileMenu()">Docs</a>
+                        <a href="https://x.com/collaboralcap" target="_blank">X / Twitter</a>
+                    </div>
+                </div>
+            </div>
+
         </div>
     `;
 }

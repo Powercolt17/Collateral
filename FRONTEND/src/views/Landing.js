@@ -96,17 +96,10 @@ export function renderLanding() {
                         <div class="lred-dash" style="margin-bottom: 0;"><span class="lmono">Open Contracts</span></div>
                         
                         <!-- ═══ OPEN CONTRACTS STATS ═══ -->
-                        <div style="display: flex; gap: 20px;">
-                            <div style="display: flex; align-items: center; gap: 10px; background: rgba(255,255,255,0.5); padding: 8px 16px; border-radius: 100px; border: 1px solid rgba(0,0,0,0.06); box-shadow: 0 4px 24px rgba(0,0,0,0.03); backdrop-filter: blur(12px);">
-                                <span style="width: 6px; height: 6px; background: #22c55e; border-radius: 50%; box-shadow: 0 0 10px rgba(34,197,94,0.8);"></span>
-                                <span style="font-family: 'Inter Tight', sans-serif; font-weight: 700; color: #111; font-size: 14px; letter-spacing: -0.2px;">$7.6k</span>
-                                <span style="font-family: 'Inter', sans-serif; font-size: 10px; font-weight: 600; color: #666; text-transform: uppercase; letter-spacing: 0.05em;">Capital Locked</span>
-                            </div>
-                            <div style="display: flex; align-items: center; gap: 10px; background: rgba(255,255,255,0.5); padding: 8px 16px; border-radius: 100px; border: 1px solid rgba(0,0,0,0.06); box-shadow: 0 4px 24px rgba(0,0,0,0.03); backdrop-filter: blur(12px);">
-                                <span style="width: 6px; height: 6px; background: #ef4444; border-radius: 50%; box-shadow: 0 0 10px rgba(239,68,68,0.8);"></span>
-                                <span style="font-family: 'Inter Tight', sans-serif; font-weight: 700; color: #111; font-size: 14px; letter-spacing: -0.2px;">0%</span>
-                                <span style="font-family: 'Inter', sans-serif; font-size: 10px; font-weight: 600; color: #666; text-transform: uppercase; letter-spacing: 0.05em;">Excuses Accepted</span>
-                            </div>
+                        <div style="display: flex; align-items: center; gap: 10px;">
+                            <span style="width: 6px; height: 6px; background: #22c55e; border-radius: 50%; box-shadow: 0 0 10px rgba(34,197,94,0.8);"></span>
+                            <span style="font-family: 'Inter Tight', sans-serif; font-weight: 700; color: #22c55e; font-size: 15px; letter-spacing: -0.2px;">$7.6k</span>
+                            <span style="font-family: 'Inter', sans-serif; font-size: 11px; font-weight: 600; color: #666; text-transform: uppercase; letter-spacing: 0.05em;">Capital Locked</span>
                         </div>
                     </div>
                     <div class="lcards">

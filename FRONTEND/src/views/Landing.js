@@ -93,8 +93,8 @@ export function renderLanding() {
                         
                         <!-- ═══ OPEN CONTRACTS STATS ═══ -->
                         <div style="display: flex; align-items: center; gap: 10px;">
-                            <span style="width: 6px; height: 6px; background: #22c55e; border-radius: 50%; box-shadow: 0 0 10px rgba(34,197,94,0.8);"></span>
-                            <span style="font-family: 'Inter Tight', sans-serif; font-weight: 700; color: #22c55e; font-size: 15px; letter-spacing: -0.2px;">$7.6k</span>
+                            <span style="width: 6px; height: 6px; background: #145c14; border-radius: 50%; box-shadow: 0 0 10px rgba(20,92,20,0.8);"></span>
+                            <span style="font-family: 'Inter Tight', sans-serif; font-weight: 700; color: #145c14; font-size: 15px; letter-spacing: -0.2px;">$7.6k</span>
                             <span style="font-family: 'Inter', sans-serif; font-size: 11px; font-weight: 600; color: #666; text-transform: uppercase; letter-spacing: 0.05em;">Capital Locked</span>
                         </div>
                     </div>

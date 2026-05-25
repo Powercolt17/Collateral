@@ -401,8 +401,7 @@ export function initLanding() {
                 const recentEvents = response.events.slice(0, 10);
                 let i = 0;
                 
-                // Pop up a toast every 6 seconds
-                setInterval(() => {
+                const showToast = () => {
                     if (i >= recentEvents.length) i = 0;
                     const e = recentEvents[i];
                     i++;
@@ -444,8 +443,10 @@ export function initLanding() {
                         toast.classList.add('animate-slide-down');
                         setTimeout(() => toast.remove(), 500);
                     }, 4500);
-                    
-                }, 6000);
+                };
+                
+                showToast();
+                setInterval(showToast, 6000);
             }
         } catch (err) {
             console.error('Failed to load ledger ticker data', err);

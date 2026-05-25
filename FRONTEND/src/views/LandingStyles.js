@@ -192,6 +192,22 @@ export const landingCSS = `
     letter-spacing: 0.5px;
 }
 
+/* ═══ LIVE TICKER ═══ */
+.lticker{border-top:1px solid var(--d);border-bottom:1px solid var(--d);background:var(--bg);padding:12px 0;overflow:hidden;position:relative;display:flex;white-space:nowrap}
+.lticker::before,.lticker::after{content:'';position:absolute;top:0;bottom:0;width:150px;z-index:2;pointer-events:none}
+.lticker::before{left:0;background:linear-gradient(to right,var(--bg),transparent)}
+.lticker::after{right:0;background:linear-gradient(to left,var(--bg),transparent)}
+.lticker-track{display:flex;gap:48px;padding-right:48px;animation:tickerScroll 40s linear infinite;width:max-content}
+.lticker-track:hover{animation-play-state:paused}
+@keyframes tickerScroll{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
+.lticker-item{display:flex;align-items:center;gap:12px;font-family:'SF Mono','Fira Code','Consolas',monospace;font-size:11px;font-weight:600;color:var(--t2);cursor:default}
+.lticker-time{color:var(--t3);font-weight:500}
+.lticker-action{color:var(--t1);font-family:'Inter',sans-serif}
+.lticker-amt{font-weight:700}
+.lticker-amt.positive{color:var(--g)}
+.lticker-amt.negative{color:var(--r)}
+.lticker-amt.locked{color:var(--t1)}
+
 /* ═══ LIVE CONTRACTS ═══ */
 .lcontracts{padding:40px 0 64px;background:var(--p);border-top:1px solid var(--d)}
 .lcontracts .lw{max-width:1280px}

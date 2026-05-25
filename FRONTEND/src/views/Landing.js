@@ -80,6 +80,25 @@ export function renderLanding() {
 
 
 
+            <!-- ═══ LIVE TICKER ═══ -->
+            <div class="lticker">
+                <div class="lticker-track">
+                    <!-- Set 1 -->
+                    <div class="lticker-item"><span class="lticker-time">2m ago</span> <span class="lticker-action">Operator #4921 locked</span> <span class="lticker-amt locked">$5,000</span> <span class="lticker-action">against Stripe MRR target</span></div>
+                    <div class="lticker-item"><span class="lticker-time">14m ago</span> <span class="lticker-action">Operator #8812 missed YouTube target.</span> <span class="lticker-amt negative">-$1,000</span> <span class="lticker-action">forfeited</span></div>
+                    <div class="lticker-item"><span class="lticker-time">42m ago</span> <span class="lticker-action">Operator #9122 hit X follower target.</span> <span class="lticker-amt positive">+$500</span> <span class="lticker-action">returned</span></div>
+                    <div class="lticker-item"><span class="lticker-time">1h ago</span> <span class="lticker-action">Operator #1105 locked</span> <span class="lticker-amt locked">$2,500</span> <span class="lticker-action">against Shopify sales target</span></div>
+                    <div class="lticker-item"><span class="lticker-time">3h ago</span> <span class="lticker-action">Operator #3319 hit Stripe MRR target.</span> <span class="lticker-amt positive">+$10,000</span> <span class="lticker-action">returned</span></div>
+                    
+                    <!-- Set 2 (Duplicate for infinite scroll) -->
+                    <div class="lticker-item"><span class="lticker-time">2m ago</span> <span class="lticker-action">Operator #4921 locked</span> <span class="lticker-amt locked">$5,000</span> <span class="lticker-action">against Stripe MRR target</span></div>
+                    <div class="lticker-item"><span class="lticker-time">14m ago</span> <span class="lticker-action">Operator #8812 missed YouTube target.</span> <span class="lticker-amt negative">-$1,000</span> <span class="lticker-action">forfeited</span></div>
+                    <div class="lticker-item"><span class="lticker-time">42m ago</span> <span class="lticker-action">Operator #9122 hit X follower target.</span> <span class="lticker-amt positive">+$500</span> <span class="lticker-action">returned</span></div>
+                    <div class="lticker-item"><span class="lticker-time">1h ago</span> <span class="lticker-action">Operator #1105 locked</span> <span class="lticker-amt locked">$2,500</span> <span class="lticker-action">against Shopify sales target</span></div>
+                    <div class="lticker-item"><span class="lticker-time">3h ago</span> <span class="lticker-action">Operator #3319 hit Stripe MRR target.</span> <span class="lticker-amt positive">+$10,000</span> <span class="lticker-action">returned</span></div>
+                </div>
+            </div>
+
             <!-- ═══ LIVE CONTRACT EXAMPLES ═══ -->
             <div class="lcontracts" id="contracts">
                 <div class="lw">

@@ -55,16 +55,16 @@ export function renderLanding() {
                         <div class="ltrust-bar ldesktop-proof animate-fade-in-up delay-3">API-verified • Funds in escrow • Auto-settled</div>
 
                         <!-- ═══ TERMINAL STATS ═══ -->
-                        <div style="display: flex; gap: 16px; margin-top: 24px; flex-wrap: wrap;" class="animate-fade-in-up delay-3">
-                            <div style="display: flex; align-items: center; gap: 10px; background: rgba(17,17,17,0.85); padding: 8px 14px; border-radius: 6px; border: 1px solid rgba(255,255,255,0.05); backdrop-filter: blur(8px);">
-                                <span style="width: 6px; height: 6px; background: #22c55e; border-radius: 50%; box-shadow: 0 0 8px rgba(34,197,94,0.6);"></span>
-                                <span style="font-family: 'Sora', sans-serif; font-weight: 700; color: #FFF; font-size: 13px;">$2.4M+</span>
-                                <span style="font-family: 'JetBrains Mono', monospace; font-size: 9px; font-weight: 700; color: rgba(255,255,255,0.5); text-transform: uppercase; letter-spacing: 0.1em;">Capital Locked</span>
+                        <div style="display: flex; gap: 20px; margin-top: 28px; flex-wrap: wrap;" class="animate-fade-in-up delay-3">
+                            <div style="display: flex; align-items: center; gap: 10px; background: rgba(255,255,255,0.5); padding: 8px 16px; border-radius: 100px; border: 1px solid rgba(0,0,0,0.06); box-shadow: 0 4px 24px rgba(0,0,0,0.03); backdrop-filter: blur(12px);">
+                                <span style="width: 6px; height: 6px; background: #22c55e; border-radius: 50%; box-shadow: 0 0 10px rgba(34,197,94,0.8);"></span>
+                                <span style="font-family: 'Inter Tight', sans-serif; font-weight: 700; color: #111; font-size: 14px; letter-spacing: -0.2px;">$2.4M+</span>
+                                <span style="font-family: 'Inter', sans-serif; font-size: 10px; font-weight: 600; color: #666; text-transform: uppercase; letter-spacing: 0.05em;">Capital Locked</span>
                             </div>
-                            <div style="display: flex; align-items: center; gap: 10px; background: rgba(17,17,17,0.85); padding: 8px 14px; border-radius: 6px; border: 1px solid rgba(255,255,255,0.05); backdrop-filter: blur(8px);">
-                                <span style="width: 6px; height: 6px; background: #ef4444; border-radius: 50%; box-shadow: 0 0 8px rgba(239,68,68,0.6);"></span>
-                                <span style="font-family: 'Sora', sans-serif; font-weight: 700; color: #FFF; font-size: 13px;">0%</span>
-                                <span style="font-family: 'JetBrains Mono', monospace; font-size: 9px; font-weight: 700; color: rgba(255,255,255,0.5); text-transform: uppercase; letter-spacing: 0.1em;">Excuses Accepted</span>
+                            <div style="display: flex; align-items: center; gap: 10px; background: rgba(255,255,255,0.5); padding: 8px 16px; border-radius: 100px; border: 1px solid rgba(0,0,0,0.06); box-shadow: 0 4px 24px rgba(0,0,0,0.03); backdrop-filter: blur(12px);">
+                                <span style="width: 6px; height: 6px; background: #ef4444; border-radius: 50%; box-shadow: 0 0 10px rgba(239,68,68,0.8);"></span>
+                                <span style="font-family: 'Inter Tight', sans-serif; font-weight: 700; color: #111; font-size: 14px; letter-spacing: -0.2px;">0%</span>
+                                <span style="font-family: 'Inter', sans-serif; font-size: 10px; font-weight: 600; color: #666; text-transform: uppercase; letter-spacing: 0.05em;">Excuses Accepted</span>
                             </div>
                         </div>
                     </div>

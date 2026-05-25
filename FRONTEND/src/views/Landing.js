@@ -308,13 +308,22 @@ export function renderLanding() {
                     </button>
                 </div>
                 <div class="pnl-body">
+                    <!-- Navigation -->
                     <div class="pnl-section-label">Navigation</div>
-                    <a href="#" onclick="window.app.closeMobileMenu(); window.app.openAccessModal(); return false;" class="pnl-nav-link" style="animation-delay: 0.06s"><span class="pnl-nav-indicator"></span>MARKET</a>
+                    <a href="#" onclick="window.app.closeMobileMenu(); window.app.openAccessModal(); return false;" class="pnl-nav-link active" style="animation-delay: 0.06s"><span class="pnl-nav-indicator"></span>MARKET</a>
                     <a href="#" onclick="window.app.closeMobileMenu(); window.app.openAccessModal(); return false;" class="pnl-nav-link" style="animation-delay: 0.09s"><span class="pnl-nav-indicator"></span>ACTIVE</a>
                     <a href="#" onclick="window.app.closeMobileMenu(); window.app.openAccessModal(); return false;" class="pnl-nav-link" style="animation-delay: 0.12s"><span class="pnl-nav-indicator"></span>RIVALRY</a>
                     <a href="#" onclick="window.app.closeMobileMenu(); window.app.openAccessModal(); return false;" class="pnl-nav-link" style="animation-delay: 0.15s"><span class="pnl-nav-indicator"></span>LEDGER</a>
                     <a href="#" onclick="window.app.closeMobileMenu(); window.app.openAccessModal(); return false;" class="pnl-nav-link" style="animation-delay: 0.18s"><span class="pnl-nav-indicator"></span>SOURCES</a>
+                    
+                    <!-- Connect -->
+                    <div id="mobile-connect-section" class="pnl-connect-section">
+                        <button onclick="window.app.closeMobileMenu(); window.app.openAccessModal()" id="btn-auth-mobile" class="pnl-connect-btn">
+                            CONNECT
+                        </button>
+                    </div>
                 </div>
+                
                 <div class="pnl-footer">
                     <div class="pnl-status">
                         <div class="pnl-status-dot"></div>
@@ -328,6 +337,14 @@ export function renderLanding() {
                         <div class="pnl-meta-item">
                             <span class="pnl-meta-label">Network</span>
                             <span class="pnl-meta-value">Mainnet</span>
+                        </div>
+                        <div class="pnl-meta-item">
+                            <span class="pnl-meta-label">Settlement</span>
+                            <span class="pnl-meta-value">USD</span>
+                        </div>
+                        <div class="pnl-meta-item">
+                            <span class="pnl-meta-label">Uptime</span>
+                            <span class="pnl-meta-value">99.9%</span>
                         </div>
                     </div>
                     <div class="pnl-legal">

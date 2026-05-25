@@ -82,12 +82,8 @@ export function renderLanding() {
 
 
 
-            <!-- ═══ LIVE TICKER ═══ -->
-            <div class="lticker">
-                <div class="lticker-track">
-                    <!-- Dynamic data populated via initLanding() -->
-                </div>
-            </div>
+            <!-- ═══ LIVE TOAST NOTIFICATIONS ═══ -->
+            <div id="l-toast-container"></div>
 
             <!-- ═══ LIVE CONTRACT EXAMPLES ═══ -->
             <div class="lcontracts" id="contracts">
@@ -383,13 +379,13 @@ export function initLanding() {
         }, 450);
     }
 
-    // Populate live ticker with real mock data
+    // Populate live toast notifications with real mock data
     setTimeout(async () => {
         try {
             const response = await window.api.getPublicLedger();
             if (response && response.events && response.events.length > 0) {
-                const track = document.querySelector('.lticker-track');
-                if (!track) return;
+                const container = document.getElementById('l-toast-container');
+                if (!container) return;
                 
                 const timeAgo = (iso) => {
                     const diff = Math.floor((new Date() - new Date(iso)) / 60000);
@@ -402,10 +398,15 @@ export function initLanding() {
 
                 const formatAmt = (amt) => '$' + parseInt(amt, 10).toLocaleString();
 
-                const recentEvents = response.events.slice(0, 5);
-                let itemsHtml = '';
+                const recentEvents = response.events.slice(0, 10);
+                let i = 0;
                 
-                recentEvents.forEach(e => {
+                // Pop up a toast every 6 seconds
+                setInterval(() => {
+                    if (i >= recentEvents.length) i = 0;
+                    const e = recentEvents[i];
+                    i++;
+                    
                     let amtClass = 'locked';
                     let amtPrefix = '';
                     
@@ -431,11 +432,20 @@ export function initLanding() {
                     let amtRaw = e.amountUsdCents || e.lockAmountUsdCents || 0;
                     let displayAmt = formatAmt(amtRaw / 100);
 
-                    itemsHtml += `<div class="lticker-item"><span class="lticker-time">${timeAgo(e.timestamp || e.created_at || new Date().toISOString())}</span> <span class="lticker-action">${preAction}</span> <span class="lticker-amt ${amtClass}">${amtPrefix}${displayAmt}</span> <span class="lticker-action">${actionText}</span></div>`;
-                });
-                
-                // Duplicate for infinite scroll loop
-                track.innerHTML = itemsHtml + itemsHtml;
+                    const toast = document.createElement('div');
+                    toast.className = 'l-toast animate-slide-up';
+                    toast.innerHTML = `<span class="lticker-time">${timeAgo(e.timestamp || e.created_at || new Date().toISOString())}</span> <span class="lticker-action">${preAction}</span> <span class="lticker-amt ${amtClass}">${amtPrefix}${displayAmt}</span> <span class="lticker-action">${actionText}</span>`;
+                    
+                    container.appendChild(toast);
+                    
+                    // Remove toast after 4.5 seconds
+                    setTimeout(() => {
+                        toast.classList.remove('animate-slide-up');
+                        toast.classList.add('animate-slide-down');
+                        setTimeout(() => toast.remove(), 500);
+                    }, 4500);
+                    
+                }, 6000);
             }
         } catch (err) {
             console.error('Failed to load ledger ticker data', err);

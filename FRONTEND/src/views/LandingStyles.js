@@ -192,21 +192,19 @@ export const landingCSS = `
     letter-spacing: 0.5px;
 }
 
-/* ═══ LIVE TICKER ═══ */
-.lticker{border-top:1px solid var(--d);border-bottom:1px solid var(--d);background:var(--bg);padding:12px 0;overflow:hidden;position:relative;display:flex;white-space:nowrap}
-.lticker::before,.lticker::after{content:'';position:absolute;top:0;bottom:0;width:150px;z-index:2;pointer-events:none}
-.lticker::before{left:0;background:linear-gradient(to right,var(--bg),transparent)}
-.lticker::after{right:0;background:linear-gradient(to left,var(--bg),transparent)}
-.lticker-track{display:flex;gap:48px;padding-right:48px;animation:tickerScroll 40s linear infinite;width:max-content}
-.lticker-track:hover{animation-play-state:paused}
-@keyframes tickerScroll{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
-.lticker-item{display:flex;align-items:center;gap:12px;font-family:'SF Mono','Fira Code','Consolas',monospace;font-size:11px;font-weight:600;color:var(--t2);cursor:default}
-.lticker-time{color:var(--t3);font-weight:500}
+/* ═══ LIVE TOAST NOTIFICATIONS ═══ */
+#l-toast-container{position:fixed;bottom:24px;left:24px;z-index:9999;display:flex;flex-direction:column;gap:12px;pointer-events:none}
+.l-toast{background:rgba(255,255,255,0.85);backdrop-filter:blur(16px);border:1px solid rgba(0,0,0,0.08);box-shadow:0 8px 32px rgba(0,0,0,0.08);padding:14px 20px;border-radius:12px;display:flex;align-items:center;gap:12px;font-family:'SF Mono','Fira Code','Consolas',monospace;font-size:12px;font-weight:600;color:var(--t2);pointer-events:auto;will-change:transform,opacity}
+.lticker-time{color:var(--t3);font-weight:500;font-size:11px}
 .lticker-action{color:var(--t1);font-family:'Inter',sans-serif}
 .lticker-amt{font-weight:700}
 .lticker-amt.positive{color:var(--g)}
 .lticker-amt.negative{color:var(--r)}
 .lticker-amt.locked{color:var(--t1)}
+.animate-slide-up{animation:toastSlideUp 0.5s cubic-bezier(0.16,1,0.3,1) forwards}
+.animate-slide-down{animation:toastSlideDown 0.5s cubic-bezier(0.16,1,0.3,1) forwards}
+@keyframes toastSlideUp{0%{opacity:0;transform:translateY(24px) scale(0.95)}100%{opacity:1;transform:translateY(0) scale(1)}}
+@keyframes toastSlideDown{0%{opacity:1;transform:translateY(0) scale(1)}100%{opacity:0;transform:translateY(24px) scale(0.95)}}
 
 /* ═══ LIVE CONTRACTS ═══ */
 .lcontracts{padding:40px 0 64px;background:var(--p);border-top:1px solid var(--d)}

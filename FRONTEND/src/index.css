@@ -1,5 +1,18 @@
 @import "tailwindcss";
 
+@font-face {
+    font-family: 'Halford';
+    src: url('/halford.ttf') format('truetype'),
+         url('/halford.otf') format('opentype');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
+
+.logo-wordmark {
+    font-family: 'Halford', sans-serif !important;
+    text-transform: uppercase !important;
+}
 /* Override Inter's slashed zero with a clean zero from system fonts */
 @font-face {
     font-family: 'Inter';

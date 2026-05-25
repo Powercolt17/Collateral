@@ -439,7 +439,7 @@ window.app = {
         const toggleText = document.getElementById('auth-toggle-text');
 
         if (isSignup) {
-            if (title) title.innerHTML = 'Lock capital.<br>Force the outcome.';
+            if (title) title.innerHTML = 'Lock capital. Force the outcome.';
             if (btn) btn.textContent = 'Create Account';
             if (usernameField) { usernameField.classList.remove('hidden'); usernameField.style.display = 'flex'; }
             if (referralField) { referralField.classList.remove('hidden'); referralField.style.display = 'flex'; }
@@ -451,7 +451,7 @@ window.app = {
             }
             if (toggleText) toggleText.innerHTML = 'Already have an account? <button onclick="window.app.toggleAuthMode()" class="text-[#111] font-medium hover:underline bg-transparent border-none cursor-pointer p-0">Sign in</button>';
         } else {
-            if (title) title.innerHTML = 'Lock capital.<br>Force the outcome.';
+            if (title) title.innerHTML = 'Lock capital. Force the outcome.';
             if (btn) btn.textContent = 'Sign In';
             if (usernameField) { usernameField.classList.add('hidden'); usernameField.style.display = 'none'; }
             if (referralField) { referralField.classList.add('hidden'); referralField.style.display = 'none'; }

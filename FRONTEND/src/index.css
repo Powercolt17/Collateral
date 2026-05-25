@@ -12,6 +12,8 @@
 .logo-wordmark {
     font-family: 'Halford', sans-serif !important;
     text-transform: uppercase !important;
+    font-size: 15px !important;
+    letter-spacing: 0.5px !important;
 }
 /* Override Inter's slashed zero with a clean zero from system fonts */
 @font-face {

@@ -1,15 +1,15 @@
 @import "tailwindcss";
 
 @font-face {
-    font-family: 'Azonix';
-    src: url('/azonix.otf') format('opentype');
+    font-family: 'Corke';
+    src: url('/corke.ttf') format('truetype');
     font-weight: normal;
     font-style: normal;
     font-display: swap;
 }
 
 .logo-wordmark {
-    font-family: 'Azonix', sans-serif !important;
+    font-family: 'Corke', sans-serif !important;
     font-size: 22px !important;
     letter-spacing: 0.5px !important;
     font-weight: bold !important;

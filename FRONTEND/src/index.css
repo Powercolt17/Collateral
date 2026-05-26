@@ -1,17 +1,17 @@
 @import "tailwindcss";
 
 @font-face {
-    font-family: 'Nomixa';
-    src: url('/nomixa.otf') format('opentype');
+    font-family: 'Phyon';
+    src: url('/phyon.ttf') format('truetype');
     font-weight: normal;
     font-style: normal;
     font-display: swap;
 }
 
 .logo-wordmark {
-    font-family: 'Nomixa', sans-serif !important;
-    text-transform: uppercase !important;
+    font-family: 'Phyon', sans-serif !important;
     font-size: 22px !important;
+    letter-spacing: 0.5px !important;
     letter-spacing: 0.5px !important;
     font-weight: bold !important;
 }

@@ -409,20 +409,20 @@ export function initLanding() {
                     
                     let amtClass = 'locked';
                     let amtPrefix = '';
-                    let preAction = 'Operator @' + (e.principal || 'User');
+                    let preAction = '@' + (e.principal || 'User');
                     let actionText = 'locked';
                     let amtRaw = (e.amountUsdCents || e.lockAmountUsdCents || 0) / 100;
                     
-                    if (e.eventType === 'FUNDS_LOCKED' || e.eventType === 'EXECUTION_CONFIRMED') {
-                        actionText = `against ${e.platform || 'API'} target`;
+                    if (e.eventType === 'FUNDS_LOCKED' || e.eventType === 'EXECUTION_CONFIRMED' || e.eventType === 'CONTRACT_CREATED') {
+                        actionText = `escrowed via ${e.platform || 'API'} oracle`;
                         amtPrefix = '';
                         amtClass = 'locked';
                     } else if (e.eventType === 'SETTLED_SUCCESS') {
-                        actionText = `recovered + bonus`;
+                        actionText = `cleared settlement + yield`;
                         amtPrefix = '+';
                         amtClass = 'recovered';
                     } else if (e.eventType === 'SETTLED_FAILURE') {
-                        actionText = `liquidated via ${e.platform || 'API'}`;
+                        actionText = `liquidated by ${e.platform || 'API'} oracle`;
                         amtPrefix = '-';
                         amtClass = 'liquidated';
                     }

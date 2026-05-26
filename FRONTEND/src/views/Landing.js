@@ -409,26 +409,25 @@ export function initLanding() {
                     
                     let amtClass = 'locked';
                     let amtPrefix = '';
-                    let preAction = 'Operator @' + (e.username || 'User');
+                    let preAction = 'Operator @' + (e.principal || 'User');
                     let actionText = 'locked';
-                    let amtRaw = e.stake_amount || 0;
+                    let amtRaw = (e.amountUsdCents || e.lockAmountUsdCents || 0) / 100;
                     
-                    if (e.event_type === 'CONTRACT_CREATED') {
+                    if (e.eventType === 'FUNDS_LOCKED' || e.eventType === 'EXECUTION_CONFIRMED') {
                         actionText = `against ${e.platform || 'API'} target`;
-                    } else if (e.event_type === 'CONTRACT_SETTLED_WIN') {
-                        actionText = `won on ${e.platform || 'API'} target`;
-                        amtClass = 'positive';
+                        amtPrefix = '';
+                        amtClass = 'locked';
+                    } else if (e.eventType === 'SETTLED_SUCCESS') {
+                        actionText = `recovered + bonus`;
                         amtPrefix = '+';
-                        amtRaw = e.payout_amount || 0;
-                    } else if (e.event_type === 'CONTRACT_SETTLED_LOSS') {
-                        preAction = 'Operator @' + (e.username || 'User') + ' missed ' + (e.platform || 'API') + ' target';
-                        actionText = 'lost';
-                        amtClass = 'negative';
+                        amtClass = 'recovered';
+                    } else if (e.eventType === 'SETTLED_FAILURE') {
+                        actionText = `liquidated via ${e.platform || 'API'}`;
                         amtPrefix = '-';
-                        amtRaw = e.stake_amount || 0;
+                        amtClass = 'liquidated';
                     }
                     
-                    let displayAmt = formatAmt(amtRaw / 100);
+                    let displayAmt = formatAmt(amtRaw);
 
                     const toast = document.createElement('div');
                     toast.className = 'l-toast animate-slide-up';

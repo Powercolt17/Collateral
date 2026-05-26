@@ -23,6 +23,10 @@ export function renderLanding() {
                         <span class="logo-wordmark">Collateral</span>
                     </a>
                     <div style="display:flex; align-items:center;">
+                        <button class="ch-icon-btn" onclick="window.app.toggleTheme()" aria-label="Toggle Theme" style="margin-right: 12px; background: transparent; border: none; cursor: pointer; color: var(--t1);">
+                            <svg class="icon-moon" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></svg>
+                            <svg class="icon-sun" style="display: none;" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="m4.93 4.93 1.41 1.41"/><path d="m17.66 17.66 1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="m6.34 17.66-1.41 1.41"/><path d="m19.07 4.93-1.41 1.41"/></svg>
+                        </button>
                         <button class="ln-cta" id="lp-nav-cta">Start Contract</button>
                         <button class="ch-hamburger" id="mobile-menu-btn" aria-label="Menu" onclick="window.app.toggleMobileMenu()">
                             <div class="ch-hamburger-lines">

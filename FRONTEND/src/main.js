@@ -365,6 +365,16 @@ function _isOnGoPage() {
 
 // App methods exposed globally
 window.app = {
+    toggleTheme: function () {
+        const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+        if (isDark) {
+            document.documentElement.removeAttribute('data-theme');
+            localStorage.setItem('theme', 'light');
+        } else {
+            document.documentElement.setAttribute('data-theme', 'dark');
+            localStorage.setItem('theme', 'dark');
+        }
+    },
     openAccessModal: function () {
         const backdrop = document.getElementById('modal-access-backdrop');
         const modal = document.getElementById('modal-access');

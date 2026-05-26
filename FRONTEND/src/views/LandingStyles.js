@@ -1,6 +1,7 @@
 // Landing CSS — Elite fintech conversion page
 export const landingCSS = `
 .lp{--bg:#FAFAFA;--p:#FFF;--t1:#111;--t2:#444;--t3:#888;--d:#E5E5E5;--r:#5C1414;--rh:#6B1212;--g:#145c14;min-height:100vh;background:var(--bg);color:var(--t1);font-family:'Inter',sans-serif;-webkit-font-smoothing:antialiased;overflow-x:hidden;opacity:0;transform:translateY(10px);transition:opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1), transform 0.6s cubic-bezier(0.16, 1, 0.3, 1)}
+[data-theme='dark'] .lp {--bg:#0A0A0A;--p:#141414;--t1:#FFF;--t2:#A3A3A3;--t3:#737373;--d:#262626;}
 .lp.v{opacity:1;transform:translateY(0)}
 .lp *{box-sizing:border-box}
 .lloading-bar{position:fixed;top:0;left:0;height:2px;background:var(--r);z-index:1000;width:0;transition:width 0.4s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.3s ease;box-shadow:0 0 8px var(--r)}

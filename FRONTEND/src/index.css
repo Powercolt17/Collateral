@@ -75,6 +75,31 @@
     --space-label-value: 8px;
 }
 
+[data-theme='dark'] {
+    /* Backgrounds */
+    --bg-page: #0A0A0A;
+    --bg-panel: #141414;
+    --bg-subtle: #1A1A1A;
+
+    /* Text hierarchy */
+    --text-primary: #FFFFFF;
+    --text-secondary: #A3A3A3;
+    --text-tertiary: #737373;
+    --text-muted: #525252;
+
+    /* Brand overrides for dark background */
+    --red-light: #2A0A0A;
+    --green-light: #062106;
+
+    /* Borders */
+    --divider: #262626;
+    --divider-strong: #333333;
+    --divider-subtle: #1A1A1A;
+}
+
+[data-theme='dark'] .icon-moon { display: none !important; }
+[data-theme='dark'] .icon-sun { display: block !important; }
+
 /* ── Global Base — Force clean zeros everywhere ── */
 *,
 *::before,

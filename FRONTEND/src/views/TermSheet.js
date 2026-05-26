@@ -580,10 +580,10 @@ export async function initTermSheet(params) {
 
     // Back button
     document.getElementById('ext-back')?.addEventListener('click', () => {
-        window.router.navigate('/overview');
+        window.router.navigate('/contracts');
     });
     document.getElementById('ext-error-back')?.addEventListener('click', () => {
-        window.router.navigate('/overview');
+        window.router.navigate('/contracts');
     });
 
     try {

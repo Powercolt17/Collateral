@@ -1,7 +1,6 @@
 // Header Component - Premium Clearinghouse Terminal Nav
 export function renderHeader(currentRoute) {
     const routes = [
-        { path: '/overview', label: 'MARKET' },
         { path: '/contracts', label: 'ACTIVE' },
         { path: '/rivalry', label: 'RIVALRY' },
         { path: '/ledger', label: 'LEDGER' },
@@ -10,8 +9,7 @@ export function renderHeader(currentRoute) {
 
     const navItems = routes.map(route => {
         const isActive = currentRoute === route.path ||
-            (route.path === '/contracts' && (currentRoute === '/contracts' || currentRoute.startsWith('/contracts/'))) ||
-            (route.path === '/overview' && currentRoute === '/');
+            (route.path === '/contracts' && (currentRoute === '/contracts' || currentRoute.startsWith('/contracts/')));
 
         return `
             <a href="#" 
@@ -24,11 +22,9 @@ export function renderHeader(currentRoute) {
         `;
     }).join('');
 
-    // Panel navigation items with staggered delay
     const panelNavItems = routes.map((route, i) => {
         const isActive = currentRoute === route.path ||
-            (route.path === '/contracts' && (currentRoute === '/contracts' || currentRoute.startsWith('/contracts/'))) ||
-            (route.path === '/overview' && currentRoute === '/');
+            (route.path === '/contracts' && (currentRoute === '/contracts' || currentRoute.startsWith('/contracts/')));
 
         return `
             <a href="#" 
@@ -752,7 +748,7 @@ export function renderHeader(currentRoute) {
         <header class="ch-header">
             <div class="ch-header-inner">
                 <!-- Logo -->
-                <a href="#" onclick="window.router.navigate('/overview'); return false;" class="ch-logo">
+                <a href="#" onclick="window.router.navigate('/'); return false;" class="ch-logo">
                     <span class="logo-wordmark">Collateral</span>
                 </a>
 

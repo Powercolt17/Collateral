@@ -167,7 +167,7 @@ async function hydrateSession() {
             const protectedPaths = ['/contracts', '/my-contracts', '/profile', '/funding'];
             const currentPath = window.location.pathname || '';
             if (protectedPaths.some(pr => currentPath === pr || currentPath.startsWith(pr + '/'))) {
-                window.router.navigate('/overview');
+                window.router.navigate('/contracts');
                 if (window.trackEvent) window.trackEvent('login', { method: 'google' });
                 // Show login modal after redirect
                 setTimeout(() => window.app.openAccessModal(), 100);
@@ -193,7 +193,7 @@ console.log(`[App] Pre-launch mode: ${PRE_LAUNCH_MODE ? 'ENABLED' : 'disabled'}`
 const routes = PRE_LAUNCH_MODE ? [
     // Pre-launch: only show the waitlist page
     { path: '/', render: renderPreLaunch, init: initPreLaunch },
-    { path: '/overview', render: renderPreLaunch, init: initPreLaunch },
+    { path: '/', render: renderPreLaunch, init: initPreLaunch },
     { path: '/ledger', render: renderPreLaunch, init: initPreLaunch },
     { path: '/contracts', render: renderPreLaunch, init: initPreLaunch },
     { path: '/contracts/:id', render: renderPreLaunch, init: initPreLaunch },
@@ -209,13 +209,12 @@ const routes = PRE_LAUNCH_MODE ? [
     { path: '/contract/:id', render: renderPreLaunch, init: initPreLaunch },
 ] : [
     // Normal mode: full app
-    { path: '/go', render: renderLanding, init: initLanding },
+    { path: '/', render: renderLanding, init: initLanding },
     { path: '/go/stripe', render: (p) => renderSEOLanding({ platform: 'stripe' }), init: initSEOLanding },
     { path: '/go/x', render: (p) => renderSEOLanding({ platform: 'x' }), init: initSEOLanding },
     { path: '/go/shopify', render: (p) => renderSEOLanding({ platform: 'shopify' }), init: initSEOLanding },
     { path: '/go/youtube', render: (p) => renderSEOLanding({ platform: 'youtube' }), init: initSEOLanding },
     { path: '/welcome', render: renderOnboarding, init: initOnboarding },
-    { path: '/overview', render: renderOverview, init: initOverview },
     { path: '/rivalry', render: renderRivalry, init: initRivalry },
     { path: '/rivalry/:id', render: renderRivalryDetail, init: initRivalryDetail },
     { path: '/ledger', render: renderLedger, init: initLedger },
@@ -251,7 +250,7 @@ const routes = PRE_LAUNCH_MODE ? [
                 api.setReferralCode(params.code);
                 console.log('[Referral] Stored referral code:', params.code);
             }
-            window.router.navigate('/overview');
+            window.router.navigate('/contracts');
             setTimeout(() => window.app.openAccessModal(), 300);
         }
     }
@@ -356,11 +355,10 @@ setTimeout(() => {
     setTimeout(() => { if (ls) ls.remove(); }, 600);
 }, 600);
 
-// Helper: check if user is currently on /go landing page
+// Helper: check if user is currently on landing page
 function _isOnGoPage() {
-    const h = window.location.hash || '';
     const p = window.location.pathname || '';
-    return h === '#/go' || h.startsWith('#/go/') || h.startsWith('#/go?') || p === '/go' || p.startsWith('/go/') || p.startsWith('/go?');
+    return p === '/' || p.startsWith('/go/');
 }
 
 // App methods exposed globally
@@ -401,7 +399,7 @@ window.app = {
         appState.userId = null;
         appState.connectedSources = { twitter: false, stripe: false, github: false };
         updateAuthUI();
-        window.router.navigate('/overview');
+        window.router.navigate('/contracts');
     },
     handleAuthClick: function () {
         if (appState.isLoggedIn) {
@@ -518,7 +516,7 @@ window.app = {
                 } else if (shouldShowOnboarding()) {
                     window.router.navigate('/welcome');
                 } else {
-                    window.router.navigate('/overview');
+                    window.router.navigate('/contracts');
                 }
             } catch (err) {
                 window.app._showAuthError(err.message || 'Account creation failed.');
@@ -551,7 +549,7 @@ window.app = {
                     sessionStorage.removeItem('collateral_go_target');
                     window.router.navigate(goTarget);
                 } else if (_isOnGoPage()) {
-                    window.router.navigate('/overview');
+                    window.router.navigate('/contracts');
                 }
             } catch (err) {
                 window.app._showAuthError(err.message || 'Invalid email or password.');
@@ -599,7 +597,7 @@ window.app = {
                     sessionStorage.removeItem('collateral_go_target');
                     window.router.navigate(goTarget);
                 } else {
-                    window.router.navigate('/overview');
+                    window.router.navigate('/contracts');
                 }
                 sessionStorage.removeItem('collateral_go_flow');
                 return;
@@ -607,7 +605,7 @@ window.app = {
             await window.Clerk.client.signIn.authenticateWithRedirect({
                 strategy: 'oauth_google',
                 redirectUrl: window.location.origin + '/sso-callback',
-                redirectUrlComplete: window.location.origin + '/overview',
+                redirectUrlComplete: window.location.origin + '/',
             });
         } catch (err) {
             console.error('[Auth] Google sign-in failed:', err);
@@ -619,7 +617,7 @@ window.app = {
                     await window.Clerk.client.signIn.authenticateWithRedirect({
                         strategy: 'oauth_google',
                         redirectUrl: window.location.origin + '/sso-callback',
-                        redirectUrlComplete: window.location.origin + '/overview',
+                        redirectUrlComplete: window.location.origin + '/',
                     });
                 } catch (retryErr) {
                     console.error('[Auth] Google retry also failed:', retryErr);
@@ -646,7 +644,7 @@ window.app = {
                     sessionStorage.removeItem('collateral_go_target');
                     window.router.navigate(goTarget);
                 } else {
-                    window.router.navigate('/overview');
+                    window.router.navigate('/contracts');
                 }
                 sessionStorage.removeItem('collateral_go_flow');
                 return;
@@ -654,7 +652,7 @@ window.app = {
             await window.Clerk.client.signIn.authenticateWithRedirect({
                 strategy: 'oauth_apple',
                 redirectUrl: window.location.origin + '/sso-callback',
-                redirectUrlComplete: window.location.origin + '/overview',
+                redirectUrlComplete: window.location.origin + '/',
             });
         } catch (err) {
             console.error('[Auth] Apple sign-in failed:', err);
@@ -666,7 +664,7 @@ window.app = {
                     await window.Clerk.client.signIn.authenticateWithRedirect({
                         strategy: 'oauth_apple',
                         redirectUrl: window.location.origin + '/sso-callback',
-                        redirectUrlComplete: window.location.origin + '/overview',
+                        redirectUrlComplete: window.location.origin + '/',
                     });
                 } catch (retryErr) {
                     console.error('[Auth] Apple retry also failed:', retryErr);
@@ -687,7 +685,7 @@ window.app = {
                     await new Promise(r => setTimeout(r, 200));
                     attempts++;
                 }
-                if (!window.Clerk) { console.error('[Auth] Clerk never loaded'); window.router.navigate('/overview'); return; }
+                if (!window.Clerk) { console.error('[Auth] Clerk never loaded'); window.router.navigate('/contracts'); return; }
             }
 
             // Read and clear go_flow flag ONCE
@@ -708,12 +706,12 @@ window.app = {
                 sessionStorage.removeItem('collateral_go_target');
                 window.router.navigate(goTarget);
             } else {
-                window.router.navigate('/overview');
+                window.router.navigate('/contracts');
             }
         } catch (err) {
             console.error('[Auth] SSO callback failed:', err);
             sessionStorage.removeItem('collateral_go_flow');
-            window.router.navigate('/overview');
+            window.router.navigate('/contracts');
         }
     },
     _exchangeClerkToken: async function () {
@@ -1564,14 +1562,14 @@ router.onRouteChange = function (route, path) {
         // Show login modal and stay on current page
         window.app.openAccessModal();
         // Redirect to overview
-        window.router.navigate('/overview');
+        window.router.navigate('/contracts');
         return;
     }
 
     // Landing page: no header, clean full-page layout
     const headerMount = document.getElementById('header-mount');
     const appMount = document.getElementById('app');
-    if (path === '/go' || path.startsWith('/go/')) {
+    if (path === '/' || path.startsWith('/go/')) {
         headerMount.innerHTML = '';
         appMount.classList.remove('pt-16');
         appMount.innerHTML = route.render(route.params);

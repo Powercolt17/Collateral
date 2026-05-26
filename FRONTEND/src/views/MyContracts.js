@@ -215,7 +215,7 @@ export function renderMyContracts() {
                 </div>
                 <div class="myc-header-actions">
                     <button class="myc-btn-secondary" onclick="window.router.navigate('/profile')">View Identity</button>
-                    <button class="myc-btn-secondary" style="background: #111; color: #fff; border: none;" onclick="window.router.navigate('/overview')">New Contract</button>
+                    <button class="myc-btn-secondary" style="background: #111; color: #fff; border: none;" onclick="window.router.navigate('/contracts/execute')">New Contract</button>
                 </div>
             </div>
 
@@ -282,7 +282,7 @@ export async function initMyContracts() {
             container.innerHTML = `
                 <div style="text-align:center; padding: 60px 0;">
                     <div style="font-family:'JetBrains Mono', monospace; font-size:11px; color:#888; text-transform:uppercase; margin-bottom:16px;">No contracts in record</div>
-                    <button class="myc-btn-secondary" style="background:#111; color:#fff; border:none;" onclick="window.router.navigate('/overview')">Create First Contract</button>
+                    <button class="myc-btn-secondary" style="background:#111; color:#fff; border:none;" onclick="window.router.navigate('/contracts/execute')">Create First Contract</button>
                 </div>
             `;
         } else {

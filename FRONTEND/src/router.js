@@ -23,17 +23,10 @@ class Router {
     }
 
     handleRoute() {
-        const raw = window.location.pathname || '/overview';
+        const raw = window.location.pathname || '/';
 
         // Strip query string before matching routes
         const pathname = raw.split('?')[0];
-
-        // Default root to /overview
-        if (pathname === '/') {
-            window.history.replaceState(null, '', '/overview');
-            this.handleRoute();
-            return;
-        }
 
         // Check for exact match first
         let route = this.routes.find(r => r.path === pathname);
@@ -54,8 +47,8 @@ class Router {
         }
 
         if (!route) {
-            // Default to overview
-            this.navigate('/overview');
+            // Default to root
+            this.navigate('/');
             return;
         }
 
@@ -68,7 +61,7 @@ class Router {
     }
 
     getCurrentPath() {
-        return this.currentRoute || '/overview';
+        return this.currentRoute || '/';
     }
 }
 

@@ -301,7 +301,7 @@ export function initOnboarding() {
     const goMarket = document.getElementById('ob-go-market');
     if (goMarket) goMarket.addEventListener('click', () => {
         completeOnboarding();
-        window.router.navigate('/overview');
+        window.router.navigate('/contracts');
     });
 
     // Final step: go to rivalry
@@ -315,7 +315,7 @@ export function initOnboarding() {
     const skip = document.getElementById('ob-skip');
     if (skip) skip.addEventListener('click', () => {
         completeOnboarding();
-        window.router.navigate('/overview');
+        window.router.navigate('/contracts');
     });
 
     // Track GA4

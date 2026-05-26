@@ -272,76 +272,88 @@
 <body class="min-h-screen flex flex-col font-sans relative text-[#1A1A1A] bg-white antialiased overflow-x-hidden"
     style="font-family: 'Sora', 'Inter', 'Helvetica Neue', sans-serif; font-feature-settings: 'zero' 0;">
 
-    <!-- Loading Screen -->
     <div id="loading-screen" style="
         position: fixed; inset: 0; z-index: 9999;
-        background: #fff;
+        background: #0A0A0A;
         display: flex; flex-direction: column;
         align-items: center; justify-content: center;
-        transition: opacity 0.5s ease, visibility 0.5s ease;
+        transition: opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1), visibility 0.6s;
     ">
         <style>
-            @keyframes cl-fadeIn {
-                from { opacity: 0; transform: translateY(8px); }
-                to { opacity: 1; transform: translateY(0); }
+            @keyframes cl-premium-shimmer {
+                0% { background-position: 200% 50%; }
+                100% { background-position: -200% 50%; }
             }
-
-            @keyframes cl-fill {
-                0% { clip-path: inset(0 100% 0 0); -webkit-clip-path: inset(0 100% 0 0); }
-                100% { clip-path: inset(0 0 0 0); -webkit-clip-path: inset(0 0 0 0); }
+            @keyframes cl-premium-pulse {
+                0%, 100% { opacity: 0.15; transform: translate(-50%, -50%) scale(0.98); }
+                50% { opacity: 0.3; transform: translate(-50%, -50%) scale(1); }
             }
-
-            @keyframes cl-pulse-text {
-                0%, 100% { opacity: 0.3; }
-                50% { opacity: 0.7; }
-            }
-
             #loading-screen.loaded {
                 opacity: 0;
                 visibility: hidden;
                 pointer-events: none;
             }
-
-            #loading-screen .load-sub {
+            .cl-loader-text {
+                font-family: 'Science', 'Azonix', 'Corke', 'Molgan', 'Aquire', sans-serif !important;
+                font-size: 28px !important;
+                letter-spacing: 1px !important;
+                font-weight: bold !important;
+                background: linear-gradient(
+                    90deg, 
+                    rgba(255,255,255,0.05) 0%, 
+                    rgba(255,255,255,0.05) 40%, 
+                    #8B2020 48%, 
+                    #ff4d4d 50%,
+                    #8B2020 52%,
+                    rgba(255,255,255,0.05) 60%, 
+                    rgba(255,255,255,0.05) 100%
+                );
+                background-size: 300% auto;
+                color: transparent !important;
+                -webkit-background-clip: text !important;
+                background-clip: text !important;
+                animation: cl-premium-shimmer 2.5s cubic-bezier(0.25, 0.1, 0.25, 1) infinite;
+                margin: 0; padding: 0;
+                position: relative;
+                z-index: 2;
+                white-space: nowrap;
+                text-transform: none !important;
+            }
+            .cl-loader-glow {
+                position: absolute;
+                top: 50%; left: 50%;
+                transform: translate(-50%, -50%);
+                font-family: 'Science', 'Azonix', 'Corke', 'Molgan', 'Aquire', sans-serif !important;
+                font-size: 28px !important;
+                letter-spacing: 1px !important;
+                font-weight: bold !important;
+                color: #8B2020 !important;
+                filter: blur(12px);
+                animation: cl-premium-pulse 2s ease-in-out infinite;
+                z-index: 1;
+                white-space: nowrap;
+                text-transform: none !important;
+            }
+            .cl-loader-sub {
                 font-family: 'JetBrains Mono', monospace;
                 font-size: 9px;
-                color: #888;
-                letter-spacing: 0.15em;
+                color: #444;
+                letter-spacing: 0.2em;
                 text-transform: uppercase;
-                margin-top: 24px;
+                margin-top: 32px;
                 animation: cl-pulse-text 2s ease-in-out infinite;
+            }
+            @keyframes cl-pulse-text {
+                0%, 100% { opacity: 0.3; }
+                50% { opacity: 0.7; }
             }
         </style>
 
-        <div style="position:relative;display:flex;justify-content:center;align-items:center;animation:cl-fadeIn 600ms cubic-bezier(0.16, 1, 0.3, 1) both;height:44px;">
-            <span class="logo-wordmark" style="opacity:0.15;margin:0;padding:0;">COLLATERAL</span>
-            <span class="logo-wordmark cl-decode-text cl-loop-decode" data-target="COLLATERAL" style="position:absolute;top:50%;left:50%;transform:translate(-50%, -50%);margin:0;padding:0;white-space:nowrap;color:#5C1414;" id="initial-loader-wordmark">COLLATERAL</span>
+        <div style="position:relative;display:flex;justify-content:center;align-items:center;height:44px;">
+            <div class="cl-loader-glow">Collateral</div>
+            <div class="cl-loader-text">Collateral</div>
         </div>
-        <script>
-            (function(){
-                var el = document.getElementById('initial-loader-wordmark');
-                if(el) el.classList.add('decoded');
-                var chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789@#$%&*';
-                var target = 'COLLATERAL';
-                var iters = 0;
-                var maxIters = 15;
-                var iv = setInterval(function(){
-                    if(!el) return clearInterval(iv);
-                    el.innerText = target.split('').map(function(l, i) {
-                        return i < iters/1.5 ? target[i] : chars[Math.floor(Math.random()*chars.length)];
-                    }).join('');
-                    if(iters >= maxIters * 1.5) {
-                        clearInterval(iv);
-                        el.innerText = target;
-                        setTimeout(function(){ el.classList.remove('decoded'); }, 2000);
-                    }
-                    iters++;
-                }, 50);
-            })();
-        </script>
-
-        <div class="load-sub" id="load-sub-text" style="opacity:0;transition:opacity 0.8s ease;">Initializing Protocol</div>
-        <script>setTimeout(function () { var el = document.getElementById('load-sub-text'); if (el) el.style.opacity = '1'; }, 1500);</script>
+        <div class="cl-loader-sub">Initializing Protocol</div>
     </div>
 
     <!-- Header (injected by JS) -->

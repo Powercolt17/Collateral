@@ -691,6 +691,605 @@ export function renderActiveContracts() {
             }
             .ctp-card.rivalry .ctp-card-go { color: #752122; }
             @media (max-width: 560px) { .ctp-grid { grid-template-columns: 1fr; } }
+
+// Overview — Collateral Execution Queue
+// ALL contracts are percentage growth from baseline
+// Social (X) = Follower % growth, Sales/Commerce/Finance = Revenue % growth
+// Tiers: PLEDGE (~30% win), STAKE (~20% win), ALL-IN (~10% win)
+// HARD GATE: Minimum baseline required per tier — no starting from zero
+// EVERY BUTTON IS LIVE — tabs, pills, CTAs, modal, search, sort
+
+import api, { getMarketListings, hasAuthToken } from '../api.js';
+import { openExecutionModal } from './ExecutionModal.js';
+
+export function renderOverview() {
+    return `
+        <style>
+            .eq {
+                background: #fff;
+                min-height: 100vh;
+                font-family: 'Sora', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+                color: #111;
+                padding-bottom: 100px;
+            }
+
+            /* --- TYPE SYSTEM --- */
+            .eq-tag {
+                display: flex;
+                align-items: center;
+                gap: 12px;
+                font-family: 'JetBrains Mono', monospace;
+                font-size: 10px;
+                text-transform: uppercase;
+                letter-spacing: 1.5px;
+                color: #5C1414;
+                margin-bottom: 24px;
+            }
+            .eq-tag::before {
+                content: '';
+                width: 32px;
+                height: 1px;
+                background: #5C1414;
+            }
+
+            /* --- HERO SECTION --- */
+            .eq-hero {
+                padding: 120px 32px 100px;
+                max-width: 1300px;
+                margin: 0 auto;
+                position: relative;
+            }
+            .eq-hero-headline {
+                font-size: 84px;
+                font-weight: 500; /* Regular weight for main */
+                color: #111;
+                line-height: 0.95;
+                letter-spacing: -3.5px;
+                margin-bottom: 40px;
+                max-width: 900px;
+            }
+            .eq-hero-headline strong {
+                font-weight: 800;
+                color: #5C1414;
+            }
+            .eq-hero-sub {
+                font-size: 16px;
+                color: #888;
+                max-width: 480px;
+                line-height: 1.6;
+                margin-bottom: 40px;
+                font-family: 'Sora', sans-serif;
+            }
+            .eq-hero-actions {
+                display: flex;
+                align-items: center;
+                gap: 24px;
+            }
+            .eq-btn-primary {
+                background: #5C1414;
+                color: #fff;
+                padding: 18px 32px;
+                font-size: 14px;
+                font-weight: 700;
+                border: none;
+                cursor: pointer;
+                border-radius: 0;
+                position: relative;
+                overflow: hidden;
+                transition: background 0.35s ease, transform 0.25s ease, box-shadow 0.3s ease, letter-spacing 0.35s ease;
+            }
+            .eq-btn-primary:hover {
+                background: #6e1c1c;
+                transform: translateY(-1px);
+                box-shadow: 0 4px 16px rgba(59, 0, 1, 0.18);
+                letter-spacing: 0.5px;
+            }
+            .eq-btn-primary:active {
+                transform: translateY(0);
+                box-shadow: none;
+            }
+            .eq-link-more {
+                color: #888;
+                font-size: 14px;
+                text-decoration: none;
+                font-weight: 500;
+            }
+            .eq-hero-scroll {
+                position: absolute;
+                right: 32px;
+                bottom: 100px;
+                writing-mode: vertical-rl;
+                font-family: 'JetBrains Mono', monospace;
+                font-size: 9px;
+                color: #ccc;
+                letter-spacing: 3px;
+                text-transform: uppercase;
+                display: flex;
+                align-items: center;
+                gap: 16px;
+            }
+            .eq-hero-scroll::after {
+                content: '';
+                width: 1px;
+                height: 60px;
+                background: #eee;
+            }
+
+            /* --- MECHANISM SECTION --- */
+            .eq-mechanism {
+                padding: 100px 0;
+                border-top: 1px solid #f2f2f2;
+                max-width: 1300px;
+                margin: 0 auto;
+            }
+            .eq-mechanism-header {
+                display: flex;
+                justify-content: space-between;
+                align-items: flex-end;
+                margin-bottom: 80px;
+                padding: 0 32px;
+            }
+            .eq-mechanism-title {
+                font-size: 48px;
+                font-weight: 500;
+                letter-spacing: -2px;
+                line-height: 1;
+            }
+            .eq-mechanism-title strong { font-weight: 800; }
+            .eq-mechanism-side {
+                max-width: 320px;
+                font-size: 14px;
+                color: #888;
+                line-height: 1.6;
+                text-align: right;
+            }
+
+            .eq-mechanism-grid {
+                display: grid;
+                grid-template-columns: repeat(4, 1fr);
+                border-top: 1px solid #f0f0f0;
+                position: relative;
+            }
+            .eq-mech-card {
+                padding: 60px 40px;
+                border-right: 1px solid #f0f0f0;
+                position: relative;
+                overflow: hidden;
+                transition: background 0.3s, transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.35s ease;
+            }
+            .eq-mech-card:hover {
+                background: #fafafa;
+                transform: translateY(-6px);
+                box-shadow: 0 12px 40px rgba(0, 0, 0, 0.06);
+            }
+            .eq-mech-card::before {
+                content: '';
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 0;
+                height: 3px;
+                background: #5C1414;
+                transition: width 0.4s ease;
+            }
+            .eq-mech-card:hover::before { width: 100%; }
+            .eq-mech-card:last-child { border-right: none; }
+            /* Step connector arrow */
+            .eq-mech-card:not(:last-child)::after {
+                content: '→';
+                position: absolute;
+                right: -8px; top: 50%;
+                transform: translateY(-50%);
+                font-size: 14px;
+                color: #ccc;
+                z-index: 2;
+                font-family: 'JetBrains Mono', monospace;
+            }
+            .eq-mech-num {
+                font-family: 'Sora', sans-serif;
+                font-size: 80px;
+                font-weight: 700;
+                color: #e0e0e0;
+                line-height: 0.8;
+                margin-bottom: 40px;
+                transition: color 0.3s;
+            }
+            .eq-mech-card:hover .eq-mech-num { color: rgba(59, 0, 1, 0.15); }
+            .eq-mech-label {
+                font-size: 22px;
+                font-weight: 700;
+                margin-bottom: 20px;
+                color: #111;
+            }
+            .eq-mech-desc {
+                font-size: 14px;
+                color: #666;
+                line-height: 1.7;
+            }
+            .eq-mechanism-sub {
+                font-size: 15px; color: #888;
+                line-height: 1.65; max-width: 520px;
+                margin-top: 16px;
+            }
+
+            /* --- MARKET SECTION --- */
+            .eq-market-header {
+                padding: 100px 32px 40px;
+                max-width: 1300px;
+                margin: 0 auto;
+            }
+            .eq-market-title {
+                font-size: 48px;
+                font-weight: 500;
+                letter-spacing: -2px;
+                margin-bottom: 24px;
+            }
+            .eq-market-title strong { font-weight: 800; }
+            .eq-market-live {
+                display: flex;
+                align-items: center;
+                gap: 8px;
+                font-family: 'JetBrains Mono', monospace;
+                font-size: 10px;
+                color: #aaa;
+                text-transform: uppercase;
+                letter-spacing: 1px;
+                margin-bottom: 48px;
+            }
+            .eq-market-dot {
+                width: 6px; height: 6px;
+                background: #10b981;
+                border-radius: 50%;
+                animation: dotPulse 2s ease-in-out infinite;
+                box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.4);
+            }
+            @keyframes dotPulse {
+                0%, 100% {
+                    box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.4);
+                }
+                50% {
+                    box-shadow: 0 0 0 6px rgba(16, 185, 129, 0);
+                }
+            }
+
+            .eq-stats-strip {
+                display: flex;
+                gap: 80px;
+                margin-bottom: 64px;
+            }
+            .eq-stat-group { display: flex; flex-direction: column; gap: 8px; }
+            .eq-stat-val {
+                font-size: 42px;
+                font-weight: 500;
+                letter-spacing: -1.5px;
+                display: flex;
+                transition: color 0.3s ease;
+            }
+            .eq-stat-group:hover .eq-stat-val {
+                color: #5C1414;
+            }
+                align-items: baseline;
+                gap: 4px;
+            }
+            .eq-stat-val small { font-size: 14px; color: #ccc; font-weight: 400; letter-spacing: 0; }
+            .eq-stat-lbl {
+                font-family: 'JetBrains Mono', monospace;
+                font-size: 10px;
+                text-transform: uppercase;
+                letter-spacing: 1px;
+                color: #bbb;
+            }
+
+            /* --- CONTROLS --- */
+            .eq-controls {
+                display: flex;
+                justify-content: space-between;
+                align-items: flex-end;
+                padding-bottom: 2px;
+                border-bottom: 1px solid #f2f2f2;
+                margin-bottom: 24px;
+            }
+            .eq-tabs { display: flex; gap: 32px; }
+            .eq-tab {
+                padding: 12px 0;
+                font-family: 'JetBrains Mono', monospace;
+                font-size: 11px;
+                font-weight: 700;
+                color: #bbb;
+                background: none;
+                border: none;
+                cursor: pointer;
+                text-transform: uppercase;
+                letter-spacing: 1px;
+                border-bottom: 2px solid transparent;
+                transition: all 0.2s;
+            }
+            .eq-tab.active { color: #111; border-bottom-color: #111; }
+            
+            .eq-search-wrap {
+                display: flex;
+                align-items: center;
+                gap: 12px;
+                margin-bottom: 12px;
+            }
+            .eq-search-box {
+                background: #fcfcfc;
+                border: 1px solid #eee;
+                padding: 10px 16px;
+                font-size: 13px;
+                width: 240px;
+                font-family: 'Sora', sans-serif;
+            }
+            .eq-btn-rules {
+                background: #fff;
+                border: 1px solid #eee;
+                padding: 10px 16px;
+                font-family: 'JetBrains Mono', monospace;
+                font-size: 11px;
+                font-weight: 700;
+                text-transform: uppercase;
+                letter-spacing: 1px;
+                cursor: pointer;
+                color: #666;
+            }
+
+            .eq-filter-bar {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                margin-bottom: 48px;
+            }
+            .eq-pills { display: flex; align-items: center; gap: 8px; }
+            .eq-filter-lbl { 
+                font-family: 'JetBrains Mono', monospace; 
+                font-size: 10px; 
+                color: #ccc; 
+                text-transform: uppercase; 
+                margin-right: 12px; 
+            }
+            .eq-pill {
+                padding: 6px 16px;
+                font-size: 11px;
+                font-weight: 500;
+                border: 1px solid #eee;
+                background: #fff;
+                cursor: pointer;
+                color: #888;
+                transition: all 0.2s;
+            }
+            .eq-pill.active { background: #000; color: #fff; border-color: #000; }
+
+            .eq-status-operational {
+                display: flex;
+                align-items: center;
+                gap: 8px;
+                font-family: 'JetBrains Mono', monospace;
+                font-size: 9px;
+                text-transform: uppercase;
+                color: #ccc;
+            }
+            .eq-status-operational .dot { width: 5px; height: 5px; background: #10b981; border-radius: 50%; }
+
+            /* --- CARD GRID --- */
+            .eq-grid {
+                display: grid;
+                grid-template-columns: repeat(4, 1fr);
+                gap: 24px;
+            }
+            .eq-card {
+                background: #fff;
+                padding: 36px 32px 32px;
+                display: flex;
+                flex-direction: column;
+                cursor: pointer;
+                transition: background 0.2s, box-shadow 0.2s;
+                position: relative;
+                overflow: hidden;
+                border: 1px solid #eee;
+            }
+            .eq-card:hover { background: #fafafa; }
+            .eq-card::before {
+                content: '';
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 0;
+                height: 3px;
+                background: #5C1414;
+                transition: width 0.4s ease;
+            }
+            .eq-card:hover::before { width: 100%; }
+            .eq-card-meta {
+                display: flex;
+                justify-content: space-between;
+                font-family: 'JetBrains Mono', monospace;
+                font-size: 10px;
+                text-transform: uppercase;
+                letter-spacing: 0.5px;
+            }
+            .eq-closing { color: #5C1414; font-weight: 700; }
+            .eq-id { color: #ccc; }
+            .eq-time { color: #ccc; display: flex; align-items: center; gap: 4px; }
+
+            .eq-card-title {
+                font-size: 18px;
+                font-weight: 700;
+                color: #111;
+                margin: 12px 0 8px;
+                letter-spacing: -0.5px;
+            }
+            .eq-card-provider {
+                display: flex;
+                align-items: center;
+                gap: 8px;
+                margin-bottom: 8px;
+            }
+            .eq-provider-name {
+                font-family: 'JetBrains Mono', monospace;
+                font-size: 10px;
+                text-transform: uppercase;
+                color: #888;
+            }
+            .eq-tier-badge {
+                padding: 3px 8px;
+                font-size: 9px;
+                font-weight: 700;
+                border-radius: 2px;
+                text-transform: uppercase;
+                font-family: 'JetBrains Mono', monospace;
+                letter-spacing: 0.5px;
+            }
+            .eq-tier-badge.controlled { background: #f0fdf4; color: #166534; border: 1px solid #dcfce7; }
+            .eq-tier-badge.elevated { background: #fff7ed; color: #9a3412; border: 1px solid #ffedd5; }
+            .eq-tier-badge.maximum { background: #fff1f2; color: #9f1239; border: 1px solid #ffe4e6; }
+
+            .eq-card-status {
+                display: flex;
+                align-items: center;
+                gap: 6px;
+                font-family: 'JetBrains Mono', monospace;
+                font-size: 9px;
+                color: #10b981;
+                text-transform: uppercase;
+                margin-bottom: 16px;
+            }
+            .eq-card-status .dot { width: 4px; height: 4px; border-radius: 50%; background: currentcolor; }
+
+            .eq-card-stake-info {
+                display: flex;
+                align-items: center;
+                gap: 12px;
+                margin-bottom: 20px;
+            }
+            .eq-stake-val { font-size: 24px; font-weight: 500; letter-spacing: -1px; }
+            .eq-stake-separator { width: 16px; height: 1px; background: #eee; }
+            .eq-stake-lbl {
+                font-family: 'JetBrains Mono', monospace;
+                font-size: 9px;
+                color: #ccc;
+                text-transform: uppercase;
+                margin-top: 4px;
+            }
+
+            .eq-card-cta {
+                background: #0a0a0a;
+                color: #fff;
+                border: 1px solid transparent;
+                padding: 16px;
+                font-size: 11px;
+                font-weight: 700;
+                text-transform: uppercase;
+                letter-spacing: 1.5px;
+                width: 100%;
+                cursor: pointer;
+                margin-top: auto;
+                position: relative;
+                overflow: hidden;
+                transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+                transform: translateY(0);
+                box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            }
+            .eq-card-cta:hover {
+                background: #5C1414;
+                transform: translateY(-3px);
+                box-shadow: 0 8px 30px rgba(92,20,20,0.35), 0 0 0 1px rgba(92,20,20,0.15);
+                letter-spacing: 2.5px;
+            }
+            .eq-card-cta:active {
+                transform: translateY(0px) scale(0.97);
+                box-shadow: 0 2px 8px rgba(92,20,20,0.2);
+                transition: all 0.08s ease;
+            }
+            .eq-card-cta::after {
+                content: '';
+                position: absolute;
+                top: -50%;
+                left: -100%;
+                width: 60%;
+                height: 200%;
+                background: linear-gradient(90deg, transparent, rgba(255,255,255,0.15), transparent);
+                transform: skewX(-25deg);
+                transition: left 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+            }
+            .eq-card-cta:hover::after {
+                left: 150%;
+            }
+            @keyframes executePulse {
+                0%, 100% { box-shadow: 0 8px 30px rgba(92,20,20,0.35), 0 0 0 1px rgba(92,20,20,0.15); }
+                50% { box-shadow: 0 8px 30px rgba(92,20,20,0.5), 0 0 0 2px rgba(92,20,20,0.25); }
+            }
+            .eq-card-cta:hover {
+                animation: executePulse 2s ease-in-out infinite;
+                animation-delay: 0.3s;
+            }
+            .eq-card-footer {
+                font-size: 10px;
+                color: #eee;
+                text-align: center;
+                margin-top: 12px;
+                font-style: italic;
+            }
+
+            /* --- RULES MODAL --- */
+            .eq-modal-backdrop {
+                display: none;
+                position: fixed;
+                inset: 0;
+                background: rgba(0,0,0,0.4);
+                z-index: 1000;
+                align-items: center;
+                justify-content: center;
+            }
+            .eq-modal-backdrop.open { display: flex; }
+            .eq-modal {
+                background: #fff;
+                width: 520px;
+                max-width: 90vw;
+                max-height: 85vh;
+                overflow-y: auto;
+                padding: 32px;
+            }
+            .eq-modal-header {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                margin-bottom: 24px;
+            }
+            .eq-modal-title { font-size: 18px; font-weight: 700; color: #111; }
+            .eq-modal-close { background: none; border: none; font-size: 18px; cursor: pointer; color: #888; padding: 4px 8px; }
+            .eq-rule-divider {
+                font-family: 'JetBrains Mono', monospace;
+                font-size: 10px;
+                text-transform: uppercase;
+                letter-spacing: 1px;
+                color: #aaa;
+                border-top: 1px solid #f2f2f2;
+                padding-top: 16px;
+                margin-top: 20px;
+                margin-bottom: 12px;
+                font-weight: 700;
+            }
+            .eq-rule-row { display: flex; align-items: center; gap: 10px; padding: 8px 0; font-size: 13px; color: #555; }
+            .eq-rule-row input[type="checkbox"] { accent-color: #5C1414; }
+            .eq-threshold-table { width: 100%; border-collapse: collapse; font-size: 12px; margin-top: 8px; }
+            .eq-threshold-table th { text-align: left; font-family: 'JetBrains Mono', monospace; font-size: 10px; text-transform: uppercase; letter-spacing: 0.5px; color: #aaa; padding: 8px 12px; border-bottom: 1px solid #f2f2f2; }
+            .eq-threshold-table td { padding: 8px 12px; color: #555; border-bottom: 1px solid #f8f8f8; }
+            .eq-threshold-table .tier-controlled { color: #166534; font-weight: 600; }
+            .eq-threshold-table .tier-elevated { color: #9a3412; font-weight: 600; }
+            .eq-threshold-table .tier-maximum { color: #9f1239; font-weight: 600; }
+            .eq-threshold-table .tier-pledge { color: #166534; font-weight: 600; }
+            .eq-threshold-table .tier-stake { color: #9a3412; font-weight: 600; }
+            .eq-threshold-table .tier-all-in { color: #9f1239; font-weight: 600; }
+            .eq-slider-row { display: flex; align-items: center; gap: 12px; padding: 12px 0; }
+            .eq-slider-label { font-size: 12px; color: #888; min-width: 80px; }
+            .eq-slider { flex: 1; accent-color: #5C1414; }
+            .eq-slider-value { font-family: 'JetBrains Mono', monospace; font-size: 12px; color: #111; font-weight: 600; min-width: 60px; text-align: right; }
+
+            /* --- STAKE WARNING --- */
+            .eq-stake-warning { max-width: 1300px; margin: 0 auto; padding: 24px 32px; border-top: 1px solid #f2f2f2; }
+            .eq-stake-warning-text { font-size: 12px; color: #ccc; font-style: italic; }
+
+            
         </style>
 
         <div class="act">
@@ -768,6 +1367,51 @@ export function renderActiveContracts() {
                     </div>
                 </div>
             </div>
+
+            <!-- Integrated Solo Contracts -->
+            <section class="eq-paths" id="how-it-works" data-reveal>
+                <div class="eq-paths-header">
+                    <div class="eq-tag anim-mech-tag">Contract Types</div>
+                    <h2 class="eq-mechanism-title anim-mech-title">Two ways to <strong>compete.</strong></h2>
+                    <p class="eq-paths-sub">Collateral offers two distinct contract primitives. Same verified metrics. Same locked capital. Same automatic settlement. Different opponents.</p>
+                </div>
+                <div class="eq-paths-grid">
+                    <!-- Solo Contract -->
+                    <div class="eq-path-card anim-mech-card-1">
+                        <div class="eq-path-icon">
+                            <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
+                                <circle cx="16" cy="16" r="14" stroke="#111" stroke-width="1.5" fill="none"/>
+                                <path d="M16 10v12M12 14l4-4 4 4" stroke="#111" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                        </div>
+                        <div class="eq-path-tag">Solo Contract</div>
+                        <h3 class="eq-path-title">Back <strong>yourself.</strong></h3>
+                        <p class="eq-path-desc">Stake capital against your own performance targets. Hit the metric — keep everything. Miss — the house takes a cut based on variance.</p>
+                        <div class="eq-path-details">
+                            <div class="eq-path-detail"><span class="eq-path-check">✓</span> Single operator</div>
+                            <div class="eq-path-detail"><span class="eq-path-check">✓</span> Self-set threshold</div>
+                            <div class="eq-path-detail"><span class="eq-path-check">✓</span> Pass / fail settlement</div>
+                        </div>
+                        <button class="eq-path-cta" onclick="document.getElementById('live-market').scrollIntoView({behavior:'smooth'})">Browse Solo Contracts →</button>
+                    </div>
+                    <!-- Rivalry Contract -->
+                    <div class="eq-path-card rivalry anim-mech-card-2">
+                        <div class="eq-path-icon">
+                            <img src="/crossed-swords.png" alt="Crossed Swords" width="36" height="36" style="object-fit:contain;" />
+                        </div>
+                        <div class="eq-path-tag rivalry">Rivalry Contract</div>
+                        <h3 class="eq-path-title">Challenge an <strong>opponent.</strong></h3>
+                        <p class="eq-path-desc">Issue a head-to-head duel. Both operators lock matched capital. Verified growth determines the winner. Loser forfeits their stake.</p>
+                        <div class="eq-path-details">
+                            <div class="eq-path-detail"><span class="eq-path-check rivalry">✓</span> Two operators</div>
+                            <div class="eq-path-detail"><span class="eq-path-check rivalry">✓</span> Matched capital</div>
+                            <div class="eq-path-detail"><span class="eq-path-check rivalry">✓</span> Relative performance</div>
+                        </div>
+                        <a href="#/rivalry" class="eq-path-cta rivalry">Explore Rivalries →</a>
+                    </div>
+                </div>
+            </section>
+
         </div>
 
         <!-- Contract Type Picker Modal -->

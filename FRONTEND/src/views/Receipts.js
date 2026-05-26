@@ -4,7 +4,7 @@
 
 export function renderReceipts() {
     return `
-        <div class="min-h-screen">
+        <div class="min-h-screen bg-white">
             <!-- Header -->
             <div class="border-b border-neutral-200" data-reveal>
                 <div class="max-w-5xl mx-auto px-8 py-8">
@@ -196,7 +196,7 @@ export async function initReceipts() {
             const title = contract.title || contract.description || contract.commitment || 'Contract';
 
             html += `
-                <div class="border border-[var(--divider-strong)] bg-[var(--bg-panel)] hover:border-[var(--text-primary)] transition-all cursor-pointer group"
+                <div class="border border-neutral-200 bg-white hover:border-neutral-300 transition-all cursor-pointer group"
                      onclick="window.router.navigate('/contracts/${contract.id}')">
 
                     <!-- Receipt Header -->

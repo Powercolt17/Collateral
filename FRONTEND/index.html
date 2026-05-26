@@ -19,16 +19,6 @@
     <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&family=Inter:wght@400;500;600;700;800&family=Inter+Tight:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="canonical" href="https://collateral.market">
 
-    <script>
-        (function() {
-            try {
-                if (localStorage.getItem('theme') === 'dark') {
-                    document.documentElement.setAttribute('data-theme', 'dark');
-                }
-            } catch (e) {}
-        })();
-    </script>
-
     <!-- Branding -->
     <meta name="theme-color" content="#752122">
     <meta name="apple-mobile-web-app-capable" content="yes">
@@ -279,8 +269,8 @@
 
 </head>
 
-<body class="min-h-screen flex flex-col font-sans relative antialiased overflow-x-hidden"
-      style="font-family: 'Sora', 'Inter', 'Helvetica Neue', sans-serif; font-feature-settings: 'zero' 0; background-color: var(--bg-page); color: var(--text-primary); transition: background-color 0.3s ease, color 0.3s ease;">
+<body class="min-h-screen flex flex-col font-sans relative text-[#1A1A1A] bg-white antialiased overflow-x-hidden"
+    style="font-family: 'Sora', 'Inter', 'Helvetica Neue', sans-serif; font-feature-settings: 'zero' 0;">
 
     <div id="loading-screen" style="
         position: fixed; inset: 0; z-index: 9999;

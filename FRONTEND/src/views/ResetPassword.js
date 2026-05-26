@@ -11,7 +11,7 @@ export function renderResetPassword() {
         <div class="rp-card">
             <div class="rp-brand">
                 <div class="rp-brand-bar"></div>
-                <span class="rp-brand-text">COLLATERAL</span>
+                <span class="rp-brand-text">Collateral</span>
             </div>
 
             <h1 class="rp-title">Set New Password</h1>

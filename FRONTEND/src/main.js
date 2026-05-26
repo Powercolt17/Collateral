@@ -1678,7 +1678,7 @@ function runDecoderAnimation() {
     const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789@#$%&*';
     document.querySelectorAll('.cl-decode-text:not(.decoded)').forEach(el => {
         el.classList.add('decoded');
-        const targetText = el.getAttribute('data-target') || 'COLLATERAL';
+        const targetText = el.getAttribute('data-target') || 'Collateral';
         let iterations = 0;
         const maxIterations = 15;
         const interval = setInterval(() => {

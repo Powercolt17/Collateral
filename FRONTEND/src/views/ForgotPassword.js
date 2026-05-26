@@ -11,7 +11,7 @@ export function renderForgotPassword() {
         <div class="fp-card">
             <div class="fp-brand">
                 <div class="fp-brand-bar"></div>
-                <span class="fp-brand-text">COLLATERAL</span>
+                <span class="fp-brand-text">Collateral</span>
             </div>
 
             <h1 class="fp-title">Reset Password</h1>

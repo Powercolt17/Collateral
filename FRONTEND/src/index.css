@@ -10,8 +10,8 @@
 
 .logo-wordmark {
     font-family: 'Phyon', sans-serif !important;
+    text-transform: lowercase !important;
     font-size: 22px !important;
-    letter-spacing: 0.5px !important;
     letter-spacing: 0.5px !important;
     font-weight: bold !important;
 }

@@ -1,15 +1,15 @@
 @import "tailwindcss";
 
 @font-face {
-    font-family: 'Molgan';
-    src: url('/molgan.otf') format('opentype');
+    font-family: 'Cavqur';
+    src: url('/cavqur.ttf') format('truetype');
     font-weight: normal;
     font-style: normal;
     font-display: swap;
 }
 
 .logo-wordmark {
-    font-family: 'Molgan', sans-serif !important;
+    font-family: 'Cavqur', sans-serif !important;
     font-size: 22px !important;
     letter-spacing: 0.5px !important;
     font-weight: bold !important;

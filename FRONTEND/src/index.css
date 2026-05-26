@@ -1,15 +1,15 @@
 @import "tailwindcss";
 
 @font-face {
-    font-family: 'RedThinker';
-    src: url('/redthinker.ttf') format('truetype');
+    font-family: 'Murva';
+    src: url('/murva.ttf') format('truetype');
     font-weight: normal;
     font-style: normal;
     font-display: swap;
 }
 
 .logo-wordmark {
-    font-family: 'RedThinker', sans-serif !important;
+    font-family: 'Murva', sans-serif !important;
     text-transform: uppercase !important;
     font-size: 22px !important;
     letter-spacing: 0.5px !important;

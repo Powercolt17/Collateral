@@ -22,16 +22,12 @@ export const landingCSS = `
 .delay-4 { animation-delay: 480ms; }
 
 /* Promo Bar */
-@keyframes promoShine {
-  0% { background-position: 200% center; }
-  100% { background-position: -200% center; }
-}
 @keyframes promoSweep {
-  0% { transform: translateX(-150%) skewX(-15deg); }
-  30%, 100% { transform: translateX(250%) skewX(-15deg); }
+  0% { left: -100%; }
+  30%, 100% { left: 200%; }
 }
-.lpromo-bar{position:fixed;top:0;left:0;right:0;height:32px;background:linear-gradient(90deg, var(--r), #8B2020, #a12323, #8B2020, var(--r));background-size:200% auto;color:#fff;display:flex;align-items:center;justify-content:center;text-align:center;font-size:12px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;z-index:60;animation:promoShine 5s linear infinite;overflow:hidden;text-shadow:0 1px 2px rgba(0,0,0,.2)}
-.lpromo-bar::before{content:'';position:absolute;top:0;left:-50%;width:50%;height:100%;background:linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);animation:promoSweep 4s cubic-bezier(0.4, 0, 0.2, 1) infinite;pointer-events:none}
+.lpromo-bar{position:fixed;top:0;left:0;right:0;height:32px;background:var(--r);color:#fff;display:flex;align-items:center;justify-content:center;text-align:center;font-size:12px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;z-index:60;overflow:hidden;box-shadow:0 4px 12px rgba(92,20,20,.3);border-bottom:1px solid rgba(255,255,255,.05)}
+.lpromo-bar::before{content:'';position:absolute;top:0;left:-100%;width:150px;height:100%;background:linear-gradient(90deg, transparent, rgba(255,255,255,0.6), transparent);transform:skewX(-25deg);animation:promoSweep 4.5s cubic-bezier(0.19, 1, 0.22, 1) infinite;pointer-events:none;filter:blur(2px)}
 
 /* Nav */
 .ln{position:fixed;top:32px;left:0;right:0;z-index:50;background:rgba(250,250,250,0.85);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-bottom:1px solid rgba(0,0,0,0.04)}

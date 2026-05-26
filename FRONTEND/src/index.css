@@ -535,4 +535,7 @@ button[class*="-connect"]:hover,
         margin-bottom: 36px;
         padding-bottom: 28px;
     }
+    .logo-wordmark {
+        font-size: 13.5px !important;
+    }
 }

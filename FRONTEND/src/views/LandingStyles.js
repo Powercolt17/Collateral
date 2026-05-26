@@ -30,7 +30,7 @@ export const landingCSS = `
   0% { transform: translateX(-150%) skewX(-15deg); }
   30%, 100% { transform: translateX(250%) skewX(-15deg); }
 }
-.lpromo-bar{position:fixed;top:0;left:0;right:0;height:32px;background:linear-gradient(90deg, var(--r), #8B2020, #a12323, #8B2020, var(--r));background-size:200% auto;color:#fff;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;z-index:60;animation:promoShine 5s linear infinite;overflow:hidden;text-shadow:0 1px 2px rgba(0,0,0,.2)}
+.lpromo-bar{position:fixed;top:0;left:0;right:0;height:32px;background:linear-gradient(90deg, var(--r), #8B2020, #a12323, #8B2020, var(--r));background-size:200% auto;color:#fff;display:flex;align-items:center;justify-content:center;text-align:center;font-size:12px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;z-index:60;animation:promoShine 5s linear infinite;overflow:hidden;text-shadow:0 1px 2px rgba(0,0,0,.2)}
 .lpromo-bar::before{content:'';position:absolute;top:0;left:-50%;width:50%;height:100%;background:linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);animation:promoSweep 4s cubic-bezier(0.4, 0, 0.2, 1) infinite;pointer-events:none}
 
 /* Nav */
@@ -309,9 +309,12 @@ export const landingCSS = `
 
 /* ═══ RESPONSIVE ═══ */
 @media(max-width:768px){
+  .lpromo-bar { height: auto; min-height: 32px; padding: 6px 10px; line-height: 1.3; font-size: 9px; }
+  .ln { top: 38px; }
+  .lmain { padding-top: 84px; }
   .lhide-mobile{display:none !important}
-  .ln-in{padding:0 20px}
-  .ln-cta{padding:8px 14px; font-size:10px; letter-spacing:0.5px}
+  .ln-in{padding:0 16px; height: 60px;}
+  .ln-cta{padding:6px 10px; font-size:8.5px; letter-spacing:0.5px}
   .lhero-grid{grid-template-columns:1fr;gap:32px;padding:130px 0 24px}
   .lhero-right{display:none}
   .lh1{font-size:clamp(38px, 11vw, 48px);line-height:1.05;letter-spacing:-1px}

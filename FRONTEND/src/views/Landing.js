@@ -82,9 +82,6 @@ export function renderLanding() {
 
 
 
-            <!-- ═══ LIVE TOAST NOTIFICATIONS ═══ -->
-            <div id="l-toast-container"></div>
-
             <!-- ═══ LIVE CONTRACT EXAMPLES ═══ -->
             <div class="lcontracts" id="contracts">
                 <div class="lw">
@@ -384,8 +381,12 @@ export function initLanding() {
         try {
             const response = await window.api.getPublicLedger();
             if (response && response.events && response.events.length > 0) {
-                const container = document.getElementById('l-toast-container');
-                if (!container) return;
+                let container = document.getElementById('l-toast-container');
+                if (!container) {
+                    container = document.createElement('div');
+                    container.id = 'l-toast-container';
+                    document.body.appendChild(container);
+                }
                 
                 const timeAgo = (iso) => {
                     const diff = Math.floor((new Date() - new Date(iso)) / 60000);

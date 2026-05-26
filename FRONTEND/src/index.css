@@ -1,15 +1,15 @@
 @import "tailwindcss";
 
 @font-face {
-    font-family: 'SavedByZero';
-    src: url('/savedbyzero.otf') format('opentype');
+    font-family: 'Nomixa';
+    src: url('/nomixa.otf') format('opentype');
     font-weight: normal;
     font-style: normal;
     font-display: swap;
 }
 
 .logo-wordmark {
-    font-family: 'SavedByZero', sans-serif !important;
+    font-family: 'Nomixa', sans-serif !important;
     text-transform: uppercase !important;
     font-size: 22px !important;
     letter-spacing: 0.5px !important;

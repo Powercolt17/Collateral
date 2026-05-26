@@ -51,7 +51,7 @@ export const landingCSS = `
 /* Shared */
 .lw{max-width:1080px;margin:0 auto;padding:0 24px;position:relative;z-index:1}
 .lhr{height:1px;background:var(--d);width:100%}
-.lmono{font-family:'SavedByZero',sans-serif;font-size:14px;font-weight:600;text-transform:uppercase;letter-spacing:1.5px;color:var(--t2)}
+.lmono{font-family:'Nomixa',sans-serif;font-size:14px;font-weight:600;text-transform:uppercase;letter-spacing:1.5px;color:var(--t2)}
 .lred-dash{display:flex;align-items:center;gap:12px;margin-bottom:12px}
 .lred-dash::before{content:'';width:28px;height:2px;background:var(--r)}
 [data-r]{opacity:0;transform:translateY(24px);transition:opacity .7s cubic-bezier(.16,1,.3,1),transform .7s cubic-bezier(.16,1,.3,1)}
@@ -77,7 +77,7 @@ export const landingCSS = `
 }
 .lsub{font-size:20px;color:var(--t2);line-height:1.5;margin:0 0 40px;max-width:680px;letter-spacing:-.2px}
 .lctas{display:flex;gap:16px;flex-wrap:wrap;margin-bottom:16px}
-.lbtn{height:56px;padding:0 32px;font-size:14px;font-weight:700;letter-spacing:1px;text-transform:uppercase;border:none;border-radius:4px;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;gap:8px;transition:all .4s cubic-bezier(.16, 1, 0.3, 1);font-family:'SavedByZero',sans-serif;position:relative;overflow:hidden}
+.lbtn{height:56px;padding:0 32px;font-size:14px;font-weight:700;letter-spacing:1px;text-transform:uppercase;border:none;border-radius:4px;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;gap:8px;transition:all .4s cubic-bezier(.16, 1, 0.3, 1);font-family:'Nomixa',sans-serif;position:relative;overflow:hidden}
 .lbtn-r{background:var(--r) !important;color:#fff !important;box-shadow:0 8px 24px -6px rgba(92,20,20,.4);font-size:14px;font-weight:800;padding:0 40px;height:60px;animation:btnPulse 3s ease-in-out infinite}
 .lbtn-r:hover{background:var(--rh) !important;box-shadow:0 16px 40px -8px rgba(92,20,20,.5);transform:translateY(-3px) scale(1.03)}
 .lbtn-r::after{content:'→';opacity:0;transform:translateX(-8px);transition:all .3s cubic-bezier(.16, 1, 0.3, 1);display:inline-block;width:0;margin-left:0}

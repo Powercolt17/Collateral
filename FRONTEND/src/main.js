@@ -605,7 +605,7 @@ window.app = {
             await window.Clerk.client.signIn.authenticateWithRedirect({
                 strategy: 'oauth_google',
                 redirectUrl: window.location.origin + '/sso-callback',
-                redirectUrlComplete: window.location.origin + '/',
+                redirectUrlComplete: window.location.origin + '/sso-callback',
             });
         } catch (err) {
             console.error('[Auth] Google sign-in failed:', err);
@@ -617,7 +617,7 @@ window.app = {
                     await window.Clerk.client.signIn.authenticateWithRedirect({
                         strategy: 'oauth_google',
                         redirectUrl: window.location.origin + '/sso-callback',
-                        redirectUrlComplete: window.location.origin + '/',
+                        redirectUrlComplete: window.location.origin + '/sso-callback',
                     });
                 } catch (retryErr) {
                     console.error('[Auth] Google retry also failed:', retryErr);
@@ -652,7 +652,7 @@ window.app = {
             await window.Clerk.client.signIn.authenticateWithRedirect({
                 strategy: 'oauth_apple',
                 redirectUrl: window.location.origin + '/sso-callback',
-                redirectUrlComplete: window.location.origin + '/',
+                redirectUrlComplete: window.location.origin + '/sso-callback',
             });
         } catch (err) {
             console.error('[Auth] Apple sign-in failed:', err);
@@ -664,7 +664,7 @@ window.app = {
                     await window.Clerk.client.signIn.authenticateWithRedirect({
                         strategy: 'oauth_apple',
                         redirectUrl: window.location.origin + '/sso-callback',
-                        redirectUrlComplete: window.location.origin + '/',
+                        redirectUrlComplete: window.location.origin + '/sso-callback',
                     });
                 } catch (retryErr) {
                     console.error('[Auth] Apple retry also failed:', retryErr);

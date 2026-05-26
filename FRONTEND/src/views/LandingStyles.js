@@ -22,20 +22,12 @@ export const landingCSS = `
 .delay-4 { animation-delay: 480ms; }
 
 /* Promo Bar */
-@keyframes promoSweep {
-  0% { left: -100%; }
-  30%, 100% { left: 200%; }
+@keyframes textShine {
+  0% { background-position: 200% center; }
+  100% { background-position: -200% center; }
 }
-@keyframes promoPan {
-  0% { background-position: 0 0; }
-  100% { background-position: 28px 28px; }
-}
-@keyframes textGlowPulse {
-  0%, 100% { text-shadow: 0 1px 2px rgba(0,0,0,0.5), 0 0 5px rgba(255,215,0,0.2); color: #FFF9D6; }
-  50% { text-shadow: 0 1px 2px rgba(0,0,0,0.5), 0 0 12px rgba(255,215,0,0.8), 0 0 20px rgba(255,215,0,0.4); color: #FFF; }
-}
-.lpromo-bar{position:fixed;top:0;left:0;right:0;height:32px;background-color:var(--r);background-image:repeating-linear-gradient(45deg, rgba(0,0,0,0.1), rgba(0,0,0,0.1) 14px, transparent 14px, transparent 28px);animation:promoPan 2s linear infinite, textGlowPulse 2.5s ease-in-out infinite;color:#FFF9D6;display:flex;align-items:center;justify-content:center;text-align:center;font-size:12px;font-weight:800;letter-spacing:2px;text-transform:uppercase;z-index:60;overflow:hidden;box-shadow:0 4px 16px rgba(92,20,20,.6);border-bottom:1px solid rgba(255,215,0,.15)}
-.lpromo-bar::before{content:'';position:absolute;top:0;left:-100%;width:150px;height:100%;background:linear-gradient(90deg, transparent, rgba(255,255,255,0.8), transparent);transform:skewX(-25deg);animation:promoSweep 5s cubic-bezier(0.19, 1, 0.22, 1) infinite;pointer-events:none;filter:blur(1px);mix-blend-mode:overlay}
+.lpromo-bar{position:fixed;top:0;left:0;right:0;height:32px;background-color:var(--r);display:flex;align-items:center;justify-content:center;text-align:center;font-size:12px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;z-index:60;box-shadow:0 2px 12px rgba(92,20,20,.4)}
+.promo-text{background:linear-gradient(to right, rgba(255,255,255,0.6) 20%, #fff 40%, #fff 60%, rgba(255,255,255,0.6) 80%);background-size:200% auto;color:transparent;-webkit-background-clip:text;background-clip:text;animation:textShine 4s linear infinite;text-shadow: 0 1px 1px rgba(0,0,0,0.1)}
 
 /* Nav */
 .ln{position:fixed;top:32px;left:0;right:0;z-index:50;background:rgba(250,250,250,0.85);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-bottom:1px solid rgba(0,0,0,0.04)}

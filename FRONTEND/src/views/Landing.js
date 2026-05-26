@@ -13,7 +13,7 @@ export function renderLanding() {
 
             <!-- PROMO BAR -->
             <div class="lpromo-bar">
-                Launch Offer — First contract match up to $250
+                <span class="promo-text">Launch Offer — First contract match up to $250</span>
             </div>
 
             <!-- NAV -->

@@ -20,7 +20,7 @@ export function renderLanding() {
             <nav class="ln">
                 <div class="ln-in">
                     <a class="ln-brand" href="/">
-                        <span class="logo-wordmark">COLLATERAL</span>
+                        <span class="logo-wordmark">Collateral</span>
                     </a>
                     <div style="display:flex; align-items:center;">
                         <button class="ln-cta" id="lp-nav-cta">Start Contract</button>

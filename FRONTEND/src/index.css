@@ -1,15 +1,15 @@
 @import "tailwindcss";
 
 @font-face {
-    font-family: 'Phyon';
-    src: url('/phyon_new.ttf') format('truetype');
+    font-family: 'Aquire';
+    src: url('/aquire.otf') format('opentype');
     font-weight: normal;
     font-style: normal;
     font-display: swap;
 }
 
 .logo-wordmark {
-    font-family: 'Phyon', sans-serif !important;
+    font-family: 'Aquire', sans-serif !important;
     font-size: 22px !important;
     letter-spacing: 0.5px !important;
     font-weight: bold !important;

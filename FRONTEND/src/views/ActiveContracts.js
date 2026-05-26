@@ -112,6 +112,30 @@ export function renderActiveContracts() {
                 box-sizing: border-box;
             }
 
+            /* Top Market Toggles */
+            .act-market-toggles {
+                display: flex;
+                align-items: center;
+                gap: 8px;
+                padding: 32px 0 0;
+            }
+            .act-market-btn {
+                padding: 10px 20px;
+                border-radius: 30px;
+                background: #f5f5f5;
+                color: #888;
+                font-family: 'Inter', -apple-system, sans-serif;
+                font-size: 13px;
+                font-weight: 600;
+                letter-spacing: 0.04em;
+                text-transform: uppercase;
+                border: 1px solid transparent;
+                cursor: pointer;
+                transition: all 0.2s;
+            }
+            .act-market-btn:hover { background: #eee; color: #111; }
+            .act-market-btn.active { background: #111; color: #fff; border-color: #111; }
+
             /* ── Tabs Row ── */
             .act-controls-row {
                 display: flex;
@@ -701,6 +725,13 @@ export function renderActiveContracts() {
 
             <!-- Content Area -->
             <div class="act-content" data-reveal>
+                <!-- Top Market Toggles -->
+                <div class="act-market-toggles" id="act-market-toggles">
+                    <button class="act-market-btn active" data-type="all">Open Market</button>
+                    <button class="act-market-btn" data-type="solo">Solo Contracts</button>
+                    <button class="act-market-btn" data-type="rivalry">Rivalries</button>
+                </div>
+
                 <!-- Tabs Row -->
                 <div class="act-controls-row">
                     <div class="act-tabs" id="act-tabs">
@@ -780,6 +811,7 @@ export async function initActiveContracts() {
 
     let allContracts = [];
     let activeFilter = 'all';
+    let typeFilter = 'all';
 
     try {
         const response = await window.api.getContracts();
@@ -792,7 +824,17 @@ export async function initActiveContracts() {
         hydrateSummary(allContracts);
 
         // Render initial view
-        renderContractList(container, allContracts, activeFilter);
+        renderContractList(container, allContracts, activeFilter, typeFilter);
+
+        // Bind market toggles
+        document.getElementById('act-market-toggles')?.addEventListener('click', (e) => {
+            const btn = e.target.closest('.act-market-btn');
+            if (!btn) return;
+            document.querySelectorAll('.act-market-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            typeFilter = btn.dataset.type;
+            renderContractList(container, allContracts, activeFilter, typeFilter);
+        });
 
         // Bind tabs
         document.getElementById('act-tabs')?.addEventListener('click', (e) => {
@@ -801,7 +843,7 @@ export async function initActiveContracts() {
             document.querySelectorAll('.act-tab').forEach(t => t.classList.remove('active'));
             tab.classList.add('active');
             activeFilter = tab.dataset.filter;
-            renderContractList(container, allContracts, activeFilter);
+            renderContractList(container, allContracts, activeFilter, typeFilter);
         });
 
     } catch (err) {
@@ -853,15 +895,21 @@ function getDerivedProgress(id) {
     return 10 + (Math.abs(hash) % 89);
 }
 
-function renderContractList(container, allContracts, filter) {
+function renderContractList(container, allContracts, filter, typeFilter = 'all') {
     let filtered = allContracts;
 
+    if (typeFilter === 'solo') {
+        filtered = filtered.filter(c => c.contractType === 'solo' || !c.contractType);
+    } else if (typeFilter === 'rivalry') {
+        filtered = filtered.filter(c => c.contractType === 'rivalry');
+    }
+
     if (filter === 'active') {
-        filtered = allContracts.filter(c => ['LOCKED', 'ACTIVE', 'EXECUTION_CONFIRMED'].includes(c.derivedState || c.state));
+        filtered = filtered.filter(c => ['LOCKED', 'ACTIVE', 'EXECUTION_CONFIRMED'].includes(c.derivedState || c.state));
     } else if (filter === 'settled') {
-        filtered = allContracts.filter(c => ['SETTLED_SUCCESS', 'SETTLEMENT_COMPLETE', 'SETTLED_FAILURE', 'FORFEITED', 'COMPLETED'].includes(c.derivedState || c.state));
+        filtered = filtered.filter(c => ['SETTLED_SUCCESS', 'SETTLEMENT_COMPLETE', 'SETTLED_FAILURE', 'FORFEITED', 'COMPLETED'].includes(c.derivedState || c.state));
     } else if (filter === 'pending') {
-        filtered = allContracts.filter(c => ['CREATED', 'FUNDS_AUTHORIZED', 'PENDING'].includes(c.derivedState || c.state));
+        filtered = filtered.filter(c => ['CREATED', 'FUNDS_AUTHORIZED', 'PENDING'].includes(c.derivedState || c.state));
     }
 
     const countEl = document.getElementById('act-list-count');

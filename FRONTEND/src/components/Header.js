@@ -84,7 +84,7 @@ export function renderHeader(currentRoute) {
                 border-bottom: 1px solid #e5e5e5;
                 background: #fff;
                 position: fixed;
-                top: 0;
+                top: 32px;
                 z-index: 50;
                 transition: background 0.4s ease,
                             border-color 0.4s ease,

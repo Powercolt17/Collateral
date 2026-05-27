@@ -306,7 +306,7 @@ export const landingCSS = `
 /* ═══ RESPONSIVE ═══ */
 @media(max-width:768px){
   .lpromo-bar { height: auto; min-height: 32px; padding: 6px 10px; line-height: 1.3; font-size: 9px; }
-  .ln { top: 38px; }
+  .ln { top: 32px; }
   .lmain { padding-top: 84px; }
   .lhide-mobile{display:none !important}
   .ln-in{padding:0 16px; height: 60px;}

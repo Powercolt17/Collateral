@@ -1545,7 +1545,7 @@ router.onRouteChange = function (route, path) {
         if (headerMount) headerMount.innerHTML = '';
         if (statusBar) statusBar.style.display = 'none';
         if (appMount) {
-            appMount.classList.remove('pt-16');
+            appMount.classList.remove('pt-24');
             appMount.innerHTML = route.render(route.params);
         }
 
@@ -1571,14 +1571,14 @@ router.onRouteChange = function (route, path) {
     const appMount = document.getElementById('app');
     if (path === '/' || path.startsWith('/go/')) {
         headerMount.innerHTML = '';
-        appMount.classList.remove('pt-16');
+        appMount.classList.remove('pt-24');
         appMount.innerHTML = route.render(route.params);
         if (route.init) setTimeout(() => route.init(route.params), 0);
         return;
     }
 
     // Render header with current route
-    appMount.classList.add('pt-16');
+    appMount.classList.add('pt-24');
     headerMount.innerHTML = renderHeader(path);
 
     // Render view content

@@ -1,7 +1,7 @@
 // Header Component - Premium Clearinghouse Terminal Nav
 export function renderHeader(currentRoute) {
     const routes = [
-        { path: '/market', label: 'MARKET PAGE', hasDropdown: true },
+        { path: '/market', label: 'MARKET', hasDropdown: true },
         { path: '/my-contracts', label: 'ACTIVE' },
         { path: '/ledger', label: 'LEDGER' },
         { path: '/sources', label: 'SOURCES' }

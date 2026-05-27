@@ -1203,202 +1203,7 @@ export function renderActiveContracts() {
             <!-- Section 3: Live Market Header -->
             <section class="eq-market-header" id="live-market" data-reveal>
                 <div class="eq-tag">Live Contracts</div>
-                <h2 class="eq-market-title">Active <strong style="color: #5C1414;">Market</strong></h2>
-                <div class="eq-market-live">
-                    <div class="eq-market-dot"></div>
-                    Live — Updated <span id="last-updated">04:20:00 PM</span>
-                </div>
-
-                <div class="eq-stats-strip">
-                    <div class="eq-stat-group">
-                        <div class="eq-stat-val">$<span id="stat-capital">0</span></div>
-                        <div class="eq-stat-lbl">Capital Locked</div>
-                    </div>
-                    <div class="eq-stat-group">
-                        <div class="eq-stat-val" id="stat-contracts">0</div>
-                opacity: 0;
-                animation: cardSlideUp 0.7s cubic-bezier(0.16, 1, 0.3, 1) 0.66s forwards;
-                animation-play-state: paused;
-            }
-
-            /* When revealed by IntersectionObserver, play the animations */
-            .revealed .anim-mech-tag,
-            .revealed .anim-mech-title,
-            .revealed .anim-mech-card-1,
-            .revealed .anim-mech-card-2,
-            .revealed .anim-mech-card-3,
-            .revealed .anim-mech-card-4 {
-                animation-play-state: running;
-            }
-
-            /* --- TIER SYSTEM SECTION --- */
-            .eq-tiers {
-                max-width: 1300px;
-                margin: 0 auto;
-                padding: 80px 32px;
-                border-top: 1px solid #f2f2f2;
-            }
-            .eq-tiers-header {
-                margin-bottom: 48px;
-            }
-            .eq-tiers-grid {
-                display: grid;
-                grid-template-columns: repeat(3, 1fr);
-                gap: 20px;
-            }
-            .eq-tier-card {
-                border: 1px solid #e8e8e8;
-                padding: 36px 32px;
-                display: flex;
-                flex-direction: column;
-                transition: border-color 0.3s, box-shadow 0.3s, transform 0.35s cubic-bezier(0.16,1,0.3,1);
-                position: relative;
-                overflow: hidden;
-            }
-            .eq-tier-card::before {
-                content: '';
-                position: absolute;
-                top: 0; left: 0;
-                width: 0; height: 3px;
-                transition: width 0.4s ease;
-            }
-            .eq-tier-card:hover {
-                transform: translateY(-4px);
-                box-shadow: 0 8px 32px rgba(0,0,0,0.05);
-            }
-            .eq-tier-card:hover::before { width: 100%; }
-            .eq-tier-card.pledge::before { background: #166534; }
-            .eq-tier-card.pledge:hover { border-color: #dcfce7; }
-            .eq-tier-card.stake::before { background: #9a3412; }
-            .eq-tier-card.stake:hover { border-color: #ffedd5; }
-            .eq-tier-card.allin::before { background: #5C1414; }
-            .eq-tier-card.allin:hover { border-color: #ffe4e6; }
-
-            .eq-tier-card-badge {
-                font-family: 'JetBrains Mono', monospace;
-                font-size: 10px;
-                font-weight: 700;
-                letter-spacing: 0.12em;
-                text-transform: uppercase;
-                padding: 4px 10px;
-                border-radius: 3px;
-                display: inline-block;
-                align-self: flex-start;
-                margin-bottom: 24px;
-            }
-            .eq-tier-card-badge.pledge { background: #f0fdf4; color: #166534; border: 1px solid #dcfce7; }
-            .eq-tier-card-badge.stake { background: #fff7ed; color: #9a3412; border: 1px solid #ffedd5; }
-            .eq-tier-card-badge.allin { background: #fff1f2; color: #9f1239; border: 1px solid #ffe4e6; }
-
-            .eq-tier-card-rate {
-                font-size: 48px;
-                font-weight: 500;
-                letter-spacing: -2px;
-                color: #111;
-                line-height: 1;
-            }
-            .eq-tier-card-rate-label {
-                font-family: 'JetBrains Mono', monospace;
-                font-size: 10px;
-                text-transform: uppercase;
-                letter-spacing: 1px;
-                color: #bbb;
-                margin-top: 6px;
-            }
-            .eq-tier-card-divider {
-                width: 100%;
-                height: 1px;
-                background: #f0f0f0;
-                margin: 24px 0;
-            }
-            .eq-tier-card-specs {
-                display: flex;
-                flex-direction: column;
-                gap: 12px;
-                margin-bottom: 20px;
-            }
-            .eq-tier-spec-row {
-                display: flex;
-                justify-content: space-between;
-                align-items: center;
-            }
-            .eq-tier-spec-label {
-                font-family: 'JetBrains Mono', monospace;
-                font-size: 10px;
-                text-transform: uppercase;
-                letter-spacing: 0.5px;
-                color: #aaa;
-            }
-            .eq-tier-spec-value {
-                font-size: 14px;
-                font-weight: 600;
-                color: #111;
-                letter-spacing: -0.3px;
-            }
-            .eq-tier-card-note {
-                font-size: 13px;
-                color: #888;
-                line-height: 1.5;
-                margin-top: auto;
-                font-style: italic;
-            }
-            .eq-tiers-footer {
-                margin-top: 32px;
-                padding-top: 24px;
-                border-top: 1px solid #f0f0f0;
-            }
-            .eq-tiers-footer p {
-                font-size: 13px;
-                color: #999;
-                line-height: 1.7;
-                max-width: 720px;
-            }
-            .eq-tiers-footer strong { color: #555; }
-
-            /* Tier section responsive: Tablet */
-            @media (max-width: 1200px) {
-                .eq-tiers-grid { grid-template-columns: repeat(3, 1fr); gap: 16px; }
-                .eq-tier-card { padding: 28px 24px; }
-                .eq-tier-card-rate { font-size: 36px; }
-            }
-            /* Tier section responsive: Mobile */
-            @media (max-width: 768px) {
-                .eq-tiers { padding: 48px 20px; }
-                .eq-tiers-grid { grid-template-columns: 1fr; gap: 16px; }
-                .eq-tier-card { padding: 28px 24px; }
-                .eq-tier-card-rate { font-size: 40px; }
-            }
-        
-            .act-market-toggles {
-                display: flex;
-                align-items: center;
-                gap: 8px;
-                margin-bottom: 32px;
-            }
-            .act-market-btn {
-                padding: 10px 20px;
-                border-radius: 30px;
-                background: #f5f5f5;
-                color: #888;
-                font-family: 'Inter', -apple-system, sans-serif;
-                font-size: 13px;
-                font-weight: 600;
-                letter-spacing: 0.04em;
-                text-transform: uppercase;
-                border: 1px solid transparent;
-                cursor: pointer;
-                transition: all 0.2s;
-            }
-            .act-market-btn:hover { background: #eee; color: #111; }
-            .act-market-btn.active { background: #111; color: #fff; border-color: #111; }
-
-        </style>
-
-        <div class="eq">
-            <!-- Section 3: Live Market Header -->
-            <section class="eq-market-header" id="live-market" data-reveal>
-                <div class="eq-tag">Live Contracts</div>
-                <h2 class="eq-market-title">Active <strong style="color: #5C1414;">Market</strong></h2>
+                <h2 class="eq-market-title">Active <strong>market.</strong></h2>
                 <div class="eq-market-live">
                     <div class="eq-market-dot"></div>
                     Live — Updated <span id="last-updated">04:20:00 PM</span>
@@ -1422,8 +1227,9 @@ export function renderActiveContracts() {
                 
                 <!-- Top Market Toggles -->
                 <div class="act-market-toggles" id="act-market-toggles">
-                    <button class="act-market-btn active" data-type="solo">Solo Contracts</button>
-                    <a href="#" onclick="window.router.navigate('/rivalry'); return false;" class="act-market-btn" style="text-decoration:none; display:inline-block;">Rivalries</a>
+                    <button class="act-market-btn active" data-type="all">Open Market</button>
+                    <button class="act-market-btn" data-type="solo">Solo Contracts</button>
+                    <button class="act-market-btn" data-type="rivalry">Rivalries</button>
                 </div>
 
                 <!-- Controls -->
@@ -1539,7 +1345,7 @@ export async function initActiveContracts() {
 
     // State
     const urlParams = new URLSearchParams(window.location.search);
-    let activeMarketType = urlParams.get('type') || 'solo';
+    let activeMarketType = urlParams.get('type') || 'all';
     let activeSort = 'trending_24h';
     let activeCategory = 'all';
     let minStake = 0; // Controlled by rules modal
@@ -1653,6 +1459,287 @@ export async function initActiveContracts() {
     }
 
 
+    function renderRivalryCard(r) {
+        const isLeadingChallenger = r.challenger.growth >= r.opponent.growth;
+        const isPending = r.state === 'CHALLENGE_ISSUED';
+        const isAccepted = r.state === 'ACCEPTED';
+        const isPreActive = isPending || isAccepted;
+        const statusClass = isPreActive ? 'pending' : r.status === 'settled' ? 'ended' : '';
+        const statusLabel = isPending ? 'FORMING' : isAccepted ? 'AWAITING FUNDS' : r.status === 'settled' ? 'SETTLED' : 'LOCKED';
+        const timeLabel = r.status === 'settled' ? 'SETTLED' : r.daysLeft <= 1 ? `${r.daysLeft * 24}H REMAINING` : `${r.daysLeft}D REMAINING`;
+        const timeUrgent = r.status !== 'settled' && r.daysLeft <= 3;
+        const shortId = r.id.substring(0, 8);
+
+        // Momentum bar percentages
+        const totalGrowth = Math.abs(r.challenger.growth) + Math.abs(r.opponent.growth);
+        let leftPct = 50;
+        let rightPct = 50;
+        
+        if (isPreActive) {
+            // Leave at 50/50 but visual tension handled in CSS
+        } else if (totalGrowth === 0) {
+            leftPct = 50; rightPct = 50;
+        } else {
+            const rawLeft = (Math.abs(r.challenger.growth) / totalGrowth) * 100;
+            leftPct = isLeadingChallenger ? Math.min(rawLeft + 10, 95) : Math.max(rawLeft - 10, 5);
+            rightPct = 100 - leftPct;
+        }
+
+        // Growth display
+        const challGrowth = isPending
+            ? '<span class="rv-player-growth awaiting" style="font-family:\'Inter\',monospace;letter-spacing:0.1em;text-transform:uppercase;">FORMING</span>'
+            : isAccepted
+            ? (r.challFunded
+                ? '<span class="rv-player-growth" style="font-family:\'Inter\',monospace;letter-spacing:0.1em;text-transform:uppercase;color:#16a34a;font-size:13px;">✓ FUNDED</span>'
+                : '<span class="rv-player-growth awaiting" style="font-family:\'Inter\',monospace;letter-spacing:0.1em;text-transform:uppercase;color:#d97706;font-size:12px;">FUND REQUIRED</span>')
+            : `<span class="rv-player-growth ${isLeadingChallenger ? 'leading' : 'trailing'}">${r.challenger.growth > 0 ? '+' : ''}${r.challenger.growth}%</span>`;
+        const oppGrowth = isPending
+            ? '<span class="rv-player-growth awaiting" style="font-family:\'Inter\',monospace;letter-spacing:0.1em;text-transform:uppercase;">FORMING</span>'
+            : isAccepted
+            ? (r.oppFunded
+                ? '<span class="rv-player-growth" style="font-family:\'Inter\',monospace;letter-spacing:0.1em;text-transform:uppercase;color:#16a34a;font-size:13px;">✓ FUNDED</span>'
+                : '<span class="rv-player-growth awaiting" style="font-family:\'Inter\',monospace;letter-spacing:0.1em;text-transform:uppercase;color:#d97706;font-size:12px;">FUND REQUIRED</span>')
+            : `<span class="rv-player-growth ${!isLeadingChallenger ? 'leading' : 'trailing'}">${r.opponent.growth > 0 ? '+' : ''}${r.opponent.growth}%</span>`;
+
+        // Lead dots
+        const challDot = !isPreActive ? `<span class="rv-lead-dot" style="background:${isLeadingChallenger ? 'var(--rv-green)' : 'var(--rv-red)'}"></span>` : '';
+        const oppDot = !isPreActive ? `<span class="rv-lead-dot" style="background:${!isLeadingChallenger ? 'var(--rv-green)' : 'var(--rv-red)'}"></span>` : '';
+
+        // Action buttons — different per state
+        let actionsHtml = '';
+        if (isPending) {
+            if (r.isOpen) {
+                actionsHtml = `<div class="rv-card-actions"><button class="rv-action-btn rv-action-accept" data-rivalry-id="${r.id}" onclick="event.stopPropagation();window.app.acceptRivalry('${r.id}')" style="flex:1;">ACCEPT</button></div>`;
+            } else {
+                actionsHtml = `<div class="rv-card-actions"><button class="rv-action-btn rv-action-accept" data-rivalry-id="${r.id}" onclick="event.stopPropagation();window.app.acceptRivalry('${r.id}')">ACCEPT</button><button class="rv-action-btn rv-action-decline" data-rivalry-id="${r.id}" onclick="event.stopPropagation();window.app.declineRivalry('${r.id}')">DECLINE</button></div>`;
+            }
+        } else if (isAccepted) {
+            const myUserId = window.appState?.userId;
+            const iAmChallenger = myUserId && r.challengerUserId === myUserId;
+            const iAmOpponent = myUserId && r.opponentUserId === myUserId;
+            const myFunded = (iAmChallenger && r.challFunded) || (iAmOpponent && r.oppFunded);
+            if (myFunded) {
+                actionsHtml = `<div class="rv-card-actions"><div style="flex:1;padding:10px 16px;background:#f8f8f8;color:#999;text-align:center;font-family:'JetBrains Mono', monospace;font-size:10px;font-weight:700;letter-spacing:0.08em;border:1px solid #eee;">WAITING FOR OPPONENT</div></div>`;
+            } else {
+                actionsHtml = `<div class="rv-card-actions"><button class="rv-action-btn rv-action-accept" data-rivalry-id="${r.id}" onclick="event.stopPropagation();window.app.fundRivalry('${r.id}')" style="flex:1;">FUND YOUR SIDE</button></div>`;
+            }
+        }
+
+        // Winner/Loser badge for settled cards
+        let resultAttr = '';
+        let winnerBadge = '';
+        if (r.status === 'settled') {
+            const challWon = r.challenger.growth > r.opponent.growth;
+            const isDraw = r.challenger.growth === r.opponent.growth;
+            if (isDraw) {
+                winnerBadge = '<span class="rv-winner-badge forfeited">DRAW</span>';
+            } else {
+                winnerBadge = challWon
+                    ? '<span class="rv-winner-badge winner">CHALLENGER WON</span>'
+                    : '<span class="rv-winner-badge loser">OPPONENT WON</span>';
+                resultAttr = challWon ? 'data-result="won"' : 'data-result="lost"';
+            }
+        }
+
+        return `
+            <div class="rv-card" data-status="${r.status}" data-id="${r.id}" ${resultAttr}>
+                <div class="rv-card-inner">
+                    <div class="rv-card-header">
+                        <div class="rv-card-status ${statusClass}">
+                            <span class="dot"></span>
+                            ${statusLabel}
+                        </div>
+                        ${r.isOpen && r.status === 'pending' ? '<span class="rv-open-badge">OPEN</span>' : ''}
+                        ${winnerBadge}
+                    </div>
+                    <div class="rv-card-metric">${r.metric} <span style="color:#ccc;font-size:10px;font-family:'JetBrains Mono', monospace;margin-left:6px;">ID:${shortId}</span></div>
+                    <div class="rv-versus">
+                        <div class="rv-player">
+                            <span class="rv-player-label">Challenger</span>
+                            <span class="rv-player-name">${challDot}${r.challenger.name}</span>
+                            ${challGrowth}
+                        </div>
+                        <div class="rv-vs-divider">
+                            <span class="rv-vs-text">VS</span>
+                        </div>
+                        <div class="rv-player right">
+                            <span class="rv-player-label">Opponent</span>
+                            <span class="rv-player-name">${r.opponent.name}${oppDot}</span>
+                            ${oppGrowth}
+                        </div>
+                    </div>
+                </div>
+                ${!isPreActive ? `
+                <div class="rv-momentum">
+                    <div class="rv-momentum-left" style="width:${leftPct}%"></div>
+                    <div class="rv-momentum-right" style="width:${rightPct}%"></div>
+                </div>` : ''}
+                <div class="rv-card-bottom">
+                    <div class="rv-card-stake">
+                        <span class="rv-card-stake-val">${(r.stake * 2).toLocaleString()}</span>
+                        <span class="rv-card-stake-lbl">CAPITAL EXPOSURE</span>
+                    </div>
+                    <div style="display:flex;flex-direction:column;align-items:flex-end;gap:4px;">
+                        <span class="rv-card-provider-pill" style="background:${getProviderColor(r.provider)}">${r.provider.toUpperCase()}</span>
+                        <span class="rv-card-time${timeUrgent ? ' urgent' : ''}">${timeLabel}</span>
+                    </div>
+                </div>
+                ${actionsHtml}
+            </div>
+        `;
+    }
+
+    
+
+    function renderCard(c) {
+        // map API data to UI
+        const rawId = (c.id || '').toString();
+        const shortId = rawId.split('-')[0] || rawId || '????';
+
+        const tier = (c.tier || 'controlled').toLowerCase();
+        // Use min_stake/max_stake from new API
+        const min = c.min_stake || 0;
+        const max = c.max_stake || 0;
+        const fee = c.fee_bps ? (c.fee_bps / 100) : 2; // default 2%
+
+        const stakeDisplay = (min === max)
+            ? `$${min.toLocaleString()}`
+            : `$${min.toLocaleString()} – $${max.toLocaleString()}`;
+
+        const deadline = new Date(c.open_until || Date.now() + 86400000);
+        const now = new Date();
+        const timeLeftMs = deadline - now;
+        const daysLeft = Math.ceil(timeLeftMs / (1000 * 60 * 60 * 24));
+        const hoursLeft = Math.ceil(timeLeftMs / (1000 * 60 * 60));
+
+        let timeLabel = `${daysLeft}d left`;
+        if (daysLeft <= 1) timeLabel = `${hoursLeft}h left`;
+        if (timeLeftMs < 0) timeLabel = 'Ended';
+
+        const platform = (c.provider || 'X').toString();
+        const goal = c.title || 'Contract Goal';
+
+        // Integration Icon
+        let dotClass = 'x';
+        if (platform === 'stripe') dotClass = 'stripe';
+        if (platform === 'shopify') dotClass = 'shopify';
+        if (platform === 'amazon') dotClass = 'amazon';
+
+        const tierUpper = tier.toUpperCase();
+        const multiplier = c.multiplier || (tierUpper === 'MAXIMUM' ? 4.0 : tierUpper === 'ELEVATED' ? 2.5 : 1.7);
+
+        // Scarcity or urgent closing
+        let isClosingSoon = timeLeftMs < 1000 * 60 * 60 * 24;
+        let closingAmtText = isClosingSoon ? "CLOSING SOON" : `OPEN MARKET`;
+
+        return `
+            <div class="eq-card"
+                 data-id="${c.id}" 
+                 data-status="active" 
+                 data-domain="${c.domain || 'social'}"
+                 data-tier="${tier}" 
+                 data-stake-min="${min}"
+                 data-stake-max="${max}"
+                 data-fee="${fee}"
+                 data-deadline="${c.fundingCloseAt}"
+                 data-goal="${goal}"
+                 data-provider="${platform}">
+                <div class="eq-card-meta">
+                    <span class="eq-closing">${closingAmtText}</span>
+                    <span class="eq-id">RCPT-${shortId.slice(0, 4).toUpperCase()}</span>
+                    <span class="eq-time">○ ${timeLabel}</span>
+                </div>
+                <div class="eq-card-title">${goal}</div>
+                <div class="eq-card-provider">
+                    <span class="dot ${dotClass}" style="width: 6px; height: 6px; border-radius: 50%; background: ${dotClass === 'stripe' ? '#635bff' : dotClass === 'shopify' ? '#96bf48' : dotClass === 'amazon' ? '#ff9900' : '#111'}"></span>
+                    <span class="eq-provider-name">${platform.toUpperCase()}</span>
+                    <span class="eq-tier-badge ${tier}">${{controlled:'PLEDGE',elevated:'STAKE',maximum:'ALL-IN'}[tier] || tier.toUpperCase()}</span>
+                </div>
+                <div class="eq-card-status"><span class="dot" style="width:4px; height:4px; border-radius:50%; background:#10b981; display:inline-block; margin-right:4px;"></span> TERMS VERIFIED</div>
+                <div class="eq-card-stake-info">
+                    <div>
+                        <div class="eq-stake-val">${stakeDisplay}</div>
+                        <div class="eq-stake-lbl">STAKE CAPACITY</div>
+                    </div>
+                    <div class="eq-stake-separator"></div>
+                    <div>
+                        <div class="eq-stake-val">${multiplier}x</div>
+                        <div class="eq-stake-lbl">YIELD MULTIPLIER</div>
+                    </div>
+                </div>
+                <button class="eq-card-cta primary eq-lock-btn">EXECUTE CONTRACT</button>
+                <div class="eq-card-footer">Capital is locked until settlement.</div>
+            </div>
+        `;
+    }
+
+    function updateStats(stats) {
+        if (!stats) return;
+
+        // Active contracts
+        if (statContracts) {
+            statContracts.textContent = stats.activeCount || '0';
+        }
+
+        // Capital locked & Volume: pull from rivalry stats (this works NOW)
+        fetchRivalryCapital();
+    }
+
+    async function fetchRivalryCapital() {
+        try {
+            const res = await api.getRivalryStats();
+            if (!res.ok || !res.stats) return;
+            const capital = (res.stats.totalCapitalLockedCents || 0) / 100;
+            const largest = (res.stats.largestPoolCents || 0) / 100;
+
+            if (statCapital) {
+                if (capital >= 1_000_000) {
+                    statCapital.textContent = (capital / 1_000_000).toFixed(1) + 'M';
+                } else if (capital >= 1_000) {
+                    statCapital.textContent = (capital / 1_000).toFixed(1) + 'k';
+                } else {
+                    statCapital.textContent = capital.toLocaleString();
+                }
+            }
+
+            // Use largest pool as volume proxy
+            if (statPool) {
+                if (largest >= 1_000_000) {
+                    statPool.textContent = (largest / 1_000_000).toFixed(1) + 'M';
+                } else if (largest >= 1_000) {
+                    statPool.textContent = (largest / 1_000).toFixed(1) + 'k';
+                } else {
+                    statPool.textContent = largest.toLocaleString();
+                }
+            }
+        } catch (_) { /* silent */ }
+    }
+
+    function updateTime() {
+        const now = new Date();
+        lastUpdatedEl.textContent = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' });
+    }
+
+    // ===================================================================
+    // LISTENERS
+    // ===================================================================
+
+    
+    // Market Toggles
+    const marketToggles = document.getElementById('act-market-toggles');
+    if (marketToggles) {
+        marketToggles.addEventListener('click', (e) => {
+            const btn = e.target.closest('.act-market-btn');
+            if (!btn) return;
+            marketToggles.querySelectorAll('.act-market-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            activeMarketType = btn.dataset.type || 'all';
+            fetchFeed(false);
+        });
+    }
+
+    // Tabs
+    const tabsContainer = document.getElementById('eq-tabs');
     if (tabsContainer) {
         tabsContainer.addEventListener('click', (e) => {
             const tab = e.target.closest('.eq-tab');

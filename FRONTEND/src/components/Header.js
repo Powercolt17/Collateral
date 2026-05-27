@@ -1,15 +1,34 @@
 // Header Component - Premium Clearinghouse Terminal Nav
 export function renderHeader(currentRoute) {
     const routes = [
-        { path: '/contracts', label: 'ACTIVE' },
-        { path: '/rivalry', label: 'RIVALRY' },
+        { path: '/market', label: 'MARKET PAGE', hasDropdown: true },
+        { path: '/my-contracts', label: 'ACTIVE' },
         { path: '/ledger', label: 'LEDGER' },
         { path: '/sources', label: 'SOURCES' }
     ];
 
     const navItems = routes.map(route => {
         const isActive = currentRoute === route.path ||
-            (route.path === '/contracts' && (currentRoute === '/contracts' || currentRoute.startsWith('/contracts/')));
+            (route.path === '/market' && (currentRoute === '/market' || currentRoute.startsWith('/market/'))) ||
+            (route.path === '/my-contracts' && (currentRoute === '/my-contracts' || currentRoute.startsWith('/contracts/')));
+
+        if (route.hasDropdown) {
+            return `
+                <div class="nav-dropdown-wrap">
+                    <a href="#" 
+                        onclick="window.router.navigate('${route.path}'); return false;" 
+                        class="nav-link ${isActive ? 'active' : ''}"
+                        data-target="${route.path}" 
+                        data-active="${isActive}">
+                        ${route.label}
+                    </a>
+                    <div class="nav-dropdown">
+                        <a href="#" onclick="window.router.navigate('/market?type=solo'); return false;">Solo Contracts</a>
+                        <a href="#" onclick="window.router.navigate('/market?type=rivalry'); return false;">Rivalry Contracts</a>
+                    </div>
+                </div>
+            `;
+        }
 
         return `
             <a href="#" 
@@ -24,7 +43,8 @@ export function renderHeader(currentRoute) {
 
     const panelNavItems = routes.map((route, i) => {
         const isActive = currentRoute === route.path ||
-            (route.path === '/contracts' && (currentRoute === '/contracts' || currentRoute.startsWith('/contracts/')));
+            (route.path === '/market' && (currentRoute === '/market' || currentRoute.startsWith('/market/'))) ||
+            (route.path === '/my-contracts' && (currentRoute === '/my-contracts' || currentRoute.startsWith('/contracts/')));
 
         return `
             <a href="#" 

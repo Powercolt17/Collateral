@@ -46,7 +46,7 @@ export function renderHeader(currentRoute) {
             (route.path === '/market' && (currentRoute === '/market' || currentRoute.startsWith('/market/'))) ||
             (route.path === '/my-contracts' && (currentRoute === '/my-contracts' || currentRoute.startsWith('/contracts/')));
 
-        return `
+        let itemHTML = `
             <a href="#" 
                 onclick="window.app.closeMobileMenu(); window.router.navigate('${route.path}'); return false;" 
                 class="pnl-nav-link ${isActive ? 'active' : ''}"
@@ -55,6 +55,17 @@ export function renderHeader(currentRoute) {
                 ${route.label}
             </a>
         `;
+
+        if (route.hasDropdown) {
+            itemHTML += `
+                <div class="pnl-subnav" style="animation-delay: ${0.06 + i * 0.03}s">
+                    <a href="#" onclick="window.app.closeMobileMenu(); window.router.navigate('/market'); return false;" class="pnl-subnav-link ${(currentRoute === '/market' || currentRoute === '/market/') ? 'active' : ''}">Solo Contracts</a>
+                    <a href="#" onclick="window.app.closeMobileMenu(); window.router.navigate('/rivalry'); return false;" class="pnl-subnav-link ${(currentRoute === '/rivalry' || currentRoute.startsWith('/rivalry/')) ? 'active' : ''}">Rivalry Contracts</a>
+                </div>
+            `;
+        }
+
+        return itemHTML;
     }).join('');
 
     const accountLinks = [
@@ -666,6 +677,33 @@ export function renderHeader(currentRoute) {
             }
             .pnl-nav-link:hover .pnl-nav-indicator {
                 background: #888;
+            }
+
+            .pnl-subnav {
+                display: flex;
+                flex-direction: column;
+                background: #fcfcfc;
+                border-left: 3px solid transparent;
+                padding-bottom: 8px;
+            }
+            .pnl-subnav-link {
+                display: flex;
+                align-items: center;
+                padding: 10px 28px 10px 48px;
+                font-size: 13px;
+                font-weight: 500;
+                color: #777;
+                text-decoration: none;
+                font-family: 'Sora', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+                border-left: 2px solid #eaeaea;
+                margin-left: 34px;
+                transition: all 0.15s;
+            }
+            .pnl-subnav-link:hover, .pnl-subnav-link.active {
+                color: #111;
+                font-weight: 600;
+                border-left-color: #5C1414;
+                background: #f9f9f9;
             }
 
             /* Divider */

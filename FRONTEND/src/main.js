@@ -164,10 +164,10 @@ async function hydrateSession() {
             appState.connectedSources = { twitter: false, stripe: false, github: false };
 
             // Force redirect off protected route if on one
-            const protectedPaths = ['/contracts', '/my-contracts', '/profile', '/funding'];
+            const protectedPaths = ['/market', '/my-contracts', '/profile', '/funding'];
             const currentPath = window.location.pathname || '';
             if (protectedPaths.some(pr => currentPath === pr || currentPath.startsWith(pr + '/'))) {
-                window.router.navigate('/contracts');
+                window.router.navigate('/market');
                 if (window.trackEvent) window.trackEvent('login', { method: 'google' });
                 // Show login modal after redirect
                 setTimeout(() => window.app.openAccessModal(), 100);
@@ -195,7 +195,7 @@ const routes = PRE_LAUNCH_MODE ? [
     { path: '/', render: renderPreLaunch, init: initPreLaunch },
     { path: '/', render: renderPreLaunch, init: initPreLaunch },
     { path: '/ledger', render: renderPreLaunch, init: initPreLaunch },
-    { path: '/contracts', render: renderPreLaunch, init: initPreLaunch },
+    { path: '/market', render: renderPreLaunch, init: initPreLaunch },
     { path: '/contracts/:id', render: renderPreLaunch, init: initPreLaunch },
     { path: '/profile', render: renderPreLaunch, init: initPreLaunch },
     { path: '/settings', render: renderPreLaunch, init: initPreLaunch },
@@ -218,7 +218,7 @@ const routes = PRE_LAUNCH_MODE ? [
     { path: '/rivalry', render: renderRivalry, init: initRivalry },
     { path: '/rivalry/:id', render: renderRivalryDetail, init: initRivalryDetail },
     { path: '/ledger', render: renderLedger, init: initLedger },
-    { path: '/contracts', render: renderActiveContracts, init: initActiveContracts },
+    { path: '/market', render: renderActiveContracts, init: initActiveContracts },
     { path: '/sources', render: renderSources, init: initSources },
     { path: '/contracts/execute', render: renderContracts, init: initContracts },
     { path: '/contracts/:id', render: renderContractDetail, init: initContractDetail },
@@ -250,7 +250,7 @@ const routes = PRE_LAUNCH_MODE ? [
                 api.setReferralCode(params.code);
                 console.log('[Referral] Stored referral code:', params.code);
             }
-            window.router.navigate('/contracts');
+            window.router.navigate('/market');
             setTimeout(() => window.app.openAccessModal(), 300);
         }
     }
@@ -399,7 +399,7 @@ window.app = {
         appState.userId = null;
         appState.connectedSources = { twitter: false, stripe: false, github: false };
         updateAuthUI();
-        window.router.navigate('/contracts');
+        window.router.navigate('/market');
     },
     handleAuthClick: function () {
         if (appState.isLoggedIn) {
@@ -412,7 +412,7 @@ window.app = {
         if (!appState.isLoggedIn) {
             window.app.openAccessModal();
         } else {
-            window.router.navigate('/contracts');
+            window.router.navigate('/market');
         }
     },
     _authMode: 'signin', // 'signin' or 'signup'
@@ -516,7 +516,7 @@ window.app = {
                 } else if (shouldShowOnboarding()) {
                     window.router.navigate('/welcome');
                 } else {
-                    window.router.navigate('/contracts');
+                    window.router.navigate('/market');
                 }
             } catch (err) {
                 window.app._showAuthError(err.message || 'Account creation failed.');
@@ -549,7 +549,7 @@ window.app = {
                     sessionStorage.removeItem('collateral_go_target');
                     window.router.navigate(goTarget);
                 } else if (_isOnGoPage()) {
-                    window.router.navigate('/contracts');
+                    window.router.navigate('/market');
                 }
             } catch (err) {
                 window.app._showAuthError(err.message || 'Invalid email or password.');
@@ -597,7 +597,7 @@ window.app = {
                     sessionStorage.removeItem('collateral_go_target');
                     window.router.navigate(goTarget);
                 } else {
-                    window.router.navigate('/contracts');
+                    window.router.navigate('/market');
                 }
                 sessionStorage.removeItem('collateral_go_flow');
                 return;
@@ -644,7 +644,7 @@ window.app = {
                     sessionStorage.removeItem('collateral_go_target');
                     window.router.navigate(goTarget);
                 } else {
-                    window.router.navigate('/contracts');
+                    window.router.navigate('/market');
                 }
                 sessionStorage.removeItem('collateral_go_flow');
                 return;
@@ -685,7 +685,7 @@ window.app = {
                     await new Promise(r => setTimeout(r, 200));
                     attempts++;
                 }
-                if (!window.Clerk) { console.error('[Auth] Clerk never loaded'); window.router.navigate('/contracts'); return; }
+                if (!window.Clerk) { console.error('[Auth] Clerk never loaded'); window.router.navigate('/market'); return; }
             }
 
             // Read and clear go_flow flag ONCE
@@ -706,12 +706,12 @@ window.app = {
                 sessionStorage.removeItem('collateral_go_target');
                 window.router.navigate(goTarget);
             } else {
-                window.router.navigate('/contracts');
+                window.router.navigate('/market');
             }
         } catch (err) {
             console.error('[Auth] SSO callback failed:', err);
             sessionStorage.removeItem('collateral_go_flow');
-            window.router.navigate('/contracts');
+            window.router.navigate('/market');
         }
     },
     _exchangeClerkToken: async function () {
@@ -1528,7 +1528,7 @@ function updateAuthUI() {
 }
 
 // Protected routes that require login
-const protectedRoutes = ['/contracts', '/contracts/execute', '/my-contracts', '/profile', '/funding', '/sources'];
+const protectedRoutes = ['/market', '/contracts/execute', '/my-contracts', '/profile', '/funding', '/sources'];
 
 // Route change handler
 router.onRouteChange = function (route, path) {
@@ -1562,7 +1562,7 @@ router.onRouteChange = function (route, path) {
         // Show login modal and stay on current page
         window.app.openAccessModal();
         // Redirect to overview
-        window.router.navigate('/contracts');
+        window.router.navigate('/market');
         return;
     }
 

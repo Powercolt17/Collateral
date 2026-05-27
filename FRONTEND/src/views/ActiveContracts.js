@@ -1344,7 +1344,8 @@ export async function initActiveContracts() {
     if (typeof lucide !== 'undefined') lucide.createIcons();
 
     // State
-    let activeMarketType = 'all';
+    const urlParams = new URLSearchParams(window.location.search);
+    let activeMarketType = urlParams.get('type') || 'all';
     let activeSort = 'trending_24h';
     let activeCategory = 'all';
     let minStake = 0; // Controlled by rules modal
@@ -1450,6 +1451,145 @@ export async function initActiveContracts() {
 
         if (typeof lucide !== 'undefined') lucide.createIcons();
     }
+
+    
+    function getProviderColor(provider) {
+        const colors = { stripe: '#635bff', x: '#111', youtube: '#ff0000', shopify: '#96bf48', amazon: '#ff9900' };
+        return colors[provider] || '#111';
+    }
+
+
+    function renderRivalryCard(r) {
+        const isLeadingChallenger = r.challenger.growth >= r.opponent.growth;
+        const isPending = r.state === 'CHALLENGE_ISSUED';
+        const isAccepted = r.state === 'ACCEPTED';
+        const isPreActive = isPending || isAccepted;
+        const statusClass = isPreActive ? 'pending' : r.status === 'settled' ? 'ended' : '';
+        const statusLabel = isPending ? 'FORMING' : isAccepted ? 'AWAITING FUNDS' : r.status === 'settled' ? 'SETTLED' : 'LOCKED';
+        const timeLabel = r.status === 'settled' ? 'SETTLED' : r.daysLeft <= 1 ? `${r.daysLeft * 24}H REMAINING` : `${r.daysLeft}D REMAINING`;
+        const timeUrgent = r.status !== 'settled' && r.daysLeft <= 3;
+        const shortId = r.id.substring(0, 8);
+
+        // Momentum bar percentages
+        const totalGrowth = Math.abs(r.challenger.growth) + Math.abs(r.opponent.growth);
+        let leftPct = 50;
+        let rightPct = 50;
+        
+        if (isPreActive) {
+            // Leave at 50/50 but visual tension handled in CSS
+        } else if (totalGrowth === 0) {
+            leftPct = 50; rightPct = 50;
+        } else {
+            const rawLeft = (Math.abs(r.challenger.growth) / totalGrowth) * 100;
+            leftPct = isLeadingChallenger ? Math.min(rawLeft + 10, 95) : Math.max(rawLeft - 10, 5);
+            rightPct = 100 - leftPct;
+        }
+
+        // Growth display
+        const challGrowth = isPending
+            ? '<span class="rv-player-growth awaiting" style="font-family:\'Inter\',monospace;letter-spacing:0.1em;text-transform:uppercase;">FORMING</span>'
+            : isAccepted
+            ? (r.challFunded
+                ? '<span class="rv-player-growth" style="font-family:\'Inter\',monospace;letter-spacing:0.1em;text-transform:uppercase;color:#16a34a;font-size:13px;">✓ FUNDED</span>'
+                : '<span class="rv-player-growth awaiting" style="font-family:\'Inter\',monospace;letter-spacing:0.1em;text-transform:uppercase;color:#d97706;font-size:12px;">FUND REQUIRED</span>')
+            : `<span class="rv-player-growth ${isLeadingChallenger ? 'leading' : 'trailing'}">${r.challenger.growth > 0 ? '+' : ''}${r.challenger.growth}%</span>`;
+        const oppGrowth = isPending
+            ? '<span class="rv-player-growth awaiting" style="font-family:\'Inter\',monospace;letter-spacing:0.1em;text-transform:uppercase;">FORMING</span>'
+            : isAccepted
+            ? (r.oppFunded
+                ? '<span class="rv-player-growth" style="font-family:\'Inter\',monospace;letter-spacing:0.1em;text-transform:uppercase;color:#16a34a;font-size:13px;">✓ FUNDED</span>'
+                : '<span class="rv-player-growth awaiting" style="font-family:\'Inter\',monospace;letter-spacing:0.1em;text-transform:uppercase;color:#d97706;font-size:12px;">FUND REQUIRED</span>')
+            : `<span class="rv-player-growth ${!isLeadingChallenger ? 'leading' : 'trailing'}">${r.opponent.growth > 0 ? '+' : ''}${r.opponent.growth}%</span>`;
+
+        // Lead dots
+        const challDot = !isPreActive ? `<span class="rv-lead-dot" style="background:${isLeadingChallenger ? 'var(--rv-green)' : 'var(--rv-red)'}"></span>` : '';
+        const oppDot = !isPreActive ? `<span class="rv-lead-dot" style="background:${!isLeadingChallenger ? 'var(--rv-green)' : 'var(--rv-red)'}"></span>` : '';
+
+        // Action buttons — different per state
+        let actionsHtml = '';
+        if (isPending) {
+            if (r.isOpen) {
+                actionsHtml = `<div class="rv-card-actions"><button class="rv-action-btn rv-action-accept" data-rivalry-id="${r.id}" onclick="event.stopPropagation();window.app.acceptRivalry('${r.id}')" style="flex:1;">ACCEPT</button></div>`;
+            } else {
+                actionsHtml = `<div class="rv-card-actions"><button class="rv-action-btn rv-action-accept" data-rivalry-id="${r.id}" onclick="event.stopPropagation();window.app.acceptRivalry('${r.id}')">ACCEPT</button><button class="rv-action-btn rv-action-decline" data-rivalry-id="${r.id}" onclick="event.stopPropagation();window.app.declineRivalry('${r.id}')">DECLINE</button></div>`;
+            }
+        } else if (isAccepted) {
+            const myUserId = window.appState?.userId;
+            const iAmChallenger = myUserId && r.challengerUserId === myUserId;
+            const iAmOpponent = myUserId && r.opponentUserId === myUserId;
+            const myFunded = (iAmChallenger && r.challFunded) || (iAmOpponent && r.oppFunded);
+            if (myFunded) {
+                actionsHtml = `<div class="rv-card-actions"><div style="flex:1;padding:10px 16px;background:#f8f8f8;color:#999;text-align:center;font-family:'JetBrains Mono', monospace;font-size:10px;font-weight:700;letter-spacing:0.08em;border:1px solid #eee;">WAITING FOR OPPONENT</div></div>`;
+            } else {
+                actionsHtml = `<div class="rv-card-actions"><button class="rv-action-btn rv-action-accept" data-rivalry-id="${r.id}" onclick="event.stopPropagation();window.app.fundRivalry('${r.id}')" style="flex:1;">FUND YOUR SIDE</button></div>`;
+            }
+        }
+
+        // Winner/Loser badge for settled cards
+        let resultAttr = '';
+        let winnerBadge = '';
+        if (r.status === 'settled') {
+            const challWon = r.challenger.growth > r.opponent.growth;
+            const isDraw = r.challenger.growth === r.opponent.growth;
+            if (isDraw) {
+                winnerBadge = '<span class="rv-winner-badge forfeited">DRAW</span>';
+            } else {
+                winnerBadge = challWon
+                    ? '<span class="rv-winner-badge winner">CHALLENGER WON</span>'
+                    : '<span class="rv-winner-badge loser">OPPONENT WON</span>';
+                resultAttr = challWon ? 'data-result="won"' : 'data-result="lost"';
+            }
+        }
+
+        return `
+            <div class="rv-card" data-status="${r.status}" data-id="${r.id}" ${resultAttr}>
+                <div class="rv-card-inner">
+                    <div class="rv-card-header">
+                        <div class="rv-card-status ${statusClass}">
+                            <span class="dot"></span>
+                            ${statusLabel}
+                        </div>
+                        ${r.isOpen && r.status === 'pending' ? '<span class="rv-open-badge">OPEN</span>' : ''}
+                        ${winnerBadge}
+                    </div>
+                    <div class="rv-card-metric">${r.metric} <span style="color:#ccc;font-size:10px;font-family:'JetBrains Mono', monospace;margin-left:6px;">ID:${shortId}</span></div>
+                    <div class="rv-versus">
+                        <div class="rv-player">
+                            <span class="rv-player-label">Challenger</span>
+                            <span class="rv-player-name">${challDot}${r.challenger.name}</span>
+                            ${challGrowth}
+                        </div>
+                        <div class="rv-vs-divider">
+                            <span class="rv-vs-text">VS</span>
+                        </div>
+                        <div class="rv-player right">
+                            <span class="rv-player-label">Opponent</span>
+                            <span class="rv-player-name">${r.opponent.name}${oppDot}</span>
+                            ${oppGrowth}
+                        </div>
+                    </div>
+                </div>
+                ${!isPreActive ? `
+                <div class="rv-momentum">
+                    <div class="rv-momentum-left" style="width:${leftPct}%"></div>
+                    <div class="rv-momentum-right" style="width:${rightPct}%"></div>
+                </div>` : ''}
+                <div class="rv-card-bottom">
+                    <div class="rv-card-stake">
+                        <span class="rv-card-stake-val">${(r.stake * 2).toLocaleString()}</span>
+                        <span class="rv-card-stake-lbl">CAPITAL EXPOSURE</span>
+                    </div>
+                    <div style="display:flex;flex-direction:column;align-items:flex-end;gap:4px;">
+                        <span class="rv-card-provider-pill" style="background:${getProviderColor(r.provider)}">${r.provider.toUpperCase()}</span>
+                        <span class="rv-card-time${timeUrgent ? ' urgent' : ''}">${timeLabel}</span>
+                    </div>
+                </div>
+                ${actionsHtml}
+            </div>
+        `;
+    }
+
+    
 
     function renderCard(c) {
         // map API data to UI

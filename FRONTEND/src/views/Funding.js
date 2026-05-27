@@ -882,28 +882,28 @@ export async function initFunding() {
                     const brand = fs.brand?.toUpperCase() || 'CARD';
                     const last4 = fs.last4 || '****';
                     const exp = fs.expMonth && fs.expYear ? `${String(fs.expMonth).padStart(2, '0')}/${String(fs.expYear).slice(-2)}` : '';
-                    cardStatusEl.textContent = `${brand} •••• ${last4}${exp ? '  ·  exp ' + exp : ''}`;
+                    if (cardStatusEl) cardStatusEl.textContent = `${brand} •••• ${last4}${exp ? '  |  exp ' + exp : ''}`;
                     if (cardBadgeEl) cardBadgeEl.innerHTML = '<span class="cap-badge verified">VERIFIED</span>';
                     if (manageCardBtn) manageCardBtn.textContent = 'REMOVE';
                 } else if (fs.status === 'pending_verification') {
-                    cardStatusEl.textContent = 'Verification pending';
+                    if (cardStatusEl) cardStatusEl.textContent = 'Verification pending';
                     if (cardBadgeEl) cardBadgeEl.innerHTML = '<span class="cap-badge pending-badge">PENDING</span>';
                 } else {
-                    cardStatusEl.textContent = 'Not configured';
+                    if (cardStatusEl) cardStatusEl.textContent = 'Not configured';
                     if (cardBadgeEl) cardBadgeEl.innerHTML = '<span class="cap-badge required">REQUIRED</span>';
                 }
             } else {
-                cardStatusEl.textContent = 'Not configured';
+                if (cardStatusEl) cardStatusEl.textContent = 'Not configured';
                 if (cardBadgeEl) cardBadgeEl.innerHTML = '<span class="cap-badge required">REQUIRED</span>';
             }
 
             if (billingStatus?.payoutDestination?.connected) {
-                bankStatusEl.textContent = 'Configured';
+                if (bankStatusEl) bankStatusEl.textContent = 'Configured';
                 if (bankBadgeEl) { bankBadgeEl.className = 'cap-badge verified'; bankBadgeEl.textContent = 'ACTIVE'; }
-                payoutStatusEl.textContent = 'Connected';
+                if (payoutStatusEl) payoutStatusEl.textContent = 'Connected';
             } else {
-                bankStatusEl.textContent = 'Not configured';
-                payoutStatusEl.textContent = 'Not configured';
+                if (bankStatusEl) bankStatusEl.textContent = 'Not configured';
+                if (payoutStatusEl) payoutStatusEl.textContent = 'Not configured';
             }
 
             if (billingStatus?.balances) {

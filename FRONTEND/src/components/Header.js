@@ -57,10 +57,19 @@ export function renderHeader(currentRoute) {
         `;
 
         if (route.hasDropdown) {
-            itemHTML += `
-                <div class="pnl-subnav" style="animation-delay: ${0.06 + i * 0.03}s">
-                    <a href="#" onclick="window.app.closeMobileMenu(); window.router.navigate('/market'); return false;" class="pnl-subnav-link ${(currentRoute === '/market' || currentRoute === '/market/') ? 'active' : ''}">Solo Contracts</a>
-                    <a href="#" onclick="window.app.closeMobileMenu(); window.router.navigate('/rivalry'); return false;" class="pnl-subnav-link ${(currentRoute === '/rivalry' || currentRoute.startsWith('/rivalry/')) ? 'active' : ''}">Rivalry Contracts</a>
+            itemHTML = `
+                <div class="pnl-nav-group" style="animation-delay: ${0.06 + i * 0.03}s">
+                    <a href="#" 
+                        onclick="this.parentElement.classList.toggle('expanded'); return false;" 
+                        class="pnl-nav-link ${isActive ? 'active' : ''}">
+                        <span class="pnl-nav-indicator"></span>
+                        <span style="flex: 1;">${route.label}</span>
+                        <svg class="pnl-chevron" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+                    </a>
+                    <div class="pnl-subnav">
+                        <a href="#" onclick="window.app.closeMobileMenu(); window.router.navigate('/market'); return false;" class="pnl-subnav-link ${(currentRoute === '/market' || currentRoute === '/market/') ? 'active' : ''}">Solo Contracts</a>
+                        <a href="#" onclick="window.app.closeMobileMenu(); window.router.navigate('/rivalry'); return false;" class="pnl-subnav-link ${(currentRoute === '/rivalry' || currentRoute.startsWith('/rivalry/')) ? 'active' : ''}">Rivalry Contracts</a>
+                    </div>
                 </div>
             `;
         }
@@ -679,12 +688,27 @@ export function renderHeader(currentRoute) {
                 background: #888;
             }
 
-            .pnl-subnav {
+            .pnl-nav-group {
                 display: flex;
+                flex-direction: column;
+            }
+            .pnl-chevron {
+                opacity: 0.4;
+                transition: transform 0.25s ease;
+            }
+            .pnl-nav-group.expanded .pnl-chevron {
+                transform: rotate(180deg);
+            }
+
+            .pnl-subnav {
+                display: none;
                 flex-direction: column;
                 background: #fcfcfc;
                 border-left: 3px solid transparent;
                 padding-bottom: 8px;
+            }
+            .pnl-nav-group.expanded .pnl-subnav {
+                display: flex;
             }
             .pnl-subnav-link {
                 display: flex;

@@ -1508,17 +1508,25 @@ function updateAuthUI() {
     if (!appState.sessionHydrated) return;
 
     const btnAuth = document.getElementById('btn-auth');
-    const searchArea = document.getElementById('header-search-area');
+    const capitalArea = document.getElementById('header-capital-area');
 
     if (appState.isLoggedIn) {
-        // Logged in: show search, hide connect button
+        // Logged in: show capital, hide connect button
         if (btnAuth) btnAuth.style.display = 'none';
-        if (searchArea) searchArea.style.display = '';
+        if (capitalArea) {
+            capitalArea.style.display = '';
+            // Fetch balance for header
+            window.api.getBillingStatus().then(res => {
+                const availCents = res?.balances?.availableBalanceUsdCents || 0;
+                const capEl = document.getElementById('header-avail-cap');
+                if (capEl) capEl.textContent = '$' + (availCents / 100).toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2});
+            }).catch(e => console.error('[Auth] Failed to fetch balance for header:', e));
+        }
         console.log('[Auth] UI updated, showing:', appState.username);
     } else {
-        // Logged out: hide search, show connect button
+        // Logged out: hide capital, show connect button
         if (btnAuth) btnAuth.style.display = '';
-        if (searchArea) searchArea.style.display = 'none';
+        if (capitalArea) capitalArea.style.display = 'none';
     }
 
     // Update panel auth state (user card, account links, sign out)

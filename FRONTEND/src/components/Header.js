@@ -298,37 +298,17 @@ export function renderHeader(currentRoute) {
             }
 
             /* Search bar (desktop only) */
-            .ch-search {
-                max-width: 280px;
-                width: 280px;
-                position: relative;
+            .ch-capital {
                 display: none;
+                flex-direction: column;
+                align-items: flex-end;
+                cursor: pointer;
+                padding-right: 24px;
+                border-right: 1px solid #eaeaea;
+                margin-right: 12px;
             }
             @media (min-width: 1024px) {
-                .ch-search { display: block; }
-            }
-            .ch-search input {
-                width: 100%;
-                height: 36px;
-                padding: 0 12px 0 36px;
-                font-size: 13px;
-                border: 1px solid #e5e5e5;
-                background: #fafafa;
-                font-family: 'Inter', sans-serif;
-                color: #333;
-            }
-            .ch-search input::placeholder { color: #999; }
-            .ch-search input:focus {
-                outline: none;
-                border-color: #ccc;
-                background: #fff;
-            }
-            .ch-search-icon {
-                position: absolute;
-                left: 10px;
-                top: 50%;
-                transform: translateY(-50%);
-                color: #999;
+                .ch-capital { display: flex; }
             }
 
             /* ── Hamburger Button — Always Visible ── */
@@ -904,10 +884,10 @@ export function renderHeader(currentRoute) {
 
                 <!-- Right Section -->
                 <div class="ch-right">
-                    <!-- Search Bar (logged in) / Connect Button (logged out) -->
-                    <div class="ch-search" id="header-search-area">
-                        <i data-lucide="search" class="ch-search-icon" style="width: 16px; height: 16px;"></i>
-                        <input type="text" id="global-search" placeholder="Search RCPT or Provider..." onkeydown="if(event.key==='Enter'){const q=this.value.trim();if(q){window.router.navigate('/contracts');setTimeout(()=>{const s=document.getElementById('ac-search');if(s){s.value=q;s.dispatchEvent(new Event('input'));}},200);}this.blur();}">
+                    <!-- Capital Display (logged in) / Connect Button (logged out) -->
+                    <div class="ch-capital" id="header-capital-area" onclick="window.router.navigate('/funding')">
+                        <span style="font-size: 10px; color: #888; font-family: 'JetBrains Mono', monospace; letter-spacing: 0.05em; text-transform: uppercase;">Available Capital</span>
+                        <span id="header-avail-cap" style="font-size: 14px; font-weight: 600; color: #111; letter-spacing: -0.02em;">$0.00</span>
                     </div>
                     <button class="ch-connect" id="btn-auth" onclick="window.app.openAccessModal()" style="display:none;">CONNECT</button>
 

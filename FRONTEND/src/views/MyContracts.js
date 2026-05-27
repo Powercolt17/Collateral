@@ -92,7 +92,167 @@ export function renderMyContracts() {
             @keyframes cl-pulse { 0%, 100% { opacity: 0.7; } 50% { opacity: 1; } }
 
             /* --- INJECTED CARD GRID CSS --- */
-            ${cssStr}
+            
+            .eq-grid {
+                display: grid;
+                grid-template-columns: repeat(4, 1fr);
+                gap: 24px;
+            }
+            .eq-card {
+                background: #fff;
+                padding: 36px 32px 32px;
+                display: flex;
+                flex-direction: column;
+                cursor: pointer;
+                transition: background 0.2s, box-shadow 0.2s;
+                position: relative;
+                overflow: hidden;
+                border: 1px solid #eee;
+            }
+            .eq-card:hover { background: #fafafa; }
+            .eq-card::before {
+                content: '';
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 0;
+                height: 3px;
+                background: #5C1414;
+                transition: width 0.4s ease;
+            }
+            .eq-card:hover::before { width: 100%; }
+            .eq-card-meta {
+                display: flex;
+                justify-content: space-between;
+                font-family: 'JetBrains Mono', monospace;
+                font-size: 10px;
+                text-transform: uppercase;
+                letter-spacing: 0.5px;
+            }
+            .eq-closing { color: #5C1414; font-weight: 700; }
+            .eq-id { color: #ccc; }
+            .eq-time { color: #ccc; display: flex; align-items: center; gap: 4px; }
+
+            .eq-card-title {
+                font-size: 18px;
+                font-weight: 700;
+                color: #111;
+                margin: 12px 0 8px;
+                letter-spacing: -0.5px;
+            }
+            .eq-card-provider {
+                display: flex;
+                align-items: center;
+                gap: 8px;
+                margin-bottom: 8px;
+            }
+            .eq-provider-name {
+                font-family: 'JetBrains Mono', monospace;
+                font-size: 10px;
+                text-transform: uppercase;
+                color: #888;
+            }
+            .eq-tier-badge {
+                padding: 3px 8px;
+                font-size: 9px;
+                font-weight: 700;
+                border-radius: 2px;
+                text-transform: uppercase;
+                font-family: 'JetBrains Mono', monospace;
+                letter-spacing: 0.5px;
+            }
+            .eq-tier-badge.controlled { background: #f0fdf4; color: #166534; border: 1px solid #dcfce7; }
+            .eq-tier-badge.elevated { background: #fff7ed; color: #9a3412; border: 1px solid #ffedd5; }
+            .eq-tier-badge.maximum { background: #fff1f2; color: #9f1239; border: 1px solid #ffe4e6; }
+
+            .eq-card-status {
+                display: flex;
+                align-items: center;
+                gap: 6px;
+                font-family: 'JetBrains Mono', monospace;
+                font-size: 9px;
+                color: #10b981;
+                text-transform: uppercase;
+                margin-bottom: 16px;
+            }
+            .eq-card-status .dot { width: 4px; height: 4px; border-radius: 50%; background: currentcolor; }
+
+            .eq-card-stake-info {
+                display: flex;
+                align-items: center;
+                gap: 12px;
+                margin-bottom: 20px;
+            }
+            .eq-stake-val { font-size: 24px; font-weight: 500; letter-spacing: -1px; }
+            .eq-stake-separator { width: 16px; height: 1px; background: #eee; }
+            .eq-stake-lbl {
+                font-family: 'JetBrains Mono', monospace;
+                font-size: 9px;
+                color: #ccc;
+                text-transform: uppercase;
+                margin-top: 4px;
+            }
+
+            .eq-card-cta {
+                background: #0a0a0a;
+                color: #fff;
+                border: 1px solid transparent;
+                padding: 16px;
+                font-size: 11px;
+                font-weight: 700;
+                text-transform: uppercase;
+                letter-spacing: 1.5px;
+                width: 100%;
+                cursor: pointer;
+                margin-top: auto;
+                position: relative;
+                overflow: hidden;
+                transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+                transform: translateY(0);
+                box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            }
+            .eq-card-cta:hover {
+                background: #5C1414;
+                transform: translateY(-3px);
+                box-shadow: 0 8px 30px rgba(92,20,20,0.35), 0 0 0 1px rgba(92,20,20,0.15);
+                letter-spacing: 2.5px;
+            }
+            .eq-card-cta:active {
+                transform: translateY(0px) scale(0.97);
+                box-shadow: 0 2px 8px rgba(92,20,20,0.2);
+                transition: all 0.08s ease;
+            }
+            .eq-card-cta::after {
+                content: '';
+                position: absolute;
+                top: -50%;
+                left: -100%;
+                width: 60%;
+                height: 200%;
+                background: linear-gradient(90deg, transparent, rgba(255,255,255,0.15), transparent);
+                transform: skewX(-25deg);
+                transition: left 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+            }
+            .eq-card-cta:hover::after {
+                left: 150%;
+            }
+            @keyframes executePulse {
+                0%, 100% { box-shadow: 0 8px 30px rgba(92,20,20,0.35), 0 0 0 1px rgba(92,20,20,0.15); }
+                50% { box-shadow: 0 8px 30px rgba(92,20,20,0.5), 0 0 0 2px rgba(92,20,20,0.25); }
+            }
+            .eq-card-cta:hover {
+                animation: executePulse 2s ease-in-out infinite;
+                animation-delay: 0.3s;
+            }
+            .eq-card-footer {
+                font-size: 10px;
+                color: #eee;
+                text-align: center;
+                margin-top: 12px;
+                font-style: italic;
+            }
+
+            
             
             /* Overrides to prevent hover-execution */
             .myc .eq-card:hover { transform: none; box-shadow: none; border-color: #e5e5e5; }

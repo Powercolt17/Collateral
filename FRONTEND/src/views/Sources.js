@@ -733,10 +733,9 @@ export function renderSources() {
             <!-- Hero Header -->
             <div class="src-header" data-reveal>
                 <div class="src-header-inner">
-                    <div class="src-breadcrumb">PLATFORM / <strong>SOURCES</strong></div>
                     <div class="src-hero-row">
                         <div class="src-hero-left">
-                            <h1 class="src-hero-title">Connect <strong>Sources</strong></h1>
+                            <h1 class="src-hero-title">Connect <strong style="color: #5C1414;">Sources</strong></h1>
                             <p class="src-hero-desc">Bind verified data providers to enable deterministic contract settlement.</p>
                         </div>
                         <div class="src-hero-stats">

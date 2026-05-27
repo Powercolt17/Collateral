@@ -457,7 +457,7 @@ export function initLanding() {
     if (Object.keys(utm).length) sessionStorage.setItem('collateral_utm', JSON.stringify(utm));
     if (window.trackEvent) window.trackEvent('go_page_view', { source: utm.utm_source || 'direct', campaign: utm.utm_campaign || 'none' });
 
-    function goAction(targetUrl = '/contracts/execute') {
+    function goAction(targetUrl = '/market') {
         if (window.appState?.isLoggedIn) {
             sessionStorage.removeItem('collateral_go_flow');
             sessionStorage.removeItem('collateral_go_target');
@@ -482,7 +482,7 @@ export function initLanding() {
             const source = btn.getAttribute('data-source');
             const tier = btn.getAttribute('data-tier');
             const capital = btn.getAttribute('data-capital');
-            let targetUrl = '/contracts/execute';
+            let targetUrl = '/market';
             if (source && tier && capital) {
                 targetUrl = `/contracts/execute?source=${source}&tier=${tier}&capital=${capital}`;
             }

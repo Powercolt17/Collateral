@@ -374,7 +374,7 @@ export function renderProfile() {
                                 </div>
                             </div>
                             <!-- CTA -->
-                            <button class="prf-cta full" style="margin-top:18px;height:48px;font-size:13px;background:#5C1414;color:#fff;border-color:#5C1414;font-weight:700;letter-spacing:1px" onclick="window.router.navigate('/contracts/execute')">Execute Contract →</button>
+                            <button class="prf-cta full" style="margin-top:18px;height:48px;font-size:13px;background:#5C1414;color:#fff;border-color:#5C1414;font-weight:700;letter-spacing:1px" onclick="window.router.navigate('/market')">Execute Contract →</button>
                         </div>
                     </div>
                     <!-- System status micro footer -->

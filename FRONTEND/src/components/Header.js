@@ -23,8 +23,8 @@ export function renderHeader(currentRoute) {
                         ${route.label}
                     </a>
                     <div class="nav-dropdown">
-                        <a href="#" onclick="window.router.navigate('/market?type=solo'); return false;">Solo Contracts</a>
-                        <a href="#" onclick="window.router.navigate('/market?type=rivalry'); return false;">Rivalry Contracts</a>
+                        <a href="#" onclick="window.router.navigate('/market'); return false;">Solo Contracts</a>
+                        <a href="#" onclick="window.router.navigate('/rivalry'); return false;">Rivalry Contracts</a>
                     </div>
                 </div>
             `;

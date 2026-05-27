@@ -268,12 +268,12 @@ export function renderMyContracts() {
         <div class="myc">
             <div class="myc-header" data-reveal>
                 <div class="myc-title-wrap">
-                    <h1 class="myc-page-title">Active Portfolio</h1>
+                    <h1 class="myc-page-title">Active <span style="color: #5C1414;">Contracts</span></h1>
                     <p class="myc-page-sub">Personalized performance record</p>
                 </div>
                 <div class="myc-header-actions">
                     <button class="myc-btn-secondary" onclick="window.router.navigate('/profile')">View Identity</button>
-                    <button class="myc-btn-secondary" style="background: #111; color: #fff; border: none;" onclick="window.router.navigate('/market')">New Contract</button>
+                    <button class="myc-btn-secondary" style="background: #5C1414; color: #fff; border: none;" onclick="window.router.navigate('/market')">New Contract</button>
                 </div>
             </div>
 
@@ -338,7 +338,7 @@ export async function initMyContracts() {
             container.innerHTML = `
                 <div style="text-align:center; padding: 60px 0;">
                     <div style="font-family:'JetBrains Mono', monospace; font-size:11px; color:#888; text-transform:uppercase; margin-bottom:16px;">No contracts in record</div>
-                    <button class="myc-btn-secondary" style="background:#111; color:#fff; border:none;" onclick="window.router.navigate('/market')">Create First Contract</button>
+                    <button class="myc-btn-secondary" style="background:#5C1414; color:#fff; border:none;" onclick="window.router.navigate('/market')">Create First Contract</button>
                 </div>
             `;
         } else {

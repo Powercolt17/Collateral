@@ -164,84 +164,67 @@ export function renderHeader(currentRoute) {
                 margin: 0;
             }
 
-            
-            /* ── Nav Dropdown ── */
-            .nav-dropdown-wrap { position: relative; display: flex; height: 100%; align-items: center; }
+            /* ── Premium Nav Dropdown ── */
+            .nav-dropdown-wrap { 
+                position: relative; 
+                display: flex; 
+                height: 100%; 
+                align-items: center; 
+            }
             .nav-dropdown {
                 position: absolute;
-                top: 54px;
+                top: 60px;
                 left: 50%;
-                transform: translateX(-50%) translateY(10px);
-                background: #fff;
-                border: 1px solid #e5e5e5;
-                box-shadow: 0 4px 20px rgba(0,0,0,0.08);
-                padding: 8px 0;
-                min-width: 180px;
+                transform: translateX(-50%) translateY(16px) scale(0.96);
+                background: rgba(255, 255, 255, 0.95);
+                backdrop-filter: blur(16px);
+                -webkit-backdrop-filter: blur(16px);
+                border: 1px solid rgba(229, 229, 229, 0.6);
+                box-shadow: 0 16px 40px -8px rgba(0,0,0,0.08), 0 4px 12px rgba(0,0,0,0.03);
+                padding: 12px 0;
+                min-width: 200px;
                 opacity: 0;
                 visibility: hidden;
-                transition: all 0.2s ease;
+                transition: opacity 0.25s cubic-bezier(0.16, 1, 0.3, 1), 
+                            transform 0.25s cubic-bezier(0.16, 1, 0.3, 1),
+                            visibility 0.25s;
                 z-index: 100;
-                border-radius: 4px;
+                border-radius: 8px;
             }
             .nav-dropdown-wrap:hover .nav-dropdown {
                 opacity: 1;
                 visibility: visible;
-                transform: translateX(-50%) translateY(0);
+                transform: translateX(-50%) translateY(0) scale(1);
             }
             .nav-dropdown a {
-                display: block;
-                padding: 10px 20px;
-                color: #555;
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                padding: 14px 24px;
+                color: #475569;
                 text-decoration: none;
-                font-family: 'Inter', sans-serif;
-                font-size: 13px;
-                font-weight: 500;
-                transition: background 0.15s, color 0.15s;
-                text-align: left;
+                font-family: 'Sora', 'Inter', sans-serif;
+                font-size: 12px;
+                font-weight: 600;
+                letter-spacing: 0.5px;
+                text-transform: uppercase;
+                transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
             }
-            .nav-dropdown a:hover {
-                background: #fafafa;
-                color: #111;
-            }
-
-            
-            /* ── Nav Dropdown ── */
-            .nav-dropdown-wrap { position: relative; display: flex; height: 100%; align-items: center; }
-            .nav-dropdown {
-                position: absolute;
-                top: 54px;
-                left: 50%;
-                transform: translateX(-50%) translateY(10px);
-                background: #fff;
-                border: 1px solid #e5e5e5;
-                box-shadow: 0 4px 20px rgba(0,0,0,0.08);
-                padding: 8px 0;
-                min-width: 180px;
+            .nav-dropdown a::after {
+                content: '→';
                 opacity: 0;
-                visibility: hidden;
-                transition: all 0.2s ease;
-                z-index: 100;
-                border-radius: 4px;
-            }
-            .nav-dropdown-wrap:hover .nav-dropdown {
-                opacity: 1;
-                visibility: visible;
-                transform: translateX(-50%) translateY(0);
-            }
-            .nav-dropdown a {
-                display: block;
-                padding: 10px 20px;
-                color: #555;
-                text-decoration: none;
-                font-family: 'Inter', sans-serif;
-                font-size: 13px;
-                font-weight: 500;
-                transition: background 0.15s, color 0.15s;
-                text-align: left;
+                transform: translateX(-8px);
+                transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+                color: #5C1414;
             }
             .nav-dropdown a:hover {
-                background: #fafafa;
+                background: rgba(248, 250, 252, 0.8);
                 color: #111;
+                padding-left: 28px;
+            }
+            .nav-dropdown a:hover::after {
+                opacity: 1;
+                transform: translateX(0);
             }
 
             /* ── Nav Links (desktop center) ── */

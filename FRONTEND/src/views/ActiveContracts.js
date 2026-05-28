@@ -236,7 +236,7 @@ export function renderActiveContracts() {
                 align-items: center;
                 gap: 8px;
                 font-family: 'JetBrains Mono', monospace;
-                font-size: 10px;
+                font-size: 8px;
                 color: #aaa;
                 text-transform: uppercase;
                 letter-spacing: 1px;
@@ -265,7 +265,7 @@ export function renderActiveContracts() {
             }
             .eq-stat-group { display: flex; flex-direction: column; gap: 8px; }
             .eq-stat-val {
-                font-size: 24px;
+                font-size: 18px;
                 font-weight: 500;
                 letter-spacing: -1.5px;
                 display: flex;
@@ -280,7 +280,7 @@ export function renderActiveContracts() {
             .eq-stat-val small { font-size: 14px; color: #ccc; font-weight: 400; letter-spacing: 0; }
             .eq-stat-lbl {
                 font-family: 'JetBrains Mono', monospace;
-                font-size: 10px;
+                font-size: 8px;
                 text-transform: uppercase;
                 letter-spacing: 1px;
                 color: #bbb;
@@ -297,9 +297,9 @@ export function renderActiveContracts() {
             }
             .eq-tabs { display: flex; gap: 32px; }
             .eq-tab {
-                padding: 12px 0;
+                padding: 8px 0;
                 font-family: 'JetBrains Mono', monospace;
-                font-size: 11px;
+                font-size: 9px;
                 font-weight: 700;
                 color: #bbb;
                 background: none;
@@ -348,14 +348,14 @@ export function renderActiveContracts() {
             .eq-pills { display: flex; align-items: center; gap: 8px; }
             .eq-filter-lbl { 
                 font-family: 'JetBrains Mono', monospace; 
-                font-size: 10px; 
+                font-size: 8px; 
                 color: #ccc; 
                 text-transform: uppercase; 
-                margin-right: 12px; 
+                margin-right: 8px; 
             }
             .eq-pill {
-                padding: 6px 16px;
-                font-size: 11px;
+                padding: 4px 10px;
+                font-size: 9px;
                 font-weight: 500;
                 border: 1px solid #eee;
                 background: #fff;
@@ -798,7 +798,7 @@ export function renderActiveContracts() {
                 }
                 .eq-stat-group:last-child { border-right: none; }
                 .eq-stat-val {
-                    font-size: 20px;
+                    font-size: 16px;
                     letter-spacing: -0.5px;
                 }
                 .eq-stat-lbl {
@@ -821,7 +821,7 @@ export function renderActiveContracts() {
                 }
                 .eq-tab {
                     white-space: nowrap;
-                    font-size: 10px;
+                    font-size: 8px;
                 }
                 .eq-search-wrap {
                     width: 100%;
@@ -849,8 +849,8 @@ export function renderActiveContracts() {
                 .eq-pill {
                     white-space: nowrap;
                     flex-shrink: 0;
-                    font-size: 10px;
-                    padding: 5px 12px;
+                    font-size: 8px;
+                    padding: 4px 10px;
                 }
 
                 /* Grid */
@@ -1181,12 +1181,12 @@ export function renderActiveContracts() {
                 margin-bottom: 8px;
             }
             .act-market-btn {
-                padding: 10px 20px;
+                padding: 6px 12px;
                 border-radius: 30px;
                 background: #f5f5f5;
                 color: #888;
                 font-family: 'Inter', -apple-system, sans-serif;
-                font-size: 13px;
+                font-size: 10px;
                 font-weight: 600;
                 letter-spacing: 0.04em;
                 text-transform: uppercase;

@@ -889,7 +889,7 @@ export function renderHeader(currentRoute) {
                         <span style="font-size: 10px; color: #888; font-family: 'JetBrains Mono', monospace; letter-spacing: 0.05em; text-transform: uppercase;">Available Capital</span>
                         <span id="header-avail-cap" style="font-size: 14px; font-weight: 600; color: #111; letter-spacing: -0.02em;">$0.00</span>
                     </div>
-                    <button class="ch-connect" id="btn-auth" onclick="window.app.openAccessModal()" style="display:none;">CONNECT</button>
+                    <button class="ch-connect" id="btn-auth" onclick="window.app.openAccessModal()" style="display:none;">SIGN UP OR SIGN IN</button>
 
                     <!-- Notification Bell (desktop only) -->
                     <div class="ch-notif-wrap" id="notif-wrap">
@@ -963,7 +963,7 @@ export function renderHeader(currentRoute) {
                 <!-- Connect (shown when NOT logged in) -->
                 <div id="mobile-connect-section" class="pnl-connect-section">
                     <button onclick="window.app.closeMobileMenu(); window.app.handleAuthClick()" id="btn-auth-mobile" class="pnl-connect-btn">
-                        CONNECT
+                        SIGN UP OR SIGN IN
                     </button>
                 </div>
             </div>

@@ -136,7 +136,7 @@ export function renderActiveContracts() {
                 padding: 0 32px;
             }
             .eq-mechanism-title {
-                font-size: 48px;
+                font-size: 36px;
                 font-weight: 500;
                 letter-spacing: -2px;
                 line-height: 1;
@@ -225,7 +225,7 @@ export function renderActiveContracts() {
                 margin: 0 auto;
             }
             .eq-market-title {
-                font-size: 36px;
+                font-size: 28px;
                 font-weight: 500;
                 letter-spacing: -2px;
                 margin-bottom: 24px;
@@ -265,7 +265,7 @@ export function renderActiveContracts() {
             }
             .eq-stat-group { display: flex; flex-direction: column; gap: 8px; }
             .eq-stat-val {
-                font-size: 32px;
+                font-size: 24px;
                 font-weight: 500;
                 letter-spacing: -1.5px;
                 display: flex;
@@ -632,7 +632,7 @@ export function renderActiveContracts() {
             }
             .eq-path-tag.rivalry { color: #5C1414; }
             .eq-path-title {
-                font-size: 28px; font-weight: 500;
+                font-size: 22px; font-weight: 500;
                 line-height: 1.1; letter-spacing: -1px;
                 color: #111; margin-bottom: 16px;
             }
@@ -684,7 +684,7 @@ export function renderActiveContracts() {
                 .eq-mechanism-side { text-align: left; max-width: 100%; }
                 .eq-mech-card { padding: 40px 28px; }
                 .eq-stats-strip { gap: 48px; }
-                .eq-stat-val { font-size: 32px; }
+                .eq-stat-val { font-size: 24px; }
                 .eq-paths-grid { grid-template-columns: 1fr; gap: 20px; }
                 .eq-paths { padding: 60px 32px; }
             }
@@ -697,7 +697,7 @@ export function renderActiveContracts() {
                     text-align: center;
                 }
                 .eq-hero-headline {
-                    font-size: 48px !important;
+                    font-size: 36px !important;
                     letter-spacing: -1.5px !important;
                     margin-bottom: 24px;
                     max-width: 100%;
@@ -742,7 +742,7 @@ export function renderActiveContracts() {
                     padding: 0 20px;
                 }
                 .eq-mechanism-title {
-                    font-size: 28px;
+                    font-size: 22px;
                     letter-spacing: -1px;
                 }
                 .eq-mechanism-side {
@@ -760,7 +760,7 @@ export function renderActiveContracts() {
                 }
                 .eq-mech-card:last-child { border-bottom: none; }
                 .eq-mech-num {
-                    font-size: 48px;
+                    font-size: 36px;
                     margin-bottom: 20px;
                 }
                 .eq-mech-label {
@@ -776,7 +776,7 @@ export function renderActiveContracts() {
                     padding: 48px 20px 24px;
                 }
                 .eq-market-title {
-                    font-size: 28px;
+                    font-size: 22px;
                     letter-spacing: -1px;
                     margin-bottom: 16px;
                 }
@@ -903,7 +903,7 @@ export function renderActiveContracts() {
                     padding: 36px 16px 32px;
                 }
                 .eq-hero-headline {
-                    font-size: 44px !important;
+                    font-size: 32px !important;
                     letter-spacing: -1.5px !important;
                 }
                 .eq-hero-sub {
@@ -1096,7 +1096,7 @@ export function renderActiveContracts() {
             .eq-tier-card-badge.allin { background: #fff1f2; color: #9f1239; border: 1px solid #ffe4e6; }
 
             .eq-tier-card-rate {
-                font-size: 48px;
+                font-size: 36px;
                 font-weight: 500;
                 letter-spacing: -2px;
                 color: #111;
@@ -1164,14 +1164,14 @@ export function renderActiveContracts() {
             @media (max-width: 1200px) {
                 .eq-tiers-grid { grid-template-columns: repeat(3, 1fr); gap: 16px; }
                 .eq-tier-card { padding: 28px 24px; }
-                .eq-tier-card-rate { font-size: 36px; }
+                .eq-tier-card-rate { font-size: 28px; }
             }
             /* Tier section responsive: Mobile */
             @media (max-width: 768px) {
                 .eq-tiers { padding: 48px 20px; }
                 .eq-tiers-grid { grid-template-columns: 1fr; gap: 16px; }
                 .eq-tier-card { padding: 28px 24px; }
-                .eq-tier-card-rate { font-size: 40px; }
+                .eq-tier-card-rate { font-size: 30px; }
             }
         
             .act-market-toggles {

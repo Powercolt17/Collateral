@@ -38,7 +38,7 @@ export function renderFunding() {
             }
             .cap-hdr-left {}
             .cap-hdr-title {
-                font-size: 32px;
+                font-size: 24px;
                 font-weight: 800;
                 letter-spacing: -1px;
                 color: #111111;
@@ -153,7 +153,7 @@ export function renderFunding() {
             }
             .cap-stat-val {
                 font-family: 'JetBrains Mono', monospace;
-                font-size: 28px;
+                font-size: 22px;
                 font-weight: 700;
                 color: #111111;
                 letter-spacing: -1px;
@@ -586,7 +586,7 @@ export function renderFunding() {
             }
             .cap-success-amt {
                 font-family: 'JetBrains Mono', monospace;
-                font-size: 36px;
+                font-size: 28px;
                 font-weight: 700;
                 color: #5C1414;
                 margin: 12px 0 4px;

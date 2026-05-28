@@ -57,7 +57,7 @@ export function renderContractDetail(params) {
             .cd-brand-icon svg { width: 24px; height: 24px; }
             .cd-title-area { display: flex; flex-direction: column; gap: 6px; }
             .cd-title-row { display: flex; align-items: center; gap: 16px; }
-            .cd-title { font-size: 32px; font-weight: 400; letter-spacing: -0.5px; margin: 0; color: #111; line-height: 1; }
+            .cd-title { font-size: 24px; font-weight: 400; letter-spacing: -0.5px; margin: 0; color: #111; line-height: 1; }
             .cd-title strong { font-weight: 600; }
             
             .cd-badge {
@@ -83,7 +83,7 @@ export function renderContractDetail(params) {
                 padding-right: 20px;
             }
             .cd-stat { display: flex; flex-direction: column; align-items: flex-start; gap: 8px; }
-            .cd-stat-val { font-size: 28px; font-weight: 400; letter-spacing: -0.5px; color: #111; line-height: 1; }
+            .cd-stat-val { font-size: 22px; font-weight: 400; letter-spacing: -0.5px; color: #111; line-height: 1; }
             .cd-stat-val.green { color: #16a34a; }
             .cd-stat-lbl { font-family: 'JetBrains Mono', monospace; font-size: 9px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.12em; color: #ccc; }
 

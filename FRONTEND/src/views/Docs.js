@@ -45,7 +45,7 @@ export function renderDocs() {
                 z-index: 1;
             }
             .doc-page-title {
-                font-size: 36px;
+                font-size: 28px;
                 font-weight: 900;
                 letter-spacing: -1.5px;
                 color: #FFFFFF;
@@ -396,7 +396,7 @@ export function renderDocs() {
                     margin-bottom: 32px;
                     max-height: none;
                 }
-                .doc-page-title { font-size: 28px; }
+                .doc-page-title { font-size: 22px; }
                 .doc-section-title { font-size: 22px; }
                 .doc-page-hdr { padding: 32px 0 28px; }
             }

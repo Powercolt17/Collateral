@@ -104,7 +104,7 @@ export function renderRivalry() {
             }
             .rv-stat-group { display: flex; flex-direction: column; gap: 8px; }
             .rv-stat-val {
-                font-size: 42px; font-weight: 500; color: #111; letter-spacing: -1.5px;
+                font-size: 32px; font-weight: 500; color: #111; letter-spacing: -1.5px;
                 display: flex; align-items: baseline; gap: 4px; line-height: 1;
                 transition: color 0.3s ease;
             }
@@ -349,7 +349,7 @@ export function renderRivalry() {
                 color: #ccc; text-transform: uppercase; margin-bottom: 12px;
             }
             .rv-mechanism-title {
-                font-size: 32px; font-weight: 500; color: #111;
+                font-size: 24px; font-weight: 500; color: #111;
                 letter-spacing: -1px; margin: 0;
             }
             .rv-mechanism-title strong { font-weight: 800; }
@@ -375,7 +375,7 @@ export function renderRivalry() {
             }
             .rv-mech-card:last-child { border-right: none; }
             .rv-mech-num {
-                font-size: 56px; font-weight: 200;
+                font-size: 42px; font-weight: 200;
                 color: rgba(59,0,1,0.6);
                 margin-bottom: 16px; line-height: 1;
                 font-family: 'Sora', 'Helvetica Neue', sans-serif;
@@ -785,7 +785,7 @@ export function renderRivalry() {
                 letter-spacing: 0.02em;
             }
             .rv-featured-growth {
-                font-size: 28px;
+                font-size: 22px;
                 font-weight: 300;
                 letter-spacing: -0.5px;
             }
@@ -837,7 +837,7 @@ export function renderRivalry() {
             @media (max-width: 768px) {
                 .rv-hero-inner { padding: 48px 20px 40px; }
                 .rv-hero-row { flex-direction: column; align-items: flex-start; gap: 20px; }
-                .rv-hero-title { font-size: 48px; letter-spacing: -1.5px; }
+                .rv-hero-title { font-size: 36px; letter-spacing: -1.5px; }
                 .rv-hero-sub { font-size: 14px; }
                 .rv-hero-right { width: 100%; flex-direction: column; }
                 .rv-btn-challenge { width: 100%; text-align: center; }

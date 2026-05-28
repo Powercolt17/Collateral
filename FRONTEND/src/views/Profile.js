@@ -206,7 +206,7 @@ export function renderProfile() {
             .prf-avatar-wrap:hover .prf-avatar-overlay{opacity:1}
             .prf-avatar{width:80px;height:80px;border-radius:50%;display:flex;align-items:center;justify-content:center;background:#111;overflow:hidden;border:2px solid #e5e5e5;transition:border-color 0.15s}
             .prf-avatar-wrap:hover .prf-avatar{border-color:#5C1414}
-            .prf-avatar-initial{font-family:'Sora','Helvetica Neue',sans-serif;font-size:28px;font-weight:700;color:#fff}
+            .prf-avatar-initial{font-family:'Sora','Helvetica Neue',sans-serif;font-size: 22px;font-weight:700;color:#fff}
             .prf-avatar-img{width:100%;height:100%;object-fit:cover;image-rendering:auto}
             .prf-avatar-overlay{position:absolute;inset:0;background:rgba(0,0,0,0.45);display:flex;align-items:center;justify-content:center;opacity:0;transition:opacity 0.15s;border-radius:50%}
             .prf-avatar-overlay svg{color:#fff;opacity:0.9}

@@ -33,7 +33,7 @@ export function renderTerms() {
                 background: #752122;
             }
             .legal-title {
-                font-size: 42px;
+                font-size: 32px;
                 font-weight: 700;
                 letter-spacing: -1.5px;
                 margin-bottom: 12px;
@@ -76,7 +76,7 @@ export function renderTerms() {
             }
             @media (max-width: 768px) {
                 .legal-page { padding: 40px 20px 80px; }
-                .legal-title { font-size: 28px; }
+                .legal-title { font-size: 22px; }
             }
         </style>
 

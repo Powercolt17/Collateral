@@ -20,7 +20,7 @@ export function renderMyContracts() {
             }
             .myc-title-wrap {}
             .myc-page-title {
-                font-size: 32px;
+                font-size: 24px;
                 font-weight: 700;
                 letter-spacing: -1px;
                 color: #111;
@@ -68,7 +68,7 @@ export function renderMyContracts() {
             }
             .myc-metric:last-child { border-right: 1px solid #e5e5e5; }
             .myc-metric-value {
-                font-size: 32px;
+                font-size: 24px;
                 font-weight: 700;
                 color: #111;
                 letter-spacing: -1px;

@@ -236,14 +236,14 @@ export const landingCSS = `
 .lsteps{display:grid;grid-template-columns:repeat(4,1fr);gap:40px;background:transparent;border:none}
 .lstep{padding:32px 0 0 0;border:none;border-top:1px solid rgba(0,0,0,0.08);transition:all 0.3s ease}
 .lstep:hover{border-top-color:var(--r)}
-.lstep-num{font-family:'Inter Tight',sans-serif;font-size:56px;font-weight:400;color:var(--r) !important;opacity:0.3;line-height:1;margin-bottom:24px;letter-spacing:-2px;transition:opacity 0.3s ease}
+.lstep-num{font-family:'Inter Tight',sans-serif;font-size: 42px;font-weight:400;color:var(--r) !important;opacity:0.3;line-height:1;margin-bottom:24px;letter-spacing:-2px;transition:opacity 0.3s ease}
 .lstep:hover .lstep-num{opacity:0.6}
 .lstep-h{font-family:'Inter Tight',sans-serif;font-size:22px;font-weight:600;color:var(--t1);margin-bottom:12px;letter-spacing:-.4px}
 .lstep-p{font-size:16px;color:var(--t2);line-height:1.65}
 
 /* Mini CTA Block */
 .lmini-cta{text-align:center;background:transparent;border:none;padding:100px 0;margin:0 auto;max-width:800px}
-.lmini-cta-h{font-family:'Inter Tight',sans-serif;font-size:40px;font-weight:600;margin-bottom:16px;letter-spacing:-1px;color:var(--t1)}
+.lmini-cta-h{font-family:'Inter Tight',sans-serif;font-size: 30px;font-weight:600;margin-bottom:16px;letter-spacing:-1px;color:var(--t1)}
 .lmini-cta-p{font-size:18px;color:var(--t2);margin-bottom:40px;line-height:1.6}
 .lmini-cta-micro{font-size:12px;color:var(--t3);margin-top:20px;font-weight:500;text-transform:uppercase;letter-spacing:2px}
 
@@ -278,7 +278,7 @@ export const landingCSS = `
 .ltype{background:transparent;border:none;padding:40px 0 0 0;border-top:1px solid rgba(0,0,0,0.08);transition:border-color 0.3s ease}
 .ltype:hover{border-top-color:var(--r)}
 .ltype-badge{font-family:'Inter',monospace;font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;margin-bottom:24px;display:inline-block;padding:0;background:transparent!important;border:none!important}
-.ltype-h{font-family:'Inter Tight',sans-serif;font-size:36px;font-weight:600;letter-spacing:-1px;margin-bottom:16px}
+.ltype-h{font-family:'Inter Tight',sans-serif;font-size: 28px;font-weight:600;letter-spacing:-1px;margin-bottom:16px}
 .ltype-p{font-size:18px;color:var(--t2);line-height:1.65;margin-bottom:32px}
 .ltype-detail{font-size:15px;color:var(--t2);line-height:1.6;padding-top:24px;border-top:1px dashed rgba(0,0,0,0.08)}
 
@@ -325,11 +325,11 @@ export const landingCSS = `
   .lcard-btn{padding-top:16px}
   .lcontracts{padding:32px 0 48px}
   .lhow{padding:48px 0}
-  .lhow-h{font-size:28px}
+  .lhow-h{font-size: 22px}
   .lhow-sub{margin-bottom:32px;font-size:14px}
   .lsteps{grid-template-columns:1fr;gap:24px}
   .lstep{padding:24px 0 0 0;border-top:1px solid rgba(0,0,0,0.08)}
-  .lstep-num{font-size:32px;margin-bottom:12px}
+  .lstep-num{font-size: 24px;margin-bottom:12px}
   .lstep-h{font-size:16px}
   .lstep-p{font-size:14px}
   .lmini-cta{padding:48px 20px;margin:24px auto}

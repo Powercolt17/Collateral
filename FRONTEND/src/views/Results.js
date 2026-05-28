@@ -10,7 +10,7 @@ export function renderResults() {
             }
             .res-hero { margin-bottom: 48px; }
             .res-title {
-                font-size: 36px; font-weight: 300; letter-spacing: -0.5px; margin: 0 0 8px;
+                font-size: 28px; font-weight: 300; letter-spacing: -0.5px; margin: 0 0 8px;
             }
             .res-title strong { font-weight: 700; }
             .res-subtitle { font-size: 14px; color: #999; margin: 0 0 32px; }
@@ -18,7 +18,7 @@ export function renderResults() {
                 display: flex; gap: 48px; padding: 24px 0;
                 border-top: 1px solid #f0f0f0; border-bottom: 1px solid #f0f0f0;
             }
-            .res-stat-val { font-size: 28px; font-weight: 600; letter-spacing: -0.5px; color: #111; }
+            .res-stat-val { font-size: 22px; font-weight: 600; letter-spacing: -0.5px; color: #111; }
             .res-stat-val.green { color: #16a34a; }
             .res-stat-val.red { color: #752122; }
             .res-stat-lbl {
@@ -86,7 +86,7 @@ export function renderResults() {
                 .res-card { grid-template-columns: 40px 1fr 90px; gap: 10px; padding: 12px 14px; }
                 .res-platform, .res-badge { display: none; }
                 .res-stats { gap: 24px; flex-wrap: wrap; }
-                .res-title { font-size: 28px; }
+                .res-title { font-size: 22px; }
             }
         </style>
 

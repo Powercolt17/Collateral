@@ -51,7 +51,7 @@ export function renderReferrals() {
             }
             .ref-hero-left { flex: 1; }
             .ref-hero-title {
-                font-size: 42px;
+                font-size: 32px;
                 font-weight: 300;
                 color: #111;
                 letter-spacing: -1.5px;
@@ -80,7 +80,7 @@ export function renderReferrals() {
                 align-items: center;
             }
             .ref-stat-value {
-                font-size: 36px;
+                font-size: 28px;
                 font-weight: 300;
                 letter-spacing: -1px;
                 color: #111;
@@ -284,7 +284,7 @@ export function renderReferrals() {
             }
             .ref-step:last-child { border-right: none; }
             .ref-step-num {
-                font-size: 32px;
+                font-size: 24px;
                 font-weight: 200;
                 color: #e5e5e5;
                 letter-spacing: -1px;
@@ -441,9 +441,9 @@ export function renderReferrals() {
                 .ref-footer { flex-wrap: wrap; gap: 20px; }
             }
             @media (max-width: 480px) {
-                .ref-hero-title { font-size: 28px; letter-spacing: -1px; }
+                .ref-hero-title { font-size: 22px; letter-spacing: -1px; }
                 .ref-hero-desc { font-size: 13px; }
-                .ref-stat-value { font-size: 28px; }
+                .ref-stat-value { font-size: 22px; }
                 .ref-link-row { flex-direction: column; }
                 .ref-link-btn { width: 100%; justify-content: center; }
                 .ref-link-input { font-size: 11px; }

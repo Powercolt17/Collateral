@@ -117,7 +117,7 @@ export function renderRivalryDetail() {
                 color: #111; letter-spacing: 0.02em;
             }
             .rvd-player-growth {
-                font-size: 28px; font-weight: 600;
+                font-size: 22px; font-weight: 600;
                 letter-spacing: -1px; margin-top: 4px;
                 line-height: 1.2;
                 transition: color .3s;
@@ -145,7 +145,7 @@ export function renderRivalryDetail() {
             }
             .rvd-pool-amount {
                 font-family: 'Inter', -apple-system, sans-serif;
-                font-size: 52px; font-weight: 600;
+                font-size: 38px; font-weight: 600;
                 letter-spacing: -1.5px; color: #111;
                 line-height: 1.0;
             }
@@ -200,7 +200,7 @@ export function renderRivalryDetail() {
             }
             .rvd-countdown-unit:last-child { border-right: none; }
             .rvd-countdown-val {
-                font-size: 32px; font-weight: 600; color: #111;
+                font-size: 24px; font-weight: 600; color: #111;
                 letter-spacing: -0.5px; line-height: 1.1;
                 font-family: 'Inter', -apple-system, sans-serif;
             }
@@ -234,7 +234,7 @@ export function renderRivalryDetail() {
                 border-right: 1px solid #ebebeb;
             }
             .rvd-vs-icon {
-                font-size: 28px; line-height: 1;
+                font-size: 22px; line-height: 1;
                 filter: drop-shadow(0 1px 2px rgba(59,0,1,0.15));
             }
             .rvd-vs-text {
@@ -337,7 +337,7 @@ export function renderRivalryDetail() {
                 justify-content: flex-end;
             }
             .rvd-chart-metric-value {
-                font-size: 28px; font-weight: 600; color: #111;
+                font-size: 22px; font-weight: 600; color: #111;
                 letter-spacing: -1px; line-height: 1.1;
                 font-family: 'Inter', -apple-system, sans-serif;
             }
@@ -623,7 +623,7 @@ export function renderRivalryDetail() {
                 .rvd-player-growth { font-size: 22px; letter-spacing: -0.5px; }
                 .rvd-player-avatar { width: 28px; height: 28px; font-size: 11px; }
                 .rvd-pool-hero { padding: 20px 0 16px; }
-                .rvd-pool-amount { font-size: 38px; }
+                .rvd-pool-amount { font-size: 28px; }
                 .rvd-stake-bar { flex-direction: column; height: auto; }
                 .rvd-stake-side { padding: 10px 16px; border: none !important; }
                 .rvd-stake-side.challenger { border-bottom: 1px solid #f0f0f0 !important; }

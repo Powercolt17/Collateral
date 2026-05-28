@@ -20,7 +20,7 @@ export function renderSEOLanding(params) {
                 margin-bottom: 28px;
             }
             .seo-h1 {
-                font-size: 48px; font-weight: 900; color: #111; letter-spacing: -1.5px;
+                font-size: 36px; font-weight: 900; color: #111; letter-spacing: -1.5px;
                 line-height: 1.15; margin-bottom: 20px;
             }
             .seo-h1 strong { color: #5C1414; }
@@ -48,7 +48,7 @@ export function renderSEOLanding(params) {
             .seo-how-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 40px; }
             .seo-how-step {}
             .seo-how-num {
-                font-size: 48px; font-weight: 900; color: #5C1414; opacity: 0.3;
+                font-size: 36px; font-weight: 900; color: #5C1414; opacity: 0.3;
                 margin-bottom: 12px; font-family: 'JetBrains Mono', monospace;
             }
             .seo-how-title { font-size: 16px; font-weight: 700; color: #111; margin-bottom: 8px; }
@@ -75,7 +75,7 @@ export function renderSEOLanding(params) {
                 text-align: center; padding: 80px 24px;
                 background: #111; color: #fff;
             }
-            .seo-bottom-h2 { font-size: 32px; font-weight: 800; margin-bottom: 16px; letter-spacing: -0.5px; }
+            .seo-bottom-h2 { font-size: 24px; font-weight: 800; margin-bottom: 16px; letter-spacing: -0.5px; }
             .seo-bottom-sub { font-size: 14px; color: #999; margin-bottom: 32px; }
             .seo-bottom-btn {
                 display: inline-block; background: #5C1414; color: #fff;
@@ -91,7 +91,7 @@ export function renderSEOLanding(params) {
             }
 
             @media (max-width: 768px) {
-                .seo-h1 { font-size: 32px; }
+                .seo-h1 { font-size: 24px; }
                 .seo-sub { font-size: 15px; }
                 .seo-how-grid { grid-template-columns: 1fr; gap: 24px; }
                 .seo-hero { padding: 80px 20px 40px; }

@@ -49,7 +49,7 @@ export function renderSources() {
             }
             .src-hero-left { flex: 1; }
             .src-hero-title {
-                font-size: 42px;
+                font-size: 32px;
                 font-weight: 300;
                 color: #111;
                 letter-spacing: -1.5px;
@@ -80,7 +80,7 @@ export function renderSources() {
                 align-items: center;
             }
             .src-stat-value {
-                font-size: 36px;
+                font-size: 28px;
                 font-weight: 300;
                 letter-spacing: -1px;
                 color: #111;

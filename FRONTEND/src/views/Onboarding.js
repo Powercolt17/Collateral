@@ -34,10 +34,10 @@ export function renderOnboarding() {
             .ob-icon {
                 width: 64px; height: 64px; background: #fef2f2; border-radius: 50%;
                 display: flex; align-items: center; justify-content: center;
-                margin-bottom: 28px; font-size: 28px;
+                margin-bottom: 28px; font-size: 22px;
             }
             .ob-title {
-                font-size: 28px; font-weight: 800; color: #111; margin-bottom: 12px;
+                font-size: 22px; font-weight: 800; color: #111; margin-bottom: 12px;
                 letter-spacing: -0.5px;
             }
             .ob-subtitle {

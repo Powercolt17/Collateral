@@ -18,7 +18,7 @@ export function renderLanding() {
                         <span class="logo-wordmark">Collateral</span>
                     </a>
                     <div style="display:flex; align-items:center;">
-                        <button class="ln-cta" id="lp-nav-cta">Sign Up or Sign In</button>
+                        <button class="ln-cta" id="lp-nav-cta">Sign In</button>
                         <button class="ch-hamburger" id="mobile-menu-btn" aria-label="Menu" onclick="window.app.toggleMobileMenu()">
                             <div class="ch-hamburger-lines">
                                 <span></span>

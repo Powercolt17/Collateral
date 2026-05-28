@@ -225,7 +225,7 @@ export function renderActiveContracts() {
                 margin: 0 auto;
             }
             .eq-market-title {
-                font-size: 48px;
+                font-size: 36px;
                 font-weight: 500;
                 letter-spacing: -2px;
                 margin-bottom: 24px;
@@ -265,7 +265,7 @@ export function renderActiveContracts() {
             }
             .eq-stat-group { display: flex; flex-direction: column; gap: 8px; }
             .eq-stat-val {
-                font-size: 42px;
+                font-size: 32px;
                 font-weight: 500;
                 letter-spacing: -1.5px;
                 display: flex;

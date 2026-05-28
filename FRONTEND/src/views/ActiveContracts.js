@@ -220,7 +220,7 @@ export function renderActiveContracts() {
 
             /* --- MARKET SECTION --- */
             .eq-market-header {
-                padding: 40px 32px 16px;
+                padding: 24px 32px 8px;
                 max-width: 1300px;
                 margin: 0 auto;
             }
@@ -228,7 +228,7 @@ export function renderActiveContracts() {
                 font-size: 36px;
                 font-weight: 500;
                 letter-spacing: -2px;
-                margin-bottom: 12px;
+                margin-bottom: 4px;
             }
             .eq-market-title strong { font-weight: 800; }
             .eq-market-live {
@@ -240,7 +240,7 @@ export function renderActiveContracts() {
                 color: #aaa;
                 text-transform: uppercase;
                 letter-spacing: 1px;
-                margin-bottom: 24px;
+                margin-bottom: 12px;
             }
             .eq-market-dot {
                 width: 6px; height: 6px;
@@ -261,7 +261,7 @@ export function renderActiveContracts() {
             .eq-stats-strip {
                 display: flex;
                 gap: 80px;
-                margin-bottom: 24px;
+                margin-bottom: 12px;
             }
             .eq-stat-group { display: flex; flex-direction: column; gap: 8px; }
             .eq-stat-val {
@@ -293,7 +293,7 @@ export function renderActiveContracts() {
                 align-items: flex-end;
                 padding-bottom: 2px;
                 border-bottom: 1px solid #f2f2f2;
-                margin-bottom: 16px;
+                margin-bottom: 8px;
             }
             .eq-tabs { display: flex; gap: 32px; }
             .eq-tab {
@@ -343,7 +343,7 @@ export function renderActiveContracts() {
                 display: flex;
                 justify-content: space-between;
                 align-items: center;
-                margin-bottom: 24px;
+                margin-bottom: 12px;
             }
             .eq-pills { display: flex; align-items: center; gap: 8px; }
             .eq-filter-lbl { 
@@ -773,12 +773,12 @@ export function renderActiveContracts() {
 
                 /* Market Header */
                 .eq-market-header {
-                    padding: 48px 20px 24px;
+                    padding: 24px 20px 12px;
                 }
                 .eq-market-title {
                     font-size: 22px;
                     letter-spacing: -1px;
-                    margin-bottom: 16px;
+                    margin-bottom: 4px;
                 }
 
                 /* Stats — compact horizontal row on mobile */
@@ -786,7 +786,7 @@ export function renderActiveContracts() {
                     display: grid;
                     grid-template-columns: repeat(3, 1fr);
                     gap: 0;
-                    margin-bottom: 32px;
+                    margin-bottom: 12px;
                     border: 1px solid #f0f0f0;
                     border-radius: 8px;
                     overflow: hidden;
@@ -1178,7 +1178,7 @@ export function renderActiveContracts() {
                 display: flex;
                 align-items: center;
                 gap: 8px;
-                margin-bottom: 16px;
+                margin-bottom: 8px;
             }
             .act-market-btn {
                 padding: 10px 20px;

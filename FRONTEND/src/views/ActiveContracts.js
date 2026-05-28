@@ -1202,7 +1202,7 @@ export function renderActiveContracts() {
         <div class="eq">
             <!-- Section 3: Live Market Header -->
             <section class="eq-market-header" id="live-market" data-reveal>
-                <div class="eq-tag">Live Contracts</div>
+
                 <h2 class="eq-market-title">Active <strong style="color: #5C1414;">Market</strong></h2>
                 <div class="eq-market-live">
                     <div class="eq-market-dot"></div>

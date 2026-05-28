@@ -220,15 +220,15 @@ export function renderActiveContracts() {
 
             /* --- MARKET SECTION --- */
             .eq-market-header {
-                padding: 100px 32px 40px;
+                padding: 40px 32px 16px;
                 max-width: 1300px;
                 margin: 0 auto;
             }
             .eq-market-title {
-                font-size: 28px;
+                font-size: 36px;
                 font-weight: 500;
                 letter-spacing: -2px;
-                margin-bottom: 24px;
+                margin-bottom: 12px;
             }
             .eq-market-title strong { font-weight: 800; }
             .eq-market-live {
@@ -240,7 +240,7 @@ export function renderActiveContracts() {
                 color: #aaa;
                 text-transform: uppercase;
                 letter-spacing: 1px;
-                margin-bottom: 48px;
+                margin-bottom: 24px;
             }
             .eq-market-dot {
                 width: 6px; height: 6px;
@@ -261,7 +261,7 @@ export function renderActiveContracts() {
             .eq-stats-strip {
                 display: flex;
                 gap: 80px;
-                margin-bottom: 64px;
+                margin-bottom: 24px;
             }
             .eq-stat-group { display: flex; flex-direction: column; gap: 8px; }
             .eq-stat-val {
@@ -293,7 +293,7 @@ export function renderActiveContracts() {
                 align-items: flex-end;
                 padding-bottom: 2px;
                 border-bottom: 1px solid #f2f2f2;
-                margin-bottom: 24px;
+                margin-bottom: 16px;
             }
             .eq-tabs { display: flex; gap: 32px; }
             .eq-tab {
@@ -343,7 +343,7 @@ export function renderActiveContracts() {
                 display: flex;
                 justify-content: space-between;
                 align-items: center;
-                margin-bottom: 48px;
+                margin-bottom: 24px;
             }
             .eq-pills { display: flex; align-items: center; gap: 8px; }
             .eq-filter-lbl { 
@@ -1178,7 +1178,7 @@ export function renderActiveContracts() {
                 display: flex;
                 align-items: center;
                 gap: 8px;
-                margin-bottom: 32px;
+                margin-bottom: 16px;
             }
             .act-market-btn {
                 padding: 10px 20px;

@@ -1227,8 +1227,7 @@ export function renderActiveContracts() {
                 
                 <!-- Top Market Toggles -->
                 <div class="act-market-toggles" id="act-market-toggles">
-                    <button class="act-market-btn active" data-type="all">Open Market</button>
-                    <button class="act-market-btn" data-type="solo">Solo Contracts</button>
+                    <button class="act-market-btn active" data-type="solo">Solo Contracts</button>
                     <button class="act-market-btn" data-type="rivalry">Rivalries</button>
                 </div>
 
@@ -1345,7 +1344,7 @@ export async function initActiveContracts() {
 
     // State
     const urlParams = new URLSearchParams(window.location.search);
-    let activeMarketType = urlParams.get('type') || 'all';
+    let activeMarketType = urlParams.get('type') || 'solo';
     let activeSort = 'trending_24h';
     let activeCategory = 'all';
     let minStake = 0; // Controlled by rules modal
@@ -1389,7 +1388,7 @@ export async function initActiveContracts() {
 
         try {
             const params = { sort: activeSort };
-            if (activeMarketType !== 'all') params.type = activeMarketType;
+            if (activeMarketType) params.type = activeMarketType;
             
             if (activeCategory !== 'all') params.category = activeCategory;
 
@@ -1733,7 +1732,7 @@ export async function initActiveContracts() {
             if (!btn) return;
             marketToggles.querySelectorAll('.act-market-btn').forEach(b => b.classList.remove('active'));
             btn.classList.add('active');
-            activeMarketType = btn.dataset.type || 'all';
+            activeMarketType = btn.dataset.type || 'solo';
             fetchFeed(false);
         });
     }

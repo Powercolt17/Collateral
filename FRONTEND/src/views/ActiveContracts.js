@@ -1759,7 +1759,7 @@ export async function initActiveContracts() {
             
             const type = btn.dataset.type || 'solo';
             if (type === 'rivalry') {
-                window.app.navigate('/rivalry');
+                window.router.navigate('/rivalry');
                 return;
             }
             

@@ -1300,17 +1300,15 @@ export function renderActiveContracts() {
                 padding: 0 4px;
             }
             .eq-duel-swords svg {
-                color: #ccc;
-                width: 16px;
-                height: 16px;
-                opacity: 0.6;
-                transition: all 0.3s ease;
+                color: #e5e7eb;
+                width: 32px;
+                height: 32px;
+                transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
             }
             .eq-duel-card:hover .eq-duel-swords svg {
-                opacity: 1;
-                transform: scale(1.1);
+                transform: scale(1.15);
                 color: #111;
-                filter: drop-shadow(0 2px 4px rgba(0,0,0,0.1));
+                filter: drop-shadow(0 4px 6px rgba(0,0,0,0.1));
             }
             .eq-duel-momentum {
                 height: 4px; display: flex; overflow: hidden;
@@ -1749,11 +1747,21 @@ export async function initActiveContracts() {
                         </div>
                         <div class="eq-duel-vs-divider">
                             <div class="eq-duel-swords">
-                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-                                    <path d="M8 21s-2-2-2-2m-2 2l4-4m-3.5 1.5L6 18M21 3l-8 8M21 3v4m0-4h-4" />
-                                    <path d="M11 15l-2 2-2-2 2-2" />
-                                    <path d="M16 21s2-2 2-2m2 2l-4-4m3.5 1.5L18 18M3 3l8 8M3 3v4m0-4h4" />
-                                    <path d="M13 15l2 2 2-2-2-2" />
+                                <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <defs>
+                                        <g id="sword">
+                                            <!-- Blade -->
+                                            <path d="M48 20 L50 5 L52 20 L52 70 L48 70 Z" fill="currentColor" />
+                                            <!-- Crossguard -->
+                                            <rect x="35" y="70" width="30" height="4" rx="1.5" fill="currentColor" />
+                                            <!-- Handle -->
+                                            <rect x="47" y="74" width="6" height="16" fill="currentColor" />
+                                            <!-- Pommel -->
+                                            <circle cx="50" cy="92" r="4.5" fill="currentColor" />
+                                        </g>
+                                    </defs>
+                                    <use href="#sword" transform="rotate(45 50 50)" />
+                                    <use href="#sword" transform="rotate(-45 50 50)" />
                                 </svg>
                             </div>
                         </div>

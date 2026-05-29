@@ -1299,9 +1299,18 @@ export function renderActiveContracts() {
                 flex-direction: column; gap: 0;
                 padding: 0 4px;
             }
-            .eq-duel-vs-text {
-                font-family: 'JetBrains Mono', monospace;
-                font-size: 9px; font-weight: 800; color: #ccc; letter-spacing: 0.15em;
+            .eq-duel-swords svg {
+                color: #ccc;
+                width: 16px;
+                height: 16px;
+                opacity: 0.6;
+                transition: all 0.3s ease;
+            }
+            .eq-duel-card:hover .eq-duel-swords svg {
+                opacity: 1;
+                transform: scale(1.1);
+                color: #111;
+                filter: drop-shadow(0 2px 4px rgba(0,0,0,0.1));
             }
             .eq-duel-momentum {
                 height: 4px; display: flex; overflow: hidden;
@@ -1739,7 +1748,14 @@ export async function initActiveContracts() {
                             ${challGrowth}
                         </div>
                         <div class="eq-duel-vs-divider">
-                            <span class="eq-duel-vs-text">VS</span>
+                            <div class="eq-duel-swords">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M8 21s-2-2-2-2m-2 2l4-4m-3.5 1.5L6 18M21 3l-8 8M21 3v4m0-4h-4" />
+                                    <path d="M11 15l-2 2-2-2 2-2" />
+                                    <path d="M16 21s2-2 2-2m2 2l-4-4m3.5 1.5L18 18M3 3l8 8M3 3v4m0-4h4" />
+                                    <path d="M13 15l2 2 2-2-2-2" />
+                                </svg>
+                            </div>
                         </div>
                         <div class="eq-duel-player right">
                             <span class="eq-duel-player-label">Opponent</span>

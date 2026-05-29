@@ -1664,6 +1664,10 @@ export async function initActiveContracts() {
             oppFunded: !!oppPart?.funded,
             challengerUserId: r.challengerUserId,
             opponentUserId: r.opponentUserId,
+            deadlineUtc: r.deadlineUtc,
+            activatedAt: r.activatedAt,
+            createdAt: r.createdAt,
+            durationDays: r.durationDays
         };
     }
 

@@ -277,83 +277,84 @@
         background: #FFFFFF;
         display: flex; flex-direction: column;
         align-items: center; justify-content: center;
-        transition: opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1), visibility 0.6s;
+        transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), visibility 0.8s;
     ">
         <style>
-            @keyframes cl-premium-shimmer {
-                0% { background-position: 200% 50%; }
-                100% { background-position: -200% 50%; }
-            }
-            @keyframes cl-premium-pulse {
-                0%, 100% { opacity: 0.15; transform: translate(-50%, -50%) scale(0.98); }
-                50% { opacity: 0.3; transform: translate(-50%, -50%) scale(1); }
-            }
             #loading-screen.loaded {
                 opacity: 0;
                 visibility: hidden;
                 pointer-events: none;
+                transform: scale(1.02);
             }
-            .cl-loader-text {
+            .cl-brand-container {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                gap: 18px;
+                margin-top: -30px;
+            }
+            .cl-loader-brand {
                 font-family: 'Science', 'Azonix', 'Corke', 'Molgan', 'Aquire', sans-serif !important;
                 font-size: 28px !important;
-                letter-spacing: 1px !important;
                 font-weight: bold !important;
-                background: linear-gradient(
-                    90deg, 
-                    rgba(0,0,0,0.08) 0%, 
-                    rgba(0,0,0,0.08) 40%, 
-                    #8B2020 48%, 
-                    #ff4d4d 50%,
-                    #8B2020 52%,
-                    rgba(0,0,0,0.08) 60%, 
-                    rgba(0,0,0,0.08) 100%
-                );
-                background-size: 300% auto;
-                color: transparent !important;
-                -webkit-background-clip: text !important;
-                background-clip: text !important;
-                animation: cl-premium-shimmer 2.5s cubic-bezier(0.25, 0.1, 0.25, 1) infinite;
-                margin: 0; padding: 0;
-                position: relative;
-                z-index: 2;
-                white-space: nowrap;
+                color: #111 !important;
+                letter-spacing: 2px;
+                animation: cl-track-in 1.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+                opacity: 0;
                 text-transform: none !important;
+                margin-left: 2px; /* Visual centering adjustment for letter-spacing */
             }
-            .cl-loader-glow {
-                position: absolute;
-                top: 50%; left: 50%;
-                transform: translate(-50%, -50%);
-                font-family: 'Science', 'Azonix', 'Corke', 'Molgan', 'Aquire', sans-serif !important;
-                font-size: 28px !important;
-                letter-spacing: 1px !important;
-                font-weight: bold !important;
-                color: #8B2020 !important;
-                filter: blur(12px);
-                animation: cl-premium-pulse 2s ease-in-out infinite;
-                z-index: 1;
-                white-space: nowrap;
-                text-transform: none !important;
+            .cl-loader-line-container {
+                width: 100%;
+                max-width: 150px;
+                height: 1px;
+                background: #f0f0f0;
+                border-radius: 2px;
+                overflow: hidden;
+                opacity: 0;
+                animation: cl-fade-in 0.6s ease forwards 0.4s;
             }
-            .cl-loader-sub {
+            .cl-loader-line {
+                width: 0%;
+                height: 100%;
+                background: #5C1414;
+                animation: cl-load-progress 1.5s cubic-bezier(0.8, 0, 0.2, 1) forwards 0.4s;
+            }
+            .cl-loader-status {
                 font-family: 'JetBrains Mono', monospace;
                 font-size: 9px;
-                color: #444;
+                color: #888;
                 letter-spacing: 0.2em;
                 text-transform: uppercase;
-                margin-top: 32px;
-                animation: cl-pulse-text 2s ease-in-out infinite;
+                opacity: 0;
+                animation: cl-fade-in 0.6s ease forwards 0.6s, cl-pulse-text 2s ease-in-out infinite 0.6s;
+            }
+            @keyframes cl-track-in {
+                0% { opacity: 0; letter-spacing: -2px; transform: translateY(10px); }
+                100% { opacity: 1; letter-spacing: 2px; transform: translateY(0); }
+            }
+            @keyframes cl-fade-in {
+                0% { opacity: 0; }
+                100% { opacity: 1; }
             }
             @keyframes cl-pulse-text {
-                0%, 100% { opacity: 0.3; }
-                50% { opacity: 0.7; }
+                0%, 100% { opacity: 0.4; }
+                50% { opacity: 0.8; }
+            }
+            @keyframes cl-load-progress {
+                0% { width: 0%; }
+                40% { width: 70%; }
+                100% { width: 100%; }
             }
         </style>
 
-        <div style="position:relative;display:flex;justify-content:center;align-items:center;height:44px;">
-            <div class="cl-loader-glow">Collateral</div>
-            <div class="cl-loader-text">Collateral</div>
+        <div class="cl-brand-container">
+            <div class="cl-loader-brand">Collateral</div>
+            <div class="cl-loader-line-container">
+                <div class="cl-loader-line"></div>
+            </div>
+            <div class="cl-loader-status">Initializing Protocol</div>
         </div>
-        <div class="cl-loader-sub">Initializing Protocol</div>
     </div>
 
     <!-- Global Banner -->

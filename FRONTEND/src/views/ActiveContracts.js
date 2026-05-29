@@ -1231,7 +1231,7 @@ export function renderActiveContracts() {
             }
             .eq-duel-card::before {
                 content: ''; position: absolute; top: 0; left: 0;
-                width: 3px; height: 0; background: #dc2626;
+                width: 3px; height: 0; background: var(--red);
                 transition: height 0.4s ease;
             }
             .eq-duel-card:hover::before { height: 100%; }
@@ -1249,7 +1249,7 @@ export function renderActiveContracts() {
             .eq-duel-card-status {
                 font-family: 'JetBrains Mono', monospace;
                 font-size: 9px; font-weight: 700; letter-spacing: 1px;
-                text-transform: uppercase; color: #10b981;
+                text-transform: uppercase; color: var(--green);
                 display: flex; align-items: center; gap: 6px;
             }
             .eq-duel-card-status .dot {
@@ -1291,8 +1291,8 @@ export function renderActiveContracts() {
                 font-size: 26px; font-weight: 500; color: #111;
                 letter-spacing: -1px; margin-top: 2px; line-height: 1.1;
             }
-            .eq-duel-player-growth.leading { color: #10b981; }
-            .eq-duel-player-growth.trailing { color: #dc2626; }
+            .eq-duel-player-growth.leading { color: var(--green); }
+            .eq-duel-player-growth.trailing { color: var(--red); }
             .eq-duel-vs-divider {
                 display: flex; align-items: center; justify-content: center;
                 width: 48px; flex-shrink: 0;
@@ -1307,8 +1307,8 @@ export function renderActiveContracts() {
                 height: 4px; display: flex; overflow: hidden;
                 margin: 0 28px 0; background: #f0f0f0; border-radius: 2px;
             }
-            .eq-duel-momentum-left { background: #10b981; transition: width .6s ease; border-radius: 2px 0 0 2px; }
-            .eq-duel-momentum-right { background: #dc2626; transition: width .6s ease; border-radius: 0 2px 2px 0; }
+            .eq-duel-momentum-left { background: var(--green); transition: width .6s ease; border-radius: 2px 0 0 2px; }
+            .eq-duel-momentum-right { background: var(--red); transition: width .6s ease; border-radius: 0 2px 2px 0; }
             
             .eq-duel-card-actions {
                 display: flex; gap: 0; border-top: 1px solid #f0f0f0;
@@ -1322,9 +1322,9 @@ export function renderActiveContracts() {
                 justify-content: center; gap: 8px;
             }
             .eq-duel-action-accept { background: #0a0a0a; color: #fff; }
-            .eq-duel-action-accept:hover { background: #dc2626; }
+            .eq-duel-action-accept:hover { background: var(--red); }
             .eq-duel-action-decline { background: #fff; color: #888; border-left: 1px solid #f0f0f0 !important; }
-            .eq-duel-action-decline:hover { color: #dc2626; }
+            .eq-duel-action-decline:hover { color: var(--red); }
             
             .eq-duel-card-bottom {
                 display: flex; align-items: flex-end; justify-content: space-between;
@@ -1343,7 +1343,7 @@ export function renderActiveContracts() {
                 font-family: 'JetBrains Mono', monospace;
                 font-size: 9px; color: #bbb; letter-spacing: 0.5px;
             }
-            .eq-duel-card-time.urgent { color: #dc2626; font-weight: 700; }
+            .eq-duel-card-time.urgent { color: var(--red); font-weight: 700; }
             .eq-duel-card-provider-pill {
                 display: inline-flex; align-items: center; padding: 2px 7px;
                 font-family: 'JetBrains Mono', monospace;
@@ -1698,8 +1698,8 @@ export async function initActiveContracts() {
             ? '<span class="eq-duel-player-growth awaiting" style="font-family:\'Inter\',monospace;letter-spacing:0.1em;text-transform:uppercase;color:#ddd;font-size:12px;">FORMING</span>'
             : `<span class="eq-duel-player-growth ${!isLeadingChallenger ? 'leading' : 'trailing'}">${r.opponent.growth > 0 ? '+' : ''}${r.opponent.growth}%</span>`;
 
-        const challDot = !isPreActive ? `<span class="eq-duel-lead-dot" style="background:${isLeadingChallenger ? '#10b981' : '#dc2626'}"></span>` : '';
-        const oppDot = !isPreActive ? `<span class="eq-duel-lead-dot" style="background:${!isLeadingChallenger ? '#10b981' : '#dc2626'}"></span>` : '';
+        const challDot = !isPreActive ? `<span class="eq-duel-lead-dot" style="background:${isLeadingChallenger ? 'var(--green)' : 'var(--red)'}"></span>` : '';
+        const oppDot = !isPreActive ? `<span class="eq-duel-lead-dot" style="background:${!isLeadingChallenger ? 'var(--green)' : 'var(--red)'}"></span>` : '';
 
         let actionsHtml = '';
         if (isPending) {

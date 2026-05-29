@@ -1565,12 +1565,20 @@ export async function initActiveContracts() {
         if (isFrozen) return; // Don't update if user is executing
 
         try {
-            const params = { sort: activeSort };
-            if (activeMarketType) params.type = activeMarketType;
+            let data;
             
-            if (activeCategory !== 'all') params.category = activeCategory;
-
-            const data = await getMarketListings(params);
+            if (activeMarketType === 'rivalry') {
+                const res = await api.getRivalries({ limit: 50 });
+                if (res.ok && res.rivalries) {
+                    data = { listings: res.rivalries.map(transformRivalry), stats: {} };
+                } else {
+                    data = { listings: [], stats: {} };
+                }
+            } else {
+                const params = { sort: activeSort };
+                if (activeCategory !== 'all') params.category = activeCategory;
+                data = await getMarketListings(params);
+            }
 
             if (isPoll) {
                 // If data changed, auto-refresh the grid
@@ -1635,6 +1643,46 @@ export async function initActiveContracts() {
         return colors[provider] || '#111';
     }
 
+
+    const PLATFORM_MAP = { stripe: 'stripe', shopify: 'shopify', amazon: 'amazon', youtube: 'youtube' };
+    const METRIC_LABELS = { 'revenue_growth': 'Revenue Growth', 'mrr_growth': 'MRR Growth', 'subscriber_growth': 'Subscriber Growth' };
+    const STATE_TO_STATUS = { 'CHALLENGE_ISSUED': 'pending', 'ACCEPTED': 'pending', 'LIVE': 'active', 'SETTLED': 'settled', 'FORFEITED': 'settled' };
+
+    function transformRivalry(r) {
+        const challPart = r.participants?.find(p => p.role === 'challenger');
+        const oppPart = r.participants?.find(p => p.role === 'opponent');
+        const now = new Date();
+        const end = r.deadlineUtc ? new Date(r.deadlineUtc) : new Date((new Date(r.activatedAt || r.createdAt)).getTime() + (r.durationDays || 30) * 86400000);
+        const daysLeft = Math.max(0, Math.ceil((end - now) / 86400000));
+
+        const metricName = METRIC_LABELS[r.metricType] || r.metricType || 'Revenue Growth';
+
+        return {
+            id: r.id,
+            status: STATE_TO_STATUS[r.state] || 'active',
+            state: r.state,
+            metric: metricName,
+            provider: PLATFORM_MAP[r.platform] || (r.platform || 'stripe').toLowerCase(),
+            isOpen: !r.opponentUserId || r.opponentUsername === 'unknown' || !r.opponentUsername,
+            challenger: {
+                name: (r.challengerUsername || 'unknown'),
+                growth: Math.max(0, parseFloat(challPart?.percentageDelta || challPart?.percentage_delta || challPart?.growthPercent || challPart?.currentDelta || 0)),
+                baseline: parseFloat(challPart?.baselineValue || 0),
+            },
+            opponent: {
+                name: r.opponentUserId ? (r.opponentUsername || 'unknown') : 'OPEN OPPONENT',
+                growth: Math.max(0, parseFloat(oppPart?.percentageDelta || oppPart?.percentage_delta || oppPart?.growthPercent || oppPart?.currentDelta || 0)),
+                baseline: parseFloat(oppPart?.baselineValue || 0),
+            },
+            stake: (r.stakePerSideCents || 0) / 100,
+            daysLeft,
+            totalDays: r.durationDays || 30,
+            challFunded: !!challPart?.funded,
+            oppFunded: !!oppPart?.funded,
+            challengerUserId: r.challengerUserId,
+            opponentUserId: r.opponentUserId,
+        };
+    }
 
     function renderRivalryCard(r) {
         const isLeadingChallenger = r.challenger.growth >= r.opponent.growth;

@@ -1221,192 +1221,135 @@ export function renderActiveContracts() {
             .act-market-toggles[data-active="solo"] .act-market-indicator { transform: translateX(0); }
             .act-market-toggles[data-active="rivalry"] .act-market-indicator { transform: translateX(100%); }
 
-            /* --- ULTRA PREMIUM LIGHT RIVALRY CARD --- */
+            /* --- REVERTED RIVALRY DUEL CARDS (FIT TO GRID) --- */
             .eq-duel-card {
-                background: #ffffff;
-                border: 1px solid #f2f2f2;
-                border-radius: 16px;
-                padding: 0;
-                color: #1f2937;
-                position: relative;
-                overflow: hidden;
-                box-shadow: 0 10px 30px rgba(0,0,0,0.06);
-                display: flex;
-                flex-direction: column;
-                cursor: pointer;
-                transition: transform 0.2s ease, box-shadow 0.2s ease;
-                font-family: 'Inter', sans-serif;
+                background: #fff; border: 1px solid #eaeaea; padding: 0;
+                transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+                cursor: pointer; position: relative; overflow: hidden;
+                display: flex; flex-direction: column; height: 100%;
+                border-radius: 12px;
             }
+            .eq-duel-card::before {
+                content: ''; position: absolute; top: 0; left: 0;
+                width: 3px; height: 0; background: #dc2626;
+                transition: height 0.4s ease;
+            }
+            .eq-duel-card:hover::before { height: 100%; }
             .eq-duel-card:hover {
-                transform: translateY(-4px);
-                box-shadow: 0 16px 40px rgba(0,0,0,0.1);
+                border-color: #ddd;
+                box-shadow: 0 8px 32px rgba(0,0,0,0.06);
+                transform: translateY(-3px);
             }
-            .eq-duel-header {
-                display: flex;
-                justify-content: space-between;
+            .eq-duel-card:active { transform: translateY(-1px); }
+            .eq-duel-card-inner { padding: 28px 28px 0; flex: 1; }
+            .eq-duel-card-header {
+                display: flex; align-items: center; justify-content: space-between;
+                margin-bottom: 12px;
+            }
+            .eq-duel-card-status {
+                font-family: 'JetBrains Mono', monospace;
+                font-size: 9px; font-weight: 700; letter-spacing: 1px;
+                text-transform: uppercase; color: #10b981;
+                display: flex; align-items: center; gap: 6px;
+            }
+            .eq-duel-card-status .dot {
+                width: 5px; height: 5px; border-radius: 50%;
+                background: currentcolor;
+            }
+            .eq-duel-card-status.pending { color: #d97706; }
+            .eq-duel-card-status.ended { color: #9ca3af; }
+            .eq-duel-card-metric {
+                font-size: 16px; font-weight: 700; color: #111;
+                margin-bottom: 20px; letter-spacing: -0.3px;
+                line-height: 1.3;
+            }
+            .eq-duel-card-metric span { font-weight: 400; }
+            
+            .eq-duel-versus {
+                display: grid; grid-template-columns: 1fr auto 1fr;
                 align-items: center;
-                padding: 24px 24px 12px 24px;
-            }
-            .eq-duel-metric-wrap {
-                display: flex;
-                align-items: center;
-                gap: 12px;
-            }
-            .eq-duel-metric {
-                font-size: 14px;
-                font-weight: 800;
-                letter-spacing: 0.05em;
-                text-transform: uppercase;
-                color: #374151;
-            }
-            .eq-duel-tag {
-                font-size: 11px;
-                font-weight: 700;
-                letter-spacing: 0.05em;
-                text-transform: uppercase;
-                padding: 4px 8px;
-                border-radius: 4px;
-            }
-            .eq-duel-tag.rivalry {
-                color: #b91c1c;
-                border: 1px solid #fca5a5;
-                background: #fff;
-            }
-            .eq-duel-status {
-                font-size: 11px;
-                font-weight: 700;
-                letter-spacing: 0.05em;
-                text-transform: uppercase;
-                padding: 6px 12px;
-                border-radius: 6px;
-                display: flex;
-                align-items: center;
-                gap: 6px;
-            }
-            .eq-duel-status.locked { color: #059669; border: 1px solid #6ee7b7; background: #fff; }
-            .eq-duel-status.pending { color: #d97706; border: 1px solid #fcd34d; background: #fff; }
-            .eq-duel-status.settled { color: #4b5563; border: 1px solid #9ca3af; background: #fff; }
-            .eq-duel-arena {
-                display: grid;
-                grid-template-columns: 1fr 1fr;
-                position: relative;
-                padding: 16px 24px 24px 24px;
-            }
-            .eq-duel-vs {
-                position: absolute;
-                top: 50%;
-                left: 50%;
-                transform: translate(-50%, -50%);
-                width: 72px;
-                height: 72px;
-                background: #fff;
-                border-radius: 50%;
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                z-index: 10;
-                box-shadow: 0 4px 16px rgba(0,0,0,0.08), inset 0 0 0 1px rgba(0,0,0,0.02);
-            }
-            .eq-duel-vs svg {
-                width: 40px;
-                height: 40px;
-                color: #6b7280;
+                margin-bottom: 20px;
             }
             .eq-duel-player {
-                display: flex;
-                flex-direction: column;
-                gap: 8px;
+                display: flex; flex-direction: column; gap: 3px;
             }
-            .eq-duel-player.right { align-items: flex-end; text-align: right; }
-            .eq-duel-name {
-                font-size: 18px;
-                font-weight: 700;
-                color: #1f2937;
-                letter-spacing: -0.01em;
+            .eq-duel-player.right { text-align: right; }
+            .eq-duel-player-label {
+                font-family: 'JetBrains Mono', monospace;
+                font-size: 8px; font-weight: 700; letter-spacing: 1.2px;
+                color: #bbb; text-transform: uppercase;
             }
-            .eq-duel-growth {
-                font-size: 32px;
-                font-weight: 700;
-                letter-spacing: -0.03em;
+            .eq-duel-player-name {
+                font-family: 'JetBrains Mono', monospace;
+                font-size: 11px; font-weight: 600; color: #333; letter-spacing: 0.02em;
+                display: flex; align-items: center; gap: 5px;
+                white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
             }
-            .eq-duel-growth.green { color: #10b981; }
-            .eq-duel-growth.red { color: #ef4444; }
-            .eq-duel-growth.gray { color: #9ca3af; }
-            .eq-duel-momentum-wrap {
-                padding: 0 24px 24px 24px;
+            .eq-duel-player.right .eq-duel-player-name { justify-content: flex-end; }
+            .eq-duel-lead-dot { width: 5px; height: 5px; border-radius: 50%; flex-shrink: 0; }
+            .eq-duel-player-growth {
+                font-size: 26px; font-weight: 500; color: #111;
+                letter-spacing: -1px; margin-top: 2px; line-height: 1.1;
+            }
+            .eq-duel-player-growth.leading { color: #10b981; }
+            .eq-duel-player-growth.trailing { color: #dc2626; }
+            .eq-duel-vs-divider {
+                display: flex; align-items: center; justify-content: center;
+                width: 48px; flex-shrink: 0;
+                flex-direction: column; gap: 0;
+                padding: 0 4px;
+            }
+            .eq-duel-vs-text {
+                font-family: 'JetBrains Mono', monospace;
+                font-size: 9px; font-weight: 800; color: #ccc; letter-spacing: 0.15em;
             }
             .eq-duel-momentum {
-                height: 4px;
-                width: 100%;
-                display: flex;
-                border-radius: 2px;
-                overflow: hidden;
-                background: #f3f4f6;
+                height: 4px; display: flex; overflow: hidden;
+                margin: 0 28px 0; background: #f0f0f0; border-radius: 2px;
             }
-            .eq-duel-momentum-left { height: 100%; background: #10b981; transition: width 0.8s ease; }
-            .eq-duel-momentum-right { height: 100%; background: #b91c1c; transition: width 0.8s ease; }
-            .eq-duel-footer {
-                display: flex;
-                justify-content: space-between;
-                align-items: center;
-                padding: 20px 24px;
-                background: #f9fafb;
-                border-top: 1px solid #f3f4f6;
+            .eq-duel-momentum-left { background: #10b981; transition: width .6s ease; border-radius: 2px 0 0 2px; }
+            .eq-duel-momentum-right { background: #dc2626; transition: width .6s ease; border-radius: 0 2px 2px 0; }
+            
+            .eq-duel-card-actions {
+                display: flex; gap: 0; border-top: 1px solid #f0f0f0;
             }
-            .eq-duel-stake {
-                font-size: 20px;
-                font-weight: 800;
-                color: #1f2937;
-                display: flex;
-                align-items: center;
-                gap: 8px;
+            .eq-duel-action-btn {
+                flex: 1; padding: 14px; border: none;
+                font-family: 'JetBrains Mono', monospace;
+                font-size: 11px; font-weight: 700; letter-spacing: 1.5px;
+                cursor: pointer; transition: all .15s ease;
+                text-transform: uppercase; display: flex; align-items: center;
+                justify-content: center; gap: 8px;
             }
-            .eq-duel-stake span {
-                font-size: 11px;
-                color: #6b7280;
-                text-transform: uppercase;
-                letter-spacing: 0.05em;
-                font-weight: 700;
+            .eq-duel-action-accept { background: #0a0a0a; color: #fff; }
+            .eq-duel-action-accept:hover { background: #dc2626; }
+            .eq-duel-action-decline { background: #fff; color: #888; border-left: 1px solid #f0f0f0 !important; }
+            .eq-duel-action-decline:hover { color: #dc2626; }
+            
+            .eq-duel-card-bottom {
+                display: flex; align-items: flex-end; justify-content: space-between;
+                padding: 16px 28px 24px;
+                border-top: 1px solid #f5f5f5;
+                margin-top: auto;
             }
-            .eq-duel-footer-center {
-                font-size: 12px;
-                font-weight: 700;
-                color: #6b7280;
-                text-transform: uppercase;
-                letter-spacing: 0.05em;
+            .eq-duel-card-stake { display: flex; flex-direction: column; gap: 2px; }
+            .eq-duel-card-stake-val { font-size: 22px; font-weight: 500; color: #111; letter-spacing: -0.5px; }
+            .eq-duel-card-stake-lbl {
+                font-family: 'JetBrains Mono', monospace;
+                font-size: 8px; font-weight: 700; color: #ccc;
+                letter-spacing: 1px; text-transform: uppercase;
             }
-            .eq-duel-provider {
-                font-size: 12px;
-                font-weight: 800;
-                padding: 6px 12px;
-                border-radius: 6px;
-                background: #f3f4f6;
-                color: #7f1d1d;
-                border: 1px solid #e5e7eb;
-                text-transform: uppercase;
-                letter-spacing: 0.05em;
+            .eq-duel-card-time {
+                font-family: 'JetBrains Mono', monospace;
+                font-size: 9px; color: #bbb; letter-spacing: 0.5px;
             }
-            .eq-duel-actions {
-                padding: 0 24px 24px 24px;
-                display: flex;
-                gap: 12px;
+            .eq-duel-card-time.urgent { color: #dc2626; font-weight: 700; }
+            .eq-duel-card-provider-pill {
+                display: inline-flex; align-items: center; padding: 2px 7px;
+                font-family: 'JetBrains Mono', monospace;
+                font-size: 7px; font-weight: 700; letter-spacing: 0.5px;
+                border-radius: 4px; color: #fff; margin-bottom: 4px;
             }
-            .eq-duel-btn {
-                flex: 1;
-                padding: 12px;
-                border-radius: 8px;
-                font-size: 12px;
-                font-weight: 800;
-                letter-spacing: 0.05em;
-                text-transform: uppercase;
-                cursor: pointer;
-                border: none;
-                transition: all 0.2s;
-            }
-            .eq-duel-btn.primary { background: #111; color: #fff; }
-            .eq-duel-btn.primary:hover { background: #333; }
-            .eq-duel-btn.secondary { background: #fff; color: #111; border: 1px solid #d1d5db; }
-            .eq-duel-btn.secondary:hover { background: #f3f4f6; }
 
         </style>
 
@@ -1724,44 +1667,46 @@ export async function initActiveContracts() {
         const isPreActive = isPending || isAccepted;
         const isSettled = r.status === 'settled';
 
-        let statusText = 'LOCKED';
-        let statusClass = 'locked';
-        let lockIconHtml = `<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>`;
+        const statusClass = isPreActive ? 'pending' : isSettled ? 'ended' : '';
+        const statusLabel = isPending ? 'FORMING' : isAccepted ? 'AWAITING FUNDS' : isSettled ? 'SETTLED' : 'LOCKED';
         
-        if (isPending) {
-            statusText = 'FORMING';
-            statusClass = 'pending';
-            lockIconHtml = `<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>`;
-        } else if (isAccepted) {
-            statusText = 'AWAITING FUNDS';
-            statusClass = 'pending';
-            lockIconHtml = `<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>`;
-        } else if (isSettled) {
-            statusText = 'SETTLED';
-            statusClass = 'settled';
-            lockIconHtml = `<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>`;
-        }
+        const deadline = new Date(r.open_until || Date.now() + 86400000);
+        const now = new Date();
+        const timeLeftMs = deadline - now;
+        const daysLeft = Math.ceil(timeLeftMs / (1000 * 60 * 60 * 24));
+        const hoursLeft = Math.ceil(timeLeftMs / (1000 * 60 * 60));
+        
+        const timeLabel = isSettled ? 'SETTLED' : daysLeft <= 1 ? `${hoursLeft}H REMAINING` : `${daysLeft}D REMAINING`;
+        const timeUrgent = !isSettled && daysLeft <= 3;
+        
+        const shortId = (r.id || '').substring(0, 8);
 
         const totalGrowth = Math.abs(r.challenger.growth) + Math.abs(r.opponent.growth);
         let leftPct = 50; let rightPct = 50;
+        
         if (!isPreActive && totalGrowth > 0) {
             const rawLeft = (Math.abs(r.challenger.growth) / totalGrowth) * 100;
             leftPct = isLeadingChallenger ? Math.min(rawLeft + 10, 95) : Math.max(rawLeft - 10, 5);
             rightPct = 100 - leftPct;
         }
 
-        const challColor = isPreActive ? 'gray' : (r.challenger.growth >= 0 ? 'green' : 'red');
-        const oppColor = isPreActive ? 'gray' : (r.opponent.growth >= 0 ? 'green' : 'red');
+        const challGrowth = isPreActive
+            ? '<span class="eq-duel-player-growth awaiting" style="font-family:\'Inter\',monospace;letter-spacing:0.1em;text-transform:uppercase;color:#ddd;font-size:12px;">FORMING</span>'
+            : `<span class="eq-duel-player-growth ${isLeadingChallenger ? 'leading' : 'trailing'}">${r.challenger.growth > 0 ? '+' : ''}${r.challenger.growth}%</span>`;
+            
+        const oppGrowth = isPreActive
+            ? '<span class="eq-duel-player-growth awaiting" style="font-family:\'Inter\',monospace;letter-spacing:0.1em;text-transform:uppercase;color:#ddd;font-size:12px;">FORMING</span>'
+            : `<span class="eq-duel-player-growth ${!isLeadingChallenger ? 'leading' : 'trailing'}">${r.opponent.growth > 0 ? '+' : ''}${r.opponent.growth}%</span>`;
 
-        const challGrowthStr = isPreActive ? '---' : `${r.challenger.growth > 0 ? '+' : ''}${r.challenger.growth}%`;
-        const oppGrowthStr = isPreActive ? '---' : `${r.opponent.growth > 0 ? '+' : ''}${r.opponent.growth}%`;
+        const challDot = !isPreActive ? `<span class="eq-duel-lead-dot" style="background:${isLeadingChallenger ? '#10b981' : '#dc2626'}"></span>` : '';
+        const oppDot = !isPreActive ? `<span class="eq-duel-lead-dot" style="background:${!isLeadingChallenger ? '#10b981' : '#dc2626'}"></span>` : '';
 
-        let actionHtml = '';
+        let actionsHtml = '';
         if (isPending) {
             if (r.isOpen) {
-                actionHtml = `<div class="eq-duel-actions"><button class="eq-duel-btn primary" onclick="event.stopPropagation();window.app.acceptRivalry('${r.id}')">Accept Challenge</button></div>`;
+                actionsHtml = `<div class="eq-duel-card-actions"><button class="eq-duel-action-btn eq-duel-action-accept" onclick="event.stopPropagation();window.app.acceptRivalry('${r.id}')" style="flex:1;">ACCEPT</button></div>`;
             } else {
-                actionHtml = `<div class="eq-duel-actions"><button class="eq-duel-btn primary" onclick="event.stopPropagation();window.app.acceptRivalry('${r.id}')">Accept</button><button class="eq-duel-btn secondary" onclick="event.stopPropagation();window.app.declineRivalry('${r.id}')">Decline</button></div>`;
+                actionsHtml = `<div class="eq-duel-card-actions"><button class="eq-duel-action-btn eq-duel-action-accept" onclick="event.stopPropagation();window.app.acceptRivalry('${r.id}')">ACCEPT</button><button class="eq-duel-action-btn eq-duel-action-decline" onclick="event.stopPropagation();window.app.declineRivalry('${r.id}')">DECLINE</button></div>`;
             }
         } else if (isAccepted) {
             const myUserId = window.appState?.userId;
@@ -1769,61 +1714,56 @@ export async function initActiveContracts() {
             const iAmOpponent = myUserId && r.opponentUserId === myUserId;
             const myFunded = (iAmChallenger && r.challFunded) || (iAmOpponent && r.oppFunded);
             if (myFunded) {
-                actionHtml = `<div class="eq-duel-actions"><div style="flex:1;text-align:center;font-size:10px;color:#888;padding:12px;border:1px solid #e5e7eb;border-radius:8px;font-weight:700;">WAITING ON OPPONENT</div></div>`;
+                actionsHtml = `<div class="eq-duel-card-actions"><div style="flex:1;padding:14px 16px;background:#f8f8f8;color:#999;text-align:center;font-family:'JetBrains Mono', monospace;font-size:10px;font-weight:700;letter-spacing:0.08em;border-top:1px solid #eee;">WAITING FOR OPPONENT</div></div>`;
             } else {
-                actionHtml = `<div class="eq-duel-actions"><button class="eq-duel-btn primary" onclick="event.stopPropagation();window.app.fundRivalry('${r.id}')">Fund Your Side</button></div>`;
+                actionsHtml = `<div class="eq-duel-card-actions"><button class="eq-duel-action-btn eq-duel-action-accept" onclick="event.stopPropagation();window.app.fundRivalry('${r.id}')" style="flex:1;">FUND YOUR SIDE</button></div>`;
             }
         }
+        
+        const providerColor = r.provider === 'stripe' ? '#635bff' : r.provider === 'shopify' ? '#96bf48' : '#111';
 
         return `
-            <div class="eq-duel-card" data-id="${r.id}" onclick="window.router.navigate('/rivalry/${r.id}')">
-                <div class="eq-duel-header">
-                    <div class="eq-duel-metric-wrap">
-                        <span class="eq-duel-metric">${r.metric.split(' ')[0]}</span>
-                        <span class="eq-duel-tag rivalry">RIVALRY</span>
+            <div class="eq-duel-card" data-status="${r.status}" data-id="${r.id}" onclick="window.router.navigate('/rivalry/${r.id}')">
+                <div class="eq-duel-card-inner">
+                    <div class="eq-duel-card-header">
+                        <div class="eq-duel-card-status ${statusClass}">
+                            <span class="dot"></span>
+                            ${statusLabel}
+                        </div>
                     </div>
-                    <div class="eq-duel-status ${statusClass}">
-                        ${lockIconHtml}
-                        ${statusText}
-                    </div>
-                </div>
-                
-                <div class="eq-duel-arena">
-                    <div class="eq-duel-vs">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-                            <path d="M8 21s-2-2-2-2m-2 2l4-4m-3.5 1.5L6 18M21 3l-8 8M21 3v4m0-4h-4" />
-                            <path d="M11 15l-2 2-2-2 2-2" />
-                            <path d="M16 21s2-2 2-2m2 2l-4-4m3.5 1.5L18 18M3 3l8 8M3 3v4m0-4h4" />
-                            <path d="M13 15l2 2 2-2-2-2" />
-                        </svg>
-                    </div>
-                    
-                    <div class="eq-duel-player">
-                        <span class="eq-duel-name">${r.challenger.name}</span>
-                        <span class="eq-duel-growth ${challColor}">${challGrowthStr}</span>
-                    </div>
-                    
-                    <div class="eq-duel-player right">
-                        <span class="eq-duel-name">${r.opponent.name}</span>
-                        <span class="eq-duel-growth ${oppColor}">${oppGrowthStr}</span>
+                    <div class="eq-duel-card-metric">${r.metric} <span style="color:#ccc;font-size:10px;font-family:'JetBrains Mono', monospace;margin-left:6px;">ID:${shortId}</span></div>
+                    <div class="eq-duel-versus">
+                        <div class="eq-duel-player">
+                            <span class="eq-duel-player-label">Challenger</span>
+                            <span class="eq-duel-player-name">${challDot}${r.challenger.name}</span>
+                            ${challGrowth}
+                        </div>
+                        <div class="eq-duel-vs-divider">
+                            <span class="eq-duel-vs-text">VS</span>
+                        </div>
+                        <div class="eq-duel-player right">
+                            <span class="eq-duel-player-label">Opponent</span>
+                            <span class="eq-duel-player-name">${r.opponent.name}${oppDot}</span>
+                            ${oppGrowth}
+                        </div>
                     </div>
                 </div>
-
-                ${!isPreActive && !isSettled ? `
-                <div class="eq-duel-momentum-wrap">
-                    <div class="eq-duel-momentum">
-                        <div class="eq-duel-momentum-left" style="width: ${leftPct}%"></div>
-                        <div class="eq-duel-momentum-right" style="width: ${rightPct}%"></div>
-                    </div>
+                ${!isPreActive ? `
+                <div class="eq-duel-momentum">
+                    <div class="eq-duel-momentum-left" style="width:${leftPct}%"></div>
+                    <div class="eq-duel-momentum-right" style="width:${rightPct}%"></div>
                 </div>` : ''}
-
-                ${actionHtml}
-
-                <div class="eq-duel-footer">
-                    <div class="eq-duel-stake">$${(r.stake * 2).toLocaleString()} <span>TOTAL POOL</span></div>
-                    <div class="eq-duel-footer-center">HEAD-TO-HEAD</div>
-                    <div class="eq-duel-provider">${r.provider.toUpperCase()}</div>
+                <div class="eq-duel-card-bottom">
+                    <div class="eq-duel-card-stake">
+                        <span class="eq-duel-card-stake-val">$${(r.stake * 2).toLocaleString()}</span>
+                        <span class="eq-duel-card-stake-lbl">CAPITAL EXPOSURE</span>
+                    </div>
+                    <div style="display:flex;flex-direction:column;align-items:flex-end;gap:4px;">
+                        <span class="eq-duel-card-provider-pill" style="background:${providerColor}">${(r.provider || '').toUpperCase()}</span>
+                        <span class="eq-duel-card-time${timeUrgent ? ' urgent' : ''}">${timeLabel}</span>
+                    </div>
                 </div>
+                ${actionsHtml}
             </div>
         `;
     }

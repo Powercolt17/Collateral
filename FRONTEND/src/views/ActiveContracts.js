@@ -1221,6 +1221,160 @@ export function renderActiveContracts() {
             .act-market-toggles[data-active="solo"] .act-market-indicator { transform: translateX(0); }
             .act-market-toggles[data-active="rivalry"] .act-market-indicator { transform: translateX(100%); }
 
+            /* --- PREMIUM RIVALRY DUEL CARDS --- */
+            .eq-duel-card {
+                background: #0f0f11;
+                border: 1px solid #222;
+                border-radius: 16px;
+                padding: 0;
+                color: #fff;
+                position: relative;
+                overflow: hidden;
+                box-shadow: 0 12px 32px rgba(0,0,0,0.4);
+                display: flex;
+                flex-direction: column;
+                cursor: pointer;
+                transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.3s ease, border-color 0.3s ease;
+            }
+            .eq-duel-card:hover {
+                transform: translateY(-4px);
+                box-shadow: 0 20px 40px rgba(0,0,0,0.6);
+                border-color: #333;
+            }
+            .eq-duel-header {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                padding: 16px 20px;
+                border-bottom: 1px solid rgba(255,255,255,0.06);
+            }
+            .eq-duel-metric {
+                font-size: 11px;
+                font-weight: 700;
+                letter-spacing: 1px;
+                text-transform: uppercase;
+                color: #888;
+                font-family: 'Inter', -apple-system, sans-serif;
+            }
+            .eq-duel-status {
+                font-size: 10px;
+                font-weight: 800;
+                letter-spacing: 0.5px;
+                padding: 4px 8px;
+                border-radius: 4px;
+                background: rgba(255,255,255,0.1);
+                color: #fff;
+            }
+            .eq-duel-status.live { background: rgba(16,185,129,0.15); color: #10b981; }
+            .eq-duel-arena {
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+                position: relative;
+                padding: 32px 20px;
+                background: linear-gradient(180deg, rgba(255,255,255,0.02) 0%, transparent 100%);
+            }
+            .eq-duel-vs {
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                width: 32px;
+                height: 32px;
+                background: #1a1a1a;
+                border: 2px solid #333;
+                border-radius: 50%;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                font-size: 11px;
+                font-weight: 900;
+                font-style: italic;
+                color: #5C1414;
+                z-index: 10;
+                box-shadow: 0 4px 12px rgba(0,0,0,0.5);
+            }
+            .eq-duel-player {
+                display: flex;
+                flex-direction: column;
+                gap: 8px;
+            }
+            .eq-duel-player.right { align-items: flex-end; text-align: right; }
+            .eq-duel-name {
+                font-size: 14px;
+                font-weight: 600;
+                color: #eee;
+                letter-spacing: -0.2px;
+            }
+            .eq-duel-growth {
+                font-size: 24px;
+                font-weight: 700;
+                letter-spacing: -1px;
+                font-family: 'JetBrains Mono', monospace;
+            }
+            .eq-duel-growth.green { color: #10b981; }
+            .eq-duel-growth.red { color: #ef4444; }
+            .eq-duel-growth.gray { color: #555; }
+            .eq-duel-footer {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                padding: 16px 20px;
+                background: rgba(0,0,0,0.2);
+                border-top: 1px solid rgba(255,255,255,0.04);
+            }
+            .eq-duel-stake {
+                font-size: 16px;
+                font-weight: 600;
+                color: #fff;
+                font-family: 'JetBrains Mono', monospace;
+            }
+            .eq-duel-stake span {
+                font-size: 9px;
+                color: #666;
+                text-transform: uppercase;
+                letter-spacing: 0.5px;
+                margin-left: 6px;
+                font-family: 'Inter', sans-serif;
+            }
+            .eq-duel-provider {
+                font-size: 10px;
+                font-weight: 700;
+                padding: 4px 8px;
+                border-radius: 4px;
+                background: #222;
+                color: #aaa;
+                text-transform: uppercase;
+                letter-spacing: 1px;
+            }
+            .eq-duel-momentum {
+                height: 4px;
+                width: 100%;
+                display: flex;
+            }
+            .eq-duel-momentum-left { height: 100%; background: #10b981; transition: width 0.8s ease; }
+            .eq-duel-momentum-right { height: 100%; background: #ef4444; transition: width 0.8s ease; }
+            .eq-duel-actions {
+                padding: 0 20px 20px;
+                display: flex;
+                gap: 8px;
+            }
+            .eq-duel-btn {
+                flex: 1;
+                padding: 12px;
+                border-radius: 6px;
+                font-size: 11px;
+                font-weight: 800;
+                letter-spacing: 1px;
+                text-transform: uppercase;
+                cursor: pointer;
+                border: none;
+                transition: all 0.2s;
+            }
+            .eq-duel-btn.primary { background: #fff; color: #000; }
+            .eq-duel-btn.primary:hover { background: #e0e0e0; }
+            .eq-duel-btn.secondary { background: #222; color: #fff; border: 1px solid #333; }
+            .eq-duel-btn.secondary:hover { background: #333; }
+
         </style>
 
         <div class="eq">
@@ -1467,7 +1621,7 @@ export async function initActiveContracts() {
 
         visibleContracts.forEach(contract => {
             const el = document.createElement('div');
-            el.innerHTML = renderCard(contract);
+            el.innerHTML = (activeMarketType === 'rivalry') ? renderRivalryCard(contract) : renderCard(contract);
             const card = el.firstElementChild;
             grid.appendChild(card);
         });
@@ -1487,54 +1641,33 @@ export async function initActiveContracts() {
         const isPending = r.state === 'CHALLENGE_ISSUED';
         const isAccepted = r.state === 'ACCEPTED';
         const isPreActive = isPending || isAccepted;
-        const statusClass = isPreActive ? 'pending' : r.status === 'settled' ? 'ended' : '';
-        const statusLabel = isPending ? 'FORMING' : isAccepted ? 'AWAITING FUNDS' : r.status === 'settled' ? 'SETTLED' : 'LOCKED';
-        const timeLabel = r.status === 'settled' ? 'SETTLED' : r.daysLeft <= 1 ? `${r.daysLeft * 24}H REMAINING` : `${r.daysLeft}D REMAINING`;
-        const timeUrgent = r.status !== 'settled' && r.daysLeft <= 3;
-        const shortId = r.id.substring(0, 8);
+        const isSettled = r.status === 'settled';
 
-        // Momentum bar percentages
+        let statusText = 'LOCKED';
+        if (isPending) statusText = 'FORMING';
+        if (isAccepted) statusText = 'AWAITING FUNDS';
+        if (isSettled) statusText = 'SETTLED';
+
         const totalGrowth = Math.abs(r.challenger.growth) + Math.abs(r.opponent.growth);
-        let leftPct = 50;
-        let rightPct = 50;
-        
-        if (isPreActive) {
-            // Leave at 50/50 but visual tension handled in CSS
-        } else if (totalGrowth === 0) {
-            leftPct = 50; rightPct = 50;
-        } else {
+        let leftPct = 50; let rightPct = 50;
+        if (!isPreActive && totalGrowth > 0) {
             const rawLeft = (Math.abs(r.challenger.growth) / totalGrowth) * 100;
             leftPct = isLeadingChallenger ? Math.min(rawLeft + 10, 95) : Math.max(rawLeft - 10, 5);
             rightPct = 100 - leftPct;
         }
 
-        // Growth display
-        const challGrowth = isPending
-            ? '<span class="rv-player-growth awaiting" style="font-family:\'Inter\',monospace;letter-spacing:0.1em;text-transform:uppercase;">FORMING</span>'
-            : isAccepted
-            ? (r.challFunded
-                ? '<span class="rv-player-growth" style="font-family:\'Inter\',monospace;letter-spacing:0.1em;text-transform:uppercase;color:#16a34a;font-size:13px;">✓ FUNDED</span>'
-                : '<span class="rv-player-growth awaiting" style="font-family:\'Inter\',monospace;letter-spacing:0.1em;text-transform:uppercase;color:#d97706;font-size:12px;">FUND REQUIRED</span>')
-            : `<span class="rv-player-growth ${isLeadingChallenger ? 'leading' : 'trailing'}">${r.challenger.growth > 0 ? '+' : ''}${r.challenger.growth}%</span>`;
-        const oppGrowth = isPending
-            ? '<span class="rv-player-growth awaiting" style="font-family:\'Inter\',monospace;letter-spacing:0.1em;text-transform:uppercase;">FORMING</span>'
-            : isAccepted
-            ? (r.oppFunded
-                ? '<span class="rv-player-growth" style="font-family:\'Inter\',monospace;letter-spacing:0.1em;text-transform:uppercase;color:#16a34a;font-size:13px;">✓ FUNDED</span>'
-                : '<span class="rv-player-growth awaiting" style="font-family:\'Inter\',monospace;letter-spacing:0.1em;text-transform:uppercase;color:#d97706;font-size:12px;">FUND REQUIRED</span>')
-            : `<span class="rv-player-growth ${!isLeadingChallenger ? 'leading' : 'trailing'}">${r.opponent.growth > 0 ? '+' : ''}${r.opponent.growth}%</span>`;
+        const challColor = isPreActive ? 'gray' : (r.challenger.growth >= 0 ? 'green' : 'red');
+        const oppColor = isPreActive ? 'gray' : (r.opponent.growth >= 0 ? 'green' : 'red');
 
-        // Lead dots
-        const challDot = !isPreActive ? `<span class="rv-lead-dot" style="background:${isLeadingChallenger ? 'var(--rv-green)' : 'var(--rv-red)'}"></span>` : '';
-        const oppDot = !isPreActive ? `<span class="rv-lead-dot" style="background:${!isLeadingChallenger ? 'var(--rv-green)' : 'var(--rv-red)'}"></span>` : '';
+        const challGrowthStr = isPreActive ? '---' : `${r.challenger.growth > 0 ? '+' : ''}${r.challenger.growth}%`;
+        const oppGrowthStr = isPreActive ? '---' : `${r.opponent.growth > 0 ? '+' : ''}${r.opponent.growth}%`;
 
-        // Action buttons — different per state
-        let actionsHtml = '';
+        let actionHtml = '';
         if (isPending) {
             if (r.isOpen) {
-                actionsHtml = `<div class="rv-card-actions"><button class="rv-action-btn rv-action-accept" data-rivalry-id="${r.id}" onclick="event.stopPropagation();window.app.acceptRivalry('${r.id}')" style="flex:1;">ACCEPT</button></div>`;
+                actionHtml = `<div class="eq-duel-actions"><button class="eq-duel-btn primary" onclick="event.stopPropagation();window.app.acceptRivalry('${r.id}')">Accept Challenge</button></div>`;
             } else {
-                actionsHtml = `<div class="rv-card-actions"><button class="rv-action-btn rv-action-accept" data-rivalry-id="${r.id}" onclick="event.stopPropagation();window.app.acceptRivalry('${r.id}')">ACCEPT</button><button class="rv-action-btn rv-action-decline" data-rivalry-id="${r.id}" onclick="event.stopPropagation();window.app.declineRivalry('${r.id}')">DECLINE</button></div>`;
+                actionHtml = `<div class="eq-duel-actions"><button class="eq-duel-btn primary" onclick="event.stopPropagation();window.app.acceptRivalry('${r.id}')">Accept</button><button class="eq-duel-btn secondary" onclick="event.stopPropagation();window.app.declineRivalry('${r.id}')">Decline</button></div>`;
             }
         } else if (isAccepted) {
             const myUserId = window.appState?.userId;
@@ -1542,72 +1675,45 @@ export async function initActiveContracts() {
             const iAmOpponent = myUserId && r.opponentUserId === myUserId;
             const myFunded = (iAmChallenger && r.challFunded) || (iAmOpponent && r.oppFunded);
             if (myFunded) {
-                actionsHtml = `<div class="rv-card-actions"><div style="flex:1;padding:10px 16px;background:#f8f8f8;color:#999;text-align:center;font-family:'JetBrains Mono', monospace;font-size:10px;font-weight:700;letter-spacing:0.08em;border:1px solid #eee;">WAITING FOR OPPONENT</div></div>`;
+                actionHtml = `<div class="eq-duel-actions"><div style="flex:1;text-align:center;font-size:10px;color:#888;padding:12px;border:1px solid #222;border-radius:6px;font-weight:700;">WAITING ON OPPONENT</div></div>`;
             } else {
-                actionsHtml = `<div class="rv-card-actions"><button class="rv-action-btn rv-action-accept" data-rivalry-id="${r.id}" onclick="event.stopPropagation();window.app.fundRivalry('${r.id}')" style="flex:1;">FUND YOUR SIDE</button></div>`;
-            }
-        }
-
-        // Winner/Loser badge for settled cards
-        let resultAttr = '';
-        let winnerBadge = '';
-        if (r.status === 'settled') {
-            const challWon = r.challenger.growth > r.opponent.growth;
-            const isDraw = r.challenger.growth === r.opponent.growth;
-            if (isDraw) {
-                winnerBadge = '<span class="rv-winner-badge forfeited">DRAW</span>';
-            } else {
-                winnerBadge = challWon
-                    ? '<span class="rv-winner-badge winner">CHALLENGER WON</span>'
-                    : '<span class="rv-winner-badge loser">OPPONENT WON</span>';
-                resultAttr = challWon ? 'data-result="won"' : 'data-result="lost"';
+                actionHtml = `<div class="eq-duel-actions"><button class="eq-duel-btn primary" onclick="event.stopPropagation();window.app.fundRivalry('${r.id}')">Fund Your Side</button></div>`;
             }
         }
 
         return `
-            <div class="rv-card" data-status="${r.status}" data-id="${r.id}" ${resultAttr}>
-                <div class="rv-card-inner">
-                    <div class="rv-card-header">
-                        <div class="rv-card-status ${statusClass}">
-                            <span class="dot"></span>
-                            ${statusLabel}
-                        </div>
-                        ${r.isOpen && r.status === 'pending' ? '<span class="rv-open-badge">OPEN</span>' : ''}
-                        ${winnerBadge}
+            <div class="eq-duel-card" data-id="${r.id}" onclick="window.router.navigate('/rivalry/${r.id}')">
+                <div class="eq-duel-header">
+                    <span class="eq-duel-metric">${r.metric}</span>
+                    <span class="eq-duel-status ${!isPreActive && !isSettled ? 'live' : ''}">${statusText}</span>
+                </div>
+                
+                <div class="eq-duel-arena">
+                    <div class="eq-duel-vs">VS</div>
+                    
+                    <div class="eq-duel-player">
+                        <span class="eq-duel-name">@${r.challenger.name}</span>
+                        <span class="eq-duel-growth ${challColor}">${challGrowthStr}</span>
                     </div>
-                    <div class="rv-card-metric">${r.metric} <span style="color:#ccc;font-size:10px;font-family:'JetBrains Mono', monospace;margin-left:6px;">ID:${shortId}</span></div>
-                    <div class="rv-versus">
-                        <div class="rv-player">
-                            <span class="rv-player-label">Challenger</span>
-                            <span class="rv-player-name">${challDot}${r.challenger.name}</span>
-                            ${challGrowth}
-                        </div>
-                        <div class="rv-vs-divider">
-                            <span class="rv-vs-text">VS</span>
-                        </div>
-                        <div class="rv-player right">
-                            <span class="rv-player-label">Opponent</span>
-                            <span class="rv-player-name">${r.opponent.name}${oppDot}</span>
-                            ${oppGrowth}
-                        </div>
+                    
+                    <div class="eq-duel-player right">
+                        <span class="eq-duel-name">@${r.opponent.name}</span>
+                        <span class="eq-duel-growth ${oppColor}">${oppGrowthStr}</span>
                     </div>
                 </div>
-                ${!isPreActive ? `
-                <div class="rv-momentum">
-                    <div class="rv-momentum-left" style="width:${leftPct}%"></div>
-                    <div class="rv-momentum-right" style="width:${rightPct}%"></div>
+
+                ${!isPreActive && !isSettled ? `
+                <div class="eq-duel-momentum">
+                    <div class="eq-duel-momentum-left" style="width: ${leftPct}%"></div>
+                    <div class="eq-duel-momentum-right" style="width: ${rightPct}%"></div>
                 </div>` : ''}
-                <div class="rv-card-bottom">
-                    <div class="rv-card-stake">
-                        <span class="rv-card-stake-val">${(r.stake * 2).toLocaleString()}</span>
-                        <span class="rv-card-stake-lbl">CAPITAL EXPOSURE</span>
-                    </div>
-                    <div style="display:flex;flex-direction:column;align-items:flex-end;gap:4px;">
-                        <span class="rv-card-provider-pill" style="background:${getProviderColor(r.provider)}">${r.provider.toUpperCase()}</span>
-                        <span class="rv-card-time${timeUrgent ? ' urgent' : ''}">${timeLabel}</span>
-                    </div>
+
+                ${actionHtml}
+
+                <div class="eq-duel-footer">
+                    <div class="eq-duel-stake">$${(r.stake * 2).toLocaleString()} <span>Total Pool</span></div>
+                    <div class="eq-duel-provider">${r.provider.toUpperCase()}</div>
                 </div>
-                ${actionsHtml}
             </div>
         `;
     }
@@ -1758,10 +1864,6 @@ export async function initActiveContracts() {
             if (!btn) return;
             
             const type = btn.dataset.type || 'solo';
-            if (type === 'rivalry') {
-                window.app.navigate('/rivalry');
-                return;
-            }
             
             marketToggles.querySelectorAll('.act-market-btn').forEach(b => b.classList.remove('active'));
             btn.classList.add('active');

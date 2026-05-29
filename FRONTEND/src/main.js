@@ -352,8 +352,8 @@ setTimeout(() => {
     const ls = document.getElementById('loading-screen');
     if (ls) ls.classList.add('loaded');
     // Remove from DOM after fade
-    setTimeout(() => { if (ls) ls.remove(); }, 600);
-}, 600);
+    setTimeout(() => { if (ls) ls.remove(); }, 800);
+}, 2000);
 
 // Helper: check if user is currently on landing page
 function _isOnGoPage() {

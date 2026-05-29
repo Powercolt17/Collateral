@@ -77,7 +77,35 @@ export function renderLanding() {
 
 
 
-            <!-- ═══ LIVE CONTRACT EXAMPLES ═══ -->
+            <!-- ═══ LOGO CAROUSEL ═══ -->
+            <div class="lmarquee" data-r>
+                <div class="lmarquee-label"><span class="lmono">Verified via official APIs</span></div>
+                <div class="lmarquee-track">
+                    <div class="lmarquee-slide">
+                        <img class="logo-stripe" src="https://www.vectorlogo.zone/logos/stripe/stripe-ar21.svg" alt="Stripe">
+                        <img class="logo-x" src="https://cdn.simpleicons.org/x/555555" alt="X">
+                        <img class="logo-shopify" src="https://www.vectorlogo.zone/logos/shopify/shopify-ar21.svg" alt="Shopify">
+                        <img class="logo-youtube" src="https://www.vectorlogo.zone/logos/youtube/youtube-ar21.svg" alt="YouTube">
+                        <img class="logo-stripe" src="https://www.vectorlogo.zone/logos/stripe/stripe-ar21.svg" alt="Stripe">
+                        <img class="logo-x" src="https://cdn.simpleicons.org/x/555555" alt="X">
+                        <img class="logo-shopify" src="https://www.vectorlogo.zone/logos/shopify/shopify-ar21.svg" alt="Shopify">
+                        <img class="logo-youtube" src="https://www.vectorlogo.zone/logos/youtube/youtube-ar21.svg" alt="YouTube">
+                    </div>
+                    <div class="lmarquee-slide">
+                        <img class="logo-stripe" src="https://www.vectorlogo.zone/logos/stripe/stripe-ar21.svg" alt="Stripe">
+                        <img class="logo-x" src="https://cdn.simpleicons.org/x/555555" alt="X">
+                        <img class="logo-shopify" src="https://www.vectorlogo.zone/logos/shopify/shopify-ar21.svg" alt="Shopify">
+                        <img class="logo-youtube" src="https://www.vectorlogo.zone/logos/youtube/youtube-ar21.svg" alt="YouTube">
+                        <img class="logo-stripe" src="https://www.vectorlogo.zone/logos/stripe/stripe-ar21.svg" alt="Stripe">
+                        <img class="logo-x" src="https://cdn.simpleicons.org/x/555555" alt="X">
+                        <img class="logo-shopify" src="https://www.vectorlogo.zone/logos/shopify/shopify-ar21.svg" alt="Shopify">
+                        <img class="logo-youtube" src="https://www.vectorlogo.zone/logos/youtube/youtube-ar21.svg" alt="YouTube">
+                    </div>
+                </div>
+            </div>
+
+            
+<!-- ═══ LIVE CONTRACT EXAMPLES ═══ -->
             <div class="lcontracts" id="contracts">
                 <div class="lw">
                     <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px; flex-wrap: wrap; gap: 16px;">
@@ -139,33 +167,6 @@ export function renderLanding() {
                             <div class="lcard-row"><span class="k">Window</span><span class="v">30 days</span></div>
                             <div class="lcard-btn"><button class="lp-cta-btn" data-source="YOUTUBE" data-tier="stake" data-capital="250">Start Contract</button></div>
                         </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- ═══ LOGO CAROUSEL ═══ -->
-            <div class="lmarquee" data-r>
-                <div class="lmarquee-label"><span class="lmono">Verified via official APIs</span></div>
-                <div class="lmarquee-track">
-                    <div class="lmarquee-slide">
-                        <img class="logo-stripe" src="https://www.vectorlogo.zone/logos/stripe/stripe-ar21.svg" alt="Stripe">
-                        <img class="logo-x" src="https://cdn.simpleicons.org/x/555555" alt="X">
-                        <img class="logo-shopify" src="https://www.vectorlogo.zone/logos/shopify/shopify-ar21.svg" alt="Shopify">
-                        <img class="logo-youtube" src="https://www.vectorlogo.zone/logos/youtube/youtube-ar21.svg" alt="YouTube">
-                        <img class="logo-stripe" src="https://www.vectorlogo.zone/logos/stripe/stripe-ar21.svg" alt="Stripe">
-                        <img class="logo-x" src="https://cdn.simpleicons.org/x/555555" alt="X">
-                        <img class="logo-shopify" src="https://www.vectorlogo.zone/logos/shopify/shopify-ar21.svg" alt="Shopify">
-                        <img class="logo-youtube" src="https://www.vectorlogo.zone/logos/youtube/youtube-ar21.svg" alt="YouTube">
-                    </div>
-                    <div class="lmarquee-slide">
-                        <img class="logo-stripe" src="https://www.vectorlogo.zone/logos/stripe/stripe-ar21.svg" alt="Stripe">
-                        <img class="logo-x" src="https://cdn.simpleicons.org/x/555555" alt="X">
-                        <img class="logo-shopify" src="https://www.vectorlogo.zone/logos/shopify/shopify-ar21.svg" alt="Shopify">
-                        <img class="logo-youtube" src="https://www.vectorlogo.zone/logos/youtube/youtube-ar21.svg" alt="YouTube">
-                        <img class="logo-stripe" src="https://www.vectorlogo.zone/logos/stripe/stripe-ar21.svg" alt="Stripe">
-                        <img class="logo-x" src="https://cdn.simpleicons.org/x/555555" alt="X">
-                        <img class="logo-shopify" src="https://www.vectorlogo.zone/logos/shopify/shopify-ar21.svg" alt="Shopify">
-                        <img class="logo-youtube" src="https://www.vectorlogo.zone/logos/youtube/youtube-ar21.svg" alt="YouTube">
                     </div>
                 </div>
             </div>

@@ -1177,25 +1177,49 @@ export function renderActiveContracts() {
             .act-market-toggles {
                 display: flex;
                 align-items: center;
-                gap: 8px;
-                margin-bottom: 8px;
+                background: #f1f1f2;
+                padding: 4px;
+                border-radius: 12px;
+                margin-top: 24px;
+                margin-bottom: 24px;
+                position: relative;
+                width: 100%;
+                max-width: 400px;
+                box-shadow: inset 0 2px 4px rgba(0,0,0,0.02);
             }
             .act-market-btn {
-                padding: 6px 12px;
-                border-radius: 30px;
-                background: #f5f5f5;
+                flex: 1;
+                padding: 10px 0;
+                background: transparent;
+                border: none;
+                border-radius: 8px;
                 color: #888;
                 font-family: 'Inter', -apple-system, sans-serif;
-                font-size: 10px;
+                font-size: 13px;
                 font-weight: 600;
-                letter-spacing: 0.04em;
-                text-transform: uppercase;
-                border: 1px solid transparent;
+                letter-spacing: 0.02em;
                 cursor: pointer;
-                transition: all 0.2s;
+                position: relative;
+                z-index: 2;
+                transition: color 0.3s ease;
+                text-align: center;
             }
-            .act-market-btn:hover { background: #eee; color: #111; }
-            .act-market-btn.active { background: #111; color: #fff; border-color: #111; }
+            .act-market-btn:hover { color: #555; }
+            .act-market-btn.active { color: #111; }
+            .act-market-indicator {
+                position: absolute;
+                top: 4px;
+                bottom: 4px;
+                left: 4px;
+                width: calc(50% - 4px);
+                background: #ffffff;
+                border-radius: 8px;
+                box-shadow: 0 2px 8px rgba(0,0,0,0.08), 0 1px 2px rgba(0,0,0,0.04);
+                transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+                z-index: 1;
+            }
+            .act-market-toggles[data-active="solo"] .act-market-indicator { transform: translateX(0); }
+            .act-market-toggles[data-active="rivalry"] .act-market-indicator { transform: translateX(100%); }
 
         </style>
 
@@ -1207,6 +1231,13 @@ export function renderActiveContracts() {
                 <div class="eq-market-live">
                     <div class="eq-market-dot"></div>
                     Live — Updated <span id="last-updated">04:20:00 PM</span>
+                </div>
+
+                <!-- Top Market Toggles (Segmented Control) -->
+                <div class="act-market-toggles" id="act-market-toggles" data-active="solo">
+                    <div class="act-market-indicator"></div>
+                    <button class="act-market-btn active" data-type="solo">Solo Contracts</button>
+                    <button class="act-market-btn" data-type="rivalry">Rivalries</button>
                 </div>
 
                 <div class="eq-stats-strip">
@@ -1222,13 +1253,6 @@ export function renderActiveContracts() {
                         <div class="eq-stat-val">$<span id="stat-pool">0</span></div>
                         <div class="eq-stat-lbl">Volume 24h</div>
                     </div>
-                </div>
-
-                
-                <!-- Top Market Toggles -->
-                <div class="act-market-toggles" id="act-market-toggles">
-                    <button class="act-market-btn active" data-type="solo">Solo Contracts</button>
-                    <button class="act-market-btn" data-type="rivalry">Rivalries</button>
                 </div>
 
                 <!-- Controls -->
@@ -1727,12 +1751,20 @@ export async function initActiveContracts() {
     // Market Toggles
     const marketToggles = document.getElementById('act-market-toggles');
     if (marketToggles) {
+        marketToggles.dataset.active = activeMarketType;
+        if (activeMarketType === 'rivalry') {
+            marketToggles.querySelectorAll('.act-market-btn')[0].classList.remove('active');
+            marketToggles.querySelectorAll('.act-market-btn')[1].classList.add('active');
+        }
+
         marketToggles.addEventListener('click', (e) => {
             const btn = e.target.closest('.act-market-btn');
             if (!btn) return;
             marketToggles.querySelectorAll('.act-market-btn').forEach(b => b.classList.remove('active'));
             btn.classList.add('active');
-            activeMarketType = btn.dataset.type || 'solo';
+            const type = btn.dataset.type || 'solo';
+            marketToggles.dataset.active = type;
+            activeMarketType = type;
             fetchFeed(false);
         });
     }

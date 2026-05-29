@@ -1223,35 +1223,35 @@ export function renderActiveContracts() {
 
             /* --- PREMIUM RIVALRY DUEL CARDS --- */
             .eq-duel-card {
-                background: #0f0f11;
-                border: 1px solid #222;
-                border-radius: 16px;
+                background: #fff;
+                border: 1px solid #f0f0f0;
+                border-radius: 12px;
                 padding: 0;
-                color: #fff;
+                color: #111;
                 position: relative;
                 overflow: hidden;
-                box-shadow: 0 12px 32px rgba(0,0,0,0.4);
+                box-shadow: 0 4px 20px rgba(0,0,0,0.03);
                 display: flex;
                 flex-direction: column;
                 cursor: pointer;
-                transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.3s ease, border-color 0.3s ease;
+                transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
             }
             .eq-duel-card:hover {
-                transform: translateY(-4px);
-                box-shadow: 0 20px 40px rgba(0,0,0,0.6);
-                border-color: #333;
+                transform: translateY(-2px);
+                box-shadow: 0 8px 30px rgba(0,0,0,0.06);
+                border-color: #ddd;
             }
             .eq-duel-header {
                 display: flex;
                 justify-content: space-between;
                 align-items: center;
                 padding: 16px 20px;
-                border-bottom: 1px solid rgba(255,255,255,0.06);
+                border-bottom: 1px solid #f5f5f5;
             }
             .eq-duel-metric {
                 font-size: 11px;
                 font-weight: 700;
-                letter-spacing: 1px;
+                letter-spacing: 0.05em;
                 text-transform: uppercase;
                 color: #888;
                 font-family: 'Inter', -apple-system, sans-serif;
@@ -1259,80 +1259,79 @@ export function renderActiveContracts() {
             .eq-duel-status {
                 font-size: 10px;
                 font-weight: 800;
-                letter-spacing: 0.5px;
+                letter-spacing: 0.05em;
                 padding: 4px 8px;
                 border-radius: 4px;
-                background: rgba(255,255,255,0.1);
-                color: #fff;
+                background: #f5f5f5;
+                color: #555;
             }
-            .eq-duel-status.live { background: rgba(16,185,129,0.15); color: #10b981; }
+            .eq-duel-status.live { background: #ecfdf5; color: #10b981; }
             .eq-duel-arena {
                 display: grid;
                 grid-template-columns: 1fr 1fr;
                 position: relative;
-                padding: 32px 20px;
-                background: linear-gradient(180deg, rgba(255,255,255,0.02) 0%, transparent 100%);
+                padding: 24px 20px;
+                background: #fafafa;
             }
             .eq-duel-vs {
                 position: absolute;
                 top: 50%;
                 left: 50%;
                 transform: translate(-50%, -50%);
-                width: 32px;
-                height: 32px;
-                background: #1a1a1a;
-                border: 2px solid #333;
+                width: 24px;
+                height: 24px;
+                background: #fff;
+                border: 1px solid #eee;
                 border-radius: 50%;
                 display: flex;
                 align-items: center;
                 justify-content: center;
-                font-size: 11px;
-                font-weight: 900;
-                font-style: italic;
-                color: #5C1414;
+                font-size: 9px;
+                font-weight: 800;
+                color: #888;
                 z-index: 10;
-                box-shadow: 0 4px 12px rgba(0,0,0,0.5);
+                box-shadow: 0 2px 8px rgba(0,0,0,0.05);
             }
             .eq-duel-player {
                 display: flex;
                 flex-direction: column;
-                gap: 8px;
+                gap: 6px;
             }
             .eq-duel-player.right { align-items: flex-end; text-align: right; }
             .eq-duel-name {
-                font-size: 14px;
+                font-size: 13px;
                 font-weight: 600;
-                color: #eee;
-                letter-spacing: -0.2px;
+                color: #333;
+                letter-spacing: -0.01em;
             }
             .eq-duel-growth {
-                font-size: 24px;
+                font-size: 20px;
                 font-weight: 700;
-                letter-spacing: -1px;
+                letter-spacing: -0.03em;
                 font-family: 'JetBrains Mono', monospace;
             }
             .eq-duel-growth.green { color: #10b981; }
             .eq-duel-growth.red { color: #ef4444; }
-            .eq-duel-growth.gray { color: #555; }
+            .eq-duel-growth.gray { color: #aaa; }
             .eq-duel-footer {
                 display: flex;
                 justify-content: space-between;
                 align-items: center;
                 padding: 16px 20px;
-                background: rgba(0,0,0,0.2);
-                border-top: 1px solid rgba(255,255,255,0.04);
+                background: #fff;
+                border-top: 1px solid #f5f5f5;
             }
             .eq-duel-stake {
-                font-size: 16px;
+                font-size: 15px;
                 font-weight: 600;
-                color: #fff;
+                color: #111;
                 font-family: 'JetBrains Mono', monospace;
             }
             .eq-duel-stake span {
                 font-size: 9px;
-                color: #666;
+                color: #888;
                 text-transform: uppercase;
-                letter-spacing: 0.5px;
+                letter-spacing: 0.05em;
                 margin-left: 6px;
                 font-family: 'Inter', sans-serif;
             }
@@ -1341,13 +1340,13 @@ export function renderActiveContracts() {
                 font-weight: 700;
                 padding: 4px 8px;
                 border-radius: 4px;
-                background: #222;
-                color: #aaa;
+                background: #f0f0f0;
+                color: #555;
                 text-transform: uppercase;
-                letter-spacing: 1px;
+                letter-spacing: 0.05em;
             }
             .eq-duel-momentum {
-                height: 4px;
+                height: 3px;
                 width: 100%;
                 display: flex;
             }
@@ -1355,25 +1354,26 @@ export function renderActiveContracts() {
             .eq-duel-momentum-right { height: 100%; background: #ef4444; transition: width 0.8s ease; }
             .eq-duel-actions {
                 padding: 0 20px 20px;
+                background: #fafafa;
                 display: flex;
                 gap: 8px;
             }
             .eq-duel-btn {
                 flex: 1;
-                padding: 12px;
+                padding: 10px;
                 border-radius: 6px;
-                font-size: 11px;
+                font-size: 10px;
                 font-weight: 800;
-                letter-spacing: 1px;
+                letter-spacing: 0.05em;
                 text-transform: uppercase;
                 cursor: pointer;
                 border: none;
                 transition: all 0.2s;
             }
-            .eq-duel-btn.primary { background: #fff; color: #000; }
-            .eq-duel-btn.primary:hover { background: #e0e0e0; }
-            .eq-duel-btn.secondary { background: #222; color: #fff; border: 1px solid #333; }
-            .eq-duel-btn.secondary:hover { background: #333; }
+            .eq-duel-btn.primary { background: #111; color: #fff; }
+            .eq-duel-btn.primary:hover { background: #333; }
+            .eq-duel-btn.secondary { background: #fff; color: #111; border: 1px solid #ddd; }
+            .eq-duel-btn.secondary:hover { background: #f5f5f5; }
 
         </style>
 

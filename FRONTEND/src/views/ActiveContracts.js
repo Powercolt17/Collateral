@@ -1751,18 +1751,20 @@ export async function initActiveContracts() {
     // Market Toggles
     const marketToggles = document.getElementById('act-market-toggles');
     if (marketToggles) {
-        marketToggles.dataset.active = activeMarketType;
-        if (activeMarketType === 'rivalry') {
-            marketToggles.querySelectorAll('.act-market-btn')[0].classList.remove('active');
-            marketToggles.querySelectorAll('.act-market-btn')[1].classList.add('active');
-        }
+        marketToggles.dataset.active = 'solo';
 
         marketToggles.addEventListener('click', (e) => {
             const btn = e.target.closest('.act-market-btn');
             if (!btn) return;
+            
+            const type = btn.dataset.type || 'solo';
+            if (type === 'rivalry') {
+                window.app.navigate('/rivalry');
+                return;
+            }
+            
             marketToggles.querySelectorAll('.act-market-btn').forEach(b => b.classList.remove('active'));
             btn.classList.add('active');
-            const type = btn.dataset.type || 'solo';
             marketToggles.dataset.active = type;
             activeMarketType = type;
             fetchFeed(false);

@@ -1677,11 +1677,11 @@ export async function initActiveContracts() {
         const statusClass = isPreActive ? 'pending' : isSettled ? 'ended' : '';
         const statusLabel = isPending ? 'FORMING' : isAccepted ? 'AWAITING FUNDS' : isSettled ? 'SETTLED' : 'LOCKED';
         
-        const deadline = new Date(r.open_until || Date.now() + 86400000);
+        const end = r.deadlineUtc ? new Date(r.deadlineUtc) : new Date((new Date(r.activatedAt || r.createdAt || Date.now())).getTime() + (r.durationDays || 30) * 86400000);
         const now = new Date();
-        const timeLeftMs = deadline - now;
-        const daysLeft = Math.ceil(timeLeftMs / (1000 * 60 * 60 * 24));
-        const hoursLeft = Math.ceil(timeLeftMs / (1000 * 60 * 60));
+        const timeLeftMs = end - now;
+        const daysLeft = Math.max(0, Math.ceil(timeLeftMs / (1000 * 60 * 60 * 24)));
+        const hoursLeft = Math.max(0, Math.ceil(timeLeftMs / (1000 * 60 * 60)));
         
         const timeLabel = isSettled ? 'SETTLED' : daysLeft <= 1 ? `${hoursLeft}H REMAINING` : `${daysLeft}D REMAINING`;
         const timeUrgent = !isSettled && daysLeft <= 3;

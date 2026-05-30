@@ -9,7 +9,7 @@ export function renderLedger() {
                ============================================================ */
 
             .ldg {
-                background: #fff;
+                background: #FAFAFA;
                 min-height: calc(100vh - 72px);
                 font-family: 'Sora', 'Helvetica Neue', Helvetica, Arial, sans-serif;
                 color: #111;
@@ -50,6 +50,7 @@ export function renderLedger() {
             }
             .ldg-hero-title strong {
                 font-weight: 700;
+                color: #5C1414;
             }
             .ldg-synced-badge {
                 display: inline-flex;
@@ -264,7 +265,12 @@ export function renderLedger() {
 
             /* ── Table ── */
             .ldg-table-wrap {
-                margin-top: 0;
+                margin-top: 24px;
+                background: #fff;
+                border: 1px solid #eaeaea;
+                border-radius: 12px;
+                box-shadow: 0 4px 24px rgba(0,0,0,0.03);
+                overflow: hidden;
             }
             .ldg-table {
                 width: 100%;
@@ -272,13 +278,14 @@ export function renderLedger() {
             }
             .ldg-table thead th {
                 font-family: 'JetBrains Mono', monospace;
-                font-size: 9px;
+                font-size: 10px;
                 font-weight: 700;
                 text-transform: uppercase;
                 letter-spacing: 0.12em;
-                color: #ccc;
-                padding: 16px 0 12px;
-                border-bottom: 1px solid #f0f0f0;
+                color: #888;
+                background: #fdfdfd;
+                padding: 16px 24px;
+                border-bottom: 1px solid #eaeaea;
                 text-align: left;
             }
             .ldg-table thead th:last-child {
@@ -287,13 +294,16 @@ export function renderLedger() {
             .ldg-table tbody tr {
                 border-bottom: 1px solid #f5f5f5;
                 cursor: pointer;
-                transition: background 0.1s;
+                transition: background 0.15s;
+            }
+            .ldg-table tbody tr:last-child {
+                border-bottom: none;
             }
             .ldg-table tbody tr:hover {
-                background: #fcfcfc;
+                background: #fafafa;
             }
             .ldg-table tbody td {
-                padding: 18px 0;
+                padding: 16px 24px;
                 font-size: 13px;
                 vertical-align: middle;
             }

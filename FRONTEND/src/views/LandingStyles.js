@@ -68,7 +68,6 @@ export const landingCSS = `
 .lh-nobrk{display:inline}
 .lh-br{display:none}
 @media(min-width:768px){
-  .lh-nobrk{white-space:nowrap}
   .lh-br{display:block}
 }
 .lsub{font-size:20px;color:var(--t2);line-height:1.5;margin:0 0 40px;max-width:680px;letter-spacing:-.2px}

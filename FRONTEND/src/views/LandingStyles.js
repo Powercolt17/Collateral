@@ -61,8 +61,7 @@ export const landingCSS = `
   0%, 100% { transform: translate(0, 0) scale(1); opacity: 0.5; }
   33% { transform: translate(30px, -20px) scale(1.05); opacity: 0.7; }
   66% { transform: translate(-20px, 15px) scale(0.95); opacity: 0.4; }
-}
-.lhero-grid{display:grid;grid-template-columns:1.1fr 0.9fr;gap:48px;align-items:center;padding:160px 0 80px}
+.lhero-grid{display:flex;flex-direction:column;align-items:center;text-align:center;padding:160px 0 80px;gap:64px}
 .lh1{font-family:'Inter Tight',sans-serif;font-weight:400;font-size:clamp(48px,6vw,72px);line-height:.95;letter-spacing:-1.5px;color:var(--t1);margin:0 0 24px}
 .lh1 em{font-style:normal;color:var(--r);font-weight:600;letter-spacing:-1.5px}
 .lh-nobrk{display:inline}
@@ -70,8 +69,8 @@ export const landingCSS = `
 @media(min-width:768px){
   .lh-br{display:block}
 }
-.lsub{font-size:20px;color:var(--t2);line-height:1.5;margin:0 0 40px;max-width:680px;letter-spacing:-.2px}
-.lctas{display:flex;gap:16px;flex-wrap:wrap;margin-bottom:16px}
+.lsub{font-size:20px;color:var(--t2);line-height:1.5;margin:0 auto 40px;max-width:680px;letter-spacing:-.2px}
+.lctas{display:flex;gap:16px;flex-wrap:wrap;margin-bottom:16px;justify-content:center}
 .lbtn{height:56px;padding:0 32px;font-size:14px;font-weight:700;letter-spacing:1px;text-transform:uppercase;border:none;border-radius:4px;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;gap:8px;transition:all .4s cubic-bezier(.16, 1, 0.3, 1);position:relative;overflow:hidden}
 .lbtn-r{background:var(--r) !important;color:#fff !important;box-shadow:0 8px 24px -6px rgba(92,20,20,.4);font-size:14px;font-weight:800;padding:0 40px;height:60px;animation:btnPulse 3s ease-in-out infinite}
 .lbtn-r:hover{background:var(--rh) !important;box-shadow:0 16px 40px -8px rgba(92,20,20,.5);transform:translateY(-3px) scale(1.03)}

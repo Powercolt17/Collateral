@@ -233,13 +233,13 @@ export const landingCSS = `
 .lhow-h{font-family:'Inter Tight',sans-serif;font-size:clamp(32px,5vw,56px);font-weight:400;letter-spacing:-1px;margin-bottom:16px}
 .lhow-h strong{font-weight:700;color:var(--r)}
 .lhow-sub{font-size:18px;color:var(--t2);margin-bottom:64px;max-width:640px;line-height:1.6}
-.lsteps{display:grid;grid-template-columns:repeat(4,1fr);gap:40px;background:transparent;border:none}
-.lstep{padding:32px 0 0 0;border:none;border-top:1px solid rgba(0,0,0,0.08);transition:all 0.3s ease}
-.lstep:hover{border-top-color:var(--r)}
-.lstep-num{font-family:'Inter Tight',sans-serif;font-size: 42px;font-weight:400;color:var(--r) !important;opacity:0.3;line-height:1;margin-bottom:24px;letter-spacing:-2px;transition:opacity 0.3s ease}
-.lstep:hover .lstep-num{opacity:0.6}
-.lstep-h{font-family:'Inter Tight',sans-serif;font-size:22px;font-weight:600;color:var(--t1);margin-bottom:12px;letter-spacing:-.4px}
-.lstep-p{font-size:16px;color:var(--t2);line-height:1.65}
+.lsteps{display:grid;grid-template-columns:repeat(4,1fr);gap:24px;background:transparent;border:none;margin-top:24px}
+.lstep{padding:32px;background:#fff;border:1px solid #eaeaea;border-radius:16px;box-shadow:0 4px 24px rgba(0,0,0,0.02);transition:all 0.3s ease;position:relative;overflow:hidden;display:flex;flex-direction:column}
+.lstep:hover{transform:translateY(-4px);box-shadow:0 12px 32px rgba(0,0,0,0.06);border-color:rgba(92,20,20,0.15)}
+.lstep-num{font-family:'Inter Tight',sans-serif;font-size:56px;font-weight:700;color:var(--r) !important;opacity:0.06;line-height:1;margin-bottom:16px;letter-spacing:-2px;transition:opacity 0.3s ease;position:absolute;top:24px;right:24px}
+.lstep:hover .lstep-num{opacity:0.12}
+.lstep-h{font-family:'Inter Tight',sans-serif;font-size:20px;font-weight:600;color:var(--t1);margin-bottom:12px;letter-spacing:-.4px;position:relative;z-index:1;margin-top:24px}
+.lstep-p{font-size:15px;color:var(--t2);line-height:1.6;position:relative;z-index:1}
 
 /* Mini CTA Block */
 .lmini-cta{text-align:center;background:transparent;border:none;padding:100px 0;margin:0 auto;max-width:800px}
@@ -327,11 +327,11 @@ export const landingCSS = `
   .lhow{padding:48px 0}
   .lhow-h{font-size: 22px}
   .lhow-sub{margin-bottom:32px;font-size:14px}
-  .lsteps{grid-template-columns:1fr;gap:24px}
-  .lstep{padding:24px 0 0 0;border-top:1px solid rgba(0,0,0,0.08)}
-  .lstep-num{font-size: 24px;margin-bottom:12px}
-  .lstep-h{font-size:16px}
-  .lstep-p{font-size:14px}
+    .lsteps{grid-template-columns:1fr;gap:16px}
+    .lstep{padding:24px}
+    .lstep-num{font-size: 40px;top:16px;right:16px;margin-bottom:0}
+    .lstep-h{font-size:18px;margin-top:12px}
+    .lstep-p{font-size:14px}
   .lmini-cta{padding:48px 20px;margin:24px auto}
   .lmini-cta-h{font-size:24px}
   .lmini-cta-p{font-size:14px;margin-bottom:24px}

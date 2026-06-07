@@ -61,8 +61,9 @@ export const landingCSS = `
   0%, 100% { transform: translate(0, 0) scale(1); opacity: 0.5; }
   33% { transform: translate(30px, -20px) scale(1.05); opacity: 0.7; }
   66% { transform: translate(-20px, 15px) scale(0.95); opacity: 0.4; }
-.lhero-grid{display:grid;grid-template-columns:1.25fr 0.75fr;gap:32px;align-items:center;padding:160px 0 80px}
-.lh1{font-family:'Inter Tight',sans-serif;font-weight:400;font-size:clamp(40px,5.5vw,64px);line-height:.95;letter-spacing:-1.5px;color:var(--t1);margin:0 0 24px}
+}
+.lhero-grid{display:grid;grid-template-columns:1.1fr 0.9fr;gap:48px;align-items:center;padding:160px 0 80px}
+.lh1{font-family:'Inter Tight',sans-serif;font-weight:400;font-size:clamp(48px,6vw,72px);line-height:.95;letter-spacing:-1.5px;color:var(--t1);margin:0 0 24px}
 .lh1 em{font-style:normal;color:var(--r);font-weight:600;letter-spacing:-1.5px}
 .lh-nobrk{display:inline}
 .lh-br{display:none}

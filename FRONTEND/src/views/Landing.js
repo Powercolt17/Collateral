@@ -36,7 +36,8 @@ export function renderLanding() {
                 <div class="lhero-grid">
                     <div class="lhero-left">
                         <h1 class="lh1 animate-fade-in-up">
-                            Performance contracts for ambitious <em>goals.</em>
+                            Performance contracts<br class="lh-br">
+                            for ambitious <em>goals.</em>
                         </h1>
                         <p class="lsub animate-fade-in-up delay-1">
                             Lock capital against a verifiable metric. Hit the target, reclaim your deposit plus a bonus. <span class="lhide-mobile">Miss it, forfeit the funds. Fully API-automated.</span>

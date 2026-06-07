@@ -39,7 +39,7 @@ export function renderLanding() {
                             Performance contracts for ambitious <em>goals.</em>
                         </h1>
                         <p class="lsub animate-fade-in-up delay-1">
-                            Lock capital in escrow against a verifiable business metric. Hit your target, reclaim your deposit plus a performance bonus. <span class="lhide-mobile">Miss it, forfeit the capital. Everything is tracked automatically via APIs.</span>
+                            Lock capital against a verifiable metric. Hit the target, reclaim your deposit plus a bonus. <span class="lhide-mobile">Miss it, forfeit the funds. Fully API-automated.</span>
                         </p>
                         <div class="lctas animate-fade-in-up delay-2">
                             <button class="lbtn lbtn-r" id="lp-hero-cta">Draft Your Contract</button>

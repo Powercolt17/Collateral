@@ -27,35 +27,6 @@ export function renderLanding() {
                             </div>
                         </button>
                     </div>
-// Landing Page — /go — Cold-traffic conversion page
-import api from '../api.js';
-import { landingCSS } from './LandingStyles.js';
-
-export function renderLanding() {
-    return `
-        <style>${landingCSS}</style>
-        <style>@media(max-width:768px){.lp .ldesktop-proof{display:none!important}}</style>
-        <div class="lp">
-
-            <!-- LOADING BAR -->
-            <div class="lloading-bar" id="lp-loading-bar"></div>
-
-            <!-- NAV -->
-            <nav class="ln">
-                <div class="ln-in">
-                    <a class="ln-brand" href="/">
-                        <span class="logo-wordmark">Collateral</span>
-                    </a>
-                    <div style="display:flex; align-items:center;">
-                        <button class="ln-cta" id="lp-nav-cta">Sign In</button>
-                        <button class="ch-hamburger" id="mobile-menu-btn" aria-label="Menu" onclick="window.app.toggleMobileMenu()">
-                            <div class="ch-hamburger-lines">
-                                <span></span>
-                                <span></span>
-                                <span></span>
-                            </div>
-                        </button>
-                    </div>
                 </div>
             </nav>
 
@@ -96,7 +67,7 @@ export function renderLanding() {
                             </div>
                             <div class="lpcard-outcome">
                                 <div class="lpcard-outcome-row lpcard-outcome-hit"><span class="lpcard-outcome-icon">↑</span><span class="lpcard-outcome-text">Hit Target</span><span class="lpcard-outcome-result">+$1,000</span></div>
-                                <div class="lpcard-outcome-row lpcard-outcome-miss"><span class="lpcard-outcome-icon">↓</span><span class="lpcard-outcome-text">Miss Target</span><span class="lpcard-outcome-result">-$250</span></div>
+                                <div class="lpcard-outcome-row lpcard-outcome-miss"><span class="lpcard-outcome-icon">↓</span><span class="lpcard-outcome-text">Miss Target</span><span class="lpcard-outcome-result">−$250</span></div>
                             </div>
                         </div>
                     </div>
@@ -134,6 +105,192 @@ export function renderLanding() {
             </div>
 
             
+<!-- ═══ LIVE CONTRACT EXAMPLES ═══ -->
+            <div class="lcontracts" id="contracts">
+                <div class="lw">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px; flex-wrap: wrap; gap: 16px;">
+                        <div class="lred-dash" style="margin-bottom: 0;"><span class="lmono">Open Contracts</span></div>
+                        
+                        <!-- ═══ OPEN CONTRACTS STATS ═══ -->
+                        <div style="display: flex; align-items: center; gap: 10px;">
+                            <span style="width: 6px; height: 6px; background: #145c14; border-radius: 50%; box-shadow: 0 0 10px rgba(20,92,20,0.8);"></span>
+                            <span style="font-family: 'Inter Tight', sans-serif; font-weight: 700; color: #145c14; font-size: 15px; letter-spacing: -0.2px;">$7.6k</span>
+                            <span style="font-family: 'Inter', sans-serif; font-size: 11px; font-weight: 600; color: #666; text-transform: uppercase; letter-spacing: 0.05em;">Capital Locked</span>
+                        </div>
+                    </div>
+                    <div class="lcards">
+                        <div class="lcard" data-r>
+                            <div class="lcard-top">
+                                <span class="lcard-src">Stripe</span>
+                                <span class="lcard-tier tier-stake">Standard</span>
+                            </div>
+                            <div class="lcard-title">Revenue Growth</div>
+                            <div class="lcard-target">+20% Revenue growth</div>
+                            <div class="lcard-row"><span class="k">Deposit</span><span class="v">$250 – $3,000</span></div>
+                            <div class="lcard-row"><span class="k">Bonus Yield</span><span class="v">1.5x</span></div>
+                            <div class="lcard-row"><span class="k">Window</span><span class="v">30 days</span></div>
+                            <div class="lcard-btn"><button class="lp-cta-btn" data-source="STRIPE" data-tier="stake" data-capital="250">Draft Contract</button></div>
+                        </div>
+                        <div class="lcard" data-r>
+                            <div class="lcard-top">
+                                <span class="lcard-src">X / Twitter</span>
+                                <span class="lcard-tier tier-allin">High Yield</span>
+                            </div>
+                            <div class="lcard-title">Follower Growth</div>
+                            <div class="lcard-target">+1,000 Followers</div>
+                            <div class="lcard-row"><span class="k">Deposit</span><span class="v">$500 – $5,000</span></div>
+                            <div class="lcard-row"><span class="k">Bonus Yield</span><span class="v">3x</span></div>
+                            <div class="lcard-row"><span class="k">Window</span><span class="v">14 days</span></div>
+                            <div class="lcard-btn"><button class="lp-cta-btn" data-source="X" data-tier="all_in" data-capital="500">Draft Contract</button></div>
+                        </div>
+                        <div class="lcard" data-r>
+                            <div class="lcard-top">
+                                <span class="lcard-src">Shopify</span>
+                                <span class="lcard-tier tier-pledge">Standard</span>
+                            </div>
+                            <div class="lcard-title">Store Sales</div>
+                            <div class="lcard-target">+$5,000 Net Sales</div>
+                            <div class="lcard-row"><span class="k">Deposit</span><span class="v">$100 – $1,500</span></div>
+                            <div class="lcard-row"><span class="k">Bonus Yield</span><span class="v">0.5x</span></div>
+                            <div class="lcard-row"><span class="k">Window</span><span class="v">30 days</span></div>
+                            <div class="lcard-btn"><button class="lp-cta-btn" data-source="SHOPIFY" data-tier="pledge" data-capital="100">Draft Contract</button></div>
+                        </div>
+                        <div class="lcard" data-r>
+                            <div class="lcard-top">
+                                <span class="lcard-src">YouTube</span>
+                                <span class="lcard-tier tier-stake">Standard</span>
+                            </div>
+                            <div class="lcard-title">Subscriber Growth</div>
+                            <div class="lcard-target">+500 Subscribers</div>
+                            <div class="lcard-row"><span class="k">Deposit</span><span class="v">$250 – $3,000</span></div>
+                            <div class="lcard-row"><span class="k">Bonus Yield</span><span class="v">0.7x</span></div>
+                            <div class="lcard-row"><span class="k">Window</span><span class="v">30 days</span></div>
+                            <div class="lcard-btn"><button class="lp-cta-btn" data-source="YOUTUBE" data-tier="stake" data-capital="250">Draft Contract</button></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ═══ HOW IT WORKS ═══ -->
+            <div class="lw">
+                <div class="lhow" data-r id="how">
+                    <div class="lred-dash"><span class="lmono">How It Works</span></div>
+                    <h2 class="lhow-h">Set a target. Lock capital.<br>Let performance <strong>decide.</strong></h2>
+                    <p class="lhow-sub">Fully automated via APIs. No human bias. No exceptions.</p>
+
+                    <div class="lsteps">
+                        <div class="lstep">
+                            <div class="lstep-num">01</div>
+                            <div class="lstep-h">Choose Metric</div>
+                            <div class="lstep-p">Select your platform and define a verifiable business target.</div>
+                        </div>
+                        <div class="lstep">
+                            <div class="lstep-num">02</div>
+                            <div class="lstep-h">Lock Capital</div>
+                            <div class="lstep-p">Commit your deposit to escrow. Once live, the contract is financially binding.</div>
+                        </div>
+                        <div class="lstep">
+                            <div class="lstep-num">03</div>
+                            <div class="lstep-h">Track Progress</div>
+                            <div class="lstep-p">We monitor your performance directly via official API integrations.</div>
+                        </div>
+                        <div class="lstep">
+                            <div class="lstep-num">04</div>
+                            <div class="lstep-h">Auto Settle</div>
+                            <div class="lstep-p">Hit your goal to unlock your deposit and bonus. Miss it and forfeit the capital.</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- MINI CTA BLOCK -->
+            <div class="lw">
+                <div class="lmini-cta" data-r>
+                    <h3 class="lmini-cta-h">Ready to commit to your next milestone?</h3>
+                    <p class="lmini-cta-p">We'll fund your first performance bonus up to $250.</p>
+                    <button class="lbtn lbtn-r lp-cta-btn">Draft Contract</button>
+                    <div class="lmini-cta-micro">Objective tracking. Verified business data only.</div>
+                </div>
+            </div>
+
+            <!-- ═══ CONTRACT TYPES ═══ -->
+            <div class="lw">
+                <div class="ltypes" data-r>
+                    <div class="lred-dash"><span class="lmono">Contract Types</span></div>
+                    <h2 class="lhow-h" style="margin-bottom:32px">Choose your <strong>contract type.</strong></h2>
+
+                    <div class="ltypes-grid">
+                        <div class="ltype">
+                            <div class="ltype-badge" style="color:var(--t1);background:rgba(17,17,17,.04);border:1px solid var(--d)">Solo</div>
+                            <div class="ltype-h">You vs. your target.</div>
+                            <div class="ltype-p">Lock a deposit against your own goal. Hit the target to claim your bonus yield. Miss it, and the deposit is forfeited.</div>
+                            <div class="ltype-detail"><strong>Best for:</strong> Revenue growth, follower milestones, and strict launch deadlines.</div>
+                        </div>
+                        <div class="ltype">
+                            <div class="ltype-badge" style="color:var(--r);background:rgba(92,20,20,.04);border:1px solid rgba(92,20,20,.15)">Rivalry</div>
+                            <div class="ltype-h">You vs. another operator.</div>
+                            <div class="ltype-p">Lock equal capital deposits with another founder or creator. The strongest verified performance claims the entire escrow pool.</div>
+                            <div class="ltype-detail"><strong>Best for:</strong> Co-founder sprints, growth challenges, and transparent duels.</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+
+            <!-- ═══ FAQ ═══ -->
+            <div class="lw">
+                <div class="lfaq" data-r id="faq">
+                    <div class="lred-dash"><span class="lmono">Common Questions</span></div>
+                    <h2 class="lhow-h" style="margin-bottom:28px">No fine print. Just <strong>answers.</strong></h2>
+                    <div class="lfaq-wrap">
+                        <div class="fq open">
+                            <div class="fq-q">Is this gambling?</div>
+                            <div class="fq-a">No. This is a binding performance contract based strictly on your own business data, verified by official APIs. There are no odds, games of chance, or luck involved. The outcome depends entirely on your verifiable execution.</div>
+                        </div>
+                        <div class="fq">
+                            <div class="fq-q">Where is the money held?</div>
+                            <div class="fq-a">Deposits are held securely in escrow via Stripe Connect. Funds are released automatically only at settlement.</div>
+                        </div>
+                        <div class="fq">
+                            <div class="fq-q">How is the target verified?</div>
+                            <div class="fq-a">Directly via official APIs at the deadline. No screenshots, no self-reporting. The API data is objective and final.</div>
+                        </div>
+                        <div class="fq">
+                            <div class="fq-q">Can I cancel after locking?</div>
+                            <div class="fq-a">No. Once live, capital is locked from execution to settlement. You can cancel anytime before locking.</div>
+                        </div>
+                        <div class="fq">
+                            <div class="fq-q">Can I get a refund if I miss?</div>
+                            <div class="fq-a">No. The forfeiture is the enforcement mechanism of the contract. Only commit capital that you are willing to put at risk for accountability.</div>
+                        </div>
+                        <div class="fq">
+                            <div class="fq-q">What happens if an API goes down?</div>
+                            <div class="fq-a">Contracts pause automatically. If a source is permanently down, your deposit is fully refunded.</div>
+                        </div>
+                        <div class="fq">
+                            <div class="fq-q">What data do you access?</div>
+                            <div class="fq-a">Read-only access to the specific metric you target. We never access billing, customer records, or DMs.</div>
+                        </div>
+                        <div class="fq">
+                            <div class="fq-q">Is this legal?</div>
+                            <div class="fq-a">Yes. Available in the US, CA, UK, and EU. This is a commercial performance contract based on skill, execution, and objective data.</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ═══ FINAL CTA ═══ -->
+            <div class="lfoot">
+                <h2 class="lfoot-h">Turn your next business goal<br>into a binding financial <em style="color:var(--r);font-style:normal;font-weight:700">commitment.</em></h2>
+                <div class="lfoot-sub">First contract matched up to $250.</div>
+                <button class="lfoot-btn" id="lp-final-cta">Draft Contract</button>
+                <div class="lfoot-micro">Objective tracking. Verified business data only.</div>
+                <div class="lfoot-line">Collateral.market · © 2026</div>
+            </div>
+
+            <!-- Landing Mobile Menu Overlay & Drawer -->
+            <div id="mobile-menu-overlay" class="pnl-overlay" onclick="window.app.closeMobileMenu()"></div>
             <div id="mobile-menu" class="pnl-drawer">
                 <div class="pnl-header">
                     <div class="pnl-header-left">

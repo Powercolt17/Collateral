@@ -37,8 +37,8 @@ export function renderLanding() {
                     <div class="lhero-left">
 
                         <h1 class="lh1 animate-fade-in-up">
-                            You already know the goal.<br class="lh-br">
-                            Now make it <span class="lh-gradient">cost&nbsp;something.</span>
+                            You know the goal.<br class="lh-br">
+                            Make it <span class="lh-gradient">cost&nbsp;something.</span>
                         </h1>
                         <p class="lsub animate-fade-in-up delay-1">
                             Lock real capital against a verifiable metric. Hit the target, reclaim your deposit plus a bonus. <span class="lhide-mobile">Miss it, the money's gone. No appeals. Fully API-automated.</span>

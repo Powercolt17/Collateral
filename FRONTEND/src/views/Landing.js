@@ -55,89 +55,52 @@ export function renderLanding() {
                         <div class="lpreview-container">
                             <!-- STAGE 1: TERMS -->
                             <div class="lpreview-card stage-card active" data-stage="1">
-                                <div class="lpcard-header">
-                                    <div class="lpcard-brand">
-                                        <div class="lpcard-icon-wrapper">
-                                            <svg class="lpcard-icon-svg" viewBox="0 0 24 24" fill="currentColor"><path d="M13.962 10.758c-2.483-.827-3.125-1.428-3.125-2.348 0-1.127.977-1.728 2.596-1.728 2.445 0 4.62.9 6.275 1.834V3.538C17.95 2.75 15.658 2.4 13.511 2.4c-4.433 0-7.327 2.254-7.327 6.085 0 3.757 3.125 5.071 5.973 6.01 2.634.864 3.223 1.577 3.223 2.573 0 1.277-1.127 1.953-2.972 1.953-2.67 0-5.184-1.052-7.064-2.141v5.184c2.254.977 4.981 1.428 7.213 1.428 4.696 0 7.74-2.217 7.74-6.198 0-3.907-3.005-5.372-6.337-6.536z"/></svg>
-                                        </div>
-                                        <span class="lpcard-type">Performance Contract</span>
-                                    </div>
-                                    <div class="lpcard-status status-live"><span class="lpcard-status-dot dot-live"></span>Live</div>
+                                <div class="lcard-top">
+                                    <span class="lcard-src">Stripe</span>
+                                    <span class="lcard-tier tier-stake">Standard</span>
                                 </div>
-                                <div class="lpcard-divider"></div>
-                                <div class="lpcard-title">Stripe Revenue Growth</div>
-                                <div class="lpcard-terms">
-                                    <div class="lpcard-term"><span class="lpcard-term-k">Deposit</span><span class="lpcard-term-v">$250.00</span></div>
-                                    <div class="lpcard-term"><span class="lpcard-term-k">Target</span><span class="lpcard-term-v">+20% in 30 days</span></div>
-                                    <div class="lpcard-term highlight-yield"><span class="lpcard-term-k">Bonus Yield</span><span class="lpcard-term-v lpcard-term-highlight">+$750.00</span></div>
-                                    <div class="lpcard-term"><span class="lpcard-term-k">Verification</span><span class="lpcard-term-v">Stripe API</span></div>
-                                </div>
-                                <div class="lpcard-outcome">
-                                    <div class="lpcard-outcome-row lpcard-outcome-hit"><span class="lpcard-outcome-icon">↑</span><span class="lpcard-outcome-text">Hit Target</span><span class="lpcard-outcome-result">+$1,000</span></div>
-                                    <div class="lpcard-outcome-row lpcard-outcome-miss"><span class="lpcard-outcome-icon">↓</span><span class="lpcard-outcome-text">Miss Target</span><span class="lpcard-outcome-result">−$250</span></div>
-                                </div>
+                                <div class="lcard-title">Revenue Growth</div>
+                                <div class="lcard-target">+20% Revenue growth</div>
+                                <div class="lcard-row"><span class="k">Deposit</span><span class="v">$250.00</span></div>
+                                <div class="lcard-row"><span class="k">Target</span><span class="v">+20% in 30 days</span></div>
+                                <div class="lcard-row"><span class="k">Bonus Yield</span><span class="v">1.5x (+$750.00)</span></div>
+                                <div class="lcard-row"><span class="k">Verification</span><span class="v">Stripe API</span></div>
+                                <div class="lcard-row" style="margin-top: 12px; border-top: 1px solid var(--d); padding-top: 12px;"><span class="k">Hit Target</span><span class="v" style="color:var(--g)">+$1,000.00</span></div>
+                                <div class="lcard-row"><span class="k">Miss Target</span><span class="v" style="color:var(--r)">−$250.00</span></div>
                             </div>
 
                             <!-- STAGE 2: TRACKING -->
                             <div class="lpreview-card stage-card" data-stage="2">
-                                <div class="lpcard-header">
-                                    <div class="lpcard-brand">
-                                        <div class="lpcard-icon-wrapper">
-                                            <svg class="lpcard-icon-svg" viewBox="0 0 24 24" fill="currentColor"><path d="M13.962 10.758c-2.483-.827-3.125-1.428-3.125-2.348 0-1.127.977-1.728 2.596-1.728 2.445 0 4.62.9 6.275 1.834V3.538C17.95 2.75 15.658 2.4 13.511 2.4c-4.433 0-7.327 2.254-7.327 6.085 0 3.757 3.125 5.071 5.973 6.01 2.634.864 3.223 1.577 3.223 2.573 0 1.277-1.127 1.953-2.972 1.953-2.67 0-5.184-1.052-7.064-2.141v5.184c2.254.977 4.981 1.428 7.213 1.428 4.696 0 7.74-2.217 7.74-6.198 0-3.907-3.005-5.372-6.337-6.536z"/></svg>
-                                        </div>
-                                        <span class="lpcard-type">Performance Contract</span>
-                                    </div>
-                                    <div class="lpcard-status status-tracking"><span class="lpcard-status-dot dot-tracking"></span>Tracking</div>
+                                <div class="lcard-top">
+                                    <span class="lcard-src">Stripe</span>
+                                    <span class="lcard-tier tier-stake" style="color:#B45309; background:rgba(180,83,9,.06); border:1px solid rgba(180,83,9,.15)">Tracking</span>
                                 </div>
-                                <div class="lpcard-divider"></div>
-                                <div class="lpcard-title">Stripe Revenue Growth</div>
-                                <div class="lpcard-body">
-                                    <div class="lpcard-progress-container">
-                                        <div class="lpcard-progress-labels">
-                                            <span>Current: <strong>+13.4%</strong></span>
-                                            <span>Target: <strong>+20.0%</strong></span>
-                                        </div>
-                                        <div class="lpcard-progress-bg">
-                                            <div class="lpcard-progress-bar" style="width: 67%;"></div>
-                                        </div>
+                                <div class="lcard-title">Revenue Growth</div>
+                                <div class="lcard-target">+20% Revenue growth</div>
+                                <div class="lpcard-progress-container" style="margin-top: 12px;">
+                                    <div class="lpcard-progress-labels" style="display:flex; justify-content:space-between; font-size:11px; color:var(--t3); margin-bottom:6px;">
+                                        <span>Current: <strong>+13.4%</strong></span>
+                                        <span>Target: <strong>+20.0%</strong></span>
                                     </div>
-                                    <div class="lpcard-timer-container">
-                                        <div class="lpcard-timer-label">Time Remaining</div>
-                                        <div class="lpcard-timer-value">09 days : 14 hours : 22 min</div>
+                                    <div class="lpcard-progress-bg" style="width:100%; height:6px; background:#F3F4F6; overflow:hidden;">
+                                        <div class="lpcard-progress-bar" style="width: 67%; height:100%; background:var(--r);"></div>
                                     </div>
                                 </div>
+                                <div class="lcard-row" style="margin-top: 24px; border-top: 1px solid var(--d); padding-top: 12px;"><span class="k">Time Remaining</span><span class="v mono">09d : 14h : 22m</span></div>
                             </div>
 
                             <!-- STAGE 3: SETTLED -->
                             <div class="lpreview-card stage-card" data-stage="3">
-                                <div class="lpcard-header">
-                                    <div class="lpcard-brand">
-                                        <div class="lpcard-icon-wrapper">
-                                            <svg class="lpcard-icon-svg" viewBox="0 0 24 24" fill="currentColor"><path d="M13.962 10.758c-2.483-.827-3.125-1.428-3.125-2.348 0-1.127.977-1.728 2.596-1.728 2.445 0 4.62.9 6.275 1.834V3.538C17.95 2.75 15.658 2.4 13.511 2.4c-4.433 0-7.327 2.254-7.327 6.085 0 3.757 3.125 5.071 5.973 6.01 2.634.864 3.223 1.577 3.223 2.573 0 1.277-1.127 1.953-2.972 1.953-2.67 0-5.184-1.052-7.064-2.141v5.184c2.254.977 4.981 1.428 7.213 1.428 4.696 0 7.74-2.217 7.74-6.198 0-3.907-3.005-5.372-6.337-6.536z"/></svg>
-                                        </div>
-                                        <span class="lpcard-type">Performance Contract</span>
-                                    </div>
-                                    <div class="lpcard-status status-settled"><span class="lpcard-status-icon">✓</span>Settled</div>
+                                <div class="lcard-top">
+                                    <span class="lcard-src">Stripe</span>
+                                    <span class="lcard-tier tier-pledge" style="color:var(--g); background:rgba(20,92,20,.06); border:1px solid rgba(20,92,20,.15)">Settled</span>
                                 </div>
-                                <div class="lpcard-divider"></div>
-                                <div class="lpcard-title">Stripe Revenue Growth</div>
-                                <div class="lpcard-settled-body">
-                                    <div class="lpcard-settled-hero">
-                                        <div class="lpcard-settled-badge">Target Hit</div>
-                                        <div class="lpcard-settled-stats">Final: <strong>+22.7%</strong> vs +20% target</div>
-                                    </div>
-                                    <div class="lpcard-divider"></div>
-                                    <div class="lpcard-settled-payout">
-                                        <div class="lpcard-payout-total">
-                                            <span>Total Payout</span>
-                                            <span>+$1,000.00</span>
-                                        </div>
-                                        <div class="lpcard-payout-breakdown">
-                                            <div class="lpcard-breakdown-row"><span>Deposit Returned</span><span>$250</span></div>
-                                            <div class="lpcard-breakdown-row"><span>Bonus Yield</span><span>+$750</span></div>
-                                        </div>
-                                    </div>
-                                </div>
+                                <div class="lcard-title">Revenue Growth</div>
+                                <div class="lcard-target">+20% Revenue growth</div>
+                                <div class="lcard-row"><span class="k">Outcome</span><span class="v" style="color:var(--g); font-weight:700;">Target Hit (+22.7%)</span></div>
+                                <div class="lcard-row" style="margin-top: 12px; border-top: 1px solid var(--d); padding-top: 12px; font-weight: 700;"><span class="k" style="color:var(--t1);">Total Payout</span><span class="v" style="color:var(--g);">+$1,000.00</span></div>
+                                <div class="lcard-row"><span class="k">Deposit Returned</span><span class="v">$250.00</span></div>
+                                <div class="lcard-row"><span class="k">Bonus Yield</span><span class="v">+$750.00</span></div>
                             </div>
 
                             <!-- CONTROLS -->

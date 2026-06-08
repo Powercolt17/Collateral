@@ -119,44 +119,9 @@ export const landingCSS = `
 }
 .lhero-right{display:flex;justify-content:center;align-items:center;position:relative;perspective:1200px}
 .lhero-right::before{content:'';position:absolute;width:450px;height:450px;background:radial-gradient(circle, rgba(92,20,20,0.08) 0%, transparent 65%);z-index:0;animation:heroGlow 8s ease-in-out infinite;border-radius:50%}
-.lpreview-card{background:var(--p);border:1px solid rgba(0,0,0,0.06);width:100%;max-width:400px;position:relative;overflow:hidden;border-radius:20px;animation:premiumFloat 8s ease-in-out infinite;transform-style:preserve-3d;will-change:transform,box-shadow;z-index:1;backdrop-filter:blur(24px);box-shadow:0 30px 60px -15px rgba(0,0,0,0.08), 0 0 0 1px rgba(0,0,0,0.03)}
-.lpreview-card::before{content:'';position:absolute;top:0;left:0;right:0;height:4px;background:linear-gradient(90deg,var(--r),#A52A2A,var(--r));z-index:10}
-.lpreview-card::after{content:'';position:absolute;top:0;left:-50%;width:150%;height:100%;background:linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.6) 50%, transparent 100%);z-index:5;animation:cardSheen 8s ease-in-out infinite;pointer-events:none}
-
-.lpcard-header{display:flex;justify-content:space-between;align-items:center;padding:20px 24px 0}
-.lpcard-brand{display:flex;align-items:center;gap:10px}
-.lpcard-icon-wrapper{width:26px;height:26px;border-radius:6px;background:rgba(99,91,255,0.08);color:#635BFF;display:flex;align-items:center;justify-content:center}
-.lpcard-icon-svg{width:13px;height:13px}
-.lpcard-type{font-family:'Inter',sans-serif;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1.2px;color:var(--t3)}
-
-.lpcard-status{display:inline-flex;align-items:center;gap:6px;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.8px;padding:4px 10px;border-radius:100px}
-.lpcard-status.status-live{color:var(--g);background:rgba(20,92,20,.06);border:1px solid rgba(20,92,20,.15)}
-.lpcard-status-dot{width:6px;height:6px;border-radius:50%}
-.lpcard-status-dot.dot-live{background:var(--g);box-shadow:0 0 6px var(--g);animation:statusPulse 1.8s ease-in-out infinite}
-@keyframes statusPulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.4;transform:scale(0.8)}}
-.lpcard-divider{height:1px;background:rgba(0,0,0,0.04);margin:16px 24px}
-.lpcard-title{font-family:'Plus Jakarta Sans',sans-serif;font-size:22px;font-weight:800;color:var(--t1);padding:0 24px 8px;letter-spacing:-0.5px}
-
-.lpcard-terms{padding:0 24px 16px;display:flex;flex-direction:column;gap:6px}
-.lpcard-term{display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-bottom:1px solid rgba(229,229,229,.3);transition:all 0.3s ease}
-.lpcard-term:last-child{border-bottom:none}
-.lpcard-term.highlight-yield{background:linear-gradient(135deg, rgba(20,92,20,0.02) 0%, rgba(20,92,20,0.05) 100%);border:1px solid rgba(20,92,20,0.08);border-radius:8px;padding:10px 14px;margin:2px 0}
-.lpcard-term-k{font-size:12px;color:var(--t3);font-weight:500}
-.lpcard-term-v{font-size:13px;font-weight:700;color:var(--t1);font-family:'SF Mono','Fira Code','Consolas',monospace;letter-spacing:-.2px}
-.lpcard-term-highlight{color:#145c14;background:rgba(20,92,20,.05);padding:3px 8px;border-radius:4px;font-weight:800}
-
-.lpcard-outcome{padding:16px 24px;border-top:1px solid rgba(0,0,0,0.04);background:rgba(17,17,17,0.01)}
-.lpcard-outcome-row{display:flex;align-items:center;gap:10px;padding:8px 12px;margin-bottom:6px;border-radius:6px;font-size:12px;font-weight:600}
-.lpcard-outcome-row:last-child{margin-bottom:0}
-.lpcard-outcome-hit{background:rgba(20,92,20,.04);border:1px solid rgba(20,92,20,.08)}
-.lpcard-outcome-miss{background:rgba(92,20,20,.03);border:1px solid rgba(92,20,20,.06)}
-.lpcard-outcome-icon{font-size:14px;font-weight:700;line-height:1}
-.lpcard-outcome-hit .lpcard-outcome-icon{color:var(--g)}
-.lpcard-outcome-miss .lpcard-outcome-icon{color:var(--r)}
-.lpcard-outcome-text{flex:1;color:var(--t2);font-weight:500}
-.lpcard-outcome-result{font-family:'SF Mono','Fira Code','Consolas',monospace;font-weight:700;letter-spacing:-.3px}
-.lpcard-outcome-hit .lpcard-outcome-result{color:var(--g)}
-.lpcard-outcome-miss .lpcard-outcome-result{color:var(--r)}
+.lpreview-card{background:var(--p);border:1px solid var(--d);padding:36px 32px;width:100%;max-width:400px;position:relative;overflow:hidden;border-radius:0;animation:premiumFloat 8s ease-in-out infinite;transform-style:preserve-3d;will-change:transform,box-shadow;z-index:1;box-shadow:0 12px 30px rgba(0,0,0,0.03)}
+.lpreview-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:var(--r)}
+.lpreview-card::after{content:'';position:absolute;top:0;left:-50%;width:150%;height:100%;background:linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.3) 50%, transparent 100%);z-index:5;animation:cardSheen 8s ease-in-out infinite;pointer-events:none}
 
 
 
@@ -416,32 +381,11 @@ export const landingCSS = `
 .lpreview-dot:hover{background:#bbb}
 .lpreview-dot.active{background:var(--r);transform:scale(1.2)}
 
-.lpcard-status.status-tracking{color:#D97706;background:rgba(217,119,6,0.06);border:1px solid rgba(217,119,6,0.15)}
-.lpcard-status-dot.dot-tracking{background:#D97706;animation:statusTrackingPulse 1.8s ease-in-out infinite}
-@keyframes statusTrackingPulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.4;transform:scale(0.8)}}
-
-.lpcard-status.status-settled{color:#059669;background:rgba(5,150,105,0.06);border:1px solid rgba(5,150,105,0.15)}
-.lpcard-status-icon{font-size:11px;font-weight:700;margin-right:4px}
-
-.lpcard-body{padding:0 24px 24px}
+.lpcard-body{padding:0}
 .lpcard-progress-container{margin-top:16px}
 .lpcard-progress-labels{display:flex;justify-content:space-between;font-size:12px;color:var(--t2);margin-bottom:8px}
-.lpcard-progress-bg{width:100%;height:8px;background:#F3F4F6;border-radius:4px;overflow:visible;position:relative}
-.lpcard-progress-bar{height:100%;background:linear-gradient(90deg, var(--r) 0%, #A52A2A 100%);border-radius:4px;transition:width 1s cubic-bezier(0.16,1,0.3,1);box-shadow:0 0 10px rgba(92,20,20,0.25);position:relative}
-.lpcard-progress-bar::after{content:'';position:absolute;right:-3px;top:50%;transform:translateY(-50%);width:8px;height:8px;border-radius:50%;background:#FFF;box-shadow:0 0 8px #FFF, 0 0 12px var(--r)}
-
-.lpcard-timer-container{margin-top:24px;background:#0D0D0D;border:1px solid #1F1F1F;padding:16px;border-radius:12px;text-align:center;box-shadow:inset 0 1px 1px rgba(255,255,255,0.05), 0 8px 20px rgba(0,0,0,0.15)}
-.lpcard-timer-label{font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:700;color:#666;text-transform:uppercase;letter-spacing:1.5px}
-.lpcard-timer-value{font-family:'JetBrains Mono',monospace;font-size:20px;font-weight:700;color:#FFF;margin-top:6px;letter-spacing:0.5px;text-shadow:0 0 8px rgba(255,255,255,0.1)}
-
-.lpcard-settled-body{padding:0 24px 24px}
-.lpcard-settled-hero{text-align:center;padding:16px 0}
-.lpcard-settled-badge{display:inline-block;background:rgba(20,92,20,0.08);color:var(--g);font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:1px;padding:4px 12px;border-radius:100px;margin-bottom:8px;border:1px solid rgba(20,92,20,0.15)}
-.lpcard-settled-stats{font-size:13px;color:var(--t2)}
-.lpcard-settled-payout{background:linear-gradient(135deg, rgba(20,92,20,0.03) 0%, rgba(20,92,20,0.06) 100%);border:1px solid rgba(20,92,20,0.1);border-radius:12px;padding:16px;margin-top:16px}
-.lpcard-payout-total{display:flex;justify-content:space-between;align-items:center;font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:16px;color:#145c14;padding-bottom:10px;border-bottom:1px dashed rgba(20,92,20,0.15)}
-.lpcard-payout-breakdown{display:flex;flex-direction:column;gap:8px;margin-top:10px;font-size:12px;color:var(--t2)}
-.lpcard-breakdown-row{display:flex;justify-content:space-between}
+.lpcard-progress-bg{width:100%;height:6px;background:#F3F4F6;border-radius:2px;overflow:hidden}
+.lpcard-progress-bar{height:100%;background:var(--r);border-radius:2px;transition:width 1s cubic-bezier(0.16,1,0.3,1)}
 
 /* ═══ SOCIAL PROOF ═══ */
 .lreal-results{padding:100px 0;background:var(--bg)}

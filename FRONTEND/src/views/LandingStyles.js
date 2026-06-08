@@ -202,7 +202,7 @@ export const landingCSS = `
 @keyframes toastSlideDown{0%{opacity:1;transform:translateY(0) scale(1)}100%{opacity:0;transform:translateY(24px) scale(0.95)}}
 
 /* ═══ LIVE CONTRACTS ═══ */
-.lcontracts{padding:40px 0 64px;background:var(--p);border-top:1px solid var(--d)}
+.lcontracts{padding:40px 0 64px;background:var(--p)}
 .lcontracts .lw{max-width:1280px}
 .lcards{display:grid;grid-template-columns:repeat(4,1fr);gap:32px}
 .lcard{border:1px solid var(--d);padding:36px 32px;display:flex;flex-direction:column;transition:all 0.4s cubic-bezier(0.16, 1, 0.3, 1);background:var(--p);position:relative;overflow:hidden}

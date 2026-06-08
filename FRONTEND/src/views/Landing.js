@@ -45,7 +45,7 @@ export function renderLanding() {
                         </p>
                         <div class="lctas animate-fade-in-up delay-2">
                             <button class="lbtn lbtn-r" id="lp-hero-cta">Create Your Contract</button>
-                            <button class="lbtn lbtn-g" onclick="document.getElementById('contracts').scrollIntoView({behavior:'smooth'})">See Live Contracts</button>
+                            <button class="lbtn lbtn-g" id="lp-see-contracts-cta">See Live Contracts</button>
                         </div>
                         <div class="lcta-match ldesktop-proof animate-fade-in-up delay-2">First contract matched up to $250</div>
                         <div class="ltrust-bar ldesktop-proof animate-fade-in-up delay-3">API-verified • Funds in escrow • Auto-settled</div>
@@ -642,6 +642,14 @@ export function initLanding() {
             e.preventDefault(); e.stopPropagation(); goAction();
             if (window.trackEvent) window.trackEvent('cta_click', { button: id, ...utm });
         });
+    });
+    document.getElementById('lp-see-contracts-cta')?.addEventListener('click', (e) => {
+        e.preventDefault(); e.stopPropagation();
+        if (window.appState?.isLoggedIn) {
+            document.getElementById('contracts')?.scrollIntoView({behavior:'smooth'});
+        } else {
+            window.app.openAccessModal();
+        }
     });
     document.querySelectorAll('.lp-cta-btn').forEach(btn => {
         btn.addEventListener('click', (e) => {

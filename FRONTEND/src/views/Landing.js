@@ -474,15 +474,15 @@ export function renderLanding() {
                 <div class="pnl-body">
                     <!-- Navigation -->
                     <div class="pnl-section-label">Navigation</div>
-                    <a href="#" onclick="window.app.closeMobileMenu(); window.app.openAccessModal(); return false;" class="pnl-nav-link active" style="animation-delay: 0.06s"><span class="pnl-nav-indicator"></span>MARKET</a>
-                    <a href="#" onclick="window.app.closeMobileMenu(); window.app.openAccessModal(); return false;" class="pnl-nav-link" style="animation-delay: 0.09s"><span class="pnl-nav-indicator"></span>ACTIVE</a>
-                    <a href="#" onclick="window.app.closeMobileMenu(); window.app.openAccessModal(); return false;" class="pnl-nav-link" style="animation-delay: 0.12s"><span class="pnl-nav-indicator"></span>RIVALRY</a>
-                    <a href="#" onclick="window.app.closeMobileMenu(); window.app.openAccessModal(); return false;" class="pnl-nav-link" style="animation-delay: 0.15s"><span class="pnl-nav-indicator"></span>LEDGER</a>
-                    <a href="#" onclick="window.app.closeMobileMenu(); window.app.openAccessModal(); return false;" class="pnl-nav-link" style="animation-delay: 0.18s"><span class="pnl-nav-indicator"></span>SOURCES</a>
+                    <a href="#" onclick="window.app.closeMobileMenu(); if(window.app._authMode !== 'signup') window.app.toggleAuthMode(); window.app.openAccessModal(); return false;" class="pnl-nav-link active" style="animation-delay: 0.06s"><span class="pnl-nav-indicator"></span>MARKET</a>
+                    <a href="#" onclick="window.app.closeMobileMenu(); if(window.app._authMode !== 'signup') window.app.toggleAuthMode(); window.app.openAccessModal(); return false;" class="pnl-nav-link" style="animation-delay: 0.09s"><span class="pnl-nav-indicator"></span>ACTIVE</a>
+                    <a href="#" onclick="window.app.closeMobileMenu(); if(window.app._authMode !== 'signup') window.app.toggleAuthMode(); window.app.openAccessModal(); return false;" class="pnl-nav-link" style="animation-delay: 0.12s"><span class="pnl-nav-indicator"></span>RIVALRY</a>
+                    <a href="#" onclick="window.app.closeMobileMenu(); if(window.app._authMode !== 'signup') window.app.toggleAuthMode(); window.app.openAccessModal(); return false;" class="pnl-nav-link" style="animation-delay: 0.15s"><span class="pnl-nav-indicator"></span>LEDGER</a>
+                    <a href="#" onclick="window.app.closeMobileMenu(); if(window.app._authMode !== 'signup') window.app.toggleAuthMode(); window.app.openAccessModal(); return false;" class="pnl-nav-link" style="animation-delay: 0.18s"><span class="pnl-nav-indicator"></span>SOURCES</a>
                     
                     <!-- Connect -->
                     <div id="mobile-connect-section" class="pnl-connect-section">
-                        <button onclick="window.app.closeMobileMenu(); window.app.openAccessModal()" id="btn-auth-mobile" class="pnl-connect-btn">
+                        <button onclick="window.app.closeMobileMenu(); if(window.app._authMode !== 'signup') window.app.toggleAuthMode(); window.app.openAccessModal()" id="btn-auth-mobile" class="pnl-connect-btn">
                             CONNECT
                         </button>
                     </div>
@@ -624,7 +624,7 @@ export function initLanding() {
     if (Object.keys(utm).length) sessionStorage.setItem('collateral_utm', JSON.stringify(utm));
     if (window.trackEvent) window.trackEvent('go_page_view', { source: utm.utm_source || 'direct', campaign: utm.utm_campaign || 'none' });
 
-    function goAction(targetUrl = '/market') {
+    function goAction(targetUrl = '/market', mode = 'signup') {
         if (window.appState?.isLoggedIn) {
             sessionStorage.removeItem('collateral_go_flow');
             sessionStorage.removeItem('collateral_go_target');
@@ -632,22 +632,32 @@ export function initLanding() {
         } else {
             sessionStorage.setItem('collateral_go_flow', '1');
             sessionStorage.setItem('collateral_go_target', targetUrl);
+            if (mode === 'signup') {
+                if (window.app._authMode !== 'signup') window.app.toggleAuthMode();
+            } else {
+                if (window.app._authMode !== 'signin') window.app.toggleAuthMode();
+            }
             window.app.openAccessModal();
         }
     }
 
     // All CTAs route through goAction
-    ['lp-hero-cta', 'lp-final-cta', 'lp-nav-cta'].forEach(id => {
+    ['lp-hero-cta', 'lp-final-cta'].forEach(id => {
         document.getElementById(id)?.addEventListener('click', (e) => {
-            e.preventDefault(); e.stopPropagation(); goAction();
+            e.preventDefault(); e.stopPropagation(); goAction('/market', 'signup');
             if (window.trackEvent) window.trackEvent('cta_click', { button: id, ...utm });
         });
+    });
+    document.getElementById('lp-nav-cta')?.addEventListener('click', (e) => {
+        e.preventDefault(); e.stopPropagation(); goAction('/market', 'signin');
+        if (window.trackEvent) window.trackEvent('cta_click', { button: 'lp-nav-cta', ...utm });
     });
     document.getElementById('lp-see-contracts-cta')?.addEventListener('click', (e) => {
         e.preventDefault(); e.stopPropagation();
         if (window.appState?.isLoggedIn) {
             document.getElementById('contracts')?.scrollIntoView({behavior:'smooth'});
         } else {
+            if (window.app._authMode !== 'signup') window.app.toggleAuthMode();
             window.app.openAccessModal();
         }
     });
@@ -661,7 +671,7 @@ export function initLanding() {
             if (source && tier && capital) {
                 targetUrl = `/contracts/execute?source=${source}&tier=${tier}&capital=${capital}`;
             }
-            goAction(targetUrl);
+            goAction(targetUrl, 'signup');
             if (window.trackEvent) window.trackEvent('cta_click', { button: 'inline', source, tier, capital, ...utm });
         });
     });

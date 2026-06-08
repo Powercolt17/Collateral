@@ -55,52 +55,93 @@ export function renderLanding() {
                         <div class="lpreview-container">
                             <!-- STAGE 1: TERMS -->
                             <div class="lpreview-card stage-card active" data-stage="1">
-                                <div class="lcard-top">
-                                    <span class="lcard-src">Stripe</span>
-                                    <span class="lcard-tier tier-stake">Standard</span>
+                                <div class="lcon-header">
+                                    <span class="lcon-tag">[ PLATFORM: STRIPE ]</span>
+                                    <span class="lcon-status status-live"><span class="lcon-pulse-dot"></span>[ LIVE ]</span>
                                 </div>
-                                <div class="lcard-title">Revenue Growth</div>
-                                <div class="lcard-target">+20% Revenue growth</div>
-                                <div class="lcard-row"><span class="k">Deposit</span><span class="v">$250.00</span></div>
-                                <div class="lcard-row"><span class="k">Target</span><span class="v">+20% in 30 days</span></div>
-                                <div class="lcard-row"><span class="k">Bonus Yield</span><span class="v">1.5x (+$750.00)</span></div>
-                                <div class="lcard-row"><span class="k">Verification</span><span class="v">Stripe API</span></div>
-                                <div class="lcard-row" style="margin-top: 12px; border-top: 1px solid var(--d); padding-top: 12px;"><span class="k">Hit Target</span><span class="v" style="color:var(--g)">+$1,000.00</span></div>
-                                <div class="lcard-row"><span class="k">Miss Target</span><span class="v" style="color:var(--r)">−$250.00</span></div>
+                                <div class="lcon-title">&gt; Stripe Revenue Growth</div>
+                                <div class="lcon-grid">
+                                    <div class="lcon-cell">
+                                        <span class="label">DEPOSIT</span>
+                                        <span class="value">$250.00</span>
+                                    </div>
+                                    <div class="lcon-cell">
+                                        <span class="label">TARGET</span>
+                                        <span class="value">+20.0%</span>
+                                    </div>
+                                    <div class="lcon-cell highlight">
+                                        <span class="label">YIELD_MULT</span>
+                                        <span class="value">1.5x</span>
+                                    </div>
+                                    <div class="lcon-cell">
+                                        <span class="label">ORACLE</span>
+                                        <span class="value">STRIPE_API</span>
+                                    </div>
+                                </div>
+                                <div class="lcon-divider"></div>
+                                <div class="lcon-receipt">
+                                    <div class="lcon-line"><span class="k">IF_TARGET_HIT</span><span class="lead"></span><span class="v positive">+$1,000.00</span></div>
+                                    <div class="lcon-line"><span class="k">IF_TARGET_MISS</span><span class="lead"></span><span class="v negative">-$250.00</span></div>
+                                </div>
                             </div>
 
                             <!-- STAGE 2: TRACKING -->
                             <div class="lpreview-card stage-card" data-stage="2">
-                                <div class="lcard-top">
-                                    <span class="lcard-src">Stripe</span>
-                                    <span class="lcard-tier tier-stake" style="color:#B45309; background:rgba(180,83,9,.06); border:1px solid rgba(180,83,9,.15)">Tracking</span>
+                                <div class="lcon-header">
+                                    <span class="lcon-tag">[ PLATFORM: STRIPE ]</span>
+                                    <span class="lcon-status status-tracking"><span class="lcon-pulse-dot"></span>[ TRACKING ]</span>
                                 </div>
-                                <div class="lcard-title">Revenue Growth</div>
-                                <div class="lcard-target">+20% Revenue growth</div>
-                                <div class="lpcard-progress-container" style="margin-top: 12px;">
-                                    <div class="lpcard-progress-labels" style="display:flex; justify-content:space-between; font-size:11px; color:var(--t3); margin-bottom:6px;">
-                                        <span>Current: <strong>+13.4%</strong></span>
-                                        <span>Target: <strong>+20.0%</strong></span>
+                                <div class="lcon-title">&gt; Stripe Revenue Growth</div>
+                                <div class="lcon-grid">
+                                    <div class="lcon-cell">
+                                        <span class="label">CURRENT</span>
+                                        <span class="value">+13.4%</span>
                                     </div>
-                                    <div class="lpcard-progress-bg" style="width:100%; height:6px; background:#F3F4F6; overflow:hidden;">
-                                        <div class="lpcard-progress-bar" style="width: 67%; height:100%; background:var(--r);"></div>
+                                    <div class="lcon-cell">
+                                        <span class="label">TARGET</span>
+                                        <span class="value">+20.0%</span>
+                                    </div>
+                                    <div class="lcon-cell">
+                                        <span class="label">WINDOW</span>
+                                        <span class="value">30_DAYS</span>
+                                    </div>
+                                    <div class="lcon-cell">
+                                        <span class="label">ESCROW</span>
+                                        <span class="value">ACTIVE</span>
                                     </div>
                                 </div>
-                                <div class="lcard-row" style="margin-top: 24px; border-top: 1px solid var(--d); padding-top: 12px;"><span class="k">Time Remaining</span><span class="v mono">09d : 14h : 22m</span></div>
+                                <div class="lcon-divider"></div>
+                                <div class="lcon-progress-section">
+                                    <div style="display:flex; justify-content:space-between; font-family:'JetBrains Mono',monospace; font-size:10px; color:#6b7280; margin-bottom:8px;">
+                                        <span>EXECUTION_SCALE</span>
+                                        <span>67% COMPLETED</span>
+                                    </div>
+                                    <div class="lcon-progress-segments">
+                                        <span class="lit"></span><span class="lit"></span><span class="lit"></span><span class="lit"></span><span class="lit"></span>
+                                        <span class="lit"></span><span class="lit"></span><span class="lit"></span><span class="lit"></span><span class="lit"></span>
+                                        <span></span><span></span><span></span><span></span><span></span>
+                                    </div>
+                                </div>
+                                <div class="lcon-timer-container">
+                                    <span class="timer-label">TIME_REMAINING</span>
+                                    <span class="timer-value">09d : 14h : 22m : 45s</span>
+                                </div>
                             </div>
 
                             <!-- STAGE 3: SETTLED -->
                             <div class="lpreview-card stage-card" data-stage="3">
-                                <div class="lcard-top">
-                                    <span class="lcard-src">Stripe</span>
-                                    <span class="lcard-tier tier-pledge" style="color:var(--g); background:rgba(20,92,20,.06); border:1px solid rgba(20,92,20,.15)">Settled</span>
+                                <div class="lcon-header">
+                                    <span class="lcon-tag">[ PLATFORM: STRIPE ]</span>
+                                    <span class="lcon-status status-settled">[ SETTLED ]</span>
                                 </div>
-                                <div class="lcard-title">Revenue Growth</div>
-                                <div class="lcard-target">+20% Revenue growth</div>
-                                <div class="lcard-row"><span class="k">Outcome</span><span class="v" style="color:var(--g); font-weight:700;">Target Hit (+22.7%)</span></div>
-                                <div class="lcard-row" style="margin-top: 12px; border-top: 1px solid var(--d); padding-top: 12px; font-weight: 700;"><span class="k" style="color:var(--t1);">Total Payout</span><span class="v" style="color:var(--g);">+$1,000.00</span></div>
-                                <div class="lcard-row"><span class="k">Deposit Returned</span><span class="v">$250.00</span></div>
-                                <div class="lcard-row"><span class="k">Bonus Yield</span><span class="v">+$750.00</span></div>
+                                <div class="lcon-title">&gt; Stripe Revenue Growth</div>
+                                <div class="lcon-banner">[ API_VERIFIED: TARGET_HIT ]</div>
+                                <div class="lcon-receipt block-receipt">
+                                    <div class="lcon-line"><span class="k">TOTAL_DISBURSED</span><span class="lead"></span><span class="v positive font-bold">+$1,000.00</span></div>
+                                    <div class="lcon-line"><span class="k">DEPOSIT_RELEASED</span><span class="lead"></span><span class="v">$250.00</span></div>
+                                    <div class="lcon-line"><span class="k">EARNED_YIELD</span><span class="lead"></span><span class="v positive">+$750.00</span></div>
+                                    <div class="lcon-line"><span class="k">TX_HASH</span><span class="lead"></span><span class="v hex">#c401...8e35</span></div>
+                                </div>
                             </div>
 
                             <!-- CONTROLS -->

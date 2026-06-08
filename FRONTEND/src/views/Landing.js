@@ -55,92 +55,138 @@ export function renderLanding() {
                         <div class="lpreview-container">
                             <!-- STAGE 1: TERMS -->
                             <div class="lpreview-card stage-card active" data-stage="1">
-                                <div class="lcon-header">
-                                    <span class="lcon-tag">[ PLATFORM: STRIPE ]</span>
-                                    <span class="lcon-status status-live"><span class="lcon-pulse-dot"></span>[ LIVE ]</span>
+                                <div class="lpcard-header-new">
+                                    <div class="lpcard-integration-badge">
+                                        <img src="https://www.vectorlogo.zone/logos/stripe/stripe-icon.svg" class="lpcard-integration-icon" alt="Stripe" />
+                                        <span>Stripe Integration</span>
+                                    </div>
+                                    <div class="lpcard-status status-live">
+                                        <span class="pulse-dot"></span>
+                                        Active
+                                    </div>
                                 </div>
-                                <div class="lcon-title">&gt; Stripe Revenue Growth</div>
-                                <div class="lcon-grid">
-                                    <div class="lcon-cell">
-                                        <span class="label">DEPOSIT</span>
+                                <h3 class="lpcard-title-new">Stripe Revenue Target</h3>
+                                <div class="lpcard-grid-new">
+                                    <div class="lpcard-cell-new">
+                                        <span class="label">Deposit</span>
                                         <span class="value">$250.00</span>
                                     </div>
-                                    <div class="lcon-cell">
-                                        <span class="label">TARGET</span>
+                                    <div class="lpcard-cell-new">
+                                        <span class="label">Target</span>
                                         <span class="value">+20.0%</span>
                                     </div>
-                                    <div class="lcon-cell highlight">
-                                        <span class="label">YIELD_MULT</span>
+                                    <div class="lpcard-cell-new highlight">
+                                        <span class="label">Yield Match</span>
                                         <span class="value">1.5x</span>
                                     </div>
-                                    <div class="lcon-cell">
-                                        <span class="label">ORACLE</span>
-                                        <span class="value">STRIPE_API</span>
+                                    <div class="lpcard-cell-new">
+                                        <span class="label">Verification</span>
+                                        <span class="value">Stripe API</span>
                                     </div>
                                 </div>
-                                <div class="lcon-divider"></div>
-                                <div class="lcon-receipt">
-                                    <div class="lcon-line"><span class="k">IF_TARGET_HIT</span><span class="lead"></span><span class="v positive">+$1,000.00</span></div>
-                                    <div class="lcon-line"><span class="k">IF_TARGET_MISS</span><span class="lead"></span><span class="v negative">-$250.00</span></div>
+                                <div class="lpcard-outcomes-container">
+                                    <div class="lpcard-outcome-box positive">
+                                        <span class="outcome-label"><span class="outcome-dot"></span>Target Hit</span>
+                                        <span class="outcome-value">+$1,000.00</span>
+                                    </div>
+                                    <div class="lpcard-outcome-box negative">
+                                        <span class="outcome-label"><span class="outcome-dot"></span>Target Missed</span>
+                                        <span class="outcome-value">-$250.00</span>
+                                    </div>
                                 </div>
                             </div>
 
                             <!-- STAGE 2: TRACKING -->
                             <div class="lpreview-card stage-card" data-stage="2">
-                                <div class="lcon-header">
-                                    <span class="lcon-tag">[ PLATFORM: STRIPE ]</span>
-                                    <span class="lcon-status status-tracking"><span class="lcon-pulse-dot"></span>[ TRACKING ]</span>
+                                <div class="lpcard-header-new">
+                                    <div class="lpcard-integration-badge">
+                                        <img src="https://www.vectorlogo.zone/logos/stripe/stripe-icon.svg" class="lpcard-integration-icon" alt="Stripe" />
+                                        <span>Stripe Integration</span>
+                                    </div>
+                                    <div class="lpcard-status status-tracking">
+                                        <span class="pulse-dot-tracking"></span>
+                                        Tracking
+                                    </div>
                                 </div>
-                                <div class="lcon-title">&gt; Stripe Revenue Growth</div>
-                                <div class="lcon-grid">
-                                    <div class="lcon-cell">
-                                        <span class="label">CURRENT</span>
+                                <h3 class="lpcard-title-new">Stripe Revenue Target</h3>
+                                <div class="lpcard-grid-new">
+                                    <div class="lpcard-cell-new">
+                                        <span class="label">Current</span>
                                         <span class="value">+13.4%</span>
                                     </div>
-                                    <div class="lcon-cell">
-                                        <span class="label">TARGET</span>
+                                    <div class="lpcard-cell-new">
+                                        <span class="label">Target</span>
                                         <span class="value">+20.0%</span>
                                     </div>
-                                    <div class="lcon-cell">
-                                        <span class="label">WINDOW</span>
-                                        <span class="value">30_DAYS</span>
+                                    <div class="lpcard-cell-new">
+                                        <span class="label">Time Elapsed</span>
+                                        <span class="value">21 Days</span>
                                     </div>
-                                    <div class="lcon-cell">
-                                        <span class="label">ESCROW</span>
-                                        <span class="value">ACTIVE</span>
-                                    </div>
-                                </div>
-                                <div class="lcon-divider"></div>
-                                <div class="lcon-progress-section">
-                                    <div style="display:flex; justify-content:space-between; font-family:'JetBrains Mono',monospace; font-size:10px; color:#6b7280; margin-bottom:8px;">
-                                        <span>EXECUTION_SCALE</span>
-                                        <span>67% COMPLETED</span>
-                                    </div>
-                                    <div class="lcon-progress-segments">
-                                        <span class="lit"></span><span class="lit"></span><span class="lit"></span><span class="lit"></span><span class="lit"></span>
-                                        <span class="lit"></span><span class="lit"></span><span class="lit"></span><span class="lit"></span><span class="lit"></span>
-                                        <span></span><span></span><span></span><span></span><span></span>
+                                    <div class="lpcard-cell-new">
+                                        <span class="label">Escrow</span>
+                                        <span class="value">Locked</span>
                                     </div>
                                 </div>
-                                <div class="lcon-timer-container">
-                                    <span class="timer-label">TIME_REMAINING</span>
-                                    <span class="timer-value">09d : 14h : 22m : 45s</span>
+                                <div class="lpcard-progress-section-new">
+                                    <div class="lpcard-progress-label">
+                                        <span>Target Progress</span>
+                                        <span>67% Completed</span>
+                                    </div>
+                                    <div class="lpcard-progress-track-new">
+                                        <div class="lpcard-progress-fill-new" style="width: 67%;"></div>
+                                    </div>
+                                </div>
+                                <div class="lpcard-countdown-widget-new">
+                                    <span class="countdown-label">Time Remaining</span>
+                                    <div class="countdown-digits">
+                                        <span class="digit-group"><span class="num">09</span><span class="unit">d</span></span>
+                                        <span class="sep">:</span>
+                                        <span class="digit-group"><span class="num">14</span><span class="unit">h</span></span>
+                                        <span class="sep">:</span>
+                                        <span class="digit-group"><span class="num">22</span><span class="unit">m</span></span>
+                                        <span class="sep">:</span>
+                                        <span class="digit-group"><span class="num">45</span><span class="unit">s</span></span>
+                                    </div>
                                 </div>
                             </div>
 
                             <!-- STAGE 3: SETTLED -->
                             <div class="lpreview-card stage-card" data-stage="3">
-                                <div class="lcon-header">
-                                    <span class="lcon-tag">[ PLATFORM: STRIPE ]</span>
-                                    <span class="lcon-status status-settled">[ SETTLED ]</span>
+                                <div class="lpcard-header-new">
+                                    <div class="lpcard-integration-badge">
+                                        <img src="https://www.vectorlogo.zone/logos/stripe/stripe-icon.svg" class="lpcard-integration-icon" alt="Stripe" />
+                                        <span>Stripe Integration</span>
+                                    </div>
+                                    <div class="lpcard-status status-settled">
+                                        <span class="pulse-dot-settled"></span>
+                                        Settled
+                                    </div>
                                 </div>
-                                <div class="lcon-title">&gt; Stripe Revenue Growth</div>
-                                <div class="lcon-banner">[ API_VERIFIED: TARGET_HIT ]</div>
-                                <div class="lcon-receipt block-receipt">
-                                    <div class="lcon-line"><span class="k">TOTAL_DISBURSED</span><span class="lead"></span><span class="v positive font-bold">+$1,000.00</span></div>
-                                    <div class="lcon-line"><span class="k">DEPOSIT_RELEASED</span><span class="lead"></span><span class="v">$250.00</span></div>
-                                    <div class="lcon-line"><span class="k">EARNED_YIELD</span><span class="lead"></span><span class="v positive">+$750.00</span></div>
-                                    <div class="lcon-line"><span class="k">TX_HASH</span><span class="lead"></span><span class="v hex">#c401...8e35</span></div>
+                                <h3 class="lpcard-title-new">Stripe Revenue Target</h3>
+                                <div class="lpcard-verified-banner-new">
+                                    <svg class="verified-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                                        <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                                        <polyline points="22 4 12 14.01 9 11.01"></polyline>
+                                    </svg>
+                                    <span>Verified Target Hit via Stripe API</span>
+                                </div>
+                                <div class="lpcard-payout-breakdown-new">
+                                    <div class="breakdown-row total">
+                                        <span class="breakdown-label">Total Disbursed</span>
+                                        <span class="breakdown-value">+$1,000.00</span>
+                                    </div>
+                                    <div class="breakdown-row sub">
+                                        <span class="breakdown-label">Deposit Released</span>
+                                        <span class="breakdown-value">$250.00</span>
+                                    </div>
+                                    <div class="breakdown-row sub">
+                                        <span class="breakdown-label">Earned Yield</span>
+                                        <span class="breakdown-value">+$750.00</span>
+                                    </div>
+                                    <div class="breakdown-row tx">
+                                        <span class="breakdown-label">Verification ID</span>
+                                        <span class="breakdown-value">stripe_settlement_c4018e35</span>
+                                    </div>
                                 </div>
                             </div>
 

@@ -86,10 +86,16 @@ export const landingCSS = `
 }
 .lbtn-g{background:var(--p);color:var(--t2);border:1px solid var(--d)}
 .lbtn-g:hover{border-color:#bbb;color:var(--t1);transform:translateY(-1px)}
-.lcta-match{font-size:14px;color:var(--t1);margin-top:16px;font-weight:700;display:flex;align-items:center;gap:8px;letter-spacing:-.1px}
-.lcta-match::before{content:'';width:6px;height:6px;border-radius:50%;background:var(--r)}
-.ltrust-bar{font-size:11px;color:var(--t2);margin-top:14px;font-weight:600;text-transform:uppercase;letter-spacing:1px;display:flex;align-items:center;gap:6px}
-.ltrust-bar::before{content:'✓';color:var(--g);font-weight:bold;font-size:12px}
+@keyframes matchDotPulse {
+  0%, 100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(92,20,20,0.4); }
+  50% { transform: scale(1.3); box-shadow: 0 0 8px 3px rgba(92,20,20,0.25); }
+}
+@keyframes matchTextShine {
+  0%, 100% { text-shadow: 0 0 0px rgba(92,20,20,0); }
+  50% { text-shadow: 0 0 4px rgba(92,20,20,0.15); }
+}
+.lcta-match{font-size:14px;color:var(--t1);margin-top:16px;font-weight:700;display:flex;align-items:center;gap:8px;letter-spacing:-.1px;animation:matchTextShine 3s infinite ease-in-out}
+.lcta-match::before{content:'';width:6px;height:6px;border-radius:50%;background:var(--r);animation:matchDotPulse 2s infinite ease-in-out}
 
 /* ═══ PREVIEW CONTRACT CARD ═══ */
 @keyframes premiumFloat {

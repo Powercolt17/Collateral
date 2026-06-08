@@ -48,7 +48,6 @@ export function renderLanding() {
                             <button class="lbtn lbtn-g" id="lp-see-contracts-cta">See Live Contracts</button>
                         </div>
                         <div class="lcta-match ldesktop-proof animate-fade-in-up delay-2">Launch offer: First contract matched up to $250</div>
-                        <div class="ltrust-bar ldesktop-proof animate-fade-in-up delay-3">API-verified • Funds in escrow • Auto-settled</div>
 
 
                     </div>

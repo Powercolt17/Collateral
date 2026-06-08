@@ -273,8 +273,8 @@
     style="font-family: 'Sora', 'Inter', 'Helvetica Neue', sans-serif; font-feature-settings: 'zero' 0;">
 
     <div id="loading-screen" style="
-        position: fixed; inset: 0; z-index: 9999;
-        background: #000000;
+        position: fixed; inset: 0; z-index: 100000;
+        background: #FFFFFF;
         display: flex; align-items: center; justify-content: center;
         transition: opacity 0.5s cubic-bezier(0.16, 1, 0.3, 1), transform 0.5s cubic-bezier(0.16, 1, 0.3, 1), visibility 0.5s;
     ">
@@ -283,67 +283,40 @@
                 opacity: 0;
                 visibility: hidden;
                 pointer-events: none;
-                transform: scale(1.08);
+                transform: scale(1.05);
             }
             .cl-loader-container {
-                display: grid;
-                place-items: center;
+                display: flex;
+                align-items: center;
+                justify-content: center;
             }
-            .cl-shimmer-text {
-                grid-area: 1 / 1 / 2 / 2;
+            .cl-loader-text {
                 font-family: 'Byte Sharp', 'Science', 'Sora', 'Inter', sans-serif;
-                font-size: 26px;
+                font-size: 28px;
                 font-weight: 800;
                 letter-spacing: 0.35em;
                 text-transform: uppercase;
-                color: #FFFFFF;
-                position: relative;
-                z-index: 2;
-                background: linear-gradient(
-                    90deg, 
-                    rgba(255,255,255,0.75) 0%, 
-                    #FFFFFF 25%, 
-                    #752122 50%, 
-                    #FFFFFF 75%, 
-                    rgba(255,255,255,0.75) 100%
-                );
-                background-size: 200% auto;
-                -webkit-background-clip: text;
-                -webkit-text-fill-color: transparent;
-                animation: cl-text-shimmer 2.2s linear infinite, cl-text-pulse 1.6s ease-in-out infinite;
+                color: #111111;
+                animation: cl-text-pulse 1.5s ease-in-out infinite;
                 padding-left: 0.35em; /* offsets tracking-widest center bias */
             }
-            .cl-glow-text {
-                grid-area: 1 / 1 / 2 / 2;
-                font-family: 'Byte Sharp', 'Science', 'Sora', 'Inter', sans-serif;
-                font-size: 26px;
-                font-weight: 800;
-                letter-spacing: 0.35em;
-                text-transform: uppercase;
-                color: #752122;
-                filter: blur(14px);
-                opacity: 0.75;
-                z-index: 1;
-                animation: cl-glow-pulse 1.6s ease-in-out infinite;
-                padding-left: 0.35em;
-            }
-            @keyframes cl-text-shimmer {
-                0% { background-position: 200% center; }
-                100% { background-position: -200% center; }
+            .cl-loader-red {
+                color: #5C1414;
             }
             @keyframes cl-text-pulse {
-                0%, 100% { transform: scale(0.97); opacity: 0.85; }
-                50% { transform: scale(1.03); opacity: 1; }
-            }
-            @keyframes cl-glow-pulse {
-                0%, 100% { transform: scale(0.95); opacity: 0.55; filter: blur(12px); }
-                50% { transform: scale(1.05); opacity: 0.9; filter: blur(16px); }
+                0%, 100% {
+                    transform: scale(0.96);
+                    opacity: 0.85;
+                }
+                50% {
+                    transform: scale(1.02);
+                    opacity: 1;
+                }
             }
         </style>
 
         <div class="cl-loader-container" aria-label="Collateral Loading">
-            <div class="cl-glow-text">COLLATERAL</div>
-            <div class="cl-shimmer-text">COLLATERAL</div>
+            <div class="cl-loader-text">COLLA<span class="cl-loader-red">TERAL</span></div>
         </div>
     </div>
 

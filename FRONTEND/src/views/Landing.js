@@ -140,6 +140,29 @@ export function renderLanding() {
 
 
 
+            <!-- ═══ CONTRACT TYPES ═══ -->
+            <div class="lw">
+                <div class="ltypes" data-r>
+                    <div class="lred-dash"><span class="lmono">Contract Types</span></div>
+                    <h2 class="lhow-h" style="margin-bottom:32px">Solo accountability or a<br>head-to-head <strong>rivalry.</strong></h2>
+
+                    <div class="ltypes-grid">
+                        <div class="ltype">
+                            <div class="ltype-badge" style="color:var(--t1);background:rgba(17,17,17,.04);border:1px solid var(--d)">Solo</div>
+                            <div class="ltype-h">You vs. your own target.</div>
+                            <div class="ltype-p">Lock a deposit against a goal only you control. Hit it and claim your bonus. Miss it and the money's gone — no one to blame but yourself.</div>
+                            <div class="ltype-detail"><strong>Best for:</strong> Revenue targets, follower milestones, launch deadlines — any goal you keep pushing to next quarter.</div>
+                        </div>
+                        <div class="ltype">
+                            <div class="ltype-badge" style="color:var(--r);background:rgba(92,20,20,.04);border:1px solid rgba(92,20,20,.15)">Rivalry</div>
+                            <div class="ltype-h">You vs. another operator.</div>
+                            <div class="ltype-p">Both sides lock equal capital. Whoever posts the stronger verified performance takes the entire pool. Loser walks away with nothing.</div>
+                            <div class="ltype-detail"><strong>Best for:</strong> Co-founder sprints, creator challenges, and anyone who performs better with competition.</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
             <!-- ═══ LOGO CAROUSEL ═══ -->
             <div class="lmarquee" data-r>
                 <div class="lmarquee-label"><span class="lmono">Verified via official APIs</span></div>
@@ -163,29 +186,6 @@ export function renderLanding() {
                         <img class="logo-x" src="https://cdn.simpleicons.org/x/555555" alt="X">
                         <img class="logo-shopify" src="https://www.vectorlogo.zone/logos/shopify/shopify-ar21.svg" alt="Shopify">
                         <img class="logo-youtube" src="https://www.vectorlogo.zone/logos/youtube/youtube-ar21.svg" alt="YouTube">
-                    </div>
-                </div>
-            </div>
-
-            <!-- ═══ CONTRACT TYPES ═══ -->
-            <div class="lw">
-                <div class="ltypes" data-r>
-                    <div class="lred-dash"><span class="lmono">Contract Types</span></div>
-                    <h2 class="lhow-h" style="margin-bottom:32px">Solo accountability or a<br>head-to-head <strong>rivalry.</strong></h2>
-
-                    <div class="ltypes-grid">
-                        <div class="ltype">
-                            <div class="ltype-badge" style="color:var(--t1);background:rgba(17,17,17,.04);border:1px solid var(--d)">Solo</div>
-                            <div class="ltype-h">You vs. your own target.</div>
-                            <div class="ltype-p">Lock a deposit against a goal only you control. Hit it and claim your bonus. Miss it and the money's gone — no one to blame but yourself.</div>
-                            <div class="ltype-detail"><strong>Best for:</strong> Revenue targets, follower milestones, launch deadlines — any goal you keep pushing to next quarter.</div>
-                        </div>
-                        <div class="ltype">
-                            <div class="ltype-badge" style="color:var(--r);background:rgba(92,20,20,.04);border:1px solid rgba(92,20,20,.15)">Rivalry</div>
-                            <div class="ltype-h">You vs. another operator.</div>
-                            <div class="ltype-p">Both sides lock equal capital. Whoever posts the stronger verified performance takes the entire pool. Loser walks away with nothing.</div>
-                            <div class="ltype-detail"><strong>Best for:</strong> Co-founder sprints, creator challenges, and anyone who performs better with competition.</div>
-                        </div>
                     </div>
                 </div>
             </div>

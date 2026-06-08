@@ -437,6 +437,7 @@ export const landingCSS = `
   color: #8C8B87;
   letter-spacing: 0.8px;
   text-transform: uppercase;
+}
 .time-display-grid {
   display: grid;
   grid-template-columns: 1fr auto 1fr auto 1fr auto 1fr;

@@ -249,26 +249,30 @@ export const landingCSS = `
 .lmini-cta-p{font-size:18px;color:var(--t2);margin-bottom:40px;line-height:1.6}
 .lmini-cta-micro{font-size:12px;color:var(--t3);margin-top:20px;font-weight:500;text-transform:uppercase;letter-spacing:2px}
 
-/* ═══ LOGO MARQUEE (STATIC ROW) ═══ */
-.lmarquee{padding:24px 0 16px;background:transparent;position:relative;border-top:1px solid rgba(0,0,0,0.04);border-bottom:1px solid rgba(0,0,0,0.04);margin:32px 0 48px}
-.lmarquee-label{text-align:center;margin-bottom:16px}
-.lmarquee-label .lmono{font-size:9px;font-weight:700;letter-spacing:3px;color:var(--t3);opacity:0.6;text-transform:uppercase}
-.lmarquee-logos{display:flex;justify-content:center;align-items:center;gap:80px;padding:8px 0}
-.lmarquee-logos img{opacity:.25;transition:all .4s cubic-bezier(0.16, 1, 0.3, 1);flex-shrink:0;filter:grayscale(1)}
-.lmarquee-logos img:hover{opacity:.85;filter:none;transform:scale(1.05)}
-.lmarquee-logos img.logo-stripe{height:34px}
-.lmarquee-logos img.logo-x{height:20px;margin:0 8px}
-.lmarquee-logos img.logo-shopify{height:36px}
-.lmarquee-logos img.logo-youtube{height:28px}
+/* ═══ ORACLE STATUS BAR ═══ */
+.loracle-wrapper{margin:32px auto 48px;padding:0;max-width:1080px;width:100%}
+.loracle-bar{background:#FFF;border:1px solid var(--d);border-radius:12px;padding:14px 20px;display:flex;justify-content:space-between;align-items:center;box-shadow:0 4px 24px rgba(0,0,0,0.015);position:relative;overflow:hidden}
+.loracle-header{display:flex;align-items:center;gap:10px}
+.loracle-dot{width:6px;height:6px;background:var(--g);border-radius:50%;display:inline-block;box-shadow:0 0 8px rgba(20,92,20,0.6);animation:badgeDotPulse 1.8s ease-in-out infinite}
+.loracle-title{font-family:'JetBrains Mono',monospace;font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;color:var(--t2)}
+.loracle-grid{display:flex;align-items:center;gap:12px}
+.loracle-pill{background:rgba(17,17,17,0.02);border:1px solid var(--d);border-radius:6px;padding:8px 14px;display:flex;align-items:center;gap:10px;transition:all 0.3s cubic-bezier(0.16, 1, 0.3, 1);cursor:default}
+.loracle-pill:hover{background:#FFF;border-color:rgba(92,20,20,0.18);box-shadow:0 6px 16px rgba(0,0,0,0.03);transform:translateY(-2px)}
+.loracle-pill img{height:16px;object-fit:contain;filter:grayscale(1);opacity:0.35;transition:all 0.3s ease}
+.loracle-pill:hover img{filter:none;opacity:0.95}
+.loracle-pill img.logo-stripe{height:13px}
+.loracle-pill img.logo-x{height:11px}
+.loracle-pill img.logo-shopify{height:15px}
+.loracle-pill img.logo-youtube{height:11px}
+.loracle-pill-status{font-family:'JetBrains Mono',monospace;font-size:9px;font-weight:700;color:var(--t3);text-transform:uppercase;letter-spacing:0.5px;display:flex;align-items:center;gap:5px;transition:color 0.3s ease}
+.loracle-pill:hover .loracle-pill-status{color:var(--t1)}
+.loracle-pill-dot{width:4px;height:4px;background:var(--g);border-radius:50%;display:inline-block;box-shadow:0 0 6px rgba(20,92,20,0.4)}
 
-@media(max-width:767px){
-  .lmarquee{padding:20px 0 12px;margin:24px 0 36px}
-  .lmarquee-label{margin-bottom:12px}
-  .lmarquee-logos{gap:40px;flex-wrap:wrap;justify-content:center}
-  .lmarquee-logos img.logo-stripe{height:26px}
-  .lmarquee-logos img.logo-x{height:16px;margin:0 4px}
-  .lmarquee-logos img.logo-shopify{height:28px}
-  .lmarquee-logos img.logo-youtube{height:22px}
+@media(max-width:900px){
+  .loracle-bar{flex-direction:column;gap:14px;align-items:stretch;padding:16px}
+  .loracle-header{justify-content:center}
+  .loracle-grid{grid-template-columns:1fr 1fr;display:grid;gap:8px}
+  .loracle-pill{justify-content:center}
 }
 
 /* ═══ CONTRACT TYPES ═══ */

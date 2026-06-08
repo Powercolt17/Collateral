@@ -62,7 +62,7 @@ export function renderLanding() {
                                     </div>
                                     <div class="lpcard-status status-live">
                                         <span class="pulse-dot"></span>
-                                        Active
+                                        ACTIVE
                                     </div>
                                 </div>
                                 <h3 class="lpcard-title-new">Stripe Revenue Target</h3>
@@ -83,15 +83,13 @@ export function renderLanding() {
                                         <span class="label">Verification</span>
                                         <span class="value">Stripe API</span>
                                     </div>
-                                </div>
-                                <div class="lpcard-outcomes-container">
-                                    <div class="lpcard-outcome-box positive">
-                                        <span class="outcome-label"><span class="outcome-dot"></span>Target Hit</span>
-                                        <span class="outcome-value">+$1,000.00</span>
+                                    <div class="lpcard-cell-new target-hit">
+                                        <span class="label">• Target Hit</span>
+                                        <span class="value">+$1,000.00</span>
                                     </div>
-                                    <div class="lpcard-outcome-box negative">
-                                        <span class="outcome-label"><span class="outcome-dot"></span>Target Missed</span>
-                                        <span class="outcome-value">-$250.00</span>
+                                    <div class="lpcard-cell-new target-missed">
+                                        <span class="label">• Target Missed</span>
+                                        <span class="value">-$250.00</span>
                                     </div>
                                 </div>
                             </div>
@@ -105,7 +103,7 @@ export function renderLanding() {
                                     </div>
                                     <div class="lpcard-status status-tracking">
                                         <span class="pulse-dot-tracking"></span>
-                                        Tracking
+                                        TRACKING
                                     </div>
                                 </div>
                                 <h3 class="lpcard-title-new">Stripe Revenue Target</h3>
@@ -159,7 +157,7 @@ export function renderLanding() {
                                     </div>
                                     <div class="lpcard-status status-settled">
                                         <span class="pulse-dot-settled"></span>
-                                        Settled
+                                        SETTLED
                                     </div>
                                 </div>
                                 <h3 class="lpcard-title-new">Stripe Revenue Target</h3>

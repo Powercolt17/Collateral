@@ -37,17 +37,17 @@ export function renderLanding() {
                     <div class="lhero-left">
 
                         <h1 class="lh1 animate-fade-in-up">
-                            Performance contracts<br class="lh-br">
-                            for ambitious <span class="lh-gradient">goals.</span>
+                            You already know the goal.<br class="lh-br">
+                            Now make it <span class="lh-gradient">cost&nbsp;something.</span>
                         </h1>
                         <p class="lsub animate-fade-in-up delay-1">
-                            Lock capital against a verifiable metric. Hit the target, reclaim your deposit plus a bonus. <span class="lhide-mobile">Miss it, forfeit the funds. Fully API-automated.</span>
+                            Lock real capital against a verifiable metric. Hit the target, reclaim your deposit plus a bonus. <span class="lhide-mobile">Miss it, the money's gone. No appeals. Fully API-automated.</span>
                         </p>
                         <div class="lctas animate-fade-in-up delay-2">
-                            <button class="lbtn lbtn-r" id="lp-hero-cta">Create Your Contract</button>
+                            <button class="lbtn lbtn-r" id="lp-hero-cta">Lock Your First Contract</button>
                             <button class="lbtn lbtn-g" id="lp-see-contracts-cta">See Live Contracts</button>
                         </div>
-                        <div class="lcta-match ldesktop-proof animate-fade-in-up delay-2">First contract matched up to $250</div>
+                        <div class="lcta-match ldesktop-proof animate-fade-in-up delay-2">Launch offer: First contract matched up to $250</div>
                         <div class="ltrust-bar ldesktop-proof animate-fade-in-up delay-3">API-verified • Funds in escrow • Auto-settled</div>
 
 
@@ -244,7 +244,7 @@ export function renderLanding() {
                             <div class="lcard-row"><span class="k">Deposit</span><span class="v">$250 – $3,000</span></div>
                             <div class="lcard-row"><span class="k">Bonus Yield</span><span class="v">1.5x</span></div>
                             <div class="lcard-row"><span class="k">Window</span><span class="v">30 days</span></div>
-                            <div class="lcard-btn"><button class="lp-cta-btn" data-source="STRIPE" data-tier="stake" data-capital="250">Draft Contract</button></div>
+                            <div class="lcard-btn"><button class="lp-cta-btn" data-source="STRIPE" data-tier="stake" data-capital="250">Lock Your First Contract</button></div>
                         </div>
                         <div class="lcard" data-r>
                             <div class="lcard-top">
@@ -259,7 +259,7 @@ export function renderLanding() {
                             <div class="lcard-row"><span class="k">Deposit</span><span class="v">$500 – $5,000</span></div>
                             <div class="lcard-row"><span class="k">Bonus Yield</span><span class="v">3x</span></div>
                             <div class="lcard-row"><span class="k">Window</span><span class="v">14 days</span></div>
-                            <div class="lcard-btn"><button class="lp-cta-btn" data-source="X" data-tier="all_in" data-capital="500">Draft Contract</button></div>
+                            <div class="lcard-btn"><button class="lp-cta-btn" data-source="X" data-tier="all_in" data-capital="500">Lock Your First Contract</button></div>
                         </div>
                         <div class="lcard" data-r>
                             <div class="lcard-top">
@@ -271,7 +271,7 @@ export function renderLanding() {
                             <div class="lcard-row"><span class="k">Deposit</span><span class="v">$100 – $1,500</span></div>
                             <div class="lcard-row"><span class="k">Bonus Yield</span><span class="v">0.5x</span></div>
                             <div class="lcard-row"><span class="k">Window</span><span class="v">30 days</span></div>
-                            <div class="lcard-btn"><button class="lp-cta-btn" data-source="SHOPIFY" data-tier="pledge" data-capital="100">Draft Contract</button></div>
+                            <div class="lcard-btn"><button class="lp-cta-btn" data-source="SHOPIFY" data-tier="pledge" data-capital="100">Lock Your First Contract</button></div>
                         </div>
                         <div class="lcard" data-r>
                             <div class="lcard-top">
@@ -283,7 +283,7 @@ export function renderLanding() {
                             <div class="lcard-row"><span class="k">Deposit</span><span class="v">$250 – $3,000</span></div>
                             <div class="lcard-row"><span class="k">Bonus Yield</span><span class="v">0.7x</span></div>
                             <div class="lcard-row"><span class="k">Window</span><span class="v">30 days</span></div>
-                            <div class="lcard-btn"><button class="lp-cta-btn" data-source="YOUTUBE" data-tier="stake" data-capital="250">Draft Contract</button></div>
+                            <div class="lcard-btn"><button class="lp-cta-btn" data-source="YOUTUBE" data-tier="stake" data-capital="250">Lock Your First Contract</button></div>
                         </div>
                     </div>
                 </div>
@@ -293,8 +293,8 @@ export function renderLanding() {
             <div class="lw">
                 <div class="lhow" data-r id="how">
                     <div class="lred-dash"><span class="lmono">How It Works</span></div>
-                    <h2 class="lh-section-title">Set a target. Lock capital.<br>Let performance <strong>decide.</strong></h2>
-                    <p class="lhow-sub">Fully automated via APIs. No human bias. No exceptions.</p>
+                    <h2 class="lh-section-title">Set a target. Lock capital.<br>Let the API <strong>decide.</strong></h2>
+                    <p class="lhow-sub">No middlemen. No judges. No appeals. Four steps to a binding financial commitment.</p>
 
                     <div class="ltimeline-container">
                         <div class="ltimeline-line"></div>
@@ -302,8 +302,8 @@ export function renderLanding() {
                         <div class="ltimeline-step" data-r>
                             <div class="ltimeline-marker">01</div>
                             <div class="ltimeline-content">
-                                <h3 class="ltimeline-h">Choose Metric</h3>
-                                <p class="ltimeline-p">Select your platform and define a verifiable business target.</p>
+                                <h3 class="ltimeline-h">Pick Your Metric</h3>
+                                <p class="ltimeline-p">Revenue on Stripe. Followers on X. Subscribers on YouTube. Choose the exact number you need to hit.</p>
                             </div>
                         </div>
 
@@ -311,23 +311,23 @@ export function renderLanding() {
                             <div class="ltimeline-marker">02</div>
                             <div class="ltimeline-content">
                                 <h3 class="ltimeline-h">Lock Capital</h3>
-                                <p class="ltimeline-p">Commit your deposit to escrow. Once live, the contract is financially binding.</p>
+                                <p class="ltimeline-p">Your deposit goes into escrow via Stripe. Once you execute, it's locked. No early withdrawals.</p>
                             </div>
                         </div>
 
                         <div class="ltimeline-step" data-r>
                             <div class="ltimeline-marker">03</div>
                             <div class="ltimeline-content">
-                                <h3 class="ltimeline-h">Track Progress</h3>
-                                <p class="ltimeline-p">We monitor your performance directly via official API integrations.</p>
+                                <h3 class="ltimeline-h">The Clock Starts</h3>
+                                <p class="ltimeline-p">Your contract is live. We track your metric in real-time through the platform's official API. You watch progress — but you can't change the terms.</p>
                             </div>
                         </div>
 
                         <div class="ltimeline-step final-step" data-r>
                             <div class="ltimeline-marker final-marker">04</div>
                             <div class="ltimeline-content">
-                                <h3 class="ltimeline-h">Auto Settle</h3>
-                                <p class="ltimeline-p">Hit your goal to unlock your deposit and bonus. Miss it and forfeit the capital.</p>
+                                <h3 class="ltimeline-h">API Settles It</h3>
+                                <p class="ltimeline-p">At the deadline, the oracle checks the final number. Hit → deposit + bonus returned. Miss → capital forfeited. Automatic. Irreversible.</p>
                             </div>
                         </div>
                     </div>
@@ -337,9 +337,9 @@ export function renderLanding() {
             <!-- MINI CTA BLOCK -->
             <div class="lw">
                 <div class="lmini-cta" data-r>
-                    <h3 class="lmini-cta-h">Ready to commit to your next milestone?</h3>
-                    <p class="lmini-cta-p">We'll fund your first performance bonus up to $250.</p>
-                    <button class="lbtn lbtn-r lp-cta-btn">Draft Contract</button>
+                    <h3 class="lmini-cta-h">Done planning. Ready to commit?</h3>
+                    <p class="lmini-cta-p">Your first performance bonus is matched up to $250.</p>
+                    <button class="lbtn lbtn-r lp-cta-btn">Lock Your First Contract</button>
                     <div class="lmini-cta-micro">Objective tracking. Verified business data only.</div>
                 </div>
             </div>
@@ -387,20 +387,20 @@ export function renderLanding() {
             <div class="lw">
                 <div class="ltypes" data-r>
                     <div class="lred-dash"><span class="lmono">Contract Types</span></div>
-                    <h2 class="lhow-h" style="margin-bottom:32px">Choose your <strong>contract type.</strong></h2>
+                    <h2 class="lhow-h" style="margin-bottom:32px">Solo accountability or a<br>head-to-head <strong>rivalry.</strong></h2>
 
                     <div class="ltypes-grid">
                         <div class="ltype">
                             <div class="ltype-badge" style="color:var(--t1);background:rgba(17,17,17,.04);border:1px solid var(--d)">Solo</div>
-                            <div class="ltype-h">You vs. your target.</div>
-                            <div class="ltype-p">Lock a deposit against your own goal. Hit the target to claim your bonus yield. Miss it, and the deposit is forfeited.</div>
-                            <div class="ltype-detail"><strong>Best for:</strong> Revenue growth, follower milestones, and strict launch deadlines.</div>
+                            <div class="ltype-h">You vs. your own target.</div>
+                            <div class="ltype-p">Lock a deposit against a goal only you control. Hit it and claim your bonus. Miss it and the money's gone — no one to blame but yourself.</div>
+                            <div class="ltype-detail"><strong>Best for:</strong> Revenue targets, follower milestones, launch deadlines — any goal you keep pushing to next quarter.</div>
                         </div>
                         <div class="ltype">
                             <div class="ltype-badge" style="color:var(--r);background:rgba(92,20,20,.04);border:1px solid rgba(92,20,20,.15)">Rivalry</div>
                             <div class="ltype-h">You vs. another operator.</div>
-                            <div class="ltype-p">Lock equal capital deposits with another founder or creator. The strongest verified performance claims the entire escrow pool.</div>
-                            <div class="ltype-detail"><strong>Best for:</strong> Co-founder sprints, growth challenges, and transparent duels.</div>
+                            <div class="ltype-p">Both sides lock equal capital. Whoever posts the stronger verified performance takes the entire pool. Loser walks away with nothing.</div>
+                            <div class="ltype-detail"><strong>Best for:</strong> Co-founder sprints, creator challenges, and anyone who performs better with competition.</div>
                         </div>
                     </div>
                 </div>
@@ -412,11 +412,11 @@ export function renderLanding() {
             <div class="lw">
                 <div class="lfaq" data-r id="faq">
                     <div class="lred-dash"><span class="lmono">Common Questions</span></div>
-                    <h2 class="lhow-h" style="margin-bottom:28px">No fine print. Just <strong>answers.</strong></h2>
+                    <h2 class="lhow-h" style="margin-bottom:28px">No fine print. Just <strong>loopholes.</strong></h2>
                     <div class="lfaq-wrap">
                         <div class="fq open">
                             <div class="fq-q">Is this gambling?</div>
-                            <div class="fq-a">No. This is a binding performance contract based strictly on your own business data, verified by official APIs. There are no odds, games of chance, or luck involved. The outcome depends entirely on your verifiable execution.</div>
+                            <div class="fq-a">No. There are no odds, no games of chance, no luck. This is a performance contract verified by official APIs against your own business data. The outcome depends entirely on your execution — not probability.</div>
                         </div>
                         <div class="fq">
                             <div class="fq-q">Where is the money held?</div>
@@ -424,15 +424,15 @@ export function renderLanding() {
                         </div>
                         <div class="fq">
                             <div class="fq-q">How is the target verified?</div>
-                            <div class="fq-a">Directly via official APIs at the deadline. No screenshots, no self-reporting. The API data is objective and final.</div>
+                            <div class="fq-a">Directly via official platform APIs at the deadline. No screenshots. No self-reporting. The number is the number.</div>
                         </div>
                         <div class="fq">
                             <div class="fq-q">Can I cancel after locking?</div>
-                            <div class="fq-a">No. Once live, capital is locked from execution to settlement. You can cancel anytime before locking.</div>
+                            <div class="fq-a">No. Once live, capital is locked until settlement. You can cancel anytime before executing — but after that, it's binding.</div>
                         </div>
                         <div class="fq">
                             <div class="fq-q">Can I get a refund if I miss?</div>
-                            <div class="fq-a">No. The forfeiture is the enforcement mechanism of the contract. Only commit capital that you are willing to put at risk for accountability.</div>
+                            <div class="fq-a">No. That's the entire point. The forfeiture is the enforcement mechanism. Don't lock capital you aren't willing to lose.</div>
                         </div>
                         <div class="fq">
                             <div class="fq-q">What happens if an API goes down?</div>
@@ -440,7 +440,7 @@ export function renderLanding() {
                         </div>
                         <div class="fq">
                             <div class="fq-q">What data do you access?</div>
-                            <div class="fq-a">Read-only access to the specific metric you target. We never access billing, customer records, or DMs.</div>
+                            <div class="fq-a">Read-only access to the single metric you're targeting. We never touch billing, customer records, messages, or anything else.</div>
                         </div>
                         <div class="fq">
                             <div class="fq-q">Is this legal?</div>
@@ -453,9 +453,9 @@ export function renderLanding() {
             <!-- ═══ FINAL CTA ═══ -->
             <div class="lfoot">
                 <div class="lfoot-overdue lmono" style="color:rgba(255,255,255,0.45); margin-bottom:20px; font-size:12px; font-weight:700; letter-spacing:2px; text-transform:uppercase;">Your goal is already overdue.</div>
-                <h2 class="lfoot-h">Turn your next business goal<br>into a binding financial <em style="color:var(--r);font-style:normal;font-weight:700">commitment.</em></h2>
+                <h2 class="lfoot-h">Your goal is already overdue.<br>Make it cost something — or keep<br>pretending it <em style="color:var(--r);font-style:normal;font-weight:700">matters.</em></h2>
                 <div class="lfoot-sub">First contract matched up to $250.</div>
-                <button class="lfoot-btn" id="lp-final-cta">Draft Contract</button>
+                <button class="lfoot-btn" id="lp-final-cta">Lock Your First Contract</button>
                 <div class="lfoot-micro">Objective tracking. Verified business data only.</div>
                 <div class="lfoot-line">Collateral.market · © 2026</div>
             </div>

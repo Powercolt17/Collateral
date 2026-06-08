@@ -126,10 +126,9 @@ export const landingCSS = `
 .lpreview-card {
   background: #FFFFFF !important;
   border: 1px solid #EBEAE6 !important;
-  padding: 28px 24px 0px 24px !important;
+  padding: 22px 24px 0px 24px !important;
   width: 100%;
   max-width: 430px !important;
-  min-height: 530px;
   position: relative;
   overflow: hidden;
   border-radius: 16px;
@@ -140,7 +139,7 @@ export const landingCSS = `
   box-shadow: 0 16px 40px rgba(0,0,0,0.03), 0 1px 2px rgba(0,0,0,0.02) !important;
   display: flex;
   flex-direction: column;
-  gap: 14px;
+  gap: 10px;
 }
 .lpreview-card::before {
   display: none !important;
@@ -240,7 +239,7 @@ export const landingCSS = `
 }
 .field-value {
   font-family: 'Inter Tight', sans-serif;
-  font-size: 17px;
+  font-size: 15px;
   font-weight: 700;
   color: #111111;
   letter-spacing: -0.3px;
@@ -478,7 +477,9 @@ export const landingCSS = `
   border-top: 1px solid #EBEAE6;
   margin-left: -24px;
   margin-right: -24px;
-  padding: 12px 24px;
+  margin-bottom: 0;
+  padding: 10px 24px;
+  border-radius: 0 0 16px 16px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -489,6 +490,7 @@ export const landingCSS = `
   color: #8C8B87;
   letter-spacing: 1.2px;
   text-transform: uppercase;
+  flex-shrink: 0;
 }
 .footer-lock-icon {
   width: 10px;
@@ -742,10 +744,10 @@ export const landingCSS = `
 @keyframes pnlSlideIn { to { opacity: 1; transform: translateX(0); } }
 @media (max-width: 767px) { .pnl-drawer { width: 100%; max-width: 100%; border-left: none; } }
 
-.lpreview-container{position:relative;width:100%;max-width:430px;height:555px;perspective:1200px}
-.stage-card{position:absolute;top:0;left:0;width:100%;height:100%;opacity:0;visibility:hidden;pointer-events:none;transform:translateY(12px);transition:opacity 0.45s cubic-bezier(0.16,1,0.3,1), transform 0.45s cubic-bezier(0.16,1,0.3,1), visibility 0.45s}
+.lpreview-container{position:relative;width:100%;max-width:430px;height:480px;perspective:1200px}
+.stage-card{position:absolute;top:0;left:0;width:100%;opacity:0;visibility:hidden;pointer-events:none;transform:translateY(12px);transition:opacity 0.45s cubic-bezier(0.16,1,0.3,1), transform 0.45s cubic-bezier(0.16,1,0.3,1), visibility 0.45s}
 .stage-card.active{opacity:1;visibility:visible;pointer-events:auto;transform:translateY(0)}
-.lpreview-controls{display:flex;justify-content:center;gap:12px;position:absolute;bottom:-44px;left:0;right:0}
+.lpreview-controls{display:flex;justify-content:center;gap:12px;position:absolute;bottom:-36px;left:0;right:0}
 
 .lpreview-dot{width:8px;height:8px;border-radius:50%;background:#e5e5e5;cursor:pointer;transition:all 0.3s ease}
 .lpreview-dot:hover{background:#bbb}

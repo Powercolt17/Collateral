@@ -489,7 +489,6 @@ export function renderLanding() {
 
             <!-- ═══ FINAL CTA ═══ -->
             <div class="lfoot">
-                <div class="lfoot-overdue"><span class="lh-badge-dot"></span>Execution Escrow</div>
                 <h2 class="lfoot-h">Your goal is already overdue.<br>Make it cost something — or keep<br>pretending it <em style="color:var(--r);font-style:normal;font-weight:700">matters.</em></h2>
                 <div class="lfoot-sub">First contract matched up to $250.</div>
                 <button class="lfoot-btn" id="lp-final-cta">Lock Your First Contract</button>

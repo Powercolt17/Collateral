@@ -459,19 +459,18 @@ export const landingCSS = `
 .lstatus-badge.hit {background:rgba(20,92,20,0.06);color:var(--g);border:1px solid rgba(20,92,20,0.12)}
 .lstatus-badge.forfeit {background:rgba(92,20,20,0.06);color:var(--r);border:1px solid rgba(92,20,20,0.12)}
 
-/* ═══ TIMELINE HOW IT WORKS ═══ */
-.ltimeline-container{position:relative;margin-top:48px;padding-left:48px}
-.ltimeline-line{position:absolute;top:0;bottom:0;left:18px;width:2px;background:var(--d)}
-.ltimeline-step{position:relative;margin-bottom:48px;display:flex;gap:24px}
-.ltimeline-step:last-child{margin-bottom:0}
-.ltimeline-marker{position:absolute;left:-48px;top:0;width:38px;height:38px;border-radius:50%;background:#fff;border:2px solid var(--d);display:flex;align-items:center;justify-content:center;font-family:'JetBrains Mono',monospace;font-size:12px;font-weight:700;color:var(--t2);z-index:2;transition:all 0.3s ease}
-.ltimeline-step:hover .ltimeline-marker{border-color:var(--r);color:var(--r)}
-.ltimeline-marker.final-marker{background:var(--r);border-color:var(--r);color:#fff}
-.ltimeline-step.final-step:hover .ltimeline-marker{background:var(--rh);border-color:var(--rh);color:#fff}
-.ltimeline-content{flex:1;background:#fff;border:1px solid var(--d);padding:24px;border-radius:12px;box-shadow:0 4px 20px rgba(0,0,0,0.01);transition:all 0.3s ease}
-.ltimeline-step:hover .ltimeline-content{border-color:rgba(92,20,20,0.15);box-shadow:0 8px 30px rgba(0,0,0,0.04)}
-.ltimeline-h{font-family:'Plus Jakarta Sans',sans-serif;font-size:18px;font-weight:700;color:var(--t1);margin-bottom:8px}
-.ltimeline-p{font-size:14px;color:var(--t2);line-height:1.5}
+/* ═══ HOW IT WORKS (HORIZONTAL CARDS) ═══ */
+.lhow-grid {display:grid;grid-template-columns:repeat(4,1fr);gap:24px;margin-top:48px}
+.lhow-card {background:#FFF;border:1px solid var(--d);padding:32px 24px;border-radius:12px;box-shadow:0 4px 20px rgba(0,0,0,0.015);display:flex;flex-direction:column;gap:16px;transition:transform 0.3s ease,box-shadow 0.3s ease;position:relative;overflow:hidden}
+.lhow-card:hover {transform:translateY(-4px);box-shadow:0 12px 30px rgba(0,0,0,0.03)}
+.lhow-card::before {content:'';position:absolute;top:0;left:0;right:0;height:3px;background:var(--d);transition:background-color 0.3s ease}
+.lhow-card:hover::before {background:var(--r)}
+.lhow-card.final-card {border-color:var(--r);box-shadow:0 8px 24px rgba(92,20,20,0.04)}
+.lhow-card.final-card::before {background:var(--r)}
+.lhow-card-badge {align-self:flex-start;background:rgba(17,17,17,0.04);border:1px solid var(--d);color:var(--t1);font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:1px;padding:4px 10px;border-radius:2px}
+.lhow-card.final-card .lhow-card-badge {background:rgba(92,20,20,0.04);border-color:rgba(92,20,20,0.15);color:var(--r)}
+.lhow-card-title {font-family:'Plus Jakarta Sans',sans-serif;font-size:18px;font-weight:700;color:var(--t1);letter-spacing:-0.3px;margin:0}
+.lhow-card-desc {font-size:13px;color:var(--t2);line-height:1.5;margin:0}
 
 /* ═══ CONTRACT CARDS DIFFERENTIATION ═══ */
 .lcard-popular{border-color:var(--r) !important;transform:scale(1.02);box-shadow:0 12px 30px rgba(92,20,20,0.06);position:relative;z-index:10}
@@ -502,11 +501,7 @@ export const landingCSS = `
   .lledger-container{padding:20px;margin-top:32px}
   .lledger-header{flex-direction:column;align-items:flex-start;gap:8px;padding-bottom:16px}
   .lreal-results{padding:60px 0}
-  .ltimeline-container{padding-left:36px}
-  .ltimeline-line{left:14px}
-  .ltimeline-marker{left:-36px;width:30px;height:30px;font-size:11px}
-  .ltimeline-step{gap:16px}
-  .ltimeline-content{padding:16px}
+  .lhow-grid{grid-template-columns:1fr;gap:16px;margin-top:32px}
   .lemo-grid{grid-template-columns:1fr;gap:32px}
   .lemo-comparison-card{grid-template-columns:1fr;gap:24px}
   .lemo-divider{width:100%;height:1px}

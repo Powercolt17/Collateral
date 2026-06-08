@@ -167,46 +167,126 @@ export function renderLanding() {
                 </div>
             </div>
 
+            <!-- ═══ CONTRACT TYPES ═══ -->
+            <div class="lw">
+                <div class="ltypes" data-r>
+                    <div class="lred-dash"><span class="lmono">Contract Types</span></div>
+                    <h2 class="lhow-h" style="margin-bottom:32px">Solo accountability or a<br>head-to-head <strong>rivalry.</strong></h2>
+
+                    <div class="ltypes-grid">
+                        <div class="ltype">
+                            <div class="ltype-badge" style="color:var(--t1);background:rgba(17,17,17,.04);border:1px solid var(--d)">Solo</div>
+                            <div class="ltype-h">You vs. your own target.</div>
+                            <div class="ltype-p">Lock a deposit against a goal only you control. Hit it and claim your bonus. Miss it and the money's gone — no one to blame but yourself.</div>
+                            <div class="ltype-detail"><strong>Best for:</strong> Revenue targets, follower milestones, launch deadlines — any goal you keep pushing to next quarter.</div>
+                        </div>
+                        <div class="ltype">
+                            <div class="ltype-badge" style="color:var(--r);background:rgba(92,20,20,.04);border:1px solid rgba(92,20,20,.15)">Rivalry</div>
+                            <div class="ltype-h">You vs. another operator.</div>
+                            <div class="ltype-p">Both sides lock equal capital. Whoever posts the stronger verified performance takes the entire pool. Loser walks away with nothing.</div>
+                            <div class="ltype-detail"><strong>Best for:</strong> Co-founder sprints, creator challenges, and anyone who performs better with competition.</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ═══ LIVE CONTRACT EXAMPLES ═══ -->
+            <div class="lcontracts" id="contracts">
+                <div class="lw">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px; flex-wrap: wrap; gap: 16px;">
+                        <div class="lred-dash" style="margin-bottom: 0;"><span class="lmono">Open Contracts</span></div>
+                        
+                        <!-- ═══ OPEN CONTRACTS STATS ═══ -->
+                        <div style="display: flex; align-items: center; gap: 10px;">
+                            <span style="width: 6px; height: 6px; background: #145c14; border-radius: 50%; box-shadow: 0 0 10px rgba(20,92,20,0.8);"></span>
+                            <span style="font-family: 'Inter Tight', sans-serif; font-weight: 700; color: #145c14; font-size: 15px; letter-spacing: -0.2px;">$7.6k</span>
+                            <span style="font-family: 'Inter', sans-serif; font-size: 11px; font-weight: 600; color: #666; text-transform: uppercase; letter-spacing: 0.05em;">Capital Locked</span>
+                        </div>
+                    </div>
+                    <div class="lcards">
+                        <div class="lcard lcard-popular" data-r>
+                            <div class="lcard-popular-badge">Most Popular</div>
+                            <div class="lcard-top">
+                                <span class="lcard-src">Stripe</span>
+                                <span class="lcard-tier tier-stake">Standard</span>
+                            </div>
+                            <div class="lcard-title">Revenue Growth</div>
+                            <div class="lcard-target">+20% Revenue growth</div>
+                            <div class="lcard-row"><span class="k">Deposit</span><span class="v">$250 – $3,000</span></div>
+                            <div class="lcard-row"><span class="k">Bonus Yield</span><span class="v">1.5x</span></div>
+                            <div class="lcard-row"><span class="k">Window</span><span class="v">30 days</span></div>
+                            <div class="lcard-btn"><button class="lp-cta-btn" data-source="STRIPE" data-tier="stake" data-capital="250">Lock Your First Contract</button></div>
+                        </div>
+                        <div class="lcard" data-r>
+                            <div class="lcard-top">
+                                <span class="lcard-src">X / Twitter</span>
+                                <div style="display:flex; gap:6px;">
+                                    <span class="lcard-tier tier-allin">High Yield</span>
+                                    <span class="lcard-tier tier-3x-yield">3x Yield</span>
+                                </div>
+                            </div>
+                            <div class="lcard-title">Follower Growth</div>
+                            <div class="lcard-target">+1,000 Followers</div>
+                            <div class="lcard-row"><span class="k">Deposit</span><span class="v">$500 – $5,000</span></div>
+                            <div class="lcard-row"><span class="k">Bonus Yield</span><span class="v">3x</span></div>
+                            <div class="lcard-row"><span class="k">Window</span><span class="v">14 days</span></div>
+                            <div class="lcard-btn"><button class="lp-cta-btn" data-source="X" data-tier="all_in" data-capital="500">Lock Your First Contract</button></div>
+                        </div>
+                        <div class="lcard" data-r>
+                            <div class="lcard-top">
+                                <span class="lcard-src">Shopify</span>
+                                <span class="lcard-tier tier-pledge">Standard</span>
+                            </div>
+                            <div class="lcard-title">Store Sales</div>
+                            <div class="lcard-target">+$5,000 Net Sales</div>
+                            <div class="lcard-row"><span class="k">Deposit</span><span class="v">$100 – $1,500</span></div>
+                            <div class="lcard-row"><span class="k">Bonus Yield</span><span class="v">0.5x</span></div>
+                            <div class="lcard-row"><span class="k">Window</span><span class="v">30 days</span></div>
+                            <div class="lcard-btn"><button class="lp-cta-btn" data-source="SHOPIFY" data-tier="pledge" data-capital="100">Lock Your First Contract</button></div>
+                        </div>
+                        <div class="lcard" data-r>
+                            <div class="lcard-top">
+                                <span class="lcard-src">YouTube</span>
+                                <span class="lcard-tier tier-stake">Standard</span>
+                            </div>
+                            <div class="lcard-title">Subscriber Growth</div>
+                            <div class="lcard-target">+500 Subscribers</div>
+                            <div class="lcard-row"><span class="k">Deposit</span><span class="v">$250 – $3,000</span></div>
+                            <div class="lcard-row"><span class="k">Bonus Yield</span><span class="v">0.7x</span></div>
+                            <div class="lcard-row"><span class="k">Window</span><span class="v">30 days</span></div>
+                            <div class="lcard-btn"><button class="lp-cta-btn" data-source="YOUTUBE" data-tier="stake" data-capital="250">Lock Your First Contract</button></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
             <!-- ═══ HOW IT WORKS ═══ -->
             <div class="lw">
                 <div class="lhow" data-r id="how">
                     <div class="lred-dash"><span class="lmono">How It Works</span></div>
-                    <h2 class="lh-section-title">Set a target. Lock capital.<br>Let the API <strong>decide.</strong></h2>
+                    <h2 class="lhow-h">Set a target. Lock capital.<br>Let the API <strong>decide.</strong></h2>
                     <p class="lhow-sub">No middlemen. No judges. No appeals. Four steps to a binding financial commitment.</p>
 
-                    <div class="ltimeline-container">
-                        <div class="ltimeline-line"></div>
-                        
-                        <div class="ltimeline-step" data-r>
-                            <div class="ltimeline-marker">01</div>
-                            <div class="ltimeline-content">
-                                <h3 class="ltimeline-h">Pick Your Metric</h3>
-                                <p class="ltimeline-p">Revenue on Stripe. Followers on X. Subscribers on YouTube. Choose the exact number you need to hit.</p>
-                            </div>
+                    <div class="lhow-grid">
+                        <div class="lhow-card" data-r>
+                            <span class="lhow-card-badge">Step 01</span>
+                            <h3 class="lhow-card-title">Pick Your Metric</h3>
+                            <p class="lhow-card-desc">Revenue on Stripe. Followers on X. Subscribers on YouTube. Choose the exact number you need to hit.</p>
                         </div>
-
-                        <div class="ltimeline-step" data-r>
-                            <div class="ltimeline-marker">02</div>
-                            <div class="ltimeline-content">
-                                <h3 class="ltimeline-h">Lock Capital</h3>
-                                <p class="ltimeline-p">Your deposit goes into escrow via Stripe. Once you execute, it's locked. No early withdrawals.</p>
-                            </div>
+                        <div class="lhow-card" data-r>
+                            <span class="lhow-card-badge">Step 02</span>
+                            <h3 class="lhow-card-title">Lock Capital</h3>
+                            <p class="lhow-card-desc">Your deposit goes into escrow via Stripe. Once you execute, it's locked. No early withdrawals.</p>
                         </div>
-
-                        <div class="ltimeline-step" data-r>
-                            <div class="ltimeline-marker">03</div>
-                            <div class="ltimeline-content">
-                                <h3 class="ltimeline-h">The Clock Starts</h3>
-                                <p class="ltimeline-p">Your contract is live. We track your metric in real-time through the platform's official API. You watch progress — but you can't change the terms.</p>
-                            </div>
+                        <div class="lhow-card" data-r>
+                            <span class="lhow-card-badge">Step 03</span>
+                            <h3 class="lhow-card-title">The Clock Starts</h3>
+                            <p class="lhow-card-desc">Your contract is live. We track your metric in real-time through the platform's official API. You watch progress — but you can't change the terms.</p>
                         </div>
-
-                        <div class="ltimeline-step final-step" data-r>
-                            <div class="ltimeline-marker final-marker">04</div>
-                            <div class="ltimeline-content">
-                                <h3 class="ltimeline-h">API Settles It</h3>
-                                <p class="ltimeline-p">At the deadline, the oracle checks the final number. Hit → deposit + bonus returned. Miss → capital forfeited. Automatic. Irreversible.</p>
-                            </div>
+                        <div class="lhow-card final-card" data-r>
+                            <span class="lhow-card-badge">Step 04</span>
+                            <h3 class="lhow-card-title">API Settles It</h3>
+                            <p class="lhow-card-desc">At the deadline, the oracle checks the final number. Hit → deposit + bonus returned. Miss → capital forfeited. Automatic. Irreversible.</p>
                         </div>
                     </div>
                 </div>
@@ -343,99 +423,6 @@ export function renderLanding() {
                                     </ul>
                                 </div>
                             </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- ═══ LIVE CONTRACT EXAMPLES ═══ -->
-            <div class="lcontracts" id="contracts">
-                <div class="lw">
-                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px; flex-wrap: wrap; gap: 16px;">
-                        <div class="lred-dash" style="margin-bottom: 0;"><span class="lmono">Open Contracts</span></div>
-                        
-                        <!-- ═══ OPEN CONTRACTS STATS ═══ -->
-                        <div style="display: flex; align-items: center; gap: 10px;">
-                            <span style="width: 6px; height: 6px; background: #145c14; border-radius: 50%; box-shadow: 0 0 10px rgba(20,92,20,0.8);"></span>
-                            <span style="font-family: 'Inter Tight', sans-serif; font-weight: 700; color: #145c14; font-size: 15px; letter-spacing: -0.2px;">$7.6k</span>
-                            <span style="font-family: 'Inter', sans-serif; font-size: 11px; font-weight: 600; color: #666; text-transform: uppercase; letter-spacing: 0.05em;">Capital Locked</span>
-                        </div>
-                    </div>
-                    <div class="lcards">
-                        <div class="lcard lcard-popular" data-r>
-                            <div class="lcard-popular-badge">Most Popular</div>
-                            <div class="lcard-top">
-                                <span class="lcard-src">Stripe</span>
-                                <span class="lcard-tier tier-stake">Standard</span>
-                            </div>
-                            <div class="lcard-title">Revenue Growth</div>
-                            <div class="lcard-target">+20% Revenue growth</div>
-                            <div class="lcard-row"><span class="k">Deposit</span><span class="v">$250 – $3,000</span></div>
-                            <div class="lcard-row"><span class="k">Bonus Yield</span><span class="v">1.5x</span></div>
-                            <div class="lcard-row"><span class="k">Window</span><span class="v">30 days</span></div>
-                            <div class="lcard-btn"><button class="lp-cta-btn" data-source="STRIPE" data-tier="stake" data-capital="250">Lock Your First Contract</button></div>
-                        </div>
-                        <div class="lcard" data-r>
-                            <div class="lcard-top">
-                                <span class="lcard-src">X / Twitter</span>
-                                <div style="display:flex; gap:6px;">
-                                    <span class="lcard-tier tier-allin">High Yield</span>
-                                    <span class="lcard-tier tier-3x-yield">3x Yield</span>
-                                </div>
-                            </div>
-                            <div class="lcard-title">Follower Growth</div>
-                            <div class="lcard-target">+1,000 Followers</div>
-                            <div class="lcard-row"><span class="k">Deposit</span><span class="v">$500 – $5,000</span></div>
-                            <div class="lcard-row"><span class="k">Bonus Yield</span><span class="v">3x</span></div>
-                            <div class="lcard-row"><span class="k">Window</span><span class="v">14 days</span></div>
-                            <div class="lcard-btn"><button class="lp-cta-btn" data-source="X" data-tier="all_in" data-capital="500">Lock Your First Contract</button></div>
-                        </div>
-                        <div class="lcard" data-r>
-                            <div class="lcard-top">
-                                <span class="lcard-src">Shopify</span>
-                                <span class="lcard-tier tier-pledge">Standard</span>
-                            </div>
-                            <div class="lcard-title">Store Sales</div>
-                            <div class="lcard-target">+$5,000 Net Sales</div>
-                            <div class="lcard-row"><span class="k">Deposit</span><span class="v">$100 – $1,500</span></div>
-                            <div class="lcard-row"><span class="k">Bonus Yield</span><span class="v">0.5x</span></div>
-                            <div class="lcard-row"><span class="k">Window</span><span class="v">30 days</span></div>
-                            <div class="lcard-btn"><button class="lp-cta-btn" data-source="SHOPIFY" data-tier="pledge" data-capital="100">Lock Your First Contract</button></div>
-                        </div>
-                        <div class="lcard" data-r>
-                            <div class="lcard-top">
-                                <span class="lcard-src">YouTube</span>
-                                <span class="lcard-tier tier-stake">Standard</span>
-                            </div>
-                            <div class="lcard-title">Subscriber Growth</div>
-                            <div class="lcard-target">+500 Subscribers</div>
-                            <div class="lcard-row"><span class="k">Deposit</span><span class="v">$250 – $3,000</span></div>
-                            <div class="lcard-row"><span class="k">Bonus Yield</span><span class="v">0.7x</span></div>
-                            <div class="lcard-row"><span class="k">Window</span><span class="v">30 days</span></div>
-                            <div class="lcard-btn"><button class="lp-cta-btn" data-source="YOUTUBE" data-tier="stake" data-capital="250">Lock Your First Contract</button></div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- ═══ CONTRACT TYPES ═══ -->
-            <div class="lw">
-                <div class="ltypes" data-r>
-                    <div class="lred-dash"><span class="lmono">Contract Types</span></div>
-                    <h2 class="lhow-h" style="margin-bottom:32px">Solo accountability or a<br>head-to-head <strong>rivalry.</strong></h2>
-
-                    <div class="ltypes-grid">
-                        <div class="ltype">
-                            <div class="ltype-badge" style="color:var(--t1);background:rgba(17,17,17,.04);border:1px solid var(--d)">Solo</div>
-                            <div class="ltype-h">You vs. your own target.</div>
-                            <div class="ltype-p">Lock a deposit against a goal only you control. Hit it and claim your bonus. Miss it and the money's gone — no one to blame but yourself.</div>
-                            <div class="ltype-detail"><strong>Best for:</strong> Revenue targets, follower milestones, launch deadlines — any goal you keep pushing to next quarter.</div>
-                        </div>
-                        <div class="ltype">
-                            <div class="ltype-badge" style="color:var(--r);background:rgba(92,20,20,.04);border:1px solid rgba(92,20,20,.15)">Rivalry</div>
-                            <div class="ltype-h">You vs. another operator.</div>
-                            <div class="ltype-p">Both sides lock equal capital. Whoever posts the stronger verified performance takes the entire pool. Loser walks away with nothing.</div>
-                            <div class="ltype-detail"><strong>Best for:</strong> Co-founder sprints, creator challenges, and anyone who performs better with competition.</div>
                         </div>
                     </div>
                 </div>

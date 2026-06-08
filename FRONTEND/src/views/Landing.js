@@ -35,10 +35,7 @@ export function renderLanding() {
             <div class="lw">
                 <div class="lhero-grid">
                     <div class="lhero-left">
-                        <div class="lh-badge animate-fade-in-up">
-                            <span class="lh-badge-dot"></span>
-                            API-Verified Performance Protocol
-                        </div>
+
                         <h1 class="lh1 animate-fade-in-up">
                             Performance contracts<br class="lh-br">
                             for ambitious <span class="lh-gradient">goals.</span>

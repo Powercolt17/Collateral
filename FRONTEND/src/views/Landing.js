@@ -43,7 +43,7 @@ export function renderLanding() {
                             Lock capital against a verifiable metric. Hit the target, reclaim your deposit plus a bonus. <span class="lhide-mobile">Miss it, forfeit the funds. Fully API-automated.</span>
                         </p>
                         <div class="lctas animate-fade-in-up delay-2">
-                            <button class="lbtn lbtn-r" id="lp-hero-cta">Draft Your Contract</button>
+                            <button class="lbtn lbtn-r" id="lp-hero-cta">Create Your Contract</button>
                             <button class="lbtn lbtn-g" onclick="document.getElementById('contracts').scrollIntoView({behavior:'smooth'})">See Live Contracts</button>
                         </div>
                         <div class="lcta-match ldesktop-proof animate-fade-in-up delay-2">First contract matched up to $250</div>

@@ -404,10 +404,10 @@ export const landingCSS = `
 @media (max-width: 767px) { .pnl-drawer { width: 100%; max-width: 100%; border-left: none; } }
 
 /* ═══ CARD LIFECYCLE ═══ */
-.lpreview-container{position:relative;width:100%;max-width:400px;height:480px;perspective:1200px}
+.lpreview-container{position:relative;width:100%;max-width:400px;height:380px;perspective:1200px}
 .stage-card{position:absolute;top:0;left:0;width:100%;height:100%;opacity:0;visibility:hidden;pointer-events:none;transform:translateY(12px);transition:opacity 0.45s cubic-bezier(0.16,1,0.3,1), transform 0.45s cubic-bezier(0.16,1,0.3,1), visibility 0.45s}
 .stage-card.active{opacity:1;visibility:visible;pointer-events:auto;transform:translateY(0)}
-.lpreview-controls{display:flex;justify-content:center;gap:12px;position:absolute;bottom:-36px;left:0;right:0}
+.lpreview-controls{display:flex;justify-content:center;gap:12px;position:absolute;bottom:-30px;left:0;right:0}
 .lpreview-dot{width:8px;height:8px;border-radius:50%;background:#e5e5e5;cursor:pointer;transition:all 0.3s ease}
 .lpreview-dot:hover{background:#bbb}
 .lpreview-dot.active{background:var(--r);transform:scale(1.2)}

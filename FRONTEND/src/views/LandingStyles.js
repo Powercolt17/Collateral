@@ -434,14 +434,28 @@ export const landingCSS = `
 .lstat-num{font-family:'Plus Jakarta Sans',sans-serif;font-size:44px;font-weight:800;color:var(--r);letter-spacing:-1.5px;line-height:1}
 .lstat-label{font-family:'Inter Tight',sans-serif;font-size:15px;font-weight:700;color:var(--t1);margin:12px 0 6px}
 .lstat-sub{font-size:13px;color:var(--t3);line-height:1.4}
-.ltestimonials-grid{display:grid;grid-template-columns:1fr 1fr;gap:32px}
-.ltestimonial-card{background:#fff;border-left:4px solid var(--r);border-top:1px solid var(--d);border-right:1px solid var(--d);border-bottom:1px solid var(--d);padding:32px;border-radius:0 12px 12px 0;box-shadow:0 4px 20px rgba(0,0,0,0.01);display:flex;flex-direction:column;justify-content:space-between}
-.ltest-quote{font-size:15px;line-height:1.6;color:var(--t2);font-style:italic;margin-bottom:24px}
-.ltest-profile{display:flex;align-items:center;gap:14px}
-.ltest-avatar{width:36px;height:36px;border-radius:50%;background:rgba(92,20,20,0.08);color:var(--r);font-family:'Plus Jakarta Sans',sans-serif;font-weight:700;font-size:14px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
-.ltest-info{display:flex;flex-direction:column}
-.ltest-attribution{font-weight:700;font-size:14px;color:var(--t1)}
-.ltest-meta{font-size:11px;color:var(--t3);margin-top:2px}
+/* ═══ LIVE LEDGER FEED ═══ */
+.lledger-container {background:#FFF;border:1px solid var(--d);border-radius:16px;padding:32px;box-shadow:0 4px 30px rgba(0,0,0,0.015);margin-top:48px}
+.lledger-header {display:flex;justify-content:space-between;align-items:flex-start;border-bottom:1px solid var(--d);padding-bottom:20px;margin-bottom:24px;flex-wrap:wrap;gap:16px}
+.lledger-h-title {font-family:'Inter Tight',sans-serif;font-size:18px;font-weight:700;color:var(--t1);display:flex;align-items:center;gap:10px}
+.lledger-pulse-dot {width:8px;height:8px;background:var(--g);border-radius:50%;display:inline-block;box-shadow:0 0 10px rgba(20,92,20,0.8);animation:statusPulse 2s ease-in-out infinite}
+.lledger-h-desc {font-size:13px;color:var(--t3);font-weight:500}
+.lledger-table-wrap {overflow-x:auto;width:100%}
+.lledger-table {width:100%;border-collapse:collapse;text-align:left;min-width:700px}
+.lledger-table th {padding:12px 16px;font-family:'Inter',sans-serif;font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:1.5px;color:var(--t3);border-bottom:1px solid var(--d)}
+.lledger-table td {padding:16px;font-size:13px;color:var(--t2);border-bottom:1px solid rgba(0,0,0,0.03);vertical-align:middle}
+.lledger-table tr:last-child td {border-bottom:none}
+.td-id {font-family:'SF Mono','Fira Code','Consolas',monospace;font-weight:700;color:var(--t1)}
+.td-user {color:var(--t3);font-weight:400;margin-left:6px;font-size:12px}
+.td-metric {display:flex;align-items:center;gap:8px;font-weight:600;color:var(--t1)}
+.td-icon {width:16px;height:16px;object-fit:contain}
+.td-capital {font-family:'SF Mono','Fira Code','Consolas',monospace;font-weight:700;color:var(--t1)}
+.td-yield {font-family:'SF Mono','Fira Code','Consolas',monospace;font-weight:700;color:var(--g)}
+.td-outcome.hit {color:var(--g);font-weight:600}
+.td-outcome.miss {color:var(--r);font-weight:600}
+.lstatus-badge {display:inline-flex;align-items:center;padding:4px 8px;border-radius:4px;font-size:11px;font-weight:700;letter-spacing:0.5px}
+.lstatus-badge.hit {background:rgba(20,92,20,0.06);color:var(--g);border:1px solid rgba(20,92,20,0.12)}
+.lstatus-badge.forfeit {background:rgba(92,20,20,0.06);color:var(--r);border:1px solid rgba(92,20,20,0.12)}
 
 /* ═══ TIMELINE HOW IT WORKS ═══ */
 .ltimeline-container{position:relative;margin-top:48px;padding-left:48px}
@@ -483,7 +497,8 @@ export const landingCSS = `
 /* ═══ RESPONSIVE UPGRADES ═══ */
 @media(max-width:768px){
   .lstats-grid{grid-template-columns:1fr;gap:16px;margin-bottom:40px;margin-top:16px}
-  .ltestimonials-grid{grid-template-columns:1fr;gap:16px}
+  .lledger-container{padding:20px;margin-top:32px}
+  .lledger-header{flex-direction:column;align-items:flex-start;gap:8px;padding-bottom:16px}
   .lreal-results{padding:60px 0}
   .ltimeline-container{padding-left:36px}
   .ltimeline-line{left:14px}

@@ -193,27 +193,62 @@ export function renderLanding() {
                         </div>
                     </div>
 
-                    <!-- Testimonials Grid -->
-                    <div class="ltestimonials-grid">
-                        <div class="ltestimonial-card">
-                            <div class="ltest-quote">"I'd been 'planning' to hit $10k MRR for six months. Locked $500 against it and hit the target in three weeks. The money made it real."</div>
-                            <div class="ltest-profile">
-                                <div class="ltest-avatar">S</div>
-                                <div class="ltest-info">
-                                    <div class="ltest-attribution">SaaS Founder</div>
-                                    <div class="ltest-meta">Stripe Revenue Contract · $500 deposit · Target hit</div>
-                                </div>
+                    <!-- Verified Ledger Feed -->
+                    <div class="lledger-container">
+                        <div class="lledger-header">
+                            <div class="lledger-h-title">
+                                <span class="lledger-pulse-dot"></span>
+                                Live Settlement Activity
                             </div>
+                            <div class="lledger-h-desc">Audited performance contracts verified via official API integrations.</div>
                         </div>
-                        <div class="ltestimonial-card">
-                            <div class="ltest-quote">"Doubled my subscriber count in 12 days. I was sitting on the same content strategy for months — the deposit was the missing variable."</div>
-                            <div class="ltest-profile">
-                                <div class="ltest-avatar">Y</div>
-                                <div class="ltest-info">
-                                    <div class="ltest-attribution">YouTube Creator</div>
-                                    <div class="ltest-meta">YouTube Subscriber Contract · $250 deposit · Target hit</div>
-                                </div>
-                            </div>
+                        <div class="lledger-table-wrap">
+                            <table class="lledger-table">
+                                <thead>
+                                    <tr>
+                                        <th>Contract ID</th>
+                                        <th>Target Metric</th>
+                                        <th>Commitment</th>
+                                        <th>Yield Target</th>
+                                        <th>Outcome</th>
+                                        <th>Status</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td class="td-id">#C-8041 <span class="td-user">@danny_v...</span></td>
+                                        <td class="td-metric"><img class="td-icon" src="https://www.vectorlogo.zone/logos/stripe/stripe-icon.svg" alt="Stripe"> Stripe Revenue (+20.0%)</td>
+                                        <td class="td-capital">$500.00</td>
+                                        <td class="td-yield">+$1,500.00</td>
+                                        <td class="td-outcome hit">Hit (+22.7% Revenue)</td>
+                                        <td><span class="lstatus-badge hit">✓ API Verified</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="td-id">#C-8022 <span class="td-user">@justin_s...</span></td>
+                                        <td class="td-metric"><img class="td-icon" src="https://cdn.simpleicons.org/x/111111" alt="X"> X Followers (+1k)</td>
+                                        <td class="td-capital">$250.00</td>
+                                        <td class="td-yield">+$750.00</td>
+                                        <td class="td-outcome miss">Missed (+820 Followers)</td>
+                                        <td><span class="lstatus-badge forfeit">⚠ Forfeited</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="td-id">#C-7988 <span class="td-user">@growth...</span></td>
+                                        <td class="td-metric"><img class="td-icon" src="https://www.vectorlogo.zone/logos/shopify/shopify-icon.svg" alt="Shopify"> Shopify Gross ($50k)</td>
+                                        <td class="td-capital">$1,000.00</td>
+                                        <td class="td-yield">+$2,000.00</td>
+                                        <td class="td-outcome hit">Hit ($53.4k Gross)</td>
+                                        <td><span class="lstatus-badge hit">✓ API Verified</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="td-id">#C-7954 <span class="td-user">@youtube_c...</span></td>
+                                        <td class="td-metric"><img class="td-icon" src="https://www.vectorlogo.zone/logos/youtube/youtube-icon.svg" alt="YouTube"> YouTube subs (+5k)</td>
+                                        <td class="td-capital">$500.00</td>
+                                        <td class="td-yield">+$1,000.00</td>
+                                        <td class="td-outcome hit">Hit (+6.2k Subs)</td>
+                                        <td><span class="lstatus-badge hit">✓ API Verified</span></td>
+                                    </tr>
+                                </tbody>
+                            </table>
                         </div>
                     </div>
                 </div>

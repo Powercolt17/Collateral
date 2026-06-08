@@ -285,29 +285,66 @@
                 pointer-events: none;
                 transform: scale(1.08);
             }
-            .cl-pulse-logo {
-                width: 120px;
-                height: 120px;
-                animation: cl-logo-pulse 1.4s ease-in-out infinite;
-                filter: drop-shadow(0 0 25px rgba(92, 20, 20, 0.6));
+            .cl-loader-container {
+                display: grid;
+                place-items: center;
             }
-            @keyframes cl-logo-pulse {
-                0%, 100% {
-                    transform: scale(0.9);
-                    opacity: 0.7;
-                }
-                50% {
-                    transform: scale(1.05);
-                    opacity: 1;
-                }
+            .cl-shimmer-text {
+                grid-area: 1 / 1 / 2 / 2;
+                font-family: 'Byte Sharp', 'Science', 'Sora', 'Inter', sans-serif;
+                font-size: 26px;
+                font-weight: 800;
+                letter-spacing: 0.35em;
+                text-transform: uppercase;
+                color: #FFFFFF;
+                position: relative;
+                z-index: 2;
+                background: linear-gradient(
+                    90deg, 
+                    rgba(255,255,255,0.75) 0%, 
+                    #FFFFFF 25%, 
+                    #752122 50%, 
+                    #FFFFFF 75%, 
+                    rgba(255,255,255,0.75) 100%
+                );
+                background-size: 200% auto;
+                -webkit-background-clip: text;
+                -webkit-text-fill-color: transparent;
+                animation: cl-text-shimmer 2.2s linear infinite, cl-text-pulse 1.6s ease-in-out infinite;
+                padding-left: 0.35em; /* offsets tracking-widest center bias */
+            }
+            .cl-glow-text {
+                grid-area: 1 / 1 / 2 / 2;
+                font-family: 'Byte Sharp', 'Science', 'Sora', 'Inter', sans-serif;
+                font-size: 26px;
+                font-weight: 800;
+                letter-spacing: 0.35em;
+                text-transform: uppercase;
+                color: #752122;
+                filter: blur(14px);
+                opacity: 0.75;
+                z-index: 1;
+                animation: cl-glow-pulse 1.6s ease-in-out infinite;
+                padding-left: 0.35em;
+            }
+            @keyframes cl-text-shimmer {
+                0% { background-position: 200% center; }
+                100% { background-position: -200% center; }
+            }
+            @keyframes cl-text-pulse {
+                0%, 100% { transform: scale(0.97); opacity: 0.85; }
+                50% { transform: scale(1.03); opacity: 1; }
+            }
+            @keyframes cl-glow-pulse {
+                0%, 100% { transform: scale(0.95); opacity: 0.55; filter: blur(12px); }
+                50% { transform: scale(1.05); opacity: 0.9; filter: blur(16px); }
             }
         </style>
 
-        <svg class="cl-pulse-logo" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" aria-label="Collateral Logo">
-            <polygon points="45,5 10,40 20,40 20,60 10,60 45,95 45,67 28,50 45,33" fill="#5C1414"/>
-            <rect x="40" y="40" width="20" height="20" fill="#5C1414"/>
-            <polygon points="55,5 90,40 80,40 80,60 90,60 55,95 55,67 72,50 55,33" fill="#5C1414"/>
-        </svg>
+        <div class="cl-loader-container" aria-label="Collateral Loading">
+            <div class="cl-glow-text">COLLATERAL</div>
+            <div class="cl-shimmer-text">COLLATERAL</div>
+        </div>
     </div>
 
     <!-- Global Banner -->

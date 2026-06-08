@@ -259,7 +259,7 @@ export function renderLanding() {
                                         <th>Status</th>
                                     </tr>
                                 </thead>
-                                <tbody>
+                                <tbody id="lledger-tbody">
                                     <tr>
                                         <td class="td-id">#C-8041 <span class="td-user">@danny_v...</span></td>
                                         <td class="td-metric"><img class="td-icon" src="https://www.vectorlogo.zone/logos/stripe/stripe-icon.svg" alt="Stripe"> Stripe Revenue (+20.0%)</td>
@@ -583,6 +583,104 @@ export function initLanding() {
         try {
             const response = await window.api.getPublicLedger();
             if (response && response.events && response.events.length > 0) {
+                // Populate Live Settlement Activity Table
+                const tbody = document.getElementById('lledger-tbody');
+                if (tbody) {
+                    const ledgerEvents = response.events.filter(e => e.contractId && e.principal);
+                    if (ledgerEvents.length > 0) {
+                        let startIndex = 0;
+
+                        const getPlatformIcon = (plt) => {
+                            const p = (plt || '').toUpperCase();
+                            if (p === 'STRIPE') return 'https://www.vectorlogo.zone/logos/stripe/stripe-icon.svg';
+                            if (p === 'X' || p === 'TWITTER') return 'https://cdn.simpleicons.org/x/111111';
+                            if (p === 'SHOPIFY') return 'https://www.vectorlogo.zone/logos/shopify/shopify-icon.svg';
+                            if (p === 'YOUTUBE') return 'https://www.vectorlogo.zone/logos/youtube/youtube-icon.svg';
+                            return 'https://www.vectorlogo.zone/logos/stripe/stripe-icon.svg';
+                        };
+
+                        const getPlatformName = (plt) => {
+                            const p = (plt || '').toUpperCase();
+                            if (p === 'STRIPE') return 'Stripe Revenue';
+                            if (p === 'X' || p === 'TWITTER') return 'X Followers';
+                            if (p === 'SHOPIFY') return 'Shopify Sales';
+                            if (p === 'YOUTUBE') return 'YouTube Subs';
+                            return 'API Metric';
+                        };
+
+                        const getYieldTarget = (plt, depositCents) => {
+                            const p = (plt || '').toUpperCase();
+                            let mult = 1.5;
+                            if (p === 'X' || p === 'TWITTER') mult = 3.0;
+                            if (p === 'SHOPIFY') mult = 0.5;
+                            if (p === 'YOUTUBE') mult = 0.7;
+                            const yieldAmt = (depositCents * mult) / 100;
+                            return '+$' + yieldAmt.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+                        };
+
+                        const getMaskedUser = (user) => {
+                            if (!user) return 'user';
+                            return user.length > 5 ? user.slice(0, 5) + '...' : user;
+                        };
+
+                        const renderRow = (e) => {
+                            const isHit = e.eventType === 'SETTLED_SUCCESS' || e.eventType === 'RIVALRY_SETTLED';
+                            const isMiss = e.eventType === 'SETTLED_FAILURE' || e.eventType === 'RIVALRY_EXPIRED' || e.eventType === 'RIVALRY_CANCELLED';
+                            let outcomeHtml = '';
+                            let statusHtml = '';
+                            if (isHit) {
+                                outcomeHtml = `<span class="td-outcome hit">Hit (Target Met)</span>`;
+                                statusHtml = `<span class="lstatus-badge hit">✓ API Verified</span>`;
+                            } else if (isMiss) {
+                                outcomeHtml = `<span class="td-outcome miss">Missed (Forfeited)</span>`;
+                                statusHtml = `<span class="lstatus-badge forfeit">⚠ Forfeited</span>`;
+                            } else {
+                                outcomeHtml = `<span class="td-outcome tracking" style="color:var(--t2);">Active (Tracking)</span>`;
+                                statusHtml = `<span class="lstatus-badge tracking" style="background:rgba(0,0,0,0.04); color:var(--t2); border:1px solid rgba(0,0,0,0.08);">Tracking</span>`;
+                            }
+                            const depositCents = e.lockAmountUsdCents || e.amountUsdCents || 25000;
+                            const depositFormatted = '$' + (depositCents / 100).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+                            const yieldFormatted = getYieldTarget(e.platform, depositCents);
+                            return `
+                                <tr>
+                                    <td class="td-id">#C-${e.contractId.slice(0, 4).toUpperCase()} <span class="td-user">@${getMaskedUser(e.principal)}</span></td>
+                                    <td class="td-metric">
+                                        <img class="td-icon" src="${getPlatformIcon(e.platform)}" alt="${e.platform || 'API'}"> 
+                                        ${getPlatformName(e.platform)}
+                                    </td>
+                                    <td class="td-capital">${depositFormatted}</td>
+                                    <td class="td-yield">${yieldFormatted}</td>
+                                    <td class="td-outcome">${outcomeHtml}</td>
+                                    <td>${statusHtml}</td>
+                                </tr>
+                            `;
+                        };
+
+                        const updateLedgerTable = () => {
+                            const rows = [];
+                            const itemsToShow = Math.min(4, ledgerEvents.length);
+                            for (let k = 0; k < itemsToShow; k++) {
+                                const idx = (startIndex + k) % ledgerEvents.length;
+                                rows.push(renderRow(ledgerEvents[idx]));
+                            }
+                            tbody.innerHTML = rows.join('');
+                        };
+
+                        updateLedgerTable();
+
+                        if (ledgerEvents.length > 4) {
+                            setInterval(() => {
+                                tbody.classList.add('fade-out');
+                                setTimeout(() => {
+                                    startIndex = (startIndex + 1) % ledgerEvents.length;
+                                    updateLedgerTable();
+                                    tbody.classList.remove('fade-out');
+                                }, 400);
+                            }, 4000);
+                        }
+                    }
+                }
+
                 let container = document.getElementById('l-toast-container');
                 if (!container) {
                     container = document.createElement('div');

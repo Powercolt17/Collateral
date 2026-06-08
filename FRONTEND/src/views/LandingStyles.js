@@ -442,6 +442,8 @@ export const landingCSS = `
 .lledger-h-desc {font-size:13px;color:var(--t3);font-weight:500}
 .lledger-table-wrap {overflow-x:auto;width:100%}
 .lledger-table {width:100%;border-collapse:collapse;text-align:left;min-width:700px}
+.lledger-table tbody {transition:opacity 0.4s ease-in-out}
+.lledger-table tbody.fade-out {opacity:0}
 .lledger-table th {padding:12px 16px;font-family:'Inter',sans-serif;font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:1.5px;color:var(--t3);border-bottom:1px solid var(--d)}
 .lledger-table td {padding:16px;font-size:13px;color:var(--t2);border-bottom:1px solid rgba(0,0,0,0.03);vertical-align:middle}
 .lledger-table tr:last-child td {border-bottom:none}

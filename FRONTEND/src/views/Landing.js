@@ -35,13 +35,9 @@ export function renderLanding() {
             <div class="lw">
                 <div class="lhero-grid">
                     <div class="lhero-left">
-                        <div class="lh-badge animate-fade-in-up">
-                            <span class="lh-badge-dot"></span>
-                            API-Verified Performance Protocol
-                        </div>
                         <h1 class="lh1 animate-fade-in-up">
                             Performance contracts<br class="lh-br">
-                            for ambitious <span class="lh-gradient">goals.</span>
+                            for ambitious <em>goals.</em>
                         </h1>
                         <p class="lsub animate-fade-in-up delay-1">
                             Lock capital against a verifiable metric. Hit the target, reclaim your deposit plus a bonus. <span class="lhide-mobile">Miss it, forfeit the funds. Fully API-automated.</span>

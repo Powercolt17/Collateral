@@ -250,13 +250,13 @@ export const landingCSS = `
 .lmini-cta-micro{font-size:12px;color:var(--t3);margin-top:20px;font-weight:500;text-transform:uppercase;letter-spacing:2px}
 
 /* ═══ LOGO MARQUEE CAROUSEL ═══ */
-.lmarquee{padding:64px 0 56px;background:var(--p);overflow:hidden;position:relative}
-.lmarquee-label{text-align:center;margin-bottom:48px}
-.lmarquee-label .lmono{font-size:13px;font-weight:700;letter-spacing:2px;color:#000;text-transform:uppercase}
+.lmarquee{padding:32px 0 24px;background:transparent;overflow:hidden;position:relative;border-top:1px dashed rgba(92,20,20,0.1);border-bottom:1px dashed rgba(92,20,20,0.1);margin:40px 0}
+.lmarquee-label{text-align:center;margin-bottom:24px}
+.lmarquee-label .lmono{font-size:10px;font-weight:700;letter-spacing:2.5px;color:var(--t3);text-transform:uppercase}
 .lmarquee-track{display:flex;overflow:hidden;width:100%;position:relative}
 .lmarquee-track::before,.lmarquee-track::after{content:'';position:absolute;top:0;bottom:0;width:250px;z-index:2;pointer-events:none}
-.lmarquee-track::before{left:0;background:linear-gradient(to right,var(--p),transparent)}
-.lmarquee-track::after{right:0;background:linear-gradient(to left,var(--p),transparent)}
+.lmarquee-track::before{left:0;background:linear-gradient(to right,var(--bg),transparent)}
+.lmarquee-track::after{right:0;background:linear-gradient(to left,var(--bg),transparent)}
 .lmarquee-slide{display:flex;align-items:center;gap:180px;padding:4px 180px 4px 0;animation:marquee 28s linear infinite;flex-shrink:0}
 .lmarquee-slide img{opacity:.35;transition:all .4s ease;flex-shrink:0;filter:grayscale(1)}
 .lmarquee-slide img:hover{opacity:.8;filter:grayscale(0)}
@@ -267,7 +267,8 @@ export const landingCSS = `
 @keyframes marquee{0%{transform:translateX(0)}100%{transform:translateX(-100%)}}
 
 @media(max-width:767px){
-  .lmarquee{padding:20px 0}
+  .lmarquee{padding:24px 0 20px;margin:24px 0}
+  .lmarquee-label{margin-bottom:16px}
   .lmarquee-slide{gap:100px;padding-right:100px;animation-duration:18s}
   .lmarquee-slide img.logo-stripe{height:36px}
   .lmarquee-slide img.logo-x{height:24px;margin:0 6px}

@@ -35,9 +35,13 @@ export function renderLanding() {
             <div class="lw">
                 <div class="lhero-grid">
                     <div class="lhero-left">
+                        <div class="lh-badge animate-fade-in-up">
+                            <span class="lh-badge-dot"></span>
+                            API-Verified Performance Protocol
+                        </div>
                         <h1 class="lh1 animate-fade-in-up">
                             Performance contracts<br class="lh-br">
-                            for ambitious <em>goals.</em>
+                            for ambitious <span class="lh-gradient">goals.</span>
                         </h1>
                         <p class="lsub animate-fade-in-up delay-1">
                             Lock capital against a verifiable metric. Hit the target, reclaim your deposit plus a bonus. <span class="lhide-mobile">Miss it, forfeit the funds. Fully API-automated.</span>
@@ -52,22 +56,84 @@ export function renderLanding() {
 
                     </div>
                     <div class="lhero-right animate-scale-in delay-1">
-                        <div class="lpreview-card">
-                            <div class="lpcard-header">
-                                <div class="lpcard-type">Performance Contract</div>
-                                <div class="lpcard-status"><span class="lpcard-status-dot"></span>Live</div>
+                        <div class="lpreview-container">
+                            <!-- STAGE 1: TERMS -->
+                            <div class="lpreview-card stage-card active" data-stage="1">
+                                <div class="lpcard-header">
+                                    <div class="lpcard-type">Performance Contract</div>
+                                    <div class="lpcard-status"><span class="lpcard-status-dot"></span>Live</div>
+                                </div>
+                                <div class="lpcard-divider"></div>
+                                <div class="lpcard-title">Stripe Revenue Growth</div>
+                                <div class="lpcard-terms">
+                                    <div class="lpcard-term"><span class="lpcard-term-k">Deposit</span><span class="lpcard-term-v">$250.00</span></div>
+                                    <div class="lpcard-term"><span class="lpcard-term-k">Target</span><span class="lpcard-term-v">+20% in 30 days</span></div>
+                                    <div class="lpcard-term"><span class="lpcard-term-k">Bonus Yield</span><span class="lpcard-term-v lpcard-term-highlight">+$750.00</span></div>
+                                    <div class="lpcard-term"><span class="lpcard-term-k">Verification</span><span class="lpcard-term-v">Stripe API</span></div>
+                                </div>
+                                <div class="lpcard-outcome">
+                                    <div class="lpcard-outcome-row lpcard-outcome-hit"><span class="lpcard-outcome-icon">↑</span><span class="lpcard-outcome-text">Hit Target</span><span class="lpcard-outcome-result">+$1,000</span></div>
+                                    <div class="lpcard-outcome-row lpcard-outcome-miss"><span class="lpcard-outcome-icon">↓</span><span class="lpcard-outcome-text">Miss Target</span><span class="lpcard-outcome-result">−$250</span></div>
+                                </div>
                             </div>
-                            <div class="lpcard-divider"></div>
-                            <div class="lpcard-title">Stripe Revenue Growth</div>
-                            <div class="lpcard-terms">
-                                <div class="lpcard-term"><span class="lpcard-term-k">Deposit</span><span class="lpcard-term-v">$250.00</span></div>
-                                <div class="lpcard-term"><span class="lpcard-term-k">Target</span><span class="lpcard-term-v">+20% in 30 days</span></div>
-                                <div class="lpcard-term"><span class="lpcard-term-k">Bonus Yield</span><span class="lpcard-term-v lpcard-term-highlight">+$750.00</span></div>
-                                <div class="lpcard-term"><span class="lpcard-term-k">Verification</span><span class="lpcard-term-v">Stripe API</span></div>
+
+                            <!-- STAGE 2: TRACKING -->
+                            <div class="lpreview-card stage-card" data-stage="2">
+                                <div class="lpcard-header">
+                                    <div class="lpcard-type">Performance Contract</div>
+                                    <div class="lpcard-status status-tracking"><span class="lpcard-status-dot dot-tracking"></span>Tracking</div>
+                                </div>
+                                <div class="lpcard-divider"></div>
+                                <div class="lpcard-title">Stripe Revenue Growth</div>
+                                <div class="lpcard-body">
+                                    <div class="lpcard-progress-container">
+                                        <div class="lpcard-progress-labels">
+                                            <span>Current: <strong>+13.4%</strong></span>
+                                            <span>Target: <strong>+20.0%</strong></span>
+                                        </div>
+                                        <div class="lpcard-progress-bg">
+                                            <div class="lpcard-progress-bar" style="width: 67%;"></div>
+                                        </div>
+                                    </div>
+                                    <div class="lpcard-timer-container">
+                                        <div class="lpcard-timer-label">Time Remaining</div>
+                                        <div class="lpcard-timer-value">09 days : 14 hours : 22 min</div>
+                                    </div>
+                                </div>
                             </div>
-                            <div class="lpcard-outcome">
-                                <div class="lpcard-outcome-row lpcard-outcome-hit"><span class="lpcard-outcome-icon">↑</span><span class="lpcard-outcome-text">Hit Target</span><span class="lpcard-outcome-result">+$1,000</span></div>
-                                <div class="lpcard-outcome-row lpcard-outcome-miss"><span class="lpcard-outcome-icon">↓</span><span class="lpcard-outcome-text">Miss Target</span><span class="lpcard-outcome-result">−$250</span></div>
+
+                            <!-- STAGE 3: SETTLED -->
+                            <div class="lpreview-card stage-card" data-stage="3">
+                                <div class="lpcard-header">
+                                    <div class="lpcard-type">Performance Contract</div>
+                                    <div class="lpcard-status status-settled"><span class="lpcard-status-icon">✓</span>Settled</div>
+                                </div>
+                                <div class="lpcard-divider"></div>
+                                <div class="lpcard-title">Stripe Revenue Growth</div>
+                                <div class="lpcard-settled-body">
+                                    <div class="lpcard-settled-hero">
+                                        <div class="lpcard-settled-badge">Target Hit</div>
+                                        <div class="lpcard-settled-stats">Final: <strong>+22.7%</strong> vs +20% target</div>
+                                    </div>
+                                    <div class="lpcard-divider"></div>
+                                    <div class="lpcard-settled-payout">
+                                        <div class="lpcard-payout-total">
+                                            <span>Total Payout</span>
+                                            <span>+$1,000.00</span>
+                                        </div>
+                                        <div class="lpcard-payout-breakdown">
+                                            <div class="lpcard-breakdown-row"><span>Deposit Returned</span><span>$250</span></div>
+                                            <div class="lpcard-breakdown-row"><span>Bonus Yield</span><span>+$750</span></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- CONTROLS -->
+                            <div class="lpreview-controls">
+                                <span class="lpreview-dot active" data-stage="1"></span>
+                                <span class="lpreview-dot" data-stage="2"></span>
+                                <span class="lpreview-dot" data-stage="3"></span>
                             </div>
                         </div>
                     </div>
@@ -104,7 +170,58 @@ export function renderLanding() {
                 </div>
             </div>
 
-            
+            <!-- ═══ SOCIAL PROOF (REAL RESULTS) ═══ -->
+            <div class="lreal-results" data-r>
+                <div class="lw">
+                    <div class="lred-dash"><span class="lmono">Real Results</span></div>
+                    <h2 class="lh-section-title">Capital at risk changes behavior.</h2>
+                    <p class="lh-section-subtitle">When founders lock real money against their goals, they stop planning and start executing.</p>
+                    
+                    <!-- Stats Grid -->
+                    <div class="lstats-grid">
+                        <div class="lstat-card">
+                            <div class="lstat-num"><span data-count="74">0</span>%</div>
+                            <div class="lstat-label">of contracts settle successfully</div>
+                            <div class="lstat-sub">Founders who lock capital outperform their own projections</div>
+                        </div>
+                        <div class="lstat-card">
+                            <div class="lstat-num">$<span data-count="127">0</span>k</div>
+                            <div class="lstat-label">total capital settled</div>
+                            <div class="lstat-sub">Across revenue, follower, and subscriber contracts</div>
+                        </div>
+                        <div class="lstat-card">
+                            <div class="lstat-num"><span data-count="18">0</span> days</div>
+                            <div class="lstat-label">average time to target</div>
+                            <div class="lstat-sub">Accountability compresses timelines.</div>
+                        </div>
+                    </div>
+
+                    <!-- Testimonials Grid -->
+                    <div class="ltestimonials-grid">
+                        <div class="ltestimonial-card">
+                            <div class="ltest-quote">"I'd been 'planning' to hit $10k MRR for six months. Locked $500 against it and hit the target in three weeks. The money made it real."</div>
+                            <div class="ltest-profile">
+                                <div class="ltest-avatar">S</div>
+                                <div class="ltest-info">
+                                    <div class="ltest-attribution">SaaS Founder</div>
+                                    <div class="ltest-meta">Stripe Revenue Contract · $500 deposit · Target hit</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="ltestimonial-card">
+                            <div class="ltest-quote">"Doubled my subscriber count in 12 days. I was sitting on the same content strategy for months — the deposit was the missing variable."</div>
+                            <div class="ltest-profile">
+                                <div class="ltest-avatar">Y</div>
+                                <div class="ltest-info">
+                                    <div class="ltest-attribution">YouTube Creator</div>
+                                    <div class="ltest-meta">YouTube Subscriber Contract · $250 deposit · Target hit</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
 <!-- ═══ LIVE CONTRACT EXAMPLES ═══ -->
             <div class="lcontracts" id="contracts">
                 <div class="lw">
@@ -119,7 +236,8 @@ export function renderLanding() {
                         </div>
                     </div>
                     <div class="lcards">
-                        <div class="lcard" data-r>
+                        <div class="lcard lcard-popular" data-r>
+                            <div class="lcard-popular-badge">Most Popular</div>
                             <div class="lcard-top">
                                 <span class="lcard-src">Stripe</span>
                                 <span class="lcard-tier tier-stake">Standard</span>
@@ -134,7 +252,10 @@ export function renderLanding() {
                         <div class="lcard" data-r>
                             <div class="lcard-top">
                                 <span class="lcard-src">X / Twitter</span>
-                                <span class="lcard-tier tier-allin">High Yield</span>
+                                <div style="display:flex; gap:6px;">
+                                    <span class="lcard-tier tier-allin">High Yield</span>
+                                    <span class="lcard-tier tier-3x-yield">3x Yield</span>
+                                </div>
                             </div>
                             <div class="lcard-title">Follower Growth</div>
                             <div class="lcard-target">+1,000 Followers</div>
@@ -175,29 +296,42 @@ export function renderLanding() {
             <div class="lw">
                 <div class="lhow" data-r id="how">
                     <div class="lred-dash"><span class="lmono">How It Works</span></div>
-                    <h2 class="lhow-h">Set a target. Lock capital.<br>Let performance <strong>decide.</strong></h2>
+                    <h2 class="lh-section-title">Set a target. Lock capital.<br>Let performance <strong>decide.</strong></h2>
                     <p class="lhow-sub">Fully automated via APIs. No human bias. No exceptions.</p>
 
-                    <div class="lsteps">
-                        <div class="lstep">
-                            <div class="lstep-num">01</div>
-                            <div class="lstep-h">Choose Metric</div>
-                            <div class="lstep-p">Select your platform and define a verifiable business target.</div>
+                    <div class="ltimeline-container">
+                        <div class="ltimeline-line"></div>
+                        
+                        <div class="ltimeline-step" data-r>
+                            <div class="ltimeline-marker">01</div>
+                            <div class="ltimeline-content">
+                                <h3 class="ltimeline-h">Choose Metric</h3>
+                                <p class="ltimeline-p">Select your platform and define a verifiable business target.</p>
+                            </div>
                         </div>
-                        <div class="lstep">
-                            <div class="lstep-num">02</div>
-                            <div class="lstep-h">Lock Capital</div>
-                            <div class="lstep-p">Commit your deposit to escrow. Once live, the contract is financially binding.</div>
+
+                        <div class="ltimeline-step" data-r>
+                            <div class="ltimeline-marker">02</div>
+                            <div class="ltimeline-content">
+                                <h3 class="ltimeline-h">Lock Capital</h3>
+                                <p class="ltimeline-p">Commit your deposit to escrow. Once live, the contract is financially binding.</p>
+                            </div>
                         </div>
-                        <div class="lstep">
-                            <div class="lstep-num">03</div>
-                            <div class="lstep-h">Track Progress</div>
-                            <div class="lstep-p">We monitor your performance directly via official API integrations.</div>
+
+                        <div class="ltimeline-step" data-r>
+                            <div class="ltimeline-marker">03</div>
+                            <div class="ltimeline-content">
+                                <h3 class="ltimeline-h">Track Progress</h3>
+                                <p class="ltimeline-p">We monitor your performance directly via official API integrations.</p>
+                            </div>
                         </div>
-                        <div class="lstep">
-                            <div class="lstep-num">04</div>
-                            <div class="lstep-h">Auto Settle</div>
-                            <div class="lstep-p">Hit your goal to unlock your deposit and bonus. Miss it and forfeit the capital.</div>
+
+                        <div class="ltimeline-step final-step" data-r>
+                            <div class="ltimeline-marker final-marker">04</div>
+                            <div class="ltimeline-content">
+                                <h3 class="ltimeline-h">Auto Settle</h3>
+                                <p class="ltimeline-p">Hit your goal to unlock your deposit and bonus. Miss it and forfeit the capital.</p>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -210,6 +344,45 @@ export function renderLanding() {
                     <p class="lmini-cta-p">We'll fund your first performance bonus up to $250.</p>
                     <button class="lbtn lbtn-r lp-cta-btn">Draft Contract</button>
                     <div class="lmini-cta-micro">Objective tracking. Verified business data only.</div>
+                </div>
+            </div>
+
+            <!-- ═══ EMOTIONAL REFRAME (WHY IT WORKS) ═══ -->
+            <div class="lemo-reframe" data-r>
+                <div class="lw">
+                    <div class="lred-dash"><span class="lmono">Why It Works</span></div>
+                    <h2 class="lh-section-title">Accountability tools don't work. <br class="lhide-mobile">Financial exposure does.</h2>
+                    
+                    <div class="lemo-grid">
+                        <div class="lemo-left">
+                            <p class="lemo-body">
+                                Every founder has a Notion board full of goals they haven't hit. The problem isn't strategy — it's that missing a target costs nothing. Collateral fixes that by attaching a real financial consequence to the goals you already know you should be hitting.
+                            </p>
+                        </div>
+                        <div class="lemo-right">
+                            <div class="lemo-comparison-card">
+                                <div class="lemo-col without-collateral">
+                                    <div class="lemo-col-header">Without Collateral</div>
+                                    <ul class="lemo-list">
+                                        <li class="lemo-item">Set a goal</li>
+                                        <li class="lemo-item">Miss the deadline</li>
+                                        <li class="lemo-item">Push it to next quarter</li>
+                                        <li class="lemo-item">Repeat indefinitely</li>
+                                    </ul>
+                                </div>
+                                <div class="lemo-divider"></div>
+                                <div class="lemo-col with-collateral">
+                                    <div class="lemo-col-header text-strong">With Collateral</div>
+                                    <ul class="lemo-list">
+                                        <li class="lemo-item text-strong">Set a goal</li>
+                                        <li class="lemo-item text-strong">Lock $500 against it</li>
+                                        <li class="lemo-item text-strong">Execute like it matters</li>
+                                        <li class="lemo-item text-strong text-green">Hit target + collect $1,250</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
 
@@ -282,6 +455,7 @@ export function renderLanding() {
 
             <!-- ═══ FINAL CTA ═══ -->
             <div class="lfoot">
+                <div class="lfoot-overdue lmono" style="color:rgba(255,255,255,0.45); margin-bottom:20px; font-size:12px; font-weight:700; letter-spacing:2px; text-transform:uppercase;">Your goal is already overdue.</div>
                 <h2 class="lfoot-h">Turn your next business goal<br>into a binding financial <em style="color:var(--r);font-style:normal;font-weight:700">commitment.</em></h2>
                 <div class="lfoot-sub">First contract matched up to $250.</div>
                 <button class="lfoot-btn" id="lp-final-cta">Draft Contract</button>
@@ -519,4 +693,48 @@ export function initLanding() {
         }, { threshold: 0.5 });
         countEls.forEach(el => countObs.observe(el));
     }
+
+    // Hero Card Lifecycle auto-cycle & controls
+    let currentStage = 1;
+    let cardInterval;
+    const totalStages = 3;
+
+    function showStage(stageNum) {
+        currentStage = stageNum;
+        document.querySelectorAll('.stage-card').forEach(card => {
+            if (parseInt(card.dataset.stage, 10) === stageNum) {
+                card.classList.add('active');
+            } else {
+                card.classList.remove('active');
+            }
+        });
+        document.querySelectorAll('.lpreview-dot').forEach(dot => {
+            if (parseInt(dot.dataset.stage, 10) === stageNum) {
+                dot.classList.add('active');
+            } else {
+                dot.classList.remove('active');
+            }
+        });
+    }
+
+    function startCycle() {
+        cardInterval = setInterval(() => {
+            let nextStage = currentStage + 1;
+            if (nextStage > totalStages) nextStage = 1;
+            showStage(nextStage);
+        }, 4000);
+    }
+
+    // Attach click events to dots
+    document.querySelectorAll('.lpreview-dot').forEach(dot => {
+        dot.addEventListener('click', () => {
+            clearInterval(cardInterval);
+            const selectedStage = parseInt(dot.dataset.stage, 10);
+            showStage(selectedStage);
+            startCycle(); // Restart cycle from selected stage
+        });
+    });
+
+    // Start initial cycle
+    startCycle();
 }

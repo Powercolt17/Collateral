@@ -247,7 +247,7 @@ export const landingCSS = `
 .lmini-cta-micro{font-size:12px;color:var(--t3);margin-top:20px;font-weight:500;text-transform:uppercase;letter-spacing:2px}
 
 /* ═══ LOGO MARQUEE CAROUSEL ═══ */
-.lmarquee{padding:64px 0 56px;background:var(--p);overflow:hidden;position:relative;border-top:1px solid rgba(0,0,0,0.03);border-bottom:1px solid rgba(0,0,0,0.03)}
+.lmarquee{padding:64px 0 56px;background:var(--p);overflow:hidden;position:relative}
 .lmarquee-label{text-align:center;margin-bottom:48px}
 .lmarquee-label .lmono{font-size:13px;font-weight:700;letter-spacing:2px;color:#000;text-transform:uppercase}
 .lmarquee-track{display:flex;overflow:hidden;width:100%;position:relative}

@@ -167,6 +167,51 @@ export function renderLanding() {
                 </div>
             </div>
 
+            <!-- ═══ HOW IT WORKS ═══ -->
+            <div class="lw">
+                <div class="lhow" data-r id="how">
+                    <div class="lred-dash"><span class="lmono">How It Works</span></div>
+                    <h2 class="lh-section-title">Set a target. Lock capital.<br>Let the API <strong>decide.</strong></h2>
+                    <p class="lhow-sub">No middlemen. No judges. No appeals. Four steps to a binding financial commitment.</p>
+
+                    <div class="ltimeline-container">
+                        <div class="ltimeline-line"></div>
+                        
+                        <div class="ltimeline-step" data-r>
+                            <div class="ltimeline-marker">01</div>
+                            <div class="ltimeline-content">
+                                <h3 class="ltimeline-h">Pick Your Metric</h3>
+                                <p class="ltimeline-p">Revenue on Stripe. Followers on X. Subscribers on YouTube. Choose the exact number you need to hit.</p>
+                            </div>
+                        </div>
+
+                        <div class="ltimeline-step" data-r>
+                            <div class="ltimeline-marker">02</div>
+                            <div class="ltimeline-content">
+                                <h3 class="ltimeline-h">Lock Capital</h3>
+                                <p class="ltimeline-p">Your deposit goes into escrow via Stripe. Once you execute, it's locked. No early withdrawals.</p>
+                            </div>
+                        </div>
+
+                        <div class="ltimeline-step" data-r>
+                            <div class="ltimeline-marker">03</div>
+                            <div class="ltimeline-content">
+                                <h3 class="ltimeline-h">The Clock Starts</h3>
+                                <p class="ltimeline-p">Your contract is live. We track your metric in real-time through the platform's official API. You watch progress — but you can't change the terms.</p>
+                            </div>
+                        </div>
+
+                        <div class="ltimeline-step final-step" data-r>
+                            <div class="ltimeline-marker final-marker">04</div>
+                            <div class="ltimeline-content">
+                                <h3 class="ltimeline-h">API Settles It</h3>
+                                <p class="ltimeline-p">At the deadline, the oracle checks the final number. Hit → deposit + bonus returned. Miss → capital forfeited. Automatic. Irreversible.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
             <!-- ═══ SOCIAL PROOF (REAL RESULTS) ═══ -->
             <div class="lreal-results" data-r>
                 <div class="lw">
@@ -254,7 +299,56 @@ export function renderLanding() {
                 </div>
             </div>
 
-<!-- ═══ LIVE CONTRACT EXAMPLES ═══ -->
+            <!-- MINI CTA BLOCK -->
+            <div class="lw">
+                <div class="lmini-cta" data-r>
+                    <h3 class="lmini-cta-h">Done planning. Ready to commit?</h3>
+                    <p class="lmini-cta-p">Your first performance bonus is matched up to $250.</p>
+                    <button class="lbtn lbtn-r lp-cta-btn">Lock Your First Contract</button>
+                    <div class="lmini-cta-micro">Objective tracking. Verified business data only.</div>
+                </div>
+            </div>
+
+            <!-- ═══ EMOTIONAL REFRAME (WHY IT WORKS) ═══ -->
+            <div class="lemo-reframe" data-r>
+                <div class="lw">
+                    <div class="lred-dash"><span class="lmono">Why It Works</span></div>
+                    <h2 class="lh-section-title">Accountability tools don't work. <br class="lhide-mobile">Financial exposure does.</h2>
+                    
+                    <div class="lemo-grid">
+                        <div class="lemo-left">
+                            <p class="lemo-body">
+                                Every founder has a Notion board full of goals they haven't hit. The problem isn't strategy — it's that missing a target costs nothing. Collateral fixes that by attaching a real financial consequence to the goals you already know you should be hitting.
+                            </p>
+                        </div>
+                        <div class="lemo-right">
+                            <div class="lemo-comparison-card">
+                                <div class="lemo-col without-collateral">
+                                    <div class="lemo-col-header">Without Collateral</div>
+                                    <ul class="lemo-list">
+                                        <li class="lemo-item">Set a goal</li>
+                                        <li class="lemo-item">Miss the deadline</li>
+                                        <li class="lemo-item">Push it to next quarter</li>
+                                        <li class="lemo-item">Repeat indefinitely</li>
+                                    </ul>
+                                </div>
+                                <div class="lemo-divider"></div>
+                                <div class="lemo-col with-collateral">
+                                    <div class="lemo-col-header text-strong">With Collateral</div>
+                                    <ul class="lemo-list">
+                                        <li class="lemo-item text-strong">Set a goal</li>
+                                        <li class="lemo-item text-strong">Lock $500 against it</li>
+                                        <li class="lemo-item text-strong">Execute like it matters</li>
+                                        <li class="lemo-item text-strong text-green">Hit target + collect $1,250</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ═══ LIVE CONTRACT EXAMPLES ═══ -->
             <div class="lcontracts" id="contracts">
                 <div class="lw">
                     <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px; flex-wrap: wrap; gap: 16px;">
@@ -319,100 +413,6 @@ export function renderLanding() {
                             <div class="lcard-row"><span class="k">Bonus Yield</span><span class="v">0.7x</span></div>
                             <div class="lcard-row"><span class="k">Window</span><span class="v">30 days</span></div>
                             <div class="lcard-btn"><button class="lp-cta-btn" data-source="YOUTUBE" data-tier="stake" data-capital="250">Lock Your First Contract</button></div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- ═══ HOW IT WORKS ═══ -->
-            <div class="lw">
-                <div class="lhow" data-r id="how">
-                    <div class="lred-dash"><span class="lmono">How It Works</span></div>
-                    <h2 class="lh-section-title">Set a target. Lock capital.<br>Let the API <strong>decide.</strong></h2>
-                    <p class="lhow-sub">No middlemen. No judges. No appeals. Four steps to a binding financial commitment.</p>
-
-                    <div class="ltimeline-container">
-                        <div class="ltimeline-line"></div>
-                        
-                        <div class="ltimeline-step" data-r>
-                            <div class="ltimeline-marker">01</div>
-                            <div class="ltimeline-content">
-                                <h3 class="ltimeline-h">Pick Your Metric</h3>
-                                <p class="ltimeline-p">Revenue on Stripe. Followers on X. Subscribers on YouTube. Choose the exact number you need to hit.</p>
-                            </div>
-                        </div>
-
-                        <div class="ltimeline-step" data-r>
-                            <div class="ltimeline-marker">02</div>
-                            <div class="ltimeline-content">
-                                <h3 class="ltimeline-h">Lock Capital</h3>
-                                <p class="ltimeline-p">Your deposit goes into escrow via Stripe. Once you execute, it's locked. No early withdrawals.</p>
-                            </div>
-                        </div>
-
-                        <div class="ltimeline-step" data-r>
-                            <div class="ltimeline-marker">03</div>
-                            <div class="ltimeline-content">
-                                <h3 class="ltimeline-h">The Clock Starts</h3>
-                                <p class="ltimeline-p">Your contract is live. We track your metric in real-time through the platform's official API. You watch progress — but you can't change the terms.</p>
-                            </div>
-                        </div>
-
-                        <div class="ltimeline-step final-step" data-r>
-                            <div class="ltimeline-marker final-marker">04</div>
-                            <div class="ltimeline-content">
-                                <h3 class="ltimeline-h">API Settles It</h3>
-                                <p class="ltimeline-p">At the deadline, the oracle checks the final number. Hit → deposit + bonus returned. Miss → capital forfeited. Automatic. Irreversible.</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- MINI CTA BLOCK -->
-            <div class="lw">
-                <div class="lmini-cta" data-r>
-                    <h3 class="lmini-cta-h">Done planning. Ready to commit?</h3>
-                    <p class="lmini-cta-p">Your first performance bonus is matched up to $250.</p>
-                    <button class="lbtn lbtn-r lp-cta-btn">Lock Your First Contract</button>
-                    <div class="lmini-cta-micro">Objective tracking. Verified business data only.</div>
-                </div>
-            </div>
-
-            <!-- ═══ EMOTIONAL REFRAME (WHY IT WORKS) ═══ -->
-            <div class="lemo-reframe" data-r>
-                <div class="lw">
-                    <div class="lred-dash"><span class="lmono">Why It Works</span></div>
-                    <h2 class="lh-section-title">Accountability tools don't work. <br class="lhide-mobile">Financial exposure does.</h2>
-                    
-                    <div class="lemo-grid">
-                        <div class="lemo-left">
-                            <p class="lemo-body">
-                                Every founder has a Notion board full of goals they haven't hit. The problem isn't strategy — it's that missing a target costs nothing. Collateral fixes that by attaching a real financial consequence to the goals you already know you should be hitting.
-                            </p>
-                        </div>
-                        <div class="lemo-right">
-                            <div class="lemo-comparison-card">
-                                <div class="lemo-col without-collateral">
-                                    <div class="lemo-col-header">Without Collateral</div>
-                                    <ul class="lemo-list">
-                                        <li class="lemo-item">Set a goal</li>
-                                        <li class="lemo-item">Miss the deadline</li>
-                                        <li class="lemo-item">Push it to next quarter</li>
-                                        <li class="lemo-item">Repeat indefinitely</li>
-                                    </ul>
-                                </div>
-                                <div class="lemo-divider"></div>
-                                <div class="lemo-col with-collateral">
-                                    <div class="lemo-col-header text-strong">With Collateral</div>
-                                    <ul class="lemo-list">
-                                        <li class="lemo-item text-strong">Set a goal</li>
-                                        <li class="lemo-item text-strong">Lock $500 against it</li>
-                                        <li class="lemo-item text-strong">Execute like it matters</li>
-                                        <li class="lemo-item text-strong text-green">Hit target + collect $1,250</li>
-                                    </ul>
-                                </div>
-                            </div>
                         </div>
                     </div>
                 </div>

@@ -41,7 +41,7 @@ export function renderLanding() {
                             Make it <span class="lh-gradient">cost&nbsp;something.</span>
                         </h1>
                         <p class="lsub animate-fade-in-up delay-1">
-                            Lock real capital against a verifiable metric. Hit the target, reclaim your deposit plus a bonus. <span class="lhide-mobile">Miss it, the money's gone. No appeals. Fully API-automated.</span>
+                            Lock capital against a verifiable target. Hit it to reclaim your deposit plus a bonus. <span class="lhide-mobile">Miss it, and the deposit is forfeited. Fully automated via APIs.</span>
                         </p>
                         <div class="lctas animate-fade-in-up delay-2">
                             <button class="lbtn lbtn-r" id="lp-hero-cta">Lock Your First Contract</button>
@@ -149,14 +149,14 @@ export function renderLanding() {
                         <div class="ltype">
                             <div class="ltype-badge" style="color:var(--t1);background:rgba(17,17,17,.04);border:1px solid var(--d)">Solo</div>
                             <div class="ltype-h">You vs. your own target.</div>
-                            <div class="ltype-p">Lock a deposit against a goal only you control. Hit it and claim your bonus. Miss it and the money's gone — no one to blame but yourself.</div>
-                            <div class="ltype-detail"><strong>Best for:</strong> Revenue targets, follower milestones, launch deadlines — any goal you keep pushing to next quarter.</div>
+                            <div class="ltype-p">Commit to a goal only you control. Hit the target to win the bonus. Miss it and your deposit is forfeited.</div>
+                            <div class="ltype-detail"><strong>Best for:</strong> Revenue milestones, launch deadlines, and personal sprints.</div>
                         </div>
                         <div class="ltype">
                             <div class="ltype-badge" style="color:var(--r);background:rgba(92,20,20,.04);border:1px solid rgba(92,20,20,.15)">Rivalry</div>
                             <div class="ltype-h">You vs. another operator.</div>
-                            <div class="ltype-p">Both sides lock equal capital. Whoever posts the stronger verified performance takes the entire pool. Loser walks away with nothing.</div>
-                            <div class="ltype-detail"><strong>Best for:</strong> Co-founder sprints, creator challenges, and anyone who performs better with competition.</div>
+                            <div class="ltype-p">Lock equal capital in a head-to-head race. The stronger verified performer wins the entire pool.</div>
+                            <div class="ltype-detail"><strong>Best for:</strong> Co-founder sprints, creator challenges, and competitive metrics.</div>
                         </div>
                     </div>
                 </div>
@@ -271,22 +271,22 @@ export function renderLanding() {
                         <div class="lhow-card" data-r>
                             <span class="lhow-card-badge">Step 01</span>
                             <h3 class="lhow-card-title">Pick Your Metric</h3>
-                            <p class="lhow-card-desc">Revenue on Stripe. Followers on X. Subscribers on YouTube. Choose the exact number you need to hit.</p>
+                            <p class="lhow-card-desc">Connect Stripe, X, Shopify, or YouTube. Choose the exact target metric you need to hit.</p>
                         </div>
                         <div class="lhow-card" data-r>
                             <span class="lhow-card-badge">Step 02</span>
                             <h3 class="lhow-card-title">Lock Capital</h3>
-                            <p class="lhow-card-desc">Your deposit goes into escrow via Stripe. Once you execute, it's locked. No early withdrawals.</p>
+                            <p class="lhow-card-desc">Lock your deposit securely in Stripe escrow. No early withdrawals or cancellations allowed.</p>
                         </div>
                         <div class="lhow-card" data-r>
                             <span class="lhow-card-badge">Step 03</span>
                             <h3 class="lhow-card-title">The Clock Starts</h3>
-                            <p class="lhow-card-desc">Your contract is live. We track your metric in real-time through the platform's official API. You watch progress — but you can't change the terms.</p>
+                            <p class="lhow-card-desc">Your contract goes live. We track your progress in real-time via official, tamper-proof platform APIs.</p>
                         </div>
                         <div class="lhow-card final-card" data-r>
                             <span class="lhow-card-badge">Step 04</span>
                             <h3 class="lhow-card-title">API Settles It</h3>
-                            <p class="lhow-card-desc">At the deadline, the oracle checks the final number. Hit → deposit + bonus returned. Miss → capital forfeited. Automatic. Irreversible.</p>
+                            <p class="lhow-card-desc">At the deadline, APIs verify outcomes. Hit targets to claim the bonus. Miss and forfeit the deposit.</p>
                         </div>
                     </div>
                 </div>
@@ -296,8 +296,8 @@ export function renderLanding() {
             <div class="lreal-results" data-r>
                 <div class="lw">
                     <div class="lred-dash"><span class="lmono">Real Results</span></div>
-                    <h2 class="lh-section-title">Capital at risk changes behavior.</h2>
-                    <p class="lh-section-subtitle">When founders lock real money against their goals, they stop planning and start executing.</p>
+                    <h2 class="lh-section-title">Capital at risk drives behavior.</h2>
+                    <p class="lh-section-subtitle">Procrastination stops when capital is at stake. Put skin in the game and execute.</p>
                     
                     <!-- Stats Grid -->
                     <div class="lstats-grid">
@@ -398,7 +398,7 @@ export function renderLanding() {
                     <div class="lemo-grid">
                         <div class="lemo-left">
                             <p class="lemo-body">
-                                Every founder has a Notion board full of goals they haven't hit. The problem isn't strategy — it's that missing a target costs nothing. Collateral fixes that by attaching a real financial consequence to the goals you already know you should be hitting.
+                                Notion boards stay full of unhit goals because missing them costs nothing. Collateral enforces execution by putting real financial consequences behind your target deadlines.
                             </p>
                         </div>
                         <div class="lemo-right">
@@ -438,23 +438,23 @@ export function renderLanding() {
                     <div class="lfaq-wrap">
                         <div class="fq open">
                             <div class="fq-q">Is this gambling?</div>
-                            <div class="fq-a">No. There are no odds, no games of chance, no luck. This is a performance contract verified by official APIs against your own business data. The outcome depends entirely on your execution — not probability.</div>
+                            <div class="fq-a">No. There is no chance or luck. This is a performance contract verified directly by official APIs against your execution — not probability.</div>
                         </div>
                         <div class="fq">
                             <div class="fq-q">Where is the money held?</div>
-                            <div class="fq-a">Deposits are held securely in escrow via Stripe Connect. Funds are released automatically only at settlement.</div>
+                            <div class="fq-a">Deposits are held in secure escrow via Stripe and released automatically upon API settlement.</div>
                         </div>
                         <div class="fq">
                             <div class="fq-q">How is the target verified?</div>
-                            <div class="fq-a">Directly via official platform APIs at the deadline. No screenshots. No self-reporting. The number is the number.</div>
+                            <div class="fq-a">Verified directly via official APIs at the deadline. No manual screenshots or self-reporting.</div>
                         </div>
                         <div class="fq">
                             <div class="fq-q">Can I cancel after locking?</div>
-                            <div class="fq-a">No. Once live, capital is locked until settlement. You can cancel anytime before executing — but after that, it's binding.</div>
+                            <div class="fq-a">No. Once live, capital is locked in escrow until the deadline. It cannot be cancelled or withdrawn early.</div>
                         </div>
                         <div class="fq">
                             <div class="fq-q">Can I get a refund if I miss?</div>
-                            <div class="fq-a">No. That's the entire point. The forfeiture is the enforcement mechanism. Don't lock capital you aren't willing to lose.</div>
+                            <div class="fq-a">No. Forfeiture is the enforcement mechanism. Only lock capital you commit to risking.</div>
                         </div>
                         <div class="fq">
                             <div class="fq-q">What happens if an API goes down?</div>

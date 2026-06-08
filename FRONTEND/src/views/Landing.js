@@ -55,136 +55,352 @@ export function renderLanding() {
                         <div class="lpreview-container">
                             <!-- STAGE 1: TERMS -->
                             <div class="lpreview-card stage-card active" data-stage="1">
-                                <div class="lpcard-header-new">
-                                    <div class="lpcard-integration-badge">
-                                        <img src="https://www.vectorlogo.zone/logos/stripe/stripe-icon.svg" class="lpcard-integration-icon" alt="Stripe" />
-                                        <span>Stripe Integration</span>
+                                <div class="lpcard-header">
+                                    <div class="lpcard-logo-area">
+                                        <svg class="lpcard-logo-s" viewBox="0 0 24 24" fill="currentColor">
+                                            <path d="M13.976 9.15c-1.372-.47-2.502-.816-2.502-1.434 0-.515.467-.852 1.277-.852.886 0 1.95.32 2.766.745l.623-2.185c-.91-.397-2.155-.733-3.46-.733-2.614 0-4.385 1.34-4.385 3.652 0 2.378 2.012 3.036 3.692 3.616 1.488.515 2.185.875 2.185 1.488 0 .616-.623.97-1.488.97-.992 0-2.222-.44-3.07-.935l-.645 2.228c.99.49 2.454.896 3.824.896 2.72 0 4.542-1.293 4.542-3.714 0-2.434-1.92-3.08-3.56-3.644z"/>
+                                        </svg>
+                                        <span class="lpcard-header-title">COLLATERAL CONTRACT</span>
                                     </div>
-                                    <div class="lpcard-status status-live">
-                                        <span class="pulse-dot"></span>
-                                        ACTIVE
+                                    <div class="lpcard-status status-active" style="background:#F3F4F6; border-color:#E5E7EB; color:#374151;">
+                                        <span class="status-dot" style="background:#9CA3AF;"></span>
+                                        DRAFT
                                     </div>
                                 </div>
-                                <h3 class="lpcard-title-new">Stripe Revenue Target</h3>
-                                <div class="lpcard-grid-new">
-                                    <div class="lpcard-cell-new">
-                                        <span class="label">Deposit</span>
-                                        <span class="value">$250.00</span>
+                                <div class="lpcard-divider"></div>
+                                <div class="lpcard-goal-target-row">
+                                    <div class="lpcard-field">
+                                        <span class="field-label">GOAL</span>
+                                        <span class="field-value">Increase Revenue</span>
                                     </div>
-                                    <div class="lpcard-cell-new">
-                                        <span class="label">Target</span>
-                                        <span class="value">+20.0%</span>
+                                    <div class="lpcard-field">
+                                        <span class="field-label">TARGET</span>
+                                        <span class="field-value">+20.0%</span>
                                     </div>
-                                    <div class="lpcard-cell-new highlight">
-                                        <span class="label">Yield Match</span>
-                                        <span class="value">1.5x</span>
+                                </div>
+                                <div class="lpcard-divider"></div>
+                                <div class="lpcard-financials-row">
+                                    <div class="lpcard-financial-cell">
+                                        <span class="field-label">DEPOSIT</span>
+                                        <span class="financial-val">$500.00</span>
+                                        <span class="financial-sub">To lock in escrow</span>
                                     </div>
-                                    <div class="lpcard-cell-new">
-                                        <span class="label">Verification</span>
-                                        <span class="value">Stripe API</span>
+                                    <div class="lpcard-financial-cell">
+                                        <span class="field-label">REWARD MATCH</span>
+                                        <span class="financial-val">+$500.00</span>
+                                        <span class="financial-sub">Match ready</span>
                                     </div>
-                                    <div class="lpcard-cell-new target-hit">
-                                        <span class="label">• Target Hit</span>
-                                        <span class="value">+$1,000.00</span>
+                                    <div class="lpcard-financial-cell">
+                                        <span class="field-label">POTENTIAL RETURN</span>
+                                        <span class="financial-val green">$1,000.00</span>
+                                        <span class="financial-sub green">Deposit + Reward</span>
                                     </div>
-                                    <div class="lpcard-cell-new target-missed">
-                                        <span class="label">• Target Missed</span>
-                                        <span class="value">-$250.00</span>
+                                </div>
+                                <div class="lpcard-divider"></div>
+                                <div class="lpcard-outcomes-row">
+                                    <div class="outcome-panel success">
+                                        <div class="outcome-header">
+                                            <div class="outcome-icon-circle green">
+                                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                                                    <polyline points="20 6 9 17 4 12"></polyline>
+                                                </svg>
+                                            </div>
+                                            <span class="outcome-title green">SUCCESS</span>
+                                        </div>
+                                        <span class="outcome-sub">You receive</span>
+                                        <span class="outcome-val green">$1,000.00</span>
+                                        <span class="outcome-desc">When target is achieved</span>
                                     </div>
+                                    <div class="outcome-panel failure">
+                                        <div class="outcome-header">
+                                            <div class="outcome-icon-circle red">
+                                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                                                    <line x1="18" y1="6" x2="6" y2="18"></line>
+                                                    <line x1="6" y1="6" x2="18" y2="18"></line>
+                                                </svg>
+                                            </div>
+                                            <span class="outcome-title red">FAILURE</span>
+                                        </div>
+                                        <span class="outcome-sub">You forfeit</span>
+                                        <span class="outcome-val red">$500.00</span>
+                                        <span class="outcome-desc">If target is not met</span>
+                                    </div>
+                                </div>
+                                <div class="lpcard-divider"></div>
+                                <div class="lpcard-progress-row">
+                                    <div class="progress-header">
+                                        <span class="progress-label">PROGRESS</span>
+                                        <span class="progress-percentage">0% COMPLETED</span>
+                                    </div>
+                                    <div class="progress-bar-track">
+                                        <div class="progress-bar-fill" style="width: 0%;"></div>
+                                    </div>
+                                </div>
+                                <div class="lpcard-divider"></div>
+                                <div class="lpcard-time-row">
+                                    <span class="time-label">TIME REMAINING</span>
+                                    <div class="time-display-grid">
+                                        <div class="time-box">
+                                            <span class="time-num">30</span>
+                                            <span class="time-unit">DAYS</span>
+                                        </div>
+                                        <div class="time-divider"></div>
+                                        <div class="time-box">
+                                            <span class="time-num">00</span>
+                                            <span class="time-unit">HRS</span>
+                                        </div>
+                                        <div class="time-divider"></div>
+                                        <div class="time-box">
+                                            <span class="time-num">00</span>
+                                            <span class="time-unit">MIN</span>
+                                        </div>
+                                        <div class="time-divider"></div>
+                                        <div class="time-box">
+                                            <span class="time-num">00</span>
+                                            <span class="time-unit">SEC</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="lpcard-footer">
+                                    <svg class="footer-lock-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                                        <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+                                        <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+                                    </svg>
+                                    <span>FUNDS SECURED BY STRIPE</span>
                                 </div>
                             </div>
 
                             <!-- STAGE 2: TRACKING -->
                             <div class="lpreview-card stage-card" data-stage="2">
-                                <div class="lpcard-header-new">
-                                    <div class="lpcard-integration-badge">
-                                        <img src="https://www.vectorlogo.zone/logos/stripe/stripe-icon.svg" class="lpcard-integration-icon" alt="Stripe" />
-                                        <span>Stripe Integration</span>
+                                <div class="lpcard-header">
+                                    <div class="lpcard-logo-area">
+                                        <svg class="lpcard-logo-s" viewBox="0 0 24 24" fill="currentColor">
+                                            <path d="M13.976 9.15c-1.372-.47-2.502-.816-2.502-1.434 0-.515.467-.852 1.277-.852.886 0 1.95.32 2.766.745l.623-2.185c-.91-.397-2.155-.733-3.46-.733-2.614 0-4.385 1.34-4.385 3.652 0 2.378 2.012 3.036 3.692 3.616 1.488.515 2.185.875 2.185 1.488 0 .616-.623.97-1.488.97-.992 0-2.222-.44-3.07-.935l-.645 2.228c.99.49 2.454.896 3.824.896 2.72 0 4.542-1.293 4.542-3.714 0-2.434-1.92-3.08-3.56-3.644z"/>
+                                        </svg>
+                                        <span class="lpcard-header-title">COLLATERAL CONTRACT</span>
                                     </div>
-                                    <div class="lpcard-status status-tracking">
-                                        <span class="pulse-dot-tracking"></span>
-                                        TRACKING
-                                    </div>
-                                </div>
-                                <h3 class="lpcard-title-new">Stripe Revenue Target</h3>
-                                <div class="lpcard-grid-new">
-                                    <div class="lpcard-cell-new">
-                                        <span class="label">Current</span>
-                                        <span class="value">+13.4%</span>
-                                    </div>
-                                    <div class="lpcard-cell-new">
-                                        <span class="label">Target</span>
-                                        <span class="value">+20.0%</span>
-                                    </div>
-                                    <div class="lpcard-cell-new">
-                                        <span class="label">Time Elapsed</span>
-                                        <span class="value">21 Days</span>
-                                    </div>
-                                    <div class="lpcard-cell-new">
-                                        <span class="label">Escrow</span>
-                                        <span class="value">Locked</span>
+                                    <div class="lpcard-status status-active">
+                                        <span class="status-dot"></span>
+                                        ACTIVE
                                     </div>
                                 </div>
-                                <div class="lpcard-progress-section-new">
-                                    <div class="lpcard-progress-label">
-                                        <span>Target Progress</span>
-                                        <span>67% Completed</span>
+                                <div class="lpcard-divider"></div>
+                                <div class="lpcard-goal-target-row">
+                                    <div class="lpcard-field">
+                                        <span class="field-label">GOAL</span>
+                                        <span class="field-value">Increase Revenue</span>
                                     </div>
-                                    <div class="lpcard-progress-track-new">
-                                        <div class="lpcard-progress-fill-new" style="width: 67%;"></div>
+                                    <div class="lpcard-field">
+                                        <span class="field-label">TARGET</span>
+                                        <span class="field-value">+20.0%</span>
                                     </div>
                                 </div>
-                                <div class="lpcard-countdown-widget-new">
-                                    <span class="countdown-label">Time Remaining</span>
-                                    <div class="countdown-digits">
-                                        <span class="digit-group"><span class="num">09</span><span class="unit">d</span></span>
-                                        <span class="sep">:</span>
-                                        <span class="digit-group"><span class="num">14</span><span class="unit">h</span></span>
-                                        <span class="sep">:</span>
-                                        <span class="digit-group"><span class="num">22</span><span class="unit">m</span></span>
-                                        <span class="sep">:</span>
-                                        <span class="digit-group"><span class="num">45</span><span class="unit">s</span></span>
+                                <div class="lpcard-divider"></div>
+                                <div class="lpcard-financials-row">
+                                    <div class="lpcard-financial-cell">
+                                        <span class="field-label">DEPOSIT</span>
+                                        <span class="financial-val">$500.00</span>
+                                        <span class="financial-sub">Locked in escrow</span>
                                     </div>
+                                    <div class="lpcard-financial-cell">
+                                        <span class="field-label">REWARD MATCH</span>
+                                        <span class="financial-val">+$500.00</span>
+                                        <span class="financial-sub">If target is achieved</span>
+                                    </div>
+                                    <div class="lpcard-financial-cell">
+                                        <span class="field-label">POTENTIAL RETURN</span>
+                                        <span class="financial-val green">$1,000.00</span>
+                                        <span class="financial-sub green">Deposit + Reward</span>
+                                    </div>
+                                </div>
+                                <div class="lpcard-divider"></div>
+                                <div class="lpcard-outcomes-row">
+                                    <div class="outcome-panel success">
+                                        <div class="outcome-header">
+                                            <div class="outcome-icon-circle green">
+                                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                                                    <polyline points="20 6 9 17 4 12"></polyline>
+                                                </svg>
+                                            </div>
+                                            <span class="outcome-title green">SUCCESS</span>
+                                        </div>
+                                        <span class="outcome-sub">You receive</span>
+                                        <span class="outcome-val green">$1,000.00</span>
+                                        <span class="outcome-desc">When target is achieved</span>
+                                    </div>
+                                    <div class="outcome-panel failure">
+                                        <div class="outcome-header">
+                                            <div class="outcome-icon-circle red">
+                                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                                                    <line x1="18" y1="6" x2="6" y2="18"></line>
+                                                    <line x1="6" y1="6" x2="18" y2="18"></line>
+                                                </svg>
+                                            </div>
+                                            <span class="outcome-title red">FAILURE</span>
+                                        </div>
+                                        <span class="outcome-sub">You forfeit</span>
+                                        <span class="outcome-val red">$500.00</span>
+                                        <span class="outcome-desc">If target is not met</span>
+                                    </div>
+                                </div>
+                                <div class="lpcard-divider"></div>
+                                <div class="lpcard-progress-row">
+                                    <div class="progress-header">
+                                        <span class="progress-label">PROGRESS</span>
+                                        <span class="progress-percentage">67% COMPLETED</span>
+                                    </div>
+                                    <div class="progress-bar-track">
+                                        <div class="progress-bar-fill" style="width: 67%;"></div>
+                                    </div>
+                                </div>
+                                <div class="lpcard-divider"></div>
+                                <div class="lpcard-time-row">
+                                    <span class="time-label">TIME REMAINING</span>
+                                    <div class="time-display-grid">
+                                        <div class="time-box">
+                                            <span class="time-num">9</span>
+                                            <span class="time-unit">DAYS</span>
+                                        </div>
+                                        <div class="time-divider"></div>
+                                        <div class="time-box">
+                                            <span class="time-num">14</span>
+                                            <span class="time-unit">HRS</span>
+                                        </div>
+                                        <div class="time-divider"></div>
+                                        <div class="time-box">
+                                            <span class="time-num">22</span>
+                                            <span class="time-unit">MIN</span>
+                                        </div>
+                                        <div class="time-divider"></div>
+                                        <div class="time-box">
+                                            <span class="time-num">45</span>
+                                            <span class="time-unit">SEC</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="lpcard-footer">
+                                    <svg class="footer-lock-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                                        <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+                                        <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+                                    </svg>
+                                    <span>FUNDS SECURED BY STRIPE</span>
                                 </div>
                             </div>
 
                             <!-- STAGE 3: SETTLED -->
                             <div class="lpreview-card stage-card" data-stage="3">
-                                <div class="lpcard-header-new">
-                                    <div class="lpcard-integration-badge">
-                                        <img src="https://www.vectorlogo.zone/logos/stripe/stripe-icon.svg" class="lpcard-integration-icon" alt="Stripe" />
-                                        <span>Stripe Integration</span>
+                                <div class="lpcard-header">
+                                    <div class="lpcard-logo-area">
+                                        <svg class="lpcard-logo-s" viewBox="0 0 24 24" fill="currentColor">
+                                            <path d="M13.976 9.15c-1.372-.47-2.502-.816-2.502-1.434 0-.515.467-.852 1.277-.852.886 0 1.95.32 2.766.745l.623-2.185c-.91-.397-2.155-.733-3.46-.733-2.614 0-4.385 1.34-4.385 3.652 0 2.378 2.012 3.036 3.692 3.616 1.488.515 2.185.875 2.185 1.488 0 .616-.623.97-1.488.97-.992 0-2.222-.44-3.07-.935l-.645 2.228c.99.49 2.454.896 3.824.896 2.72 0 4.542-1.293 4.542-3.714 0-2.434-1.92-3.08-3.56-3.644z"/>
+                                        </svg>
+                                        <span class="lpcard-header-title">COLLATERAL CONTRACT</span>
                                     </div>
-                                    <div class="lpcard-status status-settled">
-                                        <span class="pulse-dot-settled"></span>
+                                    <div class="lpcard-status status-settled" style="background:#ECFDF5; border-color:#D1FAE5; color:#065F46;">
+                                        <span class="status-dot" style="background:#10B981;"></span>
                                         SETTLED
                                     </div>
                                 </div>
-                                <h3 class="lpcard-title-new">Stripe Revenue Target</h3>
-                                <div class="lpcard-verified-banner-new">
-                                    <svg class="verified-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                                        <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
-                                        <polyline points="22 4 12 14.01 9 11.01"></polyline>
-                                    </svg>
-                                    <span>Verified Target Hit via Stripe API</span>
+                                <div class="lpcard-divider"></div>
+                                <div class="lpcard-goal-target-row">
+                                    <div class="lpcard-field">
+                                        <span class="field-label">GOAL</span>
+                                        <span class="field-value">Increase Revenue</span>
+                                    </div>
+                                    <div class="lpcard-field">
+                                        <span class="field-label">TARGET</span>
+                                        <span class="field-value">+20.0%</span>
+                                    </div>
                                 </div>
-                                <div class="lpcard-payout-breakdown-new">
-                                    <div class="breakdown-row total">
-                                        <span class="breakdown-label">Total Disbursed</span>
-                                        <span class="breakdown-value">+$1,000.00</span>
+                                <div class="lpcard-divider"></div>
+                                <div class="lpcard-financials-row">
+                                    <div class="lpcard-financial-cell">
+                                        <span class="field-label">DEPOSIT</span>
+                                        <span class="financial-val">$500.00</span>
+                                        <span class="financial-sub">Released to user</span>
                                     </div>
-                                    <div class="breakdown-row sub">
-                                        <span class="breakdown-label">Deposit Released</span>
-                                        <span class="breakdown-value">$250.00</span>
+                                    <div class="lpcard-financial-cell">
+                                        <span class="field-label">REWARD MATCH</span>
+                                        <span class="financial-val">+$500.00</span>
+                                        <span class="financial-sub">Settled & disbursed</span>
                                     </div>
-                                    <div class="breakdown-row sub">
-                                        <span class="breakdown-label">Earned Yield</span>
-                                        <span class="breakdown-value">+$750.00</span>
+                                    <div class="lpcard-financial-cell">
+                                        <span class="field-label">POTENTIAL RETURN</span>
+                                        <span class="financial-val green">$1,000.00</span>
+                                        <span class="financial-sub green">Paid to bank</span>
                                     </div>
-                                    <div class="breakdown-row tx">
-                                        <span class="breakdown-label">Verification ID</span>
-                                        <span class="breakdown-value">stripe_settlement_c4018e35</span>
+                                </div>
+                                <div class="lpcard-divider"></div>
+                                <div class="lpcard-outcomes-row">
+                                    <div class="outcome-panel success winner">
+                                        <div class="outcome-header">
+                                            <div class="outcome-icon-circle green">
+                                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                                                    <polyline points="20 6 9 17 4 12"></polyline>
+                                                </svg>
+                                            </div>
+                                            <span class="outcome-title green">SUCCESS</span>
+                                        </div>
+                                        <span class="outcome-sub">You received</span>
+                                        <span class="outcome-val green">$1,000.00</span>
+                                        <span class="outcome-desc">Target achieved</span>
                                     </div>
+                                    <div class="outcome-panel failure faded">
+                                        <div class="outcome-header">
+                                            <div class="outcome-icon-circle red">
+                                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                                                    <line x1="18" y1="6" x2="6" y2="18"></line>
+                                                    <line x1="6" y1="6" x2="18" y2="18"></line>
+                                                </svg>
+                                            </div>
+                                            <span class="outcome-title red">FAILURE</span>
+                                        </div>
+                                        <span class="outcome-sub">You forfeit</span>
+                                        <span class="outcome-val red">$500.00</span>
+                                        <span class="outcome-desc">If target was not met</span>
+                                    </div>
+                                </div>
+                                <div class="lpcard-divider"></div>
+                                <div class="lpcard-progress-row">
+                                    <div class="progress-header">
+                                        <span class="progress-label">PROGRESS</span>
+                                        <span class="progress-percentage">100% COMPLETED</span>
+                                    </div>
+                                    <div class="progress-bar-track">
+                                        <div class="progress-bar-fill settled" style="width: 100%;"></div>
+                                    </div>
+                                </div>
+                                <div class="lpcard-divider"></div>
+                                <div class="lpcard-time-row">
+                                    <span class="time-label">TIME REMAINING</span>
+                                    <div class="time-display-grid">
+                                        <div class="time-box">
+                                            <span class="time-num">0</span>
+                                            <span class="time-unit">DAYS</span>
+                                        </div>
+                                        <div class="time-divider"></div>
+                                        <div class="time-box">
+                                            <span class="time-num">00</span>
+                                            <span class="time-unit">HRS</span>
+                                        </div>
+                                        <div class="time-divider"></div>
+                                        <div class="time-box">
+                                            <span class="time-num">00</span>
+                                            <span class="time-unit">MIN</span>
+                                        </div>
+                                        <div class="time-divider"></div>
+                                        <div class="time-box">
+                                            <span class="time-num">00</span>
+                                            <span class="time-unit">SEC</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="lpcard-footer">
+                                    <svg class="footer-lock-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                                        <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+                                        <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+                                    </svg>
+                                    <span>FUNDS SECURED BY STRIPE</span>
                                 </div>
                             </div>
 

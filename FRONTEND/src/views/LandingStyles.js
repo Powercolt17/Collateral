@@ -247,15 +247,16 @@ export const landingCSS = `
 .lmini-cta-micro{font-size:12px;color:var(--t3);margin-top:20px;font-weight:500;text-transform:uppercase;letter-spacing:2px}
 
 /* ═══ LOGO MARQUEE CAROUSEL ═══ */
-.lmarquee{padding:32px 0;background:var(--p);overflow:hidden;position:relative}
-.lmarquee-label{text-align:center;margin-bottom:16px}
+.lmarquee{padding:64px 0 56px;background:var(--p);overflow:hidden;position:relative;border-top:1px solid rgba(0,0,0,0.03);border-bottom:1px solid rgba(0,0,0,0.03)}
+.lmarquee-label{text-align:center;margin-bottom:48px}
+.lmarquee-label .lmono{font-size:10px;font-weight:700;letter-spacing:2.5px;color:rgba(0,0,0,0.4);text-transform:uppercase}
 .lmarquee-track{display:flex;overflow:hidden;width:100%;position:relative}
-.lmarquee-track::before,.lmarquee-track::after{content:'';position:absolute;top:0;bottom:0;width:100px;z-index:2;pointer-events:none}
+.lmarquee-track::before,.lmarquee-track::after{content:'';position:absolute;top:0;bottom:0;width:250px;z-index:2;pointer-events:none}
 .lmarquee-track::before{left:0;background:linear-gradient(to right,var(--p),transparent)}
 .lmarquee-track::after{right:0;background:linear-gradient(to left,var(--p),transparent)}
 .lmarquee-slide{display:flex;align-items:center;gap:180px;padding:4px 180px 4px 0;animation:marquee 28s linear infinite;flex-shrink:0}
-.lmarquee-slide img{opacity:.55;transition:opacity .3s;flex-shrink:0;filter:grayscale(1)}
-.lmarquee-slide img:hover{opacity:.9}
+.lmarquee-slide img{opacity:.35;transition:all .4s ease;flex-shrink:0;filter:grayscale(1)}
+.lmarquee-slide img:hover{opacity:.8;filter:grayscale(0)}
 .lmarquee-slide img.logo-stripe{height:50px}
 .lmarquee-slide img.logo-x{height:34px;margin:0 8px}
 .lmarquee-slide img.logo-shopify{height:52px}

@@ -233,11 +233,11 @@ export const landingCSS = `
 .lhow-h strong{font-weight:700;color:var(--r)}
 .lhow-sub{font-size:18px;color:var(--t2);margin-bottom:64px;max-width:640px;line-height:1.6}
 .lsteps{display:grid;grid-template-columns:repeat(4,1fr);gap:24px;background:transparent;border:none;margin-top:24px}
-.lstep{padding:32px;background:#fff;border:1px solid #eaeaea;border-radius:16px;box-shadow:0 4px 24px rgba(0,0,0,0.02);transition:all 0.3s ease;position:relative;overflow:hidden;display:flex;flex-direction:column}
+.lstep{padding:32px;background:#fff;border:1px solid #eaeaea;border-radius:16px;box-shadow:0 4px 24px rgba(0,0,0,0.02);transition:all 0.3s ease;position:relative;overflow:hidden;display:flex;flex-direction:column;z-index:1}
 .lstep:hover{transform:translateY(-4px);box-shadow:0 12px 32px rgba(0,0,0,0.06);border-color:rgba(92,20,20,0.15)}
-.lstep-num{font-family:'Inter Tight',sans-serif;font-size:56px;font-weight:700;color:var(--r) !important;opacity:0.06;line-height:1;margin-bottom:16px;letter-spacing:-2px;transition:opacity 0.3s ease;position:absolute;top:24px;right:24px}
-.lstep:hover .lstep-num{opacity:0.12}
-.lstep-h{font-family:'Inter Tight',sans-serif;font-size:20px;font-weight:600;color:var(--t1);margin-bottom:12px;letter-spacing:-.4px;position:relative;z-index:1;margin-top:24px}
+.lstep-num{font-family:'Inter Tight',sans-serif;font-size:120px;font-weight:800;color:var(--r) !important;opacity:0.03;line-height:0.8;letter-spacing:-4px;transition:opacity 0.3s ease;position:absolute;top:-10px;right:-16px;user-select:none;z-index:-1;margin:0}
+.lstep:hover .lstep-num{opacity:0.06}
+.lstep-h{font-family:'Inter Tight',sans-serif;font-size:20px;font-weight:600;color:var(--t1);margin-bottom:12px;letter-spacing:-.4px;position:relative;margin-top:8px}
 .lstep-p{font-size:15px;color:var(--t2);line-height:1.6;position:relative;z-index:1}
 
 /* Mini CTA Block */

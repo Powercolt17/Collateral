@@ -56,15 +56,20 @@ export function renderLanding() {
                             <!-- STAGE 1: TERMS -->
                             <div class="lpreview-card stage-card active" data-stage="1">
                                 <div class="lpcard-header">
-                                    <div class="lpcard-type">Performance Contract</div>
-                                    <div class="lpcard-status"><span class="lpcard-status-dot"></span>Live</div>
+                                    <div class="lpcard-brand">
+                                        <div class="lpcard-icon-wrapper">
+                                            <svg class="lpcard-icon-svg" viewBox="0 0 24 24" fill="currentColor"><path d="M13.962 10.758c-2.483-.827-3.125-1.428-3.125-2.348 0-1.127.977-1.728 2.596-1.728 2.445 0 4.62.9 6.275 1.834V3.538C17.95 2.75 15.658 2.4 13.511 2.4c-4.433 0-7.327 2.254-7.327 6.085 0 3.757 3.125 5.071 5.973 6.01 2.634.864 3.223 1.577 3.223 2.573 0 1.277-1.127 1.953-2.972 1.953-2.67 0-5.184-1.052-7.064-2.141v5.184c2.254.977 4.981 1.428 7.213 1.428 4.696 0 7.74-2.217 7.74-6.198 0-3.907-3.005-5.372-6.337-6.536z"/></svg>
+                                        </div>
+                                        <span class="lpcard-type">Performance Contract</span>
+                                    </div>
+                                    <div class="lpcard-status status-live"><span class="lpcard-status-dot dot-live"></span>Live</div>
                                 </div>
                                 <div class="lpcard-divider"></div>
                                 <div class="lpcard-title">Stripe Revenue Growth</div>
                                 <div class="lpcard-terms">
                                     <div class="lpcard-term"><span class="lpcard-term-k">Deposit</span><span class="lpcard-term-v">$250.00</span></div>
                                     <div class="lpcard-term"><span class="lpcard-term-k">Target</span><span class="lpcard-term-v">+20% in 30 days</span></div>
-                                    <div class="lpcard-term"><span class="lpcard-term-k">Bonus Yield</span><span class="lpcard-term-v lpcard-term-highlight">+$750.00</span></div>
+                                    <div class="lpcard-term highlight-yield"><span class="lpcard-term-k">Bonus Yield</span><span class="lpcard-term-v lpcard-term-highlight">+$750.00</span></div>
                                     <div class="lpcard-term"><span class="lpcard-term-k">Verification</span><span class="lpcard-term-v">Stripe API</span></div>
                                 </div>
                                 <div class="lpcard-outcome">
@@ -76,7 +81,12 @@ export function renderLanding() {
                             <!-- STAGE 2: TRACKING -->
                             <div class="lpreview-card stage-card" data-stage="2">
                                 <div class="lpcard-header">
-                                    <div class="lpcard-type">Performance Contract</div>
+                                    <div class="lpcard-brand">
+                                        <div class="lpcard-icon-wrapper">
+                                            <svg class="lpcard-icon-svg" viewBox="0 0 24 24" fill="currentColor"><path d="M13.962 10.758c-2.483-.827-3.125-1.428-3.125-2.348 0-1.127.977-1.728 2.596-1.728 2.445 0 4.62.9 6.275 1.834V3.538C17.95 2.75 15.658 2.4 13.511 2.4c-4.433 0-7.327 2.254-7.327 6.085 0 3.757 3.125 5.071 5.973 6.01 2.634.864 3.223 1.577 3.223 2.573 0 1.277-1.127 1.953-2.972 1.953-2.67 0-5.184-1.052-7.064-2.141v5.184c2.254.977 4.981 1.428 7.213 1.428 4.696 0 7.74-2.217 7.74-6.198 0-3.907-3.005-5.372-6.337-6.536z"/></svg>
+                                        </div>
+                                        <span class="lpcard-type">Performance Contract</span>
+                                    </div>
                                     <div class="lpcard-status status-tracking"><span class="lpcard-status-dot dot-tracking"></span>Tracking</div>
                                 </div>
                                 <div class="lpcard-divider"></div>
@@ -101,7 +111,12 @@ export function renderLanding() {
                             <!-- STAGE 3: SETTLED -->
                             <div class="lpreview-card stage-card" data-stage="3">
                                 <div class="lpcard-header">
-                                    <div class="lpcard-type">Performance Contract</div>
+                                    <div class="lpcard-brand">
+                                        <div class="lpcard-icon-wrapper">
+                                            <svg class="lpcard-icon-svg" viewBox="0 0 24 24" fill="currentColor"><path d="M13.962 10.758c-2.483-.827-3.125-1.428-3.125-2.348 0-1.127.977-1.728 2.596-1.728 2.445 0 4.62.9 6.275 1.834V3.538C17.95 2.75 15.658 2.4 13.511 2.4c-4.433 0-7.327 2.254-7.327 6.085 0 3.757 3.125 5.071 5.973 6.01 2.634.864 3.223 1.577 3.223 2.573 0 1.277-1.127 1.953-2.972 1.953-2.67 0-5.184-1.052-7.064-2.141v5.184c2.254.977 4.981 1.428 7.213 1.428 4.696 0 7.74-2.217 7.74-6.198 0-3.907-3.005-5.372-6.337-6.536z"/></svg>
+                                        </div>
+                                        <span class="lpcard-type">Performance Contract</span>
+                                    </div>
                                     <div class="lpcard-status status-settled"><span class="lpcard-status-icon">✓</span>Settled</div>
                                 </div>
                                 <div class="lpcard-divider"></div>
@@ -474,7 +489,7 @@ export function renderLanding() {
 
             <!-- ═══ FINAL CTA ═══ -->
             <div class="lfoot">
-                <div class="lfoot-overdue lmono" style="color:rgba(255,255,255,0.45); margin-bottom:20px; font-size:12px; font-weight:700; letter-spacing:2px; text-transform:uppercase;">Your goal is already overdue.</div>
+                <div class="lfoot-overdue"><span class="lh-badge-dot"></span>Execution Escrow</div>
                 <h2 class="lfoot-h">Your goal is already overdue.<br>Make it cost something — or keep<br>pretending it <em style="color:var(--r);font-style:normal;font-weight:700">matters.</em></h2>
                 <div class="lfoot-sub">First contract matched up to $250.</div>
                 <button class="lfoot-btn" id="lp-final-cta">Lock Your First Contract</button>

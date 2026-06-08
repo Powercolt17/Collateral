@@ -287,36 +287,97 @@
             }
             .cl-loader-container {
                 display: flex;
+                flex-direction: column;
                 align-items: center;
-                justify-content: center;
+                gap: 14px;
+            }
+            .cl-loader-wrapper {
+                position: relative;
+                display: inline-block;
             }
             .cl-loader-text {
                 font-family: 'Byte Sharp', 'Science', 'Sora', 'Inter', sans-serif;
-                font-size: 28px;
+                font-size: 30px;
                 font-weight: 800;
                 letter-spacing: 0.35em;
                 text-transform: uppercase;
-                color: #111111;
-                animation: cl-text-pulse 1.5s ease-in-out infinite;
+                white-space: nowrap;
                 padding-left: 0.35em; /* offsets tracking-widest center bias */
             }
-            .cl-loader-red {
+            .cl-text-bg {
+                color: rgba(17, 17, 17, 0.08);
+            }
+            .cl-loader-red-bg {
+                color: rgba(92, 20, 20, 0.08);
+            }
+            .cl-text-fg {
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 0%;
+                height: 100%;
+                color: #111111;
+                overflow: hidden;
+                z-index: 2;
+                animation: cl-text-reveal 1.8s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+            }
+            .cl-loader-red-fg {
                 color: #5C1414;
             }
-            @keyframes cl-text-pulse {
-                0%, 100% {
-                    transform: scale(0.96);
-                    opacity: 0.85;
+            .cl-progress-bar-bg {
+                width: 160px;
+                height: 2px;
+                background: rgba(92, 20, 20, 0.08);
+                border-radius: 2px;
+                overflow: hidden;
+            }
+            .cl-progress-bar-fill {
+                height: 100%;
+                width: 0%;
+                background: #5C1414;
+                animation: cl-progress-fill 1.8s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+            }
+            .cl-loader-tagline {
+                font-family: 'JetBrains Mono', 'Fira Code', 'Consolas', monospace;
+                font-size: 10px;
+                font-weight: 700;
+                text-transform: uppercase;
+                letter-spacing: 0.22em;
+                color: #5C1414;
+                opacity: 0;
+                transform: translateY(4px);
+                animation: cl-tagline-fade 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+                animation-delay: 1.0s;
+            }
+            @keyframes cl-text-reveal {
+                0% { width: 0%; }
+                100% { width: 100%; }
+            }
+            @keyframes cl-progress-fill {
+                0% { width: 0%; }
+                100% { width: 100%; }
+            }
+            @keyframes cl-tagline-fade {
+                0% {
+                    opacity: 0;
+                    transform: translateY(4px);
                 }
-                50% {
-                    transform: scale(1.02);
-                    opacity: 1;
+                100% {
+                    opacity: 0.75;
+                    transform: translateY(0);
                 }
             }
         </style>
 
         <div class="cl-loader-container" aria-label="Collateral Loading">
-            <div class="cl-loader-text">COLLA<span class="cl-loader-red">TERAL</span></div>
+            <div class="cl-loader-wrapper">
+                <div class="cl-loader-text cl-text-bg">COLLA<span class="cl-loader-red-bg">TERAL</span></div>
+                <div class="cl-loader-text cl-text-fg">COLLA<span class="cl-loader-red-fg">TERAL</span></div>
+            </div>
+            <div class="cl-progress-bar-bg">
+                <div class="cl-progress-bar-fill"></div>
+            </div>
+            <div class="cl-loader-tagline">Lock capital. Hit targets.</div>
         </div>
     </div>
 

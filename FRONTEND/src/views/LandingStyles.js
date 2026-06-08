@@ -63,8 +63,11 @@ export const landingCSS = `
   66% { transform: translate(-20px, 15px) scale(0.95); opacity: 0.4; }
 }
 .lhero-grid{display:grid;grid-template-columns:1.25fr 0.75fr;gap:48px;align-items:center;padding:160px 0 80px}
-.lh1{font-family:'Inter Tight',sans-serif;font-weight:400;font-size:clamp(36px,4.2vw,60px);line-height:.95;letter-spacing:-1.5px;color:var(--t1);margin:0 0 24px}
-.lh1 em{font-style:normal;color:var(--r);font-weight:600;letter-spacing:-1.5px}
+.lh1{font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:clamp(38px,4.5vw,64px);line-height:1.02;letter-spacing:-2px;color:var(--t1);margin:0 0 24px}
+.lh-gradient{background:linear-gradient(135deg, var(--r) 0%, #B45309 50%, #D97706 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;font-weight:800;letter-spacing:-2px;display:inline-block}
+.lh-badge{display:inline-flex;align-items:center;gap:8px;background:rgba(92,20,20,0.04);border:1px solid rgba(92,20,20,0.12);padding:6px 14px;border-radius:100px;font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--r);margin-bottom:24px;box-shadow:0 2px 8px rgba(92,20,20,0.02)}
+.lh-badge-dot{width:6px;height:6px;background:var(--g);border-radius:50%;display:inline-block;box-shadow:0 0 8px rgba(20,92,20,0.8);animation:badgeDotPulse 1.8s ease-in-out infinite}
+@keyframes badgeDotPulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:0.4;transform:scale(0.85)}}
 .lh-nobrk{display:inline}
 .lh-br{display:none}
 @media(min-width:768px){

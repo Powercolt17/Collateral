@@ -126,10 +126,10 @@ export const landingCSS = `
 .lpreview-card {
   background: #FFFFFF !important;
   border: 1px solid #EBEAE6 !important;
-  padding: 24px 20px 0px 20px !important;
+  padding: 28px 24px 0px 24px !important;
   width: 100%;
-  max-width: 380px;
-  min-height: 460px;
+  max-width: 430px !important;
+  min-height: 530px;
   position: relative;
   overflow: hidden;
   border-radius: 16px;
@@ -140,7 +140,7 @@ export const landingCSS = `
   box-shadow: 0 16px 40px rgba(0,0,0,0.03), 0 1px 2px rgba(0,0,0,0.02) !important;
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 14px;
 }
 .lpreview-card::before {
   display: none !important;
@@ -168,7 +168,7 @@ export const landingCSS = `
 }
 .lpcard-header-title {
   font-family: 'Inter', sans-serif;
-  font-size: 9px;
+  font-size: 9.5px;
   font-weight: 700;
   color: #555555;
   letter-spacing: 1.2px;
@@ -177,7 +177,7 @@ export const landingCSS = `
 
 .lpcard-status {
   font-family: 'Inter', sans-serif;
-  font-size: 8px;
+  font-size: 8.5px;
   font-weight: 700;
   letter-spacing: 0.5px;
   text-transform: uppercase;
@@ -216,19 +216,19 @@ export const landingCSS = `
   background: #FAF9F6;
   border: 1px solid #F1F1F0;
   border-radius: 8px;
-  padding: 10px 14px;
+  padding: 12px 18px;
 }
 .lpcard-goal-target-row .lpcard-field:first-child {
   border-right: 1px solid #EBEAE6;
-  padding-right: 10px;
+  padding-right: 12px;
 }
 .lpcard-goal-target-row .lpcard-field:last-child {
-  padding-left: 14px;
+  padding-left: 18px;
 }
 .lpcard-field {
   display: flex;
   flex-direction: column;
-  gap: 2px;
+  gap: 3px;
 }
 .field-label {
   font-family: 'Inter', sans-serif;
@@ -240,7 +240,7 @@ export const landingCSS = `
 }
 .field-value {
   font-family: 'Inter Tight', sans-serif;
-  font-size: 16px;
+  font-size: 17px;
   font-weight: 700;
   color: #111111;
   letter-spacing: -0.3px;
@@ -252,7 +252,7 @@ export const landingCSS = `
   background: #FAF9F6;
   border: 1px solid #F1F1F0;
   border-radius: 8px;
-  padding: 12px 8px;
+  padding: 14px 10px;
 }
 .lpcard-financial-cell {
   display: flex;
@@ -271,7 +271,7 @@ export const landingCSS = `
 }
 .financial-val {
   font-family: 'Inter Tight', sans-serif;
-  font-size: 14px;
+  font-size: 15px;
   font-weight: 700;
   color: #111111;
   letter-spacing: -0.2px;
@@ -281,7 +281,7 @@ export const landingCSS = `
 }
 .financial-sub {
   font-family: 'Inter', sans-serif;
-  font-size: 8px;
+  font-size: 8.5px;
   color: #8C8B87;
   margin-top: 2px;
 }
@@ -292,13 +292,13 @@ export const landingCSS = `
 .lpcard-outcomes-row {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 8px;
+  gap: 10px;
 }
 .outcome-panel {
   background: #FAF9F6;
   border: 1px solid #F1F1F0;
   border-radius: 8px;
-  padding: 12px 10px;
+  padding: 14px 12px;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
@@ -320,6 +320,7 @@ export const landingCSS = `
   opacity: 0.45;
   filter: grayscale(0.5);
 }
+
 .outcome-header {
   display: flex;
   align-items: center;
@@ -436,14 +437,13 @@ export const landingCSS = `
   color: #8C8B87;
   letter-spacing: 0.8px;
   text-transform: uppercase;
-}
 .time-display-grid {
   display: grid;
   grid-template-columns: 1fr auto 1fr auto 1fr auto 1fr;
   background: #FAF9F6;
   border: 1px solid #F1F1F0;
   border-radius: 8px;
-  padding: 8px 12px;
+  padding: 10px 16px;
   align-items: center;
 }
 .time-box {
@@ -454,7 +454,7 @@ export const landingCSS = `
 }
 .time-num {
   font-family: 'Inter Tight', sans-serif;
-  font-size: 15px;
+  font-size: 16px;
   font-weight: 700;
   color: #111111;
 }
@@ -475,15 +475,15 @@ export const landingCSS = `
   margin-top: auto;
   background: #FAF9F6;
   border-top: 1px solid #EBEAE6;
-  margin-left: -20px;
-  margin-right: -20px;
-  padding: 10px 20px;
+  margin-left: -24px;
+  margin-right: -24px;
+  padding: 12px 24px;
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 6px;
   font-family: 'Inter', sans-serif;
-  font-size: 8px;
+  font-size: 8.5px;
   font-weight: 700;
   color: #8C8B87;
   letter-spacing: 1.2px;
@@ -494,9 +494,6 @@ export const landingCSS = `
   height: 10px;
   color: #8C8B87;
 }
-
-
-
 /* ═══ FLOATING BADGES ═══ */
 .lbadge-glass {
     position: absolute;
@@ -744,11 +741,11 @@ export const landingCSS = `
 @keyframes pnlSlideIn { to { opacity: 1; transform: translateX(0); } }
 @media (max-width: 767px) { .pnl-drawer { width: 100%; max-width: 100%; border-left: none; } }
 
-/* ═══ CARD LIFECYCLE ═══ */
-.lpreview-container{position:relative;width:100%;max-width:400px;height:480px;perspective:1200px}
+.lpreview-container{position:relative;width:100%;max-width:430px;height:555px;perspective:1200px}
 .stage-card{position:absolute;top:0;left:0;width:100%;height:100%;opacity:0;visibility:hidden;pointer-events:none;transform:translateY(12px);transition:opacity 0.45s cubic-bezier(0.16,1,0.3,1), transform 0.45s cubic-bezier(0.16,1,0.3,1), visibility 0.45s}
 .stage-card.active{opacity:1;visibility:visible;pointer-events:auto;transform:translateY(0)}
-.lpreview-controls{display:flex;justify-content:center;gap:12px;position:absolute;bottom:-36px;left:0;right:0}
+.lpreview-controls{display:flex;justify-content:center;gap:12px;position:absolute;bottom:-44px;left:0;right:0}
+
 .lpreview-dot{width:8px;height:8px;border-radius:50%;background:#e5e5e5;cursor:pointer;transition:all 0.3s ease}
 .lpreview-dot:hover{background:#bbb}
 .lpreview-dot.active{background:var(--r);transform:scale(1.2)}

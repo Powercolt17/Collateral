@@ -16,8 +16,8 @@
 }
 
 @font-face {
-    font-family: 'Nevera-Regular';
-    src: url('/Nevera-Regular.otf') format('opentype');
+    font-family: 'Nevera';
+    src: url('/nevera.otf') format('opentype');
     font-weight: normal;
 }
 
@@ -30,7 +30,7 @@
 }
 
 .logo-wordmark {
-    font-family: 'Nevera-Regular', sans-serif !important;
+    font-family: 'Nevera', sans-serif !important;
     font-size: 26px !important;
     letter-spacing: 1px !important;
     font-weight: normal !important;

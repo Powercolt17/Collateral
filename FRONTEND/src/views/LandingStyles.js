@@ -32,7 +32,7 @@ export const landingCSS = `
 /* Nav */
 .ln{position:fixed;top:32px;left:0;right:0;z-index:50;background:rgba(250,250,250,0.85);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-bottom:1px solid rgba(0,0,0,0.04)}
 .ln-in{max-width:none;width:100%;padding:0 48px;height:72px;display:flex;justify-content:space-between;align-items:center}
-.ln-brand{font-family:'Nevera-Regular',sans-serif;font-size:24px;font-weight:normal;letter-spacing:1px;color:var(--t1);text-decoration:none;display:inline-flex;align-items:center;gap:14px}
+.ln-brand{font-family:'Nevera',sans-serif;font-size:24px;font-weight:normal;letter-spacing:1px;color:var(--t1);text-decoration:none;display:inline-flex;align-items:center;gap:14px}
 .ln-logo{width:32px;height:32px;color:var(--r);fill:currentColor;flex-shrink:0}
 .ln-cta{background:var(--r) !important;color:#fff !important;font-size:11px;font-weight:600;letter-spacing:.8px;text-transform:uppercase;padding:12px 24px;border:none;cursor:pointer;transition:all .3s cubic-bezier(.16, 1, 0.3, 1)}
 .ln-cta:hover{background:var(--rh) !important;transform:scale(1.02)}

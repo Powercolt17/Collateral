@@ -1022,18 +1022,29 @@ export function initLanding() {
 
     // Scroll reveal
     const obs = new IntersectionObserver((entries) => {
-        entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('v'); obs.unobserve(e.target); } });
-    }, { threshold: 0.08, rootMargin: '0px 0px -40px 0px' });
-    document.querySelectorAll('.lp [data-r]').forEach(el => obs.observe(el));
+        entries.forEach(e => {
+            if (e.isIntersecting) {
+                console.log("[ScrollReveal] Element intersected and revealed:", e.target);
+                e.target.classList.add('v');
+                obs.unobserve(e.target);
+            }
+        });
+    }, { threshold: 0.02, rootMargin: '0px 0px -20px 0px' });
+    
+    const revealEls = document.querySelectorAll('[data-r]');
+    console.log("[ScrollReveal] Observer initialized. Observing elements count:", revealEls.length);
+    revealEls.forEach(el => obs.observe(el));
 
     // Count-up animation for stats (Premium cubic ease-out)
     const countEls = document.querySelectorAll('[data-count]');
+    console.log("[CountUp] Observer initialized. Target elements count:", countEls.length);
     if (countEls.length) {
         const countObs = new IntersectionObserver((entries) => {
             entries.forEach(e => {
                 if (e.isIntersecting) {
                     const el = e.target;
                     const target = parseFloat(el.dataset.count);
+                    console.log("[CountUp] Starting count animation for target:", target, el);
                     const duration = 1600; // 1.6 seconds ease-out
                     const startTime = performance.now();
                     

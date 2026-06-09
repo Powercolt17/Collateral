@@ -725,20 +725,20 @@ export const landingCSS = `
 
 /* Staggered Scroll Reveals */
 .lcards .lcard[data-r] {
-  transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1), transform 0.7s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.4s ease, box-shadow 0.4s ease, transform 0.4s ease !important;
+  transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1), transform 0.7s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.4s ease, box-shadow 0.4s ease !important;
 }
-.lcards .lcard[data-r]:nth-child(1) { transition-delay: 0ms !important; }
-.lcards .lcard[data-r]:nth-child(2) { transition-delay: 80ms !important; }
-.lcards .lcard[data-r]:nth-child(3) { transition-delay: 160ms !important; }
-.lcards .lcard[data-r]:nth-child(4) { transition-delay: 240ms !important; }
+.lcards .lcard[data-r]:nth-child(1) { transition-delay: 0ms, 0ms, 0ms, 0ms !important; }
+.lcards .lcard[data-r]:nth-child(2) { transition-delay: 80ms, 80ms, 0ms, 0ms !important; }
+.lcards .lcard[data-r]:nth-child(3) { transition-delay: 160ms, 160ms, 0ms, 0ms !important; }
+.lcards .lcard[data-r]:nth-child(4) { transition-delay: 240ms, 240ms, 0ms, 0ms !important; }
 .lcards .lcard[data-r]:hover { transition-delay: 0ms !important; }
 
 .lhow-grid .lhow-card[data-r] {
-  transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1), transform 0.7s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.3s ease, box-shadow 0.3s ease, transform 0.3s ease !important;
+  transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1), transform 0.7s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.3s ease, box-shadow 0.3s ease !important;
 }
-.lhow-grid .lhow-card[data-r]:nth-child(1) { transition-delay: 0ms !important; }
-.lhow-grid .lhow-card[data-r]:nth-child(2) { transition-delay: 80ms !important; }
-.lhow-grid .lhow-card[data-r]:nth-child(3) { transition-delay: 160ms !important; }
-.lhow-grid .lhow-card[data-r]:nth-child(4) { transition-delay: 240ms !important; }
+.lhow-grid .lhow-card[data-r]:nth-child(1) { transition-delay: 0ms, 0ms, 0ms, 0ms !important; }
+.lhow-grid .lhow-card[data-r]:nth-child(2) { transition-delay: 80ms, 80ms, 0ms, 0ms !important; }
+.lhow-grid .lhow-card[data-r]:nth-child(3) { transition-delay: 160ms, 160ms, 0ms, 0ms !important; }
+.lhow-grid .lhow-card[data-r]:nth-child(4) { transition-delay: 240ms, 240ms, 0ms, 0ms !important; }
 .lhow-grid .lhow-card[data-r]:hover { transition-delay: 0ms !important; }
 `;

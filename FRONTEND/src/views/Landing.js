@@ -104,10 +104,15 @@ export function renderLanding() {
                         </div>
 
                         <!-- FLOATING GLASS BADGE -->
-                        <div class="lbadge-glass" style="top: -12px; right: -24px; background: rgba(92,20,20,0.95); box-shadow: 0 12px 32px rgba(92,20,20,0.25);">
-                            <span class="lbadge-dot" style="background: #22c55e;"></span>
-                            <span class="lbadge-num" id="lc-floating-active-count">22</span>
-                            <span class="lbadge-txt">Active Contracts</span>
+                        <div style="position: absolute; top: -48px; left: 50%; transform: translateX(-50%); z-index: 20;">
+                            <div class="lbadge-glass" style="position: relative; top: auto; right: auto; background: rgba(92,20,20,0.95); box-shadow: 0 12px 32px rgba(92,20,20,0.25); white-space: nowrap; gap: 8px;">
+                                <span class="lbadge-dot" style="background: #22c55e;"></span>
+                                <span class="lbadge-num" id="lc-floating-active-count">22</span>
+                                <span class="lbadge-txt">Active Contracts</span>
+                                <span style="color: rgba(255,255,255,0.3); font-weight: 700; margin: 0 2px;">•</span>
+                                <span class="lbadge-num" id="lc-floating-locked-amount">$8,700</span>
+                                <span class="lbadge-txt">Locked</span>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -547,6 +552,10 @@ export function initLanding() {
                 const floatingActiveCountEl = document.getElementById('lc-floating-active-count');
                 if (floatingActiveCountEl) {
                     floatingActiveCountEl.textContent = totalActive;
+                }
+                const floatingLockedAmountEl = document.getElementById('lc-floating-locked-amount');
+                if (floatingLockedAmountEl) {
+                    floatingLockedAmountEl.textContent = `$${totalLocked.toLocaleString()}`;
                 }
 
                 // ═══ FEATURED CONTRACT — FROM REAL EVENTS ═══

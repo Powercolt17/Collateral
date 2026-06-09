@@ -90,7 +90,7 @@ export function renderLanding() {
 
                             <!-- DEDICATED LIVE ACTIVITY STRIP (CHANGE 3) -->
                             <div class="lc-recent-activity">
-                                <div class="lc-ra-header">Recent Activity • <span id="lc-card-active-count">22</span> Active</div>
+                                <div class="lc-ra-header">Recent Activity</div>
                                 <div class="lc-ra-list" id="lc-ra-list">
                                     <!-- Populated dynamically -->
                                 </div>
@@ -99,8 +99,15 @@ export function renderLanding() {
                             <!-- TRUST COPY -->
                             <div class="lc-trust">
                                 <svg class="lc-trust-lock" width="10" height="10" viewBox="0 0 24 28" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><path d="M12 2a5 5 0 0 0-5 5v3H5a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V12a2 2 0 0 0-2-2h-2V7a5 5 0 0 0-5-5zm-3 5a3 3 0 0 1 6 0v3H9V7zm3 9a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3z" fill="currentColor"/></svg>
-                                <span id="lc-trust-text">22 active contracts verified automatically through connected APIs.</span>
+                                Contracts verified automatically through connected APIs.
                             </div>
+                        </div>
+
+                        <!-- FLOATING GLASS BADGE -->
+                        <div class="lbadge-glass" style="top: -12px; right: -24px; background: rgba(92,20,20,0.95); box-shadow: 0 12px 32px rgba(92,20,20,0.25);">
+                            <span class="lbadge-dot" style="background: #22c55e;"></span>
+                            <span class="lbadge-num" id="lc-floating-active-count">22</span>
+                            <span class="lbadge-txt">Active Contracts</span>
                         </div>
                     </div>
                 </div>
@@ -537,13 +544,9 @@ export function initLanding() {
                 animateCount('live-stat-success-rate', achievementRate, '', '%');
 
                 // Update centerpiece card active contract indicators
-                const activeCountEl = document.getElementById('lc-card-active-count');
-                if (activeCountEl) {
-                    activeCountEl.textContent = totalActive;
-                }
-                const trustTextEl = document.getElementById('lc-trust-text');
-                if (trustTextEl) {
-                    trustTextEl.textContent = `${totalActive} active contracts verified automatically through connected APIs.`;
+                const floatingActiveCountEl = document.getElementById('lc-floating-active-count');
+                if (floatingActiveCountEl) {
+                    floatingActiveCountEl.textContent = totalActive;
                 }
 
                 // ═══ FEATURED CONTRACT — FROM REAL EVENTS ═══

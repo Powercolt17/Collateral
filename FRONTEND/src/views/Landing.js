@@ -53,40 +53,39 @@ export function renderLanding() {
                     </div>
                     <div class="lhero-right animate-scale-in delay-1">
                         <div class="lactivity-card">
-                            <!-- SECTION 1 — HERO METRIC -->
-                            <div class="lactivity-hero-section">
-                                <div class="lactivity-hero-value" id="live-stat-locked">$8,700</div>
-                                <div class="lactivity-hero-label">Capital Currently Locked</div>
-                                <div class="lactivity-hero-support" id="live-stat-active-count">25 Active Contracts</div>
-                            </div>
-                            
-                            <!-- SECTION 2 — LIVE MARKET FEED -->
-                            <div class="lactivity-feed-section">
-                                <h4 class="lactivity-feed-title">LIVE ACTIVITY</h4>
-                                <div class="lactivity-feed-rows" id="live-settlements-feed-container">
-                                    <!-- Dynamic 3 rows populated here -->
+                            <!-- TOP — COMPACT METRIC -->
+                            <div class="lc-top">
+                                <div class="lc-top-left">
+                                    <span class="lc-amount" id="live-stat-locked">$8,700</span>
+                                    <span class="lc-amount-label">Currently Locked</span>
+                                </div>
+                                <div class="lc-top-right">
+                                    <span class="lc-active-dot"></span>
+                                    <span class="lc-active-count" id="live-stat-active-count">22 Active</span>
                                 </div>
                             </div>
-                            
-                            <!-- SECTION 3 — MARKET STATS -->
-                            <div class="lactivity-stats-row">
-                                <div class="lactivity-stat-col">
-                                    <div class="lactivity-stat-label">Contracts Settled</div>
-                                    <div class="lactivity-stat-value" id="live-stat-settled">25</div>
-                                </div>
-                                <div class="lactivity-stat-col">
-                                    <div class="lactivity-stat-label">Rewards Paid</div>
-                                    <div class="lactivity-stat-value" id="live-stat-payout">$2,855</div>
-                                </div>
+
+                            <!-- MAIN — LIVE ACTIVITY FEED -->
+                            <div class="lc-feed" id="live-activity-feed">
+                                <!-- Populated dynamically from real ledger events -->
                             </div>
-                            
-                            <!-- SECTION 4 — SUCCESS RATE -->
-                            <div class="lactivity-success-section">
-                                <div class="lactivity-success-rate-box">
-                                    <div class="lactivity-success-rate-value" id="live-success-rate-val">24%</div>
-                                    <div class="lactivity-success-rate-label">Target Achievement Rate</div>
+
+                            <!-- BOTTOM — COMPACT STATS -->
+                            <div class="lc-bottom">
+                                <div class="lc-bstat">
+                                    <span class="lc-bstat-val" id="live-stat-settled">25</span>
+                                    <span class="lc-bstat-label">Settled</span>
                                 </div>
-                                <p class="lactivity-success-sentence" id="live-success-sentence">6 of 25 contracts successfully completed.</p>
+                                <div class="lc-bstat-divider"></div>
+                                <div class="lc-bstat">
+                                    <span class="lc-bstat-val" id="live-stat-payout">$2,855</span>
+                                    <span class="lc-bstat-label">Paid Out</span>
+                                </div>
+                                <div class="lc-bstat-divider"></div>
+                                <div class="lc-bstat">
+                                    <span class="lc-bstat-val" id="live-stat-rate">24%</span>
+                                    <span class="lc-bstat-label">Success</span>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -533,94 +532,123 @@ export function initLanding() {
                 const totalSettled = statsResponse.contractsSettled;
                 const totalPayout = statsResponse.totalPaidOut;
                 const displayRate = statsResponse.achievementRate;
-                const feedItems = statsResponse.recentSettlements || [];
                 const activeContracts = statsResponse.activeContractsCount;
                 
                 // Count-up animation helper
-                const animateCount = (elementId, targetVal, isCurrency = false, isPercent = false) => {
+                const animateCount = (elementId, targetVal, prefix = '', suffix = '') => {
                     const el = document.getElementById(elementId);
                     if (!el) return;
-                    let current = 0;
-                    const duration = 1500;
+                    const duration = 1200;
                     const start = performance.now();
-                    
-                    function update(timestamp) {
-                        const elapsed = timestamp - start;
-                        const progress = Math.min(elapsed / duration, 1);
-                        const easeProgress = progress * (2 - progress);
-                        current = Math.floor(easeProgress * targetVal);
-                        
-                        if (isCurrency) {
-                            el.textContent = '$' + current.toLocaleString();
-                        } else if (isPercent) {
-                            el.textContent = current.toLocaleString() + '%';
-                        } else {
-                            el.textContent = current.toLocaleString();
-                        }
-                        
-                        if (progress < 1) {
-                            requestAnimationFrame(update);
-                        } else {
-                            if (isCurrency) {
-                                el.textContent = '$' + targetVal.toLocaleString();
-                            } else if (isPercent) {
-                                el.textContent = targetVal.toLocaleString() + '%';
-                            } else {
-                                el.textContent = targetVal.toLocaleString();
-                            }
-                        }
+                    function update(ts) {
+                        const p = Math.min((ts - start) / duration, 1);
+                        const ease = p * (2 - p);
+                        const v = Math.floor(ease * targetVal);
+                        el.textContent = prefix + v.toLocaleString() + suffix;
+                        if (p < 1) requestAnimationFrame(update);
+                        else el.textContent = prefix + targetVal.toLocaleString() + suffix;
                     }
                     requestAnimationFrame(update);
                 };
                 
-                // Trigger count-up animations on load
-                animateCount('live-stat-locked', totalLocked, true, false);
-                animateCount('live-stat-settled', totalSettled, false, false);
-                animateCount('live-stat-payout', totalPayout, true, false);
-                animateCount('live-success-rate-val', displayRate, false, true);
+                // Animate top metric + bottom stats
+                animateCount('live-stat-locked', totalLocked, '$');
+                animateCount('live-stat-settled', totalSettled);
+                animateCount('live-stat-payout', totalPayout, '$');
+                animateCount('live-stat-rate', displayRate, '', '%');
 
-                // Populate active contract count supporting text
-                const activeContractsEl = document.getElementById('live-stat-active-count');
-                if (activeContractsEl) {
-                    activeContractsEl.textContent = `${activeContracts || 25} Active Contracts`;
-                }
-                
-                // Populate static settlements feed (exactly 3 rows, no scrolling)
-                const feedContainer = document.getElementById('live-settlements-feed-container');
-                if (feedContainer) {
-                    const fallbackItems = [
-                        { goal: "Revenue Growth Contract", reward: 170 },
-                        { goal: "Audience Growth Contract", reward: 170 },
-                        { goal: "Sales Goal Contract", reward: 510 }
-                    ];
+                // Active contracts count
+                const activeEl = document.getElementById('live-stat-active-count');
+                if (activeEl) activeEl.textContent = `${activeContracts || 22} Active`;
+
+                // ═══ LIVE ACTIVITY FEED — REAL EVENTS ═══
+                const feedEl = document.getElementById('live-activity-feed');
+                if (feedEl && response.events.length > 0) {
+                    const events = response.events;
                     
-                    const finalItems = [...feedItems];
-                    while (finalItems.length < 3) {
-                        finalItems.push(fallbackItems[finalItems.length]);
+                    const timeAgoShort = (iso) => {
+                        const diff = Math.floor((Date.now() - new Date(iso).getTime()) / 60000);
+                        if (diff < 1) return 'now';
+                        if (diff < 60) return `${diff}m ago`;
+                        const h = Math.floor(diff / 60);
+                        if (h < 24) return `${h}h ago`;
+                        return `${Math.floor(h / 24)}d ago`;
+                    };
+
+                    const getGoalName = (e) => {
+                        const p = (e.platform || '').toUpperCase();
+                        if (p === 'STRIPE') return 'Revenue Growth Goal';
+                        if (p === 'X' || p === 'TWITTER') return 'Audience Growth Goal';
+                        if (p === 'SHOPIFY') return 'Sales Goal';
+                        if (p === 'YOUTUBE') return 'Subscriber Growth Goal';
+                        return 'Performance Goal';
+                    };
+
+                    const renderFeedItem = (e) => {
+                        const amt = (e.amountUsdCents || e.lockAmountUsdCents || 0) / 100;
+                        const ts = e.timestamp || e.created_at || new Date().toISOString();
+                        const type = e.eventType;
+                        let icon, iconClass, title, detail;
+
+                        if (type === 'SETTLED_SUCCESS' || type === 'RIVALRY_SETTLED') {
+                            icon = '✓';
+                            iconClass = 'lc-icon-success';
+                            title = 'Contract Settled';
+                            detail = `+$${amt.toLocaleString()} reward paid`;
+                        } else if (type === 'SETTLED_FAILURE' || type === 'CONTRACT_FORFEITED') {
+                            icon = '✕';
+                            iconClass = 'lc-icon-forfeit';
+                            title = 'Contract Forfeited';
+                            detail = `$${amt.toLocaleString()} forfeited`;
+                        } else {
+                            icon = '●';
+                            iconClass = 'lc-icon-new';
+                            title = 'New Contract Created';
+                            detail = `$${amt.toLocaleString()} at stake`;
+                        }
+
+                        return `<div class="lc-feed-item">
+                            <div class="lc-fi-icon ${iconClass}">${icon}</div>
+                            <div class="lc-fi-body">
+                                <div class="lc-fi-header">
+                                    <span class="lc-fi-title">${title}</span>
+                                    <span class="lc-fi-time">${timeAgoShort(ts)}</span>
+                                </div>
+                                <div class="lc-fi-detail">
+                                    <span class="lc-fi-goal">${getGoalName(e)}</span>
+                                    <span class="lc-fi-sep">·</span>
+                                    <span class="lc-fi-amount">${detail}</span>
+                                </div>
+                            </div>
+                        </div>`;
+                    };
+
+                    let feedStart = 0;
+                    const FEED_SIZE = 4;
+
+                    const renderFeed = () => {
+                        let items = [];
+                        for (let k = 0; k < Math.min(FEED_SIZE, events.length); k++) {
+                            items.push(renderFeedItem(events[(feedStart + k) % events.length]));
+                        }
+                        feedEl.innerHTML = items.join('');
+                    };
+
+                    renderFeed();
+
+                    // Rotate feed every 5s if we have more events than slots
+                    if (events.length > FEED_SIZE) {
+                        setInterval(() => {
+                            feedEl.style.opacity = '0';
+                            feedEl.style.transform = 'translateY(4px)';
+                            setTimeout(() => {
+                                feedStart = (feedStart + 1) % events.length;
+                                renderFeed();
+                                feedEl.style.opacity = '1';
+                                feedEl.style.transform = 'translateY(0)';
+                            }, 250);
+                        }, 5000);
                     }
-                    const displayItems = finalItems.slice(0, 3);
-                    
-                    const itemHtml = displayItems.map(item => `
-                        <div class="lfeed-row">
-                            <div class="lfeed-row-left">
-                                <span class="lfeed-icon-check">✓</span>
-                                <span class="lfeed-row-title">${item.goal}</span>
-                            </div>
-                            <div class="lfeed-row-right">
-                                <span class="lfeed-reward-label">Reward:</span>
-                                <span class="lfeed-reward-value">$${item.reward.toLocaleString()}</span>
-                            </div>
-                        </div>
-                    `).join('');
-                    
-                    feedContainer.innerHTML = itemHtml;
-                }
-
-                // Populate success rate descriptive sentence
-                const successSentenceEl = document.getElementById('live-success-sentence');
-                if (successSentenceEl) {
-                    const successCount = statsResponse.successContracts || Math.round(totalSettled * (displayRate / 100)) || 6;
-                    successSentenceEl.textContent = `${successCount} of ${totalSettled} contracts successfully completed.`;
                 }
 
                 // Populate Live Settlement Activity Table

@@ -138,169 +138,185 @@ export const landingCSS = `
   animation: premiumFloat 8s ease-in-out infinite;
 }
 
-/* SECTION 1 — HERO METRIC */
-.lactivity-hero-section {
+/* SECTION — TOP COMPACT METRIC */
+.lc-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  padding-bottom: 14px;
+  border-bottom: 1px solid #eae8e2;
+}
+.lc-top-left {
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
+  gap: 1px;
 }
-.lactivity-hero-value {
+.lc-amount {
   font-family: 'Plus Jakarta Sans', sans-serif;
-  font-size: 44px !important;
+  font-size: 32px;
   font-weight: 800;
   color: #1e1e1e;
-  letter-spacing: -2px;
-  line-height: 1.0;
-  margin-bottom: 4px;
+  letter-spacing: -1.5px;
+  line-height: 1;
 }
-.lactivity-hero-label {
+.lc-amount-label {
   font-family: 'Inter', sans-serif;
   font-size: 11px;
-  font-weight: 700;
+  font-weight: 600;
   text-transform: uppercase;
-  letter-spacing: 0.1em;
-  color: #5c1414; /* burgundy brand color */
-  margin-bottom: 4px;
+  letter-spacing: 0.08em;
+  color: #5c1414;
 }
-.lactivity-hero-support {
+.lc-top-right {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.lc-active-dot {
+  width: 6px;
+  height: 6px;
+  background: #145c14;
+  border-radius: 50%;
+  box-shadow: 0 0 8px rgba(20,92,20,0.6);
+  animation: pulseDot 2s ease-in-out infinite;
+}
+.lc-active-count {
   font-family: 'Inter', sans-serif;
-  font-size: 13px;
-  font-weight: 500;
-  color: #666;
+  font-size: 12px;
+  font-weight: 700;
+  color: #145c14;
+  letter-spacing: -0.2px;
 }
 
-/* SECTION 2 — LIVE MARKET FEED */
-.lactivity-feed-section {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  border-top: 1px solid #eae8e2;
-  padding-top: 16px;
-}
-.lactivity-feed-title {
-  font-family: 'Inter', sans-serif;
-  font-size: 11px;
-  font-weight: 700;
-  color: #8a8984;
-  text-transform: uppercase;
-  letter-spacing: 0.12em;
-  margin: 0;
-}
-.lactivity-feed-rows {
+/* SECTION — LIVE ACTIVITY FEED (THE HERO) */
+.lc-feed {
   display: flex;
   flex-direction: column;
   gap: 0;
-}
-.lfeed-row {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  font-size: 13px;
-  color: #1e1e1e;
-  border-bottom: 1px solid #f5f4f1;
-  padding: 10px 0;
-}
-.lfeed-row:last-child {
-  border-bottom: none;
-  padding-bottom: 0;
-}
-.lfeed-row:first-child {
-  padding-top: 0;
-}
-.lfeed-row-left {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-.lfeed-icon-check {
-  color: #1e4620; /* forest green check */
-  font-weight: 800;
-  font-size: 14px;
-}
-.lfeed-row-title {
-  font-weight: 600;
-  color: #1e1e1e;
-}
-.lfeed-row-right {
-  display: flex;
-  align-items: center;
-  gap: 4px;
-}
-.lfeed-reward-label {
-  font-size: 11.5px;
-  color: #8a8984;
-  font-weight: 500;
-}
-.lfeed-reward-value {
-  font-weight: 700;
-  color: #5c1414; /* burgundy reward value */
-}
-
-/* SECTION 3 — MARKET STATS */
-.lactivity-stats-row {
-  display: flex;
-  justify-content: space-between;
-  gap: 16px;
-  border-top: 1px solid #eae8e2;
-  border-bottom: 1px solid #eae8e2;
-  padding: 16px 0;
-}
-.lactivity-stat-col {
   flex: 1;
+  transition: opacity 0.25s ease, transform 0.25s ease;
+}
+.lc-feed-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 10px 0;
+  border-bottom: 1px solid rgba(0,0,0,0.04);
+}
+.lc-feed-item:last-child {
+  border-bottom: none;
+}
+.lc-fi-icon {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 11px;
+  font-weight: 800;
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+.lc-icon-new {
+  background: rgba(20,92,20,0.08);
+  color: #145c14;
+  font-size: 8px;
+}
+.lc-icon-success {
+  background: rgba(20,92,20,0.1);
+  color: #145c14;
+}
+.lc-icon-forfeit {
+  background: rgba(92,20,20,0.08);
+  color: #5c1414;
+}
+.lc-fi-body {
+  flex: 1;
+  min-width: 0;
   display: flex;
   flex-direction: column;
   gap: 2px;
 }
-.lactivity-stat-label {
-  font-family: 'Inter', sans-serif;
-  font-size: 10px;
-  font-weight: 700;
-  color: #8a8984;
-  text-transform: uppercase;
-  letter-spacing: 0.1em;
+.lc-fi-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
-.lactivity-stat-value {
+.lc-fi-title {
+  font-family: 'Inter', sans-serif;
+  font-size: 13px;
+  font-weight: 700;
+  color: #1e1e1e;
+  letter-spacing: -0.2px;
+}
+.lc-fi-time {
+  font-family: 'Inter', sans-serif;
+  font-size: 11px;
+  font-weight: 500;
+  color: #999;
+  flex-shrink: 0;
+}
+.lc-fi-detail {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 12px;
+  color: #666;
+}
+.lc-fi-goal {
+  font-weight: 500;
+}
+.lc-fi-sep {
+  color: #ccc;
+}
+.lc-fi-amount {
+  font-weight: 600;
+  color: #1e1e1e;
+}
+.lc-icon-success + .lc-fi-body .lc-fi-amount {
+  color: #145c14;
+}
+.lc-icon-forfeit + .lc-fi-body .lc-fi-amount {
+  color: #5c1414;
+}
+
+/* SECTION — BOTTOM COMPACT STATS */
+.lc-bottom {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: 14px;
+  border-top: 1px solid #eae8e2;
+  gap: 0;
+}
+.lc-bstat {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1px;
+}
+.lc-bstat-val {
   font-family: 'Plus Jakarta Sans', sans-serif;
-  font-size: 22px;
+  font-size: 18px;
   font-weight: 800;
   color: #1e1e1e;
   letter-spacing: -0.5px;
-  line-height: 1.1;
+  line-height: 1;
 }
-
-/* SECTION 4 — SUCCESS RATE */
-.lactivity-success-section {
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-}
-.lactivity-success-rate-box {
-  display: flex;
-  align-items: baseline;
-  gap: 8px;
-}
-.lactivity-success-rate-value {
-  font-family: 'Plus Jakarta Sans', sans-serif;
-  font-size: 30px;
-  font-weight: 800;
-  color: #1e4620;
-  letter-spacing: -1px;
-  line-height: 1.0;
-}
-.lactivity-success-rate-label {
+.lc-bstat-label {
   font-family: 'Inter', sans-serif;
   font-size: 10px;
-  font-weight: 700;
+  font-weight: 600;
   color: #8a8984;
   text-transform: uppercase;
-  letter-spacing: 0.1em;
+  letter-spacing: 0.08em;
 }
-.lactivity-success-sentence {
-  font-family: 'Inter', sans-serif;
-  font-size: 12.5px;
-  color: #4a4a4a;
-  line-height: 1.4;
-  margin: 0;
+.lc-bstat-divider {
+  width: 1px;
+  height: 28px;
+  background: #eae8e2;
 }
 
 /* ═══ FLOATING BADGES ═══ */

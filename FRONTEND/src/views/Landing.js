@@ -132,33 +132,6 @@ export function renderLanding() {
                 </div>
             </div>
 
-            <!-- ═══ ORACLE STATUS BAR ═══ -->
-            <div class="loracle-wrapper" data-r>
-                <div class="loracle-bar">
-                    <div class="loracle-header">
-                        <span class="loracle-dot"></span>
-                        <span class="loracle-title">Verified via official APIs</span>
-                    </div>
-                    <div class="loracle-grid">
-                        <div class="loracle-pill">
-                            <img class="logo-stripe" src="https://www.vectorlogo.zone/logos/stripe/stripe-ar21.svg" alt="Stripe">
-                            <span class="loracle-pill-status"><span class="loracle-pill-dot"></span>Stripe Connect</span>
-                        </div>
-                        <div class="loracle-pill">
-                            <img class="logo-x" src="https://cdn.simpleicons.org/x/555555" alt="X">
-                            <span class="loracle-pill-status"><span class="loracle-pill-dot"></span>X API v2</span>
-                        </div>
-                        <div class="loracle-pill">
-                            <img class="logo-shopify" src="https://www.vectorlogo.zone/logos/shopify/shopify-ar21.svg" alt="Shopify">
-                            <span class="loracle-pill-status"><span class="loracle-pill-dot"></span>Shopify Webhooks</span>
-                        </div>
-                        <div class="loracle-pill">
-                            <img class="logo-youtube" src="https://www.vectorlogo.zone/logos/youtube/youtube-ar21.svg" alt="YouTube">
-                            <span class="loracle-pill-status"><span class="loracle-pill-dot"></span>YouTube API</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
 
             <!-- ═══ LIVE CONTRACT EXAMPLES ═══ -->
             <div class="lcontracts" id="contracts">

@@ -503,31 +503,6 @@ export const landingCSS = `
 .lmini-cta-p{font-size:18px;color:var(--t2);margin-bottom:40px;line-height:1.6}
 .lmini-cta-micro{font-size:12px;color:var(--t3);margin-top:20px;font-weight:500;text-transform:uppercase;letter-spacing:2px}
 
-/* ═══ ORACLE STATUS BAR ═══ */
-.loracle-wrapper{margin:32px auto 48px;padding:0;max-width:1080px;width:100%}
-.loracle-bar{background:#FFF;border:1px solid var(--d);border-radius:12px;padding:10px 18px;display:flex;justify-content:space-between;align-items:center;box-shadow:0 4px 24px rgba(0,0,0,0.015);position:relative;overflow:hidden}
-.loracle-header{display:flex;align-items:center;gap:10px}
-.loracle-dot{width:6px;height:6px;background:var(--g);border-radius:50%;display:inline-block;box-shadow:0 0 8px rgba(20,92,20,0.6);animation:badgeDotPulse 1.8s ease-in-out infinite}
-.loracle-title{font-family:'JetBrains Mono',monospace;font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;color:var(--t2)}
-.loracle-grid{display:flex;align-items:center;gap:12px}
-.loracle-pill{background:rgba(17,17,17,0.02);border:1px solid var(--d);border-radius:6px;padding:8px 14px;display:flex;align-items:center;gap:10px;transition:all 0.3s cubic-bezier(0.16, 1, 0.3, 1);cursor:default}
-.loracle-pill:hover{background:#FFF;border-color:rgba(92,20,20,0.18);box-shadow:0 4px 12px rgba(92,20,20,0.05);transform:translateY(-1px)}
-.loracle-pill img{object-fit:contain;filter:grayscale(1);opacity:0.35;transition:all 0.3s ease}
-.loracle-pill:hover img{filter:none;opacity:0.95}
-.loracle-pill img.logo-stripe{height:18px}
-.loracle-pill img.logo-x{height:14px}
-.loracle-pill img.logo-shopify{height:20px}
-.loracle-pill img.logo-youtube{height:14px}
-.loracle-pill-status{font-family:'JetBrains Mono',monospace;font-size:9px;font-weight:700;color:var(--t3);text-transform:uppercase;letter-spacing:0.5px;display:flex;align-items:center;gap:5px;transition:color 0.3s ease}
-.loracle-pill:hover .loracle-pill-status{color:var(--t1)}
-.loracle-pill-dot{width:4px;height:4px;background:var(--g);border-radius:50%;display:inline-block;box-shadow:0 0 6px rgba(20,92,20,0.4)}
-
-@media(max-width:900px){
-  .loracle-bar{flex-direction:column;gap:14px;align-items:stretch;padding:16px}
-  .loracle-header{justify-content:center}
-  .loracle-grid{grid-template-columns:1fr 1fr;display:grid;gap:8px}
-  .loracle-pill{justify-content:center}
-}
 
 /* ═══ CONTRACT TYPES ═══ */
 .ltypes{padding:100px 0}

@@ -1,6 +1,8 @@
 import { FastifyInstance } from 'fastify';
 import { getMarketFeed, getGlobalStats, publishDrop, expireInstance, getMarketListings, getMarketInstanceDetails, PublishDropParams } from '../services/market.js';
 import { z } from 'zod';
+import { db } from '../db/client.js';
+import { sql } from 'drizzle-orm';
 
 // Input Schemas
 const MarketFeedQuerySchema = z.object({
@@ -28,6 +30,140 @@ const ExpireInstanceBodySchema = z.object({
 });
 
 export default async function marketRoutes(fastify: FastifyInstance) {
+
+    // Homepage Stats
+    fastify.get('/v1/market/homepage-stats', async (request, reply) => {
+        // Query active capital locked
+        const soloLockedRes = await db.execute(sql`
+            SELECT COALESCE(SUM(lock_amount_usd_cents), 0) AS total
+            FROM contracts
+            WHERE lock_amount_usd_cents > 0
+              AND id IN (
+                  SELECT contract_id FROM ledger_events
+                  WHERE event_type = 'FUNDS_LOCKED'
+              )
+              AND id NOT IN (
+                  SELECT contract_id FROM ledger_events
+                  WHERE event_type IN ('SETTLED_SUCCESS', 'SETTLED_FAILURE', 'CONTRACT_FORFEITED')
+              )
+        `);
+        const rivalryLockedRes = await db.execute(sql`
+            SELECT COALESCE(SUM(stake_per_side_cents * 2), 0) AS total
+            FROM rivalries
+            WHERE activated_at IS NOT NULL AND settled_at IS NULL
+        `);
+
+        const getRows = (result: any) => Array.isArray(result) ? result : (result?.rows ?? []);
+
+        const soloLocked = Number(getRows(soloLockedRes)[0]?.total || 0);
+        const rivalryLocked = Number(getRows(rivalryLockedRes)[0]?.total || 0);
+        const capitalLocked = Math.round((soloLocked + rivalryLocked) / 100);
+
+        // Query settled contracts
+        const soloSettledRes = await db.execute(sql`
+            SELECT COUNT(DISTINCT contract_id) AS total
+            FROM ledger_events
+            WHERE event_type IN ('SETTLED_SUCCESS', 'SETTLED_FAILURE', 'CONTRACT_FORFEITED')
+        `);
+        const rivalrySettledRes = await db.execute(sql`
+            SELECT COUNT(*) AS total
+            FROM rivalries
+            WHERE settled_at IS NOT NULL
+        `);
+        const soloSettled = Number(getRows(soloSettledRes)[0]?.total || 0);
+        const rivalrySettled = Number(getRows(rivalrySettledRes)[0]?.total || 0);
+        const contractsSettled = soloSettled + rivalrySettled;
+
+        // Query total paid out
+        const soloPaidOutRes = await db.execute(sql`
+            SELECT COALESCE(SUM(amount_usd_cents), 0) AS total
+            FROM ledger_events
+            WHERE event_type = 'SETTLED_SUCCESS'
+        `);
+        const rivalryPaidOutRes = await db.execute(sql`
+            SELECT COALESCE(SUM(payout_cents), 0) AS total
+            FROM rivalry_participants
+            WHERE outcome = 'WIN'
+        `);
+        const soloPaidOut = Number(getRows(soloPaidOutRes)[0]?.total || 0);
+        const rivalryPaidOut = Number(getRows(rivalryPaidOutRes)[0]?.total || 0);
+        const totalPaidOut = Math.round((soloPaidOut + rivalryPaidOut) / 100);
+
+        // Query success rate (achievementRate)
+        const soloSuccessRes = await db.execute(sql`
+            SELECT COUNT(DISTINCT contract_id) AS total
+            FROM ledger_events
+            WHERE event_type = 'SETTLED_SUCCESS'
+        `);
+        const rivalrySuccessRes = await db.execute(sql`
+            SELECT COUNT(*) AS total
+            FROM rivalries
+            WHERE settled_at IS NOT NULL AND winner_user_id IS NOT NULL
+        `);
+        const soloSuccess = Number(getRows(soloSuccessRes)[0]?.total || 0);
+        const rivalrySuccess = Number(getRows(rivalrySuccessRes)[0]?.total || 0);
+        const successContracts = soloSuccess + rivalrySuccess;
+
+        const achievementRate = contractsSettled > 0
+            ? Math.round((successContracts / contractsSettled) * 100)
+            : 68;
+
+        // Query recent settlements
+        const recentSettlementsRes = await db.execute(sql`
+            SELECT 
+              c.platform,
+              c.metric_type,
+              c.payout_amount_usd_cents,
+              u.x_username,
+              u.email
+            FROM contracts c
+            JOIN users u ON c.principal_user_id = u.id
+            JOIN ledger_events le ON c.id = le.contract_id
+            WHERE le.event_type = 'SETTLED_SUCCESS'
+            ORDER BY le.timestamp_utc DESC
+            LIMIT 15
+        `);
+
+        function getContractTitle(platform: string, metricType: string): string {
+            const plat = (platform || '').toUpperCase();
+            const met = (metricType || '').toUpperCase();
+            if (plat === 'STRIPE') {
+                return 'Revenue Growth Contract';
+            } else if (plat === 'SHOPIFY') {
+                return 'Sales Goal Contract';
+            } else if (plat === 'YOUTUBE') {
+                return 'YouTube Subscriber Goal';
+            } else if (plat === 'X' || plat === 'TWITTER') {
+                return 'Audience Growth Contract';
+            }
+            return 'Performance Goal Contract';
+        }
+
+        const recentSettlements = getRows(recentSettlementsRes).map((row: any) => {
+            let username = row.x_username;
+            if (!username && row.email) {
+                username = row.email.split('@')[0];
+            }
+            if (username && username.startsWith('sim_')) {
+                username = username.slice(4);
+            }
+            username = username || 'user';
+
+            const goal = getContractTitle(row.platform, row.metric_type);
+            const reward = Math.round(Number(row.payout_amount_usd_cents || 0) / 100);
+
+            return { username, goal, reward };
+        });
+
+        return {
+            ok: true,
+            capitalLocked,
+            contractsSettled,
+            totalPaidOut,
+            achievementRate,
+            recentSettlements
+        };
+    });
 
     // Public Feed
     fastify.get('/v1/market/contracts', async (request, reply) => {

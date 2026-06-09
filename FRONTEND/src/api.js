@@ -631,6 +631,10 @@ function getRivalryEvents(id) { return getPublic(`/v1/rivalries/${id}/events`); 
 function getRivalryMetrics(id) { return getPublic(`/v1/rivalries/${id}/metrics`); }
 function getRivalryShare(id) { return getPublic(`/v1/rivalries/${id}/share`); }
 
+export function getHomepageStats() {
+    return getPublic('/v1/market/homepage-stats');
+}
+
 // =============================================================================
 // EXPORTS
 // =============================================================================
@@ -643,6 +647,7 @@ export default {
     logout,
     getAuthToken,
     setAuthToken,
+    getHomepageStats,
     hasAuthToken,
     clearAuthToken,
     getStoredUser,

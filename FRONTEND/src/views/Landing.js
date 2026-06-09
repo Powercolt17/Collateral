@@ -544,63 +544,17 @@ export function initLanding() {
     // Populate live toast notifications and hero activity with real data
     setTimeout(async () => {
         try {
-            const response = await window.api.getPublicLedger();
-            if (response && response.events && response.events.length > 0) {
+            const [response, statsResponse] = await Promise.all([
+                window.api.getPublicLedger(),
+                window.api.getHomepageStats()
+            ]);
+            if (response && response.events && response.events.length > 0 && statsResponse) {
                 
-                // ── NEW: Live Hero Activity Calculations ──
-                const events = response.events || [];
-                // Sort events in ascending order to process lifecycle chronologically
-                const sortedEvents = [...events].sort((a, b) => new Date(a.timestampUtc || a.created_at || 0) - new Date(b.timestampUtc || b.created_at || 0));
-                
-                const contractStates = new Map();
-                for (const e of sortedEvents) {
-                    if (!e.contractId) continue;
-                    const id = e.contractId;
-                    const type = e.eventType;
-                    const amount = Number(e.amountUsdCents || e.lockAmountUsdCents || 0);
-                    
-                    if (!contractStates.has(id)) {
-                        contractStates.set(id, {
-                            platform: e.platform,
-                            username: e.principal,
-                            lockAmount: amount,
-                            state: 'CREATED',
-                            payoutAmount: 0
-                        });
-                    }
-                    const c = contractStates.get(id);
-                    if (type === 'FUNDS_LOCKED') {
-                        c.state = 'LOCKED';
-                        c.lockAmount = amount;
-                    } else if (type === 'SETTLED_SUCCESS') {
-                        c.state = 'SETTLED_SUCCESS';
-                        c.payoutAmount = amount;
-                    } else if (type === 'SETTLED_FAILURE' || type === 'CONTRACT_FORFEITED') {
-                        c.state = 'SETTLED_FAILURE';
-                    }
-                }
-                
-                let dbLockedCents = 0;
-                let dbSettledCount = 0;
-                let dbPayoutCents = 0;
-                const dbSuccessSettlements = [];
-                
-                for (const [id, c] of contractStates.entries()) {
-                    if (c.state === 'LOCKED') {
-                        dbLockedCents += c.lockAmount;
-                    } else if (c.state === 'SETTLED_SUCCESS') {
-                        dbSettledCount++;
-                        dbPayoutCents += c.payoutAmount;
-                        dbSuccessSettlements.push(c);
-                    } else if (c.state === 'SETTLED_FAILURE') {
-                        dbSettledCount++;
-                    }
-                }
-                
-                // Base-plus-offset calculation to reach user's premium stats
-                const totalLocked = 247400 + Math.round(dbLockedCents / 100);
-                const totalSettled = 1222 + dbSettledCount;
-                const totalPayout = 76690 + Math.round(dbPayoutCents / 100);
+                const totalLocked = statsResponse.capitalLocked;
+                const totalSettled = statsResponse.contractsSettled;
+                const totalPayout = statsResponse.totalPaidOut;
+                const displayRate = statsResponse.achievementRate;
+                const feedItems = statsResponse.recentSettlements || [];
                 
                 // Count-up animation helper
                 const animateCount = (elementId, targetVal, isCurrency = false) => {
@@ -642,40 +596,7 @@ export function initLanding() {
                 
                 // Populate scrolling settlements feed
                 const feedContainer = document.getElementById('live-settlements-feed-container');
-                if (feedContainer) {
-                    const fallbackSettlements = [
-                        { username: 'agencyowner', platform: 'STRIPE', goal: 'Revenue Goal', reward: 500 },
-                        { username: 'founderalex', platform: 'X', goal: 'Weight Loss Goal', reward: 250 },
-                        { username: 'salesrep', platform: 'STRIPE', goal: 'Cold Calling Goal', reward: 1000 },
-                        { username: 'creator', platform: 'YOUTUBE', goal: 'YouTube Subscriber Goal', reward: 750 },
-                        { username: 'solopreneur', platform: 'SHOPIFY', goal: 'Launch MVP Goal', reward: 400 },
-                        { username: 'copywriter', platform: 'X', goal: '10k Words Goal', reward: 150 }
-                    ];
-                    
-                    const feedItems = [];
-                    for (const s of dbSuccessSettlements) {
-                        let goalLabel = 'Performance Goal';
-                        const plat = (s.platform || '').toUpperCase();
-                        if (plat === 'STRIPE') goalLabel = 'Revenue Goal';
-                        else if (plat === 'SHOPIFY') goalLabel = 'Sales Goal';
-                        else if (plat === 'YOUTUBE') goalLabel = 'Subscriber Goal';
-                        else if (plat === 'X' || plat === 'TWITTER') goalLabel = 'Audience Goal';
-                        
-                        feedItems.push({
-                            username: s.username || 'user',
-                            platform: s.platform,
-                            goal: goalLabel,
-                            reward: Math.round(s.payoutAmount / 100) || Math.round(s.lockAmount / 100) || 250
-                        });
-                    }
-                    
-                    // Merge real and fallback items
-                    for (const f of fallbackSettlements) {
-                        if (feedItems.length < 15) {
-                            feedItems.push(f);
-                        }
-                    }
-                    
+                if (feedContainer && feedItems.length > 0) {
                     // Render feed HTML
                     const itemHtml = feedItems.map(item => `
                         <div class="lfeed-item">
@@ -697,18 +618,10 @@ export function initLanding() {
                 const successTicksEl = document.getElementById('success-visual-ticks');
                 const failedTicksEl = document.getElementById('failed-visual-ticks');
                 
-                let successRate = 0.68; // Default 68%
-                if (dbSettledCount > 0) {
-                    const successCount = dbSuccessSettlements.length;
-                    const calculatedRate = successCount / dbSettledCount;
-                    successRate = calculatedRate > 0 ? calculatedRate : 0.68;
-                }
-                
-                const displayRate = Math.round(successRate * 100);
                 if (successRateValEl) successRateValEl.textContent = displayRate + '%';
                 
                 const totalTicks = 16;
-                const successTicks = Math.round(totalTicks * successRate);
+                const successTicks = Math.round(totalTicks * (displayRate / 100));
                 const failedTicks = totalTicks - successTicks;
                 
                 if (successTicksEl) {

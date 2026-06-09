@@ -414,51 +414,59 @@ export const landingCSS = `
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 16px;
+  gap: 12px;
   font-family: 'Inter', sans-serif;
-  font-size: 11px;
+  font-size: 10px;
   font-weight: 700;
   color: #64748b;
   background: #faf9f6;
   border: 1px solid #f2efeb;
   border-radius: 100px;
-  padding: 6px 18px;
+  padding: 5px 14px;
   width: fit-content;
   margin: 0 auto;
   text-transform: uppercase;
   letter-spacing: 0.05em;
   box-shadow: inset 0 1px 0 rgba(255,255,255,0.6), 0 1px 2px rgba(0,0,0,0.02);
+  white-space: nowrap;
 }
 .lc-global-stats-item {
-  display: flex;
+  display: inline-flex;
   align-items: center;
   gap: 6px;
+  white-space: nowrap;
 }
 .lc-global-stats-dot {
-  width: 6.5px;
-  height: 6.5px;
+  width: 5px;
+  height: 5px;
   background: #22c55e;
   border-radius: 50%;
-  box-shadow: 0 0 8px rgba(34,197,94,0.6);
+  box-shadow: 0 0 6px rgba(34,197,94,0.5);
   animation: statsPulse 2s infinite;
+  display: inline-block;
+  flex-shrink: 0;
 }
 @keyframes statsPulse {
   0%, 100% { opacity: 1; transform: scale(1); }
-  50% { opacity: 0.5; transform: scale(0.85); }
+  50% { opacity: 0.4; transform: scale(0.8); }
 }
 .lc-global-stats-num {
   font-family: 'SF Mono', 'Fira Code', 'Consolas', monospace;
-  font-size: 12.5px;
+  font-size: 11.5px;
   font-weight: 800;
   color: #1e1e1e;
   letter-spacing: -0.2px;
+  line-height: 1;
 }
 .lc-global-stats-label {
   color: #64748b;
+  line-height: 1;
+  white-space: nowrap;
 }
 .lc-global-stats-divider {
   color: #cbd5e1;
   font-weight: 400;
+  user-select: none;
 }
 
 /* ═══ LIVE TOAST NOTIFICATIONS ═══ */

@@ -586,35 +586,6 @@ export function initLanding() {
                     return excludedUsers.has(u) || u.startsWith('test') || u.includes('admin') || u.includes('system');
                 };
 
-                // Filter database events
-                const dbEvents = events.filter(e => {
-                    const user = e.actor || e.principal;
-                    return !isExcludedUser(user);
-                });
-
-                // Find highest value active contract from filtered events
-                const activeEvents = dbEvents.filter(e => e.eventType === 'FUNDS_LOCKED' || e.eventType === 'EXECUTION_CONFIRMED');
-                let featured = dbEvents[0] || events[0];
-                if (activeEvents.length > 0) {
-                    activeEvents.sort((a, b) => (b.amountUsdCents || 0) - (a.amountUsdCents || 0));
-                    featured = activeEvents[0];
-                }
-
-                const plat = (featured.platform || 'STRIPE').toUpperCase();
-                const info = platformData[plat] || platformData.STRIPE;
-                const depositCents = featured.lockAmountUsdCents || featured.amountUsdCents || 50000;
-                const deposit = Math.round(depositCents / 100);
-                const reward = Math.round(deposit * info.mult);
-                const total = deposit + reward;
-
-                // Calculate time remaining based on created_at or default to a randomized/calculated stable value
-                const createdTime = new Date(featured.timestamp || featured.created_at || new Date()).getTime();
-                const elapsedMs = Date.now() - createdTime;
-                const elapsedDays = Math.floor(elapsedMs / (1000 * 60 * 60 * 24));
-                const totalDays = info.windowDays;
-                // Calculate days remaining dynamically; if elapsed is 0 or negative/mock, default to a realistic remaining days like 18 or 12
-                const daysRemaining = (elapsedDays >= 0 && elapsedDays < totalDays) ? (totalDays - elapsedDays) : Math.max(5, (31 - (deposit % 17)));
-
                 // Populate contract user and headers
                 const getMaskedUser = (user) => {
                     if (!user) return 'operator';
@@ -626,17 +597,80 @@ export function initLanding() {
                     return u.length > 12 ? u.slice(0, 10) + '...' : u;
                 };
 
-                const nameEl = document.getElementById('lc-feat-name');
-                const goalEl = document.getElementById('lc-feat-goal');
-                const timeEl = document.getElementById('lc-feat-time');
-                if (nameEl) nameEl.textContent = info.name;
-                if (goalEl) goalEl.textContent = info.goal;
-                if (timeEl) timeEl.textContent = `${daysRemaining} Days Remaining`;
+                // Filter database events
+                const dbEvents = events.filter(e => {
+                    const user = e.actor || e.principal;
+                    return !isExcludedUser(user);
+                });
 
-                // Animate contract flow values
-                animateCount('lc-feat-deposit', deposit, '$');
-                setTimeout(() => animateCount('lc-feat-reward', reward, '+$'), 400);
-                setTimeout(() => animateCount('lc-feat-return', total, '$'), 800);
+                // Build a list of featured contracts (one for each platform) to cycle through
+                const platformsToFeature = ['STRIPE', 'X', 'SHOPIFY', 'YOUTUBE'];
+                const featuredContracts = [];
+
+                platformsToFeature.forEach(pKey => {
+                    const platEvents = dbEvents.filter(e => (e.platform || '').toUpperCase() === pKey || (pKey === 'X' && (e.platform || '').toUpperCase() === 'TWITTER'));
+                    let evt = platEvents[0];
+                    if (!evt) {
+                        const defaultAmounts = { STRIPE: 50000, X: 50000, SHOPIFY: 25000, YOUTUBE: 50000 };
+                        evt = {
+                            platform: pKey,
+                            amountUsdCents: defaultAmounts[pKey] || 50000,
+                            eventType: 'FUNDS_LOCKED',
+                            timestamp: new Date().toISOString()
+                        };
+                    }
+                    featuredContracts.push(evt);
+                });
+
+                let featIdx = 0;
+                const updateFeaturedContract = (featured) => {
+                    const plat = (featured.platform || 'STRIPE').toUpperCase();
+                    const info = platformData[plat] || platformData.STRIPE;
+                    const depositCents = featured.lockAmountUsdCents || featured.amountUsdCents || 50000;
+                    const deposit = Math.round(depositCents / 100);
+                    const reward = Math.round(deposit * info.mult);
+                    const total = deposit + reward;
+
+                    const createdTime = new Date(featured.timestamp || featured.created_at || new Date()).getTime();
+                    const elapsedMs = Date.now() - createdTime;
+                    const elapsedDays = Math.floor(elapsedMs / (1000 * 60 * 60 * 24));
+                    const totalDays = info.windowDays;
+                    const daysRemaining = (elapsedDays >= 0 && elapsedDays < totalDays) ? (totalDays - elapsedDays) : Math.max(5, (31 - (deposit % 17)));
+
+                    const nameEl = document.getElementById('lc-feat-name');
+                    const goalEl = document.getElementById('lc-feat-goal');
+                    const timeEl = document.getElementById('lc-feat-time');
+                    if (nameEl) nameEl.textContent = info.name;
+                    if (goalEl) goalEl.textContent = info.goal;
+                    if (timeEl) timeEl.textContent = `${daysRemaining} Days Remaining`;
+
+                    // Update values immediately for smooth cycling
+                    const depositValEl = document.getElementById('lc-feat-deposit');
+                    const rewardValEl = document.getElementById('lc-feat-reward');
+                    const returnValEl = document.getElementById('lc-feat-return');
+                    
+                    if (depositValEl) depositValEl.textContent = `$${deposit.toLocaleString()}`;
+                    if (rewardValEl) rewardValEl.textContent = `+$${reward.toLocaleString()}`;
+                    if (returnValEl) returnValEl.textContent = `$${total.toLocaleString()}`;
+                };
+
+                // Initialize the first one
+                updateFeaturedContract(featuredContracts[0]);
+
+                // Cycle featured contract every 6 seconds
+                const featContainer = document.querySelector('.lc-contract');
+                if (featContainer && featuredContracts.length > 1) {
+                    setInterval(() => {
+                        featContainer.style.opacity = '0';
+                        featContainer.style.transform = 'translateY(2px)';
+                        setTimeout(() => {
+                            featIdx = (featIdx + 1) % featuredContracts.length;
+                            updateFeaturedContract(featuredContracts[featIdx]);
+                            featContainer.style.opacity = '1';
+                            featContainer.style.transform = 'translateY(0)';
+                        }, 300);
+                    }, 6000);
+                }
 
                 // ═══ LIVE RECENT ACTIVITY STRIP (CHANGE 3) ═══
                 const raListEl = document.getElementById('lc-ra-list');

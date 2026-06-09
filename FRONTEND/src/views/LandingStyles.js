@@ -188,6 +188,7 @@ export const landingCSS = `
   display: flex;
   flex-direction: column;
   gap: 10px;
+  transition: opacity 0.3s ease, transform 0.3s ease;
 }
 .lc-contract-head {
   display: flex;

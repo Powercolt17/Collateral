@@ -409,47 +409,56 @@ export const landingCSS = `
   font-weight: 700;
 }
 
-/* ═══ FLOATING BADGES ═══ */
-.lbadge-glass {
-    position: absolute;
-    background: rgba(92, 20, 20, 0.95);
-    backdrop-filter: blur(16px);
-    -webkit-backdrop-filter: blur(16px);
-    border: 1px solid rgba(255, 255, 255, 0.15);
-    box-shadow: 0 12px 32px rgba(92, 20, 20, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.1);
-    padding: 8px 12px;
-    border-radius: 6px;
-    z-index: 20;
-    animation: premiumFloat 6s ease-in-out infinite;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    pointer-events: none;
+/* ═══ INTEGRATED GLOBAL STATS ROW ═══ */
+.lc-global-stats-row {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 16px;
+  font-family: 'Inter', sans-serif;
+  font-size: 11px;
+  font-weight: 700;
+  color: #64748b;
+  background: #faf9f6;
+  border: 1px solid #f2efeb;
+  border-radius: 100px;
+  padding: 6px 18px;
+  width: fit-content;
+  margin: 0 auto;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.6), 0 1px 2px rgba(0,0,0,0.02);
 }
-.lbadge-dot {
-    width: 6px;
-    height: 6px;
-    border-radius: 50%;
-    animation: pulseDot 2s infinite;
+.lc-global-stats-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
 }
-@keyframes pulseDot {
-    0%, 100% { opacity: 1; transform: scale(1); }
-    50% { opacity: 0.5; transform: scale(0.8); }
+.lc-global-stats-dot {
+  width: 6.5px;
+  height: 6.5px;
+  background: #22c55e;
+  border-radius: 50%;
+  box-shadow: 0 0 8px rgba(34,197,94,0.6);
+  animation: statsPulse 2s infinite;
 }
-.lbadge-num {
-    font-family: 'SF Mono', 'Fira Code', 'Consolas', monospace;
-    font-size: 13px;
-    font-weight: 700;
-    color: #FFF;
-    letter-spacing: -0.2px;
+@keyframes statsPulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.5; transform: scale(0.85); }
 }
-.lbadge-txt {
-    font-family: 'Inter Tight', sans-serif;
-    font-size: 11px;
-    font-weight: 600;
-    color: #FFF;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
+.lc-global-stats-num {
+  font-family: 'SF Mono', 'Fira Code', 'Consolas', monospace;
+  font-size: 12.5px;
+  font-weight: 800;
+  color: #1e1e1e;
+  letter-spacing: -0.2px;
+}
+.lc-global-stats-label {
+  color: #64748b;
+}
+.lc-global-stats-divider {
+  color: #cbd5e1;
+  font-weight: 400;
 }
 
 /* ═══ LIVE TOAST NOTIFICATIONS ═══ */

@@ -59,6 +59,20 @@ export function renderLanding() {
                                 <span class="lc-plat-text" id="lc-plat-text">Connected via Stripe Connect</span>
                             </div>
 
+                            <!-- INTEGRATED GLOBAL STATS ROW -->
+                            <div class="lc-global-stats-row">
+                                <span class="lc-global-stats-item">
+                                    <span class="lc-global-stats-dot"></span>
+                                    <span id="lc-global-active-count" class="lc-global-stats-num">22</span>
+                                    <span class="lc-global-stats-label">Active Contracts</span>
+                                </span>
+                                <span class="lc-global-stats-divider">|</span>
+                                <span class="lc-global-stats-item">
+                                    <span id="lc-global-locked-amount" class="lc-global-stats-num">$8,700</span>
+                                    <span class="lc-global-stats-label">Locked</span>
+                                </span>
+                            </div>
+
                             <!-- FEATURED CONTRACT -->
                             <div class="lc-contract">
                                 <div class="lc-contract-head">
@@ -100,18 +114,6 @@ export function renderLanding() {
                             <div class="lc-trust">
                                 <svg class="lc-trust-lock" width="10" height="10" viewBox="0 0 24 28" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><path d="M12 2a5 5 0 0 0-5 5v3H5a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V12a2 2 0 0 0-2-2h-2V7a5 5 0 0 0-5-5zm-3 5a3 3 0 0 1 6 0v3H9V7zm3 9a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3z" fill="currentColor"/></svg>
                                 Contracts verified automatically through connected APIs.
-                            </div>
-                        </div>
-
-                        <!-- FLOATING GLASS BADGE -->
-                        <div style="position: absolute; top: -48px; left: 50%; transform: translateX(-50%); z-index: 20;">
-                            <div class="lbadge-glass" style="position: relative; top: auto; right: auto; background: rgba(92,20,20,0.95); box-shadow: 0 12px 32px rgba(92,20,20,0.25); white-space: nowrap; gap: 8px;">
-                                <span class="lbadge-dot" style="background: #22c55e;"></span>
-                                <span class="lbadge-num" id="lc-floating-active-count">22</span>
-                                <span class="lbadge-txt">Active Contracts</span>
-                                <span style="color: rgba(255,255,255,0.3); font-weight: 700; margin: 0 2px;">•</span>
-                                <span class="lbadge-num" id="lc-floating-locked-amount">$8,700</span>
-                                <span class="lbadge-txt">Locked</span>
                             </div>
                         </div>
                     </div>
@@ -549,13 +551,13 @@ export function initLanding() {
                 animateCount('live-stat-success-rate', achievementRate, '', '%');
 
                 // Update centerpiece card active contract indicators
-                const floatingActiveCountEl = document.getElementById('lc-floating-active-count');
-                if (floatingActiveCountEl) {
-                    floatingActiveCountEl.textContent = totalActive;
+                const globalActiveCountEl = document.getElementById('lc-global-active-count');
+                if (globalActiveCountEl) {
+                    globalActiveCountEl.textContent = totalActive;
                 }
-                const floatingLockedAmountEl = document.getElementById('lc-floating-locked-amount');
-                if (floatingLockedAmountEl) {
-                    floatingLockedAmountEl.textContent = `$${totalLocked.toLocaleString()}`;
+                const globalLockedAmountEl = document.getElementById('lc-global-locked-amount');
+                if (globalLockedAmountEl) {
+                    globalLockedAmountEl.textContent = `$${totalLocked.toLocaleString()}`;
                 }
 
                 // ═══ FEATURED CONTRACT — FROM REAL EVENTS ═══

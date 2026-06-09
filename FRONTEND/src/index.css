@@ -30,10 +30,10 @@
 }
 
 .logo-wordmark {
-    font-family: 'Science', sans-serif !important;
-    font-size: 18px !important;
-    letter-spacing: 0.5px !important;
-    font-weight: bold !important;
+    font-family: 'Nevera-Regular', sans-serif !important;
+    font-size: 26px !important;
+    letter-spacing: 1px !important;
+    font-weight: normal !important;
 }
 /* Override Inter's slashed zero with a clean zero from system fonts */
 @font-face {
@@ -557,6 +557,6 @@ button[class*="-connect"]:hover,
         padding-bottom: 28px;
     }
     .logo-wordmark {
-        font-size: 13.5px !important;
+        font-size: 20px !important;
     }
 }

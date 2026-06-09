@@ -138,6 +138,46 @@ export const landingCSS = `
   animation: premiumFloat 8s ease-in-out infinite;
 }
 
+/* CARD TOP HERO STATS */
+.lc-hero-header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding-bottom: 20px;
+  border-bottom: 1px solid #f5f4f0;
+  gap: 2px;
+}
+.lc-hero-title-row {
+  display: flex;
+  align-items: baseline;
+  justify-content: center;
+  gap: 8px;
+}
+.lc-hero-val {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 44px;
+  font-weight: 800;
+  color: #1e1e1e;
+  letter-spacing: -1.5px;
+  line-height: 1;
+}
+.lc-hero-lbl {
+  font-family: 'Inter', sans-serif;
+  font-size: 14px;
+  font-weight: 700;
+  color: #5c1414;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+.lc-hero-subtitle {
+  font-family: 'Inter', sans-serif;
+  font-size: 13px;
+  font-weight: 500;
+  color: #64748b;
+  margin-top: 4px;
+}
+
 /* SECTION — FEATURED CONTRACT VISUALIZATION */
 .lc-contract {
   background: #fdfdfc;
@@ -153,6 +193,14 @@ export const landingCSS = `
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
+}
+.lc-contract-user {
+  font-family: 'SF Mono', 'Fira Code', 'Consolas', monospace;
+  font-size: 11px;
+  font-weight: 700;
+  color: #5c1414;
+  text-transform: lowercase;
+  margin-bottom: 2px;
 }
 .lc-contract-name {
   font-family: 'Plus Jakarta Sans', sans-serif;
@@ -173,7 +221,7 @@ export const landingCSS = `
   font-family: 'Inter', sans-serif;
   font-size: 11px;
   font-weight: 600;
-  color: #5c1414;
+  color: #64748b;
   text-transform: uppercase;
   letter-spacing: 0.05em;
   margin-top: 6px;
@@ -260,51 +308,52 @@ export const landingCSS = `
   text-shadow: 0 1px 2px rgba(0,0,0,0.2);
 }
 
-/* SECTION — SOCIAL PROOF STATS */
-.lc-proof {
+/* DEDICATED LIVE ACTIVITY STRIP */
+.lc-recent-activity {
   display: flex;
   flex-direction: column;
-  align-items: center;
-  text-align: center;
+  gap: 8px;
   padding-top: 20px;
   border-top: 1px solid #f5f4f0;
-  gap: 10px;
 }
-.lc-proof-locked {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 2px;
-}
-.lc-proof-val {
-  font-family: 'Plus Jakarta Sans', sans-serif;
-  font-size: 36px;
-  font-weight: 800;
-  color: #1e1e1e;
-  letter-spacing: -1.5px;
-  line-height: 1;
-}
-.lc-proof-lbl {
+.lc-ra-header {
   font-family: 'Inter', sans-serif;
   font-size: 11px;
-  font-weight: 600;
+  font-weight: 700;
   color: #5c1414;
   text-transform: uppercase;
   letter-spacing: 0.1em;
+  text-align: center;
+  margin-bottom: 4px;
 }
-.lc-proof-sub {
-  font-family: 'Inter', sans-serif;
-  font-size: 13px;
-  font-weight: 500;
+.lc-ra-list {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+.lc-ra-row {
+  font-family: 'SF Mono', 'Fira Code', 'Consolas', monospace;
+  font-size: 10px;
+  font-weight: 700;
   color: #64748b;
   display: flex;
   align-items: center;
-  gap: 6px;
+  justify-content: flex-start;
+  padding: 2px 4px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  width: 100%;
 }
-.lc-proof-bullet {
-  color: #cbd5e1;
-  font-weight: bold;
+.lc-ra-row .lct-name {
+  font-family: 'Inter', sans-serif;
+  text-transform: none;
+  font-weight: 600;
+  color: #1e1e1e;
+  letter-spacing: -0.1px;
 }
+
+/* TRUST COPY & TICKER LABELS */
 .lc-trust {
   font-family: 'Inter', sans-serif;
   font-size: 10.5px;
@@ -315,38 +364,22 @@ export const landingCSS = `
   justify-content: center;
   gap: 6px;
   margin-top: 4px;
+  padding-top: 12px;
+  border-top: 1px solid #f5f4f0;
 }
 .lc-trust-lock {
   color: #8a8984;
   flex-shrink: 0;
 }
-
-/* SECTION — LIVE TICKER */
-.lc-ticker {
-  font-family: 'SF Mono', 'Fira Code', 'Consolas', monospace;
-  font-size: 9px;
-  font-weight: 700;
-  color: #64748b;
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
-  text-align: center;
-  padding-top: 10px;
-  border-top: 1px dashed #f5f4f0;
-  min-height: 24px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: opacity 0.3s ease, transform 0.3s ease;
-}
 .lct-check {
   color: #145c14;
   font-weight: 700;
-  margin-right: 4px;
+  margin-right: 6px;
 }
 .lct-cross {
   color: #5c1414;
   font-weight: 700;
-  margin-right: 4px;
+  margin-right: 6px;
 }
 .lct-bullet {
   margin: 0 8px;

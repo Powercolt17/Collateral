@@ -749,7 +749,7 @@ export const landingCSS = `
 @keyframes pnlSlideIn { to { opacity: 1; transform: translateX(0); } }
 @media (max-width: 767px) { .pnl-drawer { width: 100%; max-width: 100%; border-left: none; } }
 
-.lpreview-container{position:relative;width:100%;max-width:430px;height:480px;perspective:1200px}
+.lpreview-container{position:relative;width:100%;max-width:430px;height:600px;perspective:1200px}
 .stage-card{position:absolute;top:0;left:0;width:100%;opacity:0;visibility:hidden;pointer-events:none;transform:translateY(12px);transition:opacity 0.45s cubic-bezier(0.16,1,0.3,1), transform 0.45s cubic-bezier(0.16,1,0.3,1), visibility 0.45s}
 .stage-card.active{opacity:1;visibility:visible;pointer-events:auto;transform:translateY(0)}
 .lpreview-controls{display:flex;justify-content:center;gap:12px;position:absolute;bottom:-36px;left:0;right:0}

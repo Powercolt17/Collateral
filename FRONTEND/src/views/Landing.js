@@ -902,7 +902,7 @@ export function initLanding() {
 
                         updateLedgerTable();
 
-                        if (ledgerEvents.length > 4) {
+                        if (ledgerEvents.length > 4 && window.innerWidth > 768) {
                             setInterval(() => {
                                 tbody.classList.add('fade-out');
                                 setTimeout(() => {

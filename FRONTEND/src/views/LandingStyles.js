@@ -741,4 +741,26 @@ export const landingCSS = `
 .lhow-grid .lhow-card[data-r]:nth-child(3) { transition-delay: 160ms, 160ms, 0ms, 0ms !important; }
 .lhow-grid .lhow-card[data-r]:nth-child(4) { transition-delay: 240ms, 240ms, 0ms, 0ms !important; }
 .lhow-grid .lhow-card[data-r]:hover { transition-delay: 0ms !important; }
+
+/* One-way Glass Sheen Hover Sweep */
+.lcard, .lhow-card, .lstep, .lstat-card {
+  position: relative;
+  overflow: hidden;
+}
+.lcard::after, .lhow-card::after, .lstep::after, .lstat-card::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -150%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.45), transparent);
+  transform: skewX(-25deg);
+  pointer-events: none;
+  z-index: 5;
+}
+.lcard:hover::after, .lhow-card:hover::after, .lstep:hover::after, .lstat-card:hover::after {
+  left: 150%;
+  transition: left 0.8s ease-in-out;
+}
 `;

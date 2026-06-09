@@ -703,7 +703,7 @@ export function initLanding() {
                     let raIdx = 0;
                     const updateRecentActivity = () => {
                         const rows = [];
-                        for (let k = 0; k < 3; k++) {
+                        for (let k = 0; k < 2; k++) {
                             const e = combinedEvents[(raIdx + k) % combinedEvents.length];
                             rows.push(renderTick(e));
                         }
@@ -711,7 +711,7 @@ export function initLanding() {
                     };
                     updateRecentActivity();
 
-                    if (combinedEvents.length > 3) {
+                    if (combinedEvents.length > 2) {
                         setInterval(() => {
                             raListEl.style.opacity = '0';
                             raListEl.style.transform = 'translateY(-4px)';

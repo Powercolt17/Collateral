@@ -123,7 +123,7 @@ export const landingCSS = `
   background: #ffffff !important;
   border: 1px solid #f2efeb !important;
   border-radius: 20px;
-  padding: 28px 32px !important;
+  padding: 20px 24px !important;
   width: 100%;
   max-width: 400px !important;
   position: relative;
@@ -132,7 +132,7 @@ export const landingCSS = `
   box-shadow: 0 32px 64px -16px rgba(92,20,20,0.1), 0 0 1px rgba(92,20,20,0.12), 0 8px 24px -8px rgba(0,0,0,0.04) !important;
   display: flex;
   flex-direction: column;
-  gap: 24px !important;
+  gap: 16px !important;
   color: #1e1e1e !important;
   font-family: 'Inter', sans-serif;
   animation: premiumFloat 8s ease-in-out infinite;
@@ -144,7 +144,7 @@ export const landingCSS = `
   flex-direction: column;
   align-items: center;
   text-align: center;
-  padding-bottom: 20px;
+  padding-bottom: 12px;
   border-bottom: 1px solid #f5f4f0;
   gap: 2px;
 }
@@ -156,7 +156,7 @@ export const landingCSS = `
 }
 .lc-hero-val {
   font-family: 'Plus Jakarta Sans', sans-serif;
-  font-size: 44px;
+  font-size: 38px;
   font-weight: 800;
   color: #1e1e1e;
   letter-spacing: -1.5px;
@@ -164,7 +164,7 @@ export const landingCSS = `
 }
 .lc-hero-lbl {
   font-family: 'Inter', sans-serif;
-  font-size: 14px;
+  font-size: 13px;
   font-weight: 700;
   color: #5c1414;
   text-transform: uppercase;
@@ -172,10 +172,10 @@ export const landingCSS = `
 }
 .lc-hero-subtitle {
   font-family: 'Inter', sans-serif;
-  font-size: 13px;
+  font-size: 12.5px;
   font-weight: 500;
   color: #64748b;
-  margin-top: 4px;
+  margin-top: 2px;
 }
 
 /* SECTION — FEATURED CONTRACT VISUALIZATION */
@@ -183,11 +183,11 @@ export const landingCSS = `
   background: #fdfdfc;
   border: 1px solid #f5f4f0;
   border-radius: 14px;
-  padding: 20px;
+  padding: 12px 14px;
   box-shadow: inset 0 1px 0 rgba(255,255,255,0.6), 0 2px 8px rgba(0,0,0,0.02);
   display: flex;
   flex-direction: column;
-  gap: 14px;
+  gap: 10px;
 }
 .lc-contract-head {
   display: flex;
@@ -196,7 +196,7 @@ export const landingCSS = `
 }
 .lc-contract-user {
   font-family: 'SF Mono', 'Fira Code', 'Consolas', monospace;
-  font-size: 11px;
+  font-size: 10.5px;
   font-weight: 700;
   color: #5c1414;
   text-transform: lowercase;
@@ -204,45 +204,45 @@ export const landingCSS = `
 }
 .lc-contract-name {
   font-family: 'Plus Jakarta Sans', sans-serif;
-  font-size: 18px;
+  font-size: 16px;
   font-weight: 800;
   color: #1e1e1e;
   letter-spacing: -0.5px;
 }
 .lc-contract-goal {
   font-family: 'Inter', sans-serif;
-  font-size: 13px;
+  font-size: 12.5px;
   font-weight: 500;
   color: #475569;
-  margin-top: 4px;
-  line-height: 1.4;
+  margin-top: 2px;
+  line-height: 1.35;
 }
 .lc-contract-time {
   font-family: 'Inter', sans-serif;
-  font-size: 11px;
+  font-size: 10.5px;
   font-weight: 600;
   color: #64748b;
   text-transform: uppercase;
   letter-spacing: 0.05em;
-  margin-top: 6px;
+  margin-top: 4px;
 }
 .lc-status {
   display: inline-flex;
   align-items: center;
   gap: 6px;
   font-family: 'Inter', sans-serif;
-  font-size: 10px;
+  font-size: 9.5px;
   font-weight: 700;
   color: #145c14;
   text-transform: uppercase;
   letter-spacing: 0.08em;
   background: rgba(20,92,20,0.06);
-  padding: 4px 10px;
+  padding: 3px 8px;
   border-radius: 100px;
 }
 .lc-status-dot {
-  width: 5px;
-  height: 5px;
+  width: 4.5px;
+  height: 4.5px;
   background: #145c14;
   border-radius: 50%;
   box-shadow: 0 0 6px rgba(20,92,20,0.4);
@@ -257,20 +257,20 @@ export const landingCSS = `
   background: #faf9f6;
   border: 1px solid #f2efeb;
   border-radius: 10px;
-  padding: 8px 12px;
-  gap: 8px;
-  margin-top: 4px;
+  padding: 6px 10px;
+  gap: 6px;
+  margin-top: 2px;
 }
 .lc-flow-col {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 2px;
+  gap: 1px;
   flex: 1;
 }
 .lc-flow-label {
   font-family: 'Inter', sans-serif;
-  font-size: 9px;
+  font-size: 8.5px;
   font-weight: 700;
   color: #64748b;
   text-transform: uppercase;
@@ -278,7 +278,7 @@ export const landingCSS = `
 }
 .lc-flow-val {
   font-family: 'SF Mono', 'Fira Code', 'Consolas', monospace;
-  font-size: 13px;
+  font-size: 12px;
   font-weight: 700;
   color: #1e1e1e;
 }
@@ -286,14 +286,14 @@ export const landingCSS = `
   color: #145c14 !important;
 }
 .lc-flow-arrow-right {
-  font-size: 14px;
+  font-size: 12px;
   color: #bbb;
   font-weight: bold;
   flex-shrink: 0;
 }
 .lc-col-final {
   background: linear-gradient(135deg, #5c1414 0%, #3d0d0d 100%) !important;
-  padding: 6px 12px !important;
+  padding: 5px 10px !important;
   border-radius: 6px !important;
   box-shadow: 0 4px 10px rgba(92, 20, 20, 0.15);
 }
@@ -302,7 +302,7 @@ export const landingCSS = `
 }
 .lc-col-final .lc-flow-val {
   color: #fff !important;
-  font-size: 13px !important;
+  font-size: 12px !important;
   font-weight: 800 !important;
 }
 
@@ -310,31 +310,31 @@ export const landingCSS = `
 .lc-recent-activity {
   display: flex;
   flex-direction: column;
-  gap: 8px;
-  padding-top: 20px;
+  gap: 6px;
+  padding-top: 12px;
   border-top: 1px solid #f5f4f0;
 }
 .lc-ra-header {
   font-family: 'Inter', sans-serif;
-  font-size: 11px;
+  font-size: 10.5px;
   font-weight: 700;
   color: #5c1414;
   text-transform: uppercase;
   letter-spacing: 0.1em;
   text-align: center;
-  margin-bottom: 4px;
+  margin-bottom: 2px;
 }
 .lc-ra-list {
   display: flex;
   flex-direction: column;
-  gap: 6px;
+  gap: 4px;
   transition: opacity 0.3s ease, transform 0.3s ease;
 }
 .lc-ra-item {
   display: flex;
   flex-direction: column;
-  gap: 3px;
-  padding: 4px 0;
+  gap: 2px;
+  padding: 2px 0;
   border-bottom: 1px solid rgba(0,0,0,0.02);
 }
 .lc-ra-item:last-child {
@@ -347,24 +347,24 @@ export const landingCSS = `
 }
 .lc-ra-username {
   font-family: 'SF Mono', 'Fira Code', 'Consolas', monospace;
-  font-size: 12.5px;
+  font-size: 11.5px;
   font-weight: 700;
   color: #1e1e1e;
   text-transform: lowercase;
 }
 .lc-ra-goal-line {
   font-family: 'Inter', sans-serif;
-  font-size: 12px;
+  font-size: 11px;
   font-weight: 500;
   color: #475569;
-  padding-left: 18px;
+  padding-left: 16px;
 }
 .lc-ra-details-line {
   font-family: 'SF Mono', 'Fira Code', 'Consolas', monospace;
-  font-size: 10.5px;
+  font-size: 9.5px;
   font-weight: 600;
   color: #64748b;
-  padding-left: 18px;
+  padding-left: 16px;
   text-transform: uppercase;
   letter-spacing: 0.02em;
 }
@@ -372,15 +372,15 @@ export const landingCSS = `
 /* TRUST COPY & TICKER LABELS */
 .lc-trust {
   font-family: 'Inter', sans-serif;
-  font-size: 10.5px;
+  font-size: 9.5px;
   font-weight: 500;
   color: #8a8984;
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 6px;
-  margin-top: 4px;
-  padding-top: 12px;
+  margin-top: 2px;
+  padding-top: 10px;
   border-top: 1px solid #f5f4f0;
 }
 .lc-trust-lock {

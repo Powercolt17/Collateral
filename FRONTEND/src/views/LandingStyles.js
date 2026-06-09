@@ -257,8 +257,8 @@ export const landingCSS = `
   background: #faf9f6;
   border: 1px solid #f2efeb;
   border-radius: 10px;
-  padding: 6px 10px;
-  gap: 6px;
+  padding: 8px 12px;
+  gap: 8px;
   margin-top: 2px;
 }
 .lc-flow-col {
@@ -278,22 +278,22 @@ export const landingCSS = `
 }
 .lc-flow-val {
   font-family: 'SF Mono', 'Fira Code', 'Consolas', monospace;
-  font-size: 12px;
-  font-weight: 700;
+  font-size: 14px;
+  font-weight: 800;
   color: #1e1e1e;
 }
 .lc-val-green {
   color: #145c14 !important;
 }
 .lc-flow-arrow-right {
-  font-size: 12px;
-  color: #bbb;
+  font-size: 14px;
+  color: #5c1414;
   font-weight: bold;
   flex-shrink: 0;
 }
 .lc-col-final {
   background: linear-gradient(135deg, #5c1414 0%, #3d0d0d 100%) !important;
-  padding: 5px 10px !important;
+  padding: 6px 12px !important;
   border-radius: 6px !important;
   box-shadow: 0 4px 10px rgba(92, 20, 20, 0.15);
 }
@@ -302,7 +302,7 @@ export const landingCSS = `
 }
 .lc-col-final .lc-flow-val {
   color: #fff !important;
-  font-size: 12px !important;
+  font-size: 14px !important;
   font-weight: 800 !important;
 }
 
@@ -333,7 +333,7 @@ export const landingCSS = `
 .lc-ra-item {
   display: flex;
   flex-direction: column;
-  gap: 2px;
+  gap: 1px;
   padding: 2px 0;
   border-bottom: 1px solid rgba(0,0,0,0.02);
 }
@@ -343,29 +343,28 @@ export const landingCSS = `
 .lc-ra-title-line {
   display: flex;
   align-items: center;
-  gap: 6px;
+  gap: 4px;
 }
 .lc-ra-username {
   font-family: 'SF Mono', 'Fira Code', 'Consolas', monospace;
-  font-size: 11.5px;
+  font-size: 11px;
   font-weight: 700;
   color: #1e1e1e;
   text-transform: lowercase;
 }
-.lc-ra-goal-line {
+.lc-ra-action {
   font-family: 'Inter', sans-serif;
   font-size: 11px;
-  font-weight: 500;
+  font-weight: 400;
   color: #475569;
-  padding-left: 16px;
 }
 .lc-ra-details-line {
   font-family: 'SF Mono', 'Fira Code', 'Consolas', monospace;
-  font-size: 9.5px;
+  font-size: 9px;
   font-weight: 600;
   color: #64748b;
-  padding-left: 16px;
-  text-transform: uppercase;
+  padding-left: 14px;
+  text-transform: lowercase;
   letter-spacing: 0.02em;
 }
 

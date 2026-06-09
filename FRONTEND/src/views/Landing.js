@@ -150,51 +150,48 @@ export function renderLanding() {
                         <div class="lcard lcard-popular" data-r>
                             <div class="lcard-top">
                                 <span class="lcard-src"><img class="lcard-src-logo" src="https://www.vectorlogo.zone/logos/stripe/stripe-icon.svg" alt="Stripe">Stripe</span>
-                                <div style="display:flex;gap:6px;align-items:center">
-                                    <span class="lcard-tier tier-stake">Standard</span>
-                                    <span class="lcard-popular-badge">Most Popular</span>
-                                </div>
+                                <span class="lcard-tier tier-stake">Stake</span>
                             </div>
                             <div class="lcard-title">Revenue Growth</div>
                             <div class="lcard-target">+20% Revenue growth</div>
                             <div class="lcard-row"><span class="k">Deposit</span><span class="v">$250 – $3,000</span></div>
-                            <div class="lcard-row"><span class="k">Bonus Yield</span><span class="v">1.5x</span></div>
+                            <div class="lcard-row"><span class="k">Bonus Yield</span><span class="v">2.5x</span></div>
                             <div class="lcard-row"><span class="k">Window</span><span class="v">30 days</span></div>
                             <div class="lcard-btn"><button class="lp-cta-btn" data-source="STRIPE" data-tier="stake" data-capital="250">Lock Your First Contract</button></div>
                         </div>
                         <div class="lcard" data-r>
                             <div class="lcard-top">
                                 <span class="lcard-src"><img class="lcard-src-logo" src="https://cdn.simpleicons.org/x/111111" alt="X">X / Twitter</span>
-                                <span class="lcard-tier tier-allin">High Yield</span>
+                                <span class="lcard-tier tier-allin">All-In</span>
                             </div>
                             <div class="lcard-title">Follower Growth</div>
                             <div class="lcard-target">+1,000 Followers</div>
                             <div class="lcard-row"><span class="k">Deposit</span><span class="v">$500 – $5,000</span></div>
-                            <div class="lcard-row"><span class="k">Bonus Yield</span><span class="v">3x</span></div>
+                            <div class="lcard-row"><span class="k">Bonus Yield</span><span class="v">4.0x</span></div>
                             <div class="lcard-row"><span class="k">Window</span><span class="v">14 days</span></div>
                             <div class="lcard-btn"><button class="lp-cta-btn" data-source="X" data-tier="all_in" data-capital="500">Lock Your First Contract</button></div>
                         </div>
                         <div class="lcard" data-r>
                             <div class="lcard-top">
                                 <span class="lcard-src"><img class="lcard-src-logo" src="https://www.vectorlogo.zone/logos/shopify/shopify-icon.svg" alt="Shopify">Shopify</span>
-                                <span class="lcard-tier tier-pledge">Standard</span>
+                                <span class="lcard-tier tier-pledge">Pledge</span>
                             </div>
                             <div class="lcard-title">Store Sales</div>
                             <div class="lcard-target">+$5,000 Net Sales</div>
                             <div class="lcard-row"><span class="k">Deposit</span><span class="v">$100 – $1,500</span></div>
-                            <div class="lcard-row"><span class="k">Bonus Yield</span><span class="v">0.5x</span></div>
+                            <div class="lcard-row"><span class="k">Bonus Yield</span><span class="v">1.5x</span></div>
                             <div class="lcard-row"><span class="k">Window</span><span class="v">30 days</span></div>
                             <div class="lcard-btn"><button class="lp-cta-btn" data-source="SHOPIFY" data-tier="pledge" data-capital="100">Lock Your First Contract</button></div>
                         </div>
                         <div class="lcard" data-r>
                             <div class="lcard-top">
                                 <span class="lcard-src"><img class="lcard-src-logo" src="https://www.vectorlogo.zone/logos/youtube/youtube-icon.svg" alt="YouTube">YouTube</span>
-                                <span class="lcard-tier tier-stake">Standard</span>
+                                <span class="lcard-tier tier-stake">Stake</span>
                             </div>
                             <div class="lcard-title">Subscriber Growth</div>
                             <div class="lcard-target">+500 Subscribers</div>
                             <div class="lcard-row"><span class="k">Deposit</span><span class="v">$250 – $3,000</span></div>
-                            <div class="lcard-row"><span class="k">Bonus Yield</span><span class="v">0.7x</span></div>
+                            <div class="lcard-row"><span class="k">Bonus Yield</span><span class="v">2.5x</span></div>
                             <div class="lcard-row"><span class="k">Window</span><span class="v">30 days</span></div>
                             <div class="lcard-btn"><button class="lp-cta-btn" data-source="YOUTUBE" data-tier="stake" data-capital="250">Lock Your First Contract</button></div>
                         </div>

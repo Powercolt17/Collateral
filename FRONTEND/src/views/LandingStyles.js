@@ -122,17 +122,17 @@ export const landingCSS = `
 .lactivity-card {
   background: #ffffff !important;
   border: 1px solid #eae8e2 !important;
-  border-radius: 24px;
-  padding: 40px 44px !important;
+  border-radius: 20px;
+  padding: 28px 32px !important;
   width: 100%;
-  max-width: 440px !important;
+  max-width: 400px !important;
   position: relative;
   overflow: hidden;
   z-index: 1;
   box-shadow: 0 16px 48px -16px rgba(92,20,20,0.06), 0 0 1px rgba(92,20,20,0.08) !important;
   display: flex;
   flex-direction: column;
-  gap: 36px !important;
+  gap: 20px !important;
   color: #1e1e1e !important;
   font-family: 'Inter', sans-serif;
   animation: premiumFloat 8s ease-in-out infinite;
@@ -146,12 +146,12 @@ export const landingCSS = `
 }
 .lactivity-hero-value {
   font-family: 'Plus Jakarta Sans', sans-serif;
-  font-size: 52px !important;
+  font-size: 44px !important;
   font-weight: 800;
   color: #1e1e1e;
   letter-spacing: -2px;
   line-height: 1.0;
-  margin-bottom: 8px;
+  margin-bottom: 4px;
 }
 .lactivity-hero-label {
   font-family: 'Inter', sans-serif;
@@ -173,9 +173,9 @@ export const landingCSS = `
 .lactivity-feed-section {
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: 10px;
   border-top: 1px solid #eae8e2;
-  padding-top: 28px;
+  padding-top: 16px;
 }
 .lactivity-feed-title {
   font-family: 'Inter', sans-serif;
@@ -189,20 +189,23 @@ export const landingCSS = `
 .lactivity-feed-rows {
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 0;
 }
 .lfeed-row {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  font-size: 13.5px;
+  font-size: 13px;
   color: #1e1e1e;
-  border-bottom: 1px solid #faf9f6;
-  padding-bottom: 8px;
+  border-bottom: 1px solid #f5f4f1;
+  padding: 10px 0;
 }
 .lfeed-row:last-child {
   border-bottom: none;
   padding-bottom: 0;
+}
+.lfeed-row:first-child {
+  padding-top: 0;
 }
 .lfeed-row-left {
   display: flex;
@@ -240,17 +243,17 @@ export const landingCSS = `
   gap: 16px;
   border-top: 1px solid #eae8e2;
   border-bottom: 1px solid #eae8e2;
-  padding: 28px 0;
+  padding: 16px 0;
 }
 .lactivity-stat-col {
   flex: 1;
   display: flex;
   flex-direction: column;
-  gap: 4px;
+  gap: 2px;
 }
 .lactivity-stat-label {
   font-family: 'Inter', sans-serif;
-  font-size: 10.5px;
+  font-size: 10px;
   font-weight: 700;
   color: #8a8984;
   text-transform: uppercase;
@@ -258,7 +261,7 @@ export const landingCSS = `
 }
 .lactivity-stat-value {
   font-family: 'Plus Jakarta Sans', sans-serif;
-  font-size: 26px;
+  font-size: 22px;
   font-weight: 800;
   color: #1e1e1e;
   letter-spacing: -0.5px;
@@ -269,24 +272,24 @@ export const landingCSS = `
 .lactivity-success-section {
   display: flex;
   flex-direction: column;
-  gap: 6px;
+  gap: 4px;
 }
 .lactivity-success-rate-box {
   display: flex;
   align-items: baseline;
-  gap: 10px;
+  gap: 8px;
 }
 .lactivity-success-rate-value {
   font-family: 'Plus Jakarta Sans', sans-serif;
-  font-size: 38px;
+  font-size: 30px;
   font-weight: 800;
-  color: #1e4620; /* forest green success rate */
+  color: #1e4620;
   letter-spacing: -1px;
   line-height: 1.0;
 }
 .lactivity-success-rate-label {
   font-family: 'Inter', sans-serif;
-  font-size: 10.5px;
+  font-size: 10px;
   font-weight: 700;
   color: #8a8984;
   text-transform: uppercase;
@@ -294,7 +297,7 @@ export const landingCSS = `
 }
 .lactivity-success-sentence {
   font-family: 'Inter', sans-serif;
-  font-size: 13.5px;
+  font-size: 12.5px;
   color: #4a4a4a;
   line-height: 1.4;
   margin: 0;

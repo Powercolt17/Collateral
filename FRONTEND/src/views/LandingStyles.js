@@ -369,18 +369,18 @@ export const landingCSS = `
   font-size: 11px;
   font-weight: 500;
   color: #8a8984;
-  display: flex;
-  align-items: center;
-  justify-content: center;
   text-align: center;
-  gap: 6px;
   margin-top: 2px;
   padding-top: 10px;
   border-top: 1px solid #f5f4f0;
 }
 .lc-trust-lock {
   color: #8a8984;
-  flex-shrink: 0;
+  display: inline-block;
+  vertical-align: middle;
+  margin-right: 4px;
+  position: relative;
+  top: -1px;
 }
 .lct-check {
   color: #145c14;

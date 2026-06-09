@@ -422,7 +422,7 @@ export function renderLanding() {
             <div class="lw">
                 <div class="ltypes" data-r>
                     <div class="lred-dash"><span class="lmono">Contract Types</span></div>
-                    <h2 class="lhow-h" style="margin-bottom:32px">Solo accountability or a<br>head-to-head <strong>rivalry.</strong></h2>
+                    <h2 class="lhow-h" style="margin-bottom:32px">Solo accountability or<br>head-to-head <strong>rivalry.</strong></h2>
 
                     <div class="ltypes-grid">
                         <div class="ltype">

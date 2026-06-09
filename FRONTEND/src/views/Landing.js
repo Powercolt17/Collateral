@@ -603,77 +603,12 @@ export function initLanding() {
                     return !isExcludedUser(user);
                 });
 
-                // Build a list of featured contracts (one for each platform) to cycle through
-                const platformsToFeature = ['STRIPE', 'X', 'SHOPIFY', 'YOUTUBE'];
-                const featuredContracts = [];
-
-                platformsToFeature.forEach(pKey => {
-                    const platEvents = dbEvents.filter(e => (e.platform || '').toUpperCase() === pKey || (pKey === 'X' && (e.platform || '').toUpperCase() === 'TWITTER'));
-                    let evt = platEvents[0];
-                    if (!evt) {
-                        const defaultAmounts = { STRIPE: 50000, X: 50000, SHOPIFY: 25000, YOUTUBE: 50000 };
-                        evt = {
-                            platform: pKey,
-                            amountUsdCents: defaultAmounts[pKey] || 50000,
-                            eventType: 'FUNDS_LOCKED',
-                            timestamp: new Date().toISOString()
-                        };
-                    }
-                    featuredContracts.push(evt);
-                });
-
-                let featIdx = 0;
-                const updateFeaturedContract = (featured) => {
-                    const plat = (featured.platform || 'STRIPE').toUpperCase();
-                    const info = platformData[plat] || platformData.STRIPE;
-                    const depositCents = featured.lockAmountUsdCents || featured.amountUsdCents || 50000;
-                    const deposit = Math.round(depositCents / 100);
-                    const reward = Math.round(deposit * info.mult);
-                    const total = deposit + reward;
-
-                    const createdTime = new Date(featured.timestamp || featured.created_at || new Date()).getTime();
-                    const elapsedMs = Date.now() - createdTime;
-                    const elapsedDays = Math.floor(elapsedMs / (1000 * 60 * 60 * 24));
-                    const totalDays = info.windowDays;
-                    const daysRemaining = (elapsedDays >= 0 && elapsedDays < totalDays) ? (totalDays - elapsedDays) : Math.max(5, (31 - (deposit % 17)));
-
-                    const nameEl = document.getElementById('lc-feat-name');
-                    const goalEl = document.getElementById('lc-feat-goal');
-                    const timeEl = document.getElementById('lc-feat-time');
-                    if (nameEl) nameEl.textContent = info.name;
-                    if (goalEl) goalEl.textContent = info.goal;
-                    if (timeEl) timeEl.textContent = `${daysRemaining} Days Remaining`;
-
-                    // Update values immediately for smooth cycling
-                    const depositValEl = document.getElementById('lc-feat-deposit');
-                    const rewardValEl = document.getElementById('lc-feat-reward');
-                    const returnValEl = document.getElementById('lc-feat-return');
-                    
-                    if (depositValEl) depositValEl.textContent = `$${deposit.toLocaleString()}`;
-                    if (rewardValEl) rewardValEl.textContent = `+$${reward.toLocaleString()}`;
-                    if (returnValEl) returnValEl.textContent = `$${total.toLocaleString()}`;
-                };
-
-                // Initialize the first one
-                updateFeaturedContract(featuredContracts[0]);
-
-                // Cycle featured contract every 6 seconds
-                const featContainer = document.querySelector('.lc-contract');
-                if (featContainer && featuredContracts.length > 1) {
-                    setInterval(() => {
-                        featContainer.style.opacity = '0';
-                        featContainer.style.transform = 'translateY(2px)';
-                        setTimeout(() => {
-                            featIdx = (featIdx + 1) % featuredContracts.length;
-                            updateFeaturedContract(featuredContracts[featIdx]);
-                            featContainer.style.opacity = '1';
-                            featContainer.style.transform = 'translateY(0)';
-                        }, 300);
-                    }, 6000);
-                }
-
                 // ═══ LIVE RECENT ACTIVITY STRIP (CHANGE 3) ═══
                 const raListEl = document.getElementById('lc-ra-list');
+                let raIdx = 0;
+                let combinedEvents = [];
+                let updateRecentActivity = () => {};
+
                 if (raListEl && events.length > 0) {
                     const mockEvents = [
                         { eventType: 'SETTLED_SUCCESS', platform: 'STRIPE', amountUsdCents: 50000, goalDesc: 'Stripe Revenue', actor: 'tylerbrooks' },
@@ -682,7 +617,7 @@ export function initLanding() {
                         { eventType: 'FUNDS_LOCKED', platform: 'SHOPIFY', amountUsdCents: 100000, goalDesc: 'Shopify Sales', actor: 'amina' }
                     ];
 
-                    const combinedEvents = [
+                    combinedEvents = [
                         ...dbEvents.map(e => ({
                             eventType: e.eventType,
                             platform: e.platform,
@@ -762,10 +697,9 @@ export function initLanding() {
                         }
                     };
 
-                    let raIdx = 0;
-                    const updateRecentActivity = () => {
+                    updateRecentActivity = () => {
                         const rows = [];
-                        const displayCount = Math.min(4, combinedEvents.length);
+                        const displayCount = Math.min(2, combinedEvents.length);
                         for (let k = 0; k < displayCount; k++) {
                             const e = combinedEvents[(raIdx + k) % combinedEvents.length];
                             rows.push(renderTick(e));
@@ -773,19 +707,92 @@ export function initLanding() {
                         raListEl.innerHTML = rows.join('');
                     };
                     updateRecentActivity();
+                }
 
-                    if (combinedEvents.length > 4) {
-                        setInterval(() => {
+                // Build a list of featured contracts (one for each platform) to cycle through
+                const platformsToFeature = ['STRIPE', 'X', 'SHOPIFY', 'YOUTUBE'];
+                const featuredContracts = [];
+
+                platformsToFeature.forEach(pKey => {
+                    const platEvents = dbEvents.filter(e => (e.platform || '').toUpperCase() === pKey || (pKey === 'X' && (e.platform || '').toUpperCase() === 'TWITTER'));
+                    let evt = platEvents[0];
+                    if (!evt) {
+                        const defaultAmounts = { STRIPE: 50000, X: 50000, SHOPIFY: 25000, YOUTUBE: 50000 };
+                        evt = {
+                            platform: pKey,
+                            amountUsdCents: defaultAmounts[pKey] || 50000,
+                            eventType: 'FUNDS_LOCKED',
+                            timestamp: new Date().toISOString()
+                        };
+                    }
+                    featuredContracts.push(evt);
+                });
+
+                let featIdx = 0;
+                const updateFeaturedContract = (featured) => {
+                    const plat = (featured.platform || 'STRIPE').toUpperCase();
+                    const info = platformData[plat] || platformData.STRIPE;
+                    const depositCents = featured.lockAmountUsdCents || featured.amountUsdCents || 50000;
+                    const deposit = Math.round(depositCents / 100);
+                    const reward = Math.round(deposit * info.mult);
+                    const total = deposit + reward;
+
+                    const createdTime = new Date(featured.timestamp || featured.created_at || new Date()).getTime();
+                    const elapsedMs = Date.now() - createdTime;
+                    const elapsedDays = Math.floor(elapsedMs / (1000 * 60 * 60 * 24));
+                    const totalDays = info.windowDays;
+                    const daysRemaining = (elapsedDays >= 0 && elapsedDays < totalDays) ? (totalDays - elapsedDays) : Math.max(5, (31 - (deposit % 17)));
+
+                    const nameEl = document.getElementById('lc-feat-name');
+                    const goalEl = document.getElementById('lc-feat-goal');
+                    const timeEl = document.getElementById('lc-feat-time');
+                    if (nameEl) nameEl.textContent = info.name;
+                    if (goalEl) goalEl.textContent = info.goal;
+                    if (timeEl) timeEl.textContent = `${daysRemaining} Days Remaining`;
+
+                    // Update values immediately for smooth cycling
+                    const depositValEl = document.getElementById('lc-feat-deposit');
+                    const rewardValEl = document.getElementById('lc-feat-reward');
+                    const returnValEl = document.getElementById('lc-feat-return');
+                    
+                    if (depositValEl) depositValEl.textContent = `$${deposit.toLocaleString()}`;
+                    if (rewardValEl) rewardValEl.textContent = `+$${reward.toLocaleString()}`;
+                    if (returnValEl) returnValEl.textContent = `$${total.toLocaleString()}`;
+                };
+
+                // Initialize the first one
+                updateFeaturedContract(featuredContracts[0]);
+
+                // Cycle featured contract and recent activity in lockstep every 6 seconds
+                const featContainer = document.querySelector('.lc-contract');
+                const hasContractCycle = featContainer && featuredContracts.length > 1;
+                const hasRaCycle = raListEl && combinedEvents.length > 2;
+
+                if (hasContractCycle || hasRaCycle) {
+                    setInterval(() => {
+                        if (hasContractCycle) {
+                            featContainer.style.opacity = '0';
+                            featContainer.style.transform = 'translateY(2px)';
+                        }
+                        if (hasRaCycle) {
                             raListEl.style.opacity = '0';
                             raListEl.style.transform = 'translateY(-4px)';
-                            setTimeout(() => {
-                                raIdx = (raIdx + 1) % combinedEvents.length;
+                        }
+                        setTimeout(() => {
+                            if (hasContractCycle) {
+                                featIdx = (featIdx + 1) % featuredContracts.length;
+                                updateFeaturedContract(featuredContracts[featIdx]);
+                                featContainer.style.opacity = '1';
+                                featContainer.style.transform = 'translateY(0)';
+                            }
+                            if (hasRaCycle) {
+                                raIdx = (raIdx + 2) % combinedEvents.length;
                                 updateRecentActivity();
                                 raListEl.style.opacity = '1';
                                 raListEl.style.transform = 'translateY(0)';
-                            }, 300);
-                        }, 4000);
-                    }
+                            }
+                        }, 300);
+                    }, 6000);
                 }
 
                 // Populate Live Settlement Activity Table

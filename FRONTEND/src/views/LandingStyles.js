@@ -233,7 +233,7 @@ export const landingCSS = `
 }
 .field-label {
   font-family: 'Inter', sans-serif;
-  font-size: 11.5px;
+  font-size: 10px;
   font-weight: 700;
   color: #8C8B87;
   letter-spacing: 0.8px;
@@ -241,7 +241,7 @@ export const landingCSS = `
 }
 .field-value {
   font-family: 'Inter Tight', sans-serif;
-  font-size: 20px;
+  font-size: 18px;
   font-weight: 700;
   color: #111111;
   letter-spacing: -0.3px;
@@ -266,13 +266,13 @@ export const landingCSS = `
   border-right: 1px solid #EBEAE6;
 }
 .lpcard-financial-cell .field-label {
-  font-size: 10.5px;
+  font-size: 9px;
   color: #8C8B87;
   margin-bottom: 4px;
 }
 .financial-val {
   font-family: 'Inter Tight', sans-serif;
-  font-size: 20px;
+  font-size: 18px;
   font-weight: 700;
   color: #111111;
   letter-spacing: -0.2px;
@@ -282,7 +282,7 @@ export const landingCSS = `
 }
 .financial-sub {
   font-family: 'Inter', sans-serif;
-  font-size: 11.5px;
+  font-size: 10px;
   color: #8C8B87;
   margin-top: 2px;
 }
@@ -350,7 +350,7 @@ export const landingCSS = `
 }
 .outcome-title {
   font-family: 'Inter', sans-serif;
-  font-size: 11.5px;
+  font-size: 10px;
   font-weight: 700;
   letter-spacing: 0.8px;
   text-transform: uppercase;
@@ -363,13 +363,13 @@ export const landingCSS = `
 }
 .outcome-sub {
   font-family: 'Inter', sans-serif;
-  font-size: 11.5px;
+  font-size: 10px;
   color: #8C8B87;
   margin-bottom: 2px;
 }
 .outcome-val {
   font-family: 'Inter Tight', sans-serif;
-  font-size: 20px;
+  font-size: 18px;
   font-weight: 700;
   letter-spacing: -0.3px;
   margin-bottom: 2px;
@@ -382,7 +382,7 @@ export const landingCSS = `
 }
 .outcome-desc {
   font-family: 'Inter', sans-serif;
-  font-size: 11.5px;
+  font-size: 10px;
   color: #8C8B87;
 }
 
@@ -792,7 +792,7 @@ export const landingCSS = `
 .lstat-label{font-family:'Inter Tight',sans-serif;font-size:15px;font-weight:700;color:var(--t1);margin:12px 0 6px}
 .lstat-sub{font-size:13px;color:var(--t3);line-height:1.4}
 /* ═══ LIVE LEDGER FEED ═══ */
-.lledger-container {background:#FFF;border:1px solid var(--d);border-radius:16px;padding:32px;box-shadow:0 4px 30px rgba(0,0,0,0.015);margin-top:48px}
+.lledger-container {background:#FFF;border:1px solid var(--d);border-radius:16px;padding:32px;box-shadow:0 4px 30px rgba(0,0,0,0.015);margin-top:48px;max-width:100%;overflow:hidden}
 .lledger-header {display:flex;justify-content:space-between;align-items:flex-start;border-bottom:1px solid var(--d);padding-bottom:20px;margin-bottom:24px;flex-wrap:wrap;gap:16px}
 .lledger-h-title {font-family:'Inter Tight',sans-serif;font-size:18px;font-weight:700;color:var(--t1);display:flex;align-items:center;gap:10px}
 .lledger-pulse-dot {width:8px;height:8px;background:var(--g);border-radius:50%;display:inline-block;box-shadow:0 0 10px rgba(20,92,20,0.8);animation:statusPulse 2s ease-in-out infinite}

@@ -53,40 +53,52 @@ export function renderLanding() {
                     </div>
                     <div class="lhero-right animate-scale-in delay-1">
                         <div class="lactivity-card">
-                            <!-- TOP — COMPACT METRIC -->
-                            <div class="lc-top">
-                                <div class="lc-top-left">
-                                    <span class="lc-amount" id="live-stat-locked">$8,700</span>
-                                    <span class="lc-amount-label">Currently Locked</span>
+                            <!-- FEATURED CONTRACT (80% attention) -->
+                            <div class="lc-contract">
+                                <div class="lc-contract-head">
+                                    <div>
+                                        <div class="lc-contract-name" id="lc-feat-name">Revenue Growth</div>
+                                        <div class="lc-contract-meta" id="lc-feat-meta">Stripe · +20% Target · 30 Days</div>
+                                    </div>
+                                    <div class="lc-status"><span class="lc-status-dot"></span>Active</div>
                                 </div>
-                                <div class="lc-top-right">
-                                    <span class="lc-active-dot"></span>
-                                    <span class="lc-active-count" id="live-stat-active-count">22 Active</span>
+
+                                <div class="lc-flow">
+                                    <div class="lc-flow-step">
+                                        <span class="lc-flow-label">Deposit</span>
+                                        <span class="lc-flow-val" id="lc-feat-deposit">$500</span>
+                                    </div>
+                                    <div class="lc-flow-arrow">↓</div>
+                                    <div class="lc-flow-step">
+                                        <span class="lc-flow-label">Reward Match</span>
+                                        <span class="lc-flow-val lc-val-green" id="lc-feat-reward">+$750</span>
+                                    </div>
+                                    <div class="lc-flow-arrow">↓</div>
+                                    <div class="lc-flow-step lc-step-final">
+                                        <span class="lc-flow-label">Potential Return</span>
+                                        <span class="lc-flow-val lc-val-bold" id="lc-feat-return">$1,250</span>
+                                    </div>
                                 </div>
                             </div>
 
-                            <!-- MAIN — LIVE ACTIVITY FEED -->
-                            <div class="lc-feed" id="live-activity-feed">
-                                <!-- Populated dynamically from real ledger events -->
+                            <!-- PROOF METRICS (15% attention) -->
+                            <div class="lc-proof">
+                                <div class="lc-proof-item">
+                                    <span class="lc-proof-val" id="live-stat-locked">$8,700</span>
+                                    <span class="lc-proof-lbl">Locked</span>
+                                </div>
+                                <div class="lc-proof-item">
+                                    <span class="lc-proof-val" id="live-stat-settled">25</span>
+                                    <span class="lc-proof-lbl">Settled</span>
+                                </div>
+                                <div class="lc-proof-item">
+                                    <span class="lc-proof-val" id="live-stat-payout">$2,855</span>
+                                    <span class="lc-proof-lbl">Paid Out</span>
+                                </div>
                             </div>
 
-                            <!-- BOTTOM — COMPACT STATS -->
-                            <div class="lc-bottom">
-                                <div class="lc-bstat">
-                                    <span class="lc-bstat-val" id="live-stat-settled">25</span>
-                                    <span class="lc-bstat-label">Settled</span>
-                                </div>
-                                <div class="lc-bstat-divider"></div>
-                                <div class="lc-bstat">
-                                    <span class="lc-bstat-val" id="live-stat-payout">$2,855</span>
-                                    <span class="lc-bstat-label">Paid Out</span>
-                                </div>
-                                <div class="lc-bstat-divider"></div>
-                                <div class="lc-bstat">
-                                    <span class="lc-bstat-val" id="live-stat-rate">24%</span>
-                                    <span class="lc-bstat-label">Success</span>
-                                </div>
-                            </div>
+                            <!-- LIVE TICKER (5% attention) -->
+                            <div class="lc-ticker" id="live-ticker"></div>
                         </div>
                     </div>
                 </div>
@@ -531,123 +543,101 @@ export function initLanding() {
                 const totalLocked = statsResponse.capitalLocked;
                 const totalSettled = statsResponse.contractsSettled;
                 const totalPayout = statsResponse.totalPaidOut;
-                const displayRate = statsResponse.achievementRate;
-                const activeContracts = statsResponse.activeContractsCount;
                 
-                // Count-up animation helper
-                const animateCount = (elementId, targetVal, prefix = '', suffix = '') => {
-                    const el = document.getElementById(elementId);
+                // Count-up helper
+                const animateCount = (id, val, pre = '', suf = '') => {
+                    const el = document.getElementById(id);
                     if (!el) return;
-                    const duration = 1200;
-                    const start = performance.now();
-                    function update(ts) {
-                        const p = Math.min((ts - start) / duration, 1);
-                        const ease = p * (2 - p);
-                        const v = Math.floor(ease * targetVal);
-                        el.textContent = prefix + v.toLocaleString() + suffix;
-                        if (p < 1) requestAnimationFrame(update);
-                        else el.textContent = prefix + targetVal.toLocaleString() + suffix;
+                    const dur = 1200, st = performance.now();
+                    function tick(ts) {
+                        const p = Math.min((ts - st) / dur, 1);
+                        const v = Math.floor(p * (2 - p) * val);
+                        el.textContent = pre + v.toLocaleString() + suf;
+                        if (p < 1) requestAnimationFrame(tick);
+                        else el.textContent = pre + val.toLocaleString() + suf;
                     }
-                    requestAnimationFrame(update);
+                    requestAnimationFrame(tick);
                 };
-                
-                // Animate top metric + bottom stats
+
+                // Animate proof stats
                 animateCount('live-stat-locked', totalLocked, '$');
                 animateCount('live-stat-settled', totalSettled);
                 animateCount('live-stat-payout', totalPayout, '$');
-                animateCount('live-stat-rate', displayRate, '', '%');
 
-                // Active contracts count
-                const activeEl = document.getElementById('live-stat-active-count');
-                if (activeEl) activeEl.textContent = `${activeContracts || 22} Active`;
+                // ═══ FEATURED CONTRACT — FROM REAL EVENTS ═══
+                const events = response.events;
+                const platformData = {
+                    STRIPE:  { name: 'Revenue Growth',     target: '+20% Revenue',      window: '30 Days', mult: 1.5 },
+                    X:       { name: 'Audience Growth',    target: '+1,000 Followers',   window: '14 Days', mult: 3.0 },
+                    TWITTER: { name: 'Audience Growth',    target: '+1,000 Followers',   window: '14 Days', mult: 3.0 },
+                    SHOPIFY: { name: 'Store Sales',        target: '+$5,000 Net Sales',  window: '30 Days', mult: 0.5 },
+                    YOUTUBE: { name: 'Subscriber Growth',  target: '+500 Subscribers',   window: '30 Days', mult: 0.7 }
+                };
 
-                // ═══ LIVE ACTIVITY FEED — REAL EVENTS ═══
-                const feedEl = document.getElementById('live-activity-feed');
-                if (feedEl && response.events.length > 0) {
-                    const events = response.events;
-                    
-                    const timeAgoShort = (iso) => {
-                        const diff = Math.floor((Date.now() - new Date(iso).getTime()) / 60000);
-                        if (diff < 1) return 'now';
-                        if (diff < 60) return `${diff}m ago`;
-                        const h = Math.floor(diff / 60);
+                // Find best featured contract (prefer funded active contracts)
+                const funded = events.find(e => e.eventType === 'FUNDS_LOCKED' || e.eventType === 'EXECUTION_CONFIRMED');
+                const featured = funded || events[0];
+                const plat = (featured.platform || 'STRIPE').toUpperCase();
+                const info = platformData[plat] || platformData.STRIPE;
+                const depositCents = featured.lockAmountUsdCents || featured.amountUsdCents || 50000;
+                const deposit = Math.round(depositCents / 100);
+                const reward = Math.round(deposit * info.mult);
+                const total = deposit + reward;
+
+                // Populate contract header
+                const nameEl = document.getElementById('lc-feat-name');
+                const metaEl = document.getElementById('lc-feat-meta');
+                if (nameEl) nameEl.textContent = info.name;
+                if (metaEl) metaEl.textContent = `${featured.platform || 'Stripe'} · ${info.target} · ${info.window}`;
+
+                // Animate contract flow values
+                animateCount('lc-feat-deposit', deposit, '$');
+                setTimeout(() => animateCount('lc-feat-reward', reward, '+$'), 400);
+                setTimeout(() => animateCount('lc-feat-return', total, '$'), 800);
+
+                // ═══ LIVE TICKER — SUBTLE ACTIVITY PROOF ═══
+                const tickerEl = document.getElementById('live-ticker');
+                if (tickerEl && events.length > 0) {
+                    const timeAgo = (iso) => {
+                        const d = Math.floor((Date.now() - new Date(iso).getTime()) / 60000);
+                        if (d < 1) return 'just now';
+                        if (d < 60) return `${d}m ago`;
+                        const h = Math.floor(d / 60);
                         if (h < 24) return `${h}h ago`;
                         return `${Math.floor(h / 24)}d ago`;
                     };
-
-                    const getGoalName = (e) => {
+                    const goalName = (e) => {
                         const p = (e.platform || '').toUpperCase();
-                        if (p === 'STRIPE') return 'Revenue Growth Goal';
-                        if (p === 'X' || p === 'TWITTER') return 'Audience Growth Goal';
+                        if (p === 'STRIPE') return 'Revenue Goal';
+                        if (p === 'X' || p === 'TWITTER') return 'Audience Goal';
                         if (p === 'SHOPIFY') return 'Sales Goal';
-                        if (p === 'YOUTUBE') return 'Subscriber Growth Goal';
-                        return 'Performance Goal';
+                        if (p === 'YOUTUBE') return 'Subscriber Goal';
+                        return 'Goal';
+                    };
+                    const actionWord = (e) => {
+                        const t = e.eventType;
+                        if (t === 'SETTLED_SUCCESS') return 'completed';
+                        if (t === 'SETTLED_FAILURE' || t === 'CONTRACT_FORFEITED') return 'forfeited';
+                        return 'funded';
                     };
 
-                    const renderFeedItem = (e) => {
-                        const amt = (e.amountUsdCents || e.lockAmountUsdCents || 0) / 100;
+                    let tickIdx = 0;
+                    const renderTick = () => {
+                        const e = events[tickIdx % events.length];
                         const ts = e.timestamp || e.created_at || new Date().toISOString();
-                        const type = e.eventType;
-                        let icon, iconClass, title, detail;
-
-                        if (type === 'SETTLED_SUCCESS' || type === 'RIVALRY_SETTLED') {
-                            icon = '✓';
-                            iconClass = 'lc-icon-success';
-                            title = 'Contract Settled';
-                            detail = `+$${amt.toLocaleString()} reward paid`;
-                        } else if (type === 'SETTLED_FAILURE' || type === 'CONTRACT_FORFEITED') {
-                            icon = '✕';
-                            iconClass = 'lc-icon-forfeit';
-                            title = 'Contract Forfeited';
-                            detail = `$${amt.toLocaleString()} forfeited`;
-                        } else {
-                            icon = '●';
-                            iconClass = 'lc-icon-new';
-                            title = 'New Contract Created';
-                            detail = `$${amt.toLocaleString()} at stake`;
-                        }
-
-                        return `<div class="lc-feed-item">
-                            <div class="lc-fi-icon ${iconClass}">${icon}</div>
-                            <div class="lc-fi-body">
-                                <div class="lc-fi-header">
-                                    <span class="lc-fi-title">${title}</span>
-                                    <span class="lc-fi-time">${timeAgoShort(ts)}</span>
-                                </div>
-                                <div class="lc-fi-detail">
-                                    <span class="lc-fi-goal">${getGoalName(e)}</span>
-                                    <span class="lc-fi-sep">·</span>
-                                    <span class="lc-fi-amount">${detail}</span>
-                                </div>
-                            </div>
-                        </div>`;
+                        tickerEl.textContent = `${goalName(e)} ${actionWord(e)} · ${timeAgo(ts)}`;
                     };
+                    renderTick();
 
-                    let feedStart = 0;
-                    const FEED_SIZE = 4;
-
-                    const renderFeed = () => {
-                        let items = [];
-                        for (let k = 0; k < Math.min(FEED_SIZE, events.length); k++) {
-                            items.push(renderFeedItem(events[(feedStart + k) % events.length]));
-                        }
-                        feedEl.innerHTML = items.join('');
-                    };
-
-                    renderFeed();
-
-                    // Rotate feed every 5s if we have more events than slots
-                    if (events.length > FEED_SIZE) {
+                    if (events.length > 1) {
                         setInterval(() => {
-                            feedEl.style.opacity = '0';
-                            feedEl.style.transform = 'translateY(4px)';
+                            tickerEl.style.opacity = '0';
                             setTimeout(() => {
-                                feedStart = (feedStart + 1) % events.length;
-                                renderFeed();
-                                feedEl.style.opacity = '1';
-                                feedEl.style.transform = 'translateY(0)';
-                            }, 250);
-                        }, 5000);
+                                tickIdx++;
+                                renderTick();
+                                tickerEl.style.opacity = '1';
+                            }, 300);
+                        }, 4000);
                     }
                 }
 

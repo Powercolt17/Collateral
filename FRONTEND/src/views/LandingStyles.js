@@ -138,166 +138,123 @@ export const landingCSS = `
   animation: premiumFloat 8s ease-in-out infinite;
 }
 
-/* SECTION — TOP COMPACT METRIC */
-.lc-top {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-end;
-  padding-bottom: 14px;
-  border-bottom: 1px solid #eae8e2;
-}
-.lc-top-left {
+/* SECTION — FEATURED CONTRACT VISUALIZATION */
+.lc-contract {
   display: flex;
   flex-direction: column;
-  gap: 1px;
+  gap: 16px;
 }
-.lc-amount {
+.lc-contract-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+.lc-contract-name {
   font-family: 'Plus Jakarta Sans', sans-serif;
-  font-size: 32px;
+  font-size: 18px;
   font-weight: 800;
   color: #1e1e1e;
-  letter-spacing: -1.5px;
-  line-height: 1;
+  letter-spacing: -0.5px;
 }
-.lc-amount-label {
+.lc-contract-meta {
   font-family: 'Inter', sans-serif;
   font-size: 11px;
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
-  color: #5c1414;
+  font-weight: 500;
+  color: #8a8984;
+  margin-top: 2px;
 }
-.lc-top-right {
-  display: flex;
+.lc-status {
+  display: inline-flex;
   align-items: center;
   gap: 6px;
+  font-family: 'Inter', sans-serif;
+  font-size: 10px;
+  font-weight: 700;
+  color: #145c14;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  background: rgba(20,92,20,0.06);
+  padding: 4px 10px;
+  border-radius: 100px;
 }
-.lc-active-dot {
-  width: 6px;
-  height: 6px;
+.lc-status-dot {
+  width: 5px;
+  height: 5px;
   background: #145c14;
   border-radius: 50%;
-  box-shadow: 0 0 8px rgba(20,92,20,0.6);
+  box-shadow: 0 0 6px rgba(20,92,20,0.4);
   animation: pulseDot 2s ease-in-out infinite;
 }
-.lc-active-count {
+
+/* DEPOSIT → REWARD → POTENTIAL RETURN FLOW */
+.lc-flow {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.lc-flow-step {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 16px;
+  background: #faf9f6;
+  border: 1px solid #eae8e2;
+  border-radius: 8px;
+  transition: all 0.3s ease;
+}
+.lc-flow-label {
   font-family: 'Inter', sans-serif;
   font-size: 12px;
+  font-weight: 600;
+  color: #666;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+.lc-flow-val {
+  font-family: 'SF Mono', 'Fira Code', 'Consolas', monospace;
+  font-size: 14px;
   font-weight: 700;
-  color: #145c14;
-  letter-spacing: -0.2px;
+  color: #1e1e1e;
+}
+.lc-val-green {
+  color: #145c14 !important;
+}
+.lc-flow-arrow {
+  text-align: center;
+  font-size: 14px;
+  color: #bbb;
+  margin: 1px 0;
+  line-height: 1;
+}
+.lc-step-final {
+  background: #5c1414 !important;
+  border-color: #5c1414 !important;
+  box-shadow: 0 4px 12px rgba(92,20,20,0.15);
+}
+.lc-step-final .lc-flow-label {
+  color: rgba(255, 255, 255, 0.8) !important;
+}
+.lc-step-final .lc-flow-val {
+  color: #fff !important;
+  font-size: 16px;
 }
 
-/* SECTION — LIVE ACTIVITY FEED (THE HERO) */
-.lc-feed {
-  display: flex;
-  flex-direction: column;
-  gap: 0;
-  flex: 1;
-  transition: opacity 0.25s ease, transform 0.25s ease;
-}
-.lc-feed-item {
-  display: flex;
-  align-items: flex-start;
-  gap: 10px;
-  padding: 10px 0;
-  border-bottom: 1px solid rgba(0,0,0,0.04);
-}
-.lc-feed-item:last-child {
-  border-bottom: none;
-}
-.lc-fi-icon {
-  width: 22px;
-  height: 22px;
-  border-radius: 50%;
+/* SECTION — SOCIAL PROOF STATS */
+.lc-proof {
   display: flex;
   align-items: center;
-  justify-content: center;
-  font-size: 11px;
-  font-weight: 800;
-  flex-shrink: 0;
-  margin-top: 1px;
+  justify-content: space-between;
+  padding-top: 16px;
+  border-top: 1px solid #eae8e2;
 }
-.lc-icon-new {
-  background: rgba(20,92,20,0.08);
-  color: #145c14;
-  font-size: 8px;
-}
-.lc-icon-success {
-  background: rgba(20,92,20,0.1);
-  color: #145c14;
-}
-.lc-icon-forfeit {
-  background: rgba(92,20,20,0.08);
-  color: #5c1414;
-}
-.lc-fi-body {
+.lc-proof-item {
   flex: 1;
-  min-width: 0;
   display: flex;
   flex-direction: column;
+  align-items: center;
   gap: 2px;
 }
-.lc-fi-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-.lc-fi-title {
-  font-family: 'Inter', sans-serif;
-  font-size: 13px;
-  font-weight: 700;
-  color: #1e1e1e;
-  letter-spacing: -0.2px;
-}
-.lc-fi-time {
-  font-family: 'Inter', sans-serif;
-  font-size: 11px;
-  font-weight: 500;
-  color: #999;
-  flex-shrink: 0;
-}
-.lc-fi-detail {
-  display: flex;
-  align-items: center;
-  gap: 5px;
-  font-size: 12px;
-  color: #666;
-}
-.lc-fi-goal {
-  font-weight: 500;
-}
-.lc-fi-sep {
-  color: #ccc;
-}
-.lc-fi-amount {
-  font-weight: 600;
-  color: #1e1e1e;
-}
-.lc-icon-success + .lc-fi-body .lc-fi-amount {
-  color: #145c14;
-}
-.lc-icon-forfeit + .lc-fi-body .lc-fi-amount {
-  color: #5c1414;
-}
-
-/* SECTION — BOTTOM COMPACT STATS */
-.lc-bottom {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding-top: 14px;
-  border-top: 1px solid #eae8e2;
-  gap: 0;
-}
-.lc-bstat {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 1px;
-}
-.lc-bstat-val {
+.lc-proof-val {
   font-family: 'Plus Jakarta Sans', sans-serif;
   font-size: 18px;
   font-weight: 800;
@@ -305,7 +262,7 @@ export const landingCSS = `
   letter-spacing: -0.5px;
   line-height: 1;
 }
-.lc-bstat-label {
+.lc-proof-lbl {
   font-family: 'Inter', sans-serif;
   font-size: 10px;
   font-weight: 600;
@@ -313,10 +270,23 @@ export const landingCSS = `
   text-transform: uppercase;
   letter-spacing: 0.08em;
 }
-.lc-bstat-divider {
-  width: 1px;
-  height: 28px;
-  background: #eae8e2;
+
+/* SECTION — LIVE TICKER */
+.lc-ticker {
+  font-family: 'SF Mono', 'Fira Code', 'Consolas', monospace;
+  font-size: 9px;
+  font-weight: 700;
+  color: #8a8984;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  text-align: center;
+  padding-top: 10px;
+  border-top: 1px dashed #eae8e2;
+  min-height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: opacity 0.3s ease;
 }
 
 /* ═══ FLOATING BADGES ═══ */

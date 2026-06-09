@@ -372,6 +372,7 @@ export const landingCSS = `
   display: flex;
   align-items: center;
   justify-content: center;
+  text-align: center;
   gap: 6px;
   margin-top: 2px;
   padding-top: 10px;

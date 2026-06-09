@@ -643,16 +643,20 @@ export function initLanding() {
                                     : e.platform === 'SHOPIFY' ? 'Generate $5,000 in net sales'
                                     : e.platform === 'YOUTUBE' ? 'Reach 5,000 subscribers'
                                     : 'Performance Goal',
-                            actor: e.actor || e.principal
+                            actor: e.actor,
+                            principal: e.principal
                         })),
-                        ...mockEvents
+                        ...mockEvents.map(e => ({
+                            ...e,
+                            principal: e.actor
+                        }))
                     ];
 
                     const renderTick = (e) => {
                         const amtRaw = Math.round((e.amountUsdCents || 0) / 100) || 250;
                         const t = e.eventType;
                         const goalText = e.goalDesc || 'Performance Goal';
-                        const username = getMaskedUser(e.actor || e.principal);
+                        const username = getMaskedUser(e.principal || e.actor);
                         const ts = e.timestamp || e.created_at || new Date().toISOString();
                         
                         const timeAgo = (iso) => {

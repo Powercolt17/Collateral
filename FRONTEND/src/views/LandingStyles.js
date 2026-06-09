@@ -672,40 +672,40 @@ export const landingCSS = `
   .ln-cta{padding:6px 10px; font-size:8.5px; letter-spacing:0.5px}
   .lhero-grid{grid-template-columns:1fr;gap:32px;padding:130px 0 24px}
   .lhero-right{display:none}
-  .lh1{font-size:clamp(38px, 11vw, 48px);line-height:1.05;letter-spacing:-1px}
-  .lsub{font-size:16px;margin-bottom:24px}
-  .lbtn{height:48px;padding:0 24px;font-size:11px}
-  .lbtn-r{height:52px;font-size:12px;padding:0 28px}
+  .lh1{font-size:clamp(34px, 10vw, 40px);line-height:1.05;letter-spacing:-1px}
+  .lsub{font-size:14px;margin-bottom:24px}
+  .lbtn{height:48px;padding:0 24px;font-size:10px}
+  .lbtn-r{height:52px;font-size:11px;padding:0 28px}
   .lcards{grid-template-columns:1fr 1fr;gap:16px}
   .lcard{padding:20px;min-height:auto}
-  .lcard-title{font-size:17px;margin-bottom:4px}
-  .lcard-target{font-size:12px;margin-bottom:16px}
-  .lcard-row{padding:6px 0;font-size:11px}
+  .lcard-title{font-size:15px;margin-bottom:4px}
+  .lcard-target{font-size:11px;margin-bottom:16px}
+  .lcard-row{padding:6px 0;font-size:10px}
   .lcard-btn{padding-top:16px}
   .lcontracts{padding:32px 0 48px}
   .lhow{padding:48px 0}
-  .lhow-h{font-size: 22px}
-  .lhow-sub{margin-bottom:32px;font-size:14px}
+  .lhow-h{font-size: 18px}
+  .lhow-sub{margin-bottom:32px;font-size:13px}
     .lsteps{grid-template-columns:1fr;gap:16px}
     .lstep{padding:24px}
-    .lstep-num{font-size: 40px;top:16px;right:16px;margin-bottom:0}
-    .lstep-h{font-size:18px;margin-top:12px}
-    .lstep-p{font-size:14px}
+    .lstep-num{font-size: 32px;top:16px;right:16px;margin-bottom:0}
+    .lstep-h{font-size:15px;margin-top:12px}
+    .lstep-p{font-size:13px}
   .lmini-cta{padding:48px 20px;margin:24px auto}
-  .lmini-cta-h{font-size:24px}
-  .lmini-cta-p{font-size:14px;margin-bottom:24px}
-  .lmini-cta-micro{font-size:11px}
+  .lmini-cta-h{font-size:20px}
+  .lmini-cta-p{font-size:13px;margin-bottom:24px}
+  .lmini-cta-micro{font-size:10px}
   .ltypes{padding:48px 0}
   .ltypes-grid{grid-template-columns:1fr;gap:32px}
   .ltype{padding:24px 0 0 0}
-  .ltype-badge{font-size:11px;margin-bottom:16px}
-  .ltype-h{font-size:22px;margin-bottom:8px}
-  .ltype-p{font-size:14px;margin-bottom:20px}
-  .ltype-detail{font-size:13px;padding-top:16px}
+  .ltype-badge{font-size:10px;margin-bottom:16px}
+  .ltype-h{font-size:18px;margin-bottom:8px}
+  .ltype-p{font-size:13px;margin-bottom:20px}
+  .ltype-detail{font-size:12px;padding-top:16px}
   .lex{padding:32px 0}
   .lex-box{margin:0 auto}
   .lfaq{padding:32px 0}
-  .fq-q{font-size:14px;padding:14px 0}
+  .fq-q{font-size:13px;padding:14px 0}
   .lfoot{padding:48px 20px 64px}
   .lctas{flex-direction:column}.lbtn{width:100%;justify-content:center}
 }
@@ -862,7 +862,9 @@ export const landingCSS = `
   .lemo-grid{grid-template-columns:1fr;gap:32px}
   .lemo-comparison-card{grid-template-columns:1fr;gap:24px}
   .lemo-divider{width:100%;height:1px}
-  .lemo-item{font-size:13px}
+  .lemo-item{font-size:12px}
+  .lstat-num{font-size:32px}
+  .lstat-label{font-size:13px}
   .lemo-reframe{padding:60px 0}
 }
 `;

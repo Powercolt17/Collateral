@@ -572,11 +572,11 @@ export function initLanding() {
                 // ═══ FEATURED CONTRACT — FROM REAL EVENTS ═══
                 const events = response.events;
                 const platformData = {
-                    STRIPE:  { name: 'Revenue Growth',     goal: 'Increase Revenue 20%',       windowDays: 30, mult: 1.0 },
-                    X:       { name: 'Newsletter Sprints', goal: 'Reach 10,000 Newsletter Subscribers',    windowDays: 14, mult: 1.5 },
-                    TWITTER: { name: 'Newsletter Sprints', goal: 'Reach 10,000 Newsletter Subscribers',    windowDays: 14, mult: 1.5 },
-                    SHOPIFY: { name: 'Store Sales',        goal: 'Generate $5,000 in net sales',   windowDays: 30, mult: 0.5 },
-                    YOUTUBE: { name: 'Subscriber Sprints', goal: 'Reach 5,000 channel subscribers',     windowDays: 30, mult: 0.7 }
+                    STRIPE:  { name: 'Stripe Revenue',     goal: 'Increase Stripe Revenue 20%',  windowDays: 30, mult: 1.0 },
+                    X:       { name: 'X Followers',        goal: 'Acquire +1,000 X Followers',   windowDays: 14, mult: 1.5 },
+                    TWITTER: { name: 'X Followers',        goal: 'Acquire +1,000 X Followers',   windowDays: 14, mult: 1.5 },
+                    SHOPIFY: { name: 'Shopify Sales',      goal: 'Generate $5,000 in net sales',   windowDays: 30, mult: 0.5 },
+                    YOUTUBE: { name: 'YouTube Subs',       goal: 'Acquire +500 YouTube Subs',    windowDays: 30, mult: 0.7 }
                 };
 
                 const excludedUsers = new Set(['maxfoundr', 'admin', 'testaccount', 'system', 'operator', 'test', 'user']);
@@ -676,10 +676,10 @@ export function initLanding() {
                 const raListEl = document.getElementById('lc-ra-list');
                 if (raListEl && events.length > 0) {
                     const mockEvents = [
-                        { eventType: 'SETTLED_SUCCESS', platform: 'STRIPE', amountUsdCents: 50000, goalDesc: 'Revenue Growth', actor: 'tylerbrooks' },
-                        { eventType: 'FUNDS_LOCKED', platform: 'FITNESS', amountUsdCents: 25000, goalDesc: 'Audience Goal', actor: 'sarah_k' },
-                        { eventType: 'SETTLED_SUCCESS', platform: 'WORKOUTS', amountUsdCents: 17000, goalDesc: 'Audience Goal', actor: 'jakevoss' },
-                        { eventType: 'FUNDS_LOCKED', platform: 'X', amountUsdCents: 100000, goalDesc: 'Revenue Goal', actor: 'amina' }
+                        { eventType: 'SETTLED_SUCCESS', platform: 'STRIPE', amountUsdCents: 50000, goalDesc: 'Stripe Revenue', actor: 'tylerbrooks' },
+                        { eventType: 'FUNDS_LOCKED', platform: 'X', amountUsdCents: 25000, goalDesc: 'X Followers', actor: 'sarah_k' },
+                        { eventType: 'SETTLED_SUCCESS', platform: 'YOUTUBE', amountUsdCents: 17000, goalDesc: 'YouTube Subs', actor: 'jakevoss' },
+                        { eventType: 'FUNDS_LOCKED', platform: 'SHOPIFY', amountUsdCents: 100000, goalDesc: 'Shopify Sales', actor: 'amina' }
                     ];
 
                     const combinedEvents = [
@@ -687,10 +687,10 @@ export function initLanding() {
                             eventType: e.eventType,
                             platform: e.platform,
                             amountUsdCents: e.lockAmountUsdCents || e.amountUsdCents,
-                            goalDesc: e.platform === 'STRIPE' ? 'Revenue Growth'
-                                    : e.platform === 'X' || e.platform === 'TWITTER' ? 'Audience Growth'
-                                    : e.platform === 'SHOPIFY' ? 'Store Sales'
-                                    : e.platform === 'YOUTUBE' ? 'Subscriber Goal'
+                            goalDesc: e.platform === 'STRIPE' ? 'Stripe Revenue'
+                                    : e.platform === 'X' || e.platform === 'TWITTER' ? 'X Followers'
+                                    : e.platform === 'SHOPIFY' ? 'Shopify Sales'
+                                    : e.platform === 'YOUTUBE' ? 'YouTube Subs'
                                     : 'Performance Goal',
                             actor: e.actor,
                             principal: e.principal,

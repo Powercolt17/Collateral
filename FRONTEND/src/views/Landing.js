@@ -421,7 +421,7 @@ export function renderLanding() {
             <!-- ═══ CONTRACT TYPES ═══ -->
             <div class="lw">
                 <div class="ltypes" data-r>
-                    <div class="lred-dash"><span class="lmono">Contract Types</span></div>
+
                     <h2 class="lhow-h" style="margin-bottom:32px">Solo accountability or<br>head-to-head <strong>rivalry.</strong></h2>
 
                     <div class="ltypes-grid">
@@ -445,7 +445,7 @@ export function renderLanding() {
             <div class="lcontracts" id="contracts">
                 <div class="lw">
                     <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px; flex-wrap: wrap; gap: 16px;">
-                        <div class="lred-dash" style="margin-bottom: 0;"><span class="lmono">Open Contracts</span></div>
+
                         
                         <!-- ═══ OPEN CONTRACTS STATS ═══ -->
                         <div style="display: flex; align-items: center; gap: 10px;">
@@ -511,7 +511,7 @@ export function renderLanding() {
             <!-- ═══ HOW IT WORKS ═══ -->
             <div class="lw">
                 <div class="lhow" data-r id="how">
-                    <div class="lred-dash"><span class="lmono">How It Works</span></div>
+
                     <h2 class="lhow-h">Set a target. Lock capital.<br>Let the API <strong>decide.</strong></h2>
                     <p class="lhow-sub">No middlemen. No judges. No appeals. Four steps to a binding financial commitment.</p>
 
@@ -543,7 +543,7 @@ export function renderLanding() {
             <!-- ═══ SOCIAL PROOF (REAL RESULTS) ═══ -->
             <div class="lreal-results" data-r>
                 <div class="lw">
-                    <div class="lred-dash"><span class="lmono">Real Results</span></div>
+
                     <h2 class="lh-section-title">Capital at risk drives behavior.</h2>
                     <p class="lh-section-subtitle">Procrastination stops when capital is at stake. Put skin in the game and execute.</p>
                     
@@ -640,7 +640,7 @@ export function renderLanding() {
             <!-- ═══ EMOTIONAL REFRAME (WHY IT WORKS) ═══ -->
             <div class="lemo-reframe" data-r>
                 <div class="lw">
-                    <div class="lred-dash"><span class="lmono">Why It Works</span></div>
+
                     <h2 class="lh-section-title">Accountability tools don't work. <br class="lhide-mobile">Financial exposure does.</h2>
                     
                     <div class="lemo-grid">
@@ -681,7 +681,7 @@ export function renderLanding() {
             <!-- ═══ FAQ ═══ -->
             <div class="lw">
                 <div class="lfaq" data-r id="faq">
-                    <div class="lred-dash"><span class="lmono">Common Questions</span></div>
+
                     <h2 class="lhow-h" style="margin-bottom:28px">No fine print. Just <strong>loopholes.</strong></h2>
                     <div class="lfaq-wrap">
                         <div class="fq open">

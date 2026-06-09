@@ -64,18 +64,18 @@ export function renderLanding() {
                             </div>
                             
                             <!-- Main Stats -->
-                            <div class="lactivity-stats-grid">
-                                <div class="lactivity-stat-box">
+                            <div class="lactivity-stats-row">
+                                <div class="lactivity-stat-col">
                                     <div class="lactivity-stat-label">Capital Locked</div>
                                     <div class="lactivity-stat-value" id="live-stat-locked">$248,500</div>
                                 </div>
-                                <div class="lactivity-stat-box">
+                                <div class="lactivity-stat-col">
                                     <div class="lactivity-stat-label">Contracts Settled</div>
                                     <div class="lactivity-stat-value" id="live-stat-settled">1,247</div>
                                 </div>
-                                <div class="lactivity-stat-box">
+                                <div class="lactivity-stat-col">
                                     <div class="lactivity-stat-label">Paid Out</div>
-                                    <div class="lactivity-stat-value" id="live-stat-payout">$82,400</div>
+                                    <div class="lactivity-stat-value" id="live-stat-payout">$79,545</div>
                                 </div>
                             </div>
                             
@@ -95,12 +95,18 @@ export function renderLanding() {
                                     <span class="success-label">Target Achievement Rate</span>
                                     <span class="success-rate-val" id="live-success-rate-val">68%</span>
                                 </div>
-                                <div class="lactivity-success-visual" id="live-success-visual-ticks">
-                                    <!-- Bloomberg/Apple style tick indicators -->
+                                
+                                <div class="lactivity-visual-row">
+                                    <span class="visual-row-label">Success Contracts</span>
+                                    <div class="visual-row-ticks" id="success-visual-ticks">
+                                        <!-- Dynamic forest green ticks -->
+                                    </div>
                                 </div>
-                                <div class="lactivity-success-legend">
-                                    <div class="legend-item"><span class="legend-dot success"></span>Success</div>
-                                    <div class="legend-item"><span class="legend-dot failure"></span>Forfeited</div>
+                                <div class="lactivity-visual-row">
+                                    <span class="visual-row-label">Failed Contracts</span>
+                                    <div class="visual-row-ticks" id="failed-visual-ticks">
+                                        <!-- Dynamic muted gray-red ticks -->
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -594,7 +600,7 @@ export function initLanding() {
                 // Base-plus-offset calculation to reach user's premium stats
                 const totalLocked = 247400 + Math.round(dbLockedCents / 100);
                 const totalSettled = 1222 + dbSettledCount;
-                const totalPayout = 79545 + Math.round(dbPayoutCents / 100);
+                const totalPayout = 76690 + Math.round(dbPayoutCents / 100);
                 
                 // Count-up animation helper
                 const animateCount = (elementId, targetVal, isCurrency = false) => {
@@ -678,7 +684,7 @@ export function initLanding() {
                                 <span class="lfeed-user">@${item.username}</span>
                                 <span class="lfeed-goal">${item.goal}</span>
                             </div>
-                            <span class="lfeed-reward">+$${item.reward.toLocaleString()} Reward</span>
+                            <span class="lfeed-reward"><span class="lfeed-reward-val">+$${item.reward.toLocaleString()}</span> Reward</span>
                         </div>
                     `).join('');
                     
@@ -688,30 +694,37 @@ export function initLanding() {
                 
                 // Populate success rate visual ticks
                 const successRateValEl = document.getElementById('live-success-rate-val');
-                const visualTicksEl = document.getElementById('live-success-visual-ticks');
+                const successTicksEl = document.getElementById('success-visual-ticks');
+                const failedTicksEl = document.getElementById('failed-visual-ticks');
                 
-                if (visualTicksEl) {
-                    let successRate = 0.68; // Default 68%
-                    if (dbSettledCount > 0) {
-                        const successCount = dbSuccessSettlements.length;
-                        const calculatedRate = successCount / dbSettledCount;
-                        successRate = calculatedRate > 0 ? calculatedRate : 0.68;
-                    }
-                    
-                    const displayRate = Math.round(successRate * 100);
-                    if (successRateValEl) successRateValEl.textContent = displayRate + '%';
-                    
+                let successRate = 0.68; // Default 68%
+                if (dbSettledCount > 0) {
+                    const successCount = dbSuccessSettlements.length;
+                    const calculatedRate = successCount / dbSettledCount;
+                    successRate = calculatedRate > 0 ? calculatedRate : 0.68;
+                }
+                
+                const displayRate = Math.round(successRate * 100);
+                if (successRateValEl) successRateValEl.textContent = displayRate + '%';
+                
+                const totalTicks = 16;
+                const successTicks = Math.round(totalTicks * successRate);
+                const failedTicks = totalTicks - successTicks;
+                
+                if (successTicksEl) {
                     let ticksHtml = '';
-                    const totalTicks = 16;
-                    const successTicks = Math.round(totalTicks * successRate);
-                    for (let t = 0; t < totalTicks; t++) {
-                        if (t < successTicks) {
-                            ticksHtml += '<div class="visual-tick success"></div>';
-                        } else {
-                            ticksHtml += '<div class="visual-tick failed"></div>';
-                        }
+                    for (let t = 0; t < successTicks; t++) {
+                        ticksHtml += '<div class="visual-tick success"></div>';
                     }
-                    visualTicksEl.innerHTML = ticksHtml;
+                    successTicksEl.innerHTML = ticksHtml;
+                }
+                
+                if (failedTicksEl) {
+                    let ticksHtml = '';
+                    for (let t = 0; t < failedTicks; t++) {
+                        ticksHtml += '<div class="visual-tick failed"></div>';
+                    }
+                    failedTicksEl.innerHTML = ticksHtml;
                 }
 
                 // Populate Live Settlement Activity Table

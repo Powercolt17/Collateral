@@ -484,7 +484,7 @@ export function renderLanding() {
                     </div>
                     <div class="lcards">
                         <div class="lcard lcard-popular" data-r>
-                            <div class="lcard-popular-badge">Most Popular</div>
+
                             <div class="lcard-top">
                                 <span class="lcard-src"><img class="lcard-src-logo" src="https://www.vectorlogo.zone/logos/stripe/stripe-icon.svg" alt="Stripe">Stripe</span>
                                 <span class="lcard-tier tier-stake">Standard</span>
@@ -499,10 +499,7 @@ export function renderLanding() {
                         <div class="lcard" data-r>
                             <div class="lcard-top">
                                 <span class="lcard-src"><img class="lcard-src-logo" src="https://cdn.simpleicons.org/x/111111" alt="X">X / Twitter</span>
-                                <div style="display:flex; gap:6px;">
-                                    <span class="lcard-tier tier-allin">High Yield</span>
-                                    <span class="lcard-tier tier-3x-yield">3x Yield</span>
-                                </div>
+                                <span class="lcard-tier tier-3x-yield">3x Yield</span>
                             </div>
                             <div class="lcard-title">Follower Growth</div>
                             <div class="lcard-target">+1,000 Followers</div>

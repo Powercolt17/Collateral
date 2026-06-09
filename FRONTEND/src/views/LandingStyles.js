@@ -168,24 +168,26 @@ export const landingCSS = `
 .lpcard-header-title {
   font-family: 'Inter', sans-serif;
   font-size: 9.5px;
-  font-weight: 700;
-  color: #555555;
-  letter-spacing: 1.2px;
-  text-transform: uppercase;
+    font-family: 'Inter', sans-serif;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: #475569;
 }
 
 .lpcard-status {
-  font-family: 'Inter', sans-serif;
-  font-size: 8.5px;
-  font-weight: 700;
-  letter-spacing: 0.5px;
-  text-transform: uppercase;
-  border-radius: 100px;
-  padding: 4px 10px;
-  display: inline-flex;
-  align-items: center;
-  gap: 5px;
-  border: 1px solid transparent;
+    font-family: 'Inter', sans-serif;
+    font-size: 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    border-radius: 100px;
+    padding: 4px 10px;
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    border: 1px solid transparent;
 }
 .lpcard-status.status-active {
   background: #EBF7EE !important;
@@ -231,7 +233,7 @@ export const landingCSS = `
 }
 .field-label {
   font-family: 'Inter', sans-serif;
-  font-size: 8px;
+  font-size: 11.5px;
   font-weight: 700;
   color: #8C8B87;
   letter-spacing: 0.8px;
@@ -239,7 +241,7 @@ export const landingCSS = `
 }
 .field-value {
   font-family: 'Inter Tight', sans-serif;
-  font-size: 15px;
+  font-size: 20px;
   font-weight: 700;
   color: #111111;
   letter-spacing: -0.3px;
@@ -264,13 +266,13 @@ export const landingCSS = `
   border-right: 1px solid #EBEAE6;
 }
 .lpcard-financial-cell .field-label {
-  font-size: 7.5px;
+  font-size: 10.5px;
   color: #8C8B87;
   margin-bottom: 4px;
 }
 .financial-val {
   font-family: 'Inter Tight', sans-serif;
-  font-size: 15px;
+  font-size: 20px;
   font-weight: 700;
   color: #111111;
   letter-spacing: -0.2px;
@@ -280,7 +282,7 @@ export const landingCSS = `
 }
 .financial-sub {
   font-family: 'Inter', sans-serif;
-  font-size: 8.5px;
+  font-size: 11.5px;
   color: #8C8B87;
   margin-top: 2px;
 }
@@ -348,7 +350,7 @@ export const landingCSS = `
 }
 .outcome-title {
   font-family: 'Inter', sans-serif;
-  font-size: 8px;
+  font-size: 11.5px;
   font-weight: 700;
   letter-spacing: 0.8px;
   text-transform: uppercase;
@@ -361,13 +363,13 @@ export const landingCSS = `
 }
 .outcome-sub {
   font-family: 'Inter', sans-serif;
-  font-size: 8.5px;
+  font-size: 11.5px;
   color: #8C8B87;
   margin-bottom: 2px;
 }
 .outcome-val {
   font-family: 'Inter Tight', sans-serif;
-  font-size: 15px;
+  font-size: 20px;
   font-weight: 700;
   letter-spacing: -0.3px;
   margin-bottom: 2px;
@@ -380,7 +382,7 @@ export const landingCSS = `
 }
 .outcome-desc {
   font-family: 'Inter', sans-serif;
-  font-size: 8px;
+  font-size: 11.5px;
   color: #8C8B87;
 }
 
@@ -396,7 +398,7 @@ export const landingCSS = `
 }
 .progress-label {
   font-family: 'Inter', sans-serif;
-  font-size: 8px;
+  font-size: 10px;
   font-weight: 700;
   color: #8C8B87;
   letter-spacing: 0.8px;
@@ -404,7 +406,7 @@ export const landingCSS = `
 }
 .progress-percentage {
   font-family: 'Inter', sans-serif;
-  font-size: 8px;
+  font-size: 10px;
   font-weight: 700;
   color: #111111;
   letter-spacing: 0.5px;
@@ -431,7 +433,7 @@ export const landingCSS = `
 }
 .time-label {
   font-family: 'Inter', sans-serif;
-  font-size: 8px;
+  font-size: 10px;
   font-weight: 700;
   color: #8C8B87;
   letter-spacing: 0.8px;
@@ -454,13 +456,13 @@ export const landingCSS = `
 }
 .time-num {
   font-family: 'Inter Tight', sans-serif;
-  font-size: 16px;
+  font-size: 18px;
   font-weight: 700;
   color: #111111;
 }
 .time-unit {
   font-family: 'Inter', sans-serif;
-  font-size: 7.5px;
+  font-size: 9px;
   font-weight: 600;
   color: #8C8B87;
   text-transform: uppercase;
@@ -485,7 +487,7 @@ export const landingCSS = `
   justify-content: center;
   gap: 6px;
   font-family: 'Inter', sans-serif;
-  font-size: 8.5px;
+  font-size: 10px;
   font-weight: 700;
   color: #8C8B87;
   letter-spacing: 1.2px;

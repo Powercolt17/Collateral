@@ -138,45 +138,29 @@ export const landingCSS = `
   animation: premiumFloat 8s ease-in-out infinite;
 }
 
-/* CARD TOP HERO STATS */
-.lc-hero-header {
+/* CARD TOP PLATFORM HEADER */
+.lc-platform-header {
   display: flex;
-  flex-direction: column;
   align-items: center;
-  text-align: center;
-  padding-bottom: 12px;
-  border-bottom: 1px solid #f5f4f0;
-  gap: 2px;
-}
-.lc-hero-title-row {
-  display: flex;
-  align-items: baseline;
   justify-content: center;
   gap: 8px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid #f5f4f0;
 }
-.lc-hero-val {
-  font-family: 'Plus Jakarta Sans', sans-serif;
-  font-size: 38px;
-  font-weight: 800;
-  color: #1e1e1e;
-  letter-spacing: -1.5px;
-  line-height: 1;
+.lc-plat-logo {
+  width: 16px;
+  height: 16px;
+  object-fit: contain;
 }
-.lc-hero-lbl {
-  font-family: 'Inter', sans-serif;
-  font-size: 13px;
+.lc-plat-text {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 9.5px;
   font-weight: 700;
-  color: #5c1414;
-  text-transform: uppercase;
-  letter-spacing: 0.1em;
-}
-.lc-hero-subtitle {
-  font-family: 'Inter', sans-serif;
-  font-size: 12.5px;
-  font-weight: 500;
   color: #64748b;
-  margin-top: 2px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
 }
+
 
 /* SECTION — FEATURED CONTRACT VISUALIZATION */
 .lc-contract {

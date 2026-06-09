@@ -53,13 +53,10 @@ export function renderLanding() {
                     </div>
                     <div class="lhero-right animate-scale-in delay-1">
                         <div class="lactivity-card">
-                            <!-- HERO STATS HEADER (CHANGE 4) -->
-                            <div class="lc-hero-header">
-                                <div class="lc-hero-title-row">
-                                    <span class="lc-hero-val" id="live-stat-locked">$8,700</span>
-                                    <span class="lc-hero-lbl">Locked</span>
-                                </div>
-                                <div class="lc-hero-subtitle">Across <span id="live-stat-active-count">22</span> active contracts • <span id="live-stat-success-rate">68%</span> success rate</div>
+                            <!-- DYNAMIC PLATFORM INTEGRATION HEADER -->
+                            <div class="lc-platform-header" id="lc-platform-header">
+                                <img class="lc-plat-logo" id="lc-plat-logo" src="https://www.vectorlogo.zone/logos/stripe/stripe-icon.svg" alt="Stripe">
+                                <span class="lc-plat-text" id="lc-plat-text">Connected via Stripe Connect</span>
                             </div>
 
                             <!-- FEATURED CONTRACT -->
@@ -758,6 +755,33 @@ export function initLanding() {
                     if (depositValEl) depositValEl.textContent = `$${deposit.toLocaleString()}`;
                     if (rewardValEl) rewardValEl.textContent = `+$${reward.toLocaleString()}`;
                     if (returnValEl) returnValEl.textContent = `$${total.toLocaleString()}`;
+
+                    // Update platform header dynamically
+                    const platLogoEl = document.getElementById('lc-plat-logo');
+                    const platTextEl = document.getElementById('lc-plat-text');
+                    if (platLogoEl && platTextEl) {
+                        let logoUrl = 'https://www.vectorlogo.zone/logos/stripe/stripe-icon.svg';
+                        let connText = 'Connected via Stripe Connect';
+                        let platAlt = 'Stripe';
+
+                        if (plat === 'X' || plat === 'TWITTER') {
+                            logoUrl = 'https://cdn.simpleicons.org/x/111111';
+                            connText = 'Verified via X API v2';
+                            platAlt = 'X';
+                        } else if (plat === 'SHOPIFY') {
+                            logoUrl = 'https://www.vectorlogo.zone/logos/shopify/shopify-icon.svg';
+                            connText = 'Connected via Shopify Webhooks';
+                            platAlt = 'Shopify';
+                        } else if (plat === 'YOUTUBE') {
+                            logoUrl = 'https://www.vectorlogo.zone/logos/youtube/youtube-icon.svg';
+                            connText = 'Verified via YouTube API';
+                            platAlt = 'YouTube';
+                        }
+
+                        platLogoEl.src = logoUrl;
+                        platLogoEl.alt = platAlt;
+                        platTextEl.textContent = connText;
+                    }
                 };
 
                 // Initialize the first one

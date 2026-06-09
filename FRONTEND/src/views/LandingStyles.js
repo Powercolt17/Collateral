@@ -120,8 +120,12 @@ export const landingCSS = `
 .lhero-right{display:flex;justify-content:center;align-items:center;position:relative;perspective:1200px}
 .lhero-right::before{content:none !important;display:none !important}
 .lactivity-card {
-  background: linear-gradient(#ffffff, #ffffff) padding-box,
-              linear-gradient(120deg, #f2efeb 35%, rgba(92,20,20,0.2) 48%, var(--r) 50%, rgba(92,20,20,0.2) 52%, #f2efeb 65%) border-box !important;
+  background-image: linear-gradient(#ffffff, #ffffff),
+                    linear-gradient(120deg, #f2efeb 35%, rgba(92,20,20,0.15) 45%, var(--r) 48%, #b91c1c 50%, var(--r) 52%, rgba(92,20,20,0.15) 55%, #f2efeb 65%) !important;
+  background-clip: padding-box, border-box !important;
+  background-origin: padding-box, border-box !important;
+  background-size: 100% 100%, 300% 100% !important;
+  background-position: 0% 0%, 300% 0%;
   border: 1px solid transparent !important;
   border-radius: 20px;
   padding: 24px 28px !important;
@@ -136,7 +140,6 @@ export const landingCSS = `
   gap: 20px !important;
   color: #1e1e1e !important;
   font-family: 'Inter', sans-serif;
-  background-size: 100% 100%, 300% 100% !important;
   animation: premiumFloat 8s ease-in-out infinite, borderSweep 6s linear infinite;
 }
 @keyframes borderSweep {

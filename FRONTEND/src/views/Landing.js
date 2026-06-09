@@ -73,19 +73,19 @@ export function renderLanding() {
                                     <div class="lc-status"><span class="lc-status-dot"></span>Active</div>
                                 </div>
 
-                                <div class="lc-flow">
-                                    <div class="lc-flow-step">
+                                <div class="lc-flow-horizontal">
+                                    <div class="lc-flow-col">
                                         <span class="lc-flow-label">Deposit</span>
                                         <span class="lc-flow-val" id="lc-feat-deposit">$500</span>
                                     </div>
-                                    <div class="lc-flow-arrow">↓</div>
-                                    <div class="lc-flow-step">
-                                        <span class="lc-flow-label">Reward Match</span>
+                                    <div class="lc-flow-arrow-right">→</div>
+                                    <div class="lc-flow-col">
+                                        <span class="lc-flow-label">Match</span>
                                         <span class="lc-flow-val lc-val-green" id="lc-feat-reward">+$500</span>
                                     </div>
-                                    <div class="lc-flow-arrow">↓</div>
-                                    <div class="lc-flow-step lc-step-final">
-                                        <span class="lc-flow-label">Potential Return</span>
+                                    <div class="lc-flow-arrow-right">→</div>
+                                    <div class="lc-flow-col lc-col-final">
+                                        <span class="lc-flow-label">Return</span>
                                         <span class="lc-flow-val" id="lc-feat-return">$1,000</span>
                                     </div>
                                 </div>

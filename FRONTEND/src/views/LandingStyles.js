@@ -249,63 +249,61 @@ export const landingCSS = `
   animation: pulseDot 2s ease-in-out infinite;
 }
 
-/* DEPOSIT → REWARD → POTENTIAL RETURN FLOW */
-.lc-flow {
+/* DEPOSIT → REWARD → POTENTIAL RETURN FLOW (COMPACT HORIZONTAL) */
+.lc-flow-horizontal {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: #faf9f6;
+  border: 1px solid #f2efeb;
+  border-radius: 10px;
+  padding: 8px 12px;
+  gap: 8px;
+  margin-top: 4px;
+}
+.lc-flow-col {
   display: flex;
   flex-direction: column;
-  gap: 6px;
-}
-.lc-flow-step {
-  display: flex;
-  justify-content: space-between;
   align-items: center;
-  padding: 12px 16px;
-  background: #faf9f6;
-  border: 1px solid #eae8e2;
-  border-radius: 8px;
-  transition: all 0.3s ease;
+  gap: 2px;
+  flex: 1;
 }
 .lc-flow-label {
   font-family: 'Inter', sans-serif;
-  font-size: 12px;
-  font-weight: 600;
-  color: #666;
+  font-size: 9px;
+  font-weight: 700;
+  color: #64748b;
   text-transform: uppercase;
   letter-spacing: 0.05em;
 }
 .lc-flow-val {
   font-family: 'SF Mono', 'Fira Code', 'Consolas', monospace;
-  font-size: 14px;
+  font-size: 13px;
   font-weight: 700;
   color: #1e1e1e;
 }
 .lc-val-green {
   color: #145c14 !important;
 }
-.lc-flow-arrow {
-  text-align: center;
+.lc-flow-arrow-right {
   font-size: 14px;
   color: #bbb;
-  margin: 1px 0;
-  line-height: 1;
+  font-weight: bold;
+  flex-shrink: 0;
 }
-.lc-step-final {
+.lc-col-final {
   background: linear-gradient(135deg, #5c1414 0%, #3d0d0d 100%) !important;
-  border-color: #4a0f0f !important;
-  padding: 16px 20px !important;
-  transform: scale(1.02);
-  box-shadow: 0 8px 24px rgba(92, 20, 20, 0.22);
+  padding: 6px 12px !important;
+  border-radius: 6px !important;
+  box-shadow: 0 4px 10px rgba(92, 20, 20, 0.15);
 }
-.lc-step-final .lc-flow-label {
-  color: rgba(255, 255, 255, 0.9) !important;
-  font-weight: 700 !important;
-  font-size: 13px !important;
+.lc-col-final .lc-flow-label {
+  color: rgba(255, 255, 255, 0.95) !important;
 }
-.lc-step-final .lc-flow-val {
+.lc-col-final .lc-flow-val {
   color: #fff !important;
-  font-size: 20px !important;
+  font-size: 13px !important;
   font-weight: 800 !important;
-  text-shadow: 0 1px 2px rgba(0,0,0,0.2);
 }
 
 /* DEDICATED LIVE ACTIVITY STRIP */

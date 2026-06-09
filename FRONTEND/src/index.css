@@ -16,6 +16,12 @@
 }
 
 @font-face {
+    font-family: 'Nevera-Regular';
+    src: url('/Nevera-Regular.otf') format('opentype');
+    font-weight: normal;
+}
+
+@font-face {
     font-family: 'Science';
     src: url('/science.otf') format('opentype');
     font-weight: normal;

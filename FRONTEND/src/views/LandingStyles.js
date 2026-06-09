@@ -332,25 +332,43 @@ export const landingCSS = `
   gap: 6px;
   transition: opacity 0.3s ease, transform 0.3s ease;
 }
-.lc-ra-row {
-  font-family: 'SF Mono', 'Fira Code', 'Consolas', monospace;
-  font-size: 10px;
-  font-weight: 700;
-  color: #64748b;
+.lc-ra-item {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  padding: 4px 0;
+  border-bottom: 1px solid rgba(0,0,0,0.02);
+}
+.lc-ra-item:last-child {
+  border-bottom: none;
+}
+.lc-ra-title-line {
   display: flex;
   align-items: center;
-  justify-content: flex-start;
-  padding: 2px 4px;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-  width: 100%;
+  gap: 6px;
 }
-.lc-ra-row .lct-name {
-  font-family: 'Inter', sans-serif;
-  text-transform: none;
-  font-weight: 600;
+.lc-ra-username {
+  font-family: 'SF Mono', 'Fira Code', 'Consolas', monospace;
+  font-size: 12.5px;
+  font-weight: 700;
   color: #1e1e1e;
-  letter-spacing: -0.1px;
+  text-transform: lowercase;
+}
+.lc-ra-goal-line {
+  font-family: 'Inter', sans-serif;
+  font-size: 12px;
+  font-weight: 500;
+  color: #475569;
+  padding-left: 18px;
+}
+.lc-ra-details-line {
+  font-family: 'SF Mono', 'Fira Code', 'Consolas', monospace;
+  font-size: 10.5px;
+  font-weight: 600;
+  color: #64748b;
+  padding-left: 18px;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
 }
 
 /* TRUST COPY & TICKER LABELS */

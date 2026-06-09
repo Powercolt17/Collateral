@@ -66,7 +66,6 @@ export function renderLanding() {
                             <div class="lc-contract">
                                 <div class="lc-contract-head">
                                     <div>
-                                        <div class="lc-contract-user" id="lc-feat-user">@danny_v</div>
                                         <div class="lc-contract-name" id="lc-feat-name">Revenue Growth</div>
                                         <div class="lc-contract-goal" id="lc-feat-goal">Increase revenue by 20%</div>
                                         <div class="lc-contract-time" id="lc-feat-time">18 Days Remaining</div>
@@ -578,9 +577,14 @@ export function initLanding() {
                     YOUTUBE: { name: 'Subscriber Sprints', goal: 'Reach 5,000 channel subscribers',     windowDays: 30, mult: 0.7 }
                 };
 
-                // Find best featured contract (prefer funded active contracts)
-                const funded = events.find(e => e.eventType === 'FUNDS_LOCKED' || e.eventType === 'EXECUTION_CONFIRMED');
-                const featured = funded || events[0];
+                // Find highest value active contract from ledger events
+                const activeEvents = events.filter(e => e.eventType === 'FUNDS_LOCKED' || e.eventType === 'EXECUTION_CONFIRMED');
+                let featured = events[0];
+                if (activeEvents.length > 0) {
+                    activeEvents.sort((a, b) => (b.amountUsdCents || 0) - (a.amountUsdCents || 0));
+                    featured = activeEvents[0];
+                }
+
                 const plat = (featured.platform || 'STRIPE').toUpperCase();
                 const info = platformData[plat] || platformData.STRIPE;
                 const depositCents = featured.lockAmountUsdCents || featured.amountUsdCents || 50000;
@@ -599,14 +603,17 @@ export function initLanding() {
                 // Populate contract user and headers
                 const getMaskedUser = (user) => {
                     if (!user) return 'operator';
-                    const u = user.startsWith('@') ? user.slice(1) : user;
+                    let u = user.startsWith('@') ? user.slice(1) : user;
+                    if (u.includes('@')) {
+                        u = u.split('@')[0];
+                    }
+                    u = u.toLowerCase().replace(/[^a-z0-9_]/g, '');
                     return u.length > 12 ? u.slice(0, 10) + '...' : u;
                 };
-                const userEl = document.getElementById('lc-feat-user');
+
                 const nameEl = document.getElementById('lc-feat-name');
                 const goalEl = document.getElementById('lc-feat-goal');
                 const timeEl = document.getElementById('lc-feat-time');
-                if (userEl) userEl.textContent = `@${getMaskedUser(featured.principal)}`;
                 if (nameEl) nameEl.textContent = info.name;
                 if (goalEl) goalEl.textContent = info.goal;
                 if (timeEl) timeEl.textContent = `${daysRemaining} Days Remaining`;
@@ -620,10 +627,10 @@ export function initLanding() {
                 const raListEl = document.getElementById('lc-ra-list');
                 if (raListEl && events.length > 0) {
                     const mockEvents = [
-                        { eventType: 'SETTLED_SUCCESS', platform: 'STRIPE', amountUsdCents: 50000, goalDesc: 'Increase Revenue 20%' },
-                        { eventType: 'FUNDS_LOCKED', platform: 'FITNESS', amountUsdCents: 25000, goalDesc: 'Lose 15 Pounds' },
-                        { eventType: 'SETTLED_SUCCESS', platform: 'WORKOUTS', amountUsdCents: 10000, goalDesc: 'Complete 30 Workouts' },
-                        { eventType: 'FUNDS_LOCKED', platform: 'X', amountUsdCents: 30000, goalDesc: 'Reach 10,000 Newsletter Subscribers' }
+                        { eventType: 'SETTLED_SUCCESS', platform: 'STRIPE', amountUsdCents: 50000, goalDesc: 'Increase Revenue 20%', actor: 'tylerbrooks' },
+                        { eventType: 'FUNDS_LOCKED', platform: 'FITNESS', amountUsdCents: 25000, goalDesc: 'Lose 15 Pounds', actor: 'sarah_k' },
+                        { eventType: 'SETTLED_SUCCESS', platform: 'WORKOUTS', amountUsdCents: 17000, goalDesc: 'Complete 30 Workouts', actor: 'jakevoss' },
+                        { eventType: 'FUNDS_LOCKED', platform: 'X', amountUsdCents: 100000, goalDesc: 'Reach 10,000 Newsletter Subscribers', actor: 'amina' }
                     ];
 
                     const combinedEvents = [
@@ -635,7 +642,8 @@ export function initLanding() {
                                     : e.platform === 'X' || e.platform === 'TWITTER' ? 'Reach 10,000 Newsletter Subscribers'
                                     : e.platform === 'SHOPIFY' ? 'Generate $5,000 in net sales'
                                     : e.platform === 'YOUTUBE' ? 'Reach 5,000 subscribers'
-                                    : 'Performance Goal'
+                                    : 'Performance Goal',
+                            actor: e.actor || e.principal
                         })),
                         ...mockEvents
                     ];
@@ -644,13 +652,51 @@ export function initLanding() {
                         const amtRaw = Math.round((e.amountUsdCents || 0) / 100) || 250;
                         const t = e.eventType;
                         const goalText = e.goalDesc || 'Performance Goal';
+                        const username = getMaskedUser(e.actor || e.principal);
+                        const ts = e.timestamp || e.created_at || new Date().toISOString();
                         
+                        const timeAgo = (iso) => {
+                            const diff = Math.floor((Date.now() - new Date(iso).getTime()) / 60000);
+                            if (diff < 1) return 'just now';
+                            if (diff < 60) return `${diff}m ago`;
+                            const h = Math.floor(diff / 60);
+                            if (h < 24) return `${h}h ago`;
+                            return `${Math.floor(h / 24)}d ago`;
+                        };
+
                         if (t === 'SETTLED_SUCCESS') {
-                            return `<div class="lc-ra-row"><span class="lct-check">✓</span> <span class="lct-name">${goalText} Completed</span> <span class="lct-bullet">•</span> <span class="lct-green">+$${amtRaw} Paid</span></div>`;
+                            return `
+                                <div class="lc-ra-item">
+                                    <div class="lc-ra-title-line">
+                                        <span class="lct-check">✓</span>
+                                        <span class="lc-ra-username">@${username}</span>
+                                    </div>
+                                    <div class="lc-ra-goal-line">${goalText} Completed</div>
+                                    <div class="lc-ra-details-line">+$${amtRaw} paid • ${timeAgo(ts)}</div>
+                                </div>
+                            `;
                         } else if (t === 'SETTLED_FAILURE' || t === 'CONTRACT_FORFEITED') {
-                            return `<div class="lc-ra-row"><span class="lct-cross">✗</span> <span class="lct-name">${goalText} Forfeited</span> <span class="lct-bullet">•</span> <span class="lct-red">$${amtRaw} Forfeited</span></div>`;
+                            return `
+                                <div class="lc-ra-item">
+                                    <div class="lc-ra-title-line">
+                                        <span class="lct-cross">✗</span>
+                                        <span class="lc-ra-username">@${username}</span>
+                                    </div>
+                                    <div class="lc-ra-goal-line">${goalText} Forfeited</div>
+                                    <div class="lc-ra-details-line">$${amtRaw} forfeited • ${timeAgo(ts)}</div>
+                                </div>
+                            `;
                         } else {
-                            return `<div class="lc-ra-row"><span class="lct-check">✓</span> <span class="lct-name">${goalText} Funded</span> <span class="lct-bullet">•</span> <span class="lct-locked">$${amtRaw} Locked</span></div>`;
+                            return `
+                                <div class="lc-ra-item">
+                                    <div class="lc-ra-title-line">
+                                        <span class="lct-check">✓</span>
+                                        <span class="lc-ra-username">@${username}</span>
+                                    </div>
+                                    <div class="lc-ra-goal-line">${goalText} Funded</div>
+                                    <div class="lc-ra-details-line">$${amtRaw} locked • ${timeAgo(ts)}</div>
+                                </div>
+                            `;
                         }
                     };
 
@@ -682,7 +728,7 @@ export function initLanding() {
                 // Populate Live Settlement Activity Table
                 const tbody = document.getElementById('lledger-tbody');
                 if (tbody) {
-                    const ledgerEvents = response.events.filter(e => e.contractId && e.principal);
+                    const ledgerEvents = response.events.filter(e => e.contractId && (e.actor || e.principal));
                     if (ledgerEvents.length > 0) {
                         let startIndex = 0;
 

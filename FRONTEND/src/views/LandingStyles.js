@@ -121,7 +121,7 @@ export const landingCSS = `
 .lhero-right::before{content:none !important;display:none !important}
 .lactivity-card {
   background: #ffffff !important;
-  border: 1px solid #eae8e2 !important;
+  border: 1px solid #f2efeb !important;
   border-radius: 20px;
   padding: 28px 32px !important;
   width: 100%;
@@ -129,10 +129,10 @@ export const landingCSS = `
   position: relative;
   overflow: hidden;
   z-index: 1;
-  box-shadow: 0 16px 48px -16px rgba(92,20,20,0.06), 0 0 1px rgba(92,20,20,0.08) !important;
+  box-shadow: 0 32px 64px -16px rgba(92,20,20,0.1), 0 0 1px rgba(92,20,20,0.12), 0 8px 24px -8px rgba(0,0,0,0.04) !important;
   display: flex;
   flex-direction: column;
-  gap: 20px !important;
+  gap: 24px !important;
   color: #1e1e1e !important;
   font-family: 'Inter', sans-serif;
   animation: premiumFloat 8s ease-in-out infinite;
@@ -140,9 +140,14 @@ export const landingCSS = `
 
 /* SECTION — FEATURED CONTRACT VISUALIZATION */
 .lc-contract {
+  background: #fdfdfc;
+  border: 1px solid #f5f4f0;
+  border-radius: 14px;
+  padding: 20px;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.6), 0 2px 8px rgba(0,0,0,0.02);
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: 14px;
 }
 .lc-contract-head {
   display: flex;
@@ -156,12 +161,22 @@ export const landingCSS = `
   color: #1e1e1e;
   letter-spacing: -0.5px;
 }
-.lc-contract-meta {
+.lc-contract-goal {
+  font-family: 'Inter', sans-serif;
+  font-size: 13px;
+  font-weight: 500;
+  color: #475569;
+  margin-top: 4px;
+  line-height: 1.4;
+}
+.lc-contract-time {
   font-family: 'Inter', sans-serif;
   font-size: 11px;
-  font-weight: 500;
-  color: #8a8984;
-  margin-top: 2px;
+  font-weight: 600;
+  color: #5c1414;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-top: 6px;
 }
 .lc-status {
   display: inline-flex;
@@ -227,28 +242,35 @@ export const landingCSS = `
   line-height: 1;
 }
 .lc-step-final {
-  background: #5c1414 !important;
-  border-color: #5c1414 !important;
-  box-shadow: 0 4px 12px rgba(92,20,20,0.15);
+  background: linear-gradient(135deg, #5c1414 0%, #3d0d0d 100%) !important;
+  border-color: #4a0f0f !important;
+  padding: 16px 20px !important;
+  transform: scale(1.02);
+  box-shadow: 0 8px 24px rgba(92, 20, 20, 0.22);
 }
 .lc-step-final .lc-flow-label {
-  color: rgba(255, 255, 255, 0.8) !important;
+  color: rgba(255, 255, 255, 0.9) !important;
+  font-weight: 700 !important;
+  font-size: 13px !important;
 }
 .lc-step-final .lc-flow-val {
   color: #fff !important;
-  font-size: 16px;
+  font-size: 20px !important;
+  font-weight: 800 !important;
+  text-shadow: 0 1px 2px rgba(0,0,0,0.2);
 }
 
 /* SECTION — SOCIAL PROOF STATS */
 .lc-proof {
   display: flex;
+  flex-direction: column;
   align-items: center;
-  justify-content: space-between;
-  padding-top: 16px;
-  border-top: 1px solid #eae8e2;
+  text-align: center;
+  padding-top: 20px;
+  border-top: 1px solid #f5f4f0;
+  gap: 10px;
 }
-.lc-proof-item {
-  flex: 1;
+.lc-proof-locked {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -256,19 +278,47 @@ export const landingCSS = `
 }
 .lc-proof-val {
   font-family: 'Plus Jakarta Sans', sans-serif;
-  font-size: 18px;
+  font-size: 36px;
   font-weight: 800;
   color: #1e1e1e;
-  letter-spacing: -0.5px;
+  letter-spacing: -1.5px;
   line-height: 1;
 }
 .lc-proof-lbl {
   font-family: 'Inter', sans-serif;
-  font-size: 10px;
+  font-size: 11px;
   font-weight: 600;
-  color: #8a8984;
+  color: #5c1414;
   text-transform: uppercase;
-  letter-spacing: 0.08em;
+  letter-spacing: 0.1em;
+}
+.lc-proof-sub {
+  font-family: 'Inter', sans-serif;
+  font-size: 13px;
+  font-weight: 500;
+  color: #64748b;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.lc-proof-bullet {
+  color: #cbd5e1;
+  font-weight: bold;
+}
+.lc-trust {
+  font-family: 'Inter', sans-serif;
+  font-size: 10.5px;
+  font-weight: 500;
+  color: #8a8984;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  margin-top: 4px;
+}
+.lc-trust-lock {
+  color: #8a8984;
+  flex-shrink: 0;
 }
 
 /* SECTION — LIVE TICKER */
@@ -276,17 +326,43 @@ export const landingCSS = `
   font-family: 'SF Mono', 'Fira Code', 'Consolas', monospace;
   font-size: 9px;
   font-weight: 700;
-  color: #8a8984;
+  color: #64748b;
   text-transform: uppercase;
   letter-spacing: 0.08em;
   text-align: center;
   padding-top: 10px;
-  border-top: 1px dashed #eae8e2;
+  border-top: 1px dashed #f5f4f0;
   min-height: 24px;
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: opacity 0.3s ease;
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+.lct-check {
+  color: #145c14;
+  font-weight: 700;
+  margin-right: 4px;
+}
+.lct-cross {
+  color: #5c1414;
+  font-weight: 700;
+  margin-right: 4px;
+}
+.lct-bullet {
+  margin: 0 8px;
+  color: #cbd5e1;
+}
+.lct-green {
+  color: #145c14;
+  font-weight: 700;
+}
+.lct-red {
+  color: #5c1414;
+  font-weight: 700;
+}
+.lct-locked {
+  color: #1e1e1e;
+  font-weight: 700;
 }
 
 /* ═══ FLOATING BADGES ═══ */

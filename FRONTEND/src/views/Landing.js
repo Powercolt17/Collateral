@@ -62,12 +62,10 @@ export function renderLanding() {
                             <!-- FEATURED CONTRACT -->
                             <div class="lc-contract">
                                 <div class="lc-contract-head">
-                                    <div>
-                                        <div class="lc-contract-name" id="lc-feat-name">Revenue Growth</div>
-                                        <div class="lc-contract-goal" id="lc-feat-goal">Increase revenue by 20%</div>
-                                        <div class="lc-contract-time" id="lc-feat-time">18 Days Remaining</div>
-                                    </div>
                                     <div class="lc-status"><span class="lc-status-dot"></span>Active</div>
+                                    <div class="lc-contract-name" id="lc-feat-name">Revenue Growth</div>
+                                    <div class="lc-contract-goal" id="lc-feat-goal">Increase revenue by 20%</div>
+                                    <div class="lc-contract-time" id="lc-feat-time">18 Days Remaining</div>
                                 </div>
 
                                 <div class="lc-flow-horizontal">

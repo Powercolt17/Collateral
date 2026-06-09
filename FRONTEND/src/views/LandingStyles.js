@@ -177,17 +177,21 @@ export const landingCSS = `
   background: #fdfdfc;
   border: 1px solid #f5f4f0;
   border-radius: 14px;
-  padding: 12px 14px;
+  padding: 18px 16px;
   box-shadow: inset 0 1px 0 rgba(255,255,255,0.6), 0 2px 8px rgba(0,0,0,0.02);
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  align-items: center;
+  text-align: center;
+  gap: 14px;
   transition: opacity 0.3s ease, transform 0.3s ease;
 }
 .lc-contract-head {
   display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  width: 100%;
 }
 .lc-contract-user {
   font-family: 'SF Mono', 'Fira Code', 'Consolas', monospace;
@@ -328,6 +332,8 @@ export const landingCSS = `
 .lc-ra-item {
   display: flex;
   flex-direction: column;
+  align-items: center;
+  text-align: center;
   gap: 1px;
   padding: 2px 0;
   border-bottom: 1px solid rgba(0,0,0,0.02);
@@ -338,6 +344,7 @@ export const landingCSS = `
 .lc-ra-title-line {
   display: flex;
   align-items: center;
+  justify-content: center;
   gap: 4px;
 }
 .lc-ra-username {
@@ -358,7 +365,8 @@ export const landingCSS = `
   font-size: 10px;
   font-weight: 600;
   color: #64748b;
-  padding-left: 14px;
+  padding-left: 0;
+  text-align: center;
   text-transform: lowercase;
   letter-spacing: 0.02em;
 }

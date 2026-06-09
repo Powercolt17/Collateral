@@ -122,265 +122,182 @@ export const landingCSS = `
 .lactivity-card {
   background: #ffffff !important;
   border: 1px solid #eae8e2 !important;
-  border-radius: 20px;
-  padding: 32px !important;
+  border-radius: 24px;
+  padding: 40px 44px !important;
   width: 100%;
   max-width: 440px !important;
   position: relative;
   overflow: hidden;
   z-index: 1;
-  box-shadow: 0 16px 48px -16px rgba(92,20,20,0.08), 0 0 1px rgba(92,20,20,0.1) !important;
+  box-shadow: 0 16px 48px -16px rgba(92,20,20,0.06), 0 0 1px rgba(92,20,20,0.08) !important;
   display: flex;
   flex-direction: column;
-  gap: 24px;
+  gap: 36px !important;
   color: #1e1e1e !important;
   font-family: 'Inter', sans-serif;
   animation: premiumFloat 8s ease-in-out infinite;
 }
 
-/* Header */
-.lactivity-header {
+/* SECTION 1 — HERO METRIC */
+.lactivity-hero-section {
   display: flex;
-  align-items: center;
-  gap: 12px;
-  border-bottom: 1px solid #eae8e2;
-  padding-bottom: 18px;
+  flex-direction: column;
+  align-items: flex-start;
 }
-.lactivity-live-indicator {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  background: rgba(30, 70, 32, 0.05);
-  border: 1px solid rgba(30, 70, 32, 0.12);
-  padding: 4px 8px;
-  border-radius: 4px;
+.lactivity-hero-value {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 52px !important;
+  font-weight: 800;
+  color: #1e1e1e;
+  letter-spacing: -2px;
+  line-height: 1.0;
+  margin-bottom: 8px;
 }
-.live-dot-pulse {
-  width: 6px;
-  height: 6px;
-  background-color: #1e4620;
-  border-radius: 50%;
-  position: relative;
-  display: inline-block;
-}
-.live-dot-pulse::after {
-  content: '';
-  position: absolute;
-  top: -3px;
-  left: -3px;
-  right: -3px;
-  bottom: -3px;
-  border-radius: 50%;
-  border: 1px solid #1e4620;
-  animation: pulseGlow 1.8s ease-out infinite;
-}
-.live-label {
-  font-family: 'Inter', sans-serif;
-  font-size: 10px;
-  font-weight: 700;
-  color: #1e4620;
-  letter-spacing: 0.5px;
-}
-.lactivity-title {
+.lactivity-hero-label {
   font-family: 'Inter', sans-serif;
   font-size: 11px;
   font-weight: 700;
-  color: #5c1414;
-  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: #5c1414; /* burgundy brand color */
+  margin-bottom: 4px;
 }
-.lactivity-status {
+.lactivity-hero-support {
   font-family: 'Inter', sans-serif;
-  font-size: 11px;
-  color: #8a8984;
-  margin-left: auto;
+  font-size: 13px;
+  font-weight: 500;
+  color: #666;
 }
 
-/* Stats Row */
+/* SECTION 2 — LIVE MARKET FEED */
+.lactivity-feed-section {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  border-top: 1px solid #eae8e2;
+  padding-top: 28px;
+}
+.lactivity-feed-title {
+  font-family: 'Inter', sans-serif;
+  font-size: 11px;
+  font-weight: 700;
+  color: #8a8984;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  margin: 0;
+}
+.lactivity-feed-rows {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.lfeed-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 13.5px;
+  color: #1e1e1e;
+  border-bottom: 1px solid #faf9f6;
+  padding-bottom: 8px;
+}
+.lfeed-row:last-child {
+  border-bottom: none;
+  padding-bottom: 0;
+}
+.lfeed-row-left {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.lfeed-icon-check {
+  color: #1e4620; /* forest green check */
+  font-weight: 800;
+  font-size: 14px;
+}
+.lfeed-row-title {
+  font-weight: 600;
+  color: #1e1e1e;
+}
+.lfeed-row-right {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+.lfeed-reward-label {
+  font-size: 11.5px;
+  color: #8a8984;
+  font-weight: 500;
+}
+.lfeed-reward-value {
+  font-weight: 700;
+  color: #5c1414; /* burgundy reward value */
+}
+
+/* SECTION 3 — MARKET STATS */
 .lactivity-stats-row {
   display: flex;
   justify-content: space-between;
   gap: 16px;
+  border-top: 1px solid #eae8e2;
   border-bottom: 1px solid #eae8e2;
-  padding-bottom: 24px;
+  padding: 28px 0;
 }
 .lactivity-stat-col {
   flex: 1;
   display: flex;
   flex-direction: column;
-  gap: 6px;
+  gap: 4px;
 }
 .lactivity-stat-label {
   font-family: 'Inter', sans-serif;
   font-size: 10.5px;
-  font-weight: 600;
+  font-weight: 700;
   color: #8a8984;
   text-transform: uppercase;
-  letter-spacing: 0.05em;
+  letter-spacing: 0.1em;
 }
 .lactivity-stat-value {
   font-family: 'Plus Jakarta Sans', sans-serif;
   font-size: 26px;
   font-weight: 800;
   color: #1e1e1e;
-  letter-spacing: -1px;
+  letter-spacing: -0.5px;
   line-height: 1.1;
 }
 
-/* Scrolling Feed Section */
-.lactivity-feed-section {
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-  border-bottom: 1px solid #eae8e2;
-  padding-bottom: 24px;
-}
-.lactivity-feed-header {
-  font-family: 'Inter', sans-serif;
-  font-size: 10.5px;
-  font-weight: 700;
-  color: #8a8984;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-}
-.lactivity-feed-mask {
-  position: relative;
-  height: 150px;
-  overflow: hidden;
-  border: 1px solid #eae8e2;
-  border-radius: 12px;
-  background: #faf9f6;
-  mask-image: linear-gradient(to bottom, transparent, #000 15%, #000 85%, transparent);
-  -webkit-mask-image: linear-gradient(to bottom, transparent, #000 15%, #000 85%, transparent);
-}
-.lactivity-feed-container {
-  display: flex;
-  flex-direction: column;
-  gap: 0px;
-  padding: 8px 12px;
-  position: absolute;
-  width: 100%;
-  box-sizing: border-box;
-  animation: verticalMarquee 20s linear infinite;
-}
-.lactivity-feed-container:hover {
-  animation-play-state: paused;
-}
-
-/* Feed Item */
-.lfeed-item {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 12px 4px;
-  border-bottom: 1px solid #eae8e2;
-  font-size: 12.5px;
-  color: #1e1e1e;
-}
-.lfeed-item-left {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-.lfeed-check {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 16px;
-  height: 16px;
-  border-radius: 50%;
-  background: rgba(30, 70, 32, 0.08);
-  color: #1e4620;
-  font-size: 9px;
-  font-weight: 700;
-}
-.lfeed-user {
-  font-weight: 600;
-  color: #1e1e1e;
-}
-.lfeed-goal {
-  color: #8a8984;
-  font-size: 11px;
-  margin-left: 4px;
-}
-.lfeed-reward {
-  font-family: 'Inter', sans-serif;
-  font-size: 12px;
-  font-weight: 500;
-  color: #4a4a4a;
-}
-.lfeed-reward-val {
-  font-weight: 700;
-  color: #5c1414;
-}
-
-/* Success Visualization */
+/* SECTION 4 — SUCCESS RATE */
 .lactivity-success-section {
   display: flex;
   flex-direction: column;
-  gap: 12px;
-  padding-top: 4px;
+  gap: 6px;
 }
-.lactivity-success-header {
+.lactivity-success-rate-box {
   display: flex;
-  justify-content: space-between;
-  align-items: center;
+  align-items: baseline;
+  gap: 10px;
 }
-.success-label {
+.lactivity-success-rate-value {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 38px;
+  font-weight: 800;
+  color: #1e4620; /* forest green success rate */
+  letter-spacing: -1px;
+  line-height: 1.0;
+}
+.lactivity-success-rate-label {
   font-family: 'Inter', sans-serif;
   font-size: 10.5px;
   font-weight: 700;
   color: #8a8984;
   text-transform: uppercase;
-  letter-spacing: 0.05em;
+  letter-spacing: 0.1em;
 }
-.success-rate-val {
-  font-family: 'Plus Jakarta Sans', sans-serif;
-  font-size: 18px;
-  font-weight: 800;
-  color: #1e1e1e;
-}
-.lactivity-visual-row {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 12px;
-}
-.visual-row-label {
+.lactivity-success-sentence {
   font-family: 'Inter', sans-serif;
-  font-size: 12px;
-  font-weight: 500;
+  font-size: 13.5px;
   color: #4a4a4a;
-  width: 120px;
-}
-.visual-row-ticks {
-  display: flex;
-  gap: 3px;
-  flex: 1;
-  justify-content: flex-end;
-}
-.visual-tick {
-  height: 14px;
-  width: 6px;
-  border-radius: 1px;
-  background: #faf9f6;
-  border: 1px solid #eae8e2;
-}
-.visual-tick.success {
-  background: #1e4620;
-  border-color: #1e4620;
-}
-.visual-tick.failed {
-  background: #8c7a7a;
-  border-color: #8c7a7a;
-}
-
-@keyframes pulseGlow {
-  0% { transform: scale(0.9); opacity: 0.6; }
-  100% { transform: scale(1.6); opacity: 0; }
-}
-@keyframes verticalMarquee {
-  0% { transform: translateY(0); }
-  100% { transform: translateY(-33.33%); }
+  line-height: 1.4;
+  margin: 0;
 }
 
 /* ═══ FLOATING BADGES ═══ */

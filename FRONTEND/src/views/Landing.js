@@ -53,61 +53,40 @@ export function renderLanding() {
                     </div>
                     <div class="lhero-right animate-scale-in delay-1">
                         <div class="lactivity-card">
-                            <!-- Header -->
-                            <div class="lactivity-header">
-                                <div class="lactivity-live-indicator">
-                                    <span class="live-dot-pulse"></span>
-                                    <span class="live-label">LIVE</span>
-                                </div>
-                                <div class="lactivity-title">LIVE CONTRACT ACTIVITY</div>
-                                <div class="lactivity-status">Updated in real time</div>
+                            <!-- SECTION 1 — HERO METRIC -->
+                            <div class="lactivity-hero-section">
+                                <div class="lactivity-hero-value" id="live-stat-locked">$8,700</div>
+                                <div class="lactivity-hero-label">Capital Currently Locked</div>
+                                <div class="lactivity-hero-support" id="live-stat-active-count">25 Active Contracts</div>
                             </div>
                             
-                            <!-- Main Stats -->
+                            <!-- SECTION 2 — LIVE MARKET FEED -->
+                            <div class="lactivity-feed-section">
+                                <h4 class="lactivity-feed-title">LIVE ACTIVITY</h4>
+                                <div class="lactivity-feed-rows" id="live-settlements-feed-container">
+                                    <!-- Dynamic 3 rows populated here -->
+                                </div>
+                            </div>
+                            
+                            <!-- SECTION 3 — MARKET STATS -->
                             <div class="lactivity-stats-row">
                                 <div class="lactivity-stat-col">
-                                    <div class="lactivity-stat-label">Capital Locked</div>
-                                    <div class="lactivity-stat-value" id="live-stat-locked">$248,500</div>
-                                </div>
-                                <div class="lactivity-stat-col">
                                     <div class="lactivity-stat-label">Contracts Settled</div>
-                                    <div class="lactivity-stat-value" id="live-stat-settled">1,247</div>
+                                    <div class="lactivity-stat-value" id="live-stat-settled">25</div>
                                 </div>
                                 <div class="lactivity-stat-col">
-                                    <div class="lactivity-stat-label">Paid Out</div>
-                                    <div class="lactivity-stat-value" id="live-stat-payout">$79,545</div>
+                                    <div class="lactivity-stat-label">Rewards Paid</div>
+                                    <div class="lactivity-stat-value" id="live-stat-payout">$2,855</div>
                                 </div>
                             </div>
                             
-                            <!-- Recent Settlements Scrolling Feed -->
-                            <div class="lactivity-feed-section">
-                                <div class="lactivity-feed-header">RECENT SETTLEMENTS</div>
-                                <div class="lactivity-feed-mask">
-                                    <div class="lactivity-feed-container" id="live-settlements-feed-container">
-                                        <!-- Will be dynamically populated with scrolling items -->
-                                    </div>
-                                </div>
-                            </div>
-                            
-                            <!-- Success Visualization -->
+                            <!-- SECTION 4 — SUCCESS RATE -->
                             <div class="lactivity-success-section">
-                                <div class="lactivity-success-header">
-                                    <span class="success-label">Target Achievement Rate</span>
-                                    <span class="success-rate-val" id="live-success-rate-val">68%</span>
+                                <div class="lactivity-success-rate-box">
+                                    <div class="lactivity-success-rate-value" id="live-success-rate-val">24%</div>
+                                    <div class="lactivity-success-rate-label">Target Achievement Rate</div>
                                 </div>
-                                
-                                <div class="lactivity-visual-row">
-                                    <span class="visual-row-label">Success Contracts</span>
-                                    <div class="visual-row-ticks" id="success-visual-ticks">
-                                        <!-- Dynamic forest green ticks -->
-                                    </div>
-                                </div>
-                                <div class="lactivity-visual-row">
-                                    <span class="visual-row-label">Failed Contracts</span>
-                                    <div class="visual-row-ticks" id="failed-visual-ticks">
-                                        <!-- Dynamic muted gray-red ticks -->
-                                    </div>
-                                </div>
+                                <p class="lactivity-success-sentence" id="live-success-sentence">6 of 25 contracts successfully completed.</p>
                             </div>
                         </div>
                     </div>
@@ -555,9 +534,10 @@ export function initLanding() {
                 const totalPayout = statsResponse.totalPaidOut;
                 const displayRate = statsResponse.achievementRate;
                 const feedItems = statsResponse.recentSettlements || [];
+                const activeContracts = statsResponse.activeContractsCount;
                 
                 // Count-up animation helper
-                const animateCount = (elementId, targetVal, isCurrency = false) => {
+                const animateCount = (elementId, targetVal, isCurrency = false, isPercent = false) => {
                     const el = document.getElementById(elementId);
                     if (!el) return;
                     let current = 0;
@@ -572,6 +552,8 @@ export function initLanding() {
                         
                         if (isCurrency) {
                             el.textContent = '$' + current.toLocaleString();
+                        } else if (isPercent) {
+                            el.textContent = current.toLocaleString() + '%';
                         } else {
                             el.textContent = current.toLocaleString();
                         }
@@ -581,6 +563,8 @@ export function initLanding() {
                         } else {
                             if (isCurrency) {
                                 el.textContent = '$' + targetVal.toLocaleString();
+                            } else if (isPercent) {
+                                el.textContent = targetVal.toLocaleString() + '%';
                             } else {
                                 el.textContent = targetVal.toLocaleString();
                             }
@@ -590,54 +574,53 @@ export function initLanding() {
                 };
                 
                 // Trigger count-up animations on load
-                animateCount('live-stat-locked', totalLocked, true);
-                animateCount('live-stat-settled', totalSettled, false);
-                animateCount('live-stat-payout', totalPayout, true);
+                animateCount('live-stat-locked', totalLocked, true, false);
+                animateCount('live-stat-settled', totalSettled, false, false);
+                animateCount('live-stat-payout', totalPayout, true, false);
+                animateCount('live-success-rate-val', displayRate, false, true);
+
+                // Populate active contract count supporting text
+                const activeContractsEl = document.getElementById('live-stat-active-count');
+                if (activeContractsEl) {
+                    activeContractsEl.textContent = `${activeContracts || 25} Active Contracts`;
+                }
                 
-                // Populate scrolling settlements feed
+                // Populate static settlements feed (exactly 3 rows, no scrolling)
                 const feedContainer = document.getElementById('live-settlements-feed-container');
-                if (feedContainer && feedItems.length > 0) {
-                    // Render feed HTML
-                    const itemHtml = feedItems.map(item => `
-                        <div class="lfeed-item">
-                            <div class="lfeed-item-left">
-                                <span class="lfeed-check">✓</span>
-                                <span class="lfeed-user">@${item.username}</span>
-                                <span class="lfeed-goal">${item.goal}</span>
+                if (feedContainer) {
+                    const fallbackItems = [
+                        { goal: "Revenue Growth Contract", reward: 170 },
+                        { goal: "Audience Growth Contract", reward: 170 },
+                        { goal: "Sales Goal Contract", reward: 510 }
+                    ];
+                    
+                    const finalItems = [...feedItems];
+                    while (finalItems.length < 3) {
+                        finalItems.push(fallbackItems[finalItems.length]);
+                    }
+                    const displayItems = finalItems.slice(0, 3);
+                    
+                    const itemHtml = displayItems.map(item => `
+                        <div class="lfeed-row">
+                            <div class="lfeed-row-left">
+                                <span class="lfeed-icon-check">✓</span>
+                                <span class="lfeed-row-title">${item.goal}</span>
                             </div>
-                            <span class="lfeed-reward"><span class="lfeed-reward-val">+$${item.reward.toLocaleString()}</span> Reward</span>
+                            <div class="lfeed-row-right">
+                                <span class="lfeed-reward-label">Reward:</span>
+                                <span class="lfeed-reward-value">$${item.reward.toLocaleString()}</span>
+                            </div>
                         </div>
                     `).join('');
                     
-                    // Triple copy for seamless CSS marquee scroll
-                    feedContainer.innerHTML = itemHtml + itemHtml + itemHtml;
+                    feedContainer.innerHTML = itemHtml;
                 }
-                
-                // Populate success rate visual ticks
-                const successRateValEl = document.getElementById('live-success-rate-val');
-                const successTicksEl = document.getElementById('success-visual-ticks');
-                const failedTicksEl = document.getElementById('failed-visual-ticks');
-                
-                if (successRateValEl) successRateValEl.textContent = displayRate + '%';
-                
-                const totalTicks = 16;
-                const successTicks = Math.round(totalTicks * (displayRate / 100));
-                const failedTicks = totalTicks - successTicks;
-                
-                if (successTicksEl) {
-                    let ticksHtml = '';
-                    for (let t = 0; t < successTicks; t++) {
-                        ticksHtml += '<div class="visual-tick success"></div>';
-                    }
-                    successTicksEl.innerHTML = ticksHtml;
-                }
-                
-                if (failedTicksEl) {
-                    let ticksHtml = '';
-                    for (let t = 0; t < failedTicks; t++) {
-                        ticksHtml += '<div class="visual-tick failed"></div>';
-                    }
-                    failedTicksEl.innerHTML = ticksHtml;
+
+                // Populate success rate descriptive sentence
+                const successSentenceEl = document.getElementById('live-success-sentence');
+                if (successSentenceEl) {
+                    const successCount = statsResponse.successContracts || Math.round(totalSettled * (displayRate / 100)) || 6;
+                    successSentenceEl.textContent = `${successCount} of ${totalSettled} contracts successfully completed.`;
                 }
 
                 // Populate Live Settlement Activity Table

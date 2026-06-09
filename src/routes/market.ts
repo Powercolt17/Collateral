@@ -59,56 +59,58 @@ export default async function marketRoutes(fastify: FastifyInstance) {
         const rivalryLocked = Number(getRows(rivalryLockedRes)[0]?.total || 0);
         const capitalLocked = Math.round((soloLocked + rivalryLocked) / 100);
 
-        // Query settled contracts
+        // Query settled contracts (solo only for homepage stats)
         const soloSettledRes = await db.execute(sql`
             SELECT COUNT(DISTINCT contract_id) AS total
             FROM ledger_events
             WHERE event_type IN ('SETTLED_SUCCESS', 'SETTLED_FAILURE', 'CONTRACT_FORFEITED')
         `);
-        const rivalrySettledRes = await db.execute(sql`
-            SELECT COUNT(*) AS total
-            FROM rivalries
-            WHERE settled_at IS NOT NULL
-        `);
-        const soloSettled = Number(getRows(soloSettledRes)[0]?.total || 0);
-        const rivalrySettled = Number(getRows(rivalrySettledRes)[0]?.total || 0);
-        const contractsSettled = soloSettled + rivalrySettled;
+        const contractsSettled = Number(getRows(soloSettledRes)[0]?.total || 0);
 
-        // Query total paid out
+        // Query total paid out (solo only)
         const soloPaidOutRes = await db.execute(sql`
             SELECT COALESCE(SUM(amount_usd_cents), 0) AS total
             FROM ledger_events
             WHERE event_type = 'SETTLED_SUCCESS'
         `);
-        const rivalryPaidOutRes = await db.execute(sql`
-            SELECT COALESCE(SUM(payout_cents), 0) AS total
-            FROM rivalry_participants
-            WHERE outcome = 'WIN'
-        `);
-        const soloPaidOut = Number(getRows(soloPaidOutRes)[0]?.total || 0);
-        const rivalryPaidOut = Number(getRows(rivalryPaidOutRes)[0]?.total || 0);
-        const totalPaidOut = Math.round((soloPaidOut + rivalryPaidOut) / 100);
+        const totalPaidOut = Math.round(Number(getRows(soloPaidOutRes)[0]?.total || 0) / 100);
 
-        // Query success rate (achievementRate)
+        // Query success rate (achievementRate, solo only)
         const soloSuccessRes = await db.execute(sql`
             SELECT COUNT(DISTINCT contract_id) AS total
             FROM ledger_events
             WHERE event_type = 'SETTLED_SUCCESS'
         `);
-        const rivalrySuccessRes = await db.execute(sql`
-            SELECT COUNT(*) AS total
-            FROM rivalries
-            WHERE settled_at IS NOT NULL AND winner_user_id IS NOT NULL
-        `);
-        const soloSuccess = Number(getRows(soloSuccessRes)[0]?.total || 0);
-        const rivalrySuccess = Number(getRows(rivalrySuccessRes)[0]?.total || 0);
-        const successContracts = soloSuccess + rivalrySuccess;
+        const successContracts = Number(getRows(soloSuccessRes)[0]?.total || 0);
 
         const achievementRate = contractsSettled > 0
             ? Math.round((successContracts / contractsSettled) * 100)
-            : 68;
+            : 24;
 
-        // Query recent settlements
+        // Query active contracts count (solo active + active rivalries)
+        const soloActiveRes = await db.execute(sql`
+            SELECT COUNT(id) AS total
+            FROM contracts
+            WHERE lock_amount_usd_cents > 0
+              AND id IN (
+                  SELECT contract_id FROM ledger_events
+                  WHERE event_type = 'FUNDS_LOCKED'
+              )
+              AND id NOT IN (
+                  SELECT contract_id FROM ledger_events
+                  WHERE event_type IN ('SETTLED_SUCCESS', 'SETTLED_FAILURE', 'CONTRACT_FORFEITED')
+              )
+        `);
+        const rivalryActiveRes = await db.execute(sql`
+            SELECT COUNT(*) AS total
+            FROM rivalries
+            WHERE activated_at IS NOT NULL AND settled_at IS NULL
+        `);
+        const soloActive = Number(getRows(soloActiveRes)[0]?.total || 0);
+        const rivalryActive = Number(getRows(rivalryActiveRes)[0]?.total || 0);
+        const activeContractsCount = soloActive + (rivalryActive * 2);
+
+        // Query recent settlements (limit to 3 rows)
         const recentSettlementsRes = await db.execute(sql`
             SELECT 
               c.platform,
@@ -121,7 +123,7 @@ export default async function marketRoutes(fastify: FastifyInstance) {
             JOIN ledger_events le ON c.id = le.contract_id
             WHERE le.event_type = 'SETTLED_SUCCESS'
             ORDER BY le.timestamp_utc DESC
-            LIMIT 15
+            LIMIT 3
         `);
 
         function getContractTitle(platform: string, metricType: string): string {
@@ -140,27 +142,19 @@ export default async function marketRoutes(fastify: FastifyInstance) {
         }
 
         const recentSettlements = getRows(recentSettlementsRes).map((row: any) => {
-            let username = row.x_username;
-            if (!username && row.email) {
-                username = row.email.split('@')[0];
-            }
-            if (username && username.startsWith('sim_')) {
-                username = username.slice(4);
-            }
-            username = username || 'user';
-
             const goal = getContractTitle(row.platform, row.metric_type);
             const reward = Math.round(Number(row.payout_amount_usd_cents || 0) / 100);
-
-            return { username, goal, reward };
+            return { goal, reward };
         });
 
         return {
             ok: true,
             capitalLocked,
+            activeContractsCount,
             contractsSettled,
             totalPaidOut,
             achievementRate,
+            successContracts,
             recentSettlements
         };
     });

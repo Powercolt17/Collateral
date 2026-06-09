@@ -562,12 +562,12 @@ export const landingCSS = `
 .lcard::before{content:'';position:absolute;top:-1px;left:0;right:0;height:2px;background:var(--r);transform:scaleX(0);transform-origin:left;transition:transform 0.4s cubic-bezier(0.16, 1, 0.3, 1)}
 .lcard:hover::before{transform:scaleX(1)}
 .lcard:hover{border-color:#bbb;box-shadow:0 16px 40px rgba(0,0,0,.08);transform:translateY(-6px)}
-.lcard-top{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:16px}
-.lcard-src{font-family:'Inter',sans-serif;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--t2);display:inline-flex;align-items:center;gap:8px;background:rgba(17,17,17,0.03);border:1px solid rgba(0,0,0,0.06);border-radius:6px;padding:5px 10px 5px 8px;transition:all 0.3s ease}
+.lcard-top{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:16px;gap:12px;flex-wrap:wrap}
+.lcard-src{font-family:'Inter',sans-serif;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--t2);display:inline-flex;align-items:center;gap:6px;background:rgba(17,17,17,0.03);border:1px solid rgba(0,0,0,0.06);border-radius:4px;height:26px;padding:0 8px 0 6px;white-space:nowrap;transition:all 0.3s ease}
 .lcard:hover .lcard-src{border-color:rgba(0,0,0,0.1);background:rgba(17,17,17,0.05)}
-.lcard-src-logo{width:16px;height:16px;object-fit:contain;flex-shrink:0;opacity:0.7;transition:opacity 0.3s ease}
+.lcard-src-logo{width:14px;height:14px;object-fit:contain;flex-shrink:0;opacity:0.7;transition:opacity 0.3s ease}
 .lcard:hover .lcard-src-logo{opacity:1}
-.lcard-tier{font-family:'Inter',monospace;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:1px;padding:3px 8px}
+.lcard-tier{font-family:'Inter',monospace;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:1px;display:inline-flex;align-items:center;height:26px;padding:0 8px;border-radius:4px;white-space:nowrap}
 .tier-pledge{color:var(--g);background:rgba(20,92,20,.06);border:1px solid rgba(20,92,20,.15)}
 .tier-stake{color:#B45309;background:rgba(180,83,9,.06);border:1px solid rgba(180,83,9,.15)}
 .tier-allin{color:var(--r);background:rgba(92,20,20,.05);border:1px solid rgba(92,20,20,.12)}
@@ -830,7 +830,7 @@ export const landingCSS = `
 /* ═══ CONTRACT CARDS DIFFERENTIATION ═══ */
 .lcard-popular{border-color:var(--r) !important;transform:scale(1.02);box-shadow:0 12px 30px rgba(92,20,20,0.06);position:relative;z-index:10}
 .lcard-popular:hover{transform:scale(1.04) translateY(-6px) !important;box-shadow:0 20px 40px rgba(92,20,20,0.1) !important}
-.lcard-popular-badge{position:absolute;top:10px;right:10px;background:var(--r);color:#fff;font-family:'JetBrains Mono',monospace;font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:1px;padding:3px 8px;border-radius:2px}
+.lcard-popular-badge{position:absolute;top:12px;right:12px;background:var(--r);color:#fff;font-family:'Inter',monospace;font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:1px;display:inline-flex;align-items:center;height:22px;padding:0 8px;border-radius:4px;white-space:nowrap}
 .tier-3x-yield{color:#fff !important;background:var(--r) !important;border:1px solid var(--r) !important}
 
 /* ═══ EMOTIONAL REFRAME ═══ */

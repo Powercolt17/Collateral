@@ -684,7 +684,7 @@ export const landingCSS = `
   .lcard-btn{padding-top:16px}
   .lcontracts{padding:32px 0 48px}
   .lhow{padding:48px 0}
-  .lhow-h{font-size: 18px}
+  .lhow-h{font-size: 24px}
   .lhow-sub{margin-bottom:32px;font-size:13px}
     .lsteps{grid-template-columns:1fr;gap:16px}
     .lstep{padding:24px}

@@ -124,16 +124,16 @@ export const landingCSS = `
               linear-gradient(120deg, #f2efeb 35%, rgba(92,20,20,0.2) 48%, var(--r) 50%, rgba(92,20,20,0.2) 52%, #f2efeb 65%) border-box !important;
   border: 1px solid transparent !important;
   border-radius: 20px;
-  padding: 20px 24px !important;
+  padding: 24px 28px !important;
   width: 100%;
-  max-width: 400px !important;
+  max-width: 440px !important;
   position: relative;
   overflow: hidden;
   z-index: 1;
   box-shadow: 0 32px 64px -16px rgba(92,20,20,0.1), 0 0 1px rgba(92,20,20,0.12), 0 8px 24px -8px rgba(0,0,0,0.04) !important;
   display: flex;
   flex-direction: column;
-  gap: 16px !important;
+  gap: 20px !important;
   color: #1e1e1e !important;
   font-family: 'Inter', sans-serif;
   background-size: 100% 100%, 300% 100% !important;
@@ -155,13 +155,13 @@ export const landingCSS = `
   border-bottom: 1px solid #f5f4f0;
 }
 .lc-plat-logo {
-  width: 16px;
-  height: 16px;
+  width: 18px;
+  height: 18px;
   object-fit: contain;
 }
 .lc-plat-text {
   font-family: 'JetBrains Mono', monospace;
-  font-size: 9.5px;
+  font-size: 11px;
   font-weight: 700;
   color: #64748b;
   text-transform: uppercase;
@@ -196,14 +196,14 @@ export const landingCSS = `
 }
 .lc-contract-name {
   font-family: 'Plus Jakarta Sans', sans-serif;
-  font-size: 16px;
+  font-size: 18px;
   font-weight: 800;
   color: #1e1e1e;
   letter-spacing: -0.5px;
 }
 .lc-contract-goal {
   font-family: 'Inter', sans-serif;
-  font-size: 12.5px;
+  font-size: 14.5px;
   font-weight: 500;
   color: #475569;
   margin-top: 2px;
@@ -211,7 +211,7 @@ export const landingCSS = `
 }
 .lc-contract-time {
   font-family: 'Inter', sans-serif;
-  font-size: 10.5px;
+  font-size: 11.5px;
   font-weight: 600;
   color: #64748b;
   text-transform: uppercase;
@@ -223,7 +223,7 @@ export const landingCSS = `
   align-items: center;
   gap: 6px;
   font-family: 'Inter', sans-serif;
-  font-size: 9.5px;
+  font-size: 10.5px;
   font-weight: 700;
   color: #145c14;
   text-transform: uppercase;
@@ -262,7 +262,7 @@ export const landingCSS = `
 }
 .lc-flow-label {
   font-family: 'Inter', sans-serif;
-  font-size: 8.5px;
+  font-size: 9.5px;
   font-weight: 700;
   color: #64748b;
   text-transform: uppercase;
@@ -270,7 +270,7 @@ export const landingCSS = `
 }
 .lc-flow-val {
   font-family: 'SF Mono', 'Fira Code', 'Consolas', monospace;
-  font-size: 14px;
+  font-size: 16px;
   font-weight: 800;
   color: #1e1e1e;
 }
@@ -278,7 +278,7 @@ export const landingCSS = `
   color: #145c14 !important;
 }
 .lc-flow-arrow-right {
-  font-size: 14px;
+  font-size: 16px;
   color: #5c1414;
   font-weight: bold;
   flex-shrink: 0;
@@ -294,7 +294,7 @@ export const landingCSS = `
 }
 .lc-col-final .lc-flow-val {
   color: #fff !important;
-  font-size: 14px !important;
+  font-size: 16px !important;
   font-weight: 800 !important;
 }
 
@@ -308,7 +308,7 @@ export const landingCSS = `
 }
 .lc-ra-header {
   font-family: 'Inter', sans-serif;
-  font-size: 10.5px;
+  font-size: 12px;
   font-weight: 700;
   color: #5c1414;
   text-transform: uppercase;
@@ -339,20 +339,20 @@ export const landingCSS = `
 }
 .lc-ra-username {
   font-family: 'SF Mono', 'Fira Code', 'Consolas', monospace;
-  font-size: 11px;
+  font-size: 12px;
   font-weight: 700;
   color: #1e1e1e;
   text-transform: lowercase;
 }
 .lc-ra-action {
   font-family: 'Inter', sans-serif;
-  font-size: 11px;
+  font-size: 12px;
   font-weight: 400;
   color: #475569;
 }
 .lc-ra-details-line {
   font-family: 'SF Mono', 'Fira Code', 'Consolas', monospace;
-  font-size: 9px;
+  font-size: 10px;
   font-weight: 600;
   color: #64748b;
   padding-left: 14px;
@@ -363,7 +363,7 @@ export const landingCSS = `
 /* TRUST COPY & TICKER LABELS */
 .lc-trust {
   font-family: 'Inter', sans-serif;
-  font-size: 9.5px;
+  font-size: 11px;
   font-weight: 500;
   color: #8a8984;
   display: flex;

@@ -52,363 +52,56 @@ export function renderLanding() {
 
                     </div>
                     <div class="lhero-right animate-scale-in delay-1">
-                        <div class="lpreview-container">
-                            <!-- STAGE 1: TERMS -->
-                            <div class="lpreview-card stage-card active" data-stage="1">
-                                <div class="lpcard-header">
-                                    <div class="lpcard-logo-area">
-                                        <svg class="lpcard-logo-s" viewBox="0 0 24 24" fill="currentColor">
-                                            <path d="M13.976 9.15c-1.372-.47-2.502-.816-2.502-1.434 0-.515.467-.852 1.277-.852.886 0 1.95.32 2.766.745l.623-2.185c-.91-.397-2.155-.733-3.46-.733-2.614 0-4.385 1.34-4.385 3.652 0 2.378 2.012 3.036 3.692 3.616 1.488.515 2.185.875 2.185 1.488 0 .616-.623.97-1.488.97-.992 0-2.222-.44-3.07-.935l-.645 2.228c.99.49 2.454.896 3.824.896 2.72 0 4.542-1.293 4.542-3.714 0-2.434-1.92-3.08-3.56-3.644z"/>
-                                        </svg>
-                                        <span class="lpcard-header-title">COLLATERAL CONTRACT</span>
-                                    </div>
-                                    <div class="lpcard-status status-active" style="background:#F3F4F6; border-color:#E5E7EB; color:#374151;">
-                                        <span class="status-dot" style="background:#9CA3AF;"></span>
-                                        DRAFT
-                                    </div>
+                        <div class="lactivity-card">
+                            <!-- Header -->
+                            <div class="lactivity-header">
+                                <div class="lactivity-live-indicator">
+                                    <span class="live-dot-pulse"></span>
+                                    <span class="live-label">LIVE</span>
                                 </div>
-                                <div class="lpcard-divider"></div>
-                                <div class="lpcard-goal-target-row">
-                                    <div class="lpcard-field">
-                                        <span class="field-label">GOAL</span>
-                                        <span class="field-value">Increase Revenue</span>
-                                    </div>
-                                    <div class="lpcard-field">
-                                        <span class="field-label">TARGET</span>
-                                        <span class="field-value">+20.0%</span>
-                                    </div>
+                                <div class="lactivity-title">LIVE CONTRACT ACTIVITY</div>
+                                <div class="lactivity-status">Updated in real time</div>
+                            </div>
+                            
+                            <!-- Main Stats -->
+                            <div class="lactivity-stats-grid">
+                                <div class="lactivity-stat-box">
+                                    <div class="lactivity-stat-label">Capital Locked</div>
+                                    <div class="lactivity-stat-value" id="live-stat-locked">$248,500</div>
                                 </div>
-                                <div class="lpcard-divider"></div>
-                                <div class="lpcard-financials-row">
-                                    <div class="lpcard-financial-cell">
-                                        <span class="field-label">DEPOSIT</span>
-                                        <span class="financial-val">$500.00</span>
-                                        <span class="financial-sub">To lock in escrow</span>
-                                    </div>
-                                    <div class="lpcard-financial-cell">
-                                        <span class="field-label">REWARD MATCH</span>
-                                        <span class="financial-val">+$500.00</span>
-                                        <span class="financial-sub">Match ready</span>
-                                    </div>
-                                    <div class="lpcard-financial-cell">
-                                        <span class="field-label">POTENTIAL RETURN</span>
-                                        <span class="financial-val green">$1,000.00</span>
-                                        <span class="financial-sub green">Deposit + Reward</span>
-                                    </div>
+                                <div class="lactivity-stat-box">
+                                    <div class="lactivity-stat-label">Contracts Settled</div>
+                                    <div class="lactivity-stat-value" id="live-stat-settled">1,247</div>
                                 </div>
-                                <div class="lpcard-divider"></div>
-                                <div class="lpcard-outcomes-row">
-                                    <div class="outcome-panel success">
-                                        <div class="outcome-header">
-                                            <div class="outcome-icon-circle green">
-                                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
-                                                    <polyline points="20 6 9 17 4 12"></polyline>
-                                                </svg>
-                                            </div>
-                                            <span class="outcome-title green">SUCCESS</span>
-                                        </div>
-                                        <span class="outcome-sub">You receive</span>
-                                        <span class="outcome-val green">$1,000.00</span>
-                                        <span class="outcome-desc">When target is achieved</span>
-                                    </div>
-                                    <div class="outcome-panel failure">
-                                        <div class="outcome-header">
-                                            <div class="outcome-icon-circle red">
-                                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
-                                                    <line x1="18" y1="6" x2="6" y2="18"></line>
-                                                    <line x1="6" y1="6" x2="18" y2="18"></line>
-                                                </svg>
-                                            </div>
-                                            <span class="outcome-title red">FAILURE</span>
-                                        </div>
-                                        <span class="outcome-sub">You forfeit</span>
-                                        <span class="outcome-val red">$500.00</span>
-                                        <span class="outcome-desc">If target is not met</span>
-                                    </div>
-                                </div>
-                                <div class="lpcard-divider"></div>
-                                <div class="lpcard-progress-row">
-                                    <div class="progress-header">
-                                        <span class="progress-label">PROGRESS</span>
-                                        <span class="progress-percentage">0% COMPLETED</span>
-                                    </div>
-                                    <div class="progress-bar-track">
-                                        <div class="progress-bar-fill" style="width: 0%;"></div>
-                                    </div>
-                                </div>
-                                <div class="lpcard-divider"></div>
-                                <div class="lpcard-time-row">
-                                    <span class="time-label">TIME REMAINING</span>
-                                    <div class="time-display-grid">
-                                        <div class="time-box">
-                                            <span class="time-num">30</span>
-                                            <span class="time-unit">DAYS</span>
-                                        </div>
-                                        <div class="time-divider"></div>
-                                        <div class="time-box">
-                                            <span class="time-num">00</span>
-                                            <span class="time-unit">HRS</span>
-                                        </div>
-                                        <div class="time-divider"></div>
-                                        <div class="time-box">
-                                            <span class="time-num">00</span>
-                                            <span class="time-unit">MIN</span>
-                                        </div>
-                                        <div class="time-divider"></div>
-                                        <div class="time-box">
-                                            <span class="time-num">00</span>
-                                            <span class="time-unit">SEC</span>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="lpcard-footer">
-                                    <svg class="footer-lock-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                                        <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
-                                        <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
-                                    </svg>
-                                    <span>FUNDS SECURED BY STRIPE</span>
+                                <div class="lactivity-stat-box">
+                                    <div class="lactivity-stat-label">Paid Out</div>
+                                    <div class="lactivity-stat-value" id="live-stat-payout">$82,400</div>
                                 </div>
                             </div>
-
-                            <!-- STAGE 2: TRACKING -->
-                            <div class="lpreview-card stage-card" data-stage="2">
-                                <div class="lpcard-header">
-                                    <div class="lpcard-logo-area">
-                                        <svg class="lpcard-logo-s" viewBox="0 0 24 24" fill="currentColor">
-                                            <path d="M13.976 9.15c-1.372-.47-2.502-.816-2.502-1.434 0-.515.467-.852 1.277-.852.886 0 1.95.32 2.766.745l.623-2.185c-.91-.397-2.155-.733-3.46-.733-2.614 0-4.385 1.34-4.385 3.652 0 2.378 2.012 3.036 3.692 3.616 1.488.515 2.185.875 2.185 1.488 0 .616-.623.97-1.488.97-.992 0-2.222-.44-3.07-.935l-.645 2.228c.99.49 2.454.896 3.824.896 2.72 0 4.542-1.293 4.542-3.714 0-2.434-1.92-3.08-3.56-3.644z"/>
-                                        </svg>
-                                        <span class="lpcard-header-title">COLLATERAL CONTRACT</span>
+                            
+                            <!-- Recent Settlements Scrolling Feed -->
+                            <div class="lactivity-feed-section">
+                                <div class="lactivity-feed-header">RECENT SETTLEMENTS</div>
+                                <div class="lactivity-feed-mask">
+                                    <div class="lactivity-feed-container" id="live-settlements-feed-container">
+                                        <!-- Will be dynamically populated with scrolling items -->
                                     </div>
-                                    <div class="lpcard-status status-active">
-                                        <span class="status-dot"></span>
-                                        ACTIVE
-                                    </div>
-                                </div>
-                                <div class="lpcard-divider"></div>
-                                <div class="lpcard-goal-target-row">
-                                    <div class="lpcard-field">
-                                        <span class="field-label">GOAL</span>
-                                        <span class="field-value">Increase Revenue</span>
-                                    </div>
-                                    <div class="lpcard-field">
-                                        <span class="field-label">TARGET</span>
-                                        <span class="field-value">+20.0%</span>
-                                    </div>
-                                </div>
-                                <div class="lpcard-divider"></div>
-                                <div class="lpcard-financials-row">
-                                    <div class="lpcard-financial-cell">
-                                        <span class="field-label">DEPOSIT</span>
-                                        <span class="financial-val">$500.00</span>
-                                        <span class="financial-sub">Locked in escrow</span>
-                                    </div>
-                                    <div class="lpcard-financial-cell">
-                                        <span class="field-label">REWARD MATCH</span>
-                                        <span class="financial-val">+$500.00</span>
-                                        <span class="financial-sub">If target is achieved</span>
-                                    </div>
-                                    <div class="lpcard-financial-cell">
-                                        <span class="field-label">POTENTIAL RETURN</span>
-                                        <span class="financial-val green">$1,000.00</span>
-                                        <span class="financial-sub green">Deposit + Reward</span>
-                                    </div>
-                                </div>
-                                <div class="lpcard-divider"></div>
-                                <div class="lpcard-outcomes-row">
-                                    <div class="outcome-panel success">
-                                        <div class="outcome-header">
-                                            <div class="outcome-icon-circle green">
-                                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
-                                                    <polyline points="20 6 9 17 4 12"></polyline>
-                                                </svg>
-                                            </div>
-                                            <span class="outcome-title green">SUCCESS</span>
-                                        </div>
-                                        <span class="outcome-sub">You receive</span>
-                                        <span class="outcome-val green">$1,000.00</span>
-                                        <span class="outcome-desc">When target is achieved</span>
-                                    </div>
-                                    <div class="outcome-panel failure">
-                                        <div class="outcome-header">
-                                            <div class="outcome-icon-circle red">
-                                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
-                                                    <line x1="18" y1="6" x2="6" y2="18"></line>
-                                                    <line x1="6" y1="6" x2="18" y2="18"></line>
-                                                </svg>
-                                            </div>
-                                            <span class="outcome-title red">FAILURE</span>
-                                        </div>
-                                        <span class="outcome-sub">You forfeit</span>
-                                        <span class="outcome-val red">$500.00</span>
-                                        <span class="outcome-desc">If target is not met</span>
-                                    </div>
-                                </div>
-                                <div class="lpcard-divider"></div>
-                                <div class="lpcard-progress-row">
-                                    <div class="progress-header">
-                                        <span class="progress-label">PROGRESS</span>
-                                        <span class="progress-percentage">67% COMPLETED</span>
-                                    </div>
-                                    <div class="progress-bar-track">
-                                        <div class="progress-bar-fill" style="width: 67%;"></div>
-                                    </div>
-                                </div>
-                                <div class="lpcard-divider"></div>
-                                <div class="lpcard-time-row">
-                                    <span class="time-label">TIME REMAINING</span>
-                                    <div class="time-display-grid">
-                                        <div class="time-box">
-                                            <span class="time-num">9</span>
-                                            <span class="time-unit">DAYS</span>
-                                        </div>
-                                        <div class="time-divider"></div>
-                                        <div class="time-box">
-                                            <span class="time-num">14</span>
-                                            <span class="time-unit">HRS</span>
-                                        </div>
-                                        <div class="time-divider"></div>
-                                        <div class="time-box">
-                                            <span class="time-num">22</span>
-                                            <span class="time-unit">MIN</span>
-                                        </div>
-                                        <div class="time-divider"></div>
-                                        <div class="time-box">
-                                            <span class="time-num">45</span>
-                                            <span class="time-unit">SEC</span>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="lpcard-footer">
-                                    <svg class="footer-lock-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                                        <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
-                                        <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
-                                    </svg>
-                                    <span>FUNDS SECURED BY STRIPE</span>
                                 </div>
                             </div>
-
-                            <!-- STAGE 3: SETTLED -->
-                            <div class="lpreview-card stage-card" data-stage="3">
-                                <div class="lpcard-header">
-                                    <div class="lpcard-logo-area">
-                                        <svg class="lpcard-logo-s" viewBox="0 0 24 24" fill="currentColor">
-                                            <path d="M13.976 9.15c-1.372-.47-2.502-.816-2.502-1.434 0-.515.467-.852 1.277-.852.886 0 1.95.32 2.766.745l.623-2.185c-.91-.397-2.155-.733-3.46-.733-2.614 0-4.385 1.34-4.385 3.652 0 2.378 2.012 3.036 3.692 3.616 1.488.515 2.185.875 2.185 1.488 0 .616-.623.97-1.488.97-.992 0-2.222-.44-3.07-.935l-.645 2.228c.99.49 2.454.896 3.824.896 2.72 0 4.542-1.293 4.542-3.714 0-2.434-1.92-3.08-3.56-3.644z"/>
-                                        </svg>
-                                        <span class="lpcard-header-title">COLLATERAL CONTRACT</span>
-                                    </div>
-                                    <div class="lpcard-status status-settled" style="background:#ECFDF5; border-color:#D1FAE5; color:#065F46;">
-                                        <span class="status-dot" style="background:#10B981;"></span>
-                                        SETTLED
-                                    </div>
+                            
+                            <!-- Success Visualization -->
+                            <div class="lactivity-success-section">
+                                <div class="lactivity-success-header">
+                                    <span class="success-label">Target Achievement Rate</span>
+                                    <span class="success-rate-val" id="live-success-rate-val">68%</span>
                                 </div>
-                                <div class="lpcard-divider"></div>
-                                <div class="lpcard-goal-target-row">
-                                    <div class="lpcard-field">
-                                        <span class="field-label">GOAL</span>
-                                        <span class="field-value">Increase Revenue</span>
-                                    </div>
-                                    <div class="lpcard-field">
-                                        <span class="field-label">TARGET</span>
-                                        <span class="field-value">+20.0%</span>
-                                    </div>
+                                <div class="lactivity-success-visual" id="live-success-visual-ticks">
+                                    <!-- Bloomberg/Apple style tick indicators -->
                                 </div>
-                                <div class="lpcard-divider"></div>
-                                <div class="lpcard-financials-row">
-                                    <div class="lpcard-financial-cell">
-                                        <span class="field-label">DEPOSIT</span>
-                                        <span class="financial-val">$500.00</span>
-                                        <span class="financial-sub">Released to user</span>
-                                    </div>
-                                    <div class="lpcard-financial-cell">
-                                        <span class="field-label">REWARD MATCH</span>
-                                        <span class="financial-val">+$500.00</span>
-                                        <span class="financial-sub">Settled & disbursed</span>
-                                    </div>
-                                    <div class="lpcard-financial-cell">
-                                        <span class="field-label">POTENTIAL RETURN</span>
-                                        <span class="financial-val green">$1,000.00</span>
-                                        <span class="financial-sub green">Paid to bank</span>
-                                    </div>
+                                <div class="lactivity-success-legend">
+                                    <div class="legend-item"><span class="legend-dot success"></span>Success</div>
+                                    <div class="legend-item"><span class="legend-dot failure"></span>Forfeited</div>
                                 </div>
-                                <div class="lpcard-divider"></div>
-                                <div class="lpcard-outcomes-row">
-                                    <div class="outcome-panel success winner">
-                                        <div class="outcome-header">
-                                            <div class="outcome-icon-circle green">
-                                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
-                                                    <polyline points="20 6 9 17 4 12"></polyline>
-                                                </svg>
-                                            </div>
-                                            <span class="outcome-title green">SUCCESS</span>
-                                        </div>
-                                        <span class="outcome-sub">You received</span>
-                                        <span class="outcome-val green">$1,000.00</span>
-                                        <span class="outcome-desc">Target achieved</span>
-                                    </div>
-                                    <div class="outcome-panel failure faded">
-                                        <div class="outcome-header">
-                                            <div class="outcome-icon-circle red">
-                                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
-                                                    <line x1="18" y1="6" x2="6" y2="18"></line>
-                                                    <line x1="6" y1="6" x2="18" y2="18"></line>
-                                                </svg>
-                                            </div>
-                                            <span class="outcome-title red">FAILURE</span>
-                                        </div>
-                                        <span class="outcome-sub">You forfeit</span>
-                                        <span class="outcome-val red">$500.00</span>
-                                        <span class="outcome-desc">If target was not met</span>
-                                    </div>
-                                </div>
-                                <div class="lpcard-divider"></div>
-                                <div class="lpcard-progress-row">
-                                    <div class="progress-header">
-                                        <span class="progress-label">PROGRESS</span>
-                                        <span class="progress-percentage">100% COMPLETED</span>
-                                    </div>
-                                    <div class="progress-bar-track">
-                                        <div class="progress-bar-fill settled" style="width: 100%;"></div>
-                                    </div>
-                                </div>
-                                <div class="lpcard-divider"></div>
-                                <div class="lpcard-time-row">
-                                    <span class="time-label">TIME REMAINING</span>
-                                    <div class="time-display-grid">
-                                        <div class="time-box">
-                                            <span class="time-num">0</span>
-                                            <span class="time-unit">DAYS</span>
-                                        </div>
-                                        <div class="time-divider"></div>
-                                        <div class="time-box">
-                                            <span class="time-num">00</span>
-                                            <span class="time-unit">HRS</span>
-                                        </div>
-                                        <div class="time-divider"></div>
-                                        <div class="time-box">
-                                            <span class="time-num">00</span>
-                                            <span class="time-unit">MIN</span>
-                                        </div>
-                                        <div class="time-divider"></div>
-                                        <div class="time-box">
-                                            <span class="time-num">00</span>
-                                            <span class="time-unit">SEC</span>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="lpcard-footer">
-                                    <svg class="footer-lock-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                                        <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
-                                        <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
-                                    </svg>
-                                    <span>FUNDS SECURED BY STRIPE</span>
-                                </div>
-                            </div>
-
-                            <!-- CONTROLS -->
-                            <div class="lpreview-controls">
-                                <span class="lpreview-dot active" data-stage="1"></span>
-                                <span class="lpreview-dot" data-stage="2"></span>
-                                <span class="lpreview-dot" data-stage="3"></span>
                             </div>
                         </div>
                     </div>
@@ -421,8 +114,8 @@ export function renderLanding() {
             <!-- ═══ CONTRACT TYPES ═══ -->
             <div class="lw">
                 <div class="ltypes" data-r>
-
-                    <h2 class="lhow-h" style="margin-bottom:32px">Solo accountability or<br>head-to-head <strong>rivalry.</strong></h2>
+                    <div class="lred-dash"><span class="lmono">Contract Types</span></div>
+                    <h2 class="lhow-h" style="margin-bottom:32px">Solo accountability or a<br>head-to-head <strong>rivalry.</strong></h2>
 
                     <div class="ltypes-grid">
                         <div class="ltype">
@@ -441,11 +134,39 @@ export function renderLanding() {
                 </div>
             </div>
 
+            <!-- ═══ ORACLE STATUS BAR ═══ -->
+            <div class="loracle-wrapper" data-r>
+                <div class="loracle-bar">
+                    <div class="loracle-header">
+                        <span class="loracle-dot"></span>
+                        <span class="loracle-title">Verified via official APIs</span>
+                    </div>
+                    <div class="loracle-grid">
+                        <div class="loracle-pill">
+                            <img class="logo-stripe" src="https://www.vectorlogo.zone/logos/stripe/stripe-ar21.svg" alt="Stripe">
+                            <span class="loracle-pill-status"><span class="loracle-pill-dot"></span>Stripe Connect</span>
+                        </div>
+                        <div class="loracle-pill">
+                            <img class="logo-x" src="https://cdn.simpleicons.org/x/555555" alt="X">
+                            <span class="loracle-pill-status"><span class="loracle-pill-dot"></span>X API v2</span>
+                        </div>
+                        <div class="loracle-pill">
+                            <img class="logo-shopify" src="https://www.vectorlogo.zone/logos/shopify/shopify-ar21.svg" alt="Shopify">
+                            <span class="loracle-pill-status"><span class="loracle-pill-dot"></span>Shopify Webhooks</span>
+                        </div>
+                        <div class="loracle-pill">
+                            <img class="logo-youtube" src="https://www.vectorlogo.zone/logos/youtube/youtube-ar21.svg" alt="YouTube">
+                            <span class="loracle-pill-status"><span class="loracle-pill-dot"></span>YouTube API</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
             <!-- ═══ LIVE CONTRACT EXAMPLES ═══ -->
             <div class="lcontracts" id="contracts">
                 <div class="lw">
                     <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px; flex-wrap: wrap; gap: 16px;">
-
+                        <div class="lred-dash" style="margin-bottom: 0;"><span class="lmono">Open Contracts</span></div>
                         
                         <!-- ═══ OPEN CONTRACTS STATS ═══ -->
                         <div style="display: flex; align-items: center; gap: 10px;">
@@ -456,39 +177,41 @@ export function renderLanding() {
                     </div>
                     <div class="lcards">
                         <div class="lcard lcard-popular" data-r>
-
                             <div class="lcard-top">
                                 <span class="lcard-src"><img class="lcard-src-logo" src="https://www.vectorlogo.zone/logos/stripe/stripe-icon.svg" alt="Stripe">Stripe</span>
-                                <span class="lcard-tier tier-stake">Stake</span>
+                                <div style="display:flex;gap:6px;align-items:center">
+                                    <span class="lcard-tier tier-stake">Standard</span>
+                                    <span class="lcard-popular-badge">Most Popular</span>
+                                </div>
                             </div>
                             <div class="lcard-title">Revenue Growth</div>
                             <div class="lcard-target">+20% Revenue growth</div>
                             <div class="lcard-row"><span class="k">Deposit</span><span class="v">$250 – $3,000</span></div>
-                            <div class="lcard-row"><span class="k">Bonus Yield</span><span class="v">2.5x</span></div>
+                            <div class="lcard-row"><span class="k">Bonus Yield</span><span class="v">1.5x</span></div>
                             <div class="lcard-row"><span class="k">Window</span><span class="v">30 days</span></div>
                             <div class="lcard-btn"><button class="lp-cta-btn" data-source="STRIPE" data-tier="stake" data-capital="250">Lock Your First Contract</button></div>
                         </div>
                         <div class="lcard" data-r>
                             <div class="lcard-top">
                                 <span class="lcard-src"><img class="lcard-src-logo" src="https://cdn.simpleicons.org/x/111111" alt="X">X / Twitter</span>
-                                <span class="lcard-tier tier-allin">All In</span>
+                                <span class="lcard-tier tier-allin">High Yield</span>
                             </div>
                             <div class="lcard-title">Follower Growth</div>
                             <div class="lcard-target">+1,000 Followers</div>
                             <div class="lcard-row"><span class="k">Deposit</span><span class="v">$500 – $5,000</span></div>
-                            <div class="lcard-row"><span class="k">Bonus Yield</span><span class="v">4x</span></div>
+                            <div class="lcard-row"><span class="k">Bonus Yield</span><span class="v">3x</span></div>
                             <div class="lcard-row"><span class="k">Window</span><span class="v">14 days</span></div>
                             <div class="lcard-btn"><button class="lp-cta-btn" data-source="X" data-tier="all_in" data-capital="500">Lock Your First Contract</button></div>
                         </div>
                         <div class="lcard" data-r>
                             <div class="lcard-top">
                                 <span class="lcard-src"><img class="lcard-src-logo" src="https://www.vectorlogo.zone/logos/shopify/shopify-icon.svg" alt="Shopify">Shopify</span>
-                                <span class="lcard-tier tier-pledge">Pledge</span>
+                                <span class="lcard-tier tier-pledge">Standard</span>
                             </div>
                             <div class="lcard-title">Store Sales</div>
                             <div class="lcard-target">+$5,000 Net Sales</div>
                             <div class="lcard-row"><span class="k">Deposit</span><span class="v">$100 – $1,500</span></div>
-                            <div class="lcard-row"><span class="k">Bonus Yield</span><span class="v">1.7x</span></div>
+                            <div class="lcard-row"><span class="k">Bonus Yield</span><span class="v">0.5x</span></div>
                             <div class="lcard-row"><span class="k">Window</span><span class="v">30 days</span></div>
                             <div class="lcard-btn"><button class="lp-cta-btn" data-source="SHOPIFY" data-tier="pledge" data-capital="100">Lock Your First Contract</button></div>
                         </div>
@@ -511,7 +234,7 @@ export function renderLanding() {
             <!-- ═══ HOW IT WORKS ═══ -->
             <div class="lw">
                 <div class="lhow" data-r id="how">
-
+                    <div class="lred-dash"><span class="lmono">How It Works</span></div>
                     <h2 class="lhow-h">Set a target. Lock capital.<br>Let the API <strong>decide.</strong></h2>
                     <p class="lhow-sub">No middlemen. No judges. No appeals. Four steps to a binding financial commitment.</p>
 
@@ -543,7 +266,7 @@ export function renderLanding() {
             <!-- ═══ SOCIAL PROOF (REAL RESULTS) ═══ -->
             <div class="lreal-results" data-r>
                 <div class="lw">
-
+                    <div class="lred-dash"><span class="lmono">Real Results</span></div>
                     <h2 class="lh-section-title">Capital at risk drives behavior.</h2>
                     <p class="lh-section-subtitle">Procrastination stops when capital is at stake. Put skin in the game and execute.</p>
                     
@@ -640,7 +363,7 @@ export function renderLanding() {
             <!-- ═══ EMOTIONAL REFRAME (WHY IT WORKS) ═══ -->
             <div class="lemo-reframe" data-r>
                 <div class="lw">
-
+                    <div class="lred-dash"><span class="lmono">Why It Works</span></div>
                     <h2 class="lh-section-title">Accountability tools don't work. <br class="lhide-mobile">Financial exposure does.</h2>
                     
                     <div class="lemo-grid">
@@ -681,7 +404,7 @@ export function renderLanding() {
             <!-- ═══ FAQ ═══ -->
             <div class="lw">
                 <div class="lfaq" data-r id="faq">
-
+                    <div class="lred-dash"><span class="lmono">Common Questions</span></div>
                     <h2 class="lhow-h" style="margin-bottom:28px">No fine print. Just <strong>loopholes.</strong></h2>
                     <div class="lfaq-wrap">
                         <div class="fq open">
@@ -812,11 +535,185 @@ export function initLanding() {
         }, 450);
     }
 
-    // Populate live toast notifications with real mock data
+    // Populate live toast notifications and hero activity with real data
     setTimeout(async () => {
         try {
             const response = await window.api.getPublicLedger();
             if (response && response.events && response.events.length > 0) {
+                
+                // ── NEW: Live Hero Activity Calculations ──
+                const events = response.events || [];
+                // Sort events in ascending order to process lifecycle chronologically
+                const sortedEvents = [...events].sort((a, b) => new Date(a.timestampUtc || a.created_at || 0) - new Date(b.timestampUtc || b.created_at || 0));
+                
+                const contractStates = new Map();
+                for (const e of sortedEvents) {
+                    if (!e.contractId) continue;
+                    const id = e.contractId;
+                    const type = e.eventType;
+                    const amount = Number(e.amountUsdCents || e.lockAmountUsdCents || 0);
+                    
+                    if (!contractStates.has(id)) {
+                        contractStates.set(id, {
+                            platform: e.platform,
+                            username: e.principal,
+                            lockAmount: amount,
+                            state: 'CREATED',
+                            payoutAmount: 0
+                        });
+                    }
+                    const c = contractStates.get(id);
+                    if (type === 'FUNDS_LOCKED') {
+                        c.state = 'LOCKED';
+                        c.lockAmount = amount;
+                    } else if (type === 'SETTLED_SUCCESS') {
+                        c.state = 'SETTLED_SUCCESS';
+                        c.payoutAmount = amount;
+                    } else if (type === 'SETTLED_FAILURE' || type === 'CONTRACT_FORFEITED') {
+                        c.state = 'SETTLED_FAILURE';
+                    }
+                }
+                
+                let dbLockedCents = 0;
+                let dbSettledCount = 0;
+                let dbPayoutCents = 0;
+                const dbSuccessSettlements = [];
+                
+                for (const [id, c] of contractStates.entries()) {
+                    if (c.state === 'LOCKED') {
+                        dbLockedCents += c.lockAmount;
+                    } else if (c.state === 'SETTLED_SUCCESS') {
+                        dbSettledCount++;
+                        dbPayoutCents += c.payoutAmount;
+                        dbSuccessSettlements.push(c);
+                    } else if (c.state === 'SETTLED_FAILURE') {
+                        dbSettledCount++;
+                    }
+                }
+                
+                // Base-plus-offset calculation to reach user's premium stats
+                const totalLocked = 247400 + Math.round(dbLockedCents / 100);
+                const totalSettled = 1222 + dbSettledCount;
+                const totalPayout = 79545 + Math.round(dbPayoutCents / 100);
+                
+                // Count-up animation helper
+                const animateCount = (elementId, targetVal, isCurrency = false) => {
+                    const el = document.getElementById(elementId);
+                    if (!el) return;
+                    let current = 0;
+                    const duration = 1500;
+                    const start = performance.now();
+                    
+                    function update(timestamp) {
+                        const elapsed = timestamp - start;
+                        const progress = Math.min(elapsed / duration, 1);
+                        const easeProgress = progress * (2 - progress);
+                        current = Math.floor(easeProgress * targetVal);
+                        
+                        if (isCurrency) {
+                            el.textContent = '$' + current.toLocaleString();
+                        } else {
+                            el.textContent = current.toLocaleString();
+                        }
+                        
+                        if (progress < 1) {
+                            requestAnimationFrame(update);
+                        } else {
+                            if (isCurrency) {
+                                el.textContent = '$' + targetVal.toLocaleString();
+                            } else {
+                                el.textContent = targetVal.toLocaleString();
+                            }
+                        }
+                    }
+                    requestAnimationFrame(update);
+                };
+                
+                // Trigger count-up animations on load
+                animateCount('live-stat-locked', totalLocked, true);
+                animateCount('live-stat-settled', totalSettled, false);
+                animateCount('live-stat-payout', totalPayout, true);
+                
+                // Populate scrolling settlements feed
+                const feedContainer = document.getElementById('live-settlements-feed-container');
+                if (feedContainer) {
+                    const fallbackSettlements = [
+                        { username: 'agencyowner', platform: 'STRIPE', goal: 'Revenue Goal', reward: 500 },
+                        { username: 'founderalex', platform: 'X', goal: 'Weight Loss Goal', reward: 250 },
+                        { username: 'salesrep', platform: 'STRIPE', goal: 'Cold Calling Goal', reward: 1000 },
+                        { username: 'creator', platform: 'YOUTUBE', goal: 'YouTube Subscriber Goal', reward: 750 },
+                        { username: 'solopreneur', platform: 'SHOPIFY', goal: 'Launch MVP Goal', reward: 400 },
+                        { username: 'copywriter', platform: 'X', goal: '10k Words Goal', reward: 150 }
+                    ];
+                    
+                    const feedItems = [];
+                    for (const s of dbSuccessSettlements) {
+                        let goalLabel = 'Performance Goal';
+                        const plat = (s.platform || '').toUpperCase();
+                        if (plat === 'STRIPE') goalLabel = 'Revenue Goal';
+                        else if (plat === 'SHOPIFY') goalLabel = 'Sales Goal';
+                        else if (plat === 'YOUTUBE') goalLabel = 'Subscriber Goal';
+                        else if (plat === 'X' || plat === 'TWITTER') goalLabel = 'Audience Goal';
+                        
+                        feedItems.push({
+                            username: s.username || 'user',
+                            platform: s.platform,
+                            goal: goalLabel,
+                            reward: Math.round(s.payoutAmount / 100) || Math.round(s.lockAmount / 100) || 250
+                        });
+                    }
+                    
+                    // Merge real and fallback items
+                    for (const f of fallbackSettlements) {
+                        if (feedItems.length < 15) {
+                            feedItems.push(f);
+                        }
+                    }
+                    
+                    // Render feed HTML
+                    const itemHtml = feedItems.map(item => `
+                        <div class="lfeed-item">
+                            <div class="lfeed-item-left">
+                                <span class="lfeed-check">✓</span>
+                                <span class="lfeed-user">@${item.username}</span>
+                                <span class="lfeed-goal">${item.goal}</span>
+                            </div>
+                            <span class="lfeed-reward">+$${item.reward.toLocaleString()} Reward</span>
+                        </div>
+                    `).join('');
+                    
+                    // Triple copy for seamless CSS marquee scroll
+                    feedContainer.innerHTML = itemHtml + itemHtml + itemHtml;
+                }
+                
+                // Populate success rate visual ticks
+                const successRateValEl = document.getElementById('live-success-rate-val');
+                const visualTicksEl = document.getElementById('live-success-visual-ticks');
+                
+                if (visualTicksEl) {
+                    let successRate = 0.68; // Default 68%
+                    if (dbSettledCount > 0) {
+                        const successCount = dbSuccessSettlements.length;
+                        const calculatedRate = successCount / dbSettledCount;
+                        successRate = calculatedRate > 0 ? calculatedRate : 0.68;
+                    }
+                    
+                    const displayRate = Math.round(successRate * 100);
+                    if (successRateValEl) successRateValEl.textContent = displayRate + '%';
+                    
+                    let ticksHtml = '';
+                    const totalTicks = 16;
+                    const successTicks = Math.round(totalTicks * successRate);
+                    for (let t = 0; t < totalTicks; t++) {
+                        if (t < successTicks) {
+                            ticksHtml += '<div class="visual-tick success"></div>';
+                        } else {
+                            ticksHtml += '<div class="visual-tick failed"></div>';
+                        }
+                    }
+                    visualTicksEl.innerHTML = ticksHtml;
+                }
+
                 // Populate Live Settlement Activity Table
                 const tbody = document.getElementById('lledger-tbody');
                 if (tbody) {
@@ -902,7 +799,7 @@ export function initLanding() {
 
                         updateLedgerTable();
 
-                        if (ledgerEvents.length > 4 && window.innerWidth > 768) {
+                        if (ledgerEvents.length > 4) {
                             setInterval(() => {
                                 tbody.classList.add('fade-out');
                                 setTimeout(() => {
@@ -1076,47 +973,4 @@ export function initLanding() {
         countEls.forEach(el => countObs.observe(el));
     }
 
-    // Hero Card Lifecycle auto-cycle & controls
-    let currentStage = 1;
-    let cardInterval;
-    const totalStages = 3;
-
-    function showStage(stageNum) {
-        currentStage = stageNum;
-        document.querySelectorAll('.stage-card').forEach(card => {
-            if (parseInt(card.dataset.stage, 10) === stageNum) {
-                card.classList.add('active');
-            } else {
-                card.classList.remove('active');
-            }
-        });
-        document.querySelectorAll('.lpreview-dot').forEach(dot => {
-            if (parseInt(dot.dataset.stage, 10) === stageNum) {
-                dot.classList.add('active');
-            } else {
-                dot.classList.remove('active');
-            }
-        });
-    }
-
-    function startCycle() {
-        cardInterval = setInterval(() => {
-            let nextStage = currentStage + 1;
-            if (nextStage > totalStages) nextStage = 1;
-            showStage(nextStage);
-        }, 4000);
-    }
-
-    // Attach click events to dots
-    document.querySelectorAll('.lpreview-dot').forEach(dot => {
-        dot.addEventListener('click', () => {
-            clearInterval(cardInterval);
-            const selectedStage = parseInt(dot.dataset.stage, 10);
-            showStage(selectedStage);
-            startCycle(); // Restart cycle from selected stage
-        });
-    });
-
-    // Start initial cycle
-    startCycle();
 }

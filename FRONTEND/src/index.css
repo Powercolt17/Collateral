@@ -34,6 +34,7 @@
     font-size: 26px !important;
     letter-spacing: 1px !important;
     font-weight: normal !important;
+    text-transform: uppercase !important;
 }
 /* Override Inter's slashed zero with a clean zero from system fonts */
 @font-face {

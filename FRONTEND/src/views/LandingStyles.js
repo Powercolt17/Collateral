@@ -121,7 +121,7 @@ export const landingCSS = `
 .lhero-right::before{content:none !important;display:none !important}
 .lactivity-card {
   background-image: linear-gradient(#ffffff, #ffffff),
-                    linear-gradient(120deg, #f2efeb 35%, rgba(92,20,20,0.15) 45%, var(--r) 48%, #b91c1c 50%, var(--r) 52%, rgba(92,20,20,0.15) 55%, #f2efeb 65%) !important;
+                    linear-gradient(120deg, #eae8e4 30%, rgba(255,255,255,0.9) 42%, rgba(92,20,20,0.25) 47%, #ffffff 50%, rgba(92,20,20,0.25) 53%, rgba(255,255,255,0.9) 58%, #eae8e4 70%) !important;
   background-clip: padding-box, border-box !important;
   background-origin: padding-box, border-box !important;
   background-size: 100% 100%, 300% 100% !important;

@@ -1026,25 +1026,42 @@ export function initLanding() {
     }, { threshold: 0.08, rootMargin: '0px 0px -40px 0px' });
     document.querySelectorAll('.lp [data-r]').forEach(el => obs.observe(el));
 
-    // Count-up animation for stats
+    // Count-up animation for stats (Premium cubic ease-out)
     const countEls = document.querySelectorAll('[data-count]');
     if (countEls.length) {
         const countObs = new IntersectionObserver((entries) => {
             entries.forEach(e => {
                 if (e.isIntersecting) {
                     const el = e.target;
-                    const target = parseInt(el.dataset.count, 10);
-                    let current = 0;
-                    const step = Math.max(1, Math.floor(target / 30));
-                    const interval = setInterval(() => {
-                        current += step;
-                        if (current >= target) { current = target; clearInterval(interval); }
-                        el.textContent = current;
-                    }, 40);
+                    const target = parseFloat(el.dataset.count);
+                    const duration = 1600; // 1.6 seconds ease-out
+                    const startTime = performance.now();
+                    
+                    const animateCount = (now) => {
+                        const elapsed = now - startTime;
+                        const progress = Math.min(elapsed / duration, 1);
+                        
+                        // Cubic ease-out curve
+                        const easeOut = 1 - Math.pow(1 - progress, 3);
+                        const currentVal = easeOut * target;
+                        
+                        if (Number.isInteger(target)) {
+                            el.textContent = Math.floor(currentVal);
+                        } else {
+                            el.textContent = currentVal.toFixed(1);
+                        }
+                        
+                        if (progress < 1) {
+                            requestAnimationFrame(animateCount);
+                        } else {
+                            el.textContent = target;
+                        }
+                    };
+                    requestAnimationFrame(animateCount);
                     countObs.unobserve(el);
                 }
             });
-        }, { threshold: 0.5 });
+        }, { threshold: 0.2 });
         countEls.forEach(el => countObs.observe(el));
     }
 

@@ -120,8 +120,9 @@ export const landingCSS = `
 .lhero-right{display:flex;justify-content:center;align-items:center;position:relative;perspective:1200px}
 .lhero-right::before{content:none !important;display:none !important}
 .lactivity-card {
-  background: #ffffff !important;
-  border: 1px solid #f2efeb !important;
+  background: linear-gradient(#ffffff, #ffffff) padding-box,
+              linear-gradient(120deg, #f2efeb 35%, rgba(92,20,20,0.2) 48%, var(--r) 50%, rgba(92,20,20,0.2) 52%, #f2efeb 65%) border-box !important;
+  border: 1px solid transparent !important;
   border-radius: 20px;
   padding: 20px 24px !important;
   width: 100%;
@@ -135,7 +136,13 @@ export const landingCSS = `
   gap: 16px !important;
   color: #1e1e1e !important;
   font-family: 'Inter', sans-serif;
-  animation: premiumFloat 8s ease-in-out infinite;
+  background-size: 100% 100%, 300% 100% !important;
+  animation: premiumFloat 8s ease-in-out infinite, borderSweep 6s linear infinite;
+}
+@keyframes borderSweep {
+  0% { background-position: 0% 0%, 300% 0%; }
+  50% { background-position: 0% 0%, 150% 0%; }
+  100% { background-position: 0% 0%, 0% 0%; }
 }
 
 /* CARD TOP PLATFORM HEADER */

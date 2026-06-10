@@ -37,17 +37,17 @@ export function renderLanding() {
                     <div class="lhero-left">
 
                         <h1 class="lh1 animate-fade-in-up">
-                            You know the goal.<br class="lh-br">
-                            Make it <span class="lh-gradient">cost&nbsp;something.</span>
+                            Are you going to ship,<br class="lh-br">
+                            or wait until <span class="lh-gradient">AI takes your job?</span>
                         </h1>
                         <p class="lsub animate-fade-in-up delay-1">
-                            Lock capital against a verifiable target. Hit it to reclaim your deposit plus a bonus. <span class="lhide-mobile">Miss it, and the deposit is forfeited. Fully automated via APIs.</span>
+                            Stop procrastinating. Lock hard capital against a verifiable target. Hit it to win, or miss and forfeit your deposit. No excuses. Fully automated via APIs.
                         </p>
                         <div class="lctas animate-fade-in-up delay-2">
                             <button class="lbtn lbtn-r" id="lp-hero-cta">Lock Your First Contract</button>
                             <button class="lbtn lbtn-g" id="lp-see-contracts-cta">See Live Contracts</button>
                         </div>
-                        <div class="lcta-match ldesktop-proof animate-fade-in-up delay-2">Launch offer: First contract matched up to $250</div>
+                        <div class="lcta-match ldesktop-proof animate-fade-in-up delay-2">First performance contract matched up to $250</div>
 
 
                     </div>
@@ -127,20 +127,20 @@ export function renderLanding() {
             <div class="lw">
                 <div class="ltypes" data-r>
                     <div class="lred-dash"><span class="lmono">Contract Types</span></div>
-                    <h2 class="lhow-h" style="margin-bottom:32px">Solo accountability or a<br>head-to-head <strong>rivalry.</strong></h2>
+                    <h2 class="lhow-h" style="margin-bottom:32px">Solo self-discipline or a<br>brutal head-to-head <strong>rivalry.</strong></h2>
 
                     <div class="ltypes-grid">
                         <div class="ltype">
                             <div class="ltype-badge" style="color:var(--t1);background:rgba(17,17,17,.04);border:1px solid var(--d)">Solo</div>
-                            <div class="ltype-h">You vs. your own target.</div>
-                            <div class="ltype-p">Commit to a goal only you control. Hit the target to win the bonus. Miss it and your deposit is forfeited.</div>
-                            <div class="ltype-detail"><strong>Best for:</strong> Revenue milestones, launch deadlines, and personal sprints.</div>
+                            <div class="ltype-h">You vs. your own laziness.</div>
+                            <div class="ltype-p">Commit to a target only you control. Put skin in the game to beat procrastination. Hit it to win the bonus; fail and your deposit is burned.</div>
+                            <div class="ltype-detail"><strong>Best for:</strong> Revenue milestones, product launches, and personal focus.</div>
                         </div>
                         <div class="ltype">
                             <div class="ltype-badge" style="color:var(--r);background:rgba(92,20,20,.04);border:1px solid rgba(92,20,20,.15)">Rivalry</div>
-                            <div class="ltype-h">You vs. another operator.</div>
-                            <div class="ltype-p">Lock equal capital in a head-to-head race. The stronger verified performer wins the entire pool.</div>
-                            <div class="ltype-detail"><strong>Best for:</strong> Co-founder sprints, creator challenges, and competitive metrics.</div>
+                            <div class="ltype-h">You vs. another builder.</div>
+                            <div class="ltype-p">Lock equal capital in a head-to-head race. May the best operator win. The winner takes the entire pool; the loser goes home empty-handed.</div>
+                            <div class="ltype-detail"><strong>Best for:</strong> Co-founder challenges, growth races, and competitive fire.</div>
                         </div>
                     </div>
                 </div>
@@ -217,8 +217,8 @@ export function renderLanding() {
             <div class="lw">
                 <div class="lhow" data-r id="how">
                     <div class="lred-dash"><span class="lmono">How It Works</span></div>
-                    <h2 class="lhow-h">Set a target. Lock capital.<br>Let the API <strong>decide.</strong></h2>
-                    <p class="lhow-sub">No middlemen. No judges. No appeals. Four steps to a binding financial commitment.</p>
+                    <h2 class="lhow-h">Set a target. Lock capital.<br>Force yourself to <strong>ship.</strong></h2>
+                    <p class="lhow-sub">No loopholes. No excuses. No appeals. Four steps to a binding financial commitment.</p>
 
                     <div class="lhow-grid">
                         <div class="lhow-card" data-r>
@@ -249,8 +249,8 @@ export function renderLanding() {
             <div class="lreal-results" data-r>
                 <div class="lw">
                     <div class="lred-dash"><span class="lmono">Real Results</span></div>
-                    <h2 class="lh-section-title">Capital at risk drives behavior.</h2>
-                    <p class="lh-section-subtitle">Procrastination stops when capital is at stake. Put skin in the game and execute.</p>
+                    <h2 class="lh-section-title">Loss aversion is the ultimate fuel.</h2>
+                    <p class="lh-section-subtitle">You don't need another productivity app. You need to know that slacking off will cost you real money.</p>
                     
                     <!-- Stats Grid -->
                     <div class="lstats-grid">
@@ -346,33 +346,33 @@ export function renderLanding() {
             <div class="lemo-reframe" data-r>
                 <div class="lw">
                     <div class="lred-dash"><span class="lmono">Why It Works</span></div>
-                    <h2 class="lh-section-title">Accountability tools don't work. <br class="lhide-mobile">Financial exposure does.</h2>
+                    <h2 class="lh-section-title">Your Notion workspace is a graveyard <br class="lhide-mobile">of goals you never hit.</h2>
                     
                     <div class="lemo-grid">
                         <div class="lemo-left">
                             <p class="lemo-body">
-                                Notion boards stay full of unhit goals because missing them costs nothing. Collateral enforces execution by putting real financial consequences behind your target deadlines.
+                                Planning is comfortable. Shipping is hard. You miss deadlines because there are no consequences. Collateral exposes your bank account to your goals, forcing you to execute or pay the price.
                             </p>
                         </div>
                         <div class="lemo-right">
                             <div class="lemo-comparison-card">
                                 <div class="lemo-col without-collateral">
-                                    <div class="lemo-col-header">Without Collateral</div>
+                                    <div class="lemo-col-header">Comfortable Procrastination</div>
                                     <ul class="lemo-list">
-                                        <li class="lemo-item">Set a goal</li>
-                                        <li class="lemo-item">Miss the deadline</li>
-                                        <li class="lemo-item">Push it to next quarter</li>
-                                        <li class="lemo-item">Repeat indefinitely</li>
+                                        <li class="lemo-item">Plan a new feature</li>
+                                        <li class="lemo-item">Get distracted or lazy</li>
+                                        <li class="lemo-item">Push deadline to next month</li>
+                                        <li class="lemo-item">Sit there until AI takes your job</li>
                                     </ul>
                                 </div>
                                 <div class="lemo-divider"></div>
                                 <div class="lemo-col with-collateral">
-                                    <div class="lemo-col-header text-strong">With Collateral</div>
+                                    <div class="lemo-col-header text-strong">Pure Execution</div>
                                     <ul class="lemo-list">
-                                        <li class="lemo-item text-strong">Set a goal</li>
-                                        <li class="lemo-item text-strong">Lock $500 against it</li>
-                                        <li class="lemo-item text-strong">Execute like it matters</li>
-                                        <li class="lemo-item text-strong text-green">Hit target + collect $1,250</li>
+                                        <li class="lemo-item text-strong">Lock $500 on the target</li>
+                                        <li class="lemo-item text-strong">Realize failure hurts</li>
+                                        <li class="lemo-item text-strong">Work through the night</li>
+                                        <li class="lemo-item text-strong text-green">Hit target & claim your money</li>
                                     </ul>
                                 </div>
                             </div>
@@ -427,8 +427,8 @@ export function renderLanding() {
 
             <!-- ═══ FINAL CTA ═══ -->
             <div class="lfoot">
-                <h2 class="lfoot-h">Your goal is already overdue.<br>Make it cost something — or keep<br>pretending it <em style="color:var(--r);font-style:normal;font-weight:700">matters.</em></h2>
-                <div class="lfoot-sub">First contract matched up to $250.</div>
+                <h2 class="lfoot-h">Are you going to do something about it,<br>or sit there like a bum until AI takes your job?<br>Make it <em style="color:var(--r);font-style:normal;font-weight:700">cost something.</em></h2>
+                <div class="lfoot-sub">First performance contract matched up to $250.</div>
                 <button class="lfoot-btn" id="lp-final-cta">Lock Your First Contract</button>
                 <div class="lfoot-micro">Objective tracking. Verified business data only.</div>
                 <div class="lfoot-line">Collateral.market · © 2026</div>

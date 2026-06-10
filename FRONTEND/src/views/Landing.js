@@ -764,7 +764,7 @@ export function initLanding() {
                             platAlt = 'X';
                         } else if (plat === 'SHOPIFY') {
                             logoUrl = 'https://www.vectorlogo.zone/logos/shopify/shopify-icon.svg';
-                            connText = 'Connected via Shopify Webhooks';
+                            connText = 'Verified via Shopify API';
                             platAlt = 'Shopify';
                         } else if (plat === 'YOUTUBE') {
                             logoUrl = 'https://www.vectorlogo.zone/logos/youtube/youtube-icon.svg';
@@ -911,70 +911,7 @@ export function initLanding() {
                     }
                 }
 
-                let container = document.getElementById('l-toast-container');
-                if (!container) {
-                    container = document.createElement('div');
-                    container.id = 'l-toast-container';
-                    document.body.appendChild(container);
-                }
-                
-                const timeAgo = (iso) => {
-                    const diff = Math.floor((new Date() - new Date(iso)) / 60000);
-                    if (diff < 1) return 'just now';
-                    if (diff < 60) return `${diff}m ago`;
-                    const h = Math.floor(diff / 60);
-                    if (h < 24) return `${h}h ago`;
-                    return `${Math.floor(h/24)}d ago`;
-                };
 
-                const formatAmt = (amt) => '$' + parseInt(amt, 10).toLocaleString();
-
-                const recentEvents = response.events.slice(0, 10);
-                let i = 0;
-                
-                const showToast = () => {
-                    if (i >= recentEvents.length) i = 0;
-                    const e = recentEvents[i];
-                    i++;
-                    
-                    let amtClass = 'locked';
-                    let amtPrefix = '';
-                    let preAction = '@' + (e.principal || 'User');
-                    let actionText = 'locked';
-                    let amtRaw = (e.amountUsdCents || e.lockAmountUsdCents || 0) / 100;
-                    
-                    if (e.eventType === 'FUNDS_LOCKED' || e.eventType === 'EXECUTION_CONFIRMED' || e.eventType === 'CONTRACT_CREATED') {
-                        actionText = `escrowed via ${e.platform || 'API'} oracle`;
-                        amtPrefix = '';
-                        amtClass = 'locked';
-                    } else if (e.eventType === 'SETTLED_SUCCESS') {
-                        actionText = `cleared settlement + yield`;
-                        amtPrefix = '+';
-                        amtClass = 'recovered';
-                    } else if (e.eventType === 'SETTLED_FAILURE') {
-                        actionText = `liquidated by ${e.platform || 'API'} oracle`;
-                        amtPrefix = '-';
-                        amtClass = 'liquidated';
-                    }
-                    
-                    let displayAmt = formatAmt(amtRaw);
-
-                    const toast = document.createElement('div');
-                    toast.className = 'l-toast animate-slide-up';
-                    toast.innerHTML = `<span class="lticker-time">${timeAgo(e.timestamp || e.created_at || new Date().toISOString())}</span> <span class="lticker-action">${preAction}</span> <span class="lticker-amt ${amtClass}">${amtPrefix}${displayAmt}</span> <span class="lticker-action">${actionText}</span>`;
-                    
-                    container.appendChild(toast);
-                    
-                    // Remove toast after 4.5 seconds
-                    setTimeout(() => {
-                        toast.classList.remove('animate-slide-up');
-                        toast.classList.add('animate-slide-down');
-                        setTimeout(() => toast.remove(), 500);
-                    }, 4500);
-                };
-                
-                showToast();
-                setInterval(showToast, 6000);
             }
         } catch (err) {
             console.error('Failed to load ledger ticker data', err);

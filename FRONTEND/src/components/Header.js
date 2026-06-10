@@ -109,9 +109,11 @@ export function renderHeader(currentRoute) {
                 transition: background 0.4s ease,
                             border-color 0.4s ease,
                             box-shadow 0.4s ease,
-                            backdrop-filter 0.4s ease;
+                            backdrop-filter 0.4s ease,
+                            top 0.4s cubic-bezier(0.16, 1, 0.3, 1);
             }
             .ch-header.nav-scrolled {
+                top: 0px !important;
                 background: rgba(255, 255, 255, 0.55) !important;
                 backdrop-filter: blur(18px) saturate(180%);
                 -webkit-backdrop-filter: blur(18px) saturate(180%);
@@ -1009,26 +1011,7 @@ export function renderHeader(currentRoute) {
  */
 export function initScrollEffects() {
     // ── Scroll-Transparent Navbar ──
-    const header = document.querySelector('.ch-header');
-    if (header) {
-        let ticking = false;
-        const onScroll = () => {
-            if (!ticking) {
-                requestAnimationFrame(() => {
-                    const scrollY = window.scrollY;
-                    if (scrollY > 60) {
-                        header.classList.add('nav-scrolled');
-                    } else {
-                        header.classList.remove('nav-scrolled');
-                    }
-                    ticking = false;
-                });
-                ticking = true;
-            }
-        };
-        window.addEventListener('scroll', onScroll, { passive: true });
-        onScroll();
-    }
+    // Handled globally in main.js to avoid duplicate listeners and memory leaks
 
     // ── Scroll Reveal (IntersectionObserver) ──
     const revealEls = document.querySelectorAll('[data-reveal]');

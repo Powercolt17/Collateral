@@ -1582,6 +1582,7 @@ router.onRouteChange = function (route, path) {
         appMount.classList.remove('pt-24');
         appMount.innerHTML = route.render(route.params);
         if (route.init) setTimeout(() => route.init(route.params), 0);
+        setTimeout(() => handleGlobalScroll(), 10);
         return;
     }
 
@@ -1608,7 +1609,49 @@ router.onRouteChange = function (route, path) {
 
     // Update auth UI
     updateAuthUI();
+    setTimeout(() => handleGlobalScroll(), 10);
 };
+
+// Global scroll handler for premium header transitions
+function handleGlobalScroll() {
+    const scrollY = window.scrollY || window.pageYOffset || document.documentElement.scrollTop;
+    const isScrolled = scrollY > 20;
+
+    if (isScrolled) {
+        document.body.classList.add('nav-scrolled');
+    } else {
+        document.body.classList.remove('nav-scrolled');
+    }
+
+    const banner = document.getElementById('global-banner');
+    if (banner) {
+        if (isScrolled) {
+            banner.classList.add('nav-scrolled');
+        } else {
+            banner.classList.remove('nav-scrolled');
+        }
+    }
+
+    const header = document.querySelector('.ch-header');
+    if (header) {
+        if (isScrolled) {
+            header.classList.add('nav-scrolled');
+        } else {
+            header.classList.remove('nav-scrolled');
+        }
+    }
+
+    const ln = document.querySelector('.ln');
+    if (ln) {
+        if (isScrolled) {
+            ln.classList.add('nav-scrolled');
+        } else {
+            ln.classList.remove('nav-scrolled');
+        }
+    }
+}
+window.addEventListener('scroll', handleGlobalScroll, { passive: true });
+window.addEventListener('load', handleGlobalScroll);
 
 // Handle default route (but NEVER override OAuth callback queries)
 const { pathname: defaultPathname, search: defaultSearch } = window.location;

@@ -108,11 +108,11 @@ export function renderLanding() {
                     <div class="lhero-left">
 
                         <h1 class="lh1 animate-fade-in-up">
-                            Are you going to ship,<br class="lh-br">
+                            Are you going to execute,<br class="lh-br">
                             or wait until <span class="lh-gradient">AI takes your job?</span>
                         </h1>
                         <p class="lsub animate-fade-in-up delay-1">
-                            If planning apps and streaks worked, you would have shipped last month. They don't. Skin in the game does. Lock capital against your target to force yourself to win.
+                            If planning apps and streaks worked, you would have hit your goals last month. They don't. Skin in the game does. Lock capital against your target to force yourself to win.
                         </p>
                         <div class="lctas animate-fade-in-up delay-2">
                             <button class="lbtn lbtn-r" id="lp-hero-cta">Lock Your First Contract</button>
@@ -204,14 +204,14 @@ export function renderLanding() {
                         <div class="ltype">
                             <div class="ltype-badge" style="color:var(--t1);background:rgba(17,17,17,.04);border:1px solid var(--d)">Solo</div>
                             <div class="ltype-h">You vs. your own laziness.</div>
-                            <div class="ltype-p">Put real cash on the line to guarantee your own execution. Hit the target to win a bonus; fail and your deposit is gone. Use the threat of loss to force yourself to ship.</div>
-                            <div class="ltype-detail"><strong>Best for:</strong> Revenue milestones, product launches, and personal focus.</div>
+                            <div class="ltype-p">Put real cash on the line to force yourself to execute. Hit your target to win a bonus; fail and your deposit is gone. Use the threat of loss to force yourself to grow, ship, or publish.</div>
+                            <div class="ltype-detail"><strong>Best for:</strong> Growing followers, launching projects, and hitting revenue goals.</div>
                         </div>
                         <div class="ltype">
                             <div class="ltype-badge" style="color:var(--r);background:rgba(92,20,20,.04);border:1px solid rgba(92,20,20,.15)">Rivalry</div>
                             <div class="ltype-h">You vs. another builder.</div>
-                            <div class="ltype-p">Lock equal cash in a head-to-head race. May the best builder win. The winner takes all the money. The loser gets nothing.</div>
-                            <div class="ltype-detail"><strong>Best for:</strong> Co-founder challenges, growth races, and competitive fire.</div>
+                            <div class="ltype-p">Lock equal cash in a head-to-head race. May the hungrier builder win. The winner takes all the money. The loser gets nothing.</div>
+                            <div class="ltype-detail"><strong>Best for:</strong> Audience growth races, creator showdowns, and competitive fire.</div>
                         </div>
                     </div>
                 </div>
@@ -288,8 +288,8 @@ export function renderLanding() {
             <div class="lw">
                 <div class="lhow" data-r id="how">
                     <div class="lred-dash"><span class="lmono">How It Works</span></div>
-                    <h2 class="lhow-h">Set a target. Lock capital.<br>Force yourself to <strong>ship.</strong></h2>
-                    <p class="lhow-sub">If you are serious about hitting your target, put something on the line. Four steps to guarantee your next launch.</p>
+                    <h2 class="lhow-h">Set a target. Lock capital.<br>Force yourself to <strong>win.</strong></h2>
+                    <p class="lhow-sub">If you are serious about hitting your target, put something on the line. Four steps to guarantee your next milestone.</p>
 
                     <div class="lhow-grid">
                         <div class="lhow-card" data-r>
@@ -321,14 +321,14 @@ export function renderLanding() {
                 <div class="lw">
                     <div class="lred-dash"><span class="lmono">Real Results</span></div>
                     <h2 class="lh-section-title">Skin in the game is the only thing that works.</h2>
-                    <p class="lh-section-subtitle">Stop pretending you will do it tomorrow. Lock capital today, ship on time, and keep your cash.</p>
+                    <p class="lh-section-subtitle">Stop pretending you will do it tomorrow. Lock capital today, execute your goals, and win.</p>
                     
                     <!-- Stats Grid -->
                     <div class="lstats-grid">
                         <div class="lstat-card">
                             <div class="lstat-num"><span data-count="74">0</span>%</div>
                             <div class="lstat-label">of contracts are won</div>
-                            <div class="lstat-sub">Builders who lock cash hit their targets way faster.</div>
+                            <div class="lstat-sub">Go-getters who lock cash hit their targets way faster.</div>
                         </div>
                         <div class="lstat-card">
                             <div class="lstat-num">$<span data-count="127">0</span>k</div>
@@ -422,7 +422,7 @@ export function renderLanding() {
                     <div class="lemo-grid">
                         <div class="lemo-left">
                             <p class="lemo-body">
-                                Planning is easy. Shipping is hard. You miss deadlines because failing is free. Collateral gives you the financial leverage you need to stop planning, force your own hand, and start shipping.
+                                Planning is easy. Executing is hard. You miss your targets because failing is free. Collateral gives you the financial leverage you need to stop planning, force your own hand, and start winning.
                             </p>
                         </div>
                         <div class="lemo-right">
@@ -430,7 +430,7 @@ export function renderLanding() {
                                 <div class="lemo-col without-collateral">
                                     <div class="lemo-col-header">Comfortable Procrastination</div>
                                     <ul class="lemo-list">
-                                        <li class="lemo-item">Plan a new feature</li>
+                                        <li class="lemo-item">Plan a new goal</li>
                                         <li class="lemo-item">Get distracted or lazy</li>
                                         <li class="lemo-item">Push deadline to next month</li>
                                         <li class="lemo-item">Sit there until AI takes your job</li>
@@ -498,7 +498,7 @@ export function renderLanding() {
 
             <!-- ═══ FINAL CTA ═══ -->
             <div class="lfoot">
-                <h2 class="lfoot-h">Are you going to keep pretending streaks work,<br>or lock capital to guarantee you ship?<br>Make it <em style="color:var(--r);font-style:normal;font-weight:700">cost something.</em></h2>
+                <h2 class="lfoot-h">Are you going to keep pretending streaks work,<br>or lock capital to guarantee you execute?<br>Make it <em style="color:var(--r);font-style:normal;font-weight:700">cost something.</em></h2>
                 <div class="lfoot-sub">First performance contract matched up to $250.</div>
                 <button class="lfoot-btn" id="lp-final-cta">Lock Your First Contract</button>
                 <div class="lfoot-micro">Objective tracking. Verified business data only.</div>

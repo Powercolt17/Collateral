@@ -781,7 +781,7 @@ export function initLanding() {
                 // Initialize the first one
                 updateFeaturedContract(featuredContracts[0]);
 
-                // Cycle featured contract and recent activity in lockstep every 2 seconds
+                // Cycle featured contract and recent activity in lockstep every 2.5 seconds
                 const featContainer = document.querySelector('.lc-contract');
                 const hasContractCycle = featContainer && featuredContracts.length > 1;
                 const hasRaCycle = raListEl && combinedEvents.length > 2;
@@ -810,7 +810,7 @@ export function initLanding() {
                                 raListEl.style.transform = 'translateY(0)';
                             }
                         }, 300);
-                    }, 2000);
+                    }, 2500);
                 }
 
                 // Populate Live Settlement Activity Table

@@ -1,7 +1,7 @@
 // Landing CSS — Elite fintech conversion page
 export const landingCSS = `
-.lp{--bg:#F8FAFC;--p:#FFF;--t1:#0F172A;--t2:#334155;--t3:#64748B;--d:#E2E8F0;--r:#5C1414;--rh:#6B1212;--g:#145c14;min-height:100vh;background:var(--bg);color:var(--t1);font-family:'Inter',sans-serif;-webkit-font-smoothing:antialiased;overflow-x:hidden;opacity:0;transform:translateY(10px);transition:opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1), transform 0.6s cubic-bezier(0.16, 1, 0.3, 1)}
-.lp.v{opacity:1;transform:translateY(0)}
+.lp{--bg:#F8FAFC;--p:#FFF;--t1:#0F172A;--t2:#334155;--t3:#64748B;--d:#E2E8F0;--r:#5C1414;--rh:#6B1212;--g:#145c14;min-height:100vh;background:var(--bg);color:var(--t1);font-family:'Inter',sans-serif;-webkit-font-smoothing:antialiased;overflow-x:hidden;opacity:0;transition:opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1)}
+.lp.v{opacity:1}
 .lp *{box-sizing:border-box}
 .lloading-bar{position:fixed;top:0;left:0;height:2px;background:var(--r);z-index:1000;width:0;transition:width 0.4s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.3s ease;box-shadow:0 0 8px var(--r)}
 
@@ -14,27 +14,41 @@ export const landingCSS = `
   from { opacity: 0; transform: scale(0.97) translateY(12px); }
   to { opacity: 1; transform: scale(1) translateY(0); }
 }
-.animate-fade-in-up { animation: fadeInUp 0.75s cubic-bezier(0.16, 1, 0.3, 1) both; }
-.animate-scale-in { animation: scaleIn 0.85s cubic-bezier(0.16, 1, 0.3, 1) both; }
-.delay-1 { animation-delay: 120ms; }
-.delay-2 { animation-delay: 240ms; }
-.delay-3 { animation-delay: 360ms; }
-.delay-4 { animation-delay: 480ms; }
+.animate-fade-in-up { opacity: 0; }
+.animate-scale-in { opacity: 0; }
+.lp.v .animate-fade-in-up { animation: fadeInUp 0.75s cubic-bezier(0.16, 1, 0.3, 1) both; }
+.lp.v .animate-scale-in { animation: scaleIn 0.85s cubic-bezier(0.16, 1, 0.3, 1) both; }
+.delay-1 { animation-delay: 150ms; }
+.delay-2 { animation-delay: 300ms; }
+.delay-3 { animation-delay: 450ms; }
+.delay-4 { animation-delay: 600ms; }
 
 /* Promo Bar */
 @keyframes textShine {
   0% { background-position: 200% center; }
   100% { background-position: -200% center; }
 }
-.lpromo-bar{position:fixed;top:0;left:0;right:0;height:32px;background-color:var(--r);display:flex;align-items:center;justify-content:center;text-align:center;font-size:12px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;z-index:60;box-shadow:0 2px 12px rgba(92,20,20,.4)}
+.lpromo-bar{position:fixed;top:0;left:0;right:0;height:32px;background-color:var(--r);display:flex;align-items:center;justify-content:center;text-align:center;font-size:12px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;z-index:60;box-shadow:0 2px 12px rgba(92,20,20,.4);opacity:0}
 .promo-text{background:linear-gradient(to right, rgba(255,255,255,0.6) 20%, #fff 40%, #fff 60%, rgba(255,255,255,0.6) 80%);background-size:200% auto;color:transparent;-webkit-background-clip:text;background-clip:text;animation:textShine 4s linear infinite;text-shadow: 0 1px 1px rgba(0,0,0,0.1)}
 
 /* Nav */
-.ln{position:fixed;top:32px;left:0;right:0;z-index:50;background:rgba(250,250,250,0.85);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-bottom:1px solid rgba(0,0,0,0.04)}
+.ln{position:fixed;top:32px;left:0;right:0;z-index:50;background:rgba(250,250,250,0.85);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-bottom:1px solid rgba(0,0,0,0.04);opacity:0}
 .ln-in{max-width:none;width:100%;padding:0 48px;height:72px;display:flex;justify-content:space-between;align-items:center}
 .ln-brand{font-family:'Inter Tight',sans-serif;font-size:16px;font-weight:800;letter-spacing:3.5px;color:var(--t1);text-decoration:none;display:inline-flex;align-items:center;gap:14px}
 .ln-logo{width:32px;height:32px;color:var(--r);fill:currentColor;flex-shrink:0}
 .ln-cta{background:var(--r) !important;color:#fff !important;font-size:11px;font-weight:600;letter-spacing:.8px;text-transform:uppercase;padding:12px 24px;border:none;cursor:pointer;transition:all .3s cubic-bezier(.16, 1, 0.3, 1)}
+
+/* Entrance Keyframes for Nav & Promo */
+@keyframes promoDown {
+  from { opacity: 0; transform: translateY(-32px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes navDown {
+  from { opacity: 0; transform: translateY(-12px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.lp.v .lpromo-bar { animation: promoDown 0.6s cubic-bezier(0.16, 1, 0.3, 1) both; }
+.lp.v .ln { animation: navDown 0.8s cubic-bezier(0.16, 1, 0.3, 1) both; animation-delay: 100ms; }
 .ln-cta:hover{background:var(--rh) !important;transform:scale(1.02)}
 .ln-cta::after{content:'→';opacity:0;transform:translateX(-6px);transition:all .25s cubic-bezier(.16, 1, 0.3, 1);display:inline-block;width:0;margin-left:0}
 .ln-cta:hover::after{opacity:1;transform:translateX(0);width:auto;margin-left:8px}

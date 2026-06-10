@@ -114,7 +114,7 @@ export function renderHeader(currentRoute) {
             }
             .ch-header.nav-scrolled {
                 top: 0px !important;
-                background: rgba(255, 255, 255, 0.55) !important;
+                background: rgba(255, 255, 255, 0.25) !important;
                 backdrop-filter: blur(18px) saturate(180%);
                 -webkit-backdrop-filter: blur(18px) saturate(180%);
                 border-bottom-color: rgba(229, 229, 229, 0.35) !important;

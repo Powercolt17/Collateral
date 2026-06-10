@@ -110,8 +110,8 @@ export function renderLanding() {
                     <div class="lhero-left">
 
                         <h1 class="lh1 animate-fade-in-up">
-                            Your Notion workspace is a<br class="lh-br">
-                            graveyard of <span class="lh-gradient">goals you never hit.</span>
+                            Are you going to execute,<br class="lh-br">
+                            or wait until <span class="lh-gradient">AI takes your job?</span>
                         </h1>
                         <p class="lsub animate-fade-in-up delay-1">
                             You keep setting goals, getting distracted, and letting yourself off the hook. If todo lists worked, you'd have hit them by now. Lock capital. Force yourself to win.
@@ -419,7 +419,7 @@ export function renderLanding() {
             <div class="lemo-reframe" data-r>
                 <div class="lw">
                     <div class="lred-dash"><span class="lmono">Why It Works</span></div>
-                    <h2 class="lh-section-title">If todo lists worked,<br class="lhide-mobile">you wouldn't be here.</h2>
+                    <h2 class="lh-section-title">Your Notion workspace is a graveyard<br>of goals you never hit.</h2>
                     
                     <div class="lemo-grid">
                         <div class="lemo-left">

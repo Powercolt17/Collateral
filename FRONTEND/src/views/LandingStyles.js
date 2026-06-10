@@ -109,16 +109,16 @@ export const landingCSS = `
 }
 .lbtn-g{background:var(--p);color:var(--t2);border:1px solid var(--d)}
 .lbtn-g:hover{border-color:#bbb;color:var(--t1);transform:translateY(-1px)}
-@keyframes matchDotGreenPulse {
-  0%, 100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.6); }
-  50% { transform: scale(1.3); box-shadow: 0 0 10px 4px rgba(34, 197, 94, 0.4); }
+@keyframes matchDotRedPulse {
+  0%, 100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.6); }
+  50% { transform: scale(1.3); box-shadow: 0 0 10px 4px rgba(239, 68, 68, 0.4); }
 }
 @keyframes matchTextShine {
   0%, 100% { text-shadow: 0 0 0px rgba(92,20,20,0); }
   50% { text-shadow: 0 0 4px rgba(92,20,20,0.1); }
 }
 .lcta-match{font-size:14px;color:var(--t1);margin-top:16px;font-weight:700;display:flex;align-items:center;gap:8px;letter-spacing:-.1px;animation:matchTextShine 3s infinite ease-in-out}
-.lcta-match::before{content:'';width:6px;height:6px;border-radius:50%;background:#22c55e;animation:matchDotGreenPulse 2s infinite ease-in-out}
+.lcta-match::before{content:'';width:6px;height:6px;border-radius:50%;background:#EF4444;animation:matchDotRedPulse 2s infinite ease-in-out}
 
 /* ═══ PREVIEW CONTRACT CARD ═══ */
 @keyframes premiumFloat {
@@ -589,6 +589,7 @@ export const landingCSS = `
 
 /* ═══ RESPONSIVE ═══ */
 @media(max-width:768px){
+  .lh-section-title{font-size:clamp(22px, 8vw, 32px) !important;letter-spacing:-0.8px !important;margin-bottom:16px}
   .lpromo-bar { height: auto; min-height: 32px; padding: 6px 10px; line-height: 1.3; font-size: 9px; }
   .ln { top: 32px; }
   .lmain { padding-top: 84px; }
@@ -684,6 +685,7 @@ export const landingCSS = `
 
 /* ═══ SOCIAL PROOF ═══ */
 .lreal-results{padding:100px 0;background:var(--bg)}
+.lh-section-title{font-family:'Plus Jakarta Sans',sans-serif;font-size:clamp(30px, 4.5vw, 44px);font-weight:800;line-height:1.15;letter-spacing:-1.2px;color:var(--t1);margin-bottom:24px}
 .lstats-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:32px;margin-bottom:64px;margin-top:32px}
 .lstat-card{background:#fff;border:1px solid var(--d);padding:32px;border-radius:12px;box-shadow:0 4px 20px rgba(0,0,0,0.01)}
 .lstat-num{font-family:'Plus Jakarta Sans',sans-serif;font-size:44px;font-weight:800;color:var(--r);letter-spacing:-1.5px;line-height:1}

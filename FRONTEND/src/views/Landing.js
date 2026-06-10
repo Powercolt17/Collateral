@@ -114,7 +114,7 @@ export function renderLanding() {
                             or wait until <span class="lh-gradient">AI takes your job?</span>
                         </h1>
                         <p class="lsub animate-fade-in-up delay-1">
-                            If todo lists and calendar reminders worked, you would have hit your goals last month. They don't. Skin in the game does. Lock capital against your target to force yourself to win.
+                            If todo lists and calendar reminders worked, you would have launched that Shopify store, grown your Twitter, or hit your YouTube sub goal last month. They don't. Skin in the game does. Lock capital to force yourself to win.
                         </p>
                         <div class="lctas animate-fade-in-up delay-2">
                             <button class="lbtn lbtn-r" id="lp-hero-cta">Lock Your First Contract</button>

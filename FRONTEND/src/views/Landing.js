@@ -173,6 +173,7 @@ export function renderLanding() {
                                         <span class="lc-flow-val" id="lc-feat-return">$1,000</span>
                                     </div>
                                 </div>
+                                <div class="lc-flow-footnote">Yields mathematically backed by protocol forfeiture pools and sponsors.</div>
                             </div>
 
                             <!-- DEDICATED LIVE ACTIVITY STRIP (CHANGE 3) -->
@@ -488,11 +489,11 @@ export function renderLanding() {
                         </div>
                         <div class="fq">
                             <div class="fq-q">What data do you access?</div>
-                            <div class="fq-a">We only read the single number you are targeting. We never look at your customers, billing, or private messages.</div>
+                            <div class="fq-a">We connect using official OAuth read-only scopes. We do not store raw API keys, and we have zero access to customer data, PII, billing details, or funds.</div>
                         </div>
                         <div class="fq">
                             <div class="fq-q">Is this legal?</div>
-                            <div class="fq-a">Yes. We operate in the US, Canada, UK, and EU. This is a simple performance contract based on your own hard work and real numbers.</div>
+                            <div class="fq-a">Yes. Available in the US, CA, UK, and EU. This is a performance-based commercial escrow agreement based on objective third-party metrics, not probability.</div>
                         </div>
                     </div>
                 </div>

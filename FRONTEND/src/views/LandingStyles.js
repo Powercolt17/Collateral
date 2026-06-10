@@ -323,6 +323,15 @@ export const landingCSS = `
   font-size: 16px !important;
   font-weight: 800 !important;
 }
+.lc-flow-footnote {
+  font-family: 'Inter', sans-serif;
+  font-size: 9px;
+  font-weight: 500;
+  color: #8a8984;
+  text-align: center;
+  margin-top: -2px;
+  letter-spacing: -0.1px;
+}
 
 /* DEDICATED LIVE ACTIVITY STRIP */
 .lc-recent-activity {
@@ -803,6 +812,28 @@ export const landingCSS = `
   z-index: 5;
 }
 .lcard:hover::after, .lhow-card:hover::after, .lstep:hover::after, .lstat-card:hover::after {
+  left: 150%;
+  transition: left 0.8s ease-in-out;
+}
+
+/* One-way Glass Sheen Hover Sweep for Buttons */
+.lbtn-r, .lbtn-g, .lfoot-btn {
+  position: relative;
+  overflow: hidden;
+}
+.lbtn-r::before, .lbtn-g::before, .lfoot-btn::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -150%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.35), transparent);
+  transform: skewX(-25deg);
+  pointer-events: none;
+  z-index: 5;
+}
+.lbtn-r:hover::before, .lbtn-g:hover::before, .lfoot-btn:hover::before {
   left: 150%;
   transition: left 0.8s ease-in-out;
 }

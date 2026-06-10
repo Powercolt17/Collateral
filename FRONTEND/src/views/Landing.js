@@ -14,7 +14,12 @@ export function renderLanding() {
             <!-- NAV -->
             <nav class="ln">
                 <div class="ln-in">
-                    <a class="ln-brand" href="/">
+                    <a class="ln-brand" href="/" onclick="window.router.navigate('/'); return false;">
+                        <svg class="logo-saturn" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:20px;height:20px;display:inline-block;vertical-align:middle;margin-right:8px;transform:rotate(-15deg);color:#5C1414;">
+                            <path d="M 3 12 C 3 8, 21 8, 21 12" stroke="currentColor" stroke-width="1.2" />
+                            <circle cx="12" cy="12" r="5" fill="#fff" stroke="currentColor" stroke-width="2" />
+                            <path d="M 3 12 C 3 16, 21 16, 21 12" stroke="currentColor" stroke-width="2" />
+                        </svg>
                         <span class="logo-wordmark">Collateral</span>
                     </a>
                     <div style="display:flex; align-items:center;">
@@ -32,6 +37,30 @@ export function renderLanding() {
 
             <!-- ═══ HERO ═══ -->
             <div class="lhero-section">
+            <div class="lhero-saturn-bg">
+                <svg class="lsaturn-svg" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:100%;">
+                    <defs>
+                        <radialGradient id="planetGrad" cx="35%" cy="35%" r="65%">
+                            <stop offset="0%" stop-color="#FFFFFF" />
+                            <stop offset="60%" stop-color="#E2E8F0" />
+                            <stop offset="100%" stop-color="#64748B" />
+                        </radialGradient>
+                        <linearGradient id="ringGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                            <stop offset="0%" stop-color="rgba(15, 23, 42, 0.05)" />
+                            <stop offset="50%" stop-color="#5C1414" />
+                            <stop offset="100%" stop-color="rgba(15, 23, 42, 0.05)" />
+                        </linearGradient>
+                    </defs>
+                    <!-- Back Ring (behind planet) -->
+                    <path d="M 10 50 A 40 10 0 0 1 90 50" stroke="url(#ringGrad)" stroke-width="5" stroke-linecap="round" />
+                    <path d="M 5 50 A 45 12 0 0 1 95 50" stroke="url(#ringGrad)" stroke-width="1.5" stroke-dasharray="2 2" />
+                    <!-- Planet Body -->
+                    <circle cx="50" cy="50" r="22" fill="url(#planetGrad)" stroke="#94A3B8" stroke-width="0.5" />
+                    <!-- Front Ring (in front of planet) -->
+                    <path d="M 90 50 A 40 10 0 0 1 10 50" stroke="url(#ringGrad)" stroke-width="5" stroke-linecap="round" />
+                    <path d="M 95 50 A 45 12 0 0 1 5 50" stroke="url(#ringGrad)" stroke-width="1.5" stroke-dasharray="2 2" />
+                </svg>
+            </div>
             <div class="lw">
                 <div class="lhero-grid">
                     <div class="lhero-left">

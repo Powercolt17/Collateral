@@ -114,7 +114,7 @@ export function renderLanding() {
                             or wait until <span class="lh-gradient">AI takes your job?</span>
                         </h1>
                         <p class="lsub animate-fade-in-up delay-1">
-                            If planning apps and streaks worked, you would have hit your goals last month. They don't. Skin in the game does. Lock capital against your target to force yourself to win.
+                            If todo lists and calendar reminders worked, you would have hit your goals last month. They don't. Skin in the game does. Lock capital against your target to force yourself to win.
                         </p>
                         <div class="lctas animate-fade-in-up delay-2">
                             <button class="lbtn lbtn-r" id="lp-hero-cta">Lock Your First Contract</button>
@@ -500,7 +500,7 @@ export function renderLanding() {
 
             <!-- ═══ FINAL CTA ═══ -->
             <div class="lfoot">
-                <h2 class="lfoot-h">Are you going to keep pretending streaks work,<br>or lock capital to guarantee you execute?<br>Make it <em style="color:var(--r);font-style:normal;font-weight:700">cost something.</em></h2>
+                <h2 class="lfoot-h">Are you going to keep pretending todo lists work,<br>or lock capital to guarantee you execute?<br>Make it <em style="color:var(--r);font-style:normal;font-weight:700">cost something.</em></h2>
                 <div class="lfoot-sub">First performance contract matched up to $250.</div>
                 <button class="lfoot-btn" id="lp-final-cta">Lock Your First Contract</button>
                 <div class="lfoot-micro">Objective tracking. Verified business data only.</div>

@@ -35,13 +35,13 @@ export function renderLanding() {
             <div class="lhero-saturn-bg">
                 <svg class="lsaturn-svg" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:100%;">
                     <defs>
-                        <!-- Planet Radial Gradient for 3D Sphere Shading -->
+                        <!-- Planet Radial Gradient for 3D Sphere Shading with Ring Red Reflection -->
                         <radialGradient id="planetGrad" cx="30%" cy="30%" r="70%">
                             <stop offset="0%" stop-color="#FFFFFF" />
                             <stop offset="40%" stop-color="#F8FAFC" />
-                            <stop offset="75%" stop-color="#CBD5E1" />
-                            <stop offset="92%" stop-color="#475569" />
-                            <stop offset="100%" stop-color="#182235" />
+                            <stop offset="70%" stop-color="#E2E8F0" />
+                            <stop offset="90%" stop-color="#8C3A3A" />
+                            <stop offset="100%" stop-color="#1E0A0A" />
                         </radialGradient>
                         
                         <!-- Ring A (Outer Ring) Gradient -->
@@ -75,16 +75,17 @@ export function renderLanding() {
                         </filter>
                     </defs>
 
-                    <!-- 1. Outer Orbit Line (Technical Blueprint Style) -->
-                    <path d="M 3 50 A 47 12 0 0 1 97 50" stroke="rgba(15,23,42,0.06)" stroke-width="0.75" stroke-dasharray="3 3" />
+                    <!-- 1. Outer Orbit Line (Technical Blueprint Style - Spins Fast) -->
+                    <path d="M 3 50 A 47 12 0 0 1 97 50" class="lsaturn-dash-fast" stroke="rgba(92,20,20,0.12)" stroke-width="0.75" />
                     
                     <!-- 2. Back Rings (drawn behind planet) -->
-                    <!-- Ring A Back -->
-                    <path d="M 12 50 A 38 9.5 0 0 1 88 50" stroke="url(#ringA)" stroke-width="1.8" stroke-linecap="round" />
-                    <!-- Ring B Back -->
-                    <path d="M 16 50 A 34 8.5 0 0 1 84 50" stroke="url(#ringB)" stroke-width="4.5" stroke-linecap="round" />
-                    <!-- Ring C Back -->
-                    <path d="M 22 50 A 28 7 0 0 1 78 50" stroke="url(#ringC)" stroke-width="1.2" stroke-linecap="round" />
+                    <!-- Ring A Back (Spins Slow) -->
+                    <path d="M 12 50 A 38 9.5 0 0 1 88 50" class="lsaturn-dash-slow" stroke="url(#ringA)" stroke-width="1.8" stroke-linecap="round" />
+                    <!-- Ring B Back (Cassini Division split - Solid) -->
+                    <path d="M 17 50 A 33 8.25 0 0 1 83 50" stroke="url(#ringB)" stroke-width="2" stroke-linecap="round" />
+                    <path d="M 15 50 A 35 8.75 0 0 1 85 50" stroke="url(#ringB)" stroke-width="1.2" stroke-linecap="round" />
+                    <!-- Ring C Back (Spins Reverse) -->
+                    <path d="M 22 50 A 28 7 0 0 1 78 50" class="lsaturn-dash-reverse" stroke="url(#ringC)" stroke-width="1.2" stroke-linecap="round" />
 
                     <!-- 3. Planet Body (with soft 3D shading & drop shadow) -->
                     <circle cx="50" cy="50" r="22" fill="url(#planetGrad)" filter="url(#planetShadow)" />
@@ -92,15 +93,16 @@ export function renderLanding() {
                     <circle cx="50" cy="50" r="22" fill="none" stroke="rgba(255,255,255,0.45)" stroke-width="0.5" />
 
                     <!-- 4. Front Rings (drawn in front of planet, creating overlap depth) -->
-                    <!-- Ring C Front -->
-                    <path d="M 78 50 A 28 7 0 0 1 22 50" stroke="url(#ringC)" stroke-width="1.2" stroke-linecap="round" />
-                    <!-- Ring B Front -->
-                    <path d="M 84 50 A 34 8.5 0 0 1 16 50" stroke="url(#ringB)" stroke-width="4.5" stroke-linecap="round" />
-                    <!-- Ring A Front -->
-                    <path d="M 88 50 A 38 9.5 0 0 1 12 50" stroke="url(#ringA)" stroke-width="1.8" stroke-linecap="round" />
+                    <!-- Ring C Front (Spins Reverse) -->
+                    <path d="M 78 50 A 28 7 0 0 1 22 50" class="lsaturn-dash-reverse" stroke="url(#ringC)" stroke-width="1.2" stroke-linecap="round" />
+                    <!-- Ring B Front (Cassini Division split - Solid) -->
+                    <path d="M 85 50 A 35 8.75 0 0 1 15 50" stroke="url(#ringB)" stroke-width="1.2" stroke-linecap="round" />
+                    <path d="M 83 50 A 33 8.25 0 0 1 17 50" stroke="url(#ringB)" stroke-width="2" stroke-linecap="round" />
+                    <!-- Ring A Front (Spins Slow) -->
+                    <path d="M 88 50 A 38 9.5 0 0 1 12 50" class="lsaturn-dash-slow" stroke="url(#ringA)" stroke-width="1.8" stroke-linecap="round" />
 
-                    <!-- 5. Front Outer Orbit Line -->
-                    <path d="M 97 50 A 47 12 0 0 1 3 50" stroke="rgba(15,23,42,0.06)" stroke-width="0.75" stroke-dasharray="3 3" />
+                    <!-- 5. Front Outer Orbit Line (Technical Blueprint Style - Spins Fast) -->
+                    <path d="M 97 50 A 47 12 0 0 1 3 50" class="lsaturn-dash-fast" stroke="rgba(92,20,20,0.12)" stroke-width="0.75" />
                 </svg>
             </div>
             <div class="lw">

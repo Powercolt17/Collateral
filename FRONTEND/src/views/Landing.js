@@ -41,13 +41,13 @@ export function renderLanding() {
                             or wait until <span class="lh-gradient">AI takes your job?</span>
                         </h1>
                         <p class="lsub animate-fade-in-up delay-1">
-                            Stop procrastinating. Lock hard capital against a verifiable target. Hit it to win, or miss and forfeit your deposit. No excuses. Fully automated via APIs.
+                            Stop slacking off. Put real cash on the line. Hit your goal to keep it and win a bonus. Miss it, and your money is gone. No excuses. Verified automatically by APIs.
                         </p>
                         <div class="lctas animate-fade-in-up delay-2">
                             <button class="lbtn lbtn-r" id="lp-hero-cta">Lock Your First Contract</button>
                             <button class="lbtn lbtn-g" id="lp-see-contracts-cta">See Live Contracts</button>
                         </div>
-                        <div class="lcta-match ldesktop-proof animate-fade-in-up delay-2">First performance contract matched up to $250</div>
+                        <div class="lcta-match ldesktop-proof animate-fade-in-up delay-2">First contract matched up to $250</div>
 
 
                     </div>
@@ -127,19 +127,19 @@ export function renderLanding() {
             <div class="lw">
                 <div class="ltypes" data-r>
                     <div class="lred-dash"><span class="lmono">Contract Types</span></div>
-                    <h2 class="lhow-h" style="margin-bottom:32px">Solo self-discipline or a<br>brutal head-to-head <strong>rivalry.</strong></h2>
+                    <h2 class="lhow-h" style="margin-bottom:32px">Go solo, or enter a<br>brutal head-to-head <strong>race.</strong></h2>
 
                     <div class="ltypes-grid">
                         <div class="ltype">
                             <div class="ltype-badge" style="color:var(--t1);background:rgba(17,17,17,.04);border:1px solid var(--d)">Solo</div>
                             <div class="ltype-h">You vs. your own laziness.</div>
-                            <div class="ltype-p">Commit to a target only you control. Put skin in the game to beat procrastination. Hit it to win the bonus; fail and your deposit is burned.</div>
+                            <div class="ltype-p">Commit to a target only you control. Put real cash on the line to force yourself to work. Hit it to win a bonus; fail and your cash is gone forever.</div>
                             <div class="ltype-detail"><strong>Best for:</strong> Revenue milestones, product launches, and personal focus.</div>
                         </div>
                         <div class="ltype">
                             <div class="ltype-badge" style="color:var(--r);background:rgba(92,20,20,.04);border:1px solid rgba(92,20,20,.15)">Rivalry</div>
                             <div class="ltype-h">You vs. another builder.</div>
-                            <div class="ltype-p">Lock equal capital in a head-to-head race. May the best operator win. The winner takes the entire pool; the loser goes home empty-handed.</div>
+                            <div class="ltype-p">Lock equal cash in a head-to-head race. May the best builder win. The winner takes all the money. The loser gets nothing.</div>
                             <div class="ltype-detail"><strong>Best for:</strong> Co-founder challenges, growth races, and competitive fire.</div>
                         </div>
                     </div>
@@ -249,15 +249,15 @@ export function renderLanding() {
             <div class="lreal-results" data-r>
                 <div class="lw">
                     <div class="lred-dash"><span class="lmono">Real Results</span></div>
-                    <h2 class="lh-section-title">Loss aversion is the ultimate fuel.</h2>
-                    <p class="lh-section-subtitle">You don't need another productivity app. You need to know that slacking off will cost you real money.</p>
+                    <h2 class="lh-section-title">Losing money hurts. That is why it works.</h2>
+                    <p class="lh-section-subtitle">No more productivity apps. If you slack off, you lose real cash.</p>
                     
                     <!-- Stats Grid -->
                     <div class="lstats-grid">
                         <div class="lstat-card">
                             <div class="lstat-num"><span data-count="74">0</span>%</div>
-                            <div class="lstat-label">of contracts settle successfully</div>
-                            <div class="lstat-sub">Founders who lock capital outperform their own projections</div>
+                            <div class="lstat-label">of contracts are won</div>
+                            <div class="lstat-sub">Builders who lock cash hit their targets way faster.</div>
                         </div>
                         <div class="lstat-card">
                             <div class="lstat-num">$<span data-count="127">0</span>k</div>
@@ -351,7 +351,7 @@ export function renderLanding() {
                     <div class="lemo-grid">
                         <div class="lemo-left">
                             <p class="lemo-body">
-                                Planning is comfortable. Shipping is hard. You miss deadlines because there are no consequences. Collateral exposes your bank account to your goals, forcing you to execute or pay the price.
+                                Planning is easy. Shipping is hard. You miss deadlines because it costs you nothing to fail. We put your bank account on the line. Hit the goal, or pay the price.
                             </p>
                         </div>
                         <div class="lemo-right">
@@ -391,35 +391,35 @@ export function renderLanding() {
                     <div class="lfaq-wrap">
                         <div class="fq open">
                             <div class="fq-q">Is this gambling?</div>
-                            <div class="fq-a">No. There is no chance or luck. This is a performance contract verified directly by official APIs against your execution — not probability.</div>
+                            <div class="fq-a">No. There is no luck involved. You win if you hit your goal. You lose if you don't. The API checks your real data.</div>
                         </div>
                         <div class="fq">
                             <div class="fq-q">Where is the money held?</div>
-                            <div class="fq-a">Deposits are held in secure escrow via Stripe and released automatically upon API settlement.</div>
+                            <div class="fq-a">Your cash is held securely by Stripe. It gets released to you automatically as soon as the API verifies you hit your target.</div>
                         </div>
                         <div class="fq">
                             <div class="fq-q">How is the target verified?</div>
-                            <div class="fq-a">Verified directly via official APIs at the deadline. No manual screenshots or self-reporting.</div>
+                            <div class="fq-a">We check your real numbers directly through official platform APIs. No screenshots, no lies, no cheating.</div>
                         </div>
                         <div class="fq">
                             <div class="fq-q">Can I cancel after locking?</div>
-                            <div class="fq-a">No. Once live, capital is locked in escrow until the deadline. It cannot be cancelled or withdrawn early.</div>
+                            <div class="fq-a">No. Once your cash is locked, you cannot get it back until the timer runs out. No early exits.</div>
                         </div>
                         <div class="fq">
                             <div class="fq-q">Can I get a refund if I miss?</div>
-                            <div class="fq-a">No. Forfeiture is the enforcement mechanism. Only lock capital you commit to risking.</div>
+                            <div class="fq-a">No. If you fail, your money is gone. That's the only reason this works. Only lock cash you are ready to lose.</div>
                         </div>
                         <div class="fq">
                             <div class="fq-q">What happens if an API goes down?</div>
-                            <div class="fq-a">Contracts pause automatically. If a source is permanently down, your deposit is fully refunded.</div>
+                            <div class="fq-a">The contract pauses. If an API breaks permanently, you get your money back.</div>
                         </div>
                         <div class="fq">
                             <div class="fq-q">What data do you access?</div>
-                            <div class="fq-a">Read-only access to the single metric you're targeting. We never touch billing, customer records, messages, or anything else.</div>
+                            <div class="fq-a">We only read the single number you are targeting. We never look at your customers, billing, or private messages.</div>
                         </div>
                         <div class="fq">
                             <div class="fq-q">Is this legal?</div>
-                            <div class="fq-a">Yes. Available in the US, CA, UK, and EU. This is a commercial performance contract based on skill, execution, and objective data.</div>
+                            <div class="fq-a">Yes. We operate in the US, Canada, UK, and EU. This is a simple performance contract based on your own hard work and real numbers.</div>
                         </div>
                     </div>
                 </div>

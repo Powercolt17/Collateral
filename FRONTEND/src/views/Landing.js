@@ -35,25 +35,72 @@ export function renderLanding() {
             <div class="lhero-saturn-bg">
                 <svg class="lsaturn-svg" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:100%;">
                     <defs>
-                        <radialGradient id="planetGrad" cx="35%" cy="35%" r="65%">
+                        <!-- Planet Radial Gradient for 3D Sphere Shading -->
+                        <radialGradient id="planetGrad" cx="30%" cy="30%" r="70%">
                             <stop offset="0%" stop-color="#FFFFFF" />
-                            <stop offset="60%" stop-color="#E2E8F0" />
-                            <stop offset="100%" stop-color="#64748B" />
+                            <stop offset="40%" stop-color="#F8FAFC" />
+                            <stop offset="75%" stop-color="#CBD5E1" />
+                            <stop offset="92%" stop-color="#475569" />
+                            <stop offset="100%" stop-color="#182235" />
                         </radialGradient>
-                        <linearGradient id="ringGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-                            <stop offset="0%" stop-color="rgba(15, 23, 42, 0.05)" />
-                            <stop offset="50%" stop-color="#5C1414" />
-                            <stop offset="100%" stop-color="rgba(15, 23, 42, 0.05)" />
+                        
+                        <!-- Ring A (Outer Ring) Gradient -->
+                        <linearGradient id="ringA" x1="0%" y1="0%" x2="100%" y2="100%">
+                            <stop offset="0%" stop-color="rgba(15, 23, 42, 0.01)" />
+                            <stop offset="30%" stop-color="rgba(92, 20, 20, 0.2)" />
+                            <stop offset="50%" stop-color="rgba(148, 163, 184, 0.3)" />
+                            <stop offset="70%" stop-color="rgba(92, 20, 20, 0.2)" />
+                            <stop offset="100%" stop-color="rgba(15, 23, 42, 0.01)" />
                         </linearGradient>
+
+                        <!-- Ring B (Main Ring) Gradient -->
+                        <linearGradient id="ringB" x1="0%" y1="0%" x2="100%" y2="100%">
+                            <stop offset="0%" stop-color="rgba(15, 23, 42, 0.02)" />
+                            <stop offset="30%" stop-color="rgba(92, 20, 20, 0.45)" />
+                            <stop offset="50%" stop-color="rgba(255, 255, 255, 0.75)" />
+                            <stop offset="70%" stop-color="rgba(92, 20, 20, 0.45)" />
+                            <stop offset="100%" stop-color="rgba(15, 23, 42, 0.02)" />
+                        </linearGradient>
+
+                        <!-- Ring C (Inner Ring) Gradient -->
+                        <linearGradient id="ringC" x1="0%" y1="0%" x2="100%" y2="100%">
+                            <stop offset="0%" stop-color="rgba(15, 23, 42, 0)" />
+                            <stop offset="50%" stop-color="rgba(148, 163, 184, 0.25)" />
+                            <stop offset="100%" stop-color="rgba(15, 23, 42, 0)" />
+                        </linearGradient>
+                        
+                        <!-- Planet Soft Drop Shadow -->
+                        <filter id="planetShadow" x="-30%" y="-30%" width="160%" height="160%">
+                            <feDropShadow dx="-1" dy="3" stdDeviation="4" flood-color="#0F172A" flood-opacity="0.1" />
+                        </filter>
                     </defs>
-                    <!-- Back Ring (behind planet) -->
-                    <path d="M 10 50 A 40 10 0 0 1 90 50" stroke="url(#ringGrad)" stroke-width="5" stroke-linecap="round" />
-                    <path d="M 5 50 A 45 12 0 0 1 95 50" stroke="url(#ringGrad)" stroke-width="1.5" stroke-dasharray="2 2" />
-                    <!-- Planet Body -->
-                    <circle cx="50" cy="50" r="22" fill="url(#planetGrad)" stroke="#94A3B8" stroke-width="0.5" />
-                    <!-- Front Ring (in front of planet) -->
-                    <path d="M 90 50 A 40 10 0 0 1 10 50" stroke="url(#ringGrad)" stroke-width="5" stroke-linecap="round" />
-                    <path d="M 95 50 A 45 12 0 0 1 5 50" stroke="url(#ringGrad)" stroke-width="1.5" stroke-dasharray="2 2" />
+
+                    <!-- 1. Outer Orbit Line (Technical Blueprint Style) -->
+                    <path d="M 3 50 A 47 12 0 0 1 97 50" stroke="rgba(15,23,42,0.06)" stroke-width="0.75" stroke-dasharray="3 3" />
+                    
+                    <!-- 2. Back Rings (drawn behind planet) -->
+                    <!-- Ring A Back -->
+                    <path d="M 12 50 A 38 9.5 0 0 1 88 50" stroke="url(#ringA)" stroke-width="1.8" stroke-linecap="round" />
+                    <!-- Ring B Back -->
+                    <path d="M 16 50 A 34 8.5 0 0 1 84 50" stroke="url(#ringB)" stroke-width="4.5" stroke-linecap="round" />
+                    <!-- Ring C Back -->
+                    <path d="M 22 50 A 28 7 0 0 1 78 50" stroke="url(#ringC)" stroke-width="1.2" stroke-linecap="round" />
+
+                    <!-- 3. Planet Body (with soft 3D shading & drop shadow) -->
+                    <circle cx="50" cy="50" r="22" fill="url(#planetGrad)" filter="url(#planetShadow)" />
+                    <!-- Subtle Atmospheric Rim Highlight -->
+                    <circle cx="50" cy="50" r="22" fill="none" stroke="rgba(255,255,255,0.45)" stroke-width="0.5" />
+
+                    <!-- 4. Front Rings (drawn in front of planet, creating overlap depth) -->
+                    <!-- Ring C Front -->
+                    <path d="M 78 50 A 28 7 0 0 1 22 50" stroke="url(#ringC)" stroke-width="1.2" stroke-linecap="round" />
+                    <!-- Ring B Front -->
+                    <path d="M 84 50 A 34 8.5 0 0 1 16 50" stroke="url(#ringB)" stroke-width="4.5" stroke-linecap="round" />
+                    <!-- Ring A Front -->
+                    <path d="M 88 50 A 38 9.5 0 0 1 12 50" stroke="url(#ringA)" stroke-width="1.8" stroke-linecap="round" />
+
+                    <!-- 5. Front Outer Orbit Line -->
+                    <path d="M 97 50 A 47 12 0 0 1 3 50" stroke="rgba(15,23,42,0.06)" stroke-width="0.75" stroke-dasharray="3 3" />
                 </svg>
             </div>
             <div class="lw">

@@ -876,11 +876,6 @@ export function renderHeader(currentRoute) {
             <div class="ch-header-inner">
                 <!-- Logo -->
                 <a href="#" onclick="window.router.navigate('/'); return false;" class="ch-logo">
-                    <svg class="logo-saturn" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:20px;height:20px;display:inline-block;vertical-align:middle;margin-right:8px;transform:rotate(-15deg);color:#5C1414;">
-                        <path d="M 3 12 C 3 8, 21 8, 21 12" stroke="currentColor" stroke-width="1.2" />
-                        <circle cx="12" cy="12" r="5" fill="#fff" stroke="currentColor" stroke-width="2" />
-                        <path d="M 3 12 C 3 16, 21 16, 21 12" stroke="currentColor" stroke-width="2" />
-                    </svg>
                     <span class="logo-wordmark">COLLA<span style="color: #5C1414;">TERAL</span></span>
                 </a>
 

@@ -558,11 +558,13 @@ export function renderLanding() {
 
                     <!-- Connect (shown when NOT logged in) -->
                     <div id="mobile-connect-section" class="pnl-connect-section">
-                        <div class="pnl-connect-promo">Lock capital. Force execution.</div>
-                        <div class="pnl-connect-promo-sub">Connect your account to lock performance contracts and match up to $250.</div>
-                        <button onclick="window.app.closeMobileMenu(); window.app.handleAuthClick()" id="btn-auth-mobile" class="pnl-connect-btn">
-                            Sign In
-                        </button>
+                        <div class="pnl-connect-card">
+                            <div class="pnl-connect-title">Lock capital. Force execution.</div>
+                            <div class="pnl-connect-desc">Connect your account to lock performance contracts and match up to $250.</div>
+                            <button onclick="window.app.closeMobileMenu(); window.app.handleAuthClick()" id="btn-auth-mobile" class="pnl-connect-btn">
+                                SIGN IN <span class="pnl-connect-arrow">→</span>
+                            </button>
+                        </div>
                     </div>
                 </div>
                 

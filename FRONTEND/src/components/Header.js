@@ -780,59 +780,81 @@ export function renderHeader(currentRoute) {
                 transform: translateY(-1px);
             }
 
-            /* Connect button in panel */
+            /* Connect card in panel */
             .pnl-connect-section {
-                padding: 32px 28px;
+                padding: 28px;
                 flex-shrink: 0;
+                border-top: 1px solid rgba(229, 229, 229, 0.4);
+                background: linear-gradient(to bottom, #ffffff, #faf9f6);
+            }
+            .pnl-connect-card {
                 display: flex;
                 flex-direction: column;
-                gap: 16px;
-                background: linear-gradient(to bottom, transparent, rgba(92, 20, 20, 0.02));
+                gap: 12px;
             }
-            .pnl-connect-promo {
-                font-family: 'Plus Jakarta Sans', sans-serif;
-                font-size: 14px;
+            .pnl-connect-title {
+                font-family: 'Plus Jakarta Sans', 'Sora', sans-serif;
+                font-size: 15px;
                 font-weight: 700;
-                color: #111;
-                line-height: 1.4;
+                color: #0f172a;
                 letter-spacing: -0.2px;
+                line-height: 1.25;
             }
-            .pnl-connect-promo-sub {
+            .pnl-connect-desc {
                 font-family: 'Inter', sans-serif;
-                font-size: 12px;
+                font-size: 12.5px;
+                font-weight: 500;
                 color: #64748b;
-                line-height: 1.5;
+                line-height: 1.45;
             }
             .pnl-connect-btn {
                 width: 100%;
-                height: 50px;
-                display: flex;
+                height: 48px;
+                display: inline-flex;
                 align-items: center;
                 justify-content: center;
                 gap: 8px;
-                font-size: 12px;
+                background: #111111;
+                color: #ffffff;
+                font-size: 11px;
                 font-weight: 700;
-                color: #fff;
-                background: linear-gradient(135deg, #111 0%, #5C1414 100%) !important;
                 border: none;
                 cursor: pointer;
                 font-family: 'JetBrains Mono', monospace;
                 letter-spacing: 1px;
                 text-transform: uppercase;
                 transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-                box-shadow: 0 4px 12px rgba(92, 20, 20, 0.15);
+                position: relative;
+                overflow: hidden;
             }
             .pnl-connect-btn:hover {
-                transform: translateY(-2px);
-                box-shadow: 0 8px 20px rgba(92, 20, 20, 0.25);
-                background: linear-gradient(135deg, #1f1f1f 0%, #6B1212 100%) !important;
+                background: #5C1414;
+                box-shadow: 0 4px 12px rgba(92, 20, 20, 0.2);
             }
-            .pnl-connect-btn::after {
-                content: '→';
-                transition: transform 0.2s ease;
+            .pnl-connect-arrow {
+                transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+                display: inline-block;
             }
-            .pnl-connect-btn:hover::after {
+            .pnl-connect-btn:hover .pnl-connect-arrow {
                 transform: translateX(4px);
+            }
+
+            /* Glass sheen effect on hamburger connect button */
+            .pnl-connect-btn::before {
+                content: '';
+                position: absolute;
+                top: 0;
+                left: -150%;
+                width: 100%;
+                height: 100%;
+                background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.35), transparent);
+                transform: skewX(-25deg);
+                pointer-events: none;
+                z-index: 5;
+            }
+            .pnl-connect-btn:hover::before {
+                left: 150%;
+                transition: left 0.8s ease-in-out;
             }
 
             /* Panel footer */
@@ -1013,11 +1035,13 @@ export function renderHeader(currentRoute) {
 
                 <!-- Connect (shown when NOT logged in) -->
                 <div id="mobile-connect-section" class="pnl-connect-section">
-                    <div class="pnl-connect-promo">Lock capital. Force execution.</div>
-                    <div class="pnl-connect-promo-sub">Connect your account to lock performance contracts and match up to $250.</div>
-                    <button onclick="window.app.closeMobileMenu(); window.app.handleAuthClick()" id="btn-auth-mobile" class="pnl-connect-btn">
-                        Sign In
-                    </button>
+                    <div class="pnl-connect-card">
+                        <div class="pnl-connect-title">Lock capital. Force execution.</div>
+                        <div class="pnl-connect-desc">Connect your account to lock performance contracts and match up to $250.</div>
+                        <button onclick="window.app.closeMobileMenu(); window.app.handleAuthClick()" id="btn-auth-mobile" class="pnl-connect-btn">
+                            SIGN IN <span class="pnl-connect-arrow">→</span>
+                        </button>
+                    </div>
                 </div>
             </div>
 

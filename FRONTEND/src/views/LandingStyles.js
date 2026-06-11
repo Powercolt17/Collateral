@@ -706,15 +706,82 @@ export const landingCSS = `
 .pnl-signout { display: flex; align-items: center; gap: 12px; width: calc(100% - 56px); margin: 16px 28px 8px; padding: 14px 20px; font-size: 11px; font-weight: 700; color: #5C1414; background: rgba(92, 20, 20, 0.04); border: 1px solid rgba(92, 20, 20, 0.12); font-family: 'JetBrains Mono', monospace; letter-spacing: 0.08em; text-transform: uppercase; cursor: pointer; text-align: left; transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1); }
 .pnl-signout:hover { background: rgba(92, 20, 20, 0.08); border-color: rgba(92, 20, 20, 0.2); color: #6B1212; transform: translateY(-1px); }
 
-/* Connect button in panel */
-.pnl-connect-section { padding: 32px 28px; flex-shrink: 0; display: flex; flex-direction: column; gap: 16px; background: linear-gradient(to bottom, transparent, rgba(92, 20, 20, 0.02)); }
-.pnl-connect-promo { font-family: 'Plus Jakarta Sans', sans-serif; font-size: 14px; font-weight: 700; color: #111; line-height: 1.4; letter-spacing: -0.2px; }
-.pnl-connect-promo-sub { font-family: 'Inter', sans-serif; font-size: 12px; color: #64748b; line-height: 1.5; }
-.pnl-connect-btn { width: 100%; height: 50px; display: flex; align-items: center; justify-content: center; gap: 8px; font-size: 12px; font-weight: 700; color: #fff; background: linear-gradient(135deg, #111 0%, #5C1414 100%) !important; border: none; cursor: pointer; font-family: 'JetBrains Mono', monospace; letter-spacing: 1px; text-transform: uppercase; transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1); box-shadow: 0 4px 12px rgba(92, 20, 20, 0.15); }
-.pnl-connect-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(92, 20, 20, 0.25); background: linear-gradient(135deg, #1f1f1f 0%, #6B1212 100%) !important; }
-.pnl-connect-btn::after { content: '→'; transition: transform 0.2s ease; }
-.pnl-connect-btn:hover::after { transform: translateX(4px); }
+/* Connect card in panel */
+.pnl-connect-section {
+    padding: 28px;
+    flex-shrink: 0;
+    border-top: 1px solid rgba(229, 229, 229, 0.4);
+    background: linear-gradient(to bottom, #ffffff, #faf9f6);
+}
+.pnl-connect-card {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+.pnl-connect-title {
+    font-family: 'Plus Jakarta Sans', 'Sora', sans-serif;
+    font-size: 15px;
+    font-weight: 700;
+    color: #0f172a;
+    letter-spacing: -0.2px;
+    line-height: 1.25;
+}
+.pnl-connect-desc {
+    font-family: 'Inter', sans-serif;
+    font-size: 12.5px;
+    font-weight: 500;
+    color: #64748b;
+    line-height: 1.45;
+}
+.pnl-connect-btn {
+    width: 100%;
+    height: 48px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    background: #111111;
+    color: #ffffff;
+    font-size: 11px;
+    font-weight: 700;
+    border: none;
+    cursor: pointer;
+    font-family: 'JetBrains Mono', monospace;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    position: relative;
+    overflow: hidden;
+}
+.pnl-connect-btn:hover {
+    background: #5C1414;
+    box-shadow: 0 4px 12px rgba(92, 20, 20, 0.2);
+}
+.pnl-connect-arrow {
+    transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    display: inline-block;
+}
+.pnl-connect-btn:hover .pnl-connect-arrow {
+    transform: translateX(4px);
+}
 
+/* Glass sheen effect on hamburger connect button */
+.pnl-connect-btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -150%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.35), transparent);
+    transform: skewX(-25deg);
+    pointer-events: none;
+    z-index: 5;
+}
+.pnl-connect-btn:hover::before {
+    left: 150%;
+    transition: left 0.8s ease-in-out;
+}
 .pnl-footer { border-top: 1px solid #f0f0f0; padding: 20px 28px; background: #fafafa; flex-shrink: 0; }
 .pnl-status { display: flex; align-items: center; gap: 8px; margin-bottom: 16px; }
 .pnl-status-dot { width: 5px; height: 5px; border-radius: 50%; background: #145c14; box-shadow: 0 0 6px rgba(20,92,20,0.4); }

@@ -420,7 +420,7 @@ export function renderLanding() {
             <div class="lemo-reframe" data-r>
                 <div class="lw">
                     <div class="lred-dash"><span class="lmono">Why It Works</span></div>
-                    <h2 class="lh-section-title">Your Notion workspace is a graveyard<br>of goals you never hit.</h2>
+                    <h2 class="lh-section-title">A plan without stakes is just<br>a comfortable wish.</h2>
                     
                     <div class="lemo-grid">
                         <div class="lemo-left">

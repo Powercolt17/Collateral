@@ -291,7 +291,7 @@ export function renderLanding() {
             <div class="lw">
                 <div class="lhow" data-r id="how">
                     <div class="lred-dash"><span class="lmono">How It Works</span></div>
-                    <h2 class="lhow-h">Set a target. Lock capital.<br>Force yourself to <strong>win.</strong></h2>
+                    <h2 class="lhow-h">Set a target. Lock money.<br>Force yourself to <strong>win.</strong></h2>
                     <p class="lhow-sub">If you are serious about hitting your target, put something on the line. Four steps to guarantee your next milestone.</p>
 
                     <div class="lhow-grid">

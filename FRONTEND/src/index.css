@@ -79,6 +79,25 @@
     font-display: swap;
 }
 
+/* Override JetBrains Mono's dotted zero with a clean zero from system fonts */
+@font-face {
+    font-family: 'JetBrains Mono';
+    src: local('Segoe UI'), local('Arial'), local('Helvetica Neue'), local('Helvetica'), local('Roboto'), local('SF Pro Display');
+    unicode-range: U+0030;
+    font-weight: 100 900;
+    font-style: normal;
+    font-display: swap;
+}
+@font-face {
+    font-family: 'JetBrains Mono';
+    src: local('Segoe UI'), local('Arial'), local('Helvetica Neue'), local('Helvetica'), local('Roboto'), local('SF Pro Display');
+    unicode-range: U+0030;
+    font-weight: 100 900;
+    font-style: italic;
+    font-display: swap;
+}
+
+
 /* ================================================================
    COLLATERAL.MARKET — GLOBAL TYPOGRAPHY & CONTRAST SYSTEM
    Institutional grade. WCAG AA minimum. Zero softness.

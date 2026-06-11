@@ -606,7 +606,27 @@ export const landingCSS = `
   .ln-in{padding:0 16px; height: 60px;}
   .ln-cta{padding:6px 10px; font-size:8.5px; letter-spacing:0.5px}
   .lhero-grid{grid-template-columns:1fr;gap:32px;padding:130px 0 24px}
-  .lhero-right{display:none}
+  .lhero-right {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    margin-top: 16px;
+  }
+  .lactivity-card {
+    padding: 20px 18px !important;
+    gap: 16px !important;
+  }
+  .lc-flow-horizontal {
+    padding: 8px 10px !important;
+    gap: 6px !important;
+  }
+  .lc-flow-val {
+    font-size: 14px !important;
+  }
+  .lc-col-final .lc-flow-val {
+    font-size: 14px !important;
+  }
   .lh1{font-size:clamp(38px, 11vw, 48px);line-height:1.05;letter-spacing:-1px}
   .lsub{font-size:16px;margin-bottom:24px}
   .lbtn{height:48px;padding:0 24px;font-size:11px}

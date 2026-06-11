@@ -615,32 +615,47 @@ export function renderOverview() {
                 gap: 24px;
             }
             .eq-path-card {
-                border: 1px solid #e8e8e8;
+                background: #fff;
+                border: 1px solid rgba(0,0,0,0.05);
                 padding: 40px 36px;
+                border-radius: 16px;
+                box-shadow: 0 4px 20px rgba(0,0,0,0.02);
                 display: flex; flex-direction: column;
-                transition: border-color 0.3s, box-shadow 0.3s;
+                transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+                position: relative;
+                overflow: hidden;
             }
-            .eq-path-card:hover { border-color: #ccc; box-shadow: 0 8px 32px rgba(0,0,0,0.04); }
-            .eq-path-card.rivalry { border-color: rgba(59,0,1,0.15); }
-            .eq-path-card.rivalry:hover { border-color: rgba(59,0,1,0.3); box-shadow: 0 8px 32px rgba(59,0,1,0.06); }
+            .eq-path-card:hover {
+                background: #fff;
+                transform: translateY(-4px);
+                border-color: rgba(92, 20, 20, 0.15);
+                box-shadow: 0 16px 48px -16px rgba(92, 20, 20, 0.08), 0 0 1px rgba(92, 20, 20, 0.12);
+            }
+            .eq-path-card.rivalry { border-color: rgba(92, 20, 20, 0.1); }
+            .eq-path-card.rivalry:hover {
+                border-color: rgba(92, 20, 20, 0.25);
+                box-shadow: 0 16px 48px -16px rgba(92, 20, 20, 0.12), 0 0 1px rgba(92, 20, 20, 0.18);
+            }
             .eq-path-icon { margin-bottom: 24px; }
             .eq-path-tag {
                 font-family: 'JetBrains Mono', monospace;
                 font-size: 10px; font-weight: 700;
-                letter-spacing: 0.12em; text-transform: uppercase;
-                color: #111; margin-bottom: 12px;
+                letter-spacing: 1.2px; text-transform: uppercase;
+                color: #8a8984; margin-bottom: 12px;
             }
             .eq-path-tag.rivalry { color: #5C1414; }
             .eq-path-title {
-                font-size: 22px; font-weight: 500;
-                line-height: 1.1; letter-spacing: -1px;
+                font-family: 'Plus Jakarta Sans', sans-serif;
+                font-size: 22px; font-weight: 800;
+                line-height: 1.2; letter-spacing: -0.5px;
                 color: #111; margin-bottom: 16px;
             }
             .eq-path-title strong { font-weight: 800; }
             .eq-path-card.rivalry .eq-path-title strong { color: #5C1414; }
             .eq-path-desc {
-                font-size: 14px; color: #888;
-                line-height: 1.65; margin-bottom: 24px;
+                font-family: 'Inter', sans-serif;
+                font-size: 14px; color: #666;
+                line-height: 1.6; margin-bottom: 24px;
                 flex-grow: 1;
             }
             .eq-path-details { margin-bottom: 28px; }
@@ -661,17 +676,45 @@ export function renderOverview() {
                 padding: 14px 24px;
                 background: #111; color: #fff;
                 border: none;
+                border-radius: 6px;
                 font-family: 'JetBrains Mono', monospace;
                 font-size: 11px; font-weight: 700;
-                letter-spacing: 0.08em; text-transform: uppercase;
+                letter-spacing: 1px; text-transform: uppercase;
                 text-decoration: none; text-align: center;
                 cursor: pointer;
-                transition: background 0.2s, transform 0.2s;
+                transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
                 align-self: flex-start;
+                box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+                position: relative;
+                overflow: hidden;
             }
-            .eq-path-cta:hover { background: #333; transform: translateY(-2px); }
+            .eq-path-cta:hover {
+                background: #5C1414;
+                transform: translateY(-2px);
+                box-shadow: 0 8px 24px rgba(92, 20, 20, 0.25);
+            }
             .eq-path-cta.rivalry { background: #5C1414; }
-            .eq-path-cta.rivalry:hover { background: #5a1718; transform: translateY(-2px); }
+            .eq-path-cta.rivalry:hover {
+                background: #111;
+                transform: translateY(-2px);
+                box-shadow: 0 8px 24px rgba(17, 17, 17, 0.25);
+            }
+            .eq-path-cta::before {
+                content: '';
+                position: absolute;
+                top: 0;
+                left: -150%;
+                width: 100%;
+                height: 100%;
+                background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+                transform: skewX(-25deg);
+                pointer-events: none;
+                z-index: 5;
+            }
+            .eq-path-cta:hover::before {
+                left: 150%;
+                transition: left 0.8s ease-in-out;
+            }
 
             /* ── Responsive: Tablet (≤1200px) ── */
             @media (max-width: 1200px) {

@@ -5,10 +5,10 @@ export function renderMyContracts() {
     return `
         <style>
             .myc {
-                background: #fff;
+                background: #fbfbf9;
                 min-height: calc(100vh - 72px);
-                font-family: 'Sora', 'Helvetica Neue', Helvetica, Arial, sans-serif;
-                color: #111;
+                font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+                color: #1e1e1e;
             }
 
             /* ── Page Header ── */
@@ -20,19 +20,20 @@ export function renderMyContracts() {
             }
             .myc-title-wrap {}
             .myc-page-title {
-                font-size: 24px;
-                font-weight: 700;
-                letter-spacing: -1px;
+                font-family: 'Plus Jakarta Sans', sans-serif;
+                font-size: 32px;
+                font-weight: 800;
+                letter-spacing: -1.2px;
                 color: #111;
                 margin: 0;
             }
             .myc-page-sub {
-                font-size: 11px;
-                color: #999;
+                font-size: 10px;
+                color: #8a8984;
                 margin: 8px 0 0;
                 font-family: 'JetBrains Mono', monospace;
                 text-transform: uppercase;
-                letter-spacing: 0.5px;
+                letter-spacing: 1.5px;
             }
 
             .myc-header-actions {
@@ -42,49 +43,103 @@ export function renderMyContracts() {
             .myc-btn-secondary {
                 padding: 10px 18px;
                 background: #fff;
-                border: 1px solid #e5e5e5;
+                border: 1px solid rgba(0,0,0,0.08);
+                border-radius: 6px;
                 font-size: 11px;
                 font-weight: 700;
                 text-transform: uppercase;
                 letter-spacing: 0.8px;
                 cursor: pointer;
-                font-family: 'Sora', 'Helvetica Neue', Helvetica, Arial, sans-serif;
-                transition: border-color 0.1s;
+                font-family: 'JetBrains Mono', monospace;
+                transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+                box-shadow: 0 1px 2px rgba(0,0,0,0.02);
             }
-            .myc-btn-secondary:hover { border-color: #aaa; }
+            .myc-btn-secondary:hover {
+                border-color: rgba(92, 20, 20, 0.25);
+                background: rgba(92, 20, 20, 0.02);
+                color: #5C1414;
+                transform: translateY(-1px);
+            }
+            .myc-btn-primary {
+                padding: 10px 18px;
+                background: #111111;
+                color: #ffffff;
+                border: none;
+                border-radius: 6px;
+                font-size: 11px;
+                font-weight: 700;
+                text-transform: uppercase;
+                letter-spacing: 0.8px;
+                cursor: pointer;
+                font-family: 'JetBrains Mono', monospace;
+                transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+                position: relative;
+                overflow: hidden;
+                box-shadow: 0 4px 12px rgba(92, 20, 20, 0.1);
+            }
+            .myc-btn-primary:hover {
+                background: #5C1414;
+                transform: translateY(-1px);
+                box-shadow: 0 6px 18px rgba(92, 20, 20, 0.25);
+            }
+            .myc-btn-primary::before {
+                content: '';
+                position: absolute;
+                top: 0;
+                left: -150%;
+                width: 100%;
+                height: 100%;
+                background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.35), transparent);
+                transform: skewX(-25deg);
+                pointer-events: none;
+                z-index: 5;
+            }
+            .myc-btn-primary:hover::before {
+                left: 150%;
+                transition: left 0.8s ease-in-out;
+            }
 
             /* ── Metrics Strip ── */
             .myc-metrics {
                 display: flex;
                 align-items: stretch;
-                padding: 32px 32px 24px;
-                border-bottom: 1px solid #e5e5e5;
+                padding: 32px;
+                gap: 16px;
+                border-bottom: none;
             }
             .myc-metric {
                 flex: 1;
-                padding: 16px 24px;
-                border: 1px solid #e5e5e5;
-                border-right: none;
+                padding: 20px 24px;
+                background: #fff;
+                border: 1px solid rgba(0,0,0,0.05);
+                border-radius: 12px;
+                box-shadow: 0 2px 8px rgba(0,0,0,0.02);
+                transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
             }
-            .myc-metric:last-child { border-right: 1px solid #e5e5e5; }
+            .myc-metric:hover {
+                border-color: rgba(92, 20, 20, 0.15);
+                box-shadow: 0 8px 24px rgba(92, 20, 20, 0.04);
+                transform: translateY(-2px);
+            }
             .myc-metric-value {
-                font-size: 24px;
+                font-family: 'JetBrains Mono', monospace;
+                font-size: 28px;
                 font-weight: 700;
                 color: #111;
-                letter-spacing: -1px;
+                letter-spacing: -1.2px;
                 line-height: 1.2;
                 margin-bottom: 6px;
             }
             .myc-metric-label {
-                font-family: 'JetBrains Mono', monospace;
+                font-family: 'Inter', sans-serif;
                 font-size: 10px;
                 font-weight: 700;
                 text-transform: uppercase;
-                letter-spacing: 1.5px;
-                color: #888;
+                letter-spacing: 1px;
+                color: #8a8984;
             }
 
-            .myc-feed { padding: 48px 32px 80px; }
+            .myc-feed { padding: 16px 32px 80px; }
 
             /* Loading */
             .myc-loading { display: flex; flex-direction: column; align-items: center; padding: 80px 0; gap: 16px; }
@@ -100,16 +155,23 @@ export function renderMyContracts() {
             }
             .eq-card {
                 background: #fff;
-                padding: 36px 32px 32px;
+                padding: 32px 28px;
+                border-radius: 16px;
+                border: 1px solid rgba(0,0,0,0.05);
+                box-shadow: 0 4px 20px rgba(0,0,0,0.02);
                 display: flex;
                 flex-direction: column;
                 cursor: pointer;
-                transition: background 0.2s, box-shadow 0.2s;
+                transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
                 position: relative;
                 overflow: hidden;
-                border: 1px solid #eee;
             }
-            .eq-card:hover { background: #fafafa; }
+            .eq-card:hover {
+                background: #fff;
+                transform: translateY(-4px);
+                border-color: rgba(92, 20, 20, 0.15);
+                box-shadow: 0 16px 48px -16px rgba(92, 20, 20, 0.08), 0 0 1px rgba(92, 20, 20, 0.12);
+            }
             .eq-card::before {
                 content: '';
                 position: absolute;
@@ -134,8 +196,9 @@ export function renderMyContracts() {
             .eq-time { color: #ccc; display: flex; align-items: center; gap: 4px; }
 
             .eq-card-title {
+                font-family: 'Plus Jakarta Sans', sans-serif;
                 font-size: 18px;
-                font-weight: 700;
+                font-weight: 800;
                 color: #111;
                 margin: 12px 0 8px;
                 letter-spacing: -0.5px;
@@ -183,85 +246,75 @@ export function renderMyContracts() {
                 gap: 12px;
                 margin-bottom: 20px;
             }
-            .eq-stake-val { font-size: 24px; font-weight: 500; letter-spacing: -1px; }
+            .eq-stake-val {
+                font-family: 'JetBrains Mono', monospace;
+                font-size: 24px;
+                font-weight: 700;
+                letter-spacing: -1px;
+            }
             .eq-stake-separator { width: 16px; height: 1px; background: #eee; }
             .eq-stake-lbl {
-                font-family: 'JetBrains Mono', monospace;
+                font-family: 'Inter', sans-serif;
                 font-size: 9px;
-                color: #ccc;
+                color: #8a8984;
                 text-transform: uppercase;
                 margin-top: 4px;
+                font-weight: 600;
             }
 
             .eq-card-cta {
-                background: #0a0a0a;
+                background: #111111;
                 color: #fff;
-                border: 1px solid transparent;
+                border: none;
+                border-radius: 6px;
                 padding: 16px;
                 font-size: 11px;
                 font-weight: 700;
                 text-transform: uppercase;
-                letter-spacing: 1.5px;
+                letter-spacing: 1px;
                 width: 100%;
                 cursor: pointer;
                 margin-top: auto;
                 position: relative;
                 overflow: hidden;
                 transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-                transform: translateY(0);
-                box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+                box-shadow: 0 4px 12px rgba(0,0,0,0.05);
             }
             .eq-card-cta:hover {
                 background: #5C1414;
-                transform: translateY(-3px);
-                box-shadow: 0 8px 30px rgba(92,20,20,0.35), 0 0 0 1px rgba(92,20,20,0.15);
-                letter-spacing: 2.5px;
+                transform: translateY(-2px);
+                box-shadow: 0 8px 24px rgba(92,20,20,0.25);
             }
-            .eq-card-cta:active {
-                transform: translateY(0px) scale(0.97);
-                box-shadow: 0 2px 8px rgba(92,20,20,0.2);
-                transition: all 0.08s ease;
-            }
-            .eq-card-cta::after {
+            .eq-card-cta::before {
                 content: '';
                 position: absolute;
-                top: -50%;
-                left: -100%;
-                width: 60%;
-                height: 200%;
-                background: linear-gradient(90deg, transparent, rgba(255,255,255,0.15), transparent);
+                top: 0;
+                left: -150%;
+                width: 100%;
+                height: 100%;
+                background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
                 transform: skewX(-25deg);
-                transition: left 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+                pointer-events: none;
+                z-index: 5;
             }
-            .eq-card-cta:hover::after {
+            .eq-card-cta:hover::before {
                 left: 150%;
-            }
-            @keyframes executePulse {
-                0%, 100% { box-shadow: 0 8px 30px rgba(92,20,20,0.35), 0 0 0 1px rgba(92,20,20,0.15); }
-                50% { box-shadow: 0 8px 30px rgba(92,20,20,0.5), 0 0 0 2px rgba(92,20,20,0.25); }
-            }
-            .eq-card-cta:hover {
-                animation: executePulse 2s ease-in-out infinite;
-                animation-delay: 0.3s;
+                transition: left 0.8s ease-in-out;
             }
             .eq-card-footer {
                 font-size: 10px;
-                color: #eee;
+                color: #8a8984;
                 text-align: center;
                 margin-top: 12px;
                 font-style: italic;
             }
 
-            
-            
-            /* Overrides to prevent hover-execution */
-            .myc .eq-card:hover { transform: none; box-shadow: none; border-color: #e5e5e5; }
-            
             @media (max-width: 768px) {
                 .myc-header { padding: 32px 16px 0; flex-direction: column; align-items: flex-start; gap: 16px; }
-                .myc-metrics { padding: 24px 16px; flex-wrap: wrap; }
-                .myc-metric { min-width: calc(50% - 1px); }
+                .myc-metrics { padding: 24px 16px; flex-wrap: wrap; gap: 12px; }
+                .myc-metric { min-width: calc(50% - 6px); }
                 .myc-feed { padding: 24px 16px 60px; }
+                .eq-grid { grid-template-columns: 1fr; gap: 16px; }
             }
         </style>
 
@@ -273,7 +326,7 @@ export function renderMyContracts() {
                 </div>
                 <div class="myc-header-actions">
                     <button class="myc-btn-secondary" onclick="window.router.navigate('/profile')">View Identity</button>
-                    <button class="myc-btn-secondary" style="background: #5C1414; color: #fff; border: none;" onclick="window.router.navigate('/market')">New Contract</button>
+                    <button class="myc-btn-primary" onclick="window.router.navigate('/market')">New Contract</button>
                 </div>
             </div>
 

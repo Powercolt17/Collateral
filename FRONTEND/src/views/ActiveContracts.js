@@ -12,10 +12,10 @@ export function renderActiveContracts() {
     return `
         <style>
             .eq {
-                background: #fff;
+                background: #fbfbf9;
                 min-height: 100vh;
-                font-family: 'Sora', 'Helvetica Neue', Helvetica, Arial, sans-serif;
-                color: #111;
+                font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+                color: #1e1e1e;
                 padding-bottom: 100px;
             }
 
@@ -46,8 +46,9 @@ export function renderActiveContracts() {
                 position: relative;
             }
             .eq-hero-headline {
+                font-family: 'Plus Jakarta Sans', sans-serif;
                 font-size: 84px;
-                font-weight: 500; /* Regular weight for main */
+                font-weight: 800;
                 color: #111;
                 line-height: 0.95;
                 letter-spacing: -3.5px;
@@ -55,16 +56,15 @@ export function renderActiveContracts() {
                 max-width: 900px;
             }
             .eq-hero-headline strong {
-                font-weight: 800;
                 color: #5C1414;
             }
             .eq-hero-sub {
                 font-size: 16px;
-                color: #888;
+                color: #8a8984;
                 max-width: 480px;
                 line-height: 1.6;
                 margin-bottom: 40px;
-                font-family: 'Sora', sans-serif;
+                font-family: 'Inter', sans-serif;
             }
             .eq-hero-actions {
                 display: flex;
@@ -72,27 +72,42 @@ export function renderActiveContracts() {
                 gap: 24px;
             }
             .eq-btn-primary {
-                background: #5C1414;
+                background: #111111;
                 color: #fff;
                 padding: 18px 32px;
                 font-size: 14px;
                 font-weight: 700;
                 border: none;
                 cursor: pointer;
-                border-radius: 0;
+                border-radius: 6px;
                 position: relative;
                 overflow: hidden;
-                transition: background 0.35s ease, transform 0.25s ease, box-shadow 0.3s ease, letter-spacing 0.35s ease;
+                font-family: 'JetBrains Mono', monospace;
+                text-transform: uppercase;
+                letter-spacing: 1px;
+                transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+                box-shadow: 0 4px 12px rgba(92, 20, 20, 0.1);
             }
             .eq-btn-primary:hover {
-                background: #6e1c1c;
-                transform: translateY(-1px);
-                box-shadow: 0 4px 16px rgba(59, 0, 1, 0.18);
-                letter-spacing: 0.5px;
+                background: #5C1414;
+                transform: translateY(-2px);
+                box-shadow: 0 8px 24px rgba(92, 20, 20, 0.25);
             }
-            .eq-btn-primary:active {
-                transform: translateY(0);
-                box-shadow: none;
+            .eq-btn-primary::before {
+                content: '';
+                position: absolute;
+                top: 0;
+                left: -150%;
+                width: 100%;
+                height: 100%;
+                background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.35), transparent);
+                transform: skewX(-25deg);
+                pointer-events: none;
+                z-index: 5;
+            }
+            .eq-btn-primary:hover::before {
+                left: 150%;
+                transition: left 0.8s ease-in-out;
             }
             .eq-link-more {
                 color: #888;
@@ -136,16 +151,17 @@ export function renderActiveContracts() {
                 padding: 0 32px;
             }
             .eq-mechanism-title {
+                font-family: 'Plus Jakarta Sans', sans-serif;
                 font-size: 36px;
-                font-weight: 500;
+                font-weight: 800;
                 letter-spacing: -2px;
                 line-height: 1;
             }
-            .eq-mechanism-title strong { font-weight: 800; }
+            .eq-mechanism-title strong { color: #5C1414; }
             .eq-mechanism-side {
                 max-width: 320px;
                 font-size: 14px;
-                color: #888;
+                color: #8a8984;
                 line-height: 1.6;
                 text-align: right;
             }
@@ -153,20 +169,21 @@ export function renderActiveContracts() {
             .eq-mechanism-grid {
                 display: grid;
                 grid-template-columns: repeat(4, 1fr);
-                border-top: 1px solid #f0f0f0;
+                border-top: 1px solid rgba(0,0,0,0.05);
                 position: relative;
             }
             .eq-mech-card {
                 padding: 60px 40px;
-                border-right: 1px solid #f0f0f0;
+                border-right: 1px solid rgba(0,0,0,0.05);
                 position: relative;
                 overflow: hidden;
-                transition: background 0.3s, transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.35s ease;
+                background: #fff;
+                transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
             }
             .eq-mech-card:hover {
-                background: #fafafa;
+                background: #fff;
                 transform: translateY(-6px);
-                box-shadow: 0 12px 40px rgba(0, 0, 0, 0.06);
+                box-shadow: 0 16px 48px -16px rgba(0, 0, 0, 0.05);
             }
             .eq-mech-card::before {
                 content: '';
@@ -187,23 +204,24 @@ export function renderActiveContracts() {
                 right: -8px; top: 50%;
                 transform: translateY(-50%);
                 font-size: 14px;
-                color: #ccc;
+                color: #cbd5e1;
                 z-index: 2;
                 font-family: 'JetBrains Mono', monospace;
             }
             .eq-mech-num {
-                font-family: 'Sora', sans-serif;
+                font-family: 'Plus Jakarta Sans', sans-serif;
                 font-size: 80px;
-                font-weight: 700;
+                font-weight: 800;
                 color: #e0e0e0;
                 line-height: 0.8;
                 margin-bottom: 40px;
                 transition: color 0.3s;
             }
-            .eq-mech-card:hover .eq-mech-num { color: rgba(59, 0, 1, 0.15); }
+            .eq-mech-card:hover .eq-mech-num { color: rgba(92, 20, 20, 0.12); }
             .eq-mech-label {
+                font-family: 'Plus Jakarta Sans', sans-serif;
                 font-size: 22px;
-                font-weight: 700;
+                font-weight: 800;
                 margin-bottom: 20px;
                 color: #111;
             }
@@ -225,19 +243,20 @@ export function renderActiveContracts() {
                 margin: 0 auto;
             }
             .eq-market-title {
+                font-family: 'Plus Jakarta Sans', sans-serif;
                 font-size: 36px;
-                font-weight: 500;
+                font-weight: 800;
                 letter-spacing: -2px;
                 margin-bottom: 4px;
             }
-            .eq-market-title strong { font-weight: 800; }
+            .eq-market-title strong { color: #5C1414; }
             .eq-market-live {
                 display: flex;
                 align-items: center;
                 gap: 8px;
                 font-family: 'JetBrains Mono', monospace;
                 font-size: 8px;
-                color: #aaa;
+                color: #8a8984;
                 text-transform: uppercase;
                 letter-spacing: 1px;
                 margin-bottom: 12px;
@@ -260,30 +279,32 @@ export function renderActiveContracts() {
 
             .eq-stats-strip {
                 display: flex;
-                gap: 80px;
-                margin-bottom: 12px;
+                gap: 60px;
+                margin-bottom: 24px;
             }
-            .eq-stat-group { display: flex; flex-direction: column; gap: 8px; }
+            .eq-stat-group { display: flex; flex-direction: column; gap: 6px; }
             .eq-stat-val {
-                font-size: 18px;
-                font-weight: 500;
-                letter-spacing: -1.5px;
+                font-family: 'JetBrains Mono', monospace;
+                font-size: 24px;
+                font-weight: 700;
+                letter-spacing: -1.2px;
                 display: flex;
+                align-items: baseline;
+                gap: 4px;
                 transition: color 0.3s ease;
+                color: #111;
             }
             .eq-stat-group:hover .eq-stat-val {
                 color: #5C1414;
             }
-                align-items: baseline;
-                gap: 4px;
-            }
-            .eq-stat-val small { font-size: 14px; color: #ccc; font-weight: 400; letter-spacing: 0; }
+            .eq-stat-val small { font-size: 12px; color: #8a8984; font-weight: 400; letter-spacing: 0; }
             .eq-stat-lbl {
-                font-family: 'JetBrains Mono', monospace;
-                font-size: 8px;
+                font-family: 'Inter', sans-serif;
+                font-size: 9px;
+                font-weight: 700;
                 text-transform: uppercase;
                 letter-spacing: 1px;
-                color: #bbb;
+                color: #8a8984;
             }
 
             /* --- CONTROLS --- */
@@ -295,22 +316,23 @@ export function renderActiveContracts() {
                 border-bottom: 1px solid #f2f2f2;
                 margin-bottom: 8px;
             }
-            .eq-tabs { display: flex; gap: 32px; }
+            .eq-tabs { display: flex; gap: 24px; }
             .eq-tab {
                 padding: 8px 0;
                 font-family: 'JetBrains Mono', monospace;
-                font-size: 9px;
+                font-size: 9.5px;
                 font-weight: 700;
-                color: #bbb;
+                color: #8a8984;
                 background: none;
                 border: none;
                 cursor: pointer;
                 text-transform: uppercase;
                 letter-spacing: 1px;
                 border-bottom: 2px solid transparent;
-                transition: all 0.2s;
+                transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
             }
-            .eq-tab.active { color: #111; border-bottom-color: #111; }
+            .eq-tab:hover { color: #5C1414; }
+            .eq-tab.active { color: #111; border-bottom-color: #5C1414; }
             
             .eq-search-wrap {
                 display: flex;
@@ -320,15 +342,23 @@ export function renderActiveContracts() {
             }
             .eq-search-box {
                 background: #fcfcfc;
-                border: 1px solid #eee;
+                border: 1px solid rgba(0,0,0,0.08);
+                border-radius: 6px;
                 padding: 10px 16px;
                 font-size: 13px;
                 width: 240px;
-                font-family: 'Sora', sans-serif;
+                font-family: 'Inter', sans-serif;
+                transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+            }
+            .eq-search-box:focus {
+                border-color: rgba(92, 20, 20, 0.3);
+                outline: none;
+                box-shadow: 0 0 0 3px rgba(92, 20, 20, 0.05);
             }
             .eq-btn-rules {
                 background: #fff;
-                border: 1px solid #eee;
+                border: 1px solid rgba(0,0,0,0.08);
+                border-radius: 6px;
                 padding: 10px 16px;
                 font-family: 'JetBrains Mono', monospace;
                 font-size: 11px;
@@ -336,7 +366,13 @@ export function renderActiveContracts() {
                 text-transform: uppercase;
                 letter-spacing: 1px;
                 cursor: pointer;
-                color: #666;
+                color: #1e1e1e;
+                transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+            }
+            .eq-btn-rules:hover {
+                border-color: rgba(92, 20, 20, 0.25);
+                background: rgba(92, 20, 20, 0.02);
+                color: #5C1414;
             }
 
             .eq-filter-bar {
@@ -349,21 +385,27 @@ export function renderActiveContracts() {
             .eq-filter-lbl { 
                 font-family: 'JetBrains Mono', monospace; 
                 font-size: 8px; 
-                color: #ccc; 
+                color: #8a8984; 
                 text-transform: uppercase; 
                 margin-right: 8px; 
             }
             .eq-pill {
-                padding: 4px 10px;
+                padding: 5px 12px;
+                border-radius: 20px;
                 font-size: 9px;
-                font-weight: 500;
-                border: 1px solid #eee;
+                font-weight: 600;
+                border: 1px solid rgba(0,0,0,0.08);
                 background: #fff;
                 cursor: pointer;
-                color: #888;
-                transition: all 0.2s;
+                color: #8a8984;
+                font-family: 'Inter', sans-serif;
+                transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
             }
-            .eq-pill.active { background: #000; color: #fff; border-color: #000; }
+            .eq-pill:hover {
+                border-color: rgba(92, 20, 20, 0.2);
+                color: #5C1414;
+            }
+            .eq-pill.active { background: #111111; color: #fff; border-color: #111111; }
 
             .eq-status-operational {
                 display: flex;
@@ -372,7 +414,7 @@ export function renderActiveContracts() {
                 font-family: 'JetBrains Mono', monospace;
                 font-size: 9px;
                 text-transform: uppercase;
-                color: #ccc;
+                color: #8a8984;
             }
             .eq-status-operational .dot { width: 5px; height: 5px; background: #10b981; border-radius: 50%; }
 
@@ -384,16 +426,23 @@ export function renderActiveContracts() {
             }
             .eq-card {
                 background: #fff;
-                padding: 36px 32px 32px;
+                padding: 32px 28px;
+                border-radius: 16px;
+                border: 1px solid rgba(0,0,0,0.05);
+                box-shadow: 0 4px 20px rgba(0,0,0,0.02);
                 display: flex;
                 flex-direction: column;
                 cursor: pointer;
-                transition: background 0.2s, box-shadow 0.2s;
+                transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
                 position: relative;
                 overflow: hidden;
-                border: 1px solid #eee;
             }
-            .eq-card:hover { background: #fafafa; }
+            .eq-card:hover {
+                background: #fff;
+                transform: translateY(-4px);
+                border-color: rgba(92, 20, 20, 0.15);
+                box-shadow: 0 16px 48px -16px rgba(92, 20, 20, 0.08), 0 0 1px rgba(92, 20, 20, 0.12);
+            }
             .eq-card::before {
                 content: '';
                 position: absolute;
@@ -418,8 +467,9 @@ export function renderActiveContracts() {
             .eq-time { color: #ccc; display: flex; align-items: center; gap: 4px; }
 
             .eq-card-title {
+                font-family: 'Plus Jakarta Sans', sans-serif;
                 font-size: 18px;
-                font-weight: 700;
+                font-weight: 800;
                 color: #111;
                 margin: 12px 0 8px;
                 letter-spacing: -0.5px;
@@ -467,70 +517,64 @@ export function renderActiveContracts() {
                 gap: 12px;
                 margin-bottom: 20px;
             }
-            .eq-stake-val { font-size: 24px; font-weight: 500; letter-spacing: -1px; }
+            .eq-stake-val {
+                font-family: 'JetBrains Mono', monospace;
+                font-size: 24px;
+                font-weight: 700;
+                letter-spacing: -1px;
+            }
             .eq-stake-separator { width: 16px; height: 1px; background: #eee; }
             .eq-stake-lbl {
-                font-family: 'JetBrains Mono', monospace;
+                font-family: 'Inter', sans-serif;
                 font-size: 9px;
-                color: #ccc;
+                color: #8a8984;
                 text-transform: uppercase;
                 margin-top: 4px;
+                font-weight: 600;
             }
 
             .eq-card-cta {
-                background: #0a0a0a;
+                background: #111111;
                 color: #fff;
-                border: 1px solid transparent;
+                border: none;
+                border-radius: 6px;
                 padding: 16px;
                 font-size: 11px;
                 font-weight: 700;
                 text-transform: uppercase;
-                letter-spacing: 1.5px;
+                letter-spacing: 1px;
                 width: 100%;
                 cursor: pointer;
                 margin-top: auto;
                 position: relative;
                 overflow: hidden;
                 transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-                transform: translateY(0);
-                box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+                box-shadow: 0 4px 12px rgba(0,0,0,0.05);
             }
             .eq-card-cta:hover {
                 background: #5C1414;
-                transform: translateY(-3px);
-                box-shadow: 0 8px 30px rgba(92,20,20,0.35), 0 0 0 1px rgba(92,20,20,0.15);
-                letter-spacing: 2.5px;
+                transform: translateY(-2px);
+                box-shadow: 0 8px 24px rgba(92,20,20,0.25);
             }
-            .eq-card-cta:active {
-                transform: translateY(0px) scale(0.97);
-                box-shadow: 0 2px 8px rgba(92,20,20,0.2);
-                transition: all 0.08s ease;
-            }
-            .eq-card-cta::after {
+            .eq-card-cta::before {
                 content: '';
                 position: absolute;
-                top: -50%;
-                left: -100%;
-                width: 60%;
-                height: 200%;
-                background: linear-gradient(90deg, transparent, rgba(255,255,255,0.15), transparent);
+                top: 0;
+                left: -150%;
+                width: 100%;
+                height: 100%;
+                background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
                 transform: skewX(-25deg);
-                transition: left 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+                pointer-events: none;
+                z-index: 5;
             }
-            .eq-card-cta:hover::after {
+            .eq-card-cta:hover::before {
                 left: 150%;
-            }
-            @keyframes executePulse {
-                0%, 100% { box-shadow: 0 8px 30px rgba(92,20,20,0.35), 0 0 0 1px rgba(92,20,20,0.15); }
-                50% { box-shadow: 0 8px 30px rgba(92,20,20,0.5), 0 0 0 2px rgba(92,20,20,0.25); }
-            }
-            .eq-card-cta:hover {
-                animation: executePulse 2s ease-in-out infinite;
-                animation-delay: 0.3s;
+                transition: left 0.8s ease-in-out;
             }
             .eq-card-footer {
                 font-size: 10px;
-                color: #eee;
+                color: #8a8984;
                 text-align: center;
                 margin-top: 12px;
                 font-style: italic;
@@ -615,32 +659,47 @@ export function renderActiveContracts() {
                 gap: 24px;
             }
             .eq-path-card {
-                border: 1px solid #e8e8e8;
+                background: #fff;
+                border: 1px solid rgba(0,0,0,0.05);
                 padding: 40px 36px;
+                border-radius: 16px;
+                box-shadow: 0 4px 20px rgba(0,0,0,0.02);
                 display: flex; flex-direction: column;
-                transition: border-color 0.3s, box-shadow 0.3s;
+                transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+                position: relative;
+                overflow: hidden;
             }
-            .eq-path-card:hover { border-color: #ccc; box-shadow: 0 8px 32px rgba(0,0,0,0.04); }
-            .eq-path-card.rivalry { border-color: rgba(59,0,1,0.15); }
-            .eq-path-card.rivalry:hover { border-color: rgba(59,0,1,0.3); box-shadow: 0 8px 32px rgba(59,0,1,0.06); }
+            .eq-path-card:hover {
+                background: #fff;
+                transform: translateY(-4px);
+                border-color: rgba(92, 20, 20, 0.15);
+                box-shadow: 0 16px 48px -16px rgba(92, 20, 20, 0.08), 0 0 1px rgba(92, 20, 20, 0.12);
+            }
+            .eq-path-card.rivalry { border-color: rgba(92, 20, 20, 0.1); }
+            .eq-path-card.rivalry:hover {
+                border-color: rgba(92, 20, 20, 0.25);
+                box-shadow: 0 16px 48px -16px rgba(92, 20, 20, 0.12), 0 0 1px rgba(92, 20, 20, 0.18);
+            }
             .eq-path-icon { margin-bottom: 24px; }
             .eq-path-tag {
                 font-family: 'JetBrains Mono', monospace;
                 font-size: 10px; font-weight: 700;
-                letter-spacing: 0.12em; text-transform: uppercase;
-                color: #111; margin-bottom: 12px;
+                letter-spacing: 1.2px; text-transform: uppercase;
+                color: #8a8984; margin-bottom: 12px;
             }
             .eq-path-tag.rivalry { color: #5C1414; }
             .eq-path-title {
-                font-size: 22px; font-weight: 500;
-                line-height: 1.1; letter-spacing: -1px;
+                font-family: 'Plus Jakarta Sans', sans-serif;
+                font-size: 22px; font-weight: 800;
+                line-height: 1.2; letter-spacing: -0.5px;
                 color: #111; margin-bottom: 16px;
             }
             .eq-path-title strong { font-weight: 800; }
             .eq-path-card.rivalry .eq-path-title strong { color: #5C1414; }
             .eq-path-desc {
-                font-size: 14px; color: #888;
-                line-height: 1.65; margin-bottom: 24px;
+                font-family: 'Inter', sans-serif;
+                font-size: 14px; color: #666;
+                line-height: 1.6; margin-bottom: 24px;
                 flex-grow: 1;
             }
             .eq-path-details { margin-bottom: 28px; }
@@ -661,17 +720,45 @@ export function renderActiveContracts() {
                 padding: 14px 24px;
                 background: #111; color: #fff;
                 border: none;
+                border-radius: 6px;
                 font-family: 'JetBrains Mono', monospace;
                 font-size: 11px; font-weight: 700;
-                letter-spacing: 0.08em; text-transform: uppercase;
+                letter-spacing: 1px; text-transform: uppercase;
                 text-decoration: none; text-align: center;
                 cursor: pointer;
-                transition: background 0.2s, transform 0.2s;
+                transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
                 align-self: flex-start;
+                box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+                position: relative;
+                overflow: hidden;
             }
-            .eq-path-cta:hover { background: #333; transform: translateY(-2px); }
+            .eq-path-cta:hover {
+                background: #5C1414;
+                transform: translateY(-2px);
+                box-shadow: 0 8px 24px rgba(92, 20, 20, 0.25);
+            }
             .eq-path-cta.rivalry { background: #5C1414; }
-            .eq-path-cta.rivalry:hover { background: #5a1718; transform: translateY(-2px); }
+            .eq-path-cta.rivalry:hover {
+                background: #111;
+                transform: translateY(-2px);
+                box-shadow: 0 8px 24px rgba(17, 17, 17, 0.25);
+            }
+            .eq-path-cta::before {
+                content: '';
+                position: absolute;
+                top: 0;
+                left: -150%;
+                width: 100%;
+                height: 100%;
+                background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+                transform: skewX(-25deg);
+                pointer-events: none;
+                z-index: 5;
+            }
+            .eq-path-cta:hover::before {
+                left: 150%;
+                transition: left 0.8s ease-in-out;
+            }
 
             /* ── Responsive: Tablet (≤1200px) ── */
             @media (max-width: 1200px) {
@@ -1052,13 +1139,15 @@ export function renderActiveContracts() {
                 gap: 20px;
             }
             .eq-tier-card {
-                border: 1px solid #e8e8e8;
+                border: 1px solid rgba(0,0,0,0.05);
+                border-radius: 16px;
                 padding: 36px 32px;
                 display: flex;
                 flex-direction: column;
-                transition: border-color 0.3s, box-shadow 0.3s, transform 0.35s cubic-bezier(0.16,1,0.3,1);
+                transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
                 position: relative;
                 overflow: hidden;
+                background: #fff;
             }
             .eq-tier-card::before {
                 content: '';
@@ -1069,15 +1158,15 @@ export function renderActiveContracts() {
             }
             .eq-tier-card:hover {
                 transform: translateY(-4px);
-                box-shadow: 0 8px 32px rgba(0,0,0,0.05);
+                box-shadow: 0 16px 48px -16px rgba(0,0,0,0.05);
             }
             .eq-tier-card:hover::before { width: 100%; }
             .eq-tier-card.pledge::before { background: #166534; }
-            .eq-tier-card.pledge:hover { border-color: #dcfce7; }
+            .eq-tier-card.pledge:hover { border-color: rgba(22, 101, 52, 0.2); }
             .eq-tier-card.stake::before { background: #9a3412; }
-            .eq-tier-card.stake:hover { border-color: #ffedd5; }
+            .eq-tier-card.stake:hover { border-color: rgba(154, 52, 18, 0.2); }
             .eq-tier-card.allin::before { background: #5C1414; }
-            .eq-tier-card.allin:hover { border-color: #ffe4e6; }
+            .eq-tier-card.allin:hover { border-color: rgba(92, 20, 20, 0.2); }
 
             .eq-tier-card-badge {
                 font-family: 'JetBrains Mono', monospace;
@@ -1096,8 +1185,9 @@ export function renderActiveContracts() {
             .eq-tier-card-badge.allin { background: #fff1f2; color: #9f1239; border: 1px solid #ffe4e6; }
 
             .eq-tier-card-rate {
+                font-family: 'Plus Jakarta Sans', sans-serif;
                 font-size: 36px;
-                font-weight: 500;
+                font-weight: 800;
                 letter-spacing: -2px;
                 color: #111;
                 line-height: 1;
@@ -1107,7 +1197,7 @@ export function renderActiveContracts() {
                 font-size: 10px;
                 text-transform: uppercase;
                 letter-spacing: 1px;
-                color: #bbb;
+                color: #8a8984;
                 margin-top: 6px;
             }
             .eq-tier-card-divider {
@@ -1223,11 +1313,18 @@ export function renderActiveContracts() {
 
             /* --- REVERTED RIVALRY DUEL CARDS (FIT TO GRID) --- */
             .eq-duel-card {
-                background: #fff; border: 1px solid #eaeaea; padding: 0;
-                transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-                cursor: pointer; position: relative; overflow: hidden;
-                display: flex; flex-direction: column; height: 100%;
-                border-radius: 12px;
+                background: #fff;
+                border: 1px solid rgba(0,0,0,0.05);
+                padding: 0;
+                transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+                cursor: pointer;
+                position: relative;
+                overflow: hidden;
+                display: flex;
+                flex-direction: column;
+                height: 100%;
+                border-radius: 16px;
+                box-shadow: 0 4px 20px rgba(0,0,0,0.02);
             }
             .eq-duel-card::before {
                 content: ''; position: absolute; top: 0; left: 0;
@@ -1236,9 +1333,9 @@ export function renderActiveContracts() {
             }
             .eq-duel-card:hover::before { height: 100%; }
             .eq-duel-card:hover {
-                border-color: #ddd;
-                box-shadow: 0 8px 32px rgba(0,0,0,0.06);
-                transform: translateY(-3px);
+                border-color: rgba(92, 20, 20, 0.15);
+                box-shadow: 0 16px 48px -16px rgba(92, 20, 20, 0.08), 0 0 1px rgba(92, 20, 20, 0.12);
+                transform: translateY(-4px);
             }
             .eq-duel-card:active { transform: translateY(-1px); }
             .eq-duel-card-inner { padding: 28px 28px 0; flex: 1; }
@@ -1259,7 +1356,8 @@ export function renderActiveContracts() {
             .eq-duel-card-status.pending { color: #d97706; }
             .eq-duel-card-status.ended { color: #9ca3af; }
             .eq-duel-card-metric {
-                font-size: 16px; font-weight: 700; color: #111;
+                font-family: 'Plus Jakarta Sans', sans-serif;
+                font-size: 16px; font-weight: 800; color: #111;
                 margin-bottom: 20px; letter-spacing: -0.3px;
                 line-height: 1.3;
             }
@@ -1288,7 +1386,8 @@ export function renderActiveContracts() {
             .eq-duel-player.right .eq-duel-player-name { justify-content: flex-end; }
             .eq-duel-lead-dot { width: 5px; height: 5px; border-radius: 50%; flex-shrink: 0; }
             .eq-duel-player-growth {
-                font-size: 26px; font-weight: 500; color: #111;
+                font-family: 'JetBrains Mono', monospace;
+                font-size: 26px; font-weight: 700; color: #111;
                 letter-spacing: -1px; margin-top: 2px; line-height: 1.1;
             }
             .eq-duel-player-growth.leading { color: var(--green); }
@@ -1312,45 +1411,45 @@ export function renderActiveContracts() {
             }
             .eq-duel-momentum {
                 height: 4px; display: flex; overflow: hidden;
-                margin: 0 28px 0; background: #f0f0f0; border-radius: 2px;
+                margin: 0 28px 0; background: #f5f4f0; border-radius: 2px;
             }
             .eq-duel-momentum-left { background: var(--green); transition: width .6s ease; border-radius: 2px 0 0 2px; }
             .eq-duel-momentum-right { background: var(--red); transition: width .6s ease; border-radius: 0 2px 2px 0; }
             
             .eq-duel-card-actions {
-                display: flex; gap: 0; border-top: 1px solid #f0f0f0;
+                display: flex; gap: 0; border-top: 1px solid rgba(0,0,0,0.05);
             }
             .eq-duel-action-btn {
                 flex: 1; padding: 14px; border: none;
                 font-family: 'JetBrains Mono', monospace;
-                font-size: 11px; font-weight: 700; letter-spacing: 1.5px;
-                cursor: pointer; transition: all .15s ease;
+                font-size: 11px; font-weight: 700; letter-spacing: 1px;
+                cursor: pointer; transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
                 text-transform: uppercase; display: flex; align-items: center;
                 justify-content: center; gap: 8px;
             }
-            .eq-duel-action-accept { background: #0a0a0a; color: #fff; }
-            .eq-duel-action-accept:hover { background: var(--red); }
-            .eq-duel-action-decline { background: #fff; color: #888; border-left: 1px solid #f0f0f0 !important; }
-            .eq-duel-action-decline:hover { color: var(--red); }
+            .eq-duel-action-accept { background: #111111; color: #fff; }
+            .eq-duel-action-accept:hover { background: #5C1414; }
+            .eq-duel-action-decline { background: #fff; color: #8a8984; border-left: 1px solid rgba(0,0,0,0.05) !important; }
+            .eq-duel-action-decline:hover { color: #5C1414; background: rgba(92, 20, 20, 0.02); }
             
             .eq-duel-card-bottom {
                 display: flex; align-items: flex-end; justify-content: space-between;
                 padding: 16px 28px 24px;
-                border-top: 1px solid #f5f5f5;
+                border-top: 1px solid rgba(0,0,0,0.05);
                 margin-top: auto;
             }
             .eq-duel-card-stake { display: flex; flex-direction: column; gap: 2px; }
-            .eq-duel-card-stake-val { font-size: 22px; font-weight: 500; color: #111; letter-spacing: -0.5px; }
+            .eq-duel-card-stake-val { font-family: 'JetBrains Mono', monospace; font-size: 22px; font-weight: 700; color: #111; letter-spacing: -0.5px; }
             .eq-duel-card-stake-lbl {
-                font-family: 'JetBrains Mono', monospace;
-                font-size: 8px; font-weight: 700; color: #ccc;
+                font-family: 'Inter', sans-serif;
+                font-size: 8px; font-weight: 700; color: #8a8984;
                 letter-spacing: 1px; text-transform: uppercase;
             }
             .eq-duel-card-time {
                 font-family: 'JetBrains Mono', monospace;
-                font-size: 9px; color: #bbb; letter-spacing: 0.5px;
+                font-size: 9px; color: #8a8984; letter-spacing: 0.5px;
             }
-            .eq-duel-card-time.urgent { color: var(--red); font-weight: 700; }
+            .eq-duel-card-time.urgent { color: #5C1414; font-weight: 700; }
             .eq-duel-card-provider-pill {
                 display: inline-flex; align-items: center; padding: 2px 7px;
                 font-family: 'JetBrains Mono', monospace;

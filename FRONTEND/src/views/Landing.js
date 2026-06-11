@@ -519,19 +519,49 @@ export function renderLanding() {
                         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
                     </button>
                 </div>
+
+                <!-- User Identity (shown when logged in) -->
+                <div id="mobile-user-section" class="pnl-user">
+                    <div class="pnl-user-badge">
+                        <span class="pnl-user-initial" id="mobile-menu-initial">U</span>
+                        <img class="pnl-user-avatar" id="mobile-menu-avatar" alt="" />
+                    </div>
+                    <div class="pnl-user-info">
+                        <span class="pnl-user-name" id="mobile-menu-username">@user</span>
+                    </div>
+                </div>
+
                 <div class="pnl-body">
                     <!-- Navigation -->
                     <div class="pnl-section-label">Navigation</div>
-                    <a href="#" onclick="window.app.closeMobileMenu(); if(window.app._authMode !== 'signup') window.app.toggleAuthMode(); window.app.openAccessModal(); return false;" class="pnl-nav-link active" style="animation-delay: 0.06s"><span class="pnl-nav-indicator"></span>MARKET</a>
-                    <a href="#" onclick="window.app.closeMobileMenu(); if(window.app._authMode !== 'signup') window.app.toggleAuthMode(); window.app.openAccessModal(); return false;" class="pnl-nav-link" style="animation-delay: 0.09s"><span class="pnl-nav-indicator"></span>ACTIVE</a>
-                    <a href="#" onclick="window.app.closeMobileMenu(); if(window.app._authMode !== 'signup') window.app.toggleAuthMode(); window.app.openAccessModal(); return false;" class="pnl-nav-link" style="animation-delay: 0.12s"><span class="pnl-nav-indicator"></span>RIVALRY</a>
-                    <a href="#" onclick="window.app.closeMobileMenu(); if(window.app._authMode !== 'signup') window.app.toggleAuthMode(); window.app.openAccessModal(); return false;" class="pnl-nav-link" style="animation-delay: 0.15s"><span class="pnl-nav-indicator"></span>LEDGER</a>
-                    <a href="#" onclick="window.app.closeMobileMenu(); if(window.app._authMode !== 'signup') window.app.toggleAuthMode(); window.app.openAccessModal(); return false;" class="pnl-nav-link" style="animation-delay: 0.18s"><span class="pnl-nav-indicator"></span>SOURCES</a>
+                    <a href="#" onclick="window.app.closeMobileMenu(); window.router.navigate('/market'); return false;" class="pnl-nav-link active" style="animation-delay: 0.06s"><span class="pnl-nav-indicator"></span>MARKET</a>
+                    <a href="#" onclick="window.app.closeMobileMenu(); window.router.navigate('/my-contracts'); return false;" class="pnl-nav-link" style="animation-delay: 0.09s"><span class="pnl-nav-indicator"></span>ACTIVE</a>
+                    <a href="#" onclick="window.app.closeMobileMenu(); window.router.navigate('/rivalry'); return false;" class="pnl-nav-link" style="animation-delay: 0.12s"><span class="pnl-nav-indicator"></span>RIVALRY</a>
+                    <a href="#" onclick="window.app.closeMobileMenu(); window.router.navigate('/ledger'); return false;" class="pnl-nav-link" style="animation-delay: 0.15s"><span class="pnl-nav-indicator"></span>LEDGER</a>
+                    <a href="#" onclick="window.app.closeMobileMenu(); window.router.navigate('/sources'); return false;" class="pnl-nav-link" style="animation-delay: 0.18s"><span class="pnl-nav-indicator"></span>SOURCES</a>
                     
-                    <!-- Connect -->
+                    <!-- Account Links (shown when logged in) -->
+                    <div id="mobile-account-links" style="display:none;">
+                        <div class="pnl-divider"></div>
+                        <div class="pnl-section-label">Account</div>
+                        <a href="#" onclick="window.app.closeMobileMenu(); window.router.navigate('/profile'); return false;" class="pnl-acct-link" style="animation-delay: 0.21s"><i data-lucide="user" style="width:14px;height:14px;opacity:0.5;display:inline-block;vertical-align:middle;margin-right:8px;"></i>Profile</a>
+                        <a href="#" onclick="window.app.closeMobileMenu(); window.router.navigate('/referrals'); return false;" class="pnl-acct-link" style="animation-delay: 0.24s"><i data-lucide="gift" style="width:14px;height:14px;opacity:0.5;display:inline-block;vertical-align:middle;margin-right:8px;"></i>Referrals</a>
+                        <a href="#" onclick="window.app.closeMobileMenu(); window.router.navigate('/funding'); return false;" class="pnl-acct-link" style="animation-delay: 0.27s"><i data-lucide="wallet" style="width:14px;height:14px;opacity:0.5;display:inline-block;vertical-align:middle;margin-right:8px;"></i>Account Capital</a>
+                        <a href="#" onclick="window.app.closeMobileMenu(); window.router.navigate('/docs'); return false;" class="pnl-acct-link" style="animation-delay: 0.30s"><i data-lucide="file-text" style="width:14px;height:14px;opacity:0.5;display:inline-block;vertical-align:middle;margin-right:8px;"></i>Documentation</a>
+                        
+                        <!-- Sign Out -->
+                        <button id="pnl-signout-btn" onclick="window.app.closeMobileMenu(); window.app.handleSignOut()" class="pnl-signout" style="display:none;">
+                            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+                            Sign Out
+                        </button>
+                    </div>
+
+                    <!-- Connect (shown when NOT logged in) -->
                     <div id="mobile-connect-section" class="pnl-connect-section">
-                        <button onclick="window.app.closeMobileMenu(); if(window.app._authMode !== 'signup') window.app.toggleAuthMode(); window.app.openAccessModal()" id="btn-auth-mobile" class="pnl-connect-btn">
-                            CONNECT
+                        <div class="pnl-connect-promo">Lock capital. Force execution.</div>
+                        <div class="pnl-connect-promo-sub">Connect your account to lock performance contracts and match up to $250.</div>
+                        <button onclick="window.app.closeMobileMenu(); window.app.handleAuthClick()" id="btn-auth-mobile" class="pnl-connect-btn">
+                            Sign In
                         </button>
                     </div>
                 </div>

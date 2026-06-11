@@ -152,9 +152,9 @@ export function renderFunding() {
                 color: #5C1414;
             }
             .cap-stat-val {
-                font-family: 'JetBrains Mono', monospace;
+                font-family: 'Plus Jakarta Sans', sans-serif;
                 font-size: 22px;
-                font-weight: 700;
+                font-weight: 800;
                 color: #111111;
                 letter-spacing: -1px;
                 line-height: 1;

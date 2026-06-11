@@ -122,11 +122,11 @@ export function renderMyContracts() {
                 transform: translateY(-2px);
             }
             .myc-metric-value {
-                font-family: 'JetBrains Mono', monospace;
+                font-family: 'Plus Jakarta Sans', sans-serif;
                 font-size: 28px;
-                font-weight: 700;
+                font-weight: 800;
                 color: #111;
-                letter-spacing: -1.2px;
+                letter-spacing: -1px;
                 line-height: 1.2;
                 margin-bottom: 6px;
             }
@@ -247,9 +247,9 @@ export function renderMyContracts() {
                 margin-bottom: 20px;
             }
             .eq-stake-val {
-                font-family: 'JetBrains Mono', monospace;
+                font-family: 'Plus Jakarta Sans', sans-serif;
                 font-size: 24px;
-                font-weight: 700;
+                font-weight: 800;
                 letter-spacing: -1px;
             }
             .eq-stake-separator { width: 16px; height: 1px; background: #eee; }

@@ -284,10 +284,10 @@ export function renderActiveContracts() {
             }
             .eq-stat-group { display: flex; flex-direction: column; gap: 6px; }
             .eq-stat-val {
-                font-family: 'JetBrains Mono', monospace;
+                font-family: 'Plus Jakarta Sans', sans-serif;
                 font-size: 24px;
-                font-weight: 700;
-                letter-spacing: -1.2px;
+                font-weight: 800;
+                letter-spacing: -1px;
                 display: flex;
                 align-items: baseline;
                 gap: 4px;
@@ -518,9 +518,9 @@ export function renderActiveContracts() {
                 margin-bottom: 20px;
             }
             .eq-stake-val {
-                font-family: 'JetBrains Mono', monospace;
+                font-family: 'Plus Jakarta Sans', sans-serif;
                 font-size: 24px;
-                font-weight: 700;
+                font-weight: 800;
                 letter-spacing: -1px;
             }
             .eq-stake-separator { width: 16px; height: 1px; background: #eee; }
@@ -1386,8 +1386,8 @@ export function renderActiveContracts() {
             .eq-duel-player.right .eq-duel-player-name { justify-content: flex-end; }
             .eq-duel-lead-dot { width: 5px; height: 5px; border-radius: 50%; flex-shrink: 0; }
             .eq-duel-player-growth {
-                font-family: 'JetBrains Mono', monospace;
-                font-size: 26px; font-weight: 700; color: #111;
+                font-family: 'Plus Jakarta Sans', sans-serif;
+                font-size: 26px; font-weight: 800; color: #111;
                 letter-spacing: -1px; margin-top: 2px; line-height: 1.1;
             }
             .eq-duel-player-growth.leading { color: var(--green); }
@@ -1439,7 +1439,7 @@ export function renderActiveContracts() {
                 margin-top: auto;
             }
             .eq-duel-card-stake { display: flex; flex-direction: column; gap: 2px; }
-            .eq-duel-card-stake-val { font-family: 'JetBrains Mono', monospace; font-size: 22px; font-weight: 700; color: #111; letter-spacing: -0.5px; }
+            .eq-duel-card-stake-val { font-family: 'Plus Jakarta Sans', sans-serif; font-size: 22px; font-weight: 800; color: #111; letter-spacing: -0.5px; }
             .eq-duel-card-stake-lbl {
                 font-family: 'Inter', sans-serif;
                 font-size: 8px; font-weight: 700; color: #8a8984;

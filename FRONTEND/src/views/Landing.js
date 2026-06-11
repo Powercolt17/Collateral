@@ -426,6 +426,8 @@ export function renderLanding() {
                         <div class="lemo-left">
                             <p class="lemo-body">
                                 Planning is easy. Executing is hard. You miss your targets because failing is free. Collateral gives you the financial leverage you need to stop planning, force your own hand, and start winning.
+                                <br><br>
+                                Every day, people risk money on outcomes they can't control—like stock markets, sports bets, or ad algorithms. Collateral lets you bet on the only asset you actually control: your own performance.
                             </p>
                         </div>
                         <div class="lemo-right">
@@ -465,7 +467,7 @@ export function renderLanding() {
                     <div class="lfaq-wrap">
                         <div class="fq open">
                             <div class="fq-q">Is this gambling?</div>
-                            <div class="fq-a">No. There is no luck involved. You win if you hit your goal. You lose if you don't. The API checks your real data.</div>
+                            <div class="fq-a">No. Gambling is risking money on outcomes you can't control—like sports, election markets, or ad algorithms. Collateral is the exact opposite: you are staking money on the one thing you have absolute control over—your own focus, work, and execution. You win if you hit your goal; you lose if you don't.</div>
                         </div>
                         <div class="fq">
                             <div class="fq-q">Where is the money held?</div>

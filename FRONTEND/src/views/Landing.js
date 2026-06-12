@@ -35,81 +35,70 @@ export function renderLanding() {
             <div class="lhero-saturn-bg">
                 <svg class="lsaturn-svg" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:100%;">
                     <defs>
-                        <!-- Planet Radial Gradient for 3D Sphere Shading with Ring Red Reflection -->
-                        <radialGradient id="planetGrad" cx="30%" cy="30%" r="70%">
-                            <stop offset="0%" stop-color="#FFF4F4" />
-                            <stop offset="25%" stop-color="#FCA5A5" />
-                            <stop offset="55%" stop-color="#8C1D1D" />
-                            <stop offset="85%" stop-color="#4C0808" />
-                            <stop offset="100%" stop-color="#1E0303" />
+                        <!-- Fade Mask -->
+                        <radialGradient id="gridFade" cx="50%" cy="50%" r="50%">
+                            <stop offset="0%" stop-color="#ffffff" stop-opacity="0.95" />
+                            <stop offset="60%" stop-color="#ffffff" stop-opacity="0.5" />
+                            <stop offset="100%" stop-color="#ffffff" stop-opacity="0" />
                         </radialGradient>
-                        
-                        <!-- Ring A (Outer Ring) Gradient -->
-                        <linearGradient id="ringA" x1="0%" y1="0%" x2="100%" y2="100%">
-                            <stop offset="0%" stop-color="rgba(217, 119, 6, 0.05)" />
-                            <stop offset="30%" stop-color="rgba(140, 29, 29, 0.4)" />
-                            <stop offset="50%" stop-color="rgba(251, 191, 36, 0.75)" />
-                            <stop offset="70%" stop-color="rgba(140, 29, 29, 0.4)" />
-                            <stop offset="100%" stop-color="rgba(217, 119, 6, 0.05)" />
+
+                        <!-- Line Gradient -->
+                        <linearGradient id="gridLineGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                            <stop offset="0%" stop-color="#5C1414" stop-opacity="0.1" />
+                            <stop offset="40%" stop-color="#8C1D1D" stop-opacity="0.55" />
+                            <stop offset="80%" stop-color="#ECA1A1" stop-opacity="0.45" />
+                            <stop offset="100%" stop-color="#5C1414" stop-opacity="0.05" />
                         </linearGradient>
 
-                        <!-- Ring B (Main Ring) Gradient -->
-                        <linearGradient id="ringB" x1="0%" y1="0%" x2="100%" y2="100%">
-                            <stop offset="0%" stop-color="rgba(92, 20, 20, 0.15)" />
-                            <stop offset="30%" stop-color="rgba(225, 29, 72, 0.75)" />
-                            <stop offset="50%" stop-color="rgba(255, 255, 255, 0.95)" />
-                            <stop offset="70%" stop-color="rgba(225, 29, 72, 0.75)" />
-                            <stop offset="100%" stop-color="rgba(92, 20, 20, 0.15)" />
-                        </linearGradient>
-
-                        <!-- Ring C (Inner Ring) Gradient -->
-                        <linearGradient id="ringC" x1="0%" y1="0%" x2="100%" y2="100%">
-                            <stop offset="0%" stop-color="rgba(92, 20, 20, 0)" />
-                            <stop offset="50%" stop-color="rgba(225, 29, 72, 0.35)" />
-                            <stop offset="100%" stop-color="rgba(92, 20, 20, 0)" />
-                        </linearGradient>
-                        
-                        <!-- Planet Soft Drop Shadow -->
-                        <filter id="planetShadow" x="-30%" y="-30%" width="160%" height="160%">
-                            <feDropShadow dx="-1" dy="3" stdDeviation="4" flood-color="#0F172A" flood-opacity="0.1" />
-                        </filter>
-
-                        <!-- Atmospheric Glow Filter -->
-                        <filter id="atmosphereGlow" x="-20%" y="-20%" width="140%" height="140%">
-                            <feGaussianBlur stdDeviation="0.8" />
+                        <!-- Node Glow -->
+                        <filter id="nodeGlow" x="-50%" y="-50%" width="200%" height="200%">
+                            <feGaussianBlur in="SourceGraphic" stdDeviation="1.5" />
                         </filter>
                     </defs>
 
-                    <!-- 1. Outer Orbit Line (Technical Blueprint Style - Spins Fast) -->
-                    <path d="M 3 50 A 47 12 0 0 1 97 50" class="lsaturn-dash-fast" stroke="rgba(92,20,20,0.12)" stroke-width="0.75" />
-                    
-                    <!-- 2. Back Rings (drawn behind planet) -->
-                    <!-- Ring A Back (Spins Slow) -->
-                    <path d="M 12 50 A 38 9.5 0 0 1 88 50" class="lsaturn-dash-slow" stroke="url(#ringA)" stroke-width="2.4" stroke-linecap="round" />
-                    <!-- Ring B Back (Cassini Division split - Solid) -->
-                    <path d="M 17 50 A 33 8.25 0 0 1 83 50" stroke="url(#ringB)" stroke-width="2.8" stroke-linecap="round" />
-                    <path d="M 15 50 A 35 8.75 0 0 1 85 50" stroke="url(#ringB)" stroke-width="1.8" stroke-linecap="round" />
-                    <!-- Ring C Back (Spins Reverse) -->
-                    <path d="M 22 50 A 28 7 0 0 1 78 50" class="lsaturn-dash-reverse" stroke="url(#ringC)" stroke-width="1.8" stroke-linecap="round" />
+                    <g mask="url(#gridFade)">
+                        <!-- 1. Radiating Perspective S-Curves -->
+                        <path d="M 50 15 C 15 35, -15 70, -40 110" stroke="url(#gridLineGrad)" stroke-width="0.3" fill="none" />
+                        <path d="M 50 15 C 28 35, 5 70, -10 110" stroke="url(#gridLineGrad)" stroke-width="0.35" fill="none" />
+                        <path d="M 50 15 C 38 35, 25 70, 15 110" stroke="url(#gridLineGrad)" stroke-width="0.4" fill="none" />
+                        <path d="M 50 15 C 45 35, 40 70, 35 110" stroke="url(#gridLineGrad)" stroke-width="0.4" fill="none" />
+                        <path d="M 50 15 C 50 40, 50 70, 50 110" stroke="url(#gridLineGrad)" stroke-width="0.45" fill="none" />
+                        <path d="M 50 15 C 55 35, 60 70, 65 110" stroke="url(#gridLineGrad)" stroke-width="0.4" fill="none" />
+                        <path d="M 50 15 C 62 35, 75 70, 85 110" stroke="url(#gridLineGrad)" stroke-width="0.4" fill="none" />
+                        <path d="M 50 15 C 72 35, 95 70, 110 110" stroke="url(#gridLineGrad)" stroke-width="0.35" fill="none" />
+                        <path d="M 50 15 C 85 35, 115 70, 140 110" stroke="url(#gridLineGrad)" stroke-width="0.3" fill="none" />
 
-                    <!-- 3. Atmosphere & Planet Body (with soft 3D shading & drop shadow) -->
-                    <!-- Glowing Atmosphere Aura -->
-                    <circle cx="50" cy="50" r="23.5" fill="none" stroke="rgba(140, 29, 29, 0.45)" stroke-width="1.2" filter="url(#atmosphereGlow)" />
-                    <circle cx="50" cy="50" r="22" fill="url(#planetGrad)" filter="url(#planetShadow)" />
-                    <!-- Subtle Atmospheric Rim Highlight -->
-                    <circle cx="50" cy="50" r="22" fill="none" stroke="rgba(255,255,255,0.45)" stroke-width="0.5" />
+                        <!-- 2. Intersecting Horizontal Waves -->
+                        <path d="M 35 25 C 40 23, 60 23, 65 25" stroke="url(#gridLineGrad)" stroke-width="0.3" fill="none" />
+                        <path d="M 30 32 C 40 29, 60 29, 70 32" stroke="url(#gridLineGrad)" stroke-width="0.35" fill="none" />
+                        <path d="M 20 40 C 40 36, 60 36, 80 40" stroke="url(#gridLineGrad)" stroke-width="0.4" fill="none" />
+                        <path d="M 10 50 C 40 45, 60 45, 90 50" stroke="url(#gridLineGrad)" stroke-width="0.4" fill="none" />
+                        <path d="M -5 62 C 35 56, 65 56, 105 62" stroke="url(#gridLineGrad)" stroke-width="0.4" fill="none" />
+                        <path d="M -20 76 C 25 68, 75 68, 120 76" stroke="url(#gridLineGrad)" stroke-width="0.45" fill="none" />
+                        <path d="M -40 92 C 15 82, 85 82, 140 92" stroke="url(#gridLineGrad)" stroke-width="0.45" fill="none" />
+                        <path d="M -60 110 C 5 98, 95 98, 160 110" stroke="url(#gridLineGrad)" stroke-width="0.3" fill="none" />
 
-                    <!-- 4. Front Rings (drawn in front of planet, creating overlap depth) -->
-                    <!-- Ring C Front (Spins Reverse) -->
-                    <path d="M 78 50 A 28 7 0 0 1 22 50" class="lsaturn-dash-reverse" stroke="url(#ringC)" stroke-width="1.8" stroke-linecap="round" />
-                    <!-- Ring B Front (Cassini Division split - Solid) -->
-                    <path d="M 85 50 A 35 8.75 0 0 1 15 50" stroke="url(#ringB)" stroke-width="1.8" stroke-linecap="round" />
-                    <path d="M 83 50 A 33 8.25 0 0 1 17 50" stroke="url(#ringB)" stroke-width="2.8" stroke-linecap="round" />
-                    <!-- Ring A Front (Spins Slow) -->
-                    <path d="M 88 50 A 38 9.5 0 0 1 12 50" class="lsaturn-dash-slow" stroke="url(#ringA)" stroke-width="2.4" stroke-linecap="round" />
+                        <!-- 3. Glowing Data Nodes (Intersections) -->
+                        <!-- Active gold center node -->
+                        <circle cx="50" cy="50" r="1.5" fill="#FBBF24" filter="url(#nodeGlow)" />
+                        <circle cx="50" cy="50" r="0.75" fill="#FFFFFF" />
 
-                    <!-- 5. Front Outer Orbit Line (Technical Blueprint Style - Spins Fast) -->
-                    <path d="M 97 50 A 47 12 0 0 1 3 50" class="lsaturn-dash-fast" stroke="rgba(92,20,20,0.12)" stroke-width="0.75" />
+                        <!-- Soft rose right-mid node -->
+                        <circle cx="68" cy="62" r="1.2" fill="#ECA1A1" filter="url(#nodeGlow)" />
+                        <circle cx="68" cy="62" r="0.6" fill="#FFFFFF" />
+
+                        <!-- Soft rose left-mid node -->
+                        <circle cx="32" cy="62" r="1.2" fill="#ECA1A1" filter="url(#nodeGlow)" />
+                        <circle cx="32" cy="62" r="0.6" fill="#FFFFFF" />
+
+                        <!-- Glowing green pulsing node (Lower-left) -->
+                        <circle cx="15" cy="76" r="1.8" fill="#10B981" filter="url(#nodeGlow)" style="animation: nodePulse 2s infinite ease-in-out" />
+                        <circle cx="15" cy="76" r="0.8" fill="#FFFFFF" />
+
+                        <!-- Glowing gold pulsing node (Lower-right) -->
+                        <circle cx="85" cy="76" r="1.8" fill="#F59E0B" filter="url(#nodeGlow)" style="animation: nodePulse 2s infinite ease-in-out; animation-delay: 1s;" />
+                        <circle cx="85" cy="76" r="0.8" fill="#FFFFFF" />
+                    </g>
                 </svg>
             </div>
             <div class="lw">

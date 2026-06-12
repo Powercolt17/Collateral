@@ -70,14 +70,16 @@ export const landingCSS = `
 
 /* ═══ HERO ═══ */
 .lhero-section{position:relative;overflow:hidden}
-.lhero-saturn-bg{position:absolute;top:5%;right:-5%;width:500px;height:500px;pointer-events:none;transform:rotate(-15deg);opacity:0.55;z-index:0;animation:saturnFloat 20s ease-in-out infinite}
-.lsaturn-dash-fast{stroke-dasharray:8 12;animation:spinClockwise 15s linear infinite}
-.lsaturn-dash-slow{stroke-dasharray:20 28;animation:spinClockwise 25s linear infinite}
-.lsaturn-dash-reverse{stroke-dasharray:6 10;animation:spinCounterClockwise 18s linear infinite}
-@keyframes spinClockwise{from{stroke-dashoffset:0}to{stroke-dashoffset:-300}}
-@keyframes spinCounterClockwise{from{stroke-dashoffset:0}to{stroke-dashoffset:300}}
-@media(max-width:768px){.lhero-saturn-bg{width:280px;height:280px;top:2%;right:-10%;opacity:0.45}}
-@keyframes saturnFloat{0%,100%{transform:rotate(-15deg) translate(0,0)}50%{transform:rotate(-12deg) translate(-15px,20px)}}
+.lhero-saturn-bg{position:absolute;top:5%;right:-5%;width:500px;height:500px;pointer-events:none;opacity:0.65;z-index:0;animation:gridFloat 16s ease-in-out infinite}
+@keyframes gridFloat {
+  0%, 100% { transform: translateY(0) scale(1) rotate(-2deg); }
+  50% { transform: translateY(-8px) scale(1.03) rotate(2deg); }
+}
+@keyframes nodePulse {
+  0%, 100% { transform: scale(1); opacity: 0.7; }
+  50% { transform: scale(1.35); opacity: 1; }
+}
+@media(max-width:768px){.lhero-saturn-bg{width:280px;height:280px;top:2%;right:-10%;opacity:0.55}}
 .lhero-section::before{content:'';position:absolute;top:-20%;right:-10%;width:700px;height:700px;background:radial-gradient(circle, rgba(92,20,20,0.04) 0%, rgba(92,20,20,0.02) 30%, transparent 70%);border-radius:50%;pointer-events:none;animation:heroOrb 12s ease-in-out infinite}
 .lhero-section::after{content:'';position:absolute;bottom:-30%;left:-5%;width:500px;height:500px;background:radial-gradient(circle, rgba(92,20,20,0.03) 0%, transparent 60%);border-radius:50%;pointer-events:none;animation:heroOrb 15s ease-in-out infinite reverse}
 @keyframes heroOrb {

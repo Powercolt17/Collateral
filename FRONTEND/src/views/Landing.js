@@ -37,41 +37,46 @@ export function renderLanding() {
                     <defs>
                         <!-- Planet Radial Gradient for 3D Sphere Shading with Ring Red Reflection -->
                         <radialGradient id="planetGrad" cx="30%" cy="30%" r="70%">
-                            <stop offset="0%" stop-color="#FFFFFF" />
-                            <stop offset="40%" stop-color="#F8FAFC" />
-                            <stop offset="70%" stop-color="#E2E8F0" />
-                            <stop offset="90%" stop-color="#8C3A3A" />
-                            <stop offset="100%" stop-color="#1E0A0A" />
+                            <stop offset="0%" stop-color="#FFF4F4" />
+                            <stop offset="25%" stop-color="#FCA5A5" />
+                            <stop offset="55%" stop-color="#8C1D1D" />
+                            <stop offset="85%" stop-color="#4C0808" />
+                            <stop offset="100%" stop-color="#1E0303" />
                         </radialGradient>
                         
                         <!-- Ring A (Outer Ring) Gradient -->
                         <linearGradient id="ringA" x1="0%" y1="0%" x2="100%" y2="100%">
-                            <stop offset="0%" stop-color="rgba(15, 23, 42, 0.01)" />
-                            <stop offset="30%" stop-color="rgba(92, 20, 20, 0.2)" />
-                            <stop offset="50%" stop-color="rgba(148, 163, 184, 0.3)" />
-                            <stop offset="70%" stop-color="rgba(92, 20, 20, 0.2)" />
-                            <stop offset="100%" stop-color="rgba(15, 23, 42, 0.01)" />
+                            <stop offset="0%" stop-color="rgba(217, 119, 6, 0.05)" />
+                            <stop offset="30%" stop-color="rgba(140, 29, 29, 0.4)" />
+                            <stop offset="50%" stop-color="rgba(251, 191, 36, 0.75)" />
+                            <stop offset="70%" stop-color="rgba(140, 29, 29, 0.4)" />
+                            <stop offset="100%" stop-color="rgba(217, 119, 6, 0.05)" />
                         </linearGradient>
 
                         <!-- Ring B (Main Ring) Gradient -->
                         <linearGradient id="ringB" x1="0%" y1="0%" x2="100%" y2="100%">
-                            <stop offset="0%" stop-color="rgba(15, 23, 42, 0.02)" />
-                            <stop offset="30%" stop-color="rgba(92, 20, 20, 0.45)" />
-                            <stop offset="50%" stop-color="rgba(255, 255, 255, 0.75)" />
-                            <stop offset="70%" stop-color="rgba(92, 20, 20, 0.45)" />
-                            <stop offset="100%" stop-color="rgba(15, 23, 42, 0.02)" />
+                            <stop offset="0%" stop-color="rgba(92, 20, 20, 0.15)" />
+                            <stop offset="30%" stop-color="rgba(225, 29, 72, 0.75)" />
+                            <stop offset="50%" stop-color="rgba(255, 255, 255, 0.95)" />
+                            <stop offset="70%" stop-color="rgba(225, 29, 72, 0.75)" />
+                            <stop offset="100%" stop-color="rgba(92, 20, 20, 0.15)" />
                         </linearGradient>
 
                         <!-- Ring C (Inner Ring) Gradient -->
                         <linearGradient id="ringC" x1="0%" y1="0%" x2="100%" y2="100%">
-                            <stop offset="0%" stop-color="rgba(15, 23, 42, 0)" />
-                            <stop offset="50%" stop-color="rgba(148, 163, 184, 0.25)" />
-                            <stop offset="100%" stop-color="rgba(15, 23, 42, 0)" />
+                            <stop offset="0%" stop-color="rgba(92, 20, 20, 0)" />
+                            <stop offset="50%" stop-color="rgba(225, 29, 72, 0.35)" />
+                            <stop offset="100%" stop-color="rgba(92, 20, 20, 0)" />
                         </linearGradient>
                         
                         <!-- Planet Soft Drop Shadow -->
                         <filter id="planetShadow" x="-30%" y="-30%" width="160%" height="160%">
                             <feDropShadow dx="-1" dy="3" stdDeviation="4" flood-color="#0F172A" flood-opacity="0.1" />
+                        </filter>
+
+                        <!-- Atmospheric Glow Filter -->
+                        <filter id="atmosphereGlow" x="-20%" y="-20%" width="140%" height="140%">
+                            <feGaussianBlur stdDeviation="0.8" />
                         </filter>
                     </defs>
 
@@ -80,26 +85,28 @@ export function renderLanding() {
                     
                     <!-- 2. Back Rings (drawn behind planet) -->
                     <!-- Ring A Back (Spins Slow) -->
-                    <path d="M 12 50 A 38 9.5 0 0 1 88 50" class="lsaturn-dash-slow" stroke="url(#ringA)" stroke-width="1.8" stroke-linecap="round" />
+                    <path d="M 12 50 A 38 9.5 0 0 1 88 50" class="lsaturn-dash-slow" stroke="url(#ringA)" stroke-width="2.4" stroke-linecap="round" />
                     <!-- Ring B Back (Cassini Division split - Solid) -->
-                    <path d="M 17 50 A 33 8.25 0 0 1 83 50" stroke="url(#ringB)" stroke-width="2" stroke-linecap="round" />
-                    <path d="M 15 50 A 35 8.75 0 0 1 85 50" stroke="url(#ringB)" stroke-width="1.2" stroke-linecap="round" />
+                    <path d="M 17 50 A 33 8.25 0 0 1 83 50" stroke="url(#ringB)" stroke-width="2.8" stroke-linecap="round" />
+                    <path d="M 15 50 A 35 8.75 0 0 1 85 50" stroke="url(#ringB)" stroke-width="1.8" stroke-linecap="round" />
                     <!-- Ring C Back (Spins Reverse) -->
-                    <path d="M 22 50 A 28 7 0 0 1 78 50" class="lsaturn-dash-reverse" stroke="url(#ringC)" stroke-width="1.2" stroke-linecap="round" />
+                    <path d="M 22 50 A 28 7 0 0 1 78 50" class="lsaturn-dash-reverse" stroke="url(#ringC)" stroke-width="1.8" stroke-linecap="round" />
 
-                    <!-- 3. Planet Body (with soft 3D shading & drop shadow) -->
+                    <!-- 3. Atmosphere & Planet Body (with soft 3D shading & drop shadow) -->
+                    <!-- Glowing Atmosphere Aura -->
+                    <circle cx="50" cy="50" r="23.5" fill="none" stroke="rgba(140, 29, 29, 0.45)" stroke-width="1.2" filter="url(#atmosphereGlow)" />
                     <circle cx="50" cy="50" r="22" fill="url(#planetGrad)" filter="url(#planetShadow)" />
                     <!-- Subtle Atmospheric Rim Highlight -->
                     <circle cx="50" cy="50" r="22" fill="none" stroke="rgba(255,255,255,0.45)" stroke-width="0.5" />
 
                     <!-- 4. Front Rings (drawn in front of planet, creating overlap depth) -->
                     <!-- Ring C Front (Spins Reverse) -->
-                    <path d="M 78 50 A 28 7 0 0 1 22 50" class="lsaturn-dash-reverse" stroke="url(#ringC)" stroke-width="1.2" stroke-linecap="round" />
+                    <path d="M 78 50 A 28 7 0 0 1 22 50" class="lsaturn-dash-reverse" stroke="url(#ringC)" stroke-width="1.8" stroke-linecap="round" />
                     <!-- Ring B Front (Cassini Division split - Solid) -->
-                    <path d="M 85 50 A 35 8.75 0 0 1 15 50" stroke="url(#ringB)" stroke-width="1.2" stroke-linecap="round" />
-                    <path d="M 83 50 A 33 8.25 0 0 1 17 50" stroke="url(#ringB)" stroke-width="2" stroke-linecap="round" />
+                    <path d="M 85 50 A 35 8.75 0 0 1 15 50" stroke="url(#ringB)" stroke-width="1.8" stroke-linecap="round" />
+                    <path d="M 83 50 A 33 8.25 0 0 1 17 50" stroke="url(#ringB)" stroke-width="2.8" stroke-linecap="round" />
                     <!-- Ring A Front (Spins Slow) -->
-                    <path d="M 88 50 A 38 9.5 0 0 1 12 50" class="lsaturn-dash-slow" stroke="url(#ringA)" stroke-width="1.8" stroke-linecap="round" />
+                    <path d="M 88 50 A 38 9.5 0 0 1 12 50" class="lsaturn-dash-slow" stroke="url(#ringA)" stroke-width="2.4" stroke-linecap="round" />
 
                     <!-- 5. Front Outer Orbit Line (Technical Blueprint Style - Spins Fast) -->
                     <path d="M 97 50 A 47 12 0 0 1 3 50" class="lsaturn-dash-fast" stroke="rgba(92,20,20,0.12)" stroke-width="0.75" />
@@ -560,13 +567,15 @@ export function renderLanding() {
 
                     <!-- Connect (shown when NOT logged in) -->
                     <div id="mobile-connect-section" class="pnl-connect-section">
-                        <div class="pnl-connect-card">
-                            <div class="pnl-connect-title">Lock capital. Force execution.</div>
-                            <div class="pnl-connect-desc">Connect your account to lock performance contracts and match up to $250.</div>
-                            <button onclick="window.app.closeMobileMenu(); window.app.handleAuthClick()" id="btn-auth-mobile" class="pnl-connect-btn">
-                                SIGN IN <span class="pnl-connect-arrow">→</span>
-                            </button>
+                        <div class="pnl-connect-badge">
+                            <span class="pnl-connect-badge-dot"></span>
+                            $250 Match Active
                         </div>
+                        <div class="pnl-connect-promo">Lock capital. Force execution.</div>
+                        <div class="pnl-connect-promo-sub">Connect your account to lock performance contracts and match up to $250.</div>
+                        <button onclick="window.app.closeMobileMenu(); window.app.handleAuthClick()" id="btn-auth-mobile" class="pnl-connect-btn">
+                            Sign In
+                        </button>
                     </div>
                 </div>
                 

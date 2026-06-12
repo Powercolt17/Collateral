@@ -70,13 +70,13 @@ export const landingCSS = `
 
 /* ═══ HERO ═══ */
 .lhero-section{position:relative;overflow:hidden}
-.lhero-saturn-bg{position:absolute;top:5%;right:-5%;width:500px;height:500px;pointer-events:none;transform:rotate(-15deg);opacity:0.18;z-index:0;animation:saturnFloat 20s ease-in-out infinite}
+.lhero-saturn-bg{position:absolute;top:5%;right:-5%;width:500px;height:500px;pointer-events:none;transform:rotate(-15deg);opacity:0.55;z-index:0;animation:saturnFloat 20s ease-in-out infinite}
 .lsaturn-dash-fast{stroke-dasharray:8 12;animation:spinClockwise 15s linear infinite}
 .lsaturn-dash-slow{stroke-dasharray:20 28;animation:spinClockwise 25s linear infinite}
 .lsaturn-dash-reverse{stroke-dasharray:6 10;animation:spinCounterClockwise 18s linear infinite}
 @keyframes spinClockwise{from{stroke-dashoffset:0}to{stroke-dashoffset:-300}}
 @keyframes spinCounterClockwise{from{stroke-dashoffset:0}to{stroke-dashoffset:300}}
-@media(max-width:768px){.lhero-saturn-bg{width:280px;height:280px;top:2%;right:-10%;opacity:0.12}}
+@media(max-width:768px){.lhero-saturn-bg{width:280px;height:280px;top:2%;right:-10%;opacity:0.45}}
 @keyframes saturnFloat{0%,100%{transform:rotate(-15deg) translate(0,0)}50%{transform:rotate(-12deg) translate(-15px,20px)}}
 .lhero-section::before{content:'';position:absolute;top:-20%;right:-10%;width:700px;height:700px;background:radial-gradient(circle, rgba(92,20,20,0.04) 0%, rgba(92,20,20,0.02) 30%, transparent 70%);border-radius:50%;pointer-events:none;animation:heroOrb 12s ease-in-out infinite}
 .lhero-section::after{content:'';position:absolute;bottom:-30%;left:-5%;width:500px;height:500px;background:radial-gradient(circle, rgba(92,20,20,0.03) 0%, transparent 60%);border-radius:50%;pointer-events:none;animation:heroOrb 15s ease-in-out infinite reverse}
@@ -604,17 +604,18 @@ export const landingCSS = `
   .lmain { padding-top: 84px; }
   .lhide-mobile{display:none !important}
   .ln-in{padding:0 16px; height: 60px;}
-  .ln-cta{padding:6px 10px; font-size:8.5px; letter-spacing:0.5px}
+  .ln-cta{padding:6px 10px; font-size:11px; letter-spacing:0.5px}
   .lhero-grid{grid-template-columns:1fr;gap:32px;padding:130px 0 24px}
   .lhero-right {
-    display: flex;
+    display: flex !important;
     justify-content: center;
     align-items: center;
     width: 100%;
-    margin-top: 16px;
+    margin-top: 40px;
   }
   .lactivity-card {
-    padding: 20px 18px !important;
+    max-width: 100% !important;
+    padding: 16px 20px !important;
     gap: 16px !important;
   }
   .lc-flow-horizontal {
@@ -631,8 +632,9 @@ export const landingCSS = `
   .lsub{font-size:16px;margin-bottom:24px}
   .lbtn{height:48px;padding:0 24px;font-size:11px}
   .lbtn-r{height:52px;font-size:12px;padding:0 28px}
-  .lcards{grid-template-columns:1fr 1fr;gap:16px}
-  .lcard{padding:20px;min-height:auto}
+  .lcards{display:flex !important;overflow-x:auto !important;scroll-snap-type:x mandatory !important;gap:16px !important;padding:12px 24px 24px !important;margin:0 -24px !important;scrollbar-width:none}
+  .lcards::-webkit-scrollbar{display:none}
+  .lcard{flex:0 0 280px !important;scroll-snap-align:start !important;padding:24px 20px !important;min-height:auto !important}
   .lcard-title{font-size:17px;margin-bottom:4px}
   .lcard-target{font-size:12px;margin-bottom:16px}
   .lcard-row{padding:6px 0;font-size:11px}
@@ -664,8 +666,20 @@ export const landingCSS = `
   .lfoot{padding:48px 20px 64px}
   .lctas{flex-direction:column}.lbtn{width:100%;justify-content:center}
 }
+@media(max-width:600px){
+  .lledger-table th:nth-child(3),
+  .lledger-table td:nth-child(3),
+  .lledger-table th:nth-child(4),
+  .lledger-table td:nth-child(4),
+  .lledger-table th:nth-child(6),
+  .lledger-table td:nth-child(6) {
+    display: none !important;
+  }
+  .lledger-table {
+    min-width: 100% !important;
+  }
+}
 @media(max-width:540px){
-  .lcards{grid-template-columns:1fr;gap:16px}
   .lsteps{grid-template-columns:1fr}
   .lstep{border-right:none!important;border-bottom:1px solid var(--d)!important}
   .lstep:last-child{border-bottom:none!important}
@@ -726,81 +740,101 @@ export const landingCSS = `
 .pnl-signout { display: flex; align-items: center; gap: 12px; width: calc(100% - 56px); margin: 16px 28px 8px; padding: 14px 20px; font-size: 11px; font-weight: 700; color: #5C1414; background: rgba(92, 20, 20, 0.04); border: 1px solid rgba(92, 20, 20, 0.12); font-family: 'JetBrains Mono', monospace; letter-spacing: 0.08em; text-transform: uppercase; cursor: pointer; text-align: left; transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1); }
 .pnl-signout:hover { background: rgba(92, 20, 20, 0.08); border-color: rgba(92, 20, 20, 0.2); color: #6B1212; transform: translateY(-1px); }
 
-/* Connect card in panel */
 .pnl-connect-section {
-    padding: 28px;
-    flex-shrink: 0;
-    border-top: 1px solid rgba(229, 229, 229, 0.4);
-    background: linear-gradient(to bottom, #ffffff, #faf9f6);
+  padding: 24px;
+  margin: 16px 20px 24px;
+  border-radius: 16px;
+  background: linear-gradient(135deg, #180505 0%, #0F0202 100%);
+  border: 1px solid rgba(92, 20, 20, 0.25);
+  box-shadow: 0 12px 32px rgba(92, 20, 20, 0.15), inset 0 1px 0 rgba(255,255,255,0.05);
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  position: relative;
+  overflow: hidden;
+  flex-shrink: 0;
 }
-.pnl-connect-card {
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
+.pnl-connect-section::before {
+  content: '';
+  position: absolute;
+  top: -30px;
+  right: -30px;
+  width: 100px;
+  height: 100px;
+  background: radial-gradient(circle, rgba(92, 20, 20, 0.45) 0%, transparent 70%);
+  pointer-events: none;
+  border-radius: 50%;
 }
-.pnl-connect-title {
-    font-family: 'Plus Jakarta Sans', 'Sora', sans-serif;
-    font-size: 15px;
-    font-weight: 700;
-    color: #0f172a;
-    letter-spacing: -0.2px;
-    line-height: 1.25;
+.pnl-connect-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  align-self: flex-start;
+  background: rgba(34, 197, 94, 0.1);
+  border: 1px solid rgba(34, 197, 94, 0.25);
+  color: #4ADE80;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  padding: 4px 8px;
+  border-radius: 4px;
+  position: relative;
+  z-index: 2;
 }
-.pnl-connect-desc {
-    font-family: 'Inter', sans-serif;
-    font-size: 12.5px;
-    font-weight: 500;
-    color: #64748b;
-    line-height: 1.45;
+.pnl-connect-badge-dot {
+  width: 5px;
+  height: 5px;
+  background: #4ADE80;
+  border-radius: 50%;
+  box-shadow: 0 0 6px #4ADE80;
+  animation: badgeDotPulse 1.8s ease-in-out infinite;
+}
+.pnl-connect-promo {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 14px;
+  font-weight: 800;
+  color: #FFFFFF;
+  line-height: 1.4;
+  letter-spacing: -0.2px;
+  position: relative;
+  z-index: 2;
+}
+.pnl-connect-promo-sub {
+  font-family: 'Inter', sans-serif;
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.65);
+  line-height: 1.5;
+  position: relative;
+  z-index: 2;
 }
 .pnl-connect-btn {
-    width: 100%;
-    height: 48px;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    gap: 8px;
-    background: #111111;
-    color: #ffffff;
-    font-size: 11px;
-    font-weight: 700;
-    border: none;
-    cursor: pointer;
-    font-family: 'JetBrains Mono', monospace;
-    letter-spacing: 1px;
-    text-transform: uppercase;
-    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-    position: relative;
-    overflow: hidden;
+  width: 100%;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  font-size: 12px;
+  font-weight: 700;
+  color: #111 !important;
+  background: #FFFFFF !important;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-family: 'JetBrains Mono', monospace;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: 0 4px 12px rgba(255, 255, 255, 0.1);
+  position: relative;
+  z-index: 2;
 }
 .pnl-connect-btn:hover {
-    background: #5C1414;
-    box-shadow: 0 4px 12px rgba(92, 20, 20, 0.2);
-}
-.pnl-connect-arrow {
-    transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-    display: inline-block;
-}
-.pnl-connect-btn:hover .pnl-connect-arrow {
-    transform: translateX(4px);
-}
-
-/* Glass sheen effect on hamburger connect button */
-.pnl-connect-btn::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: -150%;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.35), transparent);
-    transform: skewX(-25deg);
-    pointer-events: none;
-    z-index: 5;
-}
-.pnl-connect-btn:hover::before {
-    left: 150%;
-    transition: left 0.8s ease-in-out;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(255, 255, 255, 0.25);
+  background: #F8FAFC !important;
 }
 .pnl-footer { border-top: 1px solid #f0f0f0; padding: 20px 28px; background: #fafafa; flex-shrink: 0; }
 .pnl-status { display: flex; align-items: center; gap: 8px; margin-bottom: 16px; }

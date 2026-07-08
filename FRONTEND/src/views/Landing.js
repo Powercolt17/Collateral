@@ -37,11 +37,11 @@ export function renderLanding() {
                     <div class="lhero-left">
 
                         <h1 class="lh1 animate-fade-in-up">
-                            Stop betting on things you can't control.<br class="lh-br">
-                            Start betting on <span class="lh-gradient">yourself.</span>
+                            Your Biggest Bet<br class="lh-br">
+                            Should Be on <span class="lh-gradient">You.</span>
                         </h1>
                         <p class="lsub animate-fade-in-up delay-1">
-                            Todo lists don't work, and goal setting without stakes is just a wish. Lock capital on your own daily targets. Force execution.
+                            Todo lists don't work. Lock capital. Force execution.
                         </p>
                         <div class="lctas animate-fade-in-up delay-2">
                             <button class="lbtn lbtn-r" id="lp-hero-cta">Lock Your First Contract</button>

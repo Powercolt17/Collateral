@@ -954,11 +954,11 @@ export const landingCSS = `
 .lhow-grid .lhow-card[data-r]:hover { transition-delay: 0ms !important; }
 
 /* One-way Glass Sheen Hover Sweep */
-.lcard, .lhow-card, .lstep, .lstat-card {
+.lhow-card, .lstep, .lstat-card {
   position: relative;
   overflow: hidden;
 }
-.lcard::after, .lhow-card::after, .lstep::after, .lstat-card::after {
+.lhow-card::after, .lstep::after, .lstat-card::after {
   content: '';
   position: absolute;
   top: 0;
@@ -970,7 +970,7 @@ export const landingCSS = `
   pointer-events: none;
   z-index: 5;
 }
-.lcard:hover::after, .lhow-card:hover::after, .lstep:hover::after, .lstat-card:hover::after {
+.lhow-card:hover::after, .lstep:hover::after, .lstat-card:hover::after {
   left: 150%;
   transition: left 0.8s ease-in-out;
 }

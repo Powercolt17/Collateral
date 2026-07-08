@@ -41,7 +41,7 @@ export function renderLanding() {
                             Should Be on <span class="lh-gradient">You.</span>
                         </h1>
                         <p class="lsub animate-fade-in-up delay-1">
-                            Todo lists don't work. Lock capital. Force execution.
+                            Every day, people risk money on outcomes they can't control—like sports teams, markets, or ad algorithms. Collateral lets you lock capital on the only asset you actually control: your own focus and execution.
                         </p>
                         <div class="lctas animate-fade-in-up delay-2">
                             <button class="lbtn lbtn-r" id="lp-hero-cta">Lock Your First Contract</button>

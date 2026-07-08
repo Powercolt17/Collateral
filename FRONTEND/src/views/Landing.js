@@ -37,11 +37,11 @@ export function renderLanding() {
                     <div class="lhero-left">
 
                         <h1 class="lh1 animate-fade-in-up">
-                            Are you going to execute,<br class="lh-br">
-                            or wait until <span class="lh-gradient">AI takes your job?</span>
+                            Stop betting on things you can't control.<br class="lh-br">
+                            Start betting on <span class="lh-gradient">yourself.</span>
                         </h1>
                         <p class="lsub animate-fade-in-up delay-1">
-                            You keep setting goals, getting distracted, and letting yourself off the hook. If todo lists worked, you'd have hit them by now. Lock capital. Force yourself to win.
+                            Todo lists don't work, and goal setting without stakes is just a wish. Lock capital on your own daily targets. Force execution.
                         </p>
                         <div class="lctas animate-fade-in-up delay-2">
                             <button class="lbtn lbtn-r" id="lp-hero-cta">Lock Your First Contract</button>
@@ -365,7 +365,7 @@ export function renderLanding() {
                                         <li class="lemo-item">Plan a new goal</li>
                                         <li class="lemo-item">Get distracted or lazy</li>
                                         <li class="lemo-item">Push deadline to next month</li>
-                                        <li class="lemo-item">Sit there until AI takes your job</li>
+                                        <li class="lemo-item">Let another year slide by</li>
                                     </ul>
                                 </div>
                                 <div class="lemo-divider"></div>

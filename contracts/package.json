@@ -1,0 +1,13 @@
+{
+  "name": "collateral-contracts",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Smart contracts for $CLTR",
+  "devDependencies": {
+    "@nomicfoundation/hardhat-toolbox": "^5.0.0",
+    "hardhat": "^2.22.2"
+  },
+  "dependencies": {
+    "@openzeppelin/contracts": "^5.0.2"
+  }
+}

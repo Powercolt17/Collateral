@@ -15,6 +15,7 @@ async function main() {
   const liquidityWalletAddr = process.env.LIQUIDITY_WALLET_ADDR || deployer.address;
   const verifierIncentivePoolAddr = process.env.VERIFIER_INCENTIVE_POOL_ADDR || deployer.address;
   const founderWalletAddr = process.env.FOUNDER_WALLET_ADDR || deployer.address;
+  const founderVestingAddr = process.env.FOUNDER_VESTING_ADDR || deployer.address;
 
   // Vesting wallet targets
   const teamMemberAddresses = process.env.TEAM_RECIPIENTS 
@@ -44,8 +45,9 @@ async function main() {
   const ONE_MILLION = 1_000_000n * (10n ** decimals);
 
   const communityRewardsAmount = 300n * ONE_MILLION;     // 30%
-  const treasuryMultisigAmount = 133n * ONE_MILLION + 400000n * (10n ** decimals); // 13.34%
+  const treasuryMultisigAmount = 83n * ONE_MILLION + 400000n * (10n ** decimals); // 8.34%
   const founderDirectAmount = 66n * ONE_MILLION + 600000n * (10n ** decimals);     // 6.66%
+  const founderVestingAmount = 50n * ONE_MILLION;        // 5% (vested)
   const liquidityWalletAmount = 150n * ONE_MILLION;      // 15%
   const teamVestingTotal = 150n * ONE_MILLION;           // 15%
   const strategicVestingTotal = 100n * ONE_MILLION;      // 10%
@@ -89,11 +91,12 @@ async function main() {
   const ONE_YEAR = 365n * 24n * 60n * 60n;
   const FOUR_YEARS = 4n * ONE_YEAR;
 
+  const CliffVestingWallet = await ethers.getContractFactory("CliffVestingWallet");
+
   console.log("\nDeploying Team Vesting Wallets (1-year cliff, 4-year linear)...");
   const teamShare = teamVestingTotal / BigInt(teamMemberAddresses.length);
   for (let i = 0; i < teamMemberAddresses.length; i++) {
     const beneficiary = teamMemberAddresses[i];
-    const CliffVestingWallet = await ethers.getContractFactory("CliffVestingWallet");
     const wallet = await CliffVestingWallet.deploy(
       beneficiary,
       startTimestamp,
@@ -108,11 +111,23 @@ async function main() {
     console.log(`  Allocated ${ethers.formatUnits(teamShare, 18)} CLTR to this wallet`);
   }
 
+  console.log("\nDeploying Founder Vesting Wallet (1-year cliff, 4-year linear)...");
+  const founderVestingWallet = await CliffVestingWallet.deploy(
+    founderVestingAddr,
+    startTimestamp,
+    ONE_YEAR,
+    FOUR_YEARS
+  );
+  await founderVestingWallet.waitForDeployment();
+  const founderVestingWalletAddress = await founderVestingWallet.getAddress();
+  console.log(`- Founder Vesting Wallet deployed at: ${founderVestingWalletAddress} for beneficiary: ${founderVestingAddr}`);
+  await token.transfer(founderVestingWalletAddress, founderVestingAmount);
+  console.log(`  Allocated ${ethers.formatUnits(founderVestingAmount, 18)} CLTR to this wallet`);
+
   console.log("\nDeploying Strategic Vesting Wallets (custom parameters)...");
   const strategicShare = strategicVestingTotal / BigInt(strategicAddresses.length);
   for (let i = 0; i < strategicAddresses.length; i++) {
     const beneficiary = strategicAddresses[i];
-    const CliffVestingWallet = await ethers.getContractFactory("CliffVestingWallet");
     // Configurable parameters via environment variables or matching defaults
     const start = process.env.STRATEGIC_VESTING_START ? BigInt(process.env.STRATEGIC_VESTING_START) : startTimestamp;
     const cliff = process.env.STRATEGIC_VESTING_CLIFF ? BigInt(process.env.STRATEGIC_VESTING_CLIFF) : ONE_YEAR;

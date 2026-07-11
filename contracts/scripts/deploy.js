@@ -14,6 +14,7 @@ async function main() {
   const treasuryMultisigAddr = process.env.TREASURY_MULTISIG_ADDR || deployer.address;
   const liquidityWalletAddr = process.env.LIQUIDITY_WALLET_ADDR || deployer.address;
   const verifierIncentivePoolAddr = process.env.VERIFIER_INCENTIVE_POOL_ADDR || deployer.address;
+  const founderWalletAddr = process.env.FOUNDER_WALLET_ADDR || deployer.address;
 
   // Vesting wallet targets
   const teamMemberAddresses = process.env.TEAM_RECIPIENTS 
@@ -42,12 +43,13 @@ async function main() {
   const decimals = 18n;
   const ONE_MILLION = 1_000_000n * (10n ** decimals);
 
-  const communityRewardsAmount = 300n * ONE_MILLION;    // 30%
-  const treasuryMultisigAmount = 200n * ONE_MILLION;    // 20%
-  const liquidityWalletAmount = 150n * ONE_MILLION;     // 15%
-  const teamVestingTotal = 150n * ONE_MILLION;          // 15%
-  const strategicVestingTotal = 100n * ONE_MILLION;     // 10%
-  const verifierIncentivePoolAmount = 100n * ONE_MILLION; // 10%
+  const communityRewardsAmount = 300n * ONE_MILLION;     // 30%
+  const treasuryMultisigAmount = 133n * ONE_MILLION + 400000n * (10n ** decimals); // 13.34%
+  const founderDirectAmount = 66n * ONE_MILLION + 600000n * (10n ** decimals);     // 6.66%
+  const liquidityWalletAmount = 150n * ONE_MILLION;      // 15%
+  const teamVestingTotal = 150n * ONE_MILLION;           // 15%
+  const strategicVestingTotal = 100n * ONE_MILLION;      // 10%
+  const verifierIncentivePoolAmount = 100n * ONE_MILLION;  // 10%
 
   console.log("\nDistributing allocations...");
 
@@ -60,7 +62,13 @@ async function main() {
   // Transfer Treasury Multisig
   if (treasuryMultisigAddr !== deployer.address) {
     await token.transfer(treasuryMultisigAddr, treasuryMultisigAmount);
-    console.log(`- Transferred 20% Treasury Multisig (${ethers.formatUnits(treasuryMultisigAmount, 18)} CLTR) to: ${treasuryMultisigAddr}`);
+    console.log(`- Transferred 13.34% Treasury Multisig (${ethers.formatUnits(treasuryMultisigAmount, 18)} CLTR) to: ${treasuryMultisigAddr}`);
+  }
+
+  // Transfer Founder Direct Allocation
+  if (founderWalletAddr !== deployer.address) {
+    await token.transfer(founderWalletAddr, founderDirectAmount);
+    console.log(`- Transferred 6.66% Founder Direct Allocation (${ethers.formatUnits(founderDirectAmount, 18)} CLTR) to: ${founderWalletAddr}`);
   }
 
   // Transfer Liquidity Wallet

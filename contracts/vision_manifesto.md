@@ -1,7 +1,7 @@
 # $CLTR: The Currency of Conviction
 *Vision Manifesto and Strategic Framework for the Collateral Reputation Economy*
 
-![CLTR Token Logo](file:///C:/Users/Colla/.gemini/antigravity/brain/610f4ad6-0f13-474d-9cd3-b7bac860f7a4/cltr_premium_logo_1783731801191.png)
+![CLTR Token Logo](file:///C:/Users/Colla/.gemini/antigravity/brain/610f4ad6-0f13-474d-9cd3-b7bac860f7a4/cltr_flat_logo_1783731844311.png)
 
 ---
 

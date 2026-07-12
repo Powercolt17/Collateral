@@ -848,9 +848,9 @@ export function renderToken() {
 
                         <!-- Deflationary Info Card -->
                         <div class="cltr-panel" style="background:#5C1414; border:none; color:#fff; padding: 24px;">
-                            <div style="font-family:'JetBrains Mono', monospace; font-size:10px; font-weight:700; text-transform:uppercase; letter-spacing:1px; margin-bottom:12px; color:rgba(255,255,255,0.7);">Deflationary Proof-of-Success Burn</div>
-                            <h4 style="font-size:16px; font-weight:700; margin:0 0 12px; line-height:1.3;">Human execution directly drives token supply reduction.</h4>
-                            <p style="font-size:12px; opacity:0.8; line-height:1.6; margin:0;">Whenever a self-betting contract is verified successfully on the platform, 2% of the settled amount is charged as a protocol execution fee. 50% of this fee is immediately converted and permanently burned, causing automatic token supply deflation.</p>
+                            <div style="font-family:'JetBrains Mono', monospace; font-size:10px; font-weight:700; text-transform:uppercase; letter-spacing:1px; margin-bottom:12px; color:rgba(255,255,255,0.85);">Deflationary Proof-of-Success Burn</div>
+                            <h4 style="font-size:16px; font-weight:700; margin:0 0 12px; line-height:1.3; color:#ffffff;">Human execution directly drives token supply reduction.</h4>
+                            <p style="font-size:12px; color:rgba(255,255,255,0.85); line-height:1.6; margin:0;">Whenever a self-betting contract is verified successfully on the platform, 2% of the settled amount is charged as a protocol execution fee. 50% of this fee is immediately converted and permanently burned, causing automatic token supply deflation.</p>
                         </div>
                     </div>
                 </div>

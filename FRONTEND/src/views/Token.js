@@ -1,23 +1,22 @@
 // Token view — $CLTR Control Portal
-// Interactive simulated Web3 controls for Staking, Vesting, and Wallet connection.
-// Real state persistence via localStorage.
+// Redesigned with premium institutional typography, proper top padding to avoid header overlap, and sleek Web3 details.
 
 export function renderToken() {
     return `
         <style>
             /* ===================================================
-               CLTR CONTROL PORTAL — ULTRA-PREMIUM WEB3 INTERFACE
+               CLTR CONTROL PORTAL — 10/10 PREMIUM WEB3 INTERFACE
                Brand Burgundy #5C1414 · Off-White · JetBrains Mono
                =================================================== */
 
             @keyframes cltrReveal {
-                from { opacity: 0; transform: translateY(16px); }
+                from { opacity: 0; transform: translateY(12px); }
                 to { opacity: 1; transform: translateY(0); }
             }
 
             .cltr-page {
                 background: #FAFAFA;
-                min-height: calc(100vh - 72px);
+                min-height: 100vh;
                 font-family: 'Sora', 'Helvetica Neue', Helvetica, Arial, sans-serif;
                 color: #111;
                 padding-bottom: 120px;
@@ -26,70 +25,78 @@ export function renderToken() {
             .cltr-container {
                 max-width: 1200px;
                 margin: 0 auto;
-                padding: 48px 32px 0;
+                /* 128px top padding prevents overlap from the fixed global header (72px) and banner (32px) */
+                padding: 128px 32px 0;
             }
 
             /* Header Section */
-            .cltr-hdr {
+            .cltr-hdr-container {
                 display: flex;
-                align-items: flex-end;
+                align-items: center;
                 justify-content: space-between;
                 gap: 24px;
-                margin-bottom: 40px;
-                animation: cltrReveal 0.6s cubic-bezier(0.16, 1, 0.3, 1) both;
+                margin-bottom: 36px;
+                animation: cltrReveal 0.5s cubic-bezier(0.16, 1, 0.3, 1) both;
+            }
+            .cltr-hdr-left {
+                display: flex;
+                align-items: center;
+                gap: 16px;
+            }
+            .cltr-hdr-logo-svg {
+                width: 44px;
+                height: 44px;
+                color: #5C1414;
+                fill: currentColor;
+            }
+            .cltr-hdr-title-group {
+                display: flex;
+                flex-direction: column;
             }
             .cltr-hdr-title {
-                font-size: 24px;
+                font-size: 20px;
                 font-weight: 800;
-                letter-spacing: -1px;
+                letter-spacing: -0.5px;
                 color: #111;
-                margin: 0 0 6px;
-                position: relative;
-                display: inline-block;
-            }
-            .cltr-hdr-title::after {
-                content: '';
-                position: absolute;
-                bottom: -2px;
-                left: 0;
-                width: 48px;
-                height: 3px;
-                background: #5C1414;
+                margin: 0;
+                line-height: 1.2;
             }
             .cltr-hdr-sub {
-                font-size: 13px;
+                font-size: 11px;
                 color: #666;
-                margin: 8px 0 0;
+                margin: 4px 0 0;
                 font-family: 'JetBrains Mono', monospace;
                 letter-spacing: 0.2px;
+                text-transform: uppercase;
             }
 
-            /* Top Wallet Connect Bar */
+            /* Web3 Connect Bar */
             .cltr-wallet-bar {
                 background: #fff;
                 border: 1px solid #E5E5E5;
                 border-radius: 4px;
                 padding: 20px 24px;
-                margin-bottom: 32px;
+                margin-bottom: 28px;
                 display: flex;
                 align-items: center;
                 justify-content: space-between;
                 gap: 24px;
-                animation: cltrReveal 0.6s cubic-bezier(0.16, 1, 0.3, 1) 0.05s both;
+                box-shadow: 0 1px 3px rgba(0,0,0,0.02);
+                animation: cltrReveal 0.5s cubic-bezier(0.16, 1, 0.3, 1) 0.05s both;
             }
             .cltr-wallet-info {
                 display: flex;
                 align-items: center;
-                gap: 16px;
+                gap: 14px;
             }
             .cltr-wallet-status-dot {
                 width: 8px;
                 height: 8px;
                 border-radius: 50%;
-                background: #D82224; /* Disconnected by default */
+                background: #D82224; /* Disconnected Red */
             }
             .cltr-wallet-status-dot.connected {
-                background: #10B981;
+                background: #10B981; /* Connected Green */
                 animation: dotPulseWeb3 2s ease-in-out infinite;
             }
             @keyframes dotPulseWeb3 {
@@ -98,28 +105,33 @@ export function renderToken() {
             }
             .cltr-wallet-text {
                 font-family: 'JetBrains Mono', monospace;
-                font-size: 12px;
+                font-size: 11px;
                 font-weight: 700;
+                letter-spacing: 0.5px;
+                text-transform: uppercase;
             }
             .cltr-wallet-address {
-                color: #666;
+                color: #888;
                 font-weight: 500;
                 margin-left: 8px;
+                background: #F5F5F5;
+                padding: 4px 8px;
+                border-radius: 3px;
+                font-size: 10px;
             }
             .cltr-wallet-btn {
                 background: #5C1414;
                 color: #fff;
                 border: none;
-                padding: 12px 24px;
+                padding: 12px 20px;
                 font-family: 'JetBrains Mono', monospace;
-                font-size: 11px;
+                font-size: 10px;
                 font-weight: 700;
                 letter-spacing: 1px;
                 text-transform: uppercase;
                 cursor: pointer;
-                transition: all 0.2s;
-                position: relative;
-                overflow: hidden;
+                transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+                border-radius: 3px;
             }
             .cltr-wallet-btn:hover {
                 background: #4A1010;
@@ -132,8 +144,9 @@ export function renderToken() {
                 color: #555;
             }
             .cltr-wallet-btn.connected:hover {
-                border-color: #5C1414;
-                color: #5C1414;
+                border-color: #D82224;
+                color: #D82224;
+                background: rgba(216, 34, 36, 0.02);
                 box-shadow: none;
                 transform: none;
             }
@@ -144,7 +157,7 @@ export function renderToken() {
                 grid-template-columns: repeat(4, 1fr);
                 gap: 20px;
                 margin-bottom: 32px;
-                animation: cltrReveal 0.6s cubic-bezier(0.16, 1, 0.3, 1) 0.1s both;
+                animation: cltrReveal 0.5s cubic-bezier(0.16, 1, 0.3, 1) 0.1s both;
             }
             .cltr-stat-card {
                 background: #fff;
@@ -156,11 +169,12 @@ export function renderToken() {
                 gap: 8px;
                 position: relative;
                 overflow: hidden;
+                box-shadow: 0 1px 3px rgba(0,0,0,0.02);
                 transition: border-color 0.2s, box-shadow 0.2s;
             }
             .cltr-stat-card:hover {
                 border-color: rgba(92, 20, 20, 0.2);
-                box-shadow: 0 4px 16px rgba(92, 20, 20, 0.03);
+                box-shadow: 0 4px 16px rgba(92, 20, 20, 0.04);
             }
             .cltr-stat-card::before {
                 content: '';
@@ -168,7 +182,7 @@ export function renderToken() {
                 top: 0; left: 0;
                 width: 0; height: 3px;
                 background: #5C1414;
-                transition: width 0.35s ease;
+                transition: width 0.3s ease;
             }
             .cltr-stat-card:hover::before { width: 100%; }
             .cltr-stat-lbl {
@@ -185,6 +199,8 @@ export function renderToken() {
                 letter-spacing: -1px;
                 color: #111;
                 font-family: 'Sora', sans-serif;
+                line-height: 1;
+                margin: 4px 0 2px;
             }
             .cltr-stat-sub {
                 font-size: 11px;
@@ -197,18 +213,18 @@ export function renderToken() {
                 display: grid;
                 grid-template-columns: 1.2fr 1fr;
                 gap: 32px;
-                margin-bottom: 32px;
-                animation: cltrReveal 0.6s cubic-bezier(0.16, 1, 0.3, 1) 0.15s both;
+                animation: cltrReveal 0.5s cubic-bezier(0.16, 1, 0.3, 1) 0.15s both;
             }
 
-            /* Sections */
+            /* Panel Aesthetics */
             .cltr-panel {
                 background: #fff;
                 border: 1px solid #E5E5E5;
                 border-radius: 4px;
                 padding: 32px;
-                margin-bottom: 32px;
+                margin-bottom: 28px;
                 position: relative;
+                box-shadow: 0 1px 3px rgba(0,0,0,0.02);
             }
             .cltr-panel::before {
                 content: '';
@@ -234,7 +250,7 @@ export function renderToken() {
                 color: #5C1414;
             }
 
-            /* Staking Input & APY selectors */
+            /* Input Fields styling */
             .cltr-stake-box {
                 display: flex;
                 flex-direction: column;
@@ -258,6 +274,10 @@ export function renderToken() {
             .cltr-input-lbl-row span.max-link {
                 cursor: pointer;
                 text-decoration: underline;
+                transition: color 0.15s;
+            }
+            .cltr-input-lbl-row span.max-link:hover {
+                color: #111;
             }
             .cltr-input-box {
                 position: relative;
@@ -287,12 +307,12 @@ export function renderToken() {
                 top: 50%;
                 transform: translateY(-50%);
                 font-family: 'JetBrains Mono', monospace;
-                font-size: 12px;
+                font-size: 11px;
                 font-weight: 700;
                 color: #888;
             }
 
-            /* Lock Duration Pills */
+            /* Lock Duration Buttons */
             .cltr-durations {
                 display: grid;
                 grid-template-columns: repeat(4, 1fr);
@@ -301,15 +321,16 @@ export function renderToken() {
             .cltr-duration-pill {
                 border: 1px solid #E5E5E5;
                 background: #fff;
-                padding: 16px 8px;
+                padding: 14px 8px;
                 text-align: center;
                 cursor: pointer;
                 transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
                 border-radius: 4px;
+                outline: none;
             }
             .cltr-duration-pill:hover {
                 border-color: #5C1414;
-                background: rgba(92, 20, 20, 0.01);
+                background: rgba(92, 20, 20, 0.02);
             }
             .cltr-duration-pill.active {
                 background: #5C1414;
@@ -318,21 +339,21 @@ export function renderToken() {
             }
             .cltr-dur-days {
                 font-family: 'Sora', sans-serif;
-                font-size: 14px;
+                font-size: 13px;
                 font-weight: 700;
                 display: block;
-                margin-bottom: 4px;
+                margin-bottom: 2px;
             }
             .cltr-dur-apy {
                 font-family: 'JetBrains Mono', monospace;
-                font-size: 9px;
+                font-size: 8px;
                 font-weight: 700;
                 text-transform: uppercase;
                 letter-spacing: 0.5px;
-                opacity: 0.8;
+                opacity: 0.85;
             }
 
-            /* APY Info Row */
+            /* APY Info Summary Card */
             .cltr-stake-summary {
                 background: #FCFCFC;
                 border: 1px dashed #E5E5E5;
@@ -357,7 +378,7 @@ export function renderToken() {
                 font-size: 12px;
             }
 
-            /* Staking Button */
+            /* Action Buttons */
             .cltr-btn-submit {
                 width: 100%;
                 padding: 16px;
@@ -370,16 +391,16 @@ export function renderToken() {
                 letter-spacing: 1.5px;
                 text-transform: uppercase;
                 cursor: pointer;
-                transition: all 0.2s;
+                transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
                 border-radius: 4px;
             }
             .cltr-btn-submit:hover {
                 background: #4A1010;
-                box-shadow: 0 4px 16px rgba(92, 20, 20, 0.2);
+                box-shadow: 0 4px 16px rgba(92, 20, 20, 0.25);
             }
             .cltr-btn-submit:disabled {
-                background: #ccc;
-                color: #888;
+                background: #E5E5E5;
+                color: #999;
                 cursor: not-allowed;
                 box-shadow: none;
             }
@@ -400,10 +421,10 @@ export function renderToken() {
                 display: flex;
                 justify-content: space-between;
                 align-items: baseline;
-                margin-bottom: 16px;
+                margin-bottom: 14px;
             }
             .cltr-vest-name {
-                font-size: 14px;
+                font-size: 13px;
                 font-weight: 700;
                 color: #111;
             }
@@ -442,15 +463,17 @@ export function renderToken() {
                 background: #FAFAFA;
                 padding: 12px 16px;
                 border-radius: 4px;
+                border: 1px solid #F0F0F0;
             }
             .cltr-claim-lbl {
                 font-family: 'JetBrains Mono', monospace;
-                font-size: 10px;
+                font-size: 9px;
                 color: #888;
+                text-transform: uppercase;
             }
             .cltr-claim-val {
                 font-family: 'JetBrains Mono', monospace;
-                font-size: 14px;
+                font-size: 13px;
                 font-weight: 700;
                 color: #5C1414;
             }
@@ -464,10 +487,10 @@ export function renderToken() {
                 font-weight: 700;
                 text-transform: uppercase;
                 cursor: pointer;
-                transition: all 0.2s;
+                transition: all 0.15s ease;
                 border-radius: 3px;
             }
-            .cltr-claim-btn:hover {
+            .cltr-claim-btn:hover:not(:disabled) {
                 background: #5C1414;
             }
             .cltr-claim-btn:disabled {
@@ -479,6 +502,8 @@ export function renderToken() {
             /* Active Stakes Table */
             .cltr-table-wrap {
                 overflow-x: auto;
+                border: 1px solid #E5E5E5;
+                border-radius: 4px;
             }
             .cltr-table {
                 width: 100%;
@@ -492,8 +517,8 @@ export function renderToken() {
                 text-transform: uppercase;
                 letter-spacing: 1px;
                 color: #888;
-                padding: 12px 16px;
-                border-bottom: 1px solid #F0F0F0;
+                padding: 14px 16px;
+                border-bottom: 1px solid #E5E5E5;
                 background: #FCFCFC;
             }
             .cltr-table td {
@@ -501,8 +526,11 @@ export function renderToken() {
                 border-bottom: 1px solid #F0F0F0;
                 font-family: 'JetBrains Mono', monospace;
             }
+            .cltr-table tr:last-child td {
+                border-bottom: none;
+            }
             .cltr-stake-progress {
-                width: 120px;
+                width: 90px;
                 height: 4px;
                 background: #eee;
                 border-radius: 2px;
@@ -526,41 +554,43 @@ export function renderToken() {
             .cltr-badge.locked {
                 background: rgba(92, 20, 20, 0.05);
                 color: #5C1414;
+                border: 1px solid rgba(92, 20, 20, 0.15);
             }
             .cltr-badge.matured {
-                background: rgba(16, 185, 129, 0.1);
+                background: rgba(16, 185, 129, 0.08);
                 color: #10B981;
+                border: 1px solid rgba(16, 185, 129, 0.2);
             }
 
             .cltr-unstake-btn {
                 background: none;
                 border: 1px solid #E5E5E5;
-                padding: 4px 10px;
+                padding: 6px 12px;
                 font-size: 9px;
                 font-weight: 700;
                 text-transform: uppercase;
                 cursor: pointer;
                 transition: all 0.2s;
                 border-radius: 3px;
+                color: #555;
             }
-            .cltr-unstake-btn:hover {
+            .cltr-unstake-btn:hover:not(:disabled) {
                 border-color: #D82224;
                 color: #D82224;
-                background: rgba(216, 34, 36, 0.02);
+                background: rgba(216, 34, 36, 0.03);
             }
             .cltr-unstake-btn:disabled {
-                opacity: 0.3;
+                opacity: 0.35;
                 cursor: not-allowed;
                 border-color: #E5E5E5;
                 color: #aaa;
-                background: none;
             }
 
-            /* Transaction Log Loader overlay */
+            /* Transaction Modal Overlay */
             .cltr-tx-modal {
                 position: fixed;
                 inset: 0;
-                background: rgba(0,0,0,0.6);
+                background: rgba(0,0,0,0.5);
                 backdrop-filter: blur(4px);
                 display: none;
                 align-items: center;
@@ -578,6 +608,7 @@ export function renderToken() {
                 width: 100%;
                 max-width: 360px;
                 text-align: center;
+                box-shadow: 0 20px 50px rgba(0,0,0,0.15);
             }
             .cltr-tx-spinner {
                 width: 36px;
@@ -602,7 +633,6 @@ export function renderToken() {
                 color: #888;
             }
 
-            /* Responsive */
             @media (max-width: 1024px) {
                 .cltr-main-grid { grid-template-columns: 1fr; }
                 .cltr-stats-grid { grid-template-columns: repeat(2, 1fr); }
@@ -610,7 +640,7 @@ export function renderToken() {
             @media (max-width: 640px) {
                 .cltr-stats-grid { grid-template-columns: 1fr; }
                 .cltr-durations { grid-template-columns: repeat(2, 1fr); }
-                .cltr-hdr { flex-direction: column; align-items: flex-start; gap: 12px; }
+                .cltr-hdr-container { flex-direction: column; align-items: flex-start; gap: 16px; }
                 .cltr-wallet-bar { flex-direction: column; align-items: flex-start; gap: 16px; }
                 .cltr-wallet-btn { width: 100%; text-align: center; }
             }
@@ -620,10 +650,17 @@ export function renderToken() {
             <div class="cltr-container">
 
                 <!-- Header -->
-                <div class="cltr-hdr">
-                    <div>
-                        <h1 class="cltr-hdr-title">CLTR CONTROL PORTAL</h1>
-                        <p class="cltr-hdr-sub">Manage staking, vesting, and protocol utilities.</p>
+                <div class="cltr-hdr-container">
+                    <div class="cltr-hdr-left">
+                        <!-- Inline SVG of official interlocking CLTR logo -->
+                        <svg class="cltr-hdr-logo-svg" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M 44.690,43.190 L 48.940,38.940 L 39.243,29.243 Q 35.000,25.000 30.757,29.243 L 14.243,45.757 Q 10.000,50.000 14.243,54.243 L 30.757,70.757 Q 35.000,75.000 39.243,70.757 L 55.757,54.243 Q 60.000,50.000 55.757,45.757 L 55.310,45.310 L 51.060,49.560 L 51.500,50.000 Q 53.621,52.121 51.500,54.243 L 39.243,66.500 Q 37.121,68.621 35.000,66.500 L 22.743,54.243 Q 20.621,52.121 22.743,50.000 L 35.000,37.743 Q 37.121,35.621 39.243,37.743 Z" />
+                            <path d="M 55.310,56.810 L 51.060,61.060 L 60.757,70.757 Q 65.000,75.000 69.243,70.757 L 85.757,54.243 Q 90.000,50.000 85.757,45.757 L 69.243,29.243 Q 65.000,25.000 60.757,29.243 L 44.243,45.757 Q 40.000,50.000 44.243,54.243 L 44.690,54.690 L 48.940,50.440 L 48.500,50.000 Q 46.379,47.879 48.500,45.757 L 60.757,33.500 Q 62.879,31.379 65.000,33.500 L 77.257,45.757 Q 79.379,47.879 77.257,50.000 L 65.000,62.257 Q 62.879,64.379 60.757,62.257 Z" />
+                        </svg>
+                        <div class="cltr-hdr-title-group">
+                            <h1 class="cltr-hdr-title">CLTR CUSTODY TERMINAL</h1>
+                            <p class="cltr-hdr-sub">Manage staking, vesting, and protocol utilities.</p>
+                        </div>
                     </div>
                 </div>
 
@@ -639,7 +676,7 @@ export function renderToken() {
                     <button class="cltr-wallet-btn" id="w-connect-btn">CONNECT WALLET</button>
                 </div>
 
-                <!-- Deflationary Stats Grid -->
+                <!-- Stats Grid -->
                 <div class="cltr-stats-grid">
                     <div class="cltr-stat-card">
                         <span class="cltr-stat-lbl">Wallet Balance</span>
@@ -809,7 +846,7 @@ export function renderToken() {
                             </div>
                         </div>
 
-                        <!-- Info Card -->
+                        <!-- Deflationary Info Card -->
                         <div class="cltr-panel" style="background:#5C1414; border:none; color:#fff; padding: 24px;">
                             <div style="font-family:'JetBrains Mono', monospace; font-size:10px; font-weight:700; text-transform:uppercase; letter-spacing:1px; margin-bottom:12px; color:rgba(255,255,255,0.7);">Deflationary Proof-of-Success Burn</div>
                             <h4 style="font-size:16px; font-weight:700; margin:0 0 12px; line-height:1.3;">Human execution directly drives token supply reduction.</h4>
@@ -987,8 +1024,6 @@ export function initToken() {
             let progress = Math.min(100, Math.max(0, (elapsed / duration) * 100));
             const isMatured = now >= end;
 
-            // Format dates
-            const startDateStr = new Date(start).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: '2-digit' });
             const endDateStr = new Date(end).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: '2-digit' });
 
             const statusBadge = isMatured 
@@ -1055,7 +1090,7 @@ export function initToken() {
                 }
             } else {
                 founderTimeText = 'Locked (Cliff: 1 Year)';
-                founderProgressPct = (elapsed / vestingCliff) * 25; // fake progress pre-cliff
+                founderProgressPct = (elapsed / vestingCliff) * 25;
             }
 
             // Update Founder DOM
@@ -1159,12 +1194,10 @@ export function initToken() {
     // Trigger Wallet Connect animation
     connectBtn.addEventListener('click', function() {
         if (isConnected) {
-            // Disconnect Flow
             isConnected = false;
             localStorage.setItem('cltr_wallet_connected', 'false');
             updateConnectionUI();
         } else {
-            // Connect Flow with simulated latency
             txTitle.innerText = 'Connecting Web3 Wallet';
             txSub.innerText = 'Please sign the connection request in your wallet extension.';
             txModal.classList.add('open');
@@ -1217,13 +1250,11 @@ export function initToken() {
         setTimeout(() => {
             txModal.classList.remove('open');
             
-            // Deduct balance and update TVL
             balance -= amt;
             stakedBalance += amt;
             localStorage.setItem('cltr_wallet_balance', balance.toString());
             localStorage.setItem('cltr_staked_balance', stakedBalance.toString());
 
-            // Add to active stakes list
             const list = getStakes();
             const now = Date.now();
             const durationMs = activeDuration * 24 * 60 * 60 * 1000;
@@ -1238,13 +1269,11 @@ export function initToken() {
             });
             saveStakes(list);
 
-            // Reset inputs
             stakeInput.value = '';
             updateStakeSummary();
             updateStats();
             renderStakesTable();
 
-            // Simple browser alert for success confirmation
             alert(`✅ Staking Successful!\n\nLocked ${formatNumber(amt)} CLTR at ${activeAPY}% APY for ${activeDuration} days.`);
         }, 3000);
     });
@@ -1262,7 +1291,6 @@ export function initToken() {
         setTimeout(() => {
             txModal.classList.remove('open');
 
-            // Credit balance
             const payout = item.amount + item.yield;
             balance += payout;
             stakedBalance -= item.amount;
@@ -1270,7 +1298,6 @@ export function initToken() {
             localStorage.setItem('cltr_wallet_balance', balance.toString());
             localStorage.setItem('cltr_staked_balance', stakedBalance.toString());
 
-            // Remove from list
             list.splice(index, 1);
             saveStakes(list);
 

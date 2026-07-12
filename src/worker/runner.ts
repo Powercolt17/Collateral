@@ -17,6 +17,7 @@
 import { runVerificationJob } from '../services/verification.js';
 import { runSettlementJob } from '../services/settlement.js';
 import { expireInstances, recomputeStats } from '../jobs/market-maintenance.js';
+import { runIndexerIteration } from '../services/indexer.js';
 
 // Configuration from environment
 const WORKER_CONCURRENCY = parseInt(process.env.WORKER_CONCURRENCY || '1', 10);
@@ -96,6 +97,14 @@ async function runJobIteration(): Promise<{
         log('INFO', 'Market maintenance complete', { iterationId });
     } catch (err: any) {
         log('ERROR', 'Market maintenance failed', { error: err.message, iterationId });
+    }
+
+    // Run live blockchain indexing iteration
+    try {
+        await runIndexerIteration();
+        log('INFO', 'Blockchain indexer iteration complete', { iterationId });
+    } catch (err: any) {
+        log('ERROR', 'Blockchain indexer iteration failed', { error: err.message, iterationId });
     }
 
     return {

@@ -11,7 +11,8 @@ import {
     unique,
     index,
     boolean,
-    numeric
+    numeric,
+    bigint
 } from 'drizzle-orm/pg-core';
 import { sql } from 'drizzle-orm';
 
@@ -1030,3 +1031,23 @@ export type NewCreatorReferral = typeof creatorReferrals.$inferInsert;
 
 export type CreatorConversion = typeof creatorConversions.$inferSelect;
 export type NewCreatorConversion = typeof creatorConversions.$inferInsert;
+
+// Blockchain Events Table for indexing $CLTR token state
+export const cltrBlockchainEvents = pgTable('cltr_blockchain_events', {
+    id: uuid('id').primaryKey().defaultRandom(),
+    eventType: varchar('event_type', { length: 50 }).notNull(), // 'STAKE' | 'UNSTAKE' | 'BURN' | 'VESTING_RELEASE' | 'SETTLEMENT'
+    txHash: varchar('tx_hash', { length: 255 }).notNull(),
+    blockNumber: bigint('block_number', { mode: 'bigint' }).notNull(),
+    blockTimestamp: timestamp('block_timestamp', { withTimezone: true }).notNull(),
+    sender: varchar('sender', { length: 255 }).notNull(),
+    amount: numeric('amount', { precision: 36, scale: 18 }).notNull(), // standard ERC20 decimals
+    metadataJson: jsonb('metadata_json'),
+    createdAt: timestamp('created_at', { withTimezone: true }).defaultNow().notNull(),
+}, (table) => ({
+    txHashIdx: uniqueIndex('idx_cltr_blockchain_events_tx_hash').on(table.txHash),
+    eventTypeIdx: index('idx_cltr_blockchain_events_type').on(table.eventType),
+    senderIdx: index('idx_cltr_blockchain_events_sender').on(table.sender),
+}));
+
+export type CltrBlockchainEvent = typeof cltrBlockchainEvents.$inferSelect;
+export type NewCltrBlockchainEvent = typeof cltrBlockchainEvents.$inferInsert;

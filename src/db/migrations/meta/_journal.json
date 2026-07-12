@@ -176,6 +176,13 @@
       "when": 1777438204436,
       "tag": "0024_narrow_bruce_banner",
       "breakpoints": true
+    },
+    {
+      "idx": 25,
+      "version": "7",
+      "when": 1783891629597,
+      "tag": "0025_luxuriant_colossus",
+      "breakpoints": true
     }
   ]
 }

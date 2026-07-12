@@ -98,6 +98,29 @@ export async function fixSchemaDrift() {
             console.log(`[schema-fix] ⚠️ Drip column skipped: ${e.message}`);
         }
 
+        // 8. Ensure 'cltr_blockchain_events' table exists
+        try {
+            await db.execute(sql`
+                CREATE TABLE IF NOT EXISTS "cltr_blockchain_events" (
+                    "id" uuid PRIMARY KEY DEFAULT gen_random_uuid() NOT NULL,
+                    "event_type" varchar(50) NOT NULL,
+                    "tx_hash" varchar(255) NOT NULL,
+                    "block_number" bigint NOT NULL,
+                    "block_timestamp" timestamp with time zone NOT NULL,
+                    "sender" varchar(255) NOT NULL,
+                    "amount" numeric(36, 18) NOT NULL,
+                    "metadata_json" jsonb,
+                    "created_at" timestamp with time zone DEFAULT now() NOT NULL
+                );
+                CREATE UNIQUE INDEX IF NOT EXISTS "idx_cltr_blockchain_events_tx_hash" ON "cltr_blockchain_events" ("tx_hash");
+                CREATE INDEX IF NOT EXISTS "idx_cltr_blockchain_events_type" ON "cltr_blockchain_events" ("event_type");
+                CREATE INDEX IF NOT EXISTS "idx_cltr_blockchain_events_sender" ON "cltr_blockchain_events" ("sender");
+            `);
+            console.log('[schema-fix] ✅ cltr_blockchain_events table ensured.');
+        } catch (e: any) {
+            console.log(`[schema-fix] ⚠️ cltr_blockchain_events table skipped: ${e.message}`);
+        }
+
         console.log('[schema-fix] ✅ Runtime Schema Fix Complete.');
     } catch (err) {
         console.error('[schema-fix] ❌ Failed to run runtime schema fix:', err);

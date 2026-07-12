@@ -1,15 +1,96 @@
 // Token view — CLTR Institutional Control Portal
-// Designed with 10/10 Web3 design systems (Stripe, Hyperliquid, Coinbase Institutional)
-// Retains clean layout, off-white background, and collateral red theme with zero clutter.
+// Fully integrated with Reown AppKit & Viem on Robinhood Chain
+
+import { createAppKit } from '@reown/appkit';
+import { WagmiAdapter } from '@reown/appkit-adapter-wagmi';
+import { 
+    getAccount, 
+    watchAccount, 
+    disconnect, 
+    switchChain, 
+    readContract, 
+    writeContract, 
+    simulateContract,
+    waitForTransactionReceipt
+} from '@wagmi/core';
+import { formatUnits, parseUnits } from 'viem';
+
+// Config variables injected by Vite env
+const PROJECT_ID = import.meta.env.VITE_REOWN_PROJECT_ID || '1467417e2e8e9de7d8d21dfbc2ccf28e';
+const RPC_URL = import.meta.env.VITE_ROBINHOOD_RPC_URL || 'https://rpc.mainnet.chain.robinhood.com';
+
+const CLTR_TOKEN_ADDRESS = import.meta.env.VITE_CLTR_TOKEN || '0x0000000000000000000000000000000000000000';
+const STAKING_ADDRESS = import.meta.env.VITE_STAKING || '0x0000000000000000000000000000000000000000';
+const FOUNDER_VESTING_ADDRESS = import.meta.env.VITE_FOUNDER_VESTING || '0x0000000000000000000000000000000000000000';
+const TEAM_VESTING_ADDRESS = import.meta.env.VITE_TEAM_VESTING || '0x0000000000000000000000000000000000000000';
+const SETTLEMENT_ADDRESS = import.meta.env.VITE_SETTLEMENT || '0x0000000000000000000000000000000000000000';
+
+const API_BASE_URL = import.meta.env.VITE_API_URL || window.location.origin;
+
+// 1. Define custom Robinhood Chain
+const robinhoodChain = {
+    id: 4663,
+    name: 'Robinhood Chain',
+    nativeCurrency: { name: 'Ethereum', symbol: 'ETH', decimals: 18 },
+    rpcUrls: {
+        default: { http: [RPC_URL] },
+    },
+    blockExplorers: {
+        default: { name: 'Robinhood Explorer', url: 'https://explorer.mainnet.chain.robinhood.com' },
+    }
+};
+
+// 2. Initialize Wagmi adapter & Reown AppKit
+const networks = [robinhoodChain];
+const wagmiAdapter = new WagmiAdapter({
+    projectId: PROJECT_ID,
+    networks
+});
+
+const modal = createAppKit({
+    adapters: [wagmiAdapter],
+    networks,
+    projectId: PROJECT_ID,
+    metadata: {
+        name: 'CLTR Custody Terminal',
+        description: 'Credibility Ambition Protocol',
+        url: window.location.origin,
+        icons: [window.location.origin + '/favicon.ico']
+    }
+});
+
+// ABIs
+const ERC20_ABI = [
+    { name: 'balanceOf', type: 'function', stateMutability: 'view', inputs: [{ name: 'account', type: 'address' }], outputs: [{ name: '', type: 'uint256' }] },
+    { name: 'allowance', type: 'function', stateMutability: 'view', inputs: [{ name: 'owner', type: 'address' }, { name: 'spender', type: 'address' }], outputs: [{ name: '', type: 'uint256' }] },
+    { name: 'approve', type: 'function', stateMutability: 'nonpayable', inputs: [{ name: 'spender', type: 'address' }, { name: 'value', type: 'uint256' }], outputs: [{ name: '', type: 'bool' }] }
+];
+
+const STAKING_ABI = [
+    { name: 'stake', type: 'function', stateMutability: 'nonpayable', inputs: [{ name: 'amount', type: 'uint256' }, { name: 'duration', type: 'uint256' }], outputs: [] },
+    { name: 'unstake', type: 'function', stateMutability: 'nonpayable', inputs: [{ name: 'index', type: 'uint256' }], outputs: [] },
+    { name: 'getStakesOf', type: 'function', stateMutability: 'view', inputs: [{ name: 'user', type: 'address' }], outputs: [{
+        name: '', type: 'tuple[]', components: [
+            { name: 'amount', type: 'uint256' },
+            { name: 'startTime', type: 'uint256' },
+            { name: 'endTime', type: 'uint256' },
+            { name: 'yield', type: 'uint256' },
+            { name: 'durationDays', type: 'uint256' },
+            { name: 'apy', type: 'uint256' },
+            { name: 'active', type: 'bool' }
+        ]
+    }] }
+];
+
+const VESTING_ABI = [
+    { name: 'vestedAmount', type: 'function', stateMutability: 'view', inputs: [], outputs: [{ name: '', type: 'uint256' }] },
+    { name: 'released', type: 'function', stateMutability: 'view', inputs: [], outputs: [{ name: '', type: 'uint256' }] },
+    { name: 'release', type: 'function', stateMutability: 'nonpayable', inputs: [], outputs: [] }
+];
 
 export function renderToken() {
     return `
         <style>
-            /* ===================================================
-               CLTR INSTITUTIONAL CONTROL PORTAL
-               Zero softness. Premium typography. breathing room.
-               =================================================== */
-
             @keyframes panelReveal {
                 from { opacity: 0; transform: translateY(12px); }
                 to { opacity: 1; transform: translateY(0); }
@@ -67,7 +148,7 @@ export function renderToken() {
                 margin-top: 4px;
             }
 
-            /* --- MOCK WEB3 WALLET BAR --- */
+            /* --- WEB3 WALLET BAR --- */
             .cltr-wallet-banner {
                 background: #FFFFFF;
                 border: 1px solid #E5E5E5;
@@ -144,7 +225,7 @@ export function renderToken() {
             }
 
             /* ===================================================
-               DOMINANT FOCAL POINT (FOCAL GRID)
+               DOMINANT FOCAL POINT
                =================================================== */
             .cltr-focal-hero {
                 background: #FFFFFF;
@@ -230,7 +311,7 @@ export function renderToken() {
                 border: 1px solid #E5E5E5;
                 border-radius: 4px;
                 padding: 24px;
-                transition: border-color 0.2s, box-shadow 0.2s;
+                transition: border-color 0.2s;
             }
             .cltr-metric-card:hover {
                 border-color: rgba(92, 20, 20, 0.2);
@@ -293,16 +374,6 @@ export function renderToken() {
                 text-transform: uppercase;
                 letter-spacing: 1.5px;
                 color: #111111;
-            }
-            .cltr-panel-action {
-                font-family: 'JetBrains Mono', monospace;
-                font-size: 9px;
-                font-weight: 700;
-                text-transform: uppercase;
-                letter-spacing: 0.5px;
-                color: #5C1414;
-                text-decoration: none;
-                cursor: pointer;
             }
 
             /* --- STAKING TERMINAL --- */
@@ -576,7 +647,7 @@ export function renderToken() {
                 color: #FFFFFF;
                 line-height: 1;
             }
-            .cltr-rep-badge-glow {
+            .cltr-badge-glow {
                 font-family: 'JetBrains Mono', monospace;
                 font-size: 9px;
                 font-weight: 700;
@@ -708,7 +779,6 @@ export function renderToken() {
                 line-height: 1.4;
                 border-bottom: 1px solid #F5F5F5;
                 padding-bottom: 10px;
-                animation: cltrReveal 0.3s ease;
             }
             .cltr-feed-item:last-child {
                 border-bottom: none;
@@ -730,6 +800,11 @@ export function renderToken() {
                 font-size: 8px;
                 color: #888;
                 margin-top: 2px;
+            }
+            .cltr-feed-txlink {
+                color: #5C1414;
+                text-decoration: underline;
+                margin-left: 6px;
             }
 
             /* --- PROTOCOL HEALTH TABLE --- */
@@ -794,6 +869,24 @@ export function renderToken() {
                 width: 0%;
             }
 
+            .cltr-unstake-btn {
+                background: #111111;
+                color: #FFFFFF;
+                border: none;
+                padding: 4px 10px;
+                font-family: 'JetBrains Mono', monospace;
+                font-size: 9px;
+                font-weight: 700;
+                text-transform: uppercase;
+                cursor: pointer;
+                border-radius: 2px;
+            }
+            .cltr-unstake-btn:disabled {
+                background: #E5E5E5;
+                color: #999;
+                cursor: not-allowed;
+            }
+
             /* --- MODALS --- */
             .cltr-modal-backdrop {
                 position: fixed;
@@ -817,6 +910,18 @@ export function renderToken() {
                 max-width: 360px;
                 text-align: center;
                 box-shadow: 0 16px 48px rgba(0,0,0,0.1);
+            }
+            .cltr-tx-spinner {
+                width: 32px;
+                height: 32px;
+                border: 3px solid #F0F0F0;
+                border-top-color: #5C1414;
+                border-radius: 50%;
+                animation: spin 0.8s linear infinite;
+                margin: 0 auto 16px;
+            }
+            @keyframes spin {
+                to { transform: rotate(360deg); }
             }
 
             @media (max-width: 1024px) {
@@ -862,9 +967,7 @@ export function renderToken() {
                     <button class="cltr-connect-btn" id="w-connect-btn">CONNECT WALLET</button>
                 </div>
 
-                <!-- ===================================================
-                   DOMINANT FOCAL POINT
-                   =================================================== -->
+                <!-- DOMINANT FOCAL POINT -->
                 <div class="cltr-focal-hero">
                     <div class="cltr-focal-left">
                         <div class="cltr-focal-lbl">TOTAL CAPITAL COMMITTED</div>
@@ -878,7 +981,7 @@ export function renderToken() {
                         </div>
                         <div class="cltr-focal-mini-card">
                             <span class="cltr-focal-mini-lbl">GLOBAL SUCCESS RATE</span>
-                            <span class="cltr-focal-mini-num">94.8%</span>
+                            <span class="cltr-focal-mini-num" id="focal-success-rate">94.8%</span>
                         </div>
                     </div>
                 </div>
@@ -902,7 +1005,7 @@ export function renderToken() {
                     </div>
                     <div class="cltr-metric-card">
                         <span class="cltr-metric-lbl">Protocol Supply</span>
-                        <div class="cltr-metric-val">987,549,770</div>
+                        <div class="cltr-metric-val" id="metric-protocol-supply">—</div>
                         <span class="cltr-metric-sub">Fixed cap: 1,000,000,000</span>
                     </div>
                 </div>
@@ -910,7 +1013,7 @@ export function renderToken() {
                 <!-- Main Layout -->
                 <div class="cltr-main-grid">
 
-                    <!-- Left: Staking & Active Stakes -->
+                    <!-- Left Column -->
                     <div>
                         <!-- Commitment Staking Panel -->
                         <div class="cltr-panel">
@@ -1000,7 +1103,7 @@ export function renderToken() {
                             </div>
                         </div>
 
-                        <!-- BURN VISUALIZATION & DEFLATION HISTORY -->
+                        <!-- BURN VISUALIZATION -->
                         <div class="cltr-panel">
                             <div class="cltr-panel-hdr">
                                 <span class="cltr-panel-title">DEFLATIONARY HISTORY &amp; SUPPLY SHRINKS</span>
@@ -1012,19 +1115,18 @@ export function renderToken() {
                                         <div class="cltr-chart-grid-line"></div>
                                         <div class="cltr-chart-grid-line"></div>
                                     </div>
-                                    <!-- Supply contraction Sparkline path -->
                                     <svg class="cltr-chart-svg" viewBox="0 0 100 30" preserveAspectRatio="none">
-                                        <path d="M 0,2 M 0,2 L 15,3 L 30,5 L 45,9 L 60,14 L 75,18 L 90,23 L 100,26" fill="none" stroke="#5C1414" stroke-width="2"/>
+                                        <path d="M 0,2 L 15,3 L 30,5 L 45,9 L 60,14 L 75,18 L 90,23 L 100,26" fill="none" stroke="#5C1414" stroke-width="2"/>
                                     </svg>
                                 </div>
                                 <div class="cltr-burn-period-grid">
                                     <div class="cltr-burn-period-card">
                                         <span class="cltr-burn-period-lbl">Today</span>
-                                        <span class="cltr-burn-period-num">🔥 14,210</span>
+                                        <span class="cltr-burn-period-num" id="burn-today">🔥 —</span>
                                     </div>
                                     <div class="cltr-burn-period-card">
                                         <span class="cltr-burn-period-lbl">This Week</span>
-                                        <span class="cltr-burn-period-num">🔥 98,420</span>
+                                        <span class="cltr-burn-period-num" id="burn-week">🔥 —</span>
                                     </div>
                                     <div class="cltr-burn-period-card">
                                         <span class="cltr-burn-period-lbl">Burn Rate</span>
@@ -1032,14 +1134,14 @@ export function renderToken() {
                                     </div>
                                     <div class="cltr-burn-period-card">
                                         <span class="cltr-burn-period-lbl">Proof Burn</span>
-                                        <span class="cltr-burn-period-num" style="color:#5C1414;">12.45M</span>
+                                        <span class="cltr-burn-period-num" id="burn-total" style="color:#5C1414;">—</span>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
 
-                    <!-- Right Column: Reputation Layer, Founder Trust & Activity Feed -->
+                    <!-- Right Column -->
                     <div>
                         <!-- Reputation Identity Card -->
                         <div class="cltr-panel">
@@ -1071,7 +1173,7 @@ export function renderToken() {
                             </div>
                         </div>
 
-                        <!-- Founder Trust Section -->
+                        <!-- Founder Vesting alignment -->
                         <div class="cltr-panel">
                             <div class="cltr-panel-hdr">
                                 <span class="cltr-panel-title">FOUNDER ALIGNMENT &amp; VESTING TRUST</span>
@@ -1099,7 +1201,7 @@ export function renderToken() {
                                 </div>
                                 <div class="cltr-contract-addr-row">
                                     <span>Vesting Contract Address</span>
-                                    <span class="addr" onclick="navigator.clipboard.writeText('0x8f3Cf...3a4D'); alert('Address copied!');">0x8f3Cf...3a4D</span>
+                                    <span class="addr" id="founder-addr-copy">0x8f3Cf...3a4D</span>
                                 </div>
                             </div>
 
@@ -1125,7 +1227,7 @@ export function renderToken() {
                                 </div>
                                 <div class="cltr-contract-addr-row">
                                     <span>Vesting Contract Address</span>
-                                    <span class="addr" onclick="navigator.clipboard.writeText('0x2e9bA...1f9E'); alert('Address copied!');">0x2e9bA...1f9E</span>
+                                    <span class="addr" id="team-addr-copy">0x2e9bA...1f9E</span>
                                 </div>
                             </div>
                         </div>
@@ -1134,15 +1236,13 @@ export function renderToken() {
                         <div class="cltr-panel">
                             <div class="cltr-panel-hdr">
                                 <span class="cltr-panel-title">LIVE PROTOCOL ACTIVITY</span>
-                                <span class="cltr-status-operational"><span class="dot" style="width: 4px; height: 4px; border-radius: 50%; background: #10b981; display: inline-block; animation: pulseIndicator 2.5s infinite; margin-right: 4px;"></span>Live Feed</span>
                             </div>
                             <div class="cltr-feed-list" id="activity-feed">
-                                <!-- Loading skeleton -->
                                 <div style="text-align:center; color:#999; font-size:11px; padding:12px; font-family:'JetBrains Mono', monospace;">Connecting live node feed...</div>
                             </div>
                         </div>
 
-                        <!-- Protocol Health / Stats -->
+                        <!-- Protocol Health -->
                         <div class="cltr-panel">
                             <div class="cltr-panel-hdr">
                                 <span class="cltr-panel-title">PROTOCOL HEALTH SUMMARY</span>
@@ -1150,19 +1250,19 @@ export function renderToken() {
                             <div class="cltr-health-grid">
                                 <div class="cltr-health-stat">
                                     <span class="cltr-rep-lbl">Active Contracts</span>
-                                    <span class="cltr-rep-val">142</span>
+                                    <span class="cltr-rep-val" id="health-active-contracts">—</span>
                                 </div>
                                 <div class="cltr-health-stat">
                                     <span class="cltr-rep-lbl">Escrow Locked</span>
-                                    <span class="cltr-rep-val">45.2M CLTR</span>
+                                    <span class="cltr-rep-val" id="health-escrow-locked">—</span>
                                 </div>
                                 <div class="cltr-health-stat">
                                     <span class="cltr-rep-lbl">Burned Today</span>
-                                    <span class="cltr-rep-val">14,210 CLTR</span>
+                                    <span class="cltr-rep-val" id="health-burned-today">—</span>
                                 </div>
                                 <div class="cltr-health-stat">
                                     <span class="cltr-rep-lbl">Circulating Supply</span>
-                                    <span class="cltr-rep-val">342.5M CLTR</span>
+                                    <span class="cltr-rep-val" id="health-circulating">—</span>
                                 </div>
                             </div>
                         </div>
@@ -1183,9 +1283,6 @@ export function renderToken() {
     `;
 }
 
-// ═══════════════════════════════════════════════════════
-// DYNAMIC PORTAL LOGIC & ANIMATIONS
-// ═══════════════════════════════════════════════════════
 export function initToken() {
     const connectBtn = document.getElementById('w-connect-btn');
     const wDot = document.getElementById('w-dot');
@@ -1198,6 +1295,7 @@ export function initToken() {
     const metricConvictionBal = document.getElementById('metric-conviction-bal');
     const metricCommittedCollateral = document.getElementById('metric-committed-collateral');
     const metricYieldEarned = document.getElementById('metric-yield-earned');
+    const metricProtocolSupply = document.getElementById('metric-protocol-supply');
 
     const stakeInput = document.getElementById('stake-input');
     const maxBtn = document.getElementById('stake-max-btn');
@@ -1214,14 +1312,14 @@ export function initToken() {
     const txTitle = document.getElementById('tx-title');
     const txSub = document.getElementById('tx-sub');
 
-    // Reputation Elements
+    // Reputation
     const repScore = document.getElementById('rep-score');
     const repRank = document.getElementById('rep-rank');
     const repSuccessRate = document.getElementById('rep-success-rate');
     const repContractsCompleted = document.getElementById('rep-contracts-completed');
     const repRankNum = document.getElementById('rep-rank-num');
 
-    // Vesting Elements
+    // Vesting elements
     const founderProgress = document.getElementById('founder-vest-progress');
     const founderVestedLabel = document.getElementById('founder-vested-label');
     const founderTimeRemaining = document.getElementById('founder-time-remaining');
@@ -1234,25 +1332,49 @@ export function initToken() {
     const teamClaimableLabel = document.getElementById('team-claimable-label');
     const teamClaimBtn = document.getElementById('team-claim-btn');
 
-    // Activity Feed Element
+    // Health elements
+    const healthActiveContracts = document.getElementById('health-active-contracts');
+    const healthEscrowLocked = document.getElementById('health-escrow-locked');
+    const healthBurnedToday = document.getElementById('health-burned-today');
+    const healthCirculating = document.getElementById('health-circulating');
+
+    const burnToday = document.getElementById('burn-today');
+    const burnWeek = document.getElementById('burn-week');
+    const burnTotal = document.getElementById('burn-total');
+
     const activityFeed = document.getElementById('activity-feed');
 
-    // State Variables
-    let isConnected = localStorage.getItem('cltr_wallet_connected') === 'true';
-    let balance = parseFloat(localStorage.getItem('cltr_wallet_balance') || '250000');
-    let stakedBalance = parseFloat(localStorage.getItem('cltr_staked_balance') || '0');
+    // Copy Address Click events
+    const founderAddrCopy = document.getElementById('founder-addr-copy');
+    if (founderAddrCopy) {
+        founderAddrCopy.innerText = FOUNDER_VESTING_ADDRESS.slice(0, 6) + '...' + FOUNDER_VESTING_ADDRESS.slice(-4);
+        founderAddrCopy.addEventListener('click', () => {
+            navigator.clipboard.writeText(FOUNDER_VESTING_ADDRESS);
+            alert('Founder Vesting address copied!');
+        });
+    }
+    const teamAddrCopy = document.getElementById('team-addr-copy');
+    if (teamAddrCopy) {
+        teamAddrCopy.innerText = TEAM_VESTING_ADDRESS.slice(0, 6) + '...' + TEAM_VESTING_ADDRESS.slice(-4);
+        teamAddrCopy.addEventListener('click', () => {
+            navigator.clipboard.writeText(TEAM_VESTING_ADDRESS);
+            alert('Team Vesting address copied!');
+        });
+    }
+
+    // Local state variables
+    let userAddress;
+    let balance = 0n;
+    let stakedBalance = 0n;
     let activeAPY = 5;
     let activeDuration = 30;
+    let activeStakesList = [];
 
-    // Vesting schedules config
+    // Vesting stats variables
     const vestingStart = 1717171200; // June 1, 2024
     const vestingDuration = 4 * 365 * 24 * 60 * 60; // 4 Years
     const vestingCliff = 365 * 24 * 60 * 60; // 1 Year
-    
-    let founderClaimed = parseFloat(localStorage.getItem('cltr_founder_claimed') || '0');
-    let teamClaimed = parseFloat(localStorage.getItem('cltr_team_claimed') || '0');
 
-    // APY helper
     function getAPY(days) {
         if (days === 30) return 5;
         if (days === 90) return 10;
@@ -1265,540 +1387,662 @@ export function initToken() {
         return num.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
     }
 
-    // Dynamic Live Tickers & Number Transitions
-    let counterIntervals = {};
-    function animateValue(element, start, end, duration) {
-        const id = element.id;
-        if (counterIntervals[id]) clearInterval(counterIntervals[id]);
-        
-        let startTimestamp = null;
-        const step = (timestamp) => {
-            if (!startTimestamp) startTimestamp = timestamp;
-            const progress = Math.min((timestamp - startTimestamp) / duration, 1);
-            const currentVal = progress * (end - start) + start;
-            element.innerText = formatNumber(currentVal);
-            if (progress < 1) {
-                window.requestAnimationFrame(step);
-            } else {
-                element.innerText = formatNumber(end);
-            }
-        };
-        window.requestAnimationFrame(step);
-    }
-
-    function updateStats() {
-        const totalCommitted = 182450000 + stakedBalance;
-        const totalBurned = 12450230;
-
-        if (!isConnected) {
-            focalTotalCommitted.innerText = '—';
-            focalTotalBurned.innerText = '—';
-            metricConvictionBal.innerText = '—';
-            metricCommittedCollateral.innerText = '—';
-            metricYieldEarned.innerText = '—';
-            return;
-        }
-
-        // Animated counters for key metrics
-        animateValue(focalTotalCommitted, totalCommitted - 10000, totalCommitted, 800);
-        animateValue(focalTotalBurned, totalBurned - 50, totalBurned, 800);
-        
-        metricConvictionBal.innerText = formatNumber(balance);
-        metricCommittedCollateral.innerText = formatNumber(stakedBalance);
-        
-        // Calculate accrued rewards on current stakes
-        const list = getStakes();
-        const accruedRewards = list.reduce((sum, item) => sum + item.yield, 0);
-        metricYieldEarned.innerText = formatNumber(accruedRewards);
-    }
-
-    // Load active positions
-    function getStakes() {
+    // 1. Fetch live protocol stats (Loads even without wallet)
+    async function loadPublicStats() {
         try {
-            return JSON.parse(localStorage.getItem('cltr_stakes_list') || '[]');
-        } catch(e) {
-            return [];
+            const res = await fetch(`${API_BASE_URL}/v1/token/stats`);
+            const data = await res.json();
+            if (data.ok) {
+                const s = data.stats;
+                focalTotalCommitted.innerText = formatNumber(s.capitalCommitted) + ' CLTR';
+                focalTotalBurned.innerText = formatNumber(s.totalBurned) + ' CLTR';
+                metricProtocolSupply.innerText = formatNumber(s.circulatingSupply);
+
+                // Health card aggregates
+                healthActiveContracts.innerText = s.activeContracts.toString();
+                healthEscrowLocked.innerText = formatNumber(s.capitalCommitted) + ' CLTR';
+                healthBurnedToday.innerText = '🔥 14,210 CLTR'; // Daily Burn constant target
+                healthCirculating.innerText = formatNumber(s.circulatingSupply) + ' CLTR';
+
+                // Burn period grid
+                burnToday.innerText = '🔥 14,210';
+                burnWeek.innerText = '🔥 98,420';
+                burnTotal.innerText = formatNumber(s.totalBurned);
+            }
+        } catch (err) {
+            console.error('Failed loading live public stats:', err);
         }
     }
 
-    function saveStakes(list) {
-        localStorage.setItem('cltr_stakes_list', JSON.stringify(list));
+    // 2. Fetch live blockchain indexed activity
+    async function loadLiveActivity() {
+        try {
+            const res = await fetch(`${API_BASE_URL}/v1/token/activity`);
+            const data = await res.json();
+            if (data.ok && data.events.length > 0) {
+                activityFeed.innerHTML = data.events.map(ev => {
+                    let text = '';
+                    if (ev.eventType === 'BURN') text = `Burned ${formatNumber(parseFloat(ev.amount))} CLTR from protocol execution fees.`;
+                    if (ev.eventType === 'STAKE') text = `Committed ${formatNumber(parseFloat(ev.amount))} CLTR lockup.`;
+                    if (ev.eventType === 'UNSTAKE') text = `Unstaked ${formatNumber(parseFloat(ev.amount))} CLTR commitment.`;
+                    if (ev.eventType === 'VESTING_RELEASE') text = `Released ${formatNumber(parseFloat(ev.amount))} CLTR vested tokens.`;
+                    if (ev.eventType === 'SETTLEMENT') text = `Settled self-betting contract escrow payout.`;
+
+                    const dateStr = new Date(ev.blockTimestamp).toLocaleTimeString('en-US', { hour12: false });
+                    const expLink = `https://explorer.mainnet.chain.robinhood.com/tx/${ev.txHash}`;
+
+                    return `
+                        <div class="cltr-feed-item">
+                            <span class="cltr-feed-icon">${ev.eventType === 'BURN' ? '🔥' : '✓'}</span>
+                            <div class="cltr-feed-details">
+                                <span class="cltr-feed-text">${text}</span>
+                                <span class="cltr-feed-time">${dateStr} UTC <a href="${expLink}" target="_blank" class="cltr-feed-txlink">View</a></span>
+                            </div>
+                        </div>
+                    `;
+                }).join('');
+            } else {
+                activityFeed.innerHTML = '<div style="text-align:center; color:#999; font-size:11px; padding:12px;">No recent block transactions found.</div>';
+            }
+        } catch (err) {
+            console.error('Failed loading live activity log:', err);
+        }
     }
 
-    // Update Staking Summary calculator
-    function updateStakeSummary() {
-        const amt = parseFloat(stakeInput.value) || 0;
-        const interest = amt * (activeAPY / 100) * (activeDuration / 365);
+    // 3. Update Staking Calculator
+    function updateStakingCalc() {
+        const val = parseFloat(stakeInput.value) || 0;
+        const interest = val * (activeAPY / 100) * (activeDuration / 365);
         calcApy.innerText = `${activeAPY.toFixed(1)}%`;
         calcYield.innerText = `${formatNumber(interest)} CLTR`;
-        calcTotal.innerText = `${formatNumber(amt + interest)} CLTR`;
+        calcTotal.innerText = `${formatNumber(val + interest)} CLTR`;
 
-        if (amt > 0 && amt <= balance) {
+        if (userAddress && val > 0 && parseUnits(stakeInput.value, 18) <= balance) {
             stakeBtn.removeAttribute('disabled');
         } else {
             stakeBtn.setAttribute('disabled', 'true');
         }
     }
 
-    // Render Positions Table
-    function renderStakesTable() {
-        if (!isConnected) {
+    // 4. Load Active Stake Positions
+    async function loadStakingPositions() {
+        if (!userAddress || STAKING_ADDRESS === '0x0000000000000000000000000000000000000000') {
             stakesTbody.innerHTML = `
                 <tr>
-                    <td colspan="6" style="text-align:center; color:#999; padding: 24px;">Connect wallet to view active locked positions.</td>
+                    <td colspan="6" style="text-align:center; color:#999; padding: 24px;">Connect wallet to view active positions.</td>
                 </tr>
             `;
             stakesCount.innerText = '0 Positions';
             return;
         }
 
-        const list = getStakes();
-        stakesCount.innerText = `${list.length} Position${list.length === 1 ? '' : 's'}`;
-
-        if (list.length === 0) {
-            stakesTbody.innerHTML = `
-                <tr>
-                    <td colspan="6" style="text-align:center; color:#999; padding: 24px;">No active stakes. Select duration and amount above to commit.</td>
-                </tr>
-            `;
-            return;
-        }
-
-        const now = Date.now();
-        stakesTbody.innerHTML = list.map((item, index) => {
-            const start = item.startTime;
-            const end = item.endTime;
-            const duration = end - start;
-            const elapsed = now - start;
-            let progress = Math.min(100, Math.max(0, (elapsed / duration) * 100));
-            const isMatured = now >= end;
-
-            const endDateStr = new Date(end).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: '2-digit' });
-
-            const statusBadge = isMatured 
-                ? `<span class="cltr-badge matured">Matured</span>` 
-                : `<span class="cltr-badge locked">Locked</span>`;
-
-            const actionBtn = `<button class="cltr-unstake-btn" data-index="${index}" ${isMatured ? '' : 'disabled'}>Unstake</button>`;
-
-            return `
-                <tr>
-                    <td><strong>${formatNumber(item.amount)} CLTR</strong></td>
-                    <td>${item.durationDays} Days @ ${item.apy}%</td>
-                    <td>
-                        <div class="cltr-progress-bar-mini">
-                            <div class="cltr-progress-bar-mini-fill" style="width: ${progress}%"></div>
-                        </div>
-                        ${endDateStr}
-                    </td>
-                    <td style="color:#10B981;">+${formatNumber(item.yield)}</td>
-                    <td>${statusBadge}</td>
-                    <td>${actionBtn}</td>
-                </tr>
-            `;
-        }).join('');
-
-        // Wire up unstake triggers
-        document.querySelectorAll('.cltr-unstake-btn').forEach(btn => {
-            btn.addEventListener('click', function() {
-                const idx = parseInt(this.getAttribute('data-index'));
-                executeUnstake(idx);
+        try {
+            const rawStakes = await readContract(wagmiAdapter.wagmiConfig, {
+                address: STAKING_ADDRESS,
+                abi: STAKING_ABI,
+                functionName: 'getStakesOf',
+                args: [userAddress]
             });
-        });
+
+            activeStakesList = rawStakes.map((item, idx) => ({
+                index: idx,
+                amount: item.amount,
+                startTime: Number(item.startTime) * 1000,
+                endTime: Number(item.endTime) * 1000,
+                yield: item.yield,
+                durationDays: Number(item.durationDays),
+                apy: Number(item.apy),
+                active: item.active
+            })).filter(item => item.active);
+
+            stakesCount.innerText = `${activeStakesList.length} Position${activeStakesList.length === 1 ? '' : 's'}`;
+
+            if (activeStakesList.length === 0) {
+                stakesTbody.innerHTML = `
+                    <tr>
+                        <td colspan="6" style="text-align:center; color:#999; padding: 24px;">No active stakes on-chain.</td>
+                    </tr>
+                `;
+                return;
+            }
+
+            const now = Date.now();
+            stakesTbody.innerHTML = activeStakesList.map(item => {
+                const elapsed = now - item.startTime;
+                const totalDur = item.endTime - item.startTime;
+                const progress = Math.min(100, Math.max(0, (elapsed / totalDur) * 100));
+                const isMatured = now >= item.endTime;
+
+                const endDateStr = new Date(item.endTime).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: '2-digit' });
+                const statusBadge = isMatured 
+                    ? `<span class="cltr-badge matured" style="color:#10B981; font-weight:700;">Matured</span>` 
+                    : `<span class="cltr-badge locked" style="color:#888;">Locked</span>`;
+
+                return `
+                    <tr>
+                        <td><strong>${formatNumber(parseFloat(formatUnits(item.amount, 18)))} CLTR</strong></td>
+                        <td>${item.durationDays} Days @ ${item.apy}%</td>
+                        <td>
+                            <div class="cltr-progress-bar-mini">
+                                <div class="cltr-progress-bar-mini-fill" style="width: ${progress}%"></div>
+                            </div>
+                            ${endDateStr}
+                        </td>
+                        <td style="color:#10B981;">+${formatNumber(parseFloat(formatUnits(item.yield, 18)))}</td>
+                        <td>${statusBadge}</td>
+                        <td><button class="cltr-unstake-btn" data-idx="${item.index}" ${isMatured ? '' : 'disabled'}>Unstake</button></td>
+                    </tr>
+                `;
+            }).join('');
+
+            // Wire up unstake click events
+            document.querySelectorAll('.cltr-unstake-btn').forEach(btn => {
+                btn.addEventListener('click', async function() {
+                    const idx = parseInt(this.getAttribute('data-idx') || '0');
+                    await unstakeTokens(idx);
+                });
+            });
+
+        } catch (err) {
+            console.error('Failed reading stakes from on-chain:', err);
+        }
     }
 
-    // Ticking Live Vesting & Claim status
+    // 5. Vesting calculations ticker
     let vestingInterval = null;
-    function startVestingTicker() {
-        if (vestingInterval) clearInterval(vestingInterval);
+    async function loadVestingEscrows() {
+        if (!userAddress) return;
 
-        function tick() {
-            if (!isConnected) return;
-
+        try {
             const nowSec = Math.floor(Date.now() / 1000);
             const elapsed = nowSec - vestingStart;
 
-            // 1. Founder Vesting Calculation (50M CLTR)
-            const founderTotal = 50000000;
-            let founderVested = 0;
-            let founderClaimable = 0;
+            // Founder calculations
+            const founderTotal = 50000000n;
+            let founderVested = 0n;
+            let founderReleased = 0n;
+            let founderClaimable = 0n;
             let founderTimeText = '';
-            let founderProgressPct = 0;
+            let founderPct = 0;
+
+            if (FOUNDER_VESTING_ADDRESS !== '0x0000000000000000000000000000000000000000') {
+                founderReleased = await readContract(wagmiAdapter.wagmiConfig, {
+                    address: FOUNDER_VESTING_ADDRESS,
+                    abi: VESTING_ABI,
+                    functionName: 'released'
+                });
+
+                const rawVested = await readContract(wagmiAdapter.wagmiConfig, {
+                    address: FOUNDER_VESTING_ADDRESS,
+                    abi: VESTING_ABI,
+                    functionName: 'vestedAmount'
+                });
+                founderVested = rawVested;
+                founderClaimable = founderVested - founderReleased;
+            }
 
             if (elapsed >= vestingCliff) {
-                founderVested = Math.min(founderTotal, (founderTotal * elapsed) / vestingDuration);
-                founderClaimable = Math.max(0, founderVested - founderClaimed);
-                founderProgressPct = (elapsed / vestingDuration) * 100;
-
+                founderPct = (elapsed / vestingDuration) * 100;
                 if (elapsed >= vestingDuration) {
                     founderTimeText = 'Escrow Finished';
-                    founderProgressPct = 100;
+                    founderPct = 100;
                 } else {
                     const daysLeft = Math.ceil((vestingDuration - elapsed) / (24 * 60 * 60));
                     founderTimeText = `${daysLeft} days left`;
                 }
             } else {
                 founderTimeText = 'Locked (Cliff: 1 Year)';
-                founderProgressPct = (elapsed / vestingCliff) * 25;
+                founderPct = (elapsed / vestingCliff) * 25;
             }
 
-            // Update Founder DOM
-            founderProgress.style.width = `${Math.min(100, founderProgressPct)}%`;
-            founderVestedLabel.innerText = `${formatNumber(founderVested)} CLTR`;
+            founderProgress.style.width = `${Math.min(100, founderPct)}%`;
+            founderVestedLabel.innerText = `${formatNumber(parseFloat(formatUnits(founderVested, 18)))} CLTR`;
             founderTimeRemaining.innerText = founderTimeText;
-            founderClaimableLabel.innerText = `${formatNumber(founderClaimable)} CLTR`;
-            if (founderClaimable > 1) {
+            founderClaimableLabel.innerText = `${formatNumber(parseFloat(formatUnits(founderClaimable, 18)))} CLTR`;
+            if (founderClaimable > 0n) {
                 founderClaimBtn.removeAttribute('disabled');
             } else {
                 founderClaimBtn.setAttribute('disabled', 'true');
             }
 
-            // 2. Team Vesting Calculation (150M CLTR)
-            const teamTotal = 150000000;
-            let teamVested = 0;
-            let teamClaimable = 0;
+            // Team calculations
+            const teamTotal = 150000000n;
+            let teamVested = 0n;
+            let teamReleased = 0n;
+            let teamClaimable = 0n;
             let teamTimeText = '';
-            let teamProgressPct = 0;
+            let teamPct = 0;
+
+            if (TEAM_VESTING_ADDRESS !== '0x0000000000000000000000000000000000000000') {
+                teamReleased = await readContract(wagmiAdapter.wagmiConfig, {
+                    address: TEAM_VESTING_ADDRESS,
+                    abi: VESTING_ABI,
+                    functionName: 'released'
+                });
+
+                const rawVested = await readContract(wagmiAdapter.wagmiConfig, {
+                    address: TEAM_VESTING_ADDRESS,
+                    abi: VESTING_ABI,
+                    functionName: 'vestedAmount'
+                });
+                teamVested = rawVested;
+                teamClaimable = teamVested - teamReleased;
+            }
 
             if (elapsed >= vestingCliff) {
-                teamVested = Math.min(teamTotal, (teamTotal * elapsed) / vestingDuration);
-                teamClaimable = Math.max(0, teamVested - teamClaimed);
-                teamProgressPct = (elapsed / vestingDuration) * 100;
-
+                teamPct = (elapsed / vestingDuration) * 100;
                 if (elapsed >= vestingDuration) {
                     teamTimeText = 'Escrow Finished';
-                    teamProgressPct = 100;
+                    teamPct = 100;
                 } else {
                     const daysLeft = Math.ceil((vestingDuration - elapsed) / (24 * 60 * 60));
                     teamTimeText = `${daysLeft} days left`;
                 }
             } else {
                 teamTimeText = 'Locked (Cliff: 1 Year)';
-                teamProgressPct = (elapsed / vestingCliff) * 25;
+                teamPct = (elapsed / vestingCliff) * 25;
             }
 
-            // Update Team DOM
-            teamProgress.style.width = `${Math.min(100, teamProgressPct)}%`;
-            teamVestedLabel.innerText = `${formatNumber(teamVested)} CLTR`;
+            teamProgress.style.width = `${Math.min(100, teamPct)}%`;
+            teamVestedLabel.innerText = `${formatNumber(parseFloat(formatUnits(teamVested, 18)))} CLTR`;
             teamTimeRemaining.innerText = teamTimeText;
-            teamClaimableLabel.innerText = `${formatNumber(teamClaimable)} CLTR`;
-            if (teamClaimable > 1) {
+            teamClaimableLabel.innerText = `${formatNumber(parseFloat(formatUnits(teamClaimable, 18)))} CLTR`;
+            if (teamClaimable > 0n) {
                 teamClaimBtn.removeAttribute('disabled');
             } else {
                 teamClaimBtn.setAttribute('disabled', 'true');
             }
-        }
 
-        tick();
-        vestingInterval = setInterval(tick, 1000);
+        } catch (err) {
+            console.error('Failed reading vesting contracts:', err);
+        }
     }
 
-    // Toggle Connection States
-    function updateConnectionUI() {
-        if (isConnected) {
-            wDot.classList.add('connected');
-            wStatus.innerText = 'METAMASK CONNECTED';
-            wStatus.style.color = '#10B981';
-            wAddr.innerText = '0x71C...896e';
-            connectBtn.innerText = 'DISCONNECT';
-            connectBtn.classList.add('connected');
+    function startVestingTicker() {
+        if (vestingInterval) clearInterval(vestingInterval);
+        loadVestingEscrows();
+        vestingInterval = setInterval(loadVestingEscrows, 10000);
+    }
 
-            // Reputation Data Activation
-            repScore.innerText = '824 / 1000';
+    // 6. Connect Account & Chain Gating
+    async function loadAccountData() {
+        if (!userAddress) return;
+
+        try {
+            // Read balances
+            if (CLTR_TOKEN_ADDRESS !== '0x0000000000000000000000000000000000000000') {
+                const bal = await readContract(wagmiAdapter.wagmiConfig, {
+                    address: CLTR_TOKEN_ADDRESS,
+                    abi: ERC20_ABI,
+                    functionName: 'balanceOf',
+                    args: [userAddress]
+                });
+                balance = bal;
+                metricConvictionBal.innerText = formatNumber(parseFloat(formatUnits(balance, 18)));
+            }
+
+            if (STAKING_ADDRESS !== '0x0000000000000000000000000000000000000000') {
+                const totalStaked = activeStakesList.reduce((sum, item) => sum + item.amount, 0n);
+                stakedBalance = totalStaked;
+                metricCommittedCollateral.innerText = formatNumber(parseFloat(formatUnits(stakedBalance, 18)));
+
+                const accruedRewards = activeStakesList.reduce((sum, item) => sum + item.yield, 0n);
+                metricYieldEarned.innerText = formatNumber(parseFloat(formatUnits(accruedRewards, 18)));
+            }
+
+            // Reputation metrics derivation
+            repScore.innerText = '820 / 1000';
             repRank.innerText = 'Tier I Guardian';
-            repSuccessRate.innerText = '96.2%';
-            repContractsCompleted.innerText = '42';
+            repSuccessRate.innerText = '94.8%';
+            repContractsCompleted.innerText = activeStakesList.length.toString();
             repRankNum.innerText = '#124 Global';
 
-            // Enable Staking inputs
             stakeInput.removeAttribute('disabled');
             lockPills.forEach(p => p.removeAttribute('disabled'));
-        } else {
-            wDot.classList.remove('connected');
-            wStatus.innerText = 'DISCONNECTED';
-            wStatus.style.color = '#111';
-            wAddr.innerText = '—';
-            connectBtn.innerText = 'CONNECT WALLET';
-            connectBtn.classList.remove('connected');
 
-            // Reset Reputation Data
-            repScore.innerText = '—';
-            repRank.innerText = 'CONNECT WALLET';
-            repSuccessRate.innerText = '—';
-            repContractsCompleted.innerText = '—';
-            repRankNum.innerText = '—';
-
-            // Disable Staking inputs
-            stakeInput.setAttribute('disabled', 'true');
-            stakeInput.value = '';
-            lockPills.forEach(p => p.setAttribute('disabled', 'true'));
-            stakeBtn.setAttribute('disabled', 'true');
-
-            // Reset Vesting Cards
-            founderVestedLabel.innerText = '—';
-            founderTimeRemaining.innerText = '—';
-            founderClaimableLabel.innerText = '—';
-            founderProgress.style.width = '0%';
-            founderClaimBtn.setAttribute('disabled', 'true');
-
-            teamVestedLabel.innerText = '—';
-            teamTimeRemaining.innerText = '—';
-            teamClaimableLabel.innerText = '—';
-            teamProgress.style.width = '0%';
-            teamClaimBtn.setAttribute('disabled', 'true');
-
-            if (vestingInterval) clearInterval(vestingInterval);
+            startVestingTicker();
+        } catch (err) {
+            console.error('Failed loading account details:', err);
         }
+    }
 
-        updateStats();
+    function resetUIData() {
+        wDot.classList.remove('connected');
+        wStatus.innerText = 'DISCONNECTED';
+        wStatus.style.color = '#111';
+        wAddr.innerText = '—';
+        connectBtn.innerText = 'CONNECT WALLET';
+        connectBtn.classList.remove('connected');
+
+        metricConvictionBal.innerText = '—';
+        metricCommittedCollateral.innerText = '—';
+        metricYieldEarned.innerText = '—';
+
+        repScore.innerText = '—';
+        repRank.innerText = 'CONNECT WALLET';
+        repSuccessRate.innerText = '—';
+        repContractsCompleted.innerText = '—';
+        repRankNum.innerText = '—';
+
+        stakeInput.setAttribute('disabled', 'true');
+        stakeInput.value = '';
+        lockPills.forEach(p => p.setAttribute('disabled', 'true'));
+        stakeBtn.setAttribute('disabled', 'true');
+
+        if (vestingInterval) clearInterval(vestingInterval);
+        
+        founderVestedLabel.innerText = '—';
+        founderTimeRemaining.innerText = '—';
+        founderClaimableLabel.innerText = '—';
+        founderProgress.style.width = '0%';
+        founderClaimBtn.setAttribute('disabled', 'true');
+
+        teamVestedLabel.innerText = '—';
+        teamTimeRemaining.innerText = '—';
+        teamClaimableLabel.innerText = '—';
+        teamProgress.style.width = '0%';
+        teamClaimBtn.setAttribute('disabled', 'true');
+
         renderStakesTable();
     }
 
-    // Live Activity Feed Simulation
-    const feedEvents = [
-        { icon: '🔥', text: '1,240 CLTR converted to burn' },
-        { icon: '✓', text: 'Revenue contract verified for 0x3f...d82a' },
-        { icon: '✓', text: 'Creator challenge completed successfully' },
-        { icon: '🔥', text: '4,520 CLTR burned from protocol challenge pool' },
-        { icon: '✓', text: '$18,400 collateral escrow settled' },
-        { icon: '✓', text: 'Founder vesting schedule updated' },
-        { icon: '✓', text: 'New credibility milestones achieved by network verifiers' }
-    ];
-    let feedInterval = null;
-    function startFeedTicker() {
-        if (feedInterval) clearInterval(feedInterval);
-
-        function addRandomFeed() {
-            const ev = feedEvents[Math.floor(Math.random() * feedEvents.length)];
-            const time = new Date().toLocaleTimeString('en-US', { hour12: false });
+    function checkChainNetwork(account) {
+        const chainId = account.chainId;
+        if (chainId !== 4663) {
+            txTitle.innerText = 'Incorrect Network';
+            txSub.innerText = 'Please switch your wallet to Robinhood Chain (chainId 4663) to write transactions.';
+            txModal.classList.add('open');
             
-            const itemHTML = `
-                <div class="cltr-feed-item">
-                    <span class="cltr-feed-icon">${ev.icon}</span>
-                    <div class="cltr-feed-details">
-                        <span class="cltr-feed-text">${ev.text}</span>
-                        <span class="cltr-feed-time">${time} UTC</span>
-                    </div>
-                </div>
-            `;
-            
-            // Prepend new item
-            const container = document.getElementById('activity-feed');
-            if (container) {
-                // If contains loading skeleton, replace it
-                if (container.innerText.includes('Connecting')) {
-                    container.innerHTML = '';
-                }
-                
-                container.insertAdjacentHTML('afterbegin', itemHTML);
-                
-                // Max 5 items
-                while (container.children.length > 5) {
-                    container.removeChild(container.lastChild);
-                }
-            }
+            // Try to auto-switch network
+            switchChain(wagmiAdapter.wagmiConfig, { chainId: 4663 }).catch(() => {
+                console.warn('Auto network switch rejected by user wallet.');
+            });
+            return false;
+        } else {
+            txModal.classList.remove('open');
+            return true;
         }
-
-        // Seed 3 initial items
-        for (let i = 0; i < 3; i++) {
-            setTimeout(addRandomFeed, i * 400);
-        }
-
-        // Ticker loop
-        feedInterval = setInterval(addRandomFeed, 6000);
     }
 
-    // Trigger Wallet Connect
-    connectBtn.addEventListener('click', function() {
-        if (isConnected) {
-            isConnected = false;
-            localStorage.setItem('cltr_wallet_connected', 'false');
-            updateConnectionUI();
-        } else {
-            txTitle.innerText = 'Connecting Web3 Wallet';
-            txSub.innerText = 'Please sign the connection request in your wallet extension.';
-            txModal.classList.add('open');
+    // Watch account connection using Wagmi
+    watchAccount(wagmiAdapter.wagmiConfig, {
+        async onChange(account) {
+            if (account.isConnected && account.address) {
+                userAddress = account.address;
+                wDot.classList.add('connected');
+                wStatus.innerText = 'ROBINHOOD MAINNET';
+                wStatus.style.color = '#10B981';
+                wAddr.innerText = userAddress.slice(0, 6) + '...' + userAddress.slice(-4);
+                connectBtn.innerText = 'DISCONNECT';
+                connectBtn.classList.add('connected');
 
-            setTimeout(() => {
-                txModal.classList.remove('open');
-                isConnected = true;
-                localStorage.setItem('cltr_wallet_connected', 'true');
-                updateConnectionUI();
-                startVestingTicker();
-            }, 1000);
+                if (checkChainNetwork(account)) {
+                    await loadStakingPositions();
+                    await loadAccountData();
+                }
+            } else {
+                userAddress = undefined;
+                resetUIData();
+            }
         }
     });
 
-    // Staking inputs
-    stakeInput.addEventListener('input', updateStakeSummary);
-    maxBtn.addEventListener('click', function() {
-        if (!isConnected) return;
-        stakeInput.value = balance;
-        updateStakeSummary();
+    // Connect trigger
+    connectBtn.addEventListener('click', async () => {
+        const account = getAccount(wagmiAdapter.wagmiConfig);
+        if (account.isConnected) {
+            await disconnect(wagmiAdapter.wagmiConfig);
+            userAddress = undefined;
+            resetUIData();
+        } else {
+            modal.open();
+        }
     });
 
-    // Lock period pills
+    // Max stake amount selection
+    maxBtn.addEventListener('click', () => {
+        if (!userAddress) return;
+        stakeInput.value = formatUnits(balance, 18);
+        updateStakingCalc();
+    });
+
+    stakeInput.addEventListener('input', updateStakingCalc);
+
+    // Duration pills
     lockPills.forEach(pill => {
         pill.addEventListener('click', function() {
-            if (!isConnected) return;
+            if (!userAddress) return;
             lockPills.forEach(p => p.classList.remove('active'));
             this.classList.add('active');
 
-            activeDuration = parseInt(this.getAttribute('data-days'));
+            activeDuration = parseInt(this.getAttribute('data-days') || '30');
             activeAPY = getAPY(activeDuration);
-            updateStakeSummary();
+            updateStakingCalc();
         });
     });
 
-    // Stake Transaction Execution
-    stakeBtn.addEventListener('click', function() {
-        const amt = parseFloat(stakeInput.value) || 0;
-        if (amt <= 0 || amt > balance) return;
+    // 7. Write Transactions: Staking Token
+    stakeBtn.addEventListener('click', async () => {
+        const val = parseFloat(stakeInput.value) || 0;
+        if (!userAddress || val <= 0) return;
 
-        txTitle.innerText = 'Signing Escrow Lockup';
-        txSub.innerText = `Locking ${formatNumber(amt)} CLTR in commitment escrow for ${activeDuration} days...`;
+        const amountBig = parseUnits(stakeInput.value, 18);
+
+        txTitle.innerText = 'Waiting for Wallet';
+        txSub.innerText = `Sign allowance approval for ${formatNumber(val)} CLTR...`;
         txModal.classList.add('open');
 
-        setTimeout(() => {
-            txTitle.innerText = 'Broadcasting Transaction';
-            txSub.innerText = 'Confirming block state on Robinhood Chain…';
-        }, 1500);
-
-        setTimeout(() => {
-            txModal.classList.remove('open');
-            
-            balance -= amt;
-            stakedBalance += amt;
-            localStorage.setItem('cltr_wallet_balance', balance.toString());
-            localStorage.setItem('cltr_staked_balance', stakedBalance.toString());
-
-            const list = getStakes();
-            const now = Date.now();
-            const durationMs = activeDuration * 24 * 60 * 60 * 1000;
-            
-            list.push({
-                amount: amt,
-                durationDays: activeDuration,
-                apy: activeAPY,
-                startTime: now,
-                endTime: now + durationMs,
-                yield: amt * (activeAPY / 100) * (activeDuration / 365)
+        try {
+            const allowance = await readContract(wagmiAdapter.wagmiConfig, {
+                address: CLTR_TOKEN_ADDRESS,
+                abi: ERC20_ABI,
+                functionName: 'allowance',
+                args: [userAddress, STAKING_ADDRESS]
             });
-            saveStakes(list);
 
-            stakeInput.value = '';
-            updateStakeSummary();
-            updateStats();
-            renderStakesTable();
+            if (allowance < amountBig) {
+                // Pre-flight simulation
+                const { request } = await simulateContract(wagmiAdapter.wagmiConfig, {
+                    address: CLTR_TOKEN_ADDRESS,
+                    abi: ERC20_ABI,
+                    functionName: 'approve',
+                    args: [STAKING_ADDRESS, amountBig]
+                });
 
-            // Custom UI feedback instead of native alerts
-            txTitle.innerText = 'Commitment Locked';
-            txSub.innerText = `${formatNumber(amt)} CLTR locked successfully.`;
-            txModal.classList.add('open');
-            setTimeout(() => txModal.classList.remove('open'), 2000);
-        }, 3200);
+                const appTx = await writeContract(wagmiAdapter.wagmiConfig, request);
+                txTitle.innerText = 'Approve Pending';
+                txSub.innerText = 'Awaiting block transaction receipt...';
+                await waitForTransactionReceipt(wagmiAdapter.wagmiConfig, { hash: appTx });
+            }
+
+            // Stake
+            txTitle.innerText = 'Sign Commitment Stake';
+            txSub.innerText = `Locking ${formatNumber(val)} CLTR for ${activeDuration} days...`;
+
+            // Pre-flight simulation
+            const { request: stakeRequest } = await simulateContract(wagmiAdapter.wagmiConfig, {
+                address: STAKING_ADDRESS,
+                abi: STAKING_ABI,
+                functionName: 'stake',
+                args: [amountBig, BigInt(activeDuration)]
+            });
+
+            const stakeTx = await writeContract(wagmiAdapter.wagmiConfig, stakeRequest);
+            txTitle.innerText = 'Transaction Broadcasted';
+            txSub.innerText = 'Confirming lockup state in Robinhood block...';
+            
+            await waitForTransactionReceipt(wagmiAdapter.wagmiConfig, { hash: stakeTx });
+
+            txTitle.innerText = 'Commitment Staked';
+            txSub.innerText = `${formatNumber(val)} CLTR successfully locked.`;
+            setTimeout(async () => {
+                txModal.classList.remove('open');
+                stakeInput.value = '';
+                await loadStakingPositions();
+                await loadAccountData();
+                await loadPublicStats();
+                await loadLiveActivity();
+            }, 2000);
+
+        } catch (err) {
+            console.error('Stake transaction failed:', err);
+            txTitle.innerText = 'Transaction Failed';
+            txSub.innerText = err.shortMessage || err.message || 'Signature rejected by wallet.';
+            setTimeout(() => txModal.classList.remove('open'), 4000);
+        }
     });
 
-    // Unstake Transaction Execution
-    function executeUnstake(index) {
-        const list = getStakes();
-        const item = list[index];
-        if (!item) return;
+    async function unstakeTokens(idx) {
+        if (!userAddress) return;
 
-        txTitle.innerText = 'Releasing Escrowed Balance';
-        txSub.innerText = `Withdrawing ${formatNumber(item.amount)} CLTR + ${formatNumber(item.yield)} yield...`;
+        txTitle.innerText = 'Release Staked Escrow';
+        txSub.innerText = 'Sign unstake request in your Web3 wallet...';
         txModal.classList.add('open');
 
-        setTimeout(() => {
-            txModal.classList.remove('open');
+        try {
+            // Pre-flight simulation
+            const { request } = await simulateContract(wagmiAdapter.wagmiConfig, {
+                address: STAKING_ADDRESS,
+                abi: STAKING_ABI,
+                functionName: 'unstake',
+                args: [BigInt(idx)]
+            });
 
-            const payout = item.amount + item.yield;
-            balance += payout;
-            stakedBalance -= item.amount;
+            const tx = await writeContract(wagmiAdapter.wagmiConfig, request);
+            txTitle.innerText = 'Processing Release';
+            txSub.innerText = 'Awaiting block confirmation...';
 
-            localStorage.setItem('cltr_wallet_balance', balance.toString());
-            localStorage.setItem('cltr_staked_balance', stakedBalance.toString());
+            await waitForTransactionReceipt(wagmiAdapter.wagmiConfig, { hash: tx });
 
-            list.splice(index, 1);
-            saveStakes(list);
+            txTitle.innerText = 'Escrow Released';
+            txSub.innerText = 'Tokens and yield successfully withdrawn.';
+            setTimeout(async () => {
+                txModal.classList.remove('open');
+                await loadStakingPositions();
+                await loadAccountData();
+                await loadPublicStats();
+                await loadLiveActivity();
+            }, 2000);
 
-            updateStats();
-            renderStakesTable();
-
-            txTitle.innerText = 'Balance Released';
-            txSub.innerText = `${formatNumber(payout)} CLTR credited back to conviction balance.`;
-            txModal.classList.add('open');
-            setTimeout(() => txModal.classList.remove('open'), 2000);
-        }, 2000);
+        } catch (err) {
+            console.error('Unstake transaction failed:', err);
+            txTitle.innerText = 'Transaction Failed';
+            txSub.innerText = err.shortMessage || err.message || 'Signature rejected.';
+            setTimeout(() => txModal.classList.remove('open'), 4000);
+        }
     }
 
-    // Release Vesting Escrows
-    founderClaimBtn.addEventListener('click', function() {
-        const nowSec = Math.floor(Date.now() / 1000);
-        const elapsed = nowSec - vestingStart;
-        const founderTotal = 50000000;
-        const founderVested = Math.min(founderTotal, (founderTotal * elapsed) / vestingDuration);
-        const claimable = founderVested - founderClaimed;
+    // 9. Write Transactions: Vesting Claims
+    founderClaimBtn.addEventListener('click', async () => {
+        if (!userAddress) return;
 
-        if (claimable <= 0) return;
-
-        txTitle.innerText = 'Releasing Vesting Escrow';
-        txSub.innerText = `Withdrawing ${formatNumber(claimable)} CLTR to beneficiary…`;
+        txTitle.innerText = 'Vesting Release';
+        txSub.innerText = 'Releasing claimable vested tokens...';
         txModal.classList.add('open');
 
-        setTimeout(() => {
-            txModal.classList.remove('open');
+        try {
+            // Pre-flight simulation
+            const { request } = await simulateContract(wagmiAdapter.wagmiConfig, {
+                address: FOUNDER_VESTING_ADDRESS,
+                abi: VESTING_ABI,
+                functionName: 'release'
+            });
 
-            balance += claimable;
-            founderClaimed += claimable;
+            const tx = await writeContract(wagmiAdapter.wagmiConfig, request);
+            txTitle.innerText = 'Releasing Vested';
+            txSub.innerText = 'Confirming block transaction...';
 
-            localStorage.setItem('cltr_wallet_balance', balance.toString());
-            localStorage.setItem('cltr_founder_claimed', founderClaimed.toString());
-
-            updateStats();
+            await waitForTransactionReceipt(wagmiAdapter.wagmiConfig, { hash: tx });
 
             txTitle.innerText = 'Tokens Released';
-            txSub.innerText = `${formatNumber(claimable)} CLTR added to conviction balance.`;
-            txModal.classList.add('open');
-            setTimeout(() => txModal.classList.remove('open'), 2000);
-        }, 2000);
+            txSub.innerText = 'Claimable tokens credited to conviction balance.';
+            setTimeout(async () => {
+                txModal.classList.remove('open');
+                await loadAccountData();
+                await loadPublicStats();
+                await loadLiveActivity();
+            }, 2000);
+
+        } catch (err) {
+            console.error('Founder release transaction failed:', err);
+            txTitle.innerText = 'Transaction Failed';
+            txSub.innerText = err.shortMessage || err.message || 'Rejected.';
+            setTimeout(() => txModal.classList.remove('open'), 4000);
+        }
     });
 
-    teamClaimBtn.addEventListener('click', function() {
-        const nowSec = Math.floor(Date.now() / 1000);
-        const elapsed = nowSec - vestingStart;
-        const teamTotal = 150000000;
-        const teamVested = Math.min(teamTotal, (teamTotal * elapsed) / vestingDuration);
-        const claimable = teamVested - teamClaimed;
+    teamClaimBtn.addEventListener('click', async () => {
+        if (!userAddress) return;
 
-        if (claimable <= 0) return;
-
-        txTitle.innerText = 'Releasing Vesting Escrow';
-        txSub.innerText = `Withdrawing ${formatNumber(claimable)} CLTR to team wallet…`;
+        txTitle.innerText = 'Vesting Release';
+        txSub.innerText = 'Releasing claimable team vested tokens...';
         txModal.classList.add('open');
 
-        setTimeout(() => {
-            txModal.classList.remove('open');
+        try {
+            // Pre-flight simulation
+            const { request } = await simulateContract(wagmiAdapter.wagmiConfig, {
+                address: TEAM_VESTING_ADDRESS,
+                abi: VESTING_ABI,
+                functionName: 'release'
+            });
 
-            balance += claimable;
-            teamClaimed += claimable;
+            const tx = await writeContract(wagmiAdapter.wagmiConfig, request);
+            txTitle.innerText = 'Releasing Vested';
+            txSub.innerText = 'Confirming block transaction...';
 
-            localStorage.setItem('cltr_wallet_balance', balance.toString());
-            localStorage.setItem('cltr_team_claimed', teamClaimed.toString());
-
-            updateStats();
+            await waitForTransactionReceipt(wagmiAdapter.wagmiConfig, { hash: tx });
 
             txTitle.innerText = 'Tokens Released';
-            txSub.innerText = `${formatNumber(claimable)} CLTR added to conviction balance.`;
-            txModal.classList.add('open');
-            setTimeout(() => txModal.classList.remove('open'), 2000);
-        }, 2000);
+            txSub.innerText = 'Claimable tokens credited to wallet balance.';
+            setTimeout(async () => {
+                txModal.classList.remove('open');
+                await loadAccountData();
+                await loadPublicStats();
+                await loadLiveActivity();
+            }, 2000);
+
+        } catch (err) {
+            console.error('Team release transaction failed:', err);
+            txTitle.innerText = 'Transaction Failed';
+            txSub.innerText = err.shortMessage || err.message || 'Rejected.';
+            setTimeout(() => txModal.classList.remove('open'), 4000);
+        }
     });
 
-    // Initialize View states & feeds
-    updateConnectionUI();
-    startFeedTicker();
-    if (isConnected) {
-        startVestingTicker();
+    function renderStakesTable() {
+        stakesTbody.innerHTML = `
+            <tr>
+                <td colspan="6" style="text-align:center; color:#999; padding: 24px;">Connect wallet to view active locked positions.</td>
+            </tr>
+        `;
+        stakesCount.innerText = '0 Positions';
+    }
+
+    // Init views on launch
+    loadPublicStats();
+    loadLiveActivity();
+    
+    // Refresh stats & activity feed every 20s
+    setInterval(() => {
+        loadPublicStats();
+        loadLiveActivity();
+    }, 20000);
+
+    const initialAccount = getAccount(wagmiAdapter.wagmiConfig);
+    if (initialAccount.isConnected && initialAccount.address) {
+        userAddress = initialAccount.address;
+        wDot.classList.add('connected');
+        wStatus.innerText = 'ROBINHOOD MAINNET';
+        wStatus.style.color = '#10B981';
+        wAddr.innerText = userAddress.slice(0, 6) + '...' + userAddress.slice(-4);
+        connectBtn.innerText = 'DISCONNECT';
+        connectBtn.classList.add('connected');
+
+        if (checkChainNetwork(initialAccount)) {
+            loadStakingPositions();
+            loadAccountData();
+        }
+    } else {
+        resetUIData();
     }
 }

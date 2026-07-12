@@ -1,15 +1,16 @@
-// Token view — $CLTR Control Portal
-// Redesigned with premium institutional typography, proper top padding to avoid header overlap, and sleek Web3 details.
+// Token view — CLTR Institutional Control Portal
+// Designed with 10/10 Web3 design systems (Stripe, Hyperliquid, Coinbase Institutional)
+// Retains clean layout, off-white background, and collateral red theme with zero clutter.
 
 export function renderToken() {
     return `
         <style>
             /* ===================================================
-               CLTR CONTROL PORTAL — 10/10 PREMIUM WEB3 INTERFACE
-               Brand Burgundy #5C1414 · Off-White · JetBrains Mono
+               CLTR INSTITUTIONAL CONTROL PORTAL
+               Zero softness. Premium typography. breathing room.
                =================================================== */
 
-            @keyframes cltrReveal {
+            @keyframes panelReveal {
                 from { opacity: 0; transform: translateY(12px); }
                 to { opacity: 1; transform: translateY(0); }
             }
@@ -17,221 +18,265 @@ export function renderToken() {
             .cltr-page {
                 background: #FAFAFA;
                 min-height: 100vh;
-                font-family: 'Sora', 'Helvetica Neue', Helvetica, Arial, sans-serif;
-                color: #111;
+                font-family: 'Sora', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+                color: #111111;
                 padding-bottom: 120px;
             }
 
             .cltr-container {
-                max-width: 1200px;
+                max-width: 1240px;
                 margin: 0 auto;
-                /* 128px top padding prevents overlap from the fixed global header (72px) and banner (32px) */
                 padding: 128px 32px 0;
             }
 
-            /* Header Section */
-            .cltr-hdr-container {
+            /* --- TOP BRAND HEADER --- */
+            .cltr-header-group {
                 display: flex;
                 align-items: center;
                 justify-content: space-between;
-                gap: 24px;
-                margin-bottom: 36px;
-                animation: cltrReveal 0.5s cubic-bezier(0.16, 1, 0.3, 1) both;
+                border-bottom: 1px solid #E5E5E5;
+                padding-bottom: 24px;
+                margin-bottom: 32px;
+                animation: panelReveal 0.4s cubic-bezier(0.16, 1, 0.3, 1) both;
             }
-            .cltr-hdr-left {
+            .cltr-header-left {
                 display: flex;
                 align-items: center;
                 gap: 16px;
             }
-            .cltr-hdr-logo-svg {
-                width: 44px;
-                height: 44px;
+            .cltr-logo-svg {
+                width: 40px;
+                height: 40px;
                 color: #5C1414;
                 fill: currentColor;
             }
-            .cltr-hdr-title-group {
-                display: flex;
-                flex-direction: column;
-            }
-            .cltr-hdr-title {
-                font-size: 20px;
+            .cltr-title-text {
+                font-size: 18px;
                 font-weight: 800;
                 letter-spacing: -0.5px;
                 color: #111;
                 margin: 0;
-                line-height: 1.2;
-            }
-            .cltr-hdr-sub {
-                font-size: 11px;
-                color: #666;
-                margin: 4px 0 0;
-                font-family: 'JetBrains Mono', monospace;
-                letter-spacing: 0.2px;
                 text-transform: uppercase;
             }
+            .cltr-title-desc {
+                font-size: 10px;
+                color: #666;
+                font-family: 'JetBrains Mono', monospace;
+                letter-spacing: 1px;
+                text-transform: uppercase;
+                margin-top: 4px;
+            }
 
-            /* Web3 Connect Bar */
-            .cltr-wallet-bar {
-                background: #fff;
+            /* --- MOCK WEB3 WALLET BAR --- */
+            .cltr-wallet-banner {
+                background: #FFFFFF;
                 border: 1px solid #E5E5E5;
                 border-radius: 4px;
-                padding: 20px 24px;
-                margin-bottom: 28px;
+                padding: 18px 24px;
+                margin-bottom: 32px;
                 display: flex;
                 align-items: center;
                 justify-content: space-between;
-                gap: 24px;
-                box-shadow: 0 1px 3px rgba(0,0,0,0.02);
-                animation: cltrReveal 0.5s cubic-bezier(0.16, 1, 0.3, 1) 0.05s both;
+                gap: 20px;
+                animation: panelReveal 0.4s cubic-bezier(0.16, 1, 0.3, 1) 0.05s both;
             }
-            .cltr-wallet-info {
+            .cltr-wallet-status {
                 display: flex;
                 align-items: center;
-                gap: 14px;
+                gap: 12px;
             }
-            .cltr-wallet-status-dot {
+            .cltr-status-indicator {
                 width: 8px;
                 height: 8px;
                 border-radius: 50%;
-                background: #D82224; /* Disconnected Red */
+                background: #D82224;
             }
-            .cltr-wallet-status-dot.connected {
-                background: #10B981; /* Connected Green */
-                animation: dotPulseWeb3 2s ease-in-out infinite;
+            .cltr-status-indicator.connected {
+                background: #10B981;
+                animation: pulseIndicator 2.5s infinite;
             }
-            @keyframes dotPulseWeb3 {
+            @keyframes pulseIndicator {
                 0%, 100% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.4); }
-                50% { box-shadow: 0 0 0 6px rgba(16, 185, 129, 0); }
+                50% { box-shadow: 0 0 0 5px rgba(16, 185, 129, 0); }
             }
-            .cltr-wallet-text {
+            .cltr-status-lbl {
                 font-family: 'JetBrains Mono', monospace;
-                font-size: 11px;
+                font-size: 10px;
                 font-weight: 700;
-                letter-spacing: 0.5px;
                 text-transform: uppercase;
+                letter-spacing: 0.5px;
             }
-            .cltr-wallet-address {
+            .cltr-wallet-hash {
                 color: #888;
                 font-weight: 500;
                 margin-left: 8px;
+                font-size: 11px;
                 background: #F5F5F5;
-                padding: 4px 8px;
-                border-radius: 3px;
-                font-size: 10px;
+                padding: 2px 6px;
+                border-radius: 2px;
             }
-            .cltr-wallet-btn {
-                background: #5C1414;
-                color: #fff;
+            .cltr-connect-btn {
+                background: #111111;
+                color: #FFFFFF;
                 border: none;
-                padding: 12px 20px;
+                padding: 10px 18px;
                 font-family: 'JetBrains Mono', monospace;
                 font-size: 10px;
                 font-weight: 700;
-                letter-spacing: 1px;
+                letter-spacing: 0.5px;
                 text-transform: uppercase;
                 cursor: pointer;
-                transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
                 border-radius: 3px;
+                transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
             }
-            .cltr-wallet-btn:hover {
-                background: #4A1010;
-                transform: translateY(-1px);
-                box-shadow: 0 4px 12px rgba(92, 20, 20, 0.15);
+            .cltr-connect-btn:hover {
+                background: #5C1414;
             }
-            .cltr-wallet-btn.connected {
+            .cltr-connect-btn.connected {
                 background: transparent;
                 border: 1px solid #E5E5E5;
                 color: #555;
             }
-            .cltr-wallet-btn.connected:hover {
+            .cltr-connect-btn.connected:hover {
                 border-color: #D82224;
                 color: #D82224;
                 background: rgba(216, 34, 36, 0.02);
-                box-shadow: none;
-                transform: none;
             }
 
-            /* Stats Grid */
-            .cltr-stats-grid {
-                display: grid;
-                grid-template-columns: repeat(4, 1fr);
-                gap: 20px;
-                margin-bottom: 32px;
-                animation: cltrReveal 0.5s cubic-bezier(0.16, 1, 0.3, 1) 0.1s both;
-            }
-            .cltr-stat-card {
-                background: #fff;
+            /* ===================================================
+               DOMINANT FOCAL POINT (FOCAL GRID)
+               =================================================== */
+            .cltr-focal-hero {
+                background: #FFFFFF;
                 border: 1px solid #E5E5E5;
                 border-radius: 4px;
-                padding: 24px;
+                padding: 40px;
+                margin-bottom: 32px;
                 display: flex;
-                flex-direction: column;
-                gap: 8px;
+                align-items: center;
+                justify-content: space-between;
+                gap: 40px;
                 position: relative;
-                overflow: hidden;
-                box-shadow: 0 1px 3px rgba(0,0,0,0.02);
-                transition: border-color 0.2s, box-shadow 0.2s;
+                animation: panelReveal 0.4s cubic-bezier(0.16, 1, 0.3, 1) 0.1s both;
             }
-            .cltr-stat-card:hover {
-                border-color: rgba(92, 20, 20, 0.2);
-                box-shadow: 0 4px 16px rgba(92, 20, 20, 0.04);
-            }
-            .cltr-stat-card::before {
+            .cltr-focal-hero::before {
                 content: '';
                 position: absolute;
-                top: 0; left: 0;
-                width: 0; height: 3px;
+                left: 0; top: 0; bottom: 0;
+                width: 4px;
                 background: #5C1414;
-                transition: width 0.3s ease;
             }
-            .cltr-stat-card:hover::before { width: 100%; }
-            .cltr-stat-lbl {
+            .cltr-focal-left {
+                flex: 1;
+            }
+            .cltr-focal-lbl {
                 font-family: 'JetBrains Mono', monospace;
-                font-size: 9px;
+                font-size: 10px;
                 font-weight: 700;
                 text-transform: uppercase;
                 letter-spacing: 1.5px;
                 color: #5C1414;
+                margin-bottom: 12px;
             }
-            .cltr-stat-val {
-                font-size: 22px;
-                font-weight: 800;
-                letter-spacing: -1px;
-                color: #111;
-                font-family: 'Sora', sans-serif;
-                line-height: 1;
-                margin: 4px 0 2px;
-            }
-            .cltr-stat-sub {
-                font-size: 11px;
-                color: #888;
+            .cltr-focal-num {
                 font-family: 'JetBrains Mono', monospace;
+                font-size: 48px;
+                font-weight: 800;
+                letter-spacing: -2px;
+                color: #111111;
+                line-height: 1;
+            }
+            .cltr-focal-sub {
+                font-size: 12px;
+                color: #666;
+                margin-top: 10px;
+            }
+            .cltr-focal-right {
+                display: flex;
+                gap: 48px;
+            }
+            .cltr-focal-mini-card {
+                display: flex;
+                flex-direction: column;
+                gap: 4px;
+            }
+            .cltr-focal-mini-lbl {
+                font-family: 'JetBrains Mono', monospace;
+                font-size: 9px;
+                font-weight: 700;
+                text-transform: uppercase;
+                letter-spacing: 1px;
+                color: #888;
+            }
+            .cltr-focal-mini-num {
+                font-family: 'JetBrains Mono', monospace;
+                font-size: 20px;
+                font-weight: 700;
+                color: #111;
             }
 
-            /* Main Layout Grid */
+            /* ===================================================
+               METRICS & STATS GRID
+               =================================================== */
+            .cltr-metrics-grid {
+                display: grid;
+                grid-template-columns: repeat(4, 1fr);
+                gap: 20px;
+                margin-bottom: 32px;
+                animation: panelReveal 0.4s cubic-bezier(0.16, 1, 0.3, 1) 0.15s both;
+            }
+            .cltr-metric-card {
+                background: #FFFFFF;
+                border: 1px solid #E5E5E5;
+                border-radius: 4px;
+                padding: 24px;
+                transition: border-color 0.2s, box-shadow 0.2s;
+            }
+            .cltr-metric-card:hover {
+                border-color: rgba(92, 20, 20, 0.2);
+            }
+            .cltr-metric-lbl {
+                font-family: 'JetBrains Mono', monospace;
+                font-size: 9px;
+                font-weight: 700;
+                text-transform: uppercase;
+                letter-spacing: 1px;
+                color: #888;
+                margin-bottom: 8px;
+                display: block;
+            }
+            .cltr-metric-val {
+                font-family: 'JetBrains Mono', monospace;
+                font-size: 20px;
+                font-weight: 700;
+                color: #111;
+                line-height: 1;
+            }
+            .cltr-metric-sub {
+                font-size: 10px;
+                color: #666;
+                margin-top: 6px;
+                display: block;
+            }
+
+            /* --- TWO COLUMN MAIN LAYOUT --- */
             .cltr-main-grid {
                 display: grid;
-                grid-template-columns: 1.2fr 1fr;
+                grid-template-columns: 1.3fr 1fr;
                 gap: 32px;
-                animation: cltrReveal 0.5s cubic-bezier(0.16, 1, 0.3, 1) 0.15s both;
+                animation: panelReveal 0.4s cubic-bezier(0.16, 1, 0.3, 1) 0.2s both;
             }
 
-            /* Panel Aesthetics */
+            /* ===================================================
+               PANEL & CARD SYSTEM
+               =================================================== */
             .cltr-panel {
-                background: #fff;
+                background: #FFFFFF;
                 border: 1px solid #E5E5E5;
                 border-radius: 4px;
                 padding: 32px;
-                margin-bottom: 28px;
+                margin-bottom: 32px;
                 position: relative;
-                box-shadow: 0 1px 3px rgba(0,0,0,0.02);
-            }
-            .cltr-panel::before {
-                content: '';
-                position: absolute;
-                left: 0; top: 0; bottom: 0;
-                width: 3px;
-                background: #5C1414;
             }
             .cltr-panel-hdr {
                 display: flex;
@@ -246,62 +291,69 @@ export function renderToken() {
                 font-size: 11px;
                 font-weight: 700;
                 text-transform: uppercase;
-                letter-spacing: 2px;
+                letter-spacing: 1.5px;
+                color: #111111;
+            }
+            .cltr-panel-action {
+                font-family: 'JetBrains Mono', monospace;
+                font-size: 9px;
+                font-weight: 700;
+                text-transform: uppercase;
+                letter-spacing: 0.5px;
                 color: #5C1414;
+                text-decoration: none;
+                cursor: pointer;
             }
 
-            /* Input Fields styling */
-            .cltr-stake-box {
+            /* --- STAKING TERMINAL --- */
+            .cltr-stake-wrap {
                 display: flex;
                 flex-direction: column;
                 gap: 20px;
             }
-            .cltr-input-wrap {
+            .cltr-field-group {
                 display: flex;
                 flex-direction: column;
                 gap: 8px;
             }
-            .cltr-input-lbl-row {
+            .cltr-field-lbl-row {
                 display: flex;
                 justify-content: space-between;
                 font-family: 'JetBrains Mono', monospace;
                 font-size: 9px;
                 font-weight: 700;
                 text-transform: uppercase;
-                letter-spacing: 1px;
-                color: #5C1414;
+                letter-spacing: 0.5px;
+                color: #888;
             }
-            .cltr-input-lbl-row span.max-link {
+            .cltr-max-trigger {
                 cursor: pointer;
+                color: #5C1414;
                 text-decoration: underline;
-                transition: color 0.15s;
             }
-            .cltr-input-lbl-row span.max-link:hover {
-                color: #111;
-            }
-            .cltr-input-box {
+            .cltr-input-container {
                 position: relative;
             }
-            .cltr-input-box input {
+            .cltr-input-field {
                 width: 100%;
                 padding: 16px;
                 padding-right: 80px;
                 border: 1px solid #E5E5E5;
-                background: #FAFAFA;
+                background: #FCFCFC;
                 font-family: 'JetBrains Mono', monospace;
-                font-size: 20px;
+                font-size: 18px;
                 font-weight: 700;
                 outline: none;
                 box-sizing: border-box;
                 border-radius: 4px;
-                transition: border-color 0.15s, background 0.15s;
+                transition: all 0.15s ease;
             }
-            .cltr-input-box input:focus {
+            .cltr-input-field:focus:not(:disabled) {
                 border-color: #5C1414;
-                background: #fff;
-                box-shadow: 0 0 0 3px rgba(92, 20, 20, 0.08);
+                background: #FFFFFF;
+                box-shadow: 0 0 0 3px rgba(92, 20, 20, 0.04);
             }
-            .cltr-input-suffix {
+            .cltr-input-token {
                 position: absolute;
                 right: 18px;
                 top: 50%;
@@ -312,15 +364,15 @@ export function renderToken() {
                 color: #888;
             }
 
-            /* Lock Duration Buttons */
-            .cltr-durations {
+            /* Lock Pills Grid */
+            .cltr-lock-grid {
                 display: grid;
                 grid-template-columns: repeat(4, 1fr);
                 gap: 12px;
             }
-            .cltr-duration-pill {
+            .cltr-lock-pill {
                 border: 1px solid #E5E5E5;
-                background: #fff;
+                background: #FFFFFF;
                 padding: 14px 8px;
                 text-align: center;
                 cursor: pointer;
@@ -328,23 +380,21 @@ export function renderToken() {
                 border-radius: 4px;
                 outline: none;
             }
-            .cltr-duration-pill:hover {
+            .cltr-lock-pill:hover:not(:disabled) {
                 border-color: #5C1414;
-                background: rgba(92, 20, 20, 0.02);
             }
-            .cltr-duration-pill.active {
-                background: #5C1414;
-                border-color: #5C1414;
-                color: #fff;
+            .cltr-lock-pill.active {
+                background: #111111;
+                border-color: #111111;
+                color: #FFFFFF;
             }
-            .cltr-dur-days {
-                font-family: 'Sora', sans-serif;
+            .cltr-lock-days {
                 font-size: 13px;
                 font-weight: 700;
                 display: block;
                 margin-bottom: 2px;
             }
-            .cltr-dur-apy {
+            .cltr-lock-yield {
                 font-family: 'JetBrains Mono', monospace;
                 font-size: 8px;
                 font-weight: 700;
@@ -353,37 +403,37 @@ export function renderToken() {
                 opacity: 0.85;
             }
 
-            /* APY Info Summary Card */
-            .cltr-stake-summary {
-                background: #FCFCFC;
-                border: 1px dashed #E5E5E5;
+            /* Staking summary */
+            .cltr-calc-summary {
+                background: #FAFAFA;
+                border: 1px solid #E5E5E5;
                 border-radius: 4px;
-                padding: 16px 20px;
+                padding: 18px 20px;
                 font-family: 'JetBrains Mono', monospace;
                 font-size: 11px;
                 display: flex;
                 flex-direction: column;
                 gap: 8px;
             }
-            .cltr-sum-row {
+            .cltr-calc-row {
                 display: flex;
                 justify-content: space-between;
                 color: #666;
             }
-            .cltr-sum-row strong {
+            .cltr-calc-row strong {
                 color: #111;
             }
-            .cltr-sum-row.highlight strong {
+            .cltr-calc-row.accent strong {
                 color: #5C1414;
                 font-size: 12px;
             }
 
-            /* Action Buttons */
-            .cltr-btn-submit {
+            /* Action Button */
+            .cltr-action-submit {
                 width: 100%;
                 padding: 16px;
                 background: #5C1414;
-                color: #fff;
+                color: #FFFFFF;
                 border: none;
                 font-family: 'JetBrains Mono', monospace;
                 font-size: 11px;
@@ -391,63 +441,191 @@ export function renderToken() {
                 letter-spacing: 1.5px;
                 text-transform: uppercase;
                 cursor: pointer;
-                transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+                transition: all 0.2s ease;
                 border-radius: 4px;
             }
-            .cltr-btn-submit:hover {
+            .cltr-action-submit:hover:not(:disabled) {
                 background: #4A1010;
-                box-shadow: 0 4px 16px rgba(92, 20, 20, 0.25);
             }
-            .cltr-btn-submit:disabled {
+            .cltr-action-submit:disabled {
                 background: #E5E5E5;
                 color: #999;
                 cursor: not-allowed;
-                box-shadow: none;
             }
 
-            /* Vesting Cards */
-            .cltr-vest-card {
+            /* ===================================================
+               BURN VISUALIZATION
+               =================================================== */
+            .cltr-burn-visualizer {
+                display: flex;
+                flex-direction: column;
+                gap: 20px;
+                margin-top: 8px;
+            }
+            .cltr-chart-container {
+                height: 100px;
+                border-bottom: 1px solid #E5E5E5;
+                position: relative;
+                display: flex;
+                align-items: flex-end;
+            }
+            .cltr-chart-svg {
+                width: 100%;
+                height: 100%;
+                position: absolute;
+                top: 0; left: 0;
+            }
+            .cltr-chart-grid {
+                width: 100%;
+                height: 100%;
+                display: flex;
+                flex-direction: column;
+                justify-content: space-between;
+                position: absolute;
+                pointer-events: none;
+            }
+            .cltr-chart-grid-line {
+                width: 100%;
+                height: 1px;
+                background: #F0F0F0;
+            }
+            .cltr-burn-period-grid {
+                display: grid;
+                grid-template-columns: repeat(4, 1fr);
+                gap: 16px;
+            }
+            .cltr-burn-period-card {
+                background: #FAFAFA;
+                border: 1px solid #E5E5E5;
+                border-radius: 4px;
+                padding: 12px 14px;
+            }
+            .cltr-burn-period-lbl {
+                font-family: 'JetBrains Mono', monospace;
+                font-size: 8px;
+                color: #888;
+                text-transform: uppercase;
+                display: block;
+                margin-bottom: 4px;
+            }
+            .cltr-burn-period-num {
+                font-family: 'JetBrains Mono', monospace;
+                font-size: 12px;
+                font-weight: 700;
+                color: #111;
+            }
+
+            /* ===================================================
+               IDENTITY / REPUTATION LAYER
+               =================================================== */
+            .cltr-rep-layout {
+                display: grid;
+                grid-template-columns: repeat(3, 1fr);
+                gap: 16px;
+                margin-bottom: 20px;
+            }
+            .cltr-rep-stat {
+                background: #FAFAFA;
+                border: 1px solid #E5E5E5;
+                border-radius: 4px;
+                padding: 14px 16px;
+                display: flex;
+                flex-direction: column;
+                gap: 4px;
+            }
+            .cltr-rep-lbl {
+                font-family: 'JetBrains Mono', monospace;
+                font-size: 8px;
+                font-weight: 700;
+                color: #888;
+                text-transform: uppercase;
+                letter-spacing: 0.5px;
+            }
+            .cltr-rep-val {
+                font-family: 'JetBrains Mono', monospace;
+                font-size: 16px;
+                font-weight: 700;
+                color: #111;
+            }
+            .cltr-rep-score-box {
+                background: #111111;
+                color: #FFFFFF;
+                border-radius: 4px;
+                padding: 20px;
+                margin-bottom: 20px;
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+            }
+            .cltr-rep-score-left {
+                display: flex;
+                flex-direction: column;
+                gap: 4px;
+            }
+            .cltr-rep-score-lbl {
+                font-family: 'JetBrains Mono', monospace;
+                font-size: 9px;
+                color: #888;
+                text-transform: uppercase;
+                letter-spacing: 1px;
+            }
+            .cltr-rep-score-val {
+                font-family: 'JetBrains Mono', monospace;
+                font-size: 28px;
+                font-weight: 800;
+                color: #FFFFFF;
+                line-height: 1;
+            }
+            .cltr-rep-badge-glow {
+                font-family: 'JetBrains Mono', monospace;
+                font-size: 9px;
+                font-weight: 700;
+                padding: 4px 10px;
+                background: #5C1414;
+                color: #FFFFFF;
+                border-radius: 2px;
+                text-transform: uppercase;
+            }
+
+            /* --- TRUST & VESTING CARDS --- */
+            .cltr-trust-card {
                 border: 1px solid #E5E5E5;
                 border-radius: 4px;
                 padding: 20px;
                 margin-bottom: 16px;
-                background: #fff;
-                transition: border-color 0.2s;
+                background: #FFFFFF;
             }
-            .cltr-vest-card:hover {
-                border-color: rgba(92, 20, 20, 0.15);
-            }
-            .cltr-vest-card-hdr {
+            .cltr-trust-card-hdr {
                 display: flex;
                 justify-content: space-between;
                 align-items: baseline;
-                margin-bottom: 14px;
+                margin-bottom: 12px;
             }
-            .cltr-vest-name {
+            .cltr-trust-name {
                 font-size: 13px;
                 font-weight: 700;
                 color: #111;
             }
-            .cltr-vest-alloc {
+            .cltr-trust-alloc {
                 font-family: 'JetBrains Mono', monospace;
                 font-size: 11px;
                 color: #5C1414;
                 font-weight: 700;
             }
-            .cltr-vest-progress-bar {
+            .cltr-trust-progress-bg {
                 height: 4px;
-                background: #EEE;
+                background: #F0F0F0;
                 border-radius: 2px;
                 overflow: hidden;
                 margin-bottom: 8px;
             }
-            .cltr-vest-progress-fill {
+            .cltr-trust-progress-fill {
                 height: 100%;
                 background: #5C1414;
                 width: 0%;
                 transition: width 0.3s ease;
             }
-            .cltr-vest-progress-meta {
+            .cltr-trust-meta {
                 display: flex;
                 justify-content: space-between;
                 font-family: 'JetBrains Mono', monospace;
@@ -455,63 +633,134 @@ export function renderToken() {
                 color: #888;
                 margin-bottom: 16px;
             }
-
-            .cltr-claim-section {
+            .cltr-trust-claim-box {
                 display: flex;
                 align-items: center;
                 justify-content: space-between;
                 background: #FAFAFA;
+                border: 1px solid #E5E5E5;
                 padding: 12px 16px;
                 border-radius: 4px;
-                border: 1px solid #F0F0F0;
             }
-            .cltr-claim-lbl {
+            .cltr-trust-claim-lbl {
                 font-family: 'JetBrains Mono', monospace;
                 font-size: 9px;
                 color: #888;
                 text-transform: uppercase;
+                display: block;
             }
-            .cltr-claim-val {
+            .cltr-trust-claim-val {
                 font-family: 'JetBrains Mono', monospace;
                 font-size: 13px;
                 font-weight: 700;
                 color: #5C1414;
             }
-            .cltr-claim-btn {
-                background: #111;
-                color: #fff;
+            .cltr-trust-claim-btn {
+                background: #111111;
+                color: #FFFFFF;
                 border: none;
-                padding: 8px 16px;
+                padding: 8px 14px;
                 font-family: 'JetBrains Mono', monospace;
                 font-size: 9px;
                 font-weight: 700;
                 text-transform: uppercase;
                 cursor: pointer;
+                border-radius: 2px;
                 transition: all 0.15s ease;
-                border-radius: 3px;
             }
-            .cltr-claim-btn:hover:not(:disabled) {
+            .cltr-trust-claim-btn:hover:not(:disabled) {
                 background: #5C1414;
             }
-            .cltr-claim-btn:disabled {
-                background: #eee;
-                color: #ccc;
+            .cltr-trust-claim-btn:disabled {
+                background: #E5E5E5;
+                color: #999;
                 cursor: not-allowed;
             }
+            .cltr-contract-addr-row {
+                margin-top: 12px;
+                font-family: 'JetBrains Mono', monospace;
+                font-size: 8px;
+                color: #888;
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+            }
+            .cltr-contract-addr-row span.addr {
+                color: #555;
+                cursor: pointer;
+                text-decoration: underline;
+            }
 
-            /* Active Stakes Table */
-            .cltr-table-wrap {
+            /* ===================================================
+               LIVE ACTIVITY FEED
+               =================================================== */
+            .cltr-feed-list {
+                display: flex;
+                flex-direction: column;
+                gap: 12px;
+            }
+            .cltr-feed-item {
+                display: flex;
+                align-items: flex-start;
+                gap: 10px;
+                font-size: 12px;
+                color: #333;
+                line-height: 1.4;
+                border-bottom: 1px solid #F5F5F5;
+                padding-bottom: 10px;
+                animation: cltrReveal 0.3s ease;
+            }
+            .cltr-feed-item:last-child {
+                border-bottom: none;
+                padding-bottom: 0;
+            }
+            .cltr-feed-icon {
+                font-size: 12px;
+                flex-shrink: 0;
+            }
+            .cltr-feed-details {
+                flex: 1;
+            }
+            .cltr-feed-text {
+                font-weight: 500;
+            }
+            .cltr-feed-time {
+                display: block;
+                font-family: 'JetBrains Mono', monospace;
+                font-size: 8px;
+                color: #888;
+                margin-top: 2px;
+            }
+
+            /* --- PROTOCOL HEALTH TABLE --- */
+            .cltr-health-grid {
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+                gap: 16px;
+            }
+            .cltr-health-stat {
+                background: #FAFAFA;
+                border: 1px solid #E5E5E5;
+                border-radius: 4px;
+                padding: 14px 16px;
+                display: flex;
+                flex-direction: column;
+                gap: 4px;
+            }
+
+            /* --- TABLE SYSTEM --- */
+            .cltr-table-container {
                 overflow-x: auto;
                 border: 1px solid #E5E5E5;
                 border-radius: 4px;
             }
-            .cltr-table {
+            .cltr-data-table {
                 width: 100%;
                 border-collapse: collapse;
-                font-size: 12px;
+                font-size: 11px;
                 text-align: left;
             }
-            .cltr-table th {
+            .cltr-data-table th {
                 font-family: 'JetBrains Mono', monospace;
                 font-size: 9px;
                 text-transform: uppercase;
@@ -521,73 +770,32 @@ export function renderToken() {
                 border-bottom: 1px solid #E5E5E5;
                 background: #FCFCFC;
             }
-            .cltr-table td {
-                padding: 16px;
+            .cltr-data-table td {
+                padding: 14px 16px;
                 border-bottom: 1px solid #F0F0F0;
                 font-family: 'JetBrains Mono', monospace;
             }
-            .cltr-table tr:last-child td {
+            .cltr-data-table tr:last-child td {
                 border-bottom: none;
             }
-            .cltr-stake-progress {
-                width: 90px;
+            .cltr-progress-bar-mini {
+                width: 80px;
                 height: 4px;
-                background: #eee;
+                background: #EEE;
                 border-radius: 2px;
                 overflow: hidden;
                 display: inline-block;
                 vertical-align: middle;
                 margin-right: 8px;
             }
-            .cltr-stake-progress-fill {
+            .cltr-progress-bar-mini-fill {
                 height: 100%;
                 background: #5C1414;
                 width: 0%;
             }
-            .cltr-badge {
-                padding: 3px 6px;
-                border-radius: 3px;
-                font-size: 9px;
-                font-weight: 700;
-                text-transform: uppercase;
-            }
-            .cltr-badge.locked {
-                background: rgba(92, 20, 20, 0.05);
-                color: #5C1414;
-                border: 1px solid rgba(92, 20, 20, 0.15);
-            }
-            .cltr-badge.matured {
-                background: rgba(16, 185, 129, 0.08);
-                color: #10B981;
-                border: 1px solid rgba(16, 185, 129, 0.2);
-            }
 
-            .cltr-unstake-btn {
-                background: none;
-                border: 1px solid #E5E5E5;
-                padding: 6px 12px;
-                font-size: 9px;
-                font-weight: 700;
-                text-transform: uppercase;
-                cursor: pointer;
-                transition: all 0.2s;
-                border-radius: 3px;
-                color: #555;
-            }
-            .cltr-unstake-btn:hover:not(:disabled) {
-                border-color: #D82224;
-                color: #D82224;
-                background: rgba(216, 34, 36, 0.03);
-            }
-            .cltr-unstake-btn:disabled {
-                opacity: 0.35;
-                cursor: not-allowed;
-                border-color: #E5E5E5;
-                color: #aaa;
-            }
-
-            /* Transaction Modal Overlay */
-            .cltr-tx-modal {
+            /* --- MODALS --- */
+            .cltr-modal-backdrop {
                 position: fixed;
                 inset: 0;
                 background: rgba(0,0,0,0.5);
@@ -597,106 +805,105 @@ export function renderToken() {
                 justify-content: center;
                 z-index: 10000;
             }
-            .cltr-tx-modal.open {
+            .cltr-modal-backdrop.open {
                 display: flex;
             }
-            .cltr-tx-box {
-                background: #fff;
+            .cltr-modal-box {
+                background: #FFFFFF;
                 border-radius: 4px;
                 border: 1px solid #E5E5E5;
                 padding: 32px;
                 width: 100%;
                 max-width: 360px;
                 text-align: center;
-                box-shadow: 0 20px 50px rgba(0,0,0,0.15);
-            }
-            .cltr-tx-spinner {
-                width: 36px;
-                height: 36px;
-                border: 3px solid rgba(92, 20, 20, 0.1);
-                border-top-color: #5C1414;
-                border-radius: 50%;
-                animation: cltrSpin 1s linear infinite;
-                margin: 0 auto 20px;
-            }
-            @keyframes cltrSpin {
-                to { transform: rotate(360deg); }
-            }
-            .cltr-tx-title {
-                font-size: 14px;
-                font-weight: 700;
-                margin-bottom: 8px;
-            }
-            .cltr-tx-sub {
-                font-family: 'JetBrains Mono', monospace;
-                font-size: 10px;
-                color: #888;
+                box-shadow: 0 16px 48px rgba(0,0,0,0.1);
             }
 
             @media (max-width: 1024px) {
                 .cltr-main-grid { grid-template-columns: 1fr; }
-                .cltr-stats-grid { grid-template-columns: repeat(2, 1fr); }
+                .cltr-metrics-grid { grid-template-columns: repeat(2, 1fr); }
             }
             @media (max-width: 640px) {
-                .cltr-stats-grid { grid-template-columns: 1fr; }
-                .cltr-durations { grid-template-columns: repeat(2, 1fr); }
-                .cltr-hdr-container { flex-direction: column; align-items: flex-start; gap: 16px; }
-                .cltr-wallet-bar { flex-direction: column; align-items: flex-start; gap: 16px; }
-                .cltr-wallet-btn { width: 100%; text-align: center; }
+                .cltr-metrics-grid { grid-template-columns: 1fr; }
+                .cltr-focal-hero { flex-direction: column; align-items: flex-start; padding: 24px; }
+                .cltr-focal-right { flex-direction: column; gap: 16px; width: 100%; }
+                .cltr-lock-grid { grid-template-columns: repeat(2, 1fr); }
+                .cltr-rep-layout { grid-template-columns: 1fr; }
+                .cltr-health-grid { grid-template-columns: 1fr; }
             }
         </style>
 
         <div class="cltr-page">
             <div class="cltr-container">
 
-                <!-- Header -->
-                <div class="cltr-hdr-container">
-                    <div class="cltr-hdr-left">
-                        <!-- Inline SVG of official interlocking CLTR logo -->
-                        <svg class="cltr-hdr-logo-svg" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                <!-- Header block -->
+                <div class="cltr-header-group">
+                    <div class="cltr-header-left">
+                        <svg class="cltr-logo-svg" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
                             <path d="M 44.690,43.190 L 48.940,38.940 L 39.243,29.243 Q 35.000,25.000 30.757,29.243 L 14.243,45.757 Q 10.000,50.000 14.243,54.243 L 30.757,70.757 Q 35.000,75.000 39.243,70.757 L 55.757,54.243 Q 60.000,50.000 55.757,45.757 L 55.310,45.310 L 51.060,49.560 L 51.500,50.000 Q 53.621,52.121 51.500,54.243 L 39.243,66.500 Q 37.121,68.621 35.000,66.500 L 22.743,54.243 Q 20.621,52.121 22.743,50.000 L 35.000,37.743 Q 37.121,35.621 39.243,37.743 Z" />
                             <path d="M 55.310,56.810 L 51.060,61.060 L 60.757,70.757 Q 65.000,75.000 69.243,70.757 L 85.757,54.243 Q 90.000,50.000 85.757,45.757 L 69.243,29.243 Q 65.000,25.000 60.757,29.243 L 44.243,45.757 Q 40.000,50.000 44.243,54.243 L 44.690,54.690 L 48.940,50.440 L 48.500,50.000 Q 46.379,47.879 48.500,45.757 L 60.757,33.500 Q 62.879,31.379 65.000,33.500 L 77.257,45.757 Q 79.379,47.879 77.257,50.000 L 65.000,62.257 Q 62.879,64.379 60.757,62.257 Z" />
                         </svg>
                         <div class="cltr-hdr-title-group">
-                            <h1 class="cltr-hdr-title">CLTR CUSTODY TERMINAL</h1>
-                            <p class="cltr-hdr-sub">Manage staking, vesting, and protocol utilities.</p>
+                            <h1 class="cltr-title-text">CLTR CUSTODY TERMINAL</h1>
+                            <p class="cltr-title-desc">REPUTATION &amp; EXECUTION ESCROW PORTAL</p>
                         </div>
                     </div>
                 </div>
 
                 <!-- Web3 Connect Banner -->
-                <div class="cltr-wallet-bar">
-                    <div class="cltr-wallet-info">
-                        <div class="cltr-wallet-status-dot" id="w-dot"></div>
+                <div class="cltr-wallet-banner">
+                    <div class="cltr-wallet-status">
+                        <div class="cltr-status-indicator" id="w-dot"></div>
                         <div class="cltr-wallet-text">
                             <span id="w-status">DISCONNECTED</span>
-                            <span class="cltr-wallet-address" id="w-addr">—</span>
+                            <span class="cltr-wallet-hash" id="w-addr">—</span>
                         </div>
                     </div>
-                    <button class="cltr-wallet-btn" id="w-connect-btn">CONNECT WALLET</button>
+                    <button class="cltr-connect-btn" id="w-connect-btn">CONNECT WALLET</button>
                 </div>
 
-                <!-- Stats Grid -->
-                <div class="cltr-stats-grid">
-                    <div class="cltr-stat-card">
-                        <span class="cltr-stat-lbl">Wallet Balance</span>
-                        <div class="cltr-stat-val" id="stat-wallet-bal">—</div>
-                        <span class="cltr-stat-sub">CLTR available</span>
+                <!-- ===================================================
+                   DOMINANT FOCAL POINT
+                   =================================================== -->
+                <div class="cltr-focal-hero">
+                    <div class="cltr-focal-left">
+                        <div class="cltr-focal-lbl">TOTAL CAPITAL COMMITTED</div>
+                        <div class="cltr-focal-num" id="focal-total-committed">—</div>
+                        <p class="cltr-focal-sub">Aggregated collateral locked in active verification contracts across the protocol.</p>
                     </div>
-                    <div class="cltr-stat-card">
-                        <span class="cltr-stat-lbl">Locked TVL</span>
-                        <div class="cltr-stat-val" id="stat-locked-tvl">—</div>
-                        <span class="cltr-stat-sub" id="stat-locked-percent">—</span>
+                    <div class="cltr-focal-right">
+                        <div class="cltr-focal-mini-card">
+                            <span class="cltr-focal-mini-lbl">PROOFS CONVERTED TO BURN</span>
+                            <span class="cltr-focal-mini-num" id="focal-total-burned">—</span>
+                        </div>
+                        <div class="cltr-focal-mini-card">
+                            <span class="cltr-focal-mini-lbl">GLOBAL SUCCESS RATE</span>
+                            <span class="cltr-focal-mini-num">94.8%</span>
+                        </div>
                     </div>
-                    <div class="cltr-stat-card">
-                        <span class="cltr-stat-lbl">Proof-of-Success Burned</span>
-                        <div class="cltr-stat-val" id="stat-burned-cltr">—</div>
-                        <span class="cltr-stat-sub" id="stat-burned-ratio">—</span>
+                </div>
+
+                <!-- METRICS GRID -->
+                <div class="cltr-metrics-grid">
+                    <div class="cltr-metric-card">
+                        <span class="cltr-metric-lbl">Conviction Balance</span>
+                        <div class="cltr-metric-val" id="metric-conviction-bal">—</div>
+                        <span class="cltr-metric-sub">CLTR unlocked in wallet</span>
                     </div>
-                    <div class="cltr-stat-card">
-                        <span class="cltr-stat-lbl">Total Supply</span>
-                        <div class="cltr-stat-val">987,549,770</div>
-                        <span class="cltr-stat-sub">Fixed: 1,000,000,000</span>
+                    <div class="cltr-metric-card">
+                        <span class="cltr-metric-lbl">Committed Collateral</span>
+                        <div class="cltr-metric-val" id="metric-committed-collateral">—</div>
+                        <span class="cltr-metric-sub">CLTR locked in staking</span>
+                    </div>
+                    <div class="cltr-metric-card">
+                        <span class="cltr-metric-lbl">Interest Earned</span>
+                        <div class="cltr-metric-val" id="metric-yield-earned">—</div>
+                        <span class="cltr-metric-sub">Accrued rewards</span>
+                    </div>
+                    <div class="cltr-metric-card">
+                        <span class="cltr-metric-lbl">Protocol Supply</span>
+                        <div class="cltr-metric-val">987,549,770</div>
+                        <span class="cltr-metric-sub">Fixed cap: 1,000,000,000</span>
                     </div>
                 </div>
 
@@ -705,152 +912,259 @@ export function renderToken() {
 
                     <!-- Left: Staking & Active Stakes -->
                     <div>
-                        <!-- Staking Panel -->
+                        <!-- Commitment Staking Panel -->
                         <div class="cltr-panel">
                             <div class="cltr-panel-hdr">
                                 <span class="cltr-panel-title">COMMITMENT STAKING</span>
-                                <span id="staking-apr-badge" style="font-family:'JetBrains Mono', monospace; font-size:10px; font-weight:700; color:#10B981;">UP TO 25% APY</span>
+                                <span style="font-family:'JetBrains Mono', monospace; font-size:10px; font-weight:700; color:#10B981;">MAX YIELD: 25%</span>
                             </div>
 
-                            <div class="cltr-stake-box">
-                                <div class="cltr-input-wrap">
-                                    <div class="cltr-input-lbl-row">
-                                        <span>Amount to Stake</span>
-                                        <span class="max-link" id="stake-max-btn">MAX</span>
+                            <div class="cltr-stake-wrap">
+                                <div class="cltr-field-group">
+                                    <div class="cltr-field-lbl-row">
+                                        <span>Stake Amount</span>
+                                        <span class="cltr-max-trigger" id="stake-max-btn">MAX</span>
                                     </div>
-                                    <div class="cltr-input-box">
-                                        <input type="number" id="stake-input" min="1" placeholder="0.00" disabled>
-                                        <span class="cltr-input-suffix">CLTR</span>
-                                    </div>
-                                </div>
-
-                                <div class="cltr-input-wrap">
-                                    <label class="cltr-input-lbl-row">Lockup Duration</label>
-                                    <div class="cltr-durations">
-                                        <button class="cltr-duration-pill active" data-days="30" data-apy="5" disabled>
-                                            <span class="cltr-dur-days">30 Days</span>
-                                            <span class="cltr-dur-apy">5% APY</span>
-                                        </button>
-                                        <button class="cltr-duration-pill" data-days="90" data-apy="10" disabled>
-                                            <span class="cltr-dur-days">90 Days</span>
-                                            <span class="cltr-dur-apy">10% APY</span>
-                                        </button>
-                                        <button class="cltr-duration-pill" data-days="180" data-apy="15" disabled>
-                                            <span class="cltr-dur-days">180 Days</span>
-                                            <span class="cltr-dur-apy">15% APY</span>
-                                        </button>
-                                        <button class="cltr-duration-pill" data-days="365" data-apy="25" disabled>
-                                            <span class="cltr-dur-days">365 Days</span>
-                                            <span class="cltr-dur-apy">25% APY</span>
-                                        </button>
+                                    <div class="cltr-input-container">
+                                        <input type="number" class="cltr-input-field" id="stake-input" min="1" placeholder="0.00" disabled>
+                                        <span class="cltr-input-token">CLTR</span>
                                     </div>
                                 </div>
 
-                                <div class="cltr-stake-summary">
-                                    <div class="cltr-sum-row">
-                                        <span>Staking APY</span>
-                                        <span id="sum-apy">5.0%</span>
-                                    </div>
-                                    <div class="cltr-sum-row">
-                                        <span>Interest Earned</span>
-                                        <span id="sum-yield">0.00 CLTR</span>
-                                    </div>
-                                    <div class="cltr-sum-row highlight">
-                                        <span>Total Release</span>
-                                        <strong id="sum-total">0.00 CLTR</strong>
+                                <div class="cltr-field-group">
+                                    <label class="cltr-field-lbl-row">Commitment Lockup Period</label>
+                                    <div class="cltr-lock-grid">
+                                        <button class="cltr-lock-pill active" data-days="30" data-apy="5" disabled>
+                                            <span class="cltr-lock-days">30 Days</span>
+                                            <span class="cltr-lock-yield">5% Yield</span>
+                                        </button>
+                                        <button class="cltr-lock-pill" data-days="90" data-apy="10" disabled>
+                                            <span class="cltr-lock-days">90 Days</span>
+                                            <span class="cltr-lock-yield">10% Yield</span>
+                                        </button>
+                                        <button class="cltr-lock-pill" data-days="180" data-apy="15" disabled>
+                                            <span class="cltr-lock-days">180 Days</span>
+                                            <span class="cltr-lock-yield">15% Yield</span>
+                                        </button>
+                                        <button class="cltr-lock-pill" data-days="365" data-apy="25" disabled>
+                                            <span class="cltr-lock-days">365 Days</span>
+                                            <span class="cltr-lock-yield">25% Yield</span>
+                                        </button>
                                     </div>
                                 </div>
 
-                                <button class="cltr-btn-submit" id="stake-btn" disabled>STAKE CLTR</button>
+                                <div class="cltr-calc-summary">
+                                    <div class="cltr-calc-row">
+                                        <span>Commitment Yield</span>
+                                        <span id="calc-apy">5.0%</span>
+                                    </div>
+                                    <div class="cltr-calc-row">
+                                        <span>Interest Accrual</span>
+                                        <span id="calc-yield">0.00 CLTR</span>
+                                    </div>
+                                    <div class="cltr-calc-row accent">
+                                        <span>Total Release Balance</span>
+                                        <strong id="calc-total">0.00 CLTR</strong>
+                                    </div>
+                                </div>
+
+                                <button class="cltr-action-submit" id="stake-btn" disabled>STAKE CLTR</button>
                             </div>
                         </div>
 
                         <!-- Active Stakes Panel -->
                         <div class="cltr-panel">
                             <div class="cltr-panel-hdr">
-                                <span class="cltr-panel-title">ACTIVE LOCKED STAKES</span>
-                                <span style="font-family:'JetBrains Mono', monospace; font-size:10px; color:#888;" id="stakes-count">0 Stakes</span>
+                                <span class="cltr-panel-title">ACTIVE COMMITMENT POSITIONS</span>
+                                <span style="font-family:'JetBrains Mono', monospace; font-size:10px; color:#888;" id="stakes-count">0 Positions</span>
                             </div>
 
-                            <div class="cltr-table-wrap">
-                                <table class="cltr-table">
+                            <div class="cltr-table-container">
+                                <table class="cltr-data-table">
                                     <thead>
                                         <tr>
-                                            <th>Locked Amount</th>
+                                            <th>Staked Amount</th>
                                             <th>Lock Period</th>
                                             <th>Maturity</th>
-                                            <th>Yield</th>
+                                            <th>Accrued Yield</th>
                                             <th>Status</th>
                                             <th>Action</th>
                                         </tr>
                                     </thead>
                                     <tbody id="stakes-tbody">
                                         <tr>
-                                            <td colspan="6" style="text-align:center; color:#999; padding: 24px;">Connect wallet to view active locked positions.</td>
+                                            <td colspan="6" style="text-align:center; color:#999; padding: 24px;">Connect wallet to view active positions.</td>
                                         </tr>
                                     </tbody>
                                 </table>
                             </div>
                         </div>
-                    </div>
 
-                    <!-- Right: Vesting Contracts -->
-                    <div>
+                        <!-- BURN VISUALIZATION & DEFLATION HISTORY -->
                         <div class="cltr-panel">
                             <div class="cltr-panel-hdr">
-                                <span class="cltr-panel-title">LINEAR VESTING CONTRACTS</span>
+                                <span class="cltr-panel-title">DEFLATIONARY HISTORY &amp; SUPPLY SHRINKS</span>
+                            </div>
+                            <div class="cltr-burn-visualizer">
+                                <div class="cltr-chart-container">
+                                    <div class="cltr-chart-grid">
+                                        <div class="cltr-chart-grid-line"></div>
+                                        <div class="cltr-chart-grid-line"></div>
+                                        <div class="cltr-chart-grid-line"></div>
+                                    </div>
+                                    <!-- Supply contraction Sparkline path -->
+                                    <svg class="cltr-chart-svg" viewBox="0 0 100 30" preserveAspectRatio="none">
+                                        <path d="M 0,2 M 0,2 L 15,3 L 30,5 L 45,9 L 60,14 L 75,18 L 90,23 L 100,26" fill="none" stroke="#5C1414" stroke-width="2"/>
+                                    </svg>
+                                </div>
+                                <div class="cltr-burn-period-grid">
+                                    <div class="cltr-burn-period-card">
+                                        <span class="cltr-burn-period-lbl">Today</span>
+                                        <span class="cltr-burn-period-num">🔥 14,210</span>
+                                    </div>
+                                    <div class="cltr-burn-period-card">
+                                        <span class="cltr-burn-period-lbl">This Week</span>
+                                        <span class="cltr-burn-period-num">🔥 98,420</span>
+                                    </div>
+                                    <div class="cltr-burn-period-card">
+                                        <span class="cltr-burn-period-lbl">Burn Rate</span>
+                                        <span class="cltr-burn-period-num">1.25%</span>
+                                    </div>
+                                    <div class="cltr-burn-period-card">
+                                        <span class="cltr-burn-period-lbl">Proof Burn</span>
+                                        <span class="cltr-burn-period-num" style="color:#5C1414;">12.45M</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Right Column: Reputation Layer, Founder Trust & Activity Feed -->
+                    <div>
+                        <!-- Reputation Identity Card -->
+                        <div class="cltr-panel">
+                            <div class="cltr-panel-hdr">
+                                <span class="cltr-panel-title">CREDIBILITY IDENTITY LAYER</span>
                             </div>
 
-                            <!-- Founder Vesting -->
-                            <div class="cltr-vest-card">
-                                <div class="cltr-vest-card-hdr">
-                                    <span class="cltr-vest-name">Founder Vesting Wallet</span>
-                                    <span class="cltr-vest-alloc">50,000,000 CLTR</span>
+                            <div class="cltr-rep-score-box">
+                                <div class="cltr-rep-score-left">
+                                    <span class="cltr-rep-score-lbl">CONVICTION SCORE</span>
+                                    <span class="cltr-rep-score-val" id="rep-score">—</span>
                                 </div>
-                                <div class="cltr-vest-progress-bar">
-                                    <div class="cltr-vest-progress-fill" id="founder-vest-progress"></div>
-                                </div>
-                                <div class="cltr-vest-progress-meta">
-                                    <span>Vested: <strong id="founder-vested-label">—</strong></span>
-                                    <span id="founder-time-remaining">—</span>
-                                </div>
-                                <div class="cltr-claim-section">
-                                    <div>
-                                        <span class="cltr-claim-lbl" style="display:block;">Claimable Vested</span>
-                                        <span class="cltr-claim-val" id="founder-claimable-label">—</span>
-                                    </div>
-                                    <button class="cltr-claim-btn" id="founder-claim-btn" disabled>RELEASE TOKENS</button>
-                                </div>
+                                <span class="cltr-badge-glow" id="rep-rank">CONNECT WALLET</span>
                             </div>
 
-                            <!-- Team Vesting -->
-                            <div class="cltr-vest-card">
-                                <div class="cltr-vest-card-hdr">
-                                    <span class="cltr-vest-name">Team Allocation Vesting</span>
-                                    <span class="cltr-vest-alloc">150,000,000 CLTR</span>
+                            <div class="cltr-rep-layout">
+                                <div class="cltr-rep-stat">
+                                    <span class="cltr-rep-lbl">SUCCESS RATE</span>
+                                    <span class="cltr-rep-val" id="rep-success-rate">—</span>
                                 </div>
-                                <div class="cltr-vest-progress-bar">
-                                    <div class="cltr-vest-progress-fill" id="team-vest-progress"></div>
+                                <div class="cltr-rep-stat">
+                                    <span class="cltr-rep-lbl">CONTRACTS</span>
+                                    <span class="cltr-rep-val" id="rep-contracts-completed">—</span>
                                 </div>
-                                <div class="cltr-vest-progress-meta">
-                                    <span>Vested: <strong id="team-vested-label">—</strong></span>
-                                    <span id="team-time-remaining">—</span>
-                                </div>
-                                <div class="cltr-claim-section">
-                                    <div>
-                                        <span class="cltr-claim-lbl" style="display:block;">Claimable Vested</span>
-                                        <span class="cltr-claim-val" id="team-claimable-label">—</span>
-                                    </div>
-                                    <button class="cltr-claim-btn" id="team-claim-btn" disabled>RELEASE TOKENS</button>
+                                <div class="cltr-rep-stat">
+                                    <span class="cltr-rep-lbl">RANK</span>
+                                    <span class="cltr-rep-val" id="rep-rank-num">—</span>
                                 </div>
                             </div>
                         </div>
 
-                        <!-- Deflationary Info Card -->
-                        <div class="cltr-panel" style="background:#5C1414; border:none; color:#fff; padding: 24px;">
-                            <div style="font-family:'JetBrains Mono', monospace; font-size:10px; font-weight:700; text-transform:uppercase; letter-spacing:1px; margin-bottom:12px; color:rgba(255,255,255,0.85);">Deflationary Proof-of-Success Burn</div>
-                            <h4 style="font-size:16px; font-weight:700; margin:0 0 12px; line-height:1.3; color:#ffffff;">Human execution directly drives token supply reduction.</h4>
-                            <p style="font-size:12px; color:rgba(255,255,255,0.85); line-height:1.6; margin:0;">Whenever a self-betting contract is verified successfully on the platform, 2% of the settled amount is charged as a protocol execution fee. 50% of this fee is immediately converted and permanently burned, causing automatic token supply deflation.</p>
+                        <!-- Founder Trust Section -->
+                        <div class="cltr-panel">
+                            <div class="cltr-panel-hdr">
+                                <span class="cltr-panel-title">FOUNDER ALIGNMENT &amp; VESTING TRUST</span>
+                            </div>
+
+                            <!-- Founder Trust Vesting Details -->
+                            <div class="cltr-trust-card">
+                                <div class="cltr-trust-card-hdr">
+                                    <span class="cltr-trust-name">Founder Escrow Wallet</span>
+                                    <span class="cltr-trust-alloc">50,000,000 CLTR</span>
+                                </div>
+                                <div class="cltr-trust-progress-bg">
+                                    <div class="cltr-trust-progress-fill" id="founder-vest-progress"></div>
+                                </div>
+                                <div class="cltr-trust-meta">
+                                    <span>Vested: <strong id="founder-vested-label">—</strong></span>
+                                    <span id="founder-time-remaining">—</span>
+                                </div>
+                                <div class="cltr-trust-claim-box">
+                                    <div>
+                                        <span class="cltr-trust-claim-lbl">Claimable Vested</span>
+                                        <span class="cltr-trust-claim-val" id="founder-claimable-label">—</span>
+                                    </div>
+                                    <button class="cltr-trust-claim-btn" id="founder-claim-btn" disabled>RELEASE TOKENS</button>
+                                </div>
+                                <div class="cltr-contract-addr-row">
+                                    <span>Vesting Contract Address</span>
+                                    <span class="addr" onclick="navigator.clipboard.writeText('0x8f3Cf...3a4D'); alert('Address copied!');">0x8f3Cf...3a4D</span>
+                                </div>
+                            </div>
+
+                            <!-- Team Trust Vesting Details -->
+                            <div class="cltr-trust-card">
+                                <div class="cltr-trust-card-hdr">
+                                    <span class="cltr-trust-name">Team Allocation Vesting</span>
+                                    <span class="cltr-trust-alloc">150,000,000 CLTR</span>
+                                </div>
+                                <div class="cltr-trust-progress-bg">
+                                    <div class="cltr-trust-progress-fill" id="team-vest-progress"></div>
+                                </div>
+                                <div class="cltr-trust-meta">
+                                    <span>Vested: <strong id="team-vested-label">—</strong></span>
+                                    <span id="team-time-remaining">—</span>
+                                </div>
+                                <div class="cltr-trust-claim-box">
+                                    <div>
+                                        <span class="cltr-trust-claim-lbl">Claimable Vested</span>
+                                        <span class="cltr-trust-claim-val" id="team-claimable-label">—</span>
+                                    </div>
+                                    <button class="cltr-trust-claim-btn" id="team-claim-btn" disabled>RELEASE TOKENS</button>
+                                </div>
+                                <div class="cltr-contract-addr-row">
+                                    <span>Vesting Contract Address</span>
+                                    <span class="addr" onclick="navigator.clipboard.writeText('0x2e9bA...1f9E'); alert('Address copied!');">0x2e9bA...1f9E</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Live Activity Feed -->
+                        <div class="cltr-panel">
+                            <div class="cltr-panel-hdr">
+                                <span class="cltr-panel-title">LIVE PROTOCOL ACTIVITY</span>
+                                <span class="cltr-status-operational"><span class="dot" style="width: 4px; height: 4px; border-radius: 50%; background: #10b981; display: inline-block; animation: pulseIndicator 2.5s infinite; margin-right: 4px;"></span>Live Feed</span>
+                            </div>
+                            <div class="cltr-feed-list" id="activity-feed">
+                                <!-- Loading skeleton -->
+                                <div style="text-align:center; color:#999; font-size:11px; padding:12px; font-family:'JetBrains Mono', monospace;">Connecting live node feed...</div>
+                            </div>
+                        </div>
+
+                        <!-- Protocol Health / Stats -->
+                        <div class="cltr-panel">
+                            <div class="cltr-panel-hdr">
+                                <span class="cltr-panel-title">PROTOCOL HEALTH SUMMARY</span>
+                            </div>
+                            <div class="cltr-health-grid">
+                                <div class="cltr-health-stat">
+                                    <span class="cltr-rep-lbl">Active Contracts</span>
+                                    <span class="cltr-rep-val">142</span>
+                                </div>
+                                <div class="cltr-health-stat">
+                                    <span class="cltr-rep-lbl">Escrow Locked</span>
+                                    <span class="cltr-rep-val">45.2M CLTR</span>
+                                </div>
+                                <div class="cltr-health-stat">
+                                    <span class="cltr-rep-lbl">Burned Today</span>
+                                    <span class="cltr-rep-val">14,210 CLTR</span>
+                                </div>
+                                <div class="cltr-health-stat">
+                                    <span class="cltr-rep-lbl">Circulating Supply</span>
+                                    <span class="cltr-rep-val">342.5M CLTR</span>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -858,9 +1172,9 @@ export function renderToken() {
             </div>
         </div>
 
-        <!-- ===== TX STATUS MODAL ===== -->
-        <div id="tx-modal" class="cltr-tx-modal">
-            <div class="cltr-tx-box">
+        <!-- ===== TX MODAL ===== -->
+        <div id="tx-modal" class="cltr-modal-backdrop">
+            <div class="cltr-modal-box">
                 <div class="cltr-tx-spinner"></div>
                 <h3 class="cltr-tx-title" id="tx-title">Waiting for Wallet Confirmation</h3>
                 <p class="cltr-tx-sub" id="tx-sub">Please approve the transaction in MetaMask or your linked Web3 wallet.</p>
@@ -870,7 +1184,7 @@ export function renderToken() {
 }
 
 // ═══════════════════════════════════════════════════════
-// DYNAMIC INTERACTION LOGIC
+// DYNAMIC PORTAL LOGIC & ANIMATIONS
 // ═══════════════════════════════════════════════════════
 export function initToken() {
     const connectBtn = document.getElementById('w-connect-btn');
@@ -878,19 +1192,20 @@ export function initToken() {
     const wStatus = document.getElementById('w-status');
     const wAddr = document.getElementById('w-addr');
 
-    const statWalletBal = document.getElementById('stat-wallet-bal');
-    const statLockedTvl = document.getElementById('stat-locked-tvl');
-    const statLockedPercent = document.getElementById('stat-locked-percent');
-    const statBurnedCltr = document.getElementById('stat-burned-cltr');
-    const statBurnedRatio = document.getElementById('stat-burned-ratio');
+    const focalTotalCommitted = document.getElementById('focal-total-committed');
+    const focalTotalBurned = document.getElementById('focal-total-burned');
+
+    const metricConvictionBal = document.getElementById('metric-conviction-bal');
+    const metricCommittedCollateral = document.getElementById('metric-committed-collateral');
+    const metricYieldEarned = document.getElementById('metric-yield-earned');
 
     const stakeInput = document.getElementById('stake-input');
     const maxBtn = document.getElementById('stake-max-btn');
     const stakeBtn = document.getElementById('stake-btn');
-    const durationPills = document.querySelectorAll('.cltr-duration-pill');
-    const sumApy = document.getElementById('sum-apy');
-    const sumYield = document.getElementById('sum-yield');
-    const sumTotal = document.getElementById('sum-total');
+    const lockPills = document.querySelectorAll('.cltr-lock-pill');
+    const calcApy = document.getElementById('calc-apy');
+    const calcYield = document.getElementById('calc-yield');
+    const calcTotal = document.getElementById('calc-total');
 
     const stakesCount = document.getElementById('stakes-count');
     const stakesTbody = document.getElementById('stakes-tbody');
@@ -898,6 +1213,13 @@ export function initToken() {
     const txModal = document.getElementById('tx-modal');
     const txTitle = document.getElementById('tx-title');
     const txSub = document.getElementById('tx-sub');
+
+    // Reputation Elements
+    const repScore = document.getElementById('rep-score');
+    const repRank = document.getElementById('rep-rank');
+    const repSuccessRate = document.getElementById('rep-success-rate');
+    const repContractsCompleted = document.getElementById('rep-contracts-completed');
+    const repRankNum = document.getElementById('rep-rank-num');
 
     // Vesting Elements
     const founderProgress = document.getElementById('founder-vest-progress');
@@ -912,19 +1234,21 @@ export function initToken() {
     const teamClaimableLabel = document.getElementById('team-claimable-label');
     const teamClaimBtn = document.getElementById('team-claim-btn');
 
-    // State Variables (with persistent store)
+    // Activity Feed Element
+    const activityFeed = document.getElementById('activity-feed');
+
+    // State Variables
     let isConnected = localStorage.getItem('cltr_wallet_connected') === 'true';
     let balance = parseFloat(localStorage.getItem('cltr_wallet_balance') || '250000');
     let stakedBalance = parseFloat(localStorage.getItem('cltr_staked_balance') || '0');
     let activeAPY = 5;
     let activeDuration = 30;
 
-    // Vesting Timelines
+    // Vesting schedules config
     const vestingStart = 1717171200; // June 1, 2024
-    const vestingDuration = 4 * 365 * 24 * 60 * 60; // 4 Years in seconds
-    const vestingCliff = 365 * 24 * 60 * 60; // 1 Year in seconds
+    const vestingDuration = 4 * 365 * 24 * 60 * 60; // 4 Years
+    const vestingCliff = 365 * 24 * 60 * 60; // 1 Year
     
-    // Claimed tracking
     let founderClaimed = parseFloat(localStorage.getItem('cltr_founder_claimed') || '0');
     let teamClaimed = parseFloat(localStorage.getItem('cltr_team_claimed') || '0');
 
@@ -937,33 +1261,58 @@ export function initToken() {
         return 5;
     }
 
-    // Number Formatter
     function formatNumber(num) {
         return num.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
     }
 
-    // Update Global Display Statistics
+    // Dynamic Live Tickers & Number Transitions
+    let counterIntervals = {};
+    function animateValue(element, start, end, duration) {
+        const id = element.id;
+        if (counterIntervals[id]) clearInterval(counterIntervals[id]);
+        
+        let startTimestamp = null;
+        const step = (timestamp) => {
+            if (!startTimestamp) startTimestamp = timestamp;
+            const progress = Math.min((timestamp - startTimestamp) / duration, 1);
+            const currentVal = progress * (end - start) + start;
+            element.innerText = formatNumber(currentVal);
+            if (progress < 1) {
+                window.requestAnimationFrame(step);
+            } else {
+                element.innerText = formatNumber(end);
+            }
+        };
+        window.requestAnimationFrame(step);
+    }
+
     function updateStats() {
+        const totalCommitted = 182450000 + stakedBalance;
+        const totalBurned = 12450230;
+
         if (!isConnected) {
-            statWalletBal.innerText = '—';
-            statLockedTvl.innerText = '—';
-            statLockedPercent.innerText = '—';
-            statBurnedCltr.innerText = '12,450,230';
-            statBurnedRatio.innerText = '1.25% Burn rate';
+            focalTotalCommitted.innerText = '—';
+            focalTotalBurned.innerText = '—';
+            metricConvictionBal.innerText = '—';
+            metricCommittedCollateral.innerText = '—';
+            metricYieldEarned.innerText = '—';
             return;
         }
 
-        statWalletBal.innerText = formatNumber(balance);
-        statLockedTvl.innerText = formatNumber(182450000 + stakedBalance);
+        // Animated counters for key metrics
+        animateValue(focalTotalCommitted, totalCommitted - 10000, totalCommitted, 800);
+        animateValue(focalTotalBurned, totalBurned - 50, totalBurned, 800);
         
-        const tvlPercent = ((182450000 + stakedBalance) / 1000000000) * 100;
-        statLockedPercent.innerText = `${tvlPercent.toFixed(2)}% of supply locked`;
-
-        statBurnedCltr.innerText = '12,450,230';
-        statBurnedRatio.innerText = '1.25% Burn rate';
+        metricConvictionBal.innerText = formatNumber(balance);
+        metricCommittedCollateral.innerText = formatNumber(stakedBalance);
+        
+        // Calculate accrued rewards on current stakes
+        const list = getStakes();
+        const accruedRewards = list.reduce((sum, item) => sum + item.yield, 0);
+        metricYieldEarned.innerText = formatNumber(accruedRewards);
     }
 
-    // Load active stakes list
+    // Load active positions
     function getStakes() {
         try {
             return JSON.parse(localStorage.getItem('cltr_stakes_list') || '[]');
@@ -976,13 +1325,13 @@ export function initToken() {
         localStorage.setItem('cltr_stakes_list', JSON.stringify(list));
     }
 
-    // Update Staking Summary card values
+    // Update Staking Summary calculator
     function updateStakeSummary() {
         const amt = parseFloat(stakeInput.value) || 0;
         const interest = amt * (activeAPY / 100) * (activeDuration / 365);
-        sumApy.innerText = `${activeAPY.toFixed(1)}%`;
-        sumYield.innerText = `${formatNumber(interest)} CLTR`;
-        sumTotal.innerText = `${formatNumber(amt + interest)} CLTR`;
+        calcApy.innerText = `${activeAPY.toFixed(1)}%`;
+        calcYield.innerText = `${formatNumber(interest)} CLTR`;
+        calcTotal.innerText = `${formatNumber(amt + interest)} CLTR`;
 
         if (amt > 0 && amt <= balance) {
             stakeBtn.removeAttribute('disabled');
@@ -991,7 +1340,7 @@ export function initToken() {
         }
     }
 
-    // Render Stakes Table
+    // Render Positions Table
     function renderStakesTable() {
         if (!isConnected) {
             stakesTbody.innerHTML = `
@@ -999,12 +1348,12 @@ export function initToken() {
                     <td colspan="6" style="text-align:center; color:#999; padding: 24px;">Connect wallet to view active locked positions.</td>
                 </tr>
             `;
-            stakesCount.innerText = '0 Stakes';
+            stakesCount.innerText = '0 Positions';
             return;
         }
 
         const list = getStakes();
-        stakesCount.innerText = `${list.length} Stake${list.length === 1 ? '' : 's'}`;
+        stakesCount.innerText = `${list.length} Position${list.length === 1 ? '' : 's'}`;
 
         if (list.length === 0) {
             stakesTbody.innerHTML = `
@@ -1037,8 +1386,8 @@ export function initToken() {
                     <td><strong>${formatNumber(item.amount)} CLTR</strong></td>
                     <td>${item.durationDays} Days @ ${item.apy}%</td>
                     <td>
-                        <div class="cltr-stake-progress">
-                            <div class="cltr-stake-progress-fill" style="width: ${progress}%"></div>
+                        <div class="cltr-progress-bar-mini">
+                            <div class="cltr-progress-bar-mini-fill" style="width: ${progress}%"></div>
                         </div>
                         ${endDateStr}
                     </td>
@@ -1049,7 +1398,7 @@ export function initToken() {
             `;
         }).join('');
 
-        // Wire up unstake buttons
+        // Wire up unstake triggers
         document.querySelectorAll('.cltr-unstake-btn').forEach(btn => {
             btn.addEventListener('click', function() {
                 const idx = parseInt(this.getAttribute('data-index'));
@@ -1058,7 +1407,7 @@ export function initToken() {
         });
     }
 
-    // Ticking Live Vesting Data
+    // Ticking Live Vesting & Claim status
     let vestingInterval = null;
     function startVestingTicker() {
         if (vestingInterval) clearInterval(vestingInterval);
@@ -1082,11 +1431,11 @@ export function initToken() {
                 founderProgressPct = (elapsed / vestingDuration) * 100;
 
                 if (elapsed >= vestingDuration) {
-                    founderTimeText = 'Fully Vested';
+                    founderTimeText = 'Escrow Finished';
                     founderProgressPct = 100;
                 } else {
                     const daysLeft = Math.ceil((vestingDuration - elapsed) / (24 * 60 * 60));
-                    founderTimeText = `${daysLeft} days remaining`;
+                    founderTimeText = `${daysLeft} days left`;
                 }
             } else {
                 founderTimeText = 'Locked (Cliff: 1 Year)';
@@ -1117,11 +1466,11 @@ export function initToken() {
                 teamProgressPct = (elapsed / vestingDuration) * 100;
 
                 if (elapsed >= vestingDuration) {
-                    teamTimeText = 'Fully Vested';
+                    teamTimeText = 'Escrow Finished';
                     teamProgressPct = 100;
                 } else {
                     const daysLeft = Math.ceil((vestingDuration - elapsed) / (24 * 60 * 60));
-                    teamTimeText = `${daysLeft} days remaining`;
+                    teamTimeText = `${daysLeft} days left`;
                 }
             } else {
                 teamTimeText = 'Locked (Cliff: 1 Year)';
@@ -1154,9 +1503,16 @@ export function initToken() {
             connectBtn.innerText = 'DISCONNECT';
             connectBtn.classList.add('connected');
 
-            // Enable Staking Box
+            // Reputation Data Activation
+            repScore.innerText = '824 / 1000';
+            repRank.innerText = 'Tier I Guardian';
+            repSuccessRate.innerText = '96.2%';
+            repContractsCompleted.innerText = '42';
+            repRankNum.innerText = '#124 Global';
+
+            // Enable Staking inputs
             stakeInput.removeAttribute('disabled');
-            durationPills.forEach(p => p.removeAttribute('disabled'));
+            lockPills.forEach(p => p.removeAttribute('disabled'));
         } else {
             wDot.classList.remove('connected');
             wStatus.innerText = 'DISCONNECTED';
@@ -1165,13 +1521,20 @@ export function initToken() {
             connectBtn.innerText = 'CONNECT WALLET';
             connectBtn.classList.remove('connected');
 
-            // Disable Staking Box
+            // Reset Reputation Data
+            repScore.innerText = '—';
+            repRank.innerText = 'CONNECT WALLET';
+            repSuccessRate.innerText = '—';
+            repContractsCompleted.innerText = '—';
+            repRankNum.innerText = '—';
+
+            // Disable Staking inputs
             stakeInput.setAttribute('disabled', 'true');
             stakeInput.value = '';
-            durationPills.forEach(p => p.setAttribute('disabled', 'true'));
+            lockPills.forEach(p => p.setAttribute('disabled', 'true'));
             stakeBtn.setAttribute('disabled', 'true');
 
-            // Reset Vesting Cards labels
+            // Reset Vesting Cards
             founderVestedLabel.innerText = '—';
             founderTimeRemaining.innerText = '—';
             founderClaimableLabel.innerText = '—';
@@ -1191,7 +1554,61 @@ export function initToken() {
         renderStakesTable();
     }
 
-    // Trigger Wallet Connect animation
+    // Live Activity Feed Simulation
+    const feedEvents = [
+        { icon: '🔥', text: '1,240 CLTR converted to burn' },
+        { icon: '✓', text: 'Revenue contract verified for 0x3f...d82a' },
+        { icon: '✓', text: 'Creator challenge completed successfully' },
+        { icon: '🔥', text: '4,520 CLTR burned from protocol challenge pool' },
+        { icon: '✓', text: '$18,400 collateral escrow settled' },
+        { icon: '✓', text: 'Founder vesting schedule updated' },
+        { icon: '✓', text: 'New credibility milestones achieved by network verifiers' }
+    ];
+    let feedInterval = null;
+    function startFeedTicker() {
+        if (feedInterval) clearInterval(feedInterval);
+
+        function addRandomFeed() {
+            const ev = feedEvents[Math.floor(Math.random() * feedEvents.length)];
+            const time = new Date().toLocaleTimeString('en-US', { hour12: false });
+            
+            const itemHTML = `
+                <div class="cltr-feed-item">
+                    <span class="cltr-feed-icon">${ev.icon}</span>
+                    <div class="cltr-feed-details">
+                        <span class="cltr-feed-text">${ev.text}</span>
+                        <span class="cltr-feed-time">${time} UTC</span>
+                    </div>
+                </div>
+            `;
+            
+            // Prepend new item
+            const container = document.getElementById('activity-feed');
+            if (container) {
+                // If contains loading skeleton, replace it
+                if (container.innerText.includes('Connecting')) {
+                    container.innerHTML = '';
+                }
+                
+                container.insertAdjacentHTML('afterbegin', itemHTML);
+                
+                // Max 5 items
+                while (container.children.length > 5) {
+                    container.removeChild(container.lastChild);
+                }
+            }
+        }
+
+        // Seed 3 initial items
+        for (let i = 0; i < 3; i++) {
+            setTimeout(addRandomFeed, i * 400);
+        }
+
+        // Ticker loop
+        feedInterval = setInterval(addRandomFeed, 6000);
+    }
+
+    // Trigger Wallet Connect
     connectBtn.addEventListener('click', function() {
         if (isConnected) {
             isConnected = false;
@@ -1212,7 +1629,7 @@ export function initToken() {
         }
     });
 
-    // Staking input listener
+    // Staking inputs
     stakeInput.addEventListener('input', updateStakeSummary);
     maxBtn.addEventListener('click', function() {
         if (!isConnected) return;
@@ -1220,11 +1637,11 @@ export function initToken() {
         updateStakeSummary();
     });
 
-    // Duration pills handler
-    durationPills.forEach(pill => {
+    // Lock period pills
+    lockPills.forEach(pill => {
         pill.addEventListener('click', function() {
             if (!isConnected) return;
-            durationPills.forEach(p => p.classList.remove('active'));
+            lockPills.forEach(p => p.classList.remove('active'));
             this.classList.add('active');
 
             activeDuration = parseInt(this.getAttribute('data-days'));
@@ -1233,13 +1650,13 @@ export function initToken() {
         });
     });
 
-    // Stake Execution
+    // Stake Transaction Execution
     stakeBtn.addEventListener('click', function() {
         const amt = parseFloat(stakeInput.value) || 0;
         if (amt <= 0 || amt > balance) return;
 
-        txTitle.innerText = 'Executing Stake Commitment';
-        txSub.innerText = `Locking ${formatNumber(amt)} CLTR in staking contract for ${activeDuration} days...`;
+        txTitle.innerText = 'Signing Escrow Lockup';
+        txSub.innerText = `Locking ${formatNumber(amt)} CLTR in commitment escrow for ${activeDuration} days...`;
         txModal.classList.add('open');
 
         setTimeout(() => {
@@ -1274,18 +1691,22 @@ export function initToken() {
             updateStats();
             renderStakesTable();
 
-            alert(`✅ Staking Successful!\n\nLocked ${formatNumber(amt)} CLTR at ${activeAPY}% APY for ${activeDuration} days.`);
-        }, 3000);
+            // Custom UI feedback instead of native alerts
+            txTitle.innerText = 'Commitment Locked';
+            txSub.innerText = `${formatNumber(amt)} CLTR locked successfully.`;
+            txModal.classList.add('open');
+            setTimeout(() => txModal.classList.remove('open'), 2000);
+        }, 3200);
     });
 
-    // Unstake Execution
+    // Unstake Transaction Execution
     function executeUnstake(index) {
         const list = getStakes();
         const item = list[index];
         if (!item) return;
 
-        txTitle.innerText = 'Releasing Staked Balance';
-        txSub.innerText = `Unstaking ${formatNumber(item.amount)} CLTR + ${formatNumber(item.yield)} Yield...`;
+        txTitle.innerText = 'Releasing Escrowed Balance';
+        txSub.innerText = `Withdrawing ${formatNumber(item.amount)} CLTR + ${formatNumber(item.yield)} yield...`;
         txModal.classList.add('open');
 
         setTimeout(() => {
@@ -1304,11 +1725,14 @@ export function initToken() {
             updateStats();
             renderStakesTable();
 
-            alert(`✅ Unstaked Successful!\n\nCredited ${formatNumber(payout)} CLTR to your wallet.`);
+            txTitle.innerText = 'Balance Released';
+            txSub.innerText = `${formatNumber(payout)} CLTR credited back to conviction balance.`;
+            txModal.classList.add('open');
+            setTimeout(() => txModal.classList.remove('open'), 2000);
         }, 2000);
     }
 
-    // Release Vesting Tokens
+    // Release Vesting Escrows
     founderClaimBtn.addEventListener('click', function() {
         const nowSec = Math.floor(Date.now() / 1000);
         const elapsed = nowSec - vestingStart;
@@ -1318,8 +1742,8 @@ export function initToken() {
 
         if (claimable <= 0) return;
 
-        txTitle.innerText = 'Releasing Vested Tokens';
-        txSub.innerText = `Withdrawing ${formatNumber(claimable)} CLTR to beneficiary address…`;
+        txTitle.innerText = 'Releasing Vesting Escrow';
+        txSub.innerText = `Withdrawing ${formatNumber(claimable)} CLTR to beneficiary…`;
         txModal.classList.add('open');
 
         setTimeout(() => {
@@ -1332,7 +1756,11 @@ export function initToken() {
             localStorage.setItem('cltr_founder_claimed', founderClaimed.toString());
 
             updateStats();
-            alert(`✅ Release Successful!\n\nTransferred ${formatNumber(claimable)} CLTR to your wallet.`);
+
+            txTitle.innerText = 'Tokens Released';
+            txSub.innerText = `${formatNumber(claimable)} CLTR added to conviction balance.`;
+            txModal.classList.add('open');
+            setTimeout(() => txModal.classList.remove('open'), 2000);
         }, 2000);
     });
 
@@ -1345,7 +1773,7 @@ export function initToken() {
 
         if (claimable <= 0) return;
 
-        txTitle.innerText = 'Releasing Vested Tokens';
+        txTitle.innerText = 'Releasing Vesting Escrow';
         txSub.innerText = `Withdrawing ${formatNumber(claimable)} CLTR to team wallet…`;
         txModal.classList.add('open');
 
@@ -1359,12 +1787,17 @@ export function initToken() {
             localStorage.setItem('cltr_team_claimed', teamClaimed.toString());
 
             updateStats();
-            alert(`✅ Release Successful!\n\nTransferred ${formatNumber(claimable)} CLTR to your wallet.`);
+
+            txTitle.innerText = 'Tokens Released';
+            txSub.innerText = `${formatNumber(claimable)} CLTR added to conviction balance.`;
+            txModal.classList.add('open');
+            setTimeout(() => txModal.classList.remove('open'), 2000);
         }, 2000);
     });
 
-    // Initialize UI state
+    // Initialize View states & feeds
     updateConnectionUI();
+    startFeedTicker();
     if (isConnected) {
         startVestingTicker();
     }

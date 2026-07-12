@@ -4,7 +4,8 @@ export function renderHeader(currentRoute) {
         { path: '/market', label: 'MARKET', hasDropdown: true },
         { path: '/my-contracts', label: 'ACTIVE' },
         { path: '/ledger', label: 'LEDGER' },
-        { path: '/sources', label: 'SOURCES' }
+        { path: '/sources', label: 'SOURCES' },
+        { path: '/token', label: '$CLTR' }
     ];
 
     const navItems = routes.map(route => {

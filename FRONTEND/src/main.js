@@ -34,6 +34,7 @@ import { renderLanding, initLanding } from './views/Landing.js';
 import { renderOnboarding, initOnboarding, shouldShowOnboarding, completeOnboarding } from './views/Onboarding.js';
 import { renderSEOLanding, initSEOLanding } from './views/SEOLanding.js';
 import { renderCreators, initCreators } from './views/Creators.js';
+import { renderToken, initToken } from './views/Token.js';
 import './views/PreLaunch.css';
 import './index.css';
 import './mobile.css';
@@ -243,6 +244,7 @@ const routes = PRE_LAUNCH_MODE ? [
     { path: '/reset-password', render: renderResetPassword, init: initResetPassword },
     { path: '/referrals', render: renderReferrals, init: initReferrals },
     { path: '/creators', render: renderCreators, init: initCreators },
+    { path: '/token', render: renderToken, init: initToken },
     {
         path: '/r/:code', render: () => '<div></div>', init: (params) => {
             // Store referral code and redirect to signup

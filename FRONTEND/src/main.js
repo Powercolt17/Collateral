@@ -2,6 +2,8 @@
 import { showAlert, showConfirm } from './modal.js';
 import { Router } from './router.js';
 import { renderHeader, initScrollEffects } from './components/Header.js';
+import { getAccount, watchAccount, disconnect, signMessage } from '@wagmi/core';
+import { modal, wagmiAdapter } from './web3.js';
 import { renderOverview, initOverview } from './views/Overview.js';
 import { renderRivalry, initRivalry } from './views/Rivalry.js';
 import { renderRivalryDetail, initRivalryDetail } from './views/RivalryDetail.js';
@@ -92,6 +94,16 @@ const appState = {
         twitter: false,
         github: false,
         stripe: false
+    },
+    unified: {
+        user: null,
+        authStatus: api.hasAuthToken() ? 'signed_in' : 'signed_out',
+        connectedWallet: null,
+        linkedWallets: [],
+        primaryWallet: null,
+        walletStatus: 'disconnected',
+        chainId: null,
+        isCorrectChain: false
     }
 };
 
@@ -177,6 +189,9 @@ async function hydrateSession() {
     } finally {
         appState.sessionHydrated = true;
         updateAuthUI();
+        if (window.app && window.app.syncUnifiedState) {
+            window.app.syncUnifiedState();
+        }
     }
 }
 
@@ -244,7 +259,7 @@ const routes = PRE_LAUNCH_MODE ? [
     { path: '/reset-password', render: renderResetPassword, init: initResetPassword },
     { path: '/referrals', render: renderReferrals, init: initReferrals },
     { path: '/creators', render: renderCreators, init: initCreators },
-    { path: '/token', render: renderToken, init: initToken },
+    { path: '/protocol', render: renderToken, init: initToken },
     {
         path: '/r/:code', render: () => '<div></div>', init: (params) => {
             // Store referral code and redirect to signup
@@ -1504,6 +1519,146 @@ window.app = {
         }
     }
 };
+
+// ============================================================================
+// UNIFIED WALLET LINKING SYSTEM
+// ============================================================================
+window.app.syncUnifiedState = async function () {
+    const account = getAccount(wagmiAdapter.wagmiConfig);
+    const hasToken = api.hasAuthToken();
+
+    appState.unified.authStatus = hasToken ? 'signed_in' : 'signed_out';
+    appState.unified.user = hasToken ? {
+        id: appState.userId,
+        email: storedUser?.email || '',
+        displayName: appState.displayName || appState.username || ''
+    } : null;
+
+    if (account.isConnected && account.address) {
+        appState.unified.connectedWallet = account.address.toLowerCase();
+        appState.unified.chainId = account.chainId;
+        appState.unified.isCorrectChain = account.chainId === 4663;
+    } else {
+        appState.unified.connectedWallet = null;
+        appState.unified.chainId = null;
+        appState.unified.isCorrectChain = false;
+    }
+
+    if (hasToken) {
+        try {
+            const res = await api.getLinkedWallets();
+            if (res && res.ok) {
+                appState.unified.linkedWallets = res.wallets || [];
+                appState.unified.primaryWallet = appState.unified.linkedWallets.find(w => w.isPrimary) || null;
+            }
+        } catch (err) {
+            console.error('[UnifiedState] Failed to fetch linked wallets:', err);
+        }
+
+        if (appState.unified.connectedWallet) {
+            const isLinked = appState.unified.linkedWallets.some(
+                w => w.walletAddress.toLowerCase() === appState.unified.connectedWallet
+            );
+            appState.unified.walletStatus = isLinked ? 'connected_linked' : 'connected_not_linked';
+
+            // Auto-trigger link prompt if logged in, wallet is connected, but not linked
+            if (!isLinked && !window.app._linkingPromptActive) {
+                window.app.promptLinkWallet(appState.unified.connectedWallet);
+            }
+        } else {
+            appState.unified.walletStatus = 'disconnected';
+        }
+    } else {
+        appState.unified.linkedWallets = [];
+        appState.unified.primaryWallet = null;
+        appState.unified.walletStatus = 'disconnected';
+    }
+
+    console.log('[UnifiedState] Synced state:', JSON.stringify(appState.unified));
+
+    // Notify active views/components to re-render
+    if (window.app.renderLinkedWallets) {
+        window.app.renderLinkedWallets();
+    }
+    
+    // Update connected banner in Token view if active
+    if (window.app.updateTokenConnectedState) {
+        window.app.updateTokenConnectedState();
+    }
+};
+
+window.app._linkingPromptActive = false;
+window.app.promptLinkWallet = async function (address) {
+    if (window.app._linkingPromptActive) return;
+    window.app._linkingPromptActive = true;
+
+    try {
+        const accept = await showConfirm(
+            `Link connected wallet ${address.slice(0, 6)}...${address.slice(-4)} to your Collateral account?`,
+            {
+                title: 'Link Wallet Identity',
+                confirmText: 'LINK WALLET',
+                cancelText: 'NOT NOW'
+            }
+        );
+
+        if (!accept) {
+            window.app._linkingPromptActive = false;
+            return;
+        }
+
+        // Fetch nonce
+        const nonceRes = await api.getWalletNonce();
+        if (!nonceRes || !nonceRes.ok) {
+            throw new Error(nonceRes.error || 'Failed to fetch verification nonce');
+        }
+
+        const nonce = nonceRes.nonce;
+        const iat = new Date();
+        const exp = new Date(iat.getTime() + 5 * 60 * 1000); // 5 minutes
+
+        const messageText = `Collateral Wallet Verification\n\n` +
+            `Link wallet ${address} to your Collateral account.\n\n` +
+            `User ID: ${appState.userId}\n` +
+            `Domain: collateral.market\n` +
+            `Chain ID: 4663\n` +
+            `Nonce: ${nonce}\n` +
+            `Issued At: ${iat.toISOString()}\n` +
+            `Expiration Time: ${exp.toISOString()}`;
+
+        // Request signature
+        const signature = await signMessage(wagmiAdapter.wagmiConfig, {
+            message: messageText
+        });
+
+        // Submit signature to backend
+        const linkRes = await api.linkWallet(address, signature, nonce);
+        if (!linkRes || !linkRes.ok) {
+            throw new Error(linkRes.error || 'Failed to link wallet');
+        }
+
+        await showAlert('Wallet linked successfully!', { type: 'success', title: 'Identity Verified' });
+
+        // Force reload / re-fetch profile/stats
+        await window.app.syncUnifiedState();
+
+    } catch (err) {
+        console.error('[WalletLink] Linking failed:', err);
+        showAlert(err.message || 'Signature rejected or verification failed.', { type: 'error', title: 'Linking Failed' });
+    } finally {
+        window.app._linkingPromptActive = false;
+    }
+};
+
+// Watch account connection changes
+watchAccount(wagmiAdapter.wagmiConfig, {
+    onChange(account) {
+        console.log('[Web3] Account changed:', account.address);
+        if (window.app && window.app.syncUnifiedState) {
+            window.app.syncUnifiedState();
+        }
+    }
+});
 
 function updateAuthUI() {
     // Don't render until session hydration completes (prevents flicker)

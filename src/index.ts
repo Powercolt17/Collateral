@@ -39,6 +39,7 @@ import notificationRoutes from './routes/notifications.js';
 import adminSnapshotRoutes from './routes/admin-snapshots.js';
 import creatorReferralRoutes from './routes/creator-referrals.js';
 import tokenRoutes from './routes/token.js';
+import walletsRoutes from './routes/wallets.js';
 
 const PORT = parseInt(process.env.PORT || '3000', 10);
 
@@ -291,6 +292,7 @@ async function bootFastify() {
 
         // Identity & Auth
         await safeRegister('auth', authRoutes);
+        await safeRegister('wallets', walletsRoutes);
         await safeRegister('clerk-auth', clerkAuthRoutes);
         await safeRegister('identity', identityRoutes);
         await safeRegister('connect', connectRoutes);

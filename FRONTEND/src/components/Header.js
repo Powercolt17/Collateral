@@ -5,7 +5,7 @@ export function renderHeader(currentRoute) {
         { path: '/my-contracts', label: 'ACTIVE' },
         { path: '/ledger', label: 'LEDGER' },
         { path: '/sources', label: 'SOURCES' },
-        { path: '/token', label: '$CLTR' }
+        { path: '/protocol', label: 'PROTOCOL', hasDropdown: true }
     ];
 
     const navItems = routes.map(route => {
@@ -14,6 +14,21 @@ export function renderHeader(currentRoute) {
             (route.path === '/my-contracts' && (currentRoute === '/my-contracts' || currentRoute.startsWith('/contracts/')));
 
         if (route.hasDropdown) {
+            let dropdownItems = '';
+            if (route.path === '/market') {
+                dropdownItems = `
+                    <a href="#" onclick="window.router.navigate('/market'); return false;">Solo Contracts</a>
+                    <a href="#" onclick="window.router.navigate('/rivalry'); return false;">Rivalry Contracts</a>
+                `;
+            } else if (route.path === '/protocol') {
+                dropdownItems = `
+                    <a href="#" onclick="window.router.navigate('/protocol?tab=vision'); return false;">Overview</a>
+                    <a href="#" onclick="window.router.navigate('/protocol?tab=terminal'); return false;">Custody Terminal</a>
+                    <a href="#" onclick="window.router.navigate('/protocol?tab=whitepaper'); return false;">Whitepaper</a>
+                    <a href="#" onclick="window.router.navigate('/protocol?tab=economics'); return false;">Economics</a>
+                `;
+            }
+
             return `
                 <div class="nav-dropdown-wrap">
                     <a href="#" 
@@ -24,8 +39,7 @@ export function renderHeader(currentRoute) {
                         ${route.label}
                     </a>
                     <div class="nav-dropdown">
-                        <a href="#" onclick="window.router.navigate('/market'); return false;">Solo Contracts</a>
-                        <a href="#" onclick="window.router.navigate('/rivalry'); return false;">Rivalry Contracts</a>
+                        ${dropdownItems}
                     </div>
                 </div>
             `;
@@ -58,6 +72,21 @@ export function renderHeader(currentRoute) {
         `;
 
         if (route.hasDropdown) {
+            let subnavItems = '';
+            if (route.path === '/market') {
+                subnavItems = `
+                    <a href="#" onclick="window.app.closeMobileMenu(); window.router.navigate('/market'); return false;" class="pnl-subnav-link ${(currentRoute === '/market' || currentRoute === '/market/') ? 'active' : ''}">Solo Contracts</a>
+                    <a href="#" onclick="window.app.closeMobileMenu(); window.router.navigate('/rivalry'); return false;" class="pnl-subnav-link ${(currentRoute === '/rivalry' || currentRoute.startsWith('/rivalry/')) ? 'active' : ''}">Rivalry Contracts</a>
+                `;
+            } else if (route.path === '/protocol') {
+                subnavItems = `
+                    <a href="#" onclick="window.app.closeMobileMenu(); window.router.navigate('/protocol?tab=vision'); return false;" class="pnl-subnav-link">Overview</a>
+                    <a href="#" onclick="window.app.closeMobileMenu(); window.router.navigate('/protocol?tab=terminal'); return false;" class="pnl-subnav-link">Custody Terminal</a>
+                    <a href="#" onclick="window.app.closeMobileMenu(); window.router.navigate('/protocol?tab=whitepaper'); return false;" class="pnl-subnav-link">Whitepaper</a>
+                    <a href="#" onclick="window.app.closeMobileMenu(); window.router.navigate('/protocol?tab=economics'); return false;" class="pnl-subnav-link">Economics</a>
+                `;
+            }
+
             itemHTML = `
                 <div class="pnl-nav-group" style="animation-delay: ${0.06 + i * 0.03}s">
                     <a href="#" 
@@ -68,8 +97,7 @@ export function renderHeader(currentRoute) {
                         <svg class="pnl-chevron" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
                     </a>
                     <div class="pnl-subnav">
-                        <a href="#" onclick="window.app.closeMobileMenu(); window.router.navigate('/market'); return false;" class="pnl-subnav-link ${(currentRoute === '/market' || currentRoute === '/market/') ? 'active' : ''}">Solo Contracts</a>
-                        <a href="#" onclick="window.app.closeMobileMenu(); window.router.navigate('/rivalry'); return false;" class="pnl-subnav-link ${(currentRoute === '/rivalry' || currentRoute.startsWith('/rivalry/')) ? 'active' : ''}">Rivalry Contracts</a>
+                        ${subnavItems}
                     </div>
                 </div>
             `;

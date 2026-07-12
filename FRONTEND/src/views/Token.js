@@ -1,8 +1,7 @@
 // Token view — CLTR Institutional Control Portal
 // Fully integrated with Reown AppKit & Viem on Robinhood Chain
 
-import { createAppKit } from '@reown/appkit';
-import { WagmiAdapter } from '@reown/appkit-adapter-wagmi';
+import { wagmiAdapter, modal } from '../web3.js';
 import { 
     getAccount, 
     watchAccount, 
@@ -15,10 +14,6 @@ import {
 } from '@wagmi/core';
 import { formatUnits, parseUnits } from 'viem';
 
-// Config variables injected by Vite env
-const PROJECT_ID = import.meta.env.VITE_REOWN_PROJECT_ID || '1467417e2e8e9de7d8d21dfbc2ccf28e';
-const RPC_URL = import.meta.env.VITE_ROBINHOOD_RPC_URL || 'https://rpc.mainnet.chain.robinhood.com';
-
 const CLTR_TOKEN_ADDRESS = import.meta.env.VITE_CLTR_TOKEN || '0x0000000000000000000000000000000000000000';
 const STAKING_ADDRESS = import.meta.env.VITE_STAKING || '0x0000000000000000000000000000000000000000';
 const FOUNDER_VESTING_ADDRESS = import.meta.env.VITE_FOUNDER_VESTING || '0x0000000000000000000000000000000000000000';
@@ -26,51 +21,6 @@ const TEAM_VESTING_ADDRESS = import.meta.env.VITE_TEAM_VESTING || '0x00000000000
 const SETTLEMENT_ADDRESS = import.meta.env.VITE_SETTLEMENT || '0x0000000000000000000000000000000000000000';
 
 const API_BASE_URL = import.meta.env.VITE_API_URL || window.location.origin;
-
-// 1. Define custom Robinhood Chain
-const robinhoodChain = {
-    id: 4663,
-    name: 'Robinhood Chain',
-    nativeCurrency: { name: 'Ethereum', symbol: 'ETH', decimals: 18 },
-    rpcUrls: {
-        default: { http: [RPC_URL] },
-    },
-    blockExplorers: {
-        default: { name: 'Robinhood Explorer', url: 'https://explorer.mainnet.chain.robinhood.com' },
-    }
-};
-
-// 2. Initialize Wagmi adapter & Reown AppKit
-const networks = [robinhoodChain];
-const wagmiAdapter = new WagmiAdapter({
-    projectId: PROJECT_ID,
-    networks
-});
-
-const modal = createAppKit({
-    adapters: [wagmiAdapter],
-    networks,
-    projectId: PROJECT_ID,
-    features: {
-        email: false,
-        socials: false,
-        analytics: false
-    },
-    themeMode: 'light',
-    themeVariables: {
-        '--w3m-accent': '#5C1414',
-        '--w3m-color-mix': '#5C1414',
-        '--w3m-font-family': 'Sora, sans-serif',
-        '--w3m-border-radius-master': '4px',
-        '--w3m-watermark-display': 'none'
-    },
-    metadata: {
-        name: 'CLTR Identity Terminal',
-        description: 'Credibility Ambition Protocol',
-        url: window.location.origin,
-        icons: [window.location.origin + '/favicon.ico']
-    }
-});
 
 // ABIs
 const ERC20_ABI = [
@@ -958,6 +908,194 @@ export function renderToken() {
                 .cltr-rep-layout { grid-template-columns: 1fr; }
                 .cltr-health-grid { grid-template-columns: 1fr; }
             }
+
+            /* --- PROTOCOL SUBNAV TABS --- */
+            .cltr-subnav-tabs {
+                display: flex;
+                gap: 24px;
+                border-bottom: 1px solid #E5E5E5;
+                padding-bottom: 0;
+                margin-bottom: 32px;
+                animation: panelReveal 0.4s cubic-bezier(0.16, 1, 0.3, 1) both;
+            }
+            .cltr-subnav-btn {
+                background: transparent;
+                border: none;
+                border-bottom: 2px solid transparent;
+                padding: 12px 4px;
+                font-family: 'JetBrains Mono', monospace;
+                font-size: 11px;
+                font-weight: 700;
+                color: #666;
+                text-transform: uppercase;
+                letter-spacing: 1px;
+                cursor: pointer;
+                transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+            }
+            .cltr-subnav-btn:hover {
+                color: #111;
+            }
+            .cltr-subnav-btn.active {
+                color: #5C1414;
+                border-bottom-color: #5C1414;
+            }
+            .cltr-tab-panel {
+                animation: panelReveal 0.4s cubic-bezier(0.16, 1, 0.3, 1) both;
+            }
+            .cltr-tab-panel.hidden {
+                display: none !important;
+            }
+            
+            /* --- VISION VIEW STYLES --- */
+            .vis-hero {
+                padding: 48px 0;
+                border-bottom: 1px solid #E5E5E5;
+                margin-bottom: 48px;
+            }
+            .vis-title {
+                font-size: 32px;
+                font-weight: 800;
+                letter-spacing: -1.2px;
+                color: #111;
+                margin: 0 0 16px 0;
+                line-height: 1.1;
+            }
+            .vis-subtitle {
+                font-size: 15px;
+                color: #666;
+                max-width: 600px;
+                line-height: 1.6;
+                margin: 0;
+            }
+            .vis-grid {
+                display: grid;
+                grid-template-columns: repeat(2, 1fr);
+                gap: 48px;
+                margin-bottom: 64px;
+            }
+            .vis-card-title {
+                font-size: 16px;
+                font-weight: 700;
+                color: #111;
+                margin: 0 0 12px 0;
+                letter-spacing: -0.5px;
+            }
+            .vis-card-p {
+                font-size: 14px;
+                color: #555;
+                line-height: 1.6;
+                margin: 0 0 24px 0;
+            }
+            
+            /* --- HUMAN WHITEPAPER VIEW STYLES --- */
+            .wp-container {
+                max-width: 800px;
+                margin: 0 auto;
+                font-family: 'Sora', sans-serif;
+                color: #111;
+                line-height: 1.7;
+            }
+            .wp-chapter {
+                margin-bottom: 64px;
+                border-bottom: 1px solid #E5E5E5;
+                padding-bottom: 48px;
+            }
+            .wp-chapter:last-child {
+                border-bottom: none;
+            }
+            .wp-chapter-title {
+                font-size: 20px;
+                font-weight: 800;
+                color: #111;
+                margin-top: 0;
+                margin-bottom: 24px;
+                letter-spacing: -0.8px;
+            }
+            .wp-box {
+                background: #FFFFFF;
+                border: 1px solid #E5E5E5;
+                border-radius: 4px;
+                padding: 24px;
+                margin-bottom: 24px;
+            }
+            .wp-box-title {
+                font-family: 'JetBrains Mono', monospace;
+                font-size: 10px;
+                font-weight: 700;
+                color: #5C1414;
+                text-transform: uppercase;
+                letter-spacing: 1px;
+                margin-bottom: 12px;
+            }
+            .wp-box-desc {
+                font-size: 14px;
+                color: #333;
+                margin: 0;
+            }
+            .wp-box-desc strong {
+                color: #111;
+            }
+            .wp-math {
+                background: #F5F5F5;
+                font-family: 'JetBrains Mono', monospace;
+                font-size: 12px;
+                padding: 20px;
+                border-radius: 4px;
+                overflow-x: auto;
+                color: #111;
+                margin-bottom: 20px;
+                border-left: 3px solid #5C1414;
+            }
+            .wp-math-vars {
+                font-family: 'JetBrains Mono', monospace;
+                font-size: 11px;
+                color: #666;
+                margin-top: 12px;
+                line-height: 1.5;
+            }
+            .wp-table {
+                width: 100%;
+                border-collapse: collapse;
+                margin: 24px 0;
+                font-size: 13px;
+            }
+            .wp-table th {
+                background: #F5F5F5;
+                text-align: left;
+                padding: 12px;
+                font-family: 'JetBrains Mono', monospace;
+                font-weight: 700;
+                font-size: 10px;
+                letter-spacing: 0.5px;
+                border-bottom: 2px solid #E5E5E5;
+            }
+            .wp-table td {
+                padding: 12px;
+                border-bottom: 1px solid #E5E5E5;
+                color: #444;
+            }
+            
+            /* --- ECONOMICS STYLES --- */
+            .econ-hero {
+                background: #FFFFFF;
+                border: 1px solid #E5E5E5;
+                border-radius: 4px;
+                padding: 40px;
+                margin-bottom: 40px;
+            }
+            .econ-title-main {
+                font-size: 24px;
+                font-weight: 800;
+                letter-spacing: -0.8px;
+                color: #111;
+                margin: 0 0 12px 0;
+            }
+            .econ-sub-main {
+                font-size: 14px;
+                color: #666;
+                margin: 0;
+                line-height: 1.6;
+            }
         </style>
 
         <div class="cltr-page">
@@ -971,14 +1109,59 @@ export function renderToken() {
                             <path d="M 55.310,56.810 L 51.060,61.060 L 60.757,70.757 Q 65.000,75.000 69.243,70.757 L 85.757,54.243 Q 90.000,50.000 85.757,45.757 L 69.243,29.243 Q 65.000,25.000 60.757,29.243 L 44.243,45.757 Q 40.000,50.000 44.243,54.243 L 44.690,54.690 L 48.940,50.440 L 48.500,50.000 Q 46.379,47.879 48.500,45.757 L 60.757,33.500 Q 62.879,31.379 65.000,33.500 L 77.257,45.757 Q 79.379,47.879 77.257,50.000 L 65.000,62.257 Q 62.879,64.379 60.757,62.257 Z" />
                         </svg>
                         <div class="cltr-hdr-title-group">
-                            <h1 class="cltr-title-text">CLTR CUSTODY TERMINAL</h1>
-                            <p class="cltr-title-desc">REPUTATION &amp; EXECUTION ESCROW PORTAL</p>
+                            <h1 class="cltr-title-text">Collateral Protocol</h1>
+                            <p class="cltr-title-desc">Decentralized human enforcement network</p>
                         </div>
                     </div>
                 </div>
 
-                <!-- Web3 Connect Banner -->
-                <div class="cltr-wallet-banner" id="wallet-banner-container">
+                <!-- Sub navigation tabs -->
+                <div class="cltr-subnav-tabs">
+                    <button class="cltr-subnav-btn active" data-tab="vision">Vision</button>
+                    <button class="cltr-subnav-btn" data-tab="terminal">Custody Terminal</button>
+                    <button class="cltr-subnav-btn" data-tab="whitepaper">Whitepaper</button>
+                    <button class="cltr-subnav-btn" data-tab="economics">Economics</button>
+                </div>
+
+                <!-- ── VISION VIEW ── -->
+                <div class="cltr-tab-panel" id="cltr-tab-vision">
+                    <div class="vis-hero" data-reveal>
+                        <h2 class="vis-title">The Human Execution Protocol</h2>
+                        <p class="vis-subtitle">Replacing blind trust and unverified claims with economic certainty and programmatic enforcement.</p>
+                    </div>
+                    
+                    <div class="vis-grid">
+                        <div data-reveal data-reveal-delay="1">
+                            <h3 class="vis-card-title">The Trust Deficit</h3>
+                            <p class="vis-card-p">
+                                The internet has solved global communication, instant payments, and digital identity. Yet it remains completely broken at a fundamental level: faking execution is easier than executing. Resumes are exaggerated, social media metrics are bought, and promises are made and broken with zero consequences.
+                            </p>
+                        </div>
+                        <div data-reveal data-reveal-delay="2">
+                            <h3 class="vis-card-title">Proof of Execution</h3>
+                            <p class="vis-card-p">
+                                Collateral introduces the first proof of execution network. If you claim you will launch a startup, ship a feature, deliver a shipment, or maintain a streak, the protocol requires you to put real value on the line. Success releases your capital and raises your reputation score; failure forfeits it.
+                            </p>
+                        </div>
+                        <div data-reveal data-reveal-delay="3">
+                            <h3 class="vis-card-title">Execution Identity (ExID)</h3>
+                            <p class="vis-card-p">
+                                Every promise you write to the blockchain builds your permanent, immutable Execution Identity. Like a credit score for your word, your Execution Credit rises with consistency and falls with forfeiture, giving creators, freelancers, and businesses a verifiable asset that cannot be bought or faked.
+                            </p>
+                        </div>
+                        <div data-reveal data-reveal-delay="4">
+                            <h3 class="vis-card-title">The Sovereign Future</h3>
+                            <p class="vis-card-p">
+                                By pricing commitment risk, Collateral aligns incentive structures across capital venture funding, e-commerce, insurance, and talent recruitment. CLTR functions as the core currency that secures and scales this global trust layer.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ── TERMINAL VIEW ── -->
+                <div class="cltr-tab-panel hidden" id="cltr-tab-terminal">
+                    <!-- Web3 Connect Banner -->
+                    <div class="cltr-wallet-banner" id="wallet-banner-container">
                     <div class="cltr-wallet-status">
                         <div class="cltr-status-indicator" id="w-dot"></div>
                         <div class="cltr-wallet-text">
@@ -1287,6 +1470,145 @@ export function renderToken() {
                                     <span class="cltr-rep-val" id="health-circulating">—</span>
                                 </div>
                             </div>
+                        </div>
+                    </div>
+                </div> <!-- End Terminal Tab Panel -->
+
+                <!-- ── WHITEPAPER VIEW ── -->
+                <div class="cltr-tab-panel hidden" id="cltr-tab-whitepaper">
+                    <div class="wp-container">
+                        <div class="vis-hero" style="padding-bottom: 24px;">
+                            <h2 class="vis-title">Protocol &amp; Economic Whitepaper</h2>
+                            <p class="vis-subtitle">The formal design specification of the Collateral Network and CLTR conviction-bonding primitives.</p>
+                        </div>
+                        
+                        <div class="wp-chapter">
+                            <h3 class="wp-chapter-title">Chapter 1: Three Things That Make Collateral Work</h3>
+                            <p class="vis-card-p" style="margin-bottom: 20px;">To understand how Collateral works, you must understand three simple concepts: Money, Reputation, and Conviction.</p>
+                            
+                            <div class="wp-box">
+                                <div class="wp-box-title">1. Money at Risk (Financial Collateral)</div>
+                                <p class="wp-box-desc">The cash deposit (USDC or ETH) you lock up when making a promise. This is paid to the challenger or client if you fail, covering the direct financial risk of the commitment.</p>
+                            </div>
+                            
+                            <div class="wp-box">
+                                <div class="wp-box-title">2. Your Track Record (Earned Reputation)</div>
+                                <p class="wp-box-desc">A permanent, earned history of your completed promises. It belongs strictly to your identity and decays with inactivity or failure. It cannot be purchased.</p>
+                            </div>
+                            
+                            <div class="wp-box">
+                                <div class="wp-box-title">3. How Strongly You Believe in Yourself (Conviction)</div>
+                                <p class="wp-box-desc">The amount of CLTR tokens you lock up alongside your deposit. This acts as an amplifier of your track record, unlocking higher trust levels and capacity.</p>
+                            </div>
+                        </div>
+
+                        <div class="wp-chapter">
+                            <h3 class="wp-chapter-title">Chapter 2: Your Credit Score for Execution (Execution Credit)</h3>
+                            <div class="wp-box">
+                                <div class="wp-box-title">Why this exists</div>
+                                <p class="wp-box-desc">People need a way to prove they consistently follow through on commitments. Execution Credit (EC) is a credit score—but instead of measuring how reliably you repay debt, it measures how reliably you keep your word.</p>
+                            </div>
+                            
+                            <div class="wp-box">
+                                <div class="wp-box-title">What this means for you</div>
+                                <p class="wp-box-desc">The more commitments you successfully verify, the more trusted you become. Your profile becomes an asset that clients, investors, and partners check before working with you.</p>
+                            </div>
+                            
+                            <div class="wp-box">
+                                <div class="wp-box-title">Technical Design</div>
+                                <p class="wp-box-desc" style="margin-bottom:16px;">Execution Credit ($EC$) is calculated by multiplying your earned reputation track record ($R_p$) by a logarithmic function of bonded CLTR conviction ($C_{cltr}$):</p>
+                                <div class="wp-math">
+                                    EC = R_p * ln( e + C_cltr / (0.05 * R_p + 100) )
+                                </div>
+                                <div class="wp-math-vars">
+                                    • EC: Execution Credit<br>
+                                    • R_p: Your Track Record (Earned Reputation)<br>
+                                    • C_cltr: Bonded CLTR Conviction
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="wp-chapter">
+                            <h3 class="wp-chapter-title">Chapter 3: Your Commitment Bandwidth (Conviction Capacity)</h3>
+                            <div class="wp-box">
+                                <div class="wp-box-title">Why this exists</div>
+                                <p class="wp-box-desc">Without capacity constraints, spammers could flood the feed with endless empty commitments. Conviction Capacity (CC) acts as your concurrent bandwidth limit.</p>
+                            </div>
+                            
+                            <div class="wp-box">
+                                <div class="wp-box-title">What this means for you</div>
+                                <p class="wp-box-desc">To manage larger projects or run multiple tasks at once, you must lock and bond more CLTR conviction, which rate-limits and secures the system.</p>
+                            </div>
+                            
+                            <div class="wp-box">
+                                <div class="wp-box-title">Technical Design</div>
+                                <div class="wp-math">
+                                    CC = 1000 * EC
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="wp-chapter">
+                            <h3 class="wp-chapter-title">Chapter 4: The Independent Referees (Verifiers)</h3>
+                            <div class="wp-box">
+                                <div class="wp-box-title">Why this exists</div>
+                                <p class="wp-box-desc">We cannot trust a person to verify their own promise. We need neutral, independent parties—like referees in sports—to confirm outcomes programmatically.</p>
+                            </div>
+                            
+                            <div class="wp-box">
+                                <div class="wp-box-title">What this means for you</div>
+                                <p class="wp-box-desc">API integrations (GitHub, Stripe, Shopify, Twitter) or nodes check the data and confirm the outcome automatically without human bias.</p>
+                            </div>
+                            
+                            <div class="wp-box">
+                                <div class="wp-box-title">Technical Design</div>
+                                <p class="wp-box-desc" style="margin-bottom:16px;">Verifiers must bond a minimum of 50,000 CLTR to participate. Vote weight scales logarithmically:</p>
+                                <div class="wp-math">
+                                    Weight = ln(C_node)
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ── ECONOMICS VIEW ── -->
+                <div class="cltr-tab-panel hidden" id="cltr-tab-economics">
+                    <div class="vis-hero" style="padding-bottom: 24px;">
+                        <h2 class="vis-title">CLTR Economic Utility &amp; Flywheel</h2>
+                        <p class="vis-subtitle">How protocol adoption directly drives token scarcity, locks, and burns.</p>
+                    </div>
+                    
+                    <div class="wp-chapter">
+                        <h3 class="wp-chapter-title">The CLTR Monopoly</h3>
+                        <p class="vis-card-p" style="margin-bottom: 20px;">
+                            CLTR has a singular, defensible monopoly: it is the exclusive economic unit of commitment capacity. USDC/ETH represent raw cash risk. Only CLTR represents network-wide trust capacity. If you fail a promise, the USDC goes to your opponent, but your CLTR is burned, destroying your ability to make future promises until you purchase and bond more.
+                        </p>
+                    </div>
+
+                    <div class="vis-grid">
+                        <div>
+                            <h3 class="vis-card-title">1. The Settle Burn</h3>
+                            <p class="vis-card-p">
+                                Every completed contract routes a 1.5% settlement fee in USDC. 0.5% is automatically used to market-buy CLTR on the open market and burn it permanently from the circulating supply.
+                            </p>
+                        </div>
+                        <div>
+                            <h3 class="vis-card-title">2. The Forfeiture Burn</h3>
+                            <p class="vis-card-p">
+                                When a creator forfeits a commitment, 30% of their bonded CLTR conviction is immediately slashed and burned, applying direct deflationary pressure on supply.
+                            </p>
+                        </div>
+                        <div>
+                            <h3 class="vis-card-title">3. Capacity Locks</h3>
+                            <p class="vis-card-p">
+                                As builders, startups, and enterprises launch more active contracts, they must lock large amounts of CLTR, removing massive supplies from market liquidity.
+                            </p>
+                        </div>
+                        <div>
+                            <h3 class="vis-card-title">4. Validator Skin in the Game</h3>
+                            <p class="vis-card-p">
+                                Independent Referees and Dispute Jurors lock significant CLTR bonds to qualify for yields, aligning their economic incentives with the honesty of the network.
+                            </p>
                         </div>
                     </div>
                 </div>
@@ -1845,12 +2167,55 @@ export function initToken() {
                 metricYieldEarned.innerText = formatNumber(parseFloat(formatUnits(accruedRewards, 18)));
             }
 
-            // Reputation metrics derivation
-            repScore.innerText = '820 / 1000';
-            repRank.innerText = 'Tier I Guardian';
-            repSuccessRate.innerText = '94.8%';
-            repContractsCompleted.innerText = activeStakesList.length.toString();
-            repRankNum.innerText = '#124 Global';
+            // Reputation metrics derivation - Load from authenticated account if logged in
+            if (window.api.hasAuthToken()) {
+                try {
+                    const [profile, contractsRes] = await Promise.all([
+                        window.api.getProfile(),
+                        window.api.getContracts()
+                    ]);
+
+                    const contracts = contractsRes?.contracts || [];
+                    const settled = contracts.filter(c => c.isTerminal);
+                    const wins = settled.filter(c => ['SETTLED', 'SETTLED_SUCCESS', 'PAYOUT_COMPLETE', 'COMPLETED'].includes(c.derivedState || c.state));
+                    
+                    const winRate = settled.length > 0 ? (wins.length / settled.length) : 1;
+                    const successPct = (winRate * 100).toFixed(1) + '%';
+                    const completedCount = settled.length;
+
+                    // Derive rep score out of 1000
+                    const score = Math.round(500 + (winRate * 300) + Math.min(completedCount * 20, 200));
+                    
+                    let rankLabel = 'Tier III Candidate';
+                    if (score >= 850) rankLabel = 'Tier I Guardian';
+                    else if (score >= 650) rankLabel = 'Tier II Custodian';
+
+                    // Determine global ranking index based on completed count
+                    const globalRankIndex = Math.max(1, 1000 - (completedCount * 12));
+
+                    repScore.innerText = `${score} / 1000`;
+                    repRank.innerText = rankLabel;
+                    repSuccessRate.innerText = successPct;
+                    repContractsCompleted.innerText = completedCount.toString();
+                    repRankNum.innerText = `#${globalRankIndex} Global`;
+
+                } catch (profileErr) {
+                    console.error('Failed loading authenticated profile details for reputation:', profileErr);
+                    // Fallback to standard defaults
+                    repScore.innerText = '500 / 1000';
+                    repRank.innerText = 'Tier III Candidate';
+                    repSuccessRate.innerText = '100%';
+                    repContractsCompleted.innerText = '0';
+                    repRankNum.innerText = '#999 Global';
+                }
+            } else {
+                // Not logged in to Collateral account - show placeholder indicating it requires connection
+                repScore.innerText = '—';
+                repRank.innerText = 'AUTH REQUIRED';
+                repSuccessRate.innerText = '—';
+                repContractsCompleted.innerText = '—';
+                repRankNum.innerText = '—';
+            }
 
             stakeInput.removeAttribute('disabled');
             lockPills.forEach(p => p.removeAttribute('disabled'));
@@ -1915,20 +2280,27 @@ export function initToken() {
     }
 
     // Watch account connection using Wagmi
+    window.app.updateTokenConnectedState = async function () {
+        const account = getAccount(wagmiAdapter.wagmiConfig);
+        if (account.isConnected && account.address) {
+            userAddress = account.address;
+            const formattedBal = formatNumber(parseFloat(formatUnits(balance, 18)));
+            renderConnectedBanner(userAddress, formattedBal);
+
+            if (checkChainNetwork(account)) {
+                await loadStakingPositions();
+                await loadAccountData();
+            }
+        } else {
+            userAddress = undefined;
+            resetUIData();
+        }
+    };
+
     watchAccount(wagmiAdapter.wagmiConfig, {
         async onChange(account) {
-            if (account.isConnected && account.address) {
-                userAddress = account.address;
-                const formattedBal = formatNumber(parseFloat(formatUnits(balance, 18)));
-                renderConnectedBanner(userAddress, formattedBal);
-
-                if (checkChainNetwork(account)) {
-                    await loadStakingPositions();
-                    await loadAccountData();
-                }
-            } else {
-                userAddress = undefined;
-                resetUIData();
+            if (window.app.updateTokenConnectedState) {
+                await window.app.updateTokenConnectedState();
             }
         }
     });
@@ -2220,4 +2592,41 @@ export function initToken() {
     } else {
         resetUIData();
     }
+
+    // ── Sub-tabs logic ──
+    const subtabs = document.querySelectorAll('.cltr-subnav-btn');
+    const panels = document.querySelectorAll('.cltr-tab-panel');
+
+    function switchTab(tabId) {
+        subtabs.forEach(btn => {
+            if (btn.getAttribute('data-tab') === tabId) {
+                btn.classList.add('active');
+            } else {
+                btn.classList.remove('active');
+            }
+        });
+        panels.forEach(p => {
+            if (p.id === `cltr-tab-${tabId}`) {
+                p.classList.remove('hidden');
+            } else {
+                p.classList.add('hidden');
+            }
+        });
+    }
+
+    subtabs.forEach(btn => {
+        btn.addEventListener('click', function() {
+            const tabId = this.getAttribute('data-tab');
+            switchTab(tabId);
+            // Push query parameter to history
+            const url = new URL(window.location.href);
+            url.searchParams.set('tab', tabId);
+            window.history.pushState({}, '', url.toString());
+        });
+    });
+
+    // Read initial tab parameter
+    const searchParams = new URLSearchParams(window.location.search);
+    const defaultTab = searchParams.get('tab') || 'vision';
+    switchTab(defaultTab);
 }

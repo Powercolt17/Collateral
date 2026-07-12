@@ -1051,3 +1051,38 @@ export const cltrBlockchainEvents = pgTable('cltr_blockchain_events', {
 
 export type CltrBlockchainEvent = typeof cltrBlockchainEvents.$inferSelect;
 export type NewCltrBlockchainEvent = typeof cltrBlockchainEvents.$inferInsert;
+
+// =============================================================================
+// WALLET LINKING SYSTEM
+// =============================================================================
+
+export const userWallets = pgTable('user_wallets', {
+    id: uuid('id').primaryKey().defaultRandom(),
+    userId: uuid('user_id').references(() => users.id, { onDelete: 'cascade' }).notNull(),
+    walletAddress: varchar('wallet_address', { length: 255 }).notNull(),
+    chainId: integer('chain_id').notNull(),
+    isPrimary: boolean('is_primary').default(false).notNull(),
+    verifiedAt: timestamp('verified_at', { withTimezone: true }).defaultNow().notNull(),
+    createdAt: timestamp('created_at', { withTimezone: true }).defaultNow().notNull(),
+    lastConnectedAt: timestamp('last_connected_at', { withTimezone: true }).defaultNow().notNull(),
+}, (table) => ({
+    addressChainUnique: unique('wallet_address_chain_unique').on(table.walletAddress, table.chainId),
+    userIdIdx: index('idx_user_wallets_user_id').on(table.userId),
+}));
+
+export type UserWallet = typeof userWallets.$inferSelect;
+export type NewUserWallet = typeof userWallets.$inferInsert;
+
+export const walletNonces = pgTable('wallet_nonces', {
+    id: uuid('id').primaryKey().defaultRandom(),
+    nonce: varchar('nonce', { length: 255 }).notNull(),
+    userId: uuid('user_id').references(() => users.id, { onDelete: 'cascade' }),
+    expiresAt: timestamp('expires_at', { withTimezone: true }).notNull(),
+    consumed: boolean('consumed').default(false).notNull(),
+    createdAt: timestamp('created_at', { withTimezone: true }).defaultNow().notNull(),
+}, (table) => ({
+    nonceUniqueIdx: uniqueIndex('idx_wallet_nonces_nonce').on(table.nonce),
+}));
+
+export type WalletNonce = typeof walletNonces.$inferSelect;
+export type NewWalletNonce = typeof walletNonces.$inferInsert;

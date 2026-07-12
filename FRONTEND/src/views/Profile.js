@@ -1,5 +1,6 @@
 // Profile — Identity Performance Terminal
 // 10/10 Market-level institutional UI. All tabs. Receipt-grade.
+import { signMessage } from '@wagmi/core';
 
 export function renderProfile() {
     return `
@@ -362,6 +363,13 @@ export function renderProfile() {
                                     <div class="prf-id-row"><span class="prf-id-label">Currency</span><span class="prf-id-val">USD</span></div>
                                     <div class="prf-id-row"><span class="prf-id-label">Status</span><span class="prf-id-val" id="id-status"><span class="prf-badge active">Active</span></span></div>
                                     <div class="prf-id-row"><span class="prf-id-label">Created</span><span class="prf-id-val" id="id-created">—</span></div>
+                                </div>
+                            </div>
+                            <!-- Linked Wallets -->
+                            <div class="prf-card" style="margin-top:14px;">
+                                <div class="prf-card-hd"><h3 class="prf-card-title">Linked Wallets</h3></div>
+                                <div class="prf-card-bd" style="padding:16px 22px" id="linked-wallets-panel">
+                                    <div class="prf-empty"><div class="prf-empty-sub">Loading wallets...</div></div>
                                 </div>
                             </div>
                             <!-- Identity Score -->
@@ -972,6 +980,166 @@ export async function initProfile() {
                 renderTimeline(tFilter);
             });
         });
+
+        // ── Render Linked Wallets ──
+        window.app.renderLinkedWallets = function () {
+            const panel = $('linked-wallets-panel');
+            if (!panel) return;
+
+            const u = window.appState.unified;
+            if (!u) {
+                panel.innerHTML = '<div style="font-size: 11px; color: #9CA3AF; text-align: center; padding: 12px 0;">Authentication state missing.</div>';
+                return;
+            }
+
+            const connected = u.connectedWallet;
+            const linked = u.linkedWallets || [];
+
+            let html = '';
+
+            // 1. Connection Status display
+            if (connected) {
+                const shortAddr = connected.slice(0, 6) + '...' + connected.slice(-4);
+                const isLinked = linked.some(w => w.walletAddress.toLowerCase() === connected);
+                const chainName = u.chainId === 4663 ? 'Robinhood Mainnet' : ('Unknown Chain (' + u.chainId + ')');
+
+                html += `
+                    <div style="margin-bottom: 16px; padding: 12px; background: #fafafa; border: 1px solid #E5E5E5; border-radius: 6px;">
+                        <div style="font-size: 10px; font-weight: 700; color: #8A8A8A; font-family: 'JetBrains Mono', monospace; text-transform: uppercase; margin-bottom: 6px;">Connected Wallet</div>
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px;">
+                            <span style="font-size: 13px; font-weight: 700; font-family: 'JetBrains Mono', monospace; color: #111;">${shortAddr}</span>
+                            <span class="prf-badge ${isLinked ? 'connected' : 'pending'}">${isLinked ? 'Linked' : 'Not Linked'}</span>
+                        </div>
+                        <div style="font-size: 10px; color: #8A8A8A; font-family: 'JetBrains Mono', monospace;">
+                            Network: <span style="font-weight: 600; color: ${u.chainId === 4663 ? '#10B981' : '#D82224'};">${chainName}</span>
+                        </div>
+                        ${!isLinked ? `
+                            <button class="prf-cta sm" style="margin-top: 10px; width: 100%; justify-content: center; background: #5C1414; color: #fff; border-color: #5C1414;" onclick="window.app.promptLinkWallet('${connected}')">
+                                Link Wallet to Account
+                            </button>
+                        ` : ''}
+                    </div>
+                `;
+            } else {
+                html += `
+                    <div style="margin-bottom: 16px; padding: 12px; background: #fafafa; border: 1px dashed #E5E5E5; border-radius: 6px; text-align: center;">
+                        <div style="font-size: 11px; color: #6B6B6B; font-family: 'Sora', sans-serif; margin-bottom: 8px;">No wallet connected to session.</div>
+                        <button class="prf-cta sm" style="width: 100%; justify-content: center;" onclick="window.appKit.open()">
+                            Connect Wallet
+                        </button>
+                    </div>
+                `;
+            }
+
+            // 2. Linked Wallets List
+            html += `<div style="font-size: 10px; font-weight: 700; color: #8A8A8A; font-family: 'JetBrains Mono', monospace; text-transform: uppercase; margin-bottom: 10px; border-bottom: 1px solid #eee; padding-bottom: 6px;">Linked Wallets (${linked.length})</div>`;
+
+            if (linked.length === 0) {
+                html += `
+                    <div style="font-size: 11px; color: #9CA3AF; text-align: center; padding: 12px 0; font-family: 'Sora', sans-serif;">
+                        No wallets linked to this account yet.
+                    </div>
+                `;
+            } else {
+                html += linked.map(w => {
+                    const isPrimary = w.isPrimary;
+                    const addr = w.walletAddress;
+                    const short = addr.slice(0, 6) + '...' + addr.slice(-4);
+                    const isCurrent = connected && connected === addr.toLowerCase();
+
+                    return `
+                        <div style="padding: 10px 0; border-bottom: 1px solid #F0F0F0; display: flex; justify-content: space-between; align-items: center; gap: 12px;">
+                            <div>
+                                <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 2px;">
+                                    <span style="font-size: 13px; font-weight: 600; font-family: 'JetBrains Mono', monospace; color: #111;">${short}</span>
+                                    ${isPrimary ? '<span class="prf-badge controlled" style="background: #FFF7ED; color: #C2410C;">Primary</span>' : ''}
+                                    ${isCurrent ? '<span class="prf-badge active" style="font-size: 8px; height: 14px; padding: 0 4px;">Active</span>' : ''}
+                                </div>
+                                <div style="font-size: 10px; color: #8A8A8A; font-family: 'JetBrains Mono', monospace;">
+                                    Linked: ${fmtDate(w.verifiedAt)}
+                                </div>
+                            </div>
+                            <div style="display: flex; gap: 4px; flex-shrink: 0;">
+                                ${!isPrimary ? `
+                                    <button class="prf-cta ghost sm" style="height: 24px; padding: 0 8px; font-size: 9px;" onclick="event.stopPropagation(); window.app.setPrimaryWalletAction('${addr}')">
+                                        Set Primary
+                                    </button>
+                                ` : ''}
+                                <button class="prf-cta ghost sm" style="height: 24px; padding: 0 8px; font-size: 9px; color: #D82224; border-color: rgba(216,34,36,0.1);" onclick="event.stopPropagation(); window.app.unlinkWalletAction('${addr}')">
+                                    Unlink
+                                </button>
+                            </div>
+                        </div>
+                    `;
+                }).join('');
+            }
+
+            panel.innerHTML = html;
+        };
+
+        // Action handlers
+        window.app.setPrimaryWalletAction = async function (address) {
+            try {
+                const res = await window.api.setPrimaryWallet(address);
+                if (res && res.ok) {
+                    await window.CollateralModal.showAlert('Primary wallet updated successfully!', { type: 'success', title: 'Wallet Updated' });
+                    await window.app.syncUnifiedState();
+                } else {
+                    throw new Error(res.error || 'Failed to update primary wallet');
+                }
+            } catch (err) {
+                window.CollateralModal.showAlert(err.message || 'Operation failed.', { type: 'error' });
+            }
+        };
+
+        window.app.unlinkWalletAction = async function (address) {
+            const confirm = await window.CollateralModal.showConfirm(
+                `Are you sure you want to unlink wallet ${address.slice(0, 6)}...${address.slice(-4)}? This requires signature verification.`,
+                {
+                    title: 'Unlink Wallet',
+                    confirmText: 'UNLINK',
+                    danger: true
+                }
+            );
+
+            if (!confirm) return;
+
+            try {
+                const nonceRes = await window.api.getWalletNonce();
+                if (!nonceRes || !nonceRes.ok) {
+                    throw new Error(nonceRes.error || 'Failed to fetch verification nonce');
+                }
+
+                const nonce = nonceRes.nonce;
+                const iat = new Date();
+                const exp = new Date(iat.getTime() + 5 * 60 * 1000); // 5 minutes
+
+                const messageText = `Collateral Wallet Verification\n\n` +
+                    `Unlink wallet ${address} from your Collateral account.\n\n` +
+                    `User ID: ${window.appState.userId}\n` +
+                    `Domain: collateral.market\n` +
+                    `Chain ID: 4663\n` +
+                    `Nonce: ${nonce}\n` +
+                    `Issued At: ${iat.toISOString()}\n` +
+                    `Expiration Time: ${exp.toISOString()}`;
+
+                const signature = await signMessage(window.wagmiAdapter.wagmiConfig, {
+                    message: messageText
+                });
+
+                const res = await window.api.unlinkWallet(address, signature, nonce);
+                if (res && res.ok) {
+                    await window.CollateralModal.showAlert('Wallet unlinked successfully!', { type: 'success', title: 'Wallet Unlinked' });
+                    await window.app.syncUnifiedState();
+                } else {
+                    throw new Error(res.error || 'Failed to unlink wallet');
+                }
+            } catch (err) {
+                window.CollateralModal.showAlert(err.message || 'Operation failed.', { type: 'error' });
+            }
+        };
+
+        window.app.renderLinkedWallets();
 
         // ── Final icon pass ──
         if (window.lucide) window.lucide.createIcons();

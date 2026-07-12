@@ -183,6 +183,13 @@
       "when": 1783891629597,
       "tag": "0025_luxuriant_colossus",
       "breakpoints": true
+    },
+    {
+      "idx": 26,
+      "version": "7",
+      "when": 1783892498748,
+      "tag": "0026_steady_madripoor",
+      "breakpoints": true
     }
   ]
 }

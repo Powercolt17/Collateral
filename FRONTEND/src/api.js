@@ -593,6 +593,28 @@ export function clearReferralCode() {
     document.cookie = 'collateral_ref=;expires=Thu, 01 Jan 1970 00:00:00 GMT;path=/;SameSite=Lax';
 }
 
+// --- WALLET LINKING ---
+
+export async function getWalletNonce() {
+    return post('/v1/auth/wallet/nonce');
+}
+
+export async function linkWallet(walletAddress, signature, nonce) {
+    return post('/v1/auth/wallet/link', { walletAddress, signature, nonce });
+}
+
+export async function unlinkWallet(walletAddress, signature, nonce) {
+    return post('/v1/auth/wallet/unlink', { walletAddress, signature, nonce });
+}
+
+export async function setPrimaryWallet(walletAddress) {
+    return post('/v1/auth/wallet/primary', { walletAddress });
+}
+
+export async function getLinkedWallets() {
+    return get('/v1/auth/wallet/list');
+}
+
 // --- HEALTH ---
 
 export async function checkHealth() {
@@ -742,6 +764,13 @@ export default {
     setReferralCode,
     getReferralCode,
     clearReferralCode,
+
+    // Wallet linking
+    getWalletNonce,
+    linkWallet,
+    unlinkWallet,
+    setPrimaryWallet,
+    getLinkedWallets,
 
     // Health
     checkHealth,

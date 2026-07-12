@@ -121,6 +121,45 @@ export async function fixSchemaDrift() {
             console.log(`[schema-fix] ⚠️ cltr_blockchain_events table skipped: ${e.message}`);
         }
 
+        // 9. Ensure 'user_wallets' table exists
+        try {
+            await db.execute(sql`
+                CREATE TABLE IF NOT EXISTS "user_wallets" (
+                    "id" uuid PRIMARY KEY DEFAULT gen_random_uuid() NOT NULL,
+                    "user_id" uuid NOT NULL REFERENCES "users"("id") ON DELETE CASCADE,
+                    "wallet_address" varchar(255) NOT NULL,
+                    "chain_id" integer NOT NULL,
+                    "is_primary" boolean DEFAULT false NOT NULL,
+                    "verified_at" timestamp with time zone DEFAULT now() NOT NULL,
+                    "created_at" timestamp with time zone DEFAULT now() NOT NULL,
+                    "last_connected_at" timestamp with time zone DEFAULT now() NOT NULL
+                );
+                CREATE UNIQUE INDEX IF NOT EXISTS "idx_user_wallets_address_chain" ON "user_wallets" (lower("wallet_address"), "chain_id");
+                CREATE INDEX IF NOT EXISTS "idx_user_wallets_user_id" ON "user_wallets" ("user_id");
+            `);
+            console.log('[schema-fix] ✅ user_wallets table ensured.');
+        } catch (e: any) {
+            console.log(`[schema-fix] ⚠️ user_wallets table skipped: ${e.message}`);
+        }
+
+        // 10. Ensure 'wallet_nonces' table exists
+        try {
+            await db.execute(sql`
+                CREATE TABLE IF NOT EXISTS "wallet_nonces" (
+                    "id" uuid PRIMARY KEY DEFAULT gen_random_uuid() NOT NULL,
+                    "nonce" varchar(255) NOT NULL,
+                    "user_id" uuid REFERENCES "users"("id") ON DELETE CASCADE,
+                    "expires_at" timestamp with time zone NOT NULL,
+                    "consumed" boolean DEFAULT false NOT NULL,
+                    "created_at" timestamp with time zone DEFAULT now() NOT NULL
+                );
+                CREATE UNIQUE INDEX IF NOT EXISTS "idx_wallet_nonces_nonce" ON "wallet_nonces" ("nonce");
+            `);
+            console.log('[schema-fix] ✅ wallet_nonces table ensured.');
+        } catch (e: any) {
+            console.log(`[schema-fix] ⚠️ wallet_nonces table skipped: ${e.message}`);
+        }
+
         console.log('[schema-fix] ✅ Runtime Schema Fix Complete.');
     } catch (err) {
         console.error('[schema-fix] ❌ Failed to run runtime schema fix:', err);

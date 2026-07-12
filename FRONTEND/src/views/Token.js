@@ -51,8 +51,21 @@ const modal = createAppKit({
     adapters: [wagmiAdapter],
     networks,
     projectId: PROJECT_ID,
+    features: {
+        email: false,
+        socials: false,
+        analytics: false
+    },
+    themeMode: 'light',
+    themeVariables: {
+        '--w3m-accent': '#5C1414',
+        '--w3m-color-mix': '#5C1414',
+        '--w3m-font-family': 'Sora, sans-serif',
+        '--w3m-border-radius-master': '4px',
+        '--w3m-watermark-display': 'none'
+    },
     metadata: {
-        name: 'CLTR Custody Terminal',
+        name: 'CLTR Identity Terminal',
         description: 'Credibility Ambition Protocol',
         url: window.location.origin,
         icons: [window.location.origin + '/favicon.ico']
@@ -149,6 +162,9 @@ export function renderToken() {
             }
 
             /* --- WEB3 WALLET BAR --- */
+            w3m-modal, w3m-connect-button, w3m-account-button {
+                --w3m-watermark-display: none !important;
+            }
             .cltr-wallet-banner {
                 background: #FFFFFF;
                 border: 1px solid #E5E5E5;
@@ -160,6 +176,12 @@ export function renderToken() {
                 justify-content: space-between;
                 gap: 20px;
                 animation: panelReveal 0.4s cubic-bezier(0.16, 1, 0.3, 1) 0.05s both;
+                transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+            }
+            .cltr-wallet-banner.connected {
+                display: grid;
+                grid-template-columns: repeat(4, 1fr);
+                gap: 24px;
             }
             .cltr-wallet-status {
                 display: flex;
@@ -956,7 +978,7 @@ export function renderToken() {
                 </div>
 
                 <!-- Web3 Connect Banner -->
-                <div class="cltr-wallet-banner">
+                <div class="cltr-wallet-banner" id="wallet-banner-container">
                     <div class="cltr-wallet-status">
                         <div class="cltr-status-indicator" id="w-dot"></div>
                         <div class="cltr-wallet-text">
@@ -964,7 +986,7 @@ export function renderToken() {
                             <span class="cltr-wallet-hash" id="w-addr">—</span>
                         </div>
                     </div>
-                    <button class="cltr-connect-btn" id="w-connect-btn">CONNECT WALLET</button>
+                    <button class="cltr-connect-btn" id="w-connect-btn">CONNECT IDENTITY</button>
                 </div>
 
                 <!-- DOMINANT FOCAL POINT -->
@@ -1274,20 +1296,144 @@ export function renderToken() {
 
         <!-- ===== TX MODAL ===== -->
         <div id="tx-modal" class="cltr-modal-backdrop">
-            <div class="cltr-modal-box">
-                <div class="cltr-tx-spinner"></div>
-                <h3 class="cltr-tx-title" id="tx-title">Waiting for Wallet Confirmation</h3>
-                <p class="cltr-tx-sub" id="tx-sub">Please approve the transaction in MetaMask or your linked Web3 wallet.</p>
+            <div class="cltr-modal-box" style="text-align: left; max-width: 400px; padding: 40px;">
+                <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:24px;">
+                    <h3 class="cltr-panel-title" style="margin:0; font-size:11px; font-family:'JetBrains Mono', monospace; letter-spacing: 0.5px;">TRANSACTION PIPELINE</h3>
+                    <div class="cltr-tx-spinner" style="width:16px; height:16px; margin:0; border-width:2px;"></div>
+                </div>
+                
+                <div class="cltr-stepper" style="display:flex; flex-direction:column; gap:16px; font-family:'JetBrains Mono', monospace; font-size:11px;">
+                    <div class="cltr-step" id="step-approve" style="display:flex; align-items:center; gap:12px; color:#888;">
+                        <span class="step-indicator">[ ]</span>
+                        <span>Approving CLTR Allowance</span>
+                    </div>
+                    <div class="cltr-step" id="step-sign" style="display:flex; align-items:center; gap:12px; color:#888;">
+                        <span class="step-indicator">[ ]</span>
+                        <span>Waiting for Wallet Signature</span>
+                    </div>
+                    <div class="cltr-step" id="step-submit" style="display:flex; align-items:center; gap:12px; color:#888;">
+                        <span class="step-indicator">[ ]</span>
+                        <span>Submitting to Network</span>
+                    </div>
+                    <div class="cltr-step" id="step-confirm" style="display:flex; align-items:center; gap:12px; color:#888;">
+                        <span class="step-indicator">[ ]</span>
+                        <span>Awaiting Block Confirmation</span>
+                    </div>
+                    <div class="cltr-step" id="step-done" style="display:flex; align-items:center; gap:12px; color:#888;">
+                        <span class="step-indicator">[ ]</span>
+                        <span id="step-done-text">Commitment Completed</span>
+                    </div>
+                </div>
             </div>
         </div>
     `;
 }
 
 export function initToken() {
-    const connectBtn = document.getElementById('w-connect-btn');
-    const wDot = document.getElementById('w-dot');
-    const wStatus = document.getElementById('w-status');
-    const wAddr = document.getElementById('w-addr');
+    const bannerContainer = document.getElementById('wallet-banner-container');
+
+    function renderDisconnectedBanner() {
+        if (!bannerContainer) return;
+        bannerContainer.className = 'cltr-wallet-banner';
+        bannerContainer.style.display = 'flex';
+        bannerContainer.style.gridTemplateColumns = 'none';
+        bannerContainer.style.background = '#FFFFFF';
+        bannerContainer.style.border = '1px solid #E5E5E5';
+        bannerContainer.style.borderRadius = '4px';
+        bannerContainer.style.padding = '18px 24px';
+        bannerContainer.style.marginBottom = '32px';
+        bannerContainer.style.alignItems = 'center';
+        bannerContainer.style.justifyContent = 'space-between';
+        bannerContainer.style.gap = '20px';
+
+        bannerContainer.innerHTML = `
+            <div class="cltr-wallet-status">
+                <div class="cltr-status-indicator" id="w-dot" style="background:#D82224;"></div>
+                <div class="cltr-wallet-text">
+                    <span id="w-status" style="font-family:'JetBrains Mono', monospace; font-size:10px; font-weight:700; color:#111; letter-spacing:0.5px; text-transform:uppercase;">DISCONNECTED</span>
+                    <span class="cltr-wallet-hash" id="w-addr">—</span>
+                </div>
+            </div>
+            <button class="cltr-connect-btn" id="w-connect-btn">CONNECT IDENTITY</button>
+        `;
+    }
+
+    function renderConnectedBanner(address, formattedBalance) {
+        if (!bannerContainer) return;
+        bannerContainer.className = 'cltr-wallet-banner connected';
+        bannerContainer.style.display = 'grid';
+        bannerContainer.style.gridTemplateColumns = 'repeat(4, 1fr)';
+        bannerContainer.style.background = '#FFFFFF';
+        bannerContainer.style.border = '1px solid #E5E5E5';
+        bannerContainer.style.borderRadius = '4px';
+        bannerContainer.style.padding = '18px 24px';
+        bannerContainer.style.marginBottom = '32px';
+        bannerContainer.style.alignItems = 'center';
+        bannerContainer.style.gap = '24px';
+
+        const shortAddr = address.slice(0, 6) + '...' + address.slice(-4);
+
+        bannerContainer.innerHTML = `
+            <div class="cltr-wallet-status" style="border-right: 1px solid #E5E5E5; padding-right:24px;">
+                <div class="cltr-status-indicator connected" style="background:#10B981; animation: pulseIndicator 2.5s infinite;"></div>
+                <div class="cltr-wallet-text">
+                    <span style="font-family:'JetBrains Mono', monospace; font-size:10px; font-weight:700; color:#10B981; letter-spacing:0.5px; display:block;">CONNECTED</span>
+                    <span class="cltr-wallet-hash" style="display:block; font-size:11px; margin-top:2px; margin-left:0; background:none; padding:0; color:#555;" id="w-addr">${shortAddr}</span>
+                </div>
+            </div>
+            <div style="border-right: 1px solid #E5E5E5; padding-right:24px;">
+                <span style="font-family:'JetBrains Mono', monospace; font-size:8px; color:#888; text-transform:uppercase; display:block; letter-spacing:0.5px;">Conviction Balance</span>
+                <span style="font-family:'JetBrains Mono', monospace; font-size:13px; font-weight:700; color:#111; display:block; margin-top:2px;" id="banner-balance">${formattedBalance} CLTR</span>
+            </div>
+            <div style="border-right: 1px solid #E5E5E5; padding-right:24px;">
+                <span style="font-family:'JetBrains Mono', monospace; font-size:8px; color:#888; text-transform:uppercase; display:block; letter-spacing:0.5px;">Network</span>
+                <span style="font-family:'JetBrains Mono', monospace; font-size:12px; font-weight:700; color:#5C1414; display:block; margin-top:2px;">Robinhood Mainnet</span>
+            </div>
+            <div style="display:flex; justify-content:space-between; align-items:center;">
+                <div>
+                    <span style="font-family:'JetBrains Mono', monospace; font-size:8px; color:#888; text-transform:uppercase; display:block; letter-spacing:0.5px;">Identity status</span>
+                    <span style="font-family:'JetBrains Mono', monospace; font-size:11px; font-weight:700; color:#10B981; display:block; margin-top:2px;">Verified Identity</span>
+                </div>
+                <button class="cltr-connect-btn connected" id="w-disconnect-btn" style="padding: 6px 12px; font-size: 8px;">DISCONNECT</button>
+            </div>
+        `;
+    }
+
+    function updateTxStep(stepId, status) {
+        const el = document.getElementById(stepId);
+        if (!el) return;
+        const indicator = el.querySelector('.step-indicator');
+        if (status === 'pending') {
+            el.style.color = '#5C1414';
+            el.style.fontWeight = '700';
+            if (indicator) indicator.innerText = '[/]';
+        } else if (status === 'success') {
+            el.style.color = '#10B981';
+            el.style.fontWeight = '700';
+            if (indicator) indicator.innerText = '[x]';
+        } else {
+            el.style.color = '#888';
+            el.style.fontWeight = 'normal';
+            if (indicator) indicator.innerText = '[ ]';
+        }
+    }
+
+    function resetTxSteps(hasApprove = false, completionText = "Commitment Completed") {
+        const stepApproveEl = document.getElementById('step-approve');
+        if (stepApproveEl) {
+            stepApproveEl.style.display = hasApprove ? 'flex' : 'none';
+        }
+        const stepDoneTextEl = document.getElementById('step-done-text');
+        if (stepDoneTextEl) {
+            stepDoneTextEl.innerText = completionText;
+        }
+
+        updateTxStep('step-approve', 'inactive');
+        updateTxStep('step-sign', 'inactive');
+        updateTxStep('step-submit', 'inactive');
+        updateTxStep('step-confirm', 'inactive');
+        updateTxStep('step-done', 'inactive');
+    }
 
     const focalTotalCommitted = document.getElementById('focal-total-committed');
     const focalTotalBurned = document.getElementById('focal-total-burned');
@@ -1678,7 +1824,16 @@ export function initToken() {
                     args: [userAddress]
                 });
                 balance = bal;
-                metricConvictionBal.innerText = formatNumber(parseFloat(formatUnits(balance, 18)));
+                const formattedBal = formatNumber(parseFloat(formatUnits(balance, 18)));
+                metricConvictionBal.innerText = formattedBal;
+                
+                // Keep connected banner in sync
+                const bannerBalEl = document.getElementById('banner-balance');
+                if (bannerBalEl) {
+                    bannerBalEl.innerText = `${formattedBal} CLTR`;
+                } else {
+                    renderConnectedBanner(userAddress, formattedBal);
+                }
             }
 
             if (STAKING_ADDRESS !== '0x0000000000000000000000000000000000000000') {
@@ -1707,12 +1862,7 @@ export function initToken() {
     }
 
     function resetUIData() {
-        wDot.classList.remove('connected');
-        wStatus.innerText = 'DISCONNECTED';
-        wStatus.style.color = '#111';
-        wAddr.innerText = '—';
-        connectBtn.innerText = 'CONNECT WALLET';
-        connectBtn.classList.remove('connected');
+        renderDisconnectedBanner();
 
         metricConvictionBal.innerText = '—';
         metricCommittedCollateral.innerText = '—';
@@ -1749,8 +1899,8 @@ export function initToken() {
     function checkChainNetwork(account) {
         const chainId = account.chainId;
         if (chainId !== 4663) {
-            txTitle.innerText = 'Incorrect Network';
-            txSub.innerText = 'Please switch your wallet to Robinhood Chain (chainId 4663) to write transactions.';
+            resetTxSteps(false, "Switch to Robinhood Chain");
+            updateTxStep('step-sign', 'pending');
             txModal.classList.add('open');
             
             // Try to auto-switch network
@@ -1769,12 +1919,8 @@ export function initToken() {
         async onChange(account) {
             if (account.isConnected && account.address) {
                 userAddress = account.address;
-                wDot.classList.add('connected');
-                wStatus.innerText = 'ROBINHOOD MAINNET';
-                wStatus.style.color = '#10B981';
-                wAddr.innerText = userAddress.slice(0, 6) + '...' + userAddress.slice(-4);
-                connectBtn.innerText = 'DISCONNECT';
-                connectBtn.classList.add('connected');
+                const formattedBal = formatNumber(parseFloat(formatUnits(balance, 18)));
+                renderConnectedBanner(userAddress, formattedBal);
 
                 if (checkChainNetwork(account)) {
                     await loadStakingPositions();
@@ -1787,17 +1933,18 @@ export function initToken() {
         }
     });
 
-    // Connect trigger
-    connectBtn.addEventListener('click', async () => {
-        const account = getAccount(wagmiAdapter.wagmiConfig);
-        if (account.isConnected) {
-            await disconnect(wagmiAdapter.wagmiConfig);
-            userAddress = undefined;
-            resetUIData();
-        } else {
-            modal.open();
-        }
-    });
+    // Connect trigger via event delegation on parent banner
+    if (bannerContainer) {
+        bannerContainer.addEventListener('click', async (e) => {
+            if (e.target && (e.target.id === 'w-connect-btn' || e.target.closest('#w-connect-btn'))) {
+                modal.open();
+            } else if (e.target && (e.target.id === 'w-disconnect-btn' || e.target.closest('#w-disconnect-btn'))) {
+                await disconnect(wagmiAdapter.wagmiConfig);
+                userAddress = undefined;
+                resetUIData();
+            }
+        });
+    }
 
     // Max stake amount selection
     maxBtn.addEventListener('click', () => {
@@ -1828,10 +1975,6 @@ export function initToken() {
 
         const amountBig = parseUnits(stakeInput.value, 18);
 
-        txTitle.innerText = 'Waiting for Wallet';
-        txSub.innerText = `Sign allowance approval for ${formatNumber(val)} CLTR...`;
-        txModal.classList.add('open');
-
         try {
             const allowance = await readContract(wagmiAdapter.wagmiConfig, {
                 address: CLTR_TOKEN_ADDRESS,
@@ -1840,8 +1983,15 @@ export function initToken() {
                 args: [userAddress, STAKING_ADDRESS]
             });
 
-            if (allowance < amountBig) {
-                // Pre-flight simulation
+            const needsApprove = allowance < amountBig;
+            resetTxSteps(needsApprove, "Commitment Created");
+            txModal.classList.add('open');
+
+            if (needsApprove) {
+                // 1. Approving CLTR
+                updateTxStep('step-approve', 'pending');
+                updateTxStep('step-sign', 'pending');
+
                 const { request } = await simulateContract(wagmiAdapter.wagmiConfig, {
                     address: CLTR_TOKEN_ADDRESS,
                     abi: ERC20_ABI,
@@ -1850,16 +2000,21 @@ export function initToken() {
                 });
 
                 const appTx = await writeContract(wagmiAdapter.wagmiConfig, request);
-                txTitle.innerText = 'Approve Pending';
-                txSub.innerText = 'Awaiting block transaction receipt...';
+                updateTxStep('step-sign', 'success');
+                updateTxStep('step-submit', 'pending');
+                updateTxStep('step-confirm', 'pending');
+
                 await waitForTransactionReceipt(wagmiAdapter.wagmiConfig, { hash: appTx });
+                updateTxStep('step-approve', 'success');
+                updateTxStep('step-submit', 'success');
+                updateTxStep('step-confirm', 'success');
             }
 
-            // Stake
-            txTitle.innerText = 'Sign Commitment Stake';
-            txSub.innerText = `Locking ${formatNumber(val)} CLTR for ${activeDuration} days...`;
+            // 2. Staking
+            updateTxStep('step-sign', 'pending');
+            updateTxStep('step-submit', 'inactive');
+            updateTxStep('step-confirm', 'inactive');
 
-            // Pre-flight simulation
             const { request: stakeRequest } = await simulateContract(wagmiAdapter.wagmiConfig, {
                 address: STAKING_ADDRESS,
                 abi: STAKING_ABI,
@@ -1868,13 +2023,15 @@ export function initToken() {
             });
 
             const stakeTx = await writeContract(wagmiAdapter.wagmiConfig, stakeRequest);
-            txTitle.innerText = 'Transaction Broadcasted';
-            txSub.innerText = 'Confirming lockup state in Robinhood block...';
-            
-            await waitForTransactionReceipt(wagmiAdapter.wagmiConfig, { hash: stakeTx });
+            updateTxStep('step-sign', 'success');
+            updateTxStep('step-submit', 'pending');
+            updateTxStep('step-confirm', 'pending');
 
-            txTitle.innerText = 'Commitment Staked';
-            txSub.innerText = `${formatNumber(val)} CLTR successfully locked.`;
+            await waitForTransactionReceipt(wagmiAdapter.wagmiConfig, { hash: stakeTx });
+            updateTxStep('step-submit', 'success');
+            updateTxStep('step-confirm', 'success');
+            updateTxStep('step-done', 'success');
+
             setTimeout(async () => {
                 txModal.classList.remove('open');
                 stakeInput.value = '';
@@ -1886,8 +2043,13 @@ export function initToken() {
 
         } catch (err) {
             console.error('Stake transaction failed:', err);
-            txTitle.innerText = 'Transaction Failed';
-            txSub.innerText = err.shortMessage || err.message || 'Signature rejected by wallet.';
+            // Mark failed indicator
+            const activeStep = document.querySelector('.cltr-step[style*="font-weight: 700"]');
+            if (activeStep) {
+                const indicator = activeStep.querySelector('.step-indicator');
+                if (indicator) indicator.innerText = '[!]';
+                activeStep.style.color = '#D82224';
+            }
             setTimeout(() => txModal.classList.remove('open'), 4000);
         }
     });
@@ -1895,8 +2057,8 @@ export function initToken() {
     async function unstakeTokens(idx) {
         if (!userAddress) return;
 
-        txTitle.innerText = 'Release Staked Escrow';
-        txSub.innerText = 'Sign unstake request in your Web3 wallet...';
+        resetTxSteps(false, "Escrow Released");
+        updateTxStep('step-sign', 'pending');
         txModal.classList.add('open');
 
         try {
@@ -1909,13 +2071,15 @@ export function initToken() {
             });
 
             const tx = await writeContract(wagmiAdapter.wagmiConfig, request);
-            txTitle.innerText = 'Processing Release';
-            txSub.innerText = 'Awaiting block confirmation...';
+            updateTxStep('step-sign', 'success');
+            updateTxStep('step-submit', 'pending');
+            updateTxStep('step-confirm', 'pending');
 
             await waitForTransactionReceipt(wagmiAdapter.wagmiConfig, { hash: tx });
+            updateTxStep('step-submit', 'success');
+            updateTxStep('step-confirm', 'success');
+            updateTxStep('step-done', 'success');
 
-            txTitle.innerText = 'Escrow Released';
-            txSub.innerText = 'Tokens and yield successfully withdrawn.';
             setTimeout(async () => {
                 txModal.classList.remove('open');
                 await loadStakingPositions();
@@ -1926,8 +2090,12 @@ export function initToken() {
 
         } catch (err) {
             console.error('Unstake transaction failed:', err);
-            txTitle.innerText = 'Transaction Failed';
-            txSub.innerText = err.shortMessage || err.message || 'Signature rejected.';
+            const activeStep = document.querySelector('.cltr-step[style*="font-weight: 700"]');
+            if (activeStep) {
+                const indicator = activeStep.querySelector('.step-indicator');
+                if (indicator) indicator.innerText = '[!]';
+                activeStep.style.color = '#D82224';
+            }
             setTimeout(() => txModal.classList.remove('open'), 4000);
         }
     }
@@ -1936,8 +2104,8 @@ export function initToken() {
     founderClaimBtn.addEventListener('click', async () => {
         if (!userAddress) return;
 
-        txTitle.innerText = 'Vesting Release';
-        txSub.innerText = 'Releasing claimable vested tokens...';
+        resetTxSteps(false, "Tokens Released");
+        updateTxStep('step-sign', 'pending');
         txModal.classList.add('open');
 
         try {
@@ -1949,13 +2117,15 @@ export function initToken() {
             });
 
             const tx = await writeContract(wagmiAdapter.wagmiConfig, request);
-            txTitle.innerText = 'Releasing Vested';
-            txSub.innerText = 'Confirming block transaction...';
+            updateTxStep('step-sign', 'success');
+            updateTxStep('step-submit', 'pending');
+            updateTxStep('step-confirm', 'pending');
 
             await waitForTransactionReceipt(wagmiAdapter.wagmiConfig, { hash: tx });
+            updateTxStep('step-submit', 'success');
+            updateTxStep('step-confirm', 'success');
+            updateTxStep('step-done', 'success');
 
-            txTitle.innerText = 'Tokens Released';
-            txSub.innerText = 'Claimable tokens credited to conviction balance.';
             setTimeout(async () => {
                 txModal.classList.remove('open');
                 await loadAccountData();
@@ -1965,8 +2135,12 @@ export function initToken() {
 
         } catch (err) {
             console.error('Founder release transaction failed:', err);
-            txTitle.innerText = 'Transaction Failed';
-            txSub.innerText = err.shortMessage || err.message || 'Rejected.';
+            const activeStep = document.querySelector('.cltr-step[style*="font-weight: 700"]');
+            if (activeStep) {
+                const indicator = activeStep.querySelector('.step-indicator');
+                if (indicator) indicator.innerText = '[!]';
+                activeStep.style.color = '#D82224';
+            }
             setTimeout(() => txModal.classList.remove('open'), 4000);
         }
     });
@@ -1974,8 +2148,8 @@ export function initToken() {
     teamClaimBtn.addEventListener('click', async () => {
         if (!userAddress) return;
 
-        txTitle.innerText = 'Vesting Release';
-        txSub.innerText = 'Releasing claimable team vested tokens...';
+        resetTxSteps(false, "Tokens Released");
+        updateTxStep('step-sign', 'pending');
         txModal.classList.add('open');
 
         try {
@@ -1987,13 +2161,15 @@ export function initToken() {
             });
 
             const tx = await writeContract(wagmiAdapter.wagmiConfig, request);
-            txTitle.innerText = 'Releasing Vested';
-            txSub.innerText = 'Confirming block transaction...';
+            updateTxStep('step-sign', 'success');
+            updateTxStep('step-submit', 'pending');
+            updateTxStep('step-confirm', 'pending');
 
             await waitForTransactionReceipt(wagmiAdapter.wagmiConfig, { hash: tx });
+            updateTxStep('step-submit', 'success');
+            updateTxStep('step-confirm', 'success');
+            updateTxStep('step-done', 'success');
 
-            txTitle.innerText = 'Tokens Released';
-            txSub.innerText = 'Claimable tokens credited to wallet balance.';
             setTimeout(async () => {
                 txModal.classList.remove('open');
                 await loadAccountData();
@@ -2003,8 +2179,12 @@ export function initToken() {
 
         } catch (err) {
             console.error('Team release transaction failed:', err);
-            txTitle.innerText = 'Transaction Failed';
-            txSub.innerText = err.shortMessage || err.message || 'Rejected.';
+            const activeStep = document.querySelector('.cltr-step[style*="font-weight: 700"]');
+            if (activeStep) {
+                const indicator = activeStep.querySelector('.step-indicator');
+                if (indicator) indicator.innerText = '[!]';
+                activeStep.style.color = '#D82224';
+            }
             setTimeout(() => txModal.classList.remove('open'), 4000);
         }
     });
@@ -2031,12 +2211,7 @@ export function initToken() {
     const initialAccount = getAccount(wagmiAdapter.wagmiConfig);
     if (initialAccount.isConnected && initialAccount.address) {
         userAddress = initialAccount.address;
-        wDot.classList.add('connected');
-        wStatus.innerText = 'ROBINHOOD MAINNET';
-        wStatus.style.color = '#10B981';
-        wAddr.innerText = userAddress.slice(0, 6) + '...' + userAddress.slice(-4);
-        connectBtn.innerText = 'DISCONNECT';
-        connectBtn.classList.add('connected');
+        renderConnectedBanner(userAddress, '—');
 
         if (checkChainNetwork(initialAccount)) {
             loadStakingPositions();

@@ -1096,6 +1096,66 @@ export function renderToken() {
                 margin: 0;
                 line-height: 1.6;
             }
+            
+            /* --- OVERVIEW VIEW STYLES --- */
+            .ov-hero {
+                padding: 64px 0 40px;
+                text-align: center;
+                border-bottom: 1px solid #E5E5E5;
+                margin-bottom: 48px;
+            }
+            .ov-title {
+                font-size: 36px;
+                font-weight: 800;
+                color: #111;
+                margin: 0 0 12px 0;
+                letter-spacing: -1.2px;
+            }
+            .ov-subtitle {
+                font-size: 15px;
+                color: #666;
+                margin: 0;
+            }
+            .ov-cards-grid {
+                display: grid;
+                grid-template-columns: repeat(2, 1fr);
+                gap: 24px;
+                margin-bottom: 64px;
+            }
+            .ov-card {
+                background: #FFFFFF;
+                border: 1px solid #E5E5E5;
+                border-radius: 6px;
+                padding: 32px;
+                cursor: pointer;
+                transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+                text-decoration: none;
+                color: inherit;
+                display: block;
+                box-shadow: 0 1px 3px rgba(0,0,0,0.02);
+            }
+            .ov-card:hover {
+                border-color: #5C1414;
+                transform: translateY(-2px);
+                box-shadow: 0 12px 30px rgba(92, 20, 20, 0.04);
+            }
+            .ov-card-icon {
+                font-size: 24px;
+                margin-bottom: 16px;
+                display: block;
+            }
+            .ov-card-title {
+                font-size: 16px;
+                font-weight: 700;
+                color: #111;
+                margin: 0 0 8px 0;
+            }
+            .ov-card-desc {
+                font-size: 13px;
+                color: #666;
+                line-height: 1.6;
+                margin: 0;
+            }
         </style>
 
         <div class="cltr-page">
@@ -1117,14 +1177,46 @@ export function renderToken() {
 
                 <!-- Sub navigation tabs -->
                 <div class="cltr-subnav-tabs">
-                    <button class="cltr-subnav-btn active" data-tab="vision">Vision</button>
-                    <button class="cltr-subnav-btn" data-tab="terminal">Custody Terminal</button>
+                    <button class="cltr-subnav-btn active" data-tab="overview">Overview</button>
+                    <button class="cltr-subnav-btn" data-tab="vision">Vision</button>
                     <button class="cltr-subnav-btn" data-tab="whitepaper">Whitepaper</button>
                     <button class="cltr-subnav-btn" data-tab="economics">Economics</button>
+                    <button class="cltr-subnav-btn" data-tab="terminal">Custody Terminal</button>
+                </div>
+
+                <!-- ── OVERVIEW VIEW ── -->
+                <div class="cltr-tab-panel" id="cltr-tab-overview">
+                    <div class="ov-hero" data-reveal>
+                        <h2 class="ov-title">Collateral Protocol</h2>
+                        <p class="ov-subtitle">The world's first Proof of Execution network.</p>
+                    </div>
+                    
+                    <div class="ov-cards-grid">
+                        <div class="ov-card" onclick="window.app.switchProtocolTab('vision');">
+                            <span class="ov-card-icon">📖</span>
+                            <h3 class="ov-card-title">Vision</h3>
+                            <p class="ov-card-desc">Why Collateral exists, the global trust problem, and the future of human reliability.</p>
+                        </div>
+                        <div class="ov-card" onclick="window.app.switchProtocolTab('whitepaper');">
+                            <span class="ov-card-icon">📄</span>
+                            <h3 class="ov-card-title">Whitepaper</h3>
+                            <p class="ov-card-desc">The Protocol and Economic Whitepaper outlining commitment models and credit ratings.</p>
+                        </div>
+                        <div class="ov-card" onclick="window.app.switchProtocolTab('economics');">
+                            <span class="ov-card-icon">💰</span>
+                            <h3 class="ov-card-title">Token Economics</h3>
+                            <p class="ov-card-desc">How CLTR secures the network, enforces rules, and accumulates deflationary value.</p>
+                        </div>
+                        <div class="ov-card" onclick="window.router.navigate('/docs');">
+                            <span class="ov-card-icon">👨‍💻</span>
+                            <h3 class="ov-card-title">Documentation</h3>
+                            <p class="ov-card-desc">Build on Collateral. Integration references, deployed contracts, and Node.js SDK setup guides.</p>
+                        </div>
+                    </div>
                 </div>
 
                 <!-- ── VISION VIEW ── -->
-                <div class="cltr-tab-panel" id="cltr-tab-vision">
+                <div class="cltr-tab-panel hidden" id="cltr-tab-vision">
                     <div class="vis-hero" data-reveal>
                         <h2 class="vis-title">The Human Execution Protocol</h2>
                         <p class="vis-subtitle">Replacing blind trust and unverified claims with economic certainty and programmatic enforcement.</p>
@@ -2614,6 +2706,13 @@ export function initToken() {
         });
     }
 
+    window.app.switchProtocolTab = function(tabId) {
+        switchTab(tabId);
+        const url = new URL(window.location.href);
+        url.searchParams.set('tab', tabId);
+        window.history.pushState({}, '', url.toString());
+    };
+
     subtabs.forEach(btn => {
         btn.addEventListener('click', function() {
             const tabId = this.getAttribute('data-tab');
@@ -2627,6 +2726,6 @@ export function initToken() {
 
     // Read initial tab parameter
     const searchParams = new URLSearchParams(window.location.search);
-    const defaultTab = searchParams.get('tab') || 'vision';
+    const defaultTab = searchParams.get('tab') || 'overview';
     switchTab(defaultTab);
 }

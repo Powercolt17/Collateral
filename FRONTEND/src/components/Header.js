@@ -5,7 +5,8 @@ export function renderHeader(currentRoute) {
         { path: '/my-contracts', label: 'ACTIVE' },
         { path: '/ledger', label: 'LEDGER' },
         { path: '/sources', label: 'SOURCES' },
-        { path: '/protocol', label: 'PROTOCOL', hasDropdown: true }
+        { path: '/protocol', label: 'PROTOCOL', hasDropdown: true },
+        { path: '/docs', label: 'DOCS', hasDropdown: true }
     ];
 
     const navItems = routes.map(route => {
@@ -22,10 +23,18 @@ export function renderHeader(currentRoute) {
                 `;
             } else if (route.path === '/protocol') {
                 dropdownItems = `
-                    <a href="#" onclick="window.router.navigate('/protocol?tab=vision'); return false;">Overview</a>
-                    <a href="#" onclick="window.router.navigate('/protocol?tab=terminal'); return false;">Custody Terminal</a>
+                    <a href="#" onclick="window.router.navigate('/protocol?tab=overview'); return false;">Overview</a>
+                    <a href="#" onclick="window.router.navigate('/protocol?tab=vision'); return false;">Vision</a>
                     <a href="#" onclick="window.router.navigate('/protocol?tab=whitepaper'); return false;">Whitepaper</a>
                     <a href="#" onclick="window.router.navigate('/protocol?tab=economics'); return false;">Economics</a>
+                    <a href="#" onclick="window.router.navigate('/protocol?tab=terminal'); return false;">Custody Terminal</a>
+                `;
+            } else if (route.path === '/docs') {
+                dropdownItems = `
+                    <a href="#" onclick="window.router.navigate('/docs#api-endpoints'); return false;">Developer Hub</a>
+                    <a href="#" onclick="window.router.navigate('/docs#api-auth'); return false;">APIs</a>
+                    <a href="#" onclick="window.router.navigate('/docs#sdk-setup'); return false;">SDK</a>
+                    <a href="#" onclick="window.router.navigate('/docs#contract-addresses'); return false;">Smart Contracts</a>
                 `;
             }
 
@@ -80,10 +89,18 @@ export function renderHeader(currentRoute) {
                 `;
             } else if (route.path === '/protocol') {
                 subnavItems = `
-                    <a href="#" onclick="window.app.closeMobileMenu(); window.router.navigate('/protocol?tab=vision'); return false;" class="pnl-subnav-link">Overview</a>
-                    <a href="#" onclick="window.app.closeMobileMenu(); window.router.navigate('/protocol?tab=terminal'); return false;" class="pnl-subnav-link">Custody Terminal</a>
+                    <a href="#" onclick="window.app.closeMobileMenu(); window.router.navigate('/protocol?tab=overview'); return false;" class="pnl-subnav-link">Overview</a>
+                    <a href="#" onclick="window.app.closeMobileMenu(); window.router.navigate('/protocol?tab=vision'); return false;" class="pnl-subnav-link">Vision</a>
                     <a href="#" onclick="window.app.closeMobileMenu(); window.router.navigate('/protocol?tab=whitepaper'); return false;" class="pnl-subnav-link">Whitepaper</a>
                     <a href="#" onclick="window.app.closeMobileMenu(); window.router.navigate('/protocol?tab=economics'); return false;" class="pnl-subnav-link">Economics</a>
+                    <a href="#" onclick="window.app.closeMobileMenu(); window.router.navigate('/protocol?tab=terminal'); return false;" class="pnl-subnav-link">Custody Terminal</a>
+                `;
+            } else if (route.path === '/docs') {
+                subnavItems = `
+                    <a href="#" onclick="window.app.closeMobileMenu(); window.router.navigate('/docs#api-endpoints'); return false;" class="pnl-subnav-link">Developer Hub</a>
+                    <a href="#" onclick="window.app.closeMobileMenu(); window.router.navigate('/docs#api-auth'); return false;" class="pnl-subnav-link">APIs</a>
+                    <a href="#" onclick="window.app.closeMobileMenu(); window.router.navigate('/docs#sdk-setup'); return false;" class="pnl-subnav-link">SDK</a>
+                    <a href="#" onclick="window.app.closeMobileMenu(); window.router.navigate('/docs#contract-addresses'); return false;" class="pnl-subnav-link">Smart Contracts</a>
                 `;
             }
 

@@ -134,13 +134,13 @@ export function renderLanding() {
                         <div class="ltype">
                             <div class="ltype-badge" style="color:var(--t1);background:rgba(17,17,17,.04);border:1px solid var(--d)">Solo</div>
                             <div class="ltype-h">You vs. Yourself</div>
-                            <div class="ltype-p">Lock deposits to force yourself to execute. Hit targets to win; fail and forfeit capital.</div>
+                            <div class="ltype-p">Lock deposits to force yourself to execute. <span class="lhide-mobile">Hit targets to win; fail and forfeit capital.</span></div>
                             <div class="ltype-detail"><strong>Best for:</strong> Milestones, shipping code, audience building.</div>
                         </div>
                         <div class="ltype">
                             <div class="ltype-badge" style="color:var(--r);background:rgba(92,20,20,.04);border:1px solid rgba(92,20,20,.15)">Rivalry</div>
                             <div class="ltype-h">You vs. Competitors</div>
-                            <div class="ltype-p">Lock equal deposits in a head-to-head race. Winner takes the entire pool.</div>
+                            <div class="ltype-p">Lock equal deposits in a head-to-head race. <span class="lhide-mobile">Winner takes the entire pool.</span></div>
                             <div class="ltype-detail"><strong>Best for:</strong> Audience races, competitive fire.</div>
                         </div>
                     </div>
@@ -225,22 +225,22 @@ export function renderLanding() {
                         <div class="lhow-card" data-r>
                             <span class="lhow-card-badge">Step 01</span>
                             <h3 class="lhow-card-title">Set Target</h3>
-                            <p class="lhow-card-desc">Connect Stripe, X, Shopify, or YouTube. Set your exact metric target.</p>
+                            <p class="lhow-card-desc lhide-mobile">Connect Stripe, X, Shopify, or YouTube. Set your exact metric target.</p>
                         </div>
                         <div class="lhow-card" data-r>
                             <span class="lhow-card-badge">Step 02</span>
                             <h3 class="lhow-card-title">Lock Deposit</h3>
-                            <p class="lhow-card-desc">Lock your security deposit in escrow. No early withdrawals allowed.</p>
+                            <p class="lhow-card-desc lhide-mobile">Lock your security deposit in escrow. No early withdrawals allowed.</p>
                         </div>
                         <div class="lhow-card" data-r>
                             <span class="lhow-card-badge">Step 03</span>
                             <h3 class="lhow-card-title">Execute</h3>
-                            <p class="lhow-card-desc">Your contract runs. Progress is tracked in real-time via platform APIs.</p>
+                            <p class="lhow-card-desc lhide-mobile">Your contract runs. Progress is tracked in real-time via platform APIs.</p>
                         </div>
                         <div class="lhow-card final-card" data-r>
                             <span class="lhow-card-badge">Step 04</span>
                             <h3 class="lhow-card-title">API Settle</h3>
-                            <p class="lhow-card-desc">APIs verify outcomes. Hit goals to win yields; fail and forfeit deposits.</p>
+                            <p class="lhow-card-desc lhide-mobile">APIs verify outcomes. Hit goals to win yields; fail and forfeit deposits.</p>
                         </div>
                     </div>
                 </div>
@@ -353,8 +353,8 @@ export function renderLanding() {
                         <div class="lemo-left">
                             <p class="lemo-body">
                                 Planning is easy. Executing is hard. You miss targets because failing is free. Collateral makes failure cost something, shifting you from passive planning to pure execution.
-                                <br><br>
-                                Stop betting on variables you can't control. Bet on your own focus.
+                                <br class="lhide-mobile"><br class="lhide-mobile">
+                                <span class="lhide-mobile">Stop betting on variables you can't control. Bet on your own focus.</span>
                             </p>
                         </div>
                         <div class="lemo-right">
@@ -395,8 +395,8 @@ export function renderLanding() {
                         <div>
                             <p class="lemo-body" style="font-size:16px; line-height:1.65; color:var(--t2);">
                                 CLTR is the utility token powering Collateral reputation and execution on the Robinhood Chain.
-                                <br><br>
-                                Builders bond CLTR for milestone capacity. Validators and jurors lock it to secure the network. Every contract forfeiture burns CLTR permanently.
+                                <br class="lhide-mobile"><br class="lhide-mobile">
+                                <span class="lhide-mobile">Builders bond CLTR for milestone capacity. Validators and jurors lock it to secure the network. Every contract forfeiture burns CLTR permanently.</span>
                             </p>
                             <div style="display:flex; gap:16px; margin-top:32px; flex-wrap:wrap;">
                                 <a href="https://app.uniswap.org/#/swap?inputCurrency=ETH&outputCurrency=0x7b69C7E57d7004EB2374E5Aabb9db5334aE73B9f" target="_blank" class="lbtn lbtn-r" style="height:50px; padding:0 24px; font-size:11px; text-decoration:none; display:inline-flex; align-items:center; gap:8px;">
@@ -458,19 +458,19 @@ export function renderLanding() {
                             <div class="fq-q">Can I cancel after locking?</div>
                             <div class="fq-a">No. Once capital is locked, it cannot be withdrawn or canceled until the contract deadline.</div>
                         </div>
-                        <div class="fq">
+                        <div class="fq lhide-mobile">
                             <div class="fq-q">Can I get a refund if I miss?</div>
                             <div class="fq-a">No. If you fail, the deposit is forfeited. This financial risk is why the system works.</div>
                         </div>
-                        <div class="fq">
+                        <div class="fq lhide-mobile">
                             <div class="fq-q">What happens if an API goes down?</div>
                             <div class="fq-a">The contract pauses. If an integration breaks permanently, deposits are refunded.</div>
                         </div>
-                        <div class="fq">
+                        <div class="fq lhide-mobile">
                             <div class="fq-q">What data do you access?</div>
                             <div class="fq-a">We request read-only access to verify target metrics. We never store customer or billing data.</div>
                         </div>
-                        <div class="fq">
+                        <div class="fq lhide-mobile">
                             <div class="fq-q">Is this legal?</div>
                             <div class="fq-a">Yes. It is a performance-based commercial escrow agreement based on objective business data, not probability.</div>
                         </div>

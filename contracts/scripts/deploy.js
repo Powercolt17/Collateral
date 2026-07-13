@@ -26,13 +26,13 @@ async function main() {
     : [];
   
   console.log("\nValidating Team Vesting Allocation parameters...");
-  if (teamMemberAddresses.length !== 20) {
-    throw new Error(`Validation Failed: TEAM_RECIPIENTS must contain exactly 20 addresses. Found ${teamMemberAddresses.length}.`);
+  if (teamMemberAddresses.length !== 10) {
+    throw new Error(`Validation Failed: TEAM_RECIPIENTS must contain exactly 10 addresses. Found ${teamMemberAddresses.length}.`);
   }
 
   const teamAddressSet = new Set();
   const teamVestingTotal = 150n * ONE_MILLION;
-  const expectedTeamShare = 7_500_000n * (10n ** decimals);
+  const expectedTeamShare = 15_000_000n * (10n ** decimals);
 
   for (let i = 0; i < teamMemberAddresses.length; i++) {
     const addr = teamMemberAddresses[i].trim();

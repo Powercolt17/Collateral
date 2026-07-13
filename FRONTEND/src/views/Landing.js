@@ -133,15 +133,15 @@ export function renderLanding() {
                     <div class="ltypes-grid">
                         <div class="ltype">
                             <div class="ltype-badge" style="color:var(--t1);background:rgba(17,17,17,.04);border:1px solid var(--d)">Solo</div>
-                            <div class="ltype-h">You vs. your own laziness.</div>
-                            <div class="ltype-p">Put real cash on the line to force yourself to execute. Hit your target to win a bonus; fail and your deposit is gone. Use the threat of loss to force yourself to grow, ship, or publish.</div>
-                            <div class="ltype-detail"><strong>Best for:</strong> Growing followers, launching projects, and hitting revenue goals.</div>
+                            <div class="ltype-h">You vs. Yourself</div>
+                            <div class="ltype-p">Lock a cash deposit on your target. Hit it to win a bonus; fail and your deposit is forfeited. Use loss aversion to guarantee you execute.</div>
+                            <div class="ltype-detail"><strong>Best for:</strong> Audience building, launching projects, and revenue milestones.</div>
                         </div>
                         <div class="ltype">
                             <div class="ltype-badge" style="color:var(--r);background:rgba(92,20,20,.04);border:1px solid rgba(92,20,20,.15)">Rivalry</div>
-                            <div class="ltype-h">You vs. another builder.</div>
-                            <div class="ltype-p">Lock equal cash in a head-to-head race. May the hungrier builder win. The winner takes all the money. The loser gets nothing.</div>
-                            <div class="ltype-detail"><strong>Best for:</strong> Audience growth races, creator showdowns, and competitive fire.</div>
+                            <div class="ltype-h">You vs. Competitors</div>
+                            <div class="ltype-p">Lock equal deposits in a head-to-head race. The first builder to hit the target takes the entire pool.</div>
+                            <div class="ltype-detail"><strong>Best for:</strong> Growth races, creator showdowns, and competitive fire.</div>
                         </div>
                     </div>
                 </div>
@@ -219,28 +219,28 @@ export function renderLanding() {
                 <div class="lhow" data-r id="how">
                     <div class="lred-dash"><span class="lmono">How It Works</span></div>
                     <h2 class="lhow-h">Set a target. Lock money.<br>Force yourself to <strong>win.</strong></h2>
-                    <p class="lhow-sub">If you are serious about hitting your target, put something on the line. Four steps to guarantee your next milestone.</p>
+                    <p class="lhow-sub">If you are serious, put something on the line. Four steps to guarantee your next milestone.</p>
 
                     <div class="lhow-grid">
                         <div class="lhow-card" data-r>
                             <span class="lhow-card-badge">Step 01</span>
-                            <h3 class="lhow-card-title">Pick Your Metric</h3>
-                            <p class="lhow-card-desc">Connect Stripe, X, Shopify, or YouTube. Choose the exact target metric you need to hit.</p>
+                            <h3 class="lhow-card-title">Link API &amp; Goal</h3>
+                            <p class="lhow-card-desc">Connect Stripe, X, Shopify, or YouTube. Set your exact metric target.</p>
                         </div>
                         <div class="lhow-card" data-r>
                             <span class="lhow-card-badge">Step 02</span>
-                            <h3 class="lhow-card-title">Lock Capital</h3>
-                            <p class="lhow-card-desc">Lock your deposit securely in Stripe escrow. No early withdrawals or cancellations allowed.</p>
+                            <h3 class="lhow-card-title">Lock Security Deposit</h3>
+                            <p class="lhow-card-desc">Lock your deposit securely in escrow. No early withdrawals allowed.</p>
                         </div>
                         <div class="lhow-card" data-r>
                             <span class="lhow-card-badge">Step 03</span>
-                            <h3 class="lhow-card-title">The Clock Starts</h3>
-                            <p class="lhow-card-desc">Your contract goes live. We track your progress in real-time via official, tamper-proof platform APIs.</p>
+                            <h3 class="lhow-card-title">Execute Your Work</h3>
+                            <p class="lhow-card-desc">Your contract runs. Progress is tracked in real-time via platform APIs.</p>
                         </div>
                         <div class="lhow-card final-card" data-r>
                             <span class="lhow-card-badge">Step 04</span>
-                            <h3 class="lhow-card-title">API Settles It</h3>
-                            <p class="lhow-card-desc">At the deadline, APIs verify outcomes. Hit targets to claim the bonus. Miss and forfeit the deposit.</p>
+                            <h3 class="lhow-card-title">API Settle &amp; Payout</h3>
+                            <p class="lhow-card-desc">APIs verify outcomes. Hit goals to win yields; fail and forfeit deposits.</p>
                         </div>
                     </div>
                 </div>
@@ -352,9 +352,9 @@ export function renderLanding() {
                     <div class="lemo-grid">
                         <div class="lemo-left">
                             <p class="lemo-body">
-                                Planning is easy. Executing is hard. You miss your targets because failing is free. Collateral gives you the financial leverage you need to stop planning, force your own hand, and start winning.
+                                Planning is easy. Executing is hard. You miss targets because failing is free. Collateral gives you the financial leverage to stop planning and start executing by making failure cost something.
                                 <br><br>
-                                Every day, people risk money on outcomes they can't control—like stock markets, sports bets, or ad algorithms. Collateral lets you bet on the only asset you actually control: your own performance.
+                                Stop risking capital on markets or sports teams you can't control. Lock deposits on the only asset you actually control: your own focus.
                             </p>
                         </div>
                         <div class="lemo-right">
@@ -372,10 +372,10 @@ export function renderLanding() {
                                 <div class="lemo-col with-collateral">
                                     <div class="lemo-col-header text-strong">Pure Execution</div>
                                     <ul class="lemo-list">
-                                        <li class="lemo-item text-strong">Lock $500 on the target</li>
-                                        <li class="lemo-item text-strong">Realize failure hurts</li>
+                                        <li class="lemo-item text-strong">Lock $500 on target</li>
+                                        <li class="lemo-item text-strong">Failure has real cost</li>
                                         <li class="lemo-item text-strong">Work through the night</li>
-                                        <li class="lemo-item text-strong text-green">Hit target & claim your money</li>
+                                        <li class="lemo-item text-strong text-green">Hit target & claim yields</li>
                                     </ul>
                                 </div>
                             </div>
@@ -394,9 +394,9 @@ export function renderLanding() {
                     <div class="lemo-grid">
                         <div>
                             <p class="lemo-body" style="font-size:16px; line-height:1.65; color:var(--t2);">
-                                CLTR is the native utility token of the Collateral Protocol on the **Robinhood Chain**. While cash deposits cover the stakes of individual agreements, CLTR is the resource that fuels the underlying identity and execution network.
+                                CLTR is the native utility token of the Collateral Protocol on the **Robinhood Chain**. While stablecoins cover individual contract stakes, CLTR powers the underlying reputation and execution network.
                                 <br><br>
-                                Builders bond CLTR to unlock <strong>Conviction Capacity</strong> (milestone bandwidth), validators stake it to run verification checks, and dispute jurors lock it to resolve arbitrations. Every failed contract burns CLTR, and a portion of all transaction fees continuously market-buys and burns CLTR from supply.
+                                Builders bond CLTR for milestone bandwidth, validators stake it to run verification checks, and dispute jurors lock it to arbitrate. Every contract forfeiture burns CLTR permanently.
                             </p>
                             <div style="display:flex; gap:16px; margin-top:32px; flex-wrap:wrap;">
                                 <a href="https://app.uniswap.org/#/swap?inputCurrency=ETH&outputCurrency=0x7b69C7E57d7004EB2374E5Aabb9db5334aE73B9f" target="_blank" class="lbtn lbtn-r" style="height:50px; padding:0 24px; font-size:11px; text-decoration:none; display:inline-flex; align-items:center; gap:8px;">
@@ -444,35 +444,35 @@ export function renderLanding() {
                     <div class="lfaq-wrap">
                         <div class="fq open">
                             <div class="fq-q">Is this gambling?</div>
-                            <div class="fq-a">No. Gambling is risking money on outcomes you can't control—like sports, election markets, or ad algorithms. Collateral is the exact opposite: you are staking money on the one thing you have absolute control over—your own focus, work, and execution. You win if you hit your goal; you lose if you don't.</div>
+                            <div class="fq-a">No. Gambling is risking money on variables you can't control (sports, markets, algorithms). Collateral is betting on your own focus, work, and execution.</div>
                         </div>
                         <div class="fq">
                             <div class="fq-q">Where is the money held?</div>
-                            <div class="fq-a">Your cash is held securely by Stripe. It gets released to you automatically as soon as the API verifies you hit your target.</div>
+                            <div class="fq-a">All deposits are held securely in a dedicated Stripe escrow account until settled.</div>
                         </div>
                         <div class="fq">
                             <div class="fq-q">How is the target verified?</div>
-                            <div class="fq-a">We check your real numbers directly through official platform APIs. No screenshots, no lies, no cheating.</div>
+                            <div class="fq-a">We query official platform APIs (Stripe, Shopify, X, YouTube) directly. No manual uploads, no cheating.</div>
                         </div>
                         <div class="fq">
                             <div class="fq-q">Can I cancel after locking?</div>
-                            <div class="fq-a">No. Once your cash is locked, you cannot get it back until the timer runs out. No early exits.</div>
+                            <div class="fq-a">No. Once capital is locked, it cannot be withdrawn or canceled until the contract deadline.</div>
                         </div>
                         <div class="fq">
                             <div class="fq-q">Can I get a refund if I miss?</div>
-                            <div class="fq-a">No. If you fail, your money is gone. That's the only reason this works. Only lock cash you are ready to lose.</div>
+                            <div class="fq-a">No. If you fail, the deposit is forfeited. This financial risk is why the system works.</div>
                         </div>
                         <div class="fq">
                             <div class="fq-q">What happens if an API goes down?</div>
-                            <div class="fq-a">The contract pauses. If an API breaks permanently, you get your money back.</div>
+                            <div class="fq-a">The contract pauses. If an integration breaks permanently, deposits are refunded.</div>
                         </div>
                         <div class="fq">
                             <div class="fq-q">What data do you access?</div>
-                            <div class="fq-a">We connect using official OAuth read-only scopes. We do not store raw API keys, and we have zero access to customer data, PII, billing details, or funds.</div>
+                            <div class="fq-a">We request read-only access to verify target metrics. We never store customer or billing data.</div>
                         </div>
                         <div class="fq">
                             <div class="fq-q">Is this legal?</div>
-                            <div class="fq-a">Yes. Available in the US, CA, UK, and EU. This is a performance-based commercial escrow agreement based on objective third-party metrics, not probability.</div>
+                            <div class="fq-a">Yes. It is a performance-based commercial escrow agreement based on objective business data, not probability.</div>
                         </div>
                     </div>
                 </div>
@@ -480,7 +480,7 @@ export function renderLanding() {
 
             <!-- ═══ FINAL CTA ═══ -->
             <div class="lfoot">
-                <h2 class="lfoot-h">Are you going to keep pretending todo lists work,<br>or lock capital to guarantee you execute?<br>Make it <em style="color:var(--r);font-style:normal;font-weight:700">cost something.</em></h2>
+                <h2 class="lfoot-h">Stop pretending todo lists work.<br>Lock capital, force execution, and <em style="color:var(--r);font-style:normal;font-weight:700">win.</em></h2>
                 <div class="lfoot-sub">First performance contract matched up to $250.</div>
                 <button class="lfoot-btn" id="lp-final-cta">Lock Your First Contract</button>
                 <div class="lfoot-micro">Objective tracking. Verified business data only.</div>

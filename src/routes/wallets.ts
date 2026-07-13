@@ -348,6 +348,7 @@ const walletsRoutes: FastifyPluginAsync = async (fastify) => {
                 isPrimary: item.isPrimary,
                 verifiedAt: item.verifiedAt.toISOString(),
                 lastConnectedAt: item.lastConnectedAt.toISOString()
+            }))
         };
     });
 
@@ -500,7 +501,7 @@ const walletsRoutes: FastifyPluginAsync = async (fastify) => {
                     username: finalUsername,
                     displayName: `Wallet ${walletAddress.slice(0, 6)}...${walletAddress.slice(-4)}`,
                     status: 'ACTIVE' as const,
-                })
+                } as any)
                 .returning();
             identity = createdIdentity;
 

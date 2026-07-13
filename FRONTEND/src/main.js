@@ -658,6 +658,17 @@ window.app = {
             // Force route refresh
             await hydrateSession();
 
+            // Redirect or refresh route to prevent blank page
+            const goTarget = sessionStorage.getItem('collateral_go_target');
+            if (goTarget) {
+                sessionStorage.removeItem('collateral_go_target');
+                window.router.navigate(goTarget);
+            } else if (_isOnGoPage()) {
+                window.router.navigate('/market');
+            } else {
+                window.router.navigate(window.location.pathname);
+            }
+
         } catch (err) {
             console.error('[WalletAuth] Login failed:', err);
             window.app._showAuthError(err.message || 'Signature rejected or wallet login failed.');

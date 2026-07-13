@@ -134,14 +134,14 @@ export function renderLanding() {
                         <div class="ltype">
                             <div class="ltype-badge" style="color:var(--t1);background:rgba(17,17,17,.04);border:1px solid var(--d)">Solo</div>
                             <div class="ltype-h">You vs. Yourself</div>
-                            <div class="ltype-p">Lock a cash deposit on your target. Hit it to win a bonus; fail and your deposit is forfeited. Use loss aversion to guarantee you execute.</div>
-                            <div class="ltype-detail"><strong>Best for:</strong> Audience building, launching projects, and revenue milestones.</div>
+                            <div class="ltype-p">Lock deposits to force yourself to execute. Hit targets to win; fail and forfeit capital.</div>
+                            <div class="ltype-detail"><strong>Best for:</strong> Milestones, shipping code, audience building.</div>
                         </div>
                         <div class="ltype">
                             <div class="ltype-badge" style="color:var(--r);background:rgba(92,20,20,.04);border:1px solid rgba(92,20,20,.15)">Rivalry</div>
                             <div class="ltype-h">You vs. Competitors</div>
-                            <div class="ltype-p">Lock equal deposits in a head-to-head race. The first builder to hit the target takes the entire pool.</div>
-                            <div class="ltype-detail"><strong>Best for:</strong> Growth races, creator showdowns, and competitive fire.</div>
+                            <div class="ltype-p">Lock equal deposits in a head-to-head race. Winner takes the entire pool.</div>
+                            <div class="ltype-detail"><strong>Best for:</strong> Audience races, competitive fire.</div>
                         </div>
                     </div>
                 </div>
@@ -219,27 +219,27 @@ export function renderLanding() {
                 <div class="lhow" data-r id="how">
                     <div class="lred-dash"><span class="lmono">How It Works</span></div>
                     <h2 class="lhow-h">Set a target. Lock money.<br>Force yourself to <strong>win.</strong></h2>
-                    <p class="lhow-sub">If you are serious, put something on the line. Four steps to guarantee your next milestone.</p>
+                    <p class="lhow-sub">If you are serious, put something on the line.</p>
 
                     <div class="lhow-grid">
                         <div class="lhow-card" data-r>
                             <span class="lhow-card-badge">Step 01</span>
-                            <h3 class="lhow-card-title">Link API &amp; Goal</h3>
+                            <h3 class="lhow-card-title">Set Target</h3>
                             <p class="lhow-card-desc">Connect Stripe, X, Shopify, or YouTube. Set your exact metric target.</p>
                         </div>
                         <div class="lhow-card" data-r>
                             <span class="lhow-card-badge">Step 02</span>
-                            <h3 class="lhow-card-title">Lock Security Deposit</h3>
-                            <p class="lhow-card-desc">Lock your deposit securely in escrow. No early withdrawals allowed.</p>
+                            <h3 class="lhow-card-title">Lock Deposit</h3>
+                            <p class="lhow-card-desc">Lock your security deposit in escrow. No early withdrawals allowed.</p>
                         </div>
                         <div class="lhow-card" data-r>
                             <span class="lhow-card-badge">Step 03</span>
-                            <h3 class="lhow-card-title">Execute Your Work</h3>
+                            <h3 class="lhow-card-title">Execute</h3>
                             <p class="lhow-card-desc">Your contract runs. Progress is tracked in real-time via platform APIs.</p>
                         </div>
                         <div class="lhow-card final-card" data-r>
                             <span class="lhow-card-badge">Step 04</span>
-                            <h3 class="lhow-card-title">API Settle &amp; Payout</h3>
+                            <h3 class="lhow-card-title">API Settle</h3>
                             <p class="lhow-card-desc">APIs verify outcomes. Hit goals to win yields; fail and forfeit deposits.</p>
                         </div>
                     </div>
@@ -352,9 +352,9 @@ export function renderLanding() {
                     <div class="lemo-grid">
                         <div class="lemo-left">
                             <p class="lemo-body">
-                                Planning is easy. Executing is hard. You miss targets because failing is free. Collateral gives you the financial leverage to stop planning and start executing by making failure cost something.
+                                Planning is easy. Executing is hard. You miss targets because failing is free. Collateral makes failure cost something, shifting you from passive planning to pure execution.
                                 <br><br>
-                                Stop risking capital on markets or sports teams you can't control. Lock deposits on the only asset you actually control: your own focus.
+                                Stop betting on variables you can't control. Bet on your own focus.
                             </p>
                         </div>
                         <div class="lemo-right">
@@ -372,7 +372,7 @@ export function renderLanding() {
                                 <div class="lemo-col with-collateral">
                                     <div class="lemo-col-header text-strong">Pure Execution</div>
                                     <ul class="lemo-list">
-                                        <li class="lemo-item text-strong">Lock $500 on target</li>
+                                        <li class="lemo-item text-strong">Lock deposit on target</li>
                                         <li class="lemo-item text-strong">Failure has real cost</li>
                                         <li class="lemo-item text-strong">Work through the night</li>
                                         <li class="lemo-item text-strong text-green">Hit target & claim yields</li>
@@ -394,9 +394,9 @@ export function renderLanding() {
                     <div class="lemo-grid">
                         <div>
                             <p class="lemo-body" style="font-size:16px; line-height:1.65; color:var(--t2);">
-                                CLTR is the native utility token of the Collateral Protocol on the **Robinhood Chain**. While stablecoins cover individual contract stakes, CLTR powers the underlying reputation and execution network.
+                                CLTR is the utility token powering Collateral reputation and execution on the Robinhood Chain.
                                 <br><br>
-                                Builders bond CLTR for milestone bandwidth, validators stake it to run verification checks, and dispute jurors lock it to arbitrate. Every contract forfeiture burns CLTR permanently.
+                                Builders bond CLTR for milestone capacity. Validators and jurors lock it to secure the network. Every contract forfeiture burns CLTR permanently.
                             </p>
                             <div style="display:flex; gap:16px; margin-top:32px; flex-wrap:wrap;">
                                 <a href="https://app.uniswap.org/#/swap?inputCurrency=ETH&outputCurrency=0x7b69C7E57d7004EB2374E5Aabb9db5334aE73B9f" target="_blank" class="lbtn lbtn-r" style="height:50px; padding:0 24px; font-size:11px; text-decoration:none; display:inline-flex; align-items:center; gap:8px;">
@@ -416,19 +416,19 @@ export function renderLanding() {
                             <div style="display:flex; flex-direction:column; gap:12px; font-size:13px; color:var(--t2);">
                                 <div style="display:flex; align-items:flex-start; gap:10px;">
                                     <span style="color:var(--g); font-weight:bold;">✓</span>
-                                    <span><strong>Staking Yields</strong>: Earn up to 25% APY in the Custody Terminal.</span>
+                                    <span><strong>Staking</strong>: Earn up to 25% APY in the Custody Terminal.</span>
                                 </div>
                                 <div style="display:flex; align-items:flex-start; gap:10px;">
                                     <span style="color:var(--g); font-weight:bold;">✓</span>
-                                    <span><strong>Commitment Capacity</strong>: Bond token weight to lock larger contracts.</span>
+                                    <span><strong>Capacity</strong>: Bond token weight to lock larger contracts.</span>
                                 </div>
                                 <div style="display:flex; align-items:flex-start; gap:10px;">
                                     <span style="color:var(--g); font-weight:bold;">✓</span>
-                                    <span><strong>Fee Burns</strong>: 0.5% of all settlement volume is continuously burned.</span>
+                                    <span><strong>Deflationary</strong>: 0.5% of all settlement volume is burned.</span>
                                 </div>
                                 <div style="display:flex; align-items:flex-start; gap:10px;">
                                     <span style="color:var(--g); font-weight:bold;">✓</span>
-                                    <span><strong>Forfeiture Burns</strong>: 30% of failed staked tokens are burned forever.</span>
+                                    <span><strong>Forfeitures</strong>: 30% of failed staked tokens are burned forever.</span>
                                 </div>
                             </div>
                         </div>

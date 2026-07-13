@@ -616,17 +616,14 @@ window.app = {
             }
             const nonce = nonceRes.nonce;
 
-            // 3. Format SIWE message
-            const iat = new Date();
-            const exp = new Date(iat.getTime() + 5 * 60 * 1000); // 5 minutes expiration
-
+            // 3. Format SIWE message using backend timestamps
             const messageText = `Collateral Wallet Login\n\n` +
                 `Authenticate with wallet ${address}.\n\n` +
                 `Domain: collateral.market\n` +
                 `Chain ID: 4663\n` +
                 `Nonce: ${nonce}\n` +
-                `Issued At: ${iat.toISOString()}\n` +
-                `Expiration Time: ${exp.toISOString()}`;
+                `Issued At: ${nonceRes.createdAt}\n` +
+                `Expiration Time: ${nonceRes.expiresAt}`;
 
             // 4. Request signature from user's wallet
             const signature = await signMessage(wagmiAdapter.wagmiConfig, {
@@ -1709,17 +1706,14 @@ window.app.promptLinkWallet = async function (address) {
         }
 
         const nonce = nonceRes.nonce;
-        const iat = new Date();
-        const exp = new Date(iat.getTime() + 5 * 60 * 1000); // 5 minutes
-
         const messageText = `Collateral Wallet Verification\n\n` +
             `Link wallet ${address} to your Collateral account.\n\n` +
             `User ID: ${appState.userId}\n` +
             `Domain: collateral.market\n` +
             `Chain ID: 4663\n` +
             `Nonce: ${nonce}\n` +
-            `Issued At: ${iat.toISOString()}\n` +
-            `Expiration Time: ${exp.toISOString()}`;
+            `Issued At: ${nonceRes.createdAt}\n` +
+            `Expiration Time: ${nonceRes.expiresAt}`;
 
         // Request signature
         const signature = await signMessage(wagmiAdapter.wagmiConfig, {

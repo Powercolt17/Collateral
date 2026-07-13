@@ -15,6 +15,7 @@ const walletsRoutes: FastifyPluginAsync = async (fastify) => {
         // Generate single-use random nonce
         const nonce = crypto.randomBytes(16).toString('hex');
         const expiresAt = new Date(Date.now() + 5 * 60 * 1000); // 5 minutes expiration
+        const createdAt = new Date();
 
         let userId = null;
         try {
@@ -28,6 +29,7 @@ const walletsRoutes: FastifyPluginAsync = async (fastify) => {
             nonce,
             userId,
             expiresAt,
+            createdAt,
             consumed: false
         } as any);
 
@@ -35,7 +37,9 @@ const walletsRoutes: FastifyPluginAsync = async (fastify) => {
 
         return {
             ok: true,
-            nonce
+            nonce,
+            createdAt: createdAt.toISOString(),
+            expiresAt: expiresAt.toISOString()
         };
     });
 

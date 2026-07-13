@@ -1111,17 +1111,14 @@ export async function initProfile() {
                 }
 
                 const nonce = nonceRes.nonce;
-                const iat = new Date();
-                const exp = new Date(iat.getTime() + 5 * 60 * 1000); // 5 minutes
-
                 const messageText = `Collateral Wallet Verification\n\n` +
                     `Unlink wallet ${address} from your Collateral account.\n\n` +
                     `User ID: ${window.appState.userId}\n` +
                     `Domain: collateral.market\n` +
                     `Chain ID: 4663\n` +
                     `Nonce: ${nonce}\n` +
-                    `Issued At: ${iat.toISOString()}\n` +
-                    `Expiration Time: ${exp.toISOString()}`;
+                    `Issued At: ${nonceRes.createdAt}\n` +
+                    `Expiration Time: ${nonceRes.expiresAt}`;
 
                 const signature = await signMessage(window.wagmiAdapter.wagmiConfig, {
                     message: messageText

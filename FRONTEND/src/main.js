@@ -141,6 +141,9 @@ async function hydrateSession() {
         appState.connectedSources = {
             twitter: !!profile.xConnection?.connected,
             stripe: !!profile.stripeConnection?.connected,
+            youtube: !!profile.youtubeConnection?.connected,
+            shopify: !!profile.shopifyConnection?.connected,
+            amazon: !!profile.amazonConnection?.connected,
             github: false, // TODO: add when GitHub OAuth is implemented
         };
 
@@ -148,6 +151,9 @@ async function hydrateSession() {
         appState.verificationStatus = {
             twitter: profile.xConnection?.verified ?? false,
             stripe: profile.stripeConnection?.verified ?? false,
+            youtube: profile.youtubeConnection?.verified ?? false,
+            shopify: profile.shopifyConnection?.verified ?? false,
+            amazon: profile.amazonConnection?.verified ?? false,
             github: false,
         };
 
@@ -174,7 +180,7 @@ async function hydrateSession() {
             appState.displayName = null;
             appState.username = null;
             appState.userId = null;
-            appState.connectedSources = { twitter: false, stripe: false, github: false };
+            appState.connectedSources = { twitter: false, stripe: false, youtube: false, shopify: false, amazon: false, github: false };
 
             // Force redirect off protected route if on one
             const protectedPaths = ['/market', '/my-contracts', '/profile', '/funding'];
@@ -336,13 +342,7 @@ const routes = PRE_LAUNCH_MODE ? [
         }
     }
 
-    // Referral link redirect: /r/:code → /r/:code
-    const refMatch = pathname.match(/^\/r\/([a-zA-Z0-9_-]+)\/?$/);
-    if (refMatch) {
-        console.log('[Referral] Intercepting', pathname, ', redirecting to hash route');
-        window.location.replace(origin + '/r/' + refMatch[1]);
-        return;
-    }
+
 
     // Map of path-based OAuth callbacks to hash routes
     const map = {
@@ -354,8 +354,8 @@ const routes = PRE_LAUNCH_MODE ? [
     };
 
     const dest = map[pathname];
-    if (dest) {
-        console.log('[OAuth] Intercepting', pathname, ', redirecting to hash route');
+    if (dest && dest !== pathname) {
+        console.log('[OAuth] Intercepting', pathname, ', redirecting to callback route');
         window.location.replace(origin + dest + search);
     }
 })();
@@ -414,7 +414,7 @@ window.app = {
         appState.username = null;
         appState.displayName = null;
         appState.userId = null;
-        appState.connectedSources = { twitter: false, stripe: false, github: false };
+        appState.connectedSources = { twitter: false, stripe: false, youtube: false, shopify: false, amazon: false, github: false };
         updateAuthUI();
         window.router.navigate('/market');
     },

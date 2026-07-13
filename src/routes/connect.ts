@@ -888,6 +888,31 @@ async function connectRoutes(fastify: FastifyInstance) {
                 });
             }
 
+            // YouTube: from connectedAccounts
+            const youtubeAccount = accounts.find(a => a.platform === 'YOUTUBE');
+            if (youtubeAccount) {
+                platforms.push({
+                    platform: 'YOUTUBE',
+                    connectionStatus: youtubeAccount.status === 'ACTIVE' ? 'CONNECTED' : 'INACTIVE',
+                    verificationStatus: youtubeAccount.verificationStatus === 'VERIFIED' ? 'VERIFIED' :
+                        youtubeAccount.verificationStatus === 'PENDING' ? 'PENDING' : 'UNVERIFIED',
+                    externalAccountId: youtubeAccount.externalAccountId,
+                    connectedAt: youtubeAccount.connectedAt?.toISOString() || null,
+                    verifiedAt: youtubeAccount.verifiedAt?.toISOString() || null,
+                    metadata: youtubeAccount.metadataJson,
+                });
+            } else {
+                platforms.push({
+                    platform: 'YOUTUBE',
+                    connectionStatus: 'DISCONNECTED',
+                    verificationStatus: 'UNVERIFIED',
+                    externalAccountId: null,
+                    connectedAt: null,
+                    verifiedAt: null,
+                    metadata: null,
+                });
+            }
+
             return reply.status(200).send({
                 ok: true,
                 platforms,

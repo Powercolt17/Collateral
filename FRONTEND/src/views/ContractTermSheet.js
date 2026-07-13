@@ -424,10 +424,12 @@ function showContent(c) {
                     <!-- Lock Method Selector Toggle -->
                     <div style="display: flex; gap: 8px; margin-bottom: 20px; background: #f3f4f6; padding: 4px; border-radius: 6px;">
                         <button class="cts-method-btn" id="cts-method-usd" style="flex: 1; padding: 8px; font-size: 11px; font-weight: 600; border: none; border-radius: 4px; background: ${selectedMethod === 'USD_CARD' ? '#fff' : 'transparent'}; color: ${selectedMethod === 'USD_CARD' ? '#111' : '#666'}; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 6px; box-shadow: ${selectedMethod === 'USD_CARD' ? '0 1px 2px rgba(0,0,0,0.05)' : 'none'}; transition: all 0.15s; font-family: inherit;">
-                            🔒 USD Card (Stripe)
+                            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="14" x="2" y="5" rx="2"/><line x1="2" x2="22" y1="10" y2="10"/></svg>
+                            <span>USD Card (Stripe)</span>
                         </button>
                         <button class="cts-method-btn" id="cts-method-cltr" style="flex: 1; padding: 8px; font-size: 11px; font-weight: 600; border: none; border-radius: 4px; background: ${selectedMethod === 'CRYPTO' ? '#fff' : 'transparent'}; color: ${selectedMethod === 'CRYPTO' ? '#111' : '#666'}; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 6px; box-shadow: ${selectedMethod === 'CRYPTO' ? '0 1px 2px rgba(0,0,0,0.05)' : 'none'}; transition: all 0.15s; font-family: inherit;">
-                            🪙 CLTR Staking (Web3)
+                            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 6v12"/><path d="M17 12H7"/></svg>
+                            <span>CLTR Staking (Web3)</span>
                         </button>
                     </div>
 

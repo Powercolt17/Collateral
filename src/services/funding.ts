@@ -45,7 +45,8 @@ export interface CreateFundingIntentResult {
  */
 export async function createFundingIntent(
     contractId: string,
-    userId: string
+    userId: string,
+    transactionHash?: string
 ): Promise<CreateFundingIntentResult> {
     // 1. Get contract
     const contract = await getContract(contractId);
@@ -64,7 +65,64 @@ export async function createFundingIntent(
     // 3. Validate from-state (must be CREATED)
     validateFromState(currentState, [ContractStatus.CREATED], 'funding-intent');
 
-    // 4. Get user's saved funding source (card)
+    // 4. Handle CRYPTO Staking
+    if (contract.fundingMethod === 'CRYPTO') {
+        const txHash = transactionHash || `tx_simulated_${contractId}`;
+        const { AccountEventType } = await import('./balances.js');
+
+        // 4.1 Append FUNDS_AUTHORIZED
+        await appendEvent({
+            contractId,
+            actor: 'USER',
+            eventType: EventType.FUNDS_AUTHORIZED,
+            amountUsdCents: contract.lockAmountUsdCents,
+            externalRef: txHash,
+            metadata: {
+                fundingMethod: 'CRYPTO',
+                transactionHash: txHash,
+                semanticNote: 'crypto_staking_authorized',
+            },
+        });
+
+        // 4.2 Append FUNDS_LOCKED
+        await appendEvent({
+            contractId,
+            actor: 'SYSTEM',
+            eventType: EventType.FUNDS_LOCKED,
+            amountUsdCents: contract.lockAmountUsdCents,
+            externalRef: `${txHash}_locked`,
+            metadata: {
+                fundingMethod: 'CRYPTO',
+                transactionHash: txHash,
+                paymentConfirmed: true,
+                lockedAt: new Date().toISOString(),
+                source: 'web3_staking',
+            },
+        });
+
+        // 4.3 Append CAPITAL_LOCKED account ledger event
+        await appendAccountEvent({
+            userId,
+            contractId,
+            eventType: AccountEventType.CAPITAL_LOCKED,
+            amountCents: contract.lockAmountUsdCents,
+            idempotencyKey: `capital_locked_crypto_${contractId}_${txHash}`,
+            metadata: {
+                fundingMethod: 'CRYPTO',
+                transactionHash: txHash,
+                lockedAt: new Date().toISOString(),
+            },
+        });
+
+        return {
+            clientSecret: 'crypto_direct_flow',
+            paymentIntentId: txHash,
+            amountUsdCents: contract.lockAmountUsdCents,
+            status: 'succeeded',
+        };
+    }
+
+    // 5. Get user's saved funding source (card)
     const { fundingSources } = await import('../db/schema.js');
     const [fundingSource] = await db.select().from(fundingSources).where(eq(fundingSources.userId, userId));
 

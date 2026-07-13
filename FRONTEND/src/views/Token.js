@@ -1564,7 +1564,8 @@ export function renderToken() {
                             </div>
                         </div>
                     </div>
-                </div> <!-- End Terminal Tab Panel -->
+                </div>
+            </div> <!-- End Terminal Tab Panel -->
 
                 <!-- ── WHITEPAPER VIEW ── -->
                 <div class="cltr-tab-panel hidden" id="cltr-tab-whitepaper">

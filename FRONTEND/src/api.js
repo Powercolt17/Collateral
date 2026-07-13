@@ -437,8 +437,8 @@ export async function getMarketQuote(id, stake) {
 
 // --- FUNDING ---
 
-export async function createFundingIntent(contractId) {
-    return post(`/v1/contracts/${contractId}/funding-intent`);
+export async function createFundingIntent(contractId, transactionHash) {
+    return post(`/v1/contracts/${contractId}/funding-intent`, { transactionHash });
 }
 
 // --- BILLING (Card Verification) ---

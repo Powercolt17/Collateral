@@ -1,7 +1,20 @@
-// ExecutionModal.js — Capital Commitment Instrument
-// Stake selection. Dual-state button. Institutional.
-
 import { hasAuthToken } from '../api.js';
+import { getAccount, readContract, simulateContract, writeContract, waitForTransactionReceipt } from '@wagmi/core';
+import { parseUnits } from 'viem';
+import { wagmiAdapter } from '../web3.js';
+
+const CLTR_TOKEN_ADDRESS = import.meta.env.VITE_CLTR_TOKEN || '0x0000000000000000000000000000000000000000';
+const STAKING_ADDRESS = import.meta.env.VITE_STAKING || '0x0000000000000000000000000000000000000000';
+
+const ERC20_ABI = [
+    { name: 'balanceOf', type: 'function', stateMutability: 'view', inputs: [{ name: 'account', type: 'address' }], outputs: [{ name: '', type: 'uint256' }] },
+    { name: 'allowance', type: 'function', stateMutability: 'view', inputs: [{ name: 'owner', type: 'address' }, { name: 'spender', type: 'address' }], outputs: [{ name: '', type: 'uint256' }] },
+    { name: 'approve', type: 'function', stateMutability: 'nonpayable', inputs: [{ name: 'spender', type: 'address' }, { name: 'value', type: 'uint256' }], outputs: [{ name: '', type: 'bool' }] }
+];
+
+const STAKING_ABI = [
+    { name: 'stake', type: 'function', stateMutability: 'nonpayable', inputs: [{ name: 'amount', type: 'uint256' }, { name: 'duration', type: 'uint256' }], outputs: [] }
+];
 
 let _modalEl = null;
 
@@ -302,12 +315,24 @@ export function openExecutionModal(contractData) {
     const displayPresets = presets.length > 5 ? presets.slice(0, 5) : presets;
 
     let selectedStake = displayPresets[0];
+    let selectedMethod = 'USD_CARD';
 
     // ── Referral bonus state ──
     let referralBonusPct = 0;
 
-    const fmtStake = (v) => v >= 1000 ? '$' + (v / 1000).toLocaleString('en-US', { maximumFractionDigits: 1 }).replace(/\.0$/, '') + 'K' : '$' + v.toLocaleString();
-    const fmtDollar = (v) => '$' + v.toLocaleString();
+    const fmtStake = (v) => {
+        if (selectedMethod === 'CRYPTO') {
+            return v >= 1000 ? (v / 1000).toLocaleString('en-US', { maximumFractionDigits: 1 }).replace(/\.0$/, '') + 'K CLTR' : v.toLocaleString() + ' CLTR';
+        }
+        return v >= 1000 ? '$' + (v / 1000).toLocaleString('en-US', { maximumFractionDigits: 1 }).replace(/\.0$/, '') + 'K' : '$' + v.toLocaleString();
+    };
+
+    const fmtDollar = (v) => {
+        if (selectedMethod === 'CRYPTO') {
+            return v.toLocaleString() + ' CLTR';
+        }
+        return '$' + v.toLocaleString();
+    };
 
     const renderBody = () => {
         const basePayout = Math.round(selectedStake * mult);
@@ -321,6 +346,16 @@ export function openExecutionModal(contractData) {
             </div>` : '';
 
         body.innerHTML = `
+            <!-- Lock Method Selector Toggle -->
+            <div style="display: flex; gap: 8px; margin-bottom: 20px; background: #f3f4f6; padding: 4px; border-radius: 6px;">
+                <button class="exec-method-btn" id="exec-method-usd" style="flex: 1; padding: 8px; font-size: 11px; font-weight: 600; border: none; border-radius: 4px; background: ${selectedMethod === 'USD_CARD' ? '#fff' : 'transparent'}; color: ${selectedMethod === 'USD_CARD' ? '#111' : '#666'}; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 6px; box-shadow: ${selectedMethod === 'USD_CARD' ? '0 1px 2px rgba(0,0,0,0.05)' : 'none'}; transition: all 0.15s;">
+                    🔒 USD Card (Stripe)
+                </button>
+                <button class="exec-method-btn" id="exec-method-cltr" style="flex: 1; padding: 8px; font-size: 11px; font-weight: 600; border: none; border-radius: 4px; background: ${selectedMethod === 'CRYPTO' ? '#fff' : 'transparent'}; color: ${selectedMethod === 'CRYPTO' ? '#111' : '#666'}; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 6px; box-shadow: ${selectedMethod === 'CRYPTO' ? '0 1px 2px rgba(0,0,0,0.05)' : 'none'}; transition: all 0.15s;">
+                    🪙 CLTR Staking (Web3)
+                </button>
+            </div>
+
             <div class="exec-tier-row">
                 <span class="exec-tier-label">Selected Tier</span>
                 <span class="exec-tier-badge">${displayTier}</span>
@@ -350,7 +385,7 @@ export function openExecutionModal(contractData) {
 
             <hr class="exec-div">
 
-            <div class="exec-escrow">Capital is held in escrow until settlement.</div>
+            <div class="exec-escrow">${selectedMethod === 'CRYPTO' ? 'CLTR is locked on-chain in the Commitment Staking contract until settlement.' : 'Capital is held in escrow until settlement.'}</div>
 
             <label class="exec-risk-row">
                 <input type="checkbox" id="exec-risk-check">
@@ -365,6 +400,18 @@ export function openExecutionModal(contractData) {
 
             <div class="exec-error" id="exec-error-msg"></div>
         `;
+
+        // ── Wire method buttons ──
+        body.querySelector('#exec-method-usd').addEventListener('click', () => {
+            if (selectedMethod === 'USD_CARD') return;
+            selectedMethod = 'USD_CARD';
+            renderBody();
+        });
+        body.querySelector('#exec-method-cltr').addEventListener('click', () => {
+            if (selectedMethod === 'CRYPTO') return;
+            selectedMethod = 'CRYPTO';
+            renderBody();
+        });
 
         // ── Wire preset buttons ──
         body.querySelectorAll('.exec-stake-btn').forEach(btn => {
@@ -386,7 +433,7 @@ export function openExecutionModal(contractData) {
         cancelBtn.addEventListener('click', closeExecutionModal);
 
         lockBtn.addEventListener('click', async () => {
-            await runExecution(contractData, selectedStake, mult, lockBtn, body);
+            await runExecution(contractData, selectedStake, mult, lockBtn, body, selectedMethod);
         });
     };
 
@@ -413,7 +460,7 @@ export function closeExecutionModal() {
     }
 }
 
-async function runExecution(contractData, stake, multiplier, btnEl, bodyEl) {
+async function runExecution(contractData, stake, multiplier, btnEl, bodyEl, fundingMethod = 'USD_CARD') {
     // Auth gate — require login before execution
     if (!hasAuthToken()) {
         const errorEl = bodyEl.querySelector('#exec-error-msg');
@@ -436,12 +483,101 @@ async function runExecution(contractData, stake, multiplier, btnEl, bodyEl) {
 
     btnEl.disabled = true;
     btnEl.classList.add('executing');
-    btnEl.innerHTML = '<span style="display:inline-flex;align-items:center;gap:8px;"><span style="width:12px;height:12px;border:2px solid rgba(255,255,255,0.25);border-top-color:#fff;border-radius:50%;animation:exec-spin 0.7s linear infinite;display:inline-block;"></span>Processing</span>';
+    
+    const errorEl = bodyEl.querySelector('#exec-error-msg');
+    if (errorEl) errorEl.style.display = 'none';
+
+    let txHash = null;
+
+    if (fundingMethod === 'CRYPTO') {
+        btnEl.innerHTML = 'Connecting Wallet...';
+        const account = getAccount(wagmiAdapter.wagmiConfig);
+        if (!account.isConnected || !account.address) {
+            btnEl.innerHTML = 'Awaiting Wallet Connection';
+            try {
+                await window.modal.open();
+                await sleep(2000);
+            } catch (e) {
+                btnEl.disabled = false;
+                btnEl.innerHTML = `STAKE ${stake.toLocaleString()} CLTR via WEB3 →`;
+                if (errorEl) {
+                    errorEl.textContent = 'Please connect your MetaMask wallet.';
+                    errorEl.style.display = 'block';
+                }
+                return;
+            }
+        }
+
+        const freshAccount = getAccount(wagmiAdapter.wagmiConfig);
+        if (!freshAccount.isConnected || !freshAccount.address) {
+            btnEl.disabled = false;
+            btnEl.innerHTML = `STAKE ${stake.toLocaleString()} CLTR via WEB3 →`;
+            if (errorEl) {
+                errorEl.textContent = 'Wallet connection required.';
+                errorEl.style.display = 'block';
+            }
+            return;
+        }
+
+        const userAddress = freshAccount.address;
+        const amountBig = parseUnits(stake.toString(), 18);
+        const windowDays = contractData.window_days || 30;
+
+        try {
+            // Check allowance
+            btnEl.innerHTML = 'Checking CLTR Allowance...';
+            const allowance = await readContract(wagmiAdapter.wagmiConfig, {
+                address: CLTR_TOKEN_ADDRESS,
+                abi: ERC20_ABI,
+                functionName: 'allowance',
+                args: [userAddress, STAKING_ADDRESS]
+            });
+
+            if (allowance < amountBig) {
+                btnEl.innerHTML = 'Approve CLTR in Wallet...';
+                const { request } = await simulateContract(wagmiAdapter.wagmiConfig, {
+                    address: CLTR_TOKEN_ADDRESS,
+                    abi: ERC20_ABI,
+                    functionName: 'approve',
+                    args: [STAKING_ADDRESS, amountBig]
+                });
+
+                const appTx = await writeContract(wagmiAdapter.wagmiConfig, request);
+                btnEl.innerHTML = 'Awaiting Approval Confirmation...';
+                await waitForTransactionReceipt(wagmiAdapter.wagmiConfig, { hash: appTx });
+            }
+
+            // Stake
+            btnEl.innerHTML = 'Sign Stake in Wallet...';
+            const durationSec = windowDays * 24 * 60 * 60;
+            const { request: stakeRequest } = await simulateContract(wagmiAdapter.wagmiConfig, {
+                address: STAKING_ADDRESS,
+                abi: STAKING_ABI,
+                functionName: 'stake',
+                args: [amountBig, BigInt(durationSec)]
+            });
+
+            const stakeTx = await writeContract(wagmiAdapter.wagmiConfig, stakeRequest);
+            btnEl.innerHTML = 'Awaiting Blockchain Confirmation...';
+            const receipt = await waitForTransactionReceipt(wagmiAdapter.wagmiConfig, { hash: stakeTx });
+            txHash = receipt.transactionHash;
+
+        } catch (err) {
+            console.error('Web3 Staking transaction failed:', err);
+            btnEl.disabled = false;
+            btnEl.innerHTML = `STAKE ${stake.toLocaleString()} CLTR via WEB3 →`;
+            if (errorEl) {
+                errorEl.textContent = err.message || 'Transaction rejected or failed.';
+                errorEl.style.display = 'block';
+            }
+            return;
+        }
+    } else {
+        btnEl.innerHTML = '<span style="display:inline-flex;align-items:center;gap:8px;"><span style="width:12px;height:12px;border:2px solid rgba(255,255,255,0.25);border-top-color:#fff;border-radius:50%;animation:exec-spin 0.7s linear infinite;display:inline-block;"></span>Processing</span>';
+    }
 
     // TikTok funnel — InitiateCheckout
-    if (typeof ttq !== 'undefined') ttq.track('InitiateCheckout', { value: stake, currency: 'USD' });
-
-    const errorEl = bodyEl.querySelector('#exec-error-msg');
+    if (typeof ttq !== 'undefined') ttq.track('InitiateCheckout', { value: stake, currency: fundingMethod === 'CRYPTO' ? 'CLTR' : 'USD' });
 
     try {
         await sleep(800);
@@ -459,40 +595,46 @@ async function runExecution(contractData, stake, multiplier, btnEl, bodyEl) {
             lockAmountUsdCents: Math.round(stake * 100),
             payoutAmountUsdCents: Math.round(stake * multiplier * 100),
             riskTier,
-            marketInstanceId: id
+            marketInstanceId: id,
+            fundingMethod: fundingMethod
         });
 
         const realContractId = createResult.contract?.id || createResult.id;
 
         if (realContractId) {
-            await window.api.createFundingIntent(realContractId);
+            await window.api.createFundingIntent(realContractId, txHash);
             await window.api.executeContract(realContractId);
         }
 
         // Conversion tracking — Contract Execution
         if (typeof twq === 'function') twq('event', 'tw-rbwqr-rbx5u', {});
-        if (typeof gtag === 'function') gtag('event', 'conversion', { send_to: 'AW-18147195908/contract_executed', value: stake, currency: 'USD' });
-        if (typeof fbq === 'function') fbq('track', 'Purchase', { value: stake, currency: 'USD' });
-        if (typeof ttq !== 'undefined') ttq.track('CompletePayment', { value: stake, currency: 'USD' });
+        if (typeof gtag === 'function') gtag('event', 'conversion', { send_to: 'AW-18147195908/contract_executed', value: stake, currency: fundingMethod === 'CRYPTO' ? 'CLTR' : 'USD' });
+        if (typeof fbq === 'function') fbq('track', 'Purchase', { value: stake, currency: fundingMethod === 'CRYPTO' ? 'CLTR' : 'USD' });
+        if (typeof ttq !== 'undefined') ttq.track('CompletePayment', { value: stake, currency: fundingMethod === 'CRYPTO' ? 'CLTR' : 'USD' });
 
-        showSuccess(bodyEl, stake, multiplier, realContractId || id);
+        showSuccess(bodyEl, stake, multiplier, realContractId || id, fundingMethod);
 
     } catch (err) {
         console.error('[Exec] Error:', err);
-        errorEl.textContent = err.message || 'Execution failed.';
-        errorEl.style.display = 'block';
+        if (errorEl) {
+            errorEl.textContent = err.message || 'Execution failed.';
+            errorEl.style.display = 'block';
+        }
         btnEl.disabled = false;
         btnEl.classList.remove('executing');
-        btnEl.textContent = `LOCK $${stake.toLocaleString()} CAPITAL →`;
+        btnEl.textContent = fundingMethod === 'CRYPTO' ? `STAKE ${stake.toLocaleString()} CLTR via WEB3 →` : `LOCK $${stake.toLocaleString()} CAPITAL →`;
     }
 }
 
-function showSuccess(bodyEl, stake, multiplier, contractId) {
+function showSuccess(bodyEl, stake, multiplier, contractId, fundingMethod = 'USD_CARD') {
     const payout = Math.round(stake * multiplier);
     const profit = payout - stake;
     const bonusProfit = Math.round(profit * 0.05);
     const bonusPayout = payout + bonusProfit;
     const shortId = (contractId || '').split('-')[0].slice(0, 4).toUpperCase();
+
+    const fmt = (v) => fundingMethod === 'CRYPTO' ? `${v.toLocaleString()} CLTR` : `$${v.toLocaleString()}`;
+    const stakeText = fundingMethod === 'CRYPTO' ? `${stake.toLocaleString()} CLTR` : `$${stake.toLocaleString()}`;
 
     bodyEl.innerHTML = `
         <div class="exec-success">
@@ -509,9 +651,9 @@ function showSuccess(bodyEl, stake, multiplier, contractId) {
                     Share your contract on X to earn <strong>+5% extra profit</strong> if you succeed.
                 </div>
                 <div style="display:flex;gap:6px;font-size:10px;color:#6b7280;font-family:'JetBrains Mono', monospace;margin-bottom:14px;">
-                    <span>Normal: $${payout.toLocaleString()}</span>
+                    <span>Normal: ${fmt(payout)}</span>
                     <span>→</span>
-                    <span style="color:#166534;font-weight:600;">Boosted: $${bonusPayout.toLocaleString()} (+$${bonusProfit.toLocaleString()})</span>
+                    <span style="color:#166534;font-weight:600;">Boosted: ${fmt(bonusPayout)} (+${fmt(bonusProfit)})</span>
                 </div>
                 <button id="exec-share-x" style="width:100%;padding:10px;background:#0f1419;color:#fff;border:none;border-radius:4px;font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:0.04em;cursor:pointer;font-family:'Sora',sans-serif;display:flex;align-items:center;justify-content:center;gap:8px;transition:background 150ms;">
                     <svg width="14" height="14" viewBox="0 0 24 24" fill="white"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
@@ -539,13 +681,12 @@ function showSuccess(bodyEl, stake, multiplier, contractId) {
     `;
 
     // Generate tweet text
-    const tweetText = `I just locked $${stake.toLocaleString()} on @CollateralMkt that I hit my performance target in the next 30 days.\n\nIf I fail I lose the money.\nIf I succeed I get paid.\n\nhttps://collateral.market/c/${contractId}`;
+    const tweetText = `I just locked ${stakeText} on @CollateralMkt that I hit my performance target in the next 30 days.\n\nIf I fail I lose the stake.\nIf I succeed I get paid.\n\nhttps://collateral.market/c/${contractId}`;
     const tweetUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(tweetText)}`;
 
     // Wire Share on X button
     bodyEl.querySelector('#exec-share-x').addEventListener('click', () => {
         window.open(tweetUrl, '_blank', 'width=600,height=400');
-        // Show tweet paste input after a short delay
         setTimeout(() => {
             const verifySection = bodyEl.querySelector('#exec-tweet-verify');
             if (verifySection) verifySection.style.display = 'block';

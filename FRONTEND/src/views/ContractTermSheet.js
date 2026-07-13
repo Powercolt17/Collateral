@@ -381,7 +381,7 @@ function showContent(c) {
             </div>
             <div class="cts-block">
                 <div class="cts-block-title">Dispute Policy</div>
-                <div class="cts-block-text">Deterministic provider data only. No appeals.</div>
+        <div class="cts-block-text">Deterministic provider data only. No appeals.</div>
             </div>
         </div>
     `;
@@ -389,92 +389,131 @@ function showContent(c) {
     // === RIGHT COLUMN — Sticky Execution Panel ===
     let currentStake = minStake;
     let currentPayout = Math.round(currentStake * multiplier);
+    let selectedMethod = 'USD_CARD';
+    let referralBonusPct = 0;
+    let isBlocked = false;
 
     // Build tier options from stake range
     const tierSteps = buildTierSteps(minStake, maxStake);
 
-    panel.innerHTML = `
-        <div class="cts-panel">
-            <div class="cts-panel-hdr">
-                <div class="cts-panel-title">Execute Contract</div>
+    const fmtStake = (v) => {
+        if (selectedMethod === 'CRYPTO') {
+            return v >= 1000 ? (v / 1000).toLocaleString('en-US', { maximumFractionDigits: 1 }).replace(/\.0$/, '') + 'K CLTR' : v.toLocaleString() + ' CLTR';
+        }
+        return v >= 1000 ? '$' + (v / 1000).toLocaleString('en-US', { maximumFractionDigits: 1 }).replace(/\.0$/, '') + 'K' : '$' + v.toLocaleString();
+    };
+
+    const fmtDollar = (v) => {
+        if (selectedMethod === 'CRYPTO') {
+            return v.toLocaleString() + ' CLTR';
+        }
+        return '$' + v.toLocaleString();
+    };
+
+    const renderPanel = () => {
+        const basePayout = Math.round(currentStake * multiplier);
+        const bonusAmt = referralBonusPct > 0 ? Math.round(basePayout * referralBonusPct / 100) : 0;
+        currentPayout = basePayout + bonusAmt;
+
+        panel.innerHTML = `
+            <div class="cts-panel">
+                <div class="cts-panel-hdr">
+                    <div class="cts-panel-title">Execute Contract</div>
+                </div>
+                <div class="cts-panel-body">
+                    <!-- Lock Method Selector Toggle -->
+                    <div style="display: flex; gap: 8px; margin-bottom: 20px; background: #f3f4f6; padding: 4px; border-radius: 6px;">
+                        <button class="cts-method-btn" id="cts-method-usd" style="flex: 1; padding: 8px; font-size: 11px; font-weight: 600; border: none; border-radius: 4px; background: ${selectedMethod === 'USD_CARD' ? '#fff' : 'transparent'}; color: ${selectedMethod === 'USD_CARD' ? '#111' : '#666'}; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 6px; box-shadow: ${selectedMethod === 'USD_CARD' ? '0 1px 2px rgba(0,0,0,0.05)' : 'none'}; transition: all 0.15s; font-family: inherit;">
+                            🔒 USD Card (Stripe)
+                        </button>
+                        <button class="cts-method-btn" id="cts-method-cltr" style="flex: 1; padding: 8px; font-size: 11px; font-weight: 600; border: none; border-radius: 4px; background: ${selectedMethod === 'CRYPTO' ? '#fff' : 'transparent'}; color: ${selectedMethod === 'CRYPTO' ? '#111' : '#666'}; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 6px; box-shadow: ${selectedMethod === 'CRYPTO' ? '0 1px 2px rgba(0,0,0,0.05)' : 'none'}; transition: all 0.15s; font-family: inherit;">
+                            🪙 CLTR Staking (Web3)
+                        </button>
+                    </div>
+
+                    <div class="cts-panel-row">
+                        <span class="cts-panel-lbl">Selected Tier</span>
+                        <span class="cts-panel-val" id="cts-tier-label">${tierUpper}</span>
+                    </div>
+
+                    <div class="cts-tier-group" id="cts-tier-group">
+                        ${tierSteps.map((s) => `<div class="cts-tier-opt${s === currentStake ? ' active' : ''}" data-stake="${s}">${fmtStake(s)}</div>`).join('')}
+                    </div>
+
+                    <div class="cts-panel-row">
+                        <span class="cts-panel-lbl">Capital Locked</span>
+                        <span class="cts-panel-val capital" id="cts-stake-val">${fmtDollar(currentStake)}</span>
+                    </div>
+                    <div class="cts-panel-row">
+                        <span class="cts-panel-lbl">If Successful</span>
+                        <span class="cts-panel-val success" id="cts-payout-val">+${fmtDollar(currentPayout)}</span>
+                    </div>
+                    <div id="cts-bonus-row" style="${referralBonusPct > 0 ? 'display:block;' : 'display:none;'}">
+                        <div class="cts-panel-row" style="background:#f0fdf4;border:1px solid #bbf7d0;padding:4px 12px;margin:2px 0;">
+                            <span class="cts-panel-lbl" style="color:#15803d;font-weight:600;font-size:9px;">🎁 Referral Bonus (+${referralBonusPct}%)</span>
+                            <span class="cts-panel-val success" style="font-size:12px;">+${fmtDollar(bonusAmt)}</span>
+                        </div>
+                    </div>
+                    <div class="cts-panel-row">
+                        <span class="cts-panel-lbl">If Failed</span>
+                        <span class="cts-panel-val failure" id="cts-loss-val">-${fmtDollar(currentStake)}</span>
+                    </div>
+
+                    <hr class="cts-panel-div">
+
+                    <div class="cts-panel-escrow">${selectedMethod === 'CRYPTO' ? 'CLTR is locked on-chain in the Commitment Staking contract until settlement.' : 'Capital is held in escrow until settlement.'}</div>
+
+                    <button class="cts-lock-btn" id="cts-lock-btn" ${isBlocked ? 'disabled' : ''}>
+                        ${isBlocked ? 'INELIGIBLE — REQUIREMENTS NOT MET' : `${selectedMethod === 'CRYPTO' ? 'STAKE' : 'LOCK'} ${fmtDollar(currentStake)} ${selectedMethod === 'CRYPTO' ? 'via WEB3' : 'CAPITAL'} →`}
+                    </button>
+                </div>
             </div>
-            <div class="cts-panel-body">
-                <div class="cts-panel-row">
-                    <span class="cts-panel-lbl">Selected Tier</span>
-                    <span class="cts-panel-val" id="cts-tier-label">${tierUpper}</span>
-                </div>
+        `;
 
-                <div class="cts-tier-group" id="cts-tier-group">
-                    ${tierSteps.map((s, i) => `<div class="cts-tier-opt${i === 0 ? ' active' : ''}" data-stake="${s}">$${s.toLocaleString()}</div>`).join('')}
-                </div>
-
-                <div class="cts-panel-row">
-                    <span class="cts-panel-lbl">Capital Locked</span>
-                    <span class="cts-panel-val capital" id="cts-stake-val">$${currentStake.toLocaleString()}</span>
-                </div>
-                <div class="cts-panel-row">
-                    <span class="cts-panel-lbl">If Successful</span>
-                    <span class="cts-panel-val success" id="cts-payout-val">+$${currentPayout.toLocaleString()}</span>
-                </div>
-                <div id="cts-bonus-row" style="display:none;"></div>
-                <div class="cts-panel-row">
-                    <span class="cts-panel-lbl">If Failed</span>
-                    <span class="cts-panel-val failure" id="cts-loss-val">-$${currentStake.toLocaleString()}</span>
-                </div>
-
-                <hr class="cts-panel-div">
-
-                <div class="cts-panel-escrow">Capital is held in escrow until settlement.</div>
-
-                <button class="cts-lock-btn" id="cts-lock-btn">LOCK $${currentStake.toLocaleString()} CAPITAL →</button>
-            </div>
-        </div>
-    `;
-
-    // Wire tier selectors
-    const tierGroup = document.getElementById('cts-tier-group');
-    const stakeVal = document.getElementById('cts-stake-val');
-    const payoutVal = document.getElementById('cts-payout-val');
-    const lossVal = document.getElementById('cts-loss-val');
-    const lockBtn = document.getElementById('cts-lock-btn');
-    const bonusRow = document.getElementById('cts-bonus-row');
-    let referralBonusPct = 0;
-
-    if (tierGroup) {
-        tierGroup.addEventListener('click', (e) => {
-            const opt = e.target.closest('.cts-tier-opt');
-            if (!opt) return;
-
-            tierGroup.querySelectorAll('.cts-tier-opt').forEach(o => o.classList.remove('active'));
-            opt.classList.add('active');
-
-            currentStake = parseInt(opt.dataset.stake);
-            const basePayout = Math.round(currentStake * multiplier);
-            const bonusAmt = referralBonusPct > 0 ? Math.round(basePayout * referralBonusPct / 100) : 0;
-            currentPayout = basePayout + bonusAmt;
-
-            stakeVal.textContent = `$${currentStake.toLocaleString()}`;
-            payoutVal.textContent = `+$${currentPayout.toLocaleString()}`;
-            lossVal.textContent = `-$${currentStake.toLocaleString()}`;
-            lockBtn.textContent = `LOCK $${currentStake.toLocaleString()} CAPITAL →`;
-            if (bonusRow && referralBonusPct > 0) {
-                bonusRow.innerHTML = `<div class="cts-panel-row" style="background:#f0fdf4;border:1px solid #bbf7d0;padding:4px 12px;margin:2px 0;"><span class="cts-panel-lbl" style="color:#15803d;font-weight:600;font-size:9px;">🎁 Referral Bonus (+${referralBonusPct}%)</span><span class="cts-panel-val success" style="font-size:12px;">+$${bonusAmt.toLocaleString()}</span></div>`;
-            }
-        });
-    }
-
-    // Wire LOCK button → execution modal
-    if (lockBtn) {
-        lockBtn.addEventListener('click', () => {
-            const params = new URLSearchParams({
-                id,
-                tier,
-                source: provider,
-                capital: currentStake
+        // Wire events inside panel
+        const tierGroup = document.getElementById('cts-tier-group');
+        if (tierGroup) {
+            tierGroup.addEventListener('click', (e) => {
+                const opt = e.target.closest('.cts-tier-opt');
+                if (!opt) return;
+                currentStake = parseInt(opt.dataset.stake);
+                renderPanel();
             });
-            window.router.navigate('/contracts/execute?' + params.toString());
+        }
+
+        document.getElementById('cts-method-usd').addEventListener('click', () => {
+            if (selectedMethod === 'USD_CARD') return;
+            selectedMethod = 'USD_CARD';
+            renderPanel();
         });
-    }
+        document.getElementById('cts-method-cltr').addEventListener('click', () => {
+            if (selectedMethod === 'CRYPTO') return;
+            selectedMethod = 'CRYPTO';
+            renderPanel();
+        });
+
+        // Wire lock button → opens ExecutionModal directly!
+        document.getElementById('cts-lock-btn')?.addEventListener('click', () => {
+            if (isBlocked) return;
+            openExecutionModal({
+                id,
+                title,
+                goal: title,
+                tier,
+                provider,
+                platform: provider,
+                min_stake: currentStake,
+                max_stake: currentStake,
+                multiplier,
+                fee_bps: feeBps,
+                window_days: windowDays,
+                target_hint: targetHint,
+                deadline: c.deadline || new Date(Date.now() + windowDays * 86400000).toISOString()
+            });
+        });
+    };
+
+    renderPanel();
 
     // Fetch referral bonus asynchronously
     if (hasAuthToken()) {
@@ -483,16 +522,7 @@ function showContent(c) {
             console.log('[TermSheet] Referral stats:', stats);
             if (stats && stats.firstBonusAvailable && stats.firstBonusPct > 0) {
                 referralBonusPct = stats.firstBonusPct;
-                const basePayout = Math.round(currentStake * multiplier);
-                const bonusAmt = Math.round(basePayout * referralBonusPct / 100);
-                currentPayout = basePayout + bonusAmt;
-                if (payoutVal) payoutVal.textContent = `+$${currentPayout.toLocaleString()}`;
-                if (bonusRow) {
-                    bonusRow.style.display = 'block';
-                    bonusRow.innerHTML = `<div class="cts-panel-row" style="background:#f0fdf4;border:1px solid #bbf7d0;padding:4px 12px;margin:2px 0;"><span class="cts-panel-lbl" style="color:#15803d;font-weight:600;font-size:9px;">🎁 Referral Bonus (+${referralBonusPct}%)</span><span class="cts-panel-val success" style="font-size:12px;">+$${bonusAmt.toLocaleString()}</span></div>`;
-                }
-            } else {
-                console.log('[TermSheet] No referral bonus available:', { firstBonusAvailable: stats?.firstBonusAvailable, wasReferred: stats?.wasReferred });
+                renderPanel();
             }
         }).catch(err => { console.error('[TermSheet] Referral stats fetch failed:', err); });
     } else {
@@ -575,12 +605,8 @@ function showContent(c) {
                          if (banner) banner.classList.add('visible');
                          if (bannerText) bannerText.textContent = warnMsg;
 
-                         // Disable the LOCK button
-                         const lockBtnRef = document.getElementById('cts-lock-btn');
-                         if (lockBtnRef) {
-                             lockBtnRef.disabled = true;
-                             lockBtnRef.textContent = 'INELIGIBLE — REQUIREMENTS NOT MET';
-                         }
+                         isBlocked = true;
+                         renderPanel();
                      } else {
                          // Clear any previous warning state
                          const metricBox = document.getElementById('cts-live-metric-box');
@@ -591,11 +617,8 @@ function showContent(c) {
                          const banner = document.getElementById('cts-ineligible-banner');
                          if (banner) banner.classList.remove('visible');
 
-                         const lockBtnRef = document.getElementById('cts-lock-btn');
-                         if (lockBtnRef) {
-                             lockBtnRef.disabled = false;
-                             lockBtnRef.textContent = `LOCK $${currentStake.toLocaleString()} CAPITAL →`;
-                         }
+                         isBlocked = false;
+                         renderPanel();
 
                          nEl.innerHTML = `<i data-lucide="check-circle" style="color:#16a34a;"></i> Oracle connection verified. Target will be formally locked at execution.`;
                      }

@@ -319,12 +319,13 @@ const contractWriteRoutes: FastifyPluginAsync = async (fastify) => {
      * Appends: FUNDS_AUTHORIZED (via funding service)
      * To-state: FUNDS_AUTHORIZED
      */
-    fastify.post<{
+     fastify.post<{
         Params: { id: string };
-        Body: { userId?: never }; // userId NEVER accepted from body
+        Body: { userId?: never; transactionHash?: string };
     }>('/v1/contracts/:id/funding-intent', async (request, reply) => {
         const { id } = request.params;
         const principalUserId = getPrincipal(request);
+        const { transactionHash } = request.body || {};
 
         console.log('[funding-intent] Contract:', id);
         console.log('[funding-intent] principalUserId:', principalUserId);
@@ -351,8 +352,8 @@ const contractWriteRoutes: FastifyPluginAsync = async (fastify) => {
             // 2. Validates from-state is CREATED
             // 3. Appends FUNDS_AUTHORIZED event
             console.log('[funding-intent] Calling createFundingIntent...');
-            const result = await createFundingIntent(id, principalUserId);
-            console.log('[funding-intent] Success! PaymentIntent:', result.paymentIntentId);
+            const result = await createFundingIntent(id, principalUserId, transactionHash);
+            console.log('[funding-intent] Success! PaymentIntent/Tx:', result.paymentIntentId);
 
             return {
                 ok: true,

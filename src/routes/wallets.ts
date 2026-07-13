@@ -1,9 +1,9 @@
 import { FastifyPluginAsync } from 'fastify';
 import { db } from '../db/client.js';
-import { userWallets, walletNonces } from '../db/schema.js';
+import { userWallets, walletNonces, users, identities } from '../db/schema.js';
 import { eq, and, sql } from 'drizzle-orm';
 import { verifyMessage } from 'viem';
-import { requireAuth, getPrincipal } from '../services/auth.js';
+import { requireAuth, getPrincipal, signAccessToken } from '../services/auth.js';
 import crypto from 'node:crypto';
 
 const walletsRoutes: FastifyPluginAsync = async (fastify) => {
@@ -348,7 +348,221 @@ const walletsRoutes: FastifyPluginAsync = async (fastify) => {
                 isPrimary: item.isPrimary,
                 verifiedAt: item.verifiedAt.toISOString(),
                 lastConnectedAt: item.lastConnectedAt.toISOString()
-            }))
+        };
+    });
+
+    /**
+     * POST /v1/auth/wallet/login
+     * Authenticate or register a new user using a SIWE message signature.
+     */
+    fastify.post<{
+        Body: { walletAddress: string; signature: string; nonce: string; referralCode?: string };
+    }>('/v1/auth/wallet/login', async (request, reply) => {
+        const { walletAddress, signature, nonce, referralCode } = request.body;
+
+        if (!walletAddress || !signature || !nonce) {
+            reply.status(400);
+            return { ok: false, error: 'walletAddress, signature, and nonce required' };
+        }
+
+        const normalizedAddress = walletAddress.toLowerCase();
+
+        // 1. Fetch & validate nonce
+        const [nonceRecord] = await db
+            .select()
+            .from(walletNonces)
+            .where(eq(walletNonces.nonce, nonce))
+            .limit(1);
+
+        if (!nonceRecord || nonceRecord.consumed || nonceRecord.expiresAt < new Date()) {
+            reply.status(400);
+            return { ok: false, error: 'Invalid or expired login session. Please request a new nonce.' };
+        }
+
+        // Consume nonce immediately
+        await db
+            .update(walletNonces)
+            .set({ consumed: true } as any)
+            .where(eq(walletNonces.id, nonceRecord.id));
+
+        // 2. Format SIWE login message
+        const iatStr = nonceRecord.createdAt.toISOString();
+        const expStr = nonceRecord.expiresAt.toISOString();
+
+        const expectedMessage = `Collateral Wallet Login\n\n` +
+            `Authenticate with wallet ${walletAddress}.\n\n` +
+            `Domain: collateral.market\n` +
+            `Chain ID: 4663\n` +
+            `Nonce: ${nonce}\n` +
+            `Issued At: ${iatStr}\n` +
+            `Expiration Time: ${expStr}`;
+
+        // 3. Verify signature
+        try {
+            const isValid = await verifyMessage({
+                address: walletAddress as `0x${string}`,
+                message: expectedMessage,
+                signature: signature as `0x${string}`
+            });
+
+            if (!isValid) {
+                reply.status(401);
+                return { ok: false, error: 'Invalid wallet signature' };
+            }
+        } catch (err: any) {
+            console.error('[auth-wallet-login] Signature recovery failed:', err);
+            reply.status(400);
+            return { ok: false, error: 'Signature verification failed. Invalid payload.' };
+        }
+
+        // 4. Find if this wallet is already linked to a user
+        const [link] = await db
+            .select()
+            .from(userWallets)
+            .where(eq(sql`lower(${userWallets.walletAddress})`, normalizedAddress))
+            .limit(1);
+
+        let userId: string;
+        let user;
+        let identity;
+
+        if (link) {
+            // Existing user - load their profile
+            userId = link.userId;
+            
+            const [existingUser] = await db
+                .select()
+                .from(users)
+                .where(eq(users.id, userId))
+                .limit(1);
+
+            if (!existingUser) {
+                reply.status(404);
+                return { ok: false, error: 'User associated with this wallet not found' };
+            }
+            user = existingUser;
+
+            const [existingIdentity] = await db
+                .select()
+                .from(identities)
+                .where(eq(identities.userId, userId))
+                .limit(1);
+            identity = existingIdentity || null;
+
+            // Update lastConnectedAt
+            await db
+                .update(userWallets)
+                .set({ lastConnectedAt: new Date() } as any)
+                .where(eq(userWallets.id, link.id));
+
+            console.log(`[auth-wallet-login] Wallet logged in user ${userId}`);
+        } else {
+            // New user registration!
+            const email = `wallet-${normalizedAddress.slice(0, 10)}-${Date.now()}@collateral.market`;
+            const mockUsername = `user_${normalizedAddress.slice(2, 10)}`;
+
+            // Check if mock username is taken (highly unlikely, but safe check)
+            const [existingUsername] = await db
+                .select()
+                .from(identities)
+                .where(eq(identities.username, mockUsername))
+                .limit(1);
+            
+            const finalUsername = existingUsername 
+                ? `${mockUsername}_${Math.floor(Math.random() * 1000)}`
+                : mockUsername;
+
+            // Create new user record
+            const { sql: rawSql } = await import('drizzle-orm');
+            const userResult = await db.execute(rawSql`
+                INSERT INTO users (email, password_hash)
+                VALUES (${email}, 'wallet-authenticated-account')
+                RETURNING id, email, created_at
+            `);
+            const createdUser = (userResult as any)[0] || (userResult as any).rows?.[0];
+            if (!createdUser) {
+                reply.status(500);
+                return { ok: false, error: 'Failed to create user account' };
+            }
+            
+            userId = createdUser.id;
+            user = {
+                id: userId,
+                email: createdUser.email,
+                createdAt: createdUser.created_at || createdUser.createdAt
+            };
+
+            // Create identity
+            const [createdIdentity] = await db
+                .insert(identities)
+                .values({
+                    userId: userId,
+                    username: finalUsername,
+                    displayName: `Wallet ${walletAddress.slice(0, 6)}...${walletAddress.slice(-4)}`,
+                    status: 'ACTIVE' as const,
+                })
+                .returning();
+            identity = createdIdentity;
+
+            // Create wallet link as primary
+            await db.insert(userWallets).values({
+                userId,
+                walletAddress: normalizedAddress,
+                chainId: 4663,
+                isPrimary: true,
+                verifiedAt: new Date(),
+                lastConnectedAt: new Date()
+            } as any);
+
+            // Set referral code
+            try {
+                await db.execute(rawSql`
+                    UPDATE users SET referral_code = ${finalUsername}
+                    WHERE id = ${userId}
+                `);
+            } catch (err: any) {
+                console.warn('[WalletLogin] Could not set referral_code:', err.message);
+            }
+
+            // Track referral if set
+            if (referralCode) {
+                try {
+                    const { lookupReferrer, createPendingReferral } = await import('../services/referral.js');
+                    const referrerId = await lookupReferrer(referralCode);
+                    if (referrerId && referrerId !== userId) {
+                        await db.execute(rawSql`
+                            UPDATE users SET referred_by_user_id = ${referrerId}
+                            WHERE id = ${userId}
+                        `);
+                        await createPendingReferral(referrerId, userId);
+                        console.log(`🔗 Wallet signup referral tracked: ${referralCode} → ${userId}`);
+                    }
+                } catch (err: any) {
+                    console.error('[WalletLogin] Referral tracking failed:', err.message);
+                }
+            }
+
+            console.log(`[auth-wallet-login] Registered new wallet-based user ${userId} (@${finalUsername})`);
+        }
+
+        // Sign access token
+        const accessToken = signAccessToken(userId);
+
+        return {
+            ok: true,
+            user: {
+                id: user.id,
+                email: user.email,
+                createdAt: typeof user.createdAt === 'string' ? user.createdAt : new Date(user.createdAt).toISOString(),
+            },
+            identity: identity
+                ? {
+                    username: identity.username,
+                    displayName: identity.displayName,
+                    status: identity.status,
+                }
+                : null,
+            accessToken
         };
     });
 };

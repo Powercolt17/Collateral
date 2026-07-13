@@ -576,6 +576,101 @@ window.app = {
             }
         }
     },
+    signInWithWallet: async function () {
+        window.app._hideAuthError();
+        const btn = document.getElementById('btn-wallet-signin');
+        const originalText = btn ? btn.innerHTML : 'Continue with Wallet';
+
+        try {
+            // 1. Check if wallet is connected
+            let account = getAccount(wagmiAdapter.wagmiConfig);
+            if (!account.isConnected || !account.address) {
+                // Open AppKit connect modal
+                await modal.open();
+                
+                // Wait for account connection (poll/wait briefly up to 10s)
+                let connected = false;
+                for (let i = 0; i < 20; i++) {
+                    await new Promise(r => setTimeout(r, 500));
+                    account = getAccount(wagmiAdapter.wagmiConfig);
+                    if (account.isConnected && account.address) {
+                        connected = true;
+                        break;
+                    }
+                }
+                if (!connected) {
+                    throw new Error('Wallet connection timed out or was rejected.');
+                }
+            }
+
+            const address = account.address;
+            if (btn) {
+                btn.innerHTML = '<div class="w-4 h-4 border-2 border-black/30 border-t-black rounded-full animate-spin mx-auto"></div>';
+                btn.disabled = true;
+            }
+
+            // 2. Fetch single-use login nonce from backend
+            const nonceRes = await api.getWalletNonce();
+            if (!nonceRes || !nonceRes.ok) {
+                throw new Error(nonceRes.error || 'Failed to fetch verification nonce');
+            }
+            const nonce = nonceRes.nonce;
+
+            // 3. Format SIWE message
+            const iat = new Date();
+            const exp = new Date(iat.getTime() + 5 * 60 * 1000); // 5 minutes expiration
+
+            const messageText = `Collateral Wallet Login\n\n` +
+                `Authenticate with wallet ${address}.\n\n` +
+                `Domain: collateral.market\n` +
+                `Chain ID: 4663\n` +
+                `Nonce: ${nonce}\n` +
+                `Issued At: ${iat.toISOString()}\n` +
+                `Expiration Time: ${exp.toISOString()}`;
+
+            // 4. Request signature from user's wallet
+            const signature = await signMessage(wagmiAdapter.wagmiConfig, {
+                message: messageText
+            });
+
+            // 5. Submit signature to login endpoint
+            // Optional referral code during registration
+            const referralInput = document.getElementById('auth-referral-code')?.value?.trim();
+            if (referralInput) {
+                api.setReferralCode(referralInput);
+            }
+
+            const loginRes = await api.loginWithWallet(address, signature, nonce);
+            if (!loginRes || !loginRes.ok) {
+                throw new Error(loginRes.error || 'Signature verification failed');
+            }
+
+            // 6. Update AppState and log in user
+            appState.isLoggedIn = true;
+            appState.displayName = loginRes.identity?.displayName || null;
+            appState.username = loginRes.identity?.username || null;
+            appState.userId = loginRes.user?.id;
+
+            console.log('[Auth] Wallet login successful as:', appState.displayName);
+            
+            if (window.trackEvent) window.trackEvent('login', { method: 'wallet' });
+
+            window.app.closeAccessModal();
+            showAlert('Welcome to Collateral!', { type: 'success', title: 'Wallet Access Approved' });
+
+            // Force route refresh
+            await hydrateSession();
+
+        } catch (err) {
+            console.error('[WalletAuth] Login failed:', err);
+            window.app._showAuthError(err.message || 'Signature rejected or wallet login failed.');
+        } finally {
+            if (btn) {
+                btn.innerHTML = originalText;
+                btn.disabled = false;
+            }
+        }
+    },
     handleLoginSubmit: async function () {
         window.app.handleAuthSubmit();
     },

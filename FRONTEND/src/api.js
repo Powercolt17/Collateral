@@ -218,6 +218,34 @@ export async function signup(email, password, username, displayName = null) {
 }
 
 /**
+ * Authenticate or register using a wallet signature (SIWE login)
+ */
+export async function loginWithWallet(walletAddress, signature, nonce) {
+    console.log('[API] loginWithWallet called for:', walletAddress);
+
+    const data = await postPublic('/v1/auth/wallet/login', {
+        walletAddress,
+        signature,
+        nonce,
+        referralCode: getReferralCode() || undefined
+    });
+    console.log('[API] loginWithWallet response:', data);
+
+    if (data.accessToken) {
+        setAuthToken(data.accessToken);
+        setStoredUser({
+            email: data.user?.email,
+            userId: data.user?.id,
+            displayName: data.identity?.displayName,
+            username: data.identity?.username,
+        });
+        console.log('[API] ✅ Wallet login complete, identity:', data.identity?.displayName);
+    }
+
+    return data;
+}
+
+/**
  * Dev login (DEPRECATED - dev mode only)
  * Blocked in production for security
  */
@@ -665,6 +693,7 @@ export default {
     // Auth
     login,
     signup,
+    loginWithWallet,
     devLogin,
     logout,
     getAuthToken,

@@ -3,8 +3,10 @@ import { getAccount, readContract, simulateContract, writeContract, waitForTrans
 import { parseUnits } from 'viem';
 import { wagmiAdapter } from '../web3.js';
 
-const CLTR_TOKEN_ADDRESS = import.meta.env.VITE_CLTR_TOKEN || '0x0000000000000000000000000000000000000000';
-const STAKING_ADDRESS = import.meta.env.VITE_STAKING || '0x0000000000000000000000000000000000000000';
+const cleanAddress = (addr) => (addr || '').replace(/['"]/g, '').trim();
+
+const CLTR_TOKEN_ADDRESS = cleanAddress(import.meta.env.VITE_CLTR_TOKEN) || '0x7b69C7E57d7004EB2374E5Aabb9db5334aE73B9f';
+const STAKING_ADDRESS = cleanAddress(import.meta.env.VITE_STAKING) || '0x6A95484e05dD7139C7A4De192dd2f26A2a91F69e';
 
 const ERC20_ABI = [
     { name: 'balanceOf', type: 'function', stateMutability: 'view', inputs: [{ name: 'account', type: 'address' }], outputs: [{ name: '', type: 'uint256' }] },

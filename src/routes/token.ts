@@ -4,9 +4,11 @@ import { cltrBlockchainEvents } from '../db/schema.js';
 import { desc, sql } from 'drizzle-orm';
 import { createPublicClient, http, formatUnits } from 'viem';
 
-const RPC_URL = process.env.VITE_ROBINHOOD_RPC_URL || 'https://rpc.mainnet.chain.robinhood.com';
-const CLTR_TOKEN_ADDRESS = (process.env.VITE_CLTR_TOKEN || '0x0000000000000000000000000000000000000000') as `0x${string}`;
-const STAKING_ADDRESS = (process.env.VITE_STAKING || '0x0000000000000000000000000000000000000000') as `0x${string}`;
+const cleanAddress = (addr: string | undefined): string => (addr || '').replace(/['"]/g, '').trim();
+
+const RPC_URL = cleanAddress(process.env.VITE_ROBINHOOD_RPC_URL) || 'https://rpc.mainnet.chain.robinhood.com';
+const CLTR_TOKEN_ADDRESS = (cleanAddress(process.env.VITE_CLTR_TOKEN) || '0x7b69C7E57d7004EB2374E5Aabb9db5334aE73B9f') as `0x${string}`;
+const STAKING_ADDRESS = (cleanAddress(process.env.VITE_STAKING) || '0x6A95484e05dD7139C7A4De192dd2f26A2a91F69e') as `0x${string}`;
 
 const client = createPublicClient({
     transport: http(RPC_URL)

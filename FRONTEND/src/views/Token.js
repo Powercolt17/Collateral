@@ -14,11 +14,13 @@ import {
 } from '@wagmi/core';
 import { formatUnits, parseUnits } from 'viem';
 
-const CLTR_TOKEN_ADDRESS = import.meta.env.VITE_CLTR_TOKEN || '0x0000000000000000000000000000000000000000';
-const STAKING_ADDRESS = import.meta.env.VITE_STAKING || '0x0000000000000000000000000000000000000000';
-const FOUNDER_VESTING_ADDRESS = import.meta.env.VITE_FOUNDER_VESTING || '0x0000000000000000000000000000000000000000';
-const TEAM_VESTING_ADDRESS = import.meta.env.VITE_TEAM_VESTING || '0x0000000000000000000000000000000000000000';
-const SETTLEMENT_ADDRESS = import.meta.env.VITE_SETTLEMENT || '0x0000000000000000000000000000000000000000';
+const cleanAddress = (addr) => (addr || '').replace(/['"]/g, '').trim();
+
+const CLTR_TOKEN_ADDRESS = cleanAddress(import.meta.env.VITE_CLTR_TOKEN) || '0x7b69C7E57d7004EB2374E5Aabb9db5334aE73B9f';
+const STAKING_ADDRESS = cleanAddress(import.meta.env.VITE_STAKING) || '0x6A95484e05dD7139C7A4De192dd2f26A2a91F69e';
+const FOUNDER_VESTING_ADDRESS = cleanAddress(import.meta.env.VITE_FOUNDER_VESTING) || '0xc416547c5a9dE39A5E489d04a3dfa1C043E8f026';
+const TEAM_VESTING_ADDRESS = cleanAddress(import.meta.env.VITE_TEAM_VESTING) || '0x05A67f5d26F3561C94E9e32A9F36fb483b51dB59';
+const SETTLEMENT_ADDRESS = cleanAddress(import.meta.env.VITE_SETTLEMENT) || '0x6A95484e05dD7139C7A4De192dd2f26A2a91F69e';
 
 const API_BASE_URL = import.meta.env.VITE_API_URL || window.location.origin;
 

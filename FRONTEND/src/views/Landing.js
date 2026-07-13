@@ -384,7 +384,57 @@ export function renderLanding() {
                 </div>
             </div>
 
-
+            <!-- ═══ THE CLTR TOKEN ECONOMY ═══ -->
+            <div class="lemo-reframe" style="background:#fff; border-top:1px solid var(--d); border-bottom:1px solid var(--d); padding:100px 0;" data-r>
+                <div class="lw">
+                    <div class="lred-dash"><span class="lmono">Protocol Token</span></div>
+                    <h2 class="lh-section-title">The CLTR Token Economy</h2>
+                    <p class="lh-section-subtitle" style="font-size:18px; color:var(--t2); margin-top:12px; margin-bottom:48px; max-width:680px; line-height:1.6;">Securing trust, locking bandwidth, and burning supply programmatically.</p>
+                    
+                    <div class="lemo-grid">
+                        <div>
+                            <p class="lemo-body" style="font-size:16px; line-height:1.65; color:var(--t2);">
+                                CLTR is the native utility token of the Collateral Protocol on the **Robinhood Chain**. While cash deposits cover the stakes of individual agreements, CLTR is the resource that fuels the underlying identity and execution network.
+                                <br><br>
+                                Builders bond CLTR to unlock <strong>Conviction Capacity</strong> (milestone bandwidth), validators stake it to run verification checks, and dispute jurors lock it to resolve arbitrations. Every failed contract burns CLTR, and a portion of all transaction fees continuously market-buys and burns CLTR from supply.
+                            </p>
+                            <div style="display:flex; gap:16px; margin-top:32px; flex-wrap:wrap;">
+                                <a href="https://app.uniswap.org/#/swap?inputCurrency=ETH&outputCurrency=0x7b69C7E57d7004EB2374E5Aabb9db5334aE73B9f" target="_blank" class="lbtn lbtn-r" style="height:50px; padding:0 24px; font-size:11px; text-decoration:none; display:inline-flex; align-items:center; gap:8px;">
+                                    <span>Trade CLTR on Uniswap</span>
+                                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M15 3h6v6"/><path d="M10 14 21 3"/><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/></svg>
+                                </a>
+                                <a href="#" onclick="window.router.navigate('/protocol?tab=economics'); return false;" class="lbtn lbtn-g" style="height:50px; padding:0 24px; font-size:11px; text-decoration:none; display:inline-flex; align-items:center;">
+                                    <span>Explore Tokenomics</span>
+                                </a>
+                            </div>
+                        </div>
+                        <div style="background:var(--bg); border:1px solid var(--d); border-radius:12px; padding:32px; display:flex; flex-direction:column; gap:20px;">
+                            <div style="display:flex; justify-content:space-between; align-items:center; border-bottom:1px solid var(--d); padding-bottom:12px;">
+                                <span style="font-family:'Inter Tight', sans-serif; font-weight:800; font-size:13px; color:var(--t1);">CLTR UTILITY</span>
+                                <span style="font-family:'Inter', sans-serif; font-size:9px; font-weight:700; color:var(--r); background:rgba(92,20,20,0.06); padding:3px 8px; border-radius:100px; border:1px solid rgba(92,20,20,0.12); text-transform:uppercase;">Live Network</span>
+                            </div>
+                            <div style="display:flex; flex-direction:column; gap:12px; font-size:13px; color:var(--t2);">
+                                <div style="display:flex; align-items:flex-start; gap:10px;">
+                                    <span style="color:var(--g); font-weight:bold;">✓</span>
+                                    <span><strong>Staking Yields</strong>: Earn up to 25% APY in the Custody Terminal.</span>
+                                </div>
+                                <div style="display:flex; align-items:flex-start; gap:10px;">
+                                    <span style="color:var(--g); font-weight:bold;">✓</span>
+                                    <span><strong>Commitment Capacity</strong>: Bond token weight to lock larger contracts.</span>
+                                </div>
+                                <div style="display:flex; align-items:flex-start; gap:10px;">
+                                    <span style="color:var(--g); font-weight:bold;">✓</span>
+                                    <span><strong>Fee Burns</strong>: 0.5% of all settlement volume is continuously burned.</span>
+                                </div>
+                                <div style="display:flex; align-items:flex-start; gap:10px;">
+                                    <span style="color:var(--g); font-weight:bold;">✓</span>
+                                    <span><strong>Forfeiture Burns</strong>: 30% of failed staked tokens are burned forever.</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
             <!-- ═══ FAQ ═══ -->
             <div class="lw">

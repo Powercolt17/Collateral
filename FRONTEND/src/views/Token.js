@@ -1371,6 +1371,13 @@ export function renderToken() {
                                 </div>
 
                                 <button class="cltr-action-submit" id="stake-btn" disabled>STAKE CLTR</button>
+                                <div style="display:flex; justify-content:center; gap: 6px; margin-top: 14px; font-family:'JetBrains Mono', monospace; font-size:10px;">
+                                    <span style="color:#666;">Need CLTR?</span>
+                                    <a href="https://app.uniswap.org/#/swap?inputCurrency=ETH&outputCurrency=0x7b69C7E57d7004EB2374E5Aabb9db5334aE73B9f" target="_blank" style="color:#5C1414; font-weight:700; text-decoration:none; display:inline-flex; align-items:center; gap:2px;">
+                                        <span>Buy on Uniswap</span>
+                                        <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M15 3h6v6"/><path d="M10 14 21 3"/><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/></svg>
+                                    </a>
+                                </div>
                             </div>
                         </div>
 
@@ -1704,6 +1711,23 @@ export function renderToken() {
                             <p class="vis-card-p">
                                 Independent Referees and Dispute Jurors lock significant CLTR bonds to qualify for yields, aligning their economic incentives with the honesty of the network.
                             </p>
+                        </div>
+                    </div>
+
+                    <!-- Acquire CLTR Card -->
+                    <div style="margin-top: 40px; background: #FFFFFF; border: 1px solid #E5E5E5; border-radius: 4px; padding: 32px;">
+                        <h3 class="vis-card-title" style="margin-top:0; font-family:'JetBrains Mono', monospace; font-size:11px; font-weight:700; letter-spacing:1.5px; text-transform:uppercase;">ACQUIRING &amp; TRADING CLTR</h3>
+                        <p class="vis-card-p" style="margin-bottom: 24px;">
+                            The Collateral token (CLTR) is a utility asset deployed on the **Robinhood Chain**. You can trade, buy, or sell CLTR directly on Uniswap, or bridge assets to obtain it.
+                        </p>
+                        <div style="display: flex; gap: 16px; flex-wrap: wrap;">
+                            <a href="https://app.uniswap.org/#/swap?inputCurrency=ETH&outputCurrency=0x7b69C7E57d7004EB2374E5Aabb9db5334aE73B9f" target="_blank" style="display: inline-flex; align-items: center; gap: 8px; background: #5C1414; color: #FFFFFF; padding: 12px 24px; border-radius: 4px; font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 700; text-decoration: none; box-shadow: 0 4px 12px rgba(92,20,20,0.15); transition: all 0.2s;">
+                                <span>Trade CLTR on Uniswap</span>
+                                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M15 3h6v6"/><path d="M10 14 21 3"/><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/></svg>
+                            </a>
+                            <a href="#" onclick="window.router.navigate('/docs'); return false;" style="display: inline-flex; align-items: center; gap: 8px; background: #FFFFFF; color: #111111; border: 1px solid #E5E5E5; padding: 12px 24px; border-radius: 4px; font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 700; text-decoration: none; transition: all 0.2s;">
+                                <span>View Bridging Guide</span>
+                            </a>
                         </div>
                     </div>
                 </div>

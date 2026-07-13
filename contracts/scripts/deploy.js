@@ -10,21 +10,67 @@ async function main() {
   console.log("====================================================");
 
   // 1. Configure Target Addresses (using Env vars or Signer fallbacks)
-  const communityRewardsAddr = process.env.COMMUNITY_REWARDS_ADDR || deployer.address;
-  const treasuryMultisigAddr = process.env.TREASURY_MULTISIG_ADDR || deployer.address;
-  const liquidityWalletAddr = process.env.LIQUIDITY_WALLET_ADDR || deployer.address;
-  const verifierIncentivePoolAddr = process.env.VERIFIER_INCENTIVE_POOL_ADDR || deployer.address;
-  const founderWalletAddr = process.env.FOUNDER_WALLET_ADDR || deployer.address;
-  const founderVestingAddr = process.env.FOUNDER_VESTING_ADDR || deployer.address;
+  const communityRewardsAddr = (process.env.COMMUNITY_REWARDS_ADDR || deployer.address).toLowerCase();
+  const treasuryMultisigAddr = (process.env.TREASURY_MULTISIG_ADDR || deployer.address).toLowerCase();
+  const liquidityWalletAddr = (process.env.LIQUIDITY_WALLET_ADDR || deployer.address).toLowerCase();
+  const verifierIncentivePoolAddr = (process.env.VERIFIER_INCENTIVE_POOL_ADDR || deployer.address).toLowerCase();
+  const founderWalletAddr = (process.env.FOUNDER_WALLET_ADDR || deployer.address).toLowerCase();
+  const founderVestingAddr = (process.env.FOUNDER_VESTING_ADDR || deployer.address).toLowerCase();
+
+  const decimals = 18n;
+  const ONE_MILLION = 1_000_000n * (10n ** decimals);
 
   // Vesting wallet targets
   const teamMemberAddresses = process.env.TEAM_RECIPIENTS 
-    ? process.env.TEAM_RECIPIENTS.split(",") 
-    : [deployer.address]; // Default fallback to deployer
+    ? process.env.TEAM_RECIPIENTS.split(",").map(a => a.trim().toLowerCase()) 
+    : [];
   
+  console.log("\nValidating Team Vesting Allocation parameters...");
+  if (teamMemberAddresses.length !== 20) {
+    throw new Error(`Validation Failed: TEAM_RECIPIENTS must contain exactly 20 addresses. Found ${teamMemberAddresses.length}.`);
+  }
+
+  const teamAddressSet = new Set();
+  const teamVestingTotal = 150n * ONE_MILLION;
+  const expectedTeamShare = 7_500_000n * (10n ** decimals);
+
+  for (let i = 0; i < teamMemberAddresses.length; i++) {
+    const addr = teamMemberAddresses[i].trim();
+    
+    // Check if valid address format
+    if (!ethers.isAddress(addr.toLowerCase())) {
+      throw new Error(`Validation Failed: Address "${addr}" at index ${i} is not a valid Ethereum address.`);
+    }
+
+    // Check if zero address
+    if (addr === ethers.ZeroAddress) {
+      throw new Error(`Validation Failed: Address at index ${i} cannot be the zero address.`);
+    }
+
+    // Check uniqueness
+    const normalized = addr.toLowerCase();
+    if (teamAddressSet.has(normalized)) {
+      throw new Error(`Validation Failed: Duplicate address found: "${addr}".`);
+    }
+    teamAddressSet.add(normalized);
+  }
+
+  // Calculate sum and shares
+  const teamShare = teamVestingTotal / BigInt(teamMemberAddresses.length);
+  if (teamShare !== expectedTeamShare) {
+    throw new Error(`Validation Failed: Team share calculation mismatch. Expected ${ethers.formatUnits(expectedTeamShare, 18)} CLTR per wallet, got ${ethers.formatUnits(teamShare, 18)}.`);
+  }
+
+  const calculatedTotalAllocation = teamShare * BigInt(teamMemberAddresses.length);
+  if (calculatedTotalAllocation !== teamVestingTotal) {
+    throw new Error(`Validation Failed: Total team vesting allocation must equal exactly 150,000,000 CLTR.`);
+  }
+
+  console.log("✅ All Team Vesting parameters validated successfully.");
+
   const strategicAddresses = process.env.STRATEGIC_RECIPIENTS
-    ? process.env.STRATEGIC_RECIPIENTS.split(",")
-    : [deployer.address]; // Default fallback to deployer
+    ? process.env.STRATEGIC_RECIPIENTS.split(",").map(a => a.trim().toLowerCase())
+    : [deployer.address.toLowerCase()];
 
   // 2. Deploy $CLTR Token
   const CollateralToken = await ethers.getContractFactory("CollateralToken");
@@ -41,15 +87,12 @@ async function main() {
   console.log("✅ CollateralStaking deployed to:", stakingAddress);
 
   // 4. Distribute Supply according to Allocation requirements (Total 1 Billion)
-  const decimals = 18n;
-  const ONE_MILLION = 1_000_000n * (10n ** decimals);
 
   const communityRewardsAmount = 300n * ONE_MILLION;     // 30%
   const treasuryMultisigAmount = 83n * ONE_MILLION + 400000n * (10n ** decimals); // 8.34%
   const founderDirectAmount = 66n * ONE_MILLION + 600000n * (10n ** decimals);     // 6.66%
   const founderVestingAmount = 50n * ONE_MILLION;        // 5% (vested)
   const liquidityWalletAmount = 150n * ONE_MILLION;      // 15%
-  const teamVestingTotal = 150n * ONE_MILLION;           // 15%
   const strategicVestingTotal = 100n * ONE_MILLION;      // 10%
   const verifierIncentivePoolAmount = 100n * ONE_MILLION;  // 10%
 
@@ -94,7 +137,6 @@ async function main() {
   const CliffVestingWallet = await ethers.getContractFactory("CliffVestingWallet");
 
   console.log("\nDeploying Team Vesting Wallets (1-year cliff, 4-year linear)...");
-  const teamShare = teamVestingTotal / BigInt(teamMemberAddresses.length);
   for (let i = 0; i < teamMemberAddresses.length; i++) {
     const beneficiary = teamMemberAddresses[i];
     const wallet = await CliffVestingWallet.deploy(

@@ -349,22 +349,22 @@ Authorization: Bearer col_live_79a2bd8f8d9b1c72...
                                 <tbody>
                                     <tr>
                                         <td>CLTR Token</td>
-                                        <td><code>0x5C14142f36f9A02f232490b403487c6f1f3A1f9E</code></td>
+                                        <td><code>0x7b69C7E57d7004EB2374E5Aabb9db5334aE73B9f</code></td>
                                         <td>cltr.core.token</td>
                                     </tr>
                                     <tr>
                                         <td>Commitment Staking</td>
-                                        <td><code>0x2e9bA14f36f9A02f232490b403487c6f1f3A1f9E</code></td>
+                                        <td><code>0x6A95484e05dD7139C7A4De192dd2f26A2a91F69e</code></td>
                                         <td>cltr.core.staking</td>
                                     </tr>
                                     <tr>
                                         <td>Founder Vesting</td>
-                                        <td><code>0x8B32142f36f9A02f232490b403487c6f1f3A1f9E</code></td>
+                                        <td><code>0xc416547c5a9dE39A5E489d04a3dfa1C043E8f026</code></td>
                                         <td>cltr.vesting.founder</td>
                                     </tr>
                                     <tr>
                                         <td>Team Vesting</td>
-                                        <td><code>0x10B9142f36f9A02f232490b403487c6f1f3A1f9E</code></td>
+                                        <td><code>10 Multi-sig contracts</code></td>
                                         <td>cltr.vesting.team</td>
                                     </tr>
                                 </tbody>
@@ -378,9 +378,9 @@ Authorization: Bearer col_live_79a2bd8f8d9b1c72...
                             <div class="doc-code-block">
 Chain Name: Robinhood Chain
 Chain ID: 4663
-RPC URL: https://rpc.robinhoodchain.info
-Symbol: RHC
-Explorer: https://explorer.robinhoodchain.info
+RPC URL: https://rpc.mainnet.chain.robinhood.com
+Symbol: ETH
+Explorer: https://explorer.mainnet.chain.robinhood.com
                             </div>
                         </section>
 

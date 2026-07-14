@@ -579,7 +579,7 @@ window.app = {
     signInWithWallet: async function () {
         window.app._hideAuthError();
         const btn = document.getElementById('btn-wallet-signin');
-        const originalText = btn ? btn.innerHTML : 'Continue with Wallet';
+        const originalText = btn ? btn.innerHTML : 'Connect Wallet';
 
         try {
             // 1. Check if wallet is connected

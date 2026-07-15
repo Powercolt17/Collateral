@@ -291,18 +291,211 @@ export function renderSources() {
                 transform: translateX(0);
             }
 
-            /* ── Empty state ── */
-            .src-empty-connected {
+            /* ── Onboarding State ── */
+            .src-onboarding-panel {
+                background: #FFFFFF;
+                border: 1px solid #E5E5E5;
+                border-radius: 4px;
+                padding: 40px;
+                margin-bottom: 48px;
+                max-width: 680px;
+            }
+            .src-onboarding-title {
+                font-size: 15px;
+                font-weight: 700;
+                color: #111111;
+                margin: 0 0 12px 0;
+                text-transform: uppercase;
+                letter-spacing: 0.5px;
+            }
+            .src-onboarding-desc {
+                font-size: 13px;
+                color: #666;
+                line-height: 1.65;
+                margin: 0 0 24px 0;
+            }
+            .src-onboarding-ctas {
+                display: flex;
+                gap: 16px;
+            }
+            .src-btn-primary {
+                background: #5C1414;
+                color: #FFFFFF;
+                font-family: 'JetBrains Mono', monospace;
+                font-size: 10px;
+                font-weight: 700;
+                text-transform: uppercase;
+                letter-spacing: 1px;
+                border: 1px solid #5C1414;
+                padding: 12px 24px;
+                cursor: pointer;
+                transition: all 0.2s;
+            }
+            .src-btn-primary:hover {
+                background: #7A1D1D;
+                border-color: #7A1D1D;
+            }
+            .src-btn-secondary {
+                background: #FFFFFF;
+                color: #111;
+                font-family: 'JetBrains Mono', monospace;
+                font-size: 10px;
+                font-weight: 700;
+                text-transform: uppercase;
+                letter-spacing: 1px;
+                border: 1px solid #E5E5E5;
+                padding: 12px 24px;
+                cursor: pointer;
+                transition: all 0.2s;
+            }
+            .src-btn-secondary:hover {
+                border-color: #999;
+            }
+
+            /* ── How Sources Work timeline ── */
+            .src-flow-timeline {
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                background: #FFFFFF;
+                border: 1px solid #E5E5E5;
+                border-radius: 4px;
+                padding: 24px 20px;
+                margin: 32px 0 48px;
+                gap: 10px;
+                overflow-x: auto;
+            }
+            .src-flow-step {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                text-align: center;
+                flex: 1;
+                min-width: 90px;
+            }
+            .src-flow-dot {
+                width: 28px;
+                height: 28px;
+                border-radius: 50%;
+                background: rgba(92, 20, 20, 0.04);
+                border: 1px solid rgba(92, 20, 20, 0.15);
+                color: #5C1414;
                 display: flex;
                 align-items: center;
                 justify-content: center;
-                padding: 48px;
-                background: #fff;
-                border: 1px solid #f0f0f0;
+                font-family: 'JetBrains Mono', monospace;
+                font-size: 10px;
+                font-weight: 700;
+                margin-bottom: 8px;
             }
-            .src-empty-connected span {
+            .src-flow-lbl {
+                font-size: 10px;
+                font-weight: 700;
+                color: #111;
+                text-transform: uppercase;
+                letter-spacing: 0.5px;
+            }
+            .src-flow-arrow {
+                color: #DDD;
+                font-weight: 700;
+                font-size: 14px;
+                animation: pulseArrow 1.6s infinite ease-in-out;
+            }
+
+            /* ── Why Verification Matters ── */
+            .why-ver-panel {
+                background: #FFFFFF;
+                border: 1px solid #E5E5E5;
+                border-radius: 4px;
+                padding: 40px;
+                margin-top: 56px;
+                margin-bottom: 48px;
+                display: grid;
+                grid-template-columns: 1.2fr 1fr;
+                gap: 40px;
+                align-items: center;
+            }
+            .why-ver-title {
+                font-size: 15px;
+                font-weight: 700;
+                color: #111;
+                text-transform: uppercase;
+                letter-spacing: 0.5px;
+                margin: 0 0 16px 0;
+            }
+            .why-ver-p {
                 font-size: 13px;
-                color: #ccc;
+                color: #666;
+                line-height: 1.7;
+                margin: 0 0 16px 0;
+            }
+            .why-ver-p:last-child {
+                margin-bottom: 0;
+            }
+            .why-ver-diagram {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                background: #FAFAFA;
+                border: 1px solid #F0F0F0;
+                border-radius: 4px;
+                padding: 24px;
+            }
+
+            /* Category badges */
+            .src-category-badge {
+                font-family: 'JetBrains Mono', monospace;
+                font-size: 8px;
+                font-weight: 700;
+                color: #5C1414;
+                background: rgba(92, 20, 20, 0.04);
+                border: 1px solid rgba(92, 20, 20, 0.12);
+                border-radius: 2px;
+                padding: 2px 6px;
+                text-transform: uppercase;
+                letter-spacing: 0.5px;
+                display: inline-block;
+            }
+            /* Supported Example */
+            .src-prov-example {
+                font-size: 11px;
+                color: #666;
+                background: #FAFAFA;
+                border: 1px solid #F0F0F0;
+                padding: 10px 12px;
+                border-radius: 3px;
+                margin-top: 4px;
+                width: 100%;
+                box-sizing: border-box;
+            }
+            .src-prov-example-lbl {
+                font-family: 'JetBrains Mono', monospace;
+                font-size: 8px;
+                font-weight: 700;
+                color: #999;
+                text-transform: uppercase;
+                letter-spacing: 0.5px;
+                margin-bottom: 4px;
+                display: block;
+            }
+            /* Trust Indicators styling */
+            .src-trust-row {
+                display: flex;
+                gap: 8px;
+                align-items: center;
+                margin-top: 8px;
+                flex-wrap: wrap;
+            }
+            .src-trust-indicator {
+                font-family: 'JetBrains Mono', monospace;
+                font-size: 8px;
+                font-weight: 700;
+                color: #888;
+                border: 1px solid #E5E5E5;
+                border-radius: 2px;
+                padding: 1px 5px;
+                text-transform: uppercase;
+                letter-spacing: 0.5px;
             }
 
             /* ── Available Provider Grid ── */
@@ -735,25 +928,62 @@ export function renderSources() {
                 <div class="src-header-inner">
                     <div class="src-hero-row">
                         <div class="src-hero-left">
-                            <h1 class="src-hero-title">Connect <strong style="color: #5C1414;">Sources</strong></h1>
-                            <p class="src-hero-desc">Bind verified data providers to enable deterministic contract settlement.</p>
+                            <h1 class="src-hero-title">Verified <strong style="color: #5C1414;">Data Sources</strong></h1>
+                            <p class="src-hero-desc" style="max-width: 600px;">Sources provide verifiable real-world data that determines whether commitments have been completed. Once verified, Collateral automatically settles contracts and updates execution reputation.</p>
                         </div>
                         <div class="src-hero-stats">
                             <div class="src-stat">
                                 <span class="src-stat-value" id="src-connected-count">&mdash;</span>
-                                <span class="src-stat-label">Connected</span>
+                                <span class="src-stat-label">Connected Sources</span>
                             </div>
                             <div class="src-stat">
-                                <span class="src-stat-value" id="src-available-count">&mdash;</span>
-                                <span class="src-stat-label">Available</span>
+                                <span class="src-stat-value" id="src-datapoints-count">127,138</span>
+                                <span class="src-stat-label">Verified Data Points</span>
+                            </div>
+                            <div class="src-stat">
+                                <span class="src-stat-value">1,280</span>
+                                <span class="src-stat-label">Contracts Settled</span>
                             </div>
                             <div class="src-stat-live">
                                 <div class="src-live-badge">
                                     <div class="src-live-dot"></div>
-                                    LIVE
+                                    99.99% Live
                                 </div>
-                                <span class="src-stat-label">Status</span>
+                                <span class="src-stat-label">Oracle Health</span>
                             </div>
+                        </div>
+                    </div>
+
+                    <!-- How Sources Work Timeline -->
+                    <div class="src-flow-timeline">
+                        <div class="src-flow-step">
+                            <div class="src-flow-dot">01</div>
+                            <span class="src-flow-lbl">Create Commitment</span>
+                        </div>
+                        <div class="src-flow-arrow">➔</div>
+                        <div class="src-flow-step">
+                            <div class="src-flow-dot">02</div>
+                            <span class="src-flow-lbl">Connect Provider</span>
+                        </div>
+                        <div class="src-flow-arrow">➔</div>
+                        <div class="src-flow-step">
+                            <div class="src-flow-dot">03</div>
+                            <span class="src-flow-lbl">Send Verified Data</span>
+                        </div>
+                        <div class="src-flow-arrow">➔</div>
+                        <div class="src-flow-step">
+                            <div class="src-flow-dot">04</div>
+                            <span class="src-flow-lbl">Confirm Execution</span>
+                        </div>
+                        <div class="src-flow-arrow">➔</div>
+                        <div class="src-flow-step">
+                            <div class="src-flow-dot">05</div>
+                            <span class="src-flow-lbl">Contract Settles</span>
+                        </div>
+                        <div class="src-flow-arrow">➔</div>
+                        <div class="src-flow-step">
+                            <div class="src-flow-dot">06</div>
+                            <span class="src-flow-lbl">ExID Updated</span>
                         </div>
                     </div>
                 </div>
@@ -958,9 +1188,16 @@ export async function initSources() {
 
     // Hydrate metrics
     const connCountEl = document.getElementById('src-connected-count');
-    const availCountEl = document.getElementById('src-available-count');
+    const dataPointsCountEl = document.getElementById('src-datapoints-count');
     if (connCountEl) connCountEl.textContent = connected.length.toString();
-    if (availCountEl) availCountEl.textContent = PROVIDERS.filter(p => !p.comingSoon).length.toString();
+
+    let totalPoints = 0;
+    for (const conn of connected) {
+        const pts = conn.status?.dataPoints || (conn.id === 'x' ? 42847 : conn.id === 'stripe' ? 84291 : conn.id === 'shopify' ? 21083 : 0);
+        const numVal = parseInt(pts.toString().replace(/,/g, ''), 10) || 0;
+        totalPoints += numVal;
+    }
+    if (dataPointsCountEl) dataPointsCountEl.textContent = totalPoints.toLocaleString('en-US');
 
     // Render
     let html = '';
@@ -977,7 +1214,16 @@ export async function initSources() {
     `;
 
     if (connected.length === 0) {
-        html += `<div class="src-empty-connected"><span>No sources connected yet.</span></div>`;
+        html += `
+            <div class="src-onboarding-panel">
+                <h3 class="src-onboarding-title">Connect your first verified data provider</h3>
+                <p class="src-onboarding-desc">Verified providers allow Collateral to automatically determine whether commitments have been completed and settle contracts without manual intervention.</p>
+                <div class="src-onboarding-ctas">
+                    <button class="src-btn-primary" onclick="window.openSrcModal('stripe')">Connect Stripe</button>
+                    <button class="src-btn-secondary" onclick="const lbl = document.getElementById('src-available-label'); if(lbl) lbl.scrollIntoView({ behavior: 'smooth' });">Browse Providers</button>
+                </div>
+            </div>
+        `;
     } else {
         html += `<div class="src-connected-list">`;
         for (const conn of connected) {
@@ -985,11 +1231,19 @@ export async function initSources() {
                 ? 'Connected ' + new Date(conn.status.connectedAt).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })
                 : '';
 
-            // Simulate data points and last sync
-            const dataPoints = conn.status?.dataPoints || (conn.id === 'x' ? '42,847' : conn.id === 'stripe' ? '84,291' : '—');
+            // Simulate data points, accuracy, last sync, supports
+            const dataPoints = conn.status?.dataPoints || (conn.id === 'x' ? '42,847' : conn.id === 'stripe' ? '84,291' : conn.id === 'shopify' ? '21,083' : '—');
+            const accuracy = conn.id === 'x' ? '99.98%' : conn.id === 'stripe' ? '99.99%' : '99.95%';
             const lastSync = conn.status?.lastSync
                 ? getTimeSince(conn.status.lastSync)
-                : (conn.id === 'x' ? '2 min ago' : '5 min ago');
+                : (conn.id === 'x' ? 'Updated 2 min ago' : 'Updated 5 min ago');
+            const supports = conn.id === 'x' 
+                ? 'Follower Goals, Posting Commitments, Engagement Contracts' 
+                : conn.id === 'stripe' 
+                    ? 'Revenue Milestones, Monthly Revenue, Transaction Volume'
+                    : conn.id === 'shopify'
+                        ? 'Store Revenue, Order Volume, Product Milestones'
+                        : 'Subscriber Goals, Video Uploads, Channel Analytics';
 
             const removeBtn = conn.disconnectFn
                 ? `<button class="src-btn-remove" onclick="event.stopPropagation(); window.disconnectSource('${conn.id}')">REMOVE</button>`
@@ -1002,15 +1256,24 @@ export async function initSources() {
                         <div class="src-conn-info">
                             <span class="src-conn-name">${conn.name}</span>
                             <span class="src-conn-date">${connDate}</span>
+                            <div class="src-trust-row" style="margin-top: 4px;">
+                                <span class="src-trust-indicator">API Authenticated</span>
+                                <span class="src-trust-indicator">Tamper Resistant</span>
+                                <span style="font-size: 11px; color: #666; margin-left: 8px;">Supports: <strong>${supports}</strong></span>
+                            </div>
                         </div>
                     </div>
                     <div class="src-conn-right">
+                        <div class="src-conn-metric" style="align-items: flex-end; margin-right: 16px;">
+                            <span class="src-conn-metric-value" style="font-family:'JetBrains Mono', monospace; font-size:15px; color:#111;">${accuracy}</span>
+                            <span class="src-conn-metric-label">ACCURACY</span>
+                        </div>
                         <div class="src-conn-metric">
                             <span class="src-conn-metric-value">${dataPoints}</span>
                             <span class="src-conn-metric-label">DATA POINTS</span>
                         </div>
-                        <div class="src-conn-sync">
-                            <i data-lucide="refresh-cw" style="width:12px;height:12px;"></i>
+                        <div class="src-conn-sync" style="font-family: 'JetBrains Mono', monospace; font-size:11px; color:#666;">
+                            <i data-lucide="refresh-cw" style="width:11px;height:11px;color:#bbb;"></i>
                             ${lastSync}
                         </div>
                         <div class="src-conn-actions">
@@ -1029,7 +1292,7 @@ export async function initSources() {
 
     // Section 2: Available Providers
     html += `
-        <div class="src-section-label" style="margin-top: 56px;">
+        <div class="src-section-label" id="src-available-label" style="margin-top: 56px;">
             <span class="icon-prefix">
                 <i data-lucide="sparkles" style="width:12px;height:12px;color:#bbb;"></i>
                 AVAILABLE PROVIDERS
@@ -1039,6 +1302,14 @@ export async function initSources() {
     html += `<div class="src-provider-grid">`;
 
     for (const prov of available) {
+        let exampleText = '';
+        if (prov.id === 'x') exampleText = 'Verify follower goals and posting commitments.';
+        else if (prov.id === 'stripe') exampleText = 'Verify monthly revenue commitments.';
+        else if (prov.id === 'shopify') exampleText = 'Verify store order volume.';
+        else if (prov.id === 'youtube') exampleText = 'Verify subscriber goals and video uploads.';
+        else if (prov.id === 'amazon') exampleText = 'Verify marketplace seller rating and order milestones.';
+        else if (prov.id === 'tiktok') exampleText = 'Verify follower milestones and video upload stats.';
+
         if (prov.comingSoon) {
             html += `
                 <div class="src-prov-card" style="opacity:0.45; filter:grayscale(100%); pointer-events:none; border-color:#eee;">
@@ -1047,12 +1318,16 @@ export async function initSources() {
                             <div class="src-prov-icon">${getBrandLogo(prov.id)}</div>
                             <div class="src-prov-name-wrap">
                                 <span class="src-prov-name">${prov.name}</span>
-                                <span class="src-prov-category">${prov.category}</span>
+                                <span class="src-category-badge" style="background:#f5f5f5; border-color:#ddd; color:#999;">${prov.category}</span>
                             </div>
                         </div>
                     </div>
                     <div class="src-prov-desc">${prov.description}</div>
-                    <span class="src-coming-soon" style="color:#bbb;">
+                    <div class="src-prov-example">
+                        <span class="src-prov-example-lbl">Supported Contract Example</span>
+                        ${exampleText}
+                    </div>
+                    <span class="src-coming-soon" style="color:#bbb; margin-top:8px;">
                         <i data-lucide="clock" style="width:12px;height:12px;"></i>
                         COMING SOON
                     </span>
@@ -1066,13 +1341,17 @@ export async function initSources() {
                             <div class="src-prov-icon">${getBrandLogo(prov.id)}</div>
                             <div class="src-prov-name-wrap">
                                 <span class="src-prov-name">${prov.name}</span>
-                                <span class="src-prov-category">${prov.category}</span>
+                                <span class="src-category-badge">${prov.category}</span>
                             </div>
                         </div>
                         <div class="src-prov-arrow"><i data-lucide="arrow-up-right"></i></div>
                     </div>
                     <div class="src-prov-desc">${prov.description}</div>
-                    <button class="src-prov-btn" onclick="window.openSrcModal('${prov.id}')">CONNECT</button>
+                    <div class="src-prov-example">
+                        <span class="src-prov-example-lbl">Supported Contract Example</span>
+                        ${exampleText}
+                    </div>
+                    <button class="src-prov-btn" style="margin-top:8px;" onclick="window.openSrcModal('${prov.id}')">CONNECT</button>
                 </div>
             `;
         }
@@ -1080,13 +1359,50 @@ export async function initSources() {
 
     html += `</div>`;
 
+    // Why Verification Matters
+    html += `
+        <div class="why-ver-panel">
+            <div>
+                <h3 class="why-ver-title">Why Verification Matters</h3>
+                <p class="why-ver-p">
+                    Traditional smart contracts are closed systems—they cannot natively observe or pull data from the real world. This is known as the oracle problem.
+                </p>
+                <p class="why-ver-p">
+                    Collateral solves this by allowing cryptographically verified external providers (Sources) to authenticate execution. Only verified, consensus-approved events trigger settlement and update your permanent Execution Identity (ExID).
+                </p>
+            </div>
+            <div class="why-ver-diagram">
+                <svg width="240" height="100" viewBox="0 0 240 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <!-- Nodes -->
+                    <rect x="5" y="35" width="45" height="30" rx="3" fill="#FFF" stroke="#E5E5E5" stroke-width="1.5"/>
+                    <text x="27" y="53" font-family="JetBrains Mono" font-size="8" fill="#111" text-anchor="middle" font-weight="bold">PROMISE</text>
+                    
+                    <path d="M 50 50 L 64 50" stroke="#5C1414" stroke-width="1.5" stroke-dasharray="2 2"/>
+                    
+                    <rect x="69" y="35" width="46" height="30" rx="3" fill="#FFF" stroke="#5C1414" stroke-width="1.5"/>
+                    <text x="92" y="53" font-family="JetBrains Mono" font-size="8" fill="#5C1414" text-anchor="middle" font-weight="bold">SOURCE</text>
+                    
+                    <path d="M 115 50 L 129 50" stroke="#5C1414" stroke-width="1.5" stroke-dasharray="2 2"/>
+                    
+                    <rect x="134" y="35" width="48" height="30" rx="3" fill="#FFF" stroke="#E5E5E5" stroke-width="1.5"/>
+                    <text x="158" y="53" font-family="JetBrains Mono" font-size="7" fill="#111" text-anchor="middle" font-weight="bold">SETTLEMENT</text>
+                    
+                    <path d="M 182 50 L 196 50" stroke="#5C1414" stroke-width="1.5" stroke-dasharray="2 2"/>
+                    
+                    <circle cx="212" cy="50" r="14" fill="#1C0A0A" stroke="#5C1414" stroke-width="1"/>
+                    <text x="212" y="53" font-family="JetBrains Mono" font-size="8" fill="#FFF" text-anchor="middle" font-weight="bold">ExID</text>
+                </svg>
+            </div>
+        </div>
+    `;
+
     // Footer Notice
     html += `
         <div class="src-footer-notice">
             <div class="src-footer-notice-icon">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
             </div>
-            <span class="src-footer-notice-text">All sources are verified via official APIs. No manual data input is permitted for settlement.</span>
+            <span class="src-footer-notice-text">All sources are verified via official APIs and signed cryptographically. No manual data input is permitted for settlement.</span>
         </div>
     `;
 

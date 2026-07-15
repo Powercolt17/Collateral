@@ -3,6 +3,7 @@
 
 import api from '../api.js';
 import { showAlert, showConfirm } from '../modal.js';
+import { collateralFullLoader } from '../components/CollateralLoader.js';
 
 export function renderRivalryDetail() {
     return `
@@ -651,9 +652,7 @@ export function renderRivalryDetail() {
         </style>
 
         <div class="rvd" id="rvd-container">
-            <div class="rvd-loading">
-                <div class="rvd-loading-text">Loading rivalry...</div>
-            </div>
+            ${collateralFullLoader('Loading rivalry details...')}
         </div>
     `;
 }

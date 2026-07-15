@@ -1,5 +1,4 @@
-// Sources.js — Connect Sources — Institutional Data Binding Interface
-// Redesigned to match premium institutional aesthetic
+import { collateralFullLoader } from '../components/CollateralLoader.js';
 
 export function renderSources() {
     return `
@@ -991,10 +990,7 @@ export function renderSources() {
 
             <!-- Content -->
             <div class="src-content" id="src-content">
-                <div class="src-loading">
-                    <div class="src-spinner"></div>
-                    <p class="src-loading-text">Querying provider status...</p>
-                </div>
+                ${collateralFullLoader('Querying provider status...')}
             </div>
 
             <!-- Status Footer -->

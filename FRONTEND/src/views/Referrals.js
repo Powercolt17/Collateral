@@ -1,9 +1,4 @@
-/**
- * Referrals Page — Institutional Design
- *
- * Matches premium aesthetic: Sources.js / ActiveContracts.js / Funding.js
- * Sharp borders · Inter labels · #752122 accent · No border-radius
- */
+import { collateralFullLoader } from '../components/CollateralLoader.js';
 
 export function renderReferrals() {
     return `
@@ -483,9 +478,8 @@ export function renderReferrals() {
 
             <!-- Content -->
             <div class="ref-content">
-                <div id="referral-loading" class="ref-loading">
-                    <div class="ref-spinner"></div>
-                    <p class="ref-loading-text">Loading referral data...</p>
+                <div id="referral-loading">
+                    ${collateralFullLoader('Loading referral data...')}
                 </div>
                 <div id="referral-content" style="display:none;"></div>
                 <div id="referral-error" style="display:none;"></div>

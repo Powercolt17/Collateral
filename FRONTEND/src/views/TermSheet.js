@@ -1,9 +1,6 @@
 
-// TermSheet.js — Contract Execution Terminal
-// Final capital lock confirmation. No wizards. No configuration.
-// This is a financial instrument signing screen.
-
 import { openExecutionModal } from './ExecutionModal.js';
+import { collateralFullLoader } from '../components/CollateralLoader.js';
 
 export function renderTermSheet(params) {
     return `
@@ -425,8 +422,8 @@ export function renderTermSheet(params) {
             </div>
 
             <!-- Loading -->
-            <div class="ext-loading" id="ext-loading">
-                <div class="ext-spinner"></div>
+            <div id="ext-loading">
+                ${collateralFullLoader('Loading term sheet...')}
             </div>
 
             <!-- Error -->

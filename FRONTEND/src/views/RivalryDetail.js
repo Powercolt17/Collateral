@@ -37,7 +37,7 @@ export function renderRivalryDetail() {
             .rvd-hero-inner {
                 max-width: 1200px;
                 margin: 0 auto;
-                padding: 28px 64px 20px; /* Compressed by 20% */
+                padding: 24px 64px 20px; /* Compressed by 20% */
                 position: relative;
             }
             
@@ -64,33 +64,46 @@ export function renderRivalryDetail() {
                 font-weight: 700;
             }
 
-            /* Versus layout grid */
-            .rvd-vs-strip {
+            /* UFC Tale-of-the-Tape battle card layout */
+            .rvd-battle-card {
                 display: flex;
-                gap: 20px;
-                align-items: stretch;
-                margin-bottom: 24px;
-            }
-            .rvd-competitor-card {
-                flex: 1;
                 border: 1px solid var(--rvd-border);
                 background: #ffffff;
-                padding: 24px 28px; /* Increased internal breathing room */
-                position: relative;
+                margin-bottom: 24px;
                 transition: all var(--rvd-dur) var(--rvd-ease);
+                position: relative;
+                overflow: hidden;
             }
-            .rvd-competitor-card.is-leading {
-                border: 1px solid var(--rvd-green);
-                border-left: 3px solid var(--rvd-green);
+            .rvd-battle-card:hover {
+                transform: translateY(-1px);
+                box-shadow: 0 8px 24px rgba(0,0,0,0.03);
+            }
+            .rvd-competitor-side {
+                flex: 1;
+                padding: 28px 36px;
+                transition: all var(--rvd-dur) var(--rvd-ease);
+                position: relative;
+            }
+            .rvd-competitor-side.is-leading {
                 background: #fafbfa; /* Slightly stronger visual weight for the leader */
-                box-shadow: 0 4px 16px rgba(21, 71, 38, 0.03);
             }
-            .rvd-competitor-card.is-trailing {
-                border-left: 3px solid var(--rvd-brand);
+            .rvd-competitor-side.is-trailing {
+                background: #ffffff;
             }
-            .rvd-competitor-card:hover {
-                transform: translateY(-2px);
-                box-shadow: 0 8px 24px rgba(0,0,0,0.04);
+            .rvd-battle-vs {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                width: 64px;
+                background: var(--rvd-bg-sub);
+                font-family: 'JetBrains Mono', monospace;
+                font-size: 12px;
+                font-weight: 800;
+                color: #ccc;
+                border-left: 1px solid var(--rvd-border);
+                border-right: 1px solid var(--rvd-border);
+                flex-shrink: 0;
             }
 
             /* Competitor typography hierarchy */
@@ -154,23 +167,6 @@ export function renderRivalryDetail() {
                 color: var(--rvd-brand);
             }
 
-            /* Versus Center divider */
-            .rvd-vs-divider {
-                display: flex;
-                flex-direction: column;
-                align-items: center;
-                justify-content: center;
-                width: 48px;
-                border-left: 1px solid var(--rvd-border);
-                border-right: 1px solid var(--rvd-border);
-                background: var(--rvd-bg-sub);
-                font-family: 'JetBrains Mono', monospace;
-                font-size: 11px;
-                font-weight: 800;
-                color: #ccc;
-                letter-spacing: 0.12em;
-            }
-
             /* Competitor status badges */
             .rvd-badge {
                 font-family: 'JetBrains Mono', monospace;
@@ -216,12 +212,12 @@ export function renderRivalryDetail() {
                 display: flex;
                 justify-content: space-between;
                 font-family: 'JetBrains Mono', monospace;
-                font-size: 9px;
+                font-size: 10px;
                 color: var(--rvd-text-secondary);
                 text-transform: uppercase;
                 font-weight: 700;
-                margin-bottom: 6px;
-                letter-spacing: 0.05em;
+                margin-bottom: 8px;
+                letter-spacing: 0.08em;
             }
             .rvd-rivalry-bar-track {
                 height: 10px;
@@ -233,7 +229,7 @@ export function renderRivalryDetail() {
             }
             .rvd-rivalry-bar-fill {
                 height: 100%;
-                transition: width 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+                transition: width 0.8s cubic-bezier(0.16, 1, 0.3, 1);
             }
             .rvd-rivalry-bar-fill.challenger {
                 background: var(--rvd-green);
@@ -249,7 +245,7 @@ export function renderRivalryDetail() {
                 background: #ffffff;
                 z-index: 2;
                 transform: translateX(-50%);
-                transition: left 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+                transition: left 0.8s cubic-bezier(0.16, 1, 0.3, 1);
             }
 
             /* ── Monospaced Countdown Grid ── */
@@ -334,7 +330,7 @@ export function renderRivalryDetail() {
             .rvd-chart-section {
                 max-width: 1200px;
                 margin: 0 auto;
-                padding: 0 64px 24px; /* Reduced unnecessary vertical whitespace */
+                padding: 0 64px 24px;
             }
             .rvd-chart-panel {
                 background: #ffffff;
@@ -434,6 +430,25 @@ export function renderRivalryDetail() {
                 box-sizing: border-box;
                 padding: 10px 0;
             }
+            
+            /* SVG transitions for real-time Bloomberg chart extensions */
+            .rvd-chart-canvas svg path {
+                transition: d 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+            }
+            .rvd-chart-canvas svg circle {
+                transition: cx 0.8s cubic-bezier(0.16, 1, 0.3, 1), cy 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+            }
+            
+            /* Barely visible, premium pulsing live point */
+            @keyframes cl-graph-pulse {
+                0%, 100% { transform: scale(1); opacity: 0.85; transform-origin: center; }
+                50% { transform: scale(1.35); opacity: 1; transform-origin: center; }
+            }
+            .live-endpoint-dot {
+                animation: cl-graph-pulse 2s ease-in-out infinite;
+                transform-box: fill-box;
+            }
+
             .rvd-chart-footer {
                 display: flex;
                 justify-content: space-between;
@@ -446,7 +461,7 @@ export function renderRivalryDetail() {
                 color: #bbb;
             }
 
-            /* ── Live Activity Ticker Feed ── */
+            /* ── Oracle Event Log Ticker Feed ── */
             .rvd-activity-container {
                 max-width: 1200px;
                 margin: 0 auto 24px;
@@ -486,6 +501,7 @@ export function renderRivalryDetail() {
                 display: flex;
                 align-items: center;
                 justify-content: space-between;
+                transition: background-color var(--rvd-dur) var(--rvd-ease);
             }
             .rvd-activity-line-left {
                 display: flex;
@@ -519,7 +535,7 @@ export function renderRivalryDetail() {
             .rvd-panel {
                 background: #ffffff;
                 border: 1px solid var(--rvd-border);
-                padding: 24px; /* Increased internal breathing room */
+                padding: 24px;
                 transition: all var(--rvd-dur) var(--rvd-ease);
             }
             .rvd-panel:hover {
@@ -553,19 +569,22 @@ export function renderRivalryDetail() {
                 display: flex;
                 justify-content: space-between;
                 align-items: center;
-                padding: 12px 0; /* Increased row vertical spacing */
+                padding: 12px 0;
                 border-bottom: 1px solid #f8f8f8;
             }
             .rvd-row:last-child {
                 border-bottom: none;
             }
+            
+            /* Muted labels and bold values to focus user attention instantly */
             .rvd-row-label {
                 font-size: 12px;
-                color: var(--rvd-text-secondary);
+                font-weight: 500;
+                color: #666;
             }
             .rvd-row-value {
                 font-size: 13px;
-                font-weight: 700;
+                font-weight: 800;
                 color: var(--rvd-text-primary);
                 font-family: 'JetBrains Mono', monospace;
             }
@@ -809,11 +828,15 @@ export async function initRivalryDetail(params) {
                 <div style="display:grid; grid-template-columns:repeat(4, 1fr); gap:16px; border:1px solid var(--rvd-border); background:#fafafa; padding:16px 20px; margin-bottom:24px;">
                     <div>
                         <div style="font-family:'JetBrains Mono', monospace; font-size:9px; color:#777; text-transform:uppercase; letter-spacing:0.08em; font-weight:700;">Current Leader</div>
-                        <div style="font-size:15px; font-weight:700; color:#111; margin-top:4px;">${rivalry.challenger.growth === rivalry.opponent.growth ? 'TIED' : (isLeading ? rivalry.challenger.name : rivalry.opponent.name)}</div>
+                        <div style="font-size:15px; font-weight:700; color:#111; margin-top:4px; text-transform:uppercase;">
+                            ${rivalry.challenger.growth === rivalry.opponent.growth ? 'TIED' : (isLeading ? rivalry.challenger.name : rivalry.opponent.name)}
+                        </div>
                     </div>
                     <div>
-                        <div style="font-family:'JetBrains Mono', monospace; font-size:9px; color:#777; text-transform:uppercase; letter-spacing:0.08em; font-weight:700;">Winning Margin</div>
-                        <div style="font-size:15px; font-weight:700; color:var(--rvd-green); margin-top:4px;">${rivalry.challenger.growth === rivalry.opponent.growth ? '0.00%' : `${Math.abs(rivalry.challenger.growth - rivalry.opponent.growth).toFixed(2)}%`}</div>
+                        <div style="font-family:'JetBrains Mono', monospace; font-size:9px; color:#777; text-transform:uppercase; letter-spacing:0.08em; font-weight:700;">Lead</div>
+                        <div style="font-size:15px; font-weight:700; color:var(--rvd-green); margin-top:4px;">
+                            ${rivalry.challenger.growth === rivalry.opponent.growth ? '0.00%' : `+${Math.abs(rivalry.challenger.growth - rivalry.opponent.growth).toFixed(2)}% &middot; ${isLeading ? 'Challenger ahead' : 'Opponent ahead'}`}
+                        </div>
                     </div>
                     <div>
                         <div style="font-family:'JetBrains Mono', monospace; font-size:9px; color:#777; text-transform:uppercase; letter-spacing:0.08em; font-weight:700;">Contract Status</div>
@@ -828,11 +851,11 @@ export async function initRivalryDetail(params) {
                     </div>
                 </div>
 
-                <!-- Competitor panels -->
-                <div class="rvd-vs-strip">
+                <!-- Unified UFC battle-card style layout -->
+                <div class="rvd-battle-card">
                     
-                    <!-- Challenger Panel -->
-                    <div class="rvd-competitor-card challenger-card ${isLeading ? 'is-leading' : 'is-trailing'}">
+                    <!-- Challenger Side -->
+                    <div class="rvd-competitor-side challenger-side ${isLeading ? 'is-leading' : 'is-trailing'}" style="border-left: ${isLeading ? '3px solid var(--rvd-green)' : 'none'};">
                         <div class="rvd-comp-header">
                             <div>
                                 <span class="rvd-comp-role">Challenger</span>
@@ -869,10 +892,10 @@ export async function initRivalryDetail(params) {
                     </div>
 
                     <!-- VS Divider -->
-                    <div class="rvd-vs-divider">VS</div>
+                    <div class="rvd-battle-vs">VS</div>
 
-                    <!-- Opponent Panel -->
-                    <div class="rvd-competitor-card opponent-card ${!isLeading ? 'is-leading' : 'is-trailing'}">
+                    <!-- Opponent Side -->
+                    <div class="rvd-competitor-side opponent-side ${!isLeading ? 'is-leading' : 'is-trailing'}" style="border-right: ${!isLeading ? '3px solid var(--rvd-green)' : 'none'};">
                         <div class="rvd-comp-header">
                             <div>
                                 <span class="rvd-comp-role">Opponent</span>
@@ -912,12 +935,11 @@ export async function initRivalryDetail(params) {
                 <!-- Live Rivalry Meter (Tug-of-war visual representation) -->
                 <div class="rvd-rivalry-bar-wrapper">
                     <div class="rvd-rivalry-bar-hdr">
-                        <span>$${rivalry.stake.toLocaleString()} Locked (Challenger)</span>
-                        <span style="color:var(--rvd-green); font-weight:800; display:flex; align-items:center; gap:4px;">
-                            <span style="width:4px; height:4px; border-radius:50%; background:var(--rvd-green); display:inline-block; animation:cl-core-pulse 1.5s infinite"></span>
-                            Rivalry Momentum
+                        <span>${rivalry.challenger.name} ($${rivalry.stake.toLocaleString()})</span>
+                        <span style="color:${isLeading ? 'var(--rvd-green)' : 'var(--rvd-brand)'}; font-weight:800; font-size:11px; display:flex; align-items:center; gap:4px;">
+                            Lead &middot; +${Math.abs(rivalry.challenger.growth - rivalry.opponent.growth).toFixed(2)}% &middot; ${rivalry.challenger.growth === rivalry.opponent.growth ? 'Tied' : (isLeading ? `${rivalry.challenger.name} ahead` : `${rivalry.opponent.name} ahead`)}
                         </span>
-                        <span>$${rivalry.stake.toLocaleString()} Locked (Opponent)</span>
+                        <span>${rivalry.opponent.name} ($${rivalry.stake.toLocaleString()})</span>
                     </div>
                     <div class="rvd-rivalry-bar-track">
                         <div class="rvd-rivalry-bar-fill challenger" style="width:${leftPct}%;"></div>
@@ -1000,12 +1022,12 @@ export async function initRivalryDetail(params) {
             </div>
         </div>
 
-        <!-- Continuous Live Activity Feed -->
+        <!-- Oracle Event Log -->
         <div class="rvd-activity-container">
             <div class="rvd-activity-card">
                 <div class="rvd-activity-hdr">
                     <span style="width:5px; height:5px; border-radius:50%; background:var(--rvd-green); display:inline-block; animation:cl-core-pulse 1.5s infinite"></span>
-                    Continuous Oracle Verifications
+                    Oracle Event Log
                 </div>
                 <ul class="rvd-activity-list" id="rvd-activity-list">
                     <!-- Hydrated dynamically -->
@@ -1026,7 +1048,7 @@ export async function initRivalryDetail(params) {
                 </div>
                 <div class="rvd-row">
                     <span class="rvd-row-label">Growth Target</span>
-                    <span class="rvd-row-value" style="color:var(--rvd-brand); font-weight:700;">+${rivalry.targetGrowthPct}%</span>
+                    <span class="rvd-row-value" style="color:var(--rvd-brand); font-weight:800;">+${rivalry.targetGrowthPct}%</span>
                 </div>
                 <div class="rvd-row">
                     <span class="rvd-row-label">Stake Per Side</span>
@@ -1034,7 +1056,7 @@ export async function initRivalryDetail(params) {
                 </div>
                 <div class="rvd-row">
                     <span class="rvd-row-label">Combined Pool</span>
-                    <span class="rvd-row-value" style="color:var(--rvd-green); font-weight:700;">$${pool.toLocaleString()}</span>
+                    <span class="rvd-row-value" style="color:var(--rvd-green); font-weight:800;">$${pool.toLocaleString()}</span>
                 </div>
                 <div class="rvd-row">
                     <span class="rvd-row-label">Contract Tier</span>
@@ -1183,7 +1205,6 @@ export async function initRivalryDetail(params) {
         function animate(now) {
             const elapsed = now - startTime;
             const progress = Math.min(elapsed / duration, 1);
-            // Cubic easeOut for smooth finish
             const easeProgress = 1 - Math.pow(1 - progress, 3);
             current = easeProgress * target;
             el.textContent = (current >= 0 ? '+' : '') + current.toFixed(2) + '%';
@@ -1197,17 +1218,30 @@ export async function initRivalryDetail(params) {
 
     // ── Continuous Live Activity Feed Log Generator ──
     const activityList = document.getElementById('rvd-activity-list');
+    let oracleSecondsAgo = 0;
+    
     function updateLiveActivity() {
         if (!activityList) return;
+        oracleSecondsAgo++;
+        if (oracleSecondsAgo > 30) {
+            oracleSecondsAgo = 0;
+            // Flash a dynamic update state in the DOM
+            const containerCard = document.querySelector('.rvd-activity-card');
+            if (containerCard) {
+                containerCard.style.backgroundColor = 'rgba(21, 71, 38, 0.02)';
+                setTimeout(() => {
+                    containerCard.style.backgroundColor = '#ffffff';
+                }, 400);
+            }
+        }
         const now = new Date();
-        const nextSeconds = 30 - (now.getSeconds() % 30);
+        const nextSeconds = 30 - oracleSecondsAgo;
         
-        // Generate simulated dynamic logs synced with actual state
         activityList.innerHTML = `
             <li class="rvd-activity-item">
                 <span class="rvd-activity-line-left">
                     <span class="rvd-activity-bullet active"></span>
-                    <span>Oracle updated ${now.getSeconds() % 12} seconds ago</span>
+                    <span>Oracle updated ${oracleSecondsAgo} seconds ago</span>
                 </span>
                 <span class="rvd-activity-time">LIVE</span>
             </li>
@@ -1242,7 +1276,6 @@ export async function initRivalryDetail(params) {
         `;
     }
     updateLiveActivity();
-    // Run an activity feed ticker loop every 1s
     if (window._rvdActivityInterval) clearInterval(window._rvdActivityInterval);
     window._rvdActivityInterval = setInterval(updateLiveActivity, 1000);
 
@@ -1351,8 +1384,7 @@ export async function initRivalryDetail(params) {
                     
                     <path d="M${PAD_L},${zeroY} L${curX},${challY} L${curX},${zeroY} Z" fill="url(#g-chall-a)"/>
                     <line x1="${PAD_L}" y1="${zeroY}" x2="${curX}" y2="${challY}" stroke="${challColor}" stroke-width="2.5" stroke-linecap="round"/>
-                    <circle cx="${curX}" cy="${challY}" r="5" fill="${challColor}" stroke="#fff" stroke-width="2" filter="url(#dg2)"/>
-                    <animate attributeName="r" values="5;9;5" dur="2s" repeatCount="indefinite" xlink:href="#live-endpoint-dot"/>
+                    <circle cx="${curX}" cy="${challY}" r="5" fill="${challColor}" stroke="#fff" stroke-width="2" class="live-endpoint-dot" filter="url(#dg2)"/>
                     
                     <path d="M${PAD_L},${zeroY} L${curX},${oppY} L${curX},${zeroY} Z" fill="url(#g-opp-a)"/>
                     <line x1="${PAD_L}" y1="${zeroY}" x2="${curX}" y2="${oppY}" stroke="${oppColor}" stroke-width="2.5" stroke-linecap="round"/>
@@ -1432,7 +1464,7 @@ export async function initRivalryDetail(params) {
             const cx = toX(challEnd.t.getTime()).toFixed(1);
             const cy = toY(challEnd.pct).toFixed(1);
             endDots += `<line x1="${cx}" y1="${cy}" x2="${W - PAD_R}" y2="${cy}" stroke="${challColor}" stroke-width="1" stroke-dasharray="3 3" opacity="0.4"/>`;
-            endDots += `<circle cx="${cx}" cy="${cy}" r="5" fill="${challColor}" stroke="#fff" stroke-width="2" filter="url(#dot-glow)"/>`;
+            endDots += `<circle cx="${cx}" cy="${cy}" r="5" fill="${challColor}" stroke="#fff" stroke-width="2" class="live-endpoint-dot" filter="url(#dot-glow)"/>`;
             endDots += `<rect x="${W - PAD_R + 4}" y="${parseFloat(cy) - 10}" width="68" height="20" rx="0" fill="${challColor}" opacity="0.9"/>`;
             endDots += `<text x="${W - PAD_R + 38}" y="${parseFloat(cy) + 3.5}" text-anchor="middle" font-family="Inter, monospace" font-size="9" font-weight="700" fill="#fff">${challEnd.pct >= 0 ? '+' : ''}${challEnd.pct.toFixed(1)}%</text>`;
         }
@@ -1440,7 +1472,7 @@ export async function initRivalryDetail(params) {
             const cx = toX(oppEnd.t.getTime()).toFixed(1);
             const cy = toY(oppEnd.pct).toFixed(1);
             endDots += `<line x1="${cx}" y1="${cy}" x2="${W - PAD_R}" y2="${cy}" stroke="${oppColor}" stroke-width="1" stroke-dasharray="3 3" opacity="0.4"/>`;
-            endDots += `<circle cx="${cx}" cy="${cy}" r="5" fill="${oppColor}" stroke="#fff" stroke-width="2" filter="url(#dot-glow)"/>`;
+            endDots += `<circle cx="${cx}" cy="${cy}" r="5" fill="${oppColor}" stroke="#fff" stroke-width="2" class="live-endpoint-dot" filter="url(#dot-glow)"/>`;
             endDots += `<rect x="${W - PAD_R + 4}" y="${parseFloat(cy) - 10}" width="68" height="20" rx="0" fill="${oppColor}" opacity="0.9"/>`;
             endDots += `<text x="${W - PAD_R + 38}" y="${parseFloat(cy) + 3.5}" text-anchor="middle" font-family="Inter, monospace" font-size="9" font-weight="700" fill="#fff">${oppEnd.pct >= 0 ? '+' : ''}${oppEnd.pct.toFixed(1)}%</text>`;
         }

@@ -390,6 +390,7 @@ export function renderToken() {
                 font-family: 'JetBrains Mono', monospace;
                 font-size: 18px;
                 font-weight: 700;
+                color: #111;
                 outline: none;
                 box-sizing: border-box;
                 border-radius: 4px;
@@ -400,6 +401,21 @@ export function renderToken() {
                 background: #FFFFFF;
                 box-shadow: 0 0 0 3px rgba(92, 20, 20, 0.04);
             }
+            .cltr-input-field:disabled {
+                background: #F8F8F8 !important;
+                color: #888 !important;
+                border-color: #E5E5E5 !important;
+                cursor: not-allowed;
+                opacity: 1;
+                -webkit-text-fill-color: #888;
+            }
+            .cltr-input-field::placeholder {
+                color: #bbb;
+                font-weight: 400;
+            }
+            .cltr-input-field:disabled::placeholder {
+                color: #ccc;
+            }
             .cltr-input-token {
                 position: absolute;
                 right: 18px;
@@ -409,6 +425,7 @@ export function renderToken() {
                 font-size: 11px;
                 font-weight: 700;
                 color: #888;
+                pointer-events: none;
             }
 
             /* Lock Pills Grid */
@@ -1957,7 +1974,7 @@ export function renderToken() {
                                         <span class="cltr-max-trigger" id="stake-max-btn">MAX</span>
                                     </div>
                                     <div class="cltr-input-container">
-                                        <input type="number" class="cltr-input-field" id="stake-input" min="1" placeholder="0.00" disabled>
+                                        <input type="text" inputmode="decimal" class="cltr-input-field" id="stake-input" placeholder="0.00" disabled>
                                         <span class="cltr-input-token">CLTR</span>
                                     </div>
                                 </div>
@@ -3150,7 +3167,17 @@ export function initToken() {
         updateStakingCalc();
     });
 
-    stakeInput.addEventListener('input', updateStakingCalc);
+    stakeInput.addEventListener('input', (e) => {
+        let cleaned = e.target.value.replace(/[^0-9.]/g, '');
+        const parts = cleaned.split('.');
+        if (parts.length > 2) {
+            cleaned = parts[0] + '.' + parts.slice(1).join('');
+        }
+        if (e.target.value !== cleaned) {
+            e.target.value = cleaned;
+        }
+        updateStakingCalc();
+    });
 
     // Duration pills
     lockPills.forEach(pill => {

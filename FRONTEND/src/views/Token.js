@@ -2211,7 +2211,6 @@ export function renderToken() {
                         <div class="vis-hero" style="padding-bottom: 24px;">
                             <h2 class="vis-title">Protocol &amp; Economic Whitepaper</h2>
                             <p class="vis-subtitle">The formal design specification of the Collateral Network and CLTR conviction-bonding primitives.</p>
-                            <div class="cltr-pull-quote">"Execution—not ideas—is the world's scarcest resource."</div>
                             
                             <!-- Flow Diagram -->
                             <div class="flow-container" style="margin-top: 32px; margin-bottom: 0; background: #FFFFFF;">
@@ -2336,7 +2335,6 @@ export function renderToken() {
                     <div class="vis-hero" style="padding-bottom: 24px;">
                         <h2 class="vis-title">CLTR Economic Utility &amp; Flywheel</h2>
                         <p class="vis-subtitle">How protocol adoption directly drives token scarcity, locks, and burns.</p>
-                        <div class="cltr-pull-quote">"Collateral turns trust into infrastructure."</div>
                     </div>
 
                     <!-- Visual Economic Flywheel -->

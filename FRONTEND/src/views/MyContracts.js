@@ -16,7 +16,7 @@ export function renderMyContracts() {
                 padding: 48px 32px 0;
                 display: flex;
                 justify-content: space-between;
-                align-items: flex-end;
+                align-items: flex-start;
             }
             .myc-title-wrap {}
             .myc-page-title {
@@ -28,12 +28,11 @@ export function renderMyContracts() {
                 margin: 0;
             }
             .myc-page-sub {
-                font-size: 10px;
+                font-size: 13px;
                 color: #8a8984;
                 margin: 8px 0 0;
-                font-family: 'JetBrains Mono', monospace;
-                text-transform: uppercase;
-                letter-spacing: 1.5px;
+                line-height: 1.6;
+                max-width: 600px;
             }
 
             .myc-header-actions {
@@ -129,6 +128,17 @@ export function renderMyContracts() {
                 letter-spacing: -1px;
                 line-height: 1.2;
                 margin-bottom: 6px;
+            }
+            .myc-metric-subtext {
+                display: block;
+                font-family: 'Inter', sans-serif;
+                font-size: 11px;
+                font-weight: 500;
+                color: #8a8984;
+                margin-top: 4px;
+                text-transform: none;
+                letter-spacing: 0px;
+                line-height: 1.4;
             }
             .myc-metric-label {
                 font-family: 'Inter', sans-serif;
@@ -776,7 +786,7 @@ export function renderMyContracts() {
             <div class="myc-header" data-reveal>
                 <div class="myc-title-wrap">
                     <h1 class="myc-page-title">Active <span style="color: #5C1414;">Commitments</span></h1>
-                    <p class="myc-page-sub">Personalized performance record</p>
+                    <p class="myc-page-sub">Every completed commitment permanently strengthens your Execution Identity, increases trust capacity, and expands what you can accomplish on the network.</p>
                 </div>
                 <div class="myc-header-actions">
                     <button class="myc-btn-secondary" onclick="window.router.navigate('/profile')">View Identity</button>
@@ -837,10 +847,10 @@ export async function initMyContracts() {
         const totalPayout = contracts.reduce((sum, c) => sum + (c.payoutAmountUsdCents || 0), 0);
 
         if (contracts.length === 0) {
-            document.getElementById('myc-total-locked').innerHTML = '—<span style="display:block; font-size:10px; font-weight:normal; color:#8a8984; margin-top:2px;">No Capital Locked</span>';
-            document.getElementById('myc-active-count').textContent = '0';
-            document.getElementById('myc-settle-rate').innerHTML = '—<span style="display:block; font-size:10px; font-weight:normal; color:#8a8984; margin-top:2px;">No Settlements Yet</span>';
-            document.getElementById('myc-avg-risk').innerHTML = '—<span style="display:block; font-size:10px; font-weight:normal; color:#8a8984; margin-top:2px;">No Settlements Yet</span>';
+            document.getElementById('myc-total-locked').innerHTML = '—<span class="myc-metric-subtext">No Capital Locked</span>';
+            document.getElementById('myc-active-count').innerHTML = '0<span class="myc-metric-subtext">No Active Commitments</span>';
+            document.getElementById('myc-settle-rate').innerHTML = '—<span class="myc-metric-subtext">No Settlements Yet</span>';
+            document.getElementById('myc-avg-risk').innerHTML = '—<span class="myc-metric-subtext">No Settlements Yet</span>';
 
             // Query dynamic checklist states
             let isSourceConnected = false;
@@ -865,10 +875,14 @@ export async function initMyContracts() {
 
             container.innerHTML = `
                 <div class="myc-onboarding-wrapper">
-                    <!-- Section 1: Welcome -->
+                    <!-- Section 1: Welcome Card -->
                     <div class="myo-welcome-hero" data-reveal>
-                        <h2 class="myo-welcome-title">Build Your Execution Identity</h2>
-                        <p class="myo-welcome-desc">Every completed commitment permanently strengthens your Execution Identity, increases your reputation, and expands your trust capacity across the network.</p>
+                        <h2 class="myo-welcome-title">Welcome to Your Execution Dashboard</h2>
+                        <p class="myo-welcome-desc">Your execution history begins with your first commitment. Every completed contract permanently improves your reputation, increases trust capacity, and unlocks more opportunities across the protocol.</p>
+                        <div style="display:flex; gap:12px; margin-top:20px;">
+                            <button class="myc-btn-primary" onclick="window.router.navigate('/market')">Create First Commitment</button>
+                            <button class="myc-btn-secondary" onclick="document.getElementById('suggested-templates-lbl').scrollIntoView({ behavior: 'smooth' })">Browse Templates</button>
+                        </div>
                     </div>
 
                     <div class="myo-grid-layout">
@@ -877,14 +891,6 @@ export async function initMyContracts() {
                             <div class="myo-section" data-reveal>
                                 <h3 class="myo-section-lbl">Getting Started</h3>
                                 <div class="myo-checklist">
-                                    <div class="myo-checklist-item ${isSourceConnected ? 'completed' : ''}">
-                                        <div class="myo-check-box"><i data-lucide="check" class="myo-check-icon" style="${isSourceConnected ? 'display:block;' : ''}"></i></div>
-                                        <div class="myo-check-info">
-                                            <span class="myo-check-title">Connect a Verified Source</span>
-                                            <span class="myo-check-sub">Bind APIs like Stripe, YouTube, or Shopify to verify outcomes.</span>
-                                        </div>
-                                        <button class="myo-check-btn" onclick="window.router.navigate('/sources')">Go to Sources</button>
-                                    </div>
                                     <div class="myo-checklist-item ${isIdentityVerified ? 'completed' : ''}">
                                         <div class="myo-check-box"><i data-lucide="check" class="myo-check-icon" style="${isIdentityVerified ? 'display:block;' : ''}"></i></div>
                                         <div class="myo-check-info">
@@ -893,69 +899,67 @@ export async function initMyContracts() {
                                         </div>
                                         <button class="myo-check-btn" onclick="window.router.navigate('/profile')">Verify</button>
                                     </div>
+                                    <div class="myo-checklist-item ${isSourceConnected ? 'completed' : ''}">
+                                        <div class="myo-check-box"><i data-lucide="check" class="myo-check-icon" style="${isSourceConnected ? 'display:block;' : ''}"></i></div>
+                                        <div class="myo-check-info">
+                                            <span class="myo-check-title">Connect Verified Source</span>
+                                            <span class="myo-check-sub">Bind APIs like Stripe, YouTube, or Shopify to verify outcomes.</span>
+                                        </div>
+                                        <button class="myo-check-btn" onclick="window.router.navigate('/sources')">Go to Sources</button>
+                                    </div>
                                     <div class="myo-checklist-item">
                                         <div class="myo-check-box"><i data-lucide="check" class="myo-check-icon"></i></div>
                                         <div class="myo-check-info">
-                                            <span class="myo-check-title">Create Your First Commitment</span>
+                                            <span class="myo-check-title">Create First Commitment</span>
                                             <span class="myo-check-sub">Choose a performance goal and lock CLTR or collateral.</span>
                                         </div>
                                     </div>
                                     <div class="myo-checklist-item">
                                         <div class="myo-check-box"><i data-lucide="check" class="myo-check-icon"></i></div>
                                         <div class="myo-check-info">
-                                            <span class="myo-check-title">Complete Your First Settlement</span>
+                                            <span class="myo-check-title">Complete First Settlement</span>
                                             <span class="myo-check-sub">Fulfill your goal to release collateral and boost reputation.</span>
                                         </div>
                                     </div>
-                                </div>
-                            </div>
-
-                            <!-- Section 3: Why Create a Contract? (Benefits) -->
-                            <div class="myo-section" data-reveal>
-                                <h3 class="myo-section-lbl">Why Create a Contract?</h3>
-                                <div class="myo-benefits-grid">
-                                    <div class="myo-benefit-card">
-                                        <div class="myo-benefit-icon"><i data-lucide="award"></i></div>
-                                        <span class="myo-benefit-title">Build Reputation</span>
-                                        <span class="myo-benefit-desc">Build a permanent, cryptographically signed record of your real-world execution.</span>
-                                    </div>
-                                    <div class="myo-benefit-card">
-                                        <div class="myo-benefit-icon"><i data-lucide="trending-up"></i></div>
-                                        <span class="myo-benefit-title">Earn Conviction Yield</span>
-                                        <span class="myo-benefit-desc">Stake CLTR tokens alongside your commitment to earn execution yields.</span>
-                                    </div>
-                                    <div class="myo-benefit-card">
-                                        <div class="myo-benefit-icon"><i data-lucide="shield-check"></i></div>
-                                        <span class="myo-benefit-title">Increase Trust Capacity</span>
-                                        <span class="myo-benefit-desc">Unlock larger staking limits and institutional credit capacities.</span>
-                                    </div>
-                                    <div class="myo-benefit-card">
-                                        <div class="myo-benefit-icon"><i data-lucide="code"></i></div>
-                                        <span class="myo-benefit-title">Create Verifiable Proof</span>
-                                        <span class="myo-benefit-desc">Convert standard human promises into programmable execution contracts.</span>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <!-- Section 4: Popular Templates -->
-                            <div class="myo-section" data-reveal>
-                                <h3 class="myo-section-lbl">Popular Templates</h3>
-                                <div class="myo-templates-grid">
-                                    <div class="myo-temp-card" onclick="window.router.navigate('/market')">
-                                        <div class="myo-temp-header">
-                                            <span class="myo-temp-platform">Stripe</span>
-                                            <span class="myo-temp-category">Finance</span>
+                                    <div class="myo-checklist-item">
+                                        <div class="myo-check-box"><i data-lucide="check" class="myo-check-icon"></i></div>
+                                        <div class="myo-check-info">
+                                            <span class="myo-check-title">Reach Level II Reputation</span>
+                                            <span class="myo-check-sub">Perform high-rate settlements to elevate reputation status.</span>
                                         </div>
-                                        <span class="myo-temp-title">Generate $25,000 monthly revenue</span>
-                                        <button class="myo-temp-btn">Create Contract</button>
                                     </div>
+                                </div>
+                            </div>
+
+                            <!-- Section 4: Suggested Commitment Templates -->
+                            <div class="myo-section" data-reveal>
+                                <h3 class="myo-section-lbl" id="suggested-templates-lbl">Suggested Commitment Templates</h3>
+                                <div class="myo-templates-grid">
                                     <div class="myo-temp-card" onclick="window.router.navigate('/market')">
                                         <div class="myo-temp-header">
                                             <span class="myo-temp-platform">YouTube</span>
                                             <span class="myo-temp-category">Creators</span>
                                         </div>
                                         <span class="myo-temp-title">Reach 10,000 subscribers</span>
-                                        <button class="myo-temp-btn">Create Contract</button>
+                                        <div style="font-size:11px; color:#888; display:flex; flex-direction:column; gap:4px; margin-top:4px;">
+                                            <span>Duration: <strong>90 days</strong></span>
+                                            <span>Source: <strong>YouTube Data API</strong></span>
+                                            <span>Collateral: <strong>1,000 CLTR</strong></span>
+                                        </div>
+                                        <button class="myo-temp-btn" style="margin-top:8px;">Create Commitment</button>
+                                    </div>
+                                    <div class="myo-temp-card" onclick="window.router.navigate('/market')">
+                                        <div class="myo-temp-header">
+                                            <span class="myo-temp-platform">Stripe</span>
+                                            <span class="myo-temp-category">Finance</span>
+                                        </div>
+                                        <span class="myo-temp-title">Generate $25,000 monthly revenue</span>
+                                        <div style="font-size:11px; color:#888; display:flex; flex-direction:column; gap:4px; margin-top:4px;">
+                                            <span>Duration: <strong>30 days</strong></span>
+                                            <span>Source: <strong>Stripe Connect</strong></span>
+                                            <span>Collateral: <strong>2,500 CLTR</strong></span>
+                                        </div>
+                                        <button class="myo-temp-btn" style="margin-top:8px;">Create Commitment</button>
                                     </div>
                                     <div class="myo-temp-card" onclick="window.router.navigate('/market')">
                                         <div class="myo-temp-header">
@@ -963,32 +967,91 @@ export async function initMyContracts() {
                                             <span class="myo-temp-category">Commerce</span>
                                         </div>
                                         <span class="myo-temp-title">Complete 500 orders</span>
-                                        <button class="myo-temp-btn">Create Contract</button>
+                                        <div style="font-size:11px; color:#888; display:flex; flex-direction:column; gap:4px; margin-top:4px;">
+                                            <span>Duration: <strong>30 days</strong></span>
+                                            <span>Source: <strong>Shopify API</strong></span>
+                                            <span>Collateral: <strong>1,500 CLTR</strong></span>
+                                        </div>
+                                        <button class="myo-temp-btn" style="margin-top:8px;">Create Commitment</button>
                                     </div>
                                     <div class="myo-temp-card" onclick="window.router.navigate('/market')">
                                         <div class="myo-temp-header">
                                             <span class="myo-temp-platform">GitHub</span>
                                             <span class="myo-temp-category">Development</span>
                                         </div>
-                                        <span class="myo-temp-title">Ship Version 2.0 tag</span>
-                                        <button class="myo-temp-btn">Create Contract</button>
+                                        <span class="myo-temp-title">Ship Version 2.0 release tag</span>
+                                        <div style="font-size:11px; color:#888; display:flex; flex-direction:column; gap:4px; margin-top:4px;">
+                                            <span>Duration: <strong>60 days</strong></span>
+                                            <span>Source: <strong>GitHub Webhooks</strong></span>
+                                            <span>Collateral: <strong>1,200 CLTR</strong></span>
+                                        </div>
+                                        <button class="myo-temp-btn" style="margin-top:8px;">Create Commitment</button>
                                     </div>
+                                    <div class="myo-temp-card" onclick="window.router.navigate('/market')">
+                                        <div class="myo-temp-header">
+                                            <span class="myo-temp-platform">X (Twitter)</span>
+                                            <span class="myo-temp-category">Social</span>
+                                        </div>
+                                        <span class="myo-temp-title">Post every day for 30 days</span>
+                                        <div style="font-size:11px; color:#888; display:flex; flex-direction:column; gap:4px; margin-top:4px;">
+                                            <span>Duration: <strong>30 days</strong></span>
+                                            <span>Source: <strong>X API</strong></span>
+                                            <span>Collateral: <strong>500 CLTR</strong></span>
+                                        </div>
+                                        <button class="myo-temp-btn" style="margin-top:8px;">Create Commitment</button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Section 5: Why Commitments Matter -->
+                            <div class="myo-section" data-reveal>
+                                <h3 class="myo-section-lbl">Why Commitments Matter</h3>
+                                <div class="myo-benefits-grid">
+                                    <div class="myo-benefit-card">
+                                        <div class="myo-benefit-icon"><i data-lucide="award"></i></div>
+                                        <span class="myo-benefit-title">Permanent Reputation</span>
+                                        <span class="myo-benefit-desc">Every successful commitment increases credibility and establishes trust footprint.</span>
+                                    </div>
+                                    <div class="myo-benefit-card">
+                                        <div class="myo-benefit-icon"><i data-lucide="trending-up"></i></div>
+                                        <span class="myo-benefit-title">Economic Accountability</span>
+                                        <span class="myo-benefit-desc">Locked staking capital guarantees promises are programmatically verified and kept.</span>
+                                    </div>
+                                    <div class="myo-benefit-card">
+                                        <div class="myo-benefit-icon"><i data-lucide="shield-check"></i></div>
+                                        <span class="myo-benefit-title">Trust Capacity</span>
+                                        <span class="myo-benefit-desc">Larger reputation history unlocks capacity for higher yield contracts.</span>
+                                    </div>
+                                    <div class="myo-benefit-card">
+                                        <div class="myo-benefit-icon"><i data-lucide="code"></i></div>
+                                        <span class="myo-benefit-title">Proof of Execution</span>
+                                        <span class="myo-benefit-desc">Create absolute, cryptographically signed records of real-world performance.</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Section: Commitment Table Placeholder -->
+                            <div class="myo-section" data-reveal>
+                                <h3 class="myo-section-lbl">Active Commitments List</h3>
+                                <div style="background: #FFFFFF; border: 1px solid rgba(0,0,0,0.05); border-radius: 12px; padding: 40px; text-align: center; box-shadow: 0 2px 8px rgba(0,0,0,0.02);">
+                                    <div style="font-family:'JetBrains Mono', monospace; font-size:10px; color:#aaa; text-transform:uppercase; margin-bottom:8px;">No commitments yet</div>
+                                    <p style="font-size:12px; color:#666; margin:0; line-height:1.6; max-width:440px; margin: 0 auto;">Your completed commitments will appear here along with their execution history, settlements, and reputation impact.</p>
                                 </div>
                             </div>
                         </div>
 
                         <div class="myo-column-side">
-                            <!-- Section 6: Execution Identity Preview -->
+                            <!-- Section 3: Execution Identity Preview -->
                             <div class="myo-side-box" data-reveal>
                                 <h3 class="myo-side-title">Execution Identity</h3>
                                 <div class="myo-identity-card">
                                     <div class="myo-identity-header">
                                         <span class="myo-identity-level">Level I</span>
-                                        <span class="myo-identity-status">Awaiting First Commitment</span>
+                                        <span class="myo-identity-status">Waiting for First Commitment</span>
                                     </div>
                                     <div class="myo-identity-metrics">
                                         <div class="myo-id-metric">
-                                            <span class="myo-id-lbl">Reputation Score</span>
+                                            <span class="myo-id-lbl">Reputation</span>
                                             <span class="myo-id-val">0</span>
                                         </div>
                                         <div class="myo-id-metric">
@@ -1000,34 +1063,35 @@ export async function initMyContracts() {
                                             <span class="myo-id-val">0 CLTR</span>
                                         </div>
                                     </div>
-                                    <div class="myo-identity-footer">
-                                        <span>Next Milestone: <strong>Complete First Contract</strong></span>
+                                    <div class="myo-identity-footer" style="margin-bottom:8px;">
+                                        <span>Next Milestone: <strong>Complete First Commitment</strong></span>
                                     </div>
+                                    <button class="myc-btn-secondary" style="width:100%;" onclick="window.router.navigate('/profile')">View Full Identity</button>
                                 </div>
                             </div>
 
-                            <!-- Section 7: Roadmap Progression -->
+                            <!-- Section 7: Roadmap Journey -->
                             <div class="myo-side-box" data-reveal>
                                 <h3 class="myo-side-title">Roadmap Progression</h3>
                                 <div class="myo-roadmap">
                                     <div class="myo-roadmap-item active">
                                         <div class="myo-road-node"></div>
                                         <div class="myo-road-info">
-                                            <span class="myo-road-lbl">First Contract</span>
+                                            <span class="myo-road-lbl">Create First Commitment</span>
                                             <span class="myo-road-desc">Establish your first performance escrow pool.</span>
                                         </div>
                                     </div>
                                     <div class="myo-roadmap-item">
                                         <div class="myo-road-node"></div>
                                         <div class="myo-road-info">
-                                            <span class="myo-road-lbl">First Settlement</span>
+                                            <span class="myo-road-lbl">Complete First Settlement</span>
                                             <span class="myo-road-desc">Fulfill terms to secure signature confirmation.</span>
                                         </div>
                                     </div>
                                     <div class="myo-roadmap-item">
                                         <div class="myo-road-node"></div>
                                         <div class="myo-road-info">
-                                            <span class="myo-road-lbl">Level II Identity</span>
+                                            <span class="myo-road-lbl">Reach Reputation Level II</span>
                                             <span class="myo-road-desc">Ascend execution tier for higher yield ratios.</span>
                                         </div>
                                     </div>
@@ -1041,14 +1105,14 @@ export async function initMyContracts() {
                                     <div class="myo-roadmap-item">
                                         <div class="myo-road-node"></div>
                                         <div class="myo-road-info">
-                                            <span class="myo-road-lbl">Top 10% Reputation</span>
+                                            <span class="myo-road-lbl">Become Trusted Custodian</span>
                                             <span class="myo-road-desc">Earn prestige validator and governance status.</span>
                                         </div>
                                     </div>
                                 </div>
                             </div>
 
-                            <!-- Section 5: Network Activity Feed -->
+                            <!-- Section 6: Network Activity Feed -->
                             <div class="myo-side-box" data-reveal>
                                 <h3 class="myo-side-title">Network Activity</h3>
                                 <div class="myo-activity-list">
@@ -1066,7 +1130,7 @@ export async function initMyContracts() {
                                             <span class="myo-act-title">Settlement Released</span>
                                             <span class="myo-act-sub">Stripe · $2,300</span>
                                         </div>
-                                        <span class="myo-act-time">5m ago</span>
+                                        <span class="myo-act-time">6m ago</span>
                                     </div>
                                     <div class="myo-act-item">
                                         <div class="myo-act-icon"><i data-lucide="lock" style="color: #96bf48; width: 14px; height: 14px;"></i></div>
@@ -1083,11 +1147,11 @@ export async function initMyContracts() {
 
                     <!-- Motivational Call to Action Section at bottom -->
                     <div class="myo-motivation-panel" data-reveal>
-                        <h3 class="myo-motivation-title">Your execution history begins with your first commitment</h3>
-                        <p class="myo-motivation-sub">Every completed contract permanently strengthens your on-chain reputation.</p>
+                        <h3 class="myo-motivation-title">Build Your First Commitment</h3>
+                        <p class="myo-motivation-sub">Every verified commitment permanently strengthens your Execution Identity and expands your trust capacity.</p>
                         <div class="myo-motivation-ctas">
-                            <button class="myc-btn-primary" onclick="window.router.navigate('/market')">Create First Contract</button>
-                            <button class="myc-btn-secondary" onclick="window.router.navigate('/market')">Browse Templates</button>
+                            <button class="myc-btn-primary" onclick="window.router.navigate('/market')">Create First Commitment</button>
+                            <button class="myc-btn-secondary" onclick="window.router.navigate('/market')">Explore Templates</button>
                         </div>
                     </div>
                 </div>

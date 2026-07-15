@@ -929,7 +929,7 @@ export function renderSources() {
                     <div class="src-hero-row">
                         <div class="src-hero-left">
                             <h1 class="src-hero-title">Verified <strong style="color: #5C1414;">Data Sources</strong></h1>
-                            <p class="src-hero-desc" style="max-width: 600px;">Sources provide verifiable real-world data that determines whether commitments have been completed. Once verified, Collateral automatically settles contracts and updates execution reputation.</p>
+                            <p class="src-hero-desc" style="max-width: 600px;">Connect your platforms (like YouTube, Shopify, or X) to automatically track your goals. When your stats prove you hit your targets, your locked deposit is instantly returned to you.</p>
                         </div>
                         <div class="src-hero-stats">
                             <div class="src-stat">
@@ -1217,7 +1217,7 @@ export async function initSources() {
         html += `
             <div class="src-onboarding-panel">
                 <h3 class="src-onboarding-title">Connect your first verified data provider</h3>
-                <p class="src-onboarding-desc">Verified providers allow Collateral to automatically determine whether commitments have been completed and settle contracts without manual intervention.</p>
+                <p class="src-onboarding-desc">Connecting your platforms allows Collateral to automatically track your stats and return your locked deposit when goals are reached.</p>
                 <div class="src-onboarding-ctas">
                     <button class="src-btn-primary" onclick="window.openSrcModal('stripe')">Connect Stripe</button>
                     <button class="src-btn-secondary" onclick="const lbl = document.getElementById('src-available-label'); if(lbl) lbl.scrollIntoView({ behavior: 'smooth' });">Browse Providers</button>

@@ -1606,7 +1606,7 @@ export function renderActiveContracts() {
 
             <!-- Stake Warning -->
             <div class="eq-stake-warning">
-                <div class="eq-stake-warning-text">Capital is locked until settlement. Failed contracts forfeit capital.</div>
+                <div class="eq-stake-warning-text">Your deposit is locked during the goal period. If you fail to hit the target, the deposit is forfeited.</div>
             </div>
         </div>
         </div>
@@ -1615,29 +1615,29 @@ export function renderActiveContracts() {
         <div class="eq-modal-backdrop" id="rules-modal" onclick="if(event.target===this) this.classList.remove('open')">
             <div class="eq-modal">
                 <div class="eq-modal-header">
-                    <span class="eq-modal-title">Execution Rules</span>
+                    <span class="eq-modal-title">Goal Verification Rules</span>
                     <button class="eq-modal-close" onclick="document.getElementById('rules-modal').classList.remove('open')">✕</button>
                 </div>
 
                 <div class="eq-rule-divider">Enforcement</div>
-                <div class="eq-rule-row"><input type="checkbox" checked disabled><span>Verified Only (Fail-Closed)</span></div>
-                <div class="eq-rule-row"><input type="checkbox" checked disabled><span>Immutable Terms</span></div>
-                <div class="eq-rule-row"><input type="checkbox" checked disabled><span>No Appeals</span></div>
+                <div class="eq-rule-row"><input type="checkbox" checked disabled><span>Automatic Tracking (Direct API checks)</span></div>
+                <div class="eq-rule-row"><input type="checkbox" checked disabled><span>Locked-in Targets (Cannot be edited)</span></div>
+                <div class="eq-rule-row"><input type="checkbox" checked disabled><span>Final Decisions (No manual overrides)</span></div>
                 <div class="eq-rule-row"><input type="checkbox" id="rule-buyout"><span>Buyout Available</span></div>
 
-                <div class="eq-rule-divider">Tier Filter</div>
-                <div class="eq-rule-row"><input type="checkbox" checked id="tier-controlled" data-tier="controlled"><span>PLEDGE — ~30% designed win rate</span></div>
-                <div class="eq-rule-row"><input type="checkbox" checked id="tier-elevated" data-tier="elevated"><span>STAKE — ~20% designed win rate</span></div>
-                <div class="eq-rule-row"><input type="checkbox" checked id="tier-maximum" data-tier="maximum"><span>ALL-IN — ~10% designed win rate</span></div>
+                <div class="eq-rule-divider">Goal Difficulty Filter</div>
+                <div class="eq-rule-row"><input type="checkbox" checked id="tier-controlled" data-tier="controlled"><span>PLEDGE — Normal targets (~30% success rate)</span></div>
+                <div class="eq-rule-row"><input type="checkbox" checked id="tier-elevated" data-tier="elevated"><span>STAKE — Advanced targets (~20% success rate)</span></div>
+                <div class="eq-rule-row"><input type="checkbox" checked id="tier-maximum" data-tier="maximum"><span>ALL-IN — Expert targets (~10% success rate)</span></div>
 
-                <div class="eq-rule-divider">Minimum Baseline Thresholds</div>
+                <div class="eq-rule-divider">Minimum Staking Requirements</div>
                 <table class="eq-threshold-table">
                     <thead>
                         <tr>
-                            <th>Tier</th>
+                            <th>Difficulty</th>
                             <th>X Followers</th>
                             <th>Revenue</th>
-                            <th>Win Rate</th>
+                            <th>Success Rate</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -2079,33 +2079,33 @@ export async function initActiveContracts() {
                     <span class="eq-provider-name">${platform.toUpperCase()}</span>
                     <span class="eq-tier-badge ${tier}">${{controlled:'PLEDGE',elevated:'STAKE',maximum:'ALL-IN'}[tier] || tier.toUpperCase()}</span>
                 </div>
-                <div class="eq-card-status"><span class="dot" style="width:4px; height:4px; border-radius:50%; background:#10b981; display:inline-block; margin-right:4px;"></span> TERMS VERIFIED</div>
+                <div class="eq-card-status"><span class="dot" style="width:4px; height:4px; border-radius:50%; background:#10b981; display:inline-block; margin-right:4px;"></span> AUTOMATIC TRACKING</div>
                 <div class="eq-card-stake-info" style="display: flex; justify-content: space-between; align-items: flex-end; border-top: 1px dashed rgba(0,0,0,0.05); padding-top: 16px; margin-top: 16px; margin-bottom: 20px;">
                     <div>
                         <div class="eq-stake-val capacity" style="font-size: 28px; font-weight: 800; color: #111; letter-spacing: -1.2px; line-height: 1.1;">${stakeDisplay}</div>
-                        <div class="eq-stake-lbl" style="font-size: 8px; font-weight: 700; color: #8a8984; letter-spacing: 0.5px; text-transform: uppercase; margin-top: 6px;">Stake Capacity</div>
+                        <div class="eq-stake-lbl" style="font-size: 8px; font-weight: 700; color: #8a8984; letter-spacing: 0.5px; text-transform: uppercase; margin-top: 6px;">Stake Range</div>
                     </div>
                     <div style="text-align: right;">
                         <div class="eq-stake-val multiplier" style="font-size: 20px; font-weight: 800; color: #5C1414; letter-spacing: -0.5px; line-height: 1.1;">${multiplier}x</div>
-                        <div class="eq-stake-lbl" style="font-size: 8px; font-weight: 700; color: #8a8984; letter-spacing: 0.5px; text-transform: uppercase; margin-top: 6px;">Multiplier</div>
+                        <div class="eq-stake-lbl" style="font-size: 8px; font-weight: 700; color: #8a8984; letter-spacing: 0.5px; text-transform: uppercase; margin-top: 6px;">Yield Multiplier</div>
                     </div>
                 </div>
                 <div class="eq-card-hover-details">
                     <div style="display:flex; justify-content:space-between; margin-bottom: 4px; font-size:10px;">
-                        <span style="color:#8a8984; font-family:'JetBrains Mono',monospace;">VERIFICATION:</span>
-                        <span style="font-weight:700; color:#1e1e1e; font-family:'JetBrains Mono',monospace;">${platform.toUpperCase()} API</span>
+                        <span style="color:#8a8984; font-family:'JetBrains Mono',monospace;">TRACKED VIA:</span>
+                        <span style="font-weight:700; color:#1e1e1e; font-family:'JetBrains Mono',monospace;">${platform.toUpperCase()} DATA</span>
                     </div>
                     <div style="display:flex; justify-content:space-between; margin-bottom: 4px; font-size:10px;">
-                        <span style="color:#8a8984; font-family:'JetBrains Mono',monospace;">SETTLEMENT:</span>
-                        <span style="font-weight:700; color:#1e1e1e; font-family:'JetBrains Mono',monospace;">DETERMINISTIC</span>
+                        <span style="color:#8a8984; font-family:'JetBrains Mono',monospace;">VERIFICATION:</span>
+                        <span style="font-weight:700; color:#1e1e1e; font-family:'JetBrains Mono',monospace;">AUTOMATIC</span>
                     </div>
                     <div style="display:flex; justify-content:space-between; font-size:10px;">
-                        <span style="color:#8a8984; font-family:'JetBrains Mono',monospace;">EXPECTED PAYOUT:</span>
+                        <span style="color:#8a8984; font-family:'JetBrains Mono',monospace;">PAYOUT ON SUCCESS:</span>
                         <span style="font-weight:700; color:#10b981; font-family:'JetBrains Mono',monospace;">STAKE × ${multiplier}</span>
                     </div>
                 </div>
-                <button class="eq-card-cta primary eq-lock-btn">EXECUTE CONTRACT</button>
-                <div class="eq-card-footer">Capital is locked until settlement.</div>
+                <button class="eq-card-cta primary eq-lock-btn">START COMMITMENT</button>
+                <div class="eq-card-footer">Deposit returned once goal is verified.</div>
             </div>
         `;
     }

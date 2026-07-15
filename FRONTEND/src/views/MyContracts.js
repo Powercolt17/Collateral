@@ -805,7 +805,7 @@ export function renderMyContracts() {
             <div class="myc-header" data-reveal>
                 <div class="myc-title-wrap">
                     <h1 class="myc-page-title">Active <span style="color: #5C1414;">Commitments</span></h1>
-                    <p class="myc-page-sub">Every completed commitment permanently strengthens your Execution Identity, increases trust capacity, and expands what you can accomplish on the network.</p>
+                    <p class="myc-page-sub">Track and manage your active commitments. Completing your goals successfully returns your locked collateral and builds your profile's success score.</p>
                 </div>
                 <div class="myc-header-actions">
                     <button class="myc-btn-secondary" onclick="window.router.navigate('/profile')">View Identity</button>
@@ -931,7 +931,7 @@ export async function initMyContracts() {
                     <div class="myo-welcome-hero" style="border: 1px solid rgba(0,0,0,0.06); padding: 24px 32px; background: #fff; text-align: center; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.01);">
                         <h2 class="myo-welcome-title" style="font-size: 20px; margin-bottom: 8px; font-weight: 800; letter-spacing: -0.6px; color: #111;">No Active Commitments Yet</h2>
                         <p class="myo-welcome-desc" style="max-width: 600px; margin: 0 auto 20px; line-height: 1.6; color: #555; font-size: 13px;">
-                            Your Execution Identity begins with your first commitment. Successfully completing commitments permanently builds your reputation, expands your trust capacity, and unlocks larger opportunities.
+                            Prove you can do what you say you will. When you set a goal, lock a small deposit to hold yourself accountable. Reaching your goal returns your money and builds your profile's success score. Fail, and you forfeit the deposit.
                         </p>
                         <div style="display: flex; gap: 12px; justify-content: center;">
                             <button class="myc-btn-primary" onclick="window.router.navigate('/market')" style="padding: 8px 16px;">Create Your First Commitment</button>

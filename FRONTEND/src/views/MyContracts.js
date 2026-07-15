@@ -334,7 +334,7 @@ export function renderMyContracts() {
             .myc-onboarding-wrapper {
                 display: flex;
                 flex-direction: column;
-                gap: 40px;
+                gap: 24px;
                 margin-top: 8px;
             }
             .myo-welcome-hero {
@@ -533,11 +533,11 @@ export function renderMyContracts() {
                 background: #FFFFFF;
                 border: 1px solid rgba(0,0,0,0.05);
                 border-radius: 12px;
-                padding: 24px;
+                padding: 16px 20px;
                 box-shadow: 0 2px 8px rgba(0,0,0,0.02);
                 display: flex;
                 flex-direction: column;
-                gap: 12px;
+                gap: 8px;
                 cursor: pointer;
                 transition: all 0.2s ease-in-out;
             }
@@ -892,11 +892,11 @@ export async function initMyContracts() {
             }
 
             container.innerHTML = `
-                <div class="myc-onboarding-wrapper" style="display: flex; flex-direction: column; gap: 48px;">
+                <div class="myc-onboarding-wrapper" style="display: flex; flex-direction: column; gap: 32px;">
                     
                     <!-- Section: Getting Started Checklist -->
-                    <div style="background: #ffffff; border: 1px solid rgba(0,0,0,0.05); border-radius: 12px; padding: 24px; box-shadow: 0 2px 8px rgba(0,0,0,0.01);">
-                        <h3 class="myo-section-lbl" style="margin-bottom: 16px;">Getting Started</h3>
+                    <div style="background: #ffffff; border: 1px solid rgba(0,0,0,0.05); border-radius: 12px; padding: 20px 24px; box-shadow: 0 2px 8px rgba(0,0,0,0.01);">
+                        <h3 class="myo-section-lbl" style="margin-bottom: 12px;">Getting Started</h3>
                         <div class="myo-checklist">
                             <div class="myo-checklist-item ${isIdentityVerified ? 'completed' : ''}">
                                 <div class="myo-check-box" style="font-weight: 700; color: ${isIdentityVerified ? '#5C1414' : '#ccc'};">${isIdentityVerified ? '✓' : '○'}</div>
@@ -928,14 +928,14 @@ export async function initMyContracts() {
                     </div>
 
                     <!-- Section: Centered Empty-State Onboarding Section -->
-                    <div class="myo-welcome-hero" style="border: 1px solid rgba(0,0,0,0.06); padding: 48px; background: #fff; text-align: center; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.01);">
-                        <h2 class="myo-welcome-title" style="font-size: 24px; margin-bottom: 12px; font-weight: 800; letter-spacing: -0.8px; color: #111;">No Active Commitments Yet</h2>
-                        <p class="myo-welcome-desc" style="max-width: 600px; margin: 0 auto 28px; line-height: 1.7; color: #555; font-size: 14px;">
+                    <div class="myo-welcome-hero" style="border: 1px solid rgba(0,0,0,0.06); padding: 24px 32px; background: #fff; text-align: center; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.01);">
+                        <h2 class="myo-welcome-title" style="font-size: 20px; margin-bottom: 8px; font-weight: 800; letter-spacing: -0.6px; color: #111;">No Active Commitments Yet</h2>
+                        <p class="myo-welcome-desc" style="max-width: 600px; margin: 0 auto 20px; line-height: 1.6; color: #555; font-size: 13px;">
                             Your Execution Identity begins with your first commitment. Successfully completing commitments permanently builds your reputation, expands your trust capacity, and unlocks larger opportunities.
                         </p>
-                        <div style="display: flex; gap: 16px; justify-content: center;">
-                            <button class="myc-btn-primary" onclick="window.router.navigate('/market')">Create Your First Commitment</button>
-                            <button class="myc-btn-secondary" onclick="document.getElementById('suggested-commitments-lbl').scrollIntoView({ behavior: 'smooth' })">Browse Templates</button>
+                        <div style="display: flex; gap: 12px; justify-content: center;">
+                            <button class="myc-btn-primary" onclick="window.router.navigate('/market')" style="padding: 8px 16px;">Create Your First Commitment</button>
+                            <button class="myc-btn-secondary" onclick="document.getElementById('suggested-commitments-lbl').scrollIntoView({ behavior: 'smooth' })" style="padding: 8px 16px;">Browse Templates</button>
                         </div>
                     </div>
 
@@ -943,210 +943,109 @@ export async function initMyContracts() {
 
                     <!-- Section: Suggested Commitments -->
                     <div class="myo-section" style="margin-bottom: 12px;">
-                        <h3 class="myo-section-lbl" id="suggested-commitments-lbl" style="margin-bottom: 16px;">Suggested Commitments</h3>
+                        <h3 class="myo-section-lbl" id="suggested-commitments-lbl" style="margin-bottom: 12px;">Suggested Commitments</h3>
                         <div class="myo-templates-grid-3">
-                            <div class="myo-temp-card" onclick="window.router.navigate('/market')" style="display: flex; flex-direction: column; justify-content: space-between; height: 100%; min-height: 200px;">
+                            <div class="myo-temp-card" onclick="window.router.navigate('/market')" style="display: flex; flex-direction: column; justify-content: space-between; height: 100%; min-height: 170px;">
                                 <div>
-                                    <div class="myo-temp-header" style="margin-bottom: 12px;">
+                                    <div class="myo-temp-header" style="margin-bottom: 8px;">
                                         <span class="myo-temp-platform" style="display: flex; align-items: center; gap: 6px;">
                                             <i data-lucide="youtube" style="width: 14px; height: 14px; color: #ff0000;"></i> YouTube
                                         </span>
                                         <span class="myo-temp-category">Creators</span>
                                     </div>
-                                    <span class="myo-temp-title" style="display: block; margin-bottom: 8px;">Reach 10,000 YouTube Subscribers</span>
-                                    <p style="font-size: 12px; color: #666; margin: 0 0 12px 0; line-height: 1.5;">Establish verification of creator channel subscriber milestones.</p>
-                                    <div style="font-size: 11px; color: #888; display: flex; flex-direction: column; gap: 4px; margin-bottom: 16px;">
+                                    <span class="myo-temp-title" style="display: block; margin-bottom: 4px; font-size: 13px;">Reach 10,000 YouTube Subscribers</span>
+                                    <p style="font-size: 11px; color: #666; margin: 0 0 8px 0; line-height: 1.4;">Establish verification of creator channel subscriber milestones.</p>
+                                    <div style="font-size: 10px; color: #888; display: flex; flex-direction: column; gap: 2px; margin-bottom: 8px;">
                                         <span>Estimated Verification Source: <strong>YouTube API</strong></span>
                                     </div>
                                 </div>
                                 <button class="myo-temp-btn">Create Commitment</button>
                             </div>
 
-                            <div class="myo-temp-card" onclick="window.router.navigate('/market')" style="display: flex; flex-direction: column; justify-content: space-between; height: 100%; min-height: 200px;">
+                            <div class="myo-temp-card" onclick="window.router.navigate('/market')" style="display: flex; flex-direction: column; justify-content: space-between; height: 100%; min-height: 170px;">
                                 <div>
-                                    <div class="myo-temp-header" style="margin-bottom: 12px;">
+                                    <div class="myo-temp-header" style="margin-bottom: 8px;">
                                         <span class="myo-temp-platform" style="display: flex; align-items: center; gap: 6px;">
                                             <i data-lucide="stripe" style="width: 14px; height: 14px; color: #635bff;"></i> Stripe
                                         </span>
                                         <span class="myo-temp-category">Finance</span>
                                     </div>
-                                    <span class="myo-temp-title" style="display: block; margin-bottom: 8px;">Generate $10,000 Monthly Revenue</span>
-                                    <p style="font-size: 12px; color: #666; margin: 0 0 12px 0; line-height: 1.5;">Verify monthly stripe revenue metric triggers.</p>
-                                    <div style="font-size: 11px; color: #888; display: flex; flex-direction: column; gap: 4px; margin-bottom: 16px;">
+                                    <span class="myo-temp-title" style="display: block; margin-bottom: 4px; font-size: 13px;">Generate $10,000 Monthly Revenue</span>
+                                    <p style="font-size: 11px; color: #666; margin: 0 0 8px 0; line-height: 1.4;">Verify monthly stripe revenue metric triggers.</p>
+                                    <div style="font-size: 10px; color: #888; display: flex; flex-direction: column; gap: 2px; margin-bottom: 8px;">
                                         <span>Estimated Verification Source: <strong>Stripe API</strong></span>
                                     </div>
                                 </div>
                                 <button class="myo-temp-btn">Create Commitment</button>
                             </div>
 
-                            <div class="myo-temp-card" onclick="window.router.navigate('/market')" style="display: flex; flex-direction: column; justify-content: space-between; height: 100%; min-height: 200px;">
+                            <div class="myo-temp-card" onclick="window.router.navigate('/market')" style="display: flex; flex-direction: column; justify-content: space-between; height: 100%; min-height: 170px;">
                                 <div>
-                                    <div class="myo-temp-header" style="margin-bottom: 12px;">
+                                    <div class="myo-temp-header" style="margin-bottom: 8px;">
                                         <span class="myo-temp-platform" style="display: flex; align-items: center; gap: 6px;">
                                             <i data-lucide="github" style="width: 14px; height: 14px; color: #111;"></i> GitHub
                                         </span>
                                         <span class="myo-temp-category">Development</span>
                                     </div>
-                                    <span class="myo-temp-title" style="display: block; margin-bottom: 8px;">Ship Product Version 2.0</span>
-                                    <p style="font-size: 12px; color: #666; margin: 0 0 12px 0; line-height: 1.5;">Ship next version tag release to branch.</p>
-                                    <div style="font-size: 11px; color: #888; display: flex; flex-direction: column; gap: 4px; margin-bottom: 16px;">
+                                    <span class="myo-temp-title" style="display: block; margin-bottom: 4px; font-size: 13px;">Ship Product Version 2.0</span>
+                                    <p style="font-size: 11px; color: #666; margin: 0 0 8px 0; line-height: 1.4;">Ship next version tag release to branch.</p>
+                                    <div style="font-size: 10px; color: #888; display: flex; flex-direction: column; gap: 2px; margin-bottom: 8px;">
                                         <span>Estimated Verification Source: <strong>GitHub Webhooks</strong></span>
                                     </div>
                                 </div>
                                 <button class="myo-temp-btn">Create Commitment</button>
                             </div>
 
-                            <div class="myo-temp-card" onclick="window.router.navigate('/market')" style="display: flex; flex-direction: column; justify-content: space-between; height: 100%; min-height: 200px;">
+                            <div class="myo-temp-card" onclick="window.router.navigate('/market')" style="display: flex; flex-direction: column; justify-content: space-between; height: 100%; min-height: 170px;">
                                 <div>
-                                    <div class="myo-temp-header" style="margin-bottom: 12px;">
+                                    <div class="myo-temp-header" style="margin-bottom: 8px;">
                                         <span class="myo-temp-platform" style="display: flex; align-items: center; gap: 6px;">
                                             <i data-lucide="shopping-cart" style="width: 14px; height: 14px; color: #96bf48;"></i> Shopify
                                         </span>
                                         <span class="myo-temp-category">Commerce</span>
                                     </div>
-                                    <span class="myo-temp-title" style="display: block; margin-bottom: 8px;">Complete 100 Shopify Orders</span>
-                                    <p style="font-size: 12px; color: #666; margin: 0 0 12px 0; line-height: 1.5;">Fulfill orders threshold verification.</p>
-                                    <div style="font-size: 11px; color: #888; display: flex; flex-direction: column; gap: 4px; margin-bottom: 16px;">
+                                    <span class="myo-temp-title" style="display: block; margin-bottom: 4px; font-size: 13px;">Complete 100 Shopify Orders</span>
+                                    <p style="font-size: 11px; color: #666; margin: 0 0 8px 0; line-height: 1.4;">Fulfill orders threshold verification.</p>
+                                    <div style="font-size: 10px; color: #888; display: flex; flex-direction: column; gap: 2px; margin-bottom: 8px;">
                                         <span>Estimated Verification Source: <strong>Shopify API</strong></span>
                                     </div>
                                 </div>
                                 <button class="myo-temp-btn">Create Commitment</button>
                             </div>
 
-                            <div class="myo-temp-card" onclick="window.router.navigate('/market')" style="display: flex; flex-direction: column; justify-content: space-between; height: 100%; min-height: 200px;">
+                            <div class="myo-temp-card" onclick="window.router.navigate('/market')" style="display: flex; flex-direction: column; justify-content: space-between; height: 100%; min-height: 170px;">
                                 <div>
-                                    <div class="myo-temp-header" style="margin-bottom: 12px;">
+                                    <div class="myo-temp-header" style="margin-bottom: 8px;">
                                         <span class="myo-temp-platform" style="display: flex; align-items: center; gap: 6px;">
                                             <i data-lucide="twitter" style="width: 14px; height: 14px; color: #1da1f2;"></i> X (Twitter)
                                         </span>
                                         <span class="myo-temp-category">Social</span>
                                     </div>
-                                    <span class="myo-temp-title" style="display: block; margin-bottom: 8px;">Publish 50 X Posts</span>
-                                    <p style="font-size: 12px; color: #666; margin: 0 0 12px 0; line-height: 1.5;">Verify tweet/post activity goals.</p>
-                                    <div style="font-size: 11px; color: #888; display: flex; flex-direction: column; gap: 4px; margin-bottom: 16px;">
+                                    <span class="myo-temp-title" style="display: block; margin-bottom: 4px; font-size: 13px;">Publish 50 X Posts</span>
+                                    <p style="font-size: 11px; color: #666; margin: 0 0 8px 0; line-height: 1.4;">Verify tweet/post activity goals.</p>
+                                    <div style="font-size: 10px; color: #888; display: flex; flex-direction: column; gap: 2px; margin-bottom: 8px;">
                                         <span>Estimated Verification Source: <strong>X API</strong></span>
                                     </div>
                                 </div>
                                 <button class="myo-temp-btn">Create Commitment</button>
                             </div>
 
-                            <div class="myo-temp-card" onclick="window.router.navigate('/market')" style="display: flex; flex-direction: column; justify-content: space-between; height: 100%; min-height: 200px;">
+                            <div class="myo-temp-card" onclick="window.router.navigate('/market')" style="display: flex; flex-direction: column; justify-content: space-between; height: 100%; min-height: 170px;">
                                 <div>
-                                    <div class="myo-temp-header" style="margin-bottom: 12px;">
+                                    <div class="myo-temp-header" style="margin-bottom: 8px;">
                                         <span class="myo-temp-platform" style="display: flex; align-items: center; gap: 6px;">
                                             <i data-lucide="dumbbell" style="width: 14px; height: 14px; color: #5C1414;"></i> Health
                                         </span>
                                         <span class="myo-temp-category">Fitness</span>
                                     </div>
-                                    <span class="myo-temp-title" style="display: block; margin-bottom: 8px;">Lose 20 Pounds</span>
-                                    <p style="font-size: 12px; color: #666; margin: 0 0 12px 0; line-height: 1.5;">Verify weight goal metrics via verified devices.</p>
-                                    <div style="font-size: 11px; color: #888; display: flex; flex-direction: column; gap: 4px; margin-bottom: 16px;">
+                                    <span class="myo-temp-title" style="display: block; margin-bottom: 4px; font-size: 13px;">Lose 20 Pounds</span>
+                                    <p style="font-size: 11px; color: #666; margin: 0 0 8px 0; line-height: 1.4;">Verify weight goal metrics via verified devices.</p>
+                                    <div style="font-size: 10px; color: #888; display: flex; flex-direction: column; gap: 2px; margin-bottom: 8px;">
                                         <span>Estimated Verification Source: <strong>Oracle Multi-party Witness</strong></span>
                                     </div>
                                 </div>
                                 <button class="myo-temp-btn">Create Commitment</button>
                             </div>
-                        </div>
-                    </div>
-
-                    <div style="border-bottom: 1px solid rgba(0,0,0,0.05); margin: 8px 0;"></div>
-
-                    <!-- Section: Execution Identity Preview -->
-                    <div class="myo-section">
-                        <h3 class="myo-section-lbl">Execution Identity</h3>
-                        <div style="background:#fff; border:1px solid rgba(0,0,0,0.05); border-radius:12px; padding:28px; box-shadow:0 2px 8px rgba(0,0,0,0.01); display:flex; flex-direction:column; gap:16px; max-width: 600px;">
-                            <div style="display:flex; justify-content:space-between; align-items:center;">
-                                <span style="font-family:'JetBrains Mono', monospace; font-size:11px; font-weight:700; background:rgba(92,20,20,0.05); color:#5C1414; padding:2px 8px; border-radius:4px;">Level I</span>
-                                <span style="font-size:11px; color:#888;">Ready to Begin</span>
-                            </div>
-                            <div style="display:grid; grid-template-columns: repeat(3, 1fr); gap:16px; border-top:1px solid rgba(0,0,0,0.03); border-bottom:1px solid rgba(0,0,0,0.03); padding:16px 0;">
-                                <div style="display:flex; flex-direction:column; gap:4px;">
-                                    <span style="font-size:9px; color:#8a8984; text-transform:uppercase; font-weight:600;">Reputation</span>
-                                    <span style="font-size:20px; font-weight:800; color:#111;">0</span>
-                                </div>
-                                <div style="display:flex; flex-direction:column; gap:4px;">
-                                    <span style="font-size:9px; color:#8a8984; text-transform:uppercase; font-weight:600;">Trust Capacity</span>
-                                    <span style="font-size:20px; font-weight:800; color:#111;">0</span>
-                                </div>
-                                <div style="display:flex; flex-direction:column; gap:4px;">
-                                    <span style="font-size:9px; color:#8a8984; text-transform:uppercase; font-weight:600;">Completed Commitments</span>
-                                    <span style="font-size:20px; font-weight:800; color:#111;">0</span>
-                                </div>
-                            </div>
-                            <div style="display:flex; justify-content:space-between; align-items:center;">
-                                <span style="font-size:11px; color:#666;">Status: <strong>Ready to Begin</strong></span>
-                                <a href="#" onclick="event.preventDefault(); window.router.navigate('/profile')" style="font-size:11px; color:#5C1414; text-decoration:none; font-weight:700; display:flex; align-items:center; gap:4px;">View Full Identity →</a>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div style="border-bottom: 1px solid rgba(0,0,0,0.05); margin: 8px 0;"></div>
-
-                    <!-- Section: Recent Protocol Activity (Feed) -->
-                    <div class="myo-section">
-                        <h3 class="myo-section-lbl">Recent Protocol Activity</h3>
-                        <div class="myo-activity-list" style="background:#fff; border:1px solid rgba(0,0,0,0.05); border-radius:12px; padding:20px; box-shadow:0 2px 8px rgba(0,0,0,0.01); display:flex; flex-direction:column; gap:12px;">
-                            <div class="myo-act-item" style="display:flex; align-items:center; gap:12px; padding:10px 0; border-bottom:1px solid rgba(0,0,0,0.02);">
-                                <div style="color:#16a34a; font-weight:700; font-size:14px;">✓</div>
-                                <div style="flex:1;">
-                                    <span style="font-size:12px; font-weight:700; color:#111;">Creator completed YouTube Goal</span>
-                                    <span style="display:block; font-size:10px; color:#888;">YouTube API · 10,000 Subscribers</span>
-                                </div>
-                                <span style="font-size:10px; color:#aaa; font-family:'JetBrains Mono', monospace;">2m ago</span>
-                            </div>
-                            <div class="myo-act-item" style="display:flex; align-items:center; gap:12px; padding:10px 0; border-bottom:1px solid rgba(0,0,0,0.02);">
-                                <div style="color:#16a34a; font-weight:700; font-size:14px;">✓</div>
-                                <div style="flex:1;">
-                                    <span style="font-size:12px; font-weight:700; color:#111;">Startup verified Stripe Revenue</span>
-                                    <span style="display:block; font-size:10px; color:#888;">Stripe Connect · $10,000 Revenue Goal</span>
-                                </div>
-                                <span style="font-size:10px; color:#aaa; font-family:'JetBrains Mono', monospace;">6m ago</span>
-                            </div>
-                            <div class="myo-act-item" style="display:flex; align-items:center; gap:12px; padding:10px 0; border-bottom:1px solid rgba(0,0,0,0.02);">
-                                <div style="color:#16a34a; font-weight:700; font-size:14px;">✓</div>
-                                <div style="flex:1;">
-                                    <span style="font-size:12px; font-weight:700; color:#111;">Merchant settled Shopify contract</span>
-                                    <span style="display:block; font-size:10px; color:#888;">Shopify API · 100 Orders Goaled</span>
-                                </div>
-                                <span style="font-size:10px; color:#aaa; font-family:'JetBrains Mono', monospace;">12m ago</span>
-                            </div>
-                            <div class="myo-act-item" style="display:flex; align-items:center; gap:12px; padding:10px 0; border-bottom:1px solid rgba(0,0,0,0.02);">
-                                <div style="color:#16a34a; font-weight:700; font-size:14px;">✓</div>
-                                <div style="flex:1;">
-                                    <span style="font-size:12px; font-weight:700; color:#111;">Rivalry contract completed</span>
-                                    <span style="display:block; font-size:10px; color:#888;">Multi-party Witness · Weight goal met</span>
-                                </div>
-                                <span style="font-size:10px; color:#aaa; font-family:'JetBrains Mono', monospace;">18m ago</span>
-                            </div>
-                            <div class="myo-act-item" style="display:flex; align-items:center; gap:12px; padding:10px 0;">
-                                <div style="color:#16a34a; font-weight:700; font-size:14px;">✓</div>
-                                <div style="flex:1;">
-                                    <span style="font-size:12px; font-weight:700; color:#111;">Reputation score increased</span>
-                                    <span style="display:block; font-size:10px; color:#888;">ExID Registry · Level I Ascent verified</span>
-                                </div>
-                                <span style="font-size:10px; color:#aaa; font-family:'JetBrains Mono', monospace;">24m ago</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div style="border-bottom: 1px solid rgba(0,0,0,0.05); margin: 8px 0;"></div>
-
-                    <!-- Section: Commitment Table Placeholder -->
-                    <div class="myo-section">
-                        <h3 class="myo-section-lbl">Active Commitments List</h3>
-                        <div style="background: #FFFFFF; border: 1px solid rgba(0,0,0,0.05); border-radius: 12px; padding: 40px; text-align: center; box-shadow: 0 2px 8px rgba(0,0,0,0.01);">
-                            <div style="font-family:'JetBrains Mono', monospace; font-size:10px; color:#aaa; text-transform:uppercase; margin-bottom:8px;">No commitments yet</div>
-                            <p style="font-size:12px; color:#666; margin:0; line-height:1.6; max-width:440px; margin: 0 auto;">Your completed commitments will appear here along with their execution history, settlements, and reputation impact.</p>
-                        </div>
-                    </div>
-
-                    <!-- Section: Bottom Motivation Panel -->
-                    <div class="myo-motivation-panel" data-reveal>
-                        <h3 class="myo-motivation-title">Build Your First Commitment</h3>
-                        <p class="myo-motivation-sub">Every verified commitment permanently strengthens your Execution Identity and expands your trust capacity.</p>
-                        <div class="myo-motivation-ctas">
-                            <button class="myc-btn-primary" onclick="window.router.navigate('/market')">Create First Commitment</button>
-                            <button class="myc-btn-secondary" onclick="window.router.navigate('/market')">Explore Templates</button>
                         </div>
                     </div>
                 </div>

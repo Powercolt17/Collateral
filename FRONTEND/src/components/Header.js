@@ -5,8 +5,7 @@ export function renderHeader(currentRoute) {
         { path: '/my-contracts', label: 'ACTIVE' },
         { path: '/ledger', label: 'LEDGER' },
         { path: '/sources', label: 'SOURCES' },
-        { path: '/protocol', label: 'PROTOCOL', hasDropdown: true },
-        { path: '/docs', label: 'DOCS', hasDropdown: true }
+        { path: '/protocol', label: 'PROTOCOL', hasDropdown: true }
     ];
 
     const navItems = routes.map(route => {

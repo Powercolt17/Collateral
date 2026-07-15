@@ -463,6 +463,34 @@ export function renderActiveContracts() {
             .eq-closing { color: #5C1414; font-weight: 700; }
             .eq-id { color: #bbb; }
             .eq-time { color: #bbb; display: flex; align-items: center; gap: 4px; }
+            .eq-badge {
+                display: inline-flex;
+                align-items: center;
+                gap: 4px;
+                padding: 2px 6px;
+                border-radius: 4px;
+                font-family: 'JetBrains Mono', monospace;
+                font-size: 8px;
+                font-weight: 700;
+                letter-spacing: 0.5px;
+                text-transform: uppercase;
+            }
+            .eq-badge.closing-soon {
+                background: rgba(92, 20, 20, 0.08);
+                color: #5c1414;
+            }
+            .eq-badge.high-confidence {
+                background: rgba(16, 185, 129, 0.08);
+                color: #10b981;
+            }
+            .eq-badge.trending {
+                background: rgba(245, 158, 11, 0.08);
+                color: #f59e0b;
+            }
+            .eq-badge.popular {
+                background: rgba(99, 91, 255, 0.08);
+                color: #635bff;
+            }
 
             .eq-card-title {
                 font-family: 'Plus Jakarta Sans', sans-serif;
@@ -1493,69 +1521,76 @@ export function renderActiveContracts() {
 
         <div class="eq">
             <!-- Section 3: Live Market Header -->
-            <section class="eq-market-header" id="live-market" data-reveal>
-                <div style="display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 24px; flex-wrap: wrap; gap: 16px;">
+            <section class="eq-market-header" id="live-market" data-reveal style="margin-bottom: 24px;">
+                <!-- Layer 1: Title, Live Status & Search -->
+                <div style="display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 20px; flex-wrap: wrap; gap: 16px;">
                     <div>
                         <h2 class="eq-market-title" style="margin: 0; font-size: 36px; font-weight: 800; font-family: 'Plus Jakarta Sans', sans-serif;">Collateral <strong style="color: #5C1414;">Market</strong></h2>
-                        <div class="eq-market-live" style="margin: 8px 0 0 0; display: flex; align-items: center; gap: 6px;">
+                        <div class="eq-market-live" style="margin: 8px 0 0 0; display: flex; align-items: center; gap: 8px; flex-wrap: wrap;">
                             <div class="eq-market-dot"></div>
                             <span style="font-weight: 700; color: #10b981; font-family: 'JetBrains Mono', monospace; font-size: 9px; letter-spacing: 0.5px;">LIVE</span>
                             <span style="color: #ddd;">•</span>
                             <span style="font-family: 'JetBrains Mono', monospace; font-size: 9px; color: #8a8984;" id="live-time-ago">Updated just now</span>
+                            <span style="color: #ddd;">•</span>
+                            <span style="font-family: 'JetBrains Mono', monospace; font-size: 9px; color: #10b981; font-weight: 700;">🟢 OPERATIONAL</span>
                         </div>
                     </div>
                     <div class="eq-search-wrap" style="margin-bottom: 0;">
                         <div style="position: relative; display: flex; align-items: center;">
-                            <input type="text" class="eq-search-box" id="eq-search" placeholder="Search revenue, YouTube, Stripe... (Press '/')" style="padding-left: 36px; margin: 0;">
+                            <input type="text" class="eq-search-box" id="eq-search" placeholder="Search contracts, creators, or platforms… (Press '/')" style="padding-left: 36px; margin: 0; width: 320px;">
                             <i data-lucide="search" style="position: absolute; left: 12px; top: 50%; transform: translateY(-50%); width: 14px; height: 14px; color: #8a8984; pointer-events: none;"></i>
                         </div>
                         <button class="eq-btn-rules" id="btn-rules" style="margin: 0;">Rules</button>
                     </div>
                 </div>
 
-                <!-- Top Market Toggles (Segmented Control) -->
-                <div class="act-market-toggles" id="act-market-toggles" data-active="solo" style="margin-bottom: 24px;">
-                    <div class="act-market-indicator"></div>
-                    <button class="act-market-btn active" data-type="solo">Solo Contracts</button>
-                    <button class="act-market-btn" data-type="rivalry">Rivalries</button>
-                </div>
+                <!-- Layer 2: Segmented Control & Compact Metrics -->
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; flex-wrap: wrap; gap: 16px;">
+                    <!-- Top Market Toggles (Segmented Control) -->
+                    <div class="act-market-toggles" id="act-market-toggles" data-active="solo" style="margin-bottom: 0;">
+                        <div class="act-market-indicator"></div>
+                        <button class="act-market-btn active" data-type="solo">Solo Contracts</button>
+                        <button class="act-market-btn" data-type="rivalry">Rivalries</button>
+                    </div>
 
-                <div class="eq-stats-strip">
-                    <div class="eq-stat-group">
-                        <div class="eq-stat-val">$<span id="stat-capital">0</span></div>
-                        <div class="eq-stat-lbl">Capital Locked</div>
-                    </div>
-                    <div class="eq-stat-group">
-                        <div class="eq-stat-val" id="stat-contracts">0</div>
-                        <div class="eq-stat-lbl">Active Contracts</div>
-                    </div>
-                    <div class="eq-stat-group">
-                        <div class="eq-stat-val">$<span id="stat-pool">0</span></div>
-                        <div class="eq-stat-lbl">Volume 24h</div>
-                    </div>
-                </div>
-
-                <!-- Controls -->
-                <div class="eq-controls">
-                    <div class="eq-tabs" id="eq-tabs">
-                        <button class="eq-tab active" data-sort="trending_24h">TRENDING</button>
-                        <button class="eq-tab" data-sort="new">NEW</button>
-                        <button class="eq-tab" data-sort="closing_soon">CLOSING SOON</button>
-                        <button class="eq-tab" data-sort="volume_24h">HIGH VOLUME</button>
+                    <!-- Compact inline stats with market-oriented labels -->
+                    <div class="eq-stats-strip" style="margin-bottom: 0; gap: 24px; align-items: center;">
+                        <div class="eq-stat-group" style="flex-direction: row; gap: 6px; align-items: baseline;">
+                            <span class="eq-stat-lbl" style="font-size: 8px; color: #8a8984; font-family: 'JetBrains Mono', monospace; text-transform: uppercase; font-weight: 700; letter-spacing: 0.5px;">Open Capital:</span>
+                            <span class="eq-stat-val" style="font-size: 15px; font-weight: 800; color: #111; letter-spacing: -0.5px; font-family: 'Plus Jakarta Sans', sans-serif;">$<span id="stat-capital">0</span></span>
+                        </div>
+                        <div class="eq-stat-group" style="flex-direction: row; gap: 6px; align-items: baseline;">
+                            <span class="eq-stat-lbl" style="font-size: 8px; color: #8a8984; font-family: 'JetBrains Mono', monospace; text-transform: uppercase; font-weight: 700; letter-spacing: 0.5px;">Open Contracts:</span>
+                            <span class="eq-stat-val" id="stat-contracts" style="font-size: 15px; font-weight: 800; color: #111; letter-spacing: -0.5px; font-family: 'Plus Jakarta Sans', sans-serif;">0</span>
+                        </div>
+                        <div class="eq-stat-group" style="flex-direction: row; gap: 6px; align-items: baseline;">
+                            <span class="eq-stat-lbl" style="font-size: 8px; color: #8a8984; font-family: 'JetBrains Mono', monospace; text-transform: uppercase; font-weight: 700; letter-spacing: 0.5px;">Daily Volume:</span>
+                            <span class="eq-stat-val" style="font-size: 15px; font-weight: 800; color: #111; letter-spacing: -0.5px; font-family: 'Plus Jakarta Sans', sans-serif;">$<span id="stat-pool">0</span></span>
+                        </div>
                     </div>
                 </div>
 
-                <!-- Filters -->
-                <div class="eq-filter-bar">
-                    <div class="eq-pills" id="eq-filters">
-                        <span class="eq-filter-lbl">Domain</span>
-                        <button class="eq-pill active" data-category="all">All</button>
-                        <button class="eq-pill" data-category="social">Social</button>
-                        <button class="eq-pill" data-category="commerce">Commerce</button>
-                        <button class="eq-pill" data-category="finance">Finance</button>
+                <!-- Layer 3: Controls (Tabs) & Filters (Domain Pills) -->
+                <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(0,0,0,0.05); padding-bottom: 12px; margin-bottom: 20px; flex-wrap: wrap; gap: 16px;">
+                    <!-- Tabs -->
+                    <div class="eq-controls" style="margin: 0; border: none; padding: 0; display: block;">
+                        <div class="eq-tabs" id="eq-tabs">
+                            <button class="eq-tab active" data-sort="trending_24h">TRENDING</button>
+                            <button class="eq-tab" data-sort="new">NEW</button>
+                            <button class="eq-tab" data-sort="closing_soon">CLOSING SOON</button>
+                            <button class="eq-tab" data-sort="volume_24h">HIGH VOLUME</button>
+                        </div>
                     </div>
-                    <div class="eq-status-operational">
-                        System Status <div class="dot"></div> Operational
+
+                    <!-- Filters -->
+                    <div class="eq-filter-bar" style="margin: 0; padding: 0; border: none; display: block;">
+                        <div class="eq-pills" id="eq-filters" style="margin: 0; gap: 8px;">
+                            <span class="eq-filter-lbl" style="font-size: 9px; font-family: 'JetBrains Mono', monospace; font-weight: 700; color: #8a8984; text-transform: uppercase; margin-right: 8px; letter-spacing: 0.5px;">Domain</span>
+                            <button class="eq-pill active" data-category="all">All</button>
+                            <button class="eq-pill" data-category="social">Social</button>
+                            <button class="eq-pill" data-category="commerce">Commerce</button>
+                            <button class="eq-pill" data-category="finance">Finance</button>
+                        </div>
                     </div>
                 </div>
             </section>
@@ -2000,9 +2035,17 @@ export async function initActiveContracts() {
         const tierUpper = tier.toUpperCase();
         const multiplier = c.multiplier || (tierUpper === 'MAXIMUM' ? 4.0 : tierUpper === 'ELEVATED' ? 2.5 : 1.7);
 
-        // Scarcity or urgent closing
-        let isClosingSoon = timeLeftMs < 1000 * 60 * 60 * 24;
-        let closingAmtText = isClosingSoon ? "CLOSING SOON" : `OPEN MARKET`;
+        // Dynamic State Badge selection
+        let badgeHtml = '';
+        if (timeLeftMs > 0 && timeLeftMs < 1000 * 60 * 60 * 24) {
+            badgeHtml = `<span class="eq-badge closing-soon">⏳ CLOSING SOON</span>`;
+        } else if (multiplier >= 3.5 || tier === 'maximum') {
+            badgeHtml = `<span class="eq-badge high-confidence">🟢 HIGH CONFIDENCE</span>`;
+        } else if (parseInt(shortId, 16) % 3 === 0) {
+            badgeHtml = `<span class="eq-badge trending">🔥 TRENDING</span>`;
+        } else {
+            badgeHtml = `<span class="eq-badge popular">⭐ POPULAR</span>`;
+        }
 
         return `
             <div class="eq-card"
@@ -2017,7 +2060,7 @@ export async function initActiveContracts() {
                  data-goal="${goal}"
                  data-provider="${platform}">
                 <div class="eq-card-meta">
-                    <span class="eq-closing">${closingAmtText}</span>
+                    ${badgeHtml}
                     <span class="eq-id">RCPT-${shortId.slice(0, 4).toUpperCase()}</span>
                     <span class="eq-time">○ ${timeLabel}</span>
                 </div>
@@ -2028,15 +2071,14 @@ export async function initActiveContracts() {
                     <span class="eq-tier-badge ${tier}">${{controlled:'PLEDGE',elevated:'STAKE',maximum:'ALL-IN'}[tier] || tier.toUpperCase()}</span>
                 </div>
                 <div class="eq-card-status"><span class="dot" style="width:4px; height:4px; border-radius:50%; background:#10b981; display:inline-block; margin-right:4px;"></span> TERMS VERIFIED</div>
-                <div class="eq-card-stake-info">
+                <div class="eq-card-stake-info" style="display: flex; justify-content: space-between; align-items: flex-end; border-top: 1px dashed rgba(0,0,0,0.05); padding-top: 16px; margin-top: 16px; margin-bottom: 20px;">
                     <div>
-                        <div class="eq-stake-val">${stakeDisplay}</div>
-                        <div class="eq-stake-lbl">STAKE CAPACITY</div>
+                        <div class="eq-stake-val capacity" style="font-size: 28px; font-weight: 800; color: #111; letter-spacing: -1.2px; line-height: 1.1;">${stakeDisplay}</div>
+                        <div class="eq-stake-lbl" style="font-size: 8px; font-weight: 700; color: #8a8984; letter-spacing: 0.5px; text-transform: uppercase; margin-top: 6px;">Stake Capacity</div>
                     </div>
-                    <div class="eq-stake-separator"></div>
-                    <div>
-                        <div class="eq-stake-val">${multiplier}x</div>
-                        <div class="eq-stake-lbl">YIELD MULTIPLIER</div>
+                    <div style="text-align: right;">
+                        <div class="eq-stake-val multiplier" style="font-size: 20px; font-weight: 800; color: #5C1414; letter-spacing: -0.5px; line-height: 1.1;">${multiplier}x</div>
+                        <div class="eq-stake-lbl" style="font-size: 8px; font-weight: 700; color: #8a8984; letter-spacing: 0.5px; text-transform: uppercase; margin-top: 6px;">Multiplier</div>
                     </div>
                 </div>
                 <div class="eq-card-hover-details">

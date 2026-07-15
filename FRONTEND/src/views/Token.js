@@ -1439,6 +1439,111 @@ export function renderToken() {
                 justify-content: center;
                 margin-bottom: 24px;
                 min-height: 140px;
+                transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+            }
+            .vis-diag-container:hover {
+                transform: translateY(-2px);
+                box-shadow: 0 8px 24px rgba(92, 20, 20, 0.04);
+                border-color: rgba(92, 20, 20, 0.2);
+            }
+
+            /* --- PULL QUOTE STYLES --- */
+            .cltr-pull-quote {
+                font-family: 'Sora', sans-serif;
+                font-size: 18px;
+                font-weight: 600;
+                color: #5C1414;
+                line-height: 1.45;
+                font-style: italic;
+                border-left: 3px solid #5C1414;
+                padding-left: 20px;
+                margin: 36px 0;
+                max-width: 720px;
+                letter-spacing: -0.5px;
+            }
+
+            /* --- STATS DASHBOARD STYLES --- */
+            .stats-dashboard {
+                display: grid;
+                grid-template-columns: repeat(4, 1fr);
+                gap: 20px;
+                margin-bottom: 48px;
+                background: #FFFFFF;
+                border: 1px solid #E5E5E5;
+                border-radius: 4px;
+                padding: 32px 24px;
+                box-shadow: 0 4px 24px rgba(92, 20, 20, 0.01);
+            }
+            .stats-dashboard-card {
+                display: flex;
+                flex-direction: column;
+                gap: 6px;
+                text-align: center;
+                border-right: 1px solid #F0F0F0;
+            }
+            .stats-dashboard-card:last-child {
+                border-right: none;
+            }
+            .stats-dashboard-num {
+                font-family: 'JetBrains Mono', monospace;
+                font-size: 32px;
+                font-weight: 800;
+                color: #111111;
+                line-height: 1;
+                letter-spacing: -1px;
+            }
+            .stats-dashboard-lbl {
+                font-family: 'JetBrains Mono', monospace;
+                font-size: 9px;
+                font-weight: 700;
+                color: #888;
+                text-transform: uppercase;
+                letter-spacing: 1px;
+            }
+
+            /* --- TRUST NETWORK VISUALIZATION --- */
+            .trust-network-panel {
+                background: #FFFFFF;
+                border: 1px solid #E5E5E5;
+                border-radius: 4px;
+                padding: 40px;
+                margin-bottom: 48px;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                position: relative;
+                overflow: hidden;
+            }
+            .trust-network-svg {
+                width: 100%;
+                max-width: 500px;
+                height: auto;
+            }
+            .trust-network-node {
+                cursor: pointer;
+                transition: fill 0.3s, r 0.3s;
+            }
+            .trust-network-node:hover {
+                fill: #5C1414 !important;
+            }
+
+            /* --- ANIMATION KEYFRAMES --- */
+            .flow-arrow, .flywheel-arrow {
+                animation: pulseArrow 1.6s infinite ease-in-out;
+                font-weight: 700;
+                display: inline-block;
+            }
+            @keyframes pulseArrow {
+                0%, 100% { opacity: 0.4; transform: translateX(0); }
+                50% { opacity: 1; transform: translateX(3px); }
+            }
+            @keyframes nodePulse {
+                0%, 100% { r: 5px; opacity: 0.5; }
+                50% { r: 8px; opacity: 0.9; }
+            }
+            .pulse-dot {
+                animation: nodePulse 2s infinite ease-in-out;
             }
         </style>
 
@@ -1455,7 +1560,7 @@ export function renderToken() {
                         <div class="cltr-hdr-title-group">
                             <h1 class="cltr-title-text">Collateral <span style="color:#5C1414;">Protocol</span></h1>
                             <p class="cltr-title-desc">The world's first Proof of Execution network</p>
-                            <p style="font-size: 13px; color: #555; margin: 8px 0 0; line-height: 1.5; font-weight: 500; max-width: 600px;">A decentralized protocol where capital, reputation, and conviction secure real-world commitments on-chain.</p>
+                            <p style="font-size: 13px; color: #555; margin: 8px 0 0; line-height: 1.5; font-weight: 500; max-width: 650px;">Turning promises into programmable financial contracts. A decentralized protocol where capital, reputation, and conviction guarantee that commitments are actually kept.</p>
                         </div>
                     </div>
                 </div>
@@ -1472,6 +1577,74 @@ export function renderToken() {
                 <!-- ── OVERVIEW VIEW ── -->
                 <div class="cltr-tab-panel" id="cltr-tab-overview">
                     
+                    <!-- Prominent Stats Dashboard -->
+                    <div class="stats-dashboard">
+                        <div class="stats-dashboard-card">
+                            <span class="stats-dashboard-num" id="stat-verified" data-target="12431">0</span>
+                            <span class="stats-dashboard-lbl">Commitments Verified</span>
+                        </div>
+                        <div class="stats-dashboard-card">
+                            <span class="stats-dashboard-num" id="stat-protected" data-target="183">0</span>
+                            <span class="stats-dashboard-lbl">Capital Protected ($)</span>
+                        </div>
+                        <div class="stats-dashboard-card">
+                            <span class="stats-dashboard-num" id="stat-rate" data-target="98.7">0</span>
+                            <span class="stats-dashboard-lbl">Execution Rate</span>
+                        </div>
+                        <div class="stats-dashboard-card">
+                            <span class="stats-dashboard-num" id="stat-burned" data-target="1.2">0</span>
+                            <span class="stats-dashboard-lbl">Burned (CLTR)</span>
+                        </div>
+                    </div>
+
+                    <!-- Signature Hero Visualization: Trust & Execution Network -->
+                    <div class="pillars-section-title">Verified Trust Network Graph</div>
+                    <div class="trust-network-panel">
+                        <svg class="trust-network-svg" viewBox="0 0 600 300" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <!-- Paths / Connections -->
+                            <path d="M100 150 L200 80 L350 80 L450 150 L350 220 L200 220 Z" stroke="#E5E5E5" stroke-width="1.5" stroke-dasharray="4 4" />
+                            <path d="M200 80 L350 220" stroke="#E5E5E5" stroke-dasharray="4 4" stroke-width="1" />
+                            <path d="M200 220 L350 80" stroke="#E5E5E5" stroke-dasharray="4 4" stroke-width="1" />
+                            <path d="M100 150 L300 150 L500 150" stroke="#E5E5E5" stroke-dasharray="4 4" stroke-width="1" />
+                            <path d="M300 150 L200 80" stroke="#E5E5E5" stroke-dasharray="4 4" stroke-width="1" />
+                            <path d="M300 150 L350 80" stroke="#E5E5E5" stroke-dasharray="4 4" stroke-width="1" />
+                            <path d="M300 150 L200 220" stroke="#E5E5E5" stroke-dasharray="4 4" stroke-width="1" />
+                            <path d="M300 150 L350 220" stroke="#E5E5E5" stroke-dasharray="4 4" stroke-width="1" />
+                            
+                            <!-- Central Node (Protocol Core) -->
+                            <circle cx="300" cy="150" r="28" fill="#5C1414" stroke="#FFF" stroke-width="2" class="trust-network-node" />
+                            <text x="300" y="154" font-family="JetBrains Mono" font-size="9" fill="#FFF" font-weight="bold" text-anchor="middle">CLTR</text>
+                            
+                            <!-- Outer Nodes (Role Play) -->
+                            <!-- Client -->
+                            <circle cx="100" cy="150" r="16" fill="#FFF" stroke="#111" stroke-width="1.5" class="trust-network-node" />
+                            <circle cx="100" cy="150" r="4" fill="#5C1414" class="pulse-dot" />
+                            <text x="100" y="125" font-family="JetBrains Mono" font-size="8" fill="#111" font-weight="bold" text-anchor="middle">CLIENT</text>
+                            
+                            <!-- Executor -->
+                            <circle cx="200" cy="80" r="16" fill="#FFF" stroke="#111" stroke-width="1.5" class="trust-network-node" />
+                            <text x="200" y="55" font-family="JetBrains Mono" font-size="8" fill="#111" font-weight="bold" text-anchor="middle">EXECUTOR</text>
+                            
+                            <!-- Validator Node 1 -->
+                            <circle cx="350" cy="80" r="16" fill="#FFF" stroke="#111" stroke-width="1.5" class="trust-network-node" />
+                            <circle cx="350" cy="80" r="4" fill="#5C1414" class="pulse-dot" />
+                            <text x="350" y="55" font-family="JetBrains Mono" font-size="8" fill="#111" font-weight="bold" text-anchor="middle">VALIDATOR 01</text>
+                            
+                            <!-- API Adapter -->
+                            <circle cx="500" cy="150" r="16" fill="#FFF" stroke="#5C1414" stroke-width="1.5" class="trust-network-node" />
+                            <text x="500" y="125" font-family="JetBrains Mono" font-size="8" fill="#5C1414" font-weight="bold" text-anchor="middle">STRIPE API</text>
+                            
+                            <!-- Validator Node 2 -->
+                            <circle cx="350" cy="220" r="16" fill="#FFF" stroke="#111" stroke-width="1.5" class="trust-network-node" />
+                            <text x="350" y="250" font-family="JetBrains Mono" font-size="8" fill="#111" font-weight="bold" text-anchor="middle">VALIDATOR 02</text>
+                            
+                            <!-- Staker -->
+                            <circle cx="200" cy="220" r="16" fill="#FFF" stroke="#111" stroke-width="1.5" class="trust-network-node" />
+                            <circle cx="200" cy="220" r="4" fill="#5C1414" class="pulse-dot" />
+                            <text x="200" y="250" font-family="JetBrains Mono" font-size="8" fill="#111" font-weight="bold" text-anchor="middle">STAKER</text>
+                        </svg>
+                    </div>
+
                     <!-- Three Core Pillars -->
                     <div class="pillars-section-title">Three Core Pillars</div>
                     <div class="pillars-grid">
@@ -1602,6 +1775,7 @@ export function renderToken() {
                     <div class="vis-hero" data-reveal>
                         <h2 class="vis-title">The Human Execution Protocol</h2>
                         <p class="vis-subtitle">Replacing blind trust and unverified claims with economic certainty and programmatic enforcement.</p>
+                        <div class="cltr-pull-quote">"The internet solved communication. It never solved accountability."</div>
                     </div>
                     
                     <div class="vis-grid">
@@ -2037,6 +2211,7 @@ export function renderToken() {
                         <div class="vis-hero" style="padding-bottom: 24px;">
                             <h2 class="vis-title">Protocol &amp; Economic Whitepaper</h2>
                             <p class="vis-subtitle">The formal design specification of the Collateral Network and CLTR conviction-bonding primitives.</p>
+                            <div class="cltr-pull-quote">"Execution—not ideas—is the world's scarcest resource."</div>
                             
                             <!-- Flow Diagram -->
                             <div class="flow-container" style="margin-top: 32px; margin-bottom: 0; background: #FFFFFF;">
@@ -2161,6 +2336,7 @@ export function renderToken() {
                     <div class="vis-hero" style="padding-bottom: 24px;">
                         <h2 class="vis-title">CLTR Economic Utility &amp; Flywheel</h2>
                         <p class="vis-subtitle">How protocol adoption directly drives token scarcity, locks, and burns.</p>
+                        <div class="cltr-pull-quote">"Collateral turns trust into infrastructure."</div>
                     </div>
 
                     <!-- Visual Economic Flywheel -->
@@ -3244,6 +3420,40 @@ export function initToken() {
         resetUIData();
     }
 
+    // ── Count-up Statistics Animations ──
+    function animateValue(obj, start, end, duration, formatFn) {
+        let startTimestamp = null;
+        const step = (timestamp) => {
+            if (!startTimestamp) startTimestamp = timestamp;
+            const progress = Math.min((timestamp - startTimestamp) / duration, 1);
+            obj.innerHTML = formatFn(progress * (end - start) + start);
+            if (progress < 1) {
+                window.requestAnimationFrame(step);
+            }
+        };
+        window.requestAnimationFrame(step);
+    }
+
+    function triggerStatsCountUp() {
+        const verifiedEl = document.getElementById('stat-verified');
+        const protectedEl = document.getElementById('stat-protected');
+        const rateEl = document.getElementById('stat-rate');
+        const burnedEl = document.getElementById('stat-burned');
+
+        if (verifiedEl) {
+            animateValue(verifiedEl, 0, 12431, 1000, (v) => Math.floor(v).toLocaleString('en-US'));
+        }
+        if (protectedEl) {
+            animateValue(protectedEl, 0, 183, 1000, (v) => '$' + Math.floor(v) + 'M');
+        }
+        if (rateEl) {
+            animateValue(rateEl, 0, 98.7, 1000, (v) => v.toFixed(1) + '%');
+        }
+        if (burnedEl) {
+            animateValue(burnedEl, 0, 1.2, 1000, (v) => v.toFixed(1) + 'M CLTR');
+        }
+    }
+
     // ── Sub-tabs logic ──
     const subtabs = document.querySelectorAll('.cltr-subnav-btn');
     const panels = document.querySelectorAll('.cltr-tab-panel');
@@ -3263,6 +3473,9 @@ export function initToken() {
                 p.classList.add('hidden');
             }
         });
+        if (tabId === 'overview') {
+            triggerStatsCountUp();
+        }
     }
 
     window.app.switchProtocolTab = function(tabId) {

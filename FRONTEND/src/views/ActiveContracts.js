@@ -310,13 +310,12 @@ export function renderActiveContracts() {
             /* --- CONTROLS --- */
             .eq-controls {
                 display: flex;
-                justify-content: space-between;
                 align-items: flex-end;
                 padding-bottom: 2px;
                 border-bottom: 1px solid #f2f2f2;
-                margin-bottom: 8px;
+                margin-bottom: 16px;
             }
-            .eq-tabs { display: flex; gap: 24px; }
+            .eq-tabs { display: flex; gap: 36px; }
             .eq-tab {
                 padding: 8px 0;
                 font-family: 'JetBrains Mono', monospace;
@@ -338,7 +337,6 @@ export function renderActiveContracts() {
                 display: flex;
                 align-items: center;
                 gap: 12px;
-                margin-bottom: 12px;
             }
             .eq-search-box {
                 background: #fcfcfc;
@@ -346,7 +344,7 @@ export function renderActiveContracts() {
                 border-radius: 6px;
                 padding: 10px 16px;
                 font-size: 13px;
-                width: 240px;
+                width: 320px;
                 font-family: 'Inter', sans-serif;
                 transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
             }
@@ -381,7 +379,7 @@ export function renderActiveContracts() {
                 align-items: center;
                 margin-bottom: 12px;
             }
-            .eq-pills { display: flex; align-items: center; gap: 8px; }
+            .eq-pills { display: flex; align-items: center; gap: 12px; }
             .eq-filter-lbl { 
                 font-family: 'JetBrains Mono', monospace; 
                 font-size: 8px; 
@@ -426,22 +424,22 @@ export function renderActiveContracts() {
             }
             .eq-card {
                 background: #fff;
-                padding: 32px 28px;
-                border-radius: 16px;
-                border: 1px solid rgba(0,0,0,0.05);
-                box-shadow: 0 4px 20px rgba(0,0,0,0.02);
+                padding: 24px 24px;
+                border-radius: 12px;
+                border: 1px solid rgba(0,0,0,0.06);
+                box-shadow: 0 1px 3px rgba(0,0,0,0.02);
                 display: flex;
                 flex-direction: column;
                 cursor: pointer;
-                transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+                transition: transform 200ms cubic-bezier(0.16, 1, 0.3, 1), border-color 200ms ease, box-shadow 200ms ease;
                 position: relative;
                 overflow: hidden;
             }
             .eq-card:hover {
                 background: #fff;
-                transform: translateY(-4px);
-                border-color: rgba(92, 20, 20, 0.15);
-                box-shadow: 0 16px 48px -16px rgba(92, 20, 20, 0.08), 0 0 1px rgba(92, 20, 20, 0.12);
+                transform: translateY(-2px);
+                border-color: rgba(92, 20, 20, 0.18);
+                box-shadow: 0 8px 24px rgba(92, 20, 20, 0.05), 0 2px 4px rgba(0,0,0,0.01);
             }
             .eq-card::before {
                 content: '';
@@ -451,20 +449,20 @@ export function renderActiveContracts() {
                 width: 0;
                 height: 3px;
                 background: #5C1414;
-                transition: width 0.4s ease;
+                transition: width 200ms ease;
             }
             .eq-card:hover::before { width: 100%; }
             .eq-card-meta {
                 display: flex;
                 justify-content: space-between;
                 font-family: 'JetBrains Mono', monospace;
-                font-size: 10px;
+                font-size: 9px;
                 text-transform: uppercase;
                 letter-spacing: 0.5px;
             }
             .eq-closing { color: #5C1414; font-weight: 700; }
-            .eq-id { color: #ccc; }
-            .eq-time { color: #ccc; display: flex; align-items: center; gap: 4px; }
+            .eq-id { color: #bbb; }
+            .eq-time { color: #bbb; display: flex; align-items: center; gap: 4px; }
 
             .eq-card-title {
                 font-family: 'Plus Jakarta Sans', sans-serif;
@@ -578,6 +576,23 @@ export function renderActiveContracts() {
                 text-align: center;
                 margin-top: 12px;
                 font-style: italic;
+            }
+
+            .eq-card-hover-details {
+                opacity: 0;
+                max-height: 0;
+                overflow: hidden;
+                transition: opacity 200ms ease, max-height 200ms ease, margin-top 200ms ease;
+                font-size: 11px;
+                color: #666;
+                border-top: 1px dashed rgba(0,0,0,0.06);
+                padding-top: 12px;
+                margin-top: 0;
+            }
+            .eq-card:hover .eq-card-hover-details {
+                opacity: 1;
+                max-height: 100px;
+                margin-top: 16px;
             }
 
             /* --- RULES MODAL --- */
@@ -1314,31 +1329,31 @@ export function renderActiveContracts() {
             /* --- REVERTED RIVALRY DUEL CARDS (FIT TO GRID) --- */
             .eq-duel-card {
                 background: #fff;
-                border: 1px solid rgba(0,0,0,0.05);
+                border: 1px solid rgba(0,0,0,0.06);
                 padding: 0;
-                transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+                transition: transform 200ms cubic-bezier(0.16, 1, 0.3, 1), border-color 200ms ease, box-shadow 200ms ease;
                 cursor: pointer;
                 position: relative;
                 overflow: hidden;
                 display: flex;
                 flex-direction: column;
                 height: 100%;
-                border-radius: 16px;
-                box-shadow: 0 4px 20px rgba(0,0,0,0.02);
+                border-radius: 12px;
+                box-shadow: 0 1px 3px rgba(0,0,0,0.02);
             }
             .eq-duel-card::before {
                 content: ''; position: absolute; top: 0; left: 0;
                 width: 3px; height: 0; background: var(--red);
-                transition: height 0.4s ease;
+                transition: height 200ms ease;
             }
             .eq-duel-card:hover::before { height: 100%; }
             .eq-duel-card:hover {
-                border-color: rgba(92, 20, 20, 0.15);
-                box-shadow: 0 16px 48px -16px rgba(92, 20, 20, 0.08), 0 0 1px rgba(92, 20, 20, 0.12);
-                transform: translateY(-4px);
+                border-color: rgba(92, 20, 20, 0.18);
+                box-shadow: 0 8px 24px rgba(92, 20, 20, 0.05), 0 2px 4px rgba(0,0,0,0.01);
+                transform: translateY(-2px);
             }
             .eq-duel-card:active { transform: translateY(-1px); }
-            .eq-duel-card-inner { padding: 28px 28px 0; flex: 1; }
+            .eq-duel-card-inner { padding: 24px 24px 0; flex: 1; }
             .eq-duel-card-header {
                 display: flex; align-items: center; justify-content: space-between;
                 margin-bottom: 12px;
@@ -1356,10 +1371,13 @@ export function renderActiveContracts() {
             .eq-duel-card-status.pending { color: #d97706; }
             .eq-duel-card-status.ended { color: #9ca3af; }
             .eq-duel-card-metric {
-                font-family: 'Plus Jakarta Sans', sans-serif;
-                font-size: 16px; font-weight: 800; color: #111;
-                margin-bottom: 20px; letter-spacing: -0.3px;
-                line-height: 1.3;
+                font-family: 'JetBrains Mono', monospace;
+                font-size: 11px;
+                font-weight: 700;
+                letter-spacing: 1px;
+                text-transform: uppercase;
+                color: #8a8984;
+                margin-bottom: 24px;
             }
             .eq-duel-card-metric span { font-weight: 400; }
             
@@ -1387,7 +1405,7 @@ export function renderActiveContracts() {
             .eq-duel-lead-dot { width: 5px; height: 5px; border-radius: 50%; flex-shrink: 0; }
             .eq-duel-player-growth {
                 font-family: 'Plus Jakarta Sans', sans-serif;
-                font-size: 26px; font-weight: 800; color: #111;
+                font-size: 28px; font-weight: 800; color: #111;
                 letter-spacing: -1px; margin-top: 2px; line-height: 1.1;
             }
             .eq-duel-player-growth.leading { color: var(--green); }
@@ -1410,11 +1428,11 @@ export function renderActiveContracts() {
                 filter: drop-shadow(0 4px 6px rgba(0,0,0,0.1));
             }
             .eq-duel-momentum {
-                height: 4px; display: flex; overflow: hidden;
-                margin: 0 28px 0; background: #f5f4f0; border-radius: 2px;
+                height: 7px; display: flex; overflow: hidden;
+                margin: 0 28px 0; background: #f5f4f0; border-radius: 4px;
             }
-            .eq-duel-momentum-left { background: var(--green); transition: width .6s ease; border-radius: 2px 0 0 2px; }
-            .eq-duel-momentum-right { background: var(--red); transition: width .6s ease; border-radius: 0 2px 2px 0; }
+            .eq-duel-momentum-left { background: var(--green); transition: width .6s ease; border-radius: 4px 0 0 4px; }
+            .eq-duel-momentum-right { background: var(--red); transition: width .6s ease; border-radius: 0 4px 4px 0; }
             
             .eq-duel-card-actions {
                 display: flex; gap: 0; border-top: 1px solid rgba(0,0,0,0.05);
@@ -1457,20 +1475,44 @@ export function renderActiveContracts() {
                 border-radius: 4px; color: #fff; margin-bottom: 4px;
             }
 
+            .eq-duel-card-hover-details {
+                opacity: 0;
+                max-height: 0;
+                overflow: hidden;
+                transition: opacity 200ms ease, max-height 200ms ease, margin-top 200ms ease;
+            }
+            .eq-duel-card:hover .eq-duel-card-hover-details {
+                opacity: 1;
+                max-height: 100px;
+                margin-top: 12px;
+            }
+
         </style>
 
         <div class="eq">
             <!-- Section 3: Live Market Header -->
             <section class="eq-market-header" id="live-market" data-reveal>
-
-                <h2 class="eq-market-title">Active <strong style="color: #5C1414;">Market</strong></h2>
-                <div class="eq-market-live">
-                    <div class="eq-market-dot"></div>
-                    Live — Updated <span id="last-updated">04:20:00 PM</span>
+                <div style="display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 24px; flex-wrap: wrap; gap: 16px;">
+                    <div>
+                        <h2 class="eq-market-title" style="margin: 0; font-size: 36px; font-weight: 800; font-family: 'Plus Jakarta Sans', sans-serif;"><strong style="color: #5C1414;">Market</strong></h2>
+                        <div class="eq-market-live" style="margin: 8px 0 0 0; display: flex; align-items: center; gap: 6px;">
+                            <div class="eq-market-dot"></div>
+                            <span style="font-weight: 700; color: #10b981; font-family: 'JetBrains Mono', monospace; font-size: 9px; letter-spacing: 0.5px;">LIVE</span>
+                            <span style="color: #ddd;">•</span>
+                            <span style="font-family: 'JetBrains Mono', monospace; font-size: 9px; color: #8a8984;" id="live-time-ago">Updated just now</span>
+                        </div>
+                    </div>
+                    <div class="eq-search-wrap" style="margin-bottom: 0;">
+                        <div style="position: relative; display: flex; align-items: center;">
+                            <input type="text" class="eq-search-box" id="eq-search" placeholder="Search revenue, YouTube, Stripe... (Press '/')" style="padding-left: 36px; margin: 0;">
+                            <i data-lucide="search" style="position: absolute; left: 12px; top: 50%; transform: translateY(-50%); width: 14px; height: 14px; color: #8a8984; pointer-events: none;"></i>
+                        </div>
+                        <button class="eq-btn-rules" id="btn-rules" style="margin: 0;">Rules</button>
+                    </div>
                 </div>
 
                 <!-- Top Market Toggles (Segmented Control) -->
-                <div class="act-market-toggles" id="act-market-toggles" data-active="solo">
+                <div class="act-market-toggles" id="act-market-toggles" data-active="solo" style="margin-bottom: 24px;">
                     <div class="act-market-indicator"></div>
                     <button class="act-market-btn active" data-type="solo">Solo Contracts</button>
                     <button class="act-market-btn" data-type="rivalry">Rivalries</button>
@@ -1498,10 +1540,6 @@ export function renderActiveContracts() {
                         <button class="eq-tab" data-sort="new">NEW</button>
                         <button class="eq-tab" data-sort="closing_soon">CLOSING SOON</button>
                         <button class="eq-tab" data-sort="volume_24h">HIGH VOLUME</button>
-                    </div>
-                    <div class="eq-search-wrap">
-                        <input type="text" class="eq-search-box" id="eq-search" placeholder="Search contracts...">
-                        <button class="eq-btn-rules" id="btn-rules">Rules</button>
                     </div>
                 </div>
 
@@ -1692,12 +1730,24 @@ export async function initActiveContracts() {
         // Clear grid
         grid.innerHTML = '';
 
-        // Filter client-side for Rules (Tier/Stake)
+        const searchQuery = (document.getElementById('eq-search')?.value || '').toLowerCase().trim();
+
+        // Filter client-side for Rules (Tier/Stake) and Search Query
         const visibleContracts = contracts.filter(c => {
             const tier = (c.tier || 'controlled').toLowerCase();
             const stake = c.min_stake || (c.costCents ? c.costCents / 100 : 0);
             if (!enabledTiers[tier]) return false;
             if (stake < minStake) return false;
+
+            if (searchQuery) {
+                const titleMatch = (c.title || '').toLowerCase().includes(searchQuery);
+                const metricMatch = (c.metric || '').toLowerCase().includes(searchQuery);
+                const providerMatch = (c.provider || '').toLowerCase().includes(searchQuery);
+                const challengerMatch = c.challenger && (c.challenger.name || '').toLowerCase().includes(searchQuery);
+                const opponentMatch = c.opponent && (c.opponent.name || '').toLowerCase().includes(searchQuery);
+                return titleMatch || metricMatch || providerMatch || challengerMatch || opponentMatch;
+            }
+
             return true;
         });
 
@@ -1880,6 +1930,20 @@ export async function initActiveContracts() {
                     <div class="eq-duel-momentum-left" style="width:${leftPct}%"></div>
                     <div class="eq-duel-momentum-right" style="width:${rightPct}%"></div>
                 </div>` : ''}
+                <div class="eq-duel-card-hover-details" style="padding: 0 28px; border-top: 1px dashed rgba(0,0,0,0.06); padding-top: 12px; margin-top: 0;">
+                    <div style="display:flex; justify-content:space-between; margin-bottom: 4px; font-size:10px;">
+                        <span style="color:#8a8984; font-family:'JetBrains Mono',monospace;">VERIFICATION:</span>
+                        <span style="font-weight:700; color:#1e1e1e; font-family:'JetBrains Mono',monospace;">${r.provider.toUpperCase()} API</span>
+                    </div>
+                    <div style="display:flex; justify-content:space-between; margin-bottom: 4px; font-size:10px;">
+                        <span style="color:#8a8984; font-family:'JetBrains Mono',monospace;">SETTLEMENT:</span>
+                        <span style="font-weight:700; color:#1e1e1e; font-family:'JetBrains Mono',monospace;">MUTUAL CONSENSUS</span>
+                    </div>
+                    <div style="display:flex; justify-content:space-between; font-size:10px;">
+                        <span style="color:#8a8984; font-family:'JetBrains Mono',monospace;">HISTORICAL SUC:</span>
+                        <span style="font-weight:700; color:#10b981; font-family:'JetBrains Mono',monospace;">98.6%</span>
+                    </div>
+                </div>
                 <div class="eq-duel-card-bottom">
                     <div class="eq-duel-card-stake">
                         <span class="eq-duel-card-stake-val">$${(r.stake * 2).toLocaleString()}</span>
@@ -1973,6 +2037,20 @@ export async function initActiveContracts() {
                         <div class="eq-stake-lbl">YIELD MULTIPLIER</div>
                     </div>
                 </div>
+                <div class="eq-card-hover-details">
+                    <div style="display:flex; justify-content:space-between; margin-bottom: 4px; font-size:10px;">
+                        <span style="color:#8a8984; font-family:'JetBrains Mono',monospace;">VERIFICATION:</span>
+                        <span style="font-weight:700; color:#1e1e1e; font-family:'JetBrains Mono',monospace;">${platform.toUpperCase()} API</span>
+                    </div>
+                    <div style="display:flex; justify-content:space-between; margin-bottom: 4px; font-size:10px;">
+                        <span style="color:#8a8984; font-family:'JetBrains Mono',monospace;">SETTLEMENT:</span>
+                        <span style="font-weight:700; color:#1e1e1e; font-family:'JetBrains Mono',monospace;">DETERMINISTIC</span>
+                    </div>
+                    <div style="display:flex; justify-content:space-between; font-size:10px;">
+                        <span style="color:#8a8984; font-family:'JetBrains Mono',monospace;">EXPECTED PAYOUT:</span>
+                        <span style="font-weight:700; color:#10b981; font-family:'JetBrains Mono',monospace;">STAKE × ${multiplier}</span>
+                    </div>
+                </div>
                 <button class="eq-card-cta primary eq-lock-btn">EXECUTE CONTRACT</button>
                 <div class="eq-card-footer">Capital is locked until settlement.</div>
             </div>
@@ -2021,10 +2099,27 @@ export async function initActiveContracts() {
         } catch (_) { /* silent */ }
     }
 
+    let lastFeedUpdateTime = new Date();
+
     function updateTime() {
-        const now = new Date();
-        lastUpdatedEl.textContent = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' });
+        lastFeedUpdateTime = new Date();
+        updateTimeAgoText();
     }
+
+    function updateTimeAgoText() {
+        const now = new Date();
+        const diffSec = Math.floor((now - lastFeedUpdateTime) / 1000);
+        const timeAgoEl = document.getElementById('live-time-ago');
+        if (timeAgoEl) {
+            if (diffSec < 5) {
+                timeAgoEl.textContent = 'Updated just now';
+            } else {
+                timeAgoEl.textContent = `Updated ${diffSec}s ago`;
+            }
+        }
+    }
+
+    const timeAgoInterval = setInterval(updateTimeAgoText, 1000);
 
     // ===================================================================
     // LISTENERS
@@ -2073,6 +2168,17 @@ export async function initActiveContracts() {
             pill.classList.add('active');
             activeCategory = pill.dataset.category;
             fetchFeed(false);
+        });
+    }
+
+    // Search Live Filter
+    const searchEl = document.getElementById('eq-search');
+    if (searchEl) {
+        searchEl.addEventListener('input', () => {
+            if (lastFeedData) {
+                const contracts = Array.isArray(lastFeedData?.listings) ? lastFeedData.listings : [];
+                renderGrid(contracts);
+            }
         });
     }
 
@@ -2175,5 +2281,20 @@ export async function initActiveContracts() {
                 fetchFeed(false);
             });
         }
+    }
+
+    // Keyboard Focus shortcut "/"
+    const searchInputEl = document.getElementById('eq-search');
+    if (searchInputEl) {
+        document.addEventListener('keydown', (e) => {
+            if (e.key === '/' && document.activeElement !== searchInputEl) {
+                if (document.activeElement.tagName === 'INPUT' || document.activeElement.tagName === 'TEXTAREA') {
+                    return;
+                }
+                e.preventDefault();
+                searchInputEl.focus();
+                searchInputEl.select();
+            }
+        });
     }
 }

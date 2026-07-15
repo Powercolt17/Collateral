@@ -91,26 +91,27 @@ export function renderToken() {
                 gap: 16px;
             }
             .cltr-logo-svg {
-                width: 40px;
-                height: 40px;
+                width: 48px;
+                height: 48px;
                 color: #5C1414;
                 fill: currentColor;
             }
             .cltr-title-text {
-                font-size: 18px;
+                font-size: 28px;
                 font-weight: 800;
-                letter-spacing: -0.5px;
+                letter-spacing: -0.8px;
                 color: #111;
                 margin: 0;
                 text-transform: uppercase;
+                line-height: 1.1;
             }
             .cltr-title-desc {
-                font-size: 10px;
+                font-size: 11px;
                 color: #666;
                 font-family: 'JetBrains Mono', monospace;
-                letter-spacing: 1px;
+                letter-spacing: 1.5px;
                 text-transform: uppercase;
-                margin-top: 4px;
+                margin-top: 6px;
             }
 
             /* --- WEB3 WALLET BAR --- */

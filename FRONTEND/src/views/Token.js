@@ -1141,10 +1141,29 @@ export function renderToken() {
                 transform: translateY(-2px);
                 box-shadow: 0 12px 30px rgba(92, 20, 20, 0.04);
             }
-            .ov-card-icon {
-                font-size: 24px;
-                margin-bottom: 16px;
-                display: block;
+            .ov-card-icon-wrap {
+                width: 48px;
+                height: 48px;
+                border-radius: 8px;
+                background: rgba(92, 20, 20, 0.04);
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                margin-bottom: 20px;
+                color: #5C1414;
+                transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+            }
+            .ov-card:hover .ov-card-icon-wrap {
+                background: #5C1414;
+                color: #FFFFFF;
+                transform: scale(1.05);
+                box-shadow: 0 8px 24px rgba(92, 20, 20, 0.15);
+            }
+            .ov-card-icon-svg {
+                width: 22px;
+                height: 22px;
+                stroke-linecap: round;
+                stroke-linejoin: round;
             }
             .ov-card-title {
                 font-size: 16px;
@@ -1195,22 +1214,45 @@ export function renderToken() {
                     
                     <div class="ov-cards-grid">
                         <div class="ov-card" onclick="window.app.switchProtocolTab('vision');">
-                            <span class="ov-card-icon">📖</span>
+                            <div class="ov-card-icon-wrap">
+                                <svg class="ov-card-icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                                    <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/>
+                                    <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/>
+                                </svg>
+                            </div>
                             <h3 class="ov-card-title">Vision</h3>
                             <p class="ov-card-desc">Why Collateral exists, the global trust problem, and the future of human reliability.</p>
                         </div>
                         <div class="ov-card" onclick="window.app.switchProtocolTab('whitepaper');">
-                            <span class="ov-card-icon">📄</span>
+                            <div class="ov-card-icon-wrap">
+                                <svg class="ov-card-icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                                    <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+                                    <polyline points="14 2 14 8 20 8"/>
+                                    <line x1="16" y1="13" x2="8" y2="13"/>
+                                    <line x1="16" y1="17" x2="8" y2="17"/>
+                                </svg>
+                            </div>
                             <h3 class="ov-card-title">Whitepaper</h3>
                             <p class="ov-card-desc">The Protocol and Economic Whitepaper outlining commitment models and credit ratings.</p>
                         </div>
                         <div class="ov-card" onclick="window.app.switchProtocolTab('economics');">
-                            <span class="ov-card-icon">💰</span>
+                            <div class="ov-card-icon-wrap">
+                                <svg class="ov-card-icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                                    <ellipse cx="12" cy="5" rx="9" ry="3"/>
+                                    <path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/>
+                                    <path d="M3 12c0 1.66 4 3 9 3s9-1.34 9-3"/>
+                                </svg>
+                            </div>
                             <h3 class="ov-card-title">Token Economics</h3>
                             <p class="ov-card-desc">How CLTR secures the network, enforces rules, and accumulates deflationary value.</p>
                         </div>
                         <div class="ov-card" onclick="window.router.navigate('/docs');">
-                            <span class="ov-card-icon">👨‍💻</span>
+                            <div class="ov-card-icon-wrap">
+                                <svg class="ov-card-icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                                    <polyline points="16 18 22 12 16 6"/>
+                                    <polyline points="8 6 2 12 8 18"/>
+                                </svg>
+                            </div>
                             <h3 class="ov-card-title">Documentation</h3>
                             <p class="ov-card-desc">Build on Collateral. Integration references, deployed contracts, and Node.js SDK setup guides.</p>
                         </div>

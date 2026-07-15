@@ -1191,7 +1191,7 @@ export function renderToken() {
                         </svg>
                         <div class="cltr-hdr-title-group">
                             <h1 class="cltr-title-text">Collateral Protocol</h1>
-                            <p class="cltr-title-desc">Decentralized human enforcement network</p>
+                            <p class="cltr-title-desc">The world's first Proof of Execution network</p>
                         </div>
                     </div>
                 </div>
@@ -1207,10 +1207,6 @@ export function renderToken() {
 
                 <!-- ── OVERVIEW VIEW ── -->
                 <div class="cltr-tab-panel" id="cltr-tab-overview">
-                    <div class="ov-hero" data-reveal>
-                        <h2 class="ov-title">Collateral Protocol</h2>
-                        <p class="ov-subtitle">The world's first Proof of Execution network.</p>
-                    </div>
                     
                     <div class="ov-cards-grid">
                         <div class="ov-card" onclick="window.app.switchProtocolTab('vision');">

@@ -1085,6 +1085,11 @@ export function renderRivalry() {
 
 
 export async function initRivalry() {
+    if (window._rivalryPollInterval) {
+        clearInterval(window._rivalryPollInterval);
+        window._rivalryPollInterval = null;
+    }
+
     if (typeof lucide !== 'undefined') lucide.createIcons();
 
     const grid = document.getElementById('rv-grid');
@@ -1722,7 +1727,7 @@ export async function initRivalry() {
     updatePreview();
 
     // ── Auto-refresh rivalry data every 60s ──
-    const rivalryPollInterval = setInterval(async () => {
+    window._rivalryPollInterval = setInterval(async () => {
         try {
             const res = await api.getRivalries({ limit: 50 });
             if (res.ok && res.rivalries && res.rivalries.length > 0) {
@@ -1734,12 +1739,6 @@ export async function initRivalry() {
             }
         } catch (_) { /* silent */ }
     }, 60000);
-
-    // Cleanup on route change
-    window._rivalryPollCleanup = () => {
-        clearInterval(rivalryPollInterval);
-        window._rivalryPollCleanup = null;
-    };
 
     // ── How It Works scroll-reveal ──
     if ('IntersectionObserver' in window) {

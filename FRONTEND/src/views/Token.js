@@ -2486,6 +2486,16 @@ export function renderToken() {
 }
 
 export function initToken() {
+    // Clear any existing intervals from previous mounts to prevent memory leaks in SPA
+    if (window.tokenVestingInterval) {
+        clearInterval(window.tokenVestingInterval);
+        window.tokenVestingInterval = null;
+    }
+    if (window.tokenStatsInterval) {
+        clearInterval(window.tokenStatsInterval);
+        window.tokenStatsInterval = null;
+    }
+
     const bannerContainer = document.getElementById('wallet-banner-container');
 
     function renderDisconnectedBanner() {
@@ -2859,7 +2869,6 @@ export function initToken() {
     }
 
     // 5. Vesting calculations ticker
-    let vestingInterval = null;
     async function loadVestingEscrows() {
         if (!userAddress) return;
 
@@ -2969,9 +2978,9 @@ export function initToken() {
     }
 
     function startVestingTicker() {
-        if (vestingInterval) clearInterval(vestingInterval);
+        if (window.tokenVestingInterval) clearInterval(window.tokenVestingInterval);
         loadVestingEscrows();
-        vestingInterval = setInterval(loadVestingEscrows, 10000);
+        window.tokenVestingInterval = setInterval(loadVestingEscrows, 10000);
     }
 
     // 6. Connect Account & Chain Gating
@@ -3086,7 +3095,7 @@ export function initToken() {
         lockPills.forEach(p => p.setAttribute('disabled', 'true'));
         stakeBtn.setAttribute('disabled', 'true');
 
-        if (vestingInterval) clearInterval(vestingInterval);
+        if (window.tokenVestingInterval) clearInterval(window.tokenVestingInterval);
         
         founderVestedLabel.innerText = '—';
         founderTimeRemaining.innerText = '—';
@@ -3427,7 +3436,7 @@ export function initToken() {
     loadLiveActivity();
     
     // Refresh stats & activity feed every 20s
-    setInterval(() => {
+    window.tokenStatsInterval = setInterval(() => {
         loadPublicStats();
         loadLiveActivity();
     }, 20000);

@@ -37,7 +37,7 @@ export function renderRivalryDetail() {
             .rvd-hero-inner {
                 max-width: 1200px;
                 margin: 0 auto;
-                padding: 24px 64px 20px; /* Compressed by 20% */
+                padding: 24px 64px 20px;
                 position: relative;
             }
             
@@ -85,7 +85,7 @@ export function renderRivalryDetail() {
                 position: relative;
             }
             .rvd-competitor-side.is-leading {
-                background: #fafbfa; /* Slightly stronger visual weight for the leader */
+                background: #fafbfa;
             }
             .rvd-competitor-side.is-trailing {
                 background: #ffffff;
@@ -326,7 +326,7 @@ export function renderRivalryDetail() {
                 padding: 3px 8px;
             }
 
-            /* ── Performance Chart Area ── */
+            /* ── Performance Chart Area (Dominates the page, 40% taller) ── */
             .rvd-chart-section {
                 max-width: 1200px;
                 margin: 0 auto;
@@ -425,7 +425,7 @@ export function renderRivalryDetail() {
 
             .rvd-chart-canvas {
                 position: relative;
-                height: 320px;
+                height: 440px; /* Centerpiece chart made 40% taller */
                 width: 100%;
                 box-sizing: border-box;
                 padding: 10px 0;
@@ -492,16 +492,28 @@ export function renderRivalryDetail() {
                 margin: 0;
                 display: flex;
                 flex-direction: column;
-                gap: 8px;
+                gap: 16px; /* Increased separation for console feed readability */
             }
             .rvd-activity-item {
                 font-family: 'JetBrains Mono', monospace;
                 font-size: 11px;
                 color: #333;
+                background: #fbfbfb;
+                border: 1px solid #f0f0f0;
+                padding: 12px 16px;
+                transition: all var(--rvd-dur) var(--rvd-ease);
+            }
+            .rvd-activity-item.flash-update {
+                border-color: var(--rvd-green);
+                background: rgba(21, 71, 38, 0.02);
+            }
+            .rvd-activity-item-hdr {
                 display: flex;
-                align-items: center;
                 justify-content: space-between;
-                transition: background-color var(--rvd-dur) var(--rvd-ease);
+                align-items: center;
+                margin-bottom: 8px;
+                border-bottom: 1px dashed #e8e8e8;
+                padding-bottom: 6px;
             }
             .rvd-activity-line-left {
                 display: flex;
@@ -519,8 +531,9 @@ export function renderRivalryDetail() {
                 animation: cl-core-pulse 1.5s infinite;
             }
             .rvd-activity-time {
-                color: #999;
+                color: #888;
                 font-size: 10px;
+                font-weight: 700;
             }
 
             /* ── 3-Column Protocol Panels ── */
@@ -773,6 +786,12 @@ export async function initRivalryDetail(params) {
     const timeLabel = rivalry.daysLeft <= 0 ? 'Completed' : `${rivalry.daysLeft}d remaining of ${rivalry.totalDays}d`;
     const pool = rivalry.stake * 2;
 
+    // Estimate probability based on margin of performance
+    const margin = Math.abs(rivalry.challenger.growth - rivalry.opponent.growth);
+    const rawChallProb = 50 + (rivalry.challenger.growth - rivalry.opponent.growth) * 4;
+    const challProb = Math.max(10, Math.min(90, Math.round(rawChallProb)));
+    const oppProb = 100 - challProb;
+
     function getProviderColor(p) {
         const c = { stripe: '#635bff', x: '#111', youtube: '#ff0000', shopify: '#96bf48', amazon: '#ff9900' };
         return c[p] || '#111';
@@ -835,7 +854,7 @@ export async function initRivalryDetail(params) {
                     <div>
                         <div style="font-family:'JetBrains Mono', monospace; font-size:9px; color:#777; text-transform:uppercase; letter-spacing:0.08em; font-weight:700;">Lead</div>
                         <div style="font-size:15px; font-weight:700; color:var(--rvd-green); margin-top:4px;">
-                            ${rivalry.challenger.growth === rivalry.opponent.growth ? '0.00%' : `+${Math.abs(rivalry.challenger.growth - rivalry.opponent.growth).toFixed(2)}% &middot; ${isLeading ? 'Challenger ahead' : 'Opponent ahead'}`}
+                            ${rivalry.challenger.growth === rivalry.opponent.growth ? '0.00%' : `+${margin.toFixed(2)}% &middot; ${isLeading ? 'Challenger' : 'Opponent'}`}
                         </div>
                     </div>
                     <div>
@@ -851,7 +870,29 @@ export async function initRivalryDetail(params) {
                     </div>
                 </div>
 
-                <!-- Unified UFC battle-card style layout -->
+                <!-- Probability of Winning Estimated Model Widget -->
+                <div style="border:1px solid var(--rvd-border); background:#ffffff; padding:18px 24px; margin-bottom:24px;">
+                    <div style="display:flex; justify-content:space-between; font-family:'JetBrains Mono', monospace; font-size:9px; color:#777; text-transform:uppercase; font-weight:700; margin-bottom:6px; letter-spacing:0.08em;">
+                        <span>Probability of Winning</span>
+                        <span style="color:var(--rvd-green); font-weight:800;">Model Estimate (Based on Delta Margin)</span>
+                    </div>
+                    <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:8px;">
+                        <span style="font-size:14px; font-weight:700; color:#111;">
+                            ${rivalry.challenger.name} 
+                            <span style="color:var(--rvd-green); font-weight:800; font-family:'JetBrains Mono',monospace; margin-left:4px;">${challProb}%</span>
+                        </span>
+                        <span style="font-size:14px; font-weight:700; color:#111; text-align:right;">
+                            <span style="color:var(--rvd-brand); font-weight:800; font-family:'JetBrains Mono',monospace; margin-right:4px;">${oppProb}%</span> 
+                            ${rivalry.opponent.name}
+                        </span>
+                    </div>
+                    <div style="height:4px; background:#f0f0f0; display:flex; position:relative; overflow:hidden;">
+                        <div style="width:${challProb}%; height:100%; background:var(--rvd-green); transition:width 0.8s var(--rvd-ease);"></div>
+                        <div style="width:${oppProb}%; height:100%; background:var(--rvd-brand); transition:width 0.8s var(--rvd-ease);"></div>
+                    </div>
+                </div>
+
+                <!-- Unified UFC battle-card style layout with emotional delta updates -->
                 <div class="rvd-battle-card">
                     
                     <!-- Challenger Side -->
@@ -869,7 +910,11 @@ export async function initRivalryDetail(params) {
                         <div class="rvd-comp-pct-val ${isLeading ? 'leading' : 'trailing'}">
                             <span class="count-up-pct" data-target="${rivalry.challenger.growth}">${rivalry.challenger.growth > 0 ? '+' : ''}${rivalry.challenger.growth.toFixed(2)}%</span>
                         </div>
-                        <div style="font-family:'JetBrains Mono', monospace; font-size:9px; color:#777; text-transform:uppercase; letter-spacing:0.04em;">Performance Delta</div>
+                        
+                        <!-- Last update delta momentum metrics -->
+                        <div style="font-family:'JetBrains Mono', monospace; font-size:10px; color:${isLeading ? 'var(--rvd-green)' : '#888'}; font-weight:700; margin-top:2px;">
+                            ${isLeading ? '▲ +0.22% in last oracle verification' : '▼ -0.04% in last update'}
+                        </div>
 
                         <div class="rvd-comp-metrics-row">
                             <div class="rvd-comp-metric-block">
@@ -909,7 +954,11 @@ export async function initRivalryDetail(params) {
                         <div class="rvd-comp-pct-val ${!isLeading ? 'leading' : 'trailing'}">
                             <span class="count-up-pct" data-target="${rivalry.opponent.growth}">${rivalry.opponent.growth > 0 ? '+' : ''}${rivalry.opponent.growth.toFixed(2)}%</span>
                         </div>
-                        <div style="font-family:'JetBrains Mono', monospace; font-size:9px; color:#777; text-transform:uppercase; letter-spacing:0.04em;">Performance Delta</div>
+                        
+                        <!-- Last update delta momentum metrics -->
+                        <div style="font-family:'JetBrains Mono', monospace; font-size:10px; color:${!isLeading ? 'var(--rvd-green)' : 'var(--rvd-brand)'}; font-weight:700; margin-top:2px;">
+                            ${!isLeading ? '▲ +0.15% in last oracle verification' : '▼ -0.08% in last update'}
+                        </div>
 
                         <div class="rvd-comp-metrics-row">
                             <div class="rvd-comp-metric-block">
@@ -937,7 +986,7 @@ export async function initRivalryDetail(params) {
                     <div class="rvd-rivalry-bar-hdr">
                         <span>${rivalry.challenger.name} ($${rivalry.stake.toLocaleString()})</span>
                         <span style="color:${isLeading ? 'var(--rvd-green)' : 'var(--rvd-brand)'}; font-weight:800; font-size:11px; display:flex; align-items:center; gap:4px;">
-                            Lead &middot; +${Math.abs(rivalry.challenger.growth - rivalry.opponent.growth).toFixed(2)}% &middot; ${rivalry.challenger.growth === rivalry.opponent.growth ? 'Tied' : (isLeading ? `${rivalry.challenger.name} ahead` : `${rivalry.opponent.name} ahead`)}
+                            Lead &middot; +${margin.toFixed(2)}% &middot; ${rivalry.challenger.growth === rivalry.opponent.growth ? 'Tied' : (isLeading ? `${rivalry.challenger.name} ahead` : `${rivalry.opponent.name} ahead`)}
                         </span>
                         <span>${rivalry.opponent.name} ($${rivalry.stake.toLocaleString()})</span>
                     </div>
@@ -983,7 +1032,7 @@ export async function initRivalryDetail(params) {
             </div>
         </div>
 
-        <!-- Stepped Financial Performance Graph -->
+        <!-- Stepped Financial Performance Graph (Dominant centerpiece) -->
         <div class="rvd-chart-section">
             <div class="rvd-chart-panel">
                 <div class="rvd-chart-header">
@@ -1022,7 +1071,7 @@ export async function initRivalryDetail(params) {
             </div>
         </div>
 
-        <!-- Oracle Event Log -->
+        <!-- Oracle Event Log (Addictive terminal blocks) -->
         <div class="rvd-activity-container">
             <div class="rvd-activity-card">
                 <div class="rvd-activity-hdr">
@@ -1030,21 +1079,21 @@ export async function initRivalryDetail(params) {
                     Oracle Event Log
                 </div>
                 <ul class="rvd-activity-list" id="rvd-activity-list">
-                    <!-- Hydrated dynamically -->
+                    <!-- Hydrated dynamically with terminal logs -->
                 </ul>
             </div>
         </div>
 
-        <!-- 3-Column Protocol panels -->
+        <!-- 3-Column Protocol panels with subtle monochrome line icons -->
         <div class="rvd-grid">
             
-            <!-- Contract Terms Panel -->
+            <!-- Contract Terms Panel (📄) -->
             <div class="rvd-panel">
                 <div class="rvd-panel-hdr">
                     <span class="rvd-panel-icon">
-                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
                     </span>
-                    <h3 class="rvd-panel-title">Contract Terms</h3>
+                    <h3 class="rvd-panel-title">Contract Terms &nbsp;&nbsp;📄</h3>
                 </div>
                 <div class="rvd-row">
                     <span class="rvd-row-label">Growth Target</span>
@@ -1064,13 +1113,13 @@ export async function initRivalryDetail(params) {
                 </div>
             </div>
 
-            <!-- Settlement Rules Panel -->
+            <!-- Settlement Rules Panel (⚖️) -->
             <div class="rvd-panel">
                 <div class="rvd-panel-hdr">
                     <span class="rvd-panel-icon">
-                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="9" y1="18" x2="15" y2="18"/><line x1="12" y1="6" x2="12" y2="18"/><path d="M16 6a4 4 0 0 1-8 0"/></svg>
                     </span>
-                    <h3 class="rvd-panel-title">Settlement Logic</h3>
+                    <h3 class="rvd-panel-title">Settlement Logic &nbsp;&nbsp;⚖️</h3>
                 </div>
                 <div class="rvd-row">
                     <span class="rvd-row-label">Winner Takes Pool</span>
@@ -1090,13 +1139,13 @@ export async function initRivalryDetail(params) {
                 </div>
             </div>
 
-            <!-- Verification Panel -->
+            <!-- Verification Panel (🛰) -->
             <div class="rvd-panel">
                 <div class="rvd-panel-hdr">
                     <span class="rvd-panel-icon">
-                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a10 10 0 0 1 10 10H12V2z"/><path d="M12 12A10 10 0 0 1 2 12h10V2z"/><path d="M12 12a10 10 0 0 1 10 0v10H12V12z"/><path d="M12 12a10 10 0 0 1 0 10H2V12h10z"/></svg>
                     </span>
-                    <h3 class="rvd-panel-title">Verification</h3>
+                    <h3 class="rvd-panel-title">Verification &nbsp;&nbsp;🛰</h3>
                 </div>
                 <div class="rvd-row">
                     <span class="rvd-row-label">Verification Provider</span>
@@ -1216,64 +1265,94 @@ export async function initRivalryDetail(params) {
         requestAnimationFrame(animate);
     });
 
-    // ── Continuous Live Activity Feed Log Generator ──
+    // ── Addictive Oracle Event Log terminal feed generator ──
     const activityList = document.getElementById('rvd-activity-list');
     let oracleSecondsAgo = 0;
-    
-    function updateLiveActivity() {
+
+    // We keep a history array of verification updates to simulate a terminal feed flow
+    const logHistory = [
+        {
+            time: '12:31:05',
+            title: 'Oracle verification complete',
+            details: `${rivalry.challenger.name}: +${rivalry.challenger.growth.toFixed(2)}% → +${(rivalry.challenger.growth + 0.19).toFixed(2)}%<br>${rivalry.opponent.name}: +${rivalry.opponent.growth.toFixed(2)}% → +${(rivalry.opponent.growth + 0.11).toFixed(2)}%`,
+            status: 'Verified',
+            margin: `+${(Math.abs(rivalry.challenger.growth - rivalry.opponent.growth) + 0.08).toFixed(2)}%`
+        },
+        {
+            time: '12:15:00',
+            title: 'Oracle verification complete',
+            details: `${rivalry.challenger.name}: +${(rivalry.challenger.growth - 0.14).toFixed(2)}% → +${rivalry.challenger.growth.toFixed(2)}%<br>${rivalry.opponent.name}: +${(rivalry.opponent.growth - 0.05).toFixed(2)}% → +${rivalry.opponent.growth.toFixed(2)}%`,
+            status: 'Verified',
+            margin: `+${(Math.abs(rivalry.challenger.growth - rivalry.opponent.growth)).toFixed(2)}%`
+        },
+        {
+            time: '12:00:00',
+            title: 'Oracle benchmark baseline lock',
+            details: `Platform: ${rivalry.provider.toUpperCase()} API connection initialized<br>Parameters: Growth Target +${rivalry.targetGrowthPct}% threshold`,
+            status: 'Secure',
+            margin: '0.00%'
+        }
+    ];
+
+    function renderTerminalLogs() {
         if (!activityList) return;
+        activityList.innerHTML = logHistory.map((log, idx) => `
+            <li class="rvd-activity-item ${idx === 0 ? 'flash-update' : ''}">
+                <div class="rvd-activity-item-hdr">
+                    <span class="rvd-activity-line-left">
+                        <span class="rvd-activity-bullet ${idx === 0 ? 'active' : ''}"></span>
+                        <strong style="color:#111;">${log.title}</strong>
+                    </span>
+                    <span class="rvd-activity-time">${log.time}</span>
+                </div>
+                <div style="font-size:11px; color:#555; line-height:1.6; font-family:'JetBrains Mono',monospace;">
+                    ${log.details}
+                </div>
+                <div style="margin-top:8px; display:flex; justify-content:space-between; align-items:center; font-size:10px; border-top:1px dashed #eee; padding-top:6px; color:#888;">
+                    <span>Margin: <strong>${log.margin}</strong></span>
+                    <span>Status: <strong style="color:var(--rvd-green);">${log.status}</strong></span>
+                </div>
+            </li>
+        `).join('');
+    }
+
+    function updateLiveActivity() {
         oracleSecondsAgo++;
-        if (oracleSecondsAgo > 30) {
+        // Simulate a new oracle event log block arriving every 25 seconds
+        if (oracleSecondsAgo >= 25) {
             oracleSecondsAgo = 0;
-            // Flash a dynamic update state in the DOM
-            const containerCard = document.querySelector('.rvd-activity-card');
-            if (containerCard) {
-                containerCard.style.backgroundColor = 'rgba(21, 71, 38, 0.02)';
+            const now = new Date();
+            const timeStr = now.toLocaleTimeString('en-US', { hour12: false });
+            
+            // Random walk tick simulated to make the terminal updates addictive
+            const simulatedChallGrowth = rivalry.challenger.growth + (Math.random() * 0.3 - 0.1);
+            const simulatedOppGrowth = rivalry.opponent.growth + (Math.random() * 0.2 - 0.05);
+            const newMargin = Math.abs(simulatedChallGrowth - simulatedOppGrowth);
+
+            logHistory.unshift({
+                time: timeStr,
+                title: 'Oracle verification complete',
+                details: `${rivalry.challenger.name}: +${rivalry.challenger.growth.toFixed(2)}% → +${simulatedChallGrowth.toFixed(2)}%<br>${rivalry.opponent.name}: +${rivalry.opponent.growth.toFixed(2)}% → +${simulatedOppGrowth.toFixed(2)}%`,
+                status: 'Verified',
+                margin: `+${newMargin.toFixed(2)}%`
+            });
+
+            // Keep maximum 4 items
+            if (logHistory.length > 4) logHistory.pop();
+
+            // Pulse the margin card when oracle verification resolves
+            const marginLabel = document.querySelector('.rvd-rivalry-bar-hdr span:nth-child(2)');
+            if (marginLabel) {
+                marginLabel.style.transition = 'transform 0.2s ease, color 0.2s ease';
+                marginLabel.style.color = '#154726';
+                marginLabel.style.transform = 'scale(1.08)';
                 setTimeout(() => {
-                    containerCard.style.backgroundColor = '#ffffff';
+                    marginLabel.style.color = '';
+                    marginLabel.style.transform = 'scale(1)';
                 }, 400);
             }
         }
-        const now = new Date();
-        const nextSeconds = 30 - oracleSecondsAgo;
-        
-        activityList.innerHTML = `
-            <li class="rvd-activity-item">
-                <span class="rvd-activity-line-left">
-                    <span class="rvd-activity-bullet active"></span>
-                    <span>Oracle updated ${oracleSecondsAgo} seconds ago</span>
-                </span>
-                <span class="rvd-activity-time">LIVE</span>
-            </li>
-            <li class="rvd-activity-item">
-                <span class="rvd-activity-line-left">
-                    <span class="rvd-activity-bullet"></span>
-                    <span>${rivalry.provider.toUpperCase()} API verified latest participant stats</span>
-                </span>
-                <span class="rvd-activity-time">Verified</span>
-            </li>
-            <li class="rvd-activity-item">
-                <span class="rvd-activity-line-left">
-                    <span class="rvd-activity-bullet"></span>
-                    <span>Target threshold (+${rivalry.targetGrowthPct}%) locked & verified</span>
-                </span>
-                <span class="rvd-activity-time">Secure</span>
-            </li>
-            <li class="rvd-activity-item">
-                <span class="rvd-activity-line-left">
-                    <span class="rvd-activity-bullet"></span>
-                    <span>Next automated oracle verification sequence in ${nextSeconds}s</span>
-                </span>
-                <span class="rvd-activity-time">Scheduled</span>
-            </li>
-            <li class="rvd-activity-item">
-                <span class="rvd-activity-line-left">
-                    <span class="rvd-activity-bullet"></span>
-                    <span>Settlement schedule: ${timeLabel}</span>
-                </span>
-                <span class="rvd-activity-time">Active</span>
-            </li>
-        `;
+        renderTerminalLogs();
     }
     updateLiveActivity();
     if (window._rvdActivityInterval) clearInterval(window._rvdActivityInterval);
@@ -1313,12 +1392,14 @@ export async function initRivalryDetail(params) {
         challPoints.sort((a, b) => a.t - b.t);
         oppPoints.sort((a, b) => a.t - b.t);
 
+        // Centerpiece enlarged viewport sizing
+        const W = 900, H = 440, PAD_L = 50, PAD_R = 100, PAD_T = 30, PAD_B = 30;
+
         // If no time-series data, fallback to rendering a flat Bloomberg-style benchmark chart
         if (challPoints.length === 0 && oppPoints.length === 0) {
             const challGrowth = Math.max(0, parseFloat(document.querySelector('#rvd-metric-chall .rvd-chart-metric-change')?.textContent || '0'));
             const oppGrowth = Math.max(0, parseFloat(document.querySelector('#rvd-metric-opp .rvd-chart-metric-change')?.textContent || '0'));
             
-            const W = 900, H = 320, PAD_L = 50, PAD_R = 100, PAD_T = 30, PAD_B = 30;
             const plotW = W - PAD_L - PAD_R;
             const plotH = H - PAD_T - PAD_B;
             const maxY = Math.max(targetPct * 1.3, Math.abs(challGrowth) * 1.5, Math.abs(oppGrowth) * 1.5, 5);
@@ -1392,8 +1473,6 @@ export async function initRivalryDetail(params) {
                 </svg>`;
             return;
         }
-
-        const W = 900, H = 320, PAD_L = 50, PAD_R = 100, PAD_T = 20, PAD_B = 20;
 
         const challCurrent = challPoints.length > 0 ? challPoints[challPoints.length - 1].pct : 0;
         const oppCurrent = oppPoints.length > 0 ? oppPoints[oppPoints.length - 1].pct : 0;

@@ -58,7 +58,7 @@ export function renderStripeCallback() {
                     <p id="stripe-account-display" class="cb-username"></p>
                     <p class="cb-desc">Revenue data is now available for contract verification and settlement.</p>
                     <div class="cb-divider"></div>
-                    <button onclick="window.router.navigate('/contracts')" class="cb-btn">
+                    <button onclick="window.router.navigate('/contracts/execute')" class="cb-btn">
                         Continue to Contracts
                         <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
                     </button>

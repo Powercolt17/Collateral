@@ -1024,7 +1024,7 @@ export function initContracts() {
     // NAV — Back button
     // =========================================================
     document.getElementById('ext-nav-back')?.addEventListener('click', () => {
-        window.router.navigate('/contracts');
+        window.router.navigate('/market');
     });
 
     // =========================================================

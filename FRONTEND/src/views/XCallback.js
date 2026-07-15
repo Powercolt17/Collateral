@@ -220,7 +220,7 @@ export function renderXCallback() {
                     <p id="x-username-display" class="cb-username"></p>
                     <p class="cb-desc">Authority binding verified. Your X metrics are now available for contract verification.</p>
                     <div class="cb-divider"></div>
-                    <button onclick="window.router.navigate('/contracts')" class="cb-btn">
+                    <button onclick="window.router.navigate('/contracts/execute')" class="cb-btn">
                         Continue to Contracts
                         <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
                     </button>
@@ -309,7 +309,7 @@ export async function initXCallback() {
                         window.close();
                     } else {
                         // We're in main window (fallback) - redirect to contracts
-                        window.router.navigate('/contracts?step=source&connected=x');
+                        window.router.navigate('/contracts/execute?step=source&connected=x');
                     }
                 }, 1500);
 

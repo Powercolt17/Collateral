@@ -408,7 +408,7 @@ export async function initReceiptDetail(params) {
         });
 
         document.getElementById('btn-create-another')?.addEventListener('click', () => {
-            window.router.navigate('/contracts');
+            window.router.navigate('/market');
         });
 
         document.getElementById('btn-export-json')?.addEventListener('click', () => {

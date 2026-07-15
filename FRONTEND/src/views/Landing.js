@@ -590,6 +590,12 @@ export function initLanding() {
         document.querySelector('.lp')?.classList.add('v');
     }, 50);
 
+    // Update nav CTA text if logged in
+    const navCta = document.getElementById('lp-nav-cta');
+    if (navCta && window.appState?.isLoggedIn) {
+        navCta.textContent = 'Dashboard';
+    }
+
     // Animate progress loading bar
     const bar = document.getElementById('lp-loading-bar');
     if (bar) {

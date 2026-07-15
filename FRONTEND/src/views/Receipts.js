@@ -82,7 +82,7 @@ export async function initReceipts() {
                         Execute a contract to generate your first receipt.
                     </p>
                     <div class="flex items-center gap-3">
-                        <button onclick="window.router.navigate('/contracts')"
+                        <button onclick="window.router.navigate('/market')"
                             class="px-5 py-2.5 bg-neutral-900 text-white text-[11px] font-medium uppercase tracking-widest hover:bg-black transition-colors">
                             Browse Contracts
                         </button>

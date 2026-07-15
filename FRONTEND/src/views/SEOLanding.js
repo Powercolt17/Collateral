@@ -105,7 +105,7 @@ export function renderSEOLanding(params) {
                 <div class="seo-badge">${config.badge}</div>
                 <h1 class="seo-h1">${config.headline}</h1>
                 <p class="seo-sub">${config.subtext}</p>
-                <a href="/#/overview" class="seo-cta" onclick="event.preventDefault(); window.app.openAccessModal();">
+                <a href="/market" class="seo-cta" onclick="event.preventDefault(); window.app.openAccessModal();">
                     ${config.ctaText}
                 </a>
             </div>
@@ -143,7 +143,7 @@ export function renderSEOLanding(params) {
             <div class="seo-bottom-cta">
                 <div class="seo-bottom-h2">${config.bottomHeadline}</div>
                 <div class="seo-bottom-sub">${config.bottomSub}</div>
-                <a href="/#/overview" class="seo-bottom-btn" onclick="event.preventDefault(); window.app.openAccessModal();">
+                <a href="/market" class="seo-bottom-btn" onclick="event.preventDefault(); window.app.openAccessModal();">
                     Start Free →
                 </a>
             </div>
@@ -157,7 +157,7 @@ export function renderSEOLanding(params) {
 
 export function initSEOLanding() {
     if (window.trackEvent) {
-        const platform = window.location.hash.split('/go/')[1] || 'unknown';
+        const platform = window.location.pathname.split('/go/')[1] || 'unknown';
         window.trackEvent('seo_landing_view', { platform });
     }
 }

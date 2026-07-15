@@ -62,12 +62,12 @@ window.addEventListener('unhandledrejection', (e) => console.error('[UnhandledPr
         });
         if (hasUTM) {
             utm.landed_at = new Date().toISOString();
-            utm.landing_page = window.location.hash || '/';
+            utm.landing_page = window.location.pathname || '/';
             localStorage.setItem('collateral_utm', JSON.stringify(utm));
             console.log('[UTM] Captured:', utm);
             // Clean URL without reloading
             if (window.history.replaceState) {
-                const clean = window.location.pathname + window.location.hash;
+                const clean = window.location.pathname;
                 window.history.replaceState({}, '', clean);
             }
         }
@@ -1050,8 +1050,8 @@ window.app = {
                                     btn.innerHTML = '✓ Connected';
                                     btn.disabled = true;
                                     // Refresh the current view
-                                    const current = (window.location.hash || '#/contracts').replace(/^#/, '');
-                                    window.router.navigate(current);
+                                    const current = window.router.getCurrentPath();
+                                    window.router.navigate(current === '/' ? '/market' : current);
                                 } else {
                                     btn.innerHTML = 'Connect';
                                     btn.disabled = false;
@@ -1068,8 +1068,8 @@ window.app = {
                                 if (window.hydrateSession) await window.hydrateSession();
                                 btn.innerHTML = '✓ Connected';
                                 btn.disabled = true;
-                                const current = (window.location.hash || '#/contracts').replace(/^#/, '');
-                                window.router.navigate(current);
+                                const current = window.router.getCurrentPath();
+                                window.router.navigate(current === '/' ? '/market' : current);
                             }
                         } catch (pollErr) {
                             console.warn('[X] Poll error:', pollErr);
@@ -1114,8 +1114,8 @@ window.app = {
                                     btn.innerHTML = '✓ Connected';
                                     btn.disabled = true;
                                     // Refresh the current view
-                                    const current = (window.location.hash || '#/contracts').replace(/^#/, '');
-                                    window.router.navigate(current);
+                                    const current = window.router.getCurrentPath();
+                                    window.router.navigate(current === '/' ? '/market' : current);
                                 } else {
                                     btn.innerHTML = 'Connect';
                                     btn.disabled = false;
@@ -1137,7 +1137,7 @@ window.app = {
                                 btn.disabled = true;
                                 localStorage.removeItem('stripe_oauth_flow');
                                 localStorage.removeItem('stripe_oauth_state');
-                                const current = (window.location.hash || '#/contracts').replace(/^#/, '');
+                                const current = window.router.getCurrentPath() === '/' ? '/market' : window.router.getCurrentPath();
                                 window.router.navigate(current);
                             }
                         } catch (pollErr) {
@@ -1177,7 +1177,7 @@ window.app = {
                                     if (window.hydrateSession) await window.hydrateSession();
                                     btn.innerHTML = '✓ Connected';
                                     btn.disabled = true;
-                                    const current = (window.location.hash || '#/profile').replace(/^#/, '');
+                                    const current = window.router.getCurrentPath() === '/' ? '/profile' : window.router.getCurrentPath();
                                     window.router.navigate(current);
                                 } else {
                                     btn.innerHTML = 'Connect';
@@ -1194,7 +1194,7 @@ window.app = {
                                 btn.innerHTML = '✓ Connected';
                                 btn.disabled = true;
                                 localStorage.removeItem('shopify_oauth_flow');
-                                const current = (window.location.hash || '#/profile').replace(/^#/, '');
+                                const current = window.router.getCurrentPath() === '/' ? '/profile' : window.router.getCurrentPath();
                                 window.router.navigate(current);
                             }
                         } catch (pollErr) {
@@ -1224,7 +1224,7 @@ window.app = {
                                     if (window.hydrateSession) await window.hydrateSession();
                                     btn.innerHTML = '✓ Connected';
                                     btn.disabled = true;
-                                    const current = (window.location.hash || '#/profile').replace(/^#/, '');
+                                    const current = window.router.getCurrentPath() === '/' ? '/profile' : window.router.getCurrentPath();
                                     window.router.navigate(current);
                                 } else {
                                     btn.innerHTML = 'Connect';
@@ -1241,7 +1241,7 @@ window.app = {
                                 btn.innerHTML = '✓ Connected';
                                 btn.disabled = true;
                                 localStorage.removeItem('amazon_oauth_flow');
-                                const current = (window.location.hash || '#/profile').replace(/^#/, '');
+                                const current = window.router.getCurrentPath() === '/' ? '/profile' : window.router.getCurrentPath();
                                 window.router.navigate(current);
                             }
                         } catch (pollErr) {
@@ -1604,8 +1604,8 @@ window.app = {
                 window.app.populateSettingsSources();
 
                 // 3) Force router to re-render current page (prevents blank view)
-                const current = (window.location.hash || '#/overview').replace(/^#/, '');
-                window.router.navigate(current);
+                const current = window.router.getCurrentPath();
+                window.router.navigate(current === '/' ? '/market' : current);
 
                 return;
             }

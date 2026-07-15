@@ -36,7 +36,7 @@ export function renderResetPassword() {
             </form>
 
             <div class="rp-back">
-                <a href="#" onclick="window.location.hash='#/overview'; setTimeout(()=>window.app&&window.app.openAccessModal(),300); return false;" class="rp-back-link">← Back to Sign In</a>
+                <a href="#" onclick="window.router.navigate('/market'); setTimeout(()=>window.app&&window.app.openAccessModal(),300); return false;" class="rp-back-link">← Back to Sign In</a>
             </div>
         </div>
     </div>
@@ -177,9 +177,7 @@ export function initResetPassword() {
     if (!form) return;
 
     // Extract token from URL
-    const hash = window.location.hash || '';
-    const queryString = hash.split('?')[1] || '';
-    const params = new URLSearchParams(queryString);
+    const params = new URLSearchParams(window.location.search);
     const token = params.get('token');
 
     if (!token) {
@@ -237,7 +235,7 @@ export function initResetPassword() {
 
                 // Redirect to homepage and pop up sign-in modal
                 setTimeout(() => {
-                    window.location.hash = '#/overview';
+                    window.router.navigate('/market');
                     setTimeout(() => {
                         if (window.app?.openAccessModal) {
                             window.app.openAccessModal();

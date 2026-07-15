@@ -779,7 +779,7 @@ export async function initProfile() {
             else filtered.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
 
             if (filtered.length === 0) {
-                list.innerHTML = '<div class="prf-card"><div class="prf-empty"><div class="prf-empty-icon"><i data-lucide="file-text" style="width:20px;height:20px"></i></div><div class="prf-empty-title">No active contracts</div><div class="prf-empty-sub">' + (active.length === 0 ? 'Execute a contract to see it here.' : 'No contracts match this filter.') + '</div><button class="prf-cta" onclick="window.router.navigate(\'/overview\')">Browse Market Contracts →</button></div></div>';
+                list.innerHTML = '<div class="prf-card"><div class="prf-empty"><div class="prf-empty-icon"><i data-lucide="file-text" style="width:20px;height:20px"></i></div><div class="prf-empty-title">No active contracts</div><div class="prf-empty-sub">' + (active.length === 0 ? 'Execute a contract to see it here.' : 'No contracts match this filter.') + '</div><button class="prf-cta" onclick="window.router.navigate(\'/market\')">Browse Market Contracts →</button></div></div>';
                 if (window.lucide) window.lucide.createIcons();
                 return;
             }

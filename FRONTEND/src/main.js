@@ -403,20 +403,35 @@ window.app = {
         }, 300);
     },
     handleSignOut: async function () {
-        // Sign out of Clerk first (if available)
-        try {
-            if (window.Clerk && window.Clerk.signOut) {
-                await window.Clerk.signOut();
-            }
-        } catch (e) { console.warn('[Auth] Clerk sign-out failed:', e); }
+        // Clear local auth token and reset identity state immediately for instant UI response
         api.logout();
         appState.isLoggedIn = false;
         appState.username = null;
         appState.displayName = null;
         appState.userId = null;
         appState.connectedSources = { twitter: false, stripe: false, youtube: false, shopify: false, amazon: false, github: false };
+        
+        // Reset Web3 unified state properties
+        appState.unified.authStatus = 'signed_out';
+        appState.unified.user = null;
+        appState.unified.linkedWallets = [];
+        appState.unified.primaryWallet = null;
+        appState.unified.walletStatus = 'disconnected';
+
         updateAuthUI();
         window.router.navigate('/market');
+
+        // Disconnect Web3 wallet in background
+        try {
+            await disconnect(wagmiAdapter.wagmiConfig);
+        } catch (e) { console.warn('[Auth] Web3 disconnect failed:', e); }
+
+        // Sign out of Clerk in background (non-blocking)
+        try {
+            if (window.Clerk && window.Clerk.signOut) {
+                await window.Clerk.signOut();
+            }
+        } catch (e) { console.warn('[Auth] Clerk sign-out failed:', e); }
     },
     handleAuthClick: function () {
         if (appState.isLoggedIn) {

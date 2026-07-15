@@ -7,14 +7,13 @@
  */
 export function collateralSpinner(size = 48) {
     return `
-        <div style="position:relative;width:${size}px;height:${size}px;display:inline-block;vertical-align:middle;">
-            <svg style="position:absolute;top:0;left:0;width:100%;height:100%" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <circle cx="32" cy="32" r="15.5" stroke="#3B0001" stroke-width="2"/>
-                <line x1="32" y1="19.5" x2="32" y2="44.5" stroke="#3B0001" stroke-width="1.5" stroke-linecap="round" style="animation:cl-pulse 1.6s ease-in-out infinite"/>
-            </svg>
-            <svg style="position:absolute;top:0;left:0;width:100%;height:100%;animation:cl-spin 2.4s linear infinite;transform-origin:center center" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <ellipse cx="32" cy="32" rx="26.5" ry="7.5" stroke="#3B0001" stroke-width="1.1" fill="none" transform="rotate(-27 32 32)"/>
-            </svg>
+        <div class="cl-premium-spinner" style="position:relative; width:${size}px; height:${size}px; display:inline-block; vertical-align:middle;">
+            <!-- Outer Ring (Clockwise, Brand Red) -->
+            <div style="position:absolute; inset:0; border:2px solid transparent; border-top-color:#8B2020; border-right-color:#8B2020; border-radius:50%; animation:cl-spin-clockwise 1s cubic-bezier(0.4, 0.1, 0.6, 0.9) infinite;"></div>
+            <!-- Inner Dashed Ring (Counter-Clockwise, Muted Red) -->
+            <div style="position:absolute; inset:calc(${size}px * 0.15); border:1.5px dashed rgba(139,32,32,0.3); border-radius:50%; animation:cl-spin-counter 1.5s linear infinite;"></div>
+            <!-- Center Pulsing Core (Pulsing Brand Red) -->
+            <div style="position:absolute; top:50%; left:50%; width:calc(${size}px * 0.25); height:calc(${size}px * 0.25); margin-top:calc(${size}px * -0.125); margin-left:calc(${size}px * -0.125); background:#8B2020; border-radius:50%; animation:cl-core-pulse 1.5s ease-in-out infinite;"></div>
         </div>`;
 }
 

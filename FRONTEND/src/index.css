@@ -607,11 +607,15 @@ button[class*="-connect"]:hover,
 }
 
 /* ── Global Branded Loader Animations ── */
-@keyframes cl-spin {
+@keyframes cl-spin-clockwise {
     from { transform: rotate(0deg); }
     to { transform: rotate(360deg); }
 }
-@keyframes cl-pulse {
-    0%, 100% { opacity: 0.6; }
-    50% { opacity: 1; }
+@keyframes cl-spin-counter {
+    from { transform: rotate(360deg); }
+    to { transform: rotate(0deg); }
+}
+@keyframes cl-core-pulse {
+    0%, 100% { transform: scale(0.85); opacity: 0.6; }
+    50% { transform: scale(1.15); opacity: 1; }
 }

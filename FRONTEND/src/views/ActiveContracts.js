@@ -1677,6 +1677,16 @@ export async function initActiveContracts() {
     // Icons
     if (typeof lucide !== 'undefined') lucide.createIcons();
 
+    // Clear any existing intervals from previous mounts to prevent memory leaks and overlapping timers
+    if (window.marketPollInterval) {
+        clearInterval(window.marketPollInterval);
+        window.marketPollInterval = null;
+    }
+    if (window.marketTimeAgoInterval) {
+        clearInterval(window.marketTimeAgoInterval);
+        window.marketTimeAgoInterval = null;
+    }
+
     // State
     const urlParams = new URLSearchParams(window.location.search);
     let activeMarketType = urlParams.get('type') || 'solo';
@@ -1684,7 +1694,6 @@ export async function initActiveContracts() {
     let activeCategory = 'all';
     let minStake = 0; // Controlled by rules modal
     let enabledTiers = { controlled: true, elevated: true, maximum: true };
-    let pollInterval;
     let lastFeedData = null;
     let isFrozen = false; // When execution is open
 
@@ -2163,7 +2172,7 @@ export async function initActiveContracts() {
         }
     }
 
-    const timeAgoInterval = setInterval(updateTimeAgoText, 1000);
+    window.marketTimeAgoInterval = setInterval(updateTimeAgoText, 1000);
 
     // ===================================================================
     // LISTENERS
@@ -2242,8 +2251,7 @@ export async function initActiveContracts() {
     // Initial Load
     fetchFeed(false);
 
-    // Polling
-    pollInterval = setInterval(() => fetchFeed(true), 15000);
+    window.marketPollInterval = setInterval(() => fetchFeed(true), 15000);
 
     // ===================================================================
     // UNIFIED EXECUTION — Card click + Lock button → same modal

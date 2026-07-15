@@ -60,8 +60,8 @@ export function renderShopifyCallback() {
                     <p id="shopify-shop-display" class="cb-username"></p>
                     <p class="cb-desc">Store data is now available for contract verification and settlement.</p>
                     <div class="cb-divider"></div>
-                    <button onclick="window.router.navigate('/profile')" class="cb-btn">
-                        Continue
+                    <button onclick="window.router.navigate('/market')" class="cb-btn">
+                        Continue to Market
                         <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
                     </button>
                     <div class="cb-footer">Read-only access · Encrypted at rest</div>
@@ -149,7 +149,7 @@ export async function initShopifyCallback() {
         }
 
         setTimeout(() => {
-            window.router.navigate('/profile');
+            window.router.navigate('/market');
         }, 2000);
 
         return;

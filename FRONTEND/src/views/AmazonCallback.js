@@ -38,8 +38,8 @@ export function renderAmazonCallback() {
                     <h2>Amazon Connected!</h2>
                     <p>Your Amazon Seller account has been successfully connected.</p>
                     <div id="amazon-seller-display" class="amz-cb-detail"></div>
-                    <button onclick="window.router.navigate('/profile')" class="amz-cb-btn">
-                        Continue to Profile
+                    <button onclick="window.router.navigate('/market')" class="amz-cb-btn">
+                        Continue to Market
                     </button>
                 </div>
                 
@@ -47,7 +47,7 @@ export function renderAmazonCallback() {
                     <div class="amz-cb-icon error">❌</div>
                     <h2>Connection Failed</h2>
                     <p id="amazon-error-message" class="amz-cb-error-msg"></p>
-                    <button onclick="window.router.navigate('/profile')" class="amz-cb-btn">
+                    <button onclick="window.router.navigate('/sources')" class="amz-cb-btn">
                         Try Again
                     </button>
                 </div>
@@ -114,7 +114,7 @@ export async function initAmazonCallback() {
         }
 
         setTimeout(() => {
-            window.router.navigate('/profile');
+            window.router.navigate('/market');
         }, 2000);
 
         return;

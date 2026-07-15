@@ -58,8 +58,8 @@ export function renderStripeCallback() {
                     <p id="stripe-account-display" class="cb-username"></p>
                     <p class="cb-desc">Revenue data is now available for contract verification and settlement.</p>
                     <div class="cb-divider"></div>
-                    <button onclick="window.router.navigate('/contracts/execute')" class="cb-btn">
-                        Continue to Contracts
+                    <button onclick="window.router.navigate('/market')" class="cb-btn">
+                        Continue to Market
                         <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
                     </button>
                     <div class="cb-footer">Read-only access · Encrypted at rest</div>
@@ -169,7 +169,7 @@ export async function initStripeCallback() {
 
         // Auto-redirect after 2 seconds
         setTimeout(() => {
-            window.router.navigate('/sources');
+            window.router.navigate('/market');
         }, 2000);
 
         return;

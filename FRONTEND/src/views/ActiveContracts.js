@@ -582,17 +582,19 @@ export function renderActiveContracts() {
                 opacity: 0;
                 max-height: 0;
                 overflow: hidden;
-                transition: opacity 200ms ease, max-height 200ms ease, margin-top 200ms ease;
+                transition: opacity 200ms ease, max-height 200ms ease, margin-top 200ms ease, margin-bottom 200ms ease;
                 font-size: 11px;
                 color: #666;
                 border-top: 1px dashed rgba(0,0,0,0.06);
                 padding-top: 12px;
                 margin-top: 0;
+                margin-bottom: 0;
             }
             .eq-card:hover .eq-card-hover-details {
                 opacity: 1;
                 max-height: 100px;
                 margin-top: 16px;
+                margin-bottom: 16px;
             }
 
             /* --- RULES MODAL --- */

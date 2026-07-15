@@ -948,8 +948,8 @@ export async function initMyContracts() {
                             <div class="myo-temp-card" onclick="window.router.navigate('/market')" style="display: flex; flex-direction: column; justify-content: space-between; height: 100%; min-height: 170px;">
                                 <div>
                                     <div class="myo-temp-header" style="margin-bottom: 8px;">
-                                        <span class="myo-temp-platform" style="display: flex; align-items: center; gap: 6px;">
-                                            <i data-lucide="youtube" style="width: 14px; height: 14px; color: #ff0000;"></i> YouTube
+                                        <span class="myo-temp-platform" style="display: flex; align-items: center; gap: 6px; font-weight: 700; font-family: 'Plus Jakarta Sans', sans-serif;">
+                                            <img src="https://cdn.simpleicons.org/youtube/FF0000" alt="YouTube" width="14" height="14" style="display:block; flex-shrink:0;" /> YouTube
                                         </span>
                                         <span class="myo-temp-category">Creators</span>
                                     </div>
@@ -965,8 +965,8 @@ export async function initMyContracts() {
                             <div class="myo-temp-card" onclick="window.router.navigate('/market')" style="display: flex; flex-direction: column; justify-content: space-between; height: 100%; min-height: 170px;">
                                 <div>
                                     <div class="myo-temp-header" style="margin-bottom: 8px;">
-                                        <span class="myo-temp-platform" style="display: flex; align-items: center; gap: 6px;">
-                                            <i data-lucide="stripe" style="width: 14px; height: 14px; color: #635bff;"></i> Stripe
+                                        <span class="myo-temp-platform" style="display: flex; align-items: center; gap: 6px; font-weight: 700; font-family: 'Plus Jakarta Sans', sans-serif;">
+                                            <img src="https://cdn.simpleicons.org/stripe/635BFF" alt="Stripe" width="14" height="14" style="display:block; flex-shrink:0;" /> Stripe
                                         </span>
                                         <span class="myo-temp-category">Finance</span>
                                     </div>
@@ -982,8 +982,8 @@ export async function initMyContracts() {
                             <div class="myo-temp-card" onclick="window.router.navigate('/market')" style="display: flex; flex-direction: column; justify-content: space-between; height: 100%; min-height: 170px;">
                                 <div>
                                     <div class="myo-temp-header" style="margin-bottom: 8px;">
-                                        <span class="myo-temp-platform" style="display: flex; align-items: center; gap: 6px;">
-                                            <i data-lucide="youtube" style="width: 14px; height: 14px; color: #ff0000;"></i> YouTube
+                                        <span class="myo-temp-platform" style="display: flex; align-items: center; gap: 6px; font-weight: 700; font-family: 'Plus Jakarta Sans', sans-serif;">
+                                            <img src="https://cdn.simpleicons.org/youtube/FF0000" alt="YouTube" width="14" height="14" style="display:block; flex-shrink:0;" /> YouTube
                                         </span>
                                         <span class="myo-temp-category">Creators</span>
                                     </div>
@@ -999,8 +999,8 @@ export async function initMyContracts() {
                             <div class="myo-temp-card" onclick="window.router.navigate('/market')" style="display: flex; flex-direction: column; justify-content: space-between; height: 100%; min-height: 170px;">
                                 <div>
                                     <div class="myo-temp-header" style="margin-bottom: 8px;">
-                                        <span class="myo-temp-platform" style="display: flex; align-items: center; gap: 6px;">
-                                            <i data-lucide="shopping-cart" style="width: 14px; height: 14px; color: #96bf48;"></i> Shopify
+                                        <span class="myo-temp-platform" style="display: flex; align-items: center; gap: 6px; font-weight: 700; font-family: 'Plus Jakarta Sans', sans-serif;">
+                                            <img src="https://cdn.simpleicons.org/shopify/95BF47" alt="Shopify" width="14" height="14" style="display:block; flex-shrink:0;" /> Shopify
                                         </span>
                                         <span class="myo-temp-category">Commerce</span>
                                     </div>
@@ -1016,8 +1016,8 @@ export async function initMyContracts() {
                             <div class="myo-temp-card" onclick="window.router.navigate('/market')" style="display: flex; flex-direction: column; justify-content: space-between; height: 100%; min-height: 170px;">
                                 <div>
                                     <div class="myo-temp-header" style="margin-bottom: 8px;">
-                                        <span class="myo-temp-platform" style="display: flex; align-items: center; gap: 6px;">
-                                            <i data-lucide="twitter" style="width: 14px; height: 14px; color: #1da1f2;"></i> X (Twitter)
+                                        <span class="myo-temp-platform" style="display: flex; align-items: center; gap: 6px; font-weight: 700; font-family: 'Plus Jakarta Sans', sans-serif;">
+                                            <img src="https://cdn.simpleicons.org/x/000000" alt="X" width="12" height="12" style="display:block; flex-shrink:0;" /> X (Twitter)
                                         </span>
                                         <span class="myo-temp-category">Social</span>
                                     </div>
@@ -1033,8 +1033,8 @@ export async function initMyContracts() {
                             <div class="myo-temp-card" onclick="window.router.navigate('/market')" style="display: flex; flex-direction: column; justify-content: space-between; height: 100%; min-height: 170px;">
                                 <div>
                                     <div class="myo-temp-header" style="margin-bottom: 8px;">
-                                        <span class="myo-temp-platform" style="display: flex; align-items: center; gap: 6px;">
-                                            <i data-lucide="shopping-bag" style="width: 14px; height: 14px; color: #ff9900;"></i> Amazon
+                                        <span class="myo-temp-platform" style="display: flex; align-items: center; gap: 6px; font-weight: 700; font-family: 'Plus Jakarta Sans', sans-serif;">
+                                            <img src="https://cdn.simpleicons.org/amazon/FF9900" alt="Amazon" width="14" height="14" style="display:block; flex-shrink:0;" /> Amazon
                                         </span>
                                         <span class="myo-temp-category">Commerce</span>
                                     </div>

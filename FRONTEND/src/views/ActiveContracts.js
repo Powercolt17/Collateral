@@ -1496,7 +1496,7 @@ export function renderActiveContracts() {
             <section class="eq-market-header" id="live-market" data-reveal>
                 <div style="display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 24px; flex-wrap: wrap; gap: 16px;">
                     <div>
-                        <h2 class="eq-market-title" style="margin: 0; font-size: 36px; font-weight: 800; font-family: 'Plus Jakarta Sans', sans-serif;"><strong style="color: #5C1414;">Market</strong></h2>
+                        <h2 class="eq-market-title" style="margin: 0; font-size: 36px; font-weight: 800; font-family: 'Plus Jakarta Sans', sans-serif;">Collateral <strong style="color: #5C1414;">Market</strong></h2>
                         <div class="eq-market-live" style="margin: 8px 0 0 0; display: flex; align-items: center; gap: 6px;">
                             <div class="eq-market-dot"></div>
                             <span style="font-weight: 700; color: #10b981; font-family: 'JetBrains Mono', monospace; font-size: 9px; letter-spacing: 0.5px;">LIVE</span>

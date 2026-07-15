@@ -1191,7 +1191,7 @@ export function renderToken() {
                             <path d="M 55.310,56.810 L 51.060,61.060 L 60.757,70.757 Q 65.000,75.000 69.243,70.757 L 85.757,54.243 Q 90.000,50.000 85.757,45.757 L 69.243,29.243 Q 65.000,25.000 60.757,29.243 L 44.243,45.757 Q 40.000,50.000 44.243,54.243 L 44.690,54.690 L 48.940,50.440 L 48.500,50.000 Q 46.379,47.879 48.500,45.757 L 60.757,33.500 Q 62.879,31.379 65.000,33.500 L 77.257,45.757 Q 79.379,47.879 77.257,50.000 L 65.000,62.257 Q 62.879,64.379 60.757,62.257 Z" />
                         </svg>
                         <div class="cltr-hdr-title-group">
-                            <h1 class="cltr-title-text">Collateral Protocol</h1>
+                            <h1 class="cltr-title-text">Collateral <span style="color:#5C1414;">Protocol</span></h1>
                             <p class="cltr-title-desc">The world's first Proof of Execution network</p>
                         </div>
                     </div>

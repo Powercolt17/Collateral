@@ -983,14 +983,14 @@ export async function initMyContracts() {
                                 <div>
                                     <div class="myo-temp-header" style="margin-bottom: 8px;">
                                         <span class="myo-temp-platform" style="display: flex; align-items: center; gap: 6px;">
-                                            <i data-lucide="github" style="width: 14px; height: 14px; color: #111;"></i> GitHub
+                                            <i data-lucide="youtube" style="width: 14px; height: 14px; color: #ff0000;"></i> YouTube
                                         </span>
-                                        <span class="myo-temp-category">Development</span>
+                                        <span class="myo-temp-category">Creators</span>
                                     </div>
-                                    <span class="myo-temp-title" style="display: block; margin-bottom: 4px; font-size: 13px;">Ship Product Version 2.0</span>
-                                    <p style="font-size: 11px; color: #666; margin: 0 0 8px 0; line-height: 1.4;">Ship next version tag release to branch.</p>
+                                    <span class="myo-temp-title" style="display: block; margin-bottom: 4px; font-size: 13px;">Achieve 50,000 YouTube Views</span>
+                                    <p style="font-size: 11px; color: #666; margin: 0 0 8px 0; line-height: 1.4;">Track and verify video view count milestones.</p>
                                     <div style="font-size: 10px; color: #888; display: flex; flex-direction: column; gap: 2px; margin-bottom: 8px;">
-                                        <span>Estimated Verification Source: <strong>GitHub Webhooks</strong></span>
+                                        <span>Estimated Verification Source: <strong>YouTube API</strong></span>
                                     </div>
                                 </div>
                                 <button class="myo-temp-btn">Create Commitment</button>
@@ -1021,8 +1021,8 @@ export async function initMyContracts() {
                                         </span>
                                         <span class="myo-temp-category">Social</span>
                                     </div>
-                                    <span class="myo-temp-title" style="display: block; margin-bottom: 4px; font-size: 13px;">Publish 50 X Posts</span>
-                                    <p style="font-size: 11px; color: #666; margin: 0 0 8px 0; line-height: 1.4;">Verify tweet/post activity goals.</p>
+                                    <span class="myo-temp-title" style="display: block; margin-bottom: 4px; font-size: 13px;">Grow to 5,000 X Followers</span>
+                                    <p style="font-size: 11px; color: #666; margin: 0 0 8px 0; line-height: 1.4;">Verify follower count milestones on X.</p>
                                     <div style="font-size: 10px; color: #888; display: flex; flex-direction: column; gap: 2px; margin-bottom: 8px;">
                                         <span>Estimated Verification Source: <strong>X API</strong></span>
                                     </div>
@@ -1034,14 +1034,14 @@ export async function initMyContracts() {
                                 <div>
                                     <div class="myo-temp-header" style="margin-bottom: 8px;">
                                         <span class="myo-temp-platform" style="display: flex; align-items: center; gap: 6px;">
-                                            <i data-lucide="dumbbell" style="width: 14px; height: 14px; color: #5C1414;"></i> Health
+                                            <i data-lucide="shopping-bag" style="width: 14px; height: 14px; color: #ff9900;"></i> Amazon
                                         </span>
-                                        <span class="myo-temp-category">Fitness</span>
+                                        <span class="myo-temp-category">Commerce</span>
                                     </div>
-                                    <span class="myo-temp-title" style="display: block; margin-bottom: 4px; font-size: 13px;">Lose 20 Pounds</span>
-                                    <p style="font-size: 11px; color: #666; margin: 0 0 8px 0; line-height: 1.4;">Verify weight goal metrics via verified devices.</p>
+                                    <span class="myo-temp-title" style="display: block; margin-bottom: 4px; font-size: 13px;">Fulfill 200 Amazon Orders</span>
+                                    <p style="font-size: 11px; color: #666; margin: 0 0 8px 0; line-height: 1.4;">Fulfill order volume threshold verification.</p>
                                     <div style="font-size: 10px; color: #888; display: flex; flex-direction: column; gap: 2px; margin-bottom: 8px;">
-                                        <span>Estimated Verification Source: <strong>Oracle Multi-party Witness</strong></span>
+                                        <span>Estimated Verification Source: <strong>Amazon Seller API</strong></span>
                                     </div>
                                 </div>
                                 <button class="myo-temp-btn">Create Commitment</button>

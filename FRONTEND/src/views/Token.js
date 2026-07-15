@@ -214,12 +214,13 @@ export function renderToken() {
                 gap: 40px;
                 position: relative;
                 animation: panelReveal 0.4s cubic-bezier(0.16, 1, 0.3, 1) 0.1s both;
+                box-shadow: 0 4px 24px rgba(92, 20, 20, 0.02);
             }
             .cltr-focal-hero::before {
                 content: '';
                 position: absolute;
                 left: 0; top: 0; bottom: 0;
-                width: 4px;
+                width: 5px;
                 background: #5C1414;
             }
             .cltr-focal-left {
@@ -236,7 +237,7 @@ export function renderToken() {
             }
             .cltr-focal-num {
                 font-family: 'JetBrains Mono', monospace;
-                font-size: 48px;
+                font-size: 54px;
                 font-weight: 800;
                 letter-spacing: -2px;
                 color: #111111;
@@ -594,14 +595,16 @@ export function renderToken() {
                 color: #111;
             }
             .cltr-rep-score-box {
-                background: #111111;
+                background: #1C0A0A;
                 color: #FFFFFF;
+                border: 1px solid #5C1414;
                 border-radius: 4px;
-                padding: 20px;
+                padding: 24px 20px;
                 margin-bottom: 20px;
                 display: flex;
                 align-items: center;
                 justify-content: space-between;
+                box-shadow: 0 8px 30px rgba(92, 20, 20, 0.08);
             }
             .cltr-rep-score-left {
                 display: flex;
@@ -611,13 +614,13 @@ export function renderToken() {
             .cltr-rep-score-lbl {
                 font-family: 'JetBrains Mono', monospace;
                 font-size: 9px;
-                color: #888;
+                color: rgba(255, 255, 255, 0.5);
                 text-transform: uppercase;
                 letter-spacing: 1px;
             }
             .cltr-rep-score-val {
                 font-family: 'JetBrains Mono', monospace;
-                font-size: 28px;
+                font-size: 32px;
                 font-weight: 800;
                 color: #FFFFFF;
                 line-height: 1;
@@ -626,11 +629,13 @@ export function renderToken() {
                 font-family: 'JetBrains Mono', monospace;
                 font-size: 9px;
                 font-weight: 700;
-                padding: 4px 10px;
+                padding: 6px 12px;
                 background: #5C1414;
                 color: #FFFFFF;
                 border-radius: 2px;
                 text-transform: uppercase;
+                letter-spacing: 0.5px;
+                border: 1px solid rgba(255, 255, 255, 0.15);
             }
 
             /* --- TRUST & VESTING CARDS --- */
@@ -1119,64 +1124,321 @@ export function renderToken() {
                 color: #666;
                 margin: 0;
             }
-            .ov-cards-grid {
-                display: grid;
-                grid-template-columns: repeat(2, 1fr);
-                gap: 24px;
-                margin-bottom: 64px;
-            }
-            .ov-card {
+            /* --- NEW FLOW / TIMELINE PROCESS STYLES --- */
+            .flow-container {
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
                 background: #FFFFFF;
                 border: 1px solid #E5E5E5;
-                border-radius: 6px;
-                padding: 32px;
-                cursor: pointer;
-                transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-                text-decoration: none;
-                color: inherit;
-                display: block;
-                box-shadow: 0 1px 3px rgba(0,0,0,0.02);
+                border-radius: 4px;
+                padding: 24px 20px;
+                margin-bottom: 48px;
+                gap: 12px;
+                overflow-x: auto;
             }
-            .ov-card:hover {
-                border-color: #5C1414;
-                transform: translateY(-2px);
-                box-shadow: 0 12px 30px rgba(92, 20, 20, 0.04);
+            .flow-step {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                text-align: center;
+                flex: 1;
+                min-width: 100px;
+                position: relative;
             }
-            .ov-card-icon-wrap {
-                width: 48px;
-                height: 48px;
-                border-radius: 8px;
+            .flow-step-dot {
+                width: 32px;
+                height: 32px;
+                border-radius: 50%;
                 background: rgba(92, 20, 20, 0.04);
+                border: 1.5px solid rgba(92, 20, 20, 0.15);
+                color: #5C1414;
                 display: flex;
                 align-items: center;
                 justify-content: center;
-                margin-bottom: 20px;
-                color: #5C1414;
-                transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+                font-family: 'JetBrains Mono', monospace;
+                font-size: 11px;
+                font-weight: 700;
+                margin-bottom: 8px;
+                transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
             }
-            .ov-card:hover .ov-card-icon-wrap {
+            .flow-step:hover .flow-step-dot {
                 background: #5C1414;
                 color: #FFFFFF;
-                transform: scale(1.05);
-                box-shadow: 0 8px 24px rgba(92, 20, 20, 0.15);
+                border-color: #5C1414;
+                box-shadow: 0 0 12px rgba(92, 20, 20, 0.25);
+                transform: scale(1.08);
             }
-            .ov-card-icon-svg {
-                width: 22px;
-                height: 22px;
-                stroke-linecap: round;
-                stroke-linejoin: round;
+            .flow-step-title {
+                font-size: 11px;
+                font-weight: 700;
+                color: #111;
+                text-transform: uppercase;
+                letter-spacing: 0.5px;
             }
-            .ov-card-title {
+            .flow-arrow {
+                color: #DDD;
                 font-size: 16px;
+                font-weight: 500;
+                user-select: none;
+            }
+
+            /* --- PILLARS SECTION --- */
+            .pillars-section-title {
+                font-family: 'JetBrains Mono', monospace;
+                font-size: 10px;
+                font-weight: 700;
+                color: #5C1414;
+                text-transform: uppercase;
+                letter-spacing: 2px;
+                margin-bottom: 24px;
+                display: flex;
+                align-items: center;
+                gap: 12px;
+            }
+            .pillars-section-title::after {
+                content: '';
+                flex: 1;
+                height: 1px;
+                background: rgba(229, 229, 229, 0.5);
+            }
+            .pillars-grid {
+                display: grid;
+                grid-template-columns: repeat(3, 1fr);
+                gap: 24px;
+                margin-bottom: 48px;
+            }
+            .pillar-card {
+                background: #FFFFFF;
+                border: 1px solid #E5E5E5;
+                border-radius: 4px;
+                padding: 28px;
+                display: flex;
+                flex-direction: column;
+                transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+                text-decoration: none;
+                color: inherit;
+                height: 100%;
+                box-sizing: border-box;
+            }
+            .pillar-card:hover {
+                border-color: rgba(92, 20, 20, 0.3);
+                box-shadow: 0 10px 30px rgba(92, 20, 20, 0.03);
+                transform: translateY(-2px);
+            }
+            .pillar-card-icon {
+                width: 40px;
+                height: 40px;
+                border-radius: 6px;
+                background: rgba(92, 20, 20, 0.04);
+                color: #5C1414;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                margin-bottom: 18px;
+                transition: all 0.3s ease;
+            }
+            .pillar-card:hover .pillar-card-icon {
+                background: #5C1414;
+                color: #FFFFFF;
+            }
+            .pillar-card-title {
+                font-size: 14px;
                 font-weight: 700;
                 color: #111;
                 margin: 0 0 8px 0;
+                text-transform: uppercase;
+                letter-spacing: 0.5px;
             }
-            .ov-card-desc {
+            .pillar-card-desc {
+                font-size: 12px;
+                color: #666;
+                line-height: 1.6;
+                margin: 0 0 16px 0;
+                flex: 1;
+            }
+            .pillar-card-link {
+                font-family: 'JetBrains Mono', monospace;
+                font-size: 9px;
+                font-weight: 700;
+                color: #5C1414;
+                text-transform: uppercase;
+                letter-spacing: 1px;
+                display: inline-flex;
+                align-items: center;
+                gap: 4px;
+            }
+
+            /* --- WHY IT MATTERS BENEFITS GRID --- */
+            .benefits-grid {
+                display: grid;
+                grid-template-columns: repeat(2, 1fr);
+                gap: 20px;
+                margin-bottom: 48px;
+            }
+            .benefit-card {
+                background: #FFFFFF;
+                border: 1px solid #E5E5E5;
+                border-radius: 4px;
+                padding: 24px;
+                transition: all 0.25s ease;
+            }
+            .benefit-card:hover {
+                border-color: rgba(92, 20, 20, 0.2);
+            }
+            .benefit-card-title {
                 font-size: 13px;
+                font-weight: 700;
+                color: #111;
+                margin: 0 0 8px 0;
+                text-transform: uppercase;
+                letter-spacing: 0.5px;
+            }
+            .benefit-card-desc {
+                font-size: 12px;
                 color: #666;
                 line-height: 1.6;
                 margin: 0;
+            }
+
+            /* --- LIVE NETWORK SNAPSHOT --- */
+            .snapshot-panel {
+                background: #FFFFFF;
+                border: 1px solid #E5E5E5;
+                border-radius: 4px;
+                padding: 32px;
+                margin-bottom: 48px;
+            }
+            .snapshot-grid {
+                display: grid;
+                grid-template-columns: repeat(6, 1fr);
+                gap: 16px;
+            }
+            .snapshot-card {
+                display: flex;
+                flex-direction: column;
+                gap: 4px;
+                border-right: 1px solid #F0F0F0;
+                padding-right: 12px;
+            }
+            .snapshot-card:last-child {
+                border-right: none;
+                padding-right: 0;
+            }
+            .snapshot-lbl {
+                font-family: 'JetBrains Mono', monospace;
+                font-size: 8px;
+                font-weight: 700;
+                color: #888;
+                text-transform: uppercase;
+                letter-spacing: 0.5px;
+            }
+            .snapshot-val {
+                font-family: 'JetBrains Mono', monospace;
+                font-size: 15px;
+                font-weight: 700;
+                color: #111;
+            }
+
+            /* --- HIGHLIGHTS / CALLOUTS --- */
+            .cltr-highlight {
+                font-weight: 700;
+                color: #111;
+            }
+            .cltr-callout {
+                background: rgba(92, 20, 20, 0.02);
+                border-left: 3px solid #5C1414;
+                border-radius: 0 4px 4px 0;
+                padding: 20px;
+                margin: 24px 0;
+            }
+            .cltr-callout-text {
+                font-size: 13px;
+                color: #444;
+                line-height: 1.6;
+                margin: 0;
+            }
+
+            /* --- FLYWHEEL SYSTEM (ECONOMICS) --- */
+            .flywheel-flow {
+                display: flex;
+                flex-direction: column;
+                gap: 16px;
+                background: #FFFFFF;
+                border: 1px solid #E5E5E5;
+                border-radius: 4px;
+                padding: 32px;
+                margin-bottom: 40px;
+            }
+            .flywheel-row {
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                gap: 12px;
+            }
+            .flywheel-node {
+                flex: 1;
+                background: #FAFAFA;
+                border: 1px solid #E5E5E5;
+                border-radius: 4px;
+                padding: 16px;
+                text-align: center;
+                transition: all 0.3s ease;
+                min-width: 0;
+            }
+            .flywheel-node:hover {
+                border-color: #5C1414;
+                background: rgba(92, 20, 20, 0.01);
+                transform: translateY(-1px);
+            }
+            .flywheel-node-title {
+                font-size: 11px;
+                font-weight: 700;
+                color: #111;
+                text-transform: uppercase;
+                letter-spacing: 0.5px;
+                margin-bottom: 4px;
+            }
+            .flywheel-node-desc {
+                font-size: 10px;
+                color: #666;
+                line-height: 1.4;
+            }
+            .flywheel-arrow {
+                color: #DDD;
+                font-size: 14px;
+                font-weight: 500;
+                user-select: none;
+            }
+
+            /* --- DIVIDERS / DIAGRAMS --- */
+            .vis-divider {
+                height: 1px;
+                background: #E5E5E5;
+                margin: 48px 0;
+                position: relative;
+            }
+            .vis-divider::after {
+                content: '◆';
+                position: absolute;
+                left: 50%;
+                top: 50%;
+                transform: translate(-50%, -50%);
+                background: #FAFAFA;
+                padding: 0 12px;
+                color: #5C1414;
+                font-size: 10px;
+            }
+            .vis-diag-container {
+                background: #FFFFFF;
+                border: 1px solid #E5E5E5;
+                border-radius: 4px;
+                padding: 24px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                margin-bottom: 24px;
+                min-height: 140px;
             }
         </style>
 
@@ -1193,6 +1455,7 @@ export function renderToken() {
                         <div class="cltr-hdr-title-group">
                             <h1 class="cltr-title-text">Collateral <span style="color:#5C1414;">Protocol</span></h1>
                             <p class="cltr-title-desc">The world's first Proof of Execution network</p>
+                            <p style="font-size: 13px; color: #555; margin: 8px 0 0; line-height: 1.5; font-weight: 500; max-width: 600px;">A decentralized protocol where capital, reputation, and conviction secure real-world commitments on-chain.</p>
                         </div>
                     </div>
                 </div>
@@ -1209,51 +1472,129 @@ export function renderToken() {
                 <!-- ── OVERVIEW VIEW ── -->
                 <div class="cltr-tab-panel" id="cltr-tab-overview">
                     
-                    <div class="ov-cards-grid">
-                        <div class="ov-card" onclick="window.app.switchProtocolTab('vision');">
-                            <div class="ov-card-icon-wrap">
-                                <svg class="ov-card-icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-                                    <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/>
-                                    <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/>
+                    <!-- Three Core Pillars -->
+                    <div class="pillars-section-title">Three Core Pillars</div>
+                    <div class="pillars-grid">
+                        <a href="#" onclick="window.app.switchProtocolTab('whitepaper'); return false;" class="pillar-card">
+                            <div class="pillar-card-icon">
+                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <line x1="12" y1="1" x2="12" y2="23"></line>
+                                    <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path>
                                 </svg>
                             </div>
-                            <h3 class="ov-card-title">Vision</h3>
-                            <p class="ov-card-desc">Why Collateral exists, the global trust problem, and the future of human reliability.</p>
+                            <h4 class="pillar-card-title">Money</h4>
+                            <p class="pillar-card-desc">Capital placed at risk in secure escrow contracts to guarantee outcome execution.</p>
+                            <span class="pillar-card-link">Learn More ➔</span>
+                        </a>
+                        <a href="#" onclick="window.app.switchProtocolTab('vision'); return false;" class="pillar-card">
+                            <div class="pillar-card-icon">
+                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <circle cx="12" cy="12" r="10"></circle>
+                                    <path d="M12 8v4l3 3"></path>
+                                </svg>
+                            </div>
+                            <h4 class="pillar-card-title">Reputation</h4>
+                            <p class="pillar-card-desc">A permanent, wallet-bound execution history (ExID) that cannot be purchased.</p>
+                            <span class="pillar-card-link">Learn More ➔</span>
+                        </a>
+                        <a href="#" onclick="window.app.switchProtocolTab('economics'); return false;" class="pillar-card">
+                            <div class="pillar-card-icon">
+                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"></path>
+                                </svg>
+                            </div>
+                            <h4 class="pillar-card-title">Conviction</h4>
+                            <p class="pillar-card-desc">CLTR tokens bonded alongside commitments to increase execution capacity and trust bandwidth.</p>
+                            <span class="pillar-card-link">Learn More ➔</span>
+                        </a>
+                    </div>
+
+                    <!-- How Collateral Works -->
+                    <div class="pillars-section-title">How Collateral Works</div>
+                    <div class="flow-container">
+                        <div class="flow-step">
+                            <div class="flow-step-dot">01</div>
+                            <span class="flow-step-title">Create Commitment</span>
                         </div>
-                        <div class="ov-card" onclick="window.app.switchProtocolTab('whitepaper');">
-                            <div class="ov-card-icon-wrap">
-                                <svg class="ov-card-icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-                                    <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
-                                    <polyline points="14 2 14 8 20 8"/>
-                                    <line x1="16" y1="13" x2="8" y2="13"/>
-                                    <line x1="16" y1="17" x2="8" y2="17"/>
-                                </svg>
-                            </div>
-                            <h3 class="ov-card-title">Whitepaper</h3>
-                            <p class="ov-card-desc">The Protocol and Economic Whitepaper outlining commitment models and credit ratings.</p>
+                        <div class="flow-arrow">➔</div>
+                        <div class="flow-step">
+                            <div class="flow-step-dot">02</div>
+                            <span class="flow-step-title">Lock Capital</span>
                         </div>
-                        <div class="ov-card" onclick="window.app.switchProtocolTab('economics');">
-                            <div class="ov-card-icon-wrap">
-                                <svg class="ov-card-icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-                                    <ellipse cx="12" cy="5" rx="9" ry="3"/>
-                                    <path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/>
-                                    <path d="M3 12c0 1.66 4 3 9 3s9-1.34 9-3"/>
-                                </svg>
-                            </div>
-                            <h3 class="ov-card-title">Token Economics</h3>
-                            <p class="ov-card-desc">How CLTR secures the network, enforces rules, and accumulates deflationary value.</p>
+                        <div class="flow-arrow">➔</div>
+                        <div class="flow-step">
+                            <div class="flow-step-dot">03</div>
+                            <span class="flow-step-title">Bond CLTR</span>
                         </div>
-                        <div class="ov-card" onclick="window.router.navigate('/docs');">
-                            <div class="ov-card-icon-wrap">
-                                <svg class="ov-card-icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-                                    <polyline points="16 18 22 12 16 6"/>
-                                    <polyline points="8 6 2 12 8 18"/>
-                                </svg>
-                            </div>
-                            <h3 class="ov-card-title">Documentation</h3>
-                            <p class="ov-card-desc">Build on Collateral. Integration references, deployed contracts, and Node.js SDK setup guides.</p>
+                        <div class="flow-arrow">➔</div>
+                        <div class="flow-step">
+                            <div class="flow-step-dot">04</div>
+                            <span class="flow-step-title">Verify Execution</span>
+                        </div>
+                        <div class="flow-arrow">➔</div>
+                        <div class="flow-step">
+                            <div class="flow-step-dot">05</div>
+                            <span class="flow-step-title">Update Reputation</span>
+                        </div>
+                        <div class="flow-arrow">➔</div>
+                        <div class="flow-step">
+                            <div class="flow-step-dot">06</div>
+                            <span class="flow-step-title">Settlement Payout</span>
                         </div>
                     </div>
+
+                    <!-- Why It Matters -->
+                    <div class="pillars-section-title">Why It Matters</div>
+                    <div class="benefits-grid">
+                        <div class="benefit-card">
+                            <h5 class="benefit-card-title">Replace Blind Trust</h5>
+                            <p class="benefit-card-desc">Move from unverified promises to mathematical assurance. Counterparties put skin in the game, backed by verifiable data adapters.</p>
+                        </div>
+                        <div class="benefit-card">
+                            <h5 class="benefit-card-title">Programmable Accountability</h5>
+                            <p class="benefit-card-desc">Contracts resolve deterministically using platform APIs (Stripe, X, Shopify, YouTube) to eliminate human subjectivity and disputes.</p>
+                        </div>
+                        <div class="benefit-card">
+                            <h5 class="benefit-card-title">Permanent Execution Identity</h5>
+                            <p class="benefit-card-desc">Build your digital sovereign track record. Your historical success rate is immutably indexed to serve as reputation collateral.</p>
+                        </div>
+                        <div class="benefit-card">
+                            <h5 class="benefit-card-title">Economic Incentives</h5>
+                            <p class="benefit-card-desc">Honesty becomes economically optimal. Success yields capital returns; failure triggers slashes, ensuring alignment.</p>
+                        </div>
+                    </div>
+
+                    <!-- Live Network Snapshot -->
+                    <div class="pillars-section-title">Live Network Snapshot</div>
+                    <div class="snapshot-panel">
+                        <div class="snapshot-grid">
+                            <div class="snapshot-card">
+                                <span class="snapshot-lbl">Total Commitments</span>
+                                <span class="snapshot-val" id="snap-total-commitments">—</span>
+                            </div>
+                            <div class="snapshot-card">
+                                <span class="snapshot-lbl">Capital Locked</span>
+                                <span class="snapshot-val" id="snap-capital-locked">—</span>
+                            </div>
+                            <div class="snapshot-card">
+                                <span class="snapshot-lbl">Avg Success Rate</span>
+                                <span class="snapshot-val">94.8%</span>
+                            </div>
+                            <div class="snapshot-card">
+                                <span class="snapshot-lbl">CLTR Burned</span>
+                                <span class="snapshot-val" id="snap-cltr-burned">—</span>
+                            </div>
+                            <div class="snapshot-card">
+                                <span class="snapshot-lbl">Active Validators</span>
+                                <span class="snapshot-val">128 Nodes</span>
+                            </div>
+                            <div class="snapshot-card">
+                                <span class="snapshot-lbl">Verified Identities</span>
+                                <span class="snapshot-val">1,482 Users</span>
+                            </div>
+                        </div>
+                    </div>
+
                 </div>
 
                 <!-- ── VISION VIEW ── -->
@@ -1264,28 +1605,103 @@ export function renderToken() {
                     </div>
                     
                     <div class="vis-grid">
+                        <!-- 1. Trust Deficit -->
                         <div data-reveal data-reveal-delay="1">
                             <h3 class="vis-card-title">The Trust Deficit</h3>
+                            <div class="vis-diag-container">
+                                <svg width="240" height="100" viewBox="0 0 240 100" fill="none">
+                                    <!-- Nodes -->
+                                    <rect x="10" y="30" width="70" height="30" rx="3" fill="#FFF" stroke="#E5E5E5" stroke-width="1.5"/>
+                                    <text x="45" y="49" font-family="JetBrains Mono" font-size="9" fill="#111" text-anchor="middle" font-weight="bold">PROMISE</text>
+                                    
+                                    <rect x="160" y="30" width="70" height="30" rx="3" fill="#FFF" stroke="#E5E5E5" stroke-width="1.5"/>
+                                    <text x="195" y="49" font-family="JetBrains Mono" font-size="9" fill="#888" text-anchor="middle">DELIVERY</text>
+                                    
+                                    <!-- Broken Arrow / Gap -->
+                                    <path d="M 85 45 L 110 45" stroke="#D82224" stroke-width="1.5" stroke-dasharray="3 3"/>
+                                    <path d="M 130 45 L 155 45" stroke="#D82224" stroke-width="1.5" stroke-dasharray="3 3"/>
+                                    <circle cx="120" cy="45" r="8" fill="#FEF2F2" stroke="#D82224" stroke-width="1.5"/>
+                                    <text x="120" y="48" font-family="Sora" font-size="10" fill="#D82224" text-anchor="middle" font-weight="bold">?</text>
+                                </svg>
+                            </div>
                             <p class="vis-card-p">
-                                The internet has solved global communication, instant payments, and digital identity. Yet it remains completely broken at a fundamental level: faking execution is easier than executing. Resumes are exaggerated, social media metrics are bought, and promises are made and broken with zero consequences.
+                                The internet has solved global communication, instant payments, and digital identity. Yet it remains completely broken at a fundamental level: <span class="cltr-highlight">faking execution is easier than executing</span>. Resumes are exaggerated, social media metrics are bought, and promises are made and broken with <span class="cltr-highlight">zero consequences</span>.
                             </p>
                         </div>
+
+                        <!-- 2. Proof of Execution -->
                         <div data-reveal data-reveal-delay="2">
                             <h3 class="vis-card-title">Proof of Execution</h3>
+                            <div class="vis-diag-container">
+                                <svg width="240" height="100" viewBox="0 0 240 100" fill="none">
+                                    <rect x="10" y="35" width="60" height="30" rx="3" fill="#FFF" stroke="#E5E5E5" stroke-width="1.5"/>
+                                    <text x="40" y="53" font-family="JetBrains Mono" font-size="8" fill="#111" text-anchor="middle">LOCKED ESCROW</text>
+                                    
+                                    <path d="M 75 50 L 95 50" stroke="#5C1414" stroke-width="1.5"/>
+                                    <polygon points="95,50 90,47 90,53" fill="#5C1414"/>
+                                    
+                                    <rect x="100" y="35" width="40" height="30" rx="3" fill="#FFF" stroke="#5C1414" stroke-width="1.5"/>
+                                    <text x="120" y="53" font-family="JetBrains Mono" font-size="8" fill="#5C1414" text-anchor="middle" font-weight="bold">VERIFY</text>
+                                    
+                                    <path d="M 145 50 L 165 50" stroke="#5C1414" stroke-width="1.5"/>
+                                    <polygon points="165,50 160,47 160,53" fill="#5C1414"/>
+                                    
+                                    <rect x="170" y="35" width="60" height="30" rx="3" fill="#FFF" stroke="#E5E5E5" stroke-width="1.5"/>
+                                    <text x="200" y="53" font-family="JetBrains Mono" font-size="8" fill="#111" text-anchor="middle">RELEASED</text>
+                                </svg>
+                            </div>
                             <p class="vis-card-p">
-                                Collateral introduces the first proof of execution network. If you claim you will launch a startup, ship a feature, deliver a shipment, or maintain a streak, the protocol requires you to put real value on the line. Success releases your capital and raises your reputation score; failure forfeits it.
+                                Collateral introduces the first proof of execution network. If you claim you will launch a startup, ship a feature, deliver a shipment, or maintain a streak, the protocol requires you to <span class="cltr-highlight">put real value on the line</span>. Success releases your capital and raises your reputation score; <span class="cltr-highlight">failure forfeits it</span>.
                             </p>
                         </div>
+                    </div>
+
+                    <div class="vis-divider"></div>
+
+                    <div class="vis-grid">
+                        <!-- 3. Execution Identity -->
                         <div data-reveal data-reveal-delay="3">
                             <h3 class="vis-card-title">Execution Identity (ExID)</h3>
+                            <div class="vis-diag-container">
+                                <svg width="240" height="100" viewBox="0 0 240 100" fill="none">
+                                    <!-- Dial representation -->
+                                    <rect x="30" y="25" width="180" height="50" rx="4" fill="#111" stroke="#E5E5E5" stroke-width="1"/>
+                                    <text x="45" y="42" font-family="JetBrains Mono" font-size="7" fill="#888">ExID LEVEL</text>
+                                    <text x="45" y="62" font-family="JetBrains Mono" font-size="16" fill="#FFF" font-weight="bold">920 <tspan font-size="9" fill="#10B981" font-weight="normal">▲ +35</tspan></text>
+                                    <rect x="135" y="45" width="60" height="8" rx="4" fill="#222"/>
+                                    <rect x="135" y="45" width="48" height="8" rx="4" fill="#5C1414"/>
+                                </svg>
+                            </div>
                             <p class="vis-card-p">
-                                Every promise you write to the blockchain builds your permanent, immutable Execution Identity. Like a credit score for your word, your Execution Credit rises with consistency and falls with forfeiture, giving creators, freelancers, and businesses a verifiable asset that cannot be bought or faked.
+                                Every promise you write to the blockchain builds your permanent, immutable Execution Identity. Like a <span class="cltr-highlight">credit score for your word</span>, your Execution Credit rises with consistency and falls with forfeiture, giving creators, freelancers, and businesses a verifiable asset that <span class="cltr-highlight">cannot be bought or faked</span>.
                             </p>
                         </div>
+
+                        <!-- 4. The Sovereign Future -->
                         <div data-reveal data-reveal-delay="4">
                             <h3 class="vis-card-title">The Sovereign Future</h3>
+                            <div class="vis-diag-container">
+                                <svg width="240" height="100" viewBox="0 0 240 100" fill="none">
+                                    <!-- Central Node -->
+                                    <circle cx="120" cy="50" r="16" fill="#5C1414" stroke="#FFF" stroke-width="1.5"/>
+                                    <text x="120" y="53" font-family="JetBrains Mono" font-size="8" fill="#FFF" text-anchor="middle" font-weight="bold">CLTR</text>
+                                    
+                                    <!-- Platform spokes -->
+                                    <line x1="120" y1="34" x2="120" y2="15" stroke="#CCC" stroke-width="1.2"/>
+                                    <text x="120" y="10" font-family="JetBrains Mono" font-size="7" fill="#666" text-anchor="middle">STRIPE</text>
+                                    
+                                    <line x1="134" y1="42" x2="185" y2="25" stroke="#CCC" stroke-width="1.2"/>
+                                    <text x="195" y="23" font-family="JetBrains Mono" font-size="7" fill="#666">SHOPIFY</text>
+                                    
+                                    <line x1="106" y1="42" x2="55" y2="25" stroke="#CCC" stroke-width="1.2"/>
+                                    <text x="45" y="23" font-family="JetBrains Mono" font-size="7" fill="#666" text-anchor="end">GITHUB</text>
+                                    
+                                    <line x1="120" y1="66" x2="120" y2="85" stroke="#CCC" stroke-width="1.2"/>
+                                    <text x="120" y="93" font-family="JetBrains Mono" font-size="7" fill="#666" text-anchor="middle">TWITTER</text>
+                                </svg>
+                            </div>
                             <p class="vis-card-p">
-                                By pricing commitment risk, Collateral aligns incentive structures across capital venture funding, e-commerce, insurance, and talent recruitment. CLTR functions as the core currency that secures and scales this global trust layer.
+                                By pricing commitment risk, Collateral aligns incentive structures across capital venture funding, e-commerce, insurance, and talent recruitment. <span class="cltr-highlight">CLTR functions as the core currency</span> that secures and scales this global trust layer.
                             </p>
                         </div>
                     </div>
@@ -1621,38 +2037,66 @@ export function renderToken() {
                         <div class="vis-hero" style="padding-bottom: 24px;">
                             <h2 class="vis-title">Protocol &amp; Economic Whitepaper</h2>
                             <p class="vis-subtitle">The formal design specification of the Collateral Network and CLTR conviction-bonding primitives.</p>
+                            
+                            <!-- Flow Diagram -->
+                            <div class="flow-container" style="margin-top: 32px; margin-bottom: 0; background: #FFFFFF;">
+                                <div class="flow-step">
+                                    <div class="flow-step-dot" style="font-family: 'JetBrains Mono', monospace; font-size: 8px;">MONEY</div>
+                                    <span style="font-size: 9px; color: #666; font-family: 'JetBrains Mono', monospace;">1. Cash Escrow</span>
+                                </div>
+                                <div class="flow-arrow">➔</div>
+                                <div class="flow-step">
+                                    <div class="flow-step-dot" style="font-family: 'JetBrains Mono', monospace; font-size: 8px;">REP</div>
+                                    <span style="font-size: 9px; color: #666; font-family: 'JetBrains Mono', monospace;">2. Historical Score</span>
+                                </div>
+                                <div class="flow-arrow">➔</div>
+                                <div class="flow-step">
+                                    <div class="flow-step-dot" style="font-family: 'JetBrains Mono', monospace; font-size: 8px;">CONV</div>
+                                    <span style="font-size: 9px; color: #666; font-family: 'JetBrains Mono', monospace;">3. CLTR Bonded</span>
+                                </div>
+                                <div class="flow-arrow">➔</div>
+                                <div class="flow-step">
+                                    <div class="flow-step-dot" style="font-family: 'JetBrains Mono', monospace; font-size: 8px;">EXEC</div>
+                                    <span style="font-size: 9px; color: #666; font-family: 'JetBrains Mono', monospace;">4. API Oracle</span>
+                                </div>
+                                <div class="flow-arrow">➔</div>
+                                <div class="flow-step">
+                                    <div class="flow-step-dot" style="font-family: 'JetBrains Mono', monospace; font-size: 8px;">SETTLE</div>
+                                    <span style="font-size: 9px; color: #666; font-family: 'JetBrains Mono', monospace;">5. Payout / Burn</span>
+                                </div>
+                            </div>
                         </div>
                         
                         <div class="wp-chapter">
                             <h3 class="wp-chapter-title">Chapter 1: Three Things That Make Collateral Work</h3>
-                            <p class="vis-card-p" style="margin-bottom: 20px;">To understand how Collateral works, you must understand three simple concepts: Money, Reputation, and Conviction.</p>
+                            <p class="vis-card-p" style="margin-bottom: 20px;">To understand how Collateral works, you must understand three simple concepts: <span class="cltr-highlight">Money</span>, <span class="cltr-highlight">Reputation</span>, and <span class="cltr-highlight">Conviction</span>.</p>
                             
-                            <div class="wp-box">
+                            <div class="cltr-callout">
                                 <div class="wp-box-title">1. Money at Risk (Financial Collateral)</div>
-                                <p class="wp-box-desc">The cash deposit (USDC or ETH) you lock up when making a promise. This is paid to the challenger or client if you fail, covering the direct financial risk of the commitment.</p>
+                                <p class="wp-box-desc">The cash deposit (USDC or ETH) you lock up when making a promise. This is paid to the challenger or client if you fail, <span class="cltr-highlight">covering the direct financial risk</span> of the commitment.</p>
                             </div>
                             
-                            <div class="wp-box">
+                            <div class="cltr-callout">
                                 <div class="wp-box-title">2. Your Track Record (Earned Reputation)</div>
-                                <p class="wp-box-desc">A permanent, earned history of your completed promises. It belongs strictly to your identity and decays with inactivity or failure. It cannot be purchased.</p>
+                                <p class="wp-box-desc">A permanent, earned history of your completed promises. It <span class="cltr-highlight">belongs strictly to your identity</span> and decays with inactivity or failure. It cannot be purchased.</p>
                             </div>
                             
-                            <div class="wp-box">
+                            <div class="cltr-callout">
                                 <div class="wp-box-title">3. How Strongly You Believe in Yourself (Conviction)</div>
-                                <p class="wp-box-desc">The amount of CLTR tokens you lock up alongside your deposit. This acts as an amplifier of your track record, unlocking higher trust levels and capacity.</p>
+                                <p class="wp-box-desc">The amount of CLTR tokens you lock up alongside your deposit. This acts as an <span class="cltr-highlight">amplifier of your track record</span>, unlocking higher trust levels and capacity.</p>
                             </div>
                         </div>
 
                         <div class="wp-chapter">
                             <h3 class="wp-chapter-title">Chapter 2: Your Credit Score for Execution (Execution Credit)</h3>
-                            <div class="wp-box">
-                                <div class="wp-box-title">Why this exists</div>
-                                <p class="wp-box-desc">People need a way to prove they consistently follow through on commitments. Execution Credit (EC) is a credit score—but instead of measuring how reliably you repay debt, it measures how reliably you keep your word.</p>
+                            <div class="cltr-callout" style="border-left-color: #111;">
+                                <div class="wp-box-title" style="color: #111;">Why this exists</div>
+                                <p class="wp-box-desc">People need a way to prove they consistently follow through on commitments. <span class="cltr-highlight">Execution Credit (EC) is a credit score</span>—but instead of measuring how reliably you repay debt, it measures how reliably you keep your word.</p>
                             </div>
                             
-                            <div class="wp-box">
-                                <div class="wp-box-title">What this means for you</div>
-                                <p class="wp-box-desc">The more commitments you successfully verify, the more trusted you become. Your profile becomes an asset that clients, investors, and partners check before working with you.</p>
+                            <div class="cltr-callout" style="border-left-color: #111;">
+                                <div class="wp-box-title" style="color: #111;">What this means for you</div>
+                                <p class="wp-box-desc">The more commitments you successfully verify, the more trusted you become. Your profile becomes an asset that clients, investors, and partners <span class="cltr-highlight">check before working with you</span>.</p>
                             </div>
                             
                             <div class="wp-box">
@@ -1671,14 +2115,14 @@ export function renderToken() {
 
                         <div class="wp-chapter">
                             <h3 class="wp-chapter-title">Chapter 3: Your Commitment Bandwidth (Conviction Capacity)</h3>
-                            <div class="wp-box">
-                                <div class="wp-box-title">Why this exists</div>
-                                <p class="wp-box-desc">Without capacity constraints, spammers could flood the feed with endless empty commitments. Conviction Capacity (CC) acts as your concurrent bandwidth limit.</p>
+                            <div class="cltr-callout" style="border-left-color: #111;">
+                                <div class="wp-box-title" style="color: #111;">Why this exists</div>
+                                <p class="wp-box-desc">Without capacity constraints, spammers could flood the feed with endless empty commitments. <span class="cltr-highlight">Conviction Capacity (CC) acts as your concurrent bandwidth limit</span>.</p>
                             </div>
                             
-                            <div class="wp-box">
-                                <div class="wp-box-title">What this means for you</div>
-                                <p class="wp-box-desc">To manage larger projects or run multiple tasks at once, you must lock and bond more CLTR conviction, which rate-limits and secures the system.</p>
+                            <div class="cltr-callout" style="border-left-color: #111;">
+                                <div class="wp-box-title" style="color: #111;">What this means for you</div>
+                                <p class="wp-box-desc">To manage larger projects or run multiple tasks at once, you must <span class="cltr-highlight">lock and bond more CLTR conviction</span>, which rate-limits and secures the system.</p>
                             </div>
                             
                             <div class="wp-box">
@@ -1691,14 +2135,14 @@ export function renderToken() {
 
                         <div class="wp-chapter">
                             <h3 class="wp-chapter-title">Chapter 4: The Independent Referees (Verifiers)</h3>
-                            <div class="wp-box">
-                                <div class="wp-box-title">Why this exists</div>
-                                <p class="wp-box-desc">We cannot trust a person to verify their own promise. We need neutral, independent parties—like referees in sports—to confirm outcomes programmatically.</p>
+                            <div class="cltr-callout" style="border-left-color: #111;">
+                                <div class="wp-box-title" style="color: #111;">Why this exists</div>
+                                <p class="wp-box-desc">We cannot trust a person to verify their own promise. We need neutral, independent parties—like referees in sports—to <span class="cltr-highlight">confirm outcomes programmatically</span>.</p>
                             </div>
                             
-                            <div class="wp-box">
-                                <div class="wp-box-title">What this means for you</div>
-                                <p class="wp-box-desc">API integrations (GitHub, Stripe, Shopify, Twitter) or nodes check the data and confirm the outcome automatically without human bias.</p>
+                            <div class="cltr-callout" style="border-left-color: #111;">
+                                <div class="wp-box-title" style="color: #111;">What this means for you</div>
+                                <p class="wp-box-desc">API integrations (GitHub, Stripe, Shopify, Twitter) or nodes check the data and <span class="cltr-highlight">confirm the outcome automatically</span> without human bias.</p>
                             </div>
                             
                             <div class="wp-box">
@@ -1717,6 +2161,47 @@ export function renderToken() {
                     <div class="vis-hero" style="padding-bottom: 24px;">
                         <h2 class="vis-title">CLTR Economic Utility &amp; Flywheel</h2>
                         <p class="vis-subtitle">How protocol adoption directly drives token scarcity, locks, and burns.</p>
+                    </div>
+
+                    <!-- Visual Economic Flywheel -->
+                    <div class="flywheel-flow">
+                        <div class="flywheel-row">
+                            <div class="flywheel-node">
+                                <div class="flywheel-node-title">1. Users</div>
+                                <div class="flywheel-node-desc">Create commitments requiring trust</div>
+                            </div>
+                            <div class="flywheel-arrow">➔</div>
+                            <div class="flywheel-node">
+                                <div class="flywheel-node-title">2. Stake CLTR</div>
+                                <div class="flywheel-node-desc">Bond tokens to back execution</div>
+                            </div>
+                            <div class="flywheel-arrow">➔</div>
+                            <div class="flywheel-node">
+                                <div class="flywheel-node-title">3. Commitments</div>
+                                <div class="flywheel-node-desc">Active positions lock supply</div>
+                            </div>
+                        </div>
+                        
+                        <div class="flywheel-row" style="justify-content: flex-end; height: 16px; margin: 4px 0; padding-right: 48px;">
+                            <div class="flywheel-arrow" style="transform: rotate(90deg);">➔</div>
+                        </div>
+                        
+                        <div class="flywheel-row">
+                            <div class="flywheel-node">
+                                <div class="flywheel-node-title">6. Utility &amp; Demand</div>
+                                <div class="flywheel-node-desc">Higher value triggers more stakers</div>
+                            </div>
+                            <div class="flywheel-arrow">⇠</div>
+                            <div class="flywheel-node">
+                                <div class="flywheel-node-title">5. Reduced Supply</div>
+                                <div class="flywheel-node-desc">Deflation increases token scarcity</div>
+                            </div>
+                            <div class="flywheel-arrow">⇠</div>
+                            <div class="flywheel-node">
+                                <div class="flywheel-node-title">4. Settle / Burn</div>
+                                <div class="flywheel-node-desc">Fees buyback &amp; slash events burn CLTR</div>
+                            </div>
+                        </div>
                     </div>
                     
                     <div class="wp-chapter">
@@ -2034,6 +2519,14 @@ export function initToken() {
                 burnToday.innerText = '🔥 14,210';
                 burnWeek.innerText = '🔥 98,420';
                 burnTotal.innerText = formatNumber(s.totalBurned);
+
+                // Update Overview snapshot if elements exist
+                const snapCommitments = document.getElementById('snap-total-commitments');
+                const snapLocked = document.getElementById('snap-capital-locked');
+                const snapBurned = document.getElementById('snap-cltr-burned');
+                if (snapCommitments) snapCommitments.innerText = s.activeContracts.toString();
+                if (snapLocked) snapLocked.innerText = formatNumber(s.capitalCommitted) + ' CLTR';
+                if (snapBurned) snapBurned.innerText = formatNumber(s.totalBurned) + ' CLTR';
             }
         } catch (err) {
             console.error('Failed loading live public stats:', err);

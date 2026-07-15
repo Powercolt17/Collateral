@@ -1397,8 +1397,8 @@ export async function initRivalryDetail(params) {
 
         // If no time-series data, fallback to rendering a flat Bloomberg-style benchmark chart
         if (challPoints.length === 0 && oppPoints.length === 0) {
-            const challGrowth = Math.max(0, parseFloat(document.querySelector('#rvd-metric-chall .rvd-chart-metric-change')?.textContent || '0'));
-            const oppGrowth = Math.max(0, parseFloat(document.querySelector('#rvd-metric-opp .rvd-chart-metric-change')?.textContent || '0'));
+            const challGrowth = rivalry.challenger.growth;
+            const oppGrowth = rivalry.opponent.growth;
             
             const plotW = W - PAD_L - PAD_R;
             const plotH = H - PAD_T - PAD_B;

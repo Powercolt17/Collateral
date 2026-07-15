@@ -316,12 +316,466 @@ export function renderMyContracts() {
                 .myc-feed { padding: 24px 16px 60px; }
                 .eq-grid { grid-template-columns: 1fr; gap: 16px; }
             }
+
+            /* --- ONBOARDING STYLES --- */
+            .myc-onboarding-wrapper {
+                display: flex;
+                flex-direction: column;
+                gap: 40px;
+                margin-top: 8px;
+            }
+            .myo-welcome-hero {
+                background: #FFFFFF;
+                border: 1px solid rgba(0,0,0,0.05);
+                border-radius: 12px;
+                padding: 32px;
+                box-shadow: 0 2px 8px rgba(0,0,0,0.02);
+            }
+            .myo-welcome-title {
+                font-family: 'Plus Jakarta Sans', sans-serif;
+                font-size: 20px;
+                font-weight: 800;
+                color: #111;
+                margin: 0 0 8px;
+                letter-spacing: -0.5px;
+            }
+            .myo-welcome-desc {
+                font-size: 13px;
+                color: #666;
+                line-height: 1.65;
+                margin: 0;
+                max-width: 680px;
+            }
+            
+            .myo-grid-layout {
+                display: grid;
+                grid-template-columns: 1.6fr 1fr;
+                gap: 32px;
+                align-items: start;
+            }
+            
+            .myo-column-main {
+                display: flex;
+                flex-direction: column;
+                gap: 40px;
+            }
+            .myo-column-side {
+                display: flex;
+                flex-direction: column;
+                gap: 32px;
+            }
+            
+            .myo-section {
+                display: flex;
+                flex-direction: column;
+                gap: 16px;
+            }
+            .myo-section-lbl {
+                font-family: 'JetBrains Mono', monospace;
+                font-size: 10px;
+                font-weight: 700;
+                text-transform: uppercase;
+                letter-spacing: 1.5px;
+                color: #8a8984;
+                margin: 0;
+            }
+            
+            /* Checklist */
+            .myo-checklist {
+                background: #FFFFFF;
+                border: 1px solid rgba(0,0,0,0.05);
+                border-radius: 12px;
+                display: flex;
+                flex-direction: column;
+                box-shadow: 0 2px 8px rgba(0,0,0,0.02);
+            }
+            .myo-checklist-item {
+                display: flex;
+                align-items: center;
+                gap: 16px;
+                padding: 20px 24px;
+                border-bottom: 1px solid rgba(0,0,0,0.03);
+            }
+            .myo-checklist-item:last-child {
+                border-bottom: none;
+            }
+            .myo-check-box {
+                width: 20px;
+                height: 20px;
+                border-radius: 50%;
+                border: 1.5px solid #DDD;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                flex-shrink: 0;
+            }
+            .myo-check-icon {
+                width: 12px;
+                height: 12px;
+                color: #5C1414;
+                display: none;
+            }
+            .myo-checklist-item.completed .myo-check-box {
+                background: rgba(92, 20, 20, 0.08);
+                border-color: #5C1414;
+            }
+            .myo-checklist-item.completed .myo-check-icon {
+                display: block;
+            }
+            .myo-check-info {
+                flex: 1;
+                display: flex;
+                flex-direction: column;
+                gap: 2px;
+            }
+            .myo-check-title {
+                font-size: 13px;
+                font-weight: 700;
+                color: #111;
+            }
+            .myo-check-sub {
+                font-size: 11px;
+                color: #888;
+            }
+            .myo-check-btn {
+                background: #fff;
+                border: 1px solid rgba(0,0,0,0.08);
+                border-radius: 4px;
+                padding: 6px 12px;
+                font-family: 'JetBrains Mono', monospace;
+                font-size: 9px;
+                font-weight: 700;
+                text-transform: uppercase;
+                cursor: pointer;
+                transition: all 0.2s;
+            }
+            .myo-check-btn:hover {
+                border-color: #5C1414;
+                color: #5C1414;
+            }
+            .myo-checklist-item.completed .myo-check-btn {
+                display: none;
+            }
+            
+            /* Benefits */
+            .myo-benefits-grid {
+                display: grid;
+                grid-template-columns: repeat(2, 1fr);
+                gap: 16px;
+            }
+            .myo-benefit-card {
+                background: #FFFFFF;
+                border: 1px solid rgba(0,0,0,0.05);
+                border-radius: 12px;
+                padding: 24px;
+                box-shadow: 0 2px 8px rgba(0,0,0,0.02);
+                display: flex;
+                flex-direction: column;
+                gap: 8px;
+            }
+            .myo-benefit-icon {
+                color: #5C1414;
+                display: flex;
+                align-items: center;
+                margin-bottom: 4px;
+            }
+            .myo-benefit-icon svg {
+                width: 20px;
+                height: 20px;
+            }
+            .myo-benefit-title {
+                font-size: 13px;
+                font-weight: 700;
+                color: #111;
+            }
+            .myo-benefit-desc {
+                font-size: 11px;
+                color: #777;
+                line-height: 1.5;
+            }
+            
+            /* Templates */
+            .myo-templates-grid {
+                display: grid;
+                grid-template-columns: repeat(2, 1fr);
+                gap: 16px;
+            }
+            .myo-temp-card {
+                background: #FFFFFF;
+                border: 1px solid rgba(0,0,0,0.05);
+                border-radius: 12px;
+                padding: 24px;
+                box-shadow: 0 2px 8px rgba(0,0,0,0.02);
+                display: flex;
+                flex-direction: column;
+                gap: 12px;
+                cursor: pointer;
+                transition: all 0.2s ease-in-out;
+            }
+            .myo-temp-card:hover {
+                transform: translateY(-2px);
+                border-color: rgba(92, 20, 20, 0.15);
+                box-shadow: 0 8px 24px rgba(92, 20, 20, 0.04);
+            }
+            .myo-temp-header {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+            }
+            .myo-temp-platform {
+                font-size: 12px;
+                font-weight: 700;
+                color: #111;
+            }
+            .myo-temp-category {
+                font-family: 'JetBrains Mono', monospace;
+                font-size: 8px;
+                font-weight: 700;
+                color: #5C1414;
+                background: rgba(92, 20, 20, 0.04);
+                border: 1px solid rgba(92, 20, 20, 0.12);
+                border-radius: 2px;
+                padding: 1px 5px;
+                text-transform: uppercase;
+            }
+            .myo-temp-title {
+                font-family: 'Plus Jakarta Sans', sans-serif;
+                font-size: 14px;
+                font-weight: 800;
+                color: #111;
+                line-height: 1.3;
+            }
+            .myo-temp-btn {
+                align-self: start;
+                background: none;
+                border: none;
+                padding: 0;
+                font-family: 'JetBrains Mono', monospace;
+                font-size: 10px;
+                font-weight: 700;
+                color: #5C1414;
+                text-transform: uppercase;
+                cursor: pointer;
+                letter-spacing: 0.5px;
+            }
+            .myo-temp-btn:hover {
+                color: #7A1D1D;
+            }
+            
+            /* Sidebar boxes */
+            .myo-side-box {
+                background: #FFFFFF;
+                border: 1px solid rgba(0,0,0,0.05);
+                border-radius: 12px;
+                padding: 28px;
+                box-shadow: 0 2px 8px rgba(0,0,0,0.02);
+                display: flex;
+                flex-direction: column;
+                gap: 16px;
+            }
+            .myo-side-title {
+                font-family: 'JetBrains Mono', monospace;
+                font-size: 9px;
+                font-weight: 700;
+                text-transform: uppercase;
+                letter-spacing: 1.5px;
+                color: #8a8984;
+                margin: 0;
+            }
+            
+            /* Identity Preview */
+            .myo-identity-card {
+                display: flex;
+                flex-direction: column;
+                gap: 16px;
+            }
+            .myo-identity-header {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+            }
+            .myo-identity-level {
+                font-family: 'Plus Jakarta Sans', sans-serif;
+                font-size: 16px;
+                font-weight: 800;
+                color: #111;
+            }
+            .myo-identity-status {
+                font-family: 'JetBrains Mono', monospace;
+                font-size: 8px;
+                font-weight: 700;
+                color: #d97706;
+                background: #fffbeb;
+                border: 1px solid #fef3c7;
+                padding: 2px 6px;
+                text-transform: uppercase;
+                letter-spacing: 0.5px;
+            }
+            .myo-identity-metrics {
+                display: flex;
+                flex-direction: column;
+                gap: 10px;
+                border-top: 1px solid rgba(0,0,0,0.03);
+                border-bottom: 1px solid rgba(0,0,0,0.03);
+                padding: 12px 0;
+            }
+            .myo-id-metric {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+            }
+            .myo-id-val {
+                font-size: 13px;
+                font-weight: 700;
+                color: #111;
+            }
+            .myo-id-lbl {
+                font-size: 11px;
+                color: #888;
+            }
+            .myo-identity-footer {
+                font-size: 11px;
+                color: #666;
+            }
+            
+            /* Roadmap */
+            .myo-roadmap {
+                display: flex;
+                flex-direction: column;
+                gap: 16px;
+                position: relative;
+                padding-left: 18px;
+            }
+            .myo-roadmap::before {
+                content: '';
+                position: absolute;
+                left: 4px;
+                top: 8px;
+                bottom: 8px;
+                width: 1px;
+                background: #E5E5E5;
+            }
+            .myo-roadmap-item {
+                display: flex;
+                gap: 12px;
+                position: relative;
+            }
+            .myo-road-node {
+                position: absolute;
+                left: -18px;
+                top: 4px;
+                width: 9px;
+                height: 9px;
+                border-radius: 50%;
+                background: #FFFFFF;
+                border: 1.5px solid #DDD;
+                z-index: 5;
+            }
+            .myo-roadmap-item.active .myo-road-node {
+                background: #5C1414;
+                border-color: #5C1414;
+                box-shadow: 0 0 0 3px rgba(92, 20, 20, 0.15);
+            }
+            .myo-road-info {
+                display: flex;
+                flex-direction: column;
+                gap: 2px;
+            }
+            .myo-road-lbl {
+                font-size: 11px;
+                font-weight: 700;
+                color: #666;
+            }
+            .myo-roadmap-item.active .myo-road-lbl {
+                color: #111;
+            }
+            .myo-road-desc {
+                font-size: 10px;
+                color: #aaa;
+            }
+            
+            /* Activity Feed */
+            .myo-activity-list {
+                display: flex;
+                flex-direction: column;
+                gap: 12px;
+            }
+            .myo-act-item {
+                display: flex;
+                align-items: flex-start;
+                gap: 12px;
+            }
+            .myo-act-icon {
+                margin-top: 2px;
+                display: flex;
+                align-items: center;
+            }
+            .myo-act-icon svg {
+                width: 14px;
+                height: 14px;
+            }
+            .myo-act-info {
+                flex: 1;
+                display: flex;
+                flex-direction: column;
+                gap: 1px;
+            }
+            .myo-act-title {
+                font-size: 11px;
+                font-weight: 700;
+                color: #111;
+            }
+            .myo-act-sub {
+                font-size: 10px;
+                color: #888;
+            }
+            .myo-act-time {
+                font-family: 'JetBrains Mono', monospace;
+                font-size: 9px;
+                color: #ccc;
+            }
+            
+            /* Motivation Panel */
+            .myo-motivation-panel {
+                background: #FFFFFF;
+                border: 1px solid rgba(0,0,0,0.05);
+                border-radius: 12px;
+                padding: 40px;
+                text-align: center;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                box-shadow: 0 4px 16px rgba(0,0,0,0.01);
+            }
+            .myo-motivation-title {
+                font-family: 'Plus Jakarta Sans', sans-serif;
+                font-size: 16px;
+                font-weight: 800;
+                color: #111;
+                margin: 0 0 8px 0;
+            }
+            .myo-motivation-sub {
+                font-size: 12px;
+                color: #666;
+                margin: 0 0 24px 0;
+            }
+            .myo-motivation-ctas {
+                display: flex;
+                gap: 16px;
+            }
+            
+            @media (max-width: 1024px) {
+                .myo-grid-layout {
+                    grid-template-columns: 1fr;
+                    gap: 32px;
+                }
+            }
         </style>
 
         <div class="myc">
             <div class="myc-header" data-reveal>
                 <div class="myc-title-wrap">
-                    <h1 class="myc-page-title">Active <span style="color: #5C1414;">Contracts</span></h1>
+                    <h1 class="myc-page-title">Active <span style="color: #5C1414;">Commitments</span></h1>
                     <p class="myc-page-sub">Personalized performance record</p>
                 </div>
                 <div class="myc-header-actions">
@@ -382,19 +836,268 @@ export async function initMyContracts() {
 
         const totalPayout = contracts.reduce((sum, c) => sum + (c.payoutAmountUsdCents || 0), 0);
 
-        document.getElementById('myc-total-locked').textContent = '$' + (totalLocked / 100).toLocaleString('en-US', { minimumFractionDigits: 0 });
-        document.getElementById('myc-active-count').textContent = activeCount.toString();
-        document.getElementById('myc-settle-rate').textContent = rate;
-        document.getElementById('myc-avg-risk').textContent = '$' + (totalPayout / 100).toLocaleString('en-US', { minimumFractionDigits: 0 });
-
         if (contracts.length === 0) {
+            document.getElementById('myc-total-locked').innerHTML = '—<span style="display:block; font-size:10px; font-weight:normal; color:#8a8984; margin-top:2px;">No Capital Locked</span>';
+            document.getElementById('myc-active-count').textContent = '0';
+            document.getElementById('myc-settle-rate').innerHTML = '—<span style="display:block; font-size:10px; font-weight:normal; color:#8a8984; margin-top:2px;">No Settlements Yet</span>';
+            document.getElementById('myc-avg-risk').innerHTML = '—<span style="display:block; font-size:10px; font-weight:normal; color:#8a8984; margin-top:2px;">No Settlements Yet</span>';
+
+            // Query dynamic checklist states
+            let isSourceConnected = false;
+            let isIdentityVerified = false;
+            try {
+                const xStatus = await window.api.getXStatus().catch(() => null);
+                const stripeStatus = await window.api.getStripeStatus().catch(() => null);
+                const shopifyStatus = await window.api.getShopifyStatus().catch(() => null);
+                const youtubeStatus = await window.api.getYouTubeStatus().catch(() => null);
+                if (xStatus?.connected || stripeStatus?.connected || shopifyStatus?.connected || youtubeStatus?.connected) {
+                    isSourceConnected = true;
+                }
+
+                // If user has a wallet connected or loaded profile
+                const profile = await window.api.getProfile().catch(() => null);
+                if (profile || window.ethereum?.selectedAddress) {
+                    isIdentityVerified = true;
+                }
+            } catch (e) {
+                console.warn('[MyContracts] Status check error:', e);
+            }
+
             container.innerHTML = `
-                <div style="text-align:center; padding: 60px 0;">
-                    <div style="font-family:'JetBrains Mono', monospace; font-size:11px; color:#888; text-transform:uppercase; margin-bottom:16px;">No contracts in record</div>
-                    <button class="myc-btn-secondary" style="background:#5C1414; color:#fff; border:none;" onclick="window.router.navigate('/market')">Create First Contract</button>
+                <div class="myc-onboarding-wrapper">
+                    <!-- Section 1: Welcome -->
+                    <div class="myo-welcome-hero" data-reveal>
+                        <h2 class="myo-welcome-title">Build Your Execution Identity</h2>
+                        <p class="myo-welcome-desc">Every completed commitment permanently strengthens your Execution Identity, increases your reputation, and expands your trust capacity across the network.</p>
+                    </div>
+
+                    <div class="myo-grid-layout">
+                        <div class="myo-column-main">
+                            <!-- Section 2: Getting Started Checklist -->
+                            <div class="myo-section" data-reveal>
+                                <h3 class="myo-section-lbl">Getting Started</h3>
+                                <div class="myo-checklist">
+                                    <div class="myo-checklist-item ${isSourceConnected ? 'completed' : ''}">
+                                        <div class="myo-check-box"><i data-lucide="check" class="myo-check-icon" style="${isSourceConnected ? 'display:block;' : ''}"></i></div>
+                                        <div class="myo-check-info">
+                                            <span class="myo-check-title">Connect a Verified Source</span>
+                                            <span class="myo-check-sub">Bind APIs like Stripe, YouTube, or Shopify to verify outcomes.</span>
+                                        </div>
+                                        <button class="myo-check-btn" onclick="window.router.navigate('/sources')">Go to Sources</button>
+                                    </div>
+                                    <div class="myo-checklist-item ${isIdentityVerified ? 'completed' : ''}">
+                                        <div class="myo-check-box"><i data-lucide="check" class="myo-check-icon" style="${isIdentityVerified ? 'display:block;' : ''}"></i></div>
+                                        <div class="myo-check-info">
+                                            <span class="myo-check-title">Verify Identity</span>
+                                            <span class="myo-check-sub">Generate your cryptographic execution signature on-chain.</span>
+                                        </div>
+                                        <button class="myo-check-btn" onclick="window.router.navigate('/profile')">Verify</button>
+                                    </div>
+                                    <div class="myo-checklist-item">
+                                        <div class="myo-check-box"><i data-lucide="check" class="myo-check-icon"></i></div>
+                                        <div class="myo-check-info">
+                                            <span class="myo-check-title">Create Your First Commitment</span>
+                                            <span class="myo-check-sub">Choose a performance goal and lock CLTR or collateral.</span>
+                                        </div>
+                                    </div>
+                                    <div class="myo-checklist-item">
+                                        <div class="myo-check-box"><i data-lucide="check" class="myo-check-icon"></i></div>
+                                        <div class="myo-check-info">
+                                            <span class="myo-check-title">Complete Your First Settlement</span>
+                                            <span class="myo-check-sub">Fulfill your goal to release collateral and boost reputation.</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Section 3: Why Create a Contract? (Benefits) -->
+                            <div class="myo-section" data-reveal>
+                                <h3 class="myo-section-lbl">Why Create a Contract?</h3>
+                                <div class="myo-benefits-grid">
+                                    <div class="myo-benefit-card">
+                                        <div class="myo-benefit-icon"><i data-lucide="award"></i></div>
+                                        <span class="myo-benefit-title">Build Reputation</span>
+                                        <span class="myo-benefit-desc">Build a permanent, cryptographically signed record of your real-world execution.</span>
+                                    </div>
+                                    <div class="myo-benefit-card">
+                                        <div class="myo-benefit-icon"><i data-lucide="trending-up"></i></div>
+                                        <span class="myo-benefit-title">Earn Conviction Yield</span>
+                                        <span class="myo-benefit-desc">Stake CLTR tokens alongside your commitment to earn execution yields.</span>
+                                    </div>
+                                    <div class="myo-benefit-card">
+                                        <div class="myo-benefit-icon"><i data-lucide="shield-check"></i></div>
+                                        <span class="myo-benefit-title">Increase Trust Capacity</span>
+                                        <span class="myo-benefit-desc">Unlock larger staking limits and institutional credit capacities.</span>
+                                    </div>
+                                    <div class="myo-benefit-card">
+                                        <div class="myo-benefit-icon"><i data-lucide="code"></i></div>
+                                        <span class="myo-benefit-title">Create Verifiable Proof</span>
+                                        <span class="myo-benefit-desc">Convert standard human promises into programmable execution contracts.</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Section 4: Popular Templates -->
+                            <div class="myo-section" data-reveal>
+                                <h3 class="myo-section-lbl">Popular Templates</h3>
+                                <div class="myo-templates-grid">
+                                    <div class="myo-temp-card" onclick="window.router.navigate('/market')">
+                                        <div class="myo-temp-header">
+                                            <span class="myo-temp-platform">Stripe</span>
+                                            <span class="myo-temp-category">Finance</span>
+                                        </div>
+                                        <span class="myo-temp-title">Generate $25,000 monthly revenue</span>
+                                        <button class="myo-temp-btn">Create Contract</button>
+                                    </div>
+                                    <div class="myo-temp-card" onclick="window.router.navigate('/market')">
+                                        <div class="myo-temp-header">
+                                            <span class="myo-temp-platform">YouTube</span>
+                                            <span class="myo-temp-category">Creators</span>
+                                        </div>
+                                        <span class="myo-temp-title">Reach 10,000 subscribers</span>
+                                        <button class="myo-temp-btn">Create Contract</button>
+                                    </div>
+                                    <div class="myo-temp-card" onclick="window.router.navigate('/market')">
+                                        <div class="myo-temp-header">
+                                            <span class="myo-temp-platform">Shopify</span>
+                                            <span class="myo-temp-category">Commerce</span>
+                                        </div>
+                                        <span class="myo-temp-title">Complete 500 orders</span>
+                                        <button class="myo-temp-btn">Create Contract</button>
+                                    </div>
+                                    <div class="myo-temp-card" onclick="window.router.navigate('/market')">
+                                        <div class="myo-temp-header">
+                                            <span class="myo-temp-platform">GitHub</span>
+                                            <span class="myo-temp-category">Development</span>
+                                        </div>
+                                        <span class="myo-temp-title">Ship Version 2.0 tag</span>
+                                        <button class="myo-temp-btn">Create Contract</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="myo-column-side">
+                            <!-- Section 6: Execution Identity Preview -->
+                            <div class="myo-side-box" data-reveal>
+                                <h3 class="myo-side-title">Execution Identity</h3>
+                                <div class="myo-identity-card">
+                                    <div class="myo-identity-header">
+                                        <span class="myo-identity-level">Level I</span>
+                                        <span class="myo-identity-status">Awaiting First Commitment</span>
+                                    </div>
+                                    <div class="myo-identity-metrics">
+                                        <div class="myo-id-metric">
+                                            <span class="myo-id-lbl">Reputation Score</span>
+                                            <span class="myo-id-val">0</span>
+                                        </div>
+                                        <div class="myo-id-metric">
+                                            <span class="myo-id-lbl">Trust Capacity</span>
+                                            <span class="myo-id-val">$0</span>
+                                        </div>
+                                        <div class="myo-id-metric">
+                                            <span class="myo-id-lbl">Conviction</span>
+                                            <span class="myo-id-val">0 CLTR</span>
+                                        </div>
+                                    </div>
+                                    <div class="myo-identity-footer">
+                                        <span>Next Milestone: <strong>Complete First Contract</strong></span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Section 7: Roadmap Progression -->
+                            <div class="myo-side-box" data-reveal>
+                                <h3 class="myo-side-title">Roadmap Progression</h3>
+                                <div class="myo-roadmap">
+                                    <div class="myo-roadmap-item active">
+                                        <div class="myo-road-node"></div>
+                                        <div class="myo-road-info">
+                                            <span class="myo-road-lbl">First Contract</span>
+                                            <span class="myo-road-desc">Establish your first performance escrow pool.</span>
+                                        </div>
+                                    </div>
+                                    <div class="myo-roadmap-item">
+                                        <div class="myo-road-node"></div>
+                                        <div class="myo-road-info">
+                                            <span class="myo-road-lbl">First Settlement</span>
+                                            <span class="myo-road-desc">Fulfill terms to secure signature confirmation.</span>
+                                        </div>
+                                    </div>
+                                    <div class="myo-roadmap-item">
+                                        <div class="myo-road-node"></div>
+                                        <div class="myo-road-info">
+                                            <span class="myo-road-lbl">Level II Identity</span>
+                                            <span class="myo-road-desc">Ascend execution tier for higher yield ratios.</span>
+                                        </div>
+                                    </div>
+                                    <div class="myo-roadmap-item">
+                                        <div class="myo-road-node"></div>
+                                        <div class="myo-road-info">
+                                            <span class="myo-road-lbl">Unlock Larger Capacity</span>
+                                            <span class="myo-road-desc">Authorize enterprise-tier contract vaults.</span>
+                                        </div>
+                                    </div>
+                                    <div class="myo-roadmap-item">
+                                        <div class="myo-road-node"></div>
+                                        <div class="myo-road-info">
+                                            <span class="myo-road-lbl">Top 10% Reputation</span>
+                                            <span class="myo-road-desc">Earn prestige validator and governance status.</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Section 5: Network Activity Feed -->
+                            <div class="myo-side-box" data-reveal>
+                                <h3 class="myo-side-title">Network Activity</h3>
+                                <div class="myo-activity-list">
+                                    <div class="myo-act-item">
+                                        <div class="myo-act-icon"><i data-lucide="check-circle" style="color: #16a34a; width: 14px; height: 14px;"></i></div>
+                                        <div class="myo-act-info">
+                                            <span class="myo-act-title">Execution Confirmed</span>
+                                            <span class="myo-act-sub">YouTube · $500</span>
+                                        </div>
+                                        <span class="myo-act-time">2m ago</span>
+                                    </div>
+                                    <div class="myo-act-item">
+                                        <div class="myo-act-icon"><i data-lucide="arrow-right-circle" style="color: #635bff; width: 14px; height: 14px;"></i></div>
+                                        <div class="myo-act-info">
+                                            <span class="myo-act-title">Settlement Released</span>
+                                            <span class="myo-act-sub">Stripe · $2,300</span>
+                                        </div>
+                                        <span class="myo-act-time">5m ago</span>
+                                    </div>
+                                    <div class="myo-act-item">
+                                        <div class="myo-act-icon"><i data-lucide="lock" style="color: #96bf48; width: 14px; height: 14px;"></i></div>
+                                        <div class="myo-act-info">
+                                            <span class="myo-act-title">Funds Locked</span>
+                                            <span class="myo-act-sub">Shopify · $900</span>
+                                        </div>
+                                        <span class="myo-act-time">12m ago</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Motivational Call to Action Section at bottom -->
+                    <div class="myo-motivation-panel" data-reveal>
+                        <h3 class="myo-motivation-title">Your execution history begins with your first commitment</h3>
+                        <p class="myo-motivation-sub">Every completed contract permanently strengthens your on-chain reputation.</p>
+                        <div class="myo-motivation-ctas">
+                            <button class="myc-btn-primary" onclick="window.router.navigate('/market')">Create First Contract</button>
+                            <button class="myc-btn-secondary" onclick="window.router.navigate('/market')">Browse Templates</button>
+                        </div>
+                    </div>
                 </div>
             `;
+            if (window.lucide) window.lucide.createIcons();
         } else {
+            document.getElementById('myc-total-locked').textContent = '$' + (totalLocked / 100).toLocaleString('en-US', { minimumFractionDigits: 0 });
+            document.getElementById('myc-active-count').textContent = activeCount.toString();
+            document.getElementById('myc-settle-rate').textContent = rate;
+            document.getElementById('myc-avg-risk').textContent = '$' + (totalPayout / 100).toLocaleString('en-US', { minimumFractionDigits: 0 });
             renderContractList(container, contracts);
         }
     } catch (err) {

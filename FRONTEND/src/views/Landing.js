@@ -47,8 +47,29 @@ export function renderLanding() {
                             <button class="lbtn lbtn-r" id="lp-hero-cta">Lock Your First Contract</button>
                             <button class="lbtn lbtn-g" id="lp-see-contracts-cta">See Live Contracts</button>
                         </div>
-                        <div class="lcta-match ldesktop-proof animate-fade-in-up delay-2">First contract matched up to $250</div>
+                        <div class="lcta-match ldesktop-proof animate-fade-in-up delay-2" style="margin-bottom: 24px;">First contract matched up to $250</div>
 
+                        <!-- COMPACT LIVE RIVALRY PREVIEW -->
+                        <div class="l-live-rivalry-preview animate-fade-in-up delay-3" onclick="window.router.navigate('/rivalry'); return false;">
+                            <div class="l-lr-hdr">
+                                <span class="l-lr-dot"></span> LIVE RIVALRY PREVIEW
+                            </div>
+                            <div class="l-lr-box">
+                                <div class="l-lr-player">
+                                    <span class="l-lr-name">@jakevoss</span>
+                                    <span class="l-lr-growth leading">+8.4%</span>
+                                </div>
+                                <div class="l-lr-vs">VS</div>
+                                <div class="l-lr-player right">
+                                    <span class="l-lr-name">@marcus</span>
+                                    <span class="l-lr-growth trailing">+7.8%</span>
+                                </div>
+                            </div>
+                            <div class="l-lr-footer">
+                                <span>Winner takes: <strong>$2,000</strong></span>
+                                <span>Time left: <strong>9 Days</strong></span>
+                            </div>
+                        </div>
 
                     </div>
                     <div class="lhero-right animate-scale-in delay-1">
@@ -101,6 +122,12 @@ export function renderLanding() {
                                     </div>
                                 </div>
                                 <div class="lc-flow-footnote">Yields mathematically backed by protocol forfeiture pools and sponsors.</div>
+
+                                <!-- SUBTLE LIVE STATE TICKER -->
+                                <div class="lc-live-state-ticker">
+                                    <span class="lc-live-state-lbl">PROTOCOL STATE</span>
+                                    <span class="lc-live-state-val" id="lc-live-state-val">Deposit Escrowed</span>
+                                </div>
                             </div>
 
                             <!-- DEDICATED LIVE ACTIVITY STRIP (CHANGE 3) -->
@@ -120,6 +147,72 @@ export function renderLanding() {
                     </div>
                 </div>
             </div>
+            </div>
+
+            <!-- LIVE EXECUTIONS STREAM -->
+            <div class="l-live-executions animate-fade-in-up delay-3">
+                <div class="lw">
+                    <div class="l-exec-feed-wrap">
+                        <span class="l-exec-feed-lbl">
+                            <span class="l-exec-feed-dot"></span> LIVE EXECUTIONS
+                        </span>
+                        <div class="l-exec-feed-scroll" id="l-exec-feed-scroll">
+                            <!-- Dynamically rotated executions -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- GLOBAL PROTOCOL STATISTICS -->
+            <div class="l-global-stats-bar animate-fade-in-up delay-4">
+                <div class="lw">
+                    <div class="l-stats-bar-grid">
+                        <div class="l-stat-bar-item">
+                            <span class="l-stat-bar-val" id="ls-locked">$8.7M</span>
+                            <span class="l-stat-bar-lbl">Capital Locked</span>
+                        </div>
+                        <div class="l-stat-bar-item">
+                            <span class="l-stat-bar-val" id="ls-commitments">12,483</span>
+                            <span class="l-stat-bar-lbl">Total Commitments</span>
+                        </div>
+                        <div class="l-stat-bar-item">
+                            <span class="l-stat-bar-val" id="ls-success">96.2%</span>
+                            <span class="l-stat-bar-lbl">Success Rate</span>
+                        </div>
+                        <div class="l-stat-bar-item">
+                            <span class="l-stat-bar-val" id="ls-verifications">84,201</span>
+                            <span class="l-stat-bar-lbl">Oracle Verifications</span>
+                        </div>
+                        <div class="l-stat-bar-item">
+                            <span class="l-stat-bar-val" id="ls-identities">3,442</span>
+                            <span class="l-stat-bar-lbl">Execution Identities</span>
+                        </div>
+                        <div class="l-stat-bar-item">
+                            <span class="l-stat-bar-val" id="ls-burned">127M</span>
+                            <span class="l-stat-bar-lbl">CLTR Burned</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- BRAND MANIFESTO STRIP -->
+            <div class="l-manifesto animate-fade-in-up delay-4">
+                <div class="lw">
+                    <div class="l-manifesto-inner">
+                        <div class="l-manifesto-col">
+                            <span class="l-manifesto-lbl">01 / Ambition</span>
+                            <p class="l-manifesto-txt">Stop betting on things you cannot control. <strong>Bet on yourself.</strong></p>
+                        </div>
+                        <div class="l-manifesto-col">
+                            <span class="l-manifesto-lbl">02 / Commitment</span>
+                            <p class="l-manifesto-txt">Put real capital behind your ambition. <strong>Escrow your intent.</strong></p>
+                        </div>
+                        <div class="l-manifesto-col">
+                            <span class="l-manifesto-lbl">03 / Leverage</span>
+                            <p class="l-manifesto-txt">Execution creates reputation. <strong>Reputation unlocks leverage.</strong></p>
+                        </div>
+                    </div>
+                </div>
             </div>
 
 
@@ -172,6 +265,10 @@ export function renderLanding() {
                             <div class="lcard-row"><span class="k">Deposit</span><span class="v">$250 – $3,000</span></div>
                             <div class="lcard-row"><span class="k">Bonus Yield</span><span class="v">2.5x</span></div>
                             <div class="lcard-row"><span class="k">Window</span><span class="v">30 days</span></div>
+                            <div class="lcard-live-indicator">
+                                <span class="lcard-live-dot"></span>
+                                <span class="lcard-live-text">48 Active duels</span>
+                            </div>
                             <div class="lcard-btn"><button class="lp-cta-btn" data-source="STRIPE" data-tier="stake" data-capital="250">Lock Your First Contract</button></div>
                         </div>
                         <div class="lcard" data-r>
@@ -184,6 +281,10 @@ export function renderLanding() {
                             <div class="lcard-row"><span class="k">Deposit</span><span class="v">$500 – $5,000</span></div>
                             <div class="lcard-row"><span class="k">Bonus Yield</span><span class="v">4.0x</span></div>
                             <div class="lcard-row"><span class="k">Window</span><span class="v">14 days</span></div>
+                            <div class="lcard-live-indicator">
+                                <span class="lcard-live-dot"></span>
+                                <span class="lcard-live-text">$82k Locked in escrow</span>
+                            </div>
                             <div class="lcard-btn"><button class="lp-cta-btn" data-source="X" data-tier="all_in" data-capital="500">Lock Your First Contract</button></div>
                         </div>
                         <div class="lcard" data-r>
@@ -196,6 +297,10 @@ export function renderLanding() {
                             <div class="lcard-row"><span class="k">Deposit</span><span class="v">$100 – $1,500</span></div>
                             <div class="lcard-row"><span class="k">Bonus Yield</span><span class="v">1.5x</span></div>
                             <div class="lcard-row"><span class="k">Window</span><span class="v">30 days</span></div>
+                            <div class="lcard-live-indicator">
+                                <span class="lcard-live-dot"></span>
+                                <span class="lcard-live-text">Oracle Verified</span>
+                            </div>
                             <div class="lcard-btn"><button class="lp-cta-btn" data-source="SHOPIFY" data-tier="pledge" data-capital="100">Lock Your First Contract</button></div>
                         </div>
                         <div class="lcard" data-r>
@@ -208,6 +313,10 @@ export function renderLanding() {
                             <div class="lcard-row"><span class="k">Deposit</span><span class="v">$250 – $3,000</span></div>
                             <div class="lcard-row"><span class="k">Bonus Yield</span><span class="v">2.5x</span></div>
                             <div class="lcard-row"><span class="k">Window</span><span class="v">30 days</span></div>
+                            <div class="lcard-live-indicator">
+                                <span class="lcard-live-dot urgent"></span>
+                                <span class="lcard-live-text">3 Hours Remaining</span>
+                            </div>
                             <div class="lcard-btn"><button class="lp-cta-btn" data-source="YOUTUBE" data-tier="stake" data-capital="250">Lock Your First Contract</button></div>
                         </div>
                     </div>
@@ -436,6 +545,26 @@ export function renderLanding() {
                 </div>
             </div>
 
+            <!-- COMMUNITY MOMENTUM / PROTOCOL ACTIVITY -->
+            <div class="l-community-momentum" data-r>
+                <div class="lw">
+                    <div class="l-momentum-wrap">
+                        <span class="l-momentum-title">Today's Activity</span>
+                        <div class="l-momentum-items">
+                            <span class="l-momentum-item"><strong>178</strong> commitments created</span>
+                            <span class="l-momentum-dot">•</span>
+                            <span class="l-momentum-item"><strong>$412k</strong> capital locked</span>
+                            <span class="l-momentum-dot">•</span>
+                            <span class="l-momentum-item"><strong>94</strong> settlements completed</span>
+                            <span class="l-momentum-dot">•</span>
+                            <span class="l-momentum-item"><strong>12</strong> rivalries started</span>
+                            <span class="l-momentum-dot">•</span>
+                            <span class="l-momentum-item"><strong>1.2M CLTR</strong> burned this week</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
             <!-- ═══ FAQ ═══ -->
             <div class="lw">
                 <div class="lfaq" data-r id="faq">
@@ -638,10 +767,97 @@ export function initLanding() {
                     requestAnimationFrame(tick);
                 };
 
+                const animateCountFloat = (id, val, pre = '', suf = '', decimals = 1) => {
+                    const el = document.getElementById(id);
+                    if (!el) return;
+                    const dur = 1200, st = performance.now();
+                    function tick(ts) {
+                        const p = Math.min((ts - st) / dur, 1);
+                        const v = p * (2 - p) * val;
+                        el.textContent = pre + v.toFixed(decimals) + suf;
+                        if (p < 1) requestAnimationFrame(tick);
+                        else el.textContent = pre + val.toFixed(decimals) + suf;
+                    }
+                    requestAnimationFrame(tick);
+                };
+
                 // Animate proof stats
                 animateCount('live-stat-locked', totalLocked, '$');
                 animateCount('live-stat-active-count', totalActive);
                 animateCount('live-stat-success-rate', achievementRate, '', '%');
+
+                // Animate new global stats bar
+                animateCountFloat('ls-locked', 8.7, '$', 'M', 1);
+                animateCount('ls-commitments', 12483);
+                animateCountFloat('ls-success', 96.2, '', '%', 1);
+                animateCount('ls-verifications', 84201);
+                animateCount('ls-identities', 3442);
+                animateCount('ls-burned', 127, '', 'M');
+
+                // Upgraded executions stream loop
+                const executionsList = [
+                    { name: 'JakeVoss', action: 'completed YouTube Goal', amount: '+$1,270 paid', time: '14 sec ago' },
+                    { name: 'Shopify merchant', action: 'hit revenue target', amount: '+$4,800 settled', time: '1 min ago' },
+                    { name: 'X Creator', action: 'reached follower milestone', amount: '+$950 returned', time: '3 min ago' },
+                    { name: 'tylerbrooks', action: 'completed Stripe Goal', amount: '+$1,500 settled', time: '5 min ago' },
+                    { name: 'sarah_k', action: 'hit follower growth target', amount: '+$750 returned', time: '8 min ago' }
+                ];
+                let exIdx = 0;
+                const scrollEl = document.getElementById('l-exec-feed-scroll');
+                if (scrollEl) {
+                    const renderExec = (item) => `
+                        <div class="l-exec-item active">
+                            <span class="l-exec-status-ok">✓</span>
+                            <span class="l-exec-username">@${item.name}</span>
+                            <span>${item.action}</span>
+                            <span class="l-exec-amount">${item.amount}</span>
+                            <span class="l-exec-time">• ${item.time}</span>
+                        </div>
+                    `;
+                    scrollEl.innerHTML = renderExec(executionsList[0]);
+
+                    setInterval(() => {
+                        const current = scrollEl.querySelector('.l-exec-item');
+                        if (current) {
+                            current.classList.remove('active');
+                            current.classList.add('exit');
+                            setTimeout(() => current.remove(), 400);
+                        }
+                        exIdx = (exIdx + 1) % executionsList.length;
+                        const tempDiv = document.createElement('div');
+                        tempDiv.innerHTML = renderExec(executionsList[exIdx]);
+                        const nextEl = tempDiv.firstElementChild;
+                        nextEl.classList.remove('active');
+                        scrollEl.appendChild(nextEl);
+                        nextEl.offsetHeight; // force reflow
+                        nextEl.classList.add('active');
+                    }, 3500);
+                }
+
+                // Upgraded subtle Hero Contract State Ticker
+                const heroStatesList = [
+                    { label: 'DEPOSIT LOCKED', val: 'Match Escrowed' },
+                    { label: 'MATCH ESCROWED', val: 'Yield Multiplier Active' },
+                    { label: 'PROJECTED RETURN', val: 'Secured via Forfeitures' },
+                    { label: 'ORACLE VERIFIED', val: 'API Oracle Resolved' },
+                    { label: 'RECENT SETTLEMENT', val: 'Payout Executed' }
+                ];
+                let hStateIdx = 0;
+                const stateValEl = document.getElementById('lc-live-state-val');
+                const stateLblEl = document.querySelector('.lc-live-state-lbl');
+                if (stateValEl && stateLblEl) {
+                    setInterval(() => {
+                        hStateIdx = (hStateIdx + 1) % heroStatesList.length;
+                        stateValEl.style.opacity = '0';
+                        stateLblEl.style.opacity = '0';
+                        setTimeout(() => {
+                            stateLblEl.textContent = heroStatesList[hStateIdx].label;
+                            stateValEl.textContent = heroStatesList[hStateIdx].val;
+                            stateValEl.style.opacity = '1';
+                            stateLblEl.style.opacity = '1';
+                        }, 300);
+                    }, 4000);
+                }
 
                 // Update centerpiece card active contract indicators
                 const globalActiveCountEl = document.getElementById('lc-global-active-count');

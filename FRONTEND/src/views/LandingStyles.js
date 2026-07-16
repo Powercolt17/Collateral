@@ -1109,6 +1109,9 @@ export const landingCSS = `
         grid-template-columns: repeat(2, 1fr);
         gap: 20px;
     }
+    .l-live-rivalry-preview {
+        display: none !important;
+    }
 }
 
 /* Live rivalry preview */

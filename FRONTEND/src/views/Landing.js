@@ -1484,10 +1484,13 @@ export function initLanding() {
 
     let targetExecUrl = '/market';
 
-    document.querySelectorAll('.lp-cta-btn').forEach(btn => {
-        btn.addEventListener('click', (e) => {
+    document.querySelectorAll('.lcard').forEach(card => {
+        card.addEventListener('click', (e) => {
             e.preventDefault();
             e.stopPropagation();
+            const btn = card.querySelector('.lp-cta-btn');
+            if (!btn) return;
+            
             const source = btn.getAttribute('data-source');
             const tier = btn.getAttribute('data-tier');
             const capital = btn.getAttribute('data-capital');

@@ -383,6 +383,9 @@ export const landingCSS = `
   padding-top: 10px;
   border-top: 1px solid #f5f4f0;
 }
+.lmobile-only {
+  display: none !important;
+}
 .lc-trust-lock {
   color: #8a8984;
   display: inline-block;
@@ -1105,6 +1108,9 @@ export const landingCSS = `
     line-height: 1.2;
 }
 @media(max-width:768px) {
+    .lmobile-only {
+        display: block !important;
+    }
     .l-live-ticker-strip {
         padding: 6px 0 !important;
     }

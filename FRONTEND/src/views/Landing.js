@@ -138,7 +138,7 @@ export function renderLanding() {
                             </div>
 
                             <!-- TRUST COPY -->
-                            <div class="lc-trust">
+                            <div class="lc-trust lhide-mobile">
                                 <svg class="lc-trust-lock" width="10" height="10" viewBox="0 0 24 28" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><path d="M12 2a5 5 0 0 0-5 5v3H5a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V12a2 2 0 0 0-2-2h-2V7a5 5 0 0 0-5-5zm-3 5a3 3 0 0 1 6 0v3H9V7zm3 9a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3z" fill="currentColor"/></svg>
                                 Contracts verified automatically through connected APIs.
                             </div>
@@ -182,6 +182,12 @@ export function renderLanding() {
                         </div>
                     </div>
                 </div>
+            </div>
+
+            <!-- TRUST COPY FOR MOBILE ONLY -->
+            <div class="lc-trust lmobile-only" style="margin-top: 16px; border-top: none; padding-top: 0; margin-bottom: 24px;">
+                <svg class="lc-trust-lock" width="10" height="10" viewBox="0 0 24 28" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><path d="M12 2a5 5 0 0 0-5 5v3H5a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V12a2 2 0 0 0-2-2h-2V7a5 5 0 0 0-5-5zm-3 5a3 3 0 0 1 6 0v3H9V7zm3 9a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3z" fill="currentColor"/></svg>
+                Contracts verified automatically through connected APIs.
             </div>
 
 

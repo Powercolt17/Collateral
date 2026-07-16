@@ -32,32 +32,12 @@ export function renderLanding() {
 
             <!-- ═══ HERO ═══ -->
             <div class="lhero-section">
-                <!-- PREMIUM BACKGROUND ANIMATION & GRID -->
+                <!-- PREMIUM ARCHITECTURAL ENVIRONMENT -->
                 <div class="lhero-bg-container">
-                    <div class="l-exec-ring-system">
-                        <div class="l-exec-ring">
-                            <div class="l-exec-ring-inner"></div>
-                            
-                            <!-- Thin burgundy execution path -->
-                            <div class="l-exec-path">
-                                <svg class="l-exec-path-svg" viewBox="0 0 760 760">
-                                    <!-- Circular arc inside the slot groove channel -->
-                                    <path class="l-exec-path-arc" d="M 685 540 A 355 355 0 0 1 450 725" fill="none" stroke="var(--r)" stroke-width="1.5" />
-                                    
-                                    <!-- 3 tiny anchor points (Commitment, Verification, Settlement) -->
-                                    <circle class="l-exec-dot" cx="685" cy="540" r="4" fill="var(--r)" style="cursor:pointer; pointer-events:auto;">
-                                        <title>Commitment</title>
-                                    </circle>
-                                    <circle class="l-exec-dot" cx="580" cy="655" r="4" fill="var(--r)" style="cursor:pointer; pointer-events:auto;">
-                                        <title>Verification</title>
-                                    </circle>
-                                    <circle class="l-exec-dot" cx="450" cy="725" r="4" fill="var(--r)" style="cursor:pointer; pointer-events:auto;">
-                                        <title>Settlement</title>
-                                    </circle>
-                                </svg>
-                            </div>
-                        </div>
-                    </div>
+                    <div class="l-arch-light-shift"></div>
+                    <div class="l-arch-panel panel-left"></div>
+                    <div class="l-arch-panel panel-right"></div>
+                    <div class="l-arch-seam seam-horizontal"></div>
                 </div>
 
                 <div class="lw">
@@ -1697,13 +1677,28 @@ export function initLanding() {
         }, { threshold: 0.2 });
         countEls.forEach(el => countObs.observe(el));
     }
-    // Mouse parallax for sculptural execution ring (subtle 1-2px offset)
-    const execRing = document.querySelector('.l-exec-ring');
-    if (execRing) {
+    // Mouse parallax for sculptural environment & contract card
+    const activityCard = document.querySelector('.lactivity-card');
+    const panelRight = document.querySelector('.panel-right');
+    
+    if (activityCard || panelRight) {
         document.addEventListener('mousemove', (e) => {
-            const x = (e.clientX / window.innerWidth - 0.5) * 2; 
-            const y = (e.clientY / window.innerHeight - 0.5) * 2; 
-            execRing.style.transform = `translate3d(${x}px, ${y}px, 0)`;
+            const mouseX = (e.clientX / window.innerWidth - 0.5);
+            const mouseY = (e.clientY / window.innerHeight - 0.5);
+            
+            // Extremely subtle tilt on the contract card (1.5deg max)
+            if (activityCard) {
+                const rx = mouseY * -1.5;
+                const ry = mouseX * 1.5;
+                activityCard.style.transform = `rotateY(${ry}deg) rotateX(${rx}deg) translateY(-2px)`;
+            }
+            
+            // Faint parallax (1-2px shift) on the background panel
+            if (panelRight) {
+                const px = mouseX * 2;
+                const py = mouseY * 2;
+                panelRight.style.transform = `translate3d(${px}px, ${py}px, 0)`;
+            }
         }, { passive: true });
     }
 }

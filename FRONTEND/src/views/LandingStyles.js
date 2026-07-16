@@ -70,7 +70,7 @@ export const landingCSS = `
 
 /* ═══ HERO ═══ */
 .lhero-section{position:relative;overflow:hidden}
-.lhero-grid{display:grid;grid-template-columns:1.25fr 0.75fr;gap:48px;align-items:center;padding:160px 0 80px}
+.lhero-grid{display:grid;grid-template-columns:1.25fr 0.75fr;gap:48px;align-items:center;padding:110px 0 60px}
 .lh1{font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:clamp(38px,4.5vw,64px);line-height:1.1;letter-spacing:-2px;color:var(--t1);margin:0 0 24px}
 .lh-gradient{color:var(--r);font-weight:800;letter-spacing:-2px;display:inline-block;padding-bottom:0.15em;margin-bottom:-0.15em}
 .lh-badge{display:inline-flex;align-items:center;gap:8px;background:rgba(92,20,20,0.04);border:1px solid rgba(92,20,20,0.12);padding:6px 14px;border-radius:100px;font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--r);margin-bottom:24px;box-shadow:0 2px 8px rgba(92,20,20,0.02)}
@@ -106,16 +106,6 @@ export const landingCSS = `
 .lcta-match::before{content:'';width:6px;height:6px;border-radius:50%;background:#EF4444;animation:matchDotRedPulse 2s infinite ease-in-out}
 
 /* ═══ PREVIEW CONTRACT CARD ═══ */
-@keyframes premiumFloat {
-  0%, 100% { 
-    transform: translateY(0) rotateX(0deg) rotateY(0deg);
-    box-shadow: 0 16px 48px -16px rgba(92,20,20,0.08), 0 0 1px rgba(92,20,20,0.1) !important;
-  }
-  50% { 
-    transform: translateY(-8px) rotateX(0.5deg) rotateY(-0.5deg);
-    box-shadow: 0 24px 56px -16px rgba(92,20,20,0.12), 0 0 1px rgba(92,20,20,0.1) !important;
-  }
-}
 @keyframes cardSheen {
   0%, 20% { transform: translateX(-150%) skewX(-20deg); opacity: 0; }
   25% { opacity: 0.2; }
@@ -128,27 +118,28 @@ export const landingCSS = `
 .lhero-right{display:flex;justify-content:center;align-items:center;position:relative;perspective:1200px}
 .lhero-right::before{content:none !important;display:none !important}
 .lactivity-card {
-  background-image: linear-gradient(#ffffff, #ffffff),
-                    linear-gradient(120deg, #eae8e4 30%, rgba(255,255,255,0.9) 42%, rgba(92,20,20,0.25) 47%, #ffffff 50%, rgba(92,20,20,0.25) 53%, rgba(255,255,255,0.9) 58%, #eae8e4 70%) !important;
-  background-clip: padding-box, border-box !important;
-  background-origin: padding-box, border-box !important;
-  background-size: 100% 100%, 300% 100% !important;
-  background-position: 0% 0%, 300% 0%;
-  border: 1px solid transparent !important;
-  border-radius: 20px;
+  background: #ffffff !important;
+  border: 1px solid rgba(0, 0, 0, 0.065) !important;
+  border-radius: 16px;
   padding: 24px 28px !important;
   width: 100%;
   max-width: 440px !important;
   position: relative;
-  overflow: hidden;
-  z-index: 1;
-  box-shadow: 0 32px 64px -16px rgba(92,20,20,0.1), 0 0 1px rgba(92,20,20,0.12), 0 8px 24px -8px rgba(0,0,0,0.04) !important;
+  z-index: 2;
+  /* Rich layered physical shadow stack with soft burgundy reflected light */
+  box-shadow: 
+      0 4px 12px rgba(0, 0, 0, 0.01),
+      0 16px 40px rgba(0, 0, 0, 0.025),
+      0 40px 80px -16px rgba(0, 0, 0, 0.045),
+      0 30px 60px -20px rgba(92, 20, 20, 0.035),
+      inset 0 1px 1px rgba(255, 255, 255, 0.9) !important;
   display: flex;
   flex-direction: column;
   gap: 20px !important;
   color: #1e1e1e !important;
   font-family: 'Inter', sans-serif;
-  animation: premiumFloat 8s ease-in-out infinite, borderSweep 6s linear infinite;
+  transform-style: preserve-3d;
+  transition: transform 0.1s ease-out;
 }
 @keyframes borderSweep {
   0% { background-position: 0% 0%, 300% 0%; }
@@ -1118,7 +1109,7 @@ export const landingCSS = `
 
 /* Live rivalry preview */
 .l-live-rivalry-preview {
-    margin-top: 32px;
+    margin-top: 48px;
     background: #fff;
     border: 1px solid var(--d);
     border-radius: 12px;
@@ -1806,128 +1797,68 @@ export const landingCSS = `
     background: transparent; /* inherit cool greyish slate page bg */
 }
 .l-exec-ring-system {
-    position: absolute;
-    top: 50%;
-    left: 55%; /* Positioned slightly right of center to sit under card and extend left */
-    transform: translate(-30%, -50%);
-    width: 760px;
-    height: 760px;
-    z-index: 1;
-    pointer-events: none;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    box-sizing: border-box;
-    opacity: 0;
-    animation: ringFadeIn 1.5s cubic-bezier(0.16, 1, 0.3, 1) 0.1s forwards;
-}
-
-@keyframes ringFadeIn {
-    from { opacity: 0; transform: translate(-30%, -48%) scale(0.98); }
-    to { opacity: 1; transform: translate(-30%, -50%) scale(1); }
-}
-
-.l-exec-ring {
-    position: absolute;
-    width: 760px;
-    height: 760px;
-    border-radius: 50%;
-    background: #ffffff; /* pure white to stand out clearly from cool slate page bg */
-    /* Bold machined carved depth effect with at least 8%-15% visible opacity */
-    box-shadow: 
-        /* Inner debossed groove channel shadow */
-        inset 4px 4px 12px rgba(0, 0, 0, 0.08), 
-        inset -8px -8px 16px rgba(255, 255, 255, 0.9),
-        /* Subtle burgundy reflection inside the groove channel (2-3% opacity) */
-        inset 0px 12px 32px rgba(92, 20, 20, 0.03),
-        /* Outer soft shadows and highlights */
-        4px 12px 24px rgba(0, 0, 0, 0.03), 
-        -8px -8px 20px rgba(255, 255, 255, 0.8);
-    border: 1px solid rgba(0, 0, 0, 0.08); /* 8% opacity border */
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    box-sizing: border-box;
-    animation: lightingShift 60s ease-in-out infinite;
-    transform-style: preserve-3d;
-}
-.l-exec-ring-inner {
-    width: 660px;
-    height: 660px;
-    border-radius: 50%;
-    background: #F8FAFC; /* Match parent page bg exactly to complete the groove channel */
-    /* Raised center cylinder cylinder shadows casting outwards */
-    box-shadow: 
-        4px 4px 12px rgba(0, 0, 0, 0.05), 
-        -8px -8px 16px rgba(255, 255, 255, 0.9),
-        inset -2px -2px 6px rgba(0, 0, 0, 0.02),
-        inset 4px 4px 8px rgba(255, 255, 255, 0.8);
-    border: 1px solid rgba(0, 0, 0, 0.08); /* 8% opacity border */
-    box-sizing: border-box;
-}
-.l-exec-path {
+/* Premium Background Animation & Grid — Institutional Luxury Architectural Environment */
+.lhero-bg-container {
     position: absolute;
     top: 0;
     left: 0;
-    width: 760px;
-    height: 760px;
-    pointer-events: none;
-    box-sizing: border-box;
-}
-.l-exec-path-svg {
     width: 100%;
     height: 100%;
-    overflow: visible;
+    overflow: hidden;
+    z-index: 0;
+    pointer-events: none;
+    background: radial-gradient(circle at 60% 30%, #fdfdfd 0%, #fafaf9 50%, #f6f6f3 100%);
+    opacity: 0;
+    animation: envFadeIn 2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
-.l-exec-path-arc {
-    opacity: 0.25; /* Highly visible but restrained burgundy path: 25% opacity */
+@keyframes envFadeIn {
+    to { opacity: 1; }
 }
-.l-exec-dot {
-    opacity: 0.7; /* Crisp visible anchors */
-    transition: opacity 0.2s, transform 0.2s;
+.l-arch-light-shift {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle at 45% 45%, rgba(255, 255, 255, 0.6) 0%, rgba(255, 255, 255, 0) 70%);
+    pointer-events: none;
+    animation: ambientLightShift 90s ease-in-out infinite alternate;
 }
-.l-exec-dot:hover {
-    opacity: 1;
-    transform: scale(1.2);
+@keyframes ambientLightShift {
+    0% { opacity: 0.15; transform: translate(-30px, -30px); }
+    100% { opacity: 0.65; transform: translate(30px, 30px); }
 }
-
-@keyframes lightingShift {
-    0% {
-        box-shadow: 
-            inset 4px 4px 12px rgba(0, 0, 0, 0.08), 
-            inset -8px -8px 16px rgba(255, 255, 255, 0.9),
-            inset 0px 12px 32px rgba(92, 20, 20, 0.03),
-            4px 12px 24px rgba(0, 0, 0, 0.03), 
-            -8px -8px 20px rgba(255, 255, 255, 0.8);
-    }
-    50% {
-        box-shadow: 
-            inset 8px 3px 16px rgba(0, 0, 0, 0.1), 
-            inset -4px -8px 16px rgba(255, 255, 255, 0.95),
-            inset 0px 12px 32px rgba(92, 20, 20, 0.04),
-            8px 6px 28px rgba(0, 0, 0, 0.02), 
-            -4px -8px 20px rgba(255, 255, 255, 0.85);
-    }
-    100% {
-        box-shadow: 
-            inset 4px 4px 12px rgba(0, 0, 0, 0.08), 
-            inset -8px -8px 16px rgba(255, 255, 255, 0.9),
-            inset 0px 12px 32px rgba(92, 20, 20, 0.03),
-            4px 12px 24px rgba(0, 0, 0, 0.03), 
-            -8px -8px 20px rgba(255, 255, 255, 0.8);
-    }
+.l-arch-panel {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    pointer-events: none;
 }
-
-@media (max-width: 991px) {
-    .l-exec-ring-system {
-        left: 50%;
-        transform: translate(-50%, -55%) scale(0.7);
-    }
+.panel-left {
+    left: 0;
+    width: 55%;
 }
-@media (max-width: 768px) {
-    .l-exec-ring-system {
-        transform: translate(-50%, -55%) scale(0.5);
-    }
+.panel-right {
+    right: 0;
+    width: 45%;
+    /* Subtle foster + partners panel division seam */
+    border-left: 1px solid rgba(0, 0, 0, 0.035);
+    background: rgba(255, 255, 255, 0.25);
+    box-shadow: 
+        -1px 0 0 rgba(255, 255, 255, 0.8), /* Machined anodized highlight */
+        -12px 0 36px rgba(0, 0, 0, 0.006); /* Faint ambient shadow */
+}
+.l-arch-seam {
+    position: absolute;
+    pointer-events: none;
+}
+.seam-horizontal {
+    top: 68%;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: rgba(0, 0, 0, 0.03);
+    box-shadow: 0 1px 0 rgba(255, 255, 255, 0.8); /* Milled horizontal horizontal gap highlight */
 }
 
 `;

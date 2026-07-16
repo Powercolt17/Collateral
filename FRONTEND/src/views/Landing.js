@@ -684,91 +684,131 @@ export function renderLanding() {
                 <div class="l-modal-container">
                     <div class="l-modal-header">
                         <span class="l-modal-title">
-                            <span class="l-ticker-pulse"></span> LIVE RIVALRY PREVIEW
+                            <span class="l-ticker-pulse"></span> RIVALRY SPECIFICATION · ID: R-VOSS-MARCUS
                         </span>
                         <button class="l-modal-close" id="l-modal-close-btn">✕</button>
                     </div>
                     <div class="l-modal-body">
-                        <!-- UFC Tale-of-the-Tape Mini -->
-                        <div class="l-modal-tape">
-                            <div class="l-modal-tape-versus">
-                                <div class="l-modal-tape-player">
-                                    <span class="l-modal-tape-name">@jakevoss</span>
-                                    <span class="l-modal-tape-metric">YouTube Goal: 500 subs</span>
+                        
+                        <!-- 1. LIVE RIVALRY SCOREBOARD (HERO) -->
+                        <div class="l-modal-scoreboard">
+                            <div class="l-ms-header">
+                                <div class="l-ms-player left">
+                                    <span class="l-ms-name">JakeVoss</span>
+                                    <span class="l-ms-delta green">+8.40%</span>
+                                    <span class="l-ms-badge leading">LEADING</span>
                                 </div>
-                                <div class="l-modal-tape-vs-circle">VS</div>
-                                <div class="l-modal-tape-player right">
-                                    <span class="l-modal-tape-name">@marcus</span>
-                                    <span class="l-modal-tape-metric">YouTube Goal: 500 subs</span>
+                                <div class="l-ms-vs-box">
+                                    <span class="l-ms-vs-lbl">VS</span>
+                                    <div class="l-ms-lead-bubble">
+                                        <span class="l-ms-lead-lbl">Lead Margin</span>
+                                        <span class="l-ms-lead-val">+0.60%</span>
+                                    </div>
+                                </div>
+                                <div class="l-ms-player right">
+                                    <span class="l-ms-name">Marcus</span>
+                                    <span class="l-ms-delta burgundy">+7.80%</span>
+                                    <span class="l-ms-badge trailing">TRAILING</span>
                                 </div>
                             </div>
-                            <div style="height: 1px; background: rgba(0,0,0,0.06); margin: 8px 0;"></div>
-                            <div class="l-modal-tape-row">
-                                <span class="l-modal-tape-delta left">+8.4%</span>
-                                <div style="flex: 1; margin: 0 16px; position: relative; height: 6px; background: rgba(92,20,20,0.1); border-radius: 3px; overflow: hidden;">
-                                    <div style="position: absolute; left: 0; top: 0; bottom: 0; width: 52%; background: var(--g);"></div>
-                                    <div style="position: absolute; right: 0; top: 0; bottom: 0; width: 48%; background: var(--r);"></div>
+                            
+                            <!-- 2. MOMENTUM BAR -->
+                            <div class="l-ms-momentum-wrap">
+                                <div class="l-ms-momentum-names">
+                                    <span>JakeVoss</span>
+                                    <span>Marcus</span>
                                 </div>
-                                <span class="l-modal-tape-delta right">+7.8%</span>
+                                <div class="l-ms-momentum-bar">
+                                    <div class="l-ms-momentum-fill left" style="width: 54%;"></div>
+                                    <div class="l-ms-momentum-fill right" style="width: 46%;"></div>
+                                    <div class="l-ms-momentum-divider" style="left: 54%;"></div>
+                                </div>
+                                <div class="l-ms-momentum-footer">
+                                    <span>Current Lead: +0.60%</span>
+                                </div>
                             </div>
                         </div>
 
-                        <!-- Mock Live Chart (SVG) -->
-                        <div class="l-modal-graph">
-                            <svg width="100%" height="100%" viewBox="0 0 532 120" preserveAspectRatio="none" style="display: block; overflow: visible;">
-                                <defs>
-                                    <linearGradient id="g-left" x1="0" y1="0" x2="0" y2="1">
-                                        <stop offset="0%" stop-color="rgba(16,185,129,0.1)"/>
-                                        <stop offset="100%" stop-color="rgba(16,185,129,0)"/>
-                                    </linearGradient>
-                                    <linearGradient id="g-right" x1="0" y1="0" x2="0" y2="1">
-                                        <stop offset="0%" stop-color="rgba(92,20,20,0.1)"/>
-                                        <stop offset="100%" stop-color="rgba(92,20,20,0)"/>
-                                    </linearGradient>
-                                </defs>
-                                <!-- Grids -->
-                                <line x1="0" y1="30" x2="532" y2="30" stroke="rgba(0,0,0,0.03)" stroke-width="1" stroke-dasharray="3,3"/>
-                                <line x1="0" y1="60" x2="532" y2="60" stroke="rgba(0,0,0,0.03)" stroke-width="1" stroke-dasharray="3,3"/>
-                                <line x1="0" y1="90" x2="532" y2="90" stroke="rgba(0,0,0,0.03)" stroke-width="1" stroke-dasharray="3,3"/>
-                                <!-- Paths -->
-                                <path d="M 0 80 Q 100 85 200 65 T 400 45 T 532 25" fill="none" stroke="var(--g)" stroke-width="2"/>
-                                <path d="M 0 80 Q 100 78 200 70 T 400 58 T 532 40" fill="none" stroke="var(--r)" stroke-width="1.5" stroke-dasharray="2,2"/>
-                                <!-- Live Pulse Dot -->
-                                <circle cx="532" cy="25" r="4" fill="var(--g)"/>
-                                <circle cx="532" cy="25" r="8" fill="none" stroke="var(--g)" stroke-width="1">
-                                    <animate attributeName="r" values="4;12;4" dur="2s" repeatCount="indefinite" />
-                                    <animate attributeName="opacity" values="1;0;1" dur="2s" repeatCount="indefinite" />
-                                </circle>
-                            </svg>
-                        </div>
-
-                        <!-- Oracle Live Terminal console -->
-                        <div class="l-modal-console">
-                            <div class="l-console-line"><span class="c-time">[12:31:05]</span> <span class="c-oracle">ORACLE:</span> Verified @jakevoss subscriber count via API</div>
-                            <div class="l-console-line"><span class="c-time">[12:31:05]</span> <span class="c-data">DATA:</span> Delta increased from +8.22% to +8.40%</div>
-                            <div class="l-console-line"><span class="c-time">[12:00:00]</span> <span class="c-oracle">ORACLE:</span> Verified @marcus follower count via API</div>
-                            <div class="l-console-line"><span class="c-time">[12:00:00]</span> <span class="c-data">DATA:</span> Delta unchanged (+7.80%)</div>
-                            <div class="l-console-line"><span class="c-time">[10:45:12]</span> SYSTEM: Verification scheduled for next oracle epoch</div>
-                        </div>
-
-                        <!-- Details Row -->
-                        <div class="l-modal-details">
-                            <div class="l-modal-detail-item">
-                                <span class="l-modal-detail-lbl">Total Escrowed</span>
-                                <span class="l-modal-detail-val">$2,000 USD</span>
+                        <!-- 3. PERFORMANCE CHART -->
+                        <div class="l-modal-graph-container">
+                            <div class="l-mg-header">
+                                <span class="l-mg-title">PERFORMANCE METRIC HISTORY</span>
+                                <span class="l-mg-live-dot">● LIVE STREAM</span>
                             </div>
-                            <div class="l-modal-detail-item">
-                                <span class="l-modal-detail-lbl">Contract Status</span>
-                                <span class="l-modal-detail-val" style="color:var(--g)">LIVE MATCH</span>
-                            </div>
-                            <div class="l-modal-detail-item">
-                                <span class="l-modal-detail-lbl">Time Left</span>
-                                <span class="l-modal-detail-val">9 Days</span>
+                            <div class="l-modal-graph">
+                                <svg width="100%" height="100%" viewBox="0 0 532 170" preserveAspectRatio="none" style="display: block; overflow: visible;">
+                                    <!-- Grids -->
+                                    <line x1="0" y1="42.5" x2="532" y2="42.5" stroke="rgba(0,0,0,0.03)" stroke-width="1" stroke-dasharray="3,3"/>
+                                    <line x1="0" y1="85" x2="532" y2="85" stroke="rgba(0,0,0,0.03)" stroke-width="1" stroke-dasharray="3,3"/>
+                                    <line x1="0" y1="127.5" x2="532" y2="127.5" stroke="rgba(0,0,0,0.03)" stroke-width="1" stroke-dasharray="3,3"/>
+                                    <!-- Paths -->
+                                    <path d="M 0 130 Q 100 120 200 95 T 400 65 T 532 30" fill="none" stroke="var(--g)" stroke-width="1.5"/>
+                                    <path d="M 0 130 Q 100 125 200 110 T 400 90 T 532 60" fill="none" stroke="var(--r)" stroke-width="1.2" stroke-dasharray="2,2"/>
+                                    <!-- Live Pulse Dot -->
+                                    <circle cx="532" cy="30" r="3" fill="var(--g)"/>
+                                    <circle cx="532" cy="30" r="8" fill="none" stroke="var(--g)" stroke-width="0.8">
+                                        <animate attributeName="r" values="3;9;3" dur="2.2s" repeatCount="indefinite" />
+                                        <animate attributeName="opacity" values="1;0;1" dur="2.2s" repeatCount="indefinite" />
+                                    </circle>
+                                </svg>
                             </div>
                         </div>
 
-                        <!-- CTA Button -->
-                        <button class="l-modal-action-btn" id="l-modal-action-btn">Go to Rivalries Market</button>
+                        <!-- 4. ORACLE FEED -->
+                        <div class="l-modal-oracle-section">
+                            <div class="l-os-title">ORACLE VERIFICATION FEED</div>
+                            <div class="l-modal-console-new">
+                                <div class="l-os-card">
+                                    <div class="l-os-card-header">
+                                        <span class="l-os-time">12:31:05</span>
+                                        <span class="l-os-label">Oracle Verification</span>
+                                        <span class="l-os-status verified">✓ Verified</span>
+                                    </div>
+                                    <div class="l-os-card-body">
+                                        <span class="l-os-competitor">JakeVoss</span>
+                                        <span class="l-os-metric">Subscribers: <strong>+8.22% → +8.40%</strong></span>
+                                    </div>
+                                </div>
+                                <div class="l-os-card">
+                                    <div class="l-os-card-header">
+                                        <span class="l-os-time">12:31:05</span>
+                                        <span class="l-os-label">Oracle Verification</span>
+                                        <span class="l-os-status verified">✓ Verified</span>
+                                    </div>
+                                    <div class="l-os-card-body">
+                                        <span class="l-os-competitor">Marcus</span>
+                                        <span class="l-os-metric">Subscribers: <strong style="color:var(--t3)">Unchanged (+7.80%)</strong></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 5. CONTRACT SUMMARY STRIP -->
+                        <div class="l-modal-summary-strip">
+                            <div class="l-ss-item">
+                                <span class="l-ss-lbl">Pool</span>
+                                <span class="l-ss-val">$2,000</span>
+                            </div>
+                            <div class="l-ss-item">
+                                <span class="l-ss-lbl">Lead</span>
+                                <span class="l-ss-val">+0.60%</span>
+                            </div>
+                            <div class="l-ss-item">
+                                <span class="l-ss-lbl">Time</span>
+                                <span class="l-ss-val">9 Days</span>
+                            </div>
+                            <div class="l-ss-item">
+                                <span class="l-ss-lbl">Oracle</span>
+                                <span class="l-ss-val" style="color:var(--g)">Verified</span>
+                            </div>
+                            <div class="l-ss-item">
+                                <span class="l-ss-lbl">Platform</span>
+                                <span class="l-ss-val">YouTube</span>
+                            </div>
+                        </div>
+
+                        <!-- 6. PRIMARY CTA -->
+                        <button class="l-modal-action-btn-new" id="l-modal-action-btn">Open Live Rivalry</button>
                     </div>
                 </div>
             </div>

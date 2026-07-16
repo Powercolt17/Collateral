@@ -1435,10 +1435,6 @@ export function initLanding() {
             window.app.openAccessModal();
         }
     });
-    const specOverlay = document.getElementById('contract-spec-overlay');
-    const specCloseBtn = document.getElementById('l-spec-modal-close-btn');
-    const specExecBtn = document.getElementById('l-spec-execute-btn');
-
     const specData = {
         STRIPE: {
             title: 'Revenue Growth Contract',
@@ -1484,8 +1480,12 @@ export function initLanding() {
 
     let targetExecUrl = '/market';
 
-    document.querySelectorAll('.lcard').forEach(card => {
-        card.addEventListener('click', (e) => {
+    // Unified Event Delegation for Landing Page Overlays (Spec Modal + Rivalry Modal)
+    document.addEventListener('click', (e) => {
+        // ═══ A. CONTRACT SPECIFICATION OVERLAY MODAL ═══
+        // 1. Card Container Click
+        const card = e.target.closest('.lcard');
+        if (card) {
             e.preventDefault();
             e.stopPropagation();
             const btn = card.querySelector('.lp-cta-btn');
@@ -1497,7 +1497,6 @@ export function initLanding() {
             
             const data = specData[source] || specData.STRIPE;
             
-            // Populate modal
             const nameEl = document.getElementById('l-spec-platform-name');
             const tierEl = document.getElementById('l-spec-tier-name');
             const titleEl = document.getElementById('l-spec-title');
@@ -1529,34 +1528,86 @@ export function initLanding() {
             
             targetExecUrl = `/contracts/execute?source=${source}&tier=${tier}&capital=${capital}`;
             
-            if (specOverlay) {
-                specOverlay.classList.add('active');
+            const overlay = document.getElementById('contract-spec-overlay');
+            if (overlay) {
+                overlay.classList.add('active');
             }
             
             if (window.trackEvent) window.trackEvent('cta_spec_open', { source, tier, capital, ...utm });
-        });
-    });
+            return;
+        }
 
-    if (specOverlay && specCloseBtn && specExecBtn) {
-        specCloseBtn.addEventListener('click', (e) => {
+        // 2. Spec Close Button Click
+        const specClose = e.target.closest('#l-spec-modal-close-btn');
+        if (specClose) {
             e.preventDefault();
             e.stopPropagation();
-            specOverlay.classList.remove('active');
-        });
+            const overlay = document.getElementById('contract-spec-overlay');
+            if (overlay) overlay.classList.remove('active');
+            return;
+        }
 
-        specOverlay.addEventListener('click', (e) => {
-            if (e.target === specOverlay) {
-                specOverlay.classList.remove('active');
-            }
-        });
-
-        specExecBtn.addEventListener('click', (e) => {
+        // 3. Spec Execute Button Click
+        const specExec = e.target.closest('#l-spec-execute-btn');
+        if (specExec) {
             e.preventDefault();
             e.stopPropagation();
-            specOverlay.classList.remove('active');
+            const overlay = document.getElementById('contract-spec-overlay');
+            if (overlay) overlay.classList.remove('active');
             goAction(targetExecUrl, 'signup');
-        });
-    }
+            return;
+        }
+
+        // 4. Spec Backdrop Click
+        const specOverlay = document.getElementById('contract-spec-overlay');
+        if (specOverlay && e.target === specOverlay) {
+            e.preventDefault();
+            e.stopPropagation();
+            specOverlay.classList.remove('active');
+            return;
+        }
+
+        // ═══ B. RIVALRY QUICK-VIEW OVERLAY MODAL ═══
+        // 1. Rivalry Preview Card Click
+        const rivalryCard = e.target.closest('#l-live-rivalry-preview-card');
+        if (rivalryCard) {
+            e.preventDefault();
+            e.stopPropagation();
+            const overlay = document.getElementById('rivalry-quick-view-overlay');
+            if (overlay) overlay.classList.add('active');
+            return;
+        }
+
+        // 2. Rivalry Close Button Click
+        const rivalryClose = e.target.closest('#l-modal-close-btn');
+        if (rivalryClose) {
+            e.preventDefault();
+            e.stopPropagation();
+            const overlay = document.getElementById('rivalry-quick-view-overlay');
+            if (overlay) overlay.classList.remove('active');
+            return;
+        }
+
+        // 3. Rivalry Action Button Click
+        const rivalryAction = e.target.closest('#l-modal-action-btn');
+        if (rivalryAction) {
+            e.preventDefault();
+            e.stopPropagation();
+            const overlay = document.getElementById('rivalry-quick-view-overlay');
+            if (overlay) overlay.classList.remove('active');
+            window.router.navigate('/market?type=rivalry');
+            return;
+        }
+
+        // 4. Rivalry Backdrop Click
+        const rivalryOverlay = document.getElementById('rivalry-quick-view-overlay');
+        if (rivalryOverlay && e.target === rivalryOverlay) {
+            e.preventDefault();
+            e.stopPropagation();
+            rivalryOverlay.classList.remove('active');
+            return;
+        }
+    });
 
     // FAQ
     document.querySelectorAll('.fq').forEach(item => {
@@ -1619,38 +1670,7 @@ export function initLanding() {
         countEls.forEach(el => countObs.observe(el));
     }
 
-    // Rivalry Quick-View Overlay Modal event listeners
-    const overlay = document.getElementById('rivalry-quick-view-overlay');
-    const previewCard = document.getElementById('l-live-rivalry-preview-card');
-    const closeBtn = document.getElementById('l-modal-close-btn');
-    const actionBtn = document.getElementById('l-modal-action-btn');
 
-    if (overlay && previewCard && closeBtn && actionBtn) {
-        previewCard.addEventListener('click', (e) => {
-            e.preventDefault();
-            e.stopPropagation();
-            overlay.classList.add('active');
-        });
-
-        closeBtn.addEventListener('click', (e) => {
-            e.preventDefault();
-            e.stopPropagation();
-            overlay.classList.remove('active');
-        });
-
-        overlay.addEventListener('click', (e) => {
-            if (e.target === overlay) {
-                overlay.classList.remove('active');
-            }
-        });
-
-        actionBtn.addEventListener('click', (e) => {
-            e.preventDefault();
-            e.stopPropagation();
-            overlay.classList.remove('active');
-            window.router.navigate('/market?type=rivalry');
-        });
-    }
 
 }
 

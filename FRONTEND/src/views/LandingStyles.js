@@ -997,44 +997,44 @@ export const landingCSS = `
   transition: left 0.8s ease-in-out;
 }
 
-/* Upgraded Live executions styles */
-.l-live-executions {
-    background: #fff;
+/* Upgraded Live ticker status strip styles */
+.l-live-ticker-strip {
     border-top: 1px solid var(--d);
     border-bottom: 1px solid var(--d);
-    padding: 16px 0;
+    padding: 10px 0;
+    background: #fff;
 }
-.l-exec-feed-wrap {
+.l-ticker-content {
     display: flex;
     align-items: center;
-    gap: 24px;
+    gap: 16px;
+    font-size: 12px;
     font-family: 'Inter', sans-serif;
-    font-size: 13px;
     color: var(--t2);
 }
-.l-exec-feed-lbl {
+.l-ticker-badge {
     font-family: 'JetBrains Mono', monospace;
-    font-size: 10px;
+    font-size: 9px;
     font-weight: 700;
-    letter-spacing: 1.5px;
     color: var(--r);
-    display: flex;
+    letter-spacing: 1px;
+    display: inline-flex;
     align-items: center;
-    gap: 8px;
+    gap: 6px;
     flex-shrink: 0;
 }
-.l-exec-feed-dot {
-    width: 6px;
-    height: 6px;
+.l-ticker-pulse {
+    width: 5px;
+    height: 5px;
     background: var(--r);
     border-radius: 50%;
     animation: badgeDotPulse 1.8s ease-in-out infinite;
 }
-.l-exec-feed-scroll {
+.l-ticker-scroll {
     flex: 1;
     overflow: hidden;
     position: relative;
-    height: 24px;
+    height: 18px;
     display: flex;
     align-items: center;
 }
@@ -1048,8 +1048,8 @@ export const landingCSS = `
     align-items: center;
     gap: 8px;
     opacity: 0;
-    transform: translateY(10px);
-    transition: opacity 0.4s ease, transform 0.4s ease;
+    transform: translateY(6px);
+    transition: opacity 0.3s ease, transform 0.3s ease;
 }
 .l-exec-item.active {
     opacity: 1;
@@ -1057,7 +1057,7 @@ export const landingCSS = `
 }
 .l-exec-item.exit {
     opacity: 0;
-    transform: translateY(-10px);
+    transform: translateY(-6px);
 }
 .l-exec-status-ok {
     color: var(--g);
@@ -1086,8 +1086,8 @@ export const landingCSS = `
 }
 .l-stats-bar-grid {
     display: grid;
-    grid-template-columns: repeat(6, 1fr);
-    gap: 24px;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 32px;
     align-items: center;
 }
 .l-stat-bar-item {
@@ -1113,55 +1113,10 @@ export const landingCSS = `
     color: var(--t3);
     line-height: 1.2;
 }
-@media(max-width:900px) {
-    .l-stats-bar-grid {
-        grid-template-columns: repeat(3, 1fr);
-        gap: 20px;
-    }
-}
-@media(max-width:600px) {
+@media(max-width:768px) {
     .l-stats-bar-grid {
         grid-template-columns: repeat(2, 1fr);
-        gap: 16px;
-    }
-}
-
-/* Manifesto */
-.l-manifesto {
-    padding: 64px 0;
-    background: #fff;
-    border-bottom: 1px solid var(--d);
-}
-.l-manifesto-inner {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 40px;
-}
-.l-manifesto-col {
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-}
-.l-manifesto-lbl {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 10px;
-    font-weight: 700;
-    color: var(--r);
-    letter-spacing: 1px;
-    text-transform: uppercase;
-}
-.l-manifesto-txt {
-    font-size: 16px;
-    line-height: 1.5;
-    color: var(--t2);
-}
-.l-manifesto-txt strong {
-    color: #111;
-}
-@media(max-width:768px) {
-    .l-manifesto-inner {
-        grid-template-columns: 1fr;
-        gap: 28px;
+        gap: 20px;
     }
 }
 

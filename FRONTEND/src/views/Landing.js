@@ -149,15 +149,13 @@ export function renderLanding() {
             </div>
             </div>
 
-            <!-- LIVE EXECUTIONS STREAM -->
-            <div class="l-live-executions animate-fade-in-up delay-3">
+            <!-- LIVE TICKER STATUS STRIP -->
+            <div class="l-live-ticker-strip animate-fade-in-up delay-3">
                 <div class="lw">
-                    <div class="l-exec-feed-wrap">
-                        <span class="l-exec-feed-lbl">
-                            <span class="l-exec-feed-dot"></span> LIVE EXECUTIONS
-                        </span>
-                        <div class="l-exec-feed-scroll" id="l-exec-feed-scroll">
-                            <!-- Dynamically rotated executions -->
+                    <div class="l-ticker-content">
+                        <span class="l-ticker-badge"><span class="l-ticker-pulse"></span>LIVE</span>
+                        <div class="l-ticker-scroll" id="l-exec-feed-scroll">
+                            <!-- Rotated executions -->
                         </div>
                     </div>
                 </div>
@@ -177,39 +175,11 @@ export function renderLanding() {
                         </div>
                         <div class="l-stat-bar-item">
                             <span class="l-stat-bar-val" id="ls-success">96.2%</span>
-                            <span class="l-stat-bar-lbl">Success Rate</span>
-                        </div>
-                        <div class="l-stat-bar-item">
-                            <span class="l-stat-bar-val" id="ls-verifications">84,201</span>
-                            <span class="l-stat-bar-lbl">Oracle Verifications</span>
+                            <span class="l-stat-bar-lbl">Settlement Success</span>
                         </div>
                         <div class="l-stat-bar-item">
                             <span class="l-stat-bar-val" id="ls-identities">3,442</span>
                             <span class="l-stat-bar-lbl">Execution Identities</span>
-                        </div>
-                        <div class="l-stat-bar-item">
-                            <span class="l-stat-bar-val" id="ls-burned">127M</span>
-                            <span class="l-stat-bar-lbl">CLTR Burned</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- BRAND MANIFESTO STRIP -->
-            <div class="l-manifesto animate-fade-in-up delay-4">
-                <div class="lw">
-                    <div class="l-manifesto-inner">
-                        <div class="l-manifesto-col">
-                            <span class="l-manifesto-lbl">01 / Ambition</span>
-                            <p class="l-manifesto-txt">Stop betting on things you cannot control. <strong>Bet on yourself.</strong></p>
-                        </div>
-                        <div class="l-manifesto-col">
-                            <span class="l-manifesto-lbl">02 / Commitment</span>
-                            <p class="l-manifesto-txt">Put real capital behind your ambition. <strong>Escrow your intent.</strong></p>
-                        </div>
-                        <div class="l-manifesto-col">
-                            <span class="l-manifesto-lbl">03 / Leverage</span>
-                            <p class="l-manifesto-txt">Execution creates reputation. <strong>Reputation unlocks leverage.</strong></p>
                         </div>
                     </div>
                 </div>
@@ -790,9 +760,7 @@ export function initLanding() {
                 animateCountFloat('ls-locked', 8.7, '$', 'M', 1);
                 animateCount('ls-commitments', 12483);
                 animateCountFloat('ls-success', 96.2, '', '%', 1);
-                animateCount('ls-verifications', 84201);
                 animateCount('ls-identities', 3442);
-                animateCount('ls-burned', 127, '', 'M');
 
                 // Upgraded executions stream loop
                 const executionsList = [

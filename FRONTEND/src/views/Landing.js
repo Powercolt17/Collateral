@@ -148,18 +148,6 @@ export function renderLanding() {
             </div>
             </div>
 
-            <!-- LIVE TICKER STATUS STRIP -->
-            <div class="l-live-ticker-strip animate-fade-in-up delay-3">
-                <div class="lw">
-                    <div class="l-ticker-content">
-                        <span class="l-ticker-badge"><span class="l-ticker-pulse"></span>LIVE</span>
-                        <div class="l-ticker-scroll" id="l-exec-feed-scroll">
-                            <!-- Rotated executions -->
-                        </div>
-                    </div>
-                </div>
-            </div>
-
             <!-- GLOBAL PROTOCOL STATISTICS -->
             <div class="l-global-stats-bar animate-fade-in-up delay-4">
                 <div class="lw">
@@ -172,13 +160,25 @@ export function renderLanding() {
                             <span class="l-stat-bar-val" id="ls-commitments">12,483</span>
                             <span class="l-stat-bar-lbl">Total Commitments</span>
                         </div>
-                        <div class="l-stat-bar-item">
+                        <div class="l-stat-bar-item lhide-mobile">
                             <span class="l-stat-bar-val" id="ls-success">96.2%</span>
                             <span class="l-stat-bar-lbl">Settlement Success</span>
                         </div>
-                        <div class="l-stat-bar-item">
+                        <div class="l-stat-bar-item lhide-mobile">
                             <span class="l-stat-bar-val" id="ls-identities">3,442</span>
                             <span class="l-stat-bar-lbl">Execution Identities</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- LIVE TICKER STATUS STRIP -->
+            <div class="l-live-ticker-strip animate-fade-in-up delay-3">
+                <div class="lw">
+                    <div class="l-ticker-content">
+                        <span class="l-ticker-badge"><span class="l-ticker-pulse"></span>LIVE</span>
+                        <div class="l-ticker-scroll" id="l-exec-feed-scroll">
+                            <!-- Rotated executions -->
                         </div>
                     </div>
                 </div>

@@ -1105,28 +1105,7 @@ export const landingCSS = `
     line-height: 1.2;
 }
 @media(max-width:768px) {
-    .lp {
-        display: flex !important;
-        flex-direction: column !important;
-    }
-    .lp > * {
-        order: 6;
-    }
-    .lloading-bar {
-        order: 1 !important;
-    }
-    .ln {
-        order: 2 !important;
-    }
-    .lhero-section {
-        order: 3 !important;
-    }
-    .l-global-stats-bar {
-        order: 4 !important;
-        padding: 16px 0 !important;
-    }
     .l-live-ticker-strip {
-        order: 5 !important;
         padding: 6px 0 !important;
     }
     .l-ticker-content {
@@ -1137,16 +1116,15 @@ export const landingCSS = `
         font-size: 8px !important;
         letter-spacing: 0.5px !important;
     }
+    .l-global-stats-bar {
+        padding: 16px 0 !important;
+    }
     .l-stats-bar-grid {
         grid-template-columns: repeat(2, 1fr);
         gap: 16px 20px !important;
     }
     .l-stat-bar-item {
         gap: 2px !important;
-    }
-    .l-stat-bar-item:nth-child(3),
-    .l-stat-bar-item:nth-child(4) {
-        display: none !important;
     }
     .l-stat-bar-val {
         font-size: 18px !important;

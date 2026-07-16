@@ -1800,4 +1800,68 @@ export const landingCSS = `
     border-color: rgba(92,20,20,0.12);
     background: rgba(92,20,20,0.04);
 }
+
+/* Premium Background Animation & Grid */
+.lhero-bg-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    z-index: 0;
+    pointer-events: none;
+}
+.lhero-grid-pattern {
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background-image: 
+        linear-gradient(rgba(0, 0, 0, 0.02) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0, 0, 0, 0.02) 1px, transparent 1px);
+    background-size: 60px 60px;
+    transform: rotate(-12deg);
+    mask-image: radial-gradient(circle at 50% 30%, rgba(0,0,0,1) 15%, rgba(0,0,0,0.1) 60%, transparent 80%);
+    -webkit-mask-image: radial-gradient(circle at 50% 30%, rgba(0,0,0,1) 15%, rgba(0,0,0,0.1) 60%, transparent 80%);
+}
+.lhero-scanline {
+    position: absolute;
+    top: -10%;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, rgba(92, 20, 20, 0.08) 50%, transparent);
+    animation: scan 18s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+}
+.lhero-spotlight {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle at 50% 30%, rgba(92, 20, 20, 0.015) 0%, transparent 55%);
+    animation: drift 15s ease-in-out infinite alternate;
+}
+
+@keyframes scan {
+    0% {
+        top: -10%;
+    }
+    50% {
+        top: 110%;
+    }
+    100% {
+        top: 110%;
+    }
+}
+@keyframes drift {
+    0% {
+        transform: translate(-2%, -2%) scale(1);
+    }
+    100% {
+        transform: translate(2%, 2%) scale(1.05);
+    }
+}
 `;

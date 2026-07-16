@@ -32,8 +32,15 @@ export function renderLanding() {
 
             <!-- ═══ HERO ═══ -->
             <div class="lhero-section">
-            <div class="lw">
-                <div class="lhero-grid">
+                <!-- PREMIUM BACKGROUND ANIMATION & GRID -->
+                <div class="lhero-bg-container">
+                    <div class="lhero-grid-pattern"></div>
+                    <div class="lhero-scanline"></div>
+                    <div class="lhero-spotlight"></div>
+                </div>
+
+                <div class="lw">
+                    <div class="lhero-grid">
                     <div class="lhero-left">
 
                         <h1 class="lh1 animate-fade-in-up">

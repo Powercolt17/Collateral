@@ -2182,7 +2182,14 @@ export async function initActiveContracts() {
     // Market Toggles
     const marketToggles = document.getElementById('act-market-toggles');
     if (marketToggles) {
-        marketToggles.dataset.active = 'solo';
+        marketToggles.dataset.active = activeMarketType;
+        marketToggles.querySelectorAll('.act-market-btn').forEach(b => {
+            if (b.dataset.type === activeMarketType) {
+                b.classList.add('active');
+            } else {
+                b.classList.remove('active');
+            }
+        });
 
         marketToggles.addEventListener('click', (e) => {
             const btn = e.target.closest('.act-market-btn');

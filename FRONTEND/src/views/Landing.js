@@ -50,7 +50,7 @@ export function renderLanding() {
                         <div class="lcta-match ldesktop-proof animate-fade-in-up delay-2" style="margin-bottom: 24px;">First contract matched up to $250</div>
 
                         <!-- COMPACT LIVE RIVALRY PREVIEW -->
-                        <div class="l-live-rivalry-preview animate-fade-in-up delay-3" onclick="window.router.navigate('/rivalry'); return false;">
+                        <div class="l-live-rivalry-preview animate-fade-in-up delay-3" id="l-live-rivalry-preview-card">
                             <div class="l-lr-hdr">
                                 <span class="l-lr-dot"></span> LIVE RIVALRY PREVIEW
                             </div>
@@ -675,6 +675,100 @@ export function renderLanding() {
                         <a href="/terms" onclick="window.app.closeMobileMenu()">Terms</a>
                         <a href="/docs" onclick="window.app.closeMobileMenu()">Docs</a>
                         <a href="https://x.com/collaboralcap" target="_blank">X / Twitter</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- RIVALRY QUICK-VIEW OVERLAY MODAL -->
+            <div id="rivalry-quick-view-overlay" class="l-modal-overlay">
+                <div class="l-modal-container">
+                    <div class="l-modal-header">
+                        <span class="l-modal-title">
+                            <span class="l-ticker-pulse"></span> LIVE RIVALRY PREVIEW
+                        </span>
+                        <button class="l-modal-close" id="l-modal-close-btn">✕</button>
+                    </div>
+                    <div class="l-modal-body">
+                        <!-- UFC Tale-of-the-Tape Mini -->
+                        <div class="l-modal-tape">
+                            <div class="l-modal-tape-versus">
+                                <div class="l-modal-tape-player">
+                                    <span class="l-modal-tape-name">@jakevoss</span>
+                                    <span class="l-modal-tape-metric">YouTube Goal: 500 subs</span>
+                                </div>
+                                <div class="l-modal-tape-vs-circle">VS</div>
+                                <div class="l-modal-tape-player right">
+                                    <span class="l-modal-tape-name">@marcus</span>
+                                    <span class="l-modal-tape-metric">YouTube Goal: 500 subs</span>
+                                </div>
+                            </div>
+                            <div style="height: 1px; background: rgba(0,0,0,0.06); margin: 8px 0;"></div>
+                            <div class="l-modal-tape-row">
+                                <span class="l-modal-tape-delta left">+8.4%</span>
+                                <div style="flex: 1; margin: 0 16px; position: relative; height: 6px; background: rgba(92,20,20,0.1); border-radius: 3px; overflow: hidden;">
+                                    <div style="position: absolute; left: 0; top: 0; bottom: 0; width: 52%; background: var(--g);"></div>
+                                    <div style="position: absolute; right: 0; top: 0; bottom: 0; width: 48%; background: var(--r);"></div>
+                                </div>
+                                <span class="l-modal-tape-delta right">+7.8%</span>
+                            </div>
+                        </div>
+
+                        <!-- Mock Live Chart (SVG) -->
+                        <div class="l-modal-graph">
+                            <svg width="100%" height="100%" viewBox="0 0 532 120" preserveAspectRatio="none" style="display: block; overflow: visible;">
+                                <defs>
+                                    <linearGradient id="g-left" x1="0" y1="0" x2="0" y2="1">
+                                        <stop offset="0%" stop-color="rgba(16,185,129,0.1)"/>
+                                        <stop offset="100%" stop-color="rgba(16,185,129,0)"/>
+                                    </linearGradient>
+                                    <linearGradient id="g-right" x1="0" y1="0" x2="0" y2="1">
+                                        <stop offset="0%" stop-color="rgba(92,20,20,0.1)"/>
+                                        <stop offset="100%" stop-color="rgba(92,20,20,0)"/>
+                                    </linearGradient>
+                                </defs>
+                                <!-- Grids -->
+                                <line x1="0" y1="30" x2="532" y2="30" stroke="rgba(0,0,0,0.03)" stroke-width="1" stroke-dasharray="3,3"/>
+                                <line x1="0" y1="60" x2="532" y2="60" stroke="rgba(0,0,0,0.03)" stroke-width="1" stroke-dasharray="3,3"/>
+                                <line x1="0" y1="90" x2="532" y2="90" stroke="rgba(0,0,0,0.03)" stroke-width="1" stroke-dasharray="3,3"/>
+                                <!-- Paths -->
+                                <path d="M 0 80 Q 100 85 200 65 T 400 45 T 532 25" fill="none" stroke="var(--g)" stroke-width="2"/>
+                                <path d="M 0 80 Q 100 78 200 70 T 400 58 T 532 40" fill="none" stroke="var(--r)" stroke-width="1.5" stroke-dasharray="2,2"/>
+                                <!-- Live Pulse Dot -->
+                                <circle cx="532" cy="25" r="4" fill="var(--g)"/>
+                                <circle cx="532" cy="25" r="8" fill="none" stroke="var(--g)" stroke-width="1">
+                                    <animate attributeName="r" values="4;12;4" dur="2s" repeatCount="indefinite" />
+                                    <animate attributeName="opacity" values="1;0;1" dur="2s" repeatCount="indefinite" />
+                                </circle>
+                            </svg>
+                        </div>
+
+                        <!-- Oracle Live Terminal console -->
+                        <div class="l-modal-console">
+                            <div class="l-console-line"><span class="c-time">[12:31:05]</span> <span class="c-oracle">ORACLE:</span> Verified @jakevoss subscriber count via API</div>
+                            <div class="l-console-line"><span class="c-time">[12:31:05]</span> <span class="c-data">DATA:</span> Delta increased from +8.22% to +8.40%</div>
+                            <div class="l-console-line"><span class="c-time">[12:00:00]</span> <span class="c-oracle">ORACLE:</span> Verified @marcus follower count via API</div>
+                            <div class="l-console-line"><span class="c-time">[12:00:00]</span> <span class="c-data">DATA:</span> Delta unchanged (+7.80%)</div>
+                            <div class="l-console-line"><span class="c-time">[10:45:12]</span> SYSTEM: Verification scheduled for next oracle epoch</div>
+                        </div>
+
+                        <!-- Details Row -->
+                        <div class="l-modal-details">
+                            <div class="l-modal-detail-item">
+                                <span class="l-modal-detail-lbl">Total Escrowed</span>
+                                <span class="l-modal-detail-val">$2,000 USD</span>
+                            </div>
+                            <div class="l-modal-detail-item">
+                                <span class="l-modal-detail-lbl">Contract Status</span>
+                                <span class="l-modal-detail-val" style="color:var(--g)">LIVE MATCH</span>
+                            </div>
+                            <div class="l-modal-detail-item">
+                                <span class="l-modal-detail-lbl">Time Left</span>
+                                <span class="l-modal-detail-val">9 Days</span>
+                            </div>
+                        </div>
+
+                        <!-- CTA Button -->
+                        <button class="l-modal-action-btn" id="l-modal-action-btn">Go to Rivalries Market</button>
                     </div>
                 </div>
             </div>
@@ -1314,4 +1408,38 @@ export function initLanding() {
         countEls.forEach(el => countObs.observe(el));
     }
 
+    // Rivalry Quick-View Overlay Modal event listeners
+    const overlay = document.getElementById('rivalry-quick-view-overlay');
+    const previewCard = document.getElementById('l-live-rivalry-preview-card');
+    const closeBtn = document.getElementById('l-modal-close-btn');
+    const actionBtn = document.getElementById('l-modal-action-btn');
+
+    if (overlay && previewCard && closeBtn && actionBtn) {
+        previewCard.addEventListener('click', (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            overlay.classList.add('active');
+        });
+
+        closeBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            overlay.classList.remove('active');
+        });
+
+        overlay.addEventListener('click', (e) => {
+            if (e.target === overlay) {
+                overlay.classList.remove('active');
+            }
+        });
+
+        actionBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            overlay.classList.remove('active');
+            window.router.navigate('/market?type=rivalry');
+        });
+    }
+
 }
+

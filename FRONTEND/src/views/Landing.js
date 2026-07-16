@@ -38,6 +38,7 @@ export function renderLanding() {
                     <div class="l-arch-panel panel-left"></div>
                     <div class="l-arch-panel panel-right"></div>
                     <div class="l-arch-seam seam-horizontal"></div>
+                    <div class="l-arch-seam seam-vertical"></div>
                 </div>
 
                 <div class="lw">

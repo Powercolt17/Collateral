@@ -1784,19 +1784,6 @@ export const landingCSS = `
     background: rgba(92,20,20,0.04);
 }
 
-/* Premium Background Animation & Grid — Institutional Luxury Carved Ring */
-.lhero-bg-container {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    overflow: hidden;
-    z-index: 0;
-    pointer-events: none;
-    background: transparent; /* inherit cool greyish slate page bg */
-}
-.l-exec-ring-system {
 /* Premium Background Animation & Grid — Institutional Luxury Architectural Environment */
 .lhero-bg-container {
     position: absolute;
@@ -1841,24 +1828,28 @@ export const landingCSS = `
 .panel-right {
     right: 0;
     width: 45%;
-    /* Subtle foster + partners panel division seam */
-    border-left: 1px solid rgba(0, 0, 0, 0.035);
-    background: rgba(255, 255, 255, 0.25);
-    box-shadow: 
-        -1px 0 0 rgba(255, 255, 255, 0.8), /* Machined anodized highlight */
-        -12px 0 36px rgba(0, 0, 0, 0.006); /* Faint ambient shadow */
+    background: rgba(255, 255, 255, 0.45); /* Matte white overlay */
+    transition: transform 0.1s ease-out;
 }
 .l-arch-seam {
     position: absolute;
     pointer-events: none;
+}
+.seam-vertical {
+    left: 55%;
+    top: 0;
+    bottom: 0;
+    width: 1px;
+    background: rgba(0, 0, 0, 0.08); /* 8% opacity machined gap line */
+    box-shadow: 1px 0 0 rgba(255, 255, 255, 0.9); /* clean highlight reflection */
 }
 .seam-horizontal {
     top: 68%;
     left: 0;
     right: 0;
     height: 1px;
-    background: rgba(0, 0, 0, 0.03);
-    box-shadow: 0 1px 0 rgba(255, 255, 255, 0.8); /* Milled horizontal horizontal gap highlight */
+    background: rgba(0, 0, 0, 0.07); /* 7% opacity horizontal milled gap */
+    box-shadow: 0 1px 0 rgba(255, 255, 255, 0.9); /* clean milled highlight reflection */
 }
 
 `;

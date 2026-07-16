@@ -71,7 +71,7 @@ export const landingCSS = `
 /* ═══ HERO ═══ */
 .lhero-section{position:relative;overflow:hidden}
 .lhero-grid{display:grid;grid-template-columns:1.25fr 0.75fr;gap:48px;align-items:center;padding:110px 0 60px}
-.lh1{font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:clamp(38px,4.5vw,64px);line-height:1.1;letter-spacing:-2px;color:var(--t1);margin:0 0 24px}
+.lh1{font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:clamp(38px,4.5vw,64px);line-height:1.1;letter-spacing:-2px;color:var(--t1);margin:0 0 36px}
 .lh-gradient{color:var(--r);font-weight:800;letter-spacing:-2px;display:inline-block;padding-bottom:0.15em;margin-bottom:-0.15em}
 .lh-badge{display:inline-flex;align-items:center;gap:8px;background:rgba(92,20,20,0.04);border:1px solid rgba(92,20,20,0.12);padding:6px 14px;border-radius:100px;font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--r);margin-bottom:24px;box-shadow:0 2px 8px rgba(92,20,20,0.02)}
 .lh-badge-dot{width:6px;height:6px;background:var(--g);border-radius:50%;display:inline-block;box-shadow:0 0 8px rgba(20,92,20,0.8);animation:badgeDotPulse 1.8s ease-in-out infinite}
@@ -81,7 +81,7 @@ export const landingCSS = `
 @media(min-width:768px){
   .lh-br{display:block}
 }
-.lsub{font-size:20px;color:var(--t2);line-height:1.5;margin:0 0 40px;max-width:680px;letter-spacing:-.2px}
+.lsub{font-size:20px;color:var(--t2);line-height:1.5;margin:0 0 48px;max-width:680px;letter-spacing:-.2px}
 .lctas{display:flex;gap:16px;flex-wrap:wrap;margin-bottom:16px}
 .lbtn{height:56px;padding:0 32px;font-size:14px;font-weight:700;letter-spacing:1px;text-transform:uppercase;border:none;border-radius:4px;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;gap:8px;transition:all .4s cubic-bezier(.16, 1, 0.3, 1);position:relative;overflow:hidden}
 .lbtn-r{background:var(--r) !important;color:#fff !important;box-shadow:0 8px 24px -6px rgba(92,20,20,.4);font-size:14px;font-weight:800;padding:0 40px;height:60px;animation:btnPulse 3s ease-in-out infinite}
@@ -123,15 +123,16 @@ export const landingCSS = `
   border-radius: 16px;
   padding: 24px 28px !important;
   width: 100%;
-  max-width: 440px !important;
+  max-width: 480px !important;
   position: relative;
   z-index: 2;
-  /* Rich layered physical shadow stack with soft burgundy reflected light */
+  /* Masterpiece layered shadow stack: contact, medium structure, deep ambient, reflected under-glow */
   box-shadow: 
-      0 4px 12px rgba(0, 0, 0, 0.01),
-      0 16px 40px rgba(0, 0, 0, 0.025),
-      0 40px 80px -16px rgba(0, 0, 0, 0.045),
-      0 30px 60px -20px rgba(92, 20, 20, 0.035),
+      0 0 0 1px rgba(0, 0, 0, 0.04),
+      0 2px 4px rgba(0, 0, 0, 0.015),
+      0 12px 28px -4px rgba(0, 0, 0, 0.03),
+      0 40px 96px -12px rgba(0, 0, 0, 0.05),
+      0 24px 50px -16px rgba(92, 20, 20, 0.04),
       inset 0 1px 1px rgba(255, 255, 255, 0.9) !important;
   display: flex;
   flex-direction: column;
@@ -139,7 +140,7 @@ export const landingCSS = `
   color: #1e1e1e !important;
   font-family: 'Inter', sans-serif;
   transform-style: preserve-3d;
-  transition: transform 0.1s ease-out;
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.4s ease-out;
 }
 @keyframes borderSweep {
   0% { background-position: 0% 0%, 300% 0%; }
@@ -1109,97 +1110,74 @@ export const landingCSS = `
 
 /* Live rivalry preview */
 .l-live-rivalry-preview {
-    margin-top: 48px;
-    background: #fff;
-    border: 1px solid var(--d);
-    border-radius: 12px;
-    padding: 16px 20px;
-    max-width: 420px;
+    margin-top: 64px;
     cursor: pointer;
-    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-    box-shadow: 0 4px 16px rgba(0,0,0,0.015);
+    max-width: 520px;
+    background: transparent;
+    border: none;
+    padding: 0;
+    box-shadow: none;
+    transition: transform 0.2s ease-out;
 }
 .l-live-rivalry-preview:hover {
-    transform: translateY(-2px);
-    border-color: var(--r);
-    box-shadow: 0 8px 24px rgba(92,20,20,0.06);
+    transform: translateY(-1px);
+    box-shadow: none;
 }
 .l-lr-hdr {
     font-family: 'JetBrains Mono', monospace;
-    font-size: 9px;
+    font-size: 8.5px;
     font-weight: 700;
-    letter-spacing: 1px;
-    color: var(--r);
+    letter-spacing: 1.5px;
+    color: #888;
     display: flex;
     align-items: center;
     gap: 6px;
-    margin-bottom: 12px;
+    margin-bottom: 8px;
     text-transform: uppercase;
 }
 .l-lr-dot {
-    width: 5px;
-    height: 5px;
+    width: 4px;
+    height: 4px;
     background: var(--r);
     border-radius: 50%;
-    animation: badgeDotPulse 1.8s ease-in-out infinite;
+    display: inline-block;
 }
-.l-lr-box {
+.l-lr-ticker {
     display: flex;
     align-items: center;
-    justify-content: space-between;
-    gap: 16px;
-    border-bottom: 1px solid rgba(0,0,0,0.03);
-    padding-bottom: 12px;
-    margin-bottom: 8px;
-}
-.l-lr-player {
-    display: flex;
-    flex-direction: column;
-    gap: 2px;
-}
-.l-lr-player.right {
-    text-align: right;
-}
-.l-lr-name {
+    gap: 12px;
     font-family: 'JetBrains Mono', monospace;
-    font-size: 12px;
-    font-weight: 600;
-    color: var(--t1);
-}
-.l-lr-growth {
-    font-size: 18px;
-    font-weight: 800;
-    letter-spacing: -0.5px;
-}
-.l-lr-growth.leading {
-    color: var(--g);
-}
-.l-lr-growth.trailing {
-    color: var(--r);
-}
-.l-lr-vs {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 10px;
-    font-weight: 700;
-    color: #ccc;
-    background: #fafafa;
-    border: 1px solid #eee;
-    width: 24px;
-    height: 24px;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-.l-lr-footer {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
     font-size: 11px;
-    color: var(--t3);
+    color: var(--t2);
+    letter-spacing: -0.2px;
+    background: rgba(0, 0, 0, 0.02);
+    border: 1px solid rgba(0, 0, 0, 0.04);
+    border-radius: 4px;
+    padding: 8px 12px;
+    width: fit-content;
 }
-.l-lr-footer strong {
-    color: var(--t1);
+.l-lr-token {
+    font-weight: 600;
+    color: #000;
+}
+.l-lr-num {
+    font-weight: 700;
+    margin-left: 4px;
+}
+.l-lr-num.lead {
+    color: #145c14;
+}
+.l-lr-num.lag {
+    color: #5C1414;
+}
+.l-lr-divider {
+    color: rgba(0,0,0,0.15);
+    font-weight: 300;
+}
+.l-lr-cap, .l-lr-time {
+    font-weight: 700;
+    color: #666;
+    font-size: 10px;
 }
 
 /* Live state ticker */

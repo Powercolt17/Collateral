@@ -35,10 +35,6 @@ export function renderLanding() {
                 <!-- PREMIUM ARCHITECTURAL ENVIRONMENT -->
                 <div class="lhero-bg-container">
                     <div class="l-arch-light-shift"></div>
-                    <div class="l-arch-panel panel-left"></div>
-                    <div class="l-arch-panel panel-right"></div>
-                    <div class="l-arch-seam seam-horizontal"></div>
-                    <div class="l-arch-seam seam-vertical"></div>
                 </div>
 
                 <div class="lw">
@@ -58,25 +54,19 @@ export function renderLanding() {
                         </div>
                         <div class="lcta-match ldesktop-proof animate-fade-in-up delay-2" style="margin-bottom: 24px;">First contract matched up to $250</div>
 
-                        <!-- COMPACT LIVE RIVALRY PREVIEW -->
+                        <!-- COMPACT LIVE RIVALRY SNAPSHOT (Bloomberg Terminal style) -->
                         <div class="l-live-rivalry-preview animate-fade-in-up delay-3" id="l-live-rivalry-preview-card">
                             <div class="l-lr-hdr">
-                                <span class="l-lr-dot"></span> LIVE RIVALRY PREVIEW
+                                <span class="l-lr-dot"></span> LIVE CONTRACT RIVALRY
                             </div>
-                            <div class="l-lr-box">
-                                <div class="l-lr-player">
-                                    <span class="l-lr-name">@jakevoss</span>
-                                    <span class="l-lr-growth leading">+8.4%</span>
-                                </div>
-                                <div class="l-lr-vs">VS</div>
-                                <div class="l-lr-player right">
-                                    <span class="l-lr-name">@marcus</span>
-                                    <span class="l-lr-growth trailing">+7.8%</span>
-                                </div>
-                            </div>
-                            <div class="l-lr-footer">
-                                <span>Winner takes: <strong>$2,000</strong></span>
-                                <span>Time left: <strong>9 Days</strong></span>
+                            <div class="l-lr-ticker">
+                                <span class="l-lr-token">@jakevoss <span class="l-lr-num lead">+8.40%</span></span>
+                                <span class="l-lr-divider">/</span>
+                                <span class="l-lr-token">@marcus <span class="l-lr-num lag">+7.80%</span></span>
+                                <span class="l-lr-divider">|</span>
+                                <span class="l-lr-cap">POOL $2.0K</span>
+                                <span class="l-lr-divider">|</span>
+                                <span class="l-lr-time">T-MINUS 9D</span>
                             </div>
                         </div>
 
@@ -1678,28 +1668,17 @@ export function initLanding() {
         }, { threshold: 0.2 });
         countEls.forEach(el => countObs.observe(el));
     }
-    // Mouse parallax for sculptural environment & contract card
+    // Mouse parallax for contract card (subtle Apple TV tilt)
     const activityCard = document.querySelector('.lactivity-card');
-    const panelRight = document.querySelector('.panel-right');
-    
-    if (activityCard || panelRight) {
+    if (activityCard) {
         document.addEventListener('mousemove', (e) => {
             const mouseX = (e.clientX / window.innerWidth - 0.5);
             const mouseY = (e.clientY / window.innerHeight - 0.5);
             
             // Extremely subtle tilt on the contract card (1.5deg max)
-            if (activityCard) {
-                const rx = mouseY * -1.5;
-                const ry = mouseX * 1.5;
-                activityCard.style.transform = `rotateY(${ry}deg) rotateX(${rx}deg) translateY(-2px)`;
-            }
-            
-            // Faint parallax (1-2px shift) on the background panel
-            if (panelRight) {
-                const px = mouseX * 2;
-                const py = mouseY * 2;
-                panelRight.style.transform = `translate3d(${px}px, ${py}px, 0)`;
-            }
+            const rx = mouseY * -1.5;
+            const ry = mouseX * 1.5;
+            activityCard.style.transform = `rotateY(${ry}deg) rotateX(${rx}deg) translateY(-2px)`;
         }, { passive: true });
     }
 }

@@ -880,6 +880,11 @@ export function renderLanding() {
 }
 
 export function initLanding() {
+    if (window.landingIntervals) {
+        window.landingIntervals.forEach(clearInterval);
+    }
+    window.landingIntervals = [];
+
     // Fade in page container
     setTimeout(() => {
         document.querySelector('.lp')?.classList.add('v');
@@ -980,7 +985,7 @@ export function initLanding() {
                     `;
                     scrollEl.innerHTML = renderExec(executionsList[0]);
 
-                    setInterval(() => {
+                    const intervalId1 = setInterval(() => {
                         const current = scrollEl.querySelector('.l-exec-item');
                         if (current) {
                             current.classList.remove('active');
@@ -996,6 +1001,7 @@ export function initLanding() {
                         nextEl.offsetHeight; // force reflow
                         nextEl.classList.add('active');
                     }, 3500);
+                    window.landingIntervals.push(intervalId1);
                 }
 
                 // Upgraded subtle Hero Contract State Ticker
@@ -1010,7 +1016,7 @@ export function initLanding() {
                 const stateValEl = document.getElementById('lc-live-state-val');
                 const stateLblEl = document.querySelector('.lc-live-state-lbl');
                 if (stateValEl && stateLblEl) {
-                    setInterval(() => {
+                    const intervalId2 = setInterval(() => {
                         hStateIdx = (hStateIdx + 1) % heroStatesList.length;
                         stateValEl.style.opacity = '0';
                         stateLblEl.style.opacity = '0';
@@ -1021,6 +1027,7 @@ export function initLanding() {
                             stateLblEl.style.opacity = '1';
                         }, 300);
                     }, 4000);
+                    window.landingIntervals.push(intervalId2);
                 }
 
                 // Update centerpiece card active contract indicators
@@ -1260,7 +1267,7 @@ export function initLanding() {
                 const hasRaCycle = raListEl && combinedEvents.length > 2;
 
                 if (hasContractCycle || hasRaCycle) {
-                    setInterval(() => {
+                    const intervalId3 = setInterval(() => {
                         if (hasContractCycle) {
                             featContainer.style.opacity = '0';
                             featContainer.style.transform = 'translateY(2px)';
@@ -1284,6 +1291,7 @@ export function initLanding() {
                             }
                         }, 300);
                     }, 2500);
+                    window.landingIntervals.push(intervalId3);
                 }
 
                 // Populate Live Settlement Activity Table
@@ -1372,14 +1380,15 @@ export function initLanding() {
                         updateLedgerTable();
 
                         if (ledgerEvents.length > 4) {
-                            setInterval(() => {
+                            const intervalId4 = setInterval(() => {
                                 tbody.classList.add('fade-out');
                                 setTimeout(() => {
-                                    startIndex = (startIndex + 1) % ledgerEvents.length;
-                                    updateLedgerTable();
-                                    tbody.classList.remove('fade-out');
+                                     startIndex = (startIndex + 1) % ledgerEvents.length;
+                                     updateLedgerTable();
+                                     tbody.classList.remove('fade-out');
                                 }, 400);
                             }, 4000);
+                            window.landingIntervals.push(intervalId4);
                         }
                     }
                 }

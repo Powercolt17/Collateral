@@ -1007,6 +1007,7 @@ export const landingCSS = `
 .l-ticker-content {
     display: flex;
     align-items: center;
+    justify-content: center;
     gap: 16px;
     font-size: 12px;
     font-family: 'Inter', sans-serif;
@@ -1031,7 +1032,8 @@ export const landingCSS = `
     animation: badgeDotPulse 1.8s ease-in-out infinite;
 }
 .l-ticker-scroll {
-    flex: 1;
+    width: 480px;
+    max-width: 100%;
     overflow: hidden;
     position: relative;
     height: 18px;
@@ -1046,6 +1048,7 @@ export const landingCSS = `
     height: 100%;
     display: flex;
     align-items: center;
+    justify-content: center;
     gap: 8px;
     opacity: 0;
     transform: translateY(6px);
@@ -1094,7 +1097,8 @@ export const landingCSS = `
     display: flex;
     flex-direction: column;
     gap: 6px;
-    text-align: left;
+    align-items: center;
+    text-align: center;
 }
 .l-stat-bar-val {
     font-family: 'Plus Jakarta Sans', sans-serif;

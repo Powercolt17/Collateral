@@ -540,16 +540,9 @@ window.app = {
                 window.app.closeAccessModal();
                 updateAuthUI();
 
-                // Always navigate to target or overview after signup
-                const goTarget = sessionStorage.getItem('collateral_go_target');
-                if (goTarget) {
-                    sessionStorage.removeItem('collateral_go_target');
-                    window.router.navigate(goTarget);
-                } else if (shouldShowOnboarding()) {
-                    window.router.navigate('/welcome');
-                } else {
-                    window.router.navigate('/market');
-                }
+                // Always navigate to /market after signup
+                sessionStorage.removeItem('collateral_go_target');
+                window.router.navigate('/market');
             } catch (err) {
                 window.app._showAuthError(err.message || 'Account creation failed.');
             } finally {
@@ -575,14 +568,9 @@ window.app = {
                 window.app.closeAccessModal();
                 updateAuthUI();
 
-                // Always go to target or overview after login (even from /go)
-                const goTarget = sessionStorage.getItem('collateral_go_target');
-                if (goTarget) {
-                    sessionStorage.removeItem('collateral_go_target');
-                    window.router.navigate(goTarget);
-                } else if (_isOnGoPage()) {
-                    window.router.navigate('/market');
-                }
+                // Always navigate to /market after login
+                sessionStorage.removeItem('collateral_go_target');
+                window.router.navigate('/market');
             } catch (err) {
                 window.app._showAuthError(err.message || 'Invalid email or password.');
             } finally {
@@ -673,16 +661,9 @@ window.app = {
             // Force route refresh
             await hydrateSession();
 
-            // Redirect or refresh route to prevent blank page
-            const goTarget = sessionStorage.getItem('collateral_go_target');
-            if (goTarget) {
-                sessionStorage.removeItem('collateral_go_target');
-                window.router.navigate(goTarget);
-            } else if (_isOnGoPage()) {
-                window.router.navigate('/market');
-            } else {
-                window.router.navigate(window.location.pathname);
-            }
+            // Always navigate to /market after login
+            sessionStorage.removeItem('collateral_go_target');
+            window.router.navigate('/market');
 
         } catch (err) {
             console.error('[WalletAuth] Login failed:', err);
@@ -727,13 +708,8 @@ window.app = {
                 console.log('[Auth] Clerk session exists, exchanging token...');
                 await window.app._exchangeClerkToken();
                 updateAuthUI();
-                const goTarget = sessionStorage.getItem('collateral_go_target');
-                if (goTarget) {
-                    sessionStorage.removeItem('collateral_go_target');
-                    window.router.navigate(goTarget);
-                } else {
-                    window.router.navigate('/market');
-                }
+                sessionStorage.removeItem('collateral_go_target');
+                window.router.navigate('/market');
                 sessionStorage.removeItem('collateral_go_flow');
                 return;
             }
@@ -774,13 +750,8 @@ window.app = {
                 console.log('[Auth] Clerk session exists, exchanging token...');
                 await window.app._exchangeClerkToken();
                 updateAuthUI();
-                const goTarget = sessionStorage.getItem('collateral_go_target');
-                if (goTarget) {
-                    sessionStorage.removeItem('collateral_go_target');
-                    window.router.navigate(goTarget);
-                } else {
-                    window.router.navigate('/market');
-                }
+                sessionStorage.removeItem('collateral_go_target');
+                window.router.navigate('/market');
                 sessionStorage.removeItem('collateral_go_flow');
                 return;
             }
@@ -836,13 +807,8 @@ window.app = {
             } else {
                 console.log('[Auth] No session after SSO callback');
             }
-            const goTarget = sessionStorage.getItem('collateral_go_target');
-            if (goTarget) {
-                sessionStorage.removeItem('collateral_go_target');
-                window.router.navigate(goTarget);
-            } else {
-                window.router.navigate('/market');
-            }
+            sessionStorage.removeItem('collateral_go_target');
+            window.router.navigate('/market');
         } catch (err) {
             console.error('[Auth] SSO callback failed:', err);
             sessionStorage.removeItem('collateral_go_flow');

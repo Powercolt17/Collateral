@@ -810,6 +810,69 @@ export function renderLanding() {
                         <!-- 6. PRIMARY CTA -->
                         <button class="l-modal-action-btn-new" id="l-modal-action-btn">Open Live Rivalry</button>
                     </div>
+            </div>
+
+            <!-- CONTRACT SPECIFICATION OVERLAY MODAL -->
+            <div id="contract-spec-overlay" class="l-modal-overlay">
+                <div class="l-modal-container">
+                    <div class="l-modal-header">
+                        <span class="l-modal-title">
+                            <span class="l-ticker-pulse"></span> CONTRACT SPECIFICATION
+                        </span>
+                        <button class="l-modal-close" id="l-spec-modal-close-btn">✕</button>
+                    </div>
+                    <div class="l-modal-body">
+                        
+                        <!-- 1. CONTRACT HEADER DETAILS -->
+                        <div class="l-spec-hero-card">
+                            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
+                                <span class="l-spec-platform-badge" id="l-spec-platform-name">Platform</span>
+                                <span class="l-spec-tier-badge" id="l-spec-tier-name">Tier</span>
+                            </div>
+                            <h3 class="l-spec-title" id="l-spec-title">Revenue Growth</h3>
+                            <p class="l-spec-desc" id="l-spec-desc">Objective target tracking via API integrations.</p>
+                        </div>
+
+                        <!-- 2. SPEC PARAMETERS -->
+                        <div class="l-spec-params">
+                            <div class="l-spec-param-row">
+                                <span class="lbl">Deposit Range</span>
+                                <span class="val" id="l-spec-deposit-range">$250 – $3,000</span>
+                            </div>
+                            <div class="l-spec-param-row">
+                                <span class="lbl">Custody Yield</span>
+                                <span class="val" id="l-spec-bonus-yield">2.5x</span>
+                            </div>
+                            <div class="l-spec-param-row">
+                                <span class="lbl">Contract Window</span>
+                                <span class="val" id="l-spec-window">30 days</span>
+                            </div>
+                            <div class="l-spec-param-row">
+                                <span class="lbl">Verification API</span>
+                                <span class="val" id="l-spec-verification-api">Stripe API Balance v3</span>
+                            </div>
+                        </div>
+
+                        <!-- 3. CUSTODY & RESOLUTION CONSOLE -->
+                        <div style="display:flex; flex-direction:column; gap:6px;">
+                            <span style="font-family:'JetBrains Mono', monospace; font-size:8.5px; font-weight:700; color:var(--t3); letter-spacing:0.5px;">CUSTODY & RESOLUTION PIPELINE</span>
+                            <div class="l-modal-console" style="height:100px;">
+                                <div class="l-console-line"><span class="c-time">[ESCROW]</span> Funds held in secure Stripe custody vault</div>
+                                <div class="l-console-line"><span class="c-time">[ORACLE]</span> Performance queries resolved every 24 hours</div>
+                                <div class="l-console-line"><span class="c-time">[SETTLE]</span> Target matched returns paid out immediately on success</div>
+                                <div class="l-console-line"><span class="c-time">[FORFEIT]</span> Failure triggers custody burn to capacity pool</div>
+                            </div>
+                        </div>
+
+                        <!-- 4. LIVE ACTIVITY STAT -->
+                        <div class="l-spec-activity-bar" id="l-spec-live-stat-bar">
+                            <span class="l-ticker-pulse" id="l-spec-live-pulse-dot"></span>
+                            <span id="l-spec-live-stat">48 Active contracts currently tracking</span>
+                        </div>
+
+                        <!-- 5. PRIMARY CTA -->
+                        <button class="l-modal-action-btn-new" id="l-spec-execute-btn">Execute Contract</button>
+                    </div>
                 </div>
             </div>
 
@@ -1372,20 +1435,125 @@ export function initLanding() {
             window.app.openAccessModal();
         }
     });
+    const specOverlay = document.getElementById('contract-spec-overlay');
+    const specCloseBtn = document.getElementById('l-spec-modal-close-btn');
+    const specExecBtn = document.getElementById('l-spec-execute-btn');
+
+    const specData = {
+        STRIPE: {
+            title: 'Revenue Growth Contract',
+            desc: 'Secure performance matched yield on Stripe revenue volume increases.',
+            deposit: '$250 – $3,000',
+            yield: '2.5x Multiplier',
+            window: '30 Days',
+            api: 'Stripe Balance & Payout APIs v3',
+            live: '48 Active contracts currently tracking',
+            urgent: false
+        },
+        X: {
+            title: 'Follower Growth Contract',
+            desc: 'Escrow capital to verify audience growth targets via X (formerly Twitter).',
+            deposit: '$500 – $5,000',
+            yield: '4.0x Multiplier',
+            window: '14 Days',
+            api: 'X API v2 User Metrics Endpoint',
+            live: '$82k Capital Locked in custody escrow',
+            urgent: false
+        },
+        SHOPIFY: {
+            title: 'Store Sales Contract',
+            desc: 'Pledge performance bounds on Shopify merchant net order sales.',
+            deposit: '$100 – $1,500',
+            yield: '1.5x Multiplier',
+            window: '30 Days',
+            api: 'Shopify Admin Order REST API',
+            live: 'Oracle connection status: OPERATIONAL',
+            urgent: false
+        },
+        YOUTUBE: {
+            title: 'Subscriber Growth Contract',
+            desc: 'Verify YouTube creator audience milestone targets with matching yield.',
+            deposit: '$250 – $3,000',
+            yield: '2.5x Multiplier',
+            window: '30 Days',
+            api: 'YouTube Analytics API v2',
+            live: 'Urgent: 3 Hours remaining on matching round',
+            urgent: true
+        }
+    };
+
+    let targetExecUrl = '/market';
+
     document.querySelectorAll('.lp-cta-btn').forEach(btn => {
         btn.addEventListener('click', (e) => {
-            e.preventDefault(); e.stopPropagation();
+            e.preventDefault();
+            e.stopPropagation();
             const source = btn.getAttribute('data-source');
             const tier = btn.getAttribute('data-tier');
             const capital = btn.getAttribute('data-capital');
-            let targetUrl = '/market';
-            if (source && tier && capital) {
-                targetUrl = `/contracts/execute?source=${source}&tier=${tier}&capital=${capital}`;
+            
+            const data = specData[source] || specData.STRIPE;
+            
+            // Populate modal
+            const nameEl = document.getElementById('l-spec-platform-name');
+            const tierEl = document.getElementById('l-spec-tier-name');
+            const titleEl = document.getElementById('l-spec-title');
+            const descEl = document.getElementById('l-spec-desc');
+            const depEl = document.getElementById('l-spec-deposit-range');
+            const yldEl = document.getElementById('l-spec-bonus-yield');
+            const winEl = document.getElementById('l-spec-window');
+            const apiEl = document.getElementById('l-spec-verification-api');
+            const statEl = document.getElementById('l-spec-live-stat');
+            
+            if (nameEl) nameEl.textContent = source;
+            if (tierEl) tierEl.textContent = tier.replace('_', ' ');
+            if (titleEl) titleEl.textContent = data.title;
+            if (descEl) descEl.textContent = data.desc;
+            if (depEl) depEl.textContent = data.deposit;
+            if (yldEl) yldEl.textContent = data.yield;
+            if (winEl) winEl.textContent = data.window;
+            if (apiEl) apiEl.textContent = data.api;
+            if (statEl) statEl.textContent = data.live;
+            
+            const liveBar = document.getElementById('l-spec-live-stat-bar');
+            if (liveBar) {
+                if (data.urgent) {
+                    liveBar.classList.add('urgent');
+                } else {
+                    liveBar.classList.remove('urgent');
+                }
             }
-            goAction(targetUrl, 'signup');
-            if (window.trackEvent) window.trackEvent('cta_click', { button: 'inline', source, tier, capital, ...utm });
+            
+            targetExecUrl = `/contracts/execute?source=${source}&tier=${tier}&capital=${capital}`;
+            
+            if (specOverlay) {
+                specOverlay.classList.add('active');
+            }
+            
+            if (window.trackEvent) window.trackEvent('cta_spec_open', { source, tier, capital, ...utm });
         });
     });
+
+    if (specOverlay && specCloseBtn && specExecBtn) {
+        specCloseBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            specOverlay.classList.remove('active');
+        });
+
+        specOverlay.addEventListener('click', (e) => {
+            if (e.target === specOverlay) {
+                specOverlay.classList.remove('active');
+            }
+        });
+
+        specExecBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            specOverlay.classList.remove('active');
+            goAction(targetExecUrl, 'signup');
+        });
+    }
 
     // FAQ
     document.querySelectorAll('.fq').forEach(item => {

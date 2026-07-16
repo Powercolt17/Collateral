@@ -1712,4 +1712,92 @@ export const landingCSS = `
     transform: translateY(-1px);
     box-shadow: 0 4px 12px rgba(92,20,20,0.12);
 }
+
+/* Contract Specification Modal Styles */
+.l-spec-hero-card {
+    border: 1px solid var(--d);
+    border-radius: 12px;
+    padding: 20px;
+    background: #fbfbf9;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+.l-spec-platform-badge {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9px;
+    font-weight: 700;
+    color: var(--r);
+    text-transform: uppercase;
+}
+.l-spec-tier-badge {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 8px;
+    font-weight: 700;
+    color: var(--t2);
+    background: rgba(0,0,0,0.03);
+    padding: 2px 6px;
+    border-radius: 4px;
+    border: 1px solid rgba(0,0,0,0.06);
+    text-transform: uppercase;
+}
+.l-spec-title {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 22px;
+    font-weight: 800;
+    color: #111;
+    letter-spacing: -0.5px;
+    margin: 4px 0 0 0;
+}
+.l-spec-desc {
+    font-size: 13px;
+    color: var(--t2);
+    margin: 4px 0 0 0;
+}
+.l-spec-params {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    border: 1px solid var(--d);
+    border-radius: 8px;
+    padding: 16px;
+    background: #fff;
+}
+.l-spec-param-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 12px;
+}
+.l-spec-param-row .lbl {
+    font-family: 'JetBrains Mono', monospace;
+    color: var(--t3);
+    font-weight: 700;
+    font-size: 8.5px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+.l-spec-param-row .val {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-weight: 700;
+    color: var(--t1);
+}
+.l-spec-activity-bar {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 8.5px;
+    font-weight: 700;
+    color: var(--g);
+    border: 1px solid rgba(16,185,129,0.12);
+    background: rgba(16,185,129,0.04);
+    padding: 10px 12px;
+    border-radius: 8px;
+}
+.l-spec-activity-bar.urgent {
+    color: var(--r);
+    border-color: rgba(92,20,20,0.12);
+    background: rgba(92,20,20,0.04);
+}
 `;

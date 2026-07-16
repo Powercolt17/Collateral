@@ -70,14 +70,6 @@ export const landingCSS = `
 
 /* ═══ HERO ═══ */
 .lhero-section{position:relative;overflow:hidden}
-
-.lhero-section::before{content:'';position:absolute;top:-20%;right:-10%;width:700px;height:700px;background:radial-gradient(circle, rgba(92,20,20,0.04) 0%, rgba(92,20,20,0.02) 30%, transparent 70%);border-radius:50%;pointer-events:none;animation:heroOrb 12s ease-in-out infinite}
-.lhero-section::after{content:'';position:absolute;bottom:-30%;left:-5%;width:500px;height:500px;background:radial-gradient(circle, rgba(92,20,20,0.03) 0%, transparent 60%);border-radius:50%;pointer-events:none;animation:heroOrb 15s ease-in-out infinite reverse}
-@keyframes heroOrb {
-  0%, 100% { transform: translate(0, 0) scale(1); opacity: 0.5; }
-  33% { transform: translate(30px, -20px) scale(1.05); opacity: 0.7; }
-  66% { transform: translate(-20px, 15px) scale(0.95); opacity: 0.4; }
-}
 .lhero-grid{display:grid;grid-template-columns:1.25fr 0.75fr;gap:48px;align-items:center;padding:160px 0 80px}
 .lh1{font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:clamp(38px,4.5vw,64px);line-height:1.1;letter-spacing:-2px;color:var(--t1);margin:0 0 24px}
 .lh-gradient{color:var(--r);font-weight:800;letter-spacing:-2px;display:inline-block;padding-bottom:0.15em;margin-bottom:-0.15em}
@@ -1811,7 +1803,7 @@ export const landingCSS = `
     overflow: hidden;
     z-index: 0;
     pointer-events: none;
-    background: #fafaf9; /* Warm luxury white foundation */
+    background: transparent; /* inherit cool greyish slate page bg */
 }
 .l-exec-ring-system {
     position: absolute;
@@ -1827,28 +1819,31 @@ export const landingCSS = `
     justify-content: center;
     box-sizing: border-box;
     opacity: 0;
-    transition: opacity 1.5s cubic-bezier(0.16, 1, 0.3, 1);
+    animation: ringFadeIn 1.5s cubic-bezier(0.16, 1, 0.3, 1) 0.1s forwards;
 }
-.lhero-section.v .l-exec-ring-system {
-    opacity: 1;
+
+@keyframes ringFadeIn {
+    from { opacity: 0; transform: translate(-30%, -48%) scale(0.98); }
+    to { opacity: 1; transform: translate(-30%, -50%) scale(1); }
 }
+
 .l-exec-ring {
     position: absolute;
     width: 760px;
     height: 760px;
     border-radius: 50%;
-    background: #fafaf9;
-    /* Machined carved slot groove depth effect */
+    background: #ffffff; /* pure white to stand out clearly from cool slate page bg */
+    /* Bold machined carved depth effect with at least 8%-15% visible opacity */
     box-shadow: 
-        /* Inner carved shadows */
-        inset 4px 4px 16px rgba(0,0,0,0.03), 
-        inset -8px -8px 24px rgba(255,255,255,0.9),
-        /* Subtle burgundy reflection inside the carved groove channel */
-        inset 0px 12px 32px rgba(92,20,20,0.015),
-        /* Outer soft ambient depth shadows */
-        4px 12px 32px rgba(0,0,0,0.015), 
-        -8px -8px 24px rgba(255,255,255,0.8);
-    border: 1px solid rgba(0,0,0,0.015);
+        /* Inner debossed groove channel shadow */
+        inset 4px 4px 12px rgba(0, 0, 0, 0.08), 
+        inset -8px -8px 16px rgba(255, 255, 255, 0.9),
+        /* Subtle burgundy reflection inside the groove channel (2-3% opacity) */
+        inset 0px 12px 32px rgba(92, 20, 20, 0.03),
+        /* Outer soft shadows and highlights */
+        4px 12px 24px rgba(0, 0, 0, 0.03), 
+        -8px -8px 20px rgba(255, 255, 255, 0.8);
+    border: 1px solid rgba(0, 0, 0, 0.08); /* 8% opacity border */
     display: flex;
     align-items: center;
     justify-content: center;
@@ -1860,14 +1855,14 @@ export const landingCSS = `
     width: 660px;
     height: 660px;
     border-radius: 50%;
-    background: #fafaf9;
-    /* Raised inner cylinder creating the carved groove channel */
+    background: #F8FAFC; /* Match parent page bg exactly to complete the groove channel */
+    /* Raised center cylinder cylinder shadows casting outwards */
     box-shadow: 
-        4px 4px 12px rgba(0,0,0,0.02), 
-        -8px -8px 20px rgba(255,255,255,0.95),
-        inset -2px -2px 8px rgba(0,0,0,0.01),
-        inset 4px 4px 12px rgba(255,255,255,0.8);
-    border: 1px solid rgba(0,0,0,0.01);
+        4px 4px 12px rgba(0, 0, 0, 0.05), 
+        -8px -8px 16px rgba(255, 255, 255, 0.9),
+        inset -2px -2px 6px rgba(0, 0, 0, 0.02),
+        inset 4px 4px 8px rgba(255, 255, 255, 0.8);
+    border: 1px solid rgba(0, 0, 0, 0.08); /* 8% opacity border */
     box-sizing: border-box;
 }
 .l-exec-path {
@@ -1885,10 +1880,10 @@ export const landingCSS = `
     overflow: visible;
 }
 .l-exec-path-arc {
-    opacity: 0.15; /* Restrained burgundy path: 15% opacity */
+    opacity: 0.25; /* Highly visible but restrained burgundy path: 25% opacity */
 }
 .l-exec-dot {
-    opacity: 0.4; /* Soft visible anchors */
+    opacity: 0.7; /* Crisp visible anchors */
     transition: opacity 0.2s, transform 0.2s;
 }
 .l-exec-dot:hover {
@@ -1899,27 +1894,27 @@ export const landingCSS = `
 @keyframes lightingShift {
     0% {
         box-shadow: 
-            inset 4px 4px 16px rgba(0,0,0,0.03), 
-            inset -8px -8px 24px rgba(255,255,255,0.9),
-            inset 0px 12px 32px rgba(92,20,20,0.015),
-            4px 12px 32px rgba(0,0,0,0.015), 
-            -8px -8px 24px rgba(255,255,255,0.8);
+            inset 4px 4px 12px rgba(0, 0, 0, 0.08), 
+            inset -8px -8px 16px rgba(255, 255, 255, 0.9),
+            inset 0px 12px 32px rgba(92, 20, 20, 0.03),
+            4px 12px 24px rgba(0, 0, 0, 0.03), 
+            -8px -8px 20px rgba(255, 255, 255, 0.8);
     }
     50% {
         box-shadow: 
-            inset 8px 3px 20px rgba(0,0,0,0.02), 
-            inset -4px -8px 24px rgba(255,255,255,0.95),
-            inset 0px 12px 32px rgba(92,20,20,0.02),
-            8px 6px 36px rgba(0,0,0,0.01), 
-            -4px -8px 24px rgba(255,255,255,0.85);
+            inset 8px 3px 16px rgba(0, 0, 0, 0.1), 
+            inset -4px -8px 16px rgba(255, 255, 255, 0.95),
+            inset 0px 12px 32px rgba(92, 20, 20, 0.04),
+            8px 6px 28px rgba(0, 0, 0, 0.02), 
+            -4px -8px 20px rgba(255, 255, 255, 0.85);
     }
     100% {
         box-shadow: 
-            inset 4px 4px 16px rgba(0,0,0,0.03), 
-            inset -8px -8px 24px rgba(255,255,255,0.9),
-            inset 0px 12px 32px rgba(92,20,20,0.015),
-            4px 12px 32px rgba(0,0,0,0.015), 
-            -8px -8px 24px rgba(255,255,255,0.8);
+            inset 4px 4px 12px rgba(0, 0, 0, 0.08), 
+            inset -8px -8px 16px rgba(255, 255, 255, 0.9),
+            inset 0px 12px 32px rgba(92, 20, 20, 0.03),
+            4px 12px 24px rgba(0, 0, 0, 0.03), 
+            -8px -8px 20px rgba(255, 255, 255, 0.8);
     }
 }
 

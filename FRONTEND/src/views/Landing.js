@@ -34,9 +34,64 @@ export function renderLanding() {
             <div class="lhero-section">
                 <!-- PREMIUM BACKGROUND ANIMATION & GRID -->
                 <div class="lhero-bg-container">
-                    <div class="lhero-grid-pattern"></div>
-                    <div class="lhero-scanline"></div>
-                    <div class="lhero-spotlight"></div>
+                    <div class="lhero-vignette"></div>
+                    <div class="l-ledger-net">
+                        <!-- Enormous field of extremely faint protocol records -->
+                        <div class="l-lnode" style="top: 8%; left: 3%; width: 220px; height: 130px;">
+                            <span class="l-lnode-id">RCPT-71A9</span>
+                            <span class="l-lnode-status locked">LOCKED</span>
+                            <span class="l-lnode-ts">14:02:11 UTC</span>
+                            <div class="l-lnode-border-t"></div>
+                            <div class="l-lnode-border-l"></div>
+                        </div>
+                        <div class="l-lnode" style="top: 5%; right: 5%; width: 260px; height: 140px;">
+                            <span class="l-lnode-id">YT-34281</span>
+                            <span class="l-lnode-status verified">VERIFIED</span>
+                            <span class="l-lnode-val">+500 SUBS</span>
+                            <div class="l-lnode-border-r"></div>
+                            <div class="l-lnode-border-b"></div>
+                        </div>
+                        <div class="l-lnode" style="top: 48%; left: -4%; width: 250px; height: 120px;">
+                            <span class="l-lnode-id">STRIPE-8902</span>
+                            <span class="l-lnode-status settled">SETTLED</span>
+                            <span class="l-lnode-block">BLOCK 01847</span>
+                            <div class="l-lnode-border-t"></div>
+                        </div>
+                        <div class="l-lnode" style="top: 58%; right: -3%; width: 240px; height: 160px;">
+                            <span class="l-lnode-id">X-77A01</span>
+                            <span class="l-lnode-status oracle">ORACLE</span>
+                            <span class="l-lnode-lbl">EXECUTION</span>
+                            <div class="l-lnode-border-l"></div>
+                            <div class="l-lnode-border-b"></div>
+                        </div>
+                        <div class="l-lnode" style="top: -6%; left: 38%; width: 190px; height: 80px;">
+                            <span class="l-lnode-id">BLOCK-8901</span>
+                            <span class="l-lnode-status locked">LOCKED</span>
+                            <div class="l-lnode-border-r"></div>
+                        </div>
+                        <div class="l-lnode" style="bottom: 4%; left: 28%; width: 280px; height: 130px;">
+                            <span class="l-lnode-id">RCPT-88D2</span>
+                            <span class="l-lnode-status settled">SETTLED</span>
+                            <span class="l-lnode-ts">14:03:59 UTC</span>
+                            <div class="l-lnode-border-t"></div>
+                            <div class="l-lnode-border-r"></div>
+                        </div>
+                        <div class="l-lnode" style="top: 32%; left: 45%; width: 170px; height: 100px;">
+                            <span class="l-lnode-id">SYS-LOG-01</span>
+                            <span class="l-lnode-status verified">VERIFIED</span>
+                            <div class="l-lnode-border-b"></div>
+                        </div>
+                        <div class="l-lnode" style="top: 72%; left: 5%; width: 180px; height: 100px;">
+                            <span class="l-lnode-id">ORCL-89A0</span>
+                            <span class="l-lnode-status locked">LOCKED</span>
+                            <div class="l-lnode-border-l"></div>
+                        </div>
+                        <div class="l-lnode" style="top: 25%; right: 40%; width: 150px; height: 90px;">
+                            <span class="l-lnode-id">NET-4663</span>
+                            <span class="l-lnode-status oracle">ORACLE</span>
+                            <div class="l-lnode-border-t"></div>
+                        </div>
+                    </div>
                 </div>
 
                 <div class="lw">
@@ -1676,8 +1731,14 @@ export function initLanding() {
         }, { threshold: 0.2 });
         countEls.forEach(el => countObs.observe(el));
     }
-
-
-
+    // Mouse parallax for invisible execution ledger layer (subtle 2-4px offset)
+    const ledgerNet = document.querySelector('.l-ledger-net');
+    if (ledgerNet) {
+        document.addEventListener('mousemove', (e) => {
+            const x = (e.clientX / window.innerWidth - 0.5) * 4; 
+            const y = (e.clientY / window.innerHeight - 0.5) * 4; 
+            ledgerNet.style.transform = `translate3d(${x}px, ${y}px, 0)`;
+        }, { passive: true });
+    }
 }
 

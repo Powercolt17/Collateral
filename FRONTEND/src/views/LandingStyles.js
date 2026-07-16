@@ -1801,7 +1801,7 @@ export const landingCSS = `
     background: rgba(92,20,20,0.04);
 }
 
-/* Premium Background Animation & Grid */
+/* Premium Background Animation & Grid — Institutional Luxury */
 .lhero-bg-container {
     position: absolute;
     top: 0;
@@ -1811,57 +1811,91 @@ export const landingCSS = `
     overflow: hidden;
     z-index: 0;
     pointer-events: none;
+    background: #fafaf9; /* Warm luxury white foundation */
 }
-.lhero-grid-pattern {
-    position: absolute;
-    top: -50%;
-    left: -50%;
-    width: 200%;
-    height: 200%;
-    background-image: 
-        linear-gradient(rgba(0, 0, 0, 0.02) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(0, 0, 0, 0.02) 1px, transparent 1px);
-    background-size: 60px 60px;
-    transform: rotate(-12deg);
-    mask-image: radial-gradient(circle at 50% 30%, rgba(0,0,0,1) 15%, rgba(0,0,0,0.1) 60%, transparent 80%);
-    -webkit-mask-image: radial-gradient(circle at 50% 30%, rgba(0,0,0,1) 15%, rgba(0,0,0,0.1) 60%, transparent 80%);
-}
-.lhero-scanline {
-    position: absolute;
-    top: -10%;
-    left: 0;
-    width: 100%;
-    height: 2px;
-    background: linear-gradient(90deg, transparent, rgba(92, 20, 20, 0.08) 50%, transparent);
-    animation: scan 18s cubic-bezier(0.4, 0, 0.2, 1) infinite;
-}
-.lhero-spotlight {
+.lhero-vignette {
     position: absolute;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    background: radial-gradient(circle at 50% 30%, rgba(92, 20, 20, 0.015) 0%, transparent 55%);
-    animation: drift 15s ease-in-out infinite alternate;
+    background: radial-gradient(circle at 60% 40%, transparent 20%, rgba(0, 0, 0, 0.005) 85%);
+    z-index: 2;
+    pointer-events: none;
+}
+.l-ledger-net {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+    pointer-events: none;
+    transform-style: preserve-3d;
+    animation: ambientDepth 80s ease-in-out infinite;
+}
+.l-lnode {
+    position: absolute;
+    opacity: 0.02; /* Extremely faint execution ledger record: 2% opacity */
+    font-family: 'JetBrains Mono', monospace;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 10px 12px;
+    background: transparent;
+    pointer-events: none;
+    box-sizing: border-box;
+}
+.l-lnode-border-t { position: absolute; top: 0; left: 0; right: 0; height: 1px; background: #000; }
+.l-lnode-border-b { position: absolute; bottom: 0; left: 0; right: 0; height: 1px; background: #000; }
+.l-lnode-border-l { position: absolute; top: 0; bottom: 0; left: 0; width: 1px; background: #000; }
+.l-lnode-border-r { position: absolute; top: 0; bottom: 0; right: 0; width: 1px; background: #000; }
+
+.l-lnode-id {
+    font-size: 8px;
+    font-weight: 700;
+    color: #000;
+    letter-spacing: 0.5px;
+    margin-bottom: 4px;
+}
+.l-lnode-status {
+    font-size: 7px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    padding: 1px 3px;
+    border-radius: 1px;
+    width: fit-content;
+    text-transform: uppercase;
+}
+.l-lnode-status.locked { color: #000; border: 1px solid #000; }
+.l-lnode-status.verified { color: #000; background: rgba(0, 0, 0, 0.08); }
+.l-lnode-status.settled { 
+    color: var(--r, #5C1414); 
+    border: 1px solid var(--r, #5C1414); 
+    background: rgba(92, 20, 20, 0.05); /* very soft burgundy accent */
+}
+.l-lnode-status.oracle { color: #000; }
+
+.l-lnode-ts, .l-lnode-val, .l-lnode-block, .l-lnode-lbl {
+    font-size: 7px;
+    color: #666;
+    margin-top: auto;
+    letter-spacing: 0.2px;
+    text-transform: uppercase;
 }
 
-@keyframes scan {
+@keyframes ambientDepth {
     0% {
-        top: -10%;
+        transform: scale(1) translate(0px, 0px);
+        opacity: 0.95;
     }
     50% {
-        top: 110%;
+        transform: scale(1.008) translate(3px, -2px);
+        opacity: 1;
     }
     100% {
-        top: 110%;
-    }
-}
-@keyframes drift {
-    0% {
-        transform: translate(-2%, -2%) scale(1);
-    }
-    100% {
-        transform: translate(2%, 2%) scale(1.05);
+        transform: scale(1) translate(0px, 0px);
+        opacity: 0.95;
     }
 }
 `;

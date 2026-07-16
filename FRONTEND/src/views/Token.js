@@ -956,6 +956,60 @@ export function renderToken() {
                     gap: 16px !important;
                     width: 100% !important;
                 }
+                .stats-dashboard {
+                    grid-template-columns: repeat(2, 1fr) !important;
+                    gap: 16px 12px !important;
+                    padding: 20px 16px !important;
+                    margin-bottom: 32px !important;
+                }
+                .stats-dashboard-card {
+                    border-right: none !important;
+                    border-bottom: 1px solid #F0F0F0 !important;
+                    padding-bottom: 12px !important;
+                    padding-right: 0 !important;
+                }
+                .stats-dashboard-card:nth-child(odd) {
+                    border-right: 1px solid #F0F0F0 !important;
+                    padding-right: 12px !important;
+                }
+                .stats-dashboard-card:nth-child(even) {
+                    padding-left: 12px !important;
+                }
+                .stats-dashboard-card:nth-last-child(-n+2) {
+                    border-bottom: none !important;
+                    padding-bottom: 0 !important;
+                }
+                .stats-dashboard-num {
+                    font-size: 24px !important;
+                }
+                .snapshot-panel {
+                    padding: 20px 16px !important;
+                    margin-bottom: 32px !important;
+                }
+                .snapshot-grid {
+                    grid-template-columns: repeat(2, 1fr) !important;
+                    gap: 16px 12px !important;
+                }
+                .snapshot-card {
+                    border-right: none !important;
+                    border-bottom: 1px solid #F0F0F0 !important;
+                    padding-bottom: 8px !important;
+                    padding-right: 0 !important;
+                }
+                .snapshot-card:nth-child(odd) {
+                    border-right: 1px solid #F0F0F0 !important;
+                    padding-right: 12px !important;
+                }
+                .snapshot-card:nth-child(even) {
+                    padding-left: 12px !important;
+                }
+                .snapshot-card:nth-last-child(-n+2) {
+                    border-bottom: none !important;
+                    padding-bottom: 0 !important;
+                }
+                .snapshot-val {
+                    font-size: 13px !important;
+                }
                 .cltr-focal-hero {
                     flex-direction: column !important;
                     align-items: flex-start !important;

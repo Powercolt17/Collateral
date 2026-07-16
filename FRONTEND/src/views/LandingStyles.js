@@ -1801,7 +1801,7 @@ export const landingCSS = `
     background: rgba(92,20,20,0.04);
 }
 
-/* Premium Background Animation & Grid — Institutional Luxury */
+/* Premium Background Animation & Grid — Institutional Luxury Carved Ring */
 .lhero-bg-container {
     position: absolute;
     top: 0;
@@ -1813,89 +1813,126 @@ export const landingCSS = `
     pointer-events: none;
     background: #fafaf9; /* Warm luxury white foundation */
 }
-.lhero-vignette {
+.l-exec-ring-system {
     position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: radial-gradient(circle at 60% 40%, transparent 20%, rgba(0, 0, 0, 0.005) 85%);
-    z-index: 2;
-    pointer-events: none;
-}
-.l-ledger-net {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
+    top: 50%;
+    left: 55%; /* Positioned slightly right of center to sit under card and extend left */
+    transform: translate(-30%, -50%);
+    width: 760px;
+    height: 760px;
     z-index: 1;
     pointer-events: none;
-    transform-style: preserve-3d;
-    animation: ambientDepth 80s ease-in-out infinite;
-}
-.l-lnode {
-    position: absolute;
-    opacity: 0.02; /* Extremely faint execution ledger record: 2% opacity */
-    font-family: 'JetBrains Mono', monospace;
     display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    padding: 10px 12px;
-    background: transparent;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+    opacity: 0;
+    transition: opacity 1.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.lhero-section.v .l-exec-ring-system {
+    opacity: 1;
+}
+.l-exec-ring {
+    position: absolute;
+    width: 760px;
+    height: 760px;
+    border-radius: 50%;
+    background: #fafaf9;
+    /* Machined carved slot groove depth effect */
+    box-shadow: 
+        /* Inner carved shadows */
+        inset 4px 4px 16px rgba(0,0,0,0.03), 
+        inset -8px -8px 24px rgba(255,255,255,0.9),
+        /* Subtle burgundy reflection inside the carved groove channel */
+        inset 0px 12px 32px rgba(92,20,20,0.015),
+        /* Outer soft ambient depth shadows */
+        4px 12px 32px rgba(0,0,0,0.015), 
+        -8px -8px 24px rgba(255,255,255,0.8);
+    border: 1px solid rgba(0,0,0,0.015);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+    animation: lightingShift 60s ease-in-out infinite;
+    transform-style: preserve-3d;
+}
+.l-exec-ring-inner {
+    width: 660px;
+    height: 660px;
+    border-radius: 50%;
+    background: #fafaf9;
+    /* Raised inner cylinder creating the carved groove channel */
+    box-shadow: 
+        4px 4px 12px rgba(0,0,0,0.02), 
+        -8px -8px 20px rgba(255,255,255,0.95),
+        inset -2px -2px 8px rgba(0,0,0,0.01),
+        inset 4px 4px 12px rgba(255,255,255,0.8);
+    border: 1px solid rgba(0,0,0,0.01);
+    box-sizing: border-box;
+}
+.l-exec-path {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 760px;
+    height: 760px;
     pointer-events: none;
     box-sizing: border-box;
 }
-.l-lnode-border-t { position: absolute; top: 0; left: 0; right: 0; height: 1px; background: #000; }
-.l-lnode-border-b { position: absolute; bottom: 0; left: 0; right: 0; height: 1px; background: #000; }
-.l-lnode-border-l { position: absolute; top: 0; bottom: 0; left: 0; width: 1px; background: #000; }
-.l-lnode-border-r { position: absolute; top: 0; bottom: 0; right: 0; width: 1px; background: #000; }
-
-.l-lnode-id {
-    font-size: 8px;
-    font-weight: 700;
-    color: #000;
-    letter-spacing: 0.5px;
-    margin-bottom: 4px;
+.l-exec-path-svg {
+    width: 100%;
+    height: 100%;
+    overflow: visible;
 }
-.l-lnode-status {
-    font-size: 7px;
-    font-weight: 700;
-    letter-spacing: 1px;
-    padding: 1px 3px;
-    border-radius: 1px;
-    width: fit-content;
-    text-transform: uppercase;
+.l-exec-path-arc {
+    opacity: 0.15; /* Restrained burgundy path: 15% opacity */
 }
-.l-lnode-status.locked { color: #000; border: 1px solid #000; }
-.l-lnode-status.verified { color: #000; background: rgba(0, 0, 0, 0.08); }
-.l-lnode-status.settled { 
-    color: var(--r, #5C1414); 
-    border: 1px solid var(--r, #5C1414); 
-    background: rgba(92, 20, 20, 0.05); /* very soft burgundy accent */
+.l-exec-dot {
+    opacity: 0.4; /* Soft visible anchors */
+    transition: opacity 0.2s, transform 0.2s;
 }
-.l-lnode-status.oracle { color: #000; }
-
-.l-lnode-ts, .l-lnode-val, .l-lnode-block, .l-lnode-lbl {
-    font-size: 7px;
-    color: #666;
-    margin-top: auto;
-    letter-spacing: 0.2px;
-    text-transform: uppercase;
+.l-exec-dot:hover {
+    opacity: 1;
+    transform: scale(1.2);
 }
 
-@keyframes ambientDepth {
+@keyframes lightingShift {
     0% {
-        transform: scale(1) translate(0px, 0px);
-        opacity: 0.95;
+        box-shadow: 
+            inset 4px 4px 16px rgba(0,0,0,0.03), 
+            inset -8px -8px 24px rgba(255,255,255,0.9),
+            inset 0px 12px 32px rgba(92,20,20,0.015),
+            4px 12px 32px rgba(0,0,0,0.015), 
+            -8px -8px 24px rgba(255,255,255,0.8);
     }
     50% {
-        transform: scale(1.008) translate(3px, -2px);
-        opacity: 1;
+        box-shadow: 
+            inset 8px 3px 20px rgba(0,0,0,0.02), 
+            inset -4px -8px 24px rgba(255,255,255,0.95),
+            inset 0px 12px 32px rgba(92,20,20,0.02),
+            8px 6px 36px rgba(0,0,0,0.01), 
+            -4px -8px 24px rgba(255,255,255,0.85);
     }
     100% {
-        transform: scale(1) translate(0px, 0px);
-        opacity: 0.95;
+        box-shadow: 
+            inset 4px 4px 16px rgba(0,0,0,0.03), 
+            inset -8px -8px 24px rgba(255,255,255,0.9),
+            inset 0px 12px 32px rgba(92,20,20,0.015),
+            4px 12px 32px rgba(0,0,0,0.015), 
+            -8px -8px 24px rgba(255,255,255,0.8);
     }
 }
+
+@media (max-width: 991px) {
+    .l-exec-ring-system {
+        left: 50%;
+        transform: translate(-50%, -55%) scale(0.7);
+    }
+}
+@media (max-width: 768px) {
+    .l-exec-ring-system {
+        transform: translate(-50%, -55%) scale(0.5);
+    }
+}
+
 `;

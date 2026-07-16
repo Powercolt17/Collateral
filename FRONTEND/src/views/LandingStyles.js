@@ -916,6 +916,8 @@ export const landingCSS = `
   .lemo-divider{width:100%;height:1px}
   .lemo-item{font-size:13px}
   .lemo-reframe{padding:60px 0}
+  .lc-recent-activity { display: none !important; }
+  .l-exec-item { font-size: 10px !important; white-space: nowrap !important; }
 }
 
 /* Staggered Scroll Reveals */
@@ -1037,6 +1039,7 @@ export const landingCSS = `
     opacity: 0;
     transform: translateY(6px);
     transition: opacity 0.3s ease, transform 0.3s ease;
+    white-space: nowrap;
 }
 .l-exec-item.active {
     opacity: 1;

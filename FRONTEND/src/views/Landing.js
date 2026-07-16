@@ -303,22 +303,22 @@ export function renderLanding() {
                         <div class="lhow-card" data-r>
                             <span class="lhow-card-badge">Step 01</span>
                             <h3 class="lhow-card-title">Set Target</h3>
-                            <p class="lhow-card-desc lhide-mobile">Connect Stripe, X, Shopify, or YouTube. Set your exact metric target.</p>
+                            <p class="lhow-card-desc">Connect Stripe, X, Shopify, or YouTube. Set your exact metric target.</p>
                         </div>
                         <div class="lhow-card" data-r>
                             <span class="lhow-card-badge">Step 02</span>
                             <h3 class="lhow-card-title">Lock Deposit</h3>
-                            <p class="lhow-card-desc lhide-mobile">Lock your security deposit in escrow. No early withdrawals allowed.</p>
+                            <p class="lhow-card-desc">Lock your security deposit in escrow. No early withdrawals allowed.</p>
                         </div>
                         <div class="lhow-card" data-r>
                             <span class="lhow-card-badge">Step 03</span>
                             <h3 class="lhow-card-title">Execute</h3>
-                            <p class="lhow-card-desc lhide-mobile">Your contract runs. Progress is tracked in real-time via platform APIs.</p>
+                            <p class="lhow-card-desc">Your contract runs. Progress is tracked in real-time via platform APIs.</p>
                         </div>
                         <div class="lhow-card final-card" data-r>
                             <span class="lhow-card-badge">Step 04</span>
                             <h3 class="lhow-card-title">API Settle</h3>
-                            <p class="lhow-card-desc lhide-mobile">APIs verify outcomes. Hit goals to win yields; fail and forfeit deposits.</p>
+                            <p class="lhow-card-desc">APIs verify outcomes. Hit goals to win yields; fail and forfeit deposits.</p>
                         </div>
                     </div>
                 </div>

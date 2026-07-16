@@ -44,7 +44,7 @@ export function renderLanding() {
                             Every day, people risk money on outcomes they can't control—like sports teams, markets, or ad algorithms. Collateral lets you lock capital on the only asset you actually control: your own focus and execution.
                         </p>
                         <div class="lctas animate-fade-in-up delay-2">
-                            <button class="lbtn lbtn-r" id="lp-hero-cta">Lock Your First Contract</button>
+                            <button class="lbtn lbtn-r" id="lp-hero-cta">Start Contract</button>
                             <button class="lbtn lbtn-g" id="lp-see-contracts-cta">See Live Contracts</button>
                         </div>
                         <div class="lcta-match ldesktop-proof animate-fade-in-up delay-2" style="margin-bottom: 24px;">First contract matched up to $250</div>
@@ -239,7 +239,7 @@ export function renderLanding() {
                                 <span class="lcard-live-dot"></span>
                                 <span class="lcard-live-text">48 Active duels</span>
                             </div>
-                            <div class="lcard-btn"><button class="lp-cta-btn" data-source="STRIPE" data-tier="stake" data-capital="250">Lock Your First Contract</button></div>
+                            <div class="lcard-btn"><button class="lp-cta-btn" data-source="STRIPE" data-tier="stake" data-capital="250">Start Contract</button></div>
                         </div>
                         <div class="lcard" data-r>
                             <div class="lcard-top">
@@ -255,7 +255,7 @@ export function renderLanding() {
                                 <span class="lcard-live-dot"></span>
                                 <span class="lcard-live-text">$82k Locked in escrow</span>
                             </div>
-                            <div class="lcard-btn"><button class="lp-cta-btn" data-source="X" data-tier="all_in" data-capital="500">Lock Your First Contract</button></div>
+                            <div class="lcard-btn"><button class="lp-cta-btn" data-source="X" data-tier="all_in" data-capital="500">Start Contract</button></div>
                         </div>
                         <div class="lcard" data-r>
                             <div class="lcard-top">
@@ -271,7 +271,7 @@ export function renderLanding() {
                                 <span class="lcard-live-dot"></span>
                                 <span class="lcard-live-text">Oracle Verified</span>
                             </div>
-                            <div class="lcard-btn"><button class="lp-cta-btn" data-source="SHOPIFY" data-tier="pledge" data-capital="100">Lock Your First Contract</button></div>
+                            <div class="lcard-btn"><button class="lp-cta-btn" data-source="SHOPIFY" data-tier="pledge" data-capital="100">Start Contract</button></div>
                         </div>
                         <div class="lcard" data-r>
                             <div class="lcard-top">
@@ -287,7 +287,7 @@ export function renderLanding() {
                                 <span class="lcard-live-dot urgent"></span>
                                 <span class="lcard-live-text">3 Hours Remaining</span>
                             </div>
-                            <div class="lcard-btn"><button class="lp-cta-btn" data-source="YOUTUBE" data-tier="stake" data-capital="250">Lock Your First Contract</button></div>
+                            <div class="lcard-btn"><button class="lp-cta-btn" data-source="YOUTUBE" data-tier="stake" data-capital="250">Start Contract</button></div>
                         </div>
                     </div>
                 </div>
@@ -417,7 +417,7 @@ export function renderLanding() {
                 <div class="lmini-cta" data-r>
                     <h3 class="lmini-cta-h">Done planning. Ready to commit?</h3>
                     <p class="lmini-cta-p">Your first performance bonus is matched up to $250.</p>
-                    <button class="lbtn lbtn-r lp-cta-btn">Lock Your First Contract</button>
+                    <button class="lbtn lbtn-r" id="lp-mini-cta">Start Contract</button>
                     <div class="lmini-cta-micro">Objective tracking. Verified business data only.</div>
                 </div>
             </div>
@@ -581,7 +581,7 @@ export function renderLanding() {
             <div class="lfoot">
                 <h2 class="lfoot-h">Stop pretending todo lists work.<br>Lock capital, force execution, and <em style="color:var(--r);font-style:normal;font-weight:700">win.</em></h2>
                 <div class="lfoot-sub">First performance contract matched up to $250.</div>
-                <button class="lfoot-btn" id="lp-final-cta">Lock Your First Contract</button>
+                <button class="lfoot-btn" id="lp-final-cta">Start Contract</button>
                 <div class="lfoot-micro">Objective tracking. Verified business data only.</div>
                 <div class="lfoot-line">Collateral.market · © 2026</div>
             </div>
@@ -1416,7 +1416,7 @@ export function initLanding() {
     }
 
     // All CTAs route through goAction
-    ['lp-hero-cta', 'lp-final-cta'].forEach(id => {
+    ['lp-hero-cta', 'lp-final-cta', 'lp-mini-cta'].forEach(id => {
         document.getElementById(id)?.addEventListener('click', (e) => {
             e.preventDefault(); e.stopPropagation(); goAction('/market', 'signup');
             if (window.trackEvent) window.trackEvent('cta_click', { button: id, ...utm });

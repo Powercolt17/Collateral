@@ -340,7 +340,7 @@ export function renderHeader(currentRoute) {
             .ch-right {
                 display: flex;
                 align-items: center;
-                gap: 12px;
+                gap: 20px;
                 margin-left: auto;
             }
 
@@ -350,9 +350,9 @@ export function renderHeader(currentRoute) {
                 flex-direction: column;
                 align-items: flex-end;
                 cursor: pointer;
-                padding-right: 24px;
+                padding-right: 28px;
                 border-right: 1px solid #eaeaea;
-                margin-right: 12px;
+                margin-right: 16px;
             }
             @media (min-width: 1024px) {
                 .ch-capital { display: flex; }

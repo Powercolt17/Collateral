@@ -12,7 +12,7 @@ export function renderMyContracts() {
 
             /* ── Page Header ── */
             .myc-header {
-                padding: 48px 32px 0;
+                padding: 32px 32px 0;
                 display: flex;
                 justify-content: space-between;
                 align-items: flex-start;
@@ -101,23 +101,22 @@ export function renderMyContracts() {
             .myc-metrics {
                 display: flex;
                 align-items: stretch;
-                padding: 32px;
-                gap: 16px;
+                padding: 24px 32px 16px;
+                gap: 0;
                 border-bottom: none;
             }
             .myc-metric {
                 flex: 1;
-                padding: 20px 24px;
-                background: #fff;
-                border: 1px solid rgba(0,0,0,0.05);
-                border-radius: 12px;
-                box-shadow: 0 2px 8px rgba(0,0,0,0.02);
+                padding: 12px 24px;
+                background: transparent;
+                border: none;
+                border-right: 1px solid rgba(0,0,0,0.06);
+                border-radius: 0;
+                box-shadow: none;
                 transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
             }
-            .myc-metric:hover {
-                border-color: rgba(92, 20, 20, 0.15);
-                box-shadow: 0 8px 24px rgba(92, 20, 20, 0.04);
-                transform: translateY(-2px);
+            .myc-metric:last-child {
+                border-right: none;
             }
             .myc-metric-value {
                 font-family: 'Plus Jakarta Sans', sans-serif;
@@ -127,6 +126,11 @@ export function renderMyContracts() {
                 letter-spacing: -1px;
                 line-height: 1.2;
                 margin-bottom: 6px;
+            }
+            .myc-metric-placeholder {
+                color: #b0afaa;
+                font-weight: 400;
+                font-size: 24px;
             }
             .myc-metric-subtext {
                 display: block;
@@ -148,7 +152,7 @@ export function renderMyContracts() {
                 color: #8a8984;
             }
 
-            .myc-feed { padding: 16px 32px 80px; }
+            .myc-feed { padding: 16px 32px 48px; }
 
             /* Loading */
             .myc-loading { display: flex; flex-direction: column; align-items: center; padding: 80px 0; gap: 16px; }
@@ -321,12 +325,11 @@ export function renderMyContracts() {
             @media (max-width: 768px) {
                 .myc-header { padding: 32px 16px 0; flex-direction: column; align-items: flex-start; gap: 16px; }
                 .myc-metrics { padding: 24px 16px; flex-wrap: wrap; gap: 12px; }
-                .myc-metric { min-width: calc(50% - 6px); }
+                .myc-metric { min-width: calc(50% - 6px); border-right: none !important; }
                 .myc-feed { padding: 24px 16px 60px; }
                 .eq-grid { grid-template-columns: 1fr; gap: 16px; }
-                .myo-checklist { flex-direction: column !important; }
-                .myo-checklist-item { border-right: none !important; border-bottom: 1px solid rgba(0,0,0,0.05); }
-                .myo-checklist-item:last-child { border-bottom: none !important; }
+                .myo-checklist { flex-direction: column !important; gap: 8px !important; }
+                .myo-checklist-item { border-right: none !important; border-bottom: none !important; }
             }
 
             /* --- ONBOARDING STYLES --- */
@@ -392,25 +395,37 @@ export function renderMyContracts() {
                 margin: 0;
             }
             
-            /* Checklist */
+                        /* Checklist */
             .myo-checklist {
-                background: #FFFFFF;
-                border: 1px solid rgba(0,0,0,0.05);
-                border-radius: 12px;
+                background: transparent;
+                border: none;
                 display: flex;
                 flex-direction: row;
-                box-shadow: 0 2px 8px rgba(0,0,0,0.02);
+                box-shadow: none;
+                gap: 12px;
+                align-items: stretch;
             }
             .myo-checklist-item {
                 display: flex;
                 align-items: center;
                 gap: 16px;
-                padding: 20px 24px;
+                padding: 16px 20px;
                 flex: 1;
-                border-right: 1px solid rgba(0,0,0,0.05);
+                background: transparent;
+                border: 1.5px solid transparent;
+                border-radius: 8px;
+                transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
             }
-            .myo-checklist-item:last-child {
-                border-right: none;
+            .myo-checklist-item.completed {
+                opacity: 0.85;
+            }
+            .myo-checklist-item.active-step {
+                background: rgba(92, 20, 20, 0.02);
+                border-color: rgba(92, 20, 20, 0.15);
+                box-shadow: 0 4px 12px rgba(92, 20, 20, 0.03);
+            }
+            .myo-checklist-item.upcoming {
+                opacity: 0.55;
             }
             .myo-check-box {
                 width: 20px;
@@ -536,7 +551,9 @@ export function renderMyContracts() {
                 box-shadow: 0 2px 8px rgba(0,0,0,0.02);
                 display: flex;
                 flex-direction: column;
-                gap: 8px;
+                justify-content: space-between;
+                height: 100%;
+                min-height: 195px;
                 cursor: pointer;
                 transition: all 0.2s ease-in-out;
             }
@@ -884,34 +901,79 @@ export async function initMyContracts() {
                 console.warn('[MyContracts] Status check error:', e);
             }
 
+            let completedCount = 0;
+            if (isIdentityVerified) completedCount++;
+            if (isSourceConnected) completedCount++;
+
+            let step1Active = false;
+            let step2Active = false;
+            let step3Active = false;
+
+            if (!isIdentityVerified) {
+                step1Active = true;
+            } else if (!isSourceConnected) {
+                step2Active = true;
+            } else {
+                step3Active = true;
+            }
+
+            const step1Class = isIdentityVerified ? 'completed' : (step1Active ? 'active-step' : 'upcoming');
+            const step2Class = isSourceConnected ? 'completed' : (step2Active ? 'active-step' : 'upcoming');
+            const step3Class = step3Active ? 'active-step' : 'upcoming';
+            const step4Class = 'upcoming';
+
             container.innerHTML = `
                 <div class="myc-onboarding-wrapper" style="display: flex; flex-direction: column; gap: 32px;">
                     
-                    <!-- Section: Getting Started Checklist -->
-                    <div style="background: #ffffff; border: 1px solid rgba(0,0,0,0.05); border-radius: 12px; padding: 20px 24px; box-shadow: 0 2px 8px rgba(0,0,0,0.01);">
-                        <h3 class="myo-section-lbl" style="margin-bottom: 12px;">Getting Started</h3>
+                    <!-- Section: Getting Started Checklist (Lightened, borderless inline row) -->
+                    <div style="background: transparent; border: none; padding: 0 4px; box-shadow: none;">
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; flex-wrap: wrap; gap: 8px;">
+                            <h3 class="myo-section-lbl" style="margin-bottom: 0;">Getting Started</h3>
+                            <div class="myo-progress-wrapper" style="display: flex; align-items: center; gap: 10px; font-family: 'JetBrains Mono', monospace; font-size: 10px; font-weight: 700; color: #5C1414;">
+                                <span>${completedCount} OF 4 COMPLETE</span>
+                                <div style="width: 80px; height: 4px; background: rgba(92, 20, 20, 0.08); border-radius: 2px; overflow: hidden; display: inline-block; vertical-align: middle;">
+                                    <div style="width: ${(completedCount / 4) * 100}%; height: 100%; background: #5C1414; transition: width 0.3s ease;"></div>
+                                </div>
+                            </div>
+                        </div>
                         <div class="myo-checklist">
-                            <div class="myo-checklist-item ${isIdentityVerified ? 'completed' : ''}">
-                                <div class="myo-check-box" style="font-weight: 700; color: ${isIdentityVerified ? '#5C1414' : '#ccc'};">${isIdentityVerified ? '✓' : '○'}</div>
+                            <div class="myo-checklist-item ${step1Class}">
+                                <div class="myo-check-box" style="font-weight: 700; border-color: ${isIdentityVerified ? '#5C1414' : (step1Active ? '#5C1414' : '#ccc')}; color: ${isIdentityVerified ? '#5C1414' : (step1Active ? '#5C1414' : '#ccc')}; background: ${isIdentityVerified ? 'rgba(92, 20, 20, 0.08)' : 'transparent'};">
+                                    ${isIdentityVerified ? '✓' : '○'}
+                                </div>
                                 <div class="myo-check-info">
-                                    <span class="myo-check-title">Identity Verified</span>
+                                    <span class="myo-check-title" style="display: flex; align-items: center;">
+                                        Identity Verified
+                                        ${step1Active ? '<span style="font-family: \'JetBrains Mono\', monospace; font-size: 8px; font-weight: 700; color: #5C1414; background: rgba(92, 20, 20, 0.08); padding: 1px 4px; border-radius: 2px; margin-left: 6px; text-transform: uppercase; letter-spacing: 0.5px;">Next</span>' : ''}
+                                    </span>
                                     ${!isIdentityVerified ? '<a href="#" onclick="event.preventDefault(); window.router.navigate(\'/profile\')" style="font-size:10px; color:#5C1414; text-decoration:none; font-weight:600; margin-top:2px;">Verify Identity →</a>' : ''}
                                 </div>
                             </div>
-                            <div class="myo-checklist-item ${isSourceConnected ? 'completed' : ''}">
-                                <div class="myo-check-box" style="font-weight: 700; color: ${isSourceConnected ? '#5C1414' : '#ccc'};">${isSourceConnected ? '✓' : '○'}</div>
+                            <div class="myo-checklist-item ${step2Class}">
+                                <div class="myo-check-box" style="font-weight: 700; border-color: ${isSourceConnected ? '#5C1414' : (step2Active ? '#5C1414' : '#ccc')}; color: ${isSourceConnected ? '#5C1414' : (step2Active ? '#5C1414' : '#ccc')}; background: ${isSourceConnected ? 'rgba(92, 20, 20, 0.08)' : 'transparent'};">
+                                    ${isSourceConnected ? '✓' : '○'}
+                                </div>
                                 <div class="myo-check-info">
-                                    <span class="myo-check-title">Source Connected</span>
+                                    <span class="myo-check-title" style="display: flex; align-items: center;">
+                                        Source Connected
+                                        ${step2Active ? '<span style="font-family: \'JetBrains Mono\', monospace; font-size: 8px; font-weight: 700; color: #5C1414; background: rgba(92, 20, 20, 0.08); padding: 1px 4px; border-radius: 2px; margin-left: 6px; text-transform: uppercase; letter-spacing: 0.5px;">Next</span>' : ''}
+                                    </span>
                                     ${!isSourceConnected ? '<a href="#" onclick="event.preventDefault(); window.router.navigate(\'/sources\')" style="font-size:10px; color:#5C1414; text-decoration:none; font-weight:600; margin-top:2px;">Connect Source →</a>' : ''}
                                 </div>
                             </div>
-                            <div class="myo-checklist-item">
-                                <div class="myo-check-box" style="color: #ccc;">○</div>
+                            <div class="myo-checklist-item ${step3Class}">
+                                <div class="myo-check-box" style="font-weight: 700; border-color: ${step3Active ? '#5C1414' : '#ccc'}; color: ${step3Active ? '#5C1414' : '#ccc'};">
+                                    ○
+                                </div>
                                 <div class="myo-check-info">
-                                    <span class="myo-check-title">Create Commitment</span>
+                                    <span class="myo-check-title" style="display: flex; align-items: center;">
+                                        Create Commitment
+                                        ${step3Active ? '<span style="font-family: \'JetBrains Mono\', monospace; font-size: 8px; font-weight: 700; color: #5C1414; background: rgba(92, 20, 20, 0.08); padding: 1px 4px; border-radius: 2px; margin-left: 6px; text-transform: uppercase; letter-spacing: 0.5px;">Next</span>' : ''}
+                                    </span>
+                                    ${step3Active ? '<a href="#" onclick="event.preventDefault(); window.router.navigate(\'/market\')" style="font-size:10px; color:#5C1414; text-decoration:none; font-weight:600; margin-top:2px;">Create Commitment →</a>' : ''}
                                 </div>
                             </div>
-                            <div class="myo-checklist-item">
+                            <div class="myo-checklist-item ${step4Class}">
                                 <div class="myo-check-box" style="color: #ccc;">○</div>
                                 <div class="myo-check-info">
                                     <span class="myo-check-title">Complete First Settlement</span>
@@ -932,13 +994,13 @@ export async function initMyContracts() {
                         </div>
                     </div>
 
-                    <div style="border-bottom: 1px solid rgba(0,0,0,0.05); margin: 8px 0;"></div>
+                    <div style="border-bottom: 1px solid rgba(0,0,0,0.05); margin: 0;"></div>
 
                     <!-- Section: Suggested Commitments -->
                     <div class="myo-section" style="margin-bottom: 12px;">
                         <h3 class="myo-section-lbl" id="suggested-commitments-lbl" style="margin-bottom: 12px;">Suggested Commitments</h3>
                         <div class="myo-templates-grid-3">
-                            <div class="myo-temp-card" onclick="window.router.navigate('/market')" style="display: flex; flex-direction: column; justify-content: space-between; height: 100%; min-height: 170px;">
+                            <div class="myo-temp-card" onclick="window.router.navigate('/market')">
                                 <div>
                                     <div class="myo-temp-header" style="margin-bottom: 8px;">
                                         <span class="myo-temp-platform" style="display: flex; align-items: center; gap: 6px; font-weight: 700; font-family: 'Plus Jakarta Sans', sans-serif;">
@@ -955,7 +1017,7 @@ export async function initMyContracts() {
                                 <button class="myo-temp-btn">Create Commitment</button>
                             </div>
 
-                            <div class="myo-temp-card" onclick="window.router.navigate('/market')" style="display: flex; flex-direction: column; justify-content: space-between; height: 100%; min-height: 170px;">
+                            <div class="myo-temp-card" onclick="window.router.navigate('/market')">
                                 <div>
                                     <div class="myo-temp-header" style="margin-bottom: 8px;">
                                         <span class="myo-temp-platform" style="display: flex; align-items: center; gap: 6px; font-weight: 700; font-family: 'Plus Jakarta Sans', sans-serif;">
@@ -972,7 +1034,7 @@ export async function initMyContracts() {
                                 <button class="myo-temp-btn">Create Commitment</button>
                             </div>
 
-                            <div class="myo-temp-card" onclick="window.router.navigate('/market')" style="display: flex; flex-direction: column; justify-content: space-between; height: 100%; min-height: 170px;">
+                            <div class="myo-temp-card" onclick="window.router.navigate('/market')">
                                 <div>
                                     <div class="myo-temp-header" style="margin-bottom: 8px;">
                                         <span class="myo-temp-platform" style="display: flex; align-items: center; gap: 6px; font-weight: 700; font-family: 'Plus Jakarta Sans', sans-serif;">
@@ -989,7 +1051,7 @@ export async function initMyContracts() {
                                 <button class="myo-temp-btn">Create Commitment</button>
                             </div>
 
-                            <div class="myo-temp-card" onclick="window.router.navigate('/market')" style="display: flex; flex-direction: column; justify-content: space-between; height: 100%; min-height: 170px;">
+                            <div class="myo-temp-card" onclick="window.router.navigate('/market')">
                                 <div>
                                     <div class="myo-temp-header" style="margin-bottom: 8px;">
                                         <span class="myo-temp-platform" style="display: flex; align-items: center; gap: 6px; font-weight: 700; font-family: 'Plus Jakarta Sans', sans-serif;">
@@ -1006,7 +1068,7 @@ export async function initMyContracts() {
                                 <button class="myo-temp-btn">Create Commitment</button>
                             </div>
 
-                            <div class="myo-temp-card" onclick="window.router.navigate('/market')" style="display: flex; flex-direction: column; justify-content: space-between; height: 100%; min-height: 170px;">
+                            <div class="myo-temp-card" onclick="window.router.navigate('/market')">
                                 <div>
                                     <div class="myo-temp-header" style="margin-bottom: 8px;">
                                         <span class="myo-temp-platform" style="display: flex; align-items: center; gap: 6px; font-weight: 700; font-family: 'Plus Jakarta Sans', sans-serif;">
@@ -1023,11 +1085,11 @@ export async function initMyContracts() {
                                 <button class="myo-temp-btn">Create Commitment</button>
                             </div>
 
-                            <div class="myo-temp-card" onclick="window.router.navigate('/market')" style="display: flex; flex-direction: column; justify-content: space-between; height: 100%; min-height: 170px;">
+                            <div class="myo-temp-card" onclick="window.router.navigate('/market')">
                                 <div>
                                     <div class="myo-temp-header" style="margin-bottom: 8px;">
                                         <span class="myo-temp-platform" style="display: flex; align-items: center; gap: 6px; font-weight: 700; font-family: 'Plus Jakarta Sans', sans-serif;">
-                                            <img src="https://upload.wikimedia.org/wikipedia/commons/d/de/Amazon_icon.svg" alt="Amazon" width="14" height="14" style="display:block; flex-shrink:0;" /> Amazon
+                                            <img src="https://cdn.simpleicons.org/amazon/FF9900" alt="Amazon" width="14" height="14" style="display:block; flex-shrink:0;" /> Amazon
                                         </span>
                                         <span class="myo-temp-category">Commerce</span>
                                     </div>

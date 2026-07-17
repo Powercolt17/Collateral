@@ -65,8 +65,8 @@ export const landingCSS = `
 .lmono{font-family:'Inter',sans-serif;font-size:14px;font-weight:600;text-transform:uppercase;letter-spacing:1.5px;color:var(--t2)}
 .lred-dash{display:flex;align-items:center;gap:12px;margin-bottom:12px}
 .lred-dash::before{content:'';width:28px;height:2px;background:var(--r)}
-[data-r]{opacity:0;transform:translateY(24px);transition:opacity .7s cubic-bezier(.16,1,.3,1),transform .7s cubic-bezier(.16,1,.3,1)}
-[data-r].v{opacity:1;transform:none}
+[data-r]{opacity:0;transition:opacity .7s cubic-bezier(.16,1,.3,1)}
+[data-r].v{opacity:1}
 
 /* ═══ HERO ═══ */
 .lhero-section{position:relative;overflow:hidden}

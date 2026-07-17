@@ -926,10 +926,35 @@ export function initLanding() {
         requestAnimationFrame(tick);
     };
 
-    // Fade in page container
+    // Fade in page container and run hero animations immediately
     setTimeout(() => {
-        document.querySelector('.lp')?.classList.add('v');
+        const lp = document.querySelector('.lp');
+        if (lp) {
+            lp.classList.add('v');
+            
+            // Force immediate opacity 1 / normal transform on hero items if animations are disabled
+            const disableAnimations = window.DISABLE_ENTRANCE_ANIMATIONS || 
+                                      document.querySelector('.lp-no-animations') || 
+                                      window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+            if (disableAnimations) {
+                document.querySelectorAll('.animate-fade-in-up, .animate-scale-in').forEach(el => {
+                    el.style.opacity = '1';
+                    el.style.transform = 'none';
+                    el.style.animation = 'none';
+                });
+            }
+        }
     }, 50);
+
+    // Fast fallback for above-the-fold hero elements (1000ms) to ensure they are visible
+    setTimeout(() => {
+        const heroItems = document.querySelectorAll('.lh1, .lsub, .lctas, .lcta-match, .l-live-rivalry-preview, .lhero-right, .l-global-stats-bar');
+        heroItems.forEach(el => {
+            el.style.opacity = '1';
+            el.style.transform = 'none';
+            el.style.animation = 'none';
+        });
+    }, 1000);
 
     // Update nav CTA text if logged in
     const navCta = document.getElementById('lp-nav-cta');
@@ -1369,6 +1394,16 @@ export function initLanding() {
                                 rows.push(renderRow(ledgerEvents[idx]));
                             }
                             tbodyProd.innerHTML = rows.join('');
+                            
+                            // Immediately reveal items if parent section is already active
+                            const parentSection = document.querySelector('.lreal-results');
+                            if (parentSection && parentSection.classList.contains('v')) {
+                                tbodyProd.querySelectorAll('.reveal-item').forEach((row) => {
+                                    row.classList.add('v');
+                                    row.style.transform = '';
+                                    row.style.transitionDelay = '';
+                                });
+                            }
                         };
 
                         updateLedgerTable();
@@ -1621,7 +1656,7 @@ export function initLanding() {
         item.querySelector('.fq-q')?.addEventListener('click', () => item.classList.toggle('open'));
     });
 
-    // Scroll reveal observer with programmatic stagger delays
+    // Scroll reveal observer with programmatic stagger delays & post-transition cleanup
     const obs = new IntersectionObserver((entries) => {
         entries.forEach(e => {
             if (e.isIntersecting) {
@@ -1642,6 +1677,11 @@ export function initLanding() {
                         item.style.opacity = '1';
                     } else {
                         item.style.transitionDelay = `${idx * 80}ms`;
+                        // Remove inline transform and transition delay after transition finishes
+                        setTimeout(() => {
+                            item.style.transform = '';
+                            item.style.transitionDelay = '';
+                        }, 1000 + idx * 80);
                     }
                     item.classList.add('v');
                 });
@@ -1649,11 +1689,26 @@ export function initLanding() {
                 obs.unobserve(section);
             }
         });
-    }, { threshold: 0.15, rootMargin: '0px 0px -50px 0px' });
+    }, { threshold: 0.05, rootMargin: '0px 0px -10px 0px' });
     
     const revealEls = document.querySelectorAll('[data-r]');
     console.log("[ScrollReveal] Observer initialized. Observing elements count:", revealEls.length);
     revealEls.forEach(el => obs.observe(el));
+
+    // Global safety fallback: force all elements to final visible state after 1.5s
+    setTimeout(() => {
+        console.log("[ScrollReveal] Safety fallback triggered. Forcing all animations to complete.");
+        document.querySelectorAll('.reveal-item, [data-r]').forEach(el => {
+            el.classList.add('v');
+            el.style.transform = '';
+            el.style.transitionDelay = '';
+        });
+        document.querySelectorAll('.animate-fade-in-up, .animate-scale-in').forEach(el => {
+            el.style.opacity = '1';
+            el.style.transform = 'none';
+            el.style.animation = 'none';
+        });
+    }, 1500);
 
     // Count-up animation for stats (Premium cubic ease-out, fast 800ms)
     const countEls = document.querySelectorAll('[data-count]');

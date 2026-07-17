@@ -414,15 +414,27 @@ export function renderMyContracts() {
                 background: transparent;
                 border: 1.5px solid transparent;
                 border-radius: 8px;
+                position: relative;
                 transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
             }
             .myo-checklist-item.completed {
                 opacity: 0.85;
             }
             .myo-checklist-item.active-step {
-                background: rgba(92, 20, 20, 0.02);
-                border-color: rgba(92, 20, 20, 0.15);
+                background: rgba(92, 20, 20, 0.03);
+                border-color: rgba(92, 20, 20, 0.12);
                 box-shadow: 0 4px 12px rgba(92, 20, 20, 0.03);
+            }
+            .myo-checklist-item.active-step::before {
+                content: '';
+                position: absolute;
+                top: 0;
+                left: 0;
+                right: 0;
+                height: 3px;
+                background: #5C1414;
+                border-top-left-radius: 6px;
+                border-top-right-radius: 6px;
             }
             .myo-checklist-item.upcoming {
                 opacity: 0.55;
@@ -455,11 +467,13 @@ export function renderMyContracts() {
                 display: flex;
                 flex-direction: column;
                 gap: 2px;
+                justify-content: center;
             }
             .myo-check-title {
                 font-size: 13px;
                 font-weight: 700;
                 color: #111;
+                line-height: 1.2;
             }
             .myo-check-sub {
                 font-size: 11px;
@@ -927,50 +941,45 @@ export async function initMyContracts() {
                     
                     <!-- Section: Getting Started Checklist (Lightened, borderless inline row) -->
                     <div style="background: transparent; border: none; padding: 0 4px; box-shadow: none;">
-                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; flex-wrap: wrap; gap: 8px;">
+                        <div style="display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 16px;">
                             <h3 class="myo-section-lbl" style="margin-bottom: 0;">Getting Started</h3>
-                            <div class="myo-progress-wrapper" style="display: flex; align-items: center; gap: 10px; font-family: 'JetBrains Mono', monospace; font-size: 10px; font-weight: 700; color: #5C1414;">
-                                <span>${completedCount} OF 4 COMPLETE</span>
-                                <div style="width: 80px; height: 4px; background: rgba(92, 20, 20, 0.08); border-radius: 2px; overflow: hidden; display: inline-block; vertical-align: middle;">
-                                    <div style="width: ${(completedCount / 4) * 100}%; height: 100%; background: #5C1414; transition: width 0.3s ease;"></div>
-                                </div>
-                            </div>
+                            <span style="font-family: 'JetBrains Mono', monospace; font-size: 10px; font-weight: 700; color: #8a8984; letter-spacing: 0.5px;">${completedCount} OF 4 COMPLETE</span>
                         </div>
-                        <div class="myo-checklist">
-                            <div class="myo-checklist-item ${step1Class}">
+                        <div class="myo-checklist" style="margin-bottom: 16px;">
+                            <div class="myo-checklist-item ${step1Class}" ${step1Active ? 'onclick="window.router.navigate(\'/profile\')"' : ''} style="${step1Active ? 'cursor: pointer;' : ''}">
                                 <div class="myo-check-box" style="font-weight: 700; border-color: ${isIdentityVerified ? '#5C1414' : (step1Active ? '#5C1414' : '#ccc')}; color: ${isIdentityVerified ? '#5C1414' : (step1Active ? '#5C1414' : '#ccc')}; background: ${isIdentityVerified ? 'rgba(92, 20, 20, 0.08)' : 'transparent'};">
                                     ${isIdentityVerified ? '✓' : '○'}
                                 </div>
                                 <div class="myo-check-info">
                                     <span class="myo-check-title" style="display: flex; align-items: center;">
                                         Identity Verified
-                                        ${step1Active ? '<span style="font-family: \'JetBrains Mono\', monospace; font-size: 8px; font-weight: 700; color: #5C1414; background: rgba(92, 20, 20, 0.08); padding: 1px 4px; border-radius: 2px; margin-left: 6px; text-transform: uppercase; letter-spacing: 0.5px;">Next</span>' : ''}
+                                        ${step1Active ? '<span style="font-family: \'JetBrains Mono\', monospace; font-size: 8px; font-weight: 700; color: #5C1414; background: rgba(92, 20, 20, 0.08); padding: 2px 5px; border-radius: 3px; margin-left: 8px; text-transform: uppercase; letter-spacing: 0.5px; line-height: 1;">NEXT</span>' : ''}
                                     </span>
-                                    ${!isIdentityVerified ? '<a href="#" onclick="event.preventDefault(); window.router.navigate(\'/profile\')" style="font-size:10px; color:#5C1414; text-decoration:none; font-weight:600; margin-top:2px;">Verify Identity →</a>' : ''}
+                                    ${step1Active ? '<span style="font-size: 10px; color: #5C1414; font-weight: 600; margin-top: 3px;">Start →</span>' : ''}
                                 </div>
                             </div>
-                            <div class="myo-checklist-item ${step2Class}">
+                            <div class="myo-checklist-item ${step2Class}" ${step2Active ? 'onclick="window.router.navigate(\'/sources\')"' : ''} style="${step2Active ? 'cursor: pointer;' : ''}">
                                 <div class="myo-check-box" style="font-weight: 700; border-color: ${isSourceConnected ? '#5C1414' : (step2Active ? '#5C1414' : '#ccc')}; color: ${isSourceConnected ? '#5C1414' : (step2Active ? '#5C1414' : '#ccc')}; background: ${isSourceConnected ? 'rgba(92, 20, 20, 0.08)' : 'transparent'};">
                                     ${isSourceConnected ? '✓' : '○'}
                                 </div>
                                 <div class="myo-check-info">
                                     <span class="myo-check-title" style="display: flex; align-items: center;">
                                         Source Connected
-                                        ${step2Active ? '<span style="font-family: \'JetBrains Mono\', monospace; font-size: 8px; font-weight: 700; color: #5C1414; background: rgba(92, 20, 20, 0.08); padding: 1px 4px; border-radius: 2px; margin-left: 6px; text-transform: uppercase; letter-spacing: 0.5px;">Next</span>' : ''}
+                                        ${step2Active ? '<span style="font-family: \'JetBrains Mono\', monospace; font-size: 8px; font-weight: 700; color: #5C1414; background: rgba(92, 20, 20, 0.08); padding: 2px 5px; border-radius: 3px; margin-left: 8px; text-transform: uppercase; letter-spacing: 0.5px; line-height: 1;">NEXT</span>' : ''}
                                     </span>
-                                    ${!isSourceConnected ? '<a href="#" onclick="event.preventDefault(); window.router.navigate(\'/sources\')" style="font-size:10px; color:#5C1414; text-decoration:none; font-weight:600; margin-top:2px;">Connect Source →</a>' : ''}
+                                    ${step2Active ? '<span style="font-size: 10px; color: #5C1414; font-weight: 600; margin-top: 3px;">Start →</span>' : ''}
                                 </div>
                             </div>
-                            <div class="myo-checklist-item ${step3Class}">
+                            <div class="myo-checklist-item ${step3Class}" ${step3Active ? 'onclick="window.router.navigate(\'/market\')"' : ''} style="${step3Active ? 'cursor: pointer;' : ''}">
                                 <div class="myo-check-box" style="font-weight: 700; border-color: ${step3Active ? '#5C1414' : '#ccc'}; color: ${step3Active ? '#5C1414' : '#ccc'};">
                                     ○
                                 </div>
                                 <div class="myo-check-info">
                                     <span class="myo-check-title" style="display: flex; align-items: center;">
                                         Create Commitment
-                                        ${step3Active ? '<span style="font-family: \'JetBrains Mono\', monospace; font-size: 8px; font-weight: 700; color: #5C1414; background: rgba(92, 20, 20, 0.08); padding: 1px 4px; border-radius: 2px; margin-left: 6px; text-transform: uppercase; letter-spacing: 0.5px;">Next</span>' : ''}
+                                        ${step3Active ? '<span style="font-family: \'JetBrains Mono\', monospace; font-size: 8px; font-weight: 700; color: #5C1414; background: rgba(92, 20, 20, 0.08); padding: 2px 5px; border-radius: 3px; margin-left: 8px; text-transform: uppercase; letter-spacing: 0.5px; line-height: 1;">NEXT</span>' : ''}
                                     </span>
-                                    ${step3Active ? '<a href="#" onclick="event.preventDefault(); window.router.navigate(\'/market\')" style="font-size:10px; color:#5C1414; text-decoration:none; font-weight:600; margin-top:2px;">Create Commitment →</a>' : ''}
+                                    ${step3Active ? '<span style="font-size: 10px; color: #5C1414; font-weight: 600; margin-top: 3px;">Start →</span>' : ''}
                                 </div>
                             </div>
                             <div class="myo-checklist-item ${step4Class}">
@@ -979,6 +988,10 @@ export async function initMyContracts() {
                                     <span class="myo-check-title">Complete First Settlement</span>
                                 </div>
                             </div>
+                        </div>
+                        <!-- Integrated full-width thin progress track -->
+                        <div style="width: 100%; height: 3px; background: rgba(0, 0, 0, 0.04); border-radius: 2px; overflow: hidden; margin-top: 4px;">
+                            <div style="width: ${(completedCount / 4) * 100}%; height: 100%; background: #5C1414; transition: width 0.4s cubic-bezier(0.16, 1, 0.3, 1);"></div>
                         </div>
                     </div>
 

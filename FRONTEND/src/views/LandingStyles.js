@@ -724,9 +724,9 @@ export const landingCSS = `
   padding: 24px;
   margin: 16px 20px 24px;
   border-radius: 16px;
-  background: linear-gradient(135deg, #180505 0%, #0F0202 100%);
-  border: 1px solid rgba(92, 20, 20, 0.25);
-  box-shadow: 0 12px 32px rgba(92, 20, 20, 0.15), inset 0 1px 0 rgba(255,255,255,0.05);
+  background: linear-gradient(180deg, #ffffff 0%, #fafafa 100%);
+  border: 1px solid rgba(92, 20, 20, 0.12);
+  box-shadow: 0 10px 30px rgba(92, 20, 20, 0.04);
   display: flex;
   flex-direction: column;
   gap: 14px;
@@ -741,7 +741,7 @@ export const landingCSS = `
   right: -30px;
   width: 100px;
   height: 100px;
-  background: radial-gradient(circle, rgba(92, 20, 20, 0.45) 0%, transparent 70%);
+  background: radial-gradient(circle, rgba(92, 20, 20, 0.06) 0%, transparent 70%);
   pointer-events: none;
   border-radius: 50%;
 }
@@ -750,9 +750,9 @@ export const landingCSS = `
   align-items: center;
   gap: 6px;
   align-self: flex-start;
-  background: rgba(34, 197, 94, 0.1);
-  border: 1px solid rgba(34, 197, 94, 0.25);
-  color: #4ADE80;
+  background: #f0fdf4;
+  border: 1px solid #bbf7d0;
+  color: #16a34a;
   font-family: 'JetBrains Mono', monospace;
   font-size: 9px;
   font-weight: 700;
@@ -766,16 +766,16 @@ export const landingCSS = `
 .pnl-connect-badge-dot {
   width: 5px;
   height: 5px;
-  background: #4ADE80;
+  background: #16a34a;
   border-radius: 50%;
-  box-shadow: 0 0 6px #4ADE80;
+  box-shadow: 0 0 6px #16a34a;
   animation: badgeDotPulse 1.8s ease-in-out infinite;
 }
 .pnl-connect-promo {
   font-family: 'Plus Jakarta Sans', sans-serif;
   font-size: 14px;
   font-weight: 800;
-  color: #FFFFFF;
+  color: #0f172a;
   line-height: 1.4;
   letter-spacing: -0.2px;
   position: relative;
@@ -784,7 +784,7 @@ export const landingCSS = `
 .pnl-connect-promo-sub {
   font-family: 'Inter', sans-serif;
   font-size: 12px;
-  color: rgba(255, 255, 255, 0.65);
+  color: #475569;
   line-height: 1.5;
   position: relative;
   z-index: 2;
@@ -798,8 +798,8 @@ export const landingCSS = `
   gap: 8px;
   font-size: 12px;
   font-weight: 700;
-  color: #111 !important;
-  background: #FFFFFF !important;
+  color: #FFFFFF !important;
+  background: var(--r) !important;
   border: none;
   border-radius: 8px;
   cursor: pointer;
@@ -807,14 +807,14 @@ export const landingCSS = `
   letter-spacing: 1px;
   text-transform: uppercase;
   transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-  box-shadow: 0 4px 12px rgba(255, 255, 255, 0.1);
+  box-shadow: 0 4px 12px rgba(92, 20, 20, 0.15);
   position: relative;
   z-index: 2;
 }
 .pnl-connect-btn:hover {
   transform: translateY(-2px);
-  box-shadow: 0 8px 24px rgba(255, 255, 255, 0.25);
-  background: #F8FAFC !important;
+  box-shadow: 0 8px 20px rgba(92, 20, 20, 0.25);
+  background: var(--rh) !important;
 }
 .pnl-footer { border-top: 1px solid #f0f0f0; padding: 20px 28px; background: #fafafa; flex-shrink: 0; }
 .pnl-status { display: flex; align-items: center; gap: 8px; margin-bottom: 16px; }

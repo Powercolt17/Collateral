@@ -922,23 +922,45 @@ export const landingCSS = `
 }
 
 /* Staggered Scroll Reveals */
-.lcards .lcard[data-r] {
-  transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1), transform 0.7s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.4s ease, box-shadow 0.4s ease !important;
+.reveal-item {
+  opacity: 0;
+  transform: translateY(16px);
+  transition: opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1), transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
 }
-.lcards .lcard[data-r]:nth-child(1) { transition-delay: 0ms, 0ms, 0ms, 0ms !important; }
-.lcards .lcard[data-r]:nth-child(2) { transition-delay: 80ms, 80ms, 0ms, 0ms !important; }
-.lcards .lcard[data-r]:nth-child(3) { transition-delay: 160ms, 160ms, 0ms, 0ms !important; }
-.lcards .lcard[data-r]:nth-child(4) { transition-delay: 240ms, 240ms, 0ms, 0ms !important; }
-.lcards .lcard[data-r]:hover { transition-delay: 0ms !important; }
+.reveal-item.v {
+  opacity: 1;
+  transform: none;
+}
 
-.lhow-grid .lhow-card[data-r] {
-  transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1), transform 0.7s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.3s ease, box-shadow 0.3s ease !important;
+/* Global Disable Entrance Animations */
+.lp-no-animations .reveal-item,
+.lp-no-animations [data-r],
+.lp-no-animations .animate-fade-in-up,
+.lp-no-animations .animate-scale-in {
+  opacity: 1 !important;
+  transform: none !important;
+  transition: none !important;
+  animation: none !important;
 }
-.lhow-grid .lhow-card[data-r]:nth-child(1) { transition-delay: 0ms, 0ms, 0ms, 0ms !important; }
-.lhow-grid .lhow-card[data-r]:nth-child(2) { transition-delay: 80ms, 80ms, 0ms, 0ms !important; }
-.lhow-grid .lhow-card[data-r]:nth-child(3) { transition-delay: 160ms, 160ms, 0ms, 0ms !important; }
-.lhow-grid .lhow-card[data-r]:nth-child(4) { transition-delay: 240ms, 240ms, 0ms, 0ms !important; }
-.lhow-grid .lhow-card[data-r]:hover { transition-delay: 0ms !important; }
+
+/* Prefers Reduced Motion override */
+@media (prefers-reduced-motion: reduce) {
+  .reveal-item,
+  [data-r],
+  .animate-fade-in-up,
+  .animate-scale-in,
+  .lhero-right,
+  .lcard,
+  .lstep,
+  .lhow-timeline-step,
+  .lstats-grid-borderless,
+  .lstat-item-borderless {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+    animation: none !important;
+  }
+}
 
 /* One-way Glass Sheen Hover Sweep */
 .lhow-card, .lstep, .lstat-card {

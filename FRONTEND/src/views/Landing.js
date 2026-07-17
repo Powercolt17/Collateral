@@ -194,18 +194,18 @@ export function renderLanding() {
             <div class="lw">
                 <div class="ltypes-asymmetric" data-r>
                     <div class="ltypes-left">
-                        <div class="lred-dash"><span class="lmono">Contract Types</span></div>
-                        <h2 class="ltypes-headline">Use financial leverage on yourself,<br>or challenge a <strong>competitor.</strong></h2>
+                        <div class="lred-dash reveal-item"><span class="lmono">Contract Types</span></div>
+                        <h2 class="ltypes-headline reveal-item">Use financial leverage on yourself,<br>or challenge a <strong>competitor.</strong></h2>
                     </div>
 
                     <div class="ltypes-right">
-                        <div class="ltype-row">
+                        <div class="ltype-row reveal-item">
                             <div class="ltype-badge-new">Solo</div>
                             <h3 class="ltype-title-new">You vs. Yourself</h3>
                             <p class="ltype-desc-new">Lock deposits to force yourself to execute. <span class="lhide-mobile">Hit targets to win; fail and forfeit capital.</span></p>
                             <div class="ltype-meta-new"><strong>Best for:</strong> Milestones, shipping code, audience building.</div>
                         </div>
-                        <div class="ltype-row">
+                        <div class="ltype-row reveal-item">
                             <div class="ltype-badge-new secondary">Rivalry</div>
                             <h3 class="ltype-title-new">You vs. Competitors</h3>
                             <p class="ltype-desc-new">Lock equal deposits in a head-to-head race. <span class="lhide-mobile">Winner takes the entire pool.</span></p>
@@ -217,9 +217,9 @@ export function renderLanding() {
 
 
             <!-- ═══ LIVE CONTRACT EXAMPLES ═══ -->
-            <div class="lcontracts" id="contracts">
+            <div class="lcontracts" id="contracts" data-r>
                 <div class="lw">
-                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px; flex-wrap: wrap; gap: 16px;">
+                    <div class="reveal-item" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px; flex-wrap: wrap; gap: 16px;">
                         <div class="lred-dash" style="margin-bottom: 0;"><span class="lmono">Open Contracts</span></div>
                         
                         <!-- ═══ OPEN CONTRACTS STATS ═══ -->
@@ -230,7 +230,7 @@ export function renderLanding() {
                         </div>
                     </div>
                     <div class="lcards">
-                        <div class="lcard lcard-popular" data-r>
+                        <div class="lcard lcard-popular reveal-item">
                             <div class="lcard-top">
                                 <span class="lcard-src"><svg class="lcard-src-logo" viewBox="0 0 24 24" fill="currentColor" style="color:#635BFF;width:14px;height:14px;display:inline-block;vertical-align:middle;margin-right:6px;"><path d="M20 10.3c0-1.8-1.5-2.7-3.6-3.2l-2-.5c-1.3-.3-1.9-.7-1.9-1.3 0-.6.7-1 1.7-1 1.7 0 3 .6 3.6 1l.7-2.6C17.9 2.2 16.3 1.8 14.8 1.8c-3.1 0-5.2 1.6-5.2 4.3 0 2.9 2.4 3.7 4.9 4.3l1.8.4c1.4.3 2 .8 2 1.5 0 .7-.8 1.1-2.1 1.1-1.9 0-3.6-.7-4.3-1.1l-.8 2.7c1 .5 2.9 1 4.7 1C18.2 16 20 14.4 20 10.3z"/></svg>Stripe</span>
                                 <span class="lcard-tier tier-stake">Stake</span>
@@ -246,7 +246,7 @@ export function renderLanding() {
                             </div>
                             <div class="lcard-btn"><button class="lp-cta-btn" data-source="STRIPE" data-tier="stake" data-capital="250">Start Contract</button></div>
                         </div>
-                        <div class="lcard" data-r>
+                        <div class="lcard reveal-item">
                             <div class="lcard-top">
                                 <span class="lcard-src"><svg class="lcard-src-logo" viewBox="0 0 24 24" fill="currentColor" style="color:#111111;width:14px;height:14px;display:inline-block;vertical-align:middle;margin-right:6px;"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>X / Twitter</span>
                                 <span class="lcard-tier tier-allin">All-In</span>
@@ -262,7 +262,7 @@ export function renderLanding() {
                             </div>
                             <div class="lcard-btn"><button class="lp-cta-btn" data-source="X" data-tier="all_in" data-capital="500">Start Contract</button></div>
                         </div>
-                        <div class="lcard" data-r>
+                        <div class="lcard reveal-item">
                             <div class="lcard-top">
                                 <span class="lcard-src"><svg class="lcard-src-logo" viewBox="0 0 24 24" fill="currentColor" style="color:#96bf48;width:14px;height:14px;display:inline-block;vertical-align:middle;margin-right:6px;"><path d="M19.58 6.425a.86.86 0 00-.7-.34h-2.193a4.52 4.52 0 00-9.04 0H5.454a.86.86 0 00-.7.34.887.887 0 00-.16.766l1.97 10.96a2.41 2.41 0 002.37 1.986h6.49a2.41 2.41 0 002.37-1.985l1.97-10.96a.887.887 0 00-.184-.767zM12 3.86a2.53 2.53 0 012.513 2.225H9.487A2.53 2.53 0 0112 3.86zm3.267 11.516a2.036 2.036 0 01-1.745.892 2.374 2.374 0 01-1.614-.648A2.348 2.348 0 0010.3 15a2.036 2.036 0 01-1.745-.892.429.429 0 11.734-.442c.245.408.66.634 1.01.634.341 0 .614-.148.914-.442A3.21 3.21 0 0113.627 15c.341 0 .614-.148.914-.442a.429.429 0 01.734.442z"/></svg>Shopify</span>
                                 <span class="lcard-tier tier-pledge">Pledge</span>
@@ -278,7 +278,7 @@ export function renderLanding() {
                             </div>
                             <div class="lcard-btn"><button class="lp-cta-btn" data-source="SHOPIFY" data-tier="pledge" data-capital="100">Start Contract</button></div>
                         </div>
-                        <div class="lcard" data-r>
+                        <div class="lcard reveal-item">
                             <div class="lcard-top">
                                 <span class="lcard-src"><svg class="lcard-src-logo" viewBox="0 0 24 24" fill="currentColor" style="color:#FF0000;width:14px;height:14px;display:inline-block;vertical-align:middle;margin-right:6px;"><path d="M23.498 6.163a3.003 3.003 0 0 0-2.11-2.11C19.517 3.545 12 3.545 12 3.545s-7.517 0-9.388.508a3.003 3.003 0 0 0-2.11 2.11C0 8.033 0 12 0 12s0 3.967.502 5.837a3.003 3.003 0 0 0 2.11 2.11c1.871.508 9.388.508 9.388.508s7.517 0 9.388-.508a3.003 3.003 0 0 0 2.11-2.11C24 15.967 24 12 24 12s0-3.967-.502-5.837zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>YouTube</span>
                                 <span class="lcard-tier tier-stake">Stake</span>
@@ -301,29 +301,29 @@ export function renderLanding() {
             <!-- ═══ HOW IT WORKS ═══ -->
             <div class="lw">
                 <div class="lhow" data-r id="how">
-                    <div class="lred-dash"><span class="lmono">How It Works</span></div>
-                    <h2 class="lhow-h">Set a target. Lock money.<br>Force yourself to <strong>win.</strong></h2>
-                    <p class="lhow-sub">If you are serious, put something on the line.</p>
+                    <div class="lred-dash reveal-item"><span class="lmono">How It Works</span></div>
+                    <h2 class="lhow-h reveal-item">Set a target. Lock money.<br>Force yourself to <strong>win.</strong></h2>
+                    <p class="lhow-sub reveal-item">If you are serious, put something on the line.</p>
 
-                    <div class="lhow-timeline-wrap">
+                    <div class="lhow-timeline-wrap reveal-item">
                         <div class="lhow-timeline-line"></div>
                         <div class="lhow-timeline-steps">
-                            <div class="lhow-timeline-step" data-r>
+                            <div class="lhow-timeline-step reveal-item">
                                 <div class="lhow-timeline-node">01</div>
                                 <h3 class="lhow-timeline-title">Set Target</h3>
                                 <p class="lhow-timeline-desc">Connect Stripe, X, Shopify, or YouTube. Set your exact metric target.</p>
                             </div>
-                            <div class="lhow-timeline-step" data-r>
+                            <div class="lhow-timeline-step reveal-item">
                                 <div class="lhow-timeline-node">02</div>
                                 <h3 class="lhow-timeline-title">Lock Deposit</h3>
                                 <p class="lhow-timeline-desc">Lock your security deposit in escrow. No early withdrawals allowed.</p>
                             </div>
-                            <div class="lhow-timeline-step" data-r>
+                            <div class="lhow-timeline-step reveal-item">
                                 <div class="lhow-timeline-node">03</div>
                                 <h3 class="lhow-timeline-title">Execute</h3>
                                 <p class="lhow-timeline-desc">Your contract runs. Progress is tracked in real-time via platform APIs.</p>
                             </div>
-                            <div class="lhow-timeline-step" data-r>
+                            <div class="lhow-timeline-step reveal-item">
                                 <div class="lhow-timeline-node final">04</div>
                                 <h3 class="lhow-timeline-title">API Settle</h3>
                                 <p class="lhow-timeline-desc">APIs verify outcomes. Hit goals to win yields; fail and forfeit deposits.</p>
@@ -336,23 +336,23 @@ export function renderLanding() {
             <!-- ═══ SOCIAL PROOF (REAL RESULTS) ═══ -->
             <div class="lreal-results" data-r>
                 <div class="lw">
-                    <div class="lred-dash"><span class="lmono">Real Results</span></div>
-                    <h2 class="lh-section-title">Skin in the game is the only thing that works.</h2>
-                    <p class="lh-section-subtitle">Stop pretending you will do it tomorrow. Lock capital today, execute your goals, and win.</p>
+                    <div class="lred-dash reveal-item"><span class="lmono">Real Results</span></div>
+                    <h2 class="lh-section-title reveal-item">Skin in the game is the only thing that works.</h2>
+                    <p class="lh-section-subtitle reveal-item">Stop pretending you will do it tomorrow. Lock capital today, execute your goals, and win.</p>
                     
                     <!-- Stats Grid - borderless separated statistics -->
                     <div class="lstats-grid-borderless">
-                        <div class="lstat-item-borderless">
+                        <div class="lstat-item-borderless reveal-item">
                             <div class="lstat-num"><span data-count="74">0</span>%</div>
                             <div class="lstat-label">of contracts are won</div>
                             <div class="lstat-sub">Go-getters who lock cash hit their targets way faster.</div>
                         </div>
-                        <div class="lstat-item-borderless">
+                        <div class="lstat-item-borderless reveal-item">
                             <div class="lstat-num">$<span data-count="127">0</span>k</div>
                             <div class="lstat-label">total capital settled</div>
                             <div class="lstat-sub">Across revenue, follower, and subscriber contracts</div>
                         </div>
-                        <div class="lstat-item-borderless">
+                        <div class="lstat-item-borderless reveal-item">
                             <div class="lstat-num"><span data-count="18">0</span> days</div>
                             <div class="lstat-label">average time to target</div>
                             <div class="lstat-sub">Accountability compresses timelines.</div>
@@ -360,14 +360,14 @@ export function renderLanding() {
                     </div>
 
                     <!-- Fused connecting element: stats -> ledger -->
-                    <div class="lledger-connector-wrap">
+                    <div class="lledger-connector-wrap reveal-item">
                         <div class="lledger-connector-line"></div>
                         <span class="lledger-connector-label">Audited Evidence</span>
                         <div class="lledger-connector-line"></div>
                     </div>
 
                     <!-- Verified Ledger Feed (Compressed Option B) -->
-                    <div class="lledger-container-prod">
+                    <div class="lledger-container-prod reveal-item">
                         <div class="lledger-header-prod">
                             <h3 class="lledger-h-title-prod">Live Settlement Activity</h3>
                             <div class="lledger-h-desc-prod">Verified platform outcomes.</div>
@@ -383,19 +383,19 @@ export function renderLanding() {
                                     </tr>
                                 </thead>
                                 <tbody id="lledger-tbody-prod">
-                                    <tr>
+                                    <tr class="reveal-item">
                                         <td data-label="Contract ID" class="td-id">#C-8041 <span class="td-user">@danny_v...</span></td>
                                         <td data-label="Metric" class="td-metric"><svg class="td-icon" viewBox="0 0 24 24" fill="currentColor" style="color:#635BFF;width:16px;height:16px;display:inline-block;vertical-align:middle;margin-right:8px;"><path d="M20 10.3c0-1.8-1.5-2.7-3.6-3.2l-2-.5c-1.3-.3-1.9-.7-1.9-1.3 0-.6.7-1 1.7-1 1.7 0 3 .6 3.6 1l.7-2.6C17.9 2.2 16.3 1.8 14.8 1.8c-3.1 0-5.2 1.6-5.2 4.3 0 2.9 2.4 3.7 4.9 4.3l1.8.4c1.4.3 2 .8 2 1.5 0 .7-.8 1.1-2.1 1.1-1.9 0-3.6-.7-4.3-1.1l-.8 2.7c1 .5 2.9 1 4.7 1C18.2 16 20 14.4 20 10.3z"/></svg> Stripe Revenue (+20.0%)</td>
                                         <td data-label="Commitment" class="td-capital">$500.00</td>
                                         <td data-label="Outcome" class="td-outcome hit"><span class="outcome-marker-hit">✓</span> Hit</td>
                                     </tr>
-                                    <tr>
+                                    <tr class="reveal-item">
                                         <td data-label="Contract ID" class="td-id">#C-8022 <span class="td-user">@justin_s...</span></td>
                                         <td data-label="Metric" class="td-metric"><svg class="td-icon" viewBox="0 0 24 24" fill="currentColor" style="color:#111111;width:14px;height:14px;display:inline-block;vertical-align:middle;margin-right:8px;"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg> X Followers (+1k)</td>
                                         <td data-label="Commitment" class="td-capital">$250.00</td>
                                         <td data-label="Outcome" class="td-outcome miss"><span class="outcome-marker-miss">✗</span> Missed</td>
                                     </tr>
-                                    <tr>
+                                    <tr class="reveal-item">
                                         <td data-label="Contract ID" class="td-id">#C-7988 <span class="td-user">@growth...</span></td>
                                         <td data-label="Metric" class="td-metric"><svg class="td-icon" viewBox="0 0 24 24" fill="currentColor" style="color:#96bf48;width:16px;height:16px;display:inline-block;vertical-align:middle;margin-right:8px;"><path d="M19.58 6.425a.86.86 0 00-.7-.34h-2.193a4.52 4.52 0 00-9.04 0H5.454a.86.86 0 00-.7.34.887.887 0 00-.16.766l1.97 10.96a2.41 2.41 0 002.37 1.986h6.49a2.41 2.41 0 002.37-1.985l1.97-10.96a.887.887 0 00-.184-.767zM12 3.86a2.53 2.53 0 012.513 2.225H9.487A2.53 2.53 0 0112 3.86zm3.267 11.516a2.036 2.036 0 01-1.745.892 2.374 2.374 0 01-1.614-.648A2.348 2.348 0 0010.3 15a2.036 2.036 0 01-1.745-.892.429.429 0 11.734-.442c.245.408.66.634 1.01.634.341 0 .614-.148.914-.442A3.21 3.21 0 0113.627 15c.341 0 .614-.148.914-.442a.429.429 0 01.734.442z"/></svg> Shopify Gross ($50k)</td>
                                         <td data-label="Commitment" class="td-capital">$1,000.00</td>
@@ -414,28 +414,28 @@ export function renderLanding() {
             <!-- MINI CTA BLOCK -->
             <div class="lw">
                 <div class="lmini-cta" data-r>
-                    <h3 class="lmini-cta-h">Done planning. Ready to commit?</h3>
-                    <p class="lmini-cta-p">Your first performance bonus is matched up to $250.</p>
-                    <button class="lbtn lbtn-r" id="lp-mini-cta">Start Contract</button>
-                    <div class="lmini-cta-micro">Objective tracking. Verified business data only.</div>
+                    <h3 class="lmini-cta-h reveal-item">Done planning. Ready to commit?</h3>
+                    <p class="lmini-cta-p reveal-item">Your first performance bonus is matched up to $250.</p>
+                    <button class="lbtn lbtn-r reveal-item" id="lp-mini-cta">Start Contract</button>
+                    <div class="lmini-cta-micro reveal-item">Objective tracking. Verified business data only.</div>
                 </div>
             </div>
 
             <!-- ═══ EMOTIONAL REFRAME (WHY IT WORKS) ═══ -->
             <div class="lemo-reframe" data-r>
                 <div class="lw">
-                    <div class="lred-dash"><span class="lmono">Why It Works</span></div>
-                    <h2 class="lh-section-title">A plan without stakes is just<br>a comfortable wish.</h2>
+                    <div class="lred-dash reveal-item"><span class="lmono">Why It Works</span></div>
+                    <h2 class="lh-section-title reveal-item">A plan without stakes is just<br>a comfortable wish.</h2>
                     
                     <div class="lemo-grid">
-                        <div class="lemo-left">
+                        <div class="lemo-left reveal-item">
                             <p class="lemo-body">
                                 Planning is easy. Executing is hard. You miss targets because failing is free. Collateral makes failure cost something, shifting you from passive planning to pure execution.
                                 <br class="lhide-mobile"><br class="lhide-mobile">
                                 <span class="lhide-mobile">Stop betting on variables you can't control. Bet on your own focus.</span>
                             </p>
                         </div>
-                        <div class="lemo-right">
+                        <div class="lemo-right reveal-item">
                             <div class="lemo-comparison-card">
                                 <div class="lemo-col without-collateral">
                                     <div class="lemo-col-header">Comfortable Procrastination</div>
@@ -465,12 +465,12 @@ export function renderLanding() {
             <!-- ═══ THE CLTR TOKEN ECONOMY ═══ -->
             <div class="lemo-reframe" style="background:#fff; border-top:1px solid var(--d); border-bottom:1px solid var(--d); padding:75px 0;" data-r>
                 <div class="lw">
-                    <div class="lred-dash"><span class="lmono">Protocol Token</span></div>
-                    <h2 class="lh-section-title">The CLTR Token Economy</h2>
-                    <p class="lh-section-subtitle" style="font-size:18px; color:var(--t2); margin-top:12px; margin-bottom:32px; max-width:680px; line-height:1.6;">Securing trust, locking bandwidth, and burning supply programmatically.</p>
+                    <div class="lred-dash reveal-item"><span class="lmono">Protocol Token</span></div>
+                    <h2 class="lh-section-title reveal-item">The CLTR Token Economy</h2>
+                    <p class="lh-section-subtitle reveal-item" style="font-size:18px; color:var(--t2); margin-top:12px; margin-bottom:32px; max-width:680px; line-height:1.6;">Securing trust, locking bandwidth, and burning supply programmatically.</p>
                     
                     <div class="lemo-grid">
-                        <div>
+                        <div class="reveal-item">
                             <p class="lemo-body" style="font-size:16px; line-height:1.65; color:var(--t2);">
                                 CLTR is the utility token powering Collateral reputation and execution on the Robinhood Chain.
                                 <br class="lhide-mobile"><br class="lhide-mobile">
@@ -486,7 +486,7 @@ export function renderLanding() {
                                 </a>
                             </div>
                         </div>
-                        <div style="background:var(--bg); border:1px solid var(--d); border-radius:12px; padding:32px; display:flex; flex-direction:column; gap:20px;">
+                        <div class="reveal-item" style="background:var(--bg); border:1px solid var(--d); border-radius:12px; padding:32px; display:flex; flex-direction:column; gap:20px;">
                             <div style="display:flex; justify-content:space-between; align-items:center; border-bottom:1px solid var(--d); padding-bottom:12px;">
                                 <span style="font-family:'Inter Tight', sans-serif; font-weight:800; font-size:13px; color:var(--t1);">CLTR UTILITY</span>
                                 <span style="font-family:'Inter', sans-serif; font-size:9px; font-weight:700; color:var(--r); background:rgba(92,20,20,0.06); padding:3px 8px; border-radius:100px; border:1px solid rgba(92,20,20,0.12); text-transform:uppercase;">Live Network</span>
@@ -530,17 +530,17 @@ export function renderLanding() {
             <div class="l-community-momentum" data-r>
                 <div class="lw">
                     <div class="l-momentum-wrap">
-                        <span class="l-momentum-title">Today's Activity</span>
+                        <span class="l-momentum-title reveal-item">Today's Activity</span>
                         <div class="l-momentum-items">
-                            <span class="l-momentum-item"><strong>178</strong> commitments created</span>
+                            <span class="l-momentum-item reveal-item"><strong>178</strong> commitments created</span>
                             <span class="l-momentum-dot">•</span>
-                            <span class="l-momentum-item"><strong>$412k</strong> capital locked</span>
+                            <span class="l-momentum-item reveal-item"><strong>$412k</strong> capital locked</span>
                             <span class="l-momentum-dot">•</span>
-                            <span class="l-momentum-item"><strong>94</strong> settlements completed</span>
+                            <span class="l-momentum-item reveal-item"><strong>94</strong> settlements completed</span>
                             <span class="l-momentum-dot">•</span>
-                            <span class="l-momentum-item"><strong>12</strong> rivalries started</span>
+                            <span class="l-momentum-item reveal-item"><strong>12</strong> rivalries started</span>
                             <span class="l-momentum-dot">•</span>
-                            <span class="l-momentum-item"><strong>1.2M CLTR</strong> burned this week</span>
+                            <span class="l-momentum-item reveal-item"><strong>1.2M CLTR</strong> burned this week</span>
                         </div>
                     </div>
                 </div>
@@ -549,38 +549,38 @@ export function renderLanding() {
             <!-- ═══ FAQ ═══ -->
             <div class="lw">
                 <div class="lfaq" data-r id="faq">
-                    <div class="lred-dash"><span class="lmono">Common Questions</span></div>
-                    <h2 class="lhow-h" style="margin-bottom:28px">No fine print. Just <strong>loopholes.</strong></h2>
+                    <div class="lred-dash reveal-item"><span class="lmono">Common Questions</span></div>
+                    <h2 class="lhow-h reveal-item" style="margin-bottom:28px">No fine print. Just <strong>loopholes.</strong></h2>
                     <div class="lfaq-wrap">
-                        <div class="fq open">
+                        <div class="fq open reveal-item">
                             <div class="fq-q">Is this gambling?</div>
                             <div class="fq-a">No. Gambling is risking money on variables you can't control (sports, markets, algorithms). Collateral is betting on your own focus, work, and execution.</div>
                         </div>
-                        <div class="fq">
+                        <div class="fq reveal-item">
                             <div class="fq-q">Where is the money held?</div>
                             <div class="fq-a">All deposits are held securely in a dedicated Stripe escrow account until settled.</div>
                         </div>
-                        <div class="fq">
+                        <div class="fq reveal-item">
                             <div class="fq-q">How is the target verified?</div>
                             <div class="fq-a">We query official platform APIs (Stripe, Shopify, X, YouTube) directly. No manual uploads, no cheating.</div>
                         </div>
-                        <div class="fq">
+                        <div class="fq reveal-item">
                             <div class="fq-q">Can I cancel after locking?</div>
                             <div class="fq-a">No. Once capital is locked, it cannot be withdrawn or canceled until the contract deadline.</div>
                         </div>
-                        <div class="fq lhide-mobile">
+                        <div class="fq lhide-mobile reveal-item">
                             <div class="fq-q">Can I get a refund if I miss?</div>
                             <div class="fq-a">No. If you fail, the deposit is forfeited. This financial risk is why the system works.</div>
                         </div>
-                        <div class="fq lhide-mobile">
+                        <div class="fq lhide-mobile reveal-item">
                             <div class="fq-q">What happens if an API goes down?</div>
                             <div class="fq-a">The contract pauses. If an integration breaks permanently, deposits are refunded.</div>
                         </div>
-                        <div class="fq lhide-mobile">
+                        <div class="fq lhide-mobile reveal-item">
                             <div class="fq-q">What data do you access?</div>
                             <div class="fq-a">We request read-only access to verify target metrics. We never store customer or billing data.</div>
                         </div>
-                        <div class="fq lhide-mobile">
+                        <div class="fq lhide-mobile reveal-item">
                             <div class="fq-q">Is this legal?</div>
                             <div class="fq-a">Yes. It is a performance-based commercial escrow agreement based on objective business data, not probability.</div>
                         </div>
@@ -589,12 +589,12 @@ export function renderLanding() {
             </div>
 
             <!-- ═══ FINAL CTA ═══ -->
-            <div class="lfoot">
-                <h2 class="lfoot-h">Stop pretending todo lists work.<br>Lock capital, force execution, and <em style="color:var(--r);font-style:normal;font-weight:700">win.</em></h2>
-                <div class="lfoot-sub">First performance contract matched up to $250.</div>
-                <button class="lfoot-btn" id="lp-final-cta">Start Contract</button>
-                <div class="lfoot-micro">Objective tracking. Verified business data only.</div>
-                <div class="lfoot-line">Collateral.market · © 2026</div>
+            <div class="lfoot" data-r>
+                <h2 class="lfoot-h reveal-item">Stop pretending todo lists work.<br>Lock capital, force execution, and <em style="color:var(--r);font-style:normal;font-weight:700">win.</em></h2>
+                <div class="lfoot-sub reveal-item">First performance contract matched up to $250.</div>
+                <button class="lfoot-btn reveal-item" id="lp-final-cta">Start Contract</button>
+                <div class="lfoot-micro reveal-item">Objective tracking. Verified business data only.</div>
+                <div class="lfoot-line reveal-item">Collateral.market · © 2026</div>
             </div>
 
             <!-- Landing Mobile Menu Overlay & Drawer -->
@@ -1352,7 +1352,7 @@ export function initLanding() {
                             const depositCents = e.lockAmountUsdCents || e.amountUsdCents || 25000;
                             const depositFormatted = '$' + (depositCents / 100).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
                             return `
-                                <tr>
+                                <tr class="reveal-item">
                                     <td data-label="Contract ID" class="td-id">#C-${e.contractId.slice(0, 4).toUpperCase()} <span class="td-user">@${getMaskedUser(e.principal)}</span></td>
                                     <td data-label="Metric" class="td-metric">${getPlatformIcon(e.platform)} ${getPlatformName(e.platform)}</td>
                                     <td data-label="Commitment" class="td-capital">${depositFormatted}</td>
@@ -1621,22 +1621,41 @@ export function initLanding() {
         item.querySelector('.fq-q')?.addEventListener('click', () => item.classList.toggle('open'));
     });
 
-    // Scroll reveal
+    // Scroll reveal observer with programmatic stagger delays
     const obs = new IntersectionObserver((entries) => {
         entries.forEach(e => {
             if (e.isIntersecting) {
-                console.log("[ScrollReveal] Element intersected and revealed:", e.target);
-                e.target.classList.add('v');
-                obs.unobserve(e.target);
+                const section = e.target;
+                section.classList.add('v');
+                
+                // Honor global config flag or prefers-reduced-motion media query
+                const disableAnimations = window.DISABLE_ENTRANCE_ANIMATIONS || 
+                                          document.querySelector('.lp-no-animations') || 
+                                          window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+                
+                const items = section.querySelectorAll('.reveal-item');
+                items.forEach((item, idx) => {
+                    if (disableAnimations) {
+                        item.style.transitionDelay = '0ms';
+                        item.style.transition = 'none';
+                        item.style.transform = 'none';
+                        item.style.opacity = '1';
+                    } else {
+                        item.style.transitionDelay = `${idx * 80}ms`;
+                    }
+                    item.classList.add('v');
+                });
+                
+                obs.unobserve(section);
             }
         });
-    }, { threshold: 0.02, rootMargin: '0px 0px -20px 0px' });
+    }, { threshold: 0.15, rootMargin: '0px 0px -50px 0px' });
     
     const revealEls = document.querySelectorAll('[data-r]');
     console.log("[ScrollReveal] Observer initialized. Observing elements count:", revealEls.length);
     revealEls.forEach(el => obs.observe(el));
 
-    // Count-up animation for stats (Premium cubic ease-out)
+    // Count-up animation for stats (Premium cubic ease-out, fast 800ms)
     const countEls = document.querySelectorAll('[data-count]');
     console.log("[CountUp] Observer initialized. Target elements count:", countEls.length);
     if (countEls.length) {
@@ -1646,7 +1665,18 @@ export function initLanding() {
                     const el = e.target;
                     const target = parseFloat(el.dataset.count);
                     console.log("[CountUp] Starting count animation for target:", target, el);
-                    const duration = 1600; // 1.6 seconds ease-out
+                    
+                    const disableAnimations = window.DISABLE_ENTRANCE_ANIMATIONS || 
+                                              document.querySelector('.lp-no-animations') || 
+                                              window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+                    
+                    if (disableAnimations) {
+                        el.textContent = target;
+                        countObs.unobserve(el);
+                        return;
+                    }
+                    
+                    const duration = 800; // Fast 800ms ease-out count-up
                     const startTime = performance.now();
                     
                     const animateCount = (now) => {

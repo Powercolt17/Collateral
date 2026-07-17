@@ -359,6 +359,13 @@ export function renderLanding() {
                         </div>
                     </div>
 
+                    <!-- Fused connecting element: stats -> ledger -->
+                    <div class="lledger-connector-wrap">
+                        <div class="lledger-connector-line"></div>
+                        <span class="lledger-connector-label">Audited Evidence</span>
+                        <div class="lledger-connector-line"></div>
+                    </div>
+
                     <!-- Verified Ledger Feed (Compressed Option B) -->
                     <div class="lledger-container-prod">
                         <div class="lledger-header-prod">
@@ -1340,7 +1347,7 @@ export function initLanding() {
                             } else if (isMiss) {
                                 outcomeHtml = `<span class="td-outcome miss"><span class="outcome-marker-miss">✗</span> Missed</span>`;
                             } else {
-                                outcomeHtml = `<span class="td-outcome tracking" style="color:var(--t3);">Active</span>`;
+                                outcomeHtml = `<span class="td-outcome tracking" style="color:var(--t3);"><span class="outcome-marker-tracking">●</span> Active</span>`;
                             }
                             const depositCents = e.lockAmountUsdCents || e.amountUsdCents || 25000;
                             const depositFormatted = '$' + (depositCents / 100).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });

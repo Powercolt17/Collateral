@@ -2153,16 +2153,18 @@ export const landingCSS = `
     background: #FFF;
     border: 1px solid var(--d);
     border-radius: 16px;
-    padding: 32px;
+    padding: 32px 32px 24px 32px; /* reduced bottom padding */
     box-shadow: 0 4px 24px rgba(0,0,0,0.015);
-    margin-top: 48px;
+    margin-top: 24px; /* tightened gap to visual connector label */
     width: 100%;
     box-sizing: border-box;
+    position: relative;
+    z-index: 1;
 }
 .lledger-header-prod {
     border-bottom: 1px solid var(--d);
     padding-bottom: 16px;
-    margin-bottom: 20px;
+    margin-bottom: 16px;
 }
 .lledger-h-title-prod {
     font-family: 'Inter Tight', sans-serif;
@@ -2200,7 +2202,7 @@ export const landingCSS = `
     text-align: left;
 }
 .lledger-table-prod td {
-    padding: 16px;
+    padding: 12px 16px; /* reduced row vertical padding for comfortable but tighter height */
     border-bottom: 1px solid rgba(0, 0, 0, 0.03);
     vertical-align: middle;
     color: var(--t2);
@@ -2252,6 +2254,13 @@ export const landingCSS = `
     font-weight: bold;
     margin-right: 4px;
 }
+.outcome-marker-tracking {
+    color: var(--t3);
+    margin-right: 6px;
+    font-size: 10px;
+    display: inline-block;
+    vertical-align: middle;
+}
 .lledger-footer-prod {
     border-top: 1px solid var(--d);
     padding-top: 16px;
@@ -2268,6 +2277,34 @@ export const landingCSS = `
 }
 .lledger-more-link-prod:hover {
     color: var(--r);
+}
+
+/* Fused connecting element: stats -> ledger */
+.lledger-connector-wrap {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+    margin: 32px auto -12px auto; /* visual bridge */
+    position: relative;
+    z-index: 2;
+    max-width: 400px;
+}
+.lledger-connector-line {
+    flex: 1;
+    height: 1px;
+    background: linear-gradient(to right, rgba(0,0,0,0) 0%, var(--d) 50%, rgba(0,0,0,0) 100%);
+}
+.lledger-connector-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    color: var(--t3);
+    background: var(--bg);
+    padding: 2px 8px;
+    border-radius: 4px;
 }
 
 /* Responsive Table Collapse to Cards on Mobile */

@@ -859,11 +859,12 @@ export function renderHeader(currentRoute) {
                 align-items: center;
                 justify-content: center;
                 gap: 8px;
-                background: #111111;
+                background: #5C1414;
                 color: #ffffff;
                 font-size: 11px;
                 font-weight: 700;
                 border: none;
+                border-radius: 8px;
                 cursor: pointer;
                 font-family: 'JetBrains Mono', monospace;
                 letter-spacing: 1px;
@@ -873,8 +874,8 @@ export function renderHeader(currentRoute) {
                 overflow: hidden;
             }
             .pnl-connect-btn:hover {
-                background: #5C1414;
-                box-shadow: 0 4px 12px rgba(92, 20, 20, 0.2);
+                background: #6B1212;
+                box-shadow: 0 4px 12px rgba(92, 20, 20, 0.25);
             }
             .pnl-connect-arrow {
                 transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
@@ -882,24 +883,6 @@ export function renderHeader(currentRoute) {
             }
             .pnl-connect-btn:hover .pnl-connect-arrow {
                 transform: translateX(4px);
-            }
-
-            /* Glass sheen effect on hamburger connect button */
-            .pnl-connect-btn::before {
-                content: '';
-                position: absolute;
-                top: 0;
-                left: -150%;
-                width: 100%;
-                height: 100%;
-                background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.35), transparent);
-                transform: skewX(-25deg);
-                pointer-events: none;
-                z-index: 5;
-            }
-            .pnl-connect-btn:hover::before {
-                left: 150%;
-                transition: left 0.8s ease-in-out;
             }
 
             /* Panel footer */

@@ -1073,71 +1073,77 @@ export const landingCSS = `
 
 /* Global stats bar */
 .l-global-stats-bar {
-    background: #fbfbf9;
-    border-bottom: 1px solid var(--d);
-    padding: 32px 0;
+    background: linear-gradient(180deg, #ffffff 0%, #fafafa 100%);
+    border-top: 1px solid rgba(17, 17, 17, 0.04);
+    border-bottom: 1px solid rgba(17, 17, 17, 0.04);
+    padding: 48px 0;
 }
 .l-stats-bar-grid {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
-    gap: 32px;
     align-items: center;
 }
 .l-stat-bar-item {
     display: flex;
     flex-direction: column;
-    gap: 6px;
+    gap: 8px;
     align-items: center;
     text-align: center;
+    border-right: 1px solid rgba(17, 17, 17, 0.05);
+    transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.l-stat-bar-item:last-child {
+    border-right: none;
+}
+.l-stat-bar-item:hover {
+    transform: translateY(-2px);
 }
 .l-stat-bar-val {
     font-family: 'Plus Jakarta Sans', sans-serif;
-    font-size: 24px;
+    font-size: 28px;
     font-weight: 800;
     color: #111;
-    letter-spacing: -0.5px;
+    letter-spacing: -0.6px;
     line-height: 1;
+    font-variant-numeric: tabular-nums;
+    transition: color 0.3s ease;
+}
+.l-stat-bar-item:hover .l-stat-bar-val {
+    color: var(--r);
 }
 .l-stat-bar-lbl {
     font-family: 'JetBrains Mono', monospace;
     font-size: 9px;
-    font-weight: 700;
+    font-weight: 600;
     text-transform: uppercase;
-    letter-spacing: 1px;
-    color: var(--t3);
+    letter-spacing: 1.5px;
+    color: #6e6d6a;
     line-height: 1.2;
 }
 @media(max-width:768px) {
     .lmobile-only {
         display: block !important;
     }
-    .l-live-ticker-strip {
-        padding: 6px 0 !important;
-    }
-    .l-ticker-content {
-        font-size: 10px !important;
-        gap: 8px !important;
-    }
-    .l-ticker-badge {
-        font-size: 8px !important;
-        letter-spacing: 0.5px !important;
-    }
     .l-global-stats-bar {
-        padding: 16px 0 !important;
+        padding: 20px 0 !important;
     }
     .l-stats-bar-grid {
-        grid-template-columns: repeat(2, 1fr);
-        gap: 16px 20px !important;
+        grid-template-columns: repeat(2, 1fr) !important;
+        gap: 0 !important;
     }
     .l-stat-bar-item {
-        gap: 2px !important;
+        border-right: 1px solid rgba(17, 17, 17, 0.05) !important;
+        gap: 3px !important;
+    }
+    .l-stat-bar-item:nth-child(2) {
+        border-right: none !important;
     }
     .l-stat-bar-val {
-        font-size: 18px !important;
+        font-size: 20px !important;
     }
     .l-stat-bar-lbl {
-        font-size: 7.5px !important;
-        letter-spacing: 0.5px !important;
+        font-size: 8px !important;
+        letter-spacing: 0.8px !important;
     }
     .l-live-rivalry-preview {
         display: none !important;

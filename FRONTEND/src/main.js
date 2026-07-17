@@ -365,12 +365,21 @@ const router = new Router(routes);
 window.router = router;
 
 // Dismiss loading screen after first render
-setTimeout(() => {
+const dismissLoadingScreen = () => {
     const ls = document.getElementById('loading-screen');
-    if (ls) ls.classList.add('loaded');
-    // Remove from DOM after fade
-    setTimeout(() => { if (ls) ls.remove(); }, 800);
-}, 2000);
+    if (ls && !ls.classList.contains('loaded')) {
+        ls.classList.add('loaded');
+        setTimeout(() => { if (ls) ls.remove(); }, 800);
+    }
+};
+
+if (document.readyState === 'complete') {
+    setTimeout(dismissLoadingScreen, 400);
+} else {
+    window.addEventListener('load', () => setTimeout(dismissLoadingScreen, 400));
+    // Fallback safety timeout
+    setTimeout(dismissLoadingScreen, 1500);
+}
 
 // Helper: check if user is currently on landing page
 function _isOnGoPage() {
@@ -1873,7 +1882,8 @@ router.onRouteChange = function (route, path) {
     setTimeout(() => handleGlobalScroll(), 10);
 };
 
-// Global scroll handler for premium header transitions
+// Global scroll handler for premium header transitions (RAF-throttled)
+let _scrollTicking = false;
 function handleGlobalScroll() {
     const scrollY = window.scrollY || window.pageYOffset || document.documentElement.scrollTop;
     const isScrolled = scrollY > 20;
@@ -1910,8 +1920,14 @@ function handleGlobalScroll() {
             ln.classList.remove('nav-scrolled');
         }
     }
+    _scrollTicking = false;
 }
-window.addEventListener('scroll', handleGlobalScroll, { passive: true });
+window.addEventListener('scroll', () => {
+    if (!_scrollTicking) {
+        _scrollTicking = true;
+        requestAnimationFrame(handleGlobalScroll);
+    }
+}, { passive: true });
 window.addEventListener('load', handleGlobalScroll);
 
 // Handle default route (but NEVER override OAuth callback queries)
@@ -2014,4 +2030,4 @@ function runDecoderAnimation() {
         }, 50);
     });
 }
-setInterval(runDecoderAnimation, 100);
+setInterval(runDecoderAnimation, 500);

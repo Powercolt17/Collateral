@@ -124,13 +124,52 @@ async function postPublic(path, body) {
     return handleResponse(response);
 }
 
+// Response cache for short-lived GET deduplication
+const _cache = new Map();
+const CACHE_TTL = 5000; // 5 seconds
+
+function getCached(key) {
+    const entry = _cache.get(key);
+    if (entry && Date.now() - entry.ts < CACHE_TTL) return entry.data;
+    _cache.delete(key);
+    return null;
+}
+
+function setCache(key, data) {
+    _cache.set(key, { data, ts: Date.now() });
+    // Prevent unbounded growth
+    if (_cache.size > 100) {
+        const oldest = _cache.keys().next().value;
+        _cache.delete(oldest);
+    }
+}
+
+// Inflight deduplication — prevents duplicate parallel requests for same endpoint
+const _inflight = new Map();
+
 // GET helper for consistency
 async function get(path) {
-    const response = await fetch(`${API_BASE_URL}${path}`, {
+    // Check cache first
+    const cached = getCached(path);
+    if (cached) return cached;
+
+    // Deduplicate inflight requests
+    if (_inflight.has(path)) return _inflight.get(path);
+
+    const promise = fetch(`${API_BASE_URL}${path}`, {
         method: 'GET',
         headers: getHeaders(),
+    }).then(r => handleResponse(r)).then(data => {
+        setCache(path, data);
+        _inflight.delete(path);
+        return data;
+    }).catch(err => {
+        _inflight.delete(path);
+        throw err;
     });
-    return handleResponse(response);
+
+    _inflight.set(path, promise);
+    return promise;
 }
 
 // PATCH helper
@@ -145,11 +184,25 @@ async function patch(path, body) {
 
 // GET helper for unauthenticated endpoints
 async function getPublic(path) {
-    const response = await fetch(`${API_BASE_URL}${path}`, {
+    const cached = getCached('pub:' + path);
+    if (cached) return cached;
+
+    if (_inflight.has('pub:' + path)) return _inflight.get('pub:' + path);
+
+    const promise = fetch(`${API_BASE_URL}${path}`, {
         method: 'GET',
         headers: getHeaders(false),
+    }).then(r => handleResponse(r)).then(data => {
+        setCache('pub:' + path, data);
+        _inflight.delete('pub:' + path);
+        return data;
+    }).catch(err => {
+        _inflight.delete('pub:' + path);
+        throw err;
     });
-    return handleResponse(response);
+
+    _inflight.set('pub:' + path, promise);
+    return promise;
 }
 
 // =============================================================================

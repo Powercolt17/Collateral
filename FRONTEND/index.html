@@ -14,9 +14,6 @@
         content="performance contracts, capital lock, revenue growth, accountability protocol, Stripe growth, X followers, Shopify sales, Amazon revenue, fintech, self-betting, collateral market, skin in the game">
     <meta name="author" content="Collateral Protocol">
     <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&family=Inter:wght@400;500;600;700;800&family=Inter+Tight:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="canonical" href="https://collateral.market">
 
     <!-- Branding -->
@@ -155,10 +152,12 @@
     <!-- Preload critical resources -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link rel="dns-prefetch" href="https://collateral-production.up.railway.app">
+    <link rel="preconnect" href="https://collateral-production.up.railway.app" crossorigin>
+    <link rel="dns-prefetch" href="https://js.stripe.com">
+    <link rel="dns-prefetch" href="https://unpkg.com">
     <link
-        href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&family=IBM+Plex+Sans:wght@500;600;700&display=swap"
-        rel="stylesheet">
+        href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&family=Inter:wght@400;500;600;700;800&family=Inter+Tight:wght@400;500;600;700&family=IBM+Plex+Sans:wght@500;600;700&display=swap"
+        rel="stylesheet" media="print" onload="this.media='all'">
 
     <style>
         @font-face {
@@ -189,7 +188,7 @@
     <script src="https://js.stripe.com/v3/" async></script>
 
     <!-- Lucide Icons (async to not block render) -->
-    <script src="https://unpkg.com/lucide@latest" defer></script>
+    <script src="https://unpkg.com/lucide@0.462.0/dist/umd/lucide.min.js" defer></script>
 
     <!-- Google Analytics 4 (GA4) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-JV0Y35K5HQ"></script>

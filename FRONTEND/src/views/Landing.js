@@ -2,10 +2,16 @@
 import api from '../api.js';
 import { landingCSS } from './LandingStyles.js';
 
+// Inject LandingCSS once into document head to avoid duplication and parsing overhead
+if (!document.getElementById('lp-injected-styles')) {
+    const style = document.createElement('style');
+    style.id = 'lp-injected-styles';
+    style.textContent = landingCSS + `\n@media(max-width:768px){.lp .ldesktop-proof{display:none!important}}`;
+    document.head.appendChild(style);
+}
+
 export function renderLanding() {
     return `
-        <style>${landingCSS}</style>
-        <style>@media(max-width:768px){.lp .ldesktop-proof{display:none!important}}</style>
         <div class="lp">
 
             <!-- LOADING BAR -->

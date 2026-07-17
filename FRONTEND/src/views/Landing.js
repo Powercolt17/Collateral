@@ -155,19 +155,19 @@ export function renderLanding() {
                 <div class="lw">
                     <div class="l-stats-bar-grid">
                         <div class="l-stat-bar-item">
-                            <span class="l-stat-bar-val" id="ls-locked">$8.7M</span>
+                            <span class="l-stat-bar-val" id="ls-locked">$0.0M</span>
                             <span class="l-stat-bar-lbl">Capital Locked</span>
                         </div>
                         <div class="l-stat-bar-item">
-                            <span class="l-stat-bar-val" id="ls-commitments">12,483</span>
+                            <span class="l-stat-bar-val" id="ls-commitments">0</span>
                             <span class="l-stat-bar-lbl">Total Commitments</span>
                         </div>
                         <div class="l-stat-bar-item lhide-mobile">
-                            <span class="l-stat-bar-val" id="ls-success">96.2%</span>
+                            <span class="l-stat-bar-val" id="ls-success">0.0%</span>
                             <span class="l-stat-bar-lbl">Settlement Success</span>
                         </div>
                         <div class="l-stat-bar-item lhide-mobile">
-                            <span class="l-stat-bar-val" id="ls-identities">3,442</span>
+                            <span class="l-stat-bar-val" id="ls-identities">0</span>
                             <span class="l-stat-bar-lbl">Execution Identities</span>
                         </div>
                     </div>
@@ -883,6 +883,35 @@ export function initLanding() {
     }
     window.landingIntervals = [];
 
+    // Count-up helpers
+    const animateCount = (id, val, pre = '', suf = '') => {
+        const el = document.getElementById(id);
+        if (!el) return;
+        const dur = 1200, st = performance.now();
+        function tick(ts) {
+            const p = Math.min((ts - st) / dur, 1);
+            const v = Math.floor(p * (2 - p) * val);
+            el.textContent = pre + v.toLocaleString() + suf;
+            if (p < 1) requestAnimationFrame(tick);
+            else el.textContent = pre + val.toLocaleString() + suf;
+        }
+        requestAnimationFrame(tick);
+    };
+
+    const animateCountFloat = (id, val, pre = '', suf = '', decimals = 1) => {
+        const el = document.getElementById(id);
+        if (!el) return;
+        const dur = 1200, st = performance.now();
+        function tick(ts) {
+            const p = Math.min((ts - st) / dur, 1);
+            const v = p * (2 - p) * val;
+            el.textContent = pre + v.toFixed(decimals) + suf;
+            if (p < 1) requestAnimationFrame(tick);
+            else el.textContent = pre + val.toFixed(decimals) + suf;
+        }
+        requestAnimationFrame(tick);
+    };
+
     // Fade in page container
     setTimeout(() => {
         document.querySelector('.lp')?.classList.add('v');
@@ -908,6 +937,14 @@ export function initLanding() {
         }, 450);
     }
 
+    // Animate new global stats bar immediately on page transition (delay-4 starts at 600ms)
+    setTimeout(() => {
+        animateCountFloat('ls-locked', 8.7, '$', 'M', 1);
+        animateCount('ls-commitments', 12483);
+        animateCountFloat('ls-success', 96.2, '', '%', 1);
+        animateCount('ls-identities', 3442);
+    }, 600);
+
     // Populate live toast notifications and hero activity with real data
     setTimeout(async () => {
         try {
@@ -920,46 +957,11 @@ export function initLanding() {
                 const totalLocked = statsResponse.capitalLocked;
                 const totalActive = statsResponse.activeContractsCount || 22;
                 const achievementRate = statsResponse.achievementRate || 68;
-                
-                // Count-up helper
-                const animateCount = (id, val, pre = '', suf = '') => {
-                    const el = document.getElementById(id);
-                    if (!el) return;
-                    const dur = 1200, st = performance.now();
-                    function tick(ts) {
-                        const p = Math.min((ts - st) / dur, 1);
-                        const v = Math.floor(p * (2 - p) * val);
-                        el.textContent = pre + v.toLocaleString() + suf;
-                        if (p < 1) requestAnimationFrame(tick);
-                        else el.textContent = pre + val.toLocaleString() + suf;
-                    }
-                    requestAnimationFrame(tick);
-                };
-
-                const animateCountFloat = (id, val, pre = '', suf = '', decimals = 1) => {
-                    const el = document.getElementById(id);
-                    if (!el) return;
-                    const dur = 1200, st = performance.now();
-                    function tick(ts) {
-                        const p = Math.min((ts - st) / dur, 1);
-                        const v = p * (2 - p) * val;
-                        el.textContent = pre + v.toFixed(decimals) + suf;
-                        if (p < 1) requestAnimationFrame(tick);
-                        else el.textContent = pre + val.toFixed(decimals) + suf;
-                    }
-                    requestAnimationFrame(tick);
-                };
 
                 // Animate proof stats
                 animateCount('live-stat-locked', totalLocked, '$');
                 animateCount('live-stat-active-count', totalActive);
                 animateCount('live-stat-success-rate', achievementRate, '', '%');
-
-                // Animate new global stats bar
-                animateCountFloat('ls-locked', 8.7, '$', 'M', 1);
-                animateCount('ls-commitments', 12483);
-                animateCountFloat('ls-success', 96.2, '', '%', 1);
-                animateCount('ls-identities', 3442);
 
                 // Upgraded executions stream loop
                 const executionsList = [

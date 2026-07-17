@@ -463,11 +463,11 @@ export function renderLanding() {
             </div>
 
             <!-- ═══ THE CLTR TOKEN ECONOMY ═══ -->
-            <div class="lemo-reframe" style="background:#fff; border-top:1px solid var(--d); border-bottom:1px solid var(--d); padding:100px 0;" data-r>
+            <div class="lemo-reframe" style="background:#fff; border-top:1px solid var(--d); border-bottom:1px solid var(--d); padding:75px 0;" data-r>
                 <div class="lw">
                     <div class="lred-dash"><span class="lmono">Protocol Token</span></div>
                     <h2 class="lh-section-title">The CLTR Token Economy</h2>
-                    <p class="lh-section-subtitle" style="font-size:18px; color:var(--t2); margin-top:12px; margin-bottom:48px; max-width:680px; line-height:1.6;">Securing trust, locking bandwidth, and burning supply programmatically.</p>
+                    <p class="lh-section-subtitle" style="font-size:18px; color:var(--t2); margin-top:12px; margin-bottom:32px; max-width:680px; line-height:1.6;">Securing trust, locking bandwidth, and burning supply programmatically.</p>
                     
                     <div class="lemo-grid">
                         <div>

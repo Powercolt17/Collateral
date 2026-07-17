@@ -750,9 +750,9 @@ export const landingCSS = `
   align-items: center;
   gap: 6px;
   align-self: flex-start;
-  background: #f0fdf4;
-  border: 1px solid #bbf7d0;
-  color: #16a34a;
+  background: rgba(20, 92, 20, 0.05);
+  border: 1px solid rgba(20, 92, 20, 0.15);
+  color: #145C14;
   font-family: 'JetBrains Mono', monospace;
   font-size: 9px;
   font-weight: 700;
@@ -766,9 +766,9 @@ export const landingCSS = `
 .pnl-connect-badge-dot {
   width: 5px;
   height: 5px;
-  background: #16a34a;
+  background: #145C14;
   border-radius: 50%;
-  box-shadow: 0 0 6px #16a34a;
+  box-shadow: 0 0 6px rgba(20, 92, 20, 0.6);
   animation: badgeDotPulse 1.8s ease-in-out infinite;
 }
 .pnl-connect-promo {

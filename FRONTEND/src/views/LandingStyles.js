@@ -1024,29 +1024,56 @@ export const landingCSS = `
 .l-lr-ticker {
     display: flex;
     align-items: center;
-    gap: 12px;
+    gap: 16px;
     font-family: 'JetBrains Mono', monospace;
-    font-size: 11px;
+    font-size: 10.5px;
     color: var(--t2);
     letter-spacing: -0.2px;
     background: rgba(0, 0, 0, 0.02);
     border: 1px solid rgba(0, 0, 0, 0.04);
-    border-radius: 4px;
-    padding: 8px 12px;
+    border-radius: 6px;
+    padding: 10px 14px;
     width: fit-content;
+    white-space: nowrap !important;
     transition: background 0.25s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.25s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.25s cubic-bezier(0.16, 1, 0.3, 1), transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
 }
 .l-live-rivalry-preview:hover .l-lr-ticker {
     background: #ffffff;
-    border-color: rgba(92, 20, 20, 0.18);
-    box-shadow: 0 4px 12px rgba(92, 20, 20, 0.05);
+    border-color: rgba(92, 20, 20, 0.25);
+    box-shadow: 0 6px 16px rgba(92, 20, 20, 0.06);
     transform: translateY(-2px);
+}
+.l-lr-token {
+    font-weight: 600;
+    color: #000;
+    white-space: nowrap !important;
+}
+.l-lr-num {
+    font-weight: 700;
+    margin-left: 4px;
+    white-space: nowrap !important;
+}
+.l-lr-num.lead {
+    color: #10b981;
+}
+.l-lr-num.lag {
+    color: #f43f5e;
+}
+.l-lr-divider {
+    color: rgba(17, 17, 17, 0.08);
+    font-weight: 400;
+}
+.l-lr-cap, .l-lr-time {
+    font-weight: 700;
+    color: #555;
+    white-space: nowrap !important;
 }
 .l-lr-action-badge {
     font-weight: 800;
     color: var(--r);
-    font-size: 10px;
+    font-size: 10.5px;
     letter-spacing: 0.5px;
+    white-space: nowrap !important;
     transition: color 0.2s ease;
 }
 .l-live-rivalry-preview:hover .l-lr-action-badge {

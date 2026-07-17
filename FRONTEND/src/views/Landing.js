@@ -57,7 +57,7 @@ export function renderLanding() {
                         <!-- COMPACT LIVE RIVALRY SNAPSHOT (Bloomberg Terminal style) -->
                         <div class="l-live-rivalry-preview animate-fade-in-up delay-3" id="l-live-rivalry-preview-card">
                             <div class="l-lr-hdr">
-                                <span class="l-lr-dot"></span> LIVE CONTRACT RIVALRY
+                                <span class="l-lr-dot l-ticker-pulse"></span> LIVE CONTRACT RIVALRY
                             </div>
                             <div class="l-lr-ticker">
                                 <span class="l-lr-token">@jakevoss <span class="l-lr-num lead">+8.40%</span></span>

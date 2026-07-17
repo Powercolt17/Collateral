@@ -172,17 +172,7 @@ export function renderLanding() {
                 </div>
             </div>
 
-            <!-- LIVE TICKER STATUS STRIP -->
-            <div class="l-live-ticker-strip animate-fade-in-up delay-3">
-                <div class="lw">
-                    <div class="l-ticker-content">
-                        <span class="l-ticker-badge"><span class="l-ticker-pulse"></span>LIVE</span>
-                        <div class="l-ticker-scroll" id="l-exec-feed-scroll">
-                            <!-- Rotated executions -->
-                        </div>
-                    </div>
-                </div>
-            </div>
+
 
             <!-- TRUST COPY FOR MOBILE ONLY -->
             <div class="lc-trust lmobile-only" style="margin-top: 16px; border-top: none; padding-top: 0; margin-bottom: 24px;">

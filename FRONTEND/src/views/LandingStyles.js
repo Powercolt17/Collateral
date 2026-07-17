@@ -1054,10 +1054,10 @@ export const landingCSS = `
     white-space: nowrap !important;
 }
 .l-lr-num.lead {
-    color: #10b981;
+    color: #145c14;
 }
 .l-lr-num.lag {
-    color: #f43f5e;
+    color: var(--r);
 }
 .l-lr-divider {
     color: rgba(17, 17, 17, 0.08);

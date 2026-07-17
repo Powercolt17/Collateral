@@ -495,22 +495,34 @@ export function renderLanding() {
                                 <span style="font-family:'Inter Tight', sans-serif; font-weight:800; font-size:13px; color:var(--t1);">CLTR UTILITY</span>
                                 <span style="font-family:'Inter', sans-serif; font-size:9px; font-weight:700; color:var(--r); background:rgba(92,20,20,0.06); padding:3px 8px; border-radius:100px; border:1px solid rgba(92,20,20,0.12); text-transform:uppercase;">Live Network</span>
                             </div>
-                            <div style="display:flex; flex-direction:column; gap:12px; font-size:13px; color:var(--t2);">
-                                <div style="display:flex; align-items:flex-start; gap:10px;">
-                                    <span style="color:var(--g); font-weight:bold;">✓</span>
-                                    <span><strong>Staking</strong>: Earn up to 25% APY in the Custody Terminal.</span>
+                            <div style="display:flex; flex-direction:column; gap:16px; font-size:13px; color:var(--t2);">
+                                <div style="display:flex; flex-direction:column; gap:2px;">
+                                    <div style="display:flex; align-items:center; gap:10px;">
+                                        <span style="color:var(--g); font-weight:bold;">✓</span>
+                                        <strong style="color:var(--t1);">Commitment Collateral</strong>
+                                    </div>
+                                    <div style="padding-left:20px; font-size:12px; color:var(--t3); line-height:1.4;">Stake CLTR to unlock larger personal contracts.</div>
                                 </div>
-                                <div style="display:flex; align-items:flex-start; gap:10px;">
-                                    <span style="color:var(--g); font-weight:bold;">✓</span>
-                                    <span><strong>Capacity</strong>: Bond token weight to lock larger contracts.</span>
+                                <div style="display:flex; flex-direction:column; gap:2px;">
+                                    <div style="display:flex; align-items:center; gap:10px;">
+                                        <span style="color:var(--g); font-weight:bold;">✓</span>
+                                        <strong style="color:var(--t1);">Reputation Weight</strong>
+                                    </div>
+                                    <div style="padding-left:20px; font-size:12px; color:var(--t3); line-height:1.4;">Token stake increases commitment capacity and platform trust.</div>
                                 </div>
-                                <div style="display:flex; align-items:flex-start; gap:10px;">
-                                    <span style="color:var(--g); font-weight:bold;">✓</span>
-                                    <span><strong>Deflationary</strong>: 0.5% of all settlement volume is burned.</span>
+                                <div style="display:flex; flex-direction:column; gap:2px;">
+                                    <div style="display:flex; align-items:center; gap:10px;">
+                                        <span style="color:var(--g); font-weight:bold;">✓</span>
+                                        <strong style="color:var(--t1);">Settlement Economics</strong>
+                                    </div>
+                                    <div style="padding-left:20px; font-size:12px; color:var(--t3); line-height:1.4;">A portion of completed contract volume is permanently removed from circulation.</div>
                                 </div>
-                                <div style="display:flex; align-items:flex-start; gap:10px;">
-                                    <span style="color:var(--g); font-weight:bold;">✓</span>
-                                    <span><strong>Forfeitures</strong>: 30% of failed staked tokens are burned forever.</span>
+                                <div style="display:flex; flex-direction:column; gap:2px;">
+                                    <div style="display:flex; align-items:center; gap:10px;">
+                                        <span style="color:var(--g); font-weight:bold;">✓</span>
+                                        <strong style="color:var(--t1);">Accountability Layer</strong>
+                                    </div>
+                                    <div style="padding-left:20px; font-size:12px; color:var(--t3); line-height:1.4;">Failed commitments trigger penalties that reinforce the network.</div>
                                 </div>
                             </div>
                         </div>

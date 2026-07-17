@@ -359,109 +359,46 @@ export function renderLanding() {
                         </div>
                     </div>
 
-                    <!-- Verified Ledger Feed Side-by-Side Comparison -->
-                    <div style="display: grid; grid-template-columns: 1fr; gap: 32px; margin-top: 48px; border: 1px dashed var(--d); padding: 32px; border-radius: 16px; background: rgba(0,0,0,0.01);">
-                        <div style="font-family:'JetBrains Mono', monospace; font-size:11px; font-weight:700; color:var(--r); text-transform:uppercase; letter-spacing:1px; margin-bottom:8px; border-bottom:1px solid var(--d); padding-bottom:8px; text-align:center;">
-                            DESIGN REVIEW: Live Settlement Activity Presentation Options (Choose one for production)
+                    <!-- Verified Ledger Feed (Compressed Option B) -->
+                    <div class="lledger-container-prod">
+                        <div class="lledger-header-prod">
+                            <h3 class="lledger-h-title-prod">Live Settlement Activity</h3>
+                            <div class="lledger-h-desc-prod">Verified platform outcomes.</div>
                         </div>
-                        
-                        <div class="lledger-comparison-grid">
-                            
-                            <!-- OPTION A: PREMIUM DATA LEDGER -->
-                            <div class="lledger-option-a">
-                                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:16px;">
-                                    <span style="font-family:'Inter Tight', sans-serif; font-weight:800; font-size:13px; color:var(--t1); text-transform:uppercase; letter-spacing:0.5px;">Option A — Premium Terminal Ledger</span>
-                                    <span style="font-size:11px; color:#145c14; font-weight:600; background:rgba(20,92,20,0.05); padding:2px 8px; border-radius:4px;">Deliberate Data Section</span>
-                                </div>
-                                <div class="lledger-container-a">
-                                    <div class="lledger-header-a">
-                                        <div class="lledger-h-title-a">
-                                            <span class="lledger-pulse-dot-a"></span>
-                                            Live Settlement Activity
-                                        </div>
-                                        <div class="lledger-h-desc-a">Audited performance contracts verified via official API integrations.</div>
-                                    </div>
-                                    <div class="lledger-table-wrap-a">
-                                        <table class="lledger-table-a">
-                                            <thead>
-                                                <tr>
-                                                    <th>Contract ID</th>
-                                                    <th>Target Metric</th>
-                                                    <th>Commitment</th>
-                                                    <th>Yield Target</th>
-                                                    <th>Outcome</th>
-                                                    <th>Status</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody id="lledger-tbody-a">
-                                                <tr>
-                                                    <td class="td-id">#C-8041 <span class="td-user">@danny_v...</span></td>
-                                                    <td class="td-metric"><svg class="td-icon" viewBox="0 0 24 24" fill="currentColor" style="color:#635BFF;width:16px;height:16px;display:inline-block;vertical-align:middle;margin-right:8px;"><path d="M20 10.3c0-1.8-1.5-2.7-3.6-3.2l-2-.5c-1.3-.3-1.9-.7-1.9-1.3 0-.6.7-1 1.7-1 1.7 0 3 .6 3.6 1l.7-2.6C17.9 2.2 16.3 1.8 14.8 1.8c-3.1 0-5.2 1.6-5.2 4.3 0 2.9 2.4 3.7 4.9 4.3l1.8.4c1.4.3 2 .8 2 1.5 0 .7-.8 1.1-2.1 1.1-1.9 0-3.6-.7-4.3-1.1l-.8 2.7c1 .5 2.9 1 4.7 1C18.2 16 20 14.4 20 10.3z"/></svg> Stripe Revenue (+20.0%)</td>
-                                                    <td class="td-capital">$500.00</td>
-                                                    <td class="td-yield">+$1,500.00</td>
-                                                    <td class="td-outcome hit">Hit (+22.7% Revenue)</td>
-                                                    <td><span class="lstatus-badge-a hit">✓ API Verified</span></td>
-                                                </tr>
-                                                <tr>
-                                                    <td class="td-id">#C-8022 <span class="td-user">@justin_s...</span></td>
-                                                    <td class="td-metric"><svg class="td-icon" viewBox="0 0 24 24" fill="currentColor" style="color:#111111;width:14px;height:14px;display:inline-block;vertical-align:middle;margin-right:8px;"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg> X Followers (+1k)</td>
-                                                    <td class="td-capital">$250.00</td>
-                                                    <td class="td-yield">+$750.00</td>
-                                                    <td class="td-outcome miss">Missed (+820 Followers)</td>
-                                                    <td><span class="lstatus-badge-a forfeit">⚠ Forfeited</span></td>
-                                                </tr>
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                </div>
-                            </div>
-                            
-                            <!-- OPTION B: COMPRESSED PROOF WIDGET -->
-                            <div class="lledger-option-b">
-                                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:16px;">
-                                    <span style="font-family:'Inter Tight', sans-serif; font-weight:800; font-size:13px; color:var(--t1); text-transform:uppercase; letter-spacing:0.5px;">Option B — Compressed Proof Widget</span>
-                                    <span style="font-size:11px; color:var(--t3); font-weight:600; background:rgba(17,17,17,0.05); padding:2px 8px; border-radius:4px;">Secondary Proof Element</span>
-                                </div>
-                                <div class="lledger-container-b">
-                                    <div class="lledger-header-b">
-                                        <div class="lledger-h-title-b">
-                                            <span class="lledger-pulse-dot-b"></span>
-                                            Settlements
-                                        </div>
-                                        <div class="lledger-h-desc-b">Verified platform outcomes.</div>
-                                    </div>
-                                    <div class="lledger-table-wrap-b">
-                                        <table class="lledger-table-b">
-                                            <thead>
-                                                <tr>
-                                                    <th>ID</th>
-                                                    <th>Metric</th>
-                                                    <th>Commitment</th>
-                                                    <th>Outcome</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody id="lledger-tbody-b">
-                                                <tr>
-                                                    <td class="td-id">#C-8041 <span class="td-user">@danny_v...</span></td>
-                                                    <td class="td-metric"><svg class="td-icon" viewBox="0 0 24 24" fill="currentColor" style="color:#635BFF;width:16px;height:16px;display:inline-block;vertical-align:middle;margin-right:8px;"><path d="M20 10.3c0-1.8-1.5-2.7-3.6-3.2l-2-.5c-1.3-.3-1.9-.7-1.9-1.3 0-.6.7-1 1.7-1 1.7 0 3 .6 3.6 1l.7-2.6C17.9 2.2 16.3 1.8 14.8 1.8c-3.1 0-5.2 1.6-5.2 4.3 0 2.9 2.4 3.7 4.9 4.3l1.8.4c1.4.3 2 .8 2 1.5 0 .7-.8 1.1-2.1 1.1-1.9 0-3.6-.7-4.3-1.1l-.8 2.7c1 .5 2.9 1 4.7 1C18.2 16 20 14.4 20 10.3z"/></svg> Stripe Revenue (+20.0%)</td>
-                                                    <td class="td-capital">$500.00</td>
-                                                    <td class="td-outcome hit">✓ Hit</td>
-                                                </tr>
-                                                <tr>
-                                                    <td class="td-id">#C-8022 <span class="td-user">@justin_s...</span></td>
-                                                    <td class="td-metric"><svg class="td-icon" viewBox="0 0 24 24" fill="currentColor" style="color:#111111;width:14px;height:14px;display:inline-block;vertical-align:middle;margin-right:8px;"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg> X Followers (+1k)</td>
-                                                    <td class="td-capital">$250.00</td>
-                                                    <td class="td-outcome miss">⚠ Missed</td>
-                                                </tr>
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                    <div class="lledger-footer-b">
-                                        <a href="#" onclick="window.router.navigate('/ledger'); return false;" class="lledger-more-link">View all settlements →</a>
-                                    </div>
-                                </div>
-                            </div>
-                            
+                        <div class="lledger-table-wrap-prod">
+                            <table class="lledger-table-prod">
+                                <thead>
+                                    <tr>
+                                        <th>Contract ID</th>
+                                        <th>Metric</th>
+                                        <th>Commitment</th>
+                                        <th>Outcome</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="lledger-tbody-prod">
+                                    <tr>
+                                        <td data-label="Contract ID" class="td-id">#C-8041 <span class="td-user">@danny_v...</span></td>
+                                        <td data-label="Metric" class="td-metric"><svg class="td-icon" viewBox="0 0 24 24" fill="currentColor" style="color:#635BFF;width:16px;height:16px;display:inline-block;vertical-align:middle;margin-right:8px;"><path d="M20 10.3c0-1.8-1.5-2.7-3.6-3.2l-2-.5c-1.3-.3-1.9-.7-1.9-1.3 0-.6.7-1 1.7-1 1.7 0 3 .6 3.6 1l.7-2.6C17.9 2.2 16.3 1.8 14.8 1.8c-3.1 0-5.2 1.6-5.2 4.3 0 2.9 2.4 3.7 4.9 4.3l1.8.4c1.4.3 2 .8 2 1.5 0 .7-.8 1.1-2.1 1.1-1.9 0-3.6-.7-4.3-1.1l-.8 2.7c1 .5 2.9 1 4.7 1C18.2 16 20 14.4 20 10.3z"/></svg> Stripe Revenue (+20.0%)</td>
+                                        <td data-label="Commitment" class="td-capital">$500.00</td>
+                                        <td data-label="Outcome" class="td-outcome hit"><span class="outcome-marker-hit">✓</span> Hit</td>
+                                    </tr>
+                                    <tr>
+                                        <td data-label="Contract ID" class="td-id">#C-8022 <span class="td-user">@justin_s...</span></td>
+                                        <td data-label="Metric" class="td-metric"><svg class="td-icon" viewBox="0 0 24 24" fill="currentColor" style="color:#111111;width:14px;height:14px;display:inline-block;vertical-align:middle;margin-right:8px;"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg> X Followers (+1k)</td>
+                                        <td data-label="Commitment" class="td-capital">$250.00</td>
+                                        <td data-label="Outcome" class="td-outcome miss"><span class="outcome-marker-miss">✗</span> Missed</td>
+                                    </tr>
+                                    <tr>
+                                        <td data-label="Contract ID" class="td-id">#C-7988 <span class="td-user">@growth...</span></td>
+                                        <td data-label="Metric" class="td-metric"><svg class="td-icon" viewBox="0 0 24 24" fill="currentColor" style="color:#96bf48;width:16px;height:16px;display:inline-block;vertical-align:middle;margin-right:8px;"><path d="M19.58 6.425a.86.86 0 00-.7-.34h-2.193a4.52 4.52 0 00-9.04 0H5.454a.86.86 0 00-.7.34.887.887 0 00-.16.766l1.97 10.96a2.41 2.41 0 002.37 1.986h6.49a2.41 2.41 0 002.37-1.985l1.97-10.96a.887.887 0 00-.184-.767zM12 3.86a2.53 2.53 0 012.513 2.225H9.487A2.53 2.53 0 0112 3.86zm3.267 11.516a2.036 2.036 0 01-1.745.892 2.374 2.374 0 01-1.614-.648A2.348 2.348 0 0010.3 15a2.036 2.036 0 01-1.745-.892.429.429 0 11.734-.442c.245.408.66.634 1.01.634.341 0 .614-.148.914-.442A3.21 3.21 0 0113.627 15c.341 0 .614-.148.914-.442a.429.429 0 01.734.442z"/></svg> Shopify Gross ($50k)</td>
+                                        <td data-label="Commitment" class="td-capital">$1,000.00</td>
+                                        <td data-label="Outcome" class="td-outcome hit"><span class="outcome-marker-hit">✓</span> Hit</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="lledger-footer-prod">
+                            <a href="#" onclick="window.router.navigate('/ledger'); return false;" class="lledger-more-link-prod">View all settlements →</a>
                         </div>
                     </div>
                 </div>
@@ -1364,9 +1301,9 @@ export function initLanding() {
                     window.landingIntervals.push(intervalId3);
                 }
 
-                // Populate Live Settlement Activity Table
-                const tbody = document.getElementById('lledger-tbody');
-                if (tbody) {
+                // Populate Live Settlement Activity Table (Option B Compressed)
+                const tbodyProd = document.getElementById('lledger-tbody-prod');
+                if (tbodyProd) {
                     const ledgerEvents = response.events.filter(e => e.contractId && (e.actor || e.principal));
                     if (ledgerEvents.length > 0) {
                         let startIndex = 0;
@@ -1389,16 +1326,6 @@ export function initLanding() {
                             return 'API Metric';
                         };
 
-                        const getYieldTarget = (plt, depositCents) => {
-                            const p = (plt || '').toUpperCase();
-                            let mult = 1.5;
-                            if (p === 'X' || p === 'TWITTER') mult = 3.0;
-                            if (p === 'SHOPIFY') mult = 0.5;
-                            if (p === 'YOUTUBE') mult = 0.7;
-                            const yieldAmt = (depositCents * mult) / 100;
-                            return '+$' + yieldAmt.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
-                        };
-
                         const getMaskedUser = (user) => {
                             if (!user) return 'user';
                             return user.length > 5 ? user.slice(0, 5) + '...' : user;
@@ -1408,54 +1335,44 @@ export function initLanding() {
                             const isHit = e.eventType === 'SETTLED_SUCCESS' || e.eventType === 'RIVALRY_SETTLED';
                             const isMiss = e.eventType === 'SETTLED_FAILURE' || e.eventType === 'RIVALRY_EXPIRED' || e.eventType === 'RIVALRY_CANCELLED';
                             let outcomeHtml = '';
-                            let statusHtml = '';
                             if (isHit) {
-                                outcomeHtml = `<span class="td-outcome hit">Hit (Target Met)</span>`;
-                                statusHtml = `<span class="lstatus-badge hit">✓ API Verified</span>`;
+                                outcomeHtml = `<span class="td-outcome hit"><span class="outcome-marker-hit">✓</span> Hit</span>`;
                             } else if (isMiss) {
-                                outcomeHtml = `<span class="td-outcome miss">Missed (Forfeited)</span>`;
-                                statusHtml = `<span class="lstatus-badge forfeit">⚠ Forfeited</span>`;
+                                outcomeHtml = `<span class="td-outcome miss"><span class="outcome-marker-miss">✗</span> Missed</span>`;
                             } else {
-                                outcomeHtml = `<span class="td-outcome tracking" style="color:var(--t2);">Active (Tracking)</span>`;
-                                statusHtml = `<span class="lstatus-badge tracking" style="background:rgba(0,0,0,0.04); color:var(--t2); border:1px solid rgba(0,0,0,0.08);">Tracking</span>`;
+                                outcomeHtml = `<span class="td-outcome tracking" style="color:var(--t3);">Active</span>`;
                             }
                             const depositCents = e.lockAmountUsdCents || e.amountUsdCents || 25000;
                             const depositFormatted = '$' + (depositCents / 100).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
-                            const yieldFormatted = getYieldTarget(e.platform, depositCents);
                             return `
                                 <tr>
-                                    <td class="td-id">#C-${e.contractId.slice(0, 4).toUpperCase()} <span class="td-user">@${getMaskedUser(e.principal)}</span></td>
-                                    <td class="td-metric">
-                                        ${getPlatformIcon(e.platform)} 
-                                        ${getPlatformName(e.platform)}
-                                    </td>
-                                    <td class="td-capital">${depositFormatted}</td>
-                                    <td class="td-yield">${yieldFormatted}</td>
-                                    <td class="td-outcome">${outcomeHtml}</td>
-                                    <td>${statusHtml}</td>
+                                    <td data-label="Contract ID" class="td-id">#C-${e.contractId.slice(0, 4).toUpperCase()} <span class="td-user">@${getMaskedUser(e.principal)}</span></td>
+                                    <td data-label="Metric" class="td-metric">${getPlatformIcon(e.platform)} ${getPlatformName(e.platform)}</td>
+                                    <td data-label="Commitment" class="td-capital">${depositFormatted}</td>
+                                    <td data-label="Outcome" class="td-outcome">${outcomeHtml}</td>
                                 </tr>
                             `;
                         };
 
                         const updateLedgerTable = () => {
                             const rows = [];
-                            const itemsToShow = Math.min(4, ledgerEvents.length);
+                            const itemsToShow = Math.min(3, ledgerEvents.length);
                             for (let k = 0; k < itemsToShow; k++) {
                                 const idx = (startIndex + k) % ledgerEvents.length;
                                 rows.push(renderRow(ledgerEvents[idx]));
                             }
-                            tbody.innerHTML = rows.join('');
+                            tbodyProd.innerHTML = rows.join('');
                         };
 
                         updateLedgerTable();
 
-                        if (ledgerEvents.length > 4) {
+                        if (ledgerEvents.length > 3) {
                             const intervalId4 = setInterval(() => {
-                                tbody.classList.add('fade-out');
+                                tbodyProd.classList.add('fade-out');
                                 setTimeout(() => {
                                      startIndex = (startIndex + 1) % ledgerEvents.length;
                                      updateLedgerTable();
-                                     tbody.classList.remove('fade-out');
+                                     tbodyProd.classList.remove('fade-out');
                                 }, 400);
                             }, 4000);
                             window.landingIntervals.push(intervalId4);

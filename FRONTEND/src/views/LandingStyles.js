@@ -2148,4 +2148,174 @@ export const landingCSS = `
     }
 }
 
+/* Production Compressed Ledger Styles (Option B) */
+.lledger-container-prod {
+    background: #FFF;
+    border: 1px solid var(--d);
+    border-radius: 16px;
+    padding: 32px;
+    box-shadow: 0 4px 24px rgba(0,0,0,0.015);
+    margin-top: 48px;
+    width: 100%;
+    box-sizing: border-box;
+}
+.lledger-header-prod {
+    border-bottom: 1px solid var(--d);
+    padding-bottom: 16px;
+    margin-bottom: 20px;
+}
+.lledger-h-title-prod {
+    font-family: 'Inter Tight', sans-serif;
+    font-size: 18px;
+    font-weight: 800;
+    color: var(--t1);
+    letter-spacing: -0.3px;
+    margin: 0 0 6px 0;
+}
+.lledger-h-desc-prod {
+    font-size: 13px;
+    color: var(--t3);
+    font-weight: 500;
+}
+.lledger-table-wrap-prod {
+    width: 100%;
+    overflow-x: auto;
+}
+.lledger-table-prod {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: left;
+    font-size: 13px;
+}
+.lledger-table-prod th {
+    padding: 12px 16px;
+    font-family: 'Inter', sans-serif;
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--t3);
+    border-bottom: 1px solid var(--d);
+    box-sizing: border-box;
+    text-align: left;
+}
+.lledger-table-prod td {
+    padding: 16px;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.03);
+    vertical-align: middle;
+    color: var(--t2);
+    box-sizing: border-box;
+}
+.lledger-table-prod tr:last-child td {
+    border-bottom: none;
+}
+.lledger-table-prod .td-id {
+    font-family: 'JetBrains Mono', monospace;
+    font-weight: 700;
+    color: var(--t1);
+    font-size: 13px;
+}
+.lledger-table-prod .td-user {
+    color: var(--t3);
+    font-size: 11px;
+    font-weight: 400;
+    margin-left: 4px;
+}
+.lledger-table-prod .td-metric {
+    font-weight: 600;
+    color: var(--t1);
+}
+.lledger-table-prod .td-capital {
+    font-family: 'JetBrains Mono', monospace;
+    font-weight: 600;
+    color: var(--t1);
+}
+.lledger-table-prod .td-outcome {
+    font-weight: 600;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+}
+.lledger-table-prod .td-outcome.hit {
+    color: var(--g);
+}
+.lledger-table-prod .td-outcome.miss {
+    color: var(--r);
+}
+.outcome-marker-hit {
+    color: var(--g);
+    font-weight: bold;
+    margin-right: 4px;
+}
+.outcome-marker-miss {
+    color: var(--r);
+    font-weight: bold;
+    margin-right: 4px;
+}
+.lledger-footer-prod {
+    border-top: 1px solid var(--d);
+    padding-top: 16px;
+    margin-top: 16px;
+    text-align: center;
+}
+.lledger-more-link-prod {
+    font-family: 'Inter', sans-serif;
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--t3);
+    text-decoration: none;
+    transition: color 0.2s ease;
+}
+.lledger-more-link-prod:hover {
+    color: var(--r);
+}
+
+/* Responsive Table Collapse to Cards on Mobile */
+@media(max-width: 768px) {
+    .lledger-table-prod, 
+    .lledger-table-prod thead, 
+    .lledger-table-prod tbody, 
+    .lledger-table-prod tr, 
+    .lledger-table-prod td {
+        display: block;
+        width: 100%;
+        box-sizing: border-box;
+    }
+    .lledger-table-prod thead {
+        display: none;
+    }
+    .lledger-table-prod tr {
+        background: #FFF;
+        border: 1px solid var(--d);
+        border-radius: 12px;
+        margin-bottom: 16px;
+        padding: 16px;
+    }
+    .lledger-table-prod td {
+        border-bottom: 1px solid rgba(0,0,0,0.02);
+        padding: 12px 0;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        text-align: right;
+    }
+    .lledger-table-prod td:last-child {
+        border-bottom: none;
+        padding-bottom: 0;
+    }
+    .lledger-table-prod td:first-child {
+        padding-top: 0;
+    }
+    .lledger-table-prod td::before {
+        content: attr(data-label);
+        font-family: 'Inter', sans-serif;
+        font-size: 11px;
+        font-weight: 700;
+        text-transform: uppercase;
+        color: var(--t3);
+        text-align: left;
+        margin-right: 16px;
+    }
+}
+
 `;

@@ -876,8 +876,13 @@ export async function initMyContracts() {
     if (!container) return;
 
     try {
-        const response = await window.api.getContracts();
-        const contracts = response?.contracts || [];
+        let contracts = [];
+        try {
+            const response = await window.api.getContracts();
+            contracts = response?.contracts || [];
+        } catch (fetchErr) {
+            console.warn('[MyContracts] Failed to fetch contracts, falling back to empty onboarding state:', fetchErr);
+        }
 
         // Summary Calculations
         const totalLocked = contracts.reduce((sum, c) => sum + (c.lockAmountUsdCents || 0), 0);

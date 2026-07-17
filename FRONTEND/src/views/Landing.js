@@ -192,22 +192,24 @@ export function renderLanding() {
 
             <!-- ═══ CONTRACT TYPES ═══ -->
             <div class="lw">
-                <div class="ltypes" data-r>
-                    <div class="lred-dash"><span class="lmono">Contract Types</span></div>
-                    <h2 class="lhow-h" style="margin-bottom:32px">Use financial leverage on yourself,<br>or challenge a <strong>competitor.</strong></h2>
+                <div class="ltypes-asymmetric" data-r>
+                    <div class="ltypes-left">
+                        <div class="lred-dash"><span class="lmono">Contract Types</span></div>
+                        <h2 class="ltypes-headline">Use financial leverage on yourself,<br>or challenge a <strong>competitor.</strong></h2>
+                    </div>
 
-                    <div class="ltypes-grid">
-                        <div class="ltype">
-                            <div class="ltype-badge" style="color:var(--t1);background:rgba(17,17,17,.04);border:1px solid var(--d)">Solo</div>
-                            <div class="ltype-h">You vs. Yourself</div>
-                            <div class="ltype-p">Lock deposits to force yourself to execute. <span class="lhide-mobile">Hit targets to win; fail and forfeit capital.</span></div>
-                            <div class="ltype-detail"><strong>Best for:</strong> Milestones, shipping code, audience building.</div>
+                    <div class="ltypes-right">
+                        <div class="ltype-row">
+                            <div class="ltype-badge-new">Solo</div>
+                            <h3 class="ltype-title-new">You vs. Yourself</h3>
+                            <p class="ltype-desc-new">Lock deposits to force yourself to execute. <span class="lhide-mobile">Hit targets to win; fail and forfeit capital.</span></p>
+                            <div class="ltype-meta-new"><strong>Best for:</strong> Milestones, shipping code, audience building.</div>
                         </div>
-                        <div class="ltype">
-                            <div class="ltype-badge" style="color:var(--r);background:rgba(92,20,20,.04);border:1px solid rgba(92,20,20,.15)">Rivalry</div>
-                            <div class="ltype-h">You vs. Competitors</div>
-                            <div class="ltype-p">Lock equal deposits in a head-to-head race. <span class="lhide-mobile">Winner takes the entire pool.</span></div>
-                            <div class="ltype-detail"><strong>Best for:</strong> Audience races, competitive fire.</div>
+                        <div class="ltype-row">
+                            <div class="ltype-badge-new secondary">Rivalry</div>
+                            <h3 class="ltype-title-new">You vs. Competitors</h3>
+                            <p class="ltype-desc-new">Lock equal deposits in a head-to-head race. <span class="lhide-mobile">Winner takes the entire pool.</span></p>
+                            <div class="ltype-meta-new"><strong>Best for:</strong> Audience races, competitive fire.</div>
                         </div>
                     </div>
                 </div>
@@ -303,26 +305,29 @@ export function renderLanding() {
                     <h2 class="lhow-h">Set a target. Lock money.<br>Force yourself to <strong>win.</strong></h2>
                     <p class="lhow-sub">If you are serious, put something on the line.</p>
 
-                    <div class="lhow-grid">
-                        <div class="lhow-card" data-r>
-                            <span class="lhow-card-badge">Step 01</span>
-                            <h3 class="lhow-card-title">Set Target</h3>
-                            <p class="lhow-card-desc">Connect Stripe, X, Shopify, or YouTube. Set your exact metric target.</p>
-                        </div>
-                        <div class="lhow-card" data-r>
-                            <span class="lhow-card-badge">Step 02</span>
-                            <h3 class="lhow-card-title">Lock Deposit</h3>
-                            <p class="lhow-card-desc">Lock your security deposit in escrow. No early withdrawals allowed.</p>
-                        </div>
-                        <div class="lhow-card" data-r>
-                            <span class="lhow-card-badge">Step 03</span>
-                            <h3 class="lhow-card-title">Execute</h3>
-                            <p class="lhow-card-desc">Your contract runs. Progress is tracked in real-time via platform APIs.</p>
-                        </div>
-                        <div class="lhow-card final-card" data-r>
-                            <span class="lhow-card-badge">Step 04</span>
-                            <h3 class="lhow-card-title">API Settle</h3>
-                            <p class="lhow-card-desc">APIs verify outcomes. Hit goals to win yields; fail and forfeit deposits.</p>
+                    <div class="lhow-timeline-wrap">
+                        <div class="lhow-timeline-line"></div>
+                        <div class="lhow-timeline-steps">
+                            <div class="lhow-timeline-step" data-r>
+                                <div class="lhow-timeline-node">01</div>
+                                <h3 class="lhow-timeline-title">Set Target</h3>
+                                <p class="lhow-timeline-desc">Connect Stripe, X, Shopify, or YouTube. Set your exact metric target.</p>
+                            </div>
+                            <div class="lhow-timeline-step" data-r>
+                                <div class="lhow-timeline-node">02</div>
+                                <h3 class="lhow-timeline-title">Lock Deposit</h3>
+                                <p class="lhow-timeline-desc">Lock your security deposit in escrow. No early withdrawals allowed.</p>
+                            </div>
+                            <div class="lhow-timeline-step" data-r>
+                                <div class="lhow-timeline-node">03</div>
+                                <h3 class="lhow-timeline-title">Execute</h3>
+                                <p class="lhow-timeline-desc">Your contract runs. Progress is tracked in real-time via platform APIs.</p>
+                            </div>
+                            <div class="lhow-timeline-step" data-r>
+                                <div class="lhow-timeline-node final">04</div>
+                                <h3 class="lhow-timeline-title">API Settle</h3>
+                                <p class="lhow-timeline-desc">APIs verify outcomes. Hit goals to win yields; fail and forfeit deposits.</p>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -335,19 +340,19 @@ export function renderLanding() {
                     <h2 class="lh-section-title">Skin in the game is the only thing that works.</h2>
                     <p class="lh-section-subtitle">Stop pretending you will do it tomorrow. Lock capital today, execute your goals, and win.</p>
                     
-                    <!-- Stats Grid -->
-                    <div class="lstats-grid">
-                        <div class="lstat-card">
+                    <!-- Stats Grid - borderless separated statistics -->
+                    <div class="lstats-grid-borderless">
+                        <div class="lstat-item-borderless">
                             <div class="lstat-num"><span data-count="74">0</span>%</div>
                             <div class="lstat-label">of contracts are won</div>
                             <div class="lstat-sub">Go-getters who lock cash hit their targets way faster.</div>
                         </div>
-                        <div class="lstat-card">
+                        <div class="lstat-item-borderless">
                             <div class="lstat-num">$<span data-count="127">0</span>k</div>
                             <div class="lstat-label">total capital settled</div>
                             <div class="lstat-sub">Across revenue, follower, and subscriber contracts</div>
                         </div>
-                        <div class="lstat-card">
+                        <div class="lstat-item-borderless">
                             <div class="lstat-num"><span data-count="18">0</span> days</div>
                             <div class="lstat-label">average time to target</div>
                             <div class="lstat-sub">Accountability compresses timelines.</div>
@@ -481,7 +486,7 @@ export function renderLanding() {
                                 <span class="lhide-mobile">Builders bond CLTR for milestone capacity. Validators and jurors lock it to secure the network. Every contract forfeiture burns CLTR permanently.</span>
                             </p>
                             <div style="display:flex; gap:16px; margin-top:32px; flex-wrap:wrap;">
-                                <a href="https://app.uniswap.org/#/swap?inputCurrency=ETH&outputCurrency=0x7b69C7E57d7004EB2374E5Aabb9db5334aE73B9f" target="_blank" class="lbtn lbtn-r" style="height:50px; padding:0 24px; font-size:11px; text-decoration:none; display:inline-flex; align-items:center; gap:8px;">
+                                <a href="https://app.uniswap.org/#/swap?inputCurrency=ETH&outputCurrency=0x7b69C7E57d7004EB2374E5Aabb9db5334aE73B9f" target="_blank" class="lbtn lbtn-g" style="height:50px; padding:0 24px; font-size:11px; text-decoration:none; display:inline-flex; align-items:center; gap:8px;">
                                     <span>Trade CLTR on Uniswap</span>
                                     <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M15 3h6v6"/><path d="M10 14 21 3"/><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/></svg>
                                 </a>

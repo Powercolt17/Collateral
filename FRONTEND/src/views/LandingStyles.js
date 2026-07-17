@@ -1871,4 +1871,281 @@ export const landingCSS = `
     box-shadow: 0 1px 0 rgba(255, 255, 255, 0.9); /* clean milled highlight reflection */
 }
 
+/* =============================================================================
+   VISUAL/LAYOUT CADENCE & HIERARCHY OVERRIDES
+   ============================================================================= */
+
+/* Section Labels from Maroon to Muted Neutral Gray */
+.lmono {
+    color: var(--t3) !important;
+    font-size: 11px !important;
+}
+.lred-dash::before {
+    background: var(--d) !important;
+    width: 20px !important;
+}
+
+/* Page Navigation CTA - Outline/Ghost Style */
+.ln-cta {
+    background: transparent !important;
+    color: var(--t1) !important;
+    border: 1px solid var(--d) !important;
+    padding: 10px 20px !important;
+    font-size: 11px !important;
+    font-weight: 600 !important;
+    letter-spacing: 0.5px !important;
+}
+.ln-cta:hover {
+    background: #fafafa !important;
+    border-color: #bbb !important;
+    transform: scale(1.02) !important;
+}
+.ln-cta::after {
+    display: none !important;
+}
+
+/* Full-bleed Stats Bar Contrast Background */
+.l-global-stats-bar {
+    background: #FAF6F6 !important; /* faint warm maroon tint */
+    border-top: 1px solid rgba(92, 20, 20, 0.06) !important;
+    border-bottom: 1px solid rgba(92, 20, 20, 0.06) !important;
+}
+
+/* Asymmetric Left-Aligned Layout for Contract Types */
+.ltypes-asymmetric {
+    display: grid;
+    grid-template-columns: 5fr 7fr;
+    gap: 80px;
+    padding: 100px 0;
+    align-items: start;
+}
+.ltypes-left {
+    position: sticky;
+    top: 120px;
+}
+.ltypes-headline {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: clamp(30px, 4vw, 44px);
+    font-weight: 800;
+    line-height: 1.15;
+    letter-spacing: -1.2px;
+    color: var(--t1);
+    margin: 16px 0 0;
+    text-align: left;
+}
+.ltypes-headline strong {
+    font-weight: 800;
+    color: var(--r);
+}
+.ltypes-right {
+    display: flex;
+    flex-direction: column;
+    gap: 48px;
+}
+.ltype-row {
+    border-top: 1px solid var(--d);
+    padding-top: 32px;
+    transition: border-color 0.3s ease;
+}
+.ltype-row:hover {
+    border-top-color: var(--r);
+}
+.ltype-badge-new {
+    font-family: 'Inter', monospace;
+    font-size: 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    margin-bottom: 16px;
+    display: inline-block;
+    color: var(--t3);
+}
+.ltype-badge-new.secondary {
+    color: var(--r);
+}
+.ltype-title-new {
+    font-family: 'Inter Tight', sans-serif;
+    font-size: 24px;
+    font-weight: 700;
+    letter-spacing: -0.5px;
+    margin: 0 0 12px 0;
+    color: var(--t1);
+}
+.ltype-desc-new {
+    font-size: 16px;
+    color: var(--t2);
+    line-height: 1.6;
+    margin: 0 0 20px 0;
+}
+.ltype-meta-new {
+    font-size: 14px;
+    color: var(--t2);
+    padding-top: 16px;
+    border-top: 1px dashed var(--d);
+}
+
+/* Horizontal Connected-Timeline for How It Works */
+.lhow-timeline-wrap {
+    position: relative;
+    margin-top: 64px;
+    padding: 20px 0;
+}
+.lhow-timeline-line {
+    position: absolute;
+    top: 36px;
+    left: 8%;
+    right: 8%;
+    height: 2px;
+    background: var(--d);
+    z-index: 1;
+}
+.lhow-timeline-steps {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 32px;
+    position: relative;
+    z-index: 2;
+}
+.lhow-timeline-step {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+.lhow-timeline-node {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: #FFF;
+    border: 2px solid var(--d);
+    color: var(--t3);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 20px;
+    transition: all 0.3s ease;
+    box-shadow: 0 0 0 6px #FFF;
+}
+.lhow-timeline-step:hover .lhow-timeline-node {
+    border-color: var(--r);
+    color: var(--r);
+    transform: scale(1.1);
+}
+.lhow-timeline-node.final {
+    border-color: var(--r);
+    color: var(--r);
+    background: rgba(92,20,20,0.02);
+}
+.lhow-timeline-title {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--t1);
+    letter-spacing: -0.3px;
+    margin: 0 0 12px 0;
+}
+.lhow-timeline-desc {
+    font-size: 13px;
+    color: var(--t2);
+    line-height: 1.5;
+    margin: 0;
+    max-width: 200px;
+}
+
+/* Borderless separated statistics for Real Results */
+.lstats-grid-borderless {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    align-items: stretch;
+    margin-bottom: 64px;
+    margin-top: 48px;
+    border-top: 1px solid var(--d);
+    border-bottom: 1px solid var(--d);
+    padding: 48px 0;
+}
+.lstat-item-borderless {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding: 16px 32px;
+    border-right: 1px solid rgba(17, 17, 17, 0.08);
+}
+.lstat-item-borderless:last-child {
+    border-right: none;
+}
+.lstat-item-borderless .lstat-num {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 48px;
+    font-weight: 800;
+    color: var(--r);
+    letter-spacing: -1.5px;
+    line-height: 1;
+}
+.lstat-item-borderless .lstat-label {
+    font-family: 'Inter Tight', sans-serif;
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--t1);
+    margin: 16px 0 8px;
+}
+.lstat-item-borderless .lstat-sub {
+    font-size: 13px;
+    color: var(--t3);
+    line-height: 1.4;
+    max-width: 260px;
+}
+
+/* Responsive collapse rules */
+@media(max-width: 768px) {
+    .ltypes-asymmetric {
+        grid-template-columns: 1fr;
+        gap: 40px;
+        padding: 60px 0;
+    }
+    .ltypes-left {
+        position: static;
+    }
+    .lhow-timeline-line {
+        display: none;
+    }
+    .lhow-timeline-steps {
+        grid-template-columns: 1fr;
+        gap: 32px;
+    }
+    .lhow-timeline-step {
+        align-items: flex-start;
+        text-align: left;
+        padding-left: 48px;
+        position: relative;
+    }
+    .lhow-timeline-node {
+        position: absolute;
+        left: 0;
+        top: 0;
+        margin-bottom: 0;
+        box-shadow: none;
+    }
+    .lhow-timeline-desc {
+        max-width: none;
+    }
+    .lstats-grid-borderless {
+        grid-template-columns: 1fr;
+        gap: 32px;
+        padding: 32px 0;
+    }
+    .lstat-item-borderless {
+        border-right: none;
+        border-bottom: 1px solid rgba(17, 17, 17, 0.08);
+        padding: 16px 0 32px;
+    }
+    .lstat-item-borderless:last-child {
+        border-bottom: none;
+        padding-bottom: 16px;
+    }
+}
+
 `;

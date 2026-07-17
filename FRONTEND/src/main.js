@@ -1797,7 +1797,7 @@ function updateAuthUI() {
 }
 
 // Protected routes that require login
-const protectedRoutes = ['/market', '/contracts/execute', '/my-contracts', '/profile', '/funding', '/sources'];
+const protectedRoutes = ['/market', '/contracts/execute', '/my-contracts', '/profile', '/funding', '/sources', '/rivalry', '/ledger', '/contract'];
 
 // Route change handler
 router.onRouteChange = function (route, path) {
@@ -1828,10 +1828,10 @@ router.onRouteChange = function (route, path) {
     const isProtected = protectedRoutes.some(pr => path === pr || path.startsWith(pr + '/'));
 
     if (isProtected && !appState.isLoggedIn) {
-        // Show login modal and stay on current page
+        // Show login modal
         window.app.openAccessModal();
-        // Redirect to overview
-        window.router.navigate('/market');
+        // Redirect to public landing page to prevent unauthorized access
+        window.router.navigate('/');
         return;
     }
 

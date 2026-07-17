@@ -67,6 +67,8 @@ export function renderLanding() {
                                 <span class="l-lr-cap">POOL $2.0K</span>
                                 <span class="l-lr-divider">|</span>
                                 <span class="l-lr-time">T-MINUS 9D</span>
+                                <span class="l-lr-divider">|</span>
+                                <span class="l-lr-action-badge">VIEW MATCH <span style="display:inline-block; transition: transform 0.2s ease;">→</span></span>
                             </div>
                         </div>
 

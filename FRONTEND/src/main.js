@@ -457,6 +457,24 @@ window.app = {
         const el = document.getElementById('auth-error');
         if (el) el.classList.add('hidden');
     },
+    toggleReferralInput: function () {
+        const field = document.getElementById('auth-referral-field');
+        const btn = document.getElementById('auth-referral-toggle-btn');
+        if (field) {
+            const isHidden = field.style.display === 'none' || field.classList.contains('hidden');
+            if (isHidden) {
+                field.classList.remove('hidden');
+                field.style.display = 'flex';
+                if (btn) btn.textContent = '- Remove referral code';
+            } else {
+                field.classList.add('hidden');
+                field.style.display = 'none';
+                if (btn) btn.textContent = '+ Have a referral code?';
+                const input = document.getElementById('auth-referral-code');
+                if (input) input.value = '';
+            }
+        }
+    },
     toggleAuthMode: function () {
         window.app._hideAuthError();
         const isSignup = window.app._authMode === 'signin';
@@ -464,26 +482,34 @@ window.app = {
 
         const title = document.getElementById('auth-modal-title');
         const btn = document.getElementById('btn-auth-submit');
-        const usernameField = document.getElementById('auth-username-field');
+        const referralToggle = document.getElementById('auth-referral-toggle-wrapper');
         const referralField = document.getElementById('auth-referral-field');
         const toggleText = document.getElementById('auth-toggle-text');
 
         if (isSignup) {
             if (title) title.innerHTML = 'Lock capital. Force the outcome.';
             if (btn) btn.textContent = 'Create Account';
-            if (usernameField) { usernameField.classList.remove('hidden'); usernameField.style.display = 'flex'; }
-            if (referralField) { referralField.classList.remove('hidden'); referralField.style.display = 'flex'; }
-            // Pre-fill referral code from localStorage (if came via link)
+            if (referralToggle) { referralToggle.classList.remove('hidden'); referralToggle.style.display = 'block'; }
+            
+            // Check if there is a referral code pre-filled
             const storedCode = api.getReferralCode ? api.getReferralCode() : null;
             if (storedCode) {
                 const refInput = document.getElementById('auth-referral-code');
-                if (refInput && !refInput.value) refInput.value = storedCode;
+                if (refInput) refInput.value = storedCode;
+                // Auto-expand since code is present
+                if (referralField) { referralField.classList.remove('hidden'); referralField.style.display = 'flex'; }
+                const toggleBtn = document.getElementById('auth-referral-toggle-btn');
+                if (toggleBtn) toggleBtn.textContent = '- Remove referral code';
+            } else {
+                if (referralField) { referralField.classList.add('hidden'); referralField.style.display = 'none'; }
+                const toggleBtn = document.getElementById('auth-referral-toggle-btn');
+                if (toggleBtn) toggleBtn.textContent = '+ Have a referral code?';
             }
             if (toggleText) toggleText.innerHTML = 'Already have an account? <button onclick="window.app.toggleAuthMode()" class="text-[#111] font-medium hover:underline bg-transparent border-none cursor-pointer p-0">Sign in</button>';
         } else {
             if (title) title.innerHTML = 'Lock capital. Force the outcome.';
             if (btn) btn.textContent = 'Sign In';
-            if (usernameField) { usernameField.classList.add('hidden'); usernameField.style.display = 'none'; }
+            if (referralToggle) { referralToggle.classList.add('hidden'); referralToggle.style.display = 'none'; }
             if (referralField) { referralField.classList.add('hidden'); referralField.style.display = 'none'; }
             if (toggleText) toggleText.innerHTML = 'New here? <button onclick="window.app.toggleAuthMode()" class="text-[#111] font-medium hover:underline bg-transparent border-none cursor-pointer p-0">Create account</button>';
         }
@@ -500,13 +526,10 @@ window.app = {
         }
 
         if (window.app._authMode === 'signup') {
-            // Sign up flow
-            const username = document.getElementById('auth-username')?.value?.trim();
-            if (!username) { window.app._showAuthError('Username is required.'); return; }
-            if (!/^[a-zA-Z0-9_]{3,20}$/.test(username)) {
-                window.app._showAuthError('Username: 3-20 chars, letters/numbers/underscores only.');
-                return;
-            }
+            // Sign up flow: Auto-generate username from email
+            const emailPrefix = email.split('@')[0].replace(/[^a-zA-Z0-9_]/g, '');
+            const username = (emailPrefix.slice(0, 15) || 'user') + Math.floor(100 + Math.random() * 900);
+            
             if (password.length < 8) { window.app._showAuthError('Password must be at least 8 characters.'); return; }
 
             const originalText = btn.textContent;

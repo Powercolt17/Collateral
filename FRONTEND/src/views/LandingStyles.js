@@ -838,12 +838,13 @@ export const landingCSS = `
 
 /* ═══ SOCIAL PROOF ═══ */
 .lreal-results{padding:100px 0;background:var(--bg)}
-.lh-section-title{font-family:'Plus Jakarta Sans',sans-serif;font-size:clamp(30px, 4.5vw, 44px);font-weight:800;line-height:1.15;letter-spacing:-1.2px;color:var(--t1);margin-bottom:24px}
+.lh-section-title{font-family:'Plus Jakarta Sans',sans-serif;font-size:clamp(26px, 3.5vw, 36px);font-weight:800;line-height:1.15;letter-spacing:-1px;color:var(--t1);margin-bottom:16px}
+.lh-section-subtitle{font-size:14px;color:var(--t3);line-height:1.5;margin-bottom:24px;max-width:640px}
 .lstats-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:32px;margin-bottom:64px;margin-top:32px}
 .lstat-card{background:#fff;border:1px solid var(--d);padding:32px;border-radius:12px;box-shadow:0 4px 20px rgba(0,0,0,0.01)}
-.lstat-num{font-family:'Plus Jakarta Sans',sans-serif;font-size:44px;font-weight:800;color:var(--r);letter-spacing:-1.5px;line-height:1}
-.lstat-label{font-family:'Inter Tight',sans-serif;font-size:15px;font-weight:700;color:var(--t1);margin:12px 0 6px}
-.lstat-sub{font-size:13px;color:var(--t3);line-height:1.4}
+.lstat-num{font-family:'Plus Jakarta Sans',sans-serif;font-size:36px;font-weight:800;color:var(--r);letter-spacing:-1px;line-height:1}
+.lstat-label{font-family:'Inter Tight',sans-serif;font-size:13px;font-weight:700;color:var(--t1);margin:10px 0 4px}
+.lstat-sub{font-size:11px;color:var(--t3);line-height:1.4}
 /* ═══ LIVE LEDGER FEED ═══ */
 .lledger-container {background:#FFF;border:1px solid var(--d);border-radius:16px;padding:32px;box-shadow:0 4px 30px rgba(0,0,0,0.015);margin-top:48px}
 .lledger-header {display:flex;justify-content:space-between;align-items:flex-start;border-bottom:1px solid var(--d);padding-bottom:20px;margin-bottom:24px;flex-wrap:wrap;gap:16px}
@@ -2195,18 +2196,18 @@ export const landingCSS = `
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     align-items: stretch;
-    margin-bottom: 64px;
-    margin-top: 48px;
+    margin-bottom: 40px;
+    margin-top: 32px;
     border-top: 1px solid var(--d);
     border-bottom: 1px solid var(--d);
-    padding: 48px 0;
+    padding: 32px 0;
 }
 .lstat-item-borderless {
     display: flex;
     flex-direction: column;
     align-items: center;
     text-align: center;
-    padding: 16px 32px;
+    padding: 12px 24px;
     border-right: 1px solid rgba(17, 17, 17, 0.08);
 }
 .lstat-item-borderless:last-child {
@@ -2214,24 +2215,24 @@ export const landingCSS = `
 }
 .lstat-item-borderless .lstat-num {
     font-family: 'Plus Jakarta Sans', sans-serif;
-    font-size: 48px;
+    font-size: 36px;
     font-weight: 800;
     color: var(--r);
-    letter-spacing: -1.5px;
+    letter-spacing: -1px;
     line-height: 1;
 }
 .lstat-item-borderless .lstat-label {
     font-family: 'Inter Tight', sans-serif;
-    font-size: 15px;
+    font-size: 13px;
     font-weight: 700;
     color: var(--t1);
-    margin: 16px 0 8px;
+    margin: 10px 0 4px;
 }
 .lstat-item-borderless .lstat-sub {
-    font-size: 13px;
+    font-size: 11px;
     color: var(--t3);
     line-height: 1.4;
-    max-width: 260px;
+    max-width: 240px;
 }
 
 /* Responsive collapse rules */

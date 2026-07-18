@@ -203,13 +203,22 @@ export function renderLanding() {
                             <div class="ltype-badge-new">Solo</div>
                             <h3 class="ltype-title-new">You vs. Yourself</h3>
                             <p class="ltype-desc-new">Lock deposits to force yourself to execute. <span class="lhide-mobile">Hit targets to win; fail and forfeit capital.</span></p>
-                            <div class="ltype-meta-new"><strong>Best for:</strong> Milestones, shipping code, audience building.</div>
+                            <div class="ltype-meta-new">
+                                <span class="lmeta-label">Best for</span>
+                                <span class="lmeta-tag">Milestones</span>
+                                <span class="lmeta-tag">Shipping code</span>
+                                <span class="lmeta-tag">Audience building</span>
+                            </div>
                         </div>
                         <div class="ltype-row reveal-item">
                             <div class="ltype-badge-new secondary">Rivalry</div>
                             <h3 class="ltype-title-new">You vs. Competitors</h3>
                             <p class="ltype-desc-new">Lock equal deposits in a head-to-head race. <span class="lhide-mobile">Winner takes the entire pool.</span></p>
-                            <div class="ltype-meta-new"><strong>Best for:</strong> Audience races, competitive fire.</div>
+                            <div class="ltype-meta-new">
+                                <span class="lmeta-label">Best for</span>
+                                <span class="lmeta-tag">Audience races</span>
+                                <span class="lmeta-tag">Competitive fire</span>
+                            </div>
                         </div>
                     </div>
                 </div>

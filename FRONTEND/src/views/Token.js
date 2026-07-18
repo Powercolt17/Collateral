@@ -925,13 +925,196 @@ export function renderToken() {
                 .cltr-main-grid { grid-template-columns: 1fr; }
                 .cltr-metrics-grid { grid-template-columns: repeat(2, 1fr); }
             }
-            @media (max-width: 640px) {
-                .cltr-metrics-grid { grid-template-columns: 1fr; }
-                .cltr-focal-hero { flex-direction: column; align-items: flex-start; padding: 24px; }
-                .cltr-focal-right { flex-direction: column; gap: 16px; width: 100%; }
-                .cltr-lock-grid { grid-template-columns: repeat(2, 1fr); }
-                .cltr-rep-layout { grid-template-columns: 1fr; }
-                .cltr-health-grid { grid-template-columns: 1fr; }
+            @media (max-width: 768px) {
+                .cltr-container {
+                    padding: 96px 16px 0 !important;
+                }
+                .cltr-subnav-tabs {
+                    gap: 16px !important;
+                    overflow-x: auto !important;
+                    white-space: nowrap !important;
+                    -webkit-overflow-scrolling: touch !important;
+                    padding-bottom: 8px !important;
+                    margin-bottom: 24px !important;
+                }
+                .cltr-subnav-btn {
+                    flex-shrink: 0 !important;
+                    padding: 8px 4px !important;
+                }
+                .cltr-subnav-tabs::-webkit-scrollbar {
+                    display: none !important;
+                }
+                .cltr-main-grid,
+                .cltr-metrics-grid,
+                .cltr-lock-grid,
+                .cltr-rep-layout,
+                .cltr-health-grid,
+                .cltr-burn-period-grid,
+                .pillars-grid,
+                .benefits-grid {
+                    grid-template-columns: 1fr !important;
+                    gap: 16px !important;
+                    width: 100% !important;
+                }
+                .stats-dashboard {
+                    grid-template-columns: repeat(2, 1fr) !important;
+                    gap: 16px 12px !important;
+                    padding: 20px 16px !important;
+                    margin-bottom: 32px !important;
+                }
+                .stats-dashboard-card {
+                    border-right: none !important;
+                    border-bottom: 1px solid #F0F0F0 !important;
+                    padding-bottom: 12px !important;
+                    padding-right: 0 !important;
+                }
+                .stats-dashboard-card:nth-child(odd) {
+                    border-right: 1px solid #F0F0F0 !important;
+                    padding-right: 12px !important;
+                }
+                .stats-dashboard-card:nth-child(even) {
+                    padding-left: 12px !important;
+                }
+                .stats-dashboard-card:nth-last-child(-n+2) {
+                    border-bottom: none !important;
+                    padding-bottom: 0 !important;
+                }
+                .stats-dashboard-num {
+                    font-size: 24px !important;
+                }
+                .snapshot-panel {
+                    padding: 20px 16px !important;
+                    margin-bottom: 32px !important;
+                }
+                .snapshot-grid {
+                    grid-template-columns: repeat(2, 1fr) !important;
+                    gap: 16px 12px !important;
+                }
+                .snapshot-card {
+                    border-right: none !important;
+                    border-bottom: 1px solid #F0F0F0 !important;
+                    padding-bottom: 8px !important;
+                    padding-right: 0 !important;
+                }
+                .snapshot-card:nth-child(odd) {
+                    border-right: 1px solid #F0F0F0 !important;
+                    padding-right: 12px !important;
+                }
+                .snapshot-card:nth-child(even) {
+                    padding-left: 12px !important;
+                }
+                .snapshot-card:nth-last-child(-n+2) {
+                    border-bottom: none !important;
+                    padding-bottom: 0 !important;
+                }
+                .snapshot-val {
+                    font-size: 13px !important;
+                }
+                .cltr-focal-hero {
+                    flex-direction: column !important;
+                    align-items: flex-start !important;
+                    padding: 20px !important;
+                }
+                .cltr-focal-num {
+                    font-size: clamp(24px, 8vw, 36px) !important;
+                    letter-spacing: -1px !important;
+                    line-height: 1.1 !important;
+                }
+                .cltr-focal-mini-num {
+                    font-size: 16px !important;
+                }
+                .cltr-focal-right {
+                    flex-direction: column !important;
+                    gap: 16px !important;
+                    width: 100% !important;
+                    margin-top: 16px !important;
+                }
+                .cltr-panel,
+                .cltr-trust-card,
+                .pillar-card,
+                .benefit-card,
+                .econ-hero,
+                .trust-network-panel {
+                    padding: 20px 16px !important;
+                    width: 100% !important;
+                    box-sizing: border-box !important;
+                }
+                .cltr-panel-hdr {
+                    padding-bottom: 12px !important;
+                    margin-bottom: 16px !important;
+                }
+                .flywheel-flow {
+                    padding: 20px 16px !important;
+                }
+                .flywheel-row {
+                    flex-direction: column !important;
+                    gap: 12px !important;
+                }
+                .flywheel-node {
+                    width: 100% !important;
+                    padding: 12px 16px !important;
+                }
+                .flywheel-row .flywheel-arrow {
+                    display: none !important;
+                }
+                .flywheel-flow > div:nth-child(2) {
+                    display: none !important;
+                }
+                .trust-network-svg {
+                    width: 100% !important;
+                    max-width: 100% !important;
+                    height: auto !important;
+                }
+                .vis-grid {
+                    grid-template-columns: 1fr !important;
+                    gap: 24px !important;
+                }
+                .vis-hero {
+                    padding: 32px 0 !important;
+                    margin-bottom: 24px !important;
+                }
+                .vis-title {
+                    font-size: 24px !important;
+                }
+                .wp-container {
+                    max-width: 100% !important;
+                    padding: 0 !important;
+                }
+                .wp-chapter {
+                    margin-bottom: 32px !important;
+                    padding-bottom: 24px !important;
+                }
+                .wp-chapter-title {
+                    font-size: 16px !important;
+                    margin-bottom: 16px !important;
+                }
+                .wp-box {
+                    padding: 16px !important;
+                }
+                .cltr-table-container {
+                    width: 100% !important;
+                    overflow-x: auto !important;
+                    -webkit-overflow-scrolling: touch !important;
+                }
+                .cltr-data-table {
+                    min-width: 500px !important;
+                }
+                .cltr-wallet-banner {
+                    flex-direction: column !important;
+                    align-items: stretch !important;
+                    gap: 12px !important;
+                    padding: 16px !important;
+                }
+                .cltr-connect-btn {
+                    width: 100% !important;
+                    text-align: center !important;
+                }
+                .flow-container {
+                    scrollbar-width: none !important;
+                }
+                .flow-container::-webkit-scrollbar {
+                    display: none !important;
+                }
             }
 
             /* --- PROTOCOL SUBNAV TABS --- */

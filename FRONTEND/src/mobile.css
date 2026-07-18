@@ -461,3 +461,129 @@
         padding-bottom: env(safe-area-inset-bottom, 0) !important;
     }
 }
+
+/* ================================================================
+   GLOBAL MOBILE OVERRIDES — ALL VIEWS
+   ================================================================ */
+@media (max-width: 768px) {
+    /* Prevent page horizontal scrolling */
+    html, body {
+        overflow-x: hidden !important;
+        width: 100% !important;
+        max-width: 100% !important;
+        position: relative;
+    }
+
+    /* Force all main page wrappers to have uniform padding on mobile */
+    .lp, .eq, .ldg, .prf, .ac, .myc, .doc, .cap, .src, .ref, .riv, .cd, .cltr-page, .ext-container {
+        padding-left: 16px !important;
+        padding-right: 16px !important;
+        width: 100% !important;
+        max-width: 100% !important;
+        box-sizing: border-box !important;
+    }
+
+    /* Reset inner container horizontal padding to prevent double-padding */
+    .doc-container, .cltr-container, .ext-container, .cap-inner, .riv-hero-inner, .ref-hero-inner, .src-hero-inner, .ldg-hero-inner {
+        padding-left: 0 !important;
+        padding-right: 0 !important;
+        max-width: 100% !important;
+        width: 100% !important;
+    }
+
+    /* Top padding correction to avoid overlap with header/banner */
+    .cltr-container {
+        padding-top: 32px !important;
+    }
+
+    /* Tab lists: scroll horizontally, no wrap */
+    .cltr-subnav-tabs, .prf-tabs, .eq-tabs, .ldg-tabs, .ac-controls {
+        display: flex !important;
+        flex-direction: row !important;
+        flex-wrap: nowrap !important;
+        overflow-x: auto !important;
+        -webkit-overflow-scrolling: touch !important;
+        width: 100% !important;
+        gap: 16px !important;
+        padding-bottom: 8px !important;
+        border-bottom: 1px solid #E5E5E5 !important;
+    }
+    .cltr-subnav-btn, .prf-tab, .eq-tab, .ldg-tab, .ac-tab {
+        flex-shrink: 0 !important;
+        padding: 8px 4px !important;
+        font-size: 11px !important;
+    }
+    .cltr-subnav-tabs::-webkit-scrollbar, .prf-tabs::-webkit-scrollbar, .eq-tabs::-webkit-scrollbar, .ldg-tabs::-webkit-scrollbar, .ac-controls::-webkit-scrollbar {
+        display: none !important;
+    }
+
+    /* Font size scaling for titles */
+    h1, .lh1, .eq-hero-headline, .ldg-hero-headline, .prf-hero-title, .ac-hero-title, .cd-hero-title, .vis-title, .ov-title, .src-hero-headline, .ref-hero-headline {
+        font-size: clamp(24px, 7vw, 36px) !important;
+        letter-spacing: -0.5px !important;
+        line-height: 1.15 !important;
+    }
+
+    /* All grids: collapse to 1 column */
+    .cltr-main-grid, .cltr-metrics-grid, .cltr-lock-grid, .cltr-rep-layout, .cltr-health-grid, .cltr-burn-period-grid, .vis-grid, .ov-cards-grid, .prf-provider-grid, .prf-stats-grid, .prf-grid, .eq-paths-grid, .eq-grid, .ext-grid, .ldg-hero-stats, .src-provider-grid {
+        grid-template-columns: 1fr !important;
+        gap: 16px !important;
+        width: 100% !important;
+    }
+
+    /* Card padding compression on small screens */
+    .cltr-panel, .cltr-trust-card, .prf-card, .prf-pcard, .ext-card, .ext-warn, .ext-forfeit, .eq-card, .lcard, .lstep, .riv-card {
+        padding: 16px !important;
+        width: 100% !important;
+        max-width: 100% !important;
+        box-sizing: border-box !important;
+    }
+
+    /* Compressing headers in cards */
+    .cltr-panel-hdr, .prf-card-hd, .ext-card-hd {
+        padding: 12px 16px !important;
+        margin-left: -16px !important;
+        margin-right: -16px !important;
+        width: calc(100% + 32px) !important;
+    }
+    .cltr-panel-body, .prf-card-bd, .ext-card-bd {
+        padding: 16px 0 0 0 !important;
+    }
+
+    /* Scrollable tables */
+    .cltr-table-container, .ldg-table-wrap, .table-responsive {
+        width: 100% !important;
+        overflow-x: auto !important;
+        -webkit-overflow-scrolling: touch !important;
+    }
+    .cltr-data-table, .ldg-table, table {
+        min-width: 600px !important;
+    }
+
+    /* Wrap buttons and forms vertically */
+    .eq-hero-actions, .lctas, .cd-actions, .act-detail-actions, .ext-gate-connected, .prf-header-actions, .cltr-focal-hero, .cltr-wallet-banner, .ext-head, .myc-header-actions {
+        flex-direction: column !important;
+        align-items: stretch !important;
+        gap: 12px !important;
+        width: 100% !important;
+    }
+    .eq-btn-primary, .eq-btn-secondary, .lbtn, .cd-btn, .act-btn, .ext-gate-btn, .prf-cta, .cltr-connect-btn, .myc-btn-primary, .myc-btn-secondary {
+        width: 100% !important;
+        text-align: center !important;
+        justify-content: center !important;
+    }
+
+    /* Token page focal hero formatting */
+    .cltr-focal-hero {
+        flex-direction: column !important;
+        align-items: flex-start !important;
+        padding: 20px !important;
+    }
+    .cltr-focal-right {
+        width: 100% !important;
+        margin-top: 20px !important;
+        grid-template-columns: 1fr !important;
+        display: grid !important;
+        gap: 12px !important;
+    }
+}

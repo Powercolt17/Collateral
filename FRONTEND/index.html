@@ -14,9 +14,6 @@
         content="performance contracts, capital lock, revenue growth, accountability protocol, Stripe growth, X followers, Shopify sales, Amazon revenue, fintech, self-betting, collateral market, skin in the game">
     <meta name="author" content="Collateral Protocol">
     <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&family=Inter:wght@400;500;600;700;800&family=Inter+Tight:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="canonical" href="https://collateral.market">
 
     <!-- Branding -->
@@ -155,10 +152,12 @@
     <!-- Preload critical resources -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link rel="dns-prefetch" href="https://collateral-production.up.railway.app">
+    <link rel="preconnect" href="https://collateral-production.up.railway.app" crossorigin>
+    <link rel="dns-prefetch" href="https://js.stripe.com">
+    <link rel="dns-prefetch" href="https://unpkg.com">
     <link
-        href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&family=IBM+Plex+Sans:wght@500;600;700&display=swap"
-        rel="stylesheet">
+        href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&family=Inter:wght@400;500;600;700;800&family=Inter+Tight:wght@400;500;600;700&family=IBM+Plex+Sans:wght@500;600;700&display=swap"
+        rel="stylesheet" media="print" onload="this.media='all'">
 
     <style>
         @font-face {
@@ -189,7 +188,7 @@
     <script src="https://js.stripe.com/v3/" async></script>
 
     <!-- Lucide Icons (async to not block render) -->
-    <script src="https://unpkg.com/lucide@latest" defer></script>
+    <script src="https://unpkg.com/lucide@0.462.0/dist/umd/lucide.min.js" defer></script>
 
     <!-- Google Analytics 4 (GA4) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-JV0Y35K5HQ"></script>
@@ -591,17 +590,13 @@
                     </div>
                 </div>
 
-                <!-- Sign Up Only: Username field (hidden by default) -->
-                <div id="auth-username-field" class="hidden" style="display:none;flex-direction:column;gap:6px;">
-                    <label
-                        style="font-size:12px;font-weight:500;color:#6B6B6B;font-family:'Sora','IBM Plex Sans',sans-serif;">Username</label>
-                    <input type="text" id="auth-username"
-                        style="width:100%;height:44px;background:#FFF;border:1px solid #E5E5E5;border-radius:8px;padding:0 14px;font-size:14px;color:#1A1A1A;outline:none;transition:border-color 0.15s,box-shadow 0.15s;font-family:'Sora','IBM Plex Sans',sans-serif;box-sizing:border-box;"
-                        onfocus="this.style.borderColor='#3B0001';this.style.boxShadow='0 0 0 2px rgba(59,0,1,0.08)';"
-                        onblur="this.style.borderColor='#E5E5E5';this.style.boxShadow='none';" placeholder="yourhandle"
-                        maxlength="20">
-                    <p style="font-size:10px;color:#9CA3AF;margin:2px 0 0;">3-20 characters. Letters, numbers,
-                        underscores.</p>
+                <!-- Referral Code toggle -->
+                <div id="auth-referral-toggle-wrapper" class="hidden" style="display:none;margin-top:2px;">
+                    <button type="button" id="auth-referral-toggle-btn" onclick="window.app.toggleReferralInput()"
+                        style="background:none;border:none;color:#9CA3AF;font-size:12px;cursor:pointer;padding:0;font-family:'Sora','IBM Plex Sans',sans-serif;outline:none;"
+                        onmouseover="this.style.color='#3B0001'" onmouseout="this.style.color='#9CA3AF'">
+                        + Have a referral code?
+                    </button>
                 </div>
 
                 <!-- Sign Up Only: Referral Code field (hidden by default) -->

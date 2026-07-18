@@ -357,11 +357,12 @@ export function renderSources() {
                 align-items: center;
                 justify-content: space-between;
                 background: #FFFFFF;
-                border: 1px solid #E5E5E5;
-                border-radius: 4px;
-                padding: 24px 20px;
-                margin: 32px 0 48px;
-                gap: 10px;
+                border: 1px solid rgba(0,0,0,0.05);
+                border-radius: 12px;
+                padding: 32px 24px;
+                margin: 32px 0 16px;
+                gap: 16px;
+                box-shadow: 0 2px 8px rgba(0,0,0,0.01);
                 overflow-x: auto;
             }
             .src-flow-step {
@@ -371,48 +372,51 @@ export function renderSources() {
                 text-align: center;
                 flex: 1;
                 min-width: 90px;
+                gap: 8px;
             }
             .src-flow-dot {
-                width: 28px;
-                height: 28px;
+                width: 32px;
+                height: 32px;
                 border-radius: 50%;
                 background: rgba(92, 20, 20, 0.04);
-                border: 1px solid rgba(92, 20, 20, 0.15);
+                border: 1px solid rgba(92, 20, 20, 0.12);
                 color: #5C1414;
                 display: flex;
                 align-items: center;
                 justify-content: center;
                 font-family: 'JetBrains Mono', monospace;
-                font-size: 10px;
+                font-size: 11px;
                 font-weight: 700;
-                margin-bottom: 8px;
             }
             .src-flow-lbl {
-                font-size: 10px;
+                font-family: 'Inter', sans-serif;
+                font-size: 11px;
                 font-weight: 700;
-                color: #111;
-                text-transform: uppercase;
-                letter-spacing: 0.5px;
+                color: #333;
+                text-transform: none;
+                letter-spacing: 0px;
+                line-height: 1.2;
             }
             .src-flow-arrow {
                 color: #DDD;
-                font-weight: 700;
-                font-size: 14px;
-                animation: pulseArrow 1.6s infinite ease-in-out;
+                font-weight: 400;
+                font-size: 18px;
             }
 
             /* ── Why Verification Matters ── */
             .why-ver-panel {
                 background: #FFFFFF;
                 border: 1px solid #E5E5E5;
-                border-radius: 4px;
+                border-radius: 12px;
                 padding: 40px;
                 margin-top: 56px;
                 margin-bottom: 48px;
-                display: grid;
-                grid-template-columns: 1.2fr 1fr;
-                gap: 40px;
-                align-items: center;
+                display: flex;
+                flex-direction: column;
+                gap: 32px;
+            }
+            .why-ver-text {
+                max-width: 800px;
             }
             .why-ver-title {
                 font-size: 15px;
@@ -426,19 +430,99 @@ export function renderSources() {
                 font-size: 13px;
                 color: #666;
                 line-height: 1.7;
-                margin: 0 0 16px 0;
+                margin: 0 0 12px 0;
             }
             .why-ver-p:last-child {
                 margin-bottom: 0;
             }
-            .why-ver-diagram {
+            .why-ver-flow {
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                gap: 12px;
+                width: 100%;
+            }
+            .why-ver-node {
+                background: #FFFFFF;
+                border: 1.5px solid #F0F0F0;
+                border-radius: 8px;
+                padding: 20px 16px;
+                text-align: center;
+                flex: 1;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                gap: 8px;
+                box-shadow: 0 2px 8px rgba(0,0,0,0.01);
+                transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+            }
+            .why-ver-node-icon {
+                color: #8a8984;
+                background: #FAFAFA;
+                border: 1px solid #EEEEEE;
+                width: 36px;
+                height: 36px;
+                border-radius: 50%;
                 display: flex;
                 align-items: center;
                 justify-content: center;
-                background: #FAFAFA;
-                border: 1px solid #F0F0F0;
-                border-radius: 4px;
-                padding: 24px;
+            }
+            .why-ver-node-icon svg {
+                width: 18px;
+                height: 18px;
+            }
+            .why-ver-node-title {
+                font-family: 'Plus Jakarta Sans', sans-serif;
+                font-size: 13px;
+                font-weight: 700;
+                color: #111;
+            }
+            .why-ver-node-desc {
+                font-size: 11px;
+                color: #8a8984;
+                line-height: 1.4;
+            }
+            
+            /* Source node: Emphasized with maroon */
+            .why-ver-node.source-accent {
+                border-color: rgba(92, 20, 20, 0.15);
+                background: rgba(92, 20, 20, 0.02);
+            }
+            .why-ver-node.source-accent .why-ver-node-icon {
+                background: rgba(92, 20, 20, 0.06);
+                border-color: rgba(92, 20, 20, 0.15);
+                color: #5C1414;
+            }
+            .why-ver-node.source-accent .why-ver-node-title {
+                color: #5C1414;
+            }
+
+            /* ExID node: Dark terminus */
+            .why-ver-node.terminus {
+                background: #111;
+                border-color: #111;
+            }
+            .why-ver-node.terminus .why-ver-node-icon {
+                background: rgba(255,255,255,0.08);
+                border-color: rgba(255,255,255,0.12);
+                color: #FFF;
+            }
+            .why-ver-node.terminus .why-ver-node-title {
+                color: #FFF;
+            }
+            .why-ver-node.terminus .why-ver-node-desc {
+                color: #8a8984;
+            }
+
+            .why-ver-connector {
+                color: #DDD;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+            .why-ver-connector svg {
+                width: 16px;
+                height: 16px;
             }
 
             /* Category badges */
@@ -586,17 +670,81 @@ export function renderSources() {
             }
             .src-prov-btn:hover { color: #752122; }
 
-            .src-coming-soon {
+            /* Coming Soon Pipeline */
+            .src-section-label-sub {
+                font-family: 'JetBrains Mono', monospace;
+                font-size: 9px;
+                font-weight: 700;
+                letter-spacing: 0.15em;
+                color: #bbb;
+                text-transform: uppercase;
+                margin: 0 0 16px;
+            }
+            .src-coming-soon-list {
+                display: grid;
+                grid-template-columns: repeat(2, 1fr);
+                gap: 16px;
+                margin-bottom: 48px;
+            }
+            @media (max-width: 768px) {
+                .src-coming-soon-list {
+                    grid-template-columns: 1fr;
+                }
+            }
+            .src-coming-soon-card {
+                background: #FFFFFF;
+                border: 1.5px dashed #E5E5E5;
+                border-radius: 8px;
+                padding: 16px 20px;
                 display: flex;
                 align-items: center;
-                gap: 6px;
+                justify-content: space-between;
+                opacity: 0.7;
+                transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+            }
+            .src-coming-soon-card:hover {
+                opacity: 1;
+                border-color: rgba(92, 20, 20, 0.15);
+                background: rgba(92, 20, 20, 0.01);
+            }
+            .src-coming-soon-left {
+                display: flex;
+                align-items: center;
+                gap: 14px;
+            }
+            .src-coming-soon-icon {
+                width: 36px;
+                height: 36px;
+                border-radius: 6px;
+                background: #FAFAFA;
+                border: 1px solid #EEEEEE;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                flex-shrink: 0;
+            }
+            .src-coming-soon-icon img,
+            .src-coming-soon-icon svg {
+                width: 16px;
+                height: 16px;
+            }
+            .src-coming-soon-name {
+                font-family: 'Plus Jakarta Sans', sans-serif;
+                font-size: 14px;
+                font-weight: 700;
+                color: #444;
+            }
+            .src-coming-soon-badge {
                 font-family: 'JetBrains Mono', monospace;
-                font-size: 10px;
-                font-weight: 600;
-                letter-spacing: 0.1em;
+                font-size: 8px;
+                font-weight: 700;
+                letter-spacing: 0.5px;
+                background: #F0F0F0;
+                color: #888;
+                padding: 3px 8px;
+                border-radius: 4px;
                 text-transform: uppercase;
-                color: #ccc;
-                align-self: flex-start;
+                display: inline-block;
             }
 
             /* ── Footer Notice ── */
@@ -1245,31 +1393,35 @@ export async function initSources() {
                 ? `<button class="src-btn-remove" onclick="event.stopPropagation(); window.disconnectSource('${conn.id}')">REMOVE</button>`
                 : '';
 
+            // [TRUTH-CHECK-CLAIM] HUMAN REVIEW REQUIRED: Validate that "Tamper Resistant" matches the physical oracle architecture.
+            // [TRUTH-CHECK-CLAIM] HUMAN REVIEW REQUIRED: Validate that "VERIFIED" claims match the cryptographic signing protocols.
             html += `
-                <div class="src-conn-row">
+                <div class="src-conn-row" style="min-height: 96px; display: flex; align-items: center; box-sizing: border-box;">
                     <div class="src-conn-left">
                         <div class="src-conn-icon">${getBrandLogo(conn.id)}</div>
                         <div class="src-conn-info">
-                            <span class="src-conn-name">${conn.name}</span>
-                            <span class="src-conn-date">${connDate}</span>
-                            <div class="src-trust-row" style="margin-top: 4px;">
+                            <div style="display: flex; align-items: baseline; gap: 10px;">
+                                <span class="src-conn-name">${conn.name}</span>
+                                <span class="src-conn-date">${connDate}</span>
+                            </div>
+                            <div class="src-trust-row">
                                 <span class="src-trust-indicator">API Authenticated</span>
                                 <span class="src-trust-indicator">Tamper Resistant</span>
-                                <span style="font-size: 11px; color: #666; margin-left: 8px;">Supports: <strong>${supports}</strong></span>
+                                <span style="font-size: 11px; color: #8a8984; font-weight: 500; margin-left: 4px;">Supports: <strong style="color: #444;">${supports}</strong></span>
                             </div>
                         </div>
                     </div>
                     <div class="src-conn-right">
                         <div class="src-conn-metric" style="align-items: flex-end; margin-right: 16px;">
-                            <span class="src-conn-metric-value" style="font-family:'JetBrains Mono', monospace; font-size:15px; color:#111;">${accuracy}</span>
+                            <span class="src-conn-metric-value" style="font-family:'JetBrains Mono', monospace; font-size:14px; color:#111; font-weight: 700;">${accuracy}</span>
                             <span class="src-conn-metric-label">ACCURACY</span>
                         </div>
                         <div class="src-conn-metric">
-                            <span class="src-conn-metric-value">${dataPoints}</span>
+                            <span class="src-conn-metric-value" style="font-family:'JetBrains Mono', monospace; font-size:14px; color:#111; font-weight: 700;">${dataPoints}</span>
                             <span class="src-conn-metric-label">DATA POINTS</span>
                         </div>
-                        <div class="src-conn-sync" style="font-family: 'JetBrains Mono', monospace; font-size:11px; color:#666;">
-                            <i data-lucide="refresh-cw" style="width:11px;height:11px;color:#bbb;"></i>
+                        <div class="src-conn-sync" style="font-family: 'JetBrains Mono', monospace; font-size:10px; color:#8a8984;">
+                            <i data-lucide="refresh-cw" style="width:10px;height:10px;color:#bbb;"></i>
                             ${lastSync}
                         </div>
                         <div class="src-conn-actions">
@@ -1287,6 +1439,9 @@ export async function initSources() {
     }
 
     // Section 2: Available Providers
+    const activeAvailable = available.filter(prov => !prov.comingSoon);
+    const comingSoonProviders = available.filter(prov => prov.comingSoon);
+
     html += `
         <div class="src-section-label" id="src-available-label" style="margin-top: 56px;">
             <span class="icon-prefix">
@@ -1295,70 +1450,62 @@ export async function initSources() {
             </span>
         </div>
     `;
+    
     html += `<div class="src-provider-grid">`;
-
-    for (const prov of available) {
+    for (const prov of activeAvailable) {
         let exampleText = '';
         if (prov.id === 'x') exampleText = 'Verify follower goals and posting commitments.';
         else if (prov.id === 'stripe') exampleText = 'Verify monthly revenue commitments.';
         else if (prov.id === 'shopify') exampleText = 'Verify store order volume.';
         else if (prov.id === 'youtube') exampleText = 'Verify subscriber goals and video uploads.';
-        else if (prov.id === 'amazon') exampleText = 'Verify marketplace seller rating and order milestones.';
-        else if (prov.id === 'tiktok') exampleText = 'Verify follower milestones and video upload stats.';
 
-        if (prov.comingSoon) {
-            html += `
-                <div class="src-prov-card" style="opacity:0.45; filter:grayscale(100%); pointer-events:none; border-color:#eee;">
-                    <div class="src-prov-top">
-                        <div class="src-prov-top-left">
-                            <div class="src-prov-icon">${getBrandLogo(prov.id)}</div>
-                            <div class="src-prov-name-wrap">
-                                <span class="src-prov-name">${prov.name}</span>
-                                <span class="src-category-badge" style="background:#f5f5f5; border-color:#ddd; color:#999;">${prov.category}</span>
-                            </div>
+        html += `
+            <div class="src-prov-card">
+                <div class="src-prov-top">
+                    <div class="src-prov-top-left">
+                        <div class="src-prov-icon">${getBrandLogo(prov.id)}</div>
+                        <div class="src-prov-name-wrap">
+                            <span class="src-prov-name">${prov.name}</span>
+                            <span class="src-category-badge">${prov.category}</span>
                         </div>
                     </div>
-                    <div class="src-prov-desc">${prov.description}</div>
-                    <div class="src-prov-example">
-                        <span class="src-prov-example-lbl">Supported Contract Example</span>
-                        ${exampleText}
-                    </div>
-                    <span class="src-coming-soon" style="color:#bbb; margin-top:8px;">
-                        <i data-lucide="clock" style="width:12px;height:12px;"></i>
-                        COMING SOON
-                    </span>
+                    <div class="src-prov-arrow"><i data-lucide="arrow-up-right"></i></div>
                 </div>
-            `;
-        } else {
+                <div class="src-prov-desc">${prov.description}</div>
+                <div class="src-prov-example">
+                    <span class="src-prov-example-lbl">Supported Contract Example</span>
+                    ${exampleText}
+                </div>
+                <button class="src-prov-btn" style="margin-top:8px;" onclick="window.openSrcModal('${prov.id}')">CONNECT</button>
+            </div>
+        `;
+    }
+    html += `</div>`;
+
+    if (comingSoonProviders.length > 0) {
+        html += `
+            <div class="src-section-label-sub" style="margin-top: 32px;">Pipeline / Coming Soon</div>
+            <div class="src-coming-soon-list">
+        `;
+        for (const prov of comingSoonProviders) {
             html += `
-                <div class="src-prov-card">
-                    <div class="src-prov-top">
-                        <div class="src-prov-top-left">
-                            <div class="src-prov-icon">${getBrandLogo(prov.id)}</div>
-                            <div class="src-prov-name-wrap">
-                                <span class="src-prov-name">${prov.name}</span>
-                                <span class="src-category-badge">${prov.category}</span>
-                            </div>
-                        </div>
-                        <div class="src-prov-arrow"><i data-lucide="arrow-up-right"></i></div>
+                <div class="src-coming-soon-card">
+                    <div class="src-coming-soon-left">
+                        <div class="src-coming-soon-icon">${getBrandLogo(prov.id)}</div>
+                        <span class="src-coming-soon-name">${prov.name}</span>
                     </div>
-                    <div class="src-prov-desc">${prov.description}</div>
-                    <div class="src-prov-example">
-                        <span class="src-prov-example-lbl">Supported Contract Example</span>
-                        ${exampleText}
-                    </div>
-                    <button class="src-prov-btn" style="margin-top:8px;" onclick="window.openSrcModal('${prov.id}')">CONNECT</button>
+                    <span class="src-coming-soon-badge">COMING SOON</span>
                 </div>
             `;
         }
+        html += `</div>`;
     }
 
-    html += `</div>`;
-
     // Why Verification Matters
+    // [TRUTH-CHECK-CLAIM] HUMAN REVIEW REQUIRED: Validate security claims of "cryptographically verified", "consensus-approved events" and update sequence logic to verify oracle trust.
     html += `
         <div class="why-ver-panel">
-            <div>
+            <div class="why-ver-text">
                 <h3 class="why-ver-title">Why Verification Matters</h3>
                 <p class="why-ver-p">
                     Traditional smart contracts are closed systems—they cannot natively observe or pull data from the real world. This is known as the oracle problem.
@@ -1367,27 +1514,50 @@ export async function initSources() {
                     Collateral solves this by allowing cryptographically verified external providers (Sources) to authenticate execution. Only verified, consensus-approved events trigger settlement and update your permanent Execution Identity (ExID).
                 </p>
             </div>
-            <div class="why-ver-diagram">
-                <svg width="240" height="100" viewBox="0 0 240 100" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <!-- Nodes -->
-                    <rect x="5" y="35" width="45" height="30" rx="3" fill="#FFF" stroke="#E5E5E5" stroke-width="1.5"/>
-                    <text x="27" y="53" font-family="JetBrains Mono" font-size="8" fill="#111" text-anchor="middle" font-weight="bold">PROMISE</text>
-                    
-                    <path d="M 50 50 L 64 50" stroke="#5C1414" stroke-width="1.5" stroke-dasharray="2 2"/>
-                    
-                    <rect x="69" y="35" width="46" height="30" rx="3" fill="#FFF" stroke="#5C1414" stroke-width="1.5"/>
-                    <text x="92" y="53" font-family="JetBrains Mono" font-size="8" fill="#5C1414" text-anchor="middle" font-weight="bold">SOURCE</text>
-                    
-                    <path d="M 115 50 L 129 50" stroke="#5C1414" stroke-width="1.5" stroke-dasharray="2 2"/>
-                    
-                    <rect x="134" y="35" width="48" height="30" rx="3" fill="#FFF" stroke="#E5E5E5" stroke-width="1.5"/>
-                    <text x="158" y="53" font-family="JetBrains Mono" font-size="7" fill="#111" text-anchor="middle" font-weight="bold">SETTLEMENT</text>
-                    
-                    <path d="M 182 50 L 196 50" stroke="#5C1414" stroke-width="1.5" stroke-dasharray="2 2"/>
-                    
-                    <circle cx="212" cy="50" r="14" fill="#1C0A0A" stroke="#5C1414" stroke-width="1"/>
-                    <text x="212" y="53" font-family="JetBrains Mono" font-size="8" fill="#FFF" text-anchor="middle" font-weight="bold">ExID</text>
-                </svg>
+            <div class="why-ver-flow">
+                <div class="why-ver-node">
+                    <div class="why-ver-node-icon">
+                        <i data-lucide="file-text"></i>
+                    </div>
+                    <span class="why-ver-node-title">Promise</span>
+                    <span class="why-ver-node-desc">Escrowed capital & rules</span>
+                </div>
+                
+                <div class="why-ver-connector">
+                    <i data-lucide="arrow-right"></i>
+                </div>
+                
+                <div class="why-ver-node source-accent">
+                    <div class="why-ver-node-icon">
+                        <i data-lucide="database"></i>
+                    </div>
+                    <span class="why-ver-node-title">Source</span>
+                    <span class="why-ver-node-desc">API oracle verification</span>
+                </div>
+                
+                <div class="why-ver-connector">
+                    <i data-lucide="arrow-right"></i>
+                </div>
+                
+                <div class="why-ver-node">
+                    <div class="why-ver-node-icon">
+                        <i data-lucide="shield-check"></i>
+                    </div>
+                    <span class="why-ver-node-title">Settlement</span>
+                    <span class="why-ver-node-desc">Deterministic payout</span>
+                </div>
+                
+                <div class="why-ver-connector">
+                    <i data-lucide="arrow-right"></i>
+                </div>
+                
+                <div class="why-ver-node terminus">
+                    <div class="why-ver-node-icon">
+                        <i data-lucide="user-check"></i>
+                    </div>
+                    <span class="why-ver-node-title">ExID</span>
+                    <span class="why-ver-node-desc">Permanent reputation update</span>
+                </div>
             </div>
         </div>
     `;

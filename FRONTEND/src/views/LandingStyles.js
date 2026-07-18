@@ -905,6 +905,108 @@ export const landingCSS = `
 .lemo-item.text-green::before{color:var(--g) !important}
 .lemo-divider{width:1px;background:var(--d)}
 
+/* New "Why It Works" Layout Styles */
+.lhow-it-works-section {
+    padding: 100px 0;
+    background: #fafaf9; /* warm studio off-white backdrop */
+    border-top: 1px solid var(--d);
+    border-bottom: 1px solid var(--d);
+}
+.lhow-layout {
+    display: grid;
+    grid-template-columns: 1fr 1.2fr;
+    gap: 64px;
+    align-items: flex-start;
+    margin-top: 32px;
+}
+.lhow-intro {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+.lhow-title {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: clamp(28px, 3vw, 44px);
+    font-weight: 800;
+    line-height: 1.15;
+    letter-spacing: -1.2px;
+    color: var(--t1);
+    margin: 0;
+}
+.lhow-body {
+    font-family: 'Inter', sans-serif;
+    font-size: 16px;
+    line-height: 1.65;
+    color: var(--t2);
+    margin: 0;
+}
+.lhow-caption {
+    font-family: 'Inter', sans-serif;
+    font-size: 14px;
+    line-height: 1.6;
+    color: var(--t3);
+    margin: 0;
+}
+.lhow-flow {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 40px;
+}
+.lflow-col {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+.lflow-header {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--t3);
+    margin: 0;
+    padding-bottom: 12px;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+}
+.execution .lflow-header {
+    color: var(--r);
+    border-bottom-color: rgba(92, 20, 20, 0.15);
+}
+.lflow-steps {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+.lflow-step {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+}
+.lflow-num {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9px;
+    font-weight: 700;
+    color: rgba(0, 0, 0, 0.25);
+    margin-top: 3px;
+}
+.execution .lflow-num {
+    color: rgba(92, 20, 20, 0.4);
+}
+.lflow-text {
+    font-family: 'Inter', sans-serif;
+    font-size: 13.5px;
+    line-height: 1.45;
+    color: var(--t2);
+}
+.execution .lflow-text {
+    color: var(--t1);
+    font-weight: 550;
+}
+.lflow-text.highlight-green {
+    color: #145c14 !important;
+    font-weight: 700;
+}
+
 /* ═══ RESPONSIVE UPGRADES ═══ */
 @media(max-width:768px){
   .lstats-grid{grid-template-columns:1fr;gap:16px;margin-bottom:40px;margin-top:16px}
@@ -919,6 +1021,19 @@ export const landingCSS = `
   .lemo-reframe{padding:50px 0}
   .lc-recent-activity { display: none !important; }
   .l-exec-item { font-size: 10px !important; white-space: nowrap !important; }
+  
+  /* New Why It Works mobile adjustments */
+  .lhow-layout {
+    grid-template-columns: 1fr;
+    gap: 40px;
+  }
+  .lhow-flow {
+    grid-template-columns: 1fr;
+    gap: 32px;
+  }
+  .lhow-it-works-section {
+    padding: 60px 0;
+  }
 }
 
 /* Staggered Scroll Reveals */

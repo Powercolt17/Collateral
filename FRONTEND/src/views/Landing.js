@@ -422,39 +422,65 @@ export function renderLanding() {
             </div>
 
             <!-- ═══ EMOTIONAL REFRAME (WHY IT WORKS) ═══ -->
-            <div class="lemo-reframe" data-r>
+            <!-- ═══ EMOTIONAL REFRAME (WHY IT WORKS) ═══ -->
+            <div class="lhow-it-works-section" data-r>
                 <div class="lw">
                     <div class="lred-dash reveal-item"><span class="lmono">Why It Works</span></div>
-                    <h2 class="lh-section-title reveal-item">A plan without stakes is just<br>a comfortable wish.</h2>
-                    
-                    <div class="lemo-grid">
-                        <div class="lemo-left reveal-item">
-                            <p class="lemo-body">
+                    <div class="lhow-layout">
+                        <!-- Left Side: Large Bold Copy & Subtext -->
+                        <div class="lhow-intro reveal-item">
+                            <h2 class="lhow-title">A plan without stakes is just a comfortable wish.</h2>
+                            <p class="lhow-body">
                                 Planning is easy. Executing is hard. You miss targets because failing is free. Collateral makes failure cost something, shifting you from passive planning to pure execution.
-                                <br class="lhide-mobile"><br class="lhide-mobile">
-                                <span class="lhide-mobile">Stop betting on variables you can't control. Bet on your own focus.</span>
+                            </p>
+                            <p class="lhow-caption lhide-mobile">
+                                Stop betting on variables you can't control. Bet on your own focus.
                             </p>
                         </div>
-                        <div class="lemo-right reveal-item">
-                            <div class="lemo-comparison-card">
-                                <div class="lemo-col without-collateral">
-                                    <div class="lemo-col-header">Comfortable Procrastination</div>
-                                    <ul class="lemo-list">
-                                        <li class="lemo-item">Plan a new goal</li>
-                                        <li class="lemo-item">Get distracted or lazy</li>
-                                        <li class="lemo-item">Push deadline to next month</li>
-                                        <li class="lemo-item">Let another year slide by</li>
-                                    </ul>
+                        
+                        <!-- Right Side: Side-by-Side Architectural Timeline Paths (No card container) -->
+                        <div class="lhow-flow reveal-item">
+                            <div class="lflow-col procrastination">
+                                <h4 class="lflow-header">Comfortable Procrastination</h4>
+                                <div class="lflow-steps">
+                                    <div class="lflow-step">
+                                        <span class="lflow-num">01</span>
+                                        <span class="lflow-text">Plan a new goal</span>
+                                    </div>
+                                    <div class="lflow-step">
+                                        <span class="lflow-num">02</span>
+                                        <span class="lflow-text">Get distracted or lazy</span>
+                                    </div>
+                                    <div class="lflow-step">
+                                        <span class="lflow-num">03</span>
+                                        <span class="lflow-text">Push deadline to next month</span>
+                                    </div>
+                                    <div class="lflow-step">
+                                        <span class="lflow-num">04</span>
+                                        <span class="lflow-text">Let another year slide by</span>
+                                    </div>
                                 </div>
-                                <div class="lemo-divider"></div>
-                                <div class="lemo-col with-collateral">
-                                    <div class="lemo-col-header text-strong">Pure Execution</div>
-                                    <ul class="lemo-list">
-                                        <li class="lemo-item text-strong">Lock deposit on target</li>
-                                        <li class="lemo-item text-strong">Failure has real cost</li>
-                                        <li class="lemo-item text-strong">Work through the night</li>
-                                        <li class="lemo-item text-strong text-green">Hit target & claim yields</li>
-                                    </ul>
+                            </div>
+                            
+                            <div class="lflow-col execution">
+                                <h4 class="lflow-header">Pure Execution</h4>
+                                <div class="lflow-steps">
+                                    <div class="lflow-step">
+                                        <span class="lflow-num">01</span>
+                                        <span class="lflow-text">Lock deposit on target</span>
+                                    </div>
+                                    <div class="lflow-step">
+                                        <span class="lflow-num">02</span>
+                                        <span class="lflow-text">Failure has real cost</span>
+                                    </div>
+                                    <div class="lflow-step">
+                                        <span class="lflow-num">03</span>
+                                        <span class="lflow-text">Work through the night</span>
+                                    </div>
+                                    <div class="lflow-step">
+                                        <span class="lflow-num">04</span>
+                                        <span class="lflow-text highlight-green">Hit target & claim yields</span>
+                                    </div>
                                 </div>
                             </div>
                         </div>

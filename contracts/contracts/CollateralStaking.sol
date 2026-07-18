@@ -1,6 +1,10 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.24;
 
+import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
+import "@openzeppelin/contracts/token/ERC20/extensions/ERC20Permit.sol";
+import "@openzeppelin/contracts/token/ERC20/extensions/ERC20Votes.sol";
+import "@openzeppelin/contracts/utils/Nonces.sol";
 import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 import "@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
@@ -10,9 +14,10 @@ import "@openzeppelin/contracts/utils/ReentrancyGuard.sol";
  * @title CollateralStaking
  * @notice Allows users to lock $CLTR tokens for a chosen lockup duration.
  * @dev Staking admin parameters are owned by a Multisig (Ownable owner).
+ * The staking contract itself behaves as an ERC20Votes token (sCLTR) representing staked balance.
  * Emits events on staking operations and provides read methods for frontend integration.
  */
-contract CollateralStaking is Ownable, ReentrancyGuard {
+contract CollateralStaking is ERC20, ERC20Permit, ERC20Votes, Ownable, ReentrancyGuard {
     using SafeERC20 for IERC20;
 
     struct StakeInfo {
@@ -26,6 +31,9 @@ contract CollateralStaking is Ownable, ReentrancyGuard {
 
     /// @notice Tracks the stake details of each staker.
     mapping(address => StakeInfo) public stakes;
+
+    /// @notice Total amount of CLTR currently locked in active stakes.
+    uint256 public totalStaked;
 
     /// @notice Minimum duration for a lockup stake (default 30 days).
     uint64 public minLockDuration = 30 days;
@@ -45,7 +53,7 @@ contract CollateralStaking is Ownable, ReentrancyGuard {
     event MinLockDurationUpdated(uint64 oldDuration, uint64 newDuration);
     event MaxLockDurationUpdated(uint64 oldDuration, uint64 newDuration);
     event StakingEnabledStatusChanged(bool enabled);
-    event EmergencyUnlockStatusChanged(bool active);
+    event EmergencyUnlockTriggered();
 
     /**
      * @notice Constructor sets the token address and transfers initial ownership to the deploying wallet
@@ -53,7 +61,11 @@ contract CollateralStaking is Ownable, ReentrancyGuard {
      * @param tokenAddress The address of the $CLTR token contract.
      * @param initialOwner The address of the initial owner (Multisig).
      */
-    constructor(address tokenAddress, address initialOwner) Ownable(initialOwner) {
+    constructor(address tokenAddress, address initialOwner) 
+        ERC20("Staked Collateral", "sCLTR")
+        ERC20Permit("Staked Collateral")
+        Ownable(initialOwner) 
+    {
         require(tokenAddress != address(0), "CollateralStaking: token address cannot be zero");
         require(initialOwner != address(0), "CollateralStaking: owner address cannot be zero");
         cltrToken = IERC20(tokenAddress);
@@ -81,6 +93,11 @@ contract CollateralStaking is Ownable, ReentrancyGuard {
             duration: duration
         });
 
+        totalStaked += amount;
+
+        // Mint sCLTR voting receipt to user
+        _mint(msg.sender, amount);
+
         emit Staked(msg.sender, amount, duration);
     }
 
@@ -103,6 +120,11 @@ contract CollateralStaking is Ownable, ReentrancyGuard {
 
         // Clear user stake state before transferring to prevent reentrancy
         delete stakes[msg.sender];
+
+        totalStaked -= amountToWithdraw;
+
+        // Burn sCLTR voting receipt
+        _burn(msg.sender, amountToWithdraw);
 
         cltrToken.safeTransfer(msg.sender, amountToWithdraw);
 
@@ -147,18 +169,42 @@ contract CollateralStaking is Ownable, ReentrancyGuard {
     }
 
     /**
-     * @notice Toggles the emergency unlock status to allow immediate withdrawal in case of emergency.
+     * @notice Permanently activates emergency unlock mode allowing immediate withdrawal of all staked balances.
+     * This is a one-way trigger that cannot be reversed.
      */
-    function setEmergencyUnlock(bool active) external onlyOwner {
-        emergencyUnlockActive = active;
-        emit EmergencyUnlockStatusChanged(active);
+    function triggerEmergencyUnlock() external onlyOwner {
+        require(!emergencyUnlockActive, "CollateralStaking: emergency unlock already active");
+        emergencyUnlockActive = true;
+        emit EmergencyUnlockTriggered();
     }
 
     /**
      * @notice Recovers accidental ERC20 transfers to this contract. Staked $CLTR cannot be withdrawn.
      */
     function recoverERC20(address tokenAddress, uint256 tokenAmount) external onlyOwner {
-        require(tokenAddress != address(cltrToken), "CollateralStaking: cannot withdraw staked token");
+        if (tokenAddress == address(cltrToken)) {
+            uint256 balance = cltrToken.balanceOf(address(this));
+            uint256 excess = balance >= totalStaked ? balance - totalStaked : 0;
+            require(tokenAmount <= excess, "CollateralStaking: cannot withdraw staked token");
+        }
         IERC20(tokenAddress).safeTransfer(owner(), tokenAmount);
+    }
+
+    // Required overrides for Solidity compilation compatibility between ERC20, ERC20Permit, and ERC20Votes
+
+    function _update(address from, address to, uint256 value)
+        internal
+        override(ERC20, ERC20Votes)
+    {
+        super._update(from, to, value);
+    }
+
+    function nonces(address owner)
+        public
+        view
+        override(ERC20Permit, Nonces)
+        returns (uint256)
+    {
+        return super.nonces(owner);
     }
 }

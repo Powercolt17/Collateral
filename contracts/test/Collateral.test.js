@@ -46,7 +46,6 @@ describe("Collateral Protocol Smart Contracts", function () {
         });
 
         it("should not have any mint function or allow unauthorized minting", async function () {
-            // Verify there is no "mint" function in token interface
             expect(token.mint).to.be.undefined;
         });
     });
@@ -81,58 +80,55 @@ describe("Collateral Protocol Smart Contracts", function () {
             expect(await vestingWallet.owner()).to.equal(teamMember.address);
         });
 
+        it("should block ownership transfer and renunciation", async function () {
+            await expect(vestingWallet.connect(teamMember).transferOwnership(investor.address))
+                .to.be.revertedWith("CliffVestingWallet: ownership transfer is disabled");
+            await expect(vestingWallet.connect(teamMember).renounceOwnership())
+                .to.be.revertedWith("CliffVestingWallet: ownership renunciation is disabled");
+        });
+
         it("should release 0 tokens before the 1-year cliff", async function () {
-            // Move time to just before the cliff (e.g. start + 364 days)
             await ethers.provider.send("evm_increaseTime", [Number(ONE_YEAR) - 100]);
             await ethers.provider.send("evm_mine");
 
             expect(await vestingWallet["releasable(address)"](await token.getAddress())).to.equal(0);
             
-            // Release should do nothing or release 0 tokens
             await vestingWallet.connect(teamMember)["release(address)"](await token.getAddress());
             expect(await token.balanceOf(teamMember.address)).to.equal(0);
         });
 
         it("should release the correct linear portion immediately after the 1-year cliff", async function () {
-            // Move time to exactly the 1-year cliff (which is 1/4th of the way through the 4-year schedule)
             const latestBlock = await ethers.provider.getBlock("latest");
             const timeToCliff = BigInt(startTimestamp) + ONE_YEAR - BigInt(latestBlock.timestamp);
             await ethers.provider.send("evm_increaseTime", [Number(timeToCliff)]);
             await ethers.provider.send("evm_mine");
 
-            // At 1 year out of 4 years, exactly 25% should be vested/releasable
             const expectedVested = allocation / 4n;
             expect(await vestingWallet["releasable(address)"](await token.getAddress())).to.be.closeTo(expectedVested, 10n ** decimals);
 
-            // Release tokens
             await vestingWallet.connect(teamMember)["release(address)"](await token.getAddress());
             expect(await token.balanceOf(teamMember.address)).to.be.closeTo(expectedVested, 10n ** decimals);
         });
 
         it("should release tokens linearly during years 2-4", async function () {
-            // Move time to 2 years (halfway through the 4 year schedule)
             const latestBlock = await ethers.provider.getBlock("latest");
             const timeToHalfway = BigInt(startTimestamp) + (FOUR_YEARS / 2n) - BigInt(latestBlock.timestamp);
             await ethers.provider.send("evm_increaseTime", [Number(timeToHalfway)]);
             await ethers.provider.send("evm_mine");
 
-            // Expect 50% vested
             const expectedVested = allocation / 2n;
             expect(await vestingWallet["releasable(address)"](await token.getAddress())).to.be.closeTo(expectedVested, 10n ** decimals);
 
-            // Release
             await vestingWallet.connect(teamMember)["release(address)"](await token.getAddress());
             expect(await token.balanceOf(teamMember.address)).to.be.closeTo(expectedVested, 10n ** decimals);
         });
 
         it("should release 100% of allocation after 4 years", async function () {
-            // Move time past 4 years
             await ethers.provider.send("evm_increaseTime", [Number(FOUR_YEARS) + 1000]);
             await ethers.provider.send("evm_mine");
 
             expect(await vestingWallet["releasable(address)"](await token.getAddress())).to.equal(allocation);
 
-            // Release all
             await vestingWallet.connect(teamMember)["release(address)"](await token.getAddress());
             expect(await token.balanceOf(teamMember.address)).to.equal(allocation);
         });
@@ -143,42 +139,50 @@ describe("Collateral Protocol Smart Contracts", function () {
         const lockDuration = 90n * 24n * 60n * 60n; // 90 days
 
         beforeEach(async function () {
-            // Transfer tokens to user and approve staking contract
             await token.transfer(user.address, stakeAmount);
             await token.connect(user).approve(await staking.getAddress(), stakeAmount);
         });
 
-        it("should allow a user to stake tokens and track getStakedBalance", async function () {
+        it("should allow a user to stake tokens, mint sCLTR receipt, and track balance", async function () {
             await expect(staking.connect(user).stake(stakeAmount, lockDuration))
                 .to.emit(staking, "Staked")
                 .withArgs(user.address, stakeAmount, lockDuration);
 
             expect(await staking.getStakedBalance(user.address)).to.equal(stakeAmount);
+            expect(await staking.balanceOf(user.address)).to.equal(stakeAmount);
+            expect(await staking.totalStaked()).to.equal(stakeAmount);
             
             const stakeInfo = await staking.stakes(user.address);
             expect(stakeInfo.amount).to.equal(stakeAmount);
             expect(stakeInfo.duration).to.equal(lockDuration);
         });
 
+        it("should support sCLTR voting receipt logic and delegation", async function () {
+            await staking.connect(user).stake(stakeAmount, lockDuration);
+            
+            // Initial votes should be 0 because delegate is not set
+            expect(await staking.getVotes(user.address)).to.equal(0);
+            
+            // Delegate voting power
+            await staking.connect(user).delegate(user.address);
+            expect(await staking.getVotes(user.address)).to.equal(stakeAmount);
+        });
+
         it("should disallow staking with 0 amount or invalid durations", async function () {
-            // 0 amount
             await expect(staking.connect(user).stake(0, lockDuration))
                 .to.be.revertedWith("CollateralStaking: amount must be greater than zero");
 
-            // Under min duration (30 days)
             const tooShort = 10n * 24n * 60n * 60n;
             await expect(staking.connect(user).stake(stakeAmount, tooShort))
                 .to.be.revertedWith("CollateralStaking: duration below minimum threshold");
 
-            // Over max duration (365 days)
             const tooLong = 400n * 24n * 60n * 60n;
             await expect(staking.connect(user).stake(stakeAmount, tooLong))
                 .to.be.revertedWith("CollateralStaking: duration exceeds maximum threshold");
         });
 
         it("should disallow staking if the user already has an active stake", async function () {
-            // Split user's tokens to stake twice
-            await token.transfer(user.address, stakeAmount); // give them more
+            await token.transfer(user.address, stakeAmount);
             await token.connect(user).approve(await staking.getAddress(), stakeAmount * 2n);
 
             await staking.connect(user).stake(stakeAmount, lockDuration);
@@ -190,7 +194,6 @@ describe("Collateral Protocol Smart Contracts", function () {
         it("should disallow unstaking before the lock duration has expired", async function () {
             await staking.connect(user).stake(stakeAmount, lockDuration);
 
-            // Move time to 89 days (1 day before expiration)
             await ethers.provider.send("evm_increaseTime", [89 * 24 * 60 * 60]);
             await ethers.provider.send("evm_mine");
 
@@ -198,10 +201,9 @@ describe("Collateral Protocol Smart Contracts", function () {
                 .to.be.revertedWith("CollateralStaking: lock duration has not expired yet");
         });
 
-        it("should allow unstaking after the lock duration has expired", async function () {
+        it("should allow unstaking after the lock duration has expired and burn sCLTR", async function () {
             await staking.connect(user).stake(stakeAmount, lockDuration);
 
-            // Move time to 91 days
             await ethers.provider.send("evm_increaseTime", [91 * 24 * 60 * 60]);
             await ethers.provider.send("evm_mine");
 
@@ -210,38 +212,53 @@ describe("Collateral Protocol Smart Contracts", function () {
                 .withArgs(user.address, stakeAmount);
 
             expect(await staking.getStakedBalance(user.address)).to.equal(0);
+            expect(await staking.balanceOf(user.address)).to.equal(0);
+            expect(await staking.totalStaked()).to.equal(0);
             expect(await token.balanceOf(user.address)).to.equal(stakeAmount);
         });
 
         it("should allow immediate unstaking if emergency unlock is active", async function () {
             await staking.connect(user).stake(stakeAmount, lockDuration);
 
-            // Staking is locked, but multisig activates emergency unlock
-            await expect(staking.connect(multisig).setEmergencyUnlock(true))
-                .to.emit(staking, "EmergencyUnlockStatusChanged")
-                .withArgs(true);
+            await expect(staking.connect(multisig).triggerEmergencyUnlock())
+                .to.emit(staking, "EmergencyUnlockTriggered");
 
-            // User should be able to unstake immediately
             await expect(staking.connect(user).unstake())
                 .to.emit(staking, "Unstaked")
                 .withArgs(user.address, stakeAmount);
 
             expect(await staking.getStakedBalance(user.address)).to.equal(0);
+            expect(await staking.totalStaked()).to.equal(0);
         });
 
         it("should restrict admin parameter controls to the owner (multisig)", async function () {
-            // Deployer is not the owner (multisig is)
             await expect(staking.connect(deployer).setMinLockDuration(40 * 24 * 60 * 60))
                 .to.be.revertedWithCustomError(staking, "OwnableUnauthorizedAccount");
 
             await expect(staking.connect(deployer).setStakingEnabled(false))
                 .to.be.revertedWithCustomError(staking, "OwnableUnauthorizedAccount");
 
-            // Multisig (owner) should succeed
             await expect(staking.connect(multisig).setMinLockDuration(40 * 24 * 60 * 60))
                 .to.emit(staking, "MinLockDurationUpdated");
             
             expect(await staking.minLockDuration()).to.equal(40 * 24 * 60 * 60);
+        });
+
+        it("should recover excess CLTR tokens safely", async function () {
+            await staking.connect(user).stake(stakeAmount, lockDuration);
+
+            // Send CLTR directly to contract (simulating user mistake)
+            const mistakenAmount = 500n * (10n ** decimals);
+            await token.transfer(await staking.getAddress(), mistakenAmount);
+
+            // Attempt to rescue more than excess should revert
+            await expect(staking.connect(multisig).recoverERC20(await token.getAddress(), mistakenAmount + 1n))
+                .to.be.revertedWith("CollateralStaking: cannot withdraw staked token");
+
+            // Successful rescue of exact excess
+            const multisigInitialBalance = await token.balanceOf(multisig.address);
+            await staking.connect(multisig).recoverERC20(await token.getAddress(), mistakenAmount);
+            expect(await token.balanceOf(multisig.address)).to.equal(multisigInitialBalance + mistakenAmount);
         });
     });
 });

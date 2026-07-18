@@ -769,7 +769,7 @@ export async function initRivalryDetail(params) {
         container.innerHTML = `
             <div class="rvd-loading">
                 <div class="rvd-loading-text">RIVALRY NOT FOUND</div>
-                <a href="#" onclick="event.preventDefault();window.router.navigate('/rivalry')" style="color:#5C1A1B; font-size:13px; margin-top:16px; display:inline-block;">← Back to Rivalries</a>
+                <a href="#" onclick="event.preventDefault();window.router.navigate('/market?type=rivalry')" style="color:#5C1A1B; font-size:13px; margin-top:16px; display:inline-block;">← Back to Rivalries</a>
             </div>`;
         return;
     }
@@ -829,7 +829,7 @@ export async function initRivalryDetail(params) {
                 <div style="display:flex; justify-content:space-between; align-items:center; border-bottom:1px solid var(--rvd-border); padding-bottom:16px; margin-bottom:20px;">
                     <div>
                         <div class="rvd-breadcrumb" style="margin-bottom:4px;">
-                            <a href="#" onclick="event.preventDefault();window.router.navigate('/rivalry')">Rivalry</a> <span>/ ${rivalry.id.substring(0, 12)}…</span>
+                            <a href="#" onclick="event.preventDefault();window.router.navigate('/market?type=rivalry')">Rivalry</a> <span>/ ${rivalry.id.substring(0, 12)}…</span>
                         </div>
                         <div class="rvd-status-badge ${statusClass}">
                             <span class="dot"></span>
@@ -1812,7 +1812,7 @@ export async function initRivalryDetail(params) {
                 e.target.disabled = true; e.target.textContent = 'DECLINING...';
                 try {
                     const res = await api.declineRivalry(id);
-                    if (res.ok) { await showAlert('Challenge declined.', { type: 'info', title: 'Declined' }); window.router.navigate('/rivalry'); }
+                    if (res.ok) { await showAlert('Challenge declined.', { type: 'info', title: 'Declined' }); window.router.navigate('/market?type=rivalry'); }
                     else showAlert(res.error || 'Failed to decline', { type: 'error' });
                 } catch (err) { showAlert('Error: ' + err.message, { type: 'error' }); }
                 e.target.disabled = false; e.target.textContent = 'DECLINE';

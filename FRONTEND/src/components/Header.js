@@ -18,7 +18,7 @@ export function renderHeader(currentRoute) {
             if (route.path === '/market') {
                 dropdownItems = `
                     <a href="#" onclick="window.router.navigate('/market'); return false;">Solo Contracts</a>
-                    <a href="#" onclick="window.router.navigate('/rivalry'); return false;">Rivalry Contracts</a>
+                    <a href="#" onclick="window.router.navigate('/market?type=rivalry'); return false;">Rivalry Contracts</a>
                 `;
             } else if (route.path === '/protocol') {
                 dropdownItems = `
@@ -83,8 +83,8 @@ export function renderHeader(currentRoute) {
             let subnavItems = '';
             if (route.path === '/market') {
                 subnavItems = `
-                    <a href="#" onclick="window.app.closeMobileMenu(); window.router.navigate('/market'); return false;" class="pnl-subnav-link ${(currentRoute === '/market' || currentRoute === '/market/') ? 'active' : ''}">Solo Contracts</a>
-                    <a href="#" onclick="window.app.closeMobileMenu(); window.router.navigate('/rivalry'); return false;" class="pnl-subnav-link ${(currentRoute === '/rivalry' || currentRoute.startsWith('/rivalry/')) ? 'active' : ''}">Rivalry Contracts</a>
+                    <a href="#" onclick="window.app.closeMobileMenu(); window.router.navigate('/market'); return false;" class="pnl-subnav-link ${(currentRoute === '/market' && !window.location.search.includes('type=rivalry')) ? 'active' : ''}">Solo Contracts</a>
+                    <a href="#" onclick="window.app.closeMobileMenu(); window.router.navigate('/market?type=rivalry'); return false;" class="pnl-subnav-link ${(currentRoute === '/market' && window.location.search.includes('type=rivalry')) ? 'active' : ''}">Rivalry Contracts</a>
                 `;
             } else if (route.path === '/protocol') {
                 subnavItems = `

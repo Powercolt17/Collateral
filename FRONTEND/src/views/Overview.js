@@ -1270,7 +1270,7 @@ export function renderOverview() {
                             <div class="eq-path-detail"><span class="eq-path-check rivalry">✓</span> Matched capital</div>
                             <div class="eq-path-detail"><span class="eq-path-check rivalry">✓</span> Relative performance</div>
                         </div>
-                        <a href="#/rivalry" class="eq-path-cta rivalry">Explore Rivalries →</a>
+                        <a href="#" onclick="event.preventDefault(); window.router.navigate('/market?type=rivalry');" class="eq-path-cta rivalry">Explore Rivalries →</a>
                     </div>
                 </div>
             </section>

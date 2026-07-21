@@ -533,8 +533,8 @@ export const landingCSS = `
     display: inline-flex;
     align-items: center;
     gap: 8px;
-    background: rgba(20, 18, 31, 0.04);
-    border: 1px solid rgba(20, 18, 31, 0.1);
+    background: rgba(122, 18, 32, 0.05) !important;
+    border: 1px solid rgba(122, 18, 32, 0.15) !important;
     padding: 6px 14px;
     border-radius: 100px;
     font-family: 'JetBrains Mono', monospace;
@@ -542,7 +542,7 @@ export const landingCSS = `
     font-weight: 700;
     letter-spacing: 1px;
     text-transform: uppercase;
-    color: #14121F;
+    color: #7A1220 !important;
     margin-bottom: 16px;
 }
 
@@ -568,7 +568,7 @@ export const landingCSS = `
     border: 1px solid #E2E8F0;
     border-radius: 16px;
     padding: 40px;
-    box-shadow: 0 16px 40px -12px rgba(20, 18, 31, 0.06);
+    box-shadow: 0 16px 40px -12px rgba(15, 23, 42, 0.06);
     position: relative;
 }
 
@@ -581,8 +581,8 @@ export const landingCSS = `
 }
 
 .lengine-step-btn {
-    background: #F8FAFC;
-    border: 1px solid #E2E8F0;
+    background: #FAF9F7 !important;
+    border: 1px solid #E2E8F0 !important;
     border-radius: 8px;
     padding: 16px 20px;
     cursor: pointer;
@@ -590,12 +590,17 @@ export const landingCSS = `
     transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
+.lengine-step-btn:hover {
+    border-color: #CBD5E1 !important;
+    background: #FFFFFF !important;
+}
+
 .lengine-step-btn.is-active {
-    background: #14121F;
-    border-color: #14121F;
-    color: #FFFFFF;
+    background: #7A1220 !important;
+    border-color: #7A1220 !important;
+    color: #FFFFFF !important;
     transform: translateY(-2px);
-    box-shadow: 0 8px 24px -6px rgba(20, 18, 31, 0.2);
+    box-shadow: 0 8px 24px -6px rgba(122, 18, 32, 0.3) !important;
 }
 
 .lengine-step-num {
@@ -608,7 +613,7 @@ export const landingCSS = `
 }
 
 .lengine-step-btn.is-active .lengine-step-num {
-    color: rgba(255, 255, 255, 0.7);
+    color: rgba(255, 255, 255, 0.8) !important;
 }
 
 .lengine-step-title {
@@ -621,7 +626,7 @@ export const landingCSS = `
 }
 
 .lengine-step-btn.is-active .lengine-step-title {
-    color: #FFFFFF;
+    color: #FFFFFF !important;
 }
 
 .lengine-stage-display {
@@ -665,7 +670,7 @@ export const landingCSS = `
     font-family: 'JetBrains Mono', monospace;
     font-size: 20px;
     font-weight: 800;
-    color: #14121F;
+    color: #7A1220 !important;
 }
 
 .lengine-metric-lbl {

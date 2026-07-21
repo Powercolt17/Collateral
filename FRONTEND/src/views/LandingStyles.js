@@ -96,10 +96,10 @@ export const landingCSS = `
 .lhero-scroll-arrow{font-size:14px;animation:bounceDown 2s infinite ease-in-out}
 @keyframes bounceDown{0%,100%{transform:translateY(0)}50%{transform:translateY(4px)}}
 
-/* ═══ FANNED-DECK CAROUSEL SHOWCASE SECTION ═══ */
+/* ═══ REAL COLLATERAL CONTRACT CARDS DECK CAROUSEL ═══ */
 .lfeatured-live-section {
     padding: 100px 0;
-    background: #0B0B0D !important;
+    background: #080C14 !important;
     color: #FFFFFF;
     position: relative;
     overflow: hidden;
@@ -108,7 +108,7 @@ export const landingCSS = `
 
 .lfan-grid {
     display: grid;
-    grid-template-columns: 0.4fr 0.6fr;
+    grid-template-columns: 0.42fr 0.58fr;
     gap: 48px;
     align-items: center;
 }
@@ -131,13 +131,9 @@ export const landingCSS = `
     margin: 0;
 }
 
-.lfan-highlight {
-    color: #FFFFFF;
-}
-
 .lfan-sub {
     font-size: 15px;
-    color: #A1A1AA;
+    color: #94A3B8;
     line-height: 1.55;
     max-width: 380px;
     margin: 0;
@@ -168,11 +164,7 @@ export const landingCSS = `
     background: rgba(255, 255, 255, 0.12);
 }
 
-.lfan-arrow-btn:active {
-    transform: scale(0.96);
-}
-
-/* DECK CAROUSEL STAGE */
+/* REAL CARD STACK DECK STAGE */
 .lfan-right {
     position: relative;
     width: 100%;
@@ -185,120 +177,60 @@ export const landingCSS = `
 .lfan-deck-viewport {
     position: relative;
     width: 100%;
-    max-width: 540px;
-    height: 420px;
+    max-width: 560px;
+    height: 520px;
     display: flex;
     justify-content: center;
-    align-items: flex-end;
+    align-items: center;
 }
 
 .lfan-deck-stage {
     position: relative;
-    width: 285px;
-    height: 380px;
-}
-
-/* CARD SPECIFICATION */
-.lfan-card {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 285px;
-    height: 380px;
-    aspect-ratio: 3 / 4;
-    border-radius: 4px;
-    padding: 28px 24px;
+    width: 380px;
+    height: 500px;
     display: flex;
-    flex-direction: column;
-    box-sizing: border-box;
-    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.45);
-    transform-origin: bottom center !important;
-    transition: transform 450ms cubic-bezier(0.4, 0, 0.2, 1), opacity 450ms cubic-bezier(0.4, 0, 0.2, 1);
-    overflow: hidden;
-    user-select: none;
-}
-
-/* CARD INTERNAL TYPOGRAPHY & LAYOUT */
-.lfan-card-header {
-    position: relative;
-    z-index: 2;
-}
-
-.lfan-card-title {
-    font-family: 'Plus Jakarta Sans', sans-serif;
-    font-weight: 800;
-    font-size: 26px;
-    line-height: 1.05;
-    letter-spacing: -0.5px;
-    text-transform: uppercase;
-    margin: 0 0 10px 0;
-}
-
-.lfan-card-desc {
-    font-family: 'Inter', sans-serif;
-    font-size: 14px;
-    font-weight: 400;
-    line-height: 1.45;
-    opacity: 0.9;
-    margin: 0;
-}
-
-.lfan-card-icon-wrap {
-    position: relative;
-    z-index: 2;
-    margin-top: auto;
-    height: 52%;
-    display: flex;
-    align-items: center;
     justify-content: center;
+    align-items: center;
 }
 
-.lfan-card-icon-wrap svg {
-    width: 100px;
-    height: 100px;
-    opacity: 0.95;
-}
-
-.lfan-card-mesh {
-    position: absolute;
-    inset: 0;
-    width: 100%;
-    height: 100%;
-    pointer-events: none;
-    z-index: 1;
-}
-
-/* FAN POSITIONS (PRECISE SPECIFICATIONS) */
-.lfan-card.is-center {
-    transform: translateX(0) rotate(0deg) scale(1.00) !important;
-    z-index: 3 !important;
-    opacity: 1 !important;
+.lfan-real-card {
+    position: absolute !important;
+    width: 380px !important;
+    top: 0;
+    transition: transform 450ms cubic-bezier(0.4, 0, 0.2, 1), opacity 450ms cubic-bezier(0.4, 0, 0.2, 1) !important;
+    transform-origin: bottom center !important;
     cursor: pointer;
+    box-shadow: 0 25px 60px rgba(0, 0, 0, 0.5) !important;
+}
+
+.lfan-real-card.is-center {
+    transform: translateX(0) rotate(0deg) scale(1) !important;
+    z-index: 5 !important;
+    opacity: 1 !important;
     pointer-events: auto !important;
 }
 
-.lfan-card.is-left {
-    transform: translateX(-58%) rotate(-9deg) scale(0.92) !important;
-    z-index: 1 !important;
-    opacity: 0.75 !important;
-    pointer-events: none !important;
+.lfan-real-card.is-left {
+    transform: translateX(-42px) translateY(12px) rotate(-6deg) scale(0.92) !important;
+    z-index: 2 !important;
+    opacity: 0.8 !important;
+    pointer-events: auto !important;
 }
 
-.lfan-card.is-right {
-    transform: translateX(58%) rotate(9deg) scale(0.92) !important;
-    z-index: 1 !important;
-    opacity: 0.75 !important;
-    pointer-events: none !important;
+.lfan-real-card.is-right {
+    transform: translateX(42px) translateY(12px) rotate(6deg) scale(0.92) !important;
+    z-index: 2 !important;
+    opacity: 0.8 !important;
+    pointer-events: auto !important;
 }
 
-.lfan-card.is-hidden {
+.lfan-real-card.is-hidden {
     transform: translateX(0) rotate(0deg) scale(0.8) !important;
-    z-index: 0 !important;
+    z-index: 1 !important;
     opacity: 0 !important;
     pointer-events: none !important;
 }
 
-/* RESPONSIVE LAYOUT (< 900px STACKED) */
 @media(max-width: 900px) {
     .lfan-grid {
         grid-template-columns: 1fr;
@@ -312,13 +244,17 @@ export const landingCSS = `
     }
     .lfan-deck-viewport {
         max-width: 100%;
-        height: 380px;
+        height: 480px;
     }
-    .lfan-card.is-left {
-        transform: translateX(-40%) rotate(-8deg) scale(0.88) !important;
+    .lfan-real-card {
+        width: 100% !important;
+        max-width: 350px !important;
     }
-    .lfan-card.is-right {
-        transform: translateX(40%) rotate(8deg) scale(0.88) !important;
+    .lfan-real-card.is-left {
+        transform: translateX(-24px) rotate(-4deg) scale(0.92) !important;
+    }
+    .lfan-real-card.is-right {
+        transform: translateX(24px) rotate(4deg) scale(0.92) !important;
     }
 }
 /* Secondary CTA demoted to a plain text link so only "Start Contract" reads as a button */

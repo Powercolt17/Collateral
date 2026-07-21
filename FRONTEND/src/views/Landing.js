@@ -187,11 +187,11 @@ export function renderLanding() {
                 </div>
             </div>
 
-            <!-- ═══ FANNED-DECK KASPA CAROUSEL SHOWCASE ═══ -->
+            <!-- ═══ FANNED-DECK SHOWCASE WITH REAL COLLATERAL CONTRACT CARDS ═══ -->
             <div class="lfeatured-live-section" id="lfeatured-live-section" data-r>
                 <div class="lw">
                     <div class="lfan-grid">
-                        <!-- LEFT COLUMN (~40%) -->
+                        <!-- LEFT COLUMN -->
                         <div class="lfan-left">
                             <h2 class="lfan-h1">
                                 DISCOVER THE<br>
@@ -211,11 +211,197 @@ export function renderLanding() {
                             </div>
                         </div>
 
-                        <!-- RIGHT COLUMN (~60%): FANNED DECK CAROUSEL -->
+                        <!-- RIGHT COLUMN: 3 REAL COLLATERAL CONTRACT CARDS DECK -->
                         <div class="lfan-right" id="lfan-deck-container" tabindex="0" aria-label="Interactive Contract Deck Carousel">
                             <div class="lfan-deck-viewport">
                                 <div class="lfan-deck-stage" id="lfan-deck-stage">
-                                    <!-- Cards populated dynamically by JS -->
+                                    
+                                    <!-- CARD 1: STRIPE REVENUE CONTRACT -->
+                                    <div class="lactivity-card lfan-real-card is-center" id="lfan-card-0">
+                                        <div class="lc-platform-header">
+                                            <img class="lc-plat-logo" src="https://www.vectorlogo.zone/logos/stripe/stripe-icon.svg" alt="Stripe">
+                                            <span class="lc-plat-text">Connected via Stripe Connect</span>
+                                        </div>
+                                        <div class="lc-global-stats-row">
+                                            <span class="lc-global-stats-item">
+                                                <span class="lc-global-stats-dot"></span>
+                                                <span class="lc-global-stats-num">22</span>
+                                                <span class="lc-global-stats-label">Active Contracts</span>
+                                            </span>
+                                            <span class="lc-global-stats-divider">|</span>
+                                            <span class="lc-global-stats-item">
+                                                <span class="lc-global-stats-num">$8,700</span>
+                                                <span class="lc-global-stats-label">Locked</span>
+                                            </span>
+                                        </div>
+                                        <div class="lc-contract">
+                                            <div class="lc-contract-head">
+                                                <div>
+                                                    <div class="lc-contract-name">Stripe Revenue</div>
+                                                    <div class="lc-contract-goal">Increase Stripe revenue by 20%</div>
+                                                    <div class="lc-contract-time">18 Days Remaining</div>
+                                                </div>
+                                                <div class="lc-status"><span class="lc-status-dot"></span>Active</div>
+                                            </div>
+                                            <div class="lc-flow-horizontal">
+                                                <div class="lc-flow-col">
+                                                    <span class="lc-flow-label">Deposit</span>
+                                                    <span class="lc-flow-val">$500</span>
+                                                </div>
+                                                <div class="lc-flow-arrow-right">→</div>
+                                                <div class="lc-flow-col">
+                                                    <span class="lc-flow-label">Match</span>
+                                                    <span class="lc-flow-val lc-val-green">+$500</span>
+                                                </div>
+                                                <div class="lc-flow-arrow-right">→</div>
+                                                <div class="lc-flow-col lc-col-final">
+                                                    <span class="lc-flow-label">Return</span>
+                                                    <span class="lc-flow-val">$1,000</span>
+                                                </div>
+                                            </div>
+                                            <div class="lc-flow-footnote">Matches are funded by forfeited deposits and sponsors. <a href="#how" class="lc-flow-link" onclick="document.getElementById('how')?.scrollIntoView({behavior:'smooth'}); return false;">How it works →</a></div>
+                                            <div class="lc-live-state-ticker">
+                                                <span class="lc-live-state-lbl">PROTOCOL STATE</span>
+                                                <span class="lc-live-state-val">Deposit Escrowed</span>
+                                            </div>
+                                        </div>
+                                        <div class="lc-recent-activity">
+                                            <div class="lc-ra-header">Recent Activity</div>
+                                            <div class="lc-ra-list">
+                                                <div class="lc-ra-item"><span class="lc-ra-dot hit">✓</span><div><strong>@tylerbrooks</strong> completed Stripe Revenue<div class="lc-ra-meta">+$500 paid · 14m ago</div></div></div>
+                                                <div class="lc-ra-item"><span class="lc-ra-dot hit">✓</span><div><strong>@sarah_k</strong> funded X Followers<div class="lc-ra-meta">$250 locked · 45m ago</div></div></div>
+                                            </div>
+                                        </div>
+                                        <div class="lc-trust">
+                                            <svg class="lc-trust-lock" width="10" height="10" viewBox="0 0 24 28" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><path d="M12 2a5 5 0 0 0-5 5v3H5a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V12a2 2 0 0 0-2-2h-2V7a5 5 0 0 0-5-5zm-3 5a3 3 0 0 1 6 0v3H9V7zm3 9a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3z" fill="currentColor"/></svg>
+                                            Contracts verified automatically through connected APIs.
+                                        </div>
+                                    </div>
+
+                                    <!-- CARD 2: SHOPIFY SALES CONTRACT -->
+                                    <div class="lactivity-card lfan-real-card is-right" id="lfan-card-1">
+                                        <div class="lc-platform-header">
+                                            <img class="lc-plat-logo" src="https://www.vectorlogo.zone/logos/shopify/shopify-icon.svg" alt="Shopify">
+                                            <span class="lc-plat-text">Verified via Shopify API</span>
+                                        </div>
+                                        <div class="lc-global-stats-row">
+                                            <span class="lc-global-stats-item">
+                                                <span class="lc-global-stats-dot"></span>
+                                                <span class="lc-global-stats-num">15</span>
+                                                <span class="lc-global-stats-label">Active Contracts</span>
+                                            </span>
+                                            <span class="lc-global-stats-divider">|</span>
+                                            <span class="lc-global-stats-item">
+                                                <span class="lc-global-stats-num">$6,200</span>
+                                                <span class="lc-global-stats-label">Locked</span>
+                                            </span>
+                                        </div>
+                                        <div class="lc-contract">
+                                            <div class="lc-contract-head">
+                                                <div>
+                                                    <div class="lc-contract-name">Shopify Sales</div>
+                                                    <div class="lc-contract-goal">Generate $5,000 in net sales</div>
+                                                    <div class="lc-contract-time">30 Days Remaining</div>
+                                                </div>
+                                                <div class="lc-status"><span class="lc-status-dot"></span>Active</div>
+                                            </div>
+                                            <div class="lc-flow-horizontal">
+                                                <div class="lc-flow-col">
+                                                    <span class="lc-flow-label">Deposit</span>
+                                                    <span class="lc-flow-val">$250</span>
+                                                </div>
+                                                <div class="lc-flow-arrow-right">→</div>
+                                                <div class="lc-flow-col">
+                                                    <span class="lc-flow-label">Match</span>
+                                                    <span class="lc-flow-val lc-val-green">+$125</span>
+                                                </div>
+                                                <div class="lc-flow-arrow-right">→</div>
+                                                <div class="lc-flow-col lc-col-final">
+                                                    <span class="lc-flow-label">Return</span>
+                                                    <span class="lc-flow-val">$375</span>
+                                                </div>
+                                            </div>
+                                            <div class="lc-flow-footnote">Matches are funded by forfeited deposits and sponsors. <a href="#how" class="lc-flow-link" onclick="document.getElementById('how')?.scrollIntoView({behavior:'smooth'}); return false;">How it works →</a></div>
+                                            <div class="lc-live-state-ticker">
+                                                <span class="lc-live-state-lbl">PROTOCOL STATE</span>
+                                                <span class="lc-live-state-val">Yield Multiplier Active</span>
+                                            </div>
+                                        </div>
+                                        <div class="lc-recent-activity">
+                                            <div class="lc-ra-header">Recent Activity</div>
+                                            <div class="lc-ra-list">
+                                                <div class="lc-ra-item"><span class="lc-ra-dot hit">✓</span><div><strong>@marcus_d</strong> completed Shopify Sales<div class="lc-ra-meta">+$375 paid · 22m ago</div></div></div>
+                                                <div class="lc-ra-item"><span class="lc-ra-dot hit">✓</span><div><strong>@alex_dev</strong> funded Store Milestone<div class="lc-ra-meta">$250 locked · 1h ago</div></div></div>
+                                            </div>
+                                        </div>
+                                        <div class="lc-trust">
+                                            <svg class="lc-trust-lock" width="10" height="10" viewBox="0 0 24 28" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><path d="M12 2a5 5 0 0 0-5 5v3H5a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V12a2 2 0 0 0-2-2h-2V7a5 5 0 0 0-5-5zm-3 5a3 3 0 0 1 6 0v3H9V7zm3 9a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3z" fill="currentColor"/></svg>
+                                            Contracts verified automatically through connected APIs.
+                                        </div>
+                                    </div>
+
+                                    <!-- CARD 3: X AUDIENCE GROWTH CONTRACT -->
+                                    <div class="lactivity-card lfan-real-card is-left" id="lfan-card-2">
+                                        <div class="lc-platform-header">
+                                            <img class="lc-plat-logo" src="https://cdn.simpleicons.org/x/111111" alt="X">
+                                            <span class="lc-plat-text">Verified via X API v2</span>
+                                        </div>
+                                        <div class="lc-global-stats-row">
+                                            <span class="lc-global-stats-item">
+                                                <span class="lc-global-stats-dot"></span>
+                                                <span class="lc-global-stats-num">31</span>
+                                                <span class="lc-global-stats-label">Active Contracts</span>
+                                            </span>
+                                            <span class="lc-global-stats-divider">|</span>
+                                            <span class="lc-global-stats-item">
+                                                <span class="lc-global-stats-num">$12,400</span>
+                                                <span class="lc-global-stats-label">Locked</span>
+                                            </span>
+                                        </div>
+                                        <div class="lc-contract">
+                                            <div class="lc-contract-head">
+                                                <div>
+                                                    <div class="lc-contract-name">X Audience Growth</div>
+                                                    <div class="lc-contract-goal">Gain 1,000 net new followers</div>
+                                                    <div class="lc-contract-time">12 Days Remaining</div>
+                                                </div>
+                                                <div class="lc-status"><span class="lc-status-dot"></span>Active</div>
+                                            </div>
+                                            <div class="lc-flow-horizontal">
+                                                <div class="lc-flow-col">
+                                                    <span class="lc-flow-label">Deposit</span>
+                                                    <span class="lc-flow-val">$1,000</span>
+                                                </div>
+                                                <div class="lc-flow-arrow-right">→</div>
+                                                <div class="lc-flow-col">
+                                                    <span class="lc-flow-label">Match</span>
+                                                    <span class="lc-flow-val lc-val-green">+$1,000</span>
+                                                </div>
+                                                <div class="lc-flow-arrow-right">→</div>
+                                                <div class="lc-flow-col lc-col-final">
+                                                    <span class="lc-flow-label">Return</span>
+                                                    <span class="lc-flow-val">$2,000</span>
+                                                </div>
+                                            </div>
+                                            <div class="lc-flow-footnote">Matches are funded by forfeited deposits and sponsors. <a href="#how" class="lc-flow-link" onclick="document.getElementById('how')?.scrollIntoView({behavior:'smooth'}); return false;">How it works →</a></div>
+                                            <div class="lc-live-state-ticker">
+                                                <span class="lc-live-state-lbl">PROTOCOL STATE</span>
+                                                <span class="lc-live-state-val">Escrow Verified</span>
+                                            </div>
+                                        </div>
+                                        <div class="lc-recent-activity">
+                                            <div class="lc-ra-header">Recent Activity</div>
+                                            <div class="lc-ra-list">
+                                                <div class="lc-ra-item"><span class="lc-ra-dot hit">✓</span><div><strong>@jakevoss</strong> completed X Growth<div class="lc-ra-meta">+$2,000 paid · 5m ago</div></div></div>
+                                                <div class="lc-ra-item"><span class="lc-ra-dot hit">✓</span><div><strong>@elena_m</strong> funded Audience Target<div class="lc-ra-meta">$1,000 locked · 38m ago</div></div></div>
+                                            </div>
+                                        </div>
+                                        <div class="lc-trust">
+                                            <svg class="lc-trust-lock" width="10" height="10" viewBox="0 0 24 28" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><path d="M12 2a5 5 0 0 0-5 5v3H5a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V12a2 2 0 0 0-2-2h-2V7a5 5 0 0 0-5-5zm-3 5a3 3 0 0 1 6 0v3H9V7zm3 9a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3z" fill="currentColor"/></svg>
+                                            Contracts verified automatically through connected APIs.
+                                        </div>
+                                    </div>
+
                                 </div>
                             </div>
                         </div>
@@ -1612,197 +1798,77 @@ export function initLanding() {
                     window.landingIntervals.push(intervalId3);
                 }
 
-                // ═══ FANNED-DECK CAROUSEL CONTROLLER ═══
-                const stageEl = document.getElementById('lfan-deck-stage');
-                if (stageEl) {
-                    const fanCardsData = [
-                        {
-                            id: 'shopify',
-                            title: 'SHOPIFY SALES',
-                            desc: 'Deposit against a net sales target. Verified directly through the Shopify API.',
-                            bg: '#D97706',
-                            ink: '#1A1206',
-                            iconSvg: `<svg viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round">
-                                <path d="M20 35h60l-5 50H25L20 35z" fill="currentColor" fill-opacity="0.12" />
-                                <path d="M20 35h60l-5 50H25L20 35z" />
-                                <path d="M35 35V25a15 15 0 0 1 30 0v10" />
-                                <path d="M40 62l10-10 10 10" />
-                                <path d="M50 52v20" />
-                            </svg>`
-                        },
-                        {
-                            id: 'x_growth',
-                            title: 'X AUDIENCE GROWTH',
-                            desc: 'Stake on follower growth. Settled automatically from platform data.',
-                            bg: '#8B85F0',
-                            ink: '#14121F',
-                            iconSvg: `<svg viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round">
-                                <circle cx="50" cy="50" r="14" fill="currentColor" fill-opacity="0.15" />
-                                <circle cx="50" cy="50" r="14" />
-                                <circle cx="20" cy="30" r="8" />
-                                <circle cx="80" cy="30" r="8" />
-                                <circle cx="24" cy="74" r="8" />
-                                <circle cx="76" cy="74" r="8" />
-                                <line x1="39" y1="41" x2="27" y2="35" />
-                                <line x1="61" y1="41" x2="73" y2="35" />
-                                <line x1="41" y1="60" x2="30" y2="69" />
-                                <line x1="59" y1="60" x2="70" y2="69" />
-                            </svg>`
-                        },
-                        {
-                            id: 'stripe',
-                            title: 'STRIPE REVENUE',
-                            desc: 'Back a revenue milestone with escrowed funds. No manual uploads.',
-                            bg: '#3B2FD9',
-                            ink: '#FFFFFF',
-                            iconSvg: `<svg viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round">
-                                <rect x="18" y="22" width="64" height="42" rx="4" fill="currentColor" fill-opacity="0.12" />
-                                <line x1="18" y1="34" x2="82" y2="34" />
-                                <rect x="26" y="46" width="12" height="8" rx="1" fill="currentColor" fill-opacity="0.25" />
-                                <path d="M22 78l16-16 12 12 24-24" />
-                                <path d="M62 50h12v12" />
-                            </svg>`
-                        },
-                        {
-                            id: 'youtube',
-                            title: 'YOUTUBE WATCH TIME',
-                            desc: 'Commit to a watch-hour target, verified via connected analytics.',
-                            bg: '#0F9D58',
-                            ink: '#FFFFFF',
-                            iconSvg: `<svg viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round">
-                                <polygon points="34,26 74,50 34,74" fill="currentColor" fill-opacity="0.25" />
-                                <polygon points="34,26 74,50 34,74" />
-                                <circle cx="50" cy="50" r="38" stroke-dasharray="6 6" />
-                            </svg>`
-                        },
-                        {
-                            id: 'escrow',
-                            title: 'SMART ESCROW',
-                            desc: 'Funds locked on-chain until the API confirms the outcome. No cheating.',
-                            bg: '#2F3542',
-                            ink: '#FFFFFF',
-                            iconSvg: `<svg viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round">
-                                <rect x="24" y="16" width="52" height="68" rx="4" fill="currentColor" fill-opacity="0.12" />
-                                <rect x="40" y="48" width="20" height="18" rx="2" fill="currentColor" fill-opacity="0.25" />
-                                <path d="M44 48v-8a6 6 0 0 1 12 0v8" />
-                                <line x1="34" y1="30" x2="66" y2="30" />
-                                <line x1="34" y1="38" x2="56" y2="38" />
-                            </svg>`
+                // ═══ REAL COLLATERAL CONTRACT CARDS DECK CAROUSEL CONTROLLER ═══
+                let realCardIndex = 0; // 0: Stripe Revenue, 1: Shopify Sales, 2: X Audience Growth
+                const totalRealCards = 3;
+
+                const updateRealCardPositions = () => {
+                    const card0 = document.getElementById('lfan-card-0');
+                    const card1 = document.getElementById('lfan-card-1');
+                    const card2 = document.getElementById('lfan-card-2');
+                    const cards = [card0, card1, card2].filter(Boolean);
+
+                    cards.forEach((card, i) => {
+                        let diff = (i - realCardIndex) % totalRealCards;
+                        if (diff < -1) diff += totalRealCards;
+                        if (diff > 1) diff -= totalRealCards;
+
+                        card.classList.remove('is-center', 'is-left', 'is-right', 'is-hidden');
+                        if (diff === 0) {
+                            card.classList.add('is-center');
+                        } else if (diff === 1 || diff === -2) {
+                            card.classList.add('is-right');
+                        } else {
+                            card.classList.add('is-left');
                         }
-                    ];
-
-                    const meshSvgHtml = `<svg class="lfan-card-mesh" viewBox="0 0 200 300" fill="none" preserveAspectRatio="xMidYMid slice">
-                        <g opacity="0.08" stroke="currentColor" stroke-width="1.5">
-                            <circle cx="30" cy="40" r="4" fill="currentColor" />
-                            <circle cx="170" cy="60" r="4" fill="currentColor" />
-                            <circle cx="100" cy="140" r="5" fill="currentColor" />
-                            <circle cx="40" cy="240" r="4" fill="currentColor" />
-                            <circle cx="160" cy="250" r="4" fill="currentColor" />
-                            <line x1="30" y1="40" x2="170" y2="60" />
-                            <line x1="30" y1="40" x2="100" y2="140" />
-                            <line x1="170" y1="60" x2="100" y2="140" />
-                            <line x1="100" y1="140" x2="40" y2="240" />
-                            <line x1="100" y1="140" x2="160" y2="250" />
-                            <line x1="40" y1="240" x2="160" y2="250" />
-                        </g>
-                    </svg>`;
-
-                    stageEl.innerHTML = '';
-                    fanCardsData.forEach((item, index) => {
-                        const cardEl = document.createElement('div');
-                        cardEl.className = 'lfan-card';
-                        cardEl.style.backgroundColor = item.bg;
-                        cardEl.style.color = item.ink;
-                        cardEl.setAttribute('data-index', index);
-
-                        cardEl.innerHTML = `
-                            ${meshSvgHtml}
-                            <div class="lfan-card-header">
-                                <h3 class="lfan-card-title">${item.title}</h3>
-                                <p class="lfan-card-desc">${item.desc}</p>
-                            </div>
-                            <div class="lfan-card-icon-wrap">
-                                ${item.iconSvg}
-                            </div>
-                        `;
-
-                        stageEl.appendChild(cardEl);
                     });
+                };
 
-                    let activeDeckIndex = 0;
-                    let deckTimer = null;
-                    let isDeckPaused = false;
+                const nextRealCard = () => {
+                    realCardIndex = (realCardIndex + 1) % totalRealCards;
+                    updateRealCardPositions();
+                };
 
-                    const updateDeckPositions = () => {
-                        const cards = stageEl.querySelectorAll('.lfan-card');
-                        const total = fanCardsData.length;
+                const prevRealCard = () => {
+                    realCardIndex = (realCardIndex - 1 + totalRealCards) % totalRealCards;
+                    updateRealCardPositions();
+                };
 
-                        cards.forEach((card, i) => {
-                            let diff = (i - activeDeckIndex) % total;
-                            if (diff < -Math.floor(total / 2)) diff += total;
-                            if (diff > Math.floor(total / 2)) diff -= total;
+                updateRealCardPositions();
 
-                            card.classList.remove('is-center', 'is-left', 'is-right', 'is-hidden');
+                const prevBtn = document.getElementById('lfan-prev');
+                const nextBtn = document.getElementById('lfan-next');
+                if (prevBtn) prevBtn.onclick = prevRealCard;
+                if (nextBtn) nextBtn.onclick = nextRealCard;
 
-                            if (diff === 0) {
-                                card.classList.add('is-center');
-                                card.removeAttribute('aria-hidden');
-                            } else if (diff === -1 || (diff === total - 1 && total > 2)) {
-                                card.classList.add('is-left');
-                                card.setAttribute('aria-hidden', 'true');
-                            } else if (diff === 1 || (diff === -(total - 1) && total > 2)) {
-                                card.classList.add('is-right');
-                                card.setAttribute('aria-hidden', 'true');
-                            } else {
-                                card.classList.add('is-hidden');
-                                card.setAttribute('aria-hidden', 'true');
+                // Click card to advance
+                [0, 1, 2].forEach(idx => {
+                    const card = document.getElementById(`lfan-card-${idx}`);
+                    if (card) {
+                        card.onclick = () => {
+                            if (idx !== realCardIndex) {
+                                realCardIndex = idx;
+                                updateRealCardPositions();
                             }
-                        });
-                    };
-
-                    const nextDeckCard = () => {
-                        activeDeckIndex = (activeDeckIndex + 1) % fanCardsData.length;
-                        updateDeckPositions();
-                    };
-
-                    const prevDeckCard = () => {
-                        activeDeckIndex = (activeDeckIndex - 1 + fanCardsData.length) % fanCardsData.length;
-                        updateDeckPositions();
-                    };
-
-                    updateDeckPositions();
-
-                    const prevBtn = document.getElementById('lfan-prev');
-                    const nextBtn = document.getElementById('lfan-next');
-                    if (prevBtn) prevBtn.onclick = prevDeckCard;
-                    if (nextBtn) nextBtn.onclick = nextDeckCard;
-
-                    const startAutoTimer = () => {
-                        if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-                        if (deckTimer) clearInterval(deckTimer);
-                        deckTimer = setInterval(() => {
-                            if (!isDeckPaused) nextDeckCard();
-                        }, 6000);
-                        window.landingIntervals.push(deckTimer);
-                    };
-
-                    startAutoTimer();
-
-                    const deckContainer = document.getElementById('lfan-deck-container');
-                    if (deckContainer) {
-                        deckContainer.addEventListener('mouseenter', () => { isDeckPaused = true; });
-                        deckContainer.addEventListener('mouseleave', () => { isDeckPaused = false; });
-                        deckContainer.addEventListener('focusin', () => { isDeckPaused = true; });
-                        deckContainer.addEventListener('focusout', () => { isDeckPaused = false; });
-
-                        deckContainer.addEventListener('keydown', (e) => {
-                            if (e.key === 'ArrowLeft') {
-                                prevDeckCard();
-                            } else if (e.key === 'ArrowRight') {
-                                nextDeckCard();
-                            }
-                        });
+                        };
                     }
+                });
+
+                // Auto-advance every 5 seconds
+                let isRealPaused = false;
+                const realAutoTimer = setInterval(() => {
+                    if (!isRealPaused) nextRealCard();
+                }, 5000);
+                window.landingIntervals.push(realAutoTimer);
+
+                const deckContainer = document.getElementById('lfan-deck-container');
+                if (deckContainer) {
+                    deckContainer.addEventListener('mouseenter', () => { isRealPaused = true; });
+                    deckContainer.addEventListener('mouseleave', () => { isRealPaused = false; });
+                    deckContainer.addEventListener('keydown', (e) => {
+                        if (e.key === 'ArrowLeft') prevRealCard();
+                        if (e.key === 'ArrowRight') nextRealCard();
+                    });
                 }
 
                 // Populate Live Settlement Activity Table (Option B Compressed)

@@ -349,7 +349,7 @@ export function renderLanding() {
                 <div class="ltypes-asymmetric" data-r>
                     <div class="ltypes-left">
                         <div class="lred-dash reveal-item"><span class="lmono">Contract Types</span></div>
-                        <h2 class="ltypes-headline reveal-item">Pick your <span class="lh-gradient">opponent.</span></h2>
+                        <h2 class="ltypes-headline reveal-item">Pick your<br><span class="lh-gradient">opponent.</span></h2>
                         <p class="ltypes-sub reveal-item">Choose your execution mode. Lock solo capital to hold yourself accountable, or challenge a competitor head-to-head.</p>
                         <div class="ltypes-cta-wrap reveal-item">
                             <button class="lbtn lbtn-r" id="ltypes-start-cta" onclick="window.app.goAction('/market', 'signup')">

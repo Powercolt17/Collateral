@@ -2903,9 +2903,9 @@ export const landingCSS = `
 /* Asymmetric Left-Aligned Layout for Contract Types */
 .ltypes-asymmetric {
     display: grid;
-    grid-template-columns: 0.46fr 0.54fr;
-    gap: 56px;
-    padding: 60px 0;
+    grid-template-columns: 0.42fr 0.58fr;
+    gap: 48px;
+    padding: 40px 0;
     align-items: start;
 }
 .ltypes-left {
@@ -2915,20 +2915,14 @@ export const landingCSS = `
 }
 .ltypes-headline {
     font-family: 'Plus Jakarta Sans', sans-serif;
-    font-size: clamp(2.2rem, 3.6vw, 3.25rem);
+    font-size: clamp(2.4rem, 4vw, 3.6rem);
     font-weight: 900;
-    line-height: 0.98;
+    line-height: 0.96;
     letter-spacing: -0.025em;
     color: #0F172A;
     margin: 16px 0 0;
     text-align: left;
     text-transform: uppercase;
-    white-space: nowrap;
-}
-@media (max-width: 600px) {
-    .ltypes-headline {
-        white-space: normal;
-    }
 }
 .ltypes-headline .lh-gradient {
     color: #7A1220 !important;

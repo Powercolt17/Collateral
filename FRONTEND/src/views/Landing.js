@@ -455,18 +455,18 @@ export function renderLanding() {
 
                                 <!-- SPLIT ARROWS — three proportionally weighted paths fanning to outcomes -->
                                 <div class="lflow-split-arrows">
-                                    <svg width="36" height="100%" viewBox="0 0 36 120" preserveAspectRatio="none">
-                                        <defs>
-                                            <marker id="ah-green" viewBox="0 0 8 8" refX="6" refY="4" markerWidth="5" markerHeight="5" orient="auto"><path d="M0 0 L8 4 L0 8z" fill="#145C14"/></marker>
-                                            <marker id="ah-crim" viewBox="0 0 8 8" refX="6" refY="4" markerWidth="5" markerHeight="5" orient="auto"><path d="M0 0 L8 4 L0 8z" fill="#7A1220"/></marker>
-                                            <marker id="ah-crim-sm" viewBox="0 0 8 8" refX="6" refY="4" markerWidth="4" markerHeight="4" orient="auto"><path d="M0 0 L8 4 L0 8z" fill="#7A1220"/></marker>
-                                        </defs>
-                                        <!-- Win path (thick green) -->
-                                        <path d="M0 60 C12 60, 18 20, 36 20" stroke="#145C14" stroke-width="5" fill="none" stroke-linecap="round" marker-end="url(#ah-green)"/>
-                                        <!-- Forfeit path (medium crimson) -->
-                                        <path d="M0 60 H36" stroke="#7A1220" stroke-width="2.5" fill="none" stroke-linecap="round" marker-end="url(#ah-crim)"/>
-                                        <!-- Burn path (hairline crimson dashed) -->
-                                        <path d="M0 60 C12 60, 18 100, 36 100" stroke="#7A1220" stroke-width="1" fill="none" stroke-linecap="round" stroke-dasharray="3 2" marker-end="url(#ah-crim-sm)"/>
+                                    <svg width="44" height="180" viewBox="0 0 44 180" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <!-- Win path (thick green #145C14) -->
+                                        <path d="M 0 90 C 16 90, 22 24, 34 24" stroke="#145C14" stroke-width="4.5" stroke-linecap="round"/>
+                                        <polygon points="42,24 32,18 32,30" fill="#145C14"/>
+
+                                        <!-- Forfeit path (medium crimson #7A1220) -->
+                                        <path d="M 0 90 H 34" stroke="#7A1220" stroke-width="2.5" stroke-linecap="round"/>
+                                        <polygon points="42,90 33,85 33,95" fill="#7A1220"/>
+
+                                        <!-- Burn path (hairline dashed crimson #7A1220) -->
+                                        <path d="M 0 90 C 16 90, 22 156, 34 156" stroke="#7A1220" stroke-width="1.2" stroke-dasharray="4 3" stroke-linecap="round"/>
+                                        <polygon points="41,156 34,152 34,160" fill="#7A1220"/>
                                     </svg>
                                 </div>
 

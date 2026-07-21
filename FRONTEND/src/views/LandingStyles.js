@@ -642,17 +642,16 @@ export const landingCSS = `
     display: block;
 }
 
-/* SPLIT ARROWS — fan from single origin to three outcome cards */
 .lflow-split-arrows {
     display: flex;
-    align-items: stretch;
+    align-items: center;
     justify-content: center;
-    padding: 0 2px;
+    padding: 0 4px;
 }
 .lflow-split-arrows svg {
     display: block;
-    width: 36px;
-    height: 100%;
+    width: 44px;
+    height: 180px;
 }
 
 /* THREE TERMINAL OUTCOMES (stacked vertically inside the grid) */

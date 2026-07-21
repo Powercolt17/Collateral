@@ -141,43 +141,71 @@ export const landingCSS = `
 .lhero-textlink svg{width:16px;height:16px;transition:transform .25s cubic-bezier(.16,1,.3,1)}
 .lhero-textlink:hover{color:var(--r);gap:12px}
 .lhero-textlink:hover svg{transform:translateX(2px)}
-.lbtn{height:56px;padding:0 32px;font-size:14px;font-weight:700;letter-spacing:1px;text-transform:uppercase;border:none;border-radius:4px;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;gap:8px;transition:all .4s cubic-bezier(.16, 1, 0.3, 1);position:relative;overflow:hidden}
-.lbtn-r{background:var(--r) !important;color:#fff !important;box-shadow:0 8px 24px -6px rgba(92,20,20,.4);font-size:14px;font-weight:800;padding:0 40px;height:60px;animation:btnPulse 3s ease-in-out infinite}
-.lbtn-r:hover{background:var(--rh) !important;box-shadow:0 16px 40px -8px rgba(92,20,20,.5);transform:translateY(-3px) scale(1.03)}
-.lbtn-r::after{content:'→';opacity:0;transform:translateX(-8px);transition:all .3s cubic-bezier(.16, 1, 0.3, 1);display:inline-block;width:0;margin-left:0}
-.lbtn-r:hover::after{opacity:1;transform:translateX(0);width:auto;margin-left:10px}
-@keyframes btnPulse {
-  0%, 100% { box-shadow: 0 8px 24px -6px rgba(92,20,20,.4); }
-  50% { box-shadow: 0 8px 32px -4px rgba(92,20,20,.55); }
+/* ═══ MATCHING RECTANGULAR HERO BUTTONS (KASPA STYLE) ═══ */
+.lctas {
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
+    align-items: center;
+    margin-bottom: 24px;
 }
-.lbtn-g{background:var(--p);color:var(--t2);border:1px solid var(--d)}
-.lbtn-g:hover{border-color:#bbb;color:var(--t1);transform:translateY(-1px)}
-@keyframes matchDotRedPulse {
-  0%, 100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.6); }
-  50% { transform: scale(1.3); box-shadow: 0 0 10px 4px rgba(239, 68, 68, 0.4); }
+.lbtn {
+    height: 50px !important;
+    padding: 0 32px !important;
+    font-family: 'Plus Jakarta Sans', 'Inter', sans-serif !important;
+    font-size: 13px !important;
+    font-weight: 800 !important;
+    letter-spacing: 1px !important;
+    text-transform: uppercase !important;
+    border-radius: 2px !important;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    transition: all 0.25s cubic-bezier(.16, 1, 0.3, 1);
+    box-shadow: none !important;
+    animation: none !important;
 }
-@keyframes matchTextShine {
-  0%, 100% { text-shadow: 0 0 0px rgba(92,20,20,0); }
-  50% { text-shadow: 0 0 4px rgba(92,20,20,0.1); }
+.lbtn-r {
+    background: var(--r) !important;
+    color: #fff !important;
+    border: 1.5px solid var(--r) !important;
 }
-.lcta-match{font-size:14px;color:var(--t1);margin-top:16px;font-weight:700;display:flex;align-items:center;gap:8px;letter-spacing:-.1px;animation:matchTextShine 3s infinite ease-in-out}
-.lcta-match::before{content:'';width:6px;height:6px;border-radius:50%;background:#EF4444;animation:matchDotRedPulse 2s infinite ease-in-out}
+.lbtn-r:hover {
+    background: var(--rh) !important;
+    border-color: var(--rh) !important;
+    box-shadow: none !important;
+    transform: none !important;
+}
+.lbtn-r::after {
+    display: none !important;
+}
+.lbtn-g {
+    background: transparent !important;
+    color: var(--t1) !important;
+    border: 1.5px solid var(--t1) !important;
+}
+.lbtn-g:hover {
+    background: var(--t1) !important;
+    color: #fff !important;
+    border-color: var(--t1) !important;
+    transform: none !important;
+}
 
-/* ═══ HERO LEFT COLUMN: eyebrow · spine · dot-grid texture ═══ */
-.lhero-left{position:relative;border-left:2px solid var(--r);padding-left:16px}
-/* Dot-grid lives on a pseudo-element so its right-fade mask never touches the text/CTAs */
-.lhero-left::before{
-  content:'';
-  position:absolute;
-  inset:0;
-  background-image:radial-gradient(rgba(0,0,0,0.08) 1px, transparent 1px);
-  background-size:16px 16px;
-  -webkit-mask-image:linear-gradient(to right, black 55%, transparent 90%);
-  mask-image:linear-gradient(to right, black 55%, transparent 90%);
-  pointer-events:none;
-  z-index:0;
+/* ═══ HERO LEFT COLUMN (CLEAN KASPA REFERENCE STYLE) ═══ */
+.lhero-left {
+    position: relative;
+    border-left: none !important;
+    padding-left: 0 !important;
 }
-.lhero-left > *{position:relative;z-index:1}
+.lhero-left::before {
+    display: none !important;
+}
+.lhero-left > * {
+    position: relative;
+    z-index: 1;
+}
 .lhero-eyebrow{font-family:'Inter',sans-serif;font-size:11px;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:var(--t3);margin:0 0 18px;border-left:2px solid var(--t3);padding-left:14px}
 
 /* ═══ PREVIEW CONTRACT CARD ═══ */

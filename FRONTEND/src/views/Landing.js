@@ -436,23 +436,23 @@ export function renderLanding() {
                                     </tr>
                                 </thead>
                                 <tbody id="lledger-tbody-prod">
-                                    <tr class="reveal-item">
-                                        <td data-label="Contract ID" class="td-id">#C-8041 <span class="td-user">@danny_v...</span></td>
-                                        <td data-label="Metric" class="td-metric"><svg class="td-icon" viewBox="0 0 24 24" fill="currentColor" style="color:#635BFF;width:16px;height:16px;display:inline-block;vertical-align:middle;margin-right:8px;"><path d="M20 10.3c0-1.8-1.5-2.7-3.6-3.2l-2-.5c-1.3-.3-1.9-.7-1.9-1.3 0-.6.7-1 1.7-1 1.7 0 3 .6 3.6 1l.7-2.6C17.9 2.2 16.3 1.8 14.8 1.8c-3.1 0-5.2 1.6-5.2 4.3 0 2.9 2.4 3.7 4.9 4.3l1.8.4c1.4.3 2 .8 2 1.5 0 .7-.8 1.1-2.1 1.1-1.9 0-3.6-.7-4.3-1.1l-.8 2.7c1 .5 2.9 1 4.7 1C18.2 16 20 14.4 20 10.3z"/></svg> Stripe Revenue (+20.0%)</td>
-                                        <td data-label="Commitment" class="td-capital">$500.00</td>
-                                        <td data-label="Outcome" class="td-outcome hit"><span class="outcome-marker-hit">✓</span> Hit</td>
+                                    <tr class="reveal-item v">
+                                        <td data-label="Contract ID" class="td-id"><span class="td-value">#C-8041 <span class="td-user">@danny_v...</span></span></td>
+                                        <td data-label="Metric" class="td-metric"><span class="td-value"><svg class="td-icon" viewBox="0 0 24 24" fill="currentColor" style="color:#635BFF;width:16px;height:16px;display:inline-block;vertical-align:middle;margin-right:8px;"><path d="M20 10.3c0-1.8-1.5-2.7-3.6-3.2l-2-.5c-1.3-.3-1.9-.7-1.9-1.3 0-.6.7-1 1.7-1 1.7 0 3 .6 3.6 1l.7-2.6C17.9 2.2 16.3 1.8 14.8 1.8c-3.1 0-5.2 1.6-5.2 4.3 0 2.9 2.4 3.7 4.9 4.3l1.8.4c1.4.3 2 .8 2 1.5 0 .7-.8 1.1-2.1 1.1-1.9 0-3.6-.7-4.3-1.1l-.8 2.7c1 .5 2.9 1 4.7 1C18.2 16 20 14.4 20 10.3z"/></svg> Stripe Revenue (+20.0%)</span></td>
+                                        <td data-label="Commitment" class="td-capital"><span class="td-value">$500.00</span></td>
+                                        <td data-label="Outcome" class="td-outcome hit"><span class="td-value"><span class="outcome-marker-hit">✓</span> Hit</span></td>
                                     </tr>
-                                    <tr class="reveal-item">
-                                        <td data-label="Contract ID" class="td-id">#C-8022 <span class="td-user">@justin_s...</span></td>
-                                        <td data-label="Metric" class="td-metric"><svg class="td-icon" viewBox="0 0 24 24" fill="currentColor" style="color:#111111;width:14px;height:14px;display:inline-block;vertical-align:middle;margin-right:8px;"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg> X Followers (+1k)</td>
-                                        <td data-label="Commitment" class="td-capital">$250.00</td>
-                                        <td data-label="Outcome" class="td-outcome miss"><span class="outcome-marker-miss">✗</span> Missed</td>
+                                    <tr class="reveal-item v">
+                                        <td data-label="Contract ID" class="td-id"><span class="td-value">#C-8022 <span class="td-user">@justin_s...</span></span></td>
+                                        <td data-label="Metric" class="td-metric"><span class="td-value"><svg class="td-icon" viewBox="0 0 24 24" fill="currentColor" style="color:#111111;width:14px;height:14px;display:inline-block;vertical-align:middle;margin-right:8px;"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg> X Followers (+1k)</span></td>
+                                        <td data-label="Commitment" class="td-capital"><span class="td-value">$250.00</span></td>
+                                        <td data-label="Outcome" class="td-outcome miss"><span class="td-value"><span class="outcome-marker-miss">✗</span> Missed</span></td>
                                     </tr>
-                                    <tr class="reveal-item">
-                                        <td data-label="Contract ID" class="td-id">#C-7988 <span class="td-user">@growth...</span></td>
-                                        <td data-label="Metric" class="td-metric"><svg class="td-icon" viewBox="0 0 24 24" fill="currentColor" style="color:#96bf48;width:16px;height:16px;display:inline-block;vertical-align:middle;margin-right:8px;"><path d="M19.58 6.425a.86.86 0 00-.7-.34h-2.193a4.52 4.52 0 00-9.04 0H5.454a.86.86 0 00-.7.34.887.887 0 00-.16.766l1.97 10.96a2.41 2.41 0 002.37 1.986h6.49a2.41 2.41 0 002.37-1.985l1.97-10.96a.887.887 0 00-.184-.767zM12 3.86a2.53 2.53 0 012.513 2.225H9.487A2.53 2.53 0 0112 3.86zm3.267 11.516a2.036 2.036 0 01-1.745.892 2.374 2.374 0 01-1.614-.648A2.348 2.348 0 0010.3 15a2.036 2.036 0 01-1.745-.892.429.429 0 11.734-.442c.245.408.66.634 1.01.634.341 0 .614-.148.914-.442A3.21 3.21 0 0113.627 15c.341 0 .614-.148.914-.442a.429.429 0 01.734.442z"/></svg> Shopify Gross ($50k)</td>
-                                        <td data-label="Commitment" class="td-capital">$1,000.00</td>
-                                        <td data-label="Outcome" class="td-outcome hit"><span class="outcome-marker-hit">✓</span> Hit</td>
+                                    <tr class="reveal-item v">
+                                        <td data-label="Contract ID" class="td-id"><span class="td-value">#C-7988 <span class="td-user">@growth...</span></span></td>
+                                        <td data-label="Metric" class="td-metric"><span class="td-value"><svg class="td-icon" viewBox="0 0 24 24" fill="currentColor" style="color:#96bf48;width:16px;height:16px;display:inline-block;vertical-align:middle;margin-right:8px;"><path d="M19.58 6.425a.86.86 0 00-.7-.34h-2.193a4.52 4.52 0 00-9.04 0H5.454a.86.86 0 00-.7.34.887.887 0 00-.16.766l1.97 10.96a2.41 2.41 0 002.37 1.986h6.49a2.41 2.41 0 002.37-1.985l1.97-10.96a.887.887 0 00-.184-.767zM12 3.86a2.53 2.53 0 012.513 2.225H9.487A2.53 2.53 0 0112 3.86zm3.267 11.516a2.036 2.036 0 01-1.745.892 2.374 2.374 0 01-1.614-.648A2.348 2.348 0 0010.3 15a2.036 2.036 0 01-1.745-.892.429.429 0 11.734-.442c.245.408.66.634 1.01.634.341 0 .614-.148.914-.442A3.21 3.21 0 0113.627 15c.341 0 .614-.148.914-.442a.429.429 0 01.734.442z"/></svg> Shopify Gross ($50k)</span></td>
+                                        <td data-label="Commitment" class="td-capital"><span class="td-value">$1,000.00</span></td>
+                                        <td data-label="Outcome" class="td-outcome hit"><span class="td-value"><span class="outcome-marker-hit">✓</span> Hit</span></td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -1657,11 +1657,11 @@ export function initLanding() {
                             const depositCents = e.lockAmountUsdCents || e.amountUsdCents || 25000;
                             const depositFormatted = '$' + (depositCents / 100).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
                             return `
-                                <tr class="reveal-item">
-                                    <td data-label="Contract ID" class="td-id">#C-${e.contractId.slice(0, 4).toUpperCase()} <span class="td-user">@${getMaskedUser(e.principal)}</span></td>
-                                    <td data-label="Metric" class="td-metric">${getPlatformIcon(e.platform)} ${getPlatformName(e.platform)}</td>
-                                    <td data-label="Commitment" class="td-capital">${depositFormatted}</td>
-                                    <td data-label="Outcome" class="td-outcome">${outcomeHtml}</td>
+                                <tr class="reveal-item v">
+                                    <td data-label="Contract ID" class="td-id"><span class="td-value">#C-${e.contractId.slice(0, 4).toUpperCase()} <span class="td-user">@${getMaskedUser(e.principal)}</span></span></td>
+                                    <td data-label="Metric" class="td-metric"><span class="td-value">${getPlatformIcon(e.platform)} ${getPlatformName(e.platform)}</span></td>
+                                    <td data-label="Commitment" class="td-capital"><span class="td-value">${depositFormatted}</span></td>
+                                    <td data-label="Outcome" class="td-outcome"><span class="td-value">${outcomeHtml}</span></td>
                                 </tr>
                             `;
                         };

@@ -610,20 +610,97 @@ export const landingCSS = `
 
 /* ═══ RESPONSIVE ═══ */
 @media(max-width:768px){
-  .lh-section-title{font-size:clamp(22px, 8vw, 32px) !important;letter-spacing:-0.8px !important;margin-bottom:16px}
+  /* ── 1. UNIFIED MAIN SECTION HEADINGS (STRICT SAME SIZE ON MOBILE) ── */
+  .lh1,
+  .lh-section-title,
+  .lhow-h,
+  .lmini-cta-h,
+  .lfoot-h,
+  .lhow-title,
+  .ltypes-headline,
+  .lledger-h-title,
+  .lledger-h-title-prod {
+    font-size: 26px !important;
+    line-height: 1.2 !important;
+    letter-spacing: -0.6px !important;
+    font-weight: 800 !important;
+    margin-bottom: 14px !important;
+  }
+
+  /* ── 2. UNIFIED SECTION SUBTITLES & BODY TEXT ── */
+  .lsub,
+  .lh-section-subtitle,
+  .lhow-sub,
+  .lmini-cta-p,
+  .lfoot-sub,
+  .lemo-body,
+  .ltype-p,
+  .lhow-body,
+  .lhow-caption,
+  .ltype-desc-new {
+    font-size: 15px !important;
+    line-height: 1.55 !important;
+    letter-spacing: -0.1px !important;
+    color: var(--t2) !important;
+    margin-bottom: 20px !important;
+  }
+
+  /* ── 3. UNIFIED CARD & SUBSECTION HEADINGS ── */
+  .lcard-title,
+  .lhow-card-title,
+  .lstep-h,
+  .ltype-h,
+  .ltype-title-new,
+  .lhow-timeline-title,
+  .lstat-label,
+  .lstat-item-borderless .lstat-label,
+  .lspec-title {
+    font-size: 18px !important;
+    line-height: 1.3 !important;
+    font-weight: 700 !important;
+    letter-spacing: -0.3px !important;
+  }
+
+  /* ── 4. UNIFIED CARD DETAILS & SECONDARY COPY ── */
+  .lcard-target,
+  .lhow-card-desc,
+  .lstep-p,
+  .ltype-detail,
+  .lhow-timeline-desc,
+  .lstat-sub,
+  .lspec-desc {
+    font-size: 13px !important;
+    line-height: 1.5 !important;
+    color: var(--t3) !important;
+  }
+
+  /* ── 5. UNIFIED SECTION EYEBROWS & BADGES ── */
+  .lmono,
+  .lred-dash span,
+  .lh-eyebrow,
+  .ltype-badge,
+  .ltype-badge-new,
+  .lhow-card-badge {
+    font-size: 11px !important;
+    font-weight: 700 !important;
+    letter-spacing: 1.2px !important;
+    text-transform: uppercase !important;
+  }
+
+  /* ── 6. HOMEPAGE SECTION PADDING & LAYOUT SYMMETRY ── */
   .lpromo-bar { height: auto; min-height: 32px; padding: 6px 10px; line-height: 1.3; font-size: 9px; }
   .ln { top: 32px; }
   .lmain { padding-top: 84px; }
   .lhide-mobile{display:none !important}
   .ln-in{padding:0 16px; height: 60px;}
   .ln-cta{padding:6px 10px; font-size:11px; letter-spacing:0.5px}
-  .lhero-grid{grid-template-columns:1fr;gap:32px;padding:130px 0 24px}
+  .lhero-grid{grid-template-columns:1fr;gap:32px;padding:120px 0 24px}
   .lhero-right {
     display: flex !important;
     justify-content: center;
     align-items: center;
     width: 100%;
-    margin-top: 40px;
+    margin-top: 32px;
   }
   .lactivity-card {
     max-width: 100% !important;
@@ -640,42 +717,28 @@ export const landingCSS = `
   .lc-col-final .lc-flow-val {
     font-size: 14px !important;
   }
-  .lh1{font-size:clamp(38px, 11vw, 48px);line-height:1.05;letter-spacing:-1px}
-  .lsub{font-size:16px;margin-bottom:24px}
   .lbtn{height:48px;padding:0 24px;font-size:11px}
   .lbtn-r{height:52px;font-size:12px;padding:0 28px}
   .lcards{display:flex !important;overflow-x:auto !important;scroll-snap-type:x mandatory !important;gap:16px !important;padding:12px 24px 24px !important;margin:0 -24px !important;scrollbar-width:none}
   .lcards::-webkit-scrollbar{display:none}
   .lcard{flex:0 0 280px !important;scroll-snap-align:start !important;padding:24px 20px !important;min-height:auto !important}
-  .lcard-title{font-size:17px;margin-bottom:4px}
-  .lcard-target{font-size:12px;margin-bottom:16px}
   .lcard-row{padding:6px 0;font-size:11px}
   .lcard-btn{padding-top:16px}
-  .lcontracts{padding:28px 0 40px}
-  .lhow{padding:40px 0}
-  .lhow-h{font-size: 22px}
-  .lhow-sub{margin-bottom:24px;font-size:14px}
-    .lsteps{grid-template-columns:1fr;gap:16px}
-    .lstep{padding:24px}
-    .lstep-num{font-size: 40px;top:16px;right:16px;margin-bottom:0}
-    .lstep-h{font-size:18px;margin-top:12px}
-    .lstep-p{font-size:14px}
-  .lmini-cta{padding:38px 20px;margin:24px auto}
-  .lmini-cta-h{font-size:24px}
-  .lmini-cta-p{font-size:14px;margin-bottom:18px}
+  .lcontracts{padding:36px 0 40px !important}
+  .lhow{padding:36px 0 !important}
+  .lsteps{grid-template-columns:1fr;gap:16px}
+  .lstep{padding:24px}
+  .lstep-num{font-size: 36px;top:16px;right:16px;margin-bottom:0}
+  .lmini-cta{padding:36px 20px;margin:20px auto}
   .lmini-cta-micro{font-size:11px}
-  .ltypes{padding:40px 0}
-  .ltypes-grid{grid-template-columns:1fr;gap:32px}
-  .ltype{padding:24px 0 0 0}
-  .ltype-badge{font-size:11px;margin-bottom:16px}
-  .ltype-h{font-size:22px;margin-bottom:8px}
-  .ltype-p{font-size:14px;margin-bottom:20px}
-  .ltype-detail{font-size:13px;padding-top:16px}
-  .lex{padding:32px 0}
+  .ltypes{padding:36px 0 !important}
+  .ltypes-grid{grid-template-columns:1fr;gap:28px}
+  .ltype{padding:20px 0 0 0}
+  .lex{padding:32px 0 !important}
   .lex-box{margin:0 auto}
-  .lfaq{padding:32px 0}
+  .lfaq{padding:36px 0 !important}
   .fq-q{font-size:14px;padding:14px 0}
-  .lfoot{padding:48px 20px 64px}
+  .lfoot{padding:40px 20px 56px !important}
   .lctas{flex-direction:column}.lbtn{width:100%;justify-content:center}
 }
 @media(max-width:600px){

@@ -614,12 +614,8 @@ export function renderLanding() {
                 </div>
             </div>
 
-            <!-- ═══ FINAL CTA ═══ -->
+            <!-- ═══ FOOTER ═══ -->
             <div class="lfoot" data-r>
-                <h2 class="lfoot-h reveal-item">Stop pretending todo lists work.<br>Lock capital, force execution, and <em style="color:var(--r);font-style:normal;font-weight:700">win.</em></h2>
-                <div class="lfoot-sub reveal-item">First performance contract matched up to $250.</div>
-                <button class="lfoot-btn reveal-item" id="lp-final-cta">Start Contract</button>
-                <div class="lfoot-micro reveal-item">Objective tracking. Verified business data only.</div>
                 <div class="lfoot-line reveal-item">Collateral.market · © 2026</div>
             </div>
 

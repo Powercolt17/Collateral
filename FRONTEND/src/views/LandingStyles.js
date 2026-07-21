@@ -69,10 +69,16 @@ export const landingCSS = `
 [data-r].v{opacity:1}
 
 /* ═══ HERO ═══ */
-.lhero-section{position:relative;overflow:visible}
-.lhero-grid{display:grid;grid-template-columns:1.25fr 0.75fr;gap:48px;align-items:flex-start;padding:150px 0 60px}
-.lh1{font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:clamp(38px,4.5vw,64px);line-height:1.1;letter-spacing:-2px;color:var(--t1);margin:0 0 36px}
-.lh-gradient{color:var(--r);font-weight:800;letter-spacing:-2px;display:inline-block;padding-bottom:0.15em;margin-bottom:-0.15em}
+.lhero-section{position:relative;overflow:hidden;padding-top:140px;padding-bottom:50px;background:#FAF8F5}
+.lhero-bg-container{position:absolute;inset:0;pointer-events:none;z-index:0}
+.lhero-mesh-svg{width:100%;height:100%;opacity:0.85;animation:meshFloat 12s ease-in-out infinite alternate}
+@keyframes meshFloat {
+    0% { transform: scale(1) translateY(0); }
+    100% { transform: scale(1.02) translateY(-8px); }
+}
+.lhero-headline-wrap{margin-bottom:36px;position:relative;z-index:2}
+.lh1{font-family:'Plus Jakarta Sans',sans-serif;font-weight:900;font-size:clamp(44px,7.5vw,98px);line-height:0.98;letter-spacing:-2.5px;color:var(--t1);text-transform:uppercase;margin:0 0 16px}
+.lh-gradient{color:var(--r);background:linear-gradient(135deg,#5C1414 0%,#8B1212 50%,#3D0D0D 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;display:inline-block}
 .lh-badge{display:inline-flex;align-items:center;gap:8px;background:rgba(92,20,20,0.04);border:1px solid rgba(92,20,20,0.12);padding:6px 14px;border-radius:100px;font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--r);margin-bottom:20px;box-shadow:0 2px 8px rgba(92,20,20,0.02)}
 .lh-badge-dot{width:6px;height:6px;background:var(--g);border-radius:50%;display:inline-block;box-shadow:0 0 8px rgba(20,92,20,0.8);animation:badgeDotPulse 1.8s ease-in-out infinite}
 @keyframes badgeDotPulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:0.4;transform:scale(0.85)}}
@@ -81,8 +87,14 @@ export const landingCSS = `
 @media(min-width:768px){
   .lh-br{display:block}
 }
-.lsub{font-size:20px;color:var(--t2);line-height:1.5;margin:0 0 48px;max-width:680px;letter-spacing:-.2px}
+.lhero-grid{display:grid;grid-template-columns:1.2fr 0.8fr;gap:48px;align-items:flex-start;position:relative;z-index:2}
+.lsub{font-size:18px;color:var(--t2);line-height:1.55;margin:0 0 32px;max-width:640px;letter-spacing:-.2px}
 .lctas{display:flex;gap:16px;flex-wrap:wrap;align-items:center;margin-bottom:16px}
+.lhero-footer-strip{display:flex;justify-content:flex-end;margin-top:24px;position:relative;z-index:2}
+.lhero-scroll-down{display:inline-flex;align-items:center;gap:8px;font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--t3);text-decoration:none;transition:color 0.25s ease,transform 0.25s ease}
+.lhero-scroll-down:hover{color:var(--r);transform:translateY(2px)}
+.lhero-scroll-arrow{font-size:14px;animation:bounceDown 2s infinite ease-in-out}
+@keyframes bounceDown{0%,100%{transform:translateY(0)}50%{transform:translateY(4px)}}
 /* Secondary CTA demoted to a plain text link so only "Start Contract" reads as a button */
 .lhero-textlink{background:none;border:none;padding:8px 4px;cursor:pointer;font-family:'Inter',sans-serif;font-size:14px;font-weight:700;letter-spacing:0.5px;text-transform:uppercase;color:var(--t2);display:inline-flex;align-items:center;gap:8px;transition:color .25s cubic-bezier(.16,1,.3,1),gap .25s cubic-bezier(.16,1,.3,1)}
 .lhero-textlink svg{width:16px;height:16px;transition:transform .25s cubic-bezier(.16,1,.3,1)}

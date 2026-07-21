@@ -78,8 +78,8 @@ export function renderLanding() {
                             </h1>
                         </div>
 
-                        <!-- HERO LOWER GRID -->
-                        <div class="lhero-grid">
+                        <!-- HERO LOWER FLEX CONTENT -->
+                        <div class="lhero-bottom-area">
                             <div class="lhero-left">
                                 <p class="lsub animate-fade-in-up delay-1">
                                     Every day, people risk money on outcomes they can't control—like sports teams, markets, or ad algorithms. Collateral lets you lock capital on the only asset you actually control: your own focus and execution.
@@ -107,80 +107,6 @@ export function renderLanding() {
                                     </div>
                                 </div>
                             </div>
-
-                            <div class="lhero-right animate-scale-in delay-1">
-                                <div class="lactivity-card">
-                                    <!-- DYNAMIC PLATFORM INTEGRATION HEADER -->
-                                    <div class="lc-platform-header" id="lc-platform-header">
-                                        <img class="lc-plat-logo" id="lc-plat-logo" src="https://www.vectorlogo.zone/logos/stripe/stripe-icon.svg" alt="Stripe">
-                                        <span class="lc-plat-text" id="lc-plat-text">Connected via Stripe Connect</span>
-                                    </div>
-
-                                    <!-- INTEGRATED GLOBAL STATS ROW -->
-                                    <div class="lc-global-stats-row">
-                                        <span class="lc-global-stats-item">
-                                            <span class="lc-global-stats-dot"></span>
-                                            <span id="lc-global-active-count" class="lc-global-stats-num">22</span>
-                                            <span class="lc-global-stats-label">Active Contracts</span>
-                                        </span>
-                                        <span class="lc-global-stats-divider">|</span>
-                                        <span class="lc-global-stats-item">
-                                            <span id="lc-global-locked-amount" class="lc-global-stats-num">$8,700</span>
-                                            <span class="lc-global-stats-label">Locked</span>
-                                        </span>
-                                    </div>
-
-                                    <!-- FEATURED CONTRACT -->
-                                    <div class="lc-contract">
-                                        <div class="lc-contract-head">
-                                            <div>
-                                                <div class="lc-contract-name" id="lc-feat-name">Revenue Growth</div>
-                                                <div class="lc-contract-goal" id="lc-feat-goal">Increase revenue by 20%</div>
-                                                <div class="lc-contract-time" id="lc-feat-time">18 Days Remaining</div>
-                                            </div>
-                                            <div class="lc-status"><span class="lc-status-dot"></span>Active</div>
-                                        </div>
-
-                                        <div class="lc-flow-horizontal">
-                                            <div class="lc-flow-col">
-                                                <span class="lc-flow-label">Deposit</span>
-                                                <span class="lc-flow-val" id="lc-feat-deposit">$500</span>
-                                            </div>
-                                            <div class="lc-flow-arrow-right">→</div>
-                                            <div class="lc-flow-col">
-                                                <span class="lc-flow-label">Match</span>
-                                                <span class="lc-flow-val lc-val-green" id="lc-feat-reward">+$500</span>
-                                            </div>
-                                            <div class="lc-flow-arrow-right">→</div>
-                                            <div class="lc-flow-col lc-col-final">
-                                                <span class="lc-flow-label">Return</span>
-                                                <span class="lc-flow-val" id="lc-feat-return">$1,000</span>
-                                            </div>
-                                        </div>
-                                        <div class="lc-flow-footnote">Matches are funded by forfeited deposits and sponsors. <a href="#how" class="lc-flow-link" onclick="document.getElementById('how')?.scrollIntoView({behavior:'smooth'}); return false;">How it works →</a></div>
-
-                                        <!-- SUBTLE LIVE STATE TICKER -->
-                                        <div class="lc-live-state-ticker">
-                                            <span class="lc-live-state-lbl">PROTOCOL STATE</span>
-                                            <span class="lc-live-state-val" id="lc-live-state-val">Deposit Escrowed</span>
-                                        </div>
-                                    </div>
-
-                                    <!-- DEDICATED LIVE ACTIVITY STRIP -->
-                                    <div class="lc-recent-activity">
-                                        <div class="lc-ra-header">Recent Activity</div>
-                                        <div class="lc-ra-list" id="lc-ra-list">
-                                            <!-- Populated dynamically -->
-                                        </div>
-                                    </div>
-
-                                    <!-- TRUST COPY -->
-                                    <div class="lc-trust">
-                                        <svg class="lc-trust-lock" width="10" height="10" viewBox="0 0 24 28" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><path d="M12 2a5 5 0 0 0-5 5v3H5a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V12a2 2 0 0 0-2-2h-2V7a5 5 0 0 0-5-5zm-3 5a3 3 0 0 1 6 0v3H9V7zm3 9a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3z" fill="currentColor"/></svg>
-                                        Contracts verified automatically through connected APIs.
-                                    </div>
-                                </div>
-                            </div>
                         </div>
 
                         <!-- SCROLL DOWN INDICATOR -->
@@ -188,6 +114,98 @@ export function renderLanding() {
                             <a href="#contracts" onclick="window.app.scrollToSection('contracts'); return false;" class="lhero-scroll-down animate-fade-in-up delay-4">
                                 <span class="lhero-scroll-arrow">↓</span> SCROLL DOWN
                             </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ═══ FEATURED LIVE EXECUTION SHOWCASE ═══ -->
+            <div class="lfeatured-live-section" data-r>
+                <div class="lw">
+                    <div class="lfeatured-live-grid">
+                        <div class="lfeatured-live-info">
+                            <div class="lred-dash"><span class="lmono">Live Execution</span></div>
+                            <h2 class="lh-section-title">See real contracts settling in real-time.</h2>
+                            <p class="lh-section-subtitle">Every contract is backed by smart escrow and verified directly through platform APIs. No manual uploads. No cheating.</p>
+                            <div class="lfeatured-trust-badges">
+                                <span class="ltrust-badge">✓ Stripe Escrow</span>
+                                <span class="ltrust-badge">✓ Oracle Verified</span>
+                                <span class="ltrust-badge">✓ Automated Payouts</span>
+                            </div>
+                        </div>
+
+                        <div class="lfeatured-live-card-wrap">
+                            <div class="lactivity-card">
+                                <!-- DYNAMIC PLATFORM INTEGRATION HEADER -->
+                                <div class="lc-platform-header" id="lc-platform-header">
+                                    <img class="lc-plat-logo" id="lc-plat-logo" src="https://www.vectorlogo.zone/logos/stripe/stripe-icon.svg" alt="Stripe">
+                                    <span class="lc-plat-text" id="lc-plat-text">Connected via Stripe Connect</span>
+                                </div>
+
+                                <!-- INTEGRATED GLOBAL STATS ROW -->
+                                <div class="lc-global-stats-row">
+                                    <span class="lc-global-stats-item">
+                                        <span class="lc-global-stats-dot"></span>
+                                        <span id="lc-global-active-count" class="lc-global-stats-num">22</span>
+                                        <span class="lc-global-stats-label">Active Contracts</span>
+                                    </span>
+                                    <span class="lc-global-stats-divider">|</span>
+                                    <span class="lc-global-stats-item">
+                                        <span id="lc-global-locked-amount" class="lc-global-stats-num">$8,700</span>
+                                        <span class="lc-global-stats-label">Locked</span>
+                                    </span>
+                                </div>
+
+                                <!-- FEATURED CONTRACT -->
+                                <div class="lc-contract">
+                                    <div class="lc-contract-head">
+                                        <div>
+                                            <div class="lc-contract-name" id="lc-feat-name">Revenue Growth</div>
+                                            <div class="lc-contract-goal" id="lc-feat-goal">Increase revenue by 20%</div>
+                                            <div class="lc-contract-time" id="lc-feat-time">18 Days Remaining</div>
+                                        </div>
+                                        <div class="lc-status"><span class="lc-status-dot"></span>Active</div>
+                                    </div>
+
+                                    <div class="lc-flow-horizontal">
+                                        <div class="lc-flow-col">
+                                            <span class="lc-flow-label">Deposit</span>
+                                            <span class="lc-flow-val" id="lc-feat-deposit">$500</span>
+                                        </div>
+                                        <div class="lc-flow-arrow-right">→</div>
+                                        <div class="lc-flow-col">
+                                            <span class="lc-flow-label">Match</span>
+                                            <span class="lc-flow-val lc-val-green" id="lc-feat-reward">+$500</span>
+                                        </div>
+                                        <div class="lc-flow-arrow-right">→</div>
+                                        <div class="lc-flow-col lc-col-final">
+                                            <span class="lc-flow-label">Return</span>
+                                            <span class="lc-flow-val" id="lc-feat-return">$1,000</span>
+                                        </div>
+                                    </div>
+                                    <div class="lc-flow-footnote">Matches are funded by forfeited deposits and sponsors. <a href="#how" class="lc-flow-link" onclick="document.getElementById('how')?.scrollIntoView({behavior:'smooth'}); return false;">How it works →</a></div>
+
+                                    <!-- SUBTLE LIVE STATE TICKER -->
+                                    <div class="lc-live-state-ticker">
+                                        <span class="lc-live-state-lbl">PROTOCOL STATE</span>
+                                        <span class="lc-live-state-val" id="lc-live-state-val">Deposit Escrowed</span>
+                                    </div>
+                                </div>
+
+                                <!-- DEDICATED LIVE ACTIVITY STRIP -->
+                                <div class="lc-recent-activity">
+                                    <div class="lc-ra-header">Recent Activity</div>
+                                    <div class="lc-ra-list" id="lc-ra-list">
+                                        <!-- Populated dynamically -->
+                                    </div>
+                                </div>
+
+                                <!-- TRUST COPY -->
+                                <div class="lc-trust">
+                                    <svg class="lc-trust-lock" width="10" height="10" viewBox="0 0 24 28" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><path d="M12 2a5 5 0 0 0-5 5v3H5a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V12a2 2 0 0 0-2-2h-2V7a5 5 0 0 0-5-5zm-3 5a3 3 0 0 1 6 0v3H9V7zm3 9a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3z" fill="currentColor"/></svg>
+                                    Contracts verified automatically through connected APIs.
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>

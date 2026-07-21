@@ -95,6 +95,47 @@ export const landingCSS = `
 .lhero-scroll-down:hover{color:var(--r);transform:translateY(2px)}
 .lhero-scroll-arrow{font-size:14px;animation:bounceDown 2s infinite ease-in-out}
 @keyframes bounceDown{0%,100%{transform:translateY(0)}50%{transform:translateY(4px)}}
+
+/* ═══ FEATURED LIVE EXECUTION SHOWCASE ═══ */
+.lfeatured-live-section {
+    padding: 80px 0;
+    background: var(--bg);
+    border-bottom: 1px solid var(--d);
+    position: relative;
+    z-index: 2;
+}
+.lfeatured-live-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 64px;
+    align-items: center;
+}
+.lfeatured-live-info {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+.lfeatured-trust-badges {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin-top: 12px;
+}
+.ltrust-badge {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--g);
+    background: rgba(20, 92, 20, 0.05);
+    border: 1px solid rgba(20, 92, 20, 0.15);
+    padding: 6px 12px;
+    border-radius: 6px;
+    letter-spacing: 0.5px;
+}
+.lfeatured-live-card-wrap {
+    display: flex;
+    justify-content: center;
+}
 /* Secondary CTA demoted to a plain text link so only "Start Contract" reads as a button */
 .lhero-textlink{background:none;border:none;padding:8px 4px;cursor:pointer;font-family:'Inter',sans-serif;font-size:14px;font-weight:700;letter-spacing:0.5px;text-transform:uppercase;color:var(--t2);display:inline-flex;align-items:center;gap:8px;transition:color .25s cubic-bezier(.16,1,.3,1),gap .25s cubic-bezier(.16,1,.3,1)}
 .lhero-textlink svg{width:16px;height:16px;transition:transform .25s cubic-bezier(.16,1,.3,1)}

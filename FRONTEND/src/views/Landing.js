@@ -52,30 +52,209 @@ export function renderLanding() {
 
                         <!-- HERO LOWER FLEX CONTENT -->
                         <div class="lhero-bottom-area">
-                            <div class="lhero-left">
-                                <p class="lsub animate-fade-in-up delay-1">
-                                    Every day, people risk money on outcomes they can't control—like sports teams, markets, or ad algorithms. Collateral lets you lock capital on the only asset you actually control: your own focus and execution.
-                                </p>
-                                <div class="lctas animate-fade-in-up delay-2">
-                                    <button class="lbtn lbtn-r" id="lp-hero-cta">START CONTRACT</button>
-                                    <button class="lbtn lbtn-g" id="lp-see-contracts-cta">SEE LIVE CONTRACTS</button>
+                            <div class="lhero-grid">
+                                <!-- LEFT COLUMN -->
+                                <div class="lhero-left">
+                                    <p class="lsub animate-fade-in-up delay-1">
+                                        Every day, people risk money on outcomes they can't control—like sports teams, markets, or ad algorithms. Collateral lets you lock capital on the only asset you actually control: your own focus and execution.
+                                    </p>
+                                    <div class="lctas animate-fade-in-up delay-2">
+                                        <button class="lbtn lbtn-r" id="lp-hero-cta">START CONTRACT</button>
+                                        <button class="lbtn lbtn-g" id="lp-see-contracts-cta">SEE LIVE CONTRACTS</button>
+                                    </div>
+
+                                    <!-- COMPACT LIVE RIVALRY SNAPSHOT -->
+                                    <div class="l-live-rivalry-preview animate-fade-in-up delay-3" id="l-live-rivalry-preview-card">
+                                        <div class="l-lr-hdr">
+                                            <span class="l-lr-dot l-ticker-pulse"></span> LIVE CONTRACT RIVALRY
+                                        </div>
+                                        <div class="l-lr-ticker">
+                                            <span class="l-lr-token">@jakevoss <span class="l-lr-num lead">+8.40%</span></span>
+                                            <span class="l-lr-divider">/</span>
+                                            <span class="l-lr-token">@marcus <span class="l-lr-num lag">+7.80%</span></span>
+                                            <span class="l-lr-divider">|</span>
+                                            <span class="l-lr-cap">POOL $2.0K</span>
+                                            <span class="l-lr-divider">|</span>
+                                            <span class="l-lr-time">T-MINUS 9D</span>
+                                            <span class="l-lr-divider">|</span>
+                                            <span class="l-lr-action-badge">VIEW MATCH <span style="display:inline-block; transition: transform 0.2s ease;">→</span></span>
+                                        </div>
+                                    </div>
                                 </div>
 
-                                <!-- COMPACT LIVE RIVALRY SNAPSHOT -->
-                                <div class="l-live-rivalry-preview animate-fade-in-up delay-3" id="l-live-rivalry-preview-card">
-                                    <div class="l-lr-hdr">
-                                        <span class="l-lr-dot l-ticker-pulse"></span> LIVE CONTRACT RIVALRY
-                                    </div>
-                                    <div class="l-lr-ticker">
-                                        <span class="l-lr-token">@jakevoss <span class="l-lr-num lead">+8.40%</span></span>
-                                        <span class="l-lr-divider">/</span>
-                                        <span class="l-lr-token">@marcus <span class="l-lr-num lag">+7.80%</span></span>
-                                        <span class="l-lr-divider">|</span>
-                                        <span class="l-lr-cap">POOL $2.0K</span>
-                                        <span class="l-lr-divider">|</span>
-                                        <span class="l-lr-time">T-MINUS 9D</span>
-                                        <span class="l-lr-divider">|</span>
-                                        <span class="l-lr-action-badge">VIEW MATCH <span style="display:inline-block; transition: transform 0.2s ease;">→</span></span>
+                                <!-- RIGHT COLUMN: 3 COMPACT FANNED COLLATERAL CONTRACT CARDS DECK -->
+                                <div class="lhero-right animate-fade-in-up delay-2">
+                                    <div class="lfan-right" id="lfan-deck-container" tabindex="0" aria-label="Interactive Contract Deck Carousel">
+                                        <div class="lfan-deck-viewport">
+                                            <div class="lfan-deck-stage" id="lfan-deck-stage">
+                                                
+                                                <!-- CARD 1: STRIPE REVENUE CONTRACT -->
+                                                <div class="lactivity-card lfan-real-card is-center" id="lfan-card-0">
+                                                    <div class="lc-platform-header">
+                                                        <img class="lc-plat-logo" src="https://www.vectorlogo.zone/logos/stripe/stripe-icon.svg" alt="Stripe">
+                                                        <span class="lc-plat-text">Connected via Stripe Connect</span>
+                                                    </div>
+                                                    <div class="lc-global-stats-row">
+                                                        <span class="lc-global-stats-item">
+                                                            <span class="lc-global-stats-dot"></span>
+                                                            <span class="lc-global-stats-num">22</span>
+                                                            <span class="lc-global-stats-label">Active Contracts</span>
+                                                        </span>
+                                                        <span class="lc-global-stats-divider">|</span>
+                                                        <span class="lc-global-stats-item">
+                                                            <span class="lc-global-stats-num">$8,700</span>
+                                                            <span class="lc-global-stats-label">Locked</span>
+                                                        </span>
+                                                    </div>
+                                                    <div class="lc-contract">
+                                                        <div class="lc-contract-head">
+                                                            <div>
+                                                                <div class="lc-contract-name">Stripe Revenue</div>
+                                                                <div class="lc-contract-goal">Increase Stripe revenue by 20%</div>
+                                                                <div class="lc-contract-time">18 Days Remaining</div>
+                                                            </div>
+                                                            <div class="lc-status"><span class="lc-status-dot"></span>Active</div>
+                                                        </div>
+                                                        <div class="lc-flow-horizontal">
+                                                            <div class="lc-flow-col">
+                                                                <span class="lc-flow-label">Deposit</span>
+                                                                <span class="lc-flow-val">$500</span>
+                                                            </div>
+                                                            <div class="lc-flow-arrow-right">→</div>
+                                                            <div class="lc-flow-col">
+                                                                <span class="lc-flow-label">Match</span>
+                                                                <span class="lc-flow-val lc-val-green">+$500</span>
+                                                            </div>
+                                                            <div class="lc-flow-arrow-right">→</div>
+                                                            <div class="lc-flow-col lc-col-final">
+                                                                <span class="lc-flow-label">Return</span>
+                                                                <span class="lc-flow-val">$1,000</span>
+                                                            </div>
+                                                        </div>
+                                                        <div class="lc-flow-footnote">Matches are funded by forfeited deposits and sponsors. <a href="#engine-section" class="lc-flow-link" onclick="document.getElementById('engine-section')?.scrollIntoView({behavior:'smooth'}); return false;">How it works →</a></div>
+                                                        <div class="lc-live-state-ticker">
+                                                            <span class="lc-live-state-lbl">PROTOCOL STATE</span>
+                                                            <span class="lc-live-state-val">Deposit Escrowed</span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="lc-trust" style="margin-top: 12px; padding-top: 10px;">
+                                                        <svg class="lc-trust-lock" width="10" height="10" viewBox="0 0 24 28" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><path d="M12 2a5 5 0 0 0-5 5v3H5a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V12a2 2 0 0 0-2-2h-2V7a5 5 0 0 0-5-5zm-3 5a3 3 0 0 1 6 0v3H9V7zm3 9a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3z" fill="currentColor"/></svg>
+                                                        Verified automatically via Connected API.
+                                                    </div>
+                                                </div>
+
+                                                <!-- CARD 2: SHOPIFY SALES CONTRACT -->
+                                                <div class="lactivity-card lfan-real-card is-right" id="lfan-card-1">
+                                                    <div class="lc-platform-header">
+                                                        <img class="lc-plat-logo" src="https://www.vectorlogo.zone/logos/shopify/shopify-icon.svg" alt="Shopify">
+                                                        <span class="lc-plat-text">Verified via Shopify API</span>
+                                                    </div>
+                                                    <div class="lc-global-stats-row">
+                                                        <span class="lc-global-stats-item">
+                                                            <span class="lc-global-stats-dot"></span>
+                                                            <span class="lc-global-stats-num">15</span>
+                                                            <span class="lc-global-stats-label">Active Contracts</span>
+                                                        </span>
+                                                        <span class="lc-global-stats-divider">|</span>
+                                                        <span class="lc-global-stats-item">
+                                                            <span class="lc-global-stats-num">$6,200</span>
+                                                            <span class="lc-global-stats-label">Locked</span>
+                                                        </span>
+                                                    </div>
+                                                    <div class="lc-contract">
+                                                        <div class="lc-contract-head">
+                                                            <div>
+                                                                <div class="lc-contract-name">Shopify Sales</div>
+                                                                <div class="lc-contract-goal">Generate $5,000 in net sales</div>
+                                                                <div class="lc-contract-time">30 Days Remaining</div>
+                                                            </div>
+                                                            <div class="lc-status"><span class="lc-status-dot"></span>Active</div>
+                                                        </div>
+                                                        <div class="lc-flow-horizontal">
+                                                            <div class="lc-flow-col">
+                                                                <span class="lc-flow-label">Deposit</span>
+                                                                <span class="lc-flow-val">$250</span>
+                                                            </div>
+                                                            <div class="lc-flow-arrow-right">→</div>
+                                                            <div class="lc-flow-col">
+                                                                <span class="lc-flow-label">Match</span>
+                                                                <span class="lc-flow-val lc-val-green">+$125</span>
+                                                            </div>
+                                                            <div class="lc-flow-arrow-right">→</div>
+                                                            <div class="lc-flow-col lc-col-final">
+                                                                <span class="lc-flow-label">Return</span>
+                                                                <span class="lc-flow-val">$375</span>
+                                                            </div>
+                                                        </div>
+                                                        <div class="lc-flow-footnote">Matches are funded by forfeited deposits and sponsors. <a href="#engine-section" class="lc-flow-link" onclick="document.getElementById('engine-section')?.scrollIntoView({behavior:'smooth'}); return false;">How it works →</a></div>
+                                                        <div class="lc-live-state-ticker">
+                                                            <span class="lc-live-state-lbl">PROTOCOL STATE</span>
+                                                            <span class="lc-live-state-val">Yield Multiplier Active</span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="lc-trust" style="margin-top: 12px; padding-top: 10px;">
+                                                        <svg class="lc-trust-lock" width="10" height="10" viewBox="0 0 24 28" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><path d="M12 2a5 5 0 0 0-5 5v3H5a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V12a2 2 0 0 0-2-2h-2V7a5 5 0 0 0-5-5zm-3 5a3 3 0 0 1 6 0v3H9V7zm3 9a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3z" fill="currentColor"/></svg>
+                                                        Verified automatically via Connected API.
+                                                    </div>
+                                                </div>
+
+                                                <!-- CARD 3: X AUDIENCE GROWTH CONTRACT -->
+                                                <div class="lactivity-card lfan-real-card is-left" id="lfan-card-2">
+                                                    <div class="lc-platform-header">
+                                                        <img class="lc-plat-logo" src="https://cdn.simpleicons.org/x/111111" alt="X">
+                                                        <span class="lc-plat-text">Verified via X API v2</span>
+                                                    </div>
+                                                    <div class="lc-global-stats-row">
+                                                        <span class="lc-global-stats-item">
+                                                            <span class="lc-global-stats-dot"></span>
+                                                            <span class="lc-global-stats-num">31</span>
+                                                            <span class="lc-global-stats-label">Active Contracts</span>
+                                                        </span>
+                                                        <span class="lc-global-stats-divider">|</span>
+                                                        <span class="lc-global-stats-item">
+                                                            <span class="lc-global-stats-num">$12,400</span>
+                                                            <span class="lc-global-stats-label">Locked</span>
+                                                        </span>
+                                                    </div>
+                                                    <div class="lc-contract">
+                                                        <div class="lc-contract-head">
+                                                            <div>
+                                                                <div class="lc-contract-name">X Audience Growth</div>
+                                                                <div class="lc-contract-goal">Gain 1,000 net new followers</div>
+                                                                <div class="lc-contract-time">12 Days Remaining</div>
+                                                            </div>
+                                                            <div class="lc-status"><span class="lc-status-dot"></span>Active</div>
+                                                        </div>
+                                                        <div class="lc-flow-horizontal">
+                                                            <div class="lc-flow-col">
+                                                                <span class="lc-flow-label">Deposit</span>
+                                                                <span class="lc-flow-val">$1,000</span>
+                                                            </div>
+                                                            <div class="lc-flow-arrow-right">→</div>
+                                                            <div class="lc-flow-col">
+                                                                <span class="lc-flow-label">Match</span>
+                                                                <span class="lc-flow-val lc-val-green">+$1,000</span>
+                                                            </div>
+                                                            <div class="lc-flow-arrow-right">→</div>
+                                                            <div class="lc-flow-col lc-col-final">
+                                                                <span class="lc-flow-label">Return</span>
+                                                                <span class="lc-flow-val">$2,000</span>
+                                                            </div>
+                                                        </div>
+                                                        <div class="lc-flow-footnote">Matches are funded by forfeited deposits and sponsors. <a href="#engine-section" class="lc-flow-link" onclick="document.getElementById('engine-section')?.scrollIntoView({behavior:'smooth'}); return false;">How it works →</a></div>
+                                                        <div class="lc-live-state-ticker">
+                                                            <span class="lc-live-state-lbl">PROTOCOL STATE</span>
+                                                            <span class="lc-live-state-val">Escrow Verified</span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="lc-trust" style="margin-top: 12px; padding-top: 10px;">
+                                                        <svg class="lc-trust-lock" width="10" height="10" viewBox="0 0 24 28" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><path d="M12 2a5 5 0 0 0-5 5v3H5a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V12a2 2 0 0 0-2-2h-2V7a5 5 0 0 0-5-5zm-3 5a3 3 0 0 1 6 0v3H9V7zm3 9a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3z" fill="currentColor"/></svg>
+                                                        Verified automatically via Connected API.
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -159,206 +338,7 @@ export function renderLanding() {
                 </div>
             </div>
 
-            <!-- ═══ FANNED-DECK SHOWCASE WITH COMPACT REAL COLLATERAL CONTRACT CARDS ═══ -->
-            <div class="lfeatured-live-section" id="lfeatured-live-section" data-r>
-                <div class="lw">
-                    <div class="lfan-grid">
-                        <!-- LEFT COLUMN -->
-                        <div class="lfan-left">
-                            <h2 class="lfan-h1">
-                                DISCOVER THE<br>
-                                POWER OF<br>
-                                <span class="lfan-highlight">COLLATERAL</span>
-                            </h2>
-                            <p class="lfan-sub">
-                                Every contract is backed by smart escrow and verified directly through platform APIs. No manual uploads. No cheating.
-                            </p>
-                            <div class="lfan-nav">
-                                <button class="lfan-arrow-btn" id="lfan-prev" aria-label="Previous Contract Card">
-                                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
-                                </button>
-                                <button class="lfan-arrow-btn" id="lfan-next" aria-label="Next Contract Card">
-                                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-                                </button>
-                            </div>
-                        </div>
 
-                        <!-- RIGHT COLUMN: 3 COMPACT COLLATERAL CONTRACT CARDS DECK -->
-                        <div class="lfan-right" id="lfan-deck-container" tabindex="0" aria-label="Interactive Contract Deck Carousel">
-                            <div class="lfan-deck-viewport">
-                                <div class="lfan-deck-stage" id="lfan-deck-stage">
-                                    
-                                    <!-- CARD 1: STRIPE REVENUE CONTRACT -->
-                                    <div class="lactivity-card lfan-real-card is-center" id="lfan-card-0">
-                                        <div class="lc-platform-header">
-                                            <img class="lc-plat-logo" src="https://www.vectorlogo.zone/logos/stripe/stripe-icon.svg" alt="Stripe">
-                                            <span class="lc-plat-text">Connected via Stripe Connect</span>
-                                        </div>
-                                        <div class="lc-global-stats-row">
-                                            <span class="lc-global-stats-item">
-                                                <span class="lc-global-stats-dot"></span>
-                                                <span class="lc-global-stats-num">22</span>
-                                                <span class="lc-global-stats-label">Active Contracts</span>
-                                            </span>
-                                            <span class="lc-global-stats-divider">|</span>
-                                            <span class="lc-global-stats-item">
-                                                <span class="lc-global-stats-num">$8,700</span>
-                                                <span class="lc-global-stats-label">Locked</span>
-                                            </span>
-                                        </div>
-                                        <div class="lc-contract">
-                                            <div class="lc-contract-head">
-                                                <div>
-                                                    <div class="lc-contract-name">Stripe Revenue</div>
-                                                    <div class="lc-contract-goal">Increase Stripe revenue by 20%</div>
-                                                    <div class="lc-contract-time">18 Days Remaining</div>
-                                                </div>
-                                                <div class="lc-status"><span class="lc-status-dot"></span>Active</div>
-                                            </div>
-                                            <div class="lc-flow-horizontal">
-                                                <div class="lc-flow-col">
-                                                    <span class="lc-flow-label">Deposit</span>
-                                                    <span class="lc-flow-val">$500</span>
-                                                </div>
-                                                <div class="lc-flow-arrow-right">→</div>
-                                                <div class="lc-flow-col">
-                                                    <span class="lc-flow-label">Match</span>
-                                                    <span class="lc-flow-val lc-val-green">+$500</span>
-                                                </div>
-                                                <div class="lc-flow-arrow-right">→</div>
-                                                <div class="lc-flow-col lc-col-final">
-                                                    <span class="lc-flow-label">Return</span>
-                                                    <span class="lc-flow-val">$1,000</span>
-                                                </div>
-                                            </div>
-                                            <div class="lc-flow-footnote">Matches are funded by forfeited deposits and sponsors. <a href="#how" class="lc-flow-link" onclick="document.getElementById('how')?.scrollIntoView({behavior:'smooth'}); return false;">How it works →</a></div>
-                                            <div class="lc-live-state-ticker">
-                                                <span class="lc-live-state-lbl">PROTOCOL STATE</span>
-                                                <span class="lc-live-state-val">Deposit Escrowed</span>
-                                            </div>
-                                        </div>
-                                        <div class="lc-trust" style="margin-top: 12px; padding-top: 10px;">
-                                            <svg class="lc-trust-lock" width="10" height="10" viewBox="0 0 24 28" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><path d="M12 2a5 5 0 0 0-5 5v3H5a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V12a2 2 0 0 0-2-2h-2V7a5 5 0 0 0-5-5zm-3 5a3 3 0 0 1 6 0v3H9V7zm3 9a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3z" fill="currentColor"/></svg>
-                                            Verified automatically via Connected API.
-                                        </div>
-                                    </div>
-
-                                    <!-- CARD 2: SHOPIFY SALES CONTRACT -->
-                                    <div class="lactivity-card lfan-real-card is-right" id="lfan-card-1">
-                                        <div class="lc-platform-header">
-                                            <img class="lc-plat-logo" src="https://www.vectorlogo.zone/logos/shopify/shopify-icon.svg" alt="Shopify">
-                                            <span class="lc-plat-text">Verified via Shopify API</span>
-                                        </div>
-                                        <div class="lc-global-stats-row">
-                                            <span class="lc-global-stats-item">
-                                                <span class="lc-global-stats-dot"></span>
-                                                <span class="lc-global-stats-num">15</span>
-                                                <span class="lc-global-stats-label">Active Contracts</span>
-                                            </span>
-                                            <span class="lc-global-stats-divider">|</span>
-                                            <span class="lc-global-stats-item">
-                                                <span class="lc-global-stats-num">$6,200</span>
-                                                <span class="lc-global-stats-label">Locked</span>
-                                            </span>
-                                        </div>
-                                        <div class="lc-contract">
-                                            <div class="lc-contract-head">
-                                                <div>
-                                                    <div class="lc-contract-name">Shopify Sales</div>
-                                                    <div class="lc-contract-goal">Generate $5,000 in net sales</div>
-                                                    <div class="lc-contract-time">30 Days Remaining</div>
-                                                </div>
-                                                <div class="lc-status"><span class="lc-status-dot"></span>Active</div>
-                                            </div>
-                                            <div class="lc-flow-horizontal">
-                                                <div class="lc-flow-col">
-                                                    <span class="lc-flow-label">Deposit</span>
-                                                    <span class="lc-flow-val">$250</span>
-                                                </div>
-                                                <div class="lc-flow-arrow-right">→</div>
-                                                <div class="lc-flow-col">
-                                                    <span class="lc-flow-label">Match</span>
-                                                    <span class="lc-flow-val lc-val-green">+$125</span>
-                                                </div>
-                                                <div class="lc-flow-arrow-right">→</div>
-                                                <div class="lc-flow-col lc-col-final">
-                                                    <span class="lc-flow-label">Return</span>
-                                                    <span class="lc-flow-val">$375</span>
-                                                </div>
-                                            </div>
-                                            <div class="lc-flow-footnote">Matches are funded by forfeited deposits and sponsors. <a href="#how" class="lc-flow-link" onclick="document.getElementById('how')?.scrollIntoView({behavior:'smooth'}); return false;">How it works →</a></div>
-                                            <div class="lc-live-state-ticker">
-                                                <span class="lc-live-state-lbl">PROTOCOL STATE</span>
-                                                <span class="lc-live-state-val">Yield Multiplier Active</span>
-                                            </div>
-                                        </div>
-                                        <div class="lc-trust" style="margin-top: 12px; padding-top: 10px;">
-                                            <svg class="lc-trust-lock" width="10" height="10" viewBox="0 0 24 28" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><path d="M12 2a5 5 0 0 0-5 5v3H5a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V12a2 2 0 0 0-2-2h-2V7a5 5 0 0 0-5-5zm-3 5a3 3 0 0 1 6 0v3H9V7zm3 9a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3z" fill="currentColor"/></svg>
-                                            Verified automatically via Connected API.
-                                        </div>
-                                    </div>
-
-                                    <!-- CARD 3: X AUDIENCE GROWTH CONTRACT -->
-                                    <div class="lactivity-card lfan-real-card is-left" id="lfan-card-2">
-                                        <div class="lc-platform-header">
-                                            <img class="lc-plat-logo" src="https://cdn.simpleicons.org/x/111111" alt="X">
-                                            <span class="lc-plat-text">Verified via X API v2</span>
-                                        </div>
-                                        <div class="lc-global-stats-row">
-                                            <span class="lc-global-stats-item">
-                                                <span class="lc-global-stats-dot"></span>
-                                                <span class="lc-global-stats-num">31</span>
-                                                <span class="lc-global-stats-label">Active Contracts</span>
-                                            </span>
-                                            <span class="lc-global-stats-divider">|</span>
-                                            <span class="lc-global-stats-item">
-                                                <span class="lc-global-stats-num">$12,400</span>
-                                                <span class="lc-global-stats-label">Locked</span>
-                                            </span>
-                                        </div>
-                                        <div class="lc-contract">
-                                            <div class="lc-contract-head">
-                                                <div>
-                                                    <div class="lc-contract-name">X Audience Growth</div>
-                                                    <div class="lc-contract-goal">Gain 1,000 net new followers</div>
-                                                    <div class="lc-contract-time">12 Days Remaining</div>
-                                                </div>
-                                                <div class="lc-status"><span class="lc-status-dot"></span>Active</div>
-                                            </div>
-                                            <div class="lc-flow-horizontal">
-                                                <div class="lc-flow-col">
-                                                    <span class="lc-flow-label">Deposit</span>
-                                                    <span class="lc-flow-val">$1,000</span>
-                                                </div>
-                                                <div class="lc-flow-arrow-right">→</div>
-                                                <div class="lc-flow-col">
-                                                    <span class="lc-flow-label">Match</span>
-                                                    <span class="lc-flow-val lc-val-green">+$1,000</span>
-                                                </div>
-                                                <div class="lc-flow-arrow-right">→</div>
-                                                <div class="lc-flow-col lc-col-final">
-                                                    <span class="lc-flow-label">Return</span>
-                                                    <span class="lc-flow-val">$2,000</span>
-                                                </div>
-                                            </div>
-                                            <div class="lc-flow-footnote">Matches are funded by forfeited deposits and sponsors. <a href="#how" class="lc-flow-link" onclick="document.getElementById('how')?.scrollIntoView({behavior:'smooth'}); return false;">How it works →</a></div>
-                                            <div class="lc-live-state-ticker">
-                                                <span class="lc-live-state-lbl">PROTOCOL STATE</span>
-                                                <span class="lc-live-state-val">Escrow Verified</span>
-                                            </div>
-                                        </div>
-                                        <div class="lc-trust" style="margin-top: 12px; padding-top: 10px;">
-                                            <svg class="lc-trust-lock" width="10" height="10" viewBox="0 0 24 28" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><path d="M12 2a5 5 0 0 0-5 5v3H5a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V12a2 2 0 0 0-2-2h-2V7a5 5 0 0 0-5-5zm-3 5a3 3 0 0 1 6 0v3H9V7zm3 9a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3z" fill="currentColor"/></svg>
-                                            Verified automatically via Connected API.
-                                        </div>
-                                    </div>
-
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
 
 
 

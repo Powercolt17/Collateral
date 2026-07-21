@@ -173,7 +173,31 @@ export const landingCSS = `
 @media(min-width:768px){
   .lh-br{display:block}
 }
-.lhero-grid{display:grid;grid-template-columns:1.2fr 0.8fr;gap:48px;align-items:flex-start;position:relative;z-index:2}
+.lhero-section .lw {
+    max-width: 1200px;
+}
+.lhero-grid {
+    display: grid;
+    grid-template-columns: 0.52fr 0.48fr;
+    gap: 48px;
+    align-items: flex-start;
+    position: relative;
+    z-index: 2;
+}
+@media (max-width: 1024px) {
+    .lhero-grid {
+        grid-template-columns: 1fr;
+        gap: 40px;
+    }
+}
+.lhero-right {
+    position: relative;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    perspective: 1200px;
+}
 .lsub{font-size:18px;color:var(--t2);line-height:1.55;margin:0 0 32px;max-width:640px;letter-spacing:-.2px}
 .lctas{display:flex;gap:16px;flex-wrap:wrap;align-items:center;margin-bottom:16px}
 .lhero-footer-strip{display:flex;justify-content:flex-end;margin-top:24px;position:relative;z-index:2}

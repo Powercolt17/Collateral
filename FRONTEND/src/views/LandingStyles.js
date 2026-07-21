@@ -82,7 +82,12 @@ export const landingCSS = `
   .lh-br{display:block}
 }
 .lsub{font-size:20px;color:var(--t2);line-height:1.5;margin:0 0 48px;max-width:680px;letter-spacing:-.2px}
-.lctas{display:flex;gap:16px;flex-wrap:wrap;margin-bottom:16px}
+.lctas{display:flex;gap:16px;flex-wrap:wrap;align-items:center;margin-bottom:16px}
+/* Secondary CTA demoted to a plain text link so only "Start Contract" reads as a button */
+.lhero-textlink{background:none;border:none;padding:8px 4px;cursor:pointer;font-family:'Inter',sans-serif;font-size:14px;font-weight:700;letter-spacing:0.5px;text-transform:uppercase;color:var(--t2);display:inline-flex;align-items:center;gap:8px;transition:color .25s cubic-bezier(.16,1,.3,1),gap .25s cubic-bezier(.16,1,.3,1)}
+.lhero-textlink svg{width:16px;height:16px;transition:transform .25s cubic-bezier(.16,1,.3,1)}
+.lhero-textlink:hover{color:var(--r);gap:12px}
+.lhero-textlink:hover svg{transform:translateX(2px)}
 .lbtn{height:56px;padding:0 32px;font-size:14px;font-weight:700;letter-spacing:1px;text-transform:uppercase;border:none;border-radius:4px;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;gap:8px;transition:all .4s cubic-bezier(.16, 1, 0.3, 1);position:relative;overflow:hidden}
 .lbtn-r{background:var(--r) !important;color:#fff !important;box-shadow:0 8px 24px -6px rgba(92,20,20,.4);font-size:14px;font-weight:800;padding:0 40px;height:60px;animation:btnPulse 3s ease-in-out infinite}
 .lbtn-r:hover{background:var(--rh) !important;box-shadow:0 16px 40px -8px rgba(92,20,20,.5);transform:translateY(-3px) scale(1.03)}
@@ -104,6 +109,23 @@ export const landingCSS = `
 }
 .lcta-match{font-size:14px;color:var(--t1);margin-top:16px;font-weight:700;display:flex;align-items:center;gap:8px;letter-spacing:-.1px;animation:matchTextShine 3s infinite ease-in-out}
 .lcta-match::before{content:'';width:6px;height:6px;border-radius:50%;background:#EF4444;animation:matchDotRedPulse 2s infinite ease-in-out}
+
+/* ═══ HERO LEFT COLUMN: eyebrow · spine · dot-grid texture ═══ */
+.lhero-left{position:relative;border-left:2px solid var(--r);padding-left:16px}
+/* Dot-grid lives on a pseudo-element so its right-fade mask never touches the text/CTAs */
+.lhero-left::before{
+  content:'';
+  position:absolute;
+  inset:0;
+  background-image:radial-gradient(rgba(0,0,0,0.08) 1px, transparent 1px);
+  background-size:16px 16px;
+  -webkit-mask-image:linear-gradient(to right, black 55%, transparent 90%);
+  mask-image:linear-gradient(to right, black 55%, transparent 90%);
+  pointer-events:none;
+  z-index:0;
+}
+.lhero-left > *{position:relative;z-index:1}
+.lhero-eyebrow{font-family:'Inter',sans-serif;font-size:11px;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:var(--t3);margin:0 0 18px}
 
 /* ═══ PREVIEW CONTRACT CARD ═══ */
 @keyframes cardSheen {
@@ -302,13 +324,22 @@ export const landingCSS = `
 }
 .lc-flow-footnote {
   font-family: 'Inter', sans-serif;
-  font-size: 9px;
+  font-size: 12px;
   font-weight: 500;
-  color: #8a8984;
+  color: var(--t3);
   text-align: center;
-  margin-top: -2px;
+  margin-top: 2px;
+  line-height: 1.5;
   letter-spacing: -0.1px;
 }
+.lc-flow-link {
+  color: var(--r);
+  font-weight: 700;
+  text-decoration: none;
+  white-space: nowrap;
+  transition: color .2s ease;
+}
+.lc-flow-link:hover { color: var(--rh); text-decoration: underline; }
 
 /* DEDICATED LIVE ACTIVITY STRIP */
 .lc-recent-activity {
@@ -1110,12 +1141,12 @@ export const landingCSS = `
     background: #fff;
 }
 .l-live-rivalry-preview {
-    margin-top: 64px;
+    margin-top: 24px;
+    padding-top: 24px;
+    border-top: 0.5px solid rgba(0, 0, 0, 0.12);
     cursor: pointer;
     max-width: 520px;
     background: transparent;
-    border: none;
-    padding: 0;
     box-shadow: none;
 }
 .l-lr-hdr {
@@ -1949,22 +1980,14 @@ export const landingCSS = `
     overflow: hidden;
     z-index: 0;
     pointer-events: none;
-    background: radial-gradient(circle at 60% 30%, #fdfdfd 0%, #fafaf9 50%, #f6f6f3 100%);
-    opacity: 0;
-    animation: envFadeIn 2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    background: #FAF8F5;
+    opacity: 1;
 }
 @keyframes envFadeIn {
     to { opacity: 1; }
 }
 .l-arch-light-shift {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: radial-gradient(circle at 45% 45%, rgba(255, 255, 255, 0.6) 0%, rgba(255, 255, 255, 0) 70%);
-    pointer-events: none;
-    animation: ambientLightShift 90s ease-in-out infinite alternate;
+    display: none;
 }
 @keyframes ambientLightShift {
     0% { opacity: 0.15; transform: translate(-30px, -30px); }

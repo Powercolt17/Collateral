@@ -47,6 +47,7 @@ export function renderLanding() {
                     <div class="lhero-grid">
                     <div class="lhero-left">
 
+                        <div class="lhero-eyebrow animate-fade-in-up">Commitment Contracts · Verified by API</div>
                         <h1 class="lh1 animate-fade-in-up">
                             Your Biggest Bet<br class="lh-br">
                             Should Be on <span class="lh-gradient">You.</span>
@@ -56,7 +57,7 @@ export function renderLanding() {
                         </p>
                         <div class="lctas animate-fade-in-up delay-2">
                             <button class="lbtn lbtn-r" id="lp-hero-cta">Start Contract</button>
-                            <button class="lbtn lbtn-g" id="lp-see-contracts-cta">See Live Contracts</button>
+                            <button class="lhero-textlink" id="lp-see-contracts-cta">See Live Contracts <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></button>
                         </div>
                         <div class="lcta-match ldesktop-proof animate-fade-in-up delay-2" style="margin-bottom: 24px;">First contract matched up to $250</div>
 
@@ -128,7 +129,7 @@ export function renderLanding() {
                                         <span class="lc-flow-val" id="lc-feat-return">$1,000</span>
                                     </div>
                                 </div>
-                                <div class="lc-flow-footnote">Yields mathematically backed by protocol forfeiture pools and sponsors.</div>
+                                <div class="lc-flow-footnote">Matches are funded by forfeited deposits and sponsors. <a href="#how" class="lc-flow-link" onclick="document.getElementById('how')?.scrollIntoView({behavior:'smooth'}); return false;">How it works →</a></div>
 
                                 <!-- SUBTLE LIVE STATE TICKER -->
                                 <div class="lc-live-state-ticker">

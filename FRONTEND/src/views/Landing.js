@@ -187,122 +187,35 @@ export function renderLanding() {
                 </div>
             </div>
 
-            <!-- ═══ FEATURED LIVE EXECUTION SHOWCASE (KASPACOM STYLE) ═══ -->
-            <div class="lfeatured-live-section" data-r>
+            <!-- ═══ FANNED-DECK KASPA CAROUSEL SHOWCASE ═══ -->
+            <div class="lfeatured-live-section" id="lfeatured-live-section" data-r>
                 <div class="lw">
-                    <div class="lfeatured-kaspa-grid">
-                        <div class="lfeatured-kaspa-left">
-                            <h2 class="lfeatured-kaspa-h1">
+                    <div class="lfan-grid">
+                        <!-- LEFT COLUMN (~40%) -->
+                        <div class="lfan-left">
+                            <h2 class="lfan-h1">
                                 DISCOVER THE<br>
                                 POWER OF<br>
-                                <span class="lfeatured-kaspa-highlight">COLLATERAL</span>
+                                <span class="lfan-highlight">COLLATERAL</span>
                             </h2>
-                            <p class="lfeatured-kaspa-sub">
+                            <p class="lfan-sub">
                                 Every contract is backed by smart escrow and verified directly through platform APIs. No manual uploads. No cheating.
                             </p>
-                            <div class="lfeatured-kaspa-nav">
-                                <button class="lkaspa-nav-btn" id="lc-kaspa-prev" aria-label="Previous Contract">←</button>
-                                <button class="lkaspa-nav-btn" id="lc-kaspa-next" aria-label="Next Contract">→</button>
+                            <div class="lfan-nav">
+                                <button class="lfan-arrow-btn" id="lfan-prev" aria-label="Previous Contract Card">
+                                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+                                </button>
+                                <button class="lfan-arrow-btn" id="lfan-next" aria-label="Next Contract Card">
+                                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                                </button>
                             </div>
                         </div>
 
-                        <div class="lfeatured-kaspa-right">
-                            <div class="lkaspa-stack-wrapper">
-                                <!-- ANGLED BACKGROUND CARD 1 (LEFT) -->
-                                <div class="lkaspa-card-bg lkaspa-card-left" id="lkaspa-card-left">
-                                    <div class="lkaspa-card-bg-header">
-                                        <img src="https://www.vectorlogo.zone/logos/shopify/shopify-icon.svg" alt="Shopify" width="22" height="22">
-                                        <span>Shopify Store Sales</span>
-                                    </div>
-                                    <div class="lkaspa-card-bg-body">
-                                        Generate $5,000 in net sales
-                                    </div>
-                                    <div class="lkaspa-card-bg-val">Deposit $250 → Return $375</div>
-                                </div>
-
-                                <!-- FOREGROUND ACTIVE CARD (CENTER FRONT) -->
-                                <div class="lactivity-card lkaspa-card-front" id="lkaspa-card-front">
-                                    <!-- DYNAMIC PLATFORM INTEGRATION HEADER -->
-                                    <div class="lc-platform-header" id="lc-platform-header">
-                                        <img class="lc-plat-logo" id="lc-plat-logo" src="https://www.vectorlogo.zone/logos/stripe/stripe-icon.svg" alt="Stripe">
-                                        <span class="lc-plat-text" id="lc-plat-text">Connected via Stripe Connect</span>
-                                    </div>
-
-                                    <!-- INTEGRATED GLOBAL STATS ROW -->
-                                    <div class="lc-global-stats-row">
-                                        <span class="lc-global-stats-item">
-                                            <span class="lc-global-stats-dot"></span>
-                                            <span id="lc-global-active-count" class="lc-global-stats-num">22</span>
-                                            <span class="lc-global-stats-label">Active Contracts</span>
-                                        </span>
-                                        <span class="lc-global-stats-divider">|</span>
-                                        <span class="lc-global-stats-item">
-                                            <span id="lc-global-locked-amount" class="lc-global-stats-num">$8,700</span>
-                                            <span class="lc-global-stats-label">Locked</span>
-                                        </span>
-                                    </div>
-
-                                    <!-- FEATURED CONTRACT -->
-                                    <div class="lc-contract">
-                                        <div class="lc-contract-head">
-                                            <div>
-                                                <div class="lc-contract-name" id="lc-feat-name">Revenue Growth</div>
-                                                <div class="lc-contract-goal" id="lc-feat-goal">Increase revenue by 20%</div>
-                                                <div class="lc-contract-time" id="lc-feat-time">18 Days Remaining</div>
-                                            </div>
-                                            <div class="lc-status"><span class="lc-status-dot"></span>Active</div>
-                                        </div>
-
-                                        <div class="lc-flow-horizontal">
-                                            <div class="lc-flow-col">
-                                                <span class="lc-flow-label">Deposit</span>
-                                                <span class="lc-flow-val" id="lc-feat-deposit">$500</span>
-                                            </div>
-                                            <div class="lc-flow-arrow-right">→</div>
-                                            <div class="lc-flow-col">
-                                                <span class="lc-flow-label">Match</span>
-                                                <span class="lc-flow-val lc-val-green" id="lc-feat-reward">+$500</span>
-                                            </div>
-                                            <div class="lc-flow-arrow-right">→</div>
-                                            <div class="lc-flow-col lc-col-final">
-                                                <span class="lc-flow-label">Return</span>
-                                                <span class="lc-flow-val" id="lc-feat-return">$1,000</span>
-                                            </div>
-                                        </div>
-                                        <div class="lc-flow-footnote">Matches are funded by forfeited deposits and sponsors. <a href="#how" class="lc-flow-link" onclick="document.getElementById('how')?.scrollIntoView({behavior:'smooth'}); return false;">How it works →</a></div>
-
-                                        <!-- SUBTLE LIVE STATE TICKER -->
-                                        <div class="lc-live-state-ticker">
-                                            <span class="lc-live-state-lbl">PROTOCOL STATE</span>
-                                            <span class="lc-live-state-val" id="lc-live-state-val">Deposit Escrowed</span>
-                                        </div>
-                                    </div>
-
-                                    <!-- DEDICATED LIVE ACTIVITY STRIP -->
-                                    <div class="lc-recent-activity">
-                                        <div class="lc-ra-header">Recent Activity</div>
-                                        <div class="lc-ra-list" id="lc-ra-list">
-                                            <!-- Populated dynamically -->
-                                        </div>
-                                    </div>
-
-                                    <!-- TRUST COPY -->
-                                    <div class="lc-trust">
-                                        <svg class="lc-trust-lock" width="10" height="10" viewBox="0 0 24 28" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><path d="M12 2a5 5 0 0 0-5 5v3H5a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V12a2 2 0 0 0-2-2h-2V7a5 5 0 0 0-5-5zm-3 5a3 3 0 0 1 6 0v3H9V7zm3 9a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3z" fill="currentColor"/></svg>
-                                        Contracts verified automatically through connected APIs.
-                                    </div>
-                                </div>
-
-                                <!-- ANGLED BACKGROUND CARD 2 (RIGHT) -->
-                                <div class="lkaspa-card-bg lkaspa-card-right" id="lkaspa-card-right">
-                                    <div class="lkaspa-card-bg-header">
-                                        <img src="https://cdn.simpleicons.org/x/FFFFFF" alt="X" width="20" height="20">
-                                        <span>X Audience Growth</span>
-                                    </div>
-                                    <div class="lkaspa-card-bg-body">
-                                        Gain 1,000 net new followers
-                                    </div>
-                                    <div class="lkaspa-card-bg-val">Deposit $1,000 → Return $2,000</div>
+                        <!-- RIGHT COLUMN (~60%): FANNED DECK CAROUSEL -->
+                        <div class="lfan-right" id="lfan-deck-container" tabindex="0" aria-label="Interactive Contract Deck Carousel">
+                            <div class="lfan-deck-viewport">
+                                <div class="lfan-deck-stage" id="lfan-deck-stage">
+                                    <!-- Cards populated dynamically by JS -->
                                 </div>
                             </div>
                         </div>
@@ -1699,47 +1612,198 @@ export function initLanding() {
                     window.landingIntervals.push(intervalId3);
                 }
 
-                // Kaspa Carousel Navigation Buttons
-                const prevKaspaBtn = document.getElementById('lc-kaspa-prev');
-                const nextKaspaBtn = document.getElementById('lc-kaspa-next');
-
-                const cycleKaspaForward = () => {
-                    if (featContainer) {
-                        featContainer.style.opacity = '0';
-                        featContainer.style.transform = 'translateY(2px)';
-                    }
-                    setTimeout(() => {
-                        featIdx = (featIdx + 1) % featuredContracts.length;
-                        updateFeaturedContract(featuredContracts[featIdx]);
-                        if (featContainer) {
-                            featContainer.style.opacity = '1';
-                            featContainer.style.transform = 'translateY(0)';
+                // ═══ FANNED-DECK CAROUSEL CONTROLLER ═══
+                const stageEl = document.getElementById('lfan-deck-stage');
+                if (stageEl) {
+                    const fanCardsData = [
+                        {
+                            id: 'shopify',
+                            title: 'SHOPIFY SALES',
+                            desc: 'Deposit against a net sales target. Verified directly through the Shopify API.',
+                            bg: '#D97706',
+                            ink: '#1A1206',
+                            iconSvg: `<svg viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M20 35h60l-5 50H25L20 35z" fill="currentColor" fill-opacity="0.12" />
+                                <path d="M20 35h60l-5 50H25L20 35z" />
+                                <path d="M35 35V25a15 15 0 0 1 30 0v10" />
+                                <path d="M40 62l10-10 10 10" />
+                                <path d="M50 52v20" />
+                            </svg>`
+                        },
+                        {
+                            id: 'x_growth',
+                            title: 'X AUDIENCE GROWTH',
+                            desc: 'Stake on follower growth. Settled automatically from platform data.',
+                            bg: '#8B85F0',
+                            ink: '#14121F',
+                            iconSvg: `<svg viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round">
+                                <circle cx="50" cy="50" r="14" fill="currentColor" fill-opacity="0.15" />
+                                <circle cx="50" cy="50" r="14" />
+                                <circle cx="20" cy="30" r="8" />
+                                <circle cx="80" cy="30" r="8" />
+                                <circle cx="24" cy="74" r="8" />
+                                <circle cx="76" cy="74" r="8" />
+                                <line x1="39" y1="41" x2="27" y2="35" />
+                                <line x1="61" y1="41" x2="73" y2="35" />
+                                <line x1="41" y1="60" x2="30" y2="69" />
+                                <line x1="59" y1="60" x2="70" y2="69" />
+                            </svg>`
+                        },
+                        {
+                            id: 'stripe',
+                            title: 'STRIPE REVENUE',
+                            desc: 'Back a revenue milestone with escrowed funds. No manual uploads.',
+                            bg: '#3B2FD9',
+                            ink: '#FFFFFF',
+                            iconSvg: `<svg viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round">
+                                <rect x="18" y="22" width="64" height="42" rx="4" fill="currentColor" fill-opacity="0.12" />
+                                <line x1="18" y1="34" x2="82" y2="34" />
+                                <rect x="26" y="46" width="12" height="8" rx="1" fill="currentColor" fill-opacity="0.25" />
+                                <path d="M22 78l16-16 12 12 24-24" />
+                                <path d="M62 50h12v12" />
+                            </svg>`
+                        },
+                        {
+                            id: 'youtube',
+                            title: 'YOUTUBE WATCH TIME',
+                            desc: 'Commit to a watch-hour target, verified via connected analytics.',
+                            bg: '#0F9D58',
+                            ink: '#FFFFFF',
+                            iconSvg: `<svg viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round">
+                                <polygon points="34,26 74,50 34,74" fill="currentColor" fill-opacity="0.25" />
+                                <polygon points="34,26 74,50 34,74" />
+                                <circle cx="50" cy="50" r="38" stroke-dasharray="6 6" />
+                            </svg>`
+                        },
+                        {
+                            id: 'escrow',
+                            title: 'SMART ESCROW',
+                            desc: 'Funds locked on-chain until the API confirms the outcome. No cheating.',
+                            bg: '#2F3542',
+                            ink: '#FFFFFF',
+                            iconSvg: `<svg viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round">
+                                <rect x="24" y="16" width="52" height="68" rx="4" fill="currentColor" fill-opacity="0.12" />
+                                <rect x="40" y="48" width="20" height="18" rx="2" fill="currentColor" fill-opacity="0.25" />
+                                <path d="M44 48v-8a6 6 0 0 1 12 0v8" />
+                                <line x1="34" y1="30" x2="66" y2="30" />
+                                <line x1="34" y1="38" x2="56" y2="38" />
+                            </svg>`
                         }
-                    }, 250);
-                };
+                    ];
 
-                const cycleKaspaBackward = () => {
-                    if (featContainer) {
-                        featContainer.style.opacity = '0';
-                        featContainer.style.transform = 'translateY(2px)';
+                    const meshSvgHtml = `<svg class="lfan-card-mesh" viewBox="0 0 200 300" fill="none" preserveAspectRatio="xMidYMid slice">
+                        <g opacity="0.08" stroke="currentColor" stroke-width="1.5">
+                            <circle cx="30" cy="40" r="4" fill="currentColor" />
+                            <circle cx="170" cy="60" r="4" fill="currentColor" />
+                            <circle cx="100" cy="140" r="5" fill="currentColor" />
+                            <circle cx="40" cy="240" r="4" fill="currentColor" />
+                            <circle cx="160" cy="250" r="4" fill="currentColor" />
+                            <line x1="30" y1="40" x2="170" y2="60" />
+                            <line x1="30" y1="40" x2="100" y2="140" />
+                            <line x1="170" y1="60" x2="100" y2="140" />
+                            <line x1="100" y1="140" x2="40" y2="240" />
+                            <line x1="100" y1="140" x2="160" y2="250" />
+                            <line x1="40" y1="240" x2="160" y2="250" />
+                        </g>
+                    </svg>`;
+
+                    stageEl.innerHTML = '';
+                    fanCardsData.forEach((item, index) => {
+                        const cardEl = document.createElement('div');
+                        cardEl.className = 'lfan-card';
+                        cardEl.style.backgroundColor = item.bg;
+                        cardEl.style.color = item.ink;
+                        cardEl.setAttribute('data-index', index);
+
+                        cardEl.innerHTML = `
+                            ${meshSvgHtml}
+                            <div class="lfan-card-header">
+                                <h3 class="lfan-card-title">${item.title}</h3>
+                                <p class="lfan-card-desc">${item.desc}</p>
+                            </div>
+                            <div class="lfan-card-icon-wrap">
+                                ${item.iconSvg}
+                            </div>
+                        `;
+
+                        stageEl.appendChild(cardEl);
+                    });
+
+                    let activeDeckIndex = 0;
+                    let deckTimer = null;
+                    let isDeckPaused = false;
+
+                    const updateDeckPositions = () => {
+                        const cards = stageEl.querySelectorAll('.lfan-card');
+                        const total = fanCardsData.length;
+
+                        cards.forEach((card, i) => {
+                            let diff = (i - activeDeckIndex) % total;
+                            if (diff < -Math.floor(total / 2)) diff += total;
+                            if (diff > Math.floor(total / 2)) diff -= total;
+
+                            card.classList.remove('is-center', 'is-left', 'is-right', 'is-hidden');
+
+                            if (diff === 0) {
+                                card.classList.add('is-center');
+                                card.removeAttribute('aria-hidden');
+                            } else if (diff === -1 || (diff === total - 1 && total > 2)) {
+                                card.classList.add('is-left');
+                                card.setAttribute('aria-hidden', 'true');
+                            } else if (diff === 1 || (diff === -(total - 1) && total > 2)) {
+                                card.classList.add('is-right');
+                                card.setAttribute('aria-hidden', 'true');
+                            } else {
+                                card.classList.add('is-hidden');
+                                card.setAttribute('aria-hidden', 'true');
+                            }
+                        });
+                    };
+
+                    const nextDeckCard = () => {
+                        activeDeckIndex = (activeDeckIndex + 1) % fanCardsData.length;
+                        updateDeckPositions();
+                    };
+
+                    const prevDeckCard = () => {
+                        activeDeckIndex = (activeDeckIndex - 1 + fanCardsData.length) % fanCardsData.length;
+                        updateDeckPositions();
+                    };
+
+                    updateDeckPositions();
+
+                    const prevBtn = document.getElementById('lfan-prev');
+                    const nextBtn = document.getElementById('lfan-next');
+                    if (prevBtn) prevBtn.onclick = prevDeckCard;
+                    if (nextBtn) nextBtn.onclick = nextDeckCard;
+
+                    const startAutoTimer = () => {
+                        if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+                        if (deckTimer) clearInterval(deckTimer);
+                        deckTimer = setInterval(() => {
+                            if (!isDeckPaused) nextDeckCard();
+                        }, 6000);
+                        window.landingIntervals.push(deckTimer);
+                    };
+
+                    startAutoTimer();
+
+                    const deckContainer = document.getElementById('lfan-deck-container');
+                    if (deckContainer) {
+                        deckContainer.addEventListener('mouseenter', () => { isDeckPaused = true; });
+                        deckContainer.addEventListener('mouseleave', () => { isDeckPaused = false; });
+                        deckContainer.addEventListener('focusin', () => { isDeckPaused = true; });
+                        deckContainer.addEventListener('focusout', () => { isDeckPaused = false; });
+
+                        deckContainer.addEventListener('keydown', (e) => {
+                            if (e.key === 'ArrowLeft') {
+                                prevDeckCard();
+                            } else if (e.key === 'ArrowRight') {
+                                nextDeckCard();
+                            }
+                        });
                     }
-                    setTimeout(() => {
-                        featIdx = (featIdx - 1 + featuredContracts.length) % featuredContracts.length;
-                        updateFeaturedContract(featuredContracts[featIdx]);
-                        if (featContainer) {
-                            featContainer.style.opacity = '1';
-                            featContainer.style.transform = 'translateY(0)';
-                        }
-                    }, 250);
-                };
-
-                if (prevKaspaBtn) prevKaspaBtn.onclick = cycleKaspaBackward;
-                if (nextKaspaBtn) nextKaspaBtn.onclick = cycleKaspaForward;
-
-                const bgLeftCard = document.getElementById('lkaspa-card-left');
-                const bgRightCard = document.getElementById('lkaspa-card-right');
-                if (bgLeftCard) bgLeftCard.onclick = cycleKaspaBackward;
-                if (bgRightCard) bgRightCard.onclick = cycleKaspaForward;
+                }
 
                 // Populate Live Settlement Activity Table (Option B Compressed)
                 const tbodyProd = document.getElementById('lledger-tbody-prod');

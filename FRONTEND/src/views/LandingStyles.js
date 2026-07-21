@@ -96,171 +96,230 @@ export const landingCSS = `
 .lhero-scroll-arrow{font-size:14px;animation:bounceDown 2s infinite ease-in-out}
 @keyframes bounceDown{0%,100%{transform:translateY(0)}50%{transform:translateY(4px)}}
 
-/* ═══ KASPACOM STYLE CAROUSEL SECTION ═══ */
+/* ═══ FANNED-DECK CAROUSEL SHOWCASE SECTION ═══ */
 .lfeatured-live-section {
     padding: 100px 0;
-    background: #080C14;
+    background: #0B0B0D !important;
     color: #FFFFFF;
     position: relative;
     overflow: hidden;
     z-index: 2;
 }
 
-.lfeatured-kaspa-grid {
+.lfan-grid {
     display: grid;
-    grid-template-columns: 1fr 1.1fr;
-    gap: 60px;
+    grid-template-columns: 0.4fr 0.6fr;
+    gap: 48px;
     align-items: center;
 }
 
-.lfeatured-kaspa-left {
+.lfan-left {
     display: flex;
     flex-direction: column;
     gap: 24px;
+    z-index: 5;
 }
 
-.lfeatured-kaspa-h1 {
+.lfan-h1 {
     font-family: 'Plus Jakarta Sans', sans-serif;
     font-weight: 900;
-    font-size: clamp(34px, 4.5vw, 60px);
-    line-height: 0.96;
+    font-size: clamp(34px, 4.2vw, 56px);
+    line-height: 0.98;
     letter-spacing: -2px;
-    color: #FFFFFF;
+    color: #FFFFFF !important;
     text-transform: uppercase;
     margin: 0;
 }
 
-.lfeatured-kaspa-highlight {
-    color: #E2E8F0;
-    background: linear-gradient(135deg, #FFFFFF 0%, #CBD5E1 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
+.lfan-highlight {
+    color: #FFFFFF;
 }
 
-.lfeatured-kaspa-sub {
+.lfan-sub {
     font-size: 15px;
-    color: #94A3B8;
-    line-height: 1.5;
-    max-width: 440px;
+    color: #A1A1AA;
+    line-height: 1.55;
+    max-width: 380px;
     margin: 0;
 }
 
-.lfeatured-kaspa-nav {
+.lfan-nav {
     display: flex;
     gap: 12px;
-    margin-top: 12px;
+    margin-top: 8px;
 }
 
-.lkaspa-nav-btn {
-    width: 56px;
-    height: 48px;
+.lfan-arrow-btn {
+    width: 52px;
+    height: 44px;
     background: transparent;
-    border: 1px solid rgba(255, 255, 255, 0.3);
+    border: 1px solid rgba(255, 255, 255, 0.25);
     color: #FFFFFF;
-    font-size: 18px;
-    font-weight: 700;
     cursor: pointer;
     display: flex;
     align-items: center;
     justify-content: center;
-    transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+    transition: all 0.2s ease;
     border-radius: 2px;
 }
 
-.lkaspa-nav-btn:hover {
+.lfan-arrow-btn:hover {
     border-color: #FFFFFF;
     background: rgba(255, 255, 255, 0.12);
-    transform: translateY(-2px);
 }
 
-.lkaspa-nav-btn:active {
-    transform: translateY(0);
+.lfan-arrow-btn:active {
+    transform: scale(0.96);
 }
 
-/* 3D STACK CAROUSEL DECK */
-.lkaspa-stack-wrapper {
+/* DECK CAROUSEL STAGE */
+.lfan-right {
     position: relative;
+    width: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
-    min-height: 520px;
-    perspective: 1200px;
+    outline: none;
 }
 
-.lkaspa-card-front {
+.lfan-deck-viewport {
     position: relative;
-    z-index: 5;
-    transform: translateZ(0) scale(1);
-    transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.5s ease;
-    box-shadow: 0 30px 70px rgba(0, 0, 0, 0.6) !important;
+    width: 100%;
+    max-width: 540px;
+    height: 420px;
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
 }
 
-.lkaspa-card-bg {
+.lfan-deck-stage {
+    position: relative;
+    width: 285px;
+    height: 380px;
+}
+
+/* CARD SPECIFICATION */
+.lfan-card {
     position: absolute;
-    width: 320px;
-    height: 440px;
-    border-radius: 16px;
+    top: 0;
+    left: 0;
+    width: 285px;
+    height: 380px;
+    aspect-ratio: 3 / 4;
+    border-radius: 4px;
     padding: 28px 24px;
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
-    color: #FFFFFF;
-    font-family: 'Plus Jakarta Sans', sans-serif;
-    transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
-    cursor: pointer;
+    box-sizing: border-box;
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.45);
+    transform-origin: bottom center !important;
+    transition: transform 450ms cubic-bezier(0.4, 0, 0.2, 1), opacity 450ms cubic-bezier(0.4, 0, 0.2, 1);
+    overflow: hidden;
     user-select: none;
 }
 
-.lkaspa-card-left {
-    background: linear-gradient(135deg, #D97706 0%, #B45309 100%);
-    left: 10px;
+/* CARD INTERNAL TYPOGRAPHY & LAYOUT */
+.lfan-card-header {
+    position: relative;
     z-index: 2;
-    transform: translateX(-40px) translateY(10px) rotate(-8deg) scale(0.92);
-    opacity: 0.85;
 }
 
-.lkaspa-card-right {
-    background: linear-gradient(135deg, #7C3AED 0%, #6D28D9 100%);
-    right: 10px;
+.lfan-card-title {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-weight: 800;
+    font-size: 26px;
+    line-height: 1.05;
+    letter-spacing: -0.5px;
+    text-transform: uppercase;
+    margin: 0 0 10px 0;
+}
+
+.lfan-card-desc {
+    font-family: 'Inter', sans-serif;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 1.45;
+    opacity: 0.9;
+    margin: 0;
+}
+
+.lfan-card-icon-wrap {
+    position: relative;
     z-index: 2;
-    transform: translateX(40px) translateY(10px) rotate(8deg) scale(0.92);
-    opacity: 0.85;
-}
-
-.lkaspa-card-left:hover {
-    transform: translateX(-50px) translateY(5px) rotate(-10deg) scale(0.95);
-    opacity: 1;
-}
-
-.lkaspa-card-right:hover {
-    transform: translateX(50px) translateY(5px) rotate(10deg) scale(0.95);
-    opacity: 1;
-}
-
-.lkaspa-card-bg-header {
+    margin-top: auto;
+    height: 52%;
     display: flex;
     align-items: center;
-    gap: 10px;
-    font-weight: 800;
-    font-size: 16px;
-    text-transform: uppercase;
-    letter-spacing: -0.3px;
+    justify-content: center;
 }
 
-.lkaspa-card-bg-body {
-    font-size: 20px;
-    font-weight: 700;
-    line-height: 1.3;
+.lfan-card-icon-wrap svg {
+    width: 100px;
+    height: 100px;
+    opacity: 0.95;
 }
 
-.lkaspa-card-bg-val {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 12px;
-    font-weight: 700;
-    background: rgba(0, 0, 0, 0.25);
-    padding: 8px 12px;
-    border-radius: 6px;
-    letter-spacing: 0.5px;
+.lfan-card-mesh {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 1;
+}
+
+/* FAN POSITIONS (PRECISE SPECIFICATIONS) */
+.lfan-card.is-center {
+    transform: translateX(0) rotate(0deg) scale(1.00) !important;
+    z-index: 3 !important;
+    opacity: 1 !important;
+    cursor: pointer;
+    pointer-events: auto !important;
+}
+
+.lfan-card.is-left {
+    transform: translateX(-58%) rotate(-9deg) scale(0.92) !important;
+    z-index: 1 !important;
+    opacity: 0.75 !important;
+    pointer-events: none !important;
+}
+
+.lfan-card.is-right {
+    transform: translateX(58%) rotate(9deg) scale(0.92) !important;
+    z-index: 1 !important;
+    opacity: 0.75 !important;
+    pointer-events: none !important;
+}
+
+.lfan-card.is-hidden {
+    transform: translateX(0) rotate(0deg) scale(0.8) !important;
+    z-index: 0 !important;
+    opacity: 0 !important;
+    pointer-events: none !important;
+}
+
+/* RESPONSIVE LAYOUT (< 900px STACKED) */
+@media(max-width: 900px) {
+    .lfan-grid {
+        grid-template-columns: 1fr;
+        gap: 36px;
+    }
+    .lfan-right {
+        order: 1;
+    }
+    .lfan-left {
+        order: 2;
+    }
+    .lfan-deck-viewport {
+        max-width: 100%;
+        height: 380px;
+    }
+    .lfan-card.is-left {
+        transform: translateX(-40%) rotate(-8deg) scale(0.88) !important;
+    }
+    .lfan-card.is-right {
+        transform: translateX(40%) rotate(8deg) scale(0.88) !important;
+    }
 }
 /* Secondary CTA demoted to a plain text link so only "Start Contract" reads as a button */
 .lhero-textlink{background:none;border:none;padding:8px 4px;cursor:pointer;font-family:'Inter',sans-serif;font-size:14px;font-weight:700;letter-spacing:0.5px;text-transform:uppercase;color:var(--t2);display:inline-flex;align-items:center;gap:8px;transition:color .25s cubic-bezier(.16,1,.3,1),gap .25s cubic-bezier(.16,1,.3,1)}

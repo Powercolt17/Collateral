@@ -562,69 +562,52 @@ export const landingCSS = `
     color: #64748B;
     line-height: 1.6;
 }
-
-.lschematic-container {
+/* ═══ MONEY FLOW SCHEMATIC (CSS GRID — NO ABSOLUTE POSITIONING) ═══ */
+.lflow-container {
     background: #FFFFFF;
     border: 1px solid #E2E8F0;
     border-radius: 16px;
-    padding: 36px 32px 32px;
-    box-shadow: 0 16px 40px -12px rgba(15, 23, 42, 0.05);
+    padding: 32px 28px;
+    box-shadow: none;
     position: relative;
-    overflow: hidden;
 }
 
-.lschematic-desktop {
-    position: relative;
-    width: 100%;
-    min-height: 380px;
+/* DESKTOP FLOW */
+.lflow-desktop {
+    display: block;
 }
 
-.lschematic-svg {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    pointer-events: none;
-    z-index: 1;
+.lflow-row {
+    display: grid;
+    grid-template-columns: 1fr auto 1.1fr auto 1fr auto 1.2fr;
+    gap: 0;
+    align-items: center;
 }
 
-.lschem-nodes-grid {
-    position: relative;
-    z-index: 2;
-    width: 100%;
-    height: 380px;
-}
-
-.lschem-node {
-    position: absolute;
+.lflow-node {
     background: #FAF9F7;
-    border: 1.5px solid #CBD5E1;
-    border-radius: 12px;
-    padding: 16px 18px;
-    box-shadow: 0 4px 12px rgba(15, 23, 42, 0.04);
-    min-width: 160px;
+    border: 1px solid #E2E8F0;
+    border-radius: 10px;
+    padding: 16px 16px 14px;
     box-sizing: border-box;
 }
 
-.lschem-node-vault {
+.lflow-node-vault {
     background: #FFFFFF !important;
-    border-color: #0F172A !important;
-    border-width: 2px !important;
-    box-shadow: 0 8px 24px -4px rgba(15, 23, 42, 0.08) !important;
+    border: 2px solid #0F172A !important;
 }
 
-.lschem-node-hdr {
+.lflow-node-hdr {
     font-family: 'JetBrains Mono', monospace;
     font-size: 10px;
     font-weight: 700;
     letter-spacing: 1.2px;
     color: #64748B;
     text-transform: uppercase;
-    margin-bottom: 4px;
+    margin-bottom: 3px;
 }
 
-.lschem-node-title {
+.lflow-node-title {
     font-family: 'Plus Jakarta Sans', sans-serif;
     font-size: 13px;
     font-weight: 800;
@@ -633,180 +616,221 @@ export const landingCSS = `
     letter-spacing: -0.2px;
 }
 
-.lschem-node-stat {
+.lflow-node-stat {
     font-family: 'JetBrains Mono', monospace;
-    font-size: 16px;
+    font-size: 15px;
     font-weight: 800;
     color: #0F172A;
-    margin-top: 6px;
+    margin-top: 5px;
 }
 
-.lschem-node-sub {
+.lflow-node-sub {
     font-size: 11px;
     color: #64748B;
     margin-top: 2px;
 }
 
-/* THREE TERMINAL OUTCOMES */
-.lschem-outcomes-col {
-    position: absolute;
+/* ARROWS BETWEEN NODES */
+.lflow-arrow {
+    font-size: 22px;
+    color: #0F172A;
+    text-align: center;
+    padding: 0 6px;
+    font-weight: 300;
+    line-height: 1;
+    user-select: none;
+}
+.lflow-arrow-split {
+    color: #64748B;
+}
+
+/* THREE TERMINAL OUTCOMES (stacked vertically inside the grid) */
+.lflow-outcomes {
     display: flex;
     flex-direction: column;
-    gap: 12px;
-    width: 260px;
+    gap: 8px;
 }
 
-.lschem-outcome-card {
+.lflow-outcome {
+    display: flex;
+    align-items: stretch;
+    border-radius: 8px;
+    overflow: hidden;
     background: #FFFFFF;
     border: 1px solid #E2E8F0;
-    border-radius: 10px;
-    padding: 12px 16px;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.02);
 }
 
-.lschem-outcome-card.is-win {
-    border-left: 4px solid #145C14 !important;
-    background: rgba(20, 92, 20, 0.02) !important;
+.lflow-outcome-indicator {
+    width: 5px;
+    flex-shrink: 0;
+    border-radius: 8px 0 0 8px;
 }
 
-.lschem-outcome-card.is-forfeit {
-    border-left: 4px solid #7A1220 !important;
-    background: rgba(122, 18, 32, 0.02) !important;
+.lflow-outcome-body {
+    padding: 8px 12px 7px;
+    flex: 1;
+    min-width: 0;
 }
 
-.lschem-outcome-card.is-burn {
-    border-left: 4px stroke #7A1220 !important;
-    border-left-style: dashed !important;
-    background: #FAF9F7 !important;
-}
-
-.lschem-outcome-hdr {
+.lflow-out-hdr {
     font-family: 'JetBrains Mono', monospace;
-    font-size: 9.5px;
+    font-size: 9px;
     font-weight: 700;
     letter-spacing: 0.8px;
     color: #64748B;
     display: flex;
     align-items: center;
-    gap: 6px;
-    margin-bottom: 2px;
-}
-
-.lschem-dot-green {
-    width: 6px;
-    height: 6px;
-    background: #145C14;
-    border-radius: 50%;
-    display: inline-block;
-}
-
-.lschem-dot-crimson {
-    width: 6px;
-    height: 6px;
-    background: #7A1220;
-    border-radius: 50%;
-    display: inline-block;
-}
-
-.lschem-outcome-title {
-    font-family: 'Plus Jakarta Sans', sans-serif;
-    font-size: 12px;
-    font-weight: 800;
-    color: #0F172A;
+    gap: 5px;
+    margin-bottom: 1px;
     text-transform: uppercase;
 }
 
-.lschem-outcome-val {
+.lflow-dot {
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    display: inline-block;
+    flex-shrink: 0;
+}
+
+.lflow-out-title {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 11px;
+    font-weight: 800;
+    color: #0F172A;
+    text-transform: uppercase;
+    letter-spacing: -0.1px;
+}
+
+.lflow-out-val {
     font-family: 'JetBrains Mono', monospace;
-    font-size: 15px;
+    font-size: 14px;
     font-weight: 800;
     color: #0F172A;
     margin-top: 2px;
 }
 
-.lschem-outcome-card.is-win .lschem-outcome-val {
-    color: #145C14 !important;
-}
+.lflow-val-green { color: #145C14 !important; }
+.lflow-val-crimson { color: #7A1220 !important; }
 
-.lschem-outcome-card.is-forfeit .lschem-outcome-val {
-    color: #7A1220 !important;
-}
-
-.lschem-outcome-desc {
-    font-size: 11px;
+.lflow-out-desc {
+    font-size: 10px;
     color: #64748B;
-    margin-top: 2px;
+    margin-top: 1px;
 }
 
-/* SINGLE SHORT PARAGRAPH BENEATH DIAGRAM */
-.lschematic-summary-text {
+/* LOOP ROW — sits beneath the flow, visually connecting forfeit → vault */
+.lflow-loop-row {
+    display: flex;
+    align-items: center;
+    gap: 0;
+    margin-top: 20px;
+    padding: 0 4px;
+}
+
+.lflow-loop-line-left {
+    flex: 1;
+    height: 2px;
+    background: #7A1220;
+    border-radius: 2px;
+    opacity: 0.4;
+}
+
+.lflow-loop-line-right {
+    flex: 1;
+    height: 2px;
+    background: #7A1220;
+    border-radius: 2px;
+    opacity: 0.4;
+}
+
+.lflow-loop-badge {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.6px;
+    color: #FFFFFF;
+    background: #7A1220;
+    padding: 5px 16px;
+    border-radius: 100px;
+    white-space: nowrap;
+    flex-shrink: 0;
+}
+
+/* SUMMARY PARAGRAPH */
+.lflow-summary {
     max-width: 820px;
-    margin: 28px auto 0;
+    margin: 24px auto 0;
     font-size: 15px;
     color: #475569;
     line-height: 1.6;
     text-align: center;
 }
 
-/* MOBILE SCHEMATIC (<900px) */
-.lschematic-mobile {
+/* MOBILE: vertical layout */
+.lflow-mobile {
     display: none;
     flex-direction: column;
-    gap: 12px;
-    align-items: center;
+    gap: 10px;
+    align-items: stretch;
 }
 
 @media (max-width: 900px) {
-    .lschematic-desktop {
-        display: none !important;
-    }
-    .lschematic-mobile {
-        display: flex !important;
-    }
-    .lschem-mob-step {
+    .lflow-desktop { display: none !important; }
+    .lflow-mobile { display: flex !important; }
+
+    .lflow-mob-step {
         display: flex;
         align-items: center;
-        gap: 16px;
+        gap: 14px;
         background: #FAF9F7;
-        border: 1px solid #CBD5E1;
+        border: 1px solid #E2E8F0;
         border-radius: 10px;
-        padding: 14px 18px;
-        width: 100%;
+        padding: 14px 16px;
         box-sizing: border-box;
     }
-    .lschem-mob-step.is-vault {
-        background: #FFFFFF;
-        border-color: #0F172A;
-        border-width: 1.5px;
+    .lflow-mob-vault {
+        background: #FFFFFF !important;
+        border: 2px solid #0F172A !important;
     }
-    .lschem-mob-num {
+    .lflow-mob-num {
         font-family: 'JetBrains Mono', monospace;
         font-size: 12px;
         font-weight: 800;
-        color: #7A1220;
-        background: rgba(122, 18, 32, 0.08);
+        color: #0F172A;
+        background: rgba(15, 23, 42, 0.06);
         padding: 4px 8px;
         border-radius: 4px;
+        flex-shrink: 0;
     }
-    .lschem-mob-connector {
+    .lflow-mob-body {
+        flex: 1;
+        min-width: 0;
+    }
+    .lflow-mob-arrow {
+        text-align: center;
         font-size: 16px;
         color: #64748B;
         font-weight: bold;
     }
-    .lschem-mob-outcomes {
+    .lflow-mob-outcomes {
         display: flex;
         flex-direction: column;
-        gap: 12px;
-        width: 100%;
+        gap: 10px;
     }
-    .lschem-mob-loop-badge {
+    .lflow-mob-loop {
         font-family: 'JetBrains Mono', monospace;
         font-size: 10px;
         font-weight: 700;
         color: #7A1220;
-        margin-top: 6px;
+        margin-top: 4px;
+    }
+    .lflow-summary {
+        text-align: left;
+        font-size: 14px;
     }
 }
+
 
 /* CARD TOP PLATFORM HEADER */
 .lc-platform-header {

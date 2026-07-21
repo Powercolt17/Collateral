@@ -414,160 +414,156 @@ export function renderLanding() {
                         </p>
                     </div>
 
-                    <!-- CONTINUOUS SCHEMATIC DIAGRAM CONTAINER -->
-                    <div class="lschematic-container">
-                        <div class="lschematic-desktop">
-                            <svg class="lschematic-svg" viewBox="0 0 1140 400" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <defs>
-                                    <marker id="arrow-dark" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
-                                        <path d="M 0 1 L 8 5 L 0 9 z" fill="#0F172A"/>
-                                    </marker>
-                                    <marker id="arrow-green" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
-                                        <path d="M 0 1 L 8 5 L 0 9 z" fill="#145C14"/>
-                                    </marker>
-                                    <marker id="arrow-crimson" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
-                                        <path d="M 0 1 L 8 5 L 0 9 z" fill="#7A1220"/>
-                                    </marker>
-                                </defs>
+                    <!-- SCHEMATIC: CSS GRID LAYOUT (no absolute positioning) -->
+                    <div class="lflow-container">
 
-                                <!-- 1. DEPOSIT IN → ESCROW VAULT (Thick Main Flow) -->
-                                <path d="M 170 140 H 260" stroke="#0F172A" stroke-width="4.5" marker-end="url(#arrow-dark)" stroke-linecap="round"/>
+                        <!-- DESKTOP FLOW (hidden <900px) -->
+                        <div class="lflow-desktop">
+                            <!-- ROW 1: the four nodes + three outcomes, connected by arrows -->
+                            <div class="lflow-row">
 
-                                <!-- 2. ESCROW VAULT → API VERIFICATION STREAM -->
-                                <path d="M 440 140 H 530" stroke="#0F172A" stroke-width="4" marker-end="url(#arrow-dark)" stroke-linecap="round"/>
-
-                                <!-- 3. API VERIFICATION STREAM → SPLIT ROUTER -->
-                                <path d="M 710 140 H 770" stroke="#0F172A" stroke-width="3.5" marker-end="url(#arrow-dark)" stroke-linecap="round"/>
-
-                                <!-- 4A. SPLIT ROUTER → OUTCOME A: RETURNED TO CREATOR (Win Path - Thick Green) -->
-                                <path d="M 770 140 C 810 140, 810 60, 850 60 H 870" stroke="#145C14" stroke-width="4.5" marker-end="url(#arrow-green)" stroke-linecap="round"/>
-
-                                <!-- 4B. SPLIT ROUTER → OUTCOME B: FORFEITED DEPOSITS (Medium Crimson) -->
-                                <path d="M 770 140 H 870" stroke="#7A1220" stroke-width="2.5" marker-end="url(#arrow-crimson)" stroke-linecap="round"/>
-
-                                <!-- 4C. SPLIT ROUTER → OUTCOME C: CLTR BURNED (Hairline Dashed Crimson) -->
-                                <path d="M 770 140 C 810 140, 810 220, 850 220 H 870" stroke="#7A1220" stroke-width="1.2" stroke-dasharray="4 3" marker-end="url(#arrow-crimson)" stroke-linecap="round"/>
-
-                                <!-- 5. CRITICAL BACKWARD LOOP: FORFEITED DEPOSITS → MATCH POOL (Recirculating Loop Back) -->
-                                <path d="M 940 170 C 940 330, 350 330, 350 185" stroke="#7A1220" stroke-width="2.2" stroke-dasharray="6 4" marker-end="url(#arrow-crimson)" stroke-linecap="round"/>
-                                
-                                <!-- LOOP BACKLABEL BADGE -->
-                                <rect x="520" y="306" width="240" height="28" rx="14" fill="#7A1220"/>
-                                <text x="640" y="324" fill="#FFFFFF" font-family="JetBrains Mono" font-size="10" font-weight="700" text-anchor="middle" letter-spacing="0.8">↺ RE-CIRCULATES TO MATCH POOL (80%)</text>
-                            </svg>
-
-                            <!-- SCHEMATIC NODES OVERLAY -->
-                            <div class="lschem-nodes-grid">
-                                <!-- NODE 1: DEPOSIT IN -->
-                                <div class="lschem-node lschem-node-start" style="left: 0px; top: 80px;">
-                                    <div class="lschem-node-hdr">INPUT</div>
-                                    <div class="lschem-node-title">DEPOSIT IN</div>
-                                    <div class="lschem-node-stat">$8,700,000</div>
-                                    <div class="lschem-node-sub">Stripe Connect Escrow</div>
+                                <!-- NODE: DEPOSIT IN -->
+                                <div class="lflow-node">
+                                    <div class="lflow-node-hdr">INPUT</div>
+                                    <div class="lflow-node-title">DEPOSIT IN</div>
+                                    <div class="lflow-node-stat">$8,700,000</div>
+                                    <div class="lflow-node-sub">Stripe Connect Escrow</div>
                                 </div>
 
-                                <!-- NODE 2: ESCROW VAULT -->
-                                <div class="lschem-node lschem-node-vault" style="left: 250px; top: 70px;">
-                                    <div class="lschem-node-hdr">CUSTODY</div>
-                                    <div class="lschem-node-title">ESCROW VAULT</div>
-                                    <div class="lschem-node-stat">$8.7M LOCKED</div>
-                                    <div class="lschem-node-sub">FDIC-Insured Mapped Vault</div>
+                                <div class="lflow-arrow">→</div>
+
+                                <!-- NODE: ESCROW VAULT (emphasized) -->
+                                <div class="lflow-node lflow-node-vault" id="lflow-vault-node">
+                                    <div class="lflow-node-hdr">CUSTODY</div>
+                                    <div class="lflow-node-title">ESCROW VAULT</div>
+                                    <div class="lflow-node-stat">$8.7M LOCKED</div>
+                                    <div class="lflow-node-sub">Custodial Escrow via Stripe Connect</div>
                                 </div>
 
-                                <!-- NODE 3: API VERIFICATION -->
-                                <div class="lschem-node lschem-node-oracle" style="left: 520px; top: 70px;">
-                                    <div class="lschem-node-hdr">VERIFICATION</div>
-                                    <div class="lschem-node-title">ORACLE API STREAM</div>
-                                    <div class="lschem-node-stat">96.2% SUCCESS</div>
-                                    <div class="lschem-node-sub">Stripe • Shopify • X • YouTube</div>
+                                <div class="lflow-arrow">→</div>
+
+                                <!-- NODE: ORACLE API -->
+                                <div class="lflow-node">
+                                    <div class="lflow-node-hdr">VERIFICATION</div>
+                                    <div class="lflow-node-title">ORACLE API STREAM</div>
+                                    <div class="lflow-node-stat">96.2% HIT RATE</div>
+                                    <div class="lflow-node-sub">Stripe • Shopify • X • YouTube</div>
                                 </div>
 
-                                <!-- THREE TERMINAL OUTCOMES -->
-                                <div class="lschem-outcomes-col" style="left: 860px; top: 10px;">
-                                    <!-- OUTCOME A: RETURNED TO CREATOR -->
-                                    <div class="lschem-outcome-card is-win">
-                                        <div class="lschem-outcome-hdr"><span class="lschem-dot-green"></span> WIN PATH (96.2%)</div>
-                                        <div class="lschem-outcome-title">RETURNED TO CREATOR</div>
-                                        <div class="lschem-outcome-val">$8,369,400</div>
-                                        <div class="lschem-outcome-desc">100% Principal + Matching Yield</div>
+                                <div class="lflow-arrow lflow-arrow-split">⟶</div>
+
+                                <!-- THREE TERMINAL OUTCOMES (stacked vertically) -->
+                                <div class="lflow-outcomes">
+                                    <!-- WIN PATH -->
+                                    <div class="lflow-outcome is-win">
+                                        <div class="lflow-outcome-indicator" style="background:#145C14;height:5px;"></div>
+                                        <div class="lflow-outcome-body">
+                                            <div class="lflow-out-hdr"><span class="lflow-dot" style="background:#145C14;"></span>WIN PATH (96.2%)</div>
+                                            <div class="lflow-out-title">RETURNED TO CREATOR</div>
+                                            <div class="lflow-out-val lflow-val-green">$8,326,200</div>
+                                            <div class="lflow-out-desc">100% Principal + Matching Yield</div>
+                                        </div>
                                     </div>
 
-                                    <!-- OUTCOME B: FORFEITED -->
-                                    <div class="lschem-outcome-card is-forfeit">
-                                        <div class="lschem-outcome-hdr"><span class="lschem-dot-crimson"></span> FORFEITED (3.8%)</div>
-                                        <div class="lschem-outcome-title">FORFEITED DEPOSITS</div>
-                                        <div class="lschem-outcome-val">$287,100</div>
-                                        <div class="lschem-outcome-desc">Feeds Winner Match Pool (80%)</div>
+                                    <!-- FORFEIT PATH -->
+                                    <div class="lflow-outcome is-forfeit" id="lflow-forfeit-node">
+                                        <div class="lflow-outcome-indicator" style="background:#7A1220;height:3px;"></div>
+                                        <div class="lflow-outcome-body">
+                                            <div class="lflow-out-hdr"><span class="lflow-dot" style="background:#7A1220;"></span>FORFEITED (3.8%)</div>
+                                            <div class="lflow-out-title">FORFEITED DEPOSITS</div>
+                                            <div class="lflow-out-val lflow-val-crimson">$330,600</div>
+                                            <div class="lflow-out-desc">Feeds Winner Match Pool</div>
+                                        </div>
                                     </div>
 
-                                    <!-- OUTCOME C: BURNED -->
-                                    <div class="lschem-outcome-card is-burn">
-                                        <div class="lschem-outcome-hdr"><span class="lschem-dot-crimson"></span> PROTOCOL FEE</div>
-                                        <div class="lschem-outcome-title">CLTR BURNED</div>
-                                        <div class="lschem-outcome-val">$43,500</div>
-                                        <div class="lschem-outcome-desc">0.5% Fee Permanently Destroyed</div>
+                                    <!-- BURN PATH -->
+                                    <div class="lflow-outcome is-burn">
+                                        <div class="lflow-outcome-indicator" style="background:#7A1220;height:1.5px;"></div>
+                                        <div class="lflow-outcome-body">
+                                            <div class="lflow-out-hdr"><span class="lflow-dot" style="background:#7A1220;"></span>PROTOCOL FEE (0.5%)</div>
+                                            <div class="lflow-out-title">CLTR BURNED</div>
+                                            <div class="lflow-out-val">$43,200</div>
+                                            <div class="lflow-out-desc">Permanently Destroyed</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- ROW 2: The recirculating loop label -->
+                            <div class="lflow-loop-row">
+                                <div class="lflow-loop-line-left"></div>
+                                <div class="lflow-loop-badge">↺ FORFEITED DEPOSITS RE-CIRCULATE TO ESCROW VAULT</div>
+                                <div class="lflow-loop-line-right"></div>
+                            </div>
+                        </div>
+
+                        <!-- MOBILE VERTICAL FLOW (shown <900px) -->
+                        <div class="lflow-mobile">
+                            <div class="lflow-mob-step">
+                                <div class="lflow-mob-num">01</div>
+                                <div class="lflow-mob-body">
+                                    <div class="lflow-node-hdr">INPUT</div>
+                                    <div class="lflow-node-title">DEPOSIT IN</div>
+                                    <div class="lflow-node-stat">$8,700,000</div>
+                                </div>
+                            </div>
+                            <div class="lflow-mob-arrow">↓</div>
+
+                            <div class="lflow-mob-step lflow-mob-vault">
+                                <div class="lflow-mob-num">02</div>
+                                <div class="lflow-mob-body">
+                                    <div class="lflow-node-hdr">CUSTODY</div>
+                                    <div class="lflow-node-title">ESCROW VAULT</div>
+                                    <div class="lflow-node-stat">$8.7M LOCKED</div>
+                                    <div class="lflow-node-sub">Custodial Escrow via Stripe Connect</div>
+                                </div>
+                            </div>
+                            <div class="lflow-mob-arrow">↓</div>
+
+                            <div class="lflow-mob-step">
+                                <div class="lflow-mob-num">03</div>
+                                <div class="lflow-mob-body">
+                                    <div class="lflow-node-hdr">VERIFICATION</div>
+                                    <div class="lflow-node-title">ORACLE API STREAM</div>
+                                    <div class="lflow-node-stat">96.2% HIT RATE</div>
+                                </div>
+                            </div>
+                            <div class="lflow-mob-arrow">↓</div>
+
+                            <div class="lflow-mob-outcomes">
+                                <div class="lflow-outcome is-win">
+                                    <div class="lflow-outcome-indicator" style="background:#145C14;height:5px;"></div>
+                                    <div class="lflow-outcome-body">
+                                        <div class="lflow-out-hdr"><span class="lflow-dot" style="background:#145C14;"></span>WIN PATH (96.2%)</div>
+                                        <div class="lflow-out-title">RETURNED TO CREATOR</div>
+                                        <div class="lflow-out-val lflow-val-green">$8,326,200</div>
+                                    </div>
+                                </div>
+                                <div class="lflow-outcome is-forfeit">
+                                    <div class="lflow-outcome-indicator" style="background:#7A1220;height:3px;"></div>
+                                    <div class="lflow-outcome-body">
+                                        <div class="lflow-out-hdr"><span class="lflow-dot" style="background:#7A1220;"></span>FORFEITED (3.8%)</div>
+                                        <div class="lflow-out-title">FORFEITED DEPOSITS</div>
+                                        <div class="lflow-out-val lflow-val-crimson">$330,600</div>
+                                        <div class="lflow-mob-loop">↺ Re-circulates to Escrow Vault</div>
+                                    </div>
+                                </div>
+                                <div class="lflow-outcome is-burn">
+                                    <div class="lflow-outcome-indicator" style="background:#7A1220;height:1.5px;"></div>
+                                    <div class="lflow-outcome-body">
+                                        <div class="lflow-out-hdr"><span class="lflow-dot" style="background:#7A1220;"></span>PROTOCOL FEE (0.5%)</div>
+                                        <div class="lflow-out-title">CLTR BURNED</div>
+                                        <div class="lflow-out-val">$43,200</div>
                                     </div>
                                 </div>
                             </div>
                         </div>
 
-                        <!-- MOBILE VERTICAL FLOW SCHEMATIC (<900px) -->
-                        <div class="lschematic-mobile">
-                            <div class="lschem-mob-step">
-                                <div class="lschem-mob-num">01</div>
-                                <div class="lschem-mob-content">
-                                    <div class="lschem-node-hdr">INPUT</div>
-                                    <div class="lschem-node-title">DEPOSIT IN</div>
-                                    <div class="lschem-node-stat">$8,700,000</div>
-                                </div>
-                            </div>
-                            <div class="lschem-mob-connector">↓</div>
-
-                            <div class="lschem-mob-step is-vault">
-                                <div class="lschem-mob-num">02</div>
-                                <div class="lschem-mob-content">
-                                    <div class="lschem-node-hdr">CUSTODY</div>
-                                    <div class="lschem-node-title">ESCROW VAULT</div>
-                                    <div class="lschem-node-stat">$8.7M LOCKED</div>
-                                </div>
-                            </div>
-                            <div class="lschem-mob-connector">↓</div>
-
-                            <div class="lschem-mob-step">
-                                <div class="lschem-mob-num">03</div>
-                                <div class="lschem-mob-content">
-                                    <div class="lschem-node-hdr">VERIFICATION</div>
-                                    <div class="lschem-node-title">ORACLE API STREAM</div>
-                                    <div class="lschem-node-stat">96.2% SUCCESS</div>
-                                </div>
-                            </div>
-                            <div class="lschem-mob-connector">↓</div>
-
-                            <!-- THREE MOBILE TERMINAL OUTCOMES -->
-                            <div class="lschem-mob-outcomes">
-                                <div class="lschem-outcome-card is-win">
-                                    <div class="lschem-outcome-hdr"><span class="lschem-dot-green"></span> WIN PATH</div>
-                                    <div class="lschem-outcome-title">RETURNED TO CREATOR</div>
-                                    <div class="lschem-outcome-val">$8,369,400</div>
-                                </div>
-                                <div class="lschem-outcome-card is-forfeit">
-                                    <div class="lschem-outcome-hdr"><span class="lschem-dot-crimson"></span> FORFEITED</div>
-                                    <div class="lschem-outcome-title">RE-CIRCULATED TO MATCH POOL</div>
-                                    <div class="lschem-outcome-val">$287,100</div>
-                                    <div class="lschem-mob-loop-badge">↺ Loops Back to Vault (80%)</div>
-                                </div>
-                                <div class="lschem-outcome-card is-burn">
-                                    <div class="lschem-outcome-hdr"><span class="lschem-dot-crimson"></span> PROTOCOL FEE</div>
-                                    <div class="lschem-outcome-title">CLTR BURNED (0.5%)</div>
-                                    <div class="lschem-outcome-val">$43,500</div>
-                                </div>
-                            </div>
-                        </div>
                     </div>
 
-                    <!-- SINGLE SHORT EXPLANATORY PARAGRAPH BENEATH DIAGRAM -->
-                    <div class="lschematic-summary-text">
-                        Deposits flow into FDIC-insured Stripe Connect custodial escrow accounts mapped directly to smart contract state. Upon automated API verification, winning principal and matching yields are returned to creators, 0.5% is burned from CLTR supply, and forfeited deposits loop directly back into the match pool to fund future winners.
+                    <!-- SUMMARY PARAGRAPH -->
+                    <div class="lflow-summary">
+                        Deposits are held in Stripe Connect custodial escrow accounts mapped to smart contract state. Upon automated API verification, winners receive their principal plus matching yield. Forfeited deposits re-circulate into the match pool to fund future winners. A 0.5% protocol fee is permanently burned from CLTR supply on every settled contract.
                     </div>
                 </div>
             </div>

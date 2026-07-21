@@ -2207,6 +2207,9 @@ export function renderToken() {
                                         <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M15 3h6v6"/><path d="M10 14 21 3"/><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/></svg>
                                     </a>
                                 </div>
+                                <div style="margin-top: 16px; padding: 12px; border: 1px dashed #E5E5E5; border-radius: 4px; font-family:'Sora', sans-serif; font-size: 10px; color: #888; line-height: 1.5; text-align: left;">
+                                    <strong>Staking Disclosure:</strong> Yield accrual calculations are theoretical, paid out externally/off-chain, and are not guaranteed or enforced by the smart contract. Staked CLTR principal is securely held on-chain and returned 1:1 upon lock expiration.
+                                </div>
                             </div>
                         </div>
 

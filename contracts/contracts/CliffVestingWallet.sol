@@ -8,6 +8,7 @@ import "@openzeppelin/contracts/finance/VestingWallet.sol";
  * @notice Extends OpenZeppelin's standard VestingWallet to implement a cliff period.
  * @dev Releasable amount remains 0 until the cliff timestamp is met, after which
  * it follows the standard linear vesting schedule starting from the start time.
+ * Overrides ownership transfer functions to disable selling or transferring unvested tokens.
  */
 contract CliffVestingWallet is VestingWallet {
     uint64 private immutable _cliff;
@@ -34,6 +35,20 @@ contract CliffVestingWallet is VestingWallet {
      */
     function cliff() public view virtual returns (uint256) {
         return _cliff;
+    }
+
+    /**
+     * @notice Disabled to prevent beneficiary from transferring or selling unvested allocations.
+     */
+    function transferOwnership(address) public virtual override onlyOwner {
+        revert("CliffVestingWallet: ownership transfer is disabled");
+    }
+
+    /**
+     * @notice Disabled to prevent ownership renunciation.
+     */
+    function renounceOwnership() public virtual override onlyOwner {
+        revert("CliffVestingWallet: ownership renunciation is disabled");
     }
 
     /**

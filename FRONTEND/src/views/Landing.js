@@ -203,13 +203,22 @@ export function renderLanding() {
                             <div class="ltype-badge-new">Solo</div>
                             <h3 class="ltype-title-new">You vs. Yourself</h3>
                             <p class="ltype-desc-new">Lock deposits to force yourself to execute. <span class="lhide-mobile">Hit targets to win; fail and forfeit capital.</span></p>
-                            <div class="ltype-meta-new"><strong>Best for:</strong> Milestones, shipping code, audience building.</div>
+                            <div class="ltype-meta-new">
+                                <span class="lmeta-label">Best for</span>
+                                <span class="lmeta-tag">Milestones</span>
+                                <span class="lmeta-tag">Shipping code</span>
+                                <span class="lmeta-tag">Audience building</span>
+                            </div>
                         </div>
                         <div class="ltype-row reveal-item">
                             <div class="ltype-badge-new secondary">Rivalry</div>
                             <h3 class="ltype-title-new">You vs. Competitors</h3>
                             <p class="ltype-desc-new">Lock equal deposits in a head-to-head race. <span class="lhide-mobile">Winner takes the entire pool.</span></p>
-                            <div class="ltype-meta-new"><strong>Best for:</strong> Audience races, competitive fire.</div>
+                            <div class="ltype-meta-new">
+                                <span class="lmeta-label">Best for</span>
+                                <span class="lmeta-tag">Audience races</span>
+                                <span class="lmeta-tag">Competitive fire</span>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -647,7 +656,7 @@ export function renderLanding() {
                     <div class="pnl-section-label">Navigation</div>
                     <a href="#" onclick="window.app.closeMobileMenu(); window.router.navigate('/market'); return false;" class="pnl-nav-link active" style="animation-delay: 0.06s"><span class="pnl-nav-indicator"></span>MARKET</a>
                     <a href="#" onclick="window.app.closeMobileMenu(); window.router.navigate('/my-contracts'); return false;" class="pnl-nav-link" style="animation-delay: 0.09s"><span class="pnl-nav-indicator"></span>ACTIVE</a>
-                    <a href="#" onclick="window.app.closeMobileMenu(); window.router.navigate('/rivalry'); return false;" class="pnl-nav-link" style="animation-delay: 0.12s"><span class="pnl-nav-indicator"></span>RIVALRY</a>
+                    <a href="#" onclick="window.app.closeMobileMenu(); window.router.navigate('/market?type=rivalry'); return false;" class="pnl-nav-link" style="animation-delay: 0.12s"><span class="pnl-nav-indicator"></span>RIVALRY</a>
                     <a href="#" onclick="window.app.closeMobileMenu(); window.router.navigate('/ledger'); return false;" class="pnl-nav-link" style="animation-delay: 0.15s"><span class="pnl-nav-indicator"></span>LEDGER</a>
                     <a href="#" onclick="window.app.closeMobileMenu(); window.router.navigate('/sources'); return false;" class="pnl-nav-link" style="animation-delay: 0.18s"><span class="pnl-nav-indicator"></span>SOURCES</a>
                     

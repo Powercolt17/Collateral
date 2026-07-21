@@ -308,7 +308,7 @@ export function initOnboarding() {
     const goRivalry = document.getElementById('ob-go-rivalry');
     if (goRivalry) goRivalry.addEventListener('click', () => {
         completeOnboarding();
-        window.router.navigate('/rivalry');
+        window.router.navigate('/market?type=rivalry');
     });
 
     // Skip entire onboarding

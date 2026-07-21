@@ -99,11 +99,13 @@ export const landingCSS = `
 /* ═══ REAL COLLATERAL CONTRACT CARDS DECK CAROUSEL ═══ */
 .lfeatured-live-section {
     padding: 90px 0;
-    background: var(--r) !important;
-    color: #FFFFFF;
+    background: #FAF9F7 !important;
+    color: #0F172A;
     position: relative;
     overflow: hidden;
     z-index: 2;
+    border-top: 1px solid #E2E8F0;
+    border-bottom: 1px solid #E2E8F0;
 }
 
 .lfan-grid {
@@ -126,18 +128,18 @@ export const landingCSS = `
     font-size: clamp(34px, 4.2vw, 56px);
     line-height: 0.98;
     letter-spacing: -2px;
-    color: #FFFFFF !important;
+    color: #0F172A !important;
     text-transform: uppercase;
     margin: 0;
 }
 
 .lfan-highlight {
-    color: #FFFFFF !important;
+    color: #0F172A !important;
 }
 
 .lfan-sub {
     font-size: 15px;
-    color: rgba(255, 255, 255, 0.85) !important;
+    color: #475569 !important;
     line-height: 1.55;
     max-width: 380px;
     margin: 0;
@@ -152,20 +154,21 @@ export const landingCSS = `
 .lfan-arrow-btn {
     width: 52px;
     height: 44px;
-    background: transparent !important;
-    border: 1px solid rgba(255, 255, 255, 0.35) !important;
-    color: #FFFFFF !important;
+    background: #FFFFFF !important;
+    border: 1px solid #CBD5E1 !important;
+    color: #0F172A !important;
     cursor: pointer;
     display: flex;
     align-items: center;
     justify-content: center;
     transition: all 0.2s ease;
     border-radius: 4px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04);
 }
 
 .lfan-arrow-btn:hover {
-    border-color: #FFFFFF !important;
-    background: rgba(255, 255, 255, 0.18) !important;
+    border-color: #0F172A !important;
+    background: #0F172A !important;
     color: #FFFFFF !important;
     transform: translateY(-1px);
 }

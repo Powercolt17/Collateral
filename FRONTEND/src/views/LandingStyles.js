@@ -1215,7 +1215,7 @@ export const landingCSS = `
 .lcard-tier{font-family:'Inter',sans-serif;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:1px;padding:5px 10px;border-radius:6px;display:inline-flex;align-items:center;white-space:nowrap}
 .tier-pledge{color:#145C14;background:rgba(20,92,20,.06);border:1px solid rgba(20,92,20,.15)}
 .tier-stake{color:#B45309;background:rgba(180,83,9,.06);border:1px solid rgba(180,83,9,.15)}
-.tier-allin{color:#4338CA;background:rgba(67,56,202,.06);border:1px solid rgba(67,56,202,.18)}
+.tier-allin{color:#7A1220;background:rgba(122,18,32,.06);border:1px solid rgba(122,18,32,.18)}
 
 .ltier-legend-bar {
     display: grid;

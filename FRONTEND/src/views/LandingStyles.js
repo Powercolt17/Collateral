@@ -70,12 +70,8 @@ export const landingCSS = `
 
 /* ═══ HERO ═══ */
 .lhero-section{position:relative;overflow:hidden;padding-top:140px;padding-bottom:50px;background:#FAF8F5}
-.lhero-bg-container{position:absolute;inset:0;pointer-events:none;z-index:0}
-.lhero-mesh-svg{width:100%;height:100%;opacity:0.85;animation:meshFloat 12s ease-in-out infinite alternate}
-@keyframes meshFloat {
-    0% { transform: scale(1) translateY(0); }
-    100% { transform: scale(1.02) translateY(-8px); }
-}
+.lhero-bg-container{position:absolute;inset:0;pointer-events:none;z-index:0;overflow:hidden}
+.lhero-mesh-svg{width:100%;height:100%;opacity:0.95;will-change:transform;transition:transform 0.05s ease-out}
 .lhero-headline-wrap{margin-bottom:36px;position:relative;z-index:2}
 .lh1{font-family:'Plus Jakarta Sans',sans-serif;font-weight:900;font-size:clamp(44px,7.5vw,98px);line-height:0.98;letter-spacing:-2.5px;color:var(--t1);text-transform:uppercase;margin:0 0 16px}
 .lh-gradient{color:var(--r);background:linear-gradient(135deg,#5C1414 0%,#8B1212 50%,#3D0D0D 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;display:inline-block}

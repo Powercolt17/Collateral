@@ -37,33 +37,80 @@ export function renderLanding() {
             </nav>            <!-- ═══ HERO ═══ -->
             <div class="lhero-section">
                 <!-- DYNAMIC CONSTELLATION MESH BACKGROUND -->
-                <div class="lhero-bg-container">
-                    <svg class="lhero-mesh-svg" viewBox="0 0 1440 900" fill="none" preserveAspectRatio="xMidYMid slice">
-                        <g opacity="0.12" stroke="var(--r)" stroke-width="1.2">
-                            <line x1="120" y1="140" x2="380" y2="260" />
-                            <line x1="380" y1="260" x2="720" y2="160" />
-                            <line x1="720" y1="160" x2="1080" y2="320" />
-                            <line x1="1080" y1="320" x2="1360" y2="140" />
-                            <line x1="380" y1="260" x2="280" y2="520" />
-                            <line x1="720" y1="160" x2="820" y2="480" />
-                            <line x1="1080" y1="320" x2="960" y2="640" />
-                            <line x1="280" y1="520" x2="620" y2="580" />
-                            <line x1="620" y1="580" x2="820" y2="480" />
-                            <line x1="820" y1="480" x2="1240" y2="580" />
-                            <line x1="500" y1="100" x2="720" y2="160" />
-                            <line x1="900" y1="80" x2="1080" y2="320" />
+                <div class="lhero-bg-container" id="lhero-bg-container">
+                    <svg class="lhero-mesh-svg" id="lhero-mesh-svg" viewBox="0 0 1440 900" fill="none" preserveAspectRatio="xMidYMid slice">
+                        <g opacity="0.18" stroke="var(--r)" stroke-width="1.2">
+                            <line x1="80" y1="100" x2="220" y2="240" />
+                            <line x1="220" y1="240" x2="380" y2="180" />
+                            <line x1="380" y1="180" x2="540" y2="290" />
+                            <line x1="540" y1="290" x2="720" y2="140" />
+                            <line x1="720" y1="140" x2="920" y2="260" />
+                            <line x1="920" y1="260" x2="1120" y2="150" />
+                            <line x1="1120" y1="150" x2="1360" y2="280" />
+                            <line x1="1360" y1="280" x2="1400" y2="90" />
+                            
+                            <line x1="220" y1="240" x2="180" y2="480" />
+                            <line x1="380" y1="180" x2="420" y2="440" />
+                            <line x1="540" y1="290" x2="620" y2="520" />
+                            <line x1="720" y1="140" x2="780" y2="420" />
+                            <line x1="920" y1="260" x2="1020" y2="540" />
+                            <line x1="1120" y1="150" x2="1220" y2="460" />
+                            <line x1="1360" y1="280" x2="1300" y2="620" />
+
+                            <line x1="180" y1="480" x2="340" y2="620" />
+                            <line x1="340" y1="620" x2="420" y2="440" />
+                            <line x1="420" y1="440" x2="620" y2="520" />
+                            <line x1="620" y1="520" x2="780" y2="420" />
+                            <line x1="780" y1="420" x2="940" y2="680" />
+                            <line x1="940" y1="680" x2="1020" y2="540" />
+                            <line x1="1020" y1="540" x2="1220" y2="460" />
+                            <line x1="1220" y1="460" x2="1300" y2="620" />
+
+                            <line x1="100" y1="360" x2="180" y2="480" />
+                            <line x1="340" y1="620" x2="520" y2="760" />
+                            <line x1="520" y1="760" x2="620" y2="520" />
+                            <line x1="780" y1="420" x2="880" y2="820" />
+                            <line x1="880" y1="820" x2="940" y2="680" />
+                            <line x1="1020" y1="540" x2="1180" y2="720" />
+                            <line x1="1180" y1="720" x2="1300" y2="620" />
+
+                            <line x1="300" y1="80" x2="380" y2="180" />
+                            <line x1="600" y1="60" x2="720" y2="140" />
+                            <line x1="840" y1="70" x2="920" y2="260" />
+                            <line x1="1200" y1="60" x2="1360" y2="280" />
+                            <line x1="420" y1="440" x2="540" y2="290" />
+                            <line x1="620" y1="520" x2="720" y2="140" />
                         </g>
-                        <g fill="var(--r)" opacity="0.25">
-                            <circle cx="120" cy="140" r="4.5" />
-                            <circle cx="380" cy="260" r="6.5" />
-                            <circle cx="720" cy="160" r="5.5" />
-                            <circle cx="1080" cy="320" r="7.5" />
-                            <circle cx="1360" cy="140" r="4.5" />
-                            <circle cx="280" cy="520" r="5.5" />
-                            <circle cx="820" cy="480" r="6.5" />
-                            <circle cx="620" cy="580" r="4.5" />
-                            <circle cx="960" cy="640" r="5.5" />
-                            <circle cx="1240" cy="580" r="6.5" />
+                        <g fill="var(--r)" opacity="0.32">
+                            <circle cx="80" cy="100" r="4.5" />
+                            <circle cx="220" cy="240" r="6.5" />
+                            <circle cx="380" cy="180" r="7.5" />
+                            <circle cx="540" cy="290" r="5.5" />
+                            <circle cx="720" cy="140" r="8.5" />
+                            <circle cx="920" cy="260" r="6.5" />
+                            <circle cx="1120" cy="150" r="7.5" />
+                            <circle cx="1360" cy="280" r="6.5" />
+                            <circle cx="1400" cy="90" r="4.5" />
+
+                            <circle cx="180" cy="480" r="6.5" />
+                            <circle cx="420" cy="440" r="7.5" />
+                            <circle cx="620" cy="520" r="5.5" />
+                            <circle cx="780" cy="420" r="8.5" />
+                            <circle cx="1020" cy="540" r="6.5" />
+                            <circle cx="1220" cy="460" r="7.5" />
+                            <circle cx="1300" cy="620" r="6.5" />
+
+                            <circle cx="100" cy="360" r="5.5" />
+                            <circle cx="340" cy="620" r="6.5" />
+                            <circle cx="520" cy="760" r="5.5" />
+                            <circle cx="880" cy="820" r="7.5" />
+                            <circle cx="940" cy="680" r="6.5" />
+                            <circle cx="1180" cy="720" r="5.5" />
+
+                            <circle cx="300" cy="80" r="4.5" />
+                            <circle cx="600" cy="60" r="5.5" />
+                            <circle cx="840" cy="70" r="4.5" />
+                            <circle cx="1200" cy="60" r="5.5" />
                         </g>
                     </svg>
                 </div>
@@ -1213,6 +1260,48 @@ export function initLanding() {
                 setTimeout(() => { bar.style.display = 'none'; }, 300);
             }, 150);
         }, 450);
+    }
+
+    // ── DYNAMIC HERO MESH PARALLAX & MOUSE/SCROLL INTERACTION ──
+    const heroSectionEl = document.querySelector('.lhero-section');
+    const heroMeshSvgEl = document.getElementById('lhero-mesh-svg');
+
+    if (heroSectionEl && heroMeshSvgEl) {
+        let targetX = 0, targetY = 0;
+        let currentX = 0, currentY = 0;
+        let scrollY = 0;
+        let animFrameId = null;
+
+        const handleHeroMouseMove = (e) => {
+            const rect = heroSectionEl.getBoundingClientRect();
+            const mouseX = e.clientX - rect.left - rect.width / 2;
+            const mouseY = e.clientY - rect.top - rect.height / 2;
+
+            targetX = (mouseX / rect.width) * 45; // 45px smooth shift
+            targetY = (mouseY / rect.height) * 45;
+        };
+
+        const handleHeroScroll = () => {
+            scrollY = window.scrollY || window.pageYOffset;
+        };
+
+        const updateMeshTransform = () => {
+            if (!document.body.contains(heroMeshSvgEl)) {
+                if (animFrameId) cancelAnimationFrame(animFrameId);
+                return;
+            }
+            currentX += (targetX - currentX) * 0.07;
+            currentY += (targetY - currentY) * 0.07;
+
+            const totalY = currentY + (scrollY * 0.18); // Mouse shift + scroll parallax
+
+            heroMeshSvgEl.style.transform = `translate3d(${currentX.toFixed(2)}px, ${totalY.toFixed(2)}px, 0) scale(1.05)`;
+            animFrameId = requestAnimationFrame(updateMeshTransform);
+        };
+
+        heroSectionEl.addEventListener('mousemove', handleHeroMouseMove);
+        window.addEventListener('scroll', handleHeroScroll, { passive: true });
+        animFrameId = requestAnimationFrame(updateMeshTransform);
     }
 
     // ── AUTO-ROTATING STATS TICKER ──

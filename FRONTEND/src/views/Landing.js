@@ -42,19 +42,18 @@ export function renderLanding() {
                 
                 <div class="lw">
                     <div class="lhero-main-wrap">
-                        <!-- MASSIVE DISPLAY TYPOGRAPHY HEADLINE -->
-                        <div class="lhero-headline-wrap">
-                            <h1 class="lh1 animate-fade-in-up">
-                                YOUR BIGGEST BET<br>
-                                SHOULD BE ON <span class="lh-gradient">YOU.</span>
-                            </h1>
-                        </div>
-
                         <!-- HERO LOWER FLEX CONTENT -->
                         <div class="lhero-bottom-area">
                             <div class="lhero-grid">
                                 <!-- LEFT COLUMN -->
                                 <div class="lhero-left">
+                                    <!-- MASSIVE DISPLAY TYPOGRAPHY HEADLINE -->
+                                    <div class="lhero-headline-wrap">
+                                        <h1 class="lh1 animate-fade-in-up">
+                                            YOUR BIGGEST BET<br>
+                                            SHOULD BE ON <span class="lh-gradient">YOU.</span>
+                                        </h1>
+                                    </div>
                                     <p class="lsub animate-fade-in-up delay-1">
                                         Every day, people risk money on outcomes they can't control—like sports teams, markets, or ad algorithms. Collateral lets you lock capital on the only asset you actually control: your own focus and execution.
                                     </p>

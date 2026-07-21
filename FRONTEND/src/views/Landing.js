@@ -36,81 +36,64 @@ export function renderLanding() {
                 </div>
             </nav>            <!-- ═══ HERO ═══ -->
             <div class="lhero-section">
-                <!-- DYNAMIC CONSTELLATION MESH BACKGROUND -->
+                <!-- DYNAMIC CONSTELLATION MESH BACKGROUND (JITTERED GRID TEXTURE) -->
                 <div class="lhero-bg-container" id="lhero-bg-container">
                     <svg class="lhero-mesh-svg" id="lhero-mesh-svg" viewBox="0 0 1440 900" fill="none" preserveAspectRatio="xMidYMid slice">
-                        <g opacity="0.18" stroke="var(--r)" stroke-width="1.2">
-                            <line x1="80" y1="100" x2="220" y2="240" />
-                            <line x1="220" y1="240" x2="380" y2="180" />
-                            <line x1="380" y1="180" x2="540" y2="290" />
-                            <line x1="540" y1="290" x2="720" y2="140" />
-                            <line x1="720" y1="140" x2="920" y2="260" />
-                            <line x1="920" y1="260" x2="1120" y2="150" />
-                            <line x1="1120" y1="150" x2="1360" y2="280" />
-                            <line x1="1360" y1="280" x2="1400" y2="90" />
+                        <!-- SHORT SEGMENT LINES (OPACITY 0.04, INK #14121F, 1PX NON-SCALING STROKE) -->
+                        <g opacity="0.04" stroke="#14121F" stroke-width="1" vector-effect="non-scaling-stroke">
+                            <!-- Row 1 Connections -->
+                            <line x1="100" y1="70" x2="250" y2="95" /><line x1="250" y1="95" x2="410" y2="75" /><line x1="410" y1="75" x2="560" y2="90" /><line x1="560" y1="90" x2="710" y2="70" /><line x1="710" y1="70" x2="860" y2="95" /><line x1="860" y1="95" x2="1010" y2="75" /><line x1="1010" y1="75" x2="1160" y2="90" /><line x1="1160" y1="90" x2="1310" y2="70" />
                             
-                            <line x1="220" y1="240" x2="180" y2="480" />
-                            <line x1="380" y1="180" x2="420" y2="440" />
-                            <line x1="540" y1="290" x2="620" y2="520" />
-                            <line x1="720" y1="140" x2="780" y2="420" />
-                            <line x1="920" y1="260" x2="1020" y2="540" />
-                            <line x1="1120" y1="150" x2="1220" y2="460" />
-                            <line x1="1360" y1="280" x2="1300" y2="620" />
+                            <!-- Row 1 to Row 2 Vertical & Diagonal -->
+                            <line x1="100" y1="70" x2="85" y2="230" /><line x1="250" y1="95" x2="235" y2="210" /><line x1="410" y1="75" x2="390" y2="235" /><line x1="560" y1="90" x2="545" y2="210" /><line x1="710" y1="70" x2="695" y2="230" /><line x1="860" y1="95" x2="845" y2="210" /><line x1="1010" y1="75" x2="995" y2="235" /><line x1="1160" y1="90" x2="1145" y2="210" /><line x1="1310" y1="70" x2="1295" y2="230" />
+                            <line x1="100" y1="70" x2="235" y2="210" /><line x1="250" y1="95" x2="390" y2="235" /><line x1="410" y1="75" x2="545" y2="210" /><line x1="560" y1="90" x2="695" y2="230" /><line x1="710" y1="70" x2="845" y2="210" /><line x1="860" y1="95" x2="995" y2="235" /><line x1="1010" y1="75" x2="1145" y2="210" /><line x1="1160" y1="90" x2="1295" y2="230" />
 
-                            <line x1="180" y1="480" x2="340" y2="620" />
-                            <line x1="340" y1="620" x2="420" y2="440" />
-                            <line x1="420" y1="440" x2="620" y2="520" />
-                            <line x1="620" y1="520" x2="780" y2="420" />
-                            <line x1="780" y1="420" x2="940" y2="680" />
-                            <line x1="940" y1="680" x2="1020" y2="540" />
-                            <line x1="1020" y1="540" x2="1220" y2="460" />
-                            <line x1="1220" y1="460" x2="1300" y2="620" />
+                            <!-- Row 2 Connections -->
+                            <line x1="85" y1="230" x2="235" y2="210" /><line x1="235" y1="210" x2="390" y2="235" /><line x1="390" y1="235" x2="545" y2="210" /><line x1="545" y1="210" x2="695" y2="230" /><line x1="695" y1="230" x2="845" y2="210" /><line x1="845" y1="210" x2="995" y2="235" /><line x1="995" y1="235" x2="1145" y2="210" /><line x1="1145" y1="210" x2="1295" y2="230" />
 
-                            <line x1="100" y1="360" x2="180" y2="480" />
-                            <line x1="340" y1="620" x2="520" y2="760" />
-                            <line x1="520" y1="760" x2="620" y2="520" />
-                            <line x1="780" y1="420" x2="880" y2="820" />
-                            <line x1="880" y1="820" x2="940" y2="680" />
-                            <line x1="1020" y1="540" x2="1180" y2="720" />
-                            <line x1="1180" y1="720" x2="1300" y2="620" />
+                            <!-- Row 2 to Row 3 Vertical & Diagonal -->
+                            <line x1="85" y1="230" x2="110" y2="350" /><line x1="235" y1="210" x2="260" y2="375" /><line x1="390" y1="235" x2="415" y2="350" /><line x1="545" y1="210" x2="570" y2="370" /><line x1="695" y1="230" x2="720" y2="350" /><line x1="845" y1="210" x2="870" y2="375" /><line x1="995" y1="235" x2="1020" y2="350" /><line x1="1145" y1="210" x2="1170" y2="370" /><line x1="1295" y1="230" x2="1320" y2="350" />
+                            <line x1="235" y1="210" x2="110" y2="350" /><line x1="390" y1="235" x2="260" y2="375" /><line x1="545" y1="210" x2="415" y2="350" /><line x1="695" y1="230" x2="570" y2="370" /><line x1="845" y1="210" x2="720" y2="350" /><line x1="995" y1="235" x2="870" y2="375" /><line x1="1145" y1="210" x2="1020" y2="350" /><line x1="1295" y1="230" x2="1170" y2="370" />
 
-                            <line x1="300" y1="80" x2="380" y2="180" />
-                            <line x1="600" y1="60" x2="720" y2="140" />
-                            <line x1="840" y1="70" x2="920" y2="260" />
-                            <line x1="1200" y1="60" x2="1360" y2="280" />
-                            <line x1="420" y1="440" x2="540" y2="290" />
-                            <line x1="620" y1="520" x2="720" y2="140" />
+                            <!-- Row 3 Connections -->
+                            <line x1="110" y1="350" x2="260" y2="375" /><line x1="260" y1="375" x2="415" y2="350" /><line x1="415" y1="350" x2="570" y2="370" /><line x1="570" y1="370" x2="720" y2="350" /><line x1="720" y1="350" x2="870" y2="375" /><line x1="870" y1="375" x2="1020" y2="350" /><line x1="1020" y1="350" x2="1170" y2="370" /><line x1="1170" y1="370" x2="1320" y2="350" />
+
+                            <!-- Row 3 to Row 4 Vertical & Diagonal -->
+                            <line x1="110" y1="350" x2="90" y2="510" /><line x1="260" y1="375" x2="240" y2="490" /><line x1="415" y1="350" x2="395" y2="515" /><line x1="570" y1="370" x2="550" y2="490" /><line x1="720" y1="350" x2="700" y2="510" /><line x1="870" y1="375" x2="850" y2="490" /><line x1="1020" y1="350" x2="1000" y2="515" /><line x1="1170" y1="370" x2="1150" y2="490" /><line x1="1320" y1="350" x2="1300" y2="510" />
+                            <line x1="110" y1="350" x2="240" y2="490" /><line x1="260" y1="375" x2="395" y2="515" /><line x1="415" y1="350" x2="550" y2="490" /><line x1="570" y1="370" x2="700" y2="510" /><line x1="720" y1="350" x2="850" y2="490" /><line x1="870" y1="375" x2="1000" y2="515" /><line x1="1020" y1="350" x2="1150" y2="490" /><line x1="1170" y1="370" x2="1300" y2="510" />
+
+                            <!-- Row 4 Connections -->
+                            <line x1="90" y1="510" x2="240" y2="490" /><line x1="240" y1="490" x2="395" y2="515" /><line x1="395" y1="515" x2="550" y2="490" /><line x1="550" y1="490" x2="700" y2="510" /><line x1="700" y1="510" x2="850" y2="490" /><line x1="850" y1="490" x2="1000" y2="515" /><line x1="1000" y1="515" x2="1150" y2="490" /><line x1="1150" y1="490" x2="1300" y2="510" />
+
+                            <!-- Row 4 to Row 5 Vertical & Diagonal -->
+                            <line x1="90" y1="510" x2="115" y2="630" /><line x1="240" y1="490" x2="265" y2="655" /><line x1="395" y1="515" x2="420" y2="630" /><line x1="550" y1="490" x2="575" y2="650" /><line x1="700" y1="510" x2="725" y2="630" /><line x1="850" y1="490" x2="875" y2="655" /><line x1="1000" y1="515" x2="1025" y2="630" /><line x1="1150" y1="490" x2="1175" y2="650" /><line x1="1300" y1="510" x2="1325" y2="630" />
+                            <line x1="240" y1="490" x2="115" y2="630" /><line x1="395" y1="515" x2="265" y2="655" /><line x1="550" y1="490" x2="420" y2="630" /><line x1="700" y1="510" x2="575" y2="650" /><line x1="850" y1="490" x2="725" y2="630" /><line x1="1000" y1="515" x2="875" y2="655" /><line x1="1150" y1="490" x2="1025" y2="630" /><line x1="1300" y1="510" x2="1175" y2="650" />
+
+                            <!-- Row 5 Connections -->
+                            <line x1="115" y1="630" x2="265" y2="655" /><line x1="265" y1="655" x2="420" y2="630" /><line x1="420" y1="630" x2="575" y2="650" /><line x1="575" y1="650" x2="725" y2="630" /><line x1="725" y1="630" x2="875" y2="655" /><line x1="875" y1="655" x2="1025" y2="630" /><line x1="1025" y1="630" x2="1175" y2="650" /><line x1="1175" y1="650" x2="1325" y2="630" />
+
+                            <!-- Row 5 to Row 6 Vertical & Diagonal -->
+                            <line x1="115" y1="630" x2="95" y2="790" /><line x1="265" y1="655" x2="245" y2="770" /><line x1="420" y1="630" x2="400" y2="795" /><line x1="575" y1="650" x2="555" y2="770" /><line x1="725" y1="630" x2="705" y2="790" /><line x1="875" y1="655" x2="855" y2="770" /><line x1="1025" y1="630" x2="1005" y2="795" /><line x1="1175" y1="650" x2="1155" y2="770" /><line x1="1325" y1="630" x2="1305" y2="790" />
+                            <line x1="115" y1="630" x2="245" y2="770" /><line x1="265" y1="655" x2="400" y2="795" /><line x1="420" y1="630" x2="555" y2="770" /><line x1="575" y1="650" x2="705" y2="790" /><line x1="725" y1="630" x2="855" y2="770" /><line x1="875" y1="655" x2="1005" y2="795" /><line x1="1025" y1="630" x2="1155" y2="770" /><line x1="1175" y1="650" x2="1305" y2="790" />
+
+                            <!-- Row 6 Connections -->
+                            <line x1="95" y1="790" x2="245" y2="770" /><line x1="245" y1="770" x2="400" y2="795" /><line x1="400" y1="795" x2="555" y2="770" /><line x1="555" y1="770" x2="705" y2="790" /><line x1="705" y1="790" x2="855" y2="770" /><line x1="855" y1="770" x2="1005" y2="795" /><line x1="1005" y1="795" x2="1155" y2="770" /><line x1="1155" y1="770" x2="1305" y2="790" />
                         </g>
-                        <g fill="var(--r)" opacity="0.32">
-                            <circle cx="80" cy="100" r="4.5" />
-                            <circle cx="220" cy="240" r="6.5" />
-                            <circle cx="380" cy="180" r="7.5" />
-                            <circle cx="540" cy="290" r="5.5" />
-                            <circle cx="720" cy="140" r="8.5" />
-                            <circle cx="920" cy="260" r="6.5" />
-                            <circle cx="1120" cy="150" r="7.5" />
-                            <circle cx="1360" cy="280" r="6.5" />
-                            <circle cx="1400" cy="90" r="4.5" />
 
-                            <circle cx="180" cy="480" r="6.5" />
-                            <circle cx="420" cy="440" r="7.5" />
-                            <circle cx="620" cy="520" r="5.5" />
-                            <circle cx="780" cy="420" r="8.5" />
-                            <circle cx="1020" cy="540" r="6.5" />
-                            <circle cx="1220" cy="460" r="7.5" />
-                            <circle cx="1300" cy="620" r="6.5" />
-
-                            <circle cx="100" cy="360" r="5.5" />
-                            <circle cx="340" cy="620" r="6.5" />
-                            <circle cx="520" cy="760" r="5.5" />
-                            <circle cx="880" cy="820" r="7.5" />
-                            <circle cx="940" cy="680" r="6.5" />
-                            <circle cx="1180" cy="720" r="5.5" />
-
-                            <circle cx="300" cy="80" r="4.5" />
-                            <circle cx="600" cy="60" r="5.5" />
-                            <circle cx="840" cy="70" r="4.5" />
-                            <circle cx="1200" cy="60" r="5.5" />
+                        <!-- JITTERED GRID NODES (OPACITY 0.06, INK #14121F, RADIUS 2.2PX = 4.4PX DIAMETER) -->
+                        <g fill="#14121F" opacity="0.06">
+                            <!-- Row 1 -->
+                            <circle cx="100" cy="70" r="2.2" /><circle cx="250" cy="95" r="2.2" /><circle cx="410" cy="75" r="2.2" /><circle cx="560" cy="90" r="2.2" /><circle cx="710" cy="70" r="2.2" /><circle cx="860" cy="95" r="2.2" /><circle cx="1010" cy="75" r="2.2" /><circle cx="1160" cy="90" r="2.2" /><circle cx="1310" cy="70" r="2.2" />
+                            <!-- Row 2 -->
+                            <circle cx="85" cy="230" r="2.2" /><circle cx="235" cy="210" r="2.2" /><circle cx="390" cy="235" r="2.2" /><circle cx="545" cy="210" r="2.2" /><circle cx="695" cy="230" r="2.2" /><circle cx="845" cy="210" r="2.2" /><circle cx="995" cy="235" r="2.2" /><circle cx="1145" cy="210" r="2.2" /><circle cx="1295" cy="230" r="2.2" />
+                            <!-- Row 3 -->
+                            <circle cx="110" cy="350" r="2.2" /><circle cx="260" cy="375" r="2.2" /><circle cx="415" cy="350" r="2.2" /><circle cx="570" cy="370" r="2.2" /><circle cx="720" cy="350" r="2.2" /><circle cx="870" cy="375" r="2.2" /><circle cx="1020" cy="350" r="2.2" /><circle cx="1170" cy="370" r="2.2" /><circle cx="1320" cy="350" r="2.2" />
+                            <!-- Row 4 -->
+                            <circle cx="90" cy="510" r="2.2" /><circle cx="240" cy="490" r="2.2" /><circle cx="395" cy="515" r="2.2" /><circle cx="550" cy="490" r="2.2" /><circle cx="700" cy="510" r="2.2" /><circle cx="850" cy="490" r="2.2" /><circle cx="1000" cy="515" r="2.2" /><circle cx="1150" cy="490" r="2.2" /><circle cx="1300" cy="510" r="2.2" />
+                            <!-- Row 5 -->
+                            <circle cx="115" cy="630" r="2.2" /><circle cx="265" cy="655" r="2.2" /><circle cx="420" cy="630" r="2.2" /><circle cx="575" cy="650" r="2.2" /><circle cx="725" cy="630" r="2.2" /><circle cx="875" cy="655" r="2.2" /><circle cx="1025" cy="630" r="2.2" /><circle cx="1175" cy="650" r="2.2" /><circle cx="1325" cy="630" r="2.2" />
+                            <!-- Row 6 -->
+                            <circle cx="95" cy="790" r="2.2" /><circle cx="245" cy="770" r="2.2" /><circle cx="400" cy="795" r="2.2" /><circle cx="555" cy="770" r="2.2" /><circle cx="705" cy="790" r="2.2" /><circle cx="855" cy="770" r="2.2" /><circle cx="1005" cy="795" r="2.2" /><circle cx="1155" cy="770" r="2.2" /><circle cx="1305" cy="790" r="2.2" />
                         </g>
                     </svg>
                 </div>
@@ -1265,8 +1248,9 @@ export function initLanding() {
     // ── DYNAMIC HERO MESH PARALLAX & MOUSE/SCROLL INTERACTION ──
     const heroSectionEl = document.querySelector('.lhero-section');
     const heroMeshSvgEl = document.getElementById('lhero-mesh-svg');
+    const isReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-    if (heroSectionEl && heroMeshSvgEl) {
+    if (heroSectionEl && heroMeshSvgEl && !isReducedMotion) {
         let targetX = 0, targetY = 0;
         let currentX = 0, currentY = 0;
         let scrollY = 0;

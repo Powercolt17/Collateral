@@ -72,24 +72,24 @@ export const landingCSS = `
 .lhero-section {
     position: relative;
     overflow: hidden;
-    padding-top: 140px !important;
-    padding-bottom: 50px;
+    padding-top: 105px !important;
+    padding-bottom: 24px;
     background: #FAF9F7 !important;
 }
 
-/* Rotated Institutional Grid Layer */
+/* Rotated Institutional Grid Layer (Full-Bleed Seam Fix) */
 .lhero-bg-grid {
     position: absolute;
-    inset: -50%;
-    width: 200%;
-    height: 200%;
+    inset: -100%;
+    width: 300%;
+    height: 300%;
     pointer-events: none !important;
     z-index: 0 !important;
     transform: rotate(-12deg);
-    opacity: 0.025;
+    opacity: 0.03;
     background-image: 
-        linear-gradient(to right, rgba(20, 18, 31, 1) 1px, transparent 1px),
-        linear-gradient(to bottom, rgba(20, 18, 31, 1) 1px, transparent 1px);
+        linear-gradient(to right, rgba(15, 23, 42, 1) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(15, 23, 42, 1) 1px, transparent 1px);
     background-size: 80px 80px;
 }
 
@@ -162,8 +162,8 @@ export const landingCSS = `
     box-shadow: 0 20px 48px -12px rgba(20, 18, 31, 0.08), 0 1px 3px rgba(20, 18, 31, 0.02) !important;
 }
 
-.lhero-headline-wrap{margin-bottom:36px;position:relative;z-index:2}
-.lh1{font-family:'Plus Jakarta Sans',sans-serif;font-weight:900;font-size:clamp(3rem, 6.6vw, 5.75rem) !important;line-height:0.93 !important;letter-spacing:-0.025em !important;color:var(--t1);text-transform:uppercase;margin:0 0 16px}
+.lhero-headline-wrap{margin-bottom:20px;position:relative;z-index:2}
+.lh1{font-family:'Plus Jakarta Sans',sans-serif;font-weight:900;font-size:clamp(2.3rem, 5vw, 4.25rem) !important;line-height:0.95 !important;letter-spacing:-0.025em !important;color:var(--t1);text-transform:uppercase;margin:0 0 12px}
 .lh-gradient{color:#7A1220 !important;background:none !important;-webkit-background-clip:initial !important;-webkit-text-fill-color:initial !important;display:inline-block}
 .lh-badge{display:inline-flex;align-items:center;gap:8px;background:rgba(92,20,20,0.04);border:1px solid rgba(92,20,20,0.12);padding:6px 14px;border-radius:100px;font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--r);margin-bottom:20px;box-shadow:0 2px 8px rgba(92,20,20,0.02)}
 .lh-badge-dot{width:6px;height:6px;background:var(--g);border-radius:50%;display:inline-block;box-shadow:0 0 8px rgba(20,92,20,0.8);animation:badgeDotPulse 1.8s ease-in-out infinite}
@@ -179,7 +179,7 @@ export const landingCSS = `
 .lhero-grid {
     display: grid;
     grid-template-columns: 0.52fr 0.48fr;
-    gap: 48px;
+    gap: 40px;
     align-items: flex-start;
     position: relative;
     z-index: 2;
@@ -187,7 +187,7 @@ export const landingCSS = `
 @media (max-width: 1024px) {
     .lhero-grid {
         grid-template-columns: 1fr;
-        gap: 40px;
+        gap: 32px;
     }
 }
 .lhero-right {
@@ -197,9 +197,10 @@ export const landingCSS = `
     justify-content: center;
     align-items: center;
     perspective: 1200px;
+    padding-right: 15px;
 }
-.lsub{font-size:18px;color:var(--t2);line-height:1.55;margin:0 0 32px;max-width:640px;letter-spacing:-.2px}
-.lctas{display:flex;gap:16px;flex-wrap:wrap;align-items:center;margin-bottom:16px}
+.lsub{font-size:15.5px;color:var(--t2);line-height:1.5;margin:0 0 18px;max-width:580px;letter-spacing:-.2px}
+.lctas{display:flex;gap:14px;flex-wrap:wrap;align-items:center;margin-bottom:16px}
 .lhero-footer-strip{display:flex;justify-content:flex-end;margin-top:24px;position:relative;z-index:2}
 .lhero-scroll-down{display:inline-flex;align-items:center;gap:8px;font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--t3);text-decoration:none;transition:color 0.25s ease,transform 0.25s ease}
 .lhero-scroll-down:hover{color:var(--r);transform:translateY(2px)}
@@ -300,8 +301,8 @@ export const landingCSS = `
 .lfan-deck-viewport {
     position: relative;
     width: 100%;
-    max-width: 560px;
-    height: 410px;
+    max-width: 480px;
+    height: 345px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -309,23 +310,25 @@ export const landingCSS = `
 
 .lfan-deck-stage {
     position: relative;
-    width: 380px;
-    height: 390px;
+    width: 330px;
+    height: 335px;
     display: flex;
     justify-content: center;
     align-items: center;
+    transform: translateX(-12px);
 }
 
 .lfan-real-card {
     position: absolute !important;
-    width: 380px !important;
+    width: 330px !important;
     top: 0;
     transition: transform 450ms cubic-bezier(0.4, 0, 0.2, 1), opacity 450ms cubic-bezier(0.4, 0, 0.2, 1) !important;
     transform-origin: bottom center !important;
     cursor: pointer;
-    border: 1px solid rgba(0, 0, 0, 0.08) !important;
-    box-shadow: 0 20px 45px rgba(0, 0, 0, 0.1) !important;
+    border: 1px solid rgba(15, 23, 42, 0.12) !important;
+    box-shadow: 0 16px 36px -6px rgba(15, 23, 42, 0.09), 0 2px 6px rgba(0, 0, 0, 0.03) !important;
     background: #FFFFFF !important;
+    border-radius: 14px !important;
 }
 
 .lfan-real-card.is-center {
@@ -336,16 +339,16 @@ export const landingCSS = `
 }
 
 .lfan-real-card.is-left {
-    transform: translateX(-42px) translateY(10px) rotate(-6deg) scale(0.92) !important;
+    transform: translateX(-20px) translateY(8px) rotate(-3.5deg) scale(0.94) !important;
     z-index: 2 !important;
-    opacity: 0.85 !important;
+    opacity: 0.82 !important;
     pointer-events: auto !important;
 }
 
 .lfan-real-card.is-right {
-    transform: translateX(42px) translateY(10px) rotate(6deg) scale(0.92) !important;
+    transform: translateX(20px) translateY(8px) rotate(3.5deg) scale(0.94) !important;
     z-index: 2 !important;
-    opacity: 0.85 !important;
+    opacity: 0.82 !important;
     pointer-events: auto !important;
 }
 
@@ -359,7 +362,7 @@ export const landingCSS = `
 @media(max-width: 900px) {
     .lfan-grid {
         grid-template-columns: 1fr;
-        gap: 36px;
+        gap: 28px;
     }
     .lfan-right {
         order: 1;
@@ -369,17 +372,23 @@ export const landingCSS = `
     }
     .lfan-deck-viewport {
         max-width: 100%;
-        height: 390px;
+        height: 340px;
+    }
+    .lfan-deck-stage {
+        transform: none !important;
+        width: 100% !important;
+        max-width: 340px !important;
     }
     .lfan-real-card {
         width: 100% !important;
-        max-width: 350px !important;
+        max-width: 340px !important;
     }
-    .lfan-real-card.is-left {
-        transform: translateX(-20px) rotate(-4deg) scale(0.92) !important;
-    }
+    .lfan-real-card.is-left,
     .lfan-real-card.is-right {
-        transform: translateX(20px) rotate(4deg) scale(0.92) !important;
+        display: none !important;
+    }
+    .lfan-real-card.is-center {
+        transform: none !important;
     }
 }
 /* Secondary CTA demoted to a plain text link so only "Start Contract" reads as a button */

@@ -261,7 +261,7 @@ export function renderLanding() {
                         </div>
 
                         <!-- SCROLL DOWN INDICATOR -->
-                        <div class="lhero-footer-strip">
+                        <div class="lhero-footer-strip" style="justify-content: center; margin-top: 16px;">
                             <a href="#contracts" onclick="window.app.scrollToSection('contracts'); return false;" class="lhero-scroll-down animate-fade-in-up delay-4">
                                 <span class="lhero-scroll-arrow">↓</span> SCROLL DOWN
                             </a>

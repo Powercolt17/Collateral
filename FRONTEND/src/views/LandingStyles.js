@@ -98,11 +98,14 @@ export const landingCSS = `
 
 /* ═══ REAL COLLATERAL CONTRACT CARDS DECK CAROUSEL ═══ */
 .lfeatured-live-section {
-    padding: 90px 0;
+    padding-top: 96px !important;
+    padding-bottom: 96px !important;
+    padding-right: 96px !important;
+    padding-left: 0 !important;
     background: #FAF9F7 !important;
     color: #0F172A;
     position: relative;
-    overflow: hidden;
+    overflow: visible !important;
     z-index: 2;
     border-top: 1px solid #E2E8F0;
     border-bottom: 1px solid #E2E8F0;
@@ -113,6 +116,7 @@ export const landingCSS = `
     grid-template-columns: 0.42fr 0.58fr;
     gap: 48px;
     align-items: center;
+    overflow: visible !important;
 }
 
 .lfan-left {
@@ -185,6 +189,7 @@ export const landingCSS = `
     justify-content: center;
     align-items: center;
     outline: none;
+    overflow: visible !important;
 }
 
 .lfan-deck-viewport {
@@ -195,30 +200,32 @@ export const landingCSS = `
     display: flex;
     justify-content: center;
     align-items: center;
+    overflow: visible !important;
 }
 
 .lfan-deck-stage {
     position: relative;
-    width: 380px;
+    width: 350px;
     height: 390px;
     display: flex;
     justify-content: center;
     align-items: center;
+    overflow: visible !important;
 }
 
 .lfan-real-card {
     position: absolute !important;
-    width: 380px !important;
+    width: 350px !important;
     top: 0;
-    transition: transform 450ms cubic-bezier(0.4, 0, 0.2, 1), opacity 450ms cubic-bezier(0.4, 0, 0.2, 1) !important;
+    transition: transform 450ms cubic-bezier(0.4, 0, 0.2, 1), opacity 450ms cubic-bezier(0.4, 0, 0.2, 1), background-color 450ms ease !important;
     transform-origin: bottom center !important;
     cursor: pointer;
     border: 1px solid rgba(0, 0, 0, 0.08) !important;
-    box-shadow: 0 20px 45px rgba(0, 0, 0, 0.1) !important;
-    background: #FFFFFF !important;
+    box-shadow: 0 20px 45px rgba(0, 0, 0, 0.15) !important;
 }
 
 .lfan-real-card.is-center {
+    background-color: #FFFFFF !important;
     transform: translateX(0) rotate(0deg) scale(1) !important;
     z-index: 5 !important;
     opacity: 1 !important;
@@ -226,17 +233,32 @@ export const landingCSS = `
 }
 
 .lfan-real-card.is-left {
-    transform: translateX(-42px) translateY(10px) rotate(-6deg) scale(0.92) !important;
+    background-color: #3B2FD9 !important;
+    color: #FFFFFF !important;
+    transform: translateX(-38px) translateY(10px) rotate(-6deg) scale(0.9) !important;
     z-index: 2 !important;
     opacity: 0.85 !important;
     pointer-events: auto !important;
 }
 
 .lfan-real-card.is-right {
-    transform: translateX(42px) translateY(10px) rotate(6deg) scale(0.92) !important;
+    background-color: #D97706 !important;
+    color: #FFFFFF !important;
+    transform: translateX(38px) translateY(10px) rotate(6deg) scale(0.9) !important;
     z-index: 2 !important;
     opacity: 0.85 !important;
     pointer-events: auto !important;
+}
+
+.lfan-real-card.is-left *,
+.lfan-real-card.is-right * {
+    color: #FFFFFF !important;
+    border-color: rgba(255, 255, 255, 0.3) !important;
+}
+
+.lfan-real-card.is-left .lc-val-green,
+.lfan-real-card.is-right .lc-val-green {
+    color: #4ADE80 !important;
 }
 
 .lfan-real-card.is-hidden {
@@ -526,10 +548,10 @@ export const landingCSS = `
   flex-shrink: 0;
 }
 .lc-col-final {
-  background: linear-gradient(135deg, #5c1414 0%, #3d0d0d 100%) !important;
+  background: #0F9D58 !important;
   padding: 6px 12px !important;
   border-radius: 6px !important;
-  box-shadow: 0 4px 10px rgba(92, 20, 20, 0.15);
+  box-shadow: 0 4px 10px rgba(15, 157, 88, 0.25) !important;
 }
 .lc-col-final .lc-flow-label {
   color: rgba(255, 255, 255, 0.95) !important;

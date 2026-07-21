@@ -309,8 +309,8 @@ export function renderLanding() {
             </div>
 
             <!-- ═══ HOW IT WORKS ═══ -->
+            <div class="lhow" data-r id="how">
             <div class="lw">
-                <div class="lhow" data-r id="how">
                     <div class="lred-dash reveal-item"><span class="lmono">How It Works</span></div>
                     <h2 class="lhow-h reveal-item">Set a target. Lock money.<br>Force yourself to <strong>win.</strong></h2>
                     <p class="lhow-sub reveal-item">If you are serious, put something on the line.</p>
@@ -340,7 +340,7 @@ export function renderLanding() {
                             </div>
                         </div>
                     </div>
-                </div>
+            </div>
             </div>
 
             <!-- ═══ SOCIAL PROOF (REAL RESULTS) ═══ -->
@@ -499,7 +499,7 @@ export function renderLanding() {
             </div>
 
             <!-- ═══ THE CLTR TOKEN ECONOMY ═══ -->
-            <div class="lemo-reframe" style="background:#fff; border-top:1px solid var(--d); border-bottom:1px solid var(--d); padding:75px 0;" data-r>
+            <div class="lemo-reframe" data-r>
                 <div class="lw">
                     <div class="lred-dash reveal-item"><span class="lmono">Protocol Token</span></div>
                     <h2 class="lh-section-title reveal-item">The CLTR Token Economy</h2>
@@ -583,8 +583,8 @@ export function renderLanding() {
             </div>
 
             <!-- ═══ FAQ ═══ -->
+            <div class="lfaq" data-r id="faq">
             <div class="lw">
-                <div class="lfaq" data-r id="faq">
                     <div class="lred-dash reveal-item"><span class="lmono">Common Questions</span></div>
                     <h2 class="lhow-h reveal-item" style="margin-bottom:28px">No fine print. Just <strong>loopholes.</strong></h2>
                     <div class="lfaq-wrap">

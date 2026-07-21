@@ -1,6 +1,6 @@
 // Landing CSS — Elite fintech conversion page
 export const landingCSS = `
-.lp{--bg:#F8FAFC;--p:#FFF;--t1:#0F172A;--t2:#334155;--t3:#64748B;--d:#E2E8F0;--r:#5C1414;--rh:#6B1212;--g:#145c14;min-height:100vh;background:var(--bg);color:var(--t1);font-family:'Inter',sans-serif;-webkit-font-smoothing:antialiased;overflow-x:hidden;opacity:0;transition:opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1)}
+.lp{--bg:#ffffff;--p:#FFF;--s:#fafaf9;--t1:#0F172A;--t2:#334155;--t3:#64748B;--d:#E2E8F0;--r:#5C1414;--rh:#6B1212;--g:#145c14;min-height:100vh;background:var(--bg);color:var(--t1);font-family:'Inter',sans-serif;-webkit-font-smoothing:antialiased;overflow-x:hidden;opacity:0;transition:opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1)}
 .lp.v{opacity:1}
 .lp *{box-sizing:border-box}
 .lloading-bar{position:fixed;top:0;left:0;height:2px;background:var(--r);z-index:1000;width:0;transition:width 0.4s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.3s ease;box-shadow:0 0 8px var(--r)}
@@ -527,7 +527,8 @@ export const landingCSS = `
 @keyframes toastSlideDown{0%{opacity:1;transform:translateY(0) scale(1)}100%{opacity:0;transform:translateY(24px) scale(0.95)}}
 
 /* ═══ LIVE CONTRACTS ═══ */
-.lcontracts{padding:30px 0 48px;background:var(--p)}
+.lcontracts{padding:30px 0 48px;background:var(--bg);position:relative}
+.lcontracts::after{content:'';position:absolute;bottom:0;left:0;right:0;height:80px;background:linear-gradient(to bottom, var(--bg), var(--s));pointer-events:none}
 .lcontracts .lw{max-width:1280px}
 .lcards{display:grid;grid-template-columns:repeat(4,1fr);gap:32px}
 .lcard{border:1px solid var(--d);padding:36px 24px;display:flex;flex-direction:column;transition:all 0.4s cubic-bezier(0.16, 1, 0.3, 1);background:var(--p);position:relative;overflow:hidden;cursor:pointer}
@@ -556,7 +557,9 @@ export const landingCSS = `
 .lcard-btn button:hover::after{opacity:1;transform:translateX(0);width:auto;margin-left:6px}
 
 /* ═══ HOW IT WORKS ═══ */
-.lhow{padding:75px 0}
+.lhow{padding:75px 0;background:var(--s);position:relative}
+.lhow::before{content:'';position:absolute;top:0;left:0;right:0;height:60px;background:linear-gradient(to bottom, var(--s), var(--s));pointer-events:none}
+.lhow::after{content:'';position:absolute;bottom:0;left:0;right:0;height:80px;background:linear-gradient(to bottom, var(--s), var(--bg));pointer-events:none}
 .lhow-h{font-family:'Inter Tight',sans-serif;font-size:clamp(32px,5vw,56px);font-weight:400;letter-spacing:-1px;margin-bottom:16px}
 .lhow-h strong{font-weight:700;color:var(--r)}
 .lhow-sub{font-size:18px;color:var(--t2);margin-bottom:44px;max-width:640px;line-height:1.6}
@@ -586,13 +589,13 @@ export const landingCSS = `
 .ltype-detail{font-size:15px;color:var(--t2);line-height:1.6;padding-top:24px;border-top:1px dashed rgba(0,0,0,0.08)}
 
 /* ═══ FAQ ═══ */
-.lfaq{padding:36px 0;text-align:center}
+.lfaq{padding:36px 0;text-align:center;background:var(--bg);position:relative}
+.lfaq::after{content:'';position:absolute;bottom:0;left:0;right:0;height:60px;background:linear-gradient(to bottom, var(--bg), var(--s));pointer-events:none}
 .lfaq-wrap{max-width:640px;margin:0 auto;text-align:left}
 .lfaq .lred-dash{justify-content:center}
 .fq{border-bottom:1px solid var(--d)}.fq-q{padding:18px 0;font-family:'Inter Tight',sans-serif;font-size:15px;font-weight:600;color:var(--t1);cursor:pointer;display:flex;justify-content:space-between;align-items:center;user-select:none;transition:color 0.2s ease}.fq-q:hover{color:var(--r)}.fq-q::after{content:'+';font-size:16px;color:var(--t3);transition:transform 0.3s ease}.fq.open .fq-q::after{content:'\\2212';transform:rotate(180deg)}.fq-a{max-height:0;overflow:hidden;transition:max-height .3s;font-size:13px;color:var(--t2);line-height:1.6}.fq.open .fq-a{max-height:400px;padding-bottom:18px}.fq-a strong{color:var(--t1);font-weight:600}
-
-/* ═══ FINAL FOOTER ═══ */
-.lfoot{background:var(--bg);border-top:1px solid var(--d);text-align:center;padding:32px 24px;position:relative;overflow:hidden}
+/* ═══ FINAL CTA ═══ */
+.lfoot{background:var(--s);text-align:center;padding:32px 24px;position:relative;overflow:hidden}
 .lfoot::before{content:'';position:absolute;top:-50%;left:50%;transform:translateX(-50%);width:800px;height:800px;background:radial-gradient(circle, rgba(92,20,20,0.03) 0%, transparent 60%);pointer-events:none;border-radius:50%;animation:heroOrb 10s ease-in-out infinite}
 .lfoot-overdue{display:inline-flex;align-items:center;gap:8px;background:rgba(92,20,20,0.04);border:1px solid rgba(92,20,20,0.12);padding:6px 14px;border-radius:100px;font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--r);margin-bottom:24px;box-shadow:0 2px 8px rgba(92,20,20,0.02);position:relative;z-index:1}
 .lfoot-h{font-family:'Inter Tight',sans-serif;font-size:clamp(24px,4vw,36px);font-weight:700;color:var(--t1);letter-spacing:-1px;line-height:1.15;margin-bottom:12px;position:relative;z-index:1}
@@ -868,7 +871,8 @@ export const landingCSS = `
 }
 
 /* ═══ SOCIAL PROOF ═══ */
-.lreal-results{padding:100px 0;background:var(--bg)}
+.lreal-results{padding:100px 0;background:var(--bg);position:relative}
+.lreal-results::after{content:'';position:absolute;bottom:0;left:0;right:0;height:80px;background:linear-gradient(to bottom, var(--bg), var(--s));pointer-events:none}
 .lh-section-title{font-family:'Plus Jakarta Sans',sans-serif;font-size:clamp(26px, 3.5vw, 36px);font-weight:800;line-height:1.15;letter-spacing:-1px;color:var(--t1);margin-bottom:16px}
 .lh-section-subtitle{font-size:14px;color:var(--t3);line-height:1.5;margin-bottom:24px;max-width:640px}
 .lstats-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:32px;margin-bottom:64px;margin-top:32px}
@@ -921,7 +925,8 @@ export const landingCSS = `
 .tier-3x-yield{color:#fff !important;background:var(--r) !important;border:1px solid var(--r) !important}
 
 /* ═══ EMOTIONAL REFRAME ═══ */
-.lemo-reframe{padding:100px 0;background:var(--p)}
+.lemo-reframe{padding:100px 0;background:var(--bg);position:relative}
+.lemo-reframe::after{content:'';position:absolute;bottom:0;left:0;right:0;height:60px;background:linear-gradient(to bottom, var(--bg), var(--s));pointer-events:none}
 .lemo-grid{display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:center;margin-top:32px}
 .lemo-body{font-size:18px;color:var(--t2);line-height:1.6;margin:0}
 .lemo-comparison-card{background:#fff;border:1px solid var(--d);padding:32px;border-radius:16px;box-shadow:0 4px 30px rgba(0,0,0,0.02);display:grid;grid-template-columns:1fr auto 1fr;gap:24px;align-items:stretch}
@@ -940,9 +945,24 @@ export const landingCSS = `
 /* New "Why It Works" Layout Styles */
 .lhow-it-works-section {
     padding: 100px 0;
-    background: #fafaf9; /* warm studio off-white backdrop */
-    border-top: 1px solid var(--d);
-    border-bottom: 1px solid var(--d);
+    background: var(--s);
+    position: relative;
+}
+.lhow-it-works-section::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 60px;
+    background: linear-gradient(to bottom, var(--s), var(--s));
+    pointer-events: none;
+}
+.lhow-it-works-section::after {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    height: 80px;
+    background: linear-gradient(to bottom, var(--s), var(--bg));
+    pointer-events: none;
 }
 .lhow-layout {
     display: grid;
@@ -1309,10 +1329,25 @@ export const landingCSS = `
 
 /* Global stats bar */
 .l-global-stats-bar {
-    background: linear-gradient(180deg, #ffffff 0%, #fafafa 100%);
-    border-top: 1px solid rgba(17, 17, 17, 0.04);
-    border-bottom: 1px solid rgba(17, 17, 17, 0.04);
+    background: var(--s);
     padding: 48px 0;
+    position: relative;
+}
+.l-global-stats-bar::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 40px;
+    background: linear-gradient(to bottom, var(--bg), var(--s));
+    pointer-events: none;
+}
+.l-global-stats-bar::after {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    height: 40px;
+    background: linear-gradient(to bottom, var(--s), var(--bg));
+    pointer-events: none;
 }
 .l-stats-bar-grid {
     display: grid;
@@ -1445,10 +1480,9 @@ export const landingCSS = `
 
 /* Community momentum activity */
 .l-community-momentum {
-    background: #fbfbf9;
-    border-top: 1px solid var(--d);
-    border-bottom: 1px solid var(--d);
+    background: var(--s);
     padding: 20px 0;
+    position: relative;
 }
 .l-momentum-wrap {
     display: flex;
@@ -2063,12 +2097,7 @@ export const landingCSS = `
     display: none !important;
 }
 
-/* Full-bleed Stats Bar Contrast Background */
-.l-global-stats-bar {
-    background: #FAF6F6 !important; /* faint warm maroon tint */
-    border-top: 1px solid rgba(92, 20, 20, 0.06) !important;
-    border-bottom: 1px solid rgba(92, 20, 20, 0.06) !important;
-}
+/* Full-bleed Stats Bar — uses smooth gradient transitions now */
 
 /* Asymmetric Left-Aligned Layout for Contract Types */
 .ltypes-asymmetric {

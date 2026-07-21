@@ -2722,13 +2722,30 @@ export const landingCSS = `
 
 /* Responsive Table Collapse to Cards on Mobile */
 @media(max-width: 768px) {
-    .lledger-table-wrap-prod {
-        overflow-x: visible !important;
+    .lledger-container-prod {
+        padding: 16px 14px !important;
+        margin-top: 16px !important;
         width: 100% !important;
+        max-width: 100% !important;
+        box-sizing: border-box !important;
+        overflow: hidden !important;
+        border-radius: 12px !important;
+    }
+    .lledger-header-prod {
+        padding-bottom: 12px !important;
+        margin-bottom: 12px !important;
+    }
+    .lledger-table-wrap-prod {
+        overflow-x: hidden !important;
+        width: 100% !important;
+        max-width: 100% !important;
+        box-sizing: border-box !important;
     }
     .lledger-table-prod {
         display: block !important;
         width: 100% !important;
+        max-width: 100% !important;
+        box-sizing: border-box !important;
     }
     .lledger-table-prod thead {
         display: none !important;
@@ -2736,34 +2753,41 @@ export const landingCSS = `
     .lledger-table-prod tbody {
         display: flex !important;
         flex-direction: column !important;
-        gap: 12px !important;
+        gap: 10px !important;
         width: 100% !important;
+        max-width: 100% !important;
+        box-sizing: border-box !important;
     }
     .lledger-table-prod tr {
         display: flex !important;
         flex-direction: column !important;
         background: #FFF !important;
         border: 1px solid var(--d) !important;
-        border-radius: 12px !important;
+        border-radius: 10px !important;
         margin-bottom: 0 !important;
-        padding: 14px 16px !important;
+        padding: 10px 12px !important;
         width: 100% !important;
+        max-width: 100% !important;
         box-sizing: border-box !important;
-        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.02) !important;
+        box-shadow: 0 1px 4px rgba(0, 0, 0, 0.02) !important;
         opacity: 1 !important;
         transform: none !important;
         transition: none !important;
+        overflow: hidden !important;
     }
     .lledger-table-prod td {
         border-bottom: 1px solid rgba(0,0,0,0.04) !important;
-        padding: 10px 0 !important;
+        padding: 8px 0 !important;
         display: flex !important;
         justify-content: space-between !important;
         align-items: center !important;
         text-align: right !important;
         width: 100% !important;
+        max-width: 100% !important;
         box-sizing: border-box !important;
         background: transparent !important;
+        min-width: 0 !important;
+        overflow: hidden !important;
     }
     .lledger-table-prod td:last-child {
         border-bottom: none !important;
@@ -2778,21 +2802,26 @@ export const landingCSS = `
         font-size: 10px !important;
         font-weight: 700 !important;
         text-transform: uppercase !important;
-        letter-spacing: 0.8px !important;
+        letter-spacing: 0.5px !important;
         color: var(--t3) !important;
         text-align: left !important;
         flex-shrink: 0 !important;
-        margin-right: 12px !important;
+        margin-right: 8px !important;
     }
     .lledger-table-prod .td-value {
         display: inline-flex !important;
         align-items: center !important;
         justify-content: flex-end !important;
-        gap: 6px !important;
+        gap: 4px !important;
         text-align: right !important;
         margin-left: auto !important;
-        font-size: 13px !important;
+        font-size: 12px !important;
         color: var(--t1) !important;
+        min-width: 0 !important;
+        max-width: 70% !important;
+        overflow: hidden !important;
+        text-overflow: ellipsis !important;
+        white-space: nowrap !important;
     }
     .lledger-table-prod .td-metric {
         display: flex !important;
@@ -2802,6 +2831,12 @@ export const landingCSS = `
     .lledger-table-prod .td-metric .td-value {
         display: inline-flex !important;
         align-items: center !important;
+    }
+    .lledger-table-prod .td-user {
+        font-size: 11px !important;
+        overflow: hidden !important;
+        text-overflow: ellipsis !important;
+        white-space: nowrap !important;
     }
 }
 

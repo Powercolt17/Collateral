@@ -36,6 +36,10 @@ export function renderLanding() {
                 </div>
             </nav>            <!-- ═══ HERO ═══ -->
             <div class="lhero-section">
+                <!-- PROCEDURAL HERO BACKGROUND SYSTEM -->
+                <div class="lhero-bg-grid"></div>
+                <div class="lhero-bg-light-orb"></div>
+                
                 <div class="lw">
                     <div class="lhero-main-wrap">
                         <!-- MASSIVE DISPLAY TYPOGRAPHY HEADLINE -->
@@ -365,6 +369,86 @@ export function renderLanding() {
             </div>
 
 
+
+            <!-- ═══ VISUAL CENTERPIECE: THE AUTOMATED SETTLEMENT ENGINE ═══ -->
+            <div class="lengine-section" id="engine-section" data-r>
+                <div class="lw">
+                    <div class="lengine-hdr-wrap">
+                        <div class="lengine-tag">
+                            <span class="l-lr-dot l-ticker-pulse"></span> AUTOMATED EXECUTION ENGINE
+                        </div>
+                        <h2 class="lengine-h2">HOW MONEY FLOWS ON COLLATERAL</h2>
+                        <p class="lengine-sub">
+                            Every contract is governed by transparent cryptographic escrow and automated API verification. Zero human intervention.
+                        </p>
+                    </div>
+
+                    <div class="lengine-interactive-box">
+                        <div class="lengine-pipeline-nav" role="tablist" aria-label="Settlement Pipeline Stages">
+                            <button class="lengine-step-btn is-active" id="engine-tab-1" data-stage="1" role="tab" aria-selected="true">
+                                <div class="lengine-step-num">STAGE 01</div>
+                                <div class="lengine-step-title">01. CAPITAL LOCK</div>
+                            </button>
+                            <button class="lengine-step-btn" id="engine-tab-2" data-stage="2" role="tab" aria-selected="false">
+                                <div class="lengine-step-num">STAGE 02</div>
+                                <div class="lengine-step-title">02. API VERIFY</div>
+                            </button>
+                            <button class="lengine-step-btn" id="engine-tab-3" data-stage="3" role="tab" aria-selected="false">
+                                <div class="lengine-step-num">STAGE 03</div>
+                                <div class="lengine-step-title">03. MATCH ALLOCATE</div>
+                            </button>
+                            <button class="lengine-step-btn" id="engine-tab-4" data-stage="4" role="tab" aria-selected="false">
+                                <div class="lengine-step-num">STAGE 04</div>
+                                <div class="lengine-step-title">04. SETTLE & BURN</div>
+                            </button>
+                        </div>
+
+                        <div class="lengine-stage-display" id="engine-stage-display">
+                            <div class="lengine-stage-content">
+                                <h3 id="engine-stage-title">01. CAPITAL ESCROW & DEPOSIT LOCK</h3>
+                                <p id="engine-stage-desc">
+                                    Creator commits target goal and deposits funds into the isolated smart escrow vault. Principal remains locked until target deadline or API verification event.
+                                </p>
+                                <div class="lengine-stage-metrics">
+                                    <div class="lengine-metric-item">
+                                        <span class="lengine-metric-val" id="engine-metric-1">$500.00</span>
+                                        <span class="lengine-metric-lbl">Capital Locked</span>
+                                    </div>
+                                    <div class="lengine-metric-item">
+                                        <span class="lengine-metric-val" id="engine-metric-2">ESCROW_ACTIVE</span>
+                                        <span class="lengine-metric-lbl">Protocol State</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="lengine-visual-graphic">
+                                <div class="lengine-terminal-hdr">
+                                    <div class="lengine-terminal-dots">
+                                        <span class="lengine-terminal-dot"></span>
+                                        <span class="lengine-terminal-dot"></span>
+                                        <span class="lengine-terminal-dot"></span>
+                                    </div>
+                                    <span class="lengine-terminal-title">TELEMETRY STREAM</span>
+                                </div>
+                                <div class="lengine-terminal-body" id="engine-terminal-body">
+                                    <div class="lengine-log-line">
+                                        <span class="lengine-log-ts">[15:47:02]</span>
+                                        <span class="lengine-log-text">INIT_ESCROW: Vault #4902 initialized</span>
+                                    </div>
+                                    <div class="lengine-log-line">
+                                        <span class="lengine-log-ts">[15:47:03]</span>
+                                        <span class="lengine-log-text">DEPOSIT: $500.00 locked in smart contract</span>
+                                    </div>
+                                    <div class="lengine-log-line">
+                                        <span class="lengine-log-ts">[15:47:03]</span>
+                                        <span class="lengine-log-highlight">STATUS: Escrow locked & verified</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
             <!-- ═══ CONTRACT TYPES ═══ -->
             <div class="lw">
@@ -1392,6 +1476,102 @@ export function initLanding() {
                 const metricIndex = activeMetricIndices[idx];
                 const metric = METRIC_POOL[metricIndex];
                 window.trackEvent('stat_cell_click', { cell_index: idx, metric_key: metric?.key });
+            }
+        });
+    });
+
+    // ═══ INTERACTIVE MOUSE SPOTLIGHT CURSOR TRACKING ═══
+    const spotlightCards = document.querySelectorAll('.lcard, .lstep, .ltype, .lactivity-card');
+    spotlightCards.forEach(card => {
+        card.addEventListener('mousemove', (e) => {
+            const rect = card.getBoundingClientRect();
+            const x = ((e.clientX - rect.left) / rect.width) * 100;
+            const y = ((e.clientY - rect.top) / rect.height) * 100;
+            card.style.setProperty('--mouse-x', `${x}%`);
+            card.style.setProperty('--mouse-y', `${y}%`);
+        });
+    });
+
+    // ═══ INTERACTIVE SETTLEMENT ENGINE PIPELINE STAGE SWITCHER ═══
+    const engineStageData = {
+        1: {
+            title: '01. CAPITAL ESCROW & DEPOSIT LOCK',
+            desc: 'Creator commits target goal and deposits funds into the isolated smart escrow vault. Principal remains locked until target deadline or API verification event.',
+            metric1: '$500.00',
+            metric2: 'ESCROW_ACTIVE',
+            logs: [
+                { ts: '[15:47:02]', text: 'INIT_ESCROW: Vault #4902 initialized' },
+                { ts: '[15:47:03]', text: 'DEPOSIT: $500.00 locked in smart contract' },
+                { ts: '[15:47:03]', highlight: 'STATUS: Escrow locked & verified' }
+            ]
+        },
+        2: {
+            title: '02. ORACLE API VERIFICATION STREAM',
+            desc: 'Connected platform API (Stripe, Shopify, or X) streams verified data payload directly to the smart contract oracle endpoint.',
+            metric1: 'STRIPE_API_V2',
+            metric2: 'VERIFY_STREAMING',
+            logs: [
+                { ts: '[15:48:10]', text: 'ORACLE_POLL: Requesting Stripe revenue payload' },
+                { ts: '[15:48:11]', text: 'API_RESPONSE: 200 OK — Revenue target hit' },
+                { ts: '[15:48:11]', highlight: 'STATUS: Telemetry target 100% verified' }
+            ]
+        },
+        3: {
+            title: '03. AUTOMATED COUNTERPARTY MATCH ALLOCATION',
+            desc: 'Yield multipliers and forfeited deposit pools are automatically matched to verified successful executioners.',
+            metric1: '+$500.00',
+            metric2: 'MATCH_ALLOCATED',
+            logs: [
+                { ts: '[15:48:15]', text: 'POOL_MATCH: Forfeited pool yield calculated' },
+                { ts: '[15:48:16]', text: 'MATCH_ALLOCATE: +$500.00 allocated to vault' },
+                { ts: '[15:48:16]', highlight: 'STATUS: Total payout $1,000.00 locked' }
+            ]
+        },
+        4: {
+            title: '04. INSTANT SETTLEMENT & DEFLATIONARY CLTR BURN',
+            desc: 'Funds automatically unlock and return to creator account. 0.5% protocol fee is automatically burned from total CLTR supply.',
+            metric1: '$1,000.00',
+            metric2: 'SETTLED & BURNED',
+            logs: [
+                { ts: '[15:48:20]', text: 'SETTLEMENT: $1,000.00 payout executed' },
+                { ts: '[15:48:21]', text: 'BURN_EVENT: 25.4 CLTR destroyed forever' },
+                { ts: '[15:48:21]', highlight: 'STATUS: Settlement complete (0.8s)' }
+            ]
+        }
+    };
+
+    const engineBtns = document.querySelectorAll('.lengine-step-btn');
+    engineBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+            const stage = btn.getAttribute('data-stage');
+            engineBtns.forEach(b => {
+                b.classList.remove('is-active');
+                b.setAttribute('aria-selected', 'false');
+            });
+            btn.classList.add('is-active');
+            btn.setAttribute('aria-selected', 'true');
+
+            const data = engineStageData[stage];
+            if (data) {
+                const titleEl = document.getElementById('engine-stage-title');
+                const descEl = document.getElementById('engine-stage-desc');
+                const m1El = document.getElementById('engine-metric-1');
+                const m2El = document.getElementById('engine-metric-2');
+                const terminalBody = document.getElementById('engine-terminal-body');
+
+                if (titleEl) titleEl.textContent = data.title;
+                if (descEl) descEl.textContent = data.desc;
+                if (m1El) m1El.textContent = data.metric1;
+                if (m2El) m2El.textContent = data.metric2;
+
+                if (terminalBody) {
+                    terminalBody.innerHTML = data.logs.map(log => `
+                        <div class="lengine-log-line">
+                            <span class="lengine-log-ts">${log.ts}</span>
+                            <span class="${log.highlight ? 'lengine-log-highlight' : 'lengine-log-text'}">${log.highlight || log.text}</span>
+                        </div>
+                    `).join('');
+                }
             }
         });
     });

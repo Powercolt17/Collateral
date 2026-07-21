@@ -68,13 +68,49 @@ export const landingCSS = `
 [data-r]{opacity:0;transition:opacity .7s cubic-bezier(.16,1,.3,1)}
 [data-r].v{opacity:1}
 
-/* ═══ HERO BASE & TEXTURE LAYER ═══ */
+/* ═══ HERO PROCEDURAL BACKGROUND SYSTEM ═══ */
 .lhero-section {
     position: relative;
     overflow: hidden;
     padding-top: 140px !important;
     padding-bottom: 50px;
     background: #FAF9F7 !important;
+}
+
+/* Rotated Institutional Grid Layer */
+.lhero-bg-grid {
+    position: absolute;
+    inset: -50%;
+    width: 200%;
+    height: 200%;
+    pointer-events: none !important;
+    z-index: 0 !important;
+    transform: rotate(-12deg);
+    opacity: 0.025;
+    background-image: 
+        linear-gradient(to right, rgba(20, 18, 31, 1) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(20, 18, 31, 1) 1px, transparent 1px);
+    background-size: 80px 80px;
+}
+
+/* Drifting Radial Light Orb */
+.lhero-bg-light-orb {
+    position: absolute;
+    top: -20%;
+    left: 20%;
+    width: 900px;
+    height: 900px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(20, 18, 31, 0.035) 0%, rgba(250, 249, 247, 0) 70%);
+    pointer-events: none !important;
+    z-index: 0 !important;
+    animation: driftLightOrb 18s ease-in-out infinite alternate;
+}
+
+@keyframes driftLightOrb {
+    0% { transform: translate(0, 0) scale(1); }
+    50% { transform: translate(120px, 60px) scale(1.1); }
+    100% { transform: translate(-80px, 40px) scale(0.95); }
 }
 
 /* Subtle 2.5% Paper Grain Noise Overlay */
@@ -96,7 +132,34 @@ export const landingCSS = `
     inset: 0;
     pointer-events: none !important;
     z-index: 0 !important;
-    background: radial-gradient(ellipse at center, transparent 55%, rgba(20, 18, 31, 0.04) 100%);
+    background: radial-gradient(ellipse at center, transparent 55%, rgba(20, 18, 31, 0.035) 100%);
+}
+
+/* ═══ MOUSE-FOLLOWING SPOTLIGHT & PHYSICAL CARD ELEVATION ═══ */
+.lcard, .lstep, .ltype, .lactivity-card {
+    position: relative;
+    overflow: hidden;
+    transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.35s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.35s ease-out;
+}
+
+.lcard::after, .lstep::after, .ltype::after, .lactivity-card::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    pointer-events: none !important;
+    z-index: 2;
+    opacity: 0;
+    transition: opacity 0.35s ease-out;
+    background: radial-gradient(450px circle at var(--mouse-x, 50%) var(--mouse-y, 50%), rgba(20, 18, 31, 0.05), transparent 80%);
+}
+
+.lcard:hover::after, .lstep:hover::after, .ltype:hover::after, .lactivity-card:hover::after {
+    opacity: 1;
+}
+
+.lcard:hover, .lstep:hover, .lactivity-card:hover {
+    transform: translateY(-6px) scale(1.01) !important;
+    box-shadow: 0 20px 48px -12px rgba(20, 18, 31, 0.08), 0 1px 3px rgba(20, 18, 31, 0.02) !important;
 }
 
 .lhero-headline-wrap{margin-bottom:36px;position:relative;z-index:2}
@@ -408,6 +471,237 @@ export const landingCSS = `
   0% { background-position: 0% 0%, 300% 0%; }
   50% { background-position: 0% 0%, 150% 0%; }
   100% { background-position: 0% 0%, 0% 0%; }
+}
+
+/* ═══ THE AUTOMATED SETTLEMENT ENGINE (VISUAL CENTERPIECE) ═══ */
+.lengine-section {
+    padding: 100px 0;
+    background: #FAF9F7 !important;
+    position: relative;
+    overflow: hidden;
+    z-index: 2;
+    border-top: 1px solid #E2E8F0;
+    border-bottom: 1px solid #E2E8F0;
+}
+
+.lengine-hdr-wrap {
+    text-align: center;
+    max-width: 680px;
+    margin: 0 auto 56px;
+}
+
+.lengine-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(20, 18, 31, 0.04);
+    border: 1px solid rgba(20, 18, 31, 0.1);
+    padding: 6px 14px;
+    border-radius: 100px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: #14121F;
+    margin-bottom: 16px;
+}
+
+.lengine-h2 {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: clamp(2rem, 4vw, 3.25rem);
+    font-weight: 900;
+    letter-spacing: -0.02em;
+    color: #0F172A;
+    text-transform: uppercase;
+    line-height: 1.05;
+    margin-bottom: 16px;
+}
+
+.lengine-sub {
+    font-size: 16px;
+    color: #64748B;
+    line-height: 1.6;
+}
+
+.lengine-interactive-box {
+    background: #FFFFFF;
+    border: 1px solid #E2E8F0;
+    border-radius: 16px;
+    padding: 40px;
+    box-shadow: 0 16px 40px -12px rgba(20, 18, 31, 0.06);
+    position: relative;
+}
+
+.lengine-pipeline-nav {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 12px;
+    margin-bottom: 40px;
+    position: relative;
+}
+
+.lengine-step-btn {
+    background: #F8FAFC;
+    border: 1px solid #E2E8F0;
+    border-radius: 8px;
+    padding: 16px 20px;
+    cursor: pointer;
+    text-align: left;
+    transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.lengine-step-btn.is-active {
+    background: #14121F;
+    border-color: #14121F;
+    color: #FFFFFF;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px -6px rgba(20, 18, 31, 0.2);
+}
+
+.lengine-step-num {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    color: #64748B;
+    margin-bottom: 6px;
+}
+
+.lengine-step-btn.is-active .lengine-step-num {
+    color: rgba(255, 255, 255, 0.7);
+}
+
+.lengine-step-title {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 14px;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: #0F172A;
+}
+
+.lengine-step-btn.is-active .lengine-step-title {
+    color: #FFFFFF;
+}
+
+.lengine-stage-display {
+    display: grid;
+    grid-template-columns: 1.2fr 0.8fr;
+    gap: 40px;
+    align-items: center;
+    background: #FAF9F7;
+    border: 1px solid #E2E8F0;
+    border-radius: 12px;
+    padding: 32px;
+}
+
+.lengine-stage-content h3 {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 22px;
+    font-weight: 800;
+    color: #0F172A;
+    margin-bottom: 12px;
+    text-transform: uppercase;
+}
+
+.lengine-stage-content p {
+    font-size: 15px;
+    color: #475569;
+    line-height: 1.6;
+    margin-bottom: 24px;
+}
+
+.lengine-stage-metrics {
+    display: flex;
+    gap: 24px;
+}
+
+.lengine-metric-item {
+    display: flex;
+    flex-direction: column;
+}
+
+.lengine-metric-val {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 20px;
+    font-weight: 800;
+    color: #14121F;
+}
+
+.lengine-metric-lbl {
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    color: #64748B;
+    margin-top: 2px;
+}
+
+.lengine-visual-graphic {
+    background: #14121F;
+    border-radius: 12px;
+    padding: 24px;
+    color: #FFFFFF;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.4);
+}
+
+.lengine-terminal-hdr {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    padding-bottom: 12px;
+    margin-bottom: 16px;
+}
+
+.lengine-terminal-dots {
+    display: flex;
+    gap: 6px;
+}
+
+.lengine-terminal-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.2);
+}
+
+.lengine-terminal-title {
+    font-size: 10px;
+    color: rgba(255, 255, 255, 0.6);
+    letter-spacing: 1px;
+}
+
+.lengine-log-line {
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.lengine-log-ts {
+    color: rgba(255, 255, 255, 0.4);
+}
+
+.lengine-log-text {
+    color: #4ADE80;
+}
+
+.lengine-log-highlight {
+    color: #7A1220;
+    font-weight: 700;
+}
+
+@media (max-width: 900px) {
+    .lengine-pipeline-nav {
+        grid-template-columns: 1fr 1fr;
+    }
+    .lengine-stage-display {
+        grid-template-columns: 1fr;
+    }
 }
 
 /* CARD TOP PLATFORM HEADER */

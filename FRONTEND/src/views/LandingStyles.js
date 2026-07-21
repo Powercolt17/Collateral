@@ -1654,8 +1654,8 @@ export const landingCSS = `
 .lhow-card-desc {font-size:13px;color:var(--t2);line-height:1.5;margin:0}
 
 /* ═══ CONTRACT CARDS DIFFERENTIATION ═══ */
-.lcard-popular{border-color:var(--r) !important;transform:scale(1.02);box-shadow:0 12px 30px rgba(92,20,20,0.06);position:relative;z-index:10}
-.lcard-popular:hover{transform:scale(1.04) translateY(-6px) !important;box-shadow:0 20px 40px rgba(92,20,20,0.1) !important}
+.lcard-popular{border-color:#0F172A !important;transform:scale(1.02);box-shadow:0 12px 30px rgba(15,23,42,0.06);position:relative;z-index:10}
+.lcard-popular:hover{transform:scale(1.04) translateY(-6px) !important;box-shadow:0 20px 40px rgba(15,23,42,0.1) !important}
 .lcard-popular-badge{background:var(--r);color:#fff;font-family:'Inter',sans-serif;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:1px;padding:5px 10px;border-radius:6px;white-space:nowrap}
 .tier-3x-yield{color:#fff !important;background:var(--r) !important;border:1px solid var(--r) !important}
 

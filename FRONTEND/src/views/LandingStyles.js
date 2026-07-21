@@ -1212,10 +1212,51 @@ export const landingCSS = `
 .lcard:hover .lcard-src{border-color:rgba(0,0,0,0.1);background:rgba(17,17,17,0.05)}
 .lcard-src-logo{width:16px;height:16px;object-fit:contain;flex-shrink:0;opacity:0.7;transition:opacity 0.3s ease}
 .lcard:hover .lcard-src-logo{opacity:1}
-.lcard-tier{font-family:'Inter',sans-serif;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:1px;padding:5px 10px;border-radius:6px}
-.tier-pledge{color:var(--g);background:rgba(20,92,20,.06);border:1px solid rgba(20,92,20,.15)}
+.lcard-tier{font-family:'Inter',sans-serif;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:1px;padding:5px 10px;border-radius:6px;display:inline-flex;align-items:center;white-space:nowrap}
+.tier-pledge{color:#145C14;background:rgba(20,92,20,.06);border:1px solid rgba(20,92,20,.15)}
 .tier-stake{color:#B45309;background:rgba(180,83,9,.06);border:1px solid rgba(180,83,9,.15)}
-.tier-allin{color:var(--r);background:rgba(92,20,20,.05);border:1px solid rgba(92,20,20,.12)}
+.tier-allin{color:#4338CA;background:rgba(67,56,202,.06);border:1px solid rgba(67,56,202,.18)}
+
+.ltier-legend-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: #FFFFFF;
+    border: 1px solid #E2E8F0;
+    border-radius: 10px;
+    padding: 12px 20px;
+    margin-bottom: 24px;
+    gap: 16px;
+    flex-wrap: wrap;
+}
+.ltier-legend-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+.ltier-legend-desc {
+    font-family: 'Inter', sans-serif;
+    font-size: 12px;
+    color: #475569;
+    font-weight: 500;
+}
+.ltier-legend-divider {
+    width: 1px;
+    height: 18px;
+    background: #E2E8F0;
+}
+@media (max-width: 900px) {
+    .ltier-legend-bar {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 12px;
+        padding: 14px 16px;
+    }
+    .ltier-legend-divider {
+        display: none;
+    }
+}
 .lcard-title{font-family:'Inter Tight',sans-serif;font-size:19px;font-weight:600;color:var(--t1);margin-bottom:6px;letter-spacing:-.3px}
 .lcard-target{font-size:13px;color:var(--t2);margin-bottom:24px;line-height:1.4}
 .lcard-row{display:flex;justify-content:space-between;font-size:12px;padding:8px 0;border-bottom:1px solid rgba(229,229,229,.5)}

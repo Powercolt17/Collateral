@@ -2906,7 +2906,7 @@ export const landingCSS = `
     grid-template-columns: 0.42fr 0.58fr;
     gap: 48px;
     padding: 40px 0;
-    align-items: start;
+    align-items: center;
 }
 .ltypes-left {
     position: relative;
@@ -3003,8 +3003,9 @@ export const landingCSS = `
     border-radius: 4px;
 }
 .ltype-stat-pill.secondary {
-    color: #7A1220;
-    border-color: rgba(122, 18, 32, 0.15);
+    color: #7A1220 !important;
+    background: rgba(122, 18, 32, 0.06) !important;
+    border-color: rgba(122, 18, 32, 0.18) !important;
 }
 .ltype-title-new {
     font-family: 'Plus Jakarta Sans', sans-serif;

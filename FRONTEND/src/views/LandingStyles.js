@@ -35,22 +35,45 @@ export const landingCSS = `
 .ln{position:fixed;top:32px;left:0;right:0;z-index:50;background:rgba(250,250,250,0.85);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-bottom:1px solid rgba(0,0,0,0.04);opacity:0;transition:top 0.4s cubic-bezier(0.16, 1, 0.3, 1), background 0.4s ease, border-color 0.4s ease, box-shadow 0.4s ease, backdrop-filter 0.4s ease}
 .ln.nav-scrolled{top:0px !important;background:rgba(255,255,255,0.25) !important;backdrop-filter:blur(18px) saturate(180%) !important;-webkit-backdrop-filter:blur(18px) saturate(180%) !important;border-bottom-color:rgba(229,229,229,0.35) !important;box-shadow:0 1px 3px rgba(0,0,0,0.02), 0 8px 32px rgba(0,0,0,0.03)}
 .ln-in{max-width:none;width:100%;padding:0 48px;height:72px;display:flex;justify-content:space-between;align-items:center}
-.ln-brand{font-family:'Inter Tight','Inter',sans-serif;font-size:16px;font-weight:800;letter-spacing:3.5px;color:var(--t1);text-decoration:none;display:inline-flex;align-items:center;gap:14px;text-transform:uppercase}
-.logo-wordmark, .logo-wordmark * {
-    font-family:'Inter Tight','Inter',sans-serif !important;
-    font-weight:800 !important;
-    font-style:normal !important;
-    text-transform:uppercase !important;
-    letter-spacing:3.5px !important;
-}
+.ln-brand{font-family:'Inter Tight',sans-serif;font-size:16px;font-weight:800;letter-spacing:3.5px;color:var(--t1);text-decoration:none;display:inline-flex;align-items:center;gap:14px}
+.ln-logo{width:32px;height:32px;color:var(--r);fill:currentColor;flex-shrink:0}
+.ln-cta{background:var(--r) !important;color:#fff !important;font-size:11px;font-weight:600;letter-spacing:.8px;text-transform:uppercase;padding:12px 24px;border:none;cursor:pointer;transition:all .3s cubic-bezier(.16, 1, 0.3, 1)}
 
-/* ═══ HERO BASE & TWO-COLUMN LAYOUT WITH FANNED CARD DECK ═══ */
+/* Entrance Keyframes for Nav & Promo */
+@keyframes promoDown {
+  from { opacity: 0; transform: translateY(-32px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes navDown {
+  from { opacity: 0; transform: translateY(-12px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.lp.v .lpromo-bar { animation: promoDown 0.6s cubic-bezier(0.16, 1, 0.3, 1) both; }
+.lp.v .ln { animation: navDown 0.8s cubic-bezier(0.16, 1, 0.3, 1) both; animation-delay: 100ms; }
+.ln-cta:hover{background:var(--rh) !important;transform:scale(1.02)}
+.ln-cta::after{content:'→';opacity:0;transform:translateX(-6px);transition:all .25s cubic-bezier(.16, 1, 0.3, 1);display:inline-block;width:0;margin-left:0}
+.ln-cta:hover::after{opacity:1;transform:translateX(0);width:auto;margin-left:8px}
+.ch-hamburger { width: 40px; height: 40px; display: flex; align-items: center; justify-content: center; background: transparent; border: 1px solid transparent; cursor: pointer; position: relative; transition: border-color 0.2s, background 0.2s; flex-shrink: 0; margin-left: 16px; }
+.ch-hamburger:hover { border-color: #e5e5e5; background: #fafafa; }
+.ch-hamburger-lines { width: 18px; height: 14px; display: flex; flex-direction: column; justify-content: space-between; }
+.ch-hamburger-lines span { display: block; width: 100%; height: 1.5px; background: #333; transition: transform 0.3s ease, opacity 0.3s ease, width 0.3s ease; transform-origin: center; }
+.ch-hamburger-lines span:nth-child(2) { width: 12px; margin-left: auto; }
+
+/* Shared */
+.lw{max-width:1080px;margin:0 auto;padding:0 24px;position:relative;z-index:1}
+.lhr{height:1px;background:var(--d);width:100%}
+.lmono{font-family:'Inter',sans-serif;font-size:14px;font-weight:600;text-transform:uppercase;letter-spacing:1.5px;color:var(--t2)}
+.lred-dash{display:flex;align-items:center;gap:12px;margin-bottom:12px}
+.lred-dash::before{content:'';width:28px;height:2px;background:var(--r)}
+[data-r]{opacity:0;transition:opacity .7s cubic-bezier(.16,1,.3,1)}
+[data-r].v{opacity:1}
+
+/* ═══ HERO BASE & STATIC LEDGER GRID LAYER ═══ */
 .lhero-section {
     position: relative;
-    overflow: visible !important;
-    padding-top: 96px !important;
-    padding-bottom: 96px !important;
-    padding-right: 96px !important;
+    overflow: hidden;
+    padding-top: 140px;
+    padding-bottom: 50px;
     background: #FAF9F7 !important;
 }
 
@@ -95,141 +118,6 @@ export const landingCSS = `
     right: 0;
     height: 1.5px;
     background: rgba(20, 18, 31, 0.22);
-}
-
-.lhero-grid-two-col {
-    display: grid;
-    grid-template-columns: 0.52fr 0.48fr;
-    gap: 48px;
-    align-items: center;
-    position: relative;
-    z-index: 2;
-    overflow: visible !important;
-}
-
-.lhero-left-col {
-    display: flex;
-    flex-direction: column;
-    z-index: 5;
-}
-
-.lhero-right-deck {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    position: relative;
-    width: 100%;
-    overflow: visible !important;
-    outline: none;
-}
-
-.lhero-deck-viewport {
-    position: relative;
-    width: 100%;
-    max-width: 480px;
-    height: 440px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    overflow: visible !important;
-}
-
-.lhero-deck-stage {
-    position: relative;
-    width: 315px;
-    height: 420px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    overflow: visible !important;
-}
-
-.lhero-deck-card {
-    position: absolute !important;
-    width: 315px !important;
-    height: 420px !important;
-    aspect-ratio: 3 / 4 !important;
-    top: 0;
-    transition: transform 450ms cubic-bezier(0.4, 0, 0.2, 1), opacity 450ms cubic-bezier(0.4, 0, 0.2, 1) !important;
-    transform-origin: bottom center !important;
-    border-radius: 14px !important;
-    box-shadow: 0 12px 32px rgba(20, 18, 31, 0.10) !important;
-    backdrop-filter: none !important;
-    -webkit-backdrop-filter: none !important;
-}
-
-.lhero-deck-card.is-center {
-    background-color: #FFFFFF !important;
-    color: #14121F !important;
-    transform: translateX(0) rotate(0deg) scale(1.00) !important;
-    z-index: 3 !important;
-    opacity: 1 !important;
-    pointer-events: auto !important;
-}
-
-.lhero-deck-card.is-left {
-    background-color: #3B2FD9 !important;
-    color: #FFFFFF !important;
-    transform: translateX(-52%) rotate(-8deg) scale(0.92) !important;
-    z-index: 1 !important;
-    opacity: 0.88 !important;
-    pointer-events: none !important;
-}
-
-.lhero-deck-card.is-right {
-    background-color: #D97706 !important;
-    color: #14121F !important;
-    transform: translateX(52%) rotate(8deg) scale(0.92) !important;
-    z-index: 1 !important;
-    opacity: 0.88 !important;
-    pointer-events: none !important;
-}
-
-.lhero-deck-card.is-left * {
-    color: #FFFFFF !important;
-    border-color: rgba(255, 255, 255, 0.3) !important;
-}
-.lhero-deck-card.is-left .lc-val-green {
-    color: #4ADE80 !important;
-}
-
-.lhero-deck-nav {
-    display: flex;
-    gap: 12px;
-    margin-top: 16px;
-}
-
-.lhero-arrow-btn {
-    width: 48px;
-    height: 40px;
-    background: #FFFFFF !important;
-    border: 1px solid #CBD5E1 !important;
-    color: #14121F !important;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: all 0.2s ease;
-    border-radius: 4px;
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04);
-}
-
-.lhero-arrow-btn:hover {
-    border-color: #14121F !important;
-    background: #14121F !important;
-    color: #FFFFFF !important;
-    transform: translateY(-1px);
-}
-
-@media (max-width: 900px) {
-    .lhero-grid-two-col {
-        grid-template-columns: 1fr;
-        gap: 40px;
-    }
-    .lhero-right-deck {
-        margin-top: 24px;
-    }
 }
 .lhero-headline-wrap{margin-bottom:36px;position:relative;z-index:2}
 .lh1{font-family:'Plus Jakarta Sans',sans-serif;font-weight:900;font-size:clamp(44px,7.5vw,98px);line-height:0.98;letter-spacing:-2.5px;color:var(--t1);text-transform:uppercase;margin:0 0 16px}
@@ -1598,8 +1486,6 @@ export const landingCSS = `
 .l-live-rivalry-preview {
     margin-top: 24px;
     padding-top: 24px;
-    padding-left: 0 !important;
-    margin-left: 0 !important;
     border-top: 0.5px solid rgba(0, 0, 0, 0.12);
     cursor: pointer;
     max-width: 520px;
@@ -1616,8 +1502,6 @@ export const landingCSS = `
     align-items: center;
     gap: 6px;
     margin-bottom: 8px;
-    margin-left: 0 !important;
-    padding-left: 0 !important;
     text-transform: uppercase;
 }
 .l-lr-dot {
@@ -1639,7 +1523,6 @@ export const landingCSS = `
     border: 1px solid rgba(0, 0, 0, 0.04);
     border-radius: 6px;
     padding: 10px 14px;
-    margin-left: 0 !important;
     width: fit-content;
     white-space: nowrap !important;
     transition: background 0.25s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.25s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.25s cubic-bezier(0.16, 1, 0.3, 1), transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);

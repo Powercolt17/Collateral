@@ -419,9 +419,8 @@ export function renderLanding() {
 
                         <!-- DESKTOP FLOW (hidden <900px) -->
                         <div class="lflow-desktop">
-                            <!-- ROW 1: the four nodes + three outcomes, connected by arrows -->
+                            <!-- NODE ROW — CSS Grid handles horizontal containment -->
                             <div class="lflow-row">
-
                                 <!-- NODE: DEPOSIT IN -->
                                 <div class="lflow-node">
                                     <div class="lflow-node-hdr">INPUT</div>
@@ -430,9 +429,11 @@ export function renderLanding() {
                                     <div class="lflow-node-sub">Stripe Connect Escrow</div>
                                 </div>
 
-                                <div class="lflow-arrow">→</div>
+                                <div class="lflow-arrow">
+                                    <svg width="32" height="12" viewBox="0 0 32 12"><path d="M0 6 H26 L22 2 M26 6 L22 10" stroke="#0F172A" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                                </div>
 
-                                <!-- NODE: ESCROW VAULT (emphasized) -->
+                                <!-- NODE: ESCROW VAULT -->
                                 <div class="lflow-node lflow-node-vault" id="lflow-vault-node">
                                     <div class="lflow-node-hdr">CUSTODY</div>
                                     <div class="lflow-node-title">ESCROW VAULT</div>
@@ -440,7 +441,9 @@ export function renderLanding() {
                                     <div class="lflow-node-sub">Custodial Escrow via Stripe Connect</div>
                                 </div>
 
-                                <div class="lflow-arrow">→</div>
+                                <div class="lflow-arrow">
+                                    <svg width="32" height="12" viewBox="0 0 32 12"><path d="M0 6 H26 L22 2 M26 6 L22 10" stroke="#0F172A" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                                </div>
 
                                 <!-- NODE: ORACLE API -->
                                 <div class="lflow-node">
@@ -450,13 +453,27 @@ export function renderLanding() {
                                     <div class="lflow-node-sub">Stripe • Shopify • X • YouTube</div>
                                 </div>
 
-                                <div class="lflow-arrow lflow-arrow-split">⟶</div>
+                                <!-- SPLIT ARROWS — three proportionally weighted paths fanning to outcomes -->
+                                <div class="lflow-split-arrows">
+                                    <svg width="36" height="100%" viewBox="0 0 36 120" preserveAspectRatio="none">
+                                        <defs>
+                                            <marker id="ah-green" viewBox="0 0 8 8" refX="6" refY="4" markerWidth="5" markerHeight="5" orient="auto"><path d="M0 0 L8 4 L0 8z" fill="#145C14"/></marker>
+                                            <marker id="ah-crim" viewBox="0 0 8 8" refX="6" refY="4" markerWidth="5" markerHeight="5" orient="auto"><path d="M0 0 L8 4 L0 8z" fill="#7A1220"/></marker>
+                                            <marker id="ah-crim-sm" viewBox="0 0 8 8" refX="6" refY="4" markerWidth="4" markerHeight="4" orient="auto"><path d="M0 0 L8 4 L0 8z" fill="#7A1220"/></marker>
+                                        </defs>
+                                        <!-- Win path (thick green) -->
+                                        <path d="M0 60 C12 60, 18 20, 36 20" stroke="#145C14" stroke-width="5" fill="none" stroke-linecap="round" marker-end="url(#ah-green)"/>
+                                        <!-- Forfeit path (medium crimson) -->
+                                        <path d="M0 60 H36" stroke="#7A1220" stroke-width="2.5" fill="none" stroke-linecap="round" marker-end="url(#ah-crim)"/>
+                                        <!-- Burn path (hairline crimson dashed) -->
+                                        <path d="M0 60 C12 60, 18 100, 36 100" stroke="#7A1220" stroke-width="1" fill="none" stroke-linecap="round" stroke-dasharray="3 2" marker-end="url(#ah-crim-sm)"/>
+                                    </svg>
+                                </div>
 
-                                <!-- THREE TERMINAL OUTCOMES (stacked vertically) -->
+                                <!-- THREE TERMINAL OUTCOMES -->
                                 <div class="lflow-outcomes">
-                                    <!-- WIN PATH -->
                                     <div class="lflow-outcome is-win">
-                                        <div class="lflow-outcome-indicator" style="background:#145C14;height:5px;"></div>
+                                        <div class="lflow-outcome-indicator" style="background:#145C14;width:5px;"></div>
                                         <div class="lflow-outcome-body">
                                             <div class="lflow-out-hdr"><span class="lflow-dot" style="background:#145C14;"></span>WIN PATH (96.2%)</div>
                                             <div class="lflow-out-title">RETURNED TO CREATOR</div>
@@ -464,10 +481,8 @@ export function renderLanding() {
                                             <div class="lflow-out-desc">100% Principal + Matching Yield</div>
                                         </div>
                                     </div>
-
-                                    <!-- FORFEIT PATH -->
                                     <div class="lflow-outcome is-forfeit" id="lflow-forfeit-node">
-                                        <div class="lflow-outcome-indicator" style="background:#7A1220;height:3px;"></div>
+                                        <div class="lflow-outcome-indicator" style="background:#7A1220;width:3px;"></div>
                                         <div class="lflow-outcome-body">
                                             <div class="lflow-out-hdr"><span class="lflow-dot" style="background:#7A1220;"></span>FORFEITED (3.8%)</div>
                                             <div class="lflow-out-title">FORFEITED DEPOSITS</div>
@@ -475,10 +490,8 @@ export function renderLanding() {
                                             <div class="lflow-out-desc">Feeds Winner Match Pool</div>
                                         </div>
                                     </div>
-
-                                    <!-- BURN PATH -->
                                     <div class="lflow-outcome is-burn">
-                                        <div class="lflow-outcome-indicator" style="background:#7A1220;height:1.5px;"></div>
+                                        <div class="lflow-outcome-indicator" style="background:#7A1220;width:1px;"></div>
                                         <div class="lflow-outcome-body">
                                             <div class="lflow-out-hdr"><span class="lflow-dot" style="background:#7A1220;"></span>PROTOCOL FEE (0.5%)</div>
                                             <div class="lflow-out-title">CLTR BURNED</div>
@@ -489,11 +502,18 @@ export function renderLanding() {
                                 </div>
                             </div>
 
-                            <!-- ROW 2: The recirculating loop label -->
-                            <div class="lflow-loop-row">
-                                <div class="lflow-loop-line-left"></div>
+                            <!-- RECIRCULATING LOOP — routed SVG path below node row -->
+                            <div class="lflow-loop-wrap">
+                                <svg class="lflow-loop-svg" viewBox="0 0 1000 60" preserveAspectRatio="none">
+                                    <defs>
+                                        <marker id="ah-loop" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+                                            <path d="M0 1 L8 5 L0 9z" fill="#7A1220"/>
+                                        </marker>
+                                    </defs>
+                                    <!-- Path: exits from ~85% (forfeit card), routes down, runs left, turns up to ~22% (vault) -->
+                                    <path class="lflow-loop-path" d="M 850 0 C 850 28, 850 42, 820 42 L 220 42 C 190 42, 190 28, 190 0" stroke="#7A1220" stroke-width="2.2" fill="none" stroke-dasharray="6 4" stroke-linecap="round" marker-end="url(#ah-loop)"/>
+                                </svg>
                                 <div class="lflow-loop-badge">↺ FORFEITED DEPOSITS RE-CIRCULATE TO ESCROW VAULT</div>
-                                <div class="lflow-loop-line-right"></div>
                             </div>
                         </div>
 

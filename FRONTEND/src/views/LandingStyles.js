@@ -567,7 +567,7 @@ export const landingCSS = `
     background: #FFFFFF;
     border: 1px solid #E2E8F0;
     border-radius: 16px;
-    padding: 32px 28px;
+    padding: 20px 28px 16px;
     box-shadow: none;
     position: relative;
 }
@@ -579,7 +579,7 @@ export const landingCSS = `
 
 .lflow-row {
     display: grid;
-    grid-template-columns: 1fr auto 1.1fr auto 1fr auto 1.2fr;
+    grid-template-columns: 1fr auto 1.15fr auto 1fr auto 1.15fr;
     gap: 0;
     align-items: center;
 }
@@ -588,7 +588,7 @@ export const landingCSS = `
     background: #FAF9F7;
     border: 1px solid #E2E8F0;
     border-radius: 10px;
-    padding: 16px 16px 14px;
+    padding: 14px 14px 12px;
     box-sizing: border-box;
 }
 
@@ -632,23 +632,34 @@ export const landingCSS = `
 
 /* ARROWS BETWEEN NODES */
 .lflow-arrow {
-    font-size: 22px;
-    color: #0F172A;
-    text-align: center;
-    padding: 0 6px;
-    font-weight: 300;
-    line-height: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 4px;
     user-select: none;
 }
-.lflow-arrow-split {
-    color: #64748B;
+.lflow-arrow svg {
+    display: block;
+}
+
+/* SPLIT ARROWS — fan from single origin to three outcome cards */
+.lflow-split-arrows {
+    display: flex;
+    align-items: stretch;
+    justify-content: center;
+    padding: 0 2px;
+}
+.lflow-split-arrows svg {
+    display: block;
+    width: 36px;
+    height: 100%;
 }
 
 /* THREE TERMINAL OUTCOMES (stacked vertically inside the grid) */
 .lflow-outcomes {
     display: flex;
     flex-direction: column;
-    gap: 8px;
+    gap: 6px;
 }
 
 .lflow-outcome {
@@ -661,13 +672,12 @@ export const landingCSS = `
 }
 
 .lflow-outcome-indicator {
-    width: 5px;
     flex-shrink: 0;
     border-radius: 8px 0 0 8px;
 }
 
 .lflow-outcome-body {
-    padding: 8px 12px 7px;
+    padding: 7px 11px 6px;
     flex: 1;
     min-width: 0;
 }
@@ -719,32 +729,32 @@ export const landingCSS = `
     margin-top: 1px;
 }
 
-/* LOOP ROW — sits beneath the flow, visually connecting forfeit → vault */
-.lflow-loop-row {
-    display: flex;
-    align-items: center;
-    gap: 0;
-    margin-top: 20px;
-    padding: 0 4px;
+/* RECIRCULATING LOOP — routed SVG connector beneath the node row */
+.lflow-loop-wrap {
+    position: relative;
+    width: 100%;
+    height: 56px;
+    margin-top: 4px;
 }
 
-.lflow-loop-line-left {
-    flex: 1;
-    height: 2px;
-    background: #7A1220;
-    border-radius: 2px;
-    opacity: 0.4;
+.lflow-loop-svg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 56px;
+    pointer-events: none;
 }
 
-.lflow-loop-line-right {
-    flex: 1;
-    height: 2px;
-    background: #7A1220;
-    border-radius: 2px;
-    opacity: 0.4;
+.lflow-loop-path {
+    /* animated via CSS if desired */
 }
 
 .lflow-loop-badge {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
     font-family: 'JetBrains Mono', monospace;
     font-size: 10px;
     font-weight: 700;
@@ -754,7 +764,7 @@ export const landingCSS = `
     padding: 5px 16px;
     border-radius: 100px;
     white-space: nowrap;
-    flex-shrink: 0;
+    z-index: 2;
 }
 
 /* SUMMARY PARAGRAPH */

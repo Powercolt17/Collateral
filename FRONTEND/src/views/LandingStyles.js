@@ -134,7 +134,7 @@ export const landingCSS = `
 }
 
 .lfan-highlight {
-    color: #0F172A;
+    color: var(--r) !important;
 }
 
 .lfan-sub {

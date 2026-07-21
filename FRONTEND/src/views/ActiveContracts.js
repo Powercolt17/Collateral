@@ -1531,8 +1531,6 @@ export function renderActiveContracts() {
                             <span style="font-weight: 700; color: #10b981; font-family: 'JetBrains Mono', monospace; font-size: 9px; letter-spacing: 0.5px;">LIVE</span>
                             <span style="color: #ddd;">•</span>
                             <span style="font-family: 'JetBrains Mono', monospace; font-size: 9px; color: #8a8984;" id="live-time-ago">Updated just now</span>
-                            <span style="color: #ddd;">•</span>
-                            <span style="font-family: 'JetBrains Mono', monospace; font-size: 9px; color: #10b981; font-weight: 700;">🟢 OPERATIONAL</span>
                         </div>
                     </div>
                     <div class="eq-search-wrap" style="margin-bottom: 0;">

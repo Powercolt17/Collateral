@@ -38,7 +38,6 @@ export function renderLanding() {
             <div class="lhero-section">
                 <!-- STATIC LEDGER GRID BACKGROUND LAYER -->
                 <div class="lhero-ledger-grid" aria-hidden="true"></div>
-            </div>
 
                 <div class="lw">
                     <div class="lhero-main-wrap">

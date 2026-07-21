@@ -119,6 +119,74 @@ export function renderLanding() {
                 </div>
             </div>
 
+            <!-- GLOBAL PROTOCOL STATISTICS -->
+            <div class="l-global-stats-bar animate-fade-in-up delay-4">
+                <div class="lw">
+                    <!-- Visually hidden list of all metrics for screen readers -->
+                    <div style="position: absolute !important; width: 1px !important; height: 1px !important; padding: 0 !important; margin: -1px !important; overflow: hidden !important; clip: rect(0,0,0,0) !important; border: 0 !important;">
+                        Protocol metrics: Capital locked: $8.7M; Total commitments: 12,483; Settlement success: 96.2%; Execution identities: 3,442; Active contracts: 1,206; Average contract size: $6,940; Median settlement time: 1.4 days; Counterparties: 812.
+                    </div>
+                    <div class="l-stats-bar-grid" aria-live="off">
+                        <a href="/market" class="l-stat-bar-item" data-cell-index="0" aria-label="See more: capital locked">
+                            <div class="l-stat-bar-wrapper">
+                                <div class="l-stat-bar-content current">
+                                    <span class="l-stat-bar-val" id="ls-locked">$8.7M</span>
+                                    <span class="l-stat-bar-lbl">Capital Locked</span>
+                                </div>
+                            </div>
+                            <div class="l-stat-bar-overlay">
+                                SEE MORE <span class="arrow">→</span>
+                            </div>
+                            <div class="l-stat-bar-static-cta">
+                                SEE MORE →
+                            </div>
+                        </a>
+                        <a href="/market" class="l-stat-bar-item" data-cell-index="1" aria-label="See more: total commitments">
+                            <div class="l-stat-bar-wrapper">
+                                <div class="l-stat-bar-content current">
+                                    <span class="l-stat-bar-val" id="ls-commitments">12,483</span>
+                                    <span class="l-stat-bar-lbl">Total Commitments</span>
+                                </div>
+                            </div>
+                            <div class="l-stat-bar-overlay">
+                                SEE MORE <span class="arrow">→</span>
+                            </div>
+                            <div class="l-stat-bar-static-cta">
+                                SEE MORE →
+                            </div>
+                        </a>
+                        <a href="/market" class="l-stat-bar-item lhide-mobile" data-cell-index="2" aria-label="See more: settlement success">
+                            <div class="l-stat-bar-wrapper">
+                                <div class="l-stat-bar-content current">
+                                    <span class="l-stat-bar-val" id="ls-success">96.2%</span>
+                                    <span class="l-stat-bar-lbl">Settlement Success</span>
+                                </div>
+                            </div>
+                            <div class="l-stat-bar-overlay">
+                                SEE MORE <span class="arrow">→</span>
+                            </div>
+                            <div class="l-stat-bar-static-cta">
+                                SEE MORE →
+                            </div>
+                        </a>
+                        <a href="/market" class="l-stat-bar-item lhide-mobile" data-cell-index="3" aria-label="See more: execution identities">
+                            <div class="l-stat-bar-wrapper">
+                                <div class="l-stat-bar-content current">
+                                    <span class="l-stat-bar-val" id="ls-identities">3,442</span>
+                                    <span class="l-stat-bar-lbl">Execution Identities</span>
+                                </div>
+                            </div>
+                            <div class="l-stat-bar-overlay">
+                                SEE MORE <span class="arrow">→</span>
+                            </div>
+                            <div class="l-stat-bar-static-cta">
+                                SEE MORE →
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
             <!-- ═══ FEATURED LIVE EXECUTION SHOWCASE ═══ -->
             <div class="lfeatured-live-section" data-r>
                 <div class="lw">
@@ -207,74 +275,6 @@ export function renderLanding() {
                                 </div>
                             </div>
                         </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- GLOBAL PROTOCOL STATISTICS -->
-            <div class="l-global-stats-bar animate-fade-in-up delay-4">
-                <div class="lw">
-                    <!-- Visually hidden list of all metrics for screen readers -->
-                    <div style="position: absolute !important; width: 1px !important; height: 1px !important; padding: 0 !important; margin: -1px !important; overflow: hidden !important; clip: rect(0,0,0,0) !important; border: 0 !important;">
-                        Protocol metrics: Capital locked: $8.7M; Total commitments: 12,483; Settlement success: 96.2%; Execution identities: 3,442; Active contracts: 1,206; Average contract size: $6,940; Median settlement time: 1.4 days; Counterparties: 812.
-                    </div>
-                    <div class="l-stats-bar-grid" aria-live="off">
-                        <a href="/market" class="l-stat-bar-item" data-cell-index="0" aria-label="See more: capital locked">
-                            <div class="l-stat-bar-wrapper">
-                                <div class="l-stat-bar-content current">
-                                    <span class="l-stat-bar-val" id="ls-locked">$8.7M</span>
-                                    <span class="l-stat-bar-lbl">Capital Locked</span>
-                                </div>
-                            </div>
-                            <div class="l-stat-bar-overlay">
-                                SEE MORE <span class="arrow">→</span>
-                            </div>
-                            <div class="l-stat-bar-static-cta">
-                                SEE MORE →
-                            </div>
-                        </a>
-                        <a href="/market" class="l-stat-bar-item" data-cell-index="1" aria-label="See more: total commitments">
-                            <div class="l-stat-bar-wrapper">
-                                <div class="l-stat-bar-content current">
-                                    <span class="l-stat-bar-val" id="ls-commitments">12,483</span>
-                                    <span class="l-stat-bar-lbl">Total Commitments</span>
-                                </div>
-                            </div>
-                            <div class="l-stat-bar-overlay">
-                                SEE MORE <span class="arrow">→</span>
-                            </div>
-                            <div class="l-stat-bar-static-cta">
-                                SEE MORE →
-                            </div>
-                        </a>
-                        <a href="/market" class="l-stat-bar-item lhide-mobile" data-cell-index="2" aria-label="See more: settlement success">
-                            <div class="l-stat-bar-wrapper">
-                                <div class="l-stat-bar-content current">
-                                    <span class="l-stat-bar-val" id="ls-success">96.2%</span>
-                                    <span class="l-stat-bar-lbl">Settlement Success</span>
-                                </div>
-                            </div>
-                            <div class="l-stat-bar-overlay">
-                                SEE MORE <span class="arrow">→</span>
-                            </div>
-                            <div class="l-stat-bar-static-cta">
-                                SEE MORE →
-                            </div>
-                        </a>
-                        <a href="/market" class="l-stat-bar-item lhide-mobile" data-cell-index="3" aria-label="See more: execution identities">
-                            <div class="l-stat-bar-wrapper">
-                                <div class="l-stat-bar-content current">
-                                    <span class="l-stat-bar-val" id="ls-identities">3,442</span>
-                                    <span class="l-stat-bar-lbl">Execution Identities</span>
-                                </div>
-                            </div>
-                            <div class="l-stat-bar-overlay">
-                                SEE MORE <span class="arrow">→</span>
-                            </div>
-                            <div class="l-stat-bar-static-cta">
-                                SEE MORE →
-                            </div>
-                        </a>
                     </div>
                 </div>
             </div>

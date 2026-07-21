@@ -68,17 +68,40 @@ export const landingCSS = `
 [data-r]{opacity:0;transition:opacity .7s cubic-bezier(.16,1,.3,1)}
 [data-r].v{opacity:1}
 
-/* ═══ HERO BASE ═══ */
+/* ═══ HERO BASE & TEXTURE LAYER ═══ */
 .lhero-section {
     position: relative;
     overflow: hidden;
-    padding-top: 140px;
+    padding-top: 140px !important;
     padding-bottom: 50px;
     background: #FAF9F7 !important;
 }
+
+/* Subtle 2.5% Paper Grain Noise Overlay */
+.lhero-section::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    pointer-events: none !important;
+    z-index: 0 !important;
+    opacity: 0.025;
+    mix-blend-mode: multiply;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+}
+
+/* Soft Edge Vignette Overlay */
+.lhero-section::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    pointer-events: none !important;
+    z-index: 0 !important;
+    background: radial-gradient(ellipse at center, transparent 55%, rgba(20, 18, 31, 0.04) 100%);
+}
+
 .lhero-headline-wrap{margin-bottom:36px;position:relative;z-index:2}
-.lh1{font-family:'Plus Jakarta Sans',sans-serif;font-weight:900;font-size:clamp(44px,7.5vw,98px);line-height:0.98;letter-spacing:-2.5px;color:var(--t1);text-transform:uppercase;margin:0 0 16px}
-.lh-gradient{color:var(--r);background:linear-gradient(135deg,#5C1414 0%,#8B1212 50%,#3D0D0D 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;display:inline-block}
+.lh1{font-family:'Plus Jakarta Sans',sans-serif;font-weight:900;font-size:clamp(3.5rem, 8vw, 7rem) !important;line-height:0.90 !important;letter-spacing:-0.025em !important;color:var(--t1);text-transform:uppercase;margin:0 0 16px}
+.lh-gradient{color:#7A1220 !important;background:none !important;-webkit-background-clip:initial !important;-webkit-text-fill-color:initial !important;display:inline-block}
 .lh-badge{display:inline-flex;align-items:center;gap:8px;background:rgba(92,20,20,0.04);border:1px solid rgba(92,20,20,0.12);padding:6px 14px;border-radius:100px;font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--r);margin-bottom:20px;box-shadow:0 2px 8px rgba(92,20,20,0.02)}
 .lh-badge-dot{width:6px;height:6px;background:var(--g);border-radius:50%;display:inline-block;box-shadow:0 0 8px rgba(20,92,20,0.8);animation:badgeDotPulse 1.8s ease-in-out infinite}
 @keyframes badgeDotPulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:0.4;transform:scale(0.85)}}
@@ -304,13 +327,13 @@ export const landingCSS = `
     animation: none !important;
 }
 .lbtn-r {
-    background: var(--r) !important;
+    background: #7A1220 !important;
     color: #fff !important;
-    border: 1.5px solid var(--r) !important;
+    border: 1.5px solid #7A1220 !important;
 }
 .lbtn-r:hover {
-    background: var(--rh) !important;
-    border-color: var(--rh) !important;
+    background: #640E1A !important;
+    border-color: #640E1A !important;
     box-shadow: none !important;
     transform: none !important;
 }
@@ -1464,7 +1487,7 @@ export const landingCSS = `
 .l-lr-dot {
     width: 4px;
     height: 4px;
-    background: var(--r);
+    background: #7A1220 !important;
     border-radius: 50%;
     display: inline-block;
 }
@@ -1486,8 +1509,8 @@ export const landingCSS = `
 }
 .l-live-rivalry-preview:hover .l-lr-ticker {
     background: #ffffff;
-    border-color: rgba(92, 20, 20, 0.25);
-    box-shadow: 0 6px 16px rgba(92, 20, 20, 0.06);
+    border-color: rgba(20, 18, 31, 0.25);
+    box-shadow: 0 6px 16px rgba(20, 18, 31, 0.06);
     transform: translateY(-2px);
 }
 .l-lr-token {
@@ -1504,7 +1527,7 @@ export const landingCSS = `
     color: #145c14;
 }
 .l-lr-num.lag {
-    color: var(--r);
+    color: #14121F !important;
 }
 .l-lr-divider {
     color: rgba(17, 17, 17, 0.08);
@@ -1517,14 +1540,14 @@ export const landingCSS = `
 }
 .l-lr-action-badge {
     font-weight: 800;
-    color: var(--r);
+    color: #14121F !important;
     font-size: 10.5px;
     letter-spacing: 0.5px;
     white-space: nowrap !important;
     transition: color 0.2s ease;
 }
 .l-live-rivalry-preview:hover .l-lr-action-badge {
-    color: #000000;
+    color: #14121F !important;
 }
 .l-live-rivalry-preview:hover .l-lr-action-badge span {
     transform: translateX(3px);

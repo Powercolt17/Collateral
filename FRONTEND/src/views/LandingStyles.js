@@ -87,18 +87,16 @@ export const landingCSS = `
     height: 100%;
     pointer-events: none !important;
     z-index: 0 !important;
-    background-image: repeating-linear-gradient(
-        to right,
-        rgba(20, 18, 31, 0.025) 0 1px,
-        transparent 1px 96px
-    );
+    background-image: 
+        repeating-linear-gradient(to right, rgba(20, 18, 31, 0.12) 0 1px, transparent 1px 72px),
+        repeating-linear-gradient(to bottom, rgba(20, 18, 31, 0.12) 0 1px, transparent 1px 72px);
     -webkit-mask-image: 
-        linear-gradient(to right, transparent 0%, transparent 42%, black 58%, black 100%),
-        linear-gradient(to right, transparent 0px, black 80px, black calc(100% - 80px), transparent 100%);
+        linear-gradient(to right, transparent 0%, transparent 15%, black 35%, black calc(100% - 60px), transparent 100%),
+        linear-gradient(to bottom, transparent 0px, black 40px, black calc(100% - 40px), transparent 100%);
     -webkit-mask-composite: source-in;
     mask-image: 
-        linear-gradient(to right, transparent 0%, transparent 42%, black 58%, black 100%),
-        linear-gradient(to right, transparent 0px, black 80px, black calc(100% - 80px), transparent 100%);
+        linear-gradient(to right, transparent 0%, transparent 15%, black 35%, black calc(100% - 60px), transparent 100%),
+        linear-gradient(to bottom, transparent 0px, black 40px, black calc(100% - 40px), transparent 100%);
     mask-composite: intersect;
 }
 
@@ -108,8 +106,8 @@ export const landingCSS = `
     top: 120px;
     left: 0;
     right: 0;
-    height: 1px;
-    background: rgba(20, 18, 31, 0.025);
+    height: 1.5px;
+    background: rgba(20, 18, 31, 0.22);
 }
 
 .lhero-ledger-grid::after {
@@ -118,8 +116,8 @@ export const landingCSS = `
     bottom: 120px;
     left: 0;
     right: 0;
-    height: 1px;
-    background: rgba(20, 18, 31, 0.025);
+    height: 1.5px;
+    background: rgba(20, 18, 31, 0.22);
 }
 .lhero-headline-wrap{margin-bottom:36px;position:relative;z-index:2}
 .lh1{font-family:'Plus Jakarta Sans',sans-serif;font-weight:900;font-size:clamp(44px,7.5vw,98px);line-height:0.98;letter-spacing:-2.5px;color:var(--t1);text-transform:uppercase;margin:0 0 16px}

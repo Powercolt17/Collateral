@@ -2915,17 +2915,27 @@ export const landingCSS = `
 }
 .ltypes-headline {
     font-family: 'Plus Jakarta Sans', sans-serif;
-    font-size: clamp(28px, 3.8vw, 42px);
-    font-weight: 800;
-    line-height: 1.12;
-    letter-spacing: -1.2px;
+    font-size: clamp(2.2rem, 3.6vw, 3.25rem);
+    font-weight: 900;
+    line-height: 0.98;
+    letter-spacing: -0.025em;
     color: #0F172A;
     margin: 16px 0 0;
     text-align: left;
+    text-transform: uppercase;
+    white-space: nowrap;
 }
-.ltypes-headline strong {
-    font-weight: 800;
-    color: #7A1220;
+@media (max-width: 600px) {
+    .ltypes-headline {
+        white-space: normal;
+    }
+}
+.ltypes-headline .lh-gradient {
+    color: #7A1220 !important;
+    background: none !important;
+    -webkit-background-clip: initial !important;
+    -webkit-text-fill-color: initial !important;
+    display: inline-block;
 }
 .ltypes-sub {
     font-size: 15px;

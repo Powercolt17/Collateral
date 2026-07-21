@@ -68,34 +68,53 @@ export const landingCSS = `
 [data-r]{opacity:0;transition:opacity .7s cubic-bezier(.16,1,.3,1)}
 [data-r].v{opacity:1}
 
-/* ═══ HERO ═══ */
-.lhero-section{position:relative;overflow:hidden;padding-top:140px;padding-bottom:50px;background:#FAF8F5}
-.lhero-bg-container {
+/* ═══ HERO BASE & STATIC LEDGER GRID LAYER ═══ */
+.lhero-section {
+    position: relative;
+    overflow: hidden;
+    padding-top: 140px;
+    padding-bottom: 50px;
+    background: #FAF9F7 !important;
+}
+
+.lhero-ledger-grid {
     position: absolute;
     inset: 0;
     pointer-events: none !important;
     z-index: 0 !important;
-    overflow: hidden;
+    background-image: repeating-linear-gradient(
+        to right,
+        rgba(20, 18, 31, 0.035) 0 1px,
+        transparent 1px 96px
+    );
     -webkit-mask-image: 
-        linear-gradient(to right, transparent 0%, transparent 15%, #000 40%, #000 calc(100% - 60px), transparent 100%),
-        linear-gradient(to bottom, transparent 0px, #000 50px, #000 calc(100% - 50px), transparent 100%);
+        linear-gradient(to right, transparent 0%, transparent 42%, #000 58%, #000 calc(100% - 80px), transparent 100%),
+        linear-gradient(to right, transparent 0px, #000 80px, #000 100%);
     -webkit-mask-composite: source-in;
     mask-image: 
-        linear-gradient(to right, transparent 0%, transparent 15%, #000 40%, #000 calc(100% - 60px), transparent 100%),
-        linear-gradient(to bottom, transparent 0px, #000 50px, #000 calc(100% - 50px), transparent 100%);
+        linear-gradient(to right, transparent 0%, transparent 42%, #000 58%, #000 calc(100% - 80px), transparent 100%),
+        linear-gradient(to right, transparent 0px, #000 80px, #000 100%);
     mask-composite: intersect;
 }
-.lhero-mesh-svg {
-    width: 100%;
-    height: 100%;
-    will-change: transform;
-    transition: transform 0.05s ease-out;
+
+.lhero-ledger-grid::before {
+    content: '';
+    position: absolute;
+    top: 120px;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: rgba(20, 18, 31, 0.035);
 }
-@media (prefers-reduced-motion: reduce) {
-    .lhero-mesh-svg {
-        transform: none !important;
-        transition: none !important;
-    }
+
+.lhero-ledger-grid::after {
+    content: '';
+    position: absolute;
+    bottom: 120px;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: rgba(20, 18, 31, 0.035);
 }
 .lhero-headline-wrap{margin-bottom:36px;position:relative;z-index:2}
 .lh1{font-family:'Plus Jakarta Sans',sans-serif;font-weight:900;font-size:clamp(44px,7.5vw,98px);line-height:0.98;letter-spacing:-2.5px;color:var(--t1);text-transform:uppercase;margin:0 0 16px}

@@ -125,7 +125,7 @@ export const landingCSS = `
   z-index:0;
 }
 .lhero-left > *{position:relative;z-index:1}
-.lhero-eyebrow{font-family:'Inter',sans-serif;font-size:11px;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:var(--t3);margin:0 0 18px}
+.lhero-eyebrow{font-family:'Inter',sans-serif;font-size:11px;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:var(--t3);margin:0 0 18px;border-left:2px solid var(--t3);padding-left:14px}
 
 /* ═══ PREVIEW CONTRACT CARD ═══ */
 @keyframes cardSheen {

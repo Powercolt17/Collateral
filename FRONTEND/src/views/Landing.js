@@ -187,7 +187,7 @@ export function renderLanding() {
                 </div>
             </div>
 
-            <!-- ═══ FANNED-DECK SHOWCASE WITH REAL COLLATERAL CONTRACT CARDS ═══ -->
+            <!-- ═══ FANNED-DECK SHOWCASE WITH COMPACT REAL COLLATERAL CONTRACT CARDS ═══ -->
             <div class="lfeatured-live-section" id="lfeatured-live-section" data-r>
                 <div class="lw">
                     <div class="lfan-grid">
@@ -211,7 +211,7 @@ export function renderLanding() {
                             </div>
                         </div>
 
-                        <!-- RIGHT COLUMN: 3 REAL COLLATERAL CONTRACT CARDS DECK -->
+                        <!-- RIGHT COLUMN: 3 COMPACT COLLATERAL CONTRACT CARDS DECK -->
                         <div class="lfan-right" id="lfan-deck-container" tabindex="0" aria-label="Interactive Contract Deck Carousel">
                             <div class="lfan-deck-viewport">
                                 <div class="lfan-deck-stage" id="lfan-deck-stage">
@@ -265,16 +265,9 @@ export function renderLanding() {
                                                 <span class="lc-live-state-val">Deposit Escrowed</span>
                                             </div>
                                         </div>
-                                        <div class="lc-recent-activity">
-                                            <div class="lc-ra-header">Recent Activity</div>
-                                            <div class="lc-ra-list">
-                                                <div class="lc-ra-item"><span class="lc-ra-dot hit">✓</span><div><strong>@tylerbrooks</strong> completed Stripe Revenue<div class="lc-ra-meta">+$500 paid · 14m ago</div></div></div>
-                                                <div class="lc-ra-item"><span class="lc-ra-dot hit">✓</span><div><strong>@sarah_k</strong> funded X Followers<div class="lc-ra-meta">$250 locked · 45m ago</div></div></div>
-                                            </div>
-                                        </div>
-                                        <div class="lc-trust">
+                                        <div class="lc-trust" style="margin-top: 12px; padding-top: 10px;">
                                             <svg class="lc-trust-lock" width="10" height="10" viewBox="0 0 24 28" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><path d="M12 2a5 5 0 0 0-5 5v3H5a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V12a2 2 0 0 0-2-2h-2V7a5 5 0 0 0-5-5zm-3 5a3 3 0 0 1 6 0v3H9V7zm3 9a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3z" fill="currentColor"/></svg>
-                                            Contracts verified automatically through connected APIs.
+                                            Verified automatically via Connected API.
                                         </div>
                                     </div>
 
@@ -327,16 +320,9 @@ export function renderLanding() {
                                                 <span class="lc-live-state-val">Yield Multiplier Active</span>
                                             </div>
                                         </div>
-                                        <div class="lc-recent-activity">
-                                            <div class="lc-ra-header">Recent Activity</div>
-                                            <div class="lc-ra-list">
-                                                <div class="lc-ra-item"><span class="lc-ra-dot hit">✓</span><div><strong>@marcus_d</strong> completed Shopify Sales<div class="lc-ra-meta">+$375 paid · 22m ago</div></div></div>
-                                                <div class="lc-ra-item"><span class="lc-ra-dot hit">✓</span><div><strong>@alex_dev</strong> funded Store Milestone<div class="lc-ra-meta">$250 locked · 1h ago</div></div></div>
-                                            </div>
-                                        </div>
-                                        <div class="lc-trust">
+                                        <div class="lc-trust" style="margin-top: 12px; padding-top: 10px;">
                                             <svg class="lc-trust-lock" width="10" height="10" viewBox="0 0 24 28" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><path d="M12 2a5 5 0 0 0-5 5v3H5a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V12a2 2 0 0 0-2-2h-2V7a5 5 0 0 0-5-5zm-3 5a3 3 0 0 1 6 0v3H9V7zm3 9a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3z" fill="currentColor"/></svg>
-                                            Contracts verified automatically through connected APIs.
+                                            Verified automatically via Connected API.
                                         </div>
                                     </div>
 
@@ -389,16 +375,9 @@ export function renderLanding() {
                                                 <span class="lc-live-state-val">Escrow Verified</span>
                                             </div>
                                         </div>
-                                        <div class="lc-recent-activity">
-                                            <div class="lc-ra-header">Recent Activity</div>
-                                            <div class="lc-ra-list">
-                                                <div class="lc-ra-item"><span class="lc-ra-dot hit">✓</span><div><strong>@jakevoss</strong> completed X Growth<div class="lc-ra-meta">+$2,000 paid · 5m ago</div></div></div>
-                                                <div class="lc-ra-item"><span class="lc-ra-dot hit">✓</span><div><strong>@elena_m</strong> funded Audience Target<div class="lc-ra-meta">$1,000 locked · 38m ago</div></div></div>
-                                            </div>
-                                        </div>
-                                        <div class="lc-trust">
+                                        <div class="lc-trust" style="margin-top: 12px; padding-top: 10px;">
                                             <svg class="lc-trust-lock" width="10" height="10" viewBox="0 0 24 28" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><path d="M12 2a5 5 0 0 0-5 5v3H5a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V12a2 2 0 0 0-2-2h-2V7a5 5 0 0 0-5-5zm-3 5a3 3 0 0 1 6 0v3H9V7zm3 9a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3z" fill="currentColor"/></svg>
-                                            Contracts verified automatically through connected APIs.
+                                            Verified automatically via Connected API.
                                         </div>
                                     </div>
 

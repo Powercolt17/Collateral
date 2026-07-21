@@ -98,12 +98,14 @@ export const landingCSS = `
 
 /* ═══ REAL COLLATERAL CONTRACT CARDS DECK CAROUSEL ═══ */
 .lfeatured-live-section {
-    padding: 100px 0;
-    background: #080C14 !important;
-    color: #FFFFFF;
+    padding: 90px 0;
+    background: #F4F5F7 !important;
+    color: #0F172A;
     position: relative;
     overflow: hidden;
     z-index: 2;
+    border-top: 1px solid #E2E8F0;
+    border-bottom: 1px solid #E2E8F0;
 }
 
 .lfan-grid {
@@ -116,7 +118,7 @@ export const landingCSS = `
 .lfan-left {
     display: flex;
     flex-direction: column;
-    gap: 24px;
+    gap: 20px;
     z-index: 5;
 }
 
@@ -126,14 +128,18 @@ export const landingCSS = `
     font-size: clamp(34px, 4.2vw, 56px);
     line-height: 0.98;
     letter-spacing: -2px;
-    color: #FFFFFF !important;
+    color: #0F172A !important;
     text-transform: uppercase;
     margin: 0;
 }
 
+.lfan-highlight {
+    color: #0F172A;
+}
+
 .lfan-sub {
     font-size: 15px;
-    color: #94A3B8;
+    color: #475569 !important;
     line-height: 1.55;
     max-width: 380px;
     margin: 0;
@@ -148,20 +154,27 @@ export const landingCSS = `
 .lfan-arrow-btn {
     width: 52px;
     height: 44px;
-    background: transparent;
-    border: 1px solid rgba(255, 255, 255, 0.25);
-    color: #FFFFFF;
+    background: #FFFFFF !important;
+    border: 1px solid #CBD5E1 !important;
+    color: #0F172A !important;
     cursor: pointer;
     display: flex;
     align-items: center;
     justify-content: center;
     transition: all 0.2s ease;
-    border-radius: 2px;
+    border-radius: 4px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04);
 }
 
 .lfan-arrow-btn:hover {
-    border-color: #FFFFFF;
-    background: rgba(255, 255, 255, 0.12);
+    border-color: #0F172A !important;
+    background: #0F172A !important;
+    color: #FFFFFF !important;
+    transform: translateY(-1px);
+}
+
+.lfan-arrow-btn:active {
+    transform: translateY(0);
 }
 
 /* REAL CARD STACK DECK STAGE */
@@ -178,7 +191,7 @@ export const landingCSS = `
     position: relative;
     width: 100%;
     max-width: 560px;
-    height: 520px;
+    height: 410px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -187,7 +200,7 @@ export const landingCSS = `
 .lfan-deck-stage {
     position: relative;
     width: 380px;
-    height: 500px;
+    height: 390px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -200,7 +213,9 @@ export const landingCSS = `
     transition: transform 450ms cubic-bezier(0.4, 0, 0.2, 1), opacity 450ms cubic-bezier(0.4, 0, 0.2, 1) !important;
     transform-origin: bottom center !important;
     cursor: pointer;
-    box-shadow: 0 25px 60px rgba(0, 0, 0, 0.5) !important;
+    border: 1px solid rgba(0, 0, 0, 0.08) !important;
+    box-shadow: 0 20px 45px rgba(0, 0, 0, 0.1) !important;
+    background: #FFFFFF !important;
 }
 
 .lfan-real-card.is-center {
@@ -211,16 +226,16 @@ export const landingCSS = `
 }
 
 .lfan-real-card.is-left {
-    transform: translateX(-42px) translateY(12px) rotate(-6deg) scale(0.92) !important;
+    transform: translateX(-42px) translateY(10px) rotate(-6deg) scale(0.92) !important;
     z-index: 2 !important;
-    opacity: 0.8 !important;
+    opacity: 0.85 !important;
     pointer-events: auto !important;
 }
 
 .lfan-real-card.is-right {
-    transform: translateX(42px) translateY(12px) rotate(6deg) scale(0.92) !important;
+    transform: translateX(42px) translateY(10px) rotate(6deg) scale(0.92) !important;
     z-index: 2 !important;
-    opacity: 0.8 !important;
+    opacity: 0.85 !important;
     pointer-events: auto !important;
 }
 
@@ -244,17 +259,17 @@ export const landingCSS = `
     }
     .lfan-deck-viewport {
         max-width: 100%;
-        height: 480px;
+        height: 390px;
     }
     .lfan-real-card {
         width: 100% !important;
         max-width: 350px !important;
     }
     .lfan-real-card.is-left {
-        transform: translateX(-24px) rotate(-4deg) scale(0.92) !important;
+        transform: translateX(-20px) rotate(-4deg) scale(0.92) !important;
     }
     .lfan-real-card.is-right {
-        transform: translateX(24px) rotate(4deg) scale(0.92) !important;
+        transform: translateX(20px) rotate(4deg) scale(0.92) !important;
     }
 }
 /* Secondary CTA demoted to a plain text link so only "Start Contract" reads as a button */

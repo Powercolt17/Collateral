@@ -96,45 +96,171 @@ export const landingCSS = `
 .lhero-scroll-arrow{font-size:14px;animation:bounceDown 2s infinite ease-in-out}
 @keyframes bounceDown{0%,100%{transform:translateY(0)}50%{transform:translateY(4px)}}
 
-/* ═══ FEATURED LIVE EXECUTION SHOWCASE ═══ */
+/* ═══ KASPACOM STYLE CAROUSEL SECTION ═══ */
 .lfeatured-live-section {
-    padding: 80px 0;
-    background: var(--bg);
-    border-bottom: 1px solid var(--d);
+    padding: 100px 0;
+    background: #080C14;
+    color: #FFFFFF;
     position: relative;
+    overflow: hidden;
     z-index: 2;
 }
-.lfeatured-live-grid {
+
+.lfeatured-kaspa-grid {
     display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 64px;
+    grid-template-columns: 1fr 1.1fr;
+    gap: 60px;
     align-items: center;
 }
-.lfeatured-live-info {
+
+.lfeatured-kaspa-left {
     display: flex;
     flex-direction: column;
-    gap: 16px;
+    gap: 24px;
 }
-.lfeatured-trust-badges {
+
+.lfeatured-kaspa-h1 {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-weight: 900;
+    font-size: clamp(34px, 4.5vw, 60px);
+    line-height: 0.96;
+    letter-spacing: -2px;
+    color: #FFFFFF;
+    text-transform: uppercase;
+    margin: 0;
+}
+
+.lfeatured-kaspa-highlight {
+    color: #E2E8F0;
+    background: linear-gradient(135deg, #FFFFFF 0%, #CBD5E1 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.lfeatured-kaspa-sub {
+    font-size: 15px;
+    color: #94A3B8;
+    line-height: 1.5;
+    max-width: 440px;
+    margin: 0;
+}
+
+.lfeatured-kaspa-nav {
     display: flex;
-    gap: 10px;
-    flex-wrap: wrap;
+    gap: 12px;
     margin-top: 12px;
 }
-.ltrust-badge {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 11px;
+
+.lkaspa-nav-btn {
+    width: 56px;
+    height: 48px;
+    background: transparent;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    color: #FFFFFF;
+    font-size: 18px;
     font-weight: 700;
-    color: var(--g);
-    background: rgba(20, 92, 20, 0.05);
-    border: 1px solid rgba(20, 92, 20, 0.15);
-    padding: 6px 12px;
-    border-radius: 6px;
-    letter-spacing: 0.5px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+    border-radius: 2px;
 }
-.lfeatured-live-card-wrap {
+
+.lkaspa-nav-btn:hover {
+    border-color: #FFFFFF;
+    background: rgba(255, 255, 255, 0.12);
+    transform: translateY(-2px);
+}
+
+.lkaspa-nav-btn:active {
+    transform: translateY(0);
+}
+
+/* 3D STACK CAROUSEL DECK */
+.lkaspa-stack-wrapper {
+    position: relative;
     display: flex;
     justify-content: center;
+    align-items: center;
+    min-height: 520px;
+    perspective: 1200px;
+}
+
+.lkaspa-card-front {
+    position: relative;
+    z-index: 5;
+    transform: translateZ(0) scale(1);
+    transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.5s ease;
+    box-shadow: 0 30px 70px rgba(0, 0, 0, 0.6) !important;
+}
+
+.lkaspa-card-bg {
+    position: absolute;
+    width: 320px;
+    height: 440px;
+    border-radius: 16px;
+    padding: 28px 24px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    color: #FFFFFF;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+    cursor: pointer;
+    user-select: none;
+}
+
+.lkaspa-card-left {
+    background: linear-gradient(135deg, #D97706 0%, #B45309 100%);
+    left: 10px;
+    z-index: 2;
+    transform: translateX(-40px) translateY(10px) rotate(-8deg) scale(0.92);
+    opacity: 0.85;
+}
+
+.lkaspa-card-right {
+    background: linear-gradient(135deg, #7C3AED 0%, #6D28D9 100%);
+    right: 10px;
+    z-index: 2;
+    transform: translateX(40px) translateY(10px) rotate(8deg) scale(0.92);
+    opacity: 0.85;
+}
+
+.lkaspa-card-left:hover {
+    transform: translateX(-50px) translateY(5px) rotate(-10deg) scale(0.95);
+    opacity: 1;
+}
+
+.lkaspa-card-right:hover {
+    transform: translateX(50px) translateY(5px) rotate(10deg) scale(0.95);
+    opacity: 1;
+}
+
+.lkaspa-card-bg-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-weight: 800;
+    font-size: 16px;
+    text-transform: uppercase;
+    letter-spacing: -0.3px;
+}
+
+.lkaspa-card-bg-body {
+    font-size: 20px;
+    font-weight: 700;
+    line-height: 1.3;
+}
+
+.lkaspa-card-bg-val {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    font-weight: 700;
+    background: rgba(0, 0, 0, 0.25);
+    padding: 8px 12px;
+    border-radius: 6px;
+    letter-spacing: 0.5px;
 }
 /* Secondary CTA demoted to a plain text link so only "Start Contract" reads as a button */
 .lhero-textlink{background:none;border:none;padding:8px 4px;cursor:pointer;font-family:'Inter',sans-serif;font-size:14px;font-weight:700;letter-spacing:0.5px;text-transform:uppercase;color:var(--t2);display:inline-flex;align-items:center;gap:8px;transition:color .25s cubic-bezier(.16,1,.3,1),gap .25s cubic-bezier(.16,1,.3,1)}

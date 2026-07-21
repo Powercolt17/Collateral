@@ -371,18 +371,32 @@ export function renderLanding() {
 
 
             <!-- ═══ CONTRACT TYPES ═══ -->
-            <div class="lw" style="padding-top: 60px; padding-bottom: 60px;">
+            <div class="lw" style="padding-top: 80px; padding-bottom: 80px;">
                 <div class="ltypes-asymmetric" data-r>
                     <div class="ltypes-left">
                         <div class="lred-dash reveal-item"><span class="lmono">Contract Types</span></div>
                         <h2 class="ltypes-headline reveal-item">Use financial leverage on yourself,<br>or challenge a <strong>competitor.</strong></h2>
+                        <p class="ltypes-sub reveal-item">Choose your execution mode. Lock solo capital to hold yourself accountable, or challenge a competitor head-to-head.</p>
+                        <div class="ltypes-cta-wrap reveal-item">
+                            <button class="lbtn lbtn-r" id="ltypes-start-cta" onclick="window.app.goAction('/market', 'signup')">
+                                START CONTRACT <span class="lbtn-arrow">→</span>
+                            </button>
+                        </div>
                     </div>
 
                     <div class="ltypes-right">
-                        <div class="ltype-row reveal-item">
-                            <div class="ltype-badge-new">Solo</div>
+                        <!-- SOLO CARD -->
+                        <div class="ltype-row is-solo reveal-item">
+                            <div class="ltype-card-top">
+                                <span class="ltype-badge-new">Solo Mode</span>
+                                <span class="ltype-stat-pill">22 Active Contracts</span>
+                            </div>
                             <h3 class="ltype-title-new">You vs. Yourself</h3>
-                            <p class="ltype-desc-new">Lock deposits to force yourself to execute. <span class="lhide-mobile">Hit targets to win; fail and forfeit capital.</span></p>
+                            <p class="ltype-desc-new">Lock deposits to force yourself to execute. Hit targets to win; fail and forfeit capital.</p>
+                            <div class="ltype-stat-row">
+                                <span class="ltype-stat-k">Typical Deposit:</span>
+                                <span class="ltype-stat-v">$100 – $3,000</span>
+                            </div>
                             <div class="ltype-meta-new">
                                 <span class="lmeta-label">Best for</span>
                                 <span class="lmeta-tag">Milestones</span>
@@ -390,10 +404,19 @@ export function renderLanding() {
                                 <span class="lmeta-tag">Audience building</span>
                             </div>
                         </div>
-                        <div class="ltype-row reveal-item">
-                            <div class="ltype-badge-new secondary">Rivalry</div>
+
+                        <!-- RIVALRY CARD -->
+                        <div class="ltype-row is-rivalry reveal-item">
+                            <div class="ltype-card-top">
+                                <span class="ltype-badge-new secondary">Rivalry Mode</span>
+                                <span class="ltype-stat-pill secondary">48 Active Duels</span>
+                            </div>
                             <h3 class="ltype-title-new">You vs. Competitors</h3>
-                            <p class="ltype-desc-new">Lock equal deposits in a head-to-head race. <span class="lhide-mobile">Winner takes the entire pool.</span></p>
+                            <p class="ltype-desc-new">Lock equal deposits in a head-to-head race. Winner takes the entire pool.</p>
+                            <div class="ltype-stat-row">
+                                <span class="ltype-stat-k">Typical Deposit:</span>
+                                <span class="ltype-stat-v">$250 – $5,000</span>
+                            </div>
                             <div class="ltype-meta-new">
                                 <span class="lmeta-label">Best for</span>
                                 <span class="lmeta-tag">Audience races</span>

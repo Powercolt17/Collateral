@@ -77,12 +77,12 @@ export const landingCSS = `
     z-index: 0 !important;
     overflow: hidden;
     -webkit-mask-image: 
-        linear-gradient(to right, transparent 0%, transparent 45%, #000 65%, #000 calc(100% - 80px), transparent 100%),
-        linear-gradient(to bottom, transparent 0px, #000 80px, #000 calc(100% - 80px), transparent 100%);
+        linear-gradient(to right, transparent 0%, transparent 15%, #000 40%, #000 calc(100% - 60px), transparent 100%),
+        linear-gradient(to bottom, transparent 0px, #000 50px, #000 calc(100% - 50px), transparent 100%);
     -webkit-mask-composite: source-in;
     mask-image: 
-        linear-gradient(to right, transparent 0%, transparent 45%, #000 65%, #000 calc(100% - 80px), transparent 100%),
-        linear-gradient(to bottom, transparent 0px, #000 80px, #000 calc(100% - 80px), transparent 100%);
+        linear-gradient(to right, transparent 0%, transparent 15%, #000 40%, #000 calc(100% - 60px), transparent 100%),
+        linear-gradient(to bottom, transparent 0px, #000 50px, #000 calc(100% - 50px), transparent 100%);
     mask-composite: intersect;
 }
 .lhero-mesh-svg {

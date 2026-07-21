@@ -39,8 +39,8 @@ export function renderLanding() {
                 <!-- DYNAMIC CONSTELLATION MESH BACKGROUND (JITTERED GRID TEXTURE) -->
                 <div class="lhero-bg-container" id="lhero-bg-container">
                     <svg class="lhero-mesh-svg" id="lhero-mesh-svg" viewBox="0 0 1440 900" fill="none" preserveAspectRatio="xMidYMid slice">
-                        <!-- SHORT SEGMENT LINES (OPACITY 0.04, INK #14121F, 1PX NON-SCALING STROKE) -->
-                        <g opacity="0.04" stroke="#14121F" stroke-width="1" vector-effect="non-scaling-stroke">
+                        <!-- SHORT SEGMENT LINES (BOOSTED OPACITY 0.18, INK #14121F, 1.2PX STROKE) -->
+                        <g opacity="0.18" stroke="#14121F" stroke-width="1.2" vector-effect="non-scaling-stroke">
                             <!-- Row 1 Connections -->
                             <line x1="100" y1="70" x2="250" y2="95" /><line x1="250" y1="95" x2="410" y2="75" /><line x1="410" y1="75" x2="560" y2="90" /><line x1="560" y1="90" x2="710" y2="70" /><line x1="710" y1="70" x2="860" y2="95" /><line x1="860" y1="95" x2="1010" y2="75" /><line x1="1010" y1="75" x2="1160" y2="90" /><line x1="1160" y1="90" x2="1310" y2="70" />
                             
@@ -49,7 +49,7 @@ export function renderLanding() {
                             <line x1="100" y1="70" x2="235" y2="210" /><line x1="250" y1="95" x2="390" y2="235" /><line x1="410" y1="75" x2="545" y2="210" /><line x1="560" y1="90" x2="695" y2="230" /><line x1="710" y1="70" x2="845" y2="210" /><line x1="860" y1="95" x2="995" y2="235" /><line x1="1010" y1="75" x2="1145" y2="210" /><line x1="1160" y1="90" x2="1295" y2="230" />
 
                             <!-- Row 2 Connections -->
-                            <line x1="85" y1="230" x2="235" y2="210" /><line x1="235" y1="210" x2="390" y2="235" /><line x1="390" y1="235" x2="545" y2="210" /><line x1="545" y1="210" x2="695" y2="230" /><line x1="695" y1="230" x2="845" y2="210" /><line x1="845" y1="210" x2="995" y2="235" /><line x1="995" y1="235" x2="1145" y2="210" /><line x1="1145" y1="210" x2="1295" y2="230" />
+                            <line x1="85" y1="230" x2="235" y2="210" /><line x1="235" y1="210" x2="390" y2="235" /><line x1="390" y1="235" x2="545" y2="210" /><line x1="545" y1="210" x2="695" y2="230" /><line x1="695" y1="230" x2="845" y2="210" /><line x1="845" y1="210" x2="995" y2="235" /><line x1="995" y1="235" x2="1145" y2="210" /><line x1="1145" y2="210" x2="1295" y2="230" />
 
                             <!-- Row 2 to Row 3 Vertical & Diagonal -->
                             <line x1="85" y1="230" x2="110" y2="350" /><line x1="235" y1="210" x2="260" y2="375" /><line x1="390" y1="235" x2="415" y2="350" /><line x1="545" y1="210" x2="570" y2="370" /><line x1="695" y1="230" x2="720" y2="350" /><line x1="845" y1="210" x2="870" y2="375" /><line x1="995" y1="235" x2="1020" y2="350" /><line x1="1145" y1="210" x2="1170" y2="370" /><line x1="1295" y1="230" x2="1320" y2="350" />
@@ -70,7 +70,7 @@ export function renderLanding() {
                             <line x1="240" y1="490" x2="115" y2="630" /><line x1="395" y1="515" x2="265" y2="655" /><line x1="550" y1="490" x2="420" y2="630" /><line x1="700" y1="510" x2="575" y2="650" /><line x1="850" y1="490" x2="725" y2="630" /><line x1="1000" y1="515" x2="875" y2="655" /><line x1="1150" y1="490" x2="1025" y2="630" /><line x1="1300" y1="510" x2="1175" y2="650" />
 
                             <!-- Row 5 Connections -->
-                            <line x1="115" y1="630" x2="265" y2="655" /><line x1="265" y1="655" x2="420" y2="630" /><line x1="420" y1="630" x2="575" y2="650" /><line x1="575" y1="650" x2="725" y2="630" /><line x1="725" y1="630" x2="875" y2="655" /><line x1="875" y1="655" x2="1025" y2="630" /><line x1="1025" y1="630" x2="1175" y2="650" /><line x1="1175" y1="650" x2="1325" y2="630" />
+                            <line x1="115" y1="630" x2="265" y2="655" /><line x1="265" y1="655" x2="420" y2="630" /><line x1="420" y1="630" x2="575" y2="650" /><line x1="575" y2="650" x2="725" y2="630" /><line x1="725" y1="630" x2="875" y2="655" /><line x1="875" y1="655" x2="1025" y2="630" /><line x1="1025" y1="630" x2="1175" y2="650" /><line x1="1175" y1="650" x2="1325" y2="630" />
 
                             <!-- Row 5 to Row 6 Vertical & Diagonal -->
                             <line x1="115" y1="630" x2="95" y2="790" /><line x1="265" y1="655" x2="245" y2="770" /><line x1="420" y1="630" x2="400" y2="795" /><line x1="575" y1="650" x2="555" y2="770" /><line x1="725" y1="630" x2="705" y2="790" /><line x1="875" y1="655" x2="855" y2="770" /><line x1="1025" y1="630" x2="1005" y2="795" /><line x1="1175" y1="650" x2="1155" y2="770" /><line x1="1325" y1="630" x2="1305" y2="790" />
@@ -80,20 +80,20 @@ export function renderLanding() {
                             <line x1="95" y1="790" x2="245" y2="770" /><line x1="245" y1="770" x2="400" y2="795" /><line x1="400" y1="795" x2="555" y2="770" /><line x1="555" y1="770" x2="705" y2="790" /><line x1="705" y1="790" x2="855" y2="770" /><line x1="855" y1="770" x2="1005" y2="795" /><line x1="1005" y1="795" x2="1155" y2="770" /><line x1="1155" y1="770" x2="1305" y2="790" />
                         </g>
 
-                        <!-- JITTERED GRID NODES (OPACITY 0.06, INK #14121F, RADIUS 2.2PX = 4.4PX DIAMETER) -->
-                        <g fill="#14121F" opacity="0.06">
+                        <!-- JITTERED GRID NODES (BOOSTED OPACITY 0.28, INK #14121F, RADIUS 2.8PX) -->
+                        <g fill="#14121F" opacity="0.28">
                             <!-- Row 1 -->
-                            <circle cx="100" cy="70" r="2.2" /><circle cx="250" cy="95" r="2.2" /><circle cx="410" cy="75" r="2.2" /><circle cx="560" cy="90" r="2.2" /><circle cx="710" cy="70" r="2.2" /><circle cx="860" cy="95" r="2.2" /><circle cx="1010" cy="75" r="2.2" /><circle cx="1160" cy="90" r="2.2" /><circle cx="1310" cy="70" r="2.2" />
+                            <circle cx="100" cy="70" r="2.8" /><circle cx="250" cy="95" r="2.8" /><circle cx="410" cy="75" r="2.8" /><circle cx="560" cy="90" r="2.8" /><circle cx="710" cy="70" r="2.8" /><circle cx="860" cy="95" r="2.8" /><circle cx="1010" cy="75" r="2.8" /><circle cx="1160" cy="90" r="2.8" /><circle cx="1310" cy="70" r="2.8" />
                             <!-- Row 2 -->
-                            <circle cx="85" cy="230" r="2.2" /><circle cx="235" cy="210" r="2.2" /><circle cx="390" cy="235" r="2.2" /><circle cx="545" cy="210" r="2.2" /><circle cx="695" cy="230" r="2.2" /><circle cx="845" cy="210" r="2.2" /><circle cx="995" cy="235" r="2.2" /><circle cx="1145" cy="210" r="2.2" /><circle cx="1295" cy="230" r="2.2" />
+                            <circle cx="85" cy="230" r="2.8" /><circle cx="235" cy="210" r="2.8" /><circle cx="390" cy="235" r="2.8" /><circle cx="545" cy="210" r="2.8" /><circle cx="695" cy="230" r="2.8" /><circle cx="845" cy="210" r="2.8" /><circle cx="995" cy="235" r="2.8" /><circle cx="1145" cy="210" r="2.8" /><circle cx="1295" cy="230" r="2.8" />
                             <!-- Row 3 -->
-                            <circle cx="110" cy="350" r="2.2" /><circle cx="260" cy="375" r="2.2" /><circle cx="415" cy="350" r="2.2" /><circle cx="570" cy="370" r="2.2" /><circle cx="720" cy="350" r="2.2" /><circle cx="870" cy="375" r="2.2" /><circle cx="1020" cy="350" r="2.2" /><circle cx="1170" cy="370" r="2.2" /><circle cx="1320" cy="350" r="2.2" />
+                            <circle cx="110" cy="350" r="2.8" /><circle cx="260" cy="375" r="2.8" /><circle cx="415" cy="350" r="2.8" /><circle cx="570" cy="370" r="2.8" /><circle cx="720" cy="350" r="2.8" /><circle cx="870" cy="375" r="2.8" /><circle cx="1020" cy="350" r="2.8" /><circle cx="1170" cy="370" r="2.8" /><circle cx="1320" cy="350" r="2.8" />
                             <!-- Row 4 -->
-                            <circle cx="90" cy="510" r="2.2" /><circle cx="240" cy="490" r="2.2" /><circle cx="395" cy="515" r="2.2" /><circle cx="550" cy="490" r="2.2" /><circle cx="700" cy="510" r="2.2" /><circle cx="850" cy="490" r="2.2" /><circle cx="1000" cy="515" r="2.2" /><circle cx="1150" cy="490" r="2.2" /><circle cx="1300" cy="510" r="2.2" />
+                            <circle cx="90" cy="510" r="2.8" /><circle cx="240" cy="490" r="2.8" /><circle cx="395" cy="515" r="2.8" /><circle cx="550" cy="490" r="2.8" /><circle cx="700" cy="510" r="2.8" /><circle cx="850" cy="490" r="2.8" /><circle cx="1000" cy="515" r="2.8" /><circle cx="1150" cy="490" r="2.8" /><circle cx="1300" cy="510" r="2.8" />
                             <!-- Row 5 -->
-                            <circle cx="115" cy="630" r="2.2" /><circle cx="265" cy="655" r="2.2" /><circle cx="420" cy="630" r="2.2" /><circle cx="575" cy="650" r="2.2" /><circle cx="725" cy="630" r="2.2" /><circle cx="875" cy="655" r="2.2" /><circle cx="1025" cy="630" r="2.2" /><circle cx="1175" cy="650" r="2.2" /><circle cx="1325" cy="630" r="2.2" />
+                            <circle cx="115" cy="630" r="2.8" /><circle cx="265" cy="655" r="2.8" /><circle cx="420" cy="630" r="2.8" /><circle cx="575" cy="650" r="2.8" /><circle cx="725" cy="630" r="2.8" /><circle cx="875" cy="655" r="2.8" /><circle cx="1025" cy="630" r="2.8" /><circle cx="1175" cy="650" r="2.8" /><circle cx="1325" cy="630" r="2.8" />
                             <!-- Row 6 -->
-                            <circle cx="95" cy="790" r="2.2" /><circle cx="245" cy="770" r="2.2" /><circle cx="400" cy="795" r="2.2" /><circle cx="555" cy="770" r="2.2" /><circle cx="705" cy="790" r="2.2" /><circle cx="855" cy="770" r="2.2" /><circle cx="1005" cy="795" r="2.2" /><circle cx="1155" cy="770" r="2.2" /><circle cx="1305" cy="790" r="2.2" />
+                            <circle cx="95" cy="790" r="2.8" /><circle cx="245" cy="770" r="2.8" /><circle cx="400" cy="795" r="2.8" /><circle cx="555" cy="770" r="2.8" /><circle cx="705" cy="790" r="2.8" /><circle cx="855" cy="770" r="2.8" /><circle cx="1005" cy="795" r="2.8" /><circle cx="1155" cy="770" r="2.8" /><circle cx="1305" cy="790" r="2.8" />
                         </g>
                     </svg>
                 </div>

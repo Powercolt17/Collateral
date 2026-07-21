@@ -415,10 +415,11 @@ export function renderLanding() {
                                         <span class="lengine-metric-lbl">Capital Locked</span>
                                     </div>
                                     <div class="lengine-metric-item">
-                                        <span class="lengine-metric-val" id="engine-metric-2">ESCROW_ACTIVE</span>
+                                        <span class="lengine-metric-val" id="engine-metric-2">ESCROW_LOCKED</span>
                                         <span class="lengine-metric-lbl">Protocol State</span>
                                     </div>
                                 </div>
+                                <div id="engine-stage-example"></div>
                             </div>
 
                             <div class="lengine-visual-graphic">
@@ -437,11 +438,11 @@ export function renderLanding() {
                                     </div>
                                     <div class="lengine-log-line">
                                         <span class="lengine-log-ts">[15:47:03]</span>
-                                        <span class="lengine-log-text">DEPOSIT: $500.00 locked in smart contract</span>
+                                        <span class="lengine-log-pending">DEPOSIT: $500.00 locked in smart contract</span>
                                     </div>
                                     <div class="lengine-log-line">
                                         <span class="lengine-log-ts">[15:47:03]</span>
-                                        <span class="lengine-log-highlight">STATUS: Escrow locked & verified</span>
+                                        <span class="lengine-log-success">STATUS: Escrow locked & verified safe</span>
                                     </div>
                                 </div>
                             </div>
@@ -1498,44 +1499,60 @@ export function initLanding() {
             title: '01. CAPITAL ESCROW & DEPOSIT LOCK',
             desc: 'Creator commits target goal and deposits funds into the isolated smart escrow vault. Principal remains locked until target deadline or API verification event.',
             metric1: '$500.00',
-            metric2: 'ESCROW_ACTIVE',
+            metric2: 'ESCROW_LOCKED',
+            exampleHtml: '',
             logs: [
-                { ts: '[15:47:02]', text: 'INIT_ESCROW: Vault #4902 initialized' },
-                { ts: '[15:47:03]', text: 'DEPOSIT: $500.00 locked in smart contract' },
-                { ts: '[15:47:03]', highlight: 'STATUS: Escrow locked & verified' }
+                { ts: '[15:47:02]', text: 'INIT_ESCROW: Vault #4902 initialized', type: 'text' },
+                { ts: '[15:47:03]', text: 'DEPOSIT: $500.00 locked in smart contract', type: 'pending' },
+                { ts: '[15:47:03]', text: 'STATUS: Escrow locked & verified safe', type: 'success' }
             ]
         },
         2: {
             title: '02. ORACLE API VERIFICATION STREAM',
-            desc: 'Connected platform API (Stripe, Shopify, or X) streams verified data payload directly to the smart contract oracle endpoint.',
+            desc: 'Connected platform API (Stripe, Shopify, or X) streams verified telemetry payload directly to the smart contract oracle endpoint.',
             metric1: 'STRIPE_API_V2',
-            metric2: 'VERIFY_STREAMING',
+            metric2: 'VERIFIED_100%',
+            exampleHtml: '',
             logs: [
-                { ts: '[15:48:10]', text: 'ORACLE_POLL: Requesting Stripe revenue payload' },
-                { ts: '[15:48:11]', text: 'API_RESPONSE: 200 OK — Revenue target hit' },
-                { ts: '[15:48:11]', highlight: 'STATUS: Telemetry target 100% verified' }
+                { ts: '[15:48:10]', text: 'ORACLE_POLL: Requesting Stripe revenue payload', type: 'pending' },
+                { ts: '[15:48:11]', text: 'API_RESPONSE: 200 OK — Revenue milestone met', type: 'text' },
+                { ts: '[15:48:11]', text: 'STATUS: Telemetry target 100% verified', type: 'success' }
             ]
         },
         3: {
-            title: '03. AUTOMATED COUNTERPARTY MATCH ALLOCATION',
-            desc: 'Yield multipliers and forfeited deposit pools are automatically matched to verified successful executioners.',
-            metric1: '+$500.00',
-            metric2: 'MATCH_ALLOCATED',
+            title: '03. TRANSPARENT MATCH CAPITAL ALLOCATION',
+            desc: 'Match capital is funded directly from two explicit sources: 80% comes from forfeited deposits of users who failed to hit their targets, and 20% comes from verified corporate brand sponsors. Multipliers reflect real available pool ratios, not guaranteed investment returns.',
+            metric1: '+$500.00 MATCH',
+            metric2: '80% FORFEIT / 20% SPONSOR',
+            exampleHtml: `
+                <div class="lengine-example-box">
+                    <div class="lengine-example-hdr">
+                        <span style="color:#7A1220;">↳</span> WORKED EXAMPLE: $500 DEPOSIT → $1,000 PAYOUT
+                    </div>
+                    <div>Deposit <strong>$500.00</strong> → Complete Target → Receive <strong>$1,000.00 Total</strong></div>
+                    <div class="lengine-example-breakdown">
+                        <span>• <strong>$500.00</strong> — 100% returned principal deposit</span>
+                        <span>• <strong>+$400.00</strong> — Funded from forfeited deposits of failed contracts (80%)</span>
+                        <span>• <strong>+$100.00</strong> — Funded from corporate brand sponsors & protocol pool (20%)</span>
+                    </div>
+                </div>
+            `,
             logs: [
-                { ts: '[15:48:15]', text: 'POOL_MATCH: Forfeited pool yield calculated' },
-                { ts: '[15:48:16]', text: 'MATCH_ALLOCATE: +$500.00 allocated to vault' },
-                { ts: '[15:48:16]', highlight: 'STATUS: Total payout $1,000.00 locked' }
+                { ts: '[15:48:15]', text: 'POOL_AUDIT: Forfeited pool ratio calculated', type: 'pending' },
+                { ts: '[15:48:16]', text: 'MATCH_ALLOCATE: +$400.00 (Forfeits) + $100.00 (Sponsors)', type: 'text' },
+                { ts: '[15:48:16]', text: 'STATUS: Total payout $1,000.00 fully backed & queued', type: 'success' }
             ]
         },
         4: {
             title: '04. INSTANT SETTLEMENT & DEFLATIONARY CLTR BURN',
-            desc: 'Funds automatically unlock and return to creator account. 0.5% protocol fee is automatically burned from total CLTR supply.',
+            desc: 'Funds automatically unlock and return to creator account. A 0.5% protocol fee is automatically burned from total CLTR supply. Unsuccessful contracts trigger automated deposit forfeiture to fund winner matches.',
             metric1: '$1,000.00',
             metric2: 'SETTLED & BURNED',
+            exampleHtml: '',
             logs: [
-                { ts: '[15:48:20]', text: 'SETTLEMENT: $1,000.00 payout executed' },
-                { ts: '[15:48:21]', text: 'BURN_EVENT: 25.4 CLTR destroyed forever' },
-                { ts: '[15:48:21]', highlight: 'STATUS: Settlement complete (0.8s)' }
+                { ts: '[15:48:20]', text: 'SETTLEMENT: $1,000.00 payout executed to winner', type: 'success' },
+                { ts: '[15:48:21]', text: 'BURN_EVENT: 25.4 CLTR destroyed forever (0.5% fee)', type: 'text' },
+                { ts: '[15:48:21]', text: 'STATUS: Contract settled & closed (0.8s)', type: 'success' }
             ]
         }
     };
@@ -1557,20 +1574,29 @@ export function initLanding() {
                 const descEl = document.getElementById('engine-stage-desc');
                 const m1El = document.getElementById('engine-metric-1');
                 const m2El = document.getElementById('engine-metric-2');
+                const exampleEl = document.getElementById('engine-stage-example');
                 const terminalBody = document.getElementById('engine-terminal-body');
 
                 if (titleEl) titleEl.textContent = data.title;
                 if (descEl) descEl.textContent = data.desc;
                 if (m1El) m1El.textContent = data.metric1;
                 if (m2El) m2El.textContent = data.metric2;
+                if (exampleEl) exampleEl.innerHTML = data.exampleHtml || '';
 
                 if (terminalBody) {
-                    terminalBody.innerHTML = data.logs.map(log => `
-                        <div class="lengine-log-line">
-                            <span class="lengine-log-ts">${log.ts}</span>
-                            <span class="${log.highlight ? 'lengine-log-highlight' : 'lengine-log-text'}">${log.highlight || log.text}</span>
-                        </div>
-                    `).join('');
+                    terminalBody.innerHTML = data.logs.map(log => {
+                        let logClass = 'lengine-log-text';
+                        if (log.type === 'success') logClass = 'lengine-log-success';
+                        else if (log.type === 'pending') logClass = 'lengine-log-pending';
+                        else if (log.type === 'forfeit') logClass = 'lengine-log-forfeit';
+                        
+                        return `
+                            <div class="lengine-log-line">
+                                <span class="lengine-log-ts">${log.ts}</span>
+                                <span class="${logClass}">${log.text}</span>
+                            </div>
+                        `;
+                    }).join('');
                 }
             }
         });

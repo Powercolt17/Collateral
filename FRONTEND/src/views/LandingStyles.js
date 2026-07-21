@@ -684,15 +684,59 @@ export const landingCSS = `
 
 .lengine-log-ts {
     color: rgba(255, 255, 255, 0.4);
+    font-size: 11px;
 }
 
 .lengine-log-text {
-    color: #4ADE80;
+    color: rgba(255, 255, 255, 0.85);
 }
 
-.lengine-log-highlight {
-    color: #7A1220;
+.lengine-log-success {
+    color: #4ADE80 !important;
     font-weight: 700;
+}
+
+.lengine-log-pending {
+    color: #F59E0B !important;
+    font-weight: 700;
+}
+
+.lengine-log-forfeit {
+    color: #EF4444 !important;
+    font-weight: 700;
+}
+
+.lengine-example-box {
+    margin-top: 20px;
+    padding: 16px 20px;
+    background: #FFFFFF;
+    border: 1px solid #CBD5E1;
+    border-radius: 8px;
+    font-size: 13px;
+    line-height: 1.55;
+    color: #334155;
+}
+
+.lengine-example-hdr {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.8px;
+    text-transform: uppercase;
+    color: #0F172A;
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.lengine-example-breakdown {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    margin-top: 6px;
+    font-size: 12px;
+    color: #64748B;
 }
 
 @media (max-width: 900px) {

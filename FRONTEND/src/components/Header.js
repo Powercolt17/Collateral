@@ -986,7 +986,7 @@ export function renderHeader(currentRoute) {
                 <!-- Right Section -->
                 <div class="ch-right">
                     <!-- Capital Display (logged in) / Connect Button (logged out) -->
-                    <div class="ch-capital" id="header-capital-area" onclick="window.router.navigate('/funding')">
+                    <div class="ch-capital" id="header-capital-area" onclick="window.router.navigate('/funding')" style="${currentRoute === '/funding' ? 'display: none !important;' : ''}">
                         <span style="font-size: 10px; color: #888; font-family: 'JetBrains Mono', monospace; letter-spacing: 0.05em; text-transform: uppercase;">Available Capital</span>
                         <span id="header-avail-cap" style="font-size: 14px; font-weight: 600; color: #111; letter-spacing: -0.02em;">$0.00</span>
                     </div>

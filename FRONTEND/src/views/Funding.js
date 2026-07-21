@@ -36,7 +36,6 @@ export function renderFunding() {
                 gap: 16px;
                 animation: capReveal 0.6s ease both;
             }
-            .cap-hdr-left {}
             .cap-hdr-title {
                 font-size: 24px;
                 font-weight: 800;
@@ -112,6 +111,48 @@ export function renderFunding() {
             }
             .cap-alert.visible { display: block; }
 
+            /* ── Unconfigured Payout Warning ── */
+            .cap-warning-banner {
+                display: none;
+                align-items: center;
+                justify-content: space-between;
+                background: rgba(92, 20, 20, 0.03);
+                border: 1px solid rgba(92, 20, 20, 0.15);
+                padding: 12px 20px;
+                margin-bottom: 24px;
+                gap: 16px;
+                flex-wrap: wrap;
+            }
+            .cap-warning-banner.visible {
+                display: flex;
+            }
+            .cap-warning-link {
+                font-family: 'JetBrains Mono', monospace;
+                font-size: 11px;
+                font-weight: 700;
+                color: #5C1414;
+                background: none;
+                border: none;
+                cursor: pointer;
+                text-decoration: underline;
+                padding: 4px 0;
+            }
+            .cap-warning-link:hover {
+                color: #4A1010;
+            }
+            .cap-warning-close {
+                background: none;
+                border: none;
+                cursor: pointer;
+                color: #999;
+                font-size: 14px;
+                padding: 4px;
+                transition: color 0.15s;
+            }
+            .cap-warning-close:hover {
+                color: #5C1414;
+            }
+
             /* ── Overview Strip ── */
             .cap-overview {
                 display: grid;
@@ -150,6 +191,7 @@ export function renderFunding() {
                 text-transform: uppercase;
                 letter-spacing: 1.5px;
                 color: #5C1414;
+                transition: color 0.2s ease;
             }
             .cap-stat-val {
                 font-family: 'Plus Jakarta Sans', sans-serif;
@@ -161,20 +203,34 @@ export function renderFunding() {
                 transition: color 0.2s ease;
             }
             .cap-stat:hover .cap-stat-val { color: #5C1414; }
-            .cap-stat-val.locked { color: #5C1414; }
-            .cap-stat-val.pending { color: #5C1414; }
             .cap-stat-sub {
                 font-size: 12px;
                 color: #888;
                 line-height: 1.4;
+                transition: color 0.2s ease;
+            }
+
+            /* ── De-emphasized zero stat cards ── */
+            .cap-stat.zero .cap-stat-lbl {
+                color: #8a8984;
+            }
+            .cap-stat.zero .cap-stat-val {
+                color: #8a8984;
+            }
+            .cap-stat.zero .cap-stat-sub {
+                color: #b3b2ad;
+            }
+            .cap-stat.zero:hover .cap-stat-val {
+                color: #8a8984;
             }
 
             /* ── Section Container ── */
             .cap-section {
                 background: #fff;
                 border: 1px solid #E0E0E0;
+                border-left: 3px solid #5C1414; /* Accent bar spans full merged card */
                 margin-bottom: 20px;
-                border-radius: 4px;
+                border-radius: 0; /* Set border-radius to 0 */
                 overflow: hidden;
                 transition: border-color 0.2s, box-shadow 0.2s;
                 animation: capReveal 0.6s ease 0.2s both;
@@ -189,14 +245,6 @@ export function renderFunding() {
                 justify-content: space-between;
                 padding: 16px 22px;
                 border-bottom: 1px solid #f0f0f0;
-                position: relative;
-            }
-            .cap-section-hdr::before {
-                content: '';
-                position: absolute;
-                left: 0; top: 0; bottom: 0;
-                width: 3px;
-                background: #5C1414;
             }
             .cap-section-title {
                 font-family: 'JetBrains Mono', monospace;
@@ -206,38 +254,78 @@ export function renderFunding() {
                 letter-spacing: 2px;
                 color: #5C1414;
             }
+            .cap-add-btn {
+                font-family: 'JetBrains Mono', monospace;
+                font-size: 10px;
+                font-weight: 700;
+                color: #888;
+                background: none;
+                border: none;
+                cursor: pointer;
+                padding: 4px 8px;
+                transition: color 0.15s;
+                text-transform: uppercase;
+                letter-spacing: 0.5px;
+            }
+            .cap-add-btn:hover {
+                color: #5C1414;
+            }
 
             /* ── Source/Destination Row ── */
             .cap-row {
                 display: flex;
                 align-items: center;
-                justify-content: space-between;
-                padding: 20px 22px;
+                gap: 16px;
+                height: 52px;
+                padding: 0 22px;
                 border-bottom: 1px solid #f4f4f4;
-                transition: background 0.15s, padding-left 0.15s;
+                transition: background 0.15s;
             }
             .cap-row:last-child { border-bottom: none; }
             .cap-row:hover {
                 background: rgba(92, 20, 20, 0.015);
-                padding-left: 26px;
             }
-            .cap-row-left {
-                display: flex;
-                flex-direction: column;
-                gap: 5px;
+            .cap-row-icon {
+                width: 18px;
+                height: 18px;
+                color: #888;
+                flex-shrink: 0;
             }
-            .cap-row-label {
-                font-size: 14px;
-                font-weight: 700;
-                color: #111;
+            .cap-row-text-group {
                 display: flex;
                 align-items: center;
-                gap: 10px;
+                gap: 16px;
+                flex: 1;
+            }
+            .cap-row-identifier {
+                font-family: 'JetBrains Mono', monospace;
+                font-size: 13px;
+                color: #111;
+                font-weight: 500;
             }
             .cap-row-detail {
                 font-family: 'JetBrains Mono', monospace;
-                font-size: 11px;
+                font-size: 12px;
                 color: #888;
+            }
+            .cap-row-badge-wrap {
+                display: inline-flex;
+            }
+            .cap-action-btn {
+                font-family: 'JetBrains Mono', monospace;
+                font-size: 11px;
+                font-weight: 700;
+                color: #888;
+                background: none;
+                border: none;
+                cursor: pointer;
+                padding: 6px 0;
+                transition: color 0.15s;
+                margin-left: auto;
+                text-decoration: none;
+            }
+            .cap-action-btn:hover {
+                color: #5C1414;
             }
 
             /* ── Status Badges ── */
@@ -268,31 +356,13 @@ export function renderFunding() {
                 border: 1px solid rgba(92, 20, 20, 0.15);
             }
 
-            /* ── Action Links ── */
-            .cap-action {
+            /* ── Caption Text ── */
+            .cap-caption-text {
                 font-family: 'JetBrains Mono', monospace;
                 font-size: 10px;
-                font-weight: 700;
-                text-transform: uppercase;
-                letter-spacing: 0.5px;
-                color: #999;
-                background: none;
-                border: none;
-                cursor: pointer;
-                padding: 6px 12px;
-                transition: all 0.2s;
-                white-space: nowrap;
-                display: flex;
-                align-items: center;
-                gap: 5px;
-                border: 1px solid transparent;
-                border-radius: 3px;
-            }
-            .cap-action::before { content: '→'; }
-            .cap-action:hover {
-                color: #5C1414;
-                border-color: rgba(92, 20, 20, 0.2);
-                background: rgba(92, 20, 20, 0.03);
+                color: #888;
+                margin-top: 8px;
+                padding-left: 4px;
             }
 
             /* ── Footer (Bloomberg-style) ── */
@@ -345,7 +415,23 @@ export function renderFunding() {
                 .cap-footer { flex-wrap: wrap; gap: 20px; }
                 .cap-hdr-title { font-size: 26px; }
                 .cap-deposit-btn { width: 100%; text-align: center; }
-                .cap-row { flex-wrap: wrap; gap: 12px; }
+                
+                .cap-row {
+                    height: auto;
+                    padding: 14px 22px;
+                    align-items: flex-start;
+                }
+                .cap-row-icon {
+                    margin-top: 2px;
+                }
+                .cap-row-text-group {
+                    flex-direction: column;
+                    align-items: flex-start;
+                    gap: 4px;
+                }
+                .cap-action-btn {
+                    margin-top: -2px;
+                }
             }
             @media (max-width: 480px) {
                 .cap-inner { padding: 24px 16px 80px; }
@@ -618,20 +704,34 @@ export function renderFunding() {
 
                 <!-- Capital Overview Strip -->
                 <div class="cap-overview" data-reveal>
-                    <div class="cap-stat">
+                    <div class="cap-stat" id="stat-avail-card">
                         <div class="cap-stat-lbl">Available Capital</div>
                         <div class="cap-stat-val" id="available-balance">—</div>
                         <div class="cap-stat-sub" id="available-sub">Loading...</div>
                     </div>
-                    <div class="cap-stat">
+                    <div class="cap-stat" id="stat-locked-card">
                         <div class="cap-stat-lbl">Locked in Contracts</div>
-                        <div class="cap-stat-val locked" id="locked-balance">—</div>
+                        <div class="cap-stat-val" id="locked-balance">—</div>
                         <div class="cap-stat-sub" id="locked-sub">Loading...</div>
                     </div>
-                    <div class="cap-stat">
+                    <div class="cap-stat" id="stat-pending-card">
                         <div class="cap-stat-lbl">Pending Settlement</div>
-                        <div class="cap-stat-val pending" id="pending-payout">—</div>
+                        <div class="cap-stat-val" id="pending-payout">—</div>
                         <div class="cap-stat-sub" id="pending-sub">Loading...</div>
+                    </div>
+                </div>
+
+                <!-- Unconfigured Payout Warning -->
+                <div class="cap-warning-banner" id="payout-warning-banner">
+                    <div style="display: flex; align-items: center; gap: 12px; flex-wrap: wrap;">
+                        <i data-lucide="alert-triangle" style="width: 14px; height: 14px; color: #5C1414; flex-shrink: 0;"></i>
+                        <span style="font-family: 'JetBrains Mono', monospace; font-size: 11px; color: #5C1414;">
+                            No settlement destination configured. You can deposit capital, but payouts can't be issued until a bank account is added.
+                        </span>
+                    </div>
+                    <div style="display: flex; align-items: center; gap: 16px;">
+                        <button class="cap-warning-link" id="warning-add-bank-btn">Add bank account</button>
+                        <button class="cap-warning-close" id="warning-close-btn" aria-label="Dismiss warning">✕</button>
                     </div>
                 </div>
 
@@ -639,43 +739,40 @@ export function renderFunding() {
                 <div class="cap-section" data-reveal>
                     <div class="cap-section-hdr">
                         <span class="cap-section-title">Funding Sources</span>
+                        <button class="cap-add-btn" id="add-source-header-btn">+ Add source</button>
                     </div>
 
                     <!-- Card Source -->
                     <div class="cap-row" id="source-card">
-                        <div class="cap-row-left">
-                            <div class="cap-row-label">
-                                <i data-lucide="credit-card" style="width:14px;height:14px;color:#999;"></i>
-                                Card
-                                <span id="card-badge"></span>
-                            </div>
-                            <div class="cap-row-detail" id="card-status">Loading...</div>
+                        <i data-lucide="credit-card" class="cap-row-icon"></i>
+                        <div class="cap-row-text-group">
+                            <span class="cap-row-identifier" id="card-identifier">Card</span>
+                            <span class="cap-row-detail" id="card-detail">Loading...</span>
+                            <span class="cap-row-badge-wrap" id="card-badge"></span>
                         </div>
-                        <button class="cap-action" id="manage-card-btn">UPDATE</button>
+                        <button class="cap-action-btn" id="manage-card-btn" aria-label="Configure Funding Card">Configure</button>
                     </div>
-
-
                 </div>
 
                 <!-- Payout Destinations -->
                 <div class="cap-section" data-reveal>
                     <div class="cap-section-hdr">
                         <span class="cap-section-title">Settlement Destinations</span>
+                        <button class="cap-add-btn" id="add-destination-header-btn">+ Add destination</button>
                     </div>
                     <div class="cap-row" id="destination-bank">
-                        <div class="cap-row-left">
-                            <div class="cap-row-label">
-                                <i data-lucide="building-2" style="width:14px;height:14px;color:#999;"></i>
-                                Bank Account
-                                <span id="payout-last-four"></span>
-                            </div>
-                            <div class="cap-row-detail" id="payout-status">Loading...</div>
+                        <i data-lucide="building-2" class="cap-row-icon"></i>
+                        <div class="cap-row-text-group">
+                            <span class="cap-row-identifier" id="bank-identifier">Bank account</span>
+                            <span class="cap-row-detail" id="bank-detail">Loading...</span>
+                            <span class="cap-row-badge-wrap" id="bank-badge"></span>
                         </div>
-                        <button class="cap-action" id="manage-payout-btn">CONFIGURE</button>
+                        <button class="cap-action-btn" id="manage-payout-btn" aria-label="Configure Settlement Destination">Configure</button>
                     </div>
-                    <div style="padding: 10px 20px; font-family: 'JetBrains Mono', monospace; font-size: 10px; color: #bbb; border-top: 1px solid #f4f4f4;">
-                        Payouts execute only after contract settlement and clearance.
-                    </div>
+                </div>
+
+                <div class="cap-caption-text">
+                    Payouts execute only after contract settlement and clearance.
                 </div>
 
                 <!-- Bloomberg Footer -->
@@ -818,20 +915,31 @@ export async function initFunding() {
         }
     }
 
+    // ── Helper ──
+    function updateStatCard(cardId, valEl, cents, subEl, nonzeroText, zeroText) {
+        if (valEl) valEl.textContent = formatUSD(cents);
+        const card = document.getElementById(cardId);
+        if (card) {
+            card.classList.toggle('zero', cents === 0);
+        }
+        if (subEl) {
+            subEl.textContent = cents > 0 ? nonzeroText : zeroText;
+        }
+    }
+
     // ── DOM refs ──
-    const cardStatusEl = document.getElementById('card-status');
-    const bankStatusEl = document.getElementById('bank-status');
-    const payoutStatusEl = document.getElementById('payout-status');
-    const payoutLastFourEl = document.getElementById('payout-last-four');
+    const cardIdentifierEl = document.getElementById('card-identifier');
+    const cardDetailEl = document.getElementById('card-detail');
+    const cardBadgeEl = document.getElementById('card-badge');
+    const bankIdentifierEl = document.getElementById('bank-identifier');
+    const bankDetailEl = document.getElementById('bank-detail');
+    const bankBadgeEl = document.getElementById('bank-badge');
     const availableBalanceEl = document.getElementById('available-balance');
     const lockedBalanceEl = document.getElementById('locked-balance');
     const pendingPayoutEl = document.getElementById('pending-payout');
     const manageCardBtn = document.getElementById('manage-card-btn');
-    const manageBankBtn = document.getElementById('manage-bank-btn');
     const managePayoutBtn = document.getElementById('manage-payout-btn');
     const addFundsBtn = document.getElementById('add-funds-btn');
-    const cardBadgeEl = document.getElementById('card-badge');
-    const bankBadgeEl = document.getElementById('bank-badge');
 
     // Modal refs
     const cardModal = document.getElementById('card-modal');
@@ -871,7 +979,19 @@ export async function initFunding() {
 
             if (billingStatus?.identityStatus === 'SUSPENDED') {
                 document.getElementById('restriction-banner')?.classList.add('visible');
-                [manageCardBtn, manageBankBtn, addFundsBtn].forEach(b => { if (b) { b.disabled = true; b.style.opacity = '0.3'; } });
+                [manageCardBtn, managePayoutBtn, addFundsBtn].forEach(b => { if (b) { b.disabled = true; b.style.opacity = '0.3'; } });
+            }
+
+            // Surface unconfigured payout banner
+            const hasPayoutDest = !!(billingStatus?.payoutDestination?.connected);
+            const bannerDismissed = sessionStorage.getItem('payout_warning_dismissed') === 'true';
+            const warningBanner = document.getElementById('payout-warning-banner');
+            if (warningBanner) {
+                if (!hasPayoutDest && !bannerDismissed) {
+                    warningBanner.classList.add('visible');
+                } else {
+                    warningBanner.classList.remove('visible');
+                }
             }
 
             if (billingStatus?.fundingSource) {
@@ -882,70 +1002,83 @@ export async function initFunding() {
                     const brand = fs.brand?.toUpperCase() || 'CARD';
                     const last4 = fs.last4 || '****';
                     const exp = fs.expMonth && fs.expYear ? `${String(fs.expMonth).padStart(2, '0')}/${String(fs.expYear).slice(-2)}` : '';
-                    if (cardStatusEl) cardStatusEl.textContent = `${brand} •••• ${last4}${exp ? '  |  exp ' + exp : ''}`;
+                    if (cardIdentifierEl) cardIdentifierEl.textContent = `${brand} •••• ${last4}`;
+                    if (cardDetailEl) cardDetailEl.textContent = exp ? `exp ${exp}` : '';
                     if (cardBadgeEl) cardBadgeEl.innerHTML = '<span class="cap-badge verified">VERIFIED</span>';
-                    if (manageCardBtn) manageCardBtn.textContent = 'REMOVE';
+                    if (manageCardBtn) {
+                        manageCardBtn.textContent = 'Remove';
+                        manageCardBtn.setAttribute('aria-label', `Remove ${brand} •••• ${last4} funding source (Verified)`);
+                    }
                 } else if (fs.status === 'pending_verification') {
-                    if (cardStatusEl) cardStatusEl.textContent = 'Verification pending';
+                    if (cardIdentifierEl) cardIdentifierEl.textContent = 'Card';
+                    if (cardDetailEl) cardDetailEl.textContent = 'Verification pending';
                     if (cardBadgeEl) cardBadgeEl.innerHTML = '<span class="cap-badge pending-badge">PENDING</span>';
+                    if (manageCardBtn) {
+                        manageCardBtn.textContent = 'Configure';
+                        manageCardBtn.setAttribute('aria-label', 'Configure funding card (Pending verification)');
+                    }
                 } else {
-                    if (cardStatusEl) cardStatusEl.textContent = 'Not configured';
+                    if (cardIdentifierEl) cardIdentifierEl.textContent = 'Card';
+                    if (cardDetailEl) cardDetailEl.textContent = 'Not configured';
                     if (cardBadgeEl) cardBadgeEl.innerHTML = '<span class="cap-badge required">REQUIRED</span>';
+                    if (manageCardBtn) {
+                        manageCardBtn.textContent = 'Configure';
+                        manageCardBtn.setAttribute('aria-label', 'Configure funding card (Required)');
+                    }
                 }
             } else {
-                if (cardStatusEl) cardStatusEl.textContent = 'Not configured';
+                if (cardIdentifierEl) cardIdentifierEl.textContent = 'Card';
+                if (cardDetailEl) cardDetailEl.textContent = 'Not configured';
                 if (cardBadgeEl) cardBadgeEl.innerHTML = '<span class="cap-badge required">REQUIRED</span>';
+                if (manageCardBtn) {
+                    manageCardBtn.textContent = 'Configure';
+                    manageCardBtn.setAttribute('aria-label', 'Configure funding card (Required)');
+                }
             }
 
             if (billingStatus?.payoutDestination?.connected) {
-                if (bankStatusEl) bankStatusEl.textContent = 'Configured';
-                if (bankBadgeEl) { bankBadgeEl.className = 'cap-badge verified'; bankBadgeEl.textContent = 'ACTIVE'; }
-                if (payoutStatusEl) payoutStatusEl.textContent = 'Connected';
+                if (bankIdentifierEl) bankIdentifierEl.textContent = 'Bank account';
+                if (bankDetailEl) bankDetailEl.textContent = 'Connected';
+                if (bankBadgeEl) bankBadgeEl.innerHTML = '<span class="cap-badge verified">ACTIVE</span>';
+                if (managePayoutBtn) {
+                    managePayoutBtn.textContent = 'Configure';
+                    managePayoutBtn.setAttribute('aria-label', 'Configure bank account payout destination (Active)');
+                }
             } else {
-                if (bankStatusEl) bankStatusEl.textContent = 'Not configured';
-                if (payoutStatusEl) payoutStatusEl.textContent = 'Not configured';
+                if (bankIdentifierEl) bankIdentifierEl.textContent = 'Bank account';
+                if (bankDetailEl) bankDetailEl.textContent = 'Not configured';
+                if (bankBadgeEl) bankBadgeEl.innerHTML = '<span class="cap-badge required">REQUIRED</span>';
+                if (managePayoutBtn) {
+                    managePayoutBtn.textContent = 'Configure';
+                    managePayoutBtn.setAttribute('aria-label', 'Configure bank account payout destination (Required)');
+                }
             }
 
             if (billingStatus?.balances) {
                 const avail = billingStatus.balances.availableBalanceUsdCents || 0;
                 const locked = billingStatus.balances.lockedBalanceUsdCents || 0;
                 const pending = billingStatus.balances.pendingPayoutUsdCents || 0;
-                availableBalanceEl.textContent = formatUSD(avail);
-                lockedBalanceEl.textContent = formatUSD(locked);
-                pendingPayoutEl.textContent = formatUSD(pending);
-                const availSub = document.getElementById('available-sub');
-                const lockedSub = document.getElementById('locked-sub');
-                const pendingSub = document.getElementById('pending-sub');
-                if (availSub) availSub.textContent = avail > 0 ? 'Undeployed. Ready to lock.' : 'Deposit to begin.';
-                if (lockedSub) lockedSub.textContent = locked > 0 ? 'Actively committed and at risk.' : 'No active contracts.';
-                if (pendingSub) pendingSub.textContent = pending > 0 ? 'Released. Transfer in progress.' : 'No pending payouts.';
+                updateStatCard('stat-avail-card', availableBalanceEl, avail, document.getElementById('available-sub'), 'Undeployed. Ready to lock.', 'Deposit to begin.');
+                updateStatCard('stat-locked-card', lockedBalanceEl, locked, document.getElementById('locked-sub'), 'Actively committed and at risk.', 'No active contracts.');
+                updateStatCard('stat-pending-card', pendingPayoutEl, pending, document.getElementById('pending-sub'), 'Released. Transfer in progress.', 'No pending payouts.');
             } else {
-                availableBalanceEl.textContent = '$0.00';
-                lockedBalanceEl.textContent = '$0.00';
-                pendingPayoutEl.textContent = '$0.00';
-                const availSub = document.getElementById('available-sub');
-                const lockedSub = document.getElementById('locked-sub');
-                const pendingSub = document.getElementById('pending-sub');
-                if (availSub) availSub.textContent = 'Deposit to begin.';
-                if (lockedSub) lockedSub.textContent = 'No active contracts.';
-                if (pendingSub) pendingSub.textContent = 'No pending payouts.';
+                updateStatCard('stat-avail-card', availableBalanceEl, 0, document.getElementById('available-sub'), 'Undeployed. Ready to lock.', 'Deposit to begin.');
+                updateStatCard('stat-locked-card', lockedBalanceEl, 0, document.getElementById('locked-sub'), 'Actively committed and at risk.', 'No active contracts.');
+                updateStatCard('stat-pending-card', pendingPayoutEl, 0, document.getElementById('pending-sub'), 'Released. Transfer in progress.', 'No pending payouts.');
             }
 
         } catch (err) {
             console.error('[Capital] Error loading billing status:', err);
             // Set ALL fields to defaults so nothing stays stuck at "Loading..."
-            if (cardStatusEl) cardStatusEl.textContent = 'Not configured';
+            if (cardIdentifierEl) cardIdentifierEl.textContent = 'Card';
+            if (cardDetailEl) cardDetailEl.textContent = 'Not configured';
             if (cardBadgeEl) cardBadgeEl.innerHTML = '<span class="cap-badge required">REQUIRED</span>';
-            if (payoutStatusEl) payoutStatusEl.textContent = 'Not configured';
-            if (availableBalanceEl) availableBalanceEl.textContent = '$0.00';
-            if (lockedBalanceEl) lockedBalanceEl.textContent = '$0.00';
-            if (pendingPayoutEl) pendingPayoutEl.textContent = '$0.00';
-            const availSub = document.getElementById('available-sub');
-            const lockedSub = document.getElementById('locked-sub');
-            const pendingSub = document.getElementById('pending-sub');
-            if (availSub) availSub.textContent = 'Deposit to begin.';
-            if (lockedSub) lockedSub.textContent = 'No active contracts.';
-            if (pendingSub) pendingSub.textContent = 'No pending payouts.';
+            if (bankIdentifierEl) bankIdentifierEl.textContent = 'Bank account';
+            if (bankDetailEl) bankDetailEl.textContent = 'Not configured';
+            if (bankBadgeEl) bankBadgeEl.innerHTML = '<span class="cap-badge required">REQUIRED</span>';
+            updateStatCard('stat-avail-card', availableBalanceEl, 0, document.getElementById('available-sub'), 'Undeployed. Ready to lock.', 'Deposit to begin.');
+            updateStatCard('stat-locked-card', lockedBalanceEl, 0, document.getElementById('locked-sub'), 'Actively committed and at risk.', 'No active contracts.');
+            updateStatCard('stat-pending-card', pendingPayoutEl, 0, document.getElementById('pending-sub'), 'Released. Transfer in progress.', 'No pending payouts.');
         }
     }
 
@@ -965,8 +1098,12 @@ export async function initFunding() {
                 .filter(c => pendingPayoutStates.includes(c.derivedState))
                 .reduce((sum, c) => sum + (c.lockAmountUsdCents || 0), 0);
 
-            if (lockedCents > 0) lockedBalanceEl.textContent = formatUSD(lockedCents);
-            if (pendingCents > 0) pendingPayoutEl.textContent = formatUSD(pendingCents);
+            if (lockedCents > 0) {
+                updateStatCard('stat-locked-card', lockedBalanceEl, lockedCents, document.getElementById('locked-sub'), 'Actively committed and at risk.', 'No active contracts.');
+            }
+            if (pendingCents > 0) {
+                updateStatCard('stat-pending-card', pendingPayoutEl, pendingCents, document.getElementById('pending-sub'), 'Released. Transfer in progress.', 'No pending payouts.');
+            }
 
         } catch (err) {
             console.error('[Capital] Error loading contracts:', err);
@@ -1182,7 +1319,6 @@ export async function initFunding() {
             showCardModal();
         }
     });
-    manageBankBtn?.addEventListener('click', () => window.app?.setupPayout?.());
     managePayoutBtn?.addEventListener('click', () => window.app?.setupPayout?.());
 
     closeCardModalBtn?.addEventListener('click', () => closeModal(cardModal));
@@ -1202,6 +1338,19 @@ export async function initFunding() {
     addFundsModal?.addEventListener('click', (e) => { if (e.target === addFundsModal) closeModal(addFundsModal); });
     submitAddFundsBtn?.addEventListener('click', submitAddFunds);
     addFundsAmountInput?.addEventListener('keydown', (e) => { if (e.key === 'Enter') submitAddFunds(); });
+
+    // Affordance header buttons
+    document.getElementById('add-source-header-btn')?.addEventListener('click', showCardModal);
+    document.getElementById('add-destination-header-btn')?.addEventListener('click', () => window.app?.setupPayout?.());
+
+    // Payout warning banner buttons
+    document.getElementById('warning-add-bank-btn')?.addEventListener('click', () => {
+        window.app?.setupPayout?.();
+    });
+    document.getElementById('warning-close-btn')?.addEventListener('click', () => {
+        sessionStorage.setItem('payout_warning_dismissed', 'true');
+        document.getElementById('payout-warning-banner')?.classList.remove('visible');
+    });
 
     // ── Load ──
     await loadBillingStatus();

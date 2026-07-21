@@ -160,23 +160,67 @@ export function renderLanding() {
             <!-- GLOBAL PROTOCOL STATISTICS -->
             <div class="l-global-stats-bar animate-fade-in-up delay-4">
                 <div class="lw">
-                    <div class="l-stats-bar-grid">
-                        <div class="l-stat-bar-item">
-                            <span class="l-stat-bar-val" id="ls-locked">$0.0M</span>
-                            <span class="l-stat-bar-lbl">Capital Locked</span>
-                        </div>
-                        <div class="l-stat-bar-item">
-                            <span class="l-stat-bar-val" id="ls-commitments">0</span>
-                            <span class="l-stat-bar-lbl">Total Commitments</span>
-                        </div>
-                        <div class="l-stat-bar-item lhide-mobile">
-                            <span class="l-stat-bar-val" id="ls-success">0.0%</span>
-                            <span class="l-stat-bar-lbl">Settlement Success</span>
-                        </div>
-                        <div class="l-stat-bar-item lhide-mobile">
-                            <span class="l-stat-bar-val" id="ls-identities">0</span>
-                            <span class="l-stat-bar-lbl">Execution Identities</span>
-                        </div>
+                    <!-- Visually hidden list of all metrics for screen readers -->
+                    <div style="position: absolute !important; width: 1px !important; height: 1px !important; padding: 0 !important; margin: -1px !important; overflow: hidden !important; clip: rect(0,0,0,0) !important; border: 0 !important;">
+                        Protocol metrics: Capital locked: $8.7M; Total commitments: 12,483; Settlement success: 96.2%; Execution identities: 3,442; Active contracts: 1,206; Average contract size: $6,940; Median settlement time: 1.4 days; Counterparties: 812.
+                    </div>
+                    <div class="l-stats-bar-grid" aria-live="off">
+                        <a href="/market" class="l-stat-bar-item" data-cell-index="0" aria-label="See more: capital locked">
+                            <div class="l-stat-bar-wrapper">
+                                <div class="l-stat-bar-content current">
+                                    <span class="l-stat-bar-val" id="ls-locked">$8.7M</span>
+                                    <span class="l-stat-bar-lbl">Capital Locked</span>
+                                </div>
+                            </div>
+                            <div class="l-stat-bar-overlay">
+                                SEE MORE <span class="arrow">→</span>
+                            </div>
+                            <div class="l-stat-bar-static-cta">
+                                SEE MORE →
+                            </div>
+                        </a>
+                        <a href="/market" class="l-stat-bar-item" data-cell-index="1" aria-label="See more: total commitments">
+                            <div class="l-stat-bar-wrapper">
+                                <div class="l-stat-bar-content current">
+                                    <span class="l-stat-bar-val" id="ls-commitments">12,483</span>
+                                    <span class="l-stat-bar-lbl">Total Commitments</span>
+                                </div>
+                            </div>
+                            <div class="l-stat-bar-overlay">
+                                SEE MORE <span class="arrow">→</span>
+                            </div>
+                            <div class="l-stat-bar-static-cta">
+                                SEE MORE →
+                            </div>
+                        </a>
+                        <a href="/market" class="l-stat-bar-item lhide-mobile" data-cell-index="2" aria-label="See more: settlement success">
+                            <div class="l-stat-bar-wrapper">
+                                <div class="l-stat-bar-content current">
+                                    <span class="l-stat-bar-val" id="ls-success">96.2%</span>
+                                    <span class="l-stat-bar-lbl">Settlement Success</span>
+                                </div>
+                            </div>
+                            <div class="l-stat-bar-overlay">
+                                SEE MORE <span class="arrow">→</span>
+                            </div>
+                            <div class="l-stat-bar-static-cta">
+                                SEE MORE →
+                            </div>
+                        </a>
+                        <a href="/market" class="l-stat-bar-item lhide-mobile" data-cell-index="3" aria-label="See more: execution identities">
+                            <div class="l-stat-bar-wrapper">
+                                <div class="l-stat-bar-content current">
+                                    <span class="l-stat-bar-val" id="ls-identities">3,442</span>
+                                    <span class="l-stat-bar-lbl">Execution Identities</span>
+                                </div>
+                            </div>
+                            <div class="l-stat-bar-overlay">
+                                SEE MORE <span class="arrow">→</span>
+                            </div>
+                            <div class="l-stat-bar-static-cta">
+                                SEE MORE →
+                            </div>
+                        </a>
                     </div>
                 </div>
             </div>
@@ -1008,13 +1052,218 @@ export function initLanding() {
         }, 450);
     }
 
-    // Animate new global stats bar immediately on page transition (delay-4 starts at 600ms)
-    setTimeout(() => {
-        animateCountFloat('ls-locked', 8.7, '$', 'M', 1);
-        animateCount('ls-commitments', 12483);
-        animateCountFloat('ls-success', 96.2, '', '%', 1);
-        animateCount('ls-identities', 3442);
-    }, 600);
+    // ── AUTO-ROTATING STATS TICKER ──
+    const STATS_ROTATION_INTERVAL = 3000;
+    const TOUCH_ROTATION_INTERVAL = 4500;
+
+    const METRIC_POOL = [
+        { key: 'capital_locked', label: 'Capital Locked', value: 8700000, type: 'currency_short' },
+        { key: 'total_commitments', label: 'Total Commitments', value: 12483, type: 'count' },
+        { key: 'settlement_success', label: 'Settlement Success', value: 96.2, type: 'percent' },
+        { key: 'execution_identities', label: 'Execution Identities', value: 3442, type: 'count' },
+        { key: 'active_contracts', label: 'Active Contracts', value: 1206, type: 'count' },
+        { key: 'avg_contract_size', label: 'Average Contract Size', value: 6940, type: 'currency' },
+        { key: 'median_settlement_time', label: 'Median Settlement Time', value: 1.4, type: 'days' },
+        { key: 'counterparties', label: 'Counterparties', value: 812, type: 'count' }
+    ];
+
+    function formatMetricValue(val, type) {
+        if (type === 'currency_short') {
+            return '$' + (val / 1000000).toFixed(1) + 'M';
+        }
+        if (type === 'currency') {
+            return '$' + val.toLocaleString('en-US');
+        }
+        if (type === 'count') {
+            return val.toLocaleString('en-US');
+        }
+        if (type === 'percent') {
+            return val.toFixed(1) + '%';
+        }
+        if (type === 'days') {
+            return val.toFixed(1) + ' days';
+        }
+        return val.toString();
+    }
+
+    let activeMetricIndices = [0, 1, 2, 3];
+    let nextCellToSwap = 0;
+    let isPaused = false;
+    let isTabVisible = true;
+    let isElementVisible = false;
+
+    function performSwap() {
+        const cellIndex = nextCellToSwap;
+        
+        // Find next metric from pool excluding every metric currently displayed in any of the four cells
+        const currentMetricIndex = activeMetricIndices[cellIndex];
+        const nextStartIdx = (currentMetricIndex + 1) % METRIC_POOL.length;
+        let foundIdx = -1;
+
+        for (let step = 0; step < METRIC_POOL.length; step++) {
+            const candidateIdx = (nextStartIdx + step) % METRIC_POOL.length;
+            if (!activeMetricIndices.includes(candidateIdx)) {
+                foundIdx = candidateIdx;
+                break;
+            }
+        }
+
+        if (foundIdx === -1) {
+            // Pool exhausted by active filter, skip this swap tick
+            nextCellToSwap = (nextCellToSwap + 1) % 4;
+            return;
+        }
+
+        // Update active indices list
+        activeMetricIndices[cellIndex] = foundIdx;
+        
+        // Advance staggered cell index for the next swap
+        nextCellToSwap = (nextCellToSwap + 1) % 4;
+
+        // Perform DOM transition
+        const cellEl = document.querySelector(`.l-stat-bar-item[data-cell-index="${cellIndex}"]`);
+        if (!cellEl) return;
+
+        const wrapper = cellEl.querySelector('.l-stat-bar-wrapper');
+        const currentContent = wrapper?.querySelector('.l-stat-bar-content.current');
+        if (!wrapper || !currentContent) return;
+
+        const metric = METRIC_POOL[foundIdx];
+        const formattedVal = formatMetricValue(metric.value, metric.type);
+
+        const incomingContent = document.createElement('div');
+        incomingContent.className = 'l-stat-bar-content incoming';
+        
+        const valSpan = document.createElement('span');
+        valSpan.className = 'l-stat-bar-val';
+        valSpan.textContent = formattedVal;
+        
+        const lblSpan = document.createElement('span');
+        lblSpan.className = 'l-stat-bar-lbl';
+        lblSpan.textContent = metric.label;
+
+        incomingContent.appendChild(valSpan);
+        incomingContent.appendChild(lblSpan);
+
+        // Check prefers-reduced-motion
+        const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        
+        if (prefersReducedMotion) {
+            incomingContent.style.opacity = '0';
+            incomingContent.style.transform = 'translateY(0)'; // No vertical transform
+            wrapper.appendChild(incomingContent);
+            
+            // Force reflow
+            incomingContent.getBoundingClientRect();
+            
+            currentContent.style.transition = 'opacity 150ms linear';
+            currentContent.style.opacity = '0';
+            
+            incomingContent.style.transition = 'opacity 150ms linear';
+            incomingContent.style.opacity = '1';
+            
+            setTimeout(() => {
+                if (currentContent.parentNode === wrapper) {
+                    wrapper.removeChild(currentContent);
+                }
+                incomingContent.classList.remove('incoming');
+                incomingContent.classList.add('current');
+                incomingContent.style.transition = '';
+            }, 150);
+        } else {
+            incomingContent.style.opacity = '0';
+            
+            const isMobile = window.innerWidth <= 768;
+            const yOffset = isMobile ? '30px' : '43px';
+            incomingContent.style.transform = `translateY(${yOffset})`;
+            incomingContent.style.willChange = 'transform, opacity';
+            
+            wrapper.appendChild(incomingContent);
+            
+            // Force reflow
+            incomingContent.getBoundingClientRect();
+            
+            currentContent.style.transition = 'opacity 80ms linear';
+            currentContent.style.opacity = '0';
+            
+            incomingContent.style.transition = 'transform 480ms cubic-bezier(0.22, 1, 0.36, 1), opacity 480ms cubic-bezier(0.22, 1, 0.36, 1)';
+            incomingContent.style.opacity = '1';
+            incomingContent.style.transform = 'translateY(0)';
+            
+            setTimeout(() => {
+                if (currentContent.parentNode === wrapper) {
+                    wrapper.removeChild(currentContent);
+                }
+                incomingContent.classList.remove('incoming');
+                incomingContent.classList.add('current');
+                incomingContent.style.willChange = '';
+                incomingContent.style.transition = '';
+            }, 480);
+        }
+    }
+
+    // Set up pause on hover for the stats grid
+    const statsBarGrid = document.querySelector('.l-stats-bar-grid');
+    if (statsBarGrid) {
+        statsBarGrid.addEventListener('mouseenter', () => { isPaused = true; });
+        statsBarGrid.addEventListener('mouseleave', () => { isPaused = false; });
+    }
+
+    // Tab visibility handling
+    const onVisibilityChange = () => {
+        isTabVisible = !document.hidden;
+    };
+    document.addEventListener('visibilitychange', onVisibilityChange);
+    
+    // Intersection Observer for viewport visibility
+    const statsSection = document.querySelector('.l-global-stats-bar');
+    if (statsSection && window.IntersectionObserver) {
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                isElementVisible = entry.isIntersecting;
+            });
+        }, { threshold: 0.1 });
+        observer.observe(statsSection);
+    } else {
+        isElementVisible = true;
+    }
+
+    // Staggered interval rotation
+    const isTouch = window.matchMedia('(hover: none)').matches;
+    const currentInterval = isTouch ? TOUCH_ROTATION_INTERVAL : STATS_ROTATION_INTERVAL;
+    const rotationIntervalId = setInterval(() => {
+        // Guard to prevent leaks/running when page changes (element destroyed)
+        if (!document.body.contains(statsBarGrid)) {
+            clearInterval(rotationIntervalId);
+            document.removeEventListener('visibilitychange', onVisibilityChange);
+            return;
+        }
+        if (!isPaused && isTabVisible && isElementVisible) {
+            performSwap();
+        }
+    }, currentInterval);
+    window.landingIntervals.push(rotationIntervalId);
+
+    // Set up hover/focus & click handlers for all cells
+    const cells = document.querySelectorAll('.l-stat-bar-item');
+    cells.forEach((cell, idx) => {
+        cell.addEventListener('focus', () => { isPaused = true; });
+        cell.addEventListener('blur', () => { isPaused = false; });
+        
+        cell.addEventListener('click', (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            // Route through the main landing auth logic
+            goAction('/market', 'signup');
+            
+            // Track event if available
+            if (window.trackEvent) {
+                const metricIndex = activeMetricIndices[idx];
+                const metric = METRIC_POOL[metricIndex];
+                window.trackEvent('stat_cell_click', { cell_index: idx, metric_key: metric?.key });
+            }
+        });
+    });
 
     // Populate live toast notifications and hero activity with real data
     setTimeout(async () => {

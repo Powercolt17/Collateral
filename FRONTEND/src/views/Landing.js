@@ -568,40 +568,6 @@ export function renderLanding() {
                 </div>
             </div>
 
-            <!-- ═══ HOW IT WORKS ═══ -->
-            <div class="lhow" data-r id="how">
-            <div class="lw">
-                    <div class="lred-dash reveal-item"><span class="lmono">How It Works</span></div>
-                    <h2 class="lhow-h reveal-item">Set a target. Lock money.<br>Force yourself to <strong>win.</strong></h2>
-                    <p class="lhow-sub reveal-item">If you are serious, put something on the line.</p>
-
-                    <div class="lhow-timeline-wrap reveal-item">
-                        <div class="lhow-timeline-line"></div>
-                        <div class="lhow-timeline-steps">
-                            <div class="lhow-timeline-step reveal-item">
-                                <div class="lhow-timeline-node">01</div>
-                                <h3 class="lhow-timeline-title">Set Target</h3>
-                                <p class="lhow-timeline-desc">Connect Stripe, X, Shopify, or YouTube. Set your exact metric target.</p>
-                            </div>
-                            <div class="lhow-timeline-step reveal-item">
-                                <div class="lhow-timeline-node">02</div>
-                                <h3 class="lhow-timeline-title">Lock Deposit</h3>
-                                <p class="lhow-timeline-desc">Lock your security deposit in escrow. No early withdrawals allowed.</p>
-                            </div>
-                            <div class="lhow-timeline-step reveal-item">
-                                <div class="lhow-timeline-node">03</div>
-                                <h3 class="lhow-timeline-title">Execute</h3>
-                                <p class="lhow-timeline-desc">Your contract runs. Progress is tracked in real-time via platform APIs.</p>
-                            </div>
-                            <div class="lhow-timeline-step reveal-item">
-                                <div class="lhow-timeline-node final">04</div>
-                                <h3 class="lhow-timeline-title">API Settle</h3>
-                                <p class="lhow-timeline-desc">APIs verify outcomes. Hit goals to win yields; fail and forfeit deposits.</p>
-                            </div>
-                        </div>
-                    </div>
-            </div>
-            </div>
 
             <!-- ═══ SOCIAL PROOF (REAL RESULTS) ═══ -->
             <div class="lreal-results" data-r>

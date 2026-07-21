@@ -563,238 +563,248 @@ export const landingCSS = `
     line-height: 1.6;
 }
 
-.lengine-interactive-box {
+.lschematic-container {
     background: #FFFFFF;
     border: 1px solid #E2E8F0;
     border-radius: 16px;
-    padding: 40px;
-    box-shadow: 0 16px 40px -12px rgba(15, 23, 42, 0.06);
+    padding: 36px 32px 32px;
+    box-shadow: 0 16px 40px -12px rgba(15, 23, 42, 0.05);
     position: relative;
+    overflow: hidden;
 }
 
-.lengine-pipeline-nav {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 12px;
-    margin-bottom: 40px;
+.lschematic-desktop {
     position: relative;
+    width: 100%;
+    min-height: 380px;
 }
 
-.lengine-step-btn {
-    background: #FAF9F7 !important;
-    border: 1.5px solid #E2E8F0 !important;
-    border-radius: 8px;
-    padding: 16px 18px !important;
-    cursor: pointer;
-    text-align: left;
-    transition: all 0.2s ease-out;
-    box-sizing: border-box !important;
-    height: 100% !important;
-    display: flex !important;
-    flex-direction: column !important;
-    justify-content: center !important;
-    transform: none !important;
+.lschematic-svg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 1;
 }
 
-.lengine-step-btn:hover {
-    border-color: #CBD5E1 !important;
-    background: #FFFFFF !important;
+.lschem-nodes-grid {
+    position: relative;
+    z-index: 2;
+    width: 100%;
+    height: 380px;
 }
 
-.lengine-step-btn.is-active {
-    background: #14121F !important;
-    border-color: #14121F !important;
-    color: #FFFFFF !important;
-    transform: none !important;
-    box-shadow: 0 6px 18px -4px rgba(20, 18, 31, 0.18) !important;
-}
-
-.lengine-step-num {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 11px;
-    font-weight: 700;
-    letter-spacing: 1px;
-    color: #64748B;
-    margin-bottom: 6px;
-}
-
-.lengine-step-btn.is-active .lengine-step-num {
-    color: rgba(255, 255, 255, 0.8) !important;
-}
-
-.lengine-step-title {
-    font-family: 'Plus Jakarta Sans', sans-serif;
-    font-size: 14px;
-    font-weight: 800;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-    color: #0F172A;
-}
-
-.lengine-step-btn.is-active .lengine-step-title {
-    color: #FFFFFF !important;
-}
-
-.lengine-stage-display {
-    display: grid;
-    grid-template-columns: 1.2fr 0.8fr;
-    gap: 40px;
-    align-items: center;
+.lschem-node {
+    position: absolute;
     background: #FAF9F7;
-    border: 1px solid #E2E8F0;
+    border: 1.5px solid #CBD5E1;
     border-radius: 12px;
-    padding: 32px;
+    padding: 16px 18px;
+    box-shadow: 0 4px 12px rgba(15, 23, 42, 0.04);
+    min-width: 160px;
+    box-sizing: border-box;
 }
 
-.lengine-stage-content h3 {
+.lschem-node-vault {
+    background: #FFFFFF !important;
+    border-color: #0F172A !important;
+    border-width: 2px !important;
+    box-shadow: 0 8px 24px -4px rgba(15, 23, 42, 0.08) !important;
+}
+
+.lschem-node-hdr {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 1.2px;
+    color: #64748B;
+    text-transform: uppercase;
+    margin-bottom: 4px;
+}
+
+.lschem-node-title {
     font-family: 'Plus Jakarta Sans', sans-serif;
-    font-size: 22px;
+    font-size: 13px;
     font-weight: 800;
     color: #0F172A;
-    margin-bottom: 12px;
     text-transform: uppercase;
+    letter-spacing: -0.2px;
 }
 
-.lengine-stage-content p {
-    font-size: 15px;
-    color: #475569;
-    line-height: 1.6;
-    margin-bottom: 24px;
-}
-
-.lengine-stage-metrics {
-    display: flex;
-    gap: 24px;
-}
-
-.lengine-metric-item {
-    display: flex;
-    flex-direction: column;
-}
-
-.lengine-metric-val {
+.lschem-node-stat {
     font-family: 'JetBrains Mono', monospace;
-    font-size: 20px;
+    font-size: 16px;
     font-weight: 800;
-    color: #7A1220 !important;
+    color: #0F172A;
+    margin-top: 6px;
 }
 
-.lengine-metric-lbl {
+.lschem-node-sub {
     font-size: 11px;
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 0.8px;
     color: #64748B;
     margin-top: 2px;
 }
 
-.lengine-visual-graphic {
-    background: #14121F;
-    border-radius: 12px;
-    padding: 24px;
-    color: #FFFFFF;
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 12px;
-    box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.4);
-}
-
-.lengine-terminal-hdr {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-    padding-bottom: 12px;
-    margin-bottom: 16px;
-}
-
-.lengine-terminal-dots {
-    display: flex;
-    gap: 6px;
-}
-
-.lengine-terminal-dot {
-    width: 8px;
-    height: 8px;
-    border-radius: 50%;
-    background: rgba(255, 255, 255, 0.2);
-}
-
-.lengine-terminal-title {
-    font-size: 10px;
-    color: rgba(255, 255, 255, 0.6);
-    letter-spacing: 1px;
-}
-
-.lengine-log-line {
-    margin-bottom: 8px;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-}
-
-.lengine-log-ts {
-    color: rgba(255, 255, 255, 0.4);
-    font-size: 11px;
-}
-
-.lengine-log-text {
-    color: rgba(255, 255, 255, 0.85);
-}
-
-.lengine-log-success {
-    color: #4ADE80 !important;
-    font-weight: 700;
-}
-
-.lengine-log-pending {
-    color: #F59E0B !important;
-    font-weight: 700;
-}
-
-.lengine-log-forfeit {
-    color: #EF4444 !important;
-    font-weight: 700;
-}
-
-.lengine-example-box {
-    margin-top: 20px;
-    padding: 16px 20px;
-    background: #FFFFFF;
-    border: 1px solid #CBD5E1;
-    border-radius: 8px;
-    font-size: 13px;
-    line-height: 1.55;
-    color: #334155;
-}
-
-.lengine-example-hdr {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 11px;
-    font-weight: 700;
-    letter-spacing: 0.8px;
-    text-transform: uppercase;
-    color: #0F172A;
-    margin-bottom: 8px;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-}
-
-.lengine-example-breakdown {
+/* THREE TERMINAL OUTCOMES */
+.lschem-outcomes-col {
+    position: absolute;
     display: flex;
     flex-direction: column;
-    gap: 4px;
-    margin-top: 6px;
-    font-size: 12px;
+    gap: 12px;
+    width: 260px;
+}
+
+.lschem-outcome-card {
+    background: #FFFFFF;
+    border: 1px solid #E2E8F0;
+    border-radius: 10px;
+    padding: 12px 16px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.02);
+}
+
+.lschem-outcome-card.is-win {
+    border-left: 4px solid #145C14 !important;
+    background: rgba(20, 92, 20, 0.02) !important;
+}
+
+.lschem-outcome-card.is-forfeit {
+    border-left: 4px solid #7A1220 !important;
+    background: rgba(122, 18, 32, 0.02) !important;
+}
+
+.lschem-outcome-card.is-burn {
+    border-left: 4px stroke #7A1220 !important;
+    border-left-style: dashed !important;
+    background: #FAF9F7 !important;
+}
+
+.lschem-outcome-hdr {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9.5px;
+    font-weight: 700;
+    letter-spacing: 0.8px;
     color: #64748B;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin-bottom: 2px;
+}
+
+.lschem-dot-green {
+    width: 6px;
+    height: 6px;
+    background: #145C14;
+    border-radius: 50%;
+    display: inline-block;
+}
+
+.lschem-dot-crimson {
+    width: 6px;
+    height: 6px;
+    background: #7A1220;
+    border-radius: 50%;
+    display: inline-block;
+}
+
+.lschem-outcome-title {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 12px;
+    font-weight: 800;
+    color: #0F172A;
+    text-transform: uppercase;
+}
+
+.lschem-outcome-val {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 15px;
+    font-weight: 800;
+    color: #0F172A;
+    margin-top: 2px;
+}
+
+.lschem-outcome-card.is-win .lschem-outcome-val {
+    color: #145C14 !important;
+}
+
+.lschem-outcome-card.is-forfeit .lschem-outcome-val {
+    color: #7A1220 !important;
+}
+
+.lschem-outcome-desc {
+    font-size: 11px;
+    color: #64748B;
+    margin-top: 2px;
+}
+
+/* SINGLE SHORT PARAGRAPH BENEATH DIAGRAM */
+.lschematic-summary-text {
+    max-width: 820px;
+    margin: 28px auto 0;
+    font-size: 15px;
+    color: #475569;
+    line-height: 1.6;
+    text-align: center;
+}
+
+/* MOBILE SCHEMATIC (<900px) */
+.lschematic-mobile {
+    display: none;
+    flex-direction: column;
+    gap: 12px;
+    align-items: center;
 }
 
 @media (max-width: 900px) {
-    .lengine-pipeline-nav {
-        grid-template-columns: 1fr 1fr;
+    .lschematic-desktop {
+        display: none !important;
     }
-    .lengine-stage-display {
-        grid-template-columns: 1fr;
+    .lschematic-mobile {
+        display: flex !important;
+    }
+    .lschem-mob-step {
+        display: flex;
+        align-items: center;
+        gap: 16px;
+        background: #FAF9F7;
+        border: 1px solid #CBD5E1;
+        border-radius: 10px;
+        padding: 14px 18px;
+        width: 100%;
+        box-sizing: border-box;
+    }
+    .lschem-mob-step.is-vault {
+        background: #FFFFFF;
+        border-color: #0F172A;
+        border-width: 1.5px;
+    }
+    .lschem-mob-num {
+        font-family: 'JetBrains Mono', monospace;
+        font-size: 12px;
+        font-weight: 800;
+        color: #7A1220;
+        background: rgba(122, 18, 32, 0.08);
+        padding: 4px 8px;
+        border-radius: 4px;
+    }
+    .lschem-mob-connector {
+        font-size: 16px;
+        color: #64748B;
+        font-weight: bold;
+    }
+    .lschem-mob-outcomes {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+        width: 100%;
+    }
+    .lschem-mob-loop-badge {
+        font-family: 'JetBrains Mono', monospace;
+        font-size: 10px;
+        font-weight: 700;
+        color: #7A1220;
+        margin-top: 6px;
     }
 }
 

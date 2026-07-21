@@ -401,83 +401,173 @@ export function renderLanding() {
                 </div>
             </div>
 
-            <!-- ═══ VISUAL CENTERPIECE: THE AUTOMATED SETTLEMENT ENGINE ═══ -->
+            <!-- ═══ VISUAL CENTERPIECE: CONTINUOUS MONEY FLOW SCHEMATIC ═══ -->
             <div class="lengine-section" id="engine-section" data-r>
                 <div class="lw">
                     <div class="lengine-hdr-wrap">
                         <div class="lengine-tag">
-                            <span class="l-lr-dot l-ticker-pulse"></span> AUTOMATED EXECUTION ENGINE
+                            <span class="l-lr-dot l-ticker-pulse"></span> AUTOMATED EXECUTION SCHEMATIC
                         </div>
                         <h2 class="lengine-h2">HOW MONEY FLOWS ON COLLATERAL</h2>
                         <p class="lengine-sub">
-                            Every contract is governed by transparent custodial escrow and automated API verification, with an optional decentralized juror dispute path.
+                            Every deposit is governed by custodial escrow and automated API verification. Winners receive their principal plus matching yield funded by forfeited deposits and brand sponsors.
                         </p>
                     </div>
 
-                    <div class="lengine-interactive-box">
-                        <div class="lengine-pipeline-nav" role="tablist" aria-label="Settlement Pipeline Stages">
-                            <button class="lengine-step-btn is-active" id="engine-tab-1" data-stage="1" role="tab" aria-selected="true">
-                                <div class="lengine-step-num">STAGE 01</div>
-                                <div class="lengine-step-title">CAPITAL ESCROW & DEPOSIT LOCK</div>
-                            </button>
-                            <button class="lengine-step-btn" id="engine-tab-2" data-stage="2" role="tab" aria-selected="false">
-                                <div class="lengine-step-num">STAGE 02</div>
-                                <div class="lengine-step-title">ORACLE API VERIFICATION STREAM</div>
-                            </button>
-                            <button class="lengine-step-btn" id="engine-tab-3" data-stage="3" role="tab" aria-selected="false">
-                                <div class="lengine-step-num">STAGE 03</div>
-                                <div class="lengine-step-title">MATCH CAPITAL ALLOCATION</div>
-                            </button>
-                            <button class="lengine-step-btn" id="engine-tab-4" data-stage="4" role="tab" aria-selected="false">
-                                <div class="lengine-step-num">STAGE 04</div>
-                                <div class="lengine-step-title">SETTLEMENT & DEFLATIONARY BURN</div>
-                            </button>
+                    <!-- CONTINUOUS SCHEMATIC DIAGRAM CONTAINER -->
+                    <div class="lschematic-container">
+                        <div class="lschematic-desktop">
+                            <svg class="lschematic-svg" viewBox="0 0 1140 400" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <defs>
+                                    <marker id="arrow-dark" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+                                        <path d="M 0 1 L 8 5 L 0 9 z" fill="#0F172A"/>
+                                    </marker>
+                                    <marker id="arrow-green" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+                                        <path d="M 0 1 L 8 5 L 0 9 z" fill="#145C14"/>
+                                    </marker>
+                                    <marker id="arrow-crimson" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+                                        <path d="M 0 1 L 8 5 L 0 9 z" fill="#7A1220"/>
+                                    </marker>
+                                </defs>
+
+                                <!-- 1. DEPOSIT IN → ESCROW VAULT (Thick Main Flow) -->
+                                <path d="M 170 140 H 260" stroke="#0F172A" stroke-width="4.5" marker-end="url(#arrow-dark)" stroke-linecap="round"/>
+
+                                <!-- 2. ESCROW VAULT → API VERIFICATION STREAM -->
+                                <path d="M 440 140 H 530" stroke="#0F172A" stroke-width="4" marker-end="url(#arrow-dark)" stroke-linecap="round"/>
+
+                                <!-- 3. API VERIFICATION STREAM → SPLIT ROUTER -->
+                                <path d="M 710 140 H 770" stroke="#0F172A" stroke-width="3.5" marker-end="url(#arrow-dark)" stroke-linecap="round"/>
+
+                                <!-- 4A. SPLIT ROUTER → OUTCOME A: RETURNED TO CREATOR (Win Path - Thick Green) -->
+                                <path d="M 770 140 C 810 140, 810 60, 850 60 H 870" stroke="#145C14" stroke-width="4.5" marker-end="url(#arrow-green)" stroke-linecap="round"/>
+
+                                <!-- 4B. SPLIT ROUTER → OUTCOME B: FORFEITED DEPOSITS (Medium Crimson) -->
+                                <path d="M 770 140 H 870" stroke="#7A1220" stroke-width="2.5" marker-end="url(#arrow-crimson)" stroke-linecap="round"/>
+
+                                <!-- 4C. SPLIT ROUTER → OUTCOME C: CLTR BURNED (Hairline Dashed Crimson) -->
+                                <path d="M 770 140 C 810 140, 810 220, 850 220 H 870" stroke="#7A1220" stroke-width="1.2" stroke-dasharray="4 3" marker-end="url(#arrow-crimson)" stroke-linecap="round"/>
+
+                                <!-- 5. CRITICAL BACKWARD LOOP: FORFEITED DEPOSITS → MATCH POOL (Recirculating Loop Back) -->
+                                <path d="M 940 170 C 940 330, 350 330, 350 185" stroke="#7A1220" stroke-width="2.2" stroke-dasharray="6 4" marker-end="url(#arrow-crimson)" stroke-linecap="round"/>
+                                
+                                <!-- LOOP BACKLABEL BADGE -->
+                                <rect x="520" y="306" width="240" height="28" rx="14" fill="#7A1220"/>
+                                <text x="640" y="324" fill="#FFFFFF" font-family="JetBrains Mono" font-size="10" font-weight="700" text-anchor="middle" letter-spacing="0.8">↺ RE-CIRCULATES TO MATCH POOL (80%)</text>
+                            </svg>
+
+                            <!-- SCHEMATIC NODES OVERLAY -->
+                            <div class="lschem-nodes-grid">
+                                <!-- NODE 1: DEPOSIT IN -->
+                                <div class="lschem-node lschem-node-start" style="left: 0px; top: 80px;">
+                                    <div class="lschem-node-hdr">INPUT</div>
+                                    <div class="lschem-node-title">DEPOSIT IN</div>
+                                    <div class="lschem-node-stat">$8,700,000</div>
+                                    <div class="lschem-node-sub">Stripe Connect Escrow</div>
+                                </div>
+
+                                <!-- NODE 2: ESCROW VAULT -->
+                                <div class="lschem-node lschem-node-vault" style="left: 250px; top: 70px;">
+                                    <div class="lschem-node-hdr">CUSTODY</div>
+                                    <div class="lschem-node-title">ESCROW VAULT</div>
+                                    <div class="lschem-node-stat">$8.7M LOCKED</div>
+                                    <div class="lschem-node-sub">FDIC-Insured Mapped Vault</div>
+                                </div>
+
+                                <!-- NODE 3: API VERIFICATION -->
+                                <div class="lschem-node lschem-node-oracle" style="left: 520px; top: 70px;">
+                                    <div class="lschem-node-hdr">VERIFICATION</div>
+                                    <div class="lschem-node-title">ORACLE API STREAM</div>
+                                    <div class="lschem-node-stat">96.2% SUCCESS</div>
+                                    <div class="lschem-node-sub">Stripe • Shopify • X • YouTube</div>
+                                </div>
+
+                                <!-- THREE TERMINAL OUTCOMES -->
+                                <div class="lschem-outcomes-col" style="left: 860px; top: 10px;">
+                                    <!-- OUTCOME A: RETURNED TO CREATOR -->
+                                    <div class="lschem-outcome-card is-win">
+                                        <div class="lschem-outcome-hdr"><span class="lschem-dot-green"></span> WIN PATH (96.2%)</div>
+                                        <div class="lschem-outcome-title">RETURNED TO CREATOR</div>
+                                        <div class="lschem-outcome-val">$8,369,400</div>
+                                        <div class="lschem-outcome-desc">100% Principal + Matching Yield</div>
+                                    </div>
+
+                                    <!-- OUTCOME B: FORFEITED -->
+                                    <div class="lschem-outcome-card is-forfeit">
+                                        <div class="lschem-outcome-hdr"><span class="lschem-dot-crimson"></span> FORFEITED (3.8%)</div>
+                                        <div class="lschem-outcome-title">FORFEITED DEPOSITS</div>
+                                        <div class="lschem-outcome-val">$287,100</div>
+                                        <div class="lschem-outcome-desc">Feeds Winner Match Pool (80%)</div>
+                                    </div>
+
+                                    <!-- OUTCOME C: BURNED -->
+                                    <div class="lschem-outcome-card is-burn">
+                                        <div class="lschem-outcome-hdr"><span class="lschem-dot-crimson"></span> PROTOCOL FEE</div>
+                                        <div class="lschem-outcome-title">CLTR BURNED</div>
+                                        <div class="lschem-outcome-val">$43,500</div>
+                                        <div class="lschem-outcome-desc">0.5% Fee Permanently Destroyed</div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
 
-                        <div class="lengine-stage-display" id="engine-stage-display">
-                            <div class="lengine-stage-content">
-                                <h3 id="engine-stage-title">01. CAPITAL ESCROW & DEPOSIT LOCK</h3>
-                                <p id="engine-stage-desc">
-                                    Creator commits target goal and deposits funds into the isolated smart escrow vault. Principal remains locked until target deadline or API verification event.
-                                </p>
-                                <div class="lengine-stage-metrics">
-                                    <div class="lengine-metric-item">
-                                        <span class="lengine-metric-val" id="engine-metric-1">$500.00</span>
-                                        <span class="lengine-metric-lbl">Capital Locked</span>
-                                    </div>
-                                    <div class="lengine-metric-item">
-                                        <span class="lengine-metric-val" id="engine-metric-2">ESCROW_LOCKED</span>
-                                        <span class="lengine-metric-lbl">Protocol State</span>
-                                    </div>
+                        <!-- MOBILE VERTICAL FLOW SCHEMATIC (<900px) -->
+                        <div class="lschematic-mobile">
+                            <div class="lschem-mob-step">
+                                <div class="lschem-mob-num">01</div>
+                                <div class="lschem-mob-content">
+                                    <div class="lschem-node-hdr">INPUT</div>
+                                    <div class="lschem-node-title">DEPOSIT IN</div>
+                                    <div class="lschem-node-stat">$8,700,000</div>
                                 </div>
-                                <div id="engine-stage-example"></div>
                             </div>
+                            <div class="lschem-mob-connector">↓</div>
 
-                            <div class="lengine-visual-graphic">
-                                <div class="lengine-terminal-hdr">
-                                    <div class="lengine-terminal-dots">
-                                        <span class="lengine-terminal-dot"></span>
-                                        <span class="lengine-terminal-dot"></span>
-                                        <span class="lengine-terminal-dot"></span>
-                                    </div>
-                                    <span class="lengine-terminal-title">TELEMETRY STREAM</span>
+                            <div class="lschem-mob-step is-vault">
+                                <div class="lschem-mob-num">02</div>
+                                <div class="lschem-mob-content">
+                                    <div class="lschem-node-hdr">CUSTODY</div>
+                                    <div class="lschem-node-title">ESCROW VAULT</div>
+                                    <div class="lschem-node-stat">$8.7M LOCKED</div>
                                 </div>
-                                <div class="lengine-terminal-body" id="engine-terminal-body">
-                                    <div class="lengine-log-line">
-                                        <span class="lengine-log-ts">[15:47:02]</span>
-                                        <span class="lengine-log-text">INIT_ESCROW: Vault #4902 initialized</span>
-                                    </div>
-                                    <div class="lengine-log-line">
-                                        <span class="lengine-log-ts">[15:47:03]</span>
-                                        <span class="lengine-log-pending">DEPOSIT: $500.00 locked in smart contract</span>
-                                    </div>
-                                    <div class="lengine-log-line">
-                                        <span class="lengine-log-ts">[15:47:03]</span>
-                                        <span class="lengine-log-success">STATUS: Escrow locked & verified safe</span>
-                                    </div>
+                            </div>
+                            <div class="lschem-mob-connector">↓</div>
+
+                            <div class="lschem-mob-step">
+                                <div class="lschem-mob-num">03</div>
+                                <div class="lschem-mob-content">
+                                    <div class="lschem-node-hdr">VERIFICATION</div>
+                                    <div class="lschem-node-title">ORACLE API STREAM</div>
+                                    <div class="lschem-node-stat">96.2% SUCCESS</div>
+                                </div>
+                            </div>
+                            <div class="lschem-mob-connector">↓</div>
+
+                            <!-- THREE MOBILE TERMINAL OUTCOMES -->
+                            <div class="lschem-mob-outcomes">
+                                <div class="lschem-outcome-card is-win">
+                                    <div class="lschem-outcome-hdr"><span class="lschem-dot-green"></span> WIN PATH</div>
+                                    <div class="lschem-outcome-title">RETURNED TO CREATOR</div>
+                                    <div class="lschem-outcome-val">$8,369,400</div>
+                                </div>
+                                <div class="lschem-outcome-card is-forfeit">
+                                    <div class="lschem-outcome-hdr"><span class="lschem-dot-crimson"></span> FORFEITED</div>
+                                    <div class="lschem-outcome-title">RE-CIRCULATED TO MATCH POOL</div>
+                                    <div class="lschem-outcome-val">$287,100</div>
+                                    <div class="lschem-mob-loop-badge">↺ Loops Back to Vault (80%)</div>
+                                </div>
+                                <div class="lschem-outcome-card is-burn">
+                                    <div class="lschem-outcome-hdr"><span class="lschem-dot-crimson"></span> PROTOCOL FEE</div>
+                                    <div class="lschem-outcome-title">CLTR BURNED (0.5%)</div>
+                                    <div class="lschem-outcome-val">$43,500</div>
                                 </div>
                             </div>
                         </div>
+                    </div>
+
+                    <!-- SINGLE SHORT EXPLANATORY PARAGRAPH BENEATH DIAGRAM -->
+                    <div class="lschematic-summary-text">
+                        Deposits flow into FDIC-insured Stripe Connect custodial escrow accounts mapped directly to smart contract state. Upon automated API verification, winning principal and matching yields are returned to creators, 0.5% is burned from CLTR supply, and forfeited deposits loop directly back into the match pool to fund future winners.
                     </div>
                 </div>
             </div>

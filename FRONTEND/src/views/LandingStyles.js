@@ -1218,42 +1218,50 @@ export const landingCSS = `
 .tier-allin{color:#4338CA;background:rgba(67,56,202,.06);border:1px solid rgba(67,56,202,.18)}
 
 .ltier-legend-bar {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
     background: #FFFFFF;
     border: 1px solid #E2E8F0;
-    border-radius: 10px;
-    padding: 12px 20px;
+    border-radius: 12px;
+    padding: 14px 20px;
     margin-bottom: 24px;
-    gap: 16px;
-    flex-wrap: wrap;
+    gap: 20px;
+    box-shadow: 0 2px 10px rgba(15, 23, 42, 0.02);
 }
 .ltier-legend-item {
     display: flex;
     align-items: center;
-    gap: 10px;
-    flex-wrap: wrap;
+    gap: 12px;
+    position: relative;
+    padding-right: 10px;
+}
+.ltier-legend-item:not(:last-child)::after {
+    content: '';
+    position: absolute;
+    right: -10px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 1px;
+    height: 22px;
+    background: #E2E8F0;
 }
 .ltier-legend-desc {
     font-family: 'Inter', sans-serif;
-    font-size: 12px;
+    font-size: 11.5px;
     color: #475569;
     font-weight: 500;
+    line-height: 1.35;
 }
-.ltier-legend-divider {
-    width: 1px;
-    height: 18px;
-    background: #E2E8F0;
-}
-@media (max-width: 900px) {
+@media (max-width: 1024px) {
     .ltier-legend-bar {
-        flex-direction: column;
-        align-items: flex-start;
+        grid-template-columns: 1fr;
         gap: 12px;
         padding: 14px 16px;
     }
-    .ltier-legend-divider {
+    .ltier-legend-item {
+        padding-right: 0;
+    }
+    .ltier-legend-item:not(:last-child)::after {
         display: none;
     }
 }

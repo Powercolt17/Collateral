@@ -609,17 +609,15 @@ export function renderLanding() {
                     <div class="ltier-legend-bar reveal-item">
                         <div class="ltier-legend-item">
                             <span class="lcard-tier tier-pledge">Pledge 1.5x</span>
-                            <span class="ltier-legend-desc">Moderate target · 30-day window · Grace period on miss</span>
+                            <span class="ltier-legend-desc">Moderate target · 30-day window · Grace period</span>
                         </div>
-                        <div class="ltier-legend-divider"></div>
                         <div class="ltier-legend-item">
                             <span class="lcard-tier tier-stake">Stake 2.5x</span>
-                            <span class="ltier-legend-desc">Accelerated target · 30-day window · Full deposit forfeit</span>
+                            <span class="ltier-legend-desc">Standard target · 30-day window · Full forfeit</span>
                         </div>
-                        <div class="ltier-legend-divider"></div>
                         <div class="ltier-legend-item">
                             <span class="lcard-tier tier-allin">All-In 4.0x</span>
-                            <span class="ltier-legend-desc">Aggressive target · 14-day window · Full deposit forfeit</span>
+                            <span class="ltier-legend-desc">Aggressive target · 14-day window · Full forfeit</span>
                         </div>
                     </div>
 

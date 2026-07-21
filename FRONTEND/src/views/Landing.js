@@ -21,7 +21,7 @@ export function renderLanding() {
             <nav class="ln">
                 <div class="ln-in">
                     <a class="ln-brand" href="/" onclick="window.router.navigate('/'); return false;">
-                        <span class="logo-wordmark">COLLATERAL</span>
+                        <span class="logo-wordmark">Collateral</span>
                     </a>
                     <div style="display:flex; align-items:center;">
                         <button class="ln-cta" id="lp-nav-cta">Sign In</button>

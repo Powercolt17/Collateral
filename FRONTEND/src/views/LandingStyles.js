@@ -28,23 +28,45 @@ export const landingCSS = `
   0% { background-position: 200% center; }
   100% { background-position: -200% center; }
 }
-.lpromo-bar{position:fixed;top:0;left:0;right:0;height:32px;background-color:#14121F !important;color:#FFFFFF !important;display:flex;align-items:center;justify-content:center;text-align:center;font-size:12px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;z-index:60;box-shadow:0 2px 12px rgba(0,0,0,.2);opacity:0}
-.promo-text{color:#FFFFFF !important;background:none !important;-webkit-background-clip:initial !important;-webkit-text-fill-color:initial !important;text-shadow:none !important}
+.lpromo-bar{position:fixed;top:0;left:0;right:0;height:32px;background-color:var(--r);display:flex;align-items:center;justify-content:center;text-align:center;font-size:12px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;z-index:60;box-shadow:0 2px 12px rgba(92,20,20,.4);opacity:0}
+.promo-text{background:linear-gradient(to right, rgba(255,255,255,0.6) 20%, #fff 40%, #fff 60%, rgba(255,255,255,0.6) 80%);background-size:200% auto;color:transparent;-webkit-background-clip:text;background-clip:text;animation:textShine 4s linear infinite;text-shadow: 0 1px 1px rgba(0,0,0,0.1)}
 
 /* Nav */
 .ln{position:fixed;top:32px;left:0;right:0;z-index:50;background:rgba(250,250,250,0.85);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-bottom:1px solid rgba(0,0,0,0.04);opacity:0;transition:top 0.4s cubic-bezier(0.16, 1, 0.3, 1), background 0.4s ease, border-color 0.4s ease, box-shadow 0.4s ease, backdrop-filter 0.4s ease}
 .ln.nav-scrolled{top:0px !important;background:rgba(255,255,255,0.25) !important;backdrop-filter:blur(18px) saturate(180%) !important;-webkit-backdrop-filter:blur(18px) saturate(180%) !important;border-bottom-color:rgba(229,229,229,0.35) !important;box-shadow:0 1px 3px rgba(0,0,0,0.02), 0 8px 32px rgba(0,0,0,0.03)}
 .ln-in{max-width:none;width:100%;padding:0 48px;height:72px;display:flex;justify-content:space-between;align-items:center}
 .ln-brand{font-family:'Inter Tight',sans-serif;font-size:16px;font-weight:800;letter-spacing:3.5px;color:var(--t1);text-decoration:none;display:inline-flex;align-items:center;gap:14px}
-.logo-wordmark, .logo-wordmark * {
-    font-family:'Inter Tight','Inter',sans-serif !important;
-    font-weight:800 !important;
-    font-style:normal !important;
-    font-size:16px !important;
-    text-transform:uppercase !important;
-    letter-spacing:3.5px !important;
-    color:#0F172A !important;
+.ln-logo{width:32px;height:32px;color:var(--r);fill:currentColor;flex-shrink:0}
+.ln-cta{background:var(--r) !important;color:#fff !important;font-size:11px;font-weight:600;letter-spacing:.8px;text-transform:uppercase;padding:12px 24px;border:none;cursor:pointer;transition:all .3s cubic-bezier(.16, 1, 0.3, 1)}
+
+/* Entrance Keyframes for Nav & Promo */
+@keyframes promoDown {
+  from { opacity: 0; transform: translateY(-32px); }
+  to { opacity: 1; transform: translateY(0); }
 }
+@keyframes navDown {
+  from { opacity: 0; transform: translateY(-12px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.lp.v .lpromo-bar { animation: promoDown 0.6s cubic-bezier(0.16, 1, 0.3, 1) both; }
+.lp.v .ln { animation: navDown 0.8s cubic-bezier(0.16, 1, 0.3, 1) both; animation-delay: 100ms; }
+.ln-cta:hover{background:var(--rh) !important;transform:scale(1.02)}
+.ln-cta::after{content:'→';opacity:0;transform:translateX(-6px);transition:all .25s cubic-bezier(.16, 1, 0.3, 1);display:inline-block;width:0;margin-left:0}
+.ln-cta:hover::after{opacity:1;transform:translateX(0);width:auto;margin-left:8px}
+.ch-hamburger { width: 40px; height: 40px; display: flex; align-items: center; justify-content: center; background: transparent; border: 1px solid transparent; cursor: pointer; position: relative; transition: border-color 0.2s, background 0.2s; flex-shrink: 0; margin-left: 16px; }
+.ch-hamburger:hover { border-color: #e5e5e5; background: #fafafa; }
+.ch-hamburger-lines { width: 18px; height: 14px; display: flex; flex-direction: column; justify-content: space-between; }
+.ch-hamburger-lines span { display: block; width: 100%; height: 1.5px; background: #333; transition: transform 0.3s ease, opacity 0.3s ease, width 0.3s ease; transform-origin: center; }
+.ch-hamburger-lines span:nth-child(2) { width: 12px; margin-left: auto; }
+
+/* Shared */
+.lw{max-width:1080px;margin:0 auto;padding:0 24px;position:relative;z-index:1}
+.lhr{height:1px;background:var(--d);width:100%}
+.lmono{font-family:'Inter',sans-serif;font-size:14px;font-weight:600;text-transform:uppercase;letter-spacing:1.5px;color:var(--t2)}
+.lred-dash{display:flex;align-items:center;gap:12px;margin-bottom:12px}
+.lred-dash::before{content:'';width:28px;height:2px;background:var(--r)}
+[data-r]{opacity:0;transition:opacity .7s cubic-bezier(.16,1,.3,1)}
+[data-r].v{opacity:1}
 
 /* ═══ HERO BASE & TEXTURE LAYER ═══ */
 .lhero-section {
@@ -55,17 +77,11 @@ export const landingCSS = `
     background: #FAF9F7 !important;
 }
 
-/* Subtle 2.5% Paper Grain Noise Overlay (Full Width Inset 0 Fix) */
+/* Subtle 2.5% Paper Grain Noise Overlay */
 .lhero-section::before {
     content: '';
     position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    width: 100% !important;
-    height: 100% !important;
-    max-width: none !important;
+    inset: 0;
     pointer-events: none !important;
     z-index: 0 !important;
     opacity: 0.025;
@@ -73,17 +89,11 @@ export const landingCSS = `
     background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
 }
 
-/* Soft Edge Vignette Overlay (Full Width Inset 0 Fix) */
+/* Soft Edge Vignette Overlay */
 .lhero-section::after {
     content: '';
     position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    width: 100% !important;
-    height: 100% !important;
-    max-width: none !important;
+    inset: 0;
     pointer-events: none !important;
     z-index: 0 !important;
     background: radial-gradient(ellipse at center, transparent 55%, rgba(20, 18, 31, 0.04) 100%);
@@ -300,8 +310,6 @@ export const landingCSS = `
 }
 .lbtn {
     height: 50px !important;
-    min-width: 220px !important;
-    width: 220px !important;
     padding: 0 32px !important;
     font-family: 'Plus Jakarta Sans', 'Inter', sans-serif !important;
     font-size: 13px !important;

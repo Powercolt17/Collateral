@@ -410,7 +410,7 @@ export function renderLanding() {
                         </div>
                         <h2 class="lengine-h2">HOW MONEY FLOWS ON COLLATERAL</h2>
                         <p class="lengine-sub">
-                            Every contract is governed by transparent cryptographic escrow and automated API verification. Zero human intervention.
+                            Every contract is governed by transparent custodial escrow and automated API verification, with an optional decentralized juror dispute path.
                         </p>
                     </div>
 
@@ -418,19 +418,19 @@ export function renderLanding() {
                         <div class="lengine-pipeline-nav" role="tablist" aria-label="Settlement Pipeline Stages">
                             <button class="lengine-step-btn is-active" id="engine-tab-1" data-stage="1" role="tab" aria-selected="true">
                                 <div class="lengine-step-num">STAGE 01</div>
-                                <div class="lengine-step-title">01. CAPITAL LOCK</div>
+                                <div class="lengine-step-title">CAPITAL ESCROW & DEPOSIT LOCK</div>
                             </button>
                             <button class="lengine-step-btn" id="engine-tab-2" data-stage="2" role="tab" aria-selected="false">
                                 <div class="lengine-step-num">STAGE 02</div>
-                                <div class="lengine-step-title">02. API VERIFY</div>
+                                <div class="lengine-step-title">ORACLE API VERIFICATION STREAM</div>
                             </button>
                             <button class="lengine-step-btn" id="engine-tab-3" data-stage="3" role="tab" aria-selected="false">
                                 <div class="lengine-step-num">STAGE 03</div>
-                                <div class="lengine-step-title">03. MATCH ALLOCATE</div>
+                                <div class="lengine-step-title">MATCH CAPITAL ALLOCATION</div>
                             </button>
                             <button class="lengine-step-btn" id="engine-tab-4" data-stage="4" role="tab" aria-selected="false">
                                 <div class="lengine-step-num">STAGE 04</div>
-                                <div class="lengine-step-title">04. SETTLE & BURN</div>
+                                <div class="lengine-step-title">SETTLEMENT & DEFLATIONARY BURN</div>
                             </button>
                         </div>
 
@@ -1462,13 +1462,13 @@ export function initLanding() {
     const engineStageData = {
         1: {
             title: '01. CAPITAL ESCROW & DEPOSIT LOCK',
-            desc: 'Creator commits target goal and deposits funds into the isolated smart escrow vault. Principal remains locked until target deadline or API verification event.',
+            desc: 'Creator commits target goal and deposits funds held in FDIC-insured Stripe Connect custodial escrow accounts mapped directly to smart contract state. Principal remains locked until target deadline or API verification event.',
             metric1: '$500.00',
             metric2: 'ESCROW_LOCKED',
             exampleHtml: '',
             logs: [
                 { ts: '[15:47:02]', text: 'INIT_ESCROW: Vault #4902 initialized', type: 'text' },
-                { ts: '[15:47:03]', text: 'DEPOSIT: $500.00 locked in smart contract', type: 'pending' },
+                { ts: '[15:47:03]', text: 'DEPOSIT: $500.00 locked in Stripe Connect escrow', type: 'pending' },
                 { ts: '[15:47:03]', text: 'STATUS: Escrow locked & verified safe', type: 'success' }
             ]
         },
@@ -1485,7 +1485,7 @@ export function initLanding() {
             ]
         },
         3: {
-            title: '03. TRANSPARENT MATCH CAPITAL ALLOCATION',
+            title: '03. MATCH CAPITAL ALLOCATION',
             desc: 'Match capital is funded directly from two explicit sources: 80% comes from forfeited deposits of users who failed to hit their targets, and 20% comes from verified corporate brand sponsors. Multipliers reflect real available pool ratios, not guaranteed investment returns.',
             metric1: '+$500.00 MATCH',
             metric2: '80% FORFEIT / 20% SPONSOR',
@@ -1509,7 +1509,7 @@ export function initLanding() {
             ]
         },
         4: {
-            title: '04. INSTANT SETTLEMENT & DEFLATIONARY CLTR BURN',
+            title: '04. SETTLEMENT & DEFLATIONARY BURN',
             desc: 'Funds automatically unlock and return to creator account. A 0.5% protocol fee is automatically burned from total CLTR supply. Unsuccessful contracts trigger automated deposit forfeiture to fund winner matches.',
             metric1: '$1,000.00',
             metric2: 'SETTLED & BURNED',

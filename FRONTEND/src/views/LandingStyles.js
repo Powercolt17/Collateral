@@ -582,12 +582,18 @@ export const landingCSS = `
 
 .lengine-step-btn {
     background: #FAF9F7 !important;
-    border: 1px solid #E2E8F0 !important;
+    border: 1.5px solid #E2E8F0 !important;
     border-radius: 8px;
-    padding: 16px 20px;
+    padding: 16px 18px !important;
     cursor: pointer;
     text-align: left;
-    transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+    transition: all 0.2s ease-out;
+    box-sizing: border-box !important;
+    height: 100% !important;
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: center !important;
+    transform: none !important;
 }
 
 .lengine-step-btn:hover {
@@ -596,11 +602,11 @@ export const landingCSS = `
 }
 
 .lengine-step-btn.is-active {
-    background: #7A1220 !important;
-    border-color: #7A1220 !important;
+    background: #14121F !important;
+    border-color: #14121F !important;
     color: #FFFFFF !important;
-    transform: translateY(-2px);
-    box-shadow: 0 8px 24px -6px rgba(122, 18, 32, 0.3) !important;
+    transform: none !important;
+    box-shadow: 0 6px 18px -4px rgba(20, 18, 31, 0.18) !important;
 }
 
 .lengine-step-num {

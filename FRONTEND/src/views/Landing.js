@@ -358,42 +358,85 @@ export function renderLanding() {
                     </div>
 
                     <div class="ltypes-right">
-                        <!-- SOLO CARD -->
-                        <div class="ltype-row is-solo reveal-item">
-                            <div class="ltype-card-top">
-                                <span class="ltype-badge-new">Solo Mode</span>
-                                <span class="ltype-stat-pill">22 Active Contracts</span>
+                        <!-- MODE CAROUSEL STACK -->
+                        <div class="mode-deck-container" id="mode-deck-container">
+                            <!-- Carousel Controls Header -->
+                            <div class="mode-deck-tabs">
+                                <button class="mode-deck-tab active" id="mode-tab-solo" data-mode="0">
+                                    <span class="mode-tab-indicator"></span> SOLO MODE
+                                </button>
+                                <button class="mode-deck-tab" id="mode-tab-rivalry" data-mode="1">
+                                    <span class="mode-tab-indicator secondary"></span> RIVALRY MODE
+                                </button>
                             </div>
-                            <h3 class="ltype-title-new">You vs. Yourself</h3>
-                            <p class="ltype-desc-new">Lock deposits to force yourself to execute. Hit targets to win; fail and forfeit capital.</p>
-                            <div class="ltype-stat-row">
-                                <span class="ltype-stat-k">Typical Deposit:</span>
-                                <span class="ltype-stat-v">$100 – $3,000</span>
-                            </div>
-                            <div class="ltype-meta-new">
-                                <span class="lmeta-label">Best for</span>
-                                <span class="lmeta-tag">Milestones</span>
-                                <span class="lmeta-tag">Shipping code</span>
-                                <span class="lmeta-tag">Audience building</span>
-                            </div>
-                        </div>
 
-                        <!-- RIVALRY CARD -->
-                        <div class="ltype-row is-rivalry reveal-item">
-                            <div class="ltype-card-top">
-                                <span class="ltype-badge-new secondary">Rivalry Mode</span>
-                                <span class="ltype-stat-pill secondary">48 Active Duels</span>
+                            <!-- 3D CAROUSEL DECK STAGE -->
+                            <div class="mode-deck-stage" id="mode-deck-stage">
+                                
+                                <!-- CARD 1: SOLO MODE CARD -->
+                                <div class="mode-deck-card is-solo is-center" id="mode-card-solo" data-mode-card="0">
+                                    <div class="mode-card-art-wrap solo-bg">
+                                        <picture>
+                                            <source srcset="/assets/images/solo-seal.webp" type="image/webp">
+                                            <img src="/assets/images/solo-seal.png" alt="A hand pressing a wax seal onto a coin, locking a personal deposit." class="mode-seal-artwork" loading="eager">
+                                        </picture>
+                                    </div>
+                                    <div class="mode-card-info">
+                                        <div class="ltype-card-top">
+                                            <span class="ltype-badge-new">Solo Mode</span>
+                                            <span class="ltype-stat-pill">22 Active Contracts</span>
+                                        </div>
+                                        <h3 class="ltype-title-new">You vs. Yourself</h3>
+                                        <p class="ltype-desc-new">Lock deposits to force yourself to execute. Hit targets to win; fail and forfeit capital.</p>
+                                        <div class="ltype-stat-row">
+                                            <span class="ltype-stat-k">Typical Deposit:</span>
+                                            <span class="ltype-stat-v">$100 – $3,000</span>
+                                        </div>
+                                        <div class="ltype-meta-new">
+                                            <span class="lmeta-label">Best for</span>
+                                            <span class="lmeta-tag">Milestones</span>
+                                            <span class="lmeta-tag">Shipping code</span>
+                                            <span class="lmeta-tag">Audience building</span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- CARD 2: RIVALRY MODE CARD -->
+                                <div class="mode-deck-card is-rivalry is-right" id="mode-card-rivalry" data-mode-card="1">
+                                    <div class="mode-card-art-wrap rivalry-bg">
+                                        <picture>
+                                            <source srcset="/assets/images/rivalry-seal.webp" type="image/webp">
+                                            <img src="/assets/images/rivalry-seal.png" alt="Two hands sealing deposits onto one shared pot." class="mode-seal-artwork" loading="lazy">
+                                        </picture>
+                                    </div>
+                                    <div class="mode-card-info">
+                                        <div class="ltype-card-top">
+                                            <span class="ltype-badge-new secondary">Rivalry Mode</span>
+                                            <span class="ltype-stat-pill secondary">48 Active Duels</span>
+                                        </div>
+                                        <h3 class="ltype-title-new">You vs. Competitors</h3>
+                                        <p class="ltype-desc-new">Lock equal deposits in a head-to-head race. Winner takes the entire pool.</p>
+                                        <div class="ltype-stat-row">
+                                            <span class="ltype-stat-k">Typical Deposit:</span>
+                                            <span class="ltype-stat-v">$250 – $5,000</span>
+                                        </div>
+                                        <div class="ltype-meta-new">
+                                            <span class="lmeta-label">Best for</span>
+                                            <span class="lmeta-tag">Audience races</span>
+                                            <span class="lmeta-tag">Competitive fire</span>
+                                        </div>
+                                    </div>
+                                </div>
+
                             </div>
-                            <h3 class="ltype-title-new">You vs. Competitors</h3>
-                            <p class="ltype-desc-new">Lock equal deposits in a head-to-head race. Winner takes the entire pool.</p>
-                            <div class="ltype-stat-row">
-                                <span class="ltype-stat-k">Typical Deposit:</span>
-                                <span class="ltype-stat-v">$250 – $5,000</span>
-                            </div>
-                            <div class="ltype-meta-new">
-                                <span class="lmeta-label">Best for</span>
-                                <span class="lmeta-tag">Audience races</span>
-                                <span class="lmeta-tag">Competitive fire</span>
+
+                            <!-- CAROUSEL PAGINATION / AUTOPLAY HINT -->
+                            <div class="mode-deck-footer">
+                                <span class="mode-deck-hint">Click card or tab to switch execution mode</span>
+                                <div class="mode-deck-dots">
+                                    <span class="mode-deck-dot active" id="mode-dot-0" data-mode="0"></span>
+                                    <span class="mode-deck-dot" id="mode-dot-1" data-mode="1"></span>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -2298,6 +2341,34 @@ export function initLanding() {
     // Unified Event Delegation for Landing Page Overlays (Spec Modal + Rivalry Modal)
     document.addEventListener('click', (e) => {
         try {
+            // ═══ MODE DECK CAROUSEL HANDLER ═══
+            const modeTab = e.target.closest('.mode-deck-tab, .mode-deck-dot');
+            const modeCard = e.target.closest('.mode-deck-card');
+            if (modeTab || modeCard) {
+                const targetMode = modeTab ? modeTab.getAttribute('data-mode') : modeCard.getAttribute('data-mode-card');
+                if (targetMode !== null && targetMode !== undefined) {
+                    const idx = parseInt(targetMode, 10);
+                    const soloCard = document.getElementById('mode-card-solo');
+                    const rivalryCard = document.getElementById('mode-card-rivalry');
+                    const soloTab = document.getElementById('mode-tab-solo');
+                    const rivalryTab = document.getElementById('mode-tab-rivalry');
+                    const soloDot = document.getElementById('mode-dot-0');
+                    const rivalryDot = document.getElementById('mode-dot-1');
+
+                    if (idx === 0) {
+                        soloCard?.classList.remove('is-right'); soloCard?.classList.add('is-center');
+                        rivalryCard?.classList.remove('is-center'); rivalryCard?.classList.add('is-right');
+                        soloTab?.classList.add('active'); rivalryTab?.classList.remove('active');
+                        soloDot?.classList.add('active'); rivalryDot?.classList.remove('active');
+                    } else {
+                        rivalryCard?.classList.remove('is-right'); rivalryCard?.classList.add('is-center');
+                        soloCard?.classList.remove('is-center'); soloCard?.classList.add('is-right');
+                        rivalryTab?.classList.add('active'); soloTab?.classList.remove('active');
+                        rivalryDot?.classList.add('active'); soloDot?.classList.remove('active');
+                    }
+                }
+            }
+
             // ═══ A. CONTRACT SPECIFICATION OVERLAY MODAL ═══
             // 1. Card Container Click
             const card = e.target.closest('.lcard');

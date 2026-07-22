@@ -1283,6 +1283,208 @@ export const landingCSS = `
 .lcard-btn button::after{content:'→';opacity:0;transform:translateX(-6px);transition:all .25s cubic-bezier(.16, 1, 0.3, 1);display:inline-block;width:0;margin-left:0}
 .lcard-btn button:hover::after{opacity:1;transform:translateX(0);width:auto;margin-left:6px}
 
+/* ═══ RIVALRY CARD LAYOUT (MATCHING IMAGE 2 EXACTLY) ═══ */
+.lcard-rivalry {
+    background: #FFFFFF !important;
+    border: 1px solid #E2E8F0 !important;
+    border-radius: 14px !important;
+    padding: 24px 20px !important;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    box-shadow: 0 2px 8px rgba(15, 23, 42, 0.04), 0 12px 28px rgba(15, 23, 42, 0.06) !important;
+    transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    position: relative;
+    overflow: hidden;
+}
+.lcard-rivalry:hover {
+    transform: translateY(-4px);
+    border-color: #CBD5E1 !important;
+    box-shadow: 0 8px 24px rgba(15, 23, 42, 0.08), 0 20px 40px rgba(15, 23, 42, 0.08) !important;
+}
+
+.lcard-riv-top {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-bottom: 20px;
+}
+.lcard-riv-status {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    font-weight: 700;
+    color: #166534;
+    letter-spacing: 1.2px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    text-transform: uppercase;
+}
+.lcard-riv-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: #16A34A;
+    display: inline-block;
+    box-shadow: 0 0 8px rgba(22, 163, 74, 0.6);
+}
+.lcard-riv-id-wrap {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 12px;
+}
+.lcard-riv-title {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 15px;
+    font-weight: 800;
+    color: #0F172A;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+}
+.lcard-riv-id {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    font-weight: 600;
+    color: #94A3B8;
+    letter-spacing: 0.8px;
+}
+
+.lcard-riv-match-grid {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 14px;
+}
+.lcard-riv-col {
+    display: flex;
+    flex-direction: column;
+}
+.lcard-riv-col.is-left { text-align: left; }
+.lcard-riv-col.is-right { text-align: right; }
+
+.lcard-riv-role {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    font-weight: 700;
+    color: #94A3B8;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin-bottom: 4px;
+}
+.lcard-riv-user {
+    font-family: 'Inter', sans-serif;
+    font-size: 13px;
+    font-weight: 600;
+    color: #0F172A;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+.lcard-riv-col.is-right .lcard-riv-user {
+    justify-content: flex-end;
+}
+
+.user-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    display: inline-block;
+}
+.user-dot.green { background: #16A34A; }
+.user-dot.maroon { background: #991B1B; }
+
+.lcard-riv-score {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 24px;
+    font-weight: 900;
+    line-height: 1.1;
+    margin-top: 4px;
+    letter-spacing: -0.5px;
+}
+.lcard-riv-score.green { color: #16A34A; }
+.lcard-riv-score.maroon { color: #991B1B; }
+
+.lcard-riv-swords {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0.6;
+    padding: 0 4px;
+}
+
+.lcard-riv-progress-wrap {
+    height: 8px;
+    width: 100%;
+    background: #F1F5F9;
+    border-radius: 100px;
+    display: flex;
+    overflow: hidden;
+    margin-bottom: 20px;
+}
+.lcard-riv-bar-green {
+    height: 100%;
+    background: #16A34A;
+    border-radius: 100px 0 0 100px;
+}
+.lcard-riv-bar-maroon {
+    height: 100%;
+    background: #7A1220;
+    border-radius: 0 100px 100px 0;
+}
+
+.lcard-riv-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 16px;
+    padding-top: 14px;
+    border-top: 1px solid #F1F5F9;
+}
+.lcard-riv-exp-val {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 22px;
+    font-weight: 800;
+    color: #0F172A;
+    line-height: 1;
+}
+.lcard-riv-exp-lbl {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9px;
+    font-weight: 700;
+    color: #64748B;
+    letter-spacing: 1px;
+    margin-top: 4px;
+}
+.lcard-riv-badge-area {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 4px;
+}
+.lcard-src-tag {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    font-weight: 800;
+    letter-spacing: 1px;
+    padding: 4px 10px;
+    border-radius: 6px;
+    color: #FFFFFF;
+    text-transform: uppercase;
+}
+.lcard-src-tag.stripe { background: #635BFF; }
+.lcard-src-tag.x { background: #000000; }
+.lcard-src-tag.shopify { background: #96bf48; }
+
+.lcard-riv-time {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    font-weight: 700;
+    color: #64748B;
+    letter-spacing: 0.8px;
+}
+
 /* ═══ HOW IT WORKS ═══ */
 .lhow{padding:75px 0;background:#FAF8F5 !important;position:relative}
 .lhow::before{display:none !important}

@@ -270,12 +270,14 @@ export function renderLanding() {
                     <div style="position: absolute !important; width: 1px !important; height: 1px !important; padding: 0 !important; margin: -1px !important; overflow: hidden !important; clip: rect(0,0,0,0) !important; border: 0 !important;">
                         Protocol metrics: Active contracts: 1,206; Average contract size: $6,940; Median settlement time: 1.4 days; Counterparties: 812. Supported APIs: Stripe API, X / Twitter API, YouTube API, Shopify API.
                     </div>
-                    <div class="l-stats-eyebrow">SUPPORTED INTEGRATIONS &amp; LIVE METRICS</div>
+                    <div class="l-stats-eyebrow" id="l-stats-eyebrow">LIVE METRICS</div>
                     <div class="l-stats-bar-grid" id="l-stats-grid" aria-live="off">
                         <a href="/market" class="l-stat-bar-item" data-cell-index="0" aria-label="Active contracts">
                             <div class="l-stat-bar-wrapper">
                                 <div class="l-stat-bar-content current" data-state="A">
-                                    <span class="l-stat-bar-val">1,206</span>
+                                    <div class="l-stat-bar-value-zone">
+                                        <span class="l-stat-bar-val">1,206</span>
+                                    </div>
                                     <span class="l-stat-bar-lbl">Active Contracts</span>
                                 </div>
                             </div>
@@ -283,7 +285,9 @@ export function renderLanding() {
                         <a href="/market" class="l-stat-bar-item" data-cell-index="1" aria-label="Average contract size">
                             <div class="l-stat-bar-wrapper">
                                 <div class="l-stat-bar-content current" data-state="A">
-                                    <span class="l-stat-bar-val">$6,940</span>
+                                    <div class="l-stat-bar-value-zone">
+                                        <span class="l-stat-bar-val">$6,940</span>
+                                    </div>
                                     <span class="l-stat-bar-lbl">Average Contract Size</span>
                                 </div>
                             </div>
@@ -291,7 +295,9 @@ export function renderLanding() {
                         <a href="/market" class="l-stat-bar-item" data-cell-index="2" aria-label="Median settlement time">
                             <div class="l-stat-bar-wrapper">
                                 <div class="l-stat-bar-content current" data-state="A">
-                                    <span class="l-stat-bar-val">1.4 days</span>
+                                    <div class="l-stat-bar-value-zone">
+                                        <span class="l-stat-bar-val">1.4 days</span>
+                                    </div>
                                     <span class="l-stat-bar-lbl">Median Settlement Time</span>
                                 </div>
                             </div>
@@ -299,7 +305,9 @@ export function renderLanding() {
                         <a href="/market" class="l-stat-bar-item" data-cell-index="3" aria-label="Counterparties">
                             <div class="l-stat-bar-wrapper">
                                 <div class="l-stat-bar-content current" data-state="A">
-                                    <span class="l-stat-bar-val">812</span>
+                                    <div class="l-stat-bar-value-zone">
+                                        <span class="l-stat-bar-val">812</span>
+                                    </div>
                                     <span class="l-stat-bar-lbl">Counterparties</span>
                                 </div>
                             </div>
@@ -1519,6 +1527,17 @@ export function initLanding() {
         const nextState = currentState === 'A' ? 'B' : 'A';
         const items = nextState === 'A' ? STATE_A_ITEMS : STATE_B_ITEMS;
 
+        // Crossfade eyebrow text smoothly
+        const eyebrowEl = document.getElementById('l-stats-eyebrow');
+        if (eyebrowEl) {
+            eyebrowEl.style.transition = 'opacity 250ms ease';
+            eyebrowEl.style.opacity = '0';
+            setTimeout(() => {
+                eyebrowEl.textContent = nextState === 'A' ? 'LIVE METRICS' : 'SUPPORTED INTEGRATIONS';
+                eyebrowEl.style.opacity = '1';
+            }, 260);
+        }
+
         const cellElements = document.querySelectorAll('.l-stat-bar-item');
         if (!cellElements || cellElements.length < 4) return;
 
@@ -1534,17 +1553,21 @@ export function initLanding() {
             incomingContent.className = 'l-stat-bar-content incoming';
             incomingContent.setAttribute('data-state', nextState);
 
+            const valueZone = document.createElement('div');
+            valueZone.className = 'l-stat-bar-value-zone';
+
             if (nextState === 'A') {
                 const valSpan = document.createElement('span');
                 valSpan.className = 'l-stat-bar-val';
                 valSpan.textContent = itemData.val;
-                incomingContent.appendChild(valSpan);
+                valueZone.appendChild(valSpan);
             } else {
                 const logoWrap = document.createElement('div');
                 logoWrap.className = 'l-stat-bar-logo-wrap';
                 logoWrap.innerHTML = itemData.logoSvg;
-                incomingContent.appendChild(logoWrap);
+                valueZone.appendChild(logoWrap);
             }
+            incomingContent.appendChild(valueZone);
 
             const lblSpan = document.createElement('span');
             lblSpan.className = 'l-stat-bar-lbl';

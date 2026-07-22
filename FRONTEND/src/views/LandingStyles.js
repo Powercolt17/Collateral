@@ -2575,7 +2575,7 @@ export const landingCSS = `
 .l-stat-bar-wrapper {
     position: relative;
     overflow: hidden;
-    height: 72px;
+    height: 76px;
     width: 100%;
     display: flex;
     align-items: center;
@@ -2590,15 +2590,16 @@ export const landingCSS = `
     bottom: 0;
     display: flex;
     flex-direction: column;
-    gap: 8px;
+    gap: 10px;
     align-items: center;
     justify-content: center;
     width: 100%;
     height: 100%;
     text-align: center;
-    opacity: 0.88;
-    transform: translateY(0);
-    transition: opacity 0.35s ease, transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+    opacity: 0.85;
+    filter: desaturate(15%);
+    transform: translateY(0) scale(1);
+    transition: opacity 0.3s cubic-bezier(0.16, 1, 0.3, 1), transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), filter 0.3s cubic-bezier(0.16, 1, 0.3, 1);
 }
 .l-stat-bar-content.incoming {
     position: absolute;
@@ -2611,7 +2612,15 @@ export const landingCSS = `
 }
 .l-stat-bar-item:hover .l-stat-bar-content.current {
     opacity: 1;
+    filter: desaturate(0%);
     transform: translateY(-2px) scale(1.04);
+}
+.l-stat-bar-value-zone {
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
 }
 .l-stat-bar-val {
     font-family: 'Plus Jakarta Sans', sans-serif;
@@ -2627,7 +2636,7 @@ export const landingCSS = `
     color: #7A1220;
 }
 .l-stat-bar-logo-wrap {
-    height: 32px;
+    height: 40px;
     display: flex;
     align-items: center;
     justify-content: center;

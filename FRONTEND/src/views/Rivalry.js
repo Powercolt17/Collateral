@@ -1300,16 +1300,16 @@ export async function initRivalry() {
                         </div>
                         <div class="rv-vs-divider">
                             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <polygon points="2.5,2.5 11.5,10.5 10.5,11.5" fill="#475569"/>
-                                <line x1="2.5" y1="2.5" x2="11" y2="11" stroke="#94A3B8" stroke-width="0.7"/>
-                                <path d="M 8.5 13.5 C 10 12, 12 10, 13.5 8.5" stroke="#1E293B" stroke-width="1.8" stroke-linecap="round" fill="none"/>
-                                <line x1="11" y1="11" x2="19.5" y2="19.5" stroke="#1E293B" stroke-width="2.2" stroke-linecap="round"/>
-                                <circle cx="20.5" cy="20.5" r="1.6" fill="#334155" stroke="#1E293B" stroke-width="1"/>
-                                <polygon points="21.5,2.5 12.5,10.5 13.5,11.5" fill="#475569"/>
-                                <line x1="21.5" y1="2.5" x2="13" y2="11" stroke="#94A3B8" stroke-width="0.7"/>
-                                <path d="M 15.5 13.5 C 14 12, 12 10, 10.5 8.5" stroke="#1E293B" stroke-width="1.8" stroke-linecap="round" fill="none"/>
-                                <line x1="13" y1="11" x2="4.5" y2="19.5" stroke="#1E293B" stroke-width="2.2" stroke-linecap="round"/>
-                                <circle cx="3.5" cy="20.5" r="1.6" fill="#334155" stroke="#1E293B" stroke-width="1"/>
+                                <path d="M 21 3 L 19 3 L 7 15 L 9 17 L 21 5 Z" fill="#64748B" stroke="#334155" stroke-width="1" stroke-linejoin="round"/>
+                                <path d="M 21 3 L 8 16" stroke="#CBD5E1" stroke-width="0.8"/>
+                                <line x1="5.5" y1="13.5" x2="10.5" y2="18.5" stroke="#1E293B" stroke-width="2.2" stroke-linecap="round"/>
+                                <line x1="7.5" y1="16.5" x2="4" y2="20" stroke="#0F172A" stroke-width="2" stroke-linecap="round"/>
+                                <circle cx="3.5" cy="20.5" r="1.8" fill="#334155" stroke="#0F172A" stroke-width="1"/>
+                                <path d="M 3 3 L 5 3 L 17 15 L 15 17 L 3 5 Z" fill="#64748B" stroke="#334155" stroke-width="1" stroke-linejoin="round"/>
+                                <path d="M 3 3 L 16 16" stroke="#CBD5E1" stroke-width="0.8"/>
+                                <line x1="18.5" y1="13.5" x2="13.5" y2="18.5" stroke="#1E293B" stroke-width="2.2" stroke-linecap="round"/>
+                                <line x1="16.5" y1="16.5" x2="20" y2="20" stroke="#0F172A" stroke-width="2" stroke-linecap="round"/>
+                                <circle cx="20.5" cy="20.5" r="1.8" fill="#334155" stroke="#0F172A" stroke-width="1"/>
                             </svg>
                         </div>
                         <div class="rv-player right">

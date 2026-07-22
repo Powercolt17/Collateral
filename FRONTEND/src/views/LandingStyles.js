@@ -4703,197 +4703,119 @@ export const landingCSS = `
   }
 }
 
-/* ═══ FLAGSHIP INTERACTIVE PROTOCOL TERMINAL (SIGNATURE FEATURE) ═══ */
-.ltypes-asymmetric {
-    display: grid;
-    grid-template-columns: 38% 62%;
-    gap: 44px;
-    align-items: center;
+/* ═══ FLAGSHIP DOMINANT INTERACTIVE CONTRACT TERMINAL ═══ */
+.lterm-centerpiece-wrapper {
+    max-width: 960px;
+    margin: 0 auto;
+    width: 100%;
 }
 
-@media (max-width: 992px) {
-    .ltypes-asymmetric {
-        grid-template-columns: 1fr;
-        gap: 36px;
-    }
-}
-
-/* Segmented Control Mode Switcher */
-.lterm-switcher-row {
-    display: flex;
-    justify-content: center;
-    margin-bottom: 24px;
-}
-
-.lterm-segmented-control {
-    display: inline-flex;
-    align-items: center;
-    background: #E2E8F0;
-    padding: 4px;
-    border-radius: 9999px;
-    gap: 4px;
-    box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.04);
-}
-
-.lterm-tab-btn {
-    background: transparent;
-    border: none;
-    padding: 8px 22px;
-    border-radius: 9999px;
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 11px;
-    font-weight: 800;
-    letter-spacing: 0.8px;
-    color: #64748B;
-    cursor: pointer;
-    transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
-    display: flex;
-    align-items: center;
-    gap: 6px;
-}
-
-.lterm-tab-btn.active {
-    background: #7A1220;
-    color: #FFFFFF;
-    box-shadow: 0 4px 14px rgba(122, 18, 32, 0.35);
-}
-
-/* Product-Style Mode Cards */
-.ltypes-modes-wrap {
+/* Integrated Mode Selector Bar */
+.lterm-integrated-selector {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 14px;
-    margin: 20px 0 24px;
+    gap: 16px;
+    margin-bottom: 28px;
 }
 
-.ltypes-mode-card {
+.lterm-select-card {
     background: #FFFFFF;
     border: 1.5px solid rgba(226, 232, 240, 0.9);
     border-radius: 16px;
-    padding: 18px 16px;
+    padding: 16px 20px;
     display: flex;
-    flex-direction: column;
-    gap: 8px;
-    box-shadow: 0 4px 16px rgba(15, 23, 42, 0.03);
-    transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.2s ease, box-shadow 0.2s ease;
+    align-items: center;
+    justify-content: space-between;
     cursor: pointer;
+    transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+    box-shadow: 0 4px 16px rgba(15, 23, 42, 0.02);
 }
 
-.ltypes-mode-card:hover, .ltypes-mode-card.active {
-    transform: translateY(-3px);
-    border-color: rgba(122, 18, 32, 0.4);
-    box-shadow: 0 12px 28px -6px rgba(122, 18, 32, 0.12);
+.lterm-select-card:hover, .lterm-select-card.active {
+    border-color: rgba(122, 18, 32, 0.45);
+    transform: translateY(-2px);
+    box-shadow: 0 12px 28px -6px rgba(122, 18, 32, 0.14);
 }
 
-.ltypes-mode-card.highlight {
+.lterm-select-card.active {
     background: linear-gradient(180deg, #FFFDFA 0%, #FDF9F7 100%);
 }
 
-.lmode-badge {
+.lselect-left {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.lselect-badge {
     align-self: flex-start;
     font-family: 'JetBrains Mono', monospace;
     font-size: 9.5px;
     font-weight: 800;
-    padding: 3px 9px;
+    padding: 2px 8px;
     border-radius: 9999px;
     letter-spacing: 1px;
     text-transform: uppercase;
 }
 
-.lmode-badge.solo { background: #F1F5F9; color: #475569; border: 1px solid #E2E8F0; }
-.lmode-badge.rivalry { background: #FDF2F2; color: #7A1220; border: 1px solid rgba(122, 18, 32, 0.25); }
+.lselect-badge.solo { background: #F1F5F9; color: #475569; border: 1px solid #E2E8F0; }
+.lselect-badge.rivalry { background: #FDF2F2; color: #7A1220; border: 1px solid rgba(122, 18, 32, 0.25); }
 
-.lmode-title {
+.lselect-title {
     font-family: 'Plus Jakarta Sans', sans-serif;
-    font-size: 14px;
+    font-size: 15px;
     font-weight: 800;
     color: #0F172A;
-    letter-spacing: -0.2px;
+    margin-top: 4px;
 }
 
-.lmode-tagline {
+.lselect-sub {
     font-family: 'Inter', sans-serif;
-    font-size: 11.5px;
-    font-style: italic;
+    font-size: 12px;
     color: #64748B;
 }
 
-.lmode-tags-hdr {
+.lselect-stat-badge {
     font-family: 'JetBrains Mono', monospace;
-    font-size: 8.5px;
-    font-weight: 700;
-    letter-spacing: 1px;
-    color: #94A3B8;
-    text-transform: uppercase;
-    margin-top: 4px;
-}
-
-.lmode-tags-pills {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 4px;
-}
-
-.lmode-tag-pill {
-    font-family: 'Inter', sans-serif;
-    font-size: 10px;
-    font-weight: 600;
-    padding: 2px 7px;
-    background: #F1F5F9;
-    color: #334155;
-    border-radius: 4px;
-}
-
-.lmode-stat-divider {
-    height: 1px;
-    background: #E2E8F0;
-    margin: 4px 0;
-}
-
-.lmode-stat-row {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 10px;
-}
-
-.lmode-stat-lbl { color: #64748B; font-weight: 600; }
-.lmode-stat-val { color: #0F172A; font-weight: 800; }
-.lmode-stat-val.green { color: #166534; }
-
-.lmode-cta-link {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 10px;
+    font-size: 11px;
     font-weight: 800;
-    letter-spacing: 0.8px;
-    color: #7A1220;
-    text-transform: uppercase;
-    margin-top: 4px;
-    display: flex;
-    align-items: center;
-    gap: 4px;
-    transition: gap 0.2s ease;
+    color: #166534;
+    background: #F0FDF4;
+    border: 1px solid #BBF7D0;
+    padding: 4px 10px;
+    border-radius: 8px;
+    white-space: nowrap;
 }
 
-.ltypes-mode-card:hover .lmode-cta-link { gap: 7px; }
+.lselect-stat-badge.rivalry {
+    color: #7A1220;
+    background: #FDF2F2;
+    border-color: rgba(122, 18, 32, 0.2);
+}
 
-/* ═══ MORPHING OPERATING SYSTEM TERMINAL ═══ */
+@media (max-width: 768px) {
+    .lterm-integrated-selector {
+        grid-template-columns: 1fr;
+        gap: 12px;
+    }
+}
+
+/* ═══ 2X LARGER GIGANTIC OPERATING SYSTEM TERMINAL ═══ */
 .lproto-term-window {
-    background: #0F172A;
-    border: 1.5px solid rgba(255, 255, 255, 0.12);
-    border-radius: 20px;
-    box-shadow: 0 24px 64px -12px rgba(15, 23, 42, 0.4), 0 0 0 1px rgba(122, 18, 32, 0.3);
+    background: #0B132B;
+    border: 1.5px solid rgba(255, 255, 255, 0.14);
+    border-radius: 24px;
+    box-shadow: 0 32px 80px -16px rgba(11, 19, 43, 0.5), 0 0 0 1px rgba(122, 18, 32, 0.35);
     overflow: hidden;
     color: #F8FAFC;
     font-family: 'Inter', sans-serif;
     position: relative;
-    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .lterm-bar {
-    background: #1E293B;
-    padding: 12px 18px;
+    background: #1C2541;
+    padding: 16px 24px;
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -4903,12 +4825,12 @@ export const landingCSS = `
 .lterm-dots {
     display: flex;
     align-items: center;
-    gap: 6px;
+    gap: 8px;
 }
 
 .lterm-dots .dot {
-    width: 10px;
-    height: 10px;
+    width: 11px;
+    height: 11px;
     border-radius: 50%;
 }
 .lterm-dots .dot.red { background: #EF4444; }
@@ -4917,37 +4839,36 @@ export const landingCSS = `
 
 .lterm-title {
     font-family: 'JetBrains Mono', monospace;
-    font-size: 11px;
-    font-weight: 700;
-    letter-spacing: 0.8px;
+    font-size: 12px;
+    font-weight: 800;
+    letter-spacing: 1px;
     color: #94A3B8;
     text-transform: uppercase;
 }
 
 .lterm-status-badge {
     font-family: 'JetBrains Mono', monospace;
-    font-size: 9.5px;
+    font-size: 10px;
     font-weight: 800;
-    letter-spacing: 0.8px;
-    padding: 3px 9px;
+    letter-spacing: 1px;
+    padding: 4px 12px;
     border-radius: 9999px;
     text-transform: uppercase;
     display: flex;
     align-items: center;
-    gap: 5px;
+    gap: 6px;
 }
 
-.lterm-status-badge.live { background: rgba(16, 185, 129, 0.15); color: #10B981; border: 1px solid rgba(16, 185, 129, 0.3); }
+.lterm-status-badge.live { background: rgba(16, 185, 129, 0.15); color: #34D399; border: 1px solid rgba(16, 185, 129, 0.3); }
 .lterm-status-badge.rivalry { background: rgba(239, 68, 68, 0.15); color: #F87171; border: 1px solid rgba(239, 68, 68, 0.3); }
 
 .pulse-dot {
-    width: 6px;
-    height: 6px;
+    width: 7px;
+    height: 7px;
     border-radius: 50%;
-    background: #10B981;
+    background: #34D399;
     animation: termDotPulse 1.8s infinite;
 }
-
 .pulse-dot.red { background: #F87171; }
 
 @keyframes termDotPulse {
@@ -4956,20 +4877,20 @@ export const landingCSS = `
 }
 
 .lterm-body {
-    padding: 24px;
+    padding: 32px;
     display: flex;
     flex-direction: column;
-    gap: 18px;
+    gap: 22px;
 }
 
 .lterm-hero-row {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    background: rgba(30, 41, 59, 0.7);
-    border: 1px solid rgba(255, 255, 255, 0.08);
-    border-radius: 14px;
-    padding: 16px 20px;
+    background: rgba(28, 37, 65, 0.7);
+    border: 1px solid rgba(255, 255, 255, 0.09);
+    border-radius: 18px;
+    padding: 20px 24px;
 }
 
 .lterm-metric-box {
@@ -4977,79 +4898,93 @@ export const landingCSS = `
     flex-direction: column;
     gap: 4px;
 }
-
 .lterm-metric-box.right { text-align: right; }
 
 .lterm-metric-box .lbl {
     font-family: 'JetBrains Mono', monospace;
-    font-size: 9px;
+    font-size: 10px;
     font-weight: 700;
-    letter-spacing: 1.2px;
+    letter-spacing: 1.4px;
     color: #64748B;
     text-transform: uppercase;
 }
 
 .lterm-metric-box .val {
     font-family: 'Plus Jakarta Sans', sans-serif;
-    font-size: 18px;
+    font-size: 22px;
     font-weight: 800;
     color: #F8FAFC;
+    letter-spacing: -0.3px;
 }
-
 .lterm-metric-box .val.green { color: #34D399; }
 
+/* Grid Metrics */
 .lterm-grid-metrics {
     display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 10px;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 12px;
+}
+
+@media (max-width: 768px) {
+    .lterm-grid-metrics {
+        grid-template-columns: 1fr 1fr;
+    }
 }
 
 .lterm-m {
-    background: rgba(30, 41, 59, 0.4);
-    border: 1px solid rgba(255, 255, 255, 0.05);
-    border-radius: 10px;
-    padding: 10px 14px;
+    background: rgba(28, 37, 65, 0.45);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    border-radius: 12px;
+    padding: 12px 16px;
     display: flex;
     flex-direction: column;
-    gap: 2px;
+    gap: 3px;
 }
 
 .lterm-m .k {
     font-family: 'JetBrains Mono', monospace;
-    font-size: 8.5px;
+    font-size: 9px;
     font-weight: 700;
     color: #64748B;
     text-transform: uppercase;
-    letter-spacing: 0.5px;
+    letter-spacing: 0.8px;
 }
 
 .lterm-m .v {
     font-family: 'Inter', sans-serif;
-    font-size: 12px;
+    font-size: 13px;
     font-weight: 600;
     color: #E2E8F0;
 }
-
 .lterm-m .v.green { color: #34D399; }
 
-/* Progress Bar */
-.lterm-progress-wrap {
+/* Progress Tracks Stack */
+.lterm-tracks-stack {
     display: flex;
     flex-direction: column;
-    gap: 8px;
+    gap: 12px;
+    background: rgba(15, 23, 42, 0.6);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    border-radius: 16px;
+    padding: 18px 20px;
 }
 
-.lterm-progress-hdr {
+.lterm-track-item {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.lterm-track-hdr {
     display: flex;
     justify-content: space-between;
     font-family: 'JetBrains Mono', monospace;
-    font-size: 9.5px;
+    font-size: 10px;
     font-weight: 700;
     letter-spacing: 0.8px;
     color: #94A3B8;
 }
-
-.lterm-progress-hdr .pct { color: #34D399; }
+.lterm-track-hdr .pct { color: #34D399; font-weight: 800; }
 
 .lterm-progress-track {
     height: 10px;
@@ -5071,26 +5006,32 @@ export const landingCSS = `
 .lterm-progress-glow {
     position: absolute;
     top: 0; right: 0; bottom: 0;
-    width: 20px;
-    background: rgba(255, 255, 255, 0.5);
+    width: 24px;
+    background: rgba(255, 255, 255, 0.6);
     filter: blur(4px);
 }
 
 /* Rules Box */
 .lterm-rules-box {
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+}
+
+@media (max-width: 640px) {
+    .lterm-rules-box {
+        grid-template-columns: 1fr;
+    }
 }
 
 .lterm-rule {
     display: flex;
     align-items: center;
     gap: 10px;
-    padding: 10px 14px;
-    border-radius: 10px;
-    font-size: 11.5px;
-    line-height: 1.3;
+    padding: 12px 16px;
+    border-radius: 12px;
+    font-size: 12px;
+    line-height: 1.35;
 }
 
 .lterm-rule.pass {
@@ -5098,108 +5039,104 @@ export const landingCSS = `
     border: 1px solid rgba(16, 185, 129, 0.2);
     color: #D1FAE5;
 }
-
-.lterm-rule.pass .ic { color: #34D399; font-weight: 800; }
+.lterm-rule.pass .ic { color: #34D399; font-weight: 800; font-size: 13px; }
 
 .lterm-rule.fail {
     background: rgba(239, 68, 68, 0.08);
     border: 1px solid rgba(239, 68, 68, 0.2);
     color: #FEE2E2;
 }
+.lterm-rule.fail .ic { color: #F87171; font-weight: 800; font-size: 13px; }
 
-.lterm-rule.fail .ic { color: #F87171; font-weight: 800; }
-
-/* Rivalry Mode Specific Terminal Layout */
+/* Rivalry Matchup Layout */
 .lterm-matchup-row {
     display: grid;
     grid-template-columns: 1fr auto 1fr;
     align-items: center;
-    gap: 12px;
+    gap: 16px;
 }
 
 .lterm-player-card {
-    background: rgba(30, 41, 59, 0.7);
-    border: 1px solid rgba(255, 255, 255, 0.08);
-    border-radius: 14px;
-    padding: 14px;
+    background: rgba(28, 37, 65, 0.7);
+    border: 1px solid rgba(255, 255, 255, 0.09);
+    border-radius: 16px;
+    padding: 18px 20px;
     display: flex;
     flex-direction: column;
     gap: 4px;
 }
-
 .lterm-player-card.opponent { text-align: right; }
 
 .lterm-player-card .tag {
     font-family: 'JetBrains Mono', monospace;
-    font-size: 8.5px;
+    font-size: 9px;
     font-weight: 800;
-    letter-spacing: 1px;
+    letter-spacing: 1.2px;
     color: #94A3B8;
 }
 
 .lterm-player-card .handle {
     font-family: 'JetBrains Mono', monospace;
-    font-size: 12px;
+    font-size: 14px;
     font-weight: 700;
     color: #F8FAFC;
 }
 
 .lterm-player-card .metric {
     font-family: 'Plus Jakarta Sans', sans-serif;
-    font-size: 15px;
+    font-size: 18px;
     font-weight: 800;
     color: #34D399;
 }
-
 .lterm-player-card.opponent .metric { color: #F87171; }
 
 .lterm-player-card .stake {
     font-family: 'JetBrains Mono', monospace;
-    font-size: 10px;
+    font-size: 11px;
     font-weight: 700;
     color: #94A3B8;
 }
 
 .lterm-vs-badge {
-    width: 32px; height: 32px;
+    width: 38px; height: 38px;
     border-radius: 50%;
-    background: rgba(122, 18, 32, 0.4);
-    border: 1px solid rgba(239, 68, 68, 0.4);
+    background: rgba(122, 18, 32, 0.45);
+    border: 1.5px solid rgba(239, 68, 68, 0.4);
     display: flex;
     align-items: center;
     justify-content: center;
     font-family: 'JetBrains Mono', monospace;
-    font-size: 10px;
+    font-size: 11px;
     font-weight: 800;
     color: #F87171;
 }
 
 .lterm-vault-core {
-    background: linear-gradient(180deg, rgba(122, 18, 32, 0.25) 0%, rgba(30, 41, 59, 0.8) 100%);
-    border: 1.5px solid rgba(239, 68, 68, 0.35);
-    border-radius: 16px;
-    padding: 18px;
+    background: linear-gradient(180deg, rgba(122, 18, 32, 0.3) 0%, rgba(28, 37, 65, 0.85) 100%);
+    border: 1.5px solid rgba(239, 68, 68, 0.4);
+    border-radius: 18px;
+    padding: 22px;
     text-align: center;
     display: flex;
     flex-direction: column;
     align-items: center;
     gap: 4px;
     position: relative;
-    box-shadow: 0 8px 32px rgba(122, 18, 32, 0.25);
+    box-shadow: 0 12px 40px rgba(122, 18, 32, 0.3);
 }
 
 .lterm-vault-core .v-lbl {
     font-family: 'JetBrains Mono', monospace;
-    font-size: 9px;
+    font-size: 10px;
     font-weight: 800;
-    letter-spacing: 1.2px;
+    letter-spacing: 1.4px;
     color: #F87171;
     text-transform: uppercase;
 }
 
 .lterm-vault-core .v-val {
     font-family: 'Plus Jakarta Sans', sans-serif;
-    font-size: 32px;
+    font-size: 36px;
     font-weight: 900;
     letter-spacing: -0.5px;
     color: #FFFFFF;
@@ -5207,24 +5144,23 @@ export const landingCSS = `
 
 .lterm-vault-core .v-sub {
     font-family: 'Inter', sans-serif;
-    font-size: 11px;
+    font-size: 12px;
     color: #CBD5E1;
 }
 
 .lterm-telemetry {
     background: #020617;
     border: 1px solid rgba(255, 255, 255, 0.08);
-    border-radius: 12px;
-    padding: 12px 14px;
+    border-radius: 14px;
+    padding: 14px 18px;
     font-family: 'JetBrains Mono', monospace;
-    font-size: 10px;
+    font-size: 11px;
     display: flex;
     flex-direction: column;
     gap: 6px;
 }
-
 .lterm-telemetry .t-line { color: #94A3B8; }
-.lterm-telemetry .t-line .ts { color: #64748B; margin-right: 6px; }
+.lterm-telemetry .t-line .ts { color: #64748B; margin-right: 8px; }
 .lterm-telemetry .t-line.green { color: #34D399; font-weight: 700; }
 
 /* ═══ FLAGSHIP MARKETING PROTOCOL ILLUSTRATION ═══ */

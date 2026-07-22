@@ -328,124 +328,102 @@ export function renderLanding() {
 
 
 
-            <!-- ═══ CONTRACT EXECUTION MODES (SIGNATURE INTERACTIVE OS TERMINAL) ═══ -->
-            <div class="lw" style="padding-top: 90px; padding-bottom: 60px;">
-                <!-- SECTION HEADER WITH BRAND PROMISE -->
-                <div style="text-align: center; max-width: 760px; margin: 0 auto 36px;" data-r>
-                    <div class="lred-dash reveal-item" style="justify-content: center;"><span class="lmono">Financial Protocol Engine</span></div>
-                    <h2 class="ltypes-headline reveal-item" style="font-size: clamp(26px, 5vw, 42px); line-height: 1.1; margin: 12px 0 16px;">WHEN MONEY IS ON THE LINE,<br><span class="lh-gradient">INTENTIONS BECOME ACTIONS.</span></h2>
-                    <p class="ltypes-sub reveal-item" style="font-size: 16px; line-height: 1.6; color: #475569; margin: 0 auto;">People break promises. Money doesn't. Collateral is the first financial protocol that turns commitments into automated escrow contracts.</p>
-                </div>
-
-                <!-- SEGMENTED INTERACTIVE MODE TOGGLE -->
-                <div class="lterm-switcher-row reveal-item" data-r>
-                    <div class="lterm-segmented-control">
-                        <button class="lterm-tab-btn active" id="tab-solo-btn" onclick="window.switchProtocolMode('solo')">
-                            <span>SOLO CONTRACT</span>
-                        </button>
-                        <button class="lterm-tab-btn" id="tab-rivalry-btn" onclick="window.switchProtocolMode('rivalry')">
-                            <span>RIVALRY CONTRACT</span>
-                        </button>
+            <!-- ═══ SIGNATURE DOMINANT INTERACTIVE CONTRACT ENGINE ═══ -->
+            <div class="lw" style="padding-top: 90px; padding-bottom: 70px;">
+                <div class="lterm-centerpiece-wrapper">
+                    <!-- SECTION HEADER WITH ULTRA-CLEAN ONE-SENTENCE COPY -->
+                    <div style="text-align: center; max-width: 780px; margin: 0 auto 36px;" data-r>
+                        <h2 class="ltypes-headline reveal-item" style="font-size: clamp(28px, 5.5vw, 44px); line-height: 1.08; margin-bottom: 14px;">WHEN MONEY IS ON THE LINE,<br><span class="lh-gradient">INTENTIONS BECOME ACTIONS.</span></h2>
+                        <p class="ltypes-sub reveal-item" style="font-size: 16.5px; line-height: 1.5; color: #475569; margin: 0 auto;">Collateral transforms commitment into an enforceable financial contract.</p>
                     </div>
-                </div>
 
-                <div class="ltypes-asymmetric" data-r>
-                    <!-- LEFT COLUMN (38%): PRODUCT UTILITY CARDS -->
-                    <div class="ltypes-left">
-                        <div class="ltypes-modes-wrap reveal-item">
-                            <!-- SOLO CARD -->
-                            <div class="ltypes-mode-card active" id="card-mode-solo" onclick="window.switchProtocolMode('solo')">
-                                <div class="lmode-badge solo">SOLO</div>
-                                <div class="lmode-title">Stake Against Yourself</div>
-                                <div class="lmode-tagline">The discipline contract.</div>
-                                
-                                <div class="lmode-tags-hdr">Perfect for:</div>
-                                <div class="lmode-tags-pills">
-                                    <span class="lmode-tag-pill">Fitness</span>
-                                    <span class="lmode-tag-pill">Business</span>
-                                    <span class="lmode-tag-pill">Learning</span>
-                                    <span class="lmode-tag-pill">Investing</span>
-                                </div>
-
-                                <div class="lmode-stat-divider"></div>
-                                <div class="lmode-stat-row">
-                                    <span class="lmode-stat-lbl">AVG COMPLETION</span>
-                                    <span class="lmode-stat-val green">82% SUCCESS</span>
-                                </div>
-                                <div class="lmode-cta-link">TEST SOLO MODE <span>→</span></div>
+                    <!-- INTEGRATED PRODUCT MODE SELECTOR CARDS (BECOMING THE TOGGLE) -->
+                    <div class="lterm-integrated-selector reveal-item" data-r>
+                        <div class="lterm-select-card active" id="card-mode-solo" onclick="window.switchProtocolMode('solo')">
+                            <div class="lselect-left">
+                                <span class="lselect-badge solo">SOLO MODE</span>
+                                <span class="lselect-title">Stake Against Yourself</span>
+                                <span class="lselect-sub">Discipline contract • Keep principal + earn yield</span>
                             </div>
-
-                            <!-- RIVALRY CARD -->
-                            <div class="ltypes-mode-card highlight" id="card-mode-rivalry" onclick="window.switchProtocolMode('rivalry')">
-                                <div class="lmode-badge rivalry">RIVALRY</div>
-                                <div class="lmode-title">Stake Head-to-Head</div>
-                                <div class="lmode-tagline">Winner takes all.</div>
-                                
-                                <div class="lmode-tags-hdr">Perfect for:</div>
-                                <div class="lmode-tags-pills">
-                                    <span class="lmode-tag-pill">Creators</span>
-                                    <span class="lmode-tag-pill">Founders</span>
-                                    <span class="lmode-tag-pill">Sports</span>
-                                    <span class="lmode-tag-pill">Challenges</span>
-                                </div>
-
-                                <div class="lmode-stat-divider"></div>
-                                <div class="lmode-stat-row">
-                                    <span class="lmode-stat-lbl">AVG POOL</span>
-                                    <span class="lmode-stat-val">$4,250 ESCROW</span>
-                                </div>
-                                <div class="lmode-cta-link">TEST RIVALRY MODE <span>→</span></div>
-                            </div>
+                            <div class="lselect-stat-badge">82% SUCCESS</div>
                         </div>
 
-                        <div class="ltypes-cta-wrap reveal-item" style="margin-top: 10px;">
-                            <button class="lbtn lbtn-r" style="width: 100%;" id="ltypes-start-cta" onclick="window.app.goAction('/market', 'signup')">
-                                CREATE CONTRACT NOW <span class="lbtn-arrow">→</span>
-                            </button>
+                        <div class="lterm-select-card" id="card-mode-rivalry" onclick="window.switchProtocolMode('rivalry')">
+                            <div class="lselect-left">
+                                <span class="lselect-badge rivalry">RIVALRY MODE</span>
+                                <span class="lselect-title">Stake Head-to-Head</span>
+                                <span class="lselect-sub">Winner-takes-all duel • Verified API escrow</span>
+                            </div>
+                            <div class="lselect-stat-badge rivalry">$4,250 AVG POOL</div>
                         </div>
                     </div>
 
-                    <!-- RIGHT COLUMN (62%): MORPHING OPERATING SYSTEM CONTRACT TERMINAL -->
-                    <div class="ltypes-right">
-                        <div class="lproto-term-window reveal-item" id="protocol-terminal">
-                            <!-- Window Titlebar -->
-                            <div class="lterm-bar">
-                                <div class="lterm-dots">
-                                    <span class="dot red"></span>
-                                    <span class="dot yellow"></span>
-                                    <span class="dot green"></span>
-                                </div>
-                                <div class="lterm-title" id="term-header-title">CONTRACT #SOLO-8124 — DISCIPLINE ENGINE</div>
-                                <div class="lterm-status-badge live" id="term-header-badge">
-                                    <span class="pulse-dot"></span> <span id="term-badge-text">LIVE EXECUTION</span>
-                                </div>
+                    <!-- 2X LARGER GIGANTIC CONTRACT OPERATING SYSTEM CENTERPIECE -->
+                    <div class="lproto-term-window reveal-item" id="protocol-terminal" data-r>
+                        <!-- Window Bar -->
+                        <div class="lterm-bar">
+                            <div class="lterm-dots">
+                                <span class="dot red"></span>
+                                <span class="dot yellow"></span>
+                                <span class="dot green"></span>
                             </div>
+                            <div class="lterm-title" id="term-header-title">CONTRACT #SOLO-8124 — DISCIPLINE ENGINE</div>
+                            <div class="lterm-status-badge live" id="term-header-badge">
+                                <span class="pulse-dot"></span> <span id="term-badge-text">LIVE EXECUTION</span>
+                            </div>
+                        </div>
 
-                            <!-- Terminal Container Content (Dynamically Morphed by Switcher) -->
-                            <div class="lterm-body" id="term-body-content">
-                                <!-- SOLO TERMINAL CONTENT (DEFAULT) -->
-                                <div id="term-view-solo">
-                                    <div class="lterm-hero-row">
-                                        <div class="lterm-metric-box">
-                                            <span class="lbl">TARGET GOAL METRIC</span>
-                                            <span class="val">+15.0% Shopify Store Sales</span>
+                        <!-- Terminal Container Content -->
+                        <div class="lterm-body" id="term-body-content">
+                            <!-- SOLO TERMINAL CONTENT (DEFAULT) -->
+                            <div id="term-view-solo">
+                                <div class="lterm-hero-row">
+                                    <div class="lterm-metric-box">
+                                        <span class="lbl">TARGET GOAL METRIC</span>
+                                        <span class="val">+15.0% Shopify Net Sales</span>
+                                    </div>
+                                    <div class="lterm-metric-box right">
+                                        <span class="lbl">CAPITAL LOCKED</span>
+                                        <span class="val green">$1,000.00 USD</span>
+                                    </div>
+                                </div>
+
+                                <div class="lterm-grid-metrics">
+                                    <div class="lterm-m"><span class="k">Contract Window</span><span class="v">30 Days (12 Left)</span></div>
+                                    <div class="lterm-m"><span class="k">Oracle Data Stream</span><span class="v">Shopify Store API</span></div>
+                                    <div class="lterm-m"><span class="k">Escrow Custody</span><span class="v">Automated Vault</span></div>
+                                    <div class="lterm-m"><span class="k">Oracle Health</span><span class="v green">99.8% Synchronized</span></div>
+                                </div>
+
+                                <!-- ALIVE ENGINE PROGRESS TRACKS STACK -->
+                                <div class="lterm-tracks-stack">
+                                    <div class="lterm-track-item">
+                                        <div class="lterm-track-hdr">
+                                            <span>[1] CAPITAL LOCKED IN ESCROW VAULT</span>
+                                            <span class="pct">$1,000.00 (VERIFIED)</span>
                                         </div>
-                                        <div class="lterm-metric-box right">
-                                            <span class="lbl">CAPITAL LOCKED</span>
-                                            <span class="val green">$1,000.00 USD</span>
+                                        <div class="lterm-progress-track">
+                                            <div class="lterm-progress-fill" style="width: 100%;">
+                                                <div class="lterm-progress-glow"></div>
+                                            </div>
                                         </div>
                                     </div>
 
-                                    <div class="lterm-grid-metrics" style="margin-top: 18px;">
-                                        <div class="lterm-m"><span class="k">Contract Window</span><span class="v">30 Days (12 Days Left)</span></div>
-                                        <div class="lterm-m"><span class="k">Data Stream Oracle</span><span class="v">Shopify Store API (Verified)</span></div>
-                                        <div class="lterm-m"><span class="k">Escrow Vault Custody</span><span class="v">Automated Escrow</span></div>
-                                        <div class="lterm-m"><span class="k">Oracle Stream Health</span><span class="v green">99.8% Sync Confidence</span></div>
+                                    <div class="lterm-track-item">
+                                        <div class="lterm-track-hdr">
+                                            <span>[2] ORACLE TELEMETRY STREAM</span>
+                                            <span class="pct">99.8% HEALTH</span>
+                                        </div>
+                                        <div class="lterm-progress-track">
+                                            <div class="lterm-progress-fill" style="width: 99.8%;">
+                                                <div class="lterm-progress-glow"></div>
+                                            </div>
+                                        </div>
                                     </div>
 
-                                    <div class="lterm-progress-wrap" style="margin-top: 18px;">
-                                        <div class="lterm-progress-hdr">
-                                            <span>AUTOMATED VERIFICATION PROGRESS</span>
+                                    <div class="lterm-track-item">
+                                        <div class="lterm-track-hdr">
+                                            <span>[3] GOAL VERIFICATION ENGINE</span>
                                             <span class="pct">78.4% COMPLETE</span>
                                         </div>
                                         <div class="lterm-progress-track">
@@ -454,48 +432,87 @@ export function renderLanding() {
                                             </div>
                                         </div>
                                     </div>
+                                </div>
 
-                                    <div class="lterm-rules-box" style="margin-top: 18px;">
-                                        <div class="lterm-rule pass">
-                                            <span class="ic">✓</span>
-                                            <div class="txt"><strong>IF GOAL VERIFIED:</strong> $1,000 Principal Retained + $120 Execution Yield</div>
+                                <div class="lterm-rules-box">
+                                    <div class="lterm-rule pass">
+                                        <span class="ic">✓</span>
+                                        <div class="txt"><strong>IF VERIFIED:</strong> $1,000 Principal Retained + $120 Yield</div>
+                                    </div>
+                                    <div class="lterm-rule fail">
+                                        <span class="ic">✗</span>
+                                        <div class="txt"><strong>IF MISSED:</strong> Capital forfeited to protocol yield pool</div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- RIVALRY TERMINAL CONTENT (HIDDEN BY DEFAULT) -->
+                            <div id="term-view-rivalry" style="display: none;">
+                                <div class="lterm-matchup-row">
+                                    <div class="lterm-player-card challenger">
+                                        <span class="tag">CHALLENGER</span>
+                                        <span class="handle">@revpilot</span>
+                                        <span class="metric">+12.4% Revenue</span>
+                                        <span class="stake">$1,000 LOCKED</span>
+                                    </div>
+                                    <div class="lterm-vs-badge">VS</div>
+                                    <div class="lterm-player-card opponent">
+                                        <span class="tag">OPPONENT</span>
+                                        <span class="handle">@dev_sarah</span>
+                                        <span class="metric">+9.1% Followers</span>
+                                        <span class="stake">$1,000 LOCKED</span>
+                                    </div>
+                                </div>
+
+                                <div class="lterm-vault-core">
+                                    <span class="v-lbl">VERIFIED ESCROW VAULT POOL</span>
+                                    <span class="v-val">$2,000.00 USD</span>
+                                    <span class="v-sub">🔒 Smart Escrow Contract Active • 3 Days Remaining</span>
+                                </div>
+
+                                <!-- ALIVE ENGINE PROGRESS TRACKS STACK FOR RIVALRY -->
+                                <div class="lterm-tracks-stack">
+                                    <div class="lterm-track-item">
+                                        <div class="lterm-track-hdr">
+                                            <span>[1] ESCROW DEPOSITS VERIFIED</span>
+                                            <span class="pct">$2,000.00 LOCKED (100%)</span>
                                         </div>
-                                        <div class="lterm-rule fail">
-                                            <span class="ic">✗</span>
-                                            <div class="txt"><strong>IF TARGET MISSED:</strong> Deposit forfeited to protocol yield pool</div>
+                                        <div class="lterm-progress-track">
+                                            <div class="lterm-progress-fill" style="width: 100%;">
+                                                <div class="lterm-progress-glow"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="lterm-track-item">
+                                        <div class="lterm-track-hdr">
+                                            <span>[2] ORACLE METRIC STREAM</span>
+                                            <span class="pct">STRIPE & X APIS SYNCED</span>
+                                        </div>
+                                        <div class="lterm-progress-track">
+                                            <div class="lterm-progress-fill" style="width: 100%;">
+                                                <div class="lterm-progress-glow"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="lterm-track-item">
+                                        <div class="lterm-track-hdr">
+                                            <span>[3] DUEL SETTLEMENT ENGINE</span>
+                                            <span class="pct">READY FOR AUTOMATED PAYOUT</span>
+                                        </div>
+                                        <div class="lterm-progress-track">
+                                            <div class="lterm-progress-fill" style="width: 92%;">
+                                                <div class="lterm-progress-glow"></div>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
 
-                                <!-- RIVALRY TERMINAL CONTENT (HIDDEN BY DEFAULT) -->
-                                <div id="term-view-rivalry" style="display: none;">
-                                    <div class="lterm-matchup-row">
-                                        <div class="lterm-player-card challenger">
-                                            <span class="tag">CHALLENGER</span>
-                                            <span class="handle">@revpilot</span>
-                                            <span class="metric">+12.4% Rev</span>
-                                            <span class="stake">$1,000 LOCKED</span>
-                                        </div>
-                                        <div class="lterm-vs-badge">VS</div>
-                                        <div class="lterm-player-card opponent">
-                                            <span class="tag">OPPONENT</span>
-                                            <span class="handle">@dev_sarah</span>
-                                            <span class="metric">+9.1% Followers</span>
-                                            <span class="stake">$1,000 LOCKED</span>
-                                        </div>
-                                    </div>
-
-                                    <div class="lterm-vault-core" style="margin-top: 18px;">
-                                        <span class="v-lbl">VERIFIED ESCROW VAULT POOL</span>
-                                        <span class="v-val">$2,000.00 USD</span>
-                                        <span class="v-sub">🔒 Smart Escrow Contract Active • 3 Days Remaining</span>
-                                    </div>
-
-                                    <div class="lterm-telemetry" style="margin-top: 18px;">
-                                        <div class="t-line"><span class="ts">[17:24:02]</span> Oracles Synced: Stripe Connect API & X Data Feed</div>
-                                        <div class="t-line"><span class="ts">[17:24:05]</span> Metric Verified: @revpilot leading growth battle by +3.3%</div>
-                                        <div class="t-line green"><span class="ts">[17:24:09]</span> Auto Settlement: Winner receives full $2,000 pool upon deadline</div>
-                                    </div>
+                                <div class="lterm-telemetry">
+                                    <div class="t-line"><span class="ts">[17:41:02]</span> Oracles Synced: Stripe Connect API & X Data Feed</div>
+                                    <div class="t-line"><span class="ts">[17:41:05]</span> Metric Verified: @revpilot leading growth battle by +3.3%</div>
+                                    <div class="t-line green"><span class="ts">[17:41:09]</span> Auto Settlement: Winner receives full $2,000 pool automatically upon deadline</div>
                                 </div>
                             </div>
                         </div>
@@ -505,8 +522,6 @@ export function renderLanding() {
 
             <script>
                 window.switchProtocolMode = function(mode) {
-                    var soloBtn = document.getElementById('tab-solo-btn');
-                    var rivalryBtn = document.getElementById('tab-rivalry-btn');
                     var soloCard = document.getElementById('card-mode-solo');
                     var rivalryCard = document.getElementById('card-mode-rivalry');
                     var termTitle = document.getElementById('term-header-title');
@@ -515,13 +530,11 @@ export function renderLanding() {
                     var viewSolo = document.getElementById('term-view-solo');
                     var viewRivalry = document.getElementById('term-view-rivalry');
 
-                    if (!soloBtn || !viewSolo || !viewRivalry) return;
+                    if (!viewSolo || !viewRivalry) return;
 
                     if (mode === 'solo') {
-                        if (soloBtn) soloBtn.className = 'lterm-tab-btn active';
-                        if (rivalryBtn) rivalryBtn.className = 'lterm-tab-btn';
-                        if (soloCard) soloCard.className = 'ltypes-mode-card active';
-                        if (rivalryCard) rivalryCard.className = 'ltypes-mode-card highlight';
+                        if (soloCard) soloCard.className = 'lterm-select-card active';
+                        if (rivalryCard) rivalryCard.className = 'lterm-select-card';
 
                         if (termTitle) termTitle.innerText = 'CONTRACT #SOLO-8124 — DISCIPLINE ENGINE';
                         if (termBadge) termBadge.className = 'lterm-status-badge live';
@@ -530,10 +543,8 @@ export function renderLanding() {
                         viewSolo.style.display = 'block';
                         viewRivalry.style.display = 'none';
                     } else {
-                        if (rivalryBtn) rivalryBtn.className = 'lterm-tab-btn active';
-                        if (soloBtn) soloBtn.className = 'lterm-tab-btn';
-                        if (rivalryCard) rivalryCard.className = 'ltypes-mode-card highlight active';
-                        if (soloCard) soloCard.className = 'ltypes-mode-card';
+                        if (rivalryCard) rivalryCard.className = 'lterm-select-card active';
+                        if (soloCard) soloCard.className = 'lterm-select-card';
 
                         if (termTitle) termTitle.innerText = 'DUEL #RIVAL-3406 — HEAD-TO-HEAD ESCROW';
                         if (termBadge) termBadge.className = 'lterm-status-badge rivalry';

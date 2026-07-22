@@ -1227,22 +1227,37 @@ export const landingCSS = `
 
 /* ═══ RIVALRY CARDS ═══ */
 .rv-card {
-    background: #FFFFFF !important;
-    border: 1px solid #E2E8F0 !important;
+    background: #ffffff;
+    border: 1px solid #E2E8F0;
     border-radius: 16px;
-    box-shadow: 0 4px 20px rgba(15, 23, 42, 0.03);
-    position: relative;
     overflow: hidden;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+    transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1) !important;
     cursor: pointer;
+    position: relative;
+}
+.rv-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: #7A1220;
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+    z-index: 10;
+}
+.rv-card:hover::before {
+    transform: scaleX(1);
 }
 .rv-card:hover {
-    border-color: #CBD5E1 !important;
-    box-shadow: 0 12px 32px rgba(15, 23, 42, 0.08) !important;
-    transform: translateY(-3px) !important;
+    border-color: #94A3B8 !important;
+    box-shadow: 0 24px 52px -10px rgba(15, 23, 42, 0.14), 0 4px 16px rgba(15, 23, 42, 0.05) !important;
+    transform: translateY(-8px) scale(1.015) !important;
 }
 .rv-card-inner { padding: 24px 24px 0; }
 .rv-card-header {
@@ -1336,10 +1351,10 @@ export const landingCSS = `
     font-size: 8px; font-weight: 700; letter-spacing: 0.5px;
     color: #fff; text-transform: uppercase; border-radius: 4px;
 }
-.lcard{border:1px solid var(--d);padding:36px 24px;display:flex;flex-direction:column;transition:all 0.4s cubic-bezier(0.16, 1, 0.3, 1);background:#FFFFFF !important;position:relative;overflow:hidden;cursor:pointer}
-.lcard::before{content:'';position:absolute;top:-1px;left:0;right:0;height:2px;background:var(--r);transform:scaleX(0);transform-origin:left;transition:transform 0.4s cubic-bezier(0.16, 1, 0.3, 1)}
+.lcard{border:1px solid #E2E8F0;border-radius:16px;padding:28px 24px;display:flex;flex-direction:column;transition:all 0.35s cubic-bezier(0.16, 1, 0.3, 1) !important;background:#FFFFFF !important;position:relative;overflow:hidden;cursor:pointer}
+.lcard::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:#7A1220;transform:scaleX(0);transform-origin:left;transition:transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);z-index:10}
 .lcard:hover::before{transform:scaleX(1)}
-.lcard:hover{border-color:#bbb;box-shadow:0 16px 40px rgba(0,0,0,.08);transform:translateY(-6px)}
+.lcard:hover{border-color:#94A3B8 !important;box-shadow:0 24px 52px -10px rgba(15, 23, 42, 0.14), 0 4px 16px rgba(15, 23, 42, 0.05) !important;transform:translateY(-8px) scale(1.015) !important}
 .lcard-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;flex-wrap:wrap;gap:8px 12px}
 .lcard-src{font-family:'Inter',sans-serif;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--t2);display:inline-flex;align-items:center;gap:8px;background:rgba(17,17,17,0.03);border:1px solid rgba(0,0,0,0.06);border-radius:6px;padding:5px 10px 5px 8px;transition:all 0.3s ease}
 .lcard:hover .lcard-src{border-color:rgba(0,0,0,0.1);background:rgba(17,17,17,0.05)}

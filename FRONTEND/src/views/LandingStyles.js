@@ -294,20 +294,22 @@ export const landingCSS = `
     position: relative;
     width: 100%;
     max-width: 520px;
-    height: 385px;
+    height: 410px;
     display: flex;
     justify-content: center;
     align-items: center;
+    padding-top: 16px;
+    box-sizing: border-box;
 }
 
 .lfan-deck-stage {
     position: relative;
     width: 365px;
-    height: 375px;
+    height: 385px;
     display: flex;
     justify-content: center;
     align-items: center;
-    transform: translateX(0);
+    transform: translateY(-10px);
 }
 
 .lfan-real-card {
@@ -318,38 +320,46 @@ export const landingCSS = `
     display: flex !important;
     flex-direction: column !important;
     gap: 12px !important;
-    transition: transform 450ms cubic-bezier(0.4, 0, 0.2, 1), opacity 450ms cubic-bezier(0.4, 0, 0.2, 1) !important;
+    transition: transform 500ms cubic-bezier(0.16, 1, 0.3, 1), opacity 500ms cubic-bezier(0.16, 1, 0.3, 1), box-shadow 350ms ease !important;
     transform-origin: bottom center !important;
     cursor: pointer;
     border: 1px solid rgba(15, 23, 42, 0.12) !important;
-    box-shadow: 0 20px 48px -8px rgba(15, 23, 42, 0.1), 0 2px 6px rgba(0, 0, 0, 0.03) !important;
     background: #FFFFFF !important;
     border-radius: 16px !important;
 }
 
 .lfan-real-card.is-center {
-    transform: translateX(0) rotate(0deg) scale(1) !important;
+    transform: translateX(0) translateY(0) rotate(0deg) scale(1) !important;
     z-index: 5 !important;
     opacity: 1 !important;
+    box-shadow: 0 2px 8px rgba(15, 23, 42, 0.08), 0 24px 48px rgba(15, 23, 42, 0.12) !important;
     pointer-events: auto !important;
+    filter: none !important;
+    backdrop-filter: none !important;
 }
 
 .lfan-real-card.is-left {
-    transform: translateX(-16px) translateY(8px) rotate(-3deg) scale(0.95) !important;
+    transform: translateX(-20px) translateY(12px) rotate(-3deg) scale(0.95) !important;
     z-index: 2 !important;
-    opacity: 0.82 !important;
+    opacity: 0.60 !important;
+    box-shadow: 0 4px 16px rgba(15, 23, 42, 0.04) !important;
     pointer-events: auto !important;
+    filter: blur(0.5px) !important;
+    backdrop-filter: blur(2px) !important;
 }
 
 .lfan-real-card.is-right {
-    transform: translateX(16px) translateY(8px) rotate(3deg) scale(0.95) !important;
+    transform: translateX(20px) translateY(12px) rotate(3deg) scale(0.95) !important;
     z-index: 2 !important;
-    opacity: 0.82 !important;
+    opacity: 0.60 !important;
+    box-shadow: 0 4px 16px rgba(15, 23, 42, 0.04) !important;
     pointer-events: auto !important;
+    filter: blur(0.5px) !important;
+    backdrop-filter: blur(2px) !important;
 }
 
 .lfan-real-card.is-hidden {
-    transform: translateX(0) rotate(0deg) scale(0.8) !important;
+    transform: translateX(0) rotate(0deg) scale(0.92) !important;
     z-index: 1 !important;
     opacity: 0 !important;
     pointer-events: none !important;

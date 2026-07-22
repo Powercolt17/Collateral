@@ -2055,16 +2055,103 @@ export const landingCSS = `
   height: auto;
 }
 
-/* ═══ SOCIAL PROOF ═══ */
-.lreal-results{padding:100px 0;background:var(--bg);position:relative}
-.lreal-results::after{content:'';position:absolute;bottom:0;left:0;right:0;height:80px;background:linear-gradient(to bottom, var(--bg), var(--s));pointer-events:none}
-.lh-section-title{font-family:'Plus Jakarta Sans',sans-serif;font-size:clamp(26px, 3.5vw, 36px);font-weight:800;line-height:1.15;letter-spacing:-1px;color:var(--t1);margin-bottom:16px}
-.lh-section-subtitle{font-size:14px;color:var(--t3);line-height:1.5;margin-bottom:24px;max-width:640px}
-.lstats-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:32px;margin-bottom:64px;margin-top:32px}
-.lstat-card{background:#fff;border:1px solid var(--d);padding:32px;border-radius:12px;box-shadow:0 4px 20px rgba(0,0,0,0.01)}
-.lstat-num{font-family:'Plus Jakarta Sans',sans-serif;font-size:36px;font-weight:800;color:var(--r);letter-spacing:-1px;line-height:1}
-.lstat-label{font-family:'Inter Tight',sans-serif;font-size:13px;font-weight:700;color:var(--t1);margin:10px 0 4px}
-.lstat-sub{font-size:11px;color:var(--t3);line-height:1.4}
+/* ═══ SOCIAL PROOF (REAL RESULTS) ═══ */
+.lreal-results {
+    padding: 56px 0 40px;
+    background: var(--bg);
+    position: relative;
+}
+.lreal-results::after {
+    display: none !important;
+}
+.lreal-header-stack {
+    margin-bottom: 28px;
+}
+.lreal-header-stack .lred-dash {
+    margin-bottom: 6px;
+}
+.lh-section-title {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: clamp(26px, 3.5vw, 36px);
+    font-weight: 800;
+    line-height: 1.15;
+    letter-spacing: -1px;
+    color: var(--t1);
+    margin-bottom: 8px;
+}
+.lh-section-subtitle {
+    font-size: 14px;
+    color: #64748B;
+    line-height: 1.45;
+    margin-bottom: 0;
+    max-width: 640px;
+}
+.lstats-cards-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+    margin-bottom: 36px;
+}
+.lstat-card {
+    background: #FAFAF7 !important;
+    border: 1px solid rgba(226, 232, 240, 0.85) !important;
+    border-radius: 18px !important;
+    box-shadow: 0 12px 32px -10px rgba(15, 23, 42, 0.05), 0 2px 6px rgba(15, 23, 42, 0.02) !important;
+    padding: 24px 22px !important;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    position: relative;
+    transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.3s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.3s ease;
+}
+.lstat-card:hover {
+    transform: translateY(-3px);
+    border-color: rgba(203, 213, 225, 0.9) !important;
+    box-shadow: 0 20px 44px -12px rgba(15, 23, 42, 0.09), 0 4px 12px rgba(15, 23, 42, 0.03) !important;
+}
+.lstat-card-top {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    margin-bottom: 12px;
+}
+.lstat-card-icon {
+    width: 32px;
+    height: 32px;
+    border-radius: 8px;
+    background: rgba(122, 18, 32, 0.06);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.lstat-card-body {
+    display: flex;
+    flex-direction: column;
+}
+.lstat-num {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 40px;
+    font-weight: 800;
+    color: #7A1220;
+    letter-spacing: -1.2px;
+    line-height: 1;
+}
+.lstat-label {
+    font-family: 'Inter Tight', sans-serif;
+    font-size: 13.5px;
+    font-weight: 700;
+    color: #0F172A;
+    margin: 10px 0 4px;
+    line-height: 1.25;
+}
+.lstat-sub {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 12px;
+    color: #64748B;
+    line-height: 1.45;
+    text-wrap: balance;
+    margin: 0;
+}
 /* ═══ LIVE LEDGER FEED ═══ */
 .lledger-container {background:#FFF;border:1px solid var(--d);border-radius:16px;padding:32px;box-shadow:0 4px 30px rgba(0,0,0,0.015);margin-top:48px}
 .lledger-header {display:flex;justify-content:space-between;align-items:flex-start;border-bottom:1px solid var(--d);padding-bottom:20px;margin-bottom:24px;flex-wrap:wrap;gap:16px}
@@ -4527,22 +4614,12 @@ export const landingCSS = `
 
   /* Real Results / Protocol Metrics */
   .lreal-results {
-    padding: 44px 0 !important;
+    padding: 40px 0 !important;
   }
-  .lstats-grid, .lstats-grid-borderless {
+  .lstats-cards-grid {
     grid-template-columns: 1fr !important;
     gap: 16px !important;
-    margin: 24px 0 !important;
-  }
-  .lstat-item-borderless {
-    border-right: none !important;
-    border-bottom: 1px solid rgba(17, 17, 17, 0.08) !important;
-    padding: 16px 0 24px !important;
-    text-align: center !important;
-  }
-  .lstat-item-borderless:last-child {
-    border-bottom: none !important;
-    padding-bottom: 0 !important;
+    margin-bottom: 28px !important;
   }
 
   /* Why It Works / Emotional Reframe */

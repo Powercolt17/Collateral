@@ -3613,5 +3613,311 @@ export const landingCSS = `
     }
 }
 
+/* ═══════════════════════════════════════════════════════════════ */
+/* MASTER MOBILE RESPONSIVE ENGINE (320px - 768px Viewports)        */
+/* Enforces 100% Symmetrical, High-Precision Alignment & Scaling    */
+/* ═══════════════════════════════════════════════════════════════ */
+@media (max-width: 768px) {
+  /* Prevent Any Horizontal Overflow Page-Wide */
+  html, body, .lp, .lmain {
+    overflow-x: hidden !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    box-sizing: border-box !important;
+  }
+
+  /* Global Container Side Padding */
+  .lw {
+    width: 100% !important;
+    max-width: 100% !important;
+    padding: 0 20px !important;
+    box-sizing: border-box !important;
+  }
+
+  /* Promo Bar & Fixed Header Placement */
+  .lpromo-bar {
+    height: 32px !important;
+    line-height: 32px !important;
+    font-size: 10px !important;
+    font-weight: 700 !important;
+    letter-spacing: 1px !important;
+    padding: 0 12px !important;
+  }
+  .ln {
+    top: 32px !important;
+    height: 60px !important;
+  }
+  .ln-in {
+    height: 60px !important;
+    padding: 0 16px !important;
+  }
+
+  /* Hero Section Mobile Layout */
+  .lhero-section {
+    padding-top: 108px !important;
+    padding-bottom: 32px !important;
+    overflow: hidden !important;
+  }
+  .lhero-grid {
+    grid-template-columns: 1fr !important;
+    gap: 28px !important;
+    padding: 0 !important;
+  }
+  .lhero-left {
+    width: 100% !important;
+    text-align: left !important;
+  }
+  .lhero-eyebrow {
+    font-size: 10px !important;
+    font-weight: 700 !important;
+    letter-spacing: 0.1em !important;
+    text-transform: uppercase !important;
+    color: var(--t3) !important;
+    margin: 0 0 14px 0 !important;
+    border-left: 2px solid var(--r) !important;
+    padding-left: 10px !important;
+    display: inline-block !important;
+  }
+  .lh1 {
+    font-family: 'Plus Jakarta Sans', sans-serif !important;
+    font-size: clamp(28px, 7.8vw, 42px) !important;
+    line-height: 1.08 !important;
+    letter-spacing: -1.2px !important;
+    color: var(--t1) !important;
+    margin: 0 0 16px 0 !important;
+    text-transform: uppercase !important;
+    word-break: break-word !important;
+  }
+  .lsub {
+    font-size: 14.5px !important;
+    line-height: 1.55 !important;
+    color: var(--t2) !important;
+    margin-bottom: 22px !important;
+    max-width: 100% !important;
+  }
+
+  /* CTAs & Button Stacking */
+  .lctas {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 10px !important;
+    width: 100% !important;
+    margin-bottom: 12px !important;
+  }
+  .lbtn, .lbtn-r, #lp-hero-cta {
+    width: 100% !important;
+    height: 50px !important;
+    font-size: 12px !important;
+    font-weight: 700 !important;
+    letter-spacing: 1px !important;
+    justify-content: center !important;
+    text-align: center !important;
+    border-radius: 8px !important;
+    box-sizing: border-box !important;
+  }
+  .lhero-textlink, #lp-see-contracts-cta {
+    width: 100% !important;
+    height: 46px !important;
+    font-size: 12px !important;
+    font-weight: 700 !important;
+    letter-spacing: 0.8px !important;
+    justify-content: center !important;
+    text-align: center !important;
+    background: transparent !important;
+    border: 1px solid var(--d) !important;
+    border-radius: 8px !important;
+    color: var(--t1) !important;
+    box-sizing: border-box !important;
+  }
+  .lcta-match {
+    font-size: 11px !important;
+    color: var(--t3) !important;
+    margin: 6px 0 0 0 !important;
+    text-align: center !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 6px !important;
+  }
+
+  /* Mobile Live Rivalry Ticker */
+  .l-live-rivalry-preview {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 8px !important;
+    width: 100% !important;
+    padding: 12px 14px !important;
+    margin-top: 18px !important;
+    border-radius: 10px !important;
+    background: #FFFFFF !important;
+    border: 1px solid var(--d) !important;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.02) !important;
+    box-sizing: border-box !important;
+  }
+  .l-lr-hdr {
+    font-size: 9px !important;
+    letter-spacing: 1px !important;
+  }
+  .l-lr-ticker {
+    display: flex !important;
+    flex-wrap: wrap !important;
+    gap: 6px 12px !important;
+    font-size: 11px !important;
+    justify-content: space-between !important;
+    align-items: center !important;
+  }
+
+  /* Hero Centerpiece Card */
+  .lhero-right {
+    display: flex !important;
+    width: 100% !important;
+    margin-top: 24px !important;
+    justify-content: center !important;
+    align-items: center !important;
+  }
+  .lactivity-card {
+    width: 100% !important;
+    max-width: 100% !important;
+    box-sizing: border-box !important;
+    padding: 18px 16px !important;
+    gap: 14px !important;
+    border-radius: 16px !important;
+    border: 1px solid rgba(0, 0, 0, 0.08) !important;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04) !important;
+  }
+
+  /* Open Contracts Section & Horizontal Swipe Cards */
+  .lcontracts {
+    padding: 40px 0 44px !important;
+  }
+  .lh-section-title {
+    font-size: clamp(22px, 6.5vw, 30px) !important;
+    line-height: 1.18 !important;
+    letter-spacing: -0.8px !important;
+    margin-bottom: 10px !important;
+    text-align: center !important;
+  }
+  .lh-section-subtitle {
+    font-size: 13.5px !important;
+    line-height: 1.5 !important;
+    color: var(--t2) !important;
+    margin: 0 auto 24px auto !important;
+    max-width: 100% !important;
+    text-align: center !important;
+  }
+  .lred-dash {
+    justify-content: center !important;
+    margin-bottom: 10px !important;
+  }
+
+  .lcards {
+    display: flex !important;
+    overflow-x: auto !important;
+    scroll-snap-type: x mandatory !important;
+    -webkit-overflow-scrolling: touch !important;
+    gap: 14px !important;
+    padding: 4px 20px 20px 20px !important;
+    margin: 0 -20px !important;
+    scrollbar-width: none !important;
+  }
+  .lcards::-webkit-scrollbar {
+    display: none !important;
+  }
+  .lcard {
+    flex: 0 0 280px !important;
+    width: 280px !important;
+    max-width: 82vw !important;
+    scroll-snap-align: start !important;
+    border-radius: 14px !important;
+    padding: 20px 18px !important;
+    box-sizing: border-box !important;
+  }
+
+  /* Money Flow Schematic / How It Works */
+  .lhow {
+    padding: 44px 0 !important;
+  }
+  .lfan-grid, .l-schematic-grid {
+    grid-template-columns: 1fr !important;
+    gap: 24px !important;
+  }
+  .lstep {
+    padding: 20px 16px !important;
+    border-radius: 12px !important;
+  }
+
+  /* Real Results / Protocol Metrics */
+  .lreal-results {
+    padding: 44px 0 !important;
+  }
+  .lstats-grid, .lstats-grid-borderless {
+    grid-template-columns: 1fr !important;
+    gap: 16px !important;
+    margin: 24px 0 !important;
+  }
+  .lstat-item-borderless {
+    border-right: none !important;
+    border-bottom: 1px solid rgba(17, 17, 17, 0.08) !important;
+    padding: 16px 0 24px !important;
+    text-align: center !important;
+  }
+  .lstat-item-borderless:last-child {
+    border-bottom: none !important;
+    padding-bottom: 0 !important;
+  }
+
+  /* Why It Works / Emotional Reframe */
+  .lhow-it-works-section {
+    padding: 44px 0 !important;
+  }
+  .lhow-layout {
+    grid-template-columns: 1fr !important;
+    gap: 28px !important;
+    margin-top: 20px !important;
+  }
+  .lhow-title {
+    font-size: clamp(22px, 6vw, 30px) !important;
+    line-height: 1.2 !important;
+    letter-spacing: -0.8px !important;
+    text-align: left !important;
+    margin-bottom: 14px !important;
+  }
+  .lhow-flow {
+    grid-template-columns: 1fr !important;
+    gap: 24px !important;
+  }
+
+  /* CLTR Token Economy Section */
+  .lemo-reframe {
+    padding: 44px 0 !important;
+  }
+  .lemo-grid {
+    grid-template-columns: 1fr !important;
+    gap: 24px !important;
+    margin-top: 20px !important;
+  }
+
+  /* FAQ Section */
+  .lfaq {
+    padding: 44px 0 !important;
+  }
+  .fq-q {
+    font-size: 14px !important;
+    padding: 14px 0 !important;
+  }
+
+  /* Footer */
+  .lfoot {
+    padding: 36px 20px 48px !important;
+    text-align: center !important;
+  }
+
+  /* Drawer Menu Width */
+  .pnl-drawer {
+    width: 100% !important;
+    max-width: 100% !important;
+    border-left: none !important;
+  }
+}
 
 `;

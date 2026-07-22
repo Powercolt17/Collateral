@@ -1208,7 +1208,122 @@ export const landingCSS = `
 .lcontracts{padding:30px 0 48px;background:#FAF8F5 !important;position:relative}
 .lcontracts::after{display:none !important}
 .lcontracts .lw{max-width:1280px}
-.lcards{display:grid;grid-template-columns:repeat(4,1fr);gap:32px}
+.lcards{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+@media (max-width: 1024px) {
+    .lcards{grid-template-columns:1fr}
+}
+
+/* ═══ RIVALRY CARDS ═══ */
+.rv-card {
+    background: #FFFFFF !important;
+    border: 1px solid #E2E8F0 !important;
+    border-radius: 16px;
+    box-shadow: 0 4px 20px rgba(15, 23, 42, 0.03);
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+    cursor: pointer;
+}
+.rv-card:hover {
+    border-color: #CBD5E1 !important;
+    box-shadow: 0 12px 32px rgba(15, 23, 42, 0.08) !important;
+    transform: translateY(-3px) !important;
+}
+.rv-card-inner { padding: 24px 24px 0; }
+.rv-card-header {
+    display: flex; align-items: center; justify-content: space-between;
+    margin-bottom: 8px;
+}
+.rv-card-status {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px; font-weight: 700; letter-spacing: 1px;
+    text-transform: uppercase; color: #166534;
+    display: flex; align-items: center; gap: 6px;
+}
+.rv-card-status .dot {
+    width: 6px; height: 6px; border-radius: 50%;
+    background: #166534;
+}
+.rv-card-metric-row {
+    display: flex; align-items: center; justify-content: space-between;
+    margin-bottom: 20px;
+}
+.rv-card-metric {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 15px; font-weight: 800; color: #0F172A;
+    letter-spacing: -0.3px; text-transform: uppercase;
+}
+.rv-card-id {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px; font-weight: 600; color: #94A3B8;
+    letter-spacing: 0.5px;
+}
+.rv-versus {
+    display: grid; grid-template-columns: 1fr auto 1fr;
+    align-items: center; gap: 8px;
+    margin-bottom: 16px;
+}
+.rv-player {
+    display: flex; flex-direction: column; gap: 2px;
+}
+.rv-player.right { text-align: right; }
+.rv-player-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 8px; font-weight: 700; letter-spacing: 1.2px;
+    color: #94A3B8; text-transform: uppercase;
+}
+.rv-player-name {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px; font-weight: 600; color: #0F172A; letter-spacing: 0.02em;
+    display: flex; align-items: center; gap: 5px;
+    white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+.rv-player.right .rv-player-name { justify-content: flex-end; }
+.rv-lead-dot { width: 5px; height: 5px; border-radius: 50%; flex-shrink: 0; }
+.rv-player-growth {
+    font-size: 26px; font-weight: 700; color: #0F172A;
+    letter-spacing: -1px; margin-top: 2px; line-height: 1.1;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+}
+.rv-player-growth.leading { color: #166534; }
+.rv-player-growth.trailing { color: #7A1220; }
+.rv-vs-divider {
+    display: flex; align-items: center; justify-content: center;
+    width: 36px; flex-shrink: 0;
+}
+.rv-momentum {
+    height: 4px; display: flex; overflow: hidden;
+    margin: 0 24px; background: #F1F5F9; border-radius: 2px;
+}
+.rv-momentum-left { background: #166534; border-radius: 2px 0 0 2px; }
+.rv-momentum-right { background: #7A1220; border-radius: 0 2px 2px 0; }
+.rv-card-bottom {
+    display: flex; align-items: flex-end; justify-content: space-between;
+    padding: 16px 24px 20px;
+    border-top: 1px solid #F1F5F9;
+    margin-top: 16px;
+}
+.rv-card-stake { display: flex; flex-direction: column; gap: 2px; }
+.rv-card-stake-val { font-size: 24px; font-weight: 800; color: #0F172A; letter-spacing: -0.5px; font-family: 'Plus Jakarta Sans', sans-serif; }
+.rv-card-stake-lbl {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 8px; font-weight: 700; color: #94A3B8;
+    letter-spacing: 1px; text-transform: uppercase;
+}
+.rv-card-time {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9px; color: #7A1220; letter-spacing: 0.5px; font-weight: 700;
+    text-transform: uppercase;
+}
+.rv-card-provider-pill {
+    display: inline-flex; align-items: center; padding: 3px 8px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 8px; font-weight: 700; letter-spacing: 0.5px;
+    color: #fff; text-transform: uppercase; border-radius: 4px;
+}
 .lcard{border:1px solid var(--d);padding:36px 24px;display:flex;flex-direction:column;transition:all 0.4s cubic-bezier(0.16, 1, 0.3, 1);background:#FFFFFF !important;position:relative;overflow:hidden;cursor:pointer}
 .lcard::before{content:'';position:absolute;top:-1px;left:0;right:0;height:2px;background:var(--r);transform:scaleX(0);transform-origin:left;transition:transform 0.4s cubic-bezier(0.16, 1, 0.3, 1)}
 .lcard:hover::before{transform:scaleX(1)}

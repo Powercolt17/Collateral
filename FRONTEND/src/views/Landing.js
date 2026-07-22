@@ -795,38 +795,61 @@ export function renderLanding() {
                     </div>
 
                     <div class="lcards">
-                        <div class="lcard lcard-popular reveal-item">
-                            <div class="lcard-top">
-                                <span class="lcard-src"><svg class="lcard-src-logo" viewBox="0 0 24 24" fill="currentColor" style="color:#635BFF;width:14px;height:14px;display:inline-block;vertical-align:middle;margin-right:6px;"><path d="M20 10.3c0-1.8-1.5-2.7-3.6-3.2l-2-.5c-1.3-.3-1.9-.7-1.9-1.3 0-.6.7-1 1.7-1 1.7 0 3 .6 3.6 1l.7-2.6C17.9 2.2 16.3 1.8 14.8 1.8c-3.1 0-5.2 1.6-5.2 4.3 0 2.9 2.4 3.7 4.9 4.3l1.8.4c1.4.3 2 .8 2 1.5 0 .7-.8 1.1-2.1 1.1-1.9 0-3.6-.7-4.3-1.1l-.8 2.7c1 .5 2.9 1 4.7 1C18.2 16 20 14.4 20 10.3z"/></svg>Stripe</span>
-                                <span class="lcard-tier tier-stake">Stake</span>
+                        <!-- CARD 1: RIVALRY - AUDIENCE (ID: 7B92A41E) -->
+                        <div class="rv-card reveal-item" onclick="window.router.navigate('/rivalry/7B92A41E')">
+                            <div class="rv-card-inner">
+                                <div class="rv-card-header">
+                                    <div class="rv-card-status">
+                                        <span class="dot"></span>
+                                        LOCKED
+                                    </div>
+                                </div>
+                                <div class="rv-card-metric-row">
+                                    <span class="rv-card-metric">AUDIENCE</span>
+                                    <span class="rv-card-id">ID:7B92A41E</span>
+                                </div>
+                                <div class="rv-versus">
+                                    <div class="rv-player">
+                                        <span class="rv-player-label">Challenger</span>
+                                        <span class="rv-player-name"><span class="rv-lead-dot" style="background:#166534"></span>jakevoss</span>
+                                        <span class="rv-player-growth leading">+12.4%</span>
+                                    </div>
+                                    <div class="rv-vs-divider">
+                                        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#CBD5E1" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                                            <polyline points="14.5 17.5 3 6 3 3 6 3 17.5 14.5"/>
+                                            <line x1="13" x2="19" y1="19" y2="13"/>
+                                            <line x1="16" x2="20" y1="16" y2="20"/>
+                                            <line x1="19" x2="21" y1="21" y2="19"/>
+                                            <polyline points="14.5 6.5 18 3 21 3 21 6 17.5 9.5"/>
+                                            <line x1="5" x2="9" y1="14" y2="18"/>
+                                            <line x1="7" x2="4" y1="17" y2="20"/>
+                                            <line x1="3" x2="5" y1="19" y2="21"/>
+                                        </svg>
+                                    </div>
+                                    <div class="rv-player right">
+                                        <span class="rv-player-label">Opponent</span>
+                                        <span class="rv-player-name">marcus<span class="rv-lead-dot" style="background:#7A1220"></span></span>
+                                        <span class="rv-player-growth trailing">+9.2%</span>
+                                    </div>
+                                </div>
                             </div>
-                            <div class="lcard-title">Revenue Growth</div>
-                            <div class="lcard-target">+20% Revenue growth</div>
-                            <div class="lcard-row"><span class="k">Deposit</span><span class="v">$250 – $3,000</span></div>
-                            <div class="lcard-row"><span class="k">Total Return</span><span class="v">2.5x</span></div>
-                            <div class="lcard-row"><span class="k">Window</span><span class="v">30 days</span></div>
-                            <div class="lcard-live-indicator">
-                                <span class="lcard-live-dot"></span>
-                                <span class="lcard-live-text">$2.4k in escrow</span>
+                            <div class="rv-momentum">
+                                <div class="rv-momentum-left" style="width: 58%;"></div>
+                                <div class="rv-momentum-right" style="width: 42%;"></div>
                             </div>
-                            <div class="lcard-btn"><button class="lp-cta-btn" data-source="STRIPE" data-tier="stake" data-capital="250">Start Contract</button></div>
+                            <div class="rv-card-bottom">
+                                <div class="rv-card-stake">
+                                    <span class="rv-card-stake-val">$5,000</span>
+                                    <span class="rv-card-stake-lbl">CAPITAL EXPOSURE</span>
+                                </div>
+                                <div style="display:flex;flex-direction:column;align-items:flex-end;gap:4px;">
+                                    <span class="rv-card-provider-pill" style="background:#111">X / TWITTER</span>
+                                    <span class="rv-card-time">14D REMAINING</span>
+                                </div>
+                            </div>
                         </div>
-                        <div class="lcard reveal-item">
-                            <div class="lcard-top">
-                                <span class="lcard-src"><svg class="lcard-src-logo" viewBox="0 0 24 24" fill="currentColor" style="color:#111111;width:14px;height:14px;display:inline-block;vertical-align:middle;margin-right:6px;"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>X / Twitter</span>
-                                <span class="lcard-tier tier-allin">All-In</span>
-                            </div>
-                            <div class="lcard-title">Follower Growth</div>
-                            <div class="lcard-target">+1,000 Followers</div>
-                            <div class="lcard-row"><span class="k">Deposit</span><span class="v">$500 – $5,000</span></div>
-                            <div class="lcard-row"><span class="k">Total Return</span><span class="v">4.0x</span></div>
-                            <div class="lcard-row"><span class="k">Window</span><span class="v">14 days</span></div>
-                            <div class="lcard-live-indicator">
-                                <span class="lcard-live-dot"></span>
-                                <span class="lcard-live-text">$3.1k in escrow</span>
-                            </div>
-                            <div class="lcard-btn"><button class="lp-cta-btn" data-source="X" data-tier="all_in" data-capital="500">Start Contract</button></div>
-                        </div>
+
+                        <!-- CARD 2: SOLO - SHOPIFY STORE SALES -->
                         <div class="lcard reveal-item">
                             <div class="lcard-top">
                                 <span class="lcard-src"><svg class="lcard-src-logo" viewBox="0 0 24 24" fill="currentColor" style="color:#96bf48;width:14px;height:14px;display:inline-block;vertical-align:middle;margin-right:6px;"><path d="M19.58 6.425a.86.86 0 00-.7-.34h-2.193a4.52 4.52 0 00-9.04 0H5.454a.86.86 0 00-.7.34.887.887 0 00-.16.766l1.97 10.96a2.41 2.41 0 002.37 1.986h6.49a2.41 2.41 0 002.37-1.985l1.97-10.96a.887.887 0 00-.184-.767zM12 3.86a2.53 2.53 0 012.513 2.225H9.487A2.53 2.53 0 0112 3.86zm3.267 11.516a2.036 2.036 0 01-1.745.892 2.374 2.374 0 01-1.614-.648A2.348 2.348 0 0010.3 15a2.036 2.036 0 01-1.745-.892.429.429 0 11.734-.442c.245.408.66.634 1.01.634.341 0 .614-.148.914-.442A3.21 3.21 0 0113.627 15c.341 0 .614-.148.914-.442a.429.429 0 01.734.442z"/></svg>Shopify</span>
@@ -843,21 +866,59 @@ export function renderLanding() {
                             </div>
                             <div class="lcard-btn"><button class="lp-cta-btn" data-source="SHOPIFY" data-tier="pledge" data-capital="100">Start Contract</button></div>
                         </div>
-                        <div class="lcard reveal-item">
-                            <div class="lcard-top">
-                                <span class="lcard-src"><svg class="lcard-src-logo" viewBox="0 0 24 24" fill="currentColor" style="color:#FF0000;width:14px;height:14px;display:inline-block;vertical-align:middle;margin-right:6px;"><path d="M23.498 6.163a3.003 3.003 0 0 0-2.11-2.11C19.517 3.545 12 3.545 12 3.545s-7.517 0-9.388.508a3.003 3.003 0 0 0-2.11 2.11C0 8.033 0 12 0 12s0 3.967.502 5.837a3.003 3.003 0 0 0 2.11 2.11c1.871.508 9.388.508 9.388.508s7.517 0 9.388-.508a3.003 3.003 0 0 0 2.11-2.11C24 15.967 24 12 24 12s0-3.967-.502-5.837zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>YouTube</span>
-                                <span class="lcard-tier tier-stake">Stake</span>
+
+                        <!-- CARD 3: RIVALRY - REVENUE (ID: 34D63CA3) -->
+                        <div class="rv-card reveal-item" onclick="window.router.navigate('/rivalry/34D63CA3')">
+                            <div class="rv-card-inner">
+                                <div class="rv-card-header">
+                                    <div class="rv-card-status">
+                                        <span class="dot"></span>
+                                        LOCKED
+                                    </div>
+                                </div>
+                                <div class="rv-card-metric-row">
+                                    <span class="rv-card-metric">REVENUE</span>
+                                    <span class="rv-card-id">ID:34D63CA3</span>
+                                </div>
+                                <div class="rv-versus">
+                                    <div class="rv-player">
+                                        <span class="rv-player-label">Challenger</span>
+                                        <span class="rv-player-name"><span class="rv-lead-dot" style="background:#166534"></span>revpilot</span>
+                                        <span class="rv-player-growth leading">+8.1%</span>
+                                    </div>
+                                    <div class="rv-vs-divider">
+                                        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#CBD5E1" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                                            <polyline points="14.5 17.5 3 6 3 3 6 3 17.5 14.5"/>
+                                            <line x1="13" x2="19" y1="19" y2="13"/>
+                                            <line x1="16" x2="20" y1="16" y2="20"/>
+                                            <line x1="19" x2="21" y1="21" y2="19"/>
+                                            <polyline points="14.5 6.5 18 3 21 3 21 6 17.5 9.5"/>
+                                            <line x1="5" x2="9" y1="14" y2="18"/>
+                                            <line x1="7" x2="4" y1="17" y2="20"/>
+                                            <line x1="3" x2="5" y1="19" y2="21"/>
+                                        </svg>
+                                    </div>
+                                    <div class="rv-player right">
+                                        <span class="rv-player-label">Opponent</span>
+                                        <span class="rv-player-name">quotaops<span class="rv-lead-dot" style="background:#7A1220"></span></span>
+                                        <span class="rv-player-growth trailing">+5.4%</span>
+                                    </div>
+                                </div>
                             </div>
-                            <div class="lcard-title">Subscriber Growth</div>
-                            <div class="lcard-target">+500 Subscribers</div>
-                            <div class="lcard-row"><span class="k">Deposit</span><span class="v">$250 – $3,000</span></div>
-                            <div class="lcard-row"><span class="k">Total Return</span><span class="v">2.5x</span></div>
-                            <div class="lcard-row"><span class="k">Window</span><span class="v">30 days</span></div>
-                            <div class="lcard-live-indicator">
-                                <span class="lcard-live-dot"></span>
-                                <span class="lcard-live-text">$0.9k in escrow</span>
+                            <div class="rv-momentum">
+                                <div class="rv-momentum-left" style="width: 60%;"></div>
+                                <div class="rv-momentum-right" style="width: 40%;"></div>
                             </div>
-                            <div class="lcard-btn"><button class="lp-cta-btn" data-source="YOUTUBE" data-tier="stake" data-capital="250">Start Contract</button></div>
+                            <div class="rv-card-bottom">
+                                <div class="rv-card-stake">
+                                    <span class="rv-card-stake-val">$2,000</span>
+                                    <span class="rv-card-stake-lbl">CAPITAL EXPOSURE</span>
+                                </div>
+                                <div style="display:flex;flex-direction:column;align-items:flex-end;gap:4px;">
+                                    <span class="rv-card-provider-pill" style="background:#635BFF">STRIPE</span>
+                                    <span class="rv-card-time">0H REMAINING</span>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>

@@ -4685,131 +4685,286 @@ export const landingCSS = `
   }
 }
 
-/* ═══ INSTITUTIONAL PROTOCOL VISUALIZER (SOLO & RIVALRY) ═══ */
-.proto-execution-card {
+/* ═══ LARGE INSTITUTIONAL RIVALRY PROTOCOL VISUALIZER ═══ */
+.lrivalry-protocol-visualizer {
     background: #FAFAF7;
     border: 1px solid rgba(226, 232, 240, 0.85);
-    border-radius: 18px;
-    padding: 24px;
-    box-shadow: 0 16px 44px -12px rgba(15, 23, 42, 0.06);
+    border-radius: 20px;
+    padding: 24px 22px;
+    box-shadow: 0 20px 48px -12px rgba(15, 23, 42, 0.07);
     display: flex;
     flex-direction: column;
     gap: 20px;
+    width: 100%;
+    box-sizing: border-box;
     position: relative;
 }
 
-.proto-diagram-box {
+.rpv-header {
     display: flex;
     align-items: center;
     justify-content: space-between;
+    border-bottom: 1px solid rgba(226, 232, 240, 0.8);
+    padding-bottom: 14px;
+}
+
+.rpv-status-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10.5px;
+    font-weight: 700;
+    color: #7A1220;
+    letter-spacing: 0.8px;
+}
+
+.rpv-pulse-dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: #22C55E;
+    box-shadow: 0 0 8px rgba(34, 197, 94, 0.8);
+    animation: statusPulse 2s ease-in-out infinite;
+}
+
+.rpv-contract-id {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    font-weight: 700;
+    color: #64748B;
+}
+
+.rpv-flow-canvas {
+    display: flex;
+    flex-direction: column;
     gap: 16px;
-    background: #FFFFFF;
-    border: 1px solid rgba(226, 232, 240, 0.7);
-    border-radius: 14px;
-    padding: 20px 18px;
     position: relative;
 }
 
-.proto-node {
+.rpv-competitor-card {
+    background: #FFFFFF;
+    border: 1px solid rgba(226, 232, 240, 0.85);
+    border-radius: 14px;
+    padding: 16px 18px;
     display: flex;
     flex-direction: column;
-    gap: 4px;
-    padding: 12px 14px;
-    background: #FAFAF7;
-    border: 1px solid rgba(226, 232, 240, 0.8);
-    border-radius: 10px;
-    min-width: 120px;
+    gap: 10px;
+    box-shadow: 0 4px 14px rgba(15, 23, 42, 0.02);
+    transition: transform 0.3s ease, border-color 0.3s ease;
 }
 
-.proto-node-hdr {
+.rpv-competitor-card:hover {
+    transform: translateY(-2px);
+    border-color: rgba(122, 18, 32, 0.25);
+}
+
+.rpv-card-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.rpv-party-tag {
     font-family: 'JetBrains Mono', monospace;
-    font-size: 10px;
-    font-weight: 700;
-    color: #64748B;
+    font-size: 9.5px;
+    font-weight: 800;
+    color: #7A1220;
+    background: rgba(122, 18, 32, 0.06);
+    padding: 2px 8px;
+    border-radius: 9999px;
     letter-spacing: 0.5px;
-    text-transform: uppercase;
 }
 
-.proto-node-val {
-    font-family: 'Plus Jakarta Sans', sans-serif;
-    font-size: 15px;
-    font-weight: 800;
+.rpv-user-handle {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    font-weight: 700;
     color: #0F172A;
 }
 
-.proto-node-user {
-    font-size: 11px;
-    color: #64748B;
-    font-weight: 500;
-}
-
-.proto-node-user.status-green {
-    color: #166534;
+.rpv-metric-title {
+    font-family: 'Inter Tight', sans-serif;
+    font-size: 14px;
     font-weight: 700;
+    color: #0F172A;
+    display: flex;
+    align-items: center;
+    gap: 8px;
 }
 
-.proto-connection-line {
+.rpv-brand-icon {
+    width: 18px;
+    height: 18px;
+    object-fit: contain;
+}
+
+.rpv-progress-wrap {
     display: flex;
     flex-direction: column;
-    align-items: center;
-    gap: 6px;
-    flex: 1;
-    position: relative;
-}
-
-.proto-lock-badge {
-    display: inline-flex;
-    align-items: center;
     gap: 4px;
-    padding: 4px 8px;
-    border-radius: 9999px;
-    background: #FDF2F2;
-    color: #7A1220;
-    border: 1px solid rgba(122, 18, 32, 0.2);
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 9px;
-    font-weight: 700;
-    letter-spacing: 0.5px;
 }
 
-.proto-vs-badge {
-    width: 32px;
-    height: 32px;
-    border-radius: 50%;
-    background: #7A1220;
-    color: #FFFFFF;
-    font-family: 'Plus Jakarta Sans', sans-serif;
-    font-size: 11px;
-    font-weight: 800;
+.rpv-progress-info {
     display: flex;
-    align-items: center;
-    justify-content: center;
-    box-shadow: 0 4px 12px rgba(122, 18, 32, 0.3);
+    justify-content: space-between;
+    font-size: 10.5px;
+    font-family: 'JetBrains Mono', monospace;
+    color: #64748B;
+    font-weight: 600;
 }
 
-.proto-pool-bar {
+.rpv-progress-bar {
+    width: 100%;
+    height: 6px;
+    background: #F1F5F9;
+    border-radius: 9999px;
+    overflow: hidden;
+}
+
+.rpv-progress-fill {
+    height: 100%;
+    background: #22C55E;
+    border-radius: 9999px;
+    transition: width 1s ease-out;
+}
+
+.rpv-progress-fill.secondary {
+    background: #3B82F6;
+}
+
+.rpv-stake-amount {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    background: rgba(122, 18, 32, 0.05);
-    border: 1px solid rgba(122, 18, 32, 0.15);
-    border-radius: 10px;
-    padding: 10px 14px;
+    border-top: 1px dashed rgba(226, 232, 240, 0.8);
+    padding-top: 8px;
+    margin-top: 2px;
 }
 
-.pool-lbl {
+.rpv-stake-lbl {
     font-family: 'JetBrains Mono', monospace;
     font-size: 10px;
+    color: #64748B;
     font-weight: 700;
-    color: #7A1220;
-    letter-spacing: 0.5px;
 }
 
-.pool-val {
-    font-family: 'Plus Jakarta Sans', sans-serif;
+.rpv-stake-val {
+    font-family: 'JetBrains Mono', monospace;
     font-size: 13px;
     font-weight: 800;
     color: #7A1220;
+}
+
+.rpv-center-vault-area {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+    margin: -4px 0;
+}
+
+.rpv-beam-container {
+    width: 100%;
+    height: 36px;
+}
+
+.rpv-core-vault {
+    background: #FFFFFF;
+    border: 1.5px solid rgba(122, 18, 32, 0.3);
+    border-radius: 14px;
+    padding: 14px 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    box-shadow: 0 10px 28px -6px rgba(122, 18, 32, 0.12);
+    width: 80%;
+    max-width: 320px;
+    margin-top: -12px;
+    margin-bottom: -12px;
+    z-index: 2;
+    position: relative;
+}
+
+.rpv-vault-icon {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: rgba(122, 18, 32, 0.06);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.rpv-vault-lbl {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9.5px;
+    font-weight: 800;
+    color: #64748B;
+    letter-spacing: 0.8px;
+}
+
+.rpv-vault-amount {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 22px;
+    font-weight: 900;
+    color: #7A1220;
+    line-height: 1;
+}
+
+.rpv-vault-tag {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9px;
+    font-weight: 800;
+    color: #166534;
+    background: #F0FDF4;
+    padding: 2px 8px;
+    border-radius: 9999px;
+    border: 1px solid #BBF7D0;
+}
+
+.rpv-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: #FFFFFF;
+    border: 1px solid rgba(226, 232, 240, 0.8);
+    border-radius: 12px;
+    padding: 12px 16px;
+}
+
+.rpv-foot-item {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.rpv-foot-lbl {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 8.5px;
+    font-weight: 700;
+    color: #64748B;
+    letter-spacing: 0.5px;
+}
+
+.rpv-foot-val {
+    font-family: 'Inter', sans-serif;
+    font-size: 11px;
+    font-weight: 600;
+    color: #0F172A;
+}
+
+.rpv-foot-val.status-green {
+    color: #166534;
+}
+
+@media(max-width: 768px) {
+    .rpv-footer {
+        flex-direction: column;
+        gap: 8px;
+        align-items: flex-start;
+    }
 }
 
 /* ═══ CLTR PROTOCOL TOKEN FLYWHEEL ═══ */

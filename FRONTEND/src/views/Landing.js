@@ -360,66 +360,111 @@ export function renderLanding() {
                     </div>
 
                     <div class="ltypes-right">
-                        <!-- INSTITUTIONAL PROTOCOL EXECUTION VISUALIZER -->
-                        <div class="proto-execution-card" id="mode-image-carousel">
-                            <!-- SYNCHRONIZED MODE PILL BADGES -->
-                            <div class="mode-badge-wrap">
-                                <span class="mode-badge-pill is-solo active" id="mode-badge-0">
-                                    <span class="mode-badge-dot"></span> SOLO MODE · PERSONAL ESCROW
-                                </span>
-                                <span class="mode-badge-pill is-rivalry" id="mode-badge-1">
-                                    <span class="mode-badge-dot secondary"></span> RIVALRY MODE · HEAD-TO-HEAD DUEL
-                                </span>
+                        <!-- LARGE INSTITUTIONAL RIVALRY CONTRACT DIAGRAM -->
+                        <div class="lrivalry-protocol-visualizer reveal-item">
+                            <!-- Top Control Bar -->
+                            <div class="rpv-header">
+                                <div class="rpv-status-badge">
+                                    <span class="rpv-pulse-dot"></span> AUTOMATED ESCROW ENGINE
+                                </div>
+                                <div class="rpv-contract-id">CONTRACT #C-88A2</div>
                             </div>
 
-                            <div class="mode-carousel-viewport">
-                                <!-- Slide 0: Solo Execution Diagram -->
-                                <div class="mode-carousel-slide active" id="mode-slide-0">
-                                    <div class="proto-diagram-box">
-                                        <div class="proto-node node-a">
-                                            <div class="proto-node-hdr">CREATOR VAULT</div>
-                                            <div class="proto-node-val">$2,500 locked</div>
-                                            <div class="proto-node-user">@revpilot</div>
+                            <!-- Main Protocol Flow Canvas -->
+                            <div class="rpv-flow-canvas">
+                                <!-- Left Competitor Node (Challenger A) -->
+                                <div class="rpv-competitor-card party-a">
+                                    <div class="rpv-card-top">
+                                        <span class="rpv-party-tag">PARTY A</span>
+                                        <span class="rpv-user-handle">@revpilot</span>
+                                    </div>
+                                    <div class="rpv-metric-title">
+                                        <svg viewBox="54 36 360.02 149.84" xmlns="http://www.w3.org/2000/svg" class="rpv-brand-icon"><path fill="#635BFF" d="M414,113.4c0-25.6-12.4-45.8-36.1-45.8c-23.8,0-38.2,20.2-38.2,45.6c0,30.1,17,45.3,41.4,45.3c11.9,0,20.9-2.7,27.7-6.5v-20c-6.8,3.4-14.6,5.5-24.5,5.5c-9.7,0-18.3-3.4-19.4-15.2h48.9C413.8,121,414,115.8,414,113.4z M364.6,103.9c0-11.3,6.9-16,13.2-16c6.1,0,12.6,4.7,12.6,16H364.6z M301.1,67.6c-9.8,0-16.1,4.6-19.6,7.8l-1.3-6.2h-22v116.6l25-5.3l0.1-28.3c3.6,2.6,8.9,6.3,17.7,6.3c17.9,0,34.2-14.4,34.2-46.1C335.1,83.4,318.6,67.6,301.1,67.6z M295.1,136.5c-5.9,0-9.4-2.1-11.8-4.7l-0.1-37.1c2.6-2.9,6.2-4.9,11.9-4.9c9.1,0,15.4,10.2,15.4,23.3C310.5,126.5,304.3,136.5,295.1,136.5z M223.8,61.7l25.1-5.4v-20.3l-25.1,5.3 M223.8,69.3h25.1v87.5h-25.1z M196.9,76.7l-1.6-7.4h-21.6v87.5h25V97.5c5.9-7.7,15.9-6.3,19-5.2v-23C214.5,68.1,202.8,65.9,196.9,76.7z M146.9,47.6l-24.4,5.2l-0.1,80.1c0,14.8,11.1,25.7,25.9,25.7c8.2,0,14.2-1.5,17.5-3.3V135c-3.2,1.3-19,5.9-19-8.9V90.6h19V69.3h-19L146.9,47.6z M79.3,94.7c0-3.9,3.2-5.4,8.5-5.4c7.6,0,17.2,2.3,24.8,6.4V72.2c-8.3-3.3-16.5-4.6-24.8-4.6C67.5,67.6,54,78.2,54,95.9c0,27.6,38,23.2,38,35.1c0,4.6-4,6.1-9.6,6.1c-8.3,0-18.9-3.4-27.3-8v23.8c9.3,4,18.7,5.7,27.3,5.7c20.8,0,35.1-10.3,35.1-28.2C117.4,100.6,79.3,105.9,79.3,94.7z"/></svg>
+                                        Stripe Revenue
+                                    </div>
+                                    <!-- Progress Bar -->
+                                    <div class="rpv-progress-wrap">
+                                        <div class="rpv-progress-info">
+                                            <span>GOAL: $10,000</span>
+                                            <strong class="status-green">78%</strong>
                                         </div>
-                                        <div class="proto-connection-line">
-                                            <svg width="100%" height="2" viewBox="0 0 120 2" fill="none"><line x1="0" y1="1" x2="120" y2="1" stroke="#7A1220" stroke-width="2" stroke-dasharray="4 4"/></svg>
-                                            <span class="proto-lock-badge">
-                                                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 2a5 5 0 0 0-5 5v3H5a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V12a2 2 0 0 0-2-2h-2V7a5 5 0 0 0-5-5z"/></svg>
-                                                LOCKED ESCROW
-                                            </span>
+                                        <div class="rpv-progress-bar">
+                                            <div class="rpv-progress-fill" style="width: 78%;"></div>
                                         </div>
-                                        <div class="proto-node node-oracle">
-                                            <div class="proto-node-hdr">API ORACLE</div>
-                                            <div class="proto-node-val">Stripe +20%</div>
-                                            <div class="proto-node-user status-green">✓ TELEMETRY VALID</div>
-                                        </div>
+                                    </div>
+                                    <div class="rpv-stake-amount">
+                                        <span class="rpv-stake-lbl">STAKE LOCKED:</span>
+                                        <strong class="rpv-stake-val">$1,000.00</strong>
                                     </div>
                                 </div>
 
-                                <!-- Slide 1: Rivalry Execution Diagram -->
-                                <div class="mode-carousel-slide" id="mode-slide-1">
-                                    <div class="proto-diagram-box rivalry">
-                                        <div class="proto-node node-a">
-                                            <div class="proto-node-hdr">CHALLENGER A</div>
-                                            <div class="proto-node-val">$1,000 STAKE</div>
-                                            <div class="proto-node-user">@marcusk</div>
+                                <!-- Central Animated Connection Beams + Vault -->
+                                <div class="rpv-center-vault-area">
+                                    <div class="rpv-beam-container">
+                                        <svg width="100%" height="40" viewBox="0 0 160 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                            <path d="M 0 20 L 80 20" stroke="rgba(122, 18, 32, 0.3)" stroke-width="2" stroke-dasharray="4 4" />
+                                            <circle cx="0" cy="20" r="3.5" fill="#7A1220">
+                                                <animate attributeName="cx" from="0" to="80" dur="2s" repeatCount="indefinite" />
+                                            </circle>
+                                            <path d="M 160 20 L 80 20" stroke="rgba(122, 18, 32, 0.3)" stroke-width="2" stroke-dasharray="4 4" />
+                                            <circle cx="160" cy="20" r="3.5" fill="#7A1220">
+                                                <animate attributeName="cx" from="160" to="80" dur="2s" repeatCount="indefinite" />
+                                            </circle>
+                                        </svg>
+                                    </div>
+
+                                    <!-- Smart Escrow Core Vault -->
+                                    <div class="rpv-core-vault">
+                                        <div class="rpv-vault-icon">
+                                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#7A1220" stroke-width="2.2" stroke-linecap="round"><path d="M12 2a5 5 0 0 0-5 5v3H5a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V12a2 2 0 0 0-2-2h-2V7a5 5 0 0 0-5-5z"/></svg>
                                         </div>
-                                        <div class="proto-vs-badge">VS</div>
-                                        <div class="proto-node node-b">
-                                            <div class="proto-node-hdr">CHALLENGER B</div>
-                                            <div class="proto-node-val">$1,000 STAKE</div>
-                                            <div class="proto-node-user">@dev_sarah</div>
+                                        <div class="rpv-vault-lbl">LOCKED ESCROW POOL</div>
+                                        <div class="rpv-vault-amount">$2,000.00</div>
+                                        <div class="rpv-vault-tag">WINNER TAKES ALL</div>
+                                    </div>
+                                </div>
+
+                                <!-- Right Competitor Node (Challenger B) -->
+                                <div class="rpv-competitor-card party-b">
+                                    <div class="rpv-card-top">
+                                        <span class="rpv-party-tag">PARTY B</span>
+                                        <span class="rpv-user-handle">@dev_sarah</span>
+                                    </div>
+                                    <div class="rpv-metric-title">
+                                        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" class="rpv-brand-icon"><path fill="#0F172A" d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+                                        X Followers
+                                    </div>
+                                    <!-- Progress Bar -->
+                                    <div class="rpv-progress-wrap">
+                                        <div class="rpv-progress-info">
+                                            <span>GOAL: 25,000</span>
+                                            <strong>62%</strong>
+                                        </div>
+                                        <div class="rpv-progress-bar">
+                                            <div class="rpv-progress-fill secondary" style="width: 62%;"></div>
                                         </div>
                                     </div>
-                                    <div class="proto-pool-bar">
-                                        <span class="pool-lbl">TOTAL MATCHED POOL:</span>
-                                        <span class="pool-val">$2,000 USD (WINNER TAKES ALL)</span>
+                                    <div class="rpv-stake-amount">
+                                        <span class="rpv-stake-lbl">STAKE LOCKED:</span>
+                                        <strong class="rpv-stake-val">$1,000.00</strong>
                                     </div>
                                 </div>
                             </div>
-                            <div class="mode-carousel-dots">
-                                <span class="mode-carousel-dot active" id="mode-img-dot-0" data-slide="0"></span>
-                                <span class="mode-carousel-dot" id="mode-img-dot-1" data-slide="1"></span>
+
+                            <!-- Bottom Real-Time Telemetry Bar -->
+                            <div class="rpv-footer">
+                                <div class="rpv-foot-item">
+                                    <span class="rpv-foot-lbl">VERIFICATION ORACLE</span>
+                                    <span class="rpv-foot-val">Stripe &amp; X Telemetry</span>
+                                </div>
+                                <div class="rpv-foot-item">
+                                    <span class="rpv-foot-lbl">TIME REMAINING</span>
+                                    <span class="rpv-foot-val">14 Days 08 Hours</span>
+                                </div>
+                                <div class="rpv-foot-item">
+                                    <span class="rpv-foot-lbl">SETTLEMENT</span>
+                                    <span class="rpv-foot-val status-green">✓ Automated</span>
+                                </div>
                             </div>
                         </div>
                     </div>

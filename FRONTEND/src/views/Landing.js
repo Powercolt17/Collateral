@@ -360,6 +360,12 @@ export function renderLanding() {
                     <div class="ltypes-right">
                         <!-- SOLO CARD -->
                         <div class="ltype-row is-solo reveal-item">
+                            <div class="ltype-art solo-art">
+                              <picture>
+                                <source srcset="/assets/images/solo-seal.webp" type="image/webp">
+                                <img src="/assets/images/solo-seal.png" alt="A hand pressing a wax seal onto a coin, locking a personal deposit." loading="lazy" width="280" height="280">
+                              </picture>
+                            </div>
                             <div class="ltype-card-top">
                                 <span class="ltype-badge-new">Solo Mode</span>
                                 <span class="ltype-stat-pill">22 Active Contracts</span>
@@ -380,6 +386,12 @@ export function renderLanding() {
 
                         <!-- RIVALRY CARD -->
                         <div class="ltype-row is-rivalry reveal-item">
+                            <div class="ltype-art rivalry-art">
+                              <picture>
+                                <source srcset="/assets/images/rivalry-seal.webp" type="image/webp">
+                                <img src="/assets/images/rivalry-seal.png" alt="Two hands sealing deposits onto one shared pot." loading="lazy" width="280" height="280">
+                              </picture>
+                            </div>
                             <div class="ltype-card-top">
                                 <span class="ltype-badge-new secondary">Rivalry Mode</span>
                                 <span class="ltype-stat-pill secondary">48 Active Duels</span>

@@ -3035,6 +3035,10 @@ export const landingCSS = `
     gap: 24px;
 }
 
+.ltype-art { width: 100%; display: flex; justify-content: center; margin-bottom: 20px; }
+.ltype-art img { width: 100%; max-width: 280px; height: auto; aspect-ratio: 1/1; object-fit: contain; }
+.rivalry-art img { border-radius: 12px; }
+
 
 .ltype-row {
     position: relative;

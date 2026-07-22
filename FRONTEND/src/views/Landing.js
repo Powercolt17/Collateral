@@ -360,40 +360,60 @@ export function renderLanding() {
                     <div class="ltypes-right">
                         <!-- SOLO CARD -->
                         <div class="ltype-row is-solo reveal-item">
-                            <div class="ltype-card-top">
-                                <span class="ltype-badge-new">Solo Mode</span>
-                                <span class="ltype-stat-pill">22 Active Contracts</span>
-                            </div>
-                            <h3 class="ltype-title-new">You vs. Yourself</h3>
-                            <p class="ltype-desc-new">Lock deposits to force yourself to execute. Hit targets to win; fail and forfeit capital.</p>
-                            <div class="ltype-stat-row">
-                                <span class="ltype-stat-k">Typical Deposit:</span>
-                                <span class="ltype-stat-v">$100 – $3,000</span>
-                            </div>
-                            <div class="ltype-meta-new">
-                                <span class="lmeta-label">Best for</span>
-                                <span class="lmeta-tag">Milestones</span>
-                                <span class="lmeta-tag">Shipping code</span>
-                                <span class="lmeta-tag">Audience building</span>
+                            <div class="ltype-body-grid">
+                                <div class="ltype-content-col">
+                                    <div class="ltype-card-top">
+                                        <span class="ltype-badge-new">Solo Mode</span>
+                                        <span class="ltype-stat-pill">22 Active Contracts</span>
+                                    </div>
+                                    <h3 class="ltype-title-new">You vs. Yourself</h3>
+                                    <p class="ltype-desc-new">Lock deposits to force yourself to execute. Hit targets to win; fail and forfeit capital.</p>
+                                    <div class="ltype-stat-row">
+                                        <span class="ltype-stat-k">Typical Deposit:</span>
+                                        <span class="ltype-stat-v">$100 – $3,000</span>
+                                    </div>
+                                    <div class="ltype-meta-new">
+                                        <span class="lmeta-label">Best for</span>
+                                        <span class="lmeta-tag">Milestones</span>
+                                        <span class="lmeta-tag">Shipping code</span>
+                                        <span class="lmeta-tag">Audience building</span>
+                                    </div>
+                                </div>
+                                <div class="ltype-image-col">
+                                    <picture class="ltype-img-wrap solo-wrap">
+                                        <source srcset="/assets/images/solo-seal.webp" type="image/webp">
+                                        <img src="/assets/images/solo-seal.png" alt="A hand pressing a wax seal onto a coin, locking a personal deposit." class="ltype-img solo-img" width="280" height="280" loading="lazy">
+                                    </picture>
+                                </div>
                             </div>
                         </div>
 
                         <!-- RIVALRY CARD -->
                         <div class="ltype-row is-rivalry reveal-item">
-                            <div class="ltype-card-top">
-                                <span class="ltype-badge-new secondary">Rivalry Mode</span>
-                                <span class="ltype-stat-pill secondary">48 Active Duels</span>
-                            </div>
-                            <h3 class="ltype-title-new">You vs. Competitors</h3>
-                            <p class="ltype-desc-new">Lock equal deposits in a head-to-head race. Winner takes the entire pool.</p>
-                            <div class="ltype-stat-row">
-                                <span class="ltype-stat-k">Typical Deposit:</span>
-                                <span class="ltype-stat-v">$250 – $5,000</span>
-                            </div>
-                            <div class="ltype-meta-new">
-                                <span class="lmeta-label">Best for</span>
-                                <span class="lmeta-tag">Audience races</span>
-                                <span class="lmeta-tag">Competitive fire</span>
+                            <div class="ltype-body-grid">
+                                <div class="ltype-content-col">
+                                    <div class="ltype-card-top">
+                                        <span class="ltype-badge-new secondary">Rivalry Mode</span>
+                                        <span class="ltype-stat-pill secondary">48 Active Duels</span>
+                                    </div>
+                                    <h3 class="ltype-title-new">You vs. Competitors</h3>
+                                    <p class="ltype-desc-new">Lock equal deposits in a head-to-head race. Winner takes the entire pool.</p>
+                                    <div class="ltype-stat-row">
+                                        <span class="ltype-stat-k">Typical Deposit:</span>
+                                        <span class="ltype-stat-v">$250 – $5,000</span>
+                                    </div>
+                                    <div class="ltype-meta-new">
+                                        <span class="lmeta-label">Best for</span>
+                                        <span class="lmeta-tag">Audience races</span>
+                                        <span class="lmeta-tag">Competitive fire</span>
+                                    </div>
+                                </div>
+                                <div class="ltype-image-col">
+                                    <picture class="ltype-img-wrap rivalry-wrap">
+                                        <source srcset="/assets/images/rivalry-seal.webp" type="image/webp">
+                                        <img src="/assets/images/rivalry-seal.png" alt="Two hands sealing deposits onto one shared pot." class="ltype-img rivalry-img" width="280" height="280" loading="lazy">
+                                    </picture>
+                                </div>
                             </div>
                         </div>
                     </div>

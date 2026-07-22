@@ -364,37 +364,22 @@ export function renderLanding() {
                         <div class="proto-diagram-wrapper reveal-item">
                             <!-- SVG Vector Path Connections Layer -->
                             <svg class="proto-svg-canvas" viewBox="0 0 540 320" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <defs>
-                                    <linearGradient id="beam-grad-left" x1="0%" y1="0%" x2="100%" y2="0%">
-                                        <stop offset="0%" stop-color="rgba(122,18,32,0.2)" />
-                                        <stop offset="100%" stop-color="#7A1220" />
-                                    </linearGradient>
-                                    <linearGradient id="beam-grad-right" x1="100%" y1="0%" x2="0%" y2="0%">
-                                        <stop offset="0%" stop-color="rgba(122,18,32,0.2)" />
-                                        <stop offset="100%" stop-color="#7A1220" />
-                                    </linearGradient>
-                                    <linearGradient id="payout-grad" x1="0%" y1="0%" x2="0%" y2="100%">
-                                        <stop offset="0%" stop-color="#7A1220" />
-                                        <stop offset="100%" stop-color="#22C55E" />
-                                    </linearGradient>
-                                </defs>
-
                                 <!-- Incoming Path Left: Challenger -> Vault -->
-                                <path id="path-left" d="M 160 155 L 190 155" stroke="url(#beam-grad-left)" stroke-width="3" stroke-dasharray="4 4" fill="none" />
+                                <line x1="160" y1="155" x2="190" y2="155" stroke="#7A1220" stroke-width="2.5" stroke-dasharray="4 4" opacity="0.6" />
                                 <!-- Incoming Path Right: Opponent -> Vault -->
-                                <path id="path-right" d="M 380 155 L 350 155" stroke="url(#beam-grad-right)" stroke-width="3" stroke-dasharray="4 4" fill="none" />
+                                <line x1="380" y1="155" x2="350" y2="155" stroke="#7A1220" stroke-width="2.5" stroke-dasharray="4 4" opacity="0.6" />
                                 <!-- Outgoing Path Down: Vault -> Settlement Endpoint -->
-                                <path id="path-down" d="M 270 202 L 270 252" stroke="url(#payout-grad)" stroke-width="3" stroke-dasharray="4 4" fill="none" />
+                                <line x1="270" y1="202" x2="270" y2="264" stroke="#22C55E" stroke-width="2.5" stroke-dasharray="4 4" opacity="0.8" />
 
                                 <!-- Animated Pulses Along Paths -->
-                                <circle class="proto-pulse-circle" r="4" fill="#7A1220">
+                                <circle class="proto-pulse-circle" r="3.5" fill="#7A1220">
                                     <animateMotion dur="2.0s" repeatCount="indefinite" path="M 160 155 L 190 155" />
                                 </circle>
-                                <circle class="proto-pulse-circle" r="4" fill="#7A1220">
+                                <circle class="proto-pulse-circle" r="3.5" fill="#7A1220">
                                     <animateMotion dur="2.0s" repeatCount="indefinite" path="M 380 155 L 350 155" />
                                 </circle>
-                                <circle class="proto-pulse-circle" r="4" fill="#22C55E">
-                                    <animateMotion dur="2.4s" repeatCount="indefinite" path="M 270 202 L 270 252" />
+                                <circle class="proto-pulse-circle" r="3.5" fill="#22C55E">
+                                    <animateMotion dur="2.4s" repeatCount="indefinite" path="M 270 202 L 270 264" />
                                 </circle>
                             </svg>
 
@@ -404,7 +389,7 @@ export function renderLanding() {
                                 <div class="proto-mini-card challenger">
                                     <div class="mini-card-hdr">
                                         <svg viewBox="54 36 360.02 149.84" xmlns="http://www.w3.org/2000/svg" class="mini-brand-svg"><path fill="#635BFF" d="M414,113.4c0-25.6-12.4-45.8-36.1-45.8c-23.8,0-38.2,20.2-38.2,45.6c0,30.1,17,45.3,41.4,45.3c11.9,0,20.9-2.7,27.7-6.5v-20c-6.8,3.4-14.6,5.5-24.5,5.5c-9.7,0-18.3-3.4-19.4-15.2h48.9C413.8,121,414,115.8,414,113.4z M364.6,103.9c0-11.3,6.9-16,13.2-16c6.1,0,12.6,4.7,12.6,16H364.6z M301.1,67.6c-9.8,0-16.1,4.6-19.6,7.8l-1.3-6.2h-22v116.6l25-5.3l0.1-28.3c3.6,2.6,8.9,6.3,17.7,6.3c17.9,0,34.2-14.4,34.2-46.1C335.1,83.4,318.6,67.6,301.1,67.6z M295.1,136.5c-5.9,0-9.4-2.1-11.8-4.7l-0.1-37.1c2.6-2.9,6.2-4.9,11.9-4.9c9.1,0,15.4,10.2,15.4,23.3C310.5,126.5,304.3,136.5,295.1,136.5z M223.8,61.7l25.1-5.4v-20.3l-25.1,5.3 M223.8,69.3h25.1v87.5h-25.1z M196.9,76.7l-1.6-7.4h-21.6v87.5h25V97.5c5.9-7.7,15.9-6.3,19-5.2v-23C214.5,68.1,202.8,65.9,196.9,76.7z M146.9,47.6l-24.4,5.2l-0.1,80.1c0,14.8,11.1,25.7,25.9,25.7c8.2,0,14.2-1.5,17.5-3.3V135c-3.2,1.3-19,5.9-19-8.9V90.6h19V69.3h-19L146.9,47.6z M79.3,94.7c0-3.9,3.2-5.4,8.5-5.4c7.6,0,17.2,2.3,24.8,6.4V72.2c-8.3-3.3-16.5-4.6-24.8-4.6C67.5,67.6,54,78.2,54,95.9c0,27.6,38,23.2,38,35.1c0,4.6-4,6.1-9.6,6.1c-8.3,0-18.9-3.4-27.3-8v23.8c9.3,4,18.7,5.7,27.3,5.7c20.8,0,35.1-10.3,35.1-28.2C117.4,100.6,79.3,105.9,79.3,94.7z"/></svg>
-                                        <span class="mini-handle">@revpilot</span>
+                                        <span class="mini-role-eyebrow">CHALLENGER</span>
                                     </div>
                                     <div class="mini-metric">Revenue +12%</div>
                                     <div class="mini-lock-val">$1,000 LOCKED</div>
@@ -423,7 +408,7 @@ export function renderLanding() {
                                 <div class="proto-mini-card opponent">
                                     <div class="mini-card-hdr">
                                         <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" class="mini-brand-svg"><path fill="#0F172A" d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
-                                        <span class="mini-handle">@dev_sarah</span>
+                                        <span class="mini-role-eyebrow">OPPONENT</span>
                                     </div>
                                     <div class="mini-metric">Followers +9%</div>
                                     <div class="mini-lock-val">$1,000 LOCKED</div>

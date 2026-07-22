@@ -4750,11 +4750,13 @@ export const landingCSS = `
     object-fit: contain;
 }
 
-.mini-handle {
+.mini-role-eyebrow {
     font-family: 'JetBrains Mono', monospace;
-    font-size: 11px;
-    font-weight: 700;
-    color: #0F172A;
+    font-size: 9.5px;
+    font-weight: 800;
+    color: #64748B;
+    letter-spacing: 0.8px;
+    text-transform: uppercase;
 }
 
 .mini-metric {

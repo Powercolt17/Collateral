@@ -263,68 +263,44 @@ export function renderLanding() {
                 </div>
             </div>
 
-            <!-- GLOBAL PROTOCOL STATISTICS -->
-            <div class="l-global-stats-bar animate-fade-in-up delay-4">
+            <!-- GLOBAL PROTOCOL STATISTICS / CYCLING BAND -->
+            <div class="l-global-stats-bar animate-fade-in-up delay-4" id="l-stats-band">
                 <div class="lw">
-                    <!-- Visually hidden list of all metrics for screen readers -->
+                    <!-- Visually hidden list of all metrics and supported APIs for screen readers -->
                     <div style="position: absolute !important; width: 1px !important; height: 1px !important; padding: 0 !important; margin: -1px !important; overflow: hidden !important; clip: rect(0,0,0,0) !important; border: 0 !important;">
-                        Protocol metrics: Capital locked: $8.7M; Total commitments: 12,483; Settlement success: 96.2%; Execution identities: 3,442; Active contracts: 1,206; Average contract size: $6,940; Median settlement time: 1.4 days; Counterparties: 812.
+                        Protocol metrics: Active contracts: 1,206; Average contract size: $6,940; Median settlement time: 1.4 days; Counterparties: 812. Supported APIs: Stripe API, X / Twitter API, YouTube API, Shopify API.
                     </div>
-                    <div class="l-stats-bar-grid" aria-live="off">
-                        <a href="/market" class="l-stat-bar-item" data-cell-index="0" aria-label="See more: capital locked">
+                    <div class="l-stats-bar-grid" id="l-stats-grid" aria-live="off">
+                        <a href="/market" class="l-stat-bar-item" data-cell-index="0" aria-label="Active contracts">
                             <div class="l-stat-bar-wrapper">
-                                <div class="l-stat-bar-content current">
-                                    <span class="l-stat-bar-val" id="ls-locked">$8.7M</span>
-                                    <span class="l-stat-bar-lbl">Capital Locked</span>
+                                <div class="l-stat-bar-content current" data-state="A">
+                                    <span class="l-stat-bar-val">1,206</span>
+                                    <span class="l-stat-bar-lbl">Active Contracts</span>
                                 </div>
-                            </div>
-                            <div class="l-stat-bar-overlay">
-                                SEE MORE <span class="arrow">→</span>
-                            </div>
-                            <div class="l-stat-bar-static-cta">
-                                SEE MORE →
                             </div>
                         </a>
-                        <a href="/market" class="l-stat-bar-item" data-cell-index="1" aria-label="See more: total commitments">
+                        <a href="/market" class="l-stat-bar-item" data-cell-index="1" aria-label="Average contract size">
                             <div class="l-stat-bar-wrapper">
-                                <div class="l-stat-bar-content current">
-                                    <span class="l-stat-bar-val" id="ls-commitments">12,483</span>
-                                    <span class="l-stat-bar-lbl">Total Commitments</span>
+                                <div class="l-stat-bar-content current" data-state="A">
+                                    <span class="l-stat-bar-val">$6,940</span>
+                                    <span class="l-stat-bar-lbl">Average Contract Size</span>
                                 </div>
-                            </div>
-                            <div class="l-stat-bar-overlay">
-                                SEE MORE <span class="arrow">→</span>
-                            </div>
-                            <div class="l-stat-bar-static-cta">
-                                SEE MORE →
                             </div>
                         </a>
-                        <a href="/market" class="l-stat-bar-item lhide-mobile" data-cell-index="2" aria-label="See more: settlement success">
+                        <a href="/market" class="l-stat-bar-item" data-cell-index="2" aria-label="Median settlement time">
                             <div class="l-stat-bar-wrapper">
-                                <div class="l-stat-bar-content current">
-                                    <span class="l-stat-bar-val" id="ls-success">96.2%</span>
-                                    <span class="l-stat-bar-lbl">Settlement Success</span>
+                                <div class="l-stat-bar-content current" data-state="A">
+                                    <span class="l-stat-bar-val">1.4 days</span>
+                                    <span class="l-stat-bar-lbl">Median Settlement Time</span>
                                 </div>
-                            </div>
-                            <div class="l-stat-bar-overlay">
-                                SEE MORE <span class="arrow">→</span>
-                            </div>
-                            <div class="l-stat-bar-static-cta">
-                                SEE MORE →
                             </div>
                         </a>
-                        <a href="/market" class="l-stat-bar-item lhide-mobile" data-cell-index="3" aria-label="See more: execution identities">
+                        <a href="/market" class="l-stat-bar-item" data-cell-index="3" aria-label="Counterparties">
                             <div class="l-stat-bar-wrapper">
-                                <div class="l-stat-bar-content current">
-                                    <span class="l-stat-bar-val" id="ls-identities">3,442</span>
-                                    <span class="l-stat-bar-lbl">Execution Identities</span>
+                                <div class="l-stat-bar-content current" data-state="A">
+                                    <span class="l-stat-bar-val">812</span>
+                                    <span class="l-stat-bar-lbl">Counterparties</span>
                                 </div>
-                            </div>
-                            <div class="l-stat-bar-overlay">
-                                SEE MORE <span class="arrow">→</span>
-                            </div>
-                            <div class="l-stat-bar-static-cta">
-                                SEE MORE →
                             </div>
                         </a>
                     </div>
@@ -1497,144 +1473,98 @@ export function initLanding() {
         }, 450);
     }
 
-    // ── AUTO-ROTATING STATS TICKER ──
-    const STATS_ROTATION_INTERVAL = 3000;
-    const TOUCH_ROTATION_INTERVAL = 4500;
+    // ── 2-STATE CYCLING STATS / SUPPORTED APIS BAND ──
+    const CYCLE_INTERVAL_MS = 5000;
 
-    const METRIC_POOL = [
-        { key: 'capital_locked', label: 'Capital Locked', value: 8700000, type: 'currency_short' },
-        { key: 'total_commitments', label: 'Total Commitments', value: 12483, type: 'count' },
-        { key: 'settlement_success', label: 'Settlement Success', value: 96.2, type: 'percent' },
-        { key: 'execution_identities', label: 'Execution Identities', value: 3442, type: 'count' },
-        { key: 'active_contracts', label: 'Active Contracts', value: 1206, type: 'count' },
-        { key: 'avg_contract_size', label: 'Average Contract Size', value: 6940, type: 'currency' },
-        { key: 'median_settlement_time', label: 'Median Settlement Time', value: 1.4, type: 'days' },
-        { key: 'counterparties', label: 'Counterparties', value: 812, type: 'count' }
+    const STATE_A_ITEMS = [
+        { val: '1,206', lbl: 'Active Contracts', aria: 'Active contracts: 1,206' },
+        { val: '$6,940', lbl: 'Average Contract Size', aria: 'Average contract size: $6,940' },
+        { val: '1.4 days', lbl: 'Median Settlement Time', aria: 'Median settlement time: 1.4 days' },
+        { val: '812', lbl: 'Counterparties', aria: 'Counterparties: 812' }
     ];
 
-    function formatMetricValue(val, type) {
-        if (type === 'currency_short') {
-            return '$' + (val / 1000000).toFixed(1) + 'M';
+    const STATE_B_ITEMS = [
+        {
+            logoSvg: `<svg viewBox="0 0 60 25" height="26" fill="#635BFF" xmlns="http://www.w3.org/2000/svg" style="display:block;height:26px;width:auto;"><path d="M59.64 14.28h-8.06c.19 1.93 1.6 2.55 3.2 2.55 1.64 0 2.96-.37 4.05-.95v3.32a8.33 8.33 0 0 1-4.56 1.1c-4.01 0-6.83-2.5-6.83-7.48 0-4.19 2.39-7.52 6.3-7.52 3.92 0 5.9 3.28 5.9 7.42 0 .58-.02 1.14-.05 1.56zM53.6 8.38c-1.39 0-2.31 1.01-2.56 2.7h5.12c-.08-1.57-.96-2.7-2.56-2.7zm-11.75-3.08h4.22v14.7h-4.22V5.30zM35.63 2.05c1.47 0 2.65.37 3.52.92v3.4c-.87-.53-1.84-.82-2.9-.82-1.82 0-2.82.97-2.82 2.34 0 3.73 5.48 2.64 5.48 7.37 0 3.2-2.47 5.04-6.07 5.04-1.78 0-3.32-.45-4.44-1.12v-3.52c1.17.72 2.62 1.17 4.07 1.17 1.94 0 2.91-1 2.91-2.37 0-3.8-5.46-2.6-5.46-7.34 0-3.13 2.45-5.07 5.71-5.07zm-14.7 3.25h4.22v14.7h-4.22V5.30zM12.98 9.38v10.62H8.76V9.38H6.18V5.3h2.58V2.7c0-2.31 1.56-3.7 4.2-3.7 1.25 0 2.34.28 3.16.71v3.4c-.66-.35-1.42-.51-2.18-.51-1.01 0-1.74.55-1.74 1.76v.94h3.76v4.08h-3.76zM4.32 10.36c0-1.04.42-1.92 1.4-2.54V5.45C2.26 6.35.5 8.12.5 11.23c0 4.96 3.42 7.07 7.02 7.07 1.6 0 3.18-.42 4.34-1.1v-3.4c-1.06.63-2.34.97-3.72.97-2.26 0-3.82-1.32-3.82-4.41z"/></svg>`,
+            lbl: 'STRIPE API',
+            aria: 'Supported API: Stripe'
+        },
+        {
+            logoSvg: `<svg viewBox="0 0 24 24" height="24" fill="#0F172A" xmlns="http://www.w3.org/2000/svg" style="display:block;height:24px;width:auto;"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>`,
+            lbl: 'X / TWITTER API',
+            aria: 'Supported API: X / Twitter'
+        },
+        {
+            logoSvg: `<svg viewBox="0 0 24 24" height="24" fill="#FF0000" xmlns="http://www.w3.org/2000/svg" style="display:block;height:24px;width:auto;"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>`,
+            lbl: 'YOUTUBE API',
+            aria: 'Supported API: YouTube'
+        },
+        {
+            logoSvg: `<svg viewBox="0 0 24 24" height="26" fill="#96BF48" xmlns="http://www.w3.org/2000/svg" style="display:block;height:26px;width:auto;"><path d="M19.58 6.425a.86.86 0 00-.7-.34h-2.193a4.52 4.52 0 00-9.04 0H5.454a.86.86 0 00-.7.34.887.887 0 00-.16.766l1.97 10.96a2.41 2.41 0 002.37 1.986h6.49a2.41 2.41 0 002.37-1.985l1.97-10.96a.887.887 0 00-.184-.767zM12 3.86a2.53 2.53 0 012.513 2.225H9.487A2.53 2.53 0 0112 3.86zm3.267 11.516a2.036 2.036 0 01-1.745.892 2.374 2.374 0 01-1.614-.648A2.348 2.348 0 0010.3 15a2.036 2.036 0 01-1.745-.892.429.429 0 11.734-.442c.245.408.66.634 1.01.634.341 0 .614-.148.914-.442A3.21 3.21 0 0113.627 15c.341 0 .614-.148.914-.442a.429.429 0 01.734.442z"/></svg>`,
+            lbl: 'SHOPIFY API',
+            aria: 'Supported API: Shopify'
         }
-        if (type === 'currency') {
-            return '$' + val.toLocaleString('en-US');
-        }
-        if (type === 'count') {
-            return val.toLocaleString('en-US');
-        }
-        if (type === 'percent') {
-            return val.toFixed(1) + '%';
-        }
-        if (type === 'days') {
-            return val.toFixed(1) + ' days';
-        }
-        return val.toString();
-    }
+    ];
 
-    let activeMetricIndices = [0, 1, 2, 3];
-    let nextCellToSwap = 0;
-    let isPaused = false;
+    let currentState = 'A';
+    let isStatsBandPaused = false;
     let isTabVisible = true;
-    let isElementVisible = false;
 
-    function performSwap() {
-        const cellIndex = nextCellToSwap;
-        
-        // Find next metric from pool excluding every metric currently displayed in any of the four cells
-        const currentMetricIndex = activeMetricIndices[cellIndex];
-        const nextStartIdx = (currentMetricIndex + 1) % METRIC_POOL.length;
-        let foundIdx = -1;
+    function cycleStatsBand() {
+        if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+            return; // Disable cycle if reduced motion is requested
+        }
 
-        for (let step = 0; step < METRIC_POOL.length; step++) {
-            const candidateIdx = (nextStartIdx + step) % METRIC_POOL.length;
-            if (!activeMetricIndices.includes(candidateIdx)) {
-                foundIdx = candidateIdx;
-                break;
+        const nextState = currentState === 'A' ? 'B' : 'A';
+        const items = nextState === 'A' ? STATE_A_ITEMS : STATE_B_ITEMS;
+
+        const cellElements = document.querySelectorAll('.l-stat-bar-item');
+        if (!cellElements || cellElements.length < 4) return;
+
+        cellElements.forEach((cellEl, idx) => {
+            const wrapper = cellEl.querySelector('.l-stat-bar-wrapper');
+            const currentContent = wrapper?.querySelector('.l-stat-bar-content.current');
+            if (!wrapper || !currentContent) return;
+
+            const itemData = items[idx];
+            cellEl.setAttribute('aria-label', itemData.aria);
+
+            const incomingContent = document.createElement('div');
+            incomingContent.className = 'l-stat-bar-content incoming';
+            incomingContent.setAttribute('data-state', nextState);
+
+            if (nextState === 'A') {
+                const valSpan = document.createElement('span');
+                valSpan.className = 'l-stat-bar-val';
+                valSpan.textContent = itemData.val;
+                incomingContent.appendChild(valSpan);
+            } else {
+                const logoWrap = document.createElement('div');
+                logoWrap.className = 'l-stat-bar-logo-wrap';
+                logoWrap.innerHTML = itemData.logoSvg;
+                incomingContent.appendChild(logoWrap);
             }
-        }
 
-        if (foundIdx === -1) {
-            // Pool exhausted by active filter, skip this swap tick
-            nextCellToSwap = (nextCellToSwap + 1) % 4;
-            return;
-        }
+            const lblSpan = document.createElement('span');
+            lblSpan.className = 'l-stat-bar-lbl';
+            lblSpan.textContent = itemData.lbl;
+            incomingContent.appendChild(lblSpan);
 
-        // Update active indices list
-        activeMetricIndices[cellIndex] = foundIdx;
-        
-        // Advance staggered cell index for the next swap
-        nextCellToSwap = (nextCellToSwap + 1) % 4;
-
-        // Perform DOM transition
-        const cellEl = document.querySelector(`.l-stat-bar-item[data-cell-index="${cellIndex}"]`);
-        if (!cellEl) return;
-
-        const wrapper = cellEl.querySelector('.l-stat-bar-wrapper');
-        const currentContent = wrapper?.querySelector('.l-stat-bar-content.current');
-        if (!wrapper || !currentContent) return;
-
-        const metric = METRIC_POOL[foundIdx];
-        const formattedVal = formatMetricValue(metric.value, metric.type);
-
-        const incomingContent = document.createElement('div');
-        incomingContent.className = 'l-stat-bar-content incoming';
-        
-        const valSpan = document.createElement('span');
-        valSpan.className = 'l-stat-bar-val';
-        valSpan.textContent = formattedVal;
-        
-        const lblSpan = document.createElement('span');
-        lblSpan.className = 'l-stat-bar-lbl';
-        lblSpan.textContent = metric.label;
-
-        incomingContent.appendChild(valSpan);
-        incomingContent.appendChild(lblSpan);
-
-        // Check prefers-reduced-motion
-        const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-        
-        if (prefersReducedMotion) {
             incomingContent.style.opacity = '0';
-            incomingContent.style.transform = 'translateY(0)'; // No vertical transform
-            wrapper.appendChild(incomingContent);
-            
-            // Force reflow
-            incomingContent.getBoundingClientRect();
-            
-            currentContent.style.transition = 'opacity 150ms linear';
-            currentContent.style.opacity = '0';
-            
-            incomingContent.style.transition = 'opacity 150ms linear';
-            incomingContent.style.opacity = '1';
-            
-            setTimeout(() => {
-                if (currentContent.parentNode === wrapper) {
-                    wrapper.removeChild(currentContent);
-                }
-                incomingContent.classList.remove('incoming');
-                incomingContent.classList.add('current');
-                incomingContent.style.transition = '';
-            }, 150);
-        } else {
-            incomingContent.style.opacity = '0';
-            
-            const isMobile = window.innerWidth <= 768;
-            const yOffset = isMobile ? '30px' : '43px';
-            incomingContent.style.transform = `translateY(${yOffset})`;
+            incomingContent.style.transform = 'translateY(12px)';
             incomingContent.style.willChange = 'transform, opacity';
-            
+
             wrapper.appendChild(incomingContent);
-            
-            // Force reflow
-            incomingContent.getBoundingClientRect();
-            
-            currentContent.style.transition = 'opacity 80ms linear';
+            incomingContent.getBoundingClientRect(); // Force reflow
+
+            currentContent.style.transition = 'opacity 200ms ease, transform 200ms ease';
             currentContent.style.opacity = '0';
-            
-            incomingContent.style.transition = 'transform 480ms cubic-bezier(0.22, 1, 0.36, 1), opacity 480ms cubic-bezier(0.22, 1, 0.36, 1)';
+            currentContent.style.transform = 'translateY(-12px)';
+
+            incomingContent.style.transition = 'transform 450ms cubic-bezier(0.22, 1, 0.36, 1), opacity 450ms cubic-bezier(0.22, 1, 0.36, 1)';
             incomingContent.style.opacity = '1';
             incomingContent.style.transform = 'translateY(0)';
-            
+
             setTimeout(() => {
                 if (currentContent.parentNode === wrapper) {
                     wrapper.removeChild(currentContent);
@@ -1643,50 +1573,34 @@ export function initLanding() {
                 incomingContent.classList.add('current');
                 incomingContent.style.willChange = '';
                 incomingContent.style.transition = '';
-            }, 480);
-        }
+            }, 460);
+        });
+
+        currentState = nextState;
     }
 
-    // Set up pause on hover for the stats grid
-    const statsBarGrid = document.querySelector('.l-stats-bar-grid');
-    if (statsBarGrid) {
-        statsBarGrid.addEventListener('mouseenter', () => { isPaused = true; });
-        statsBarGrid.addEventListener('mouseleave', () => { isPaused = false; });
+    // Set up pause on hover
+    const statsBandContainer = document.getElementById('l-stats-band') || document.querySelector('.l-global-stats-bar');
+    if (statsBandContainer) {
+        statsBandContainer.addEventListener('mouseenter', () => { isStatsBandPaused = true; });
+        statsBandContainer.addEventListener('mouseleave', () => { isStatsBandPaused = false; });
     }
 
-    // Tab visibility handling
     const onVisibilityChange = () => {
         isTabVisible = !document.hidden;
     };
     document.addEventListener('visibilitychange', onVisibilityChange);
-    
-    // Intersection Observer for viewport visibility
-    const statsSection = document.querySelector('.l-global-stats-bar');
-    if (statsSection && window.IntersectionObserver) {
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                isElementVisible = entry.isIntersecting;
-            });
-        }, { threshold: 0.1 });
-        observer.observe(statsSection);
-    } else {
-        isElementVisible = true;
-    }
 
-    // Staggered interval rotation
-    const isTouch = window.matchMedia('(hover: none)').matches;
-    const currentInterval = isTouch ? TOUCH_ROTATION_INTERVAL : STATS_ROTATION_INTERVAL;
     const rotationIntervalId = setInterval(() => {
-        // Guard to prevent leaks/running when page changes (element destroyed)
-        if (!document.body.contains(statsBarGrid)) {
+        if (!document.body.contains(statsBandContainer)) {
             clearInterval(rotationIntervalId);
             document.removeEventListener('visibilitychange', onVisibilityChange);
             return;
         }
-        if (!isPaused && isTabVisible && isElementVisible) {
-            performSwap();
+        if (!isStatsBandPaused && isTabVisible) {
+            cycleStatsBand();
         }
-    }, currentInterval);
+    }, CYCLE_INTERVAL_MS);
     window.landingIntervals.push(rotationIntervalId);
 
     // Set up hover/focus & click handlers for all cells

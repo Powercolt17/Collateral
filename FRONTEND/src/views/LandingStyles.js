@@ -2561,7 +2561,7 @@ export const landingCSS = `
 .l-stat-bar-wrapper {
     position: relative;
     overflow: hidden;
-    height: 52px;
+    height: 68px;
     width: 100%;
     display: flex;
     flex-direction: column;
@@ -2569,6 +2569,22 @@ export const landingCSS = `
     justify-content: center;
     transition: filter 220ms ease-out, opacity 220ms ease-out;
     transform: translateZ(0); /* promote to GPU */
+}
+.l-stat-bar-logo-wrap {
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.l-stat-bar-logo-wrap svg {
+    max-height: 28px;
+    width: auto;
+    object-fit: contain;
+    display: block;
+    transition: transform 0.3s ease;
+}
+.l-stat-bar-item:hover .l-stat-bar-logo-wrap svg {
+    transform: scale(1.06);
 }
 .l-stat-bar-content {
     display: flex;

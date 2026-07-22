@@ -332,10 +332,24 @@ export function renderLanding() {
             <div class="lw" style="padding-top: 80px; padding-bottom: 40px;">
                 <div class="ltypes-asymmetric" data-r>
                     <div class="ltypes-left">
-                        <div class="lred-dash reveal-item"><span class="lmono">Contract Types</span></div>
-                        <h2 class="ltypes-headline reveal-item">Pick your<br><span class="lh-gradient">opponent.</span></h2>
-                        <p class="ltypes-sub reveal-item">Choose your execution mode. Lock your own capital behind a goal — hit it and you keep everything, miss it and you forfeit. Go Solo to hold yourself accountable, or enter Rivalry to stake head-to-head against a competitor. Winner takes the pool.</p>
-                        
+                        <div class="lred-dash reveal-item"><span class="lmono">Contract Execution Modes</span></div>
+                        <h2 class="ltypes-headline reveal-item">Solo or<br><span class="lh-gradient">Rivalry.</span></h2>
+                        <p class="ltypes-sub reveal-item">Collateral supports two distinct financial commitment models — stake against yourself to guarantee discipline, or stake head-to-head against a competitor in escrow.</p>
+
+                        <!-- SOLO VS RIVALRY MODE CARDS -->
+                        <div class="ltypes-modes-wrap reveal-item">
+                            <div class="ltypes-mode-card">
+                                <div class="lmode-badge solo">SOLO MODE</div>
+                                <div class="lmode-title">Stake Against Yourself</div>
+                                <div class="lmode-desc">Lock capital behind a personal metric. Hit your target → retain 100% principal + yield.</div>
+                            </div>
+                            <div class="ltypes-mode-card highlight">
+                                <div class="lmode-badge rivalry">RIVALRY MODE</div>
+                                <div class="lmode-title">Stake Head-to-Head</div>
+                                <div class="lmode-desc">Two competitors lock matching stakes into verified escrow. Winner takes the entire pool.</div>
+                            </div>
+                        </div>
+
                         <!-- 3-STEP MECHANISM SUMMARY -->
                         <div class="ltypes-steps reveal-item">
                             <div class="ltypes-step-item">

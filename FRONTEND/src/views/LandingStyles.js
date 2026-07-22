@@ -4685,6 +4685,80 @@ export const landingCSS = `
   }
 }
 
+/* Mode Cards for Contract Types Section */
+.ltypes-modes-wrap {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin: 20px 0 24px;
+}
+
+.ltypes-mode-card {
+    background: #FFFFFF;
+    border: 1px solid rgba(226, 232, 240, 0.9);
+    border-radius: 14px;
+    padding: 14px 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    box-shadow: 0 4px 14px rgba(15, 23, 42, 0.02);
+    transition: transform 0.25s ease, border-color 0.25s ease;
+}
+
+.ltypes-mode-card:hover {
+    transform: translateY(-2px);
+    border-color: rgba(122, 18, 32, 0.25);
+}
+
+.ltypes-mode-card.highlight {
+    background: #FDF9F7;
+    border-color: rgba(122, 18, 32, 0.3);
+}
+
+.lmode-badge {
+    align-self: flex-start;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9px;
+    font-weight: 800;
+    padding: 2px 8px;
+    border-radius: 9999px;
+    letter-spacing: 0.8px;
+    text-transform: uppercase;
+}
+
+.lmode-badge.solo {
+    background: #F1F5F9;
+    color: #475569;
+    border: 1px solid #E2E8F0;
+}
+
+.lmode-badge.rivalry {
+    background: #FDF2F2;
+    color: #7A1220;
+    border: 1px solid rgba(122, 18, 32, 0.2);
+}
+
+.lmode-title {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 13.5px;
+    font-weight: 800;
+    color: #0F172A;
+}
+
+.lmode-desc {
+    font-family: 'Inter', sans-serif;
+    font-size: 11.5px;
+    color: #64748B;
+    line-height: 1.4;
+}
+
+@media (max-width: 640px) {
+    .ltypes-modes-wrap {
+        grid-template-columns: 1fr;
+        gap: 12px;
+    }
+}
+
 /* ═══ FLAGSHIP MARKETING PROTOCOL ILLUSTRATION ═══ */
 .proto-diagram-wrapper {
     position: relative;

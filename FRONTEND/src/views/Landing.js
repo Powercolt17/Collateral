@@ -665,22 +665,12 @@ export function renderLanding() {
                                     <span class="rv-card-id">ID:7B92A41E</span>
                                 </div>
                                 <div class="rv-versus">
-                                    <div class="rv-player">
                                         <span class="rv-player-label">Challenger</span>
                                         <span class="rv-player-name"><span class="rv-lead-dot" style="background:#166534"></span>jakevoss</span>
                                         <span class="rv-player-growth leading">+12.4%</span>
                                     </div>
                                     <div class="rv-vs-divider">
-                                        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#CBD5E1" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round">
-                                            <polyline points="14.5 17.5 3 6 3 3 6 3 17.5 14.5"/>
-                                            <line x1="13" y1="19" x2="19" y2="13"/>
-                                            <line x1="16" y1="16" x2="20" y2="20"/>
-                                            <line x1="19" y1="21" x2="21" y2="19"/>
-                                            <polyline points="14.5 6.5 18 3 21 3 21 6 17.5 9.5"/>
-                                            <line x1="5" y1="14" x2="9" y2="18"/>
-                                            <line x1="7" y1="17" x2="4" y2="20"/>
-                                            <line x1="3" y1="19" x2="5" y2="21"/>
-                                        </svg>
+                                        <img src="/crossed-swords.png" alt="vs" style="width:24px;height:24px;object-fit:contain;display:block;" />
                                     </div>
                                     <div class="rv-player right">
                                         <span class="rv-player-label">Opponent</span>
@@ -743,16 +733,7 @@ export function renderLanding() {
                                         <span class="rv-player-growth leading">+8.1%</span>
                                     </div>
                                     <div class="rv-vs-divider">
-                                        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#CBD5E1" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round">
-                                            <polyline points="14.5 17.5 3 6 3 3 6 3 17.5 14.5"/>
-                                            <line x1="13" y1="19" x2="19" y2="13"/>
-                                            <line x1="16" y1="16" x2="20" y2="20"/>
-                                            <line x1="19" y1="21" x2="21" y2="19"/>
-                                            <polyline points="14.5 6.5 18 3 21 3 21 6 17.5 9.5"/>
-                                            <line x1="5" y1="14" x2="9" y2="18"/>
-                                            <line x1="7" y1="17" x2="4" y2="20"/>
-                                            <line x1="3" y1="19" x2="5" y2="21"/>
-                                        </svg>
+                                        <img src="/crossed-swords.png" alt="vs" style="width:24px;height:24px;object-fit:contain;display:block;" />
                                     </div>
                                     <div class="rv-player right">
                                         <span class="rv-player-label">Opponent</span>

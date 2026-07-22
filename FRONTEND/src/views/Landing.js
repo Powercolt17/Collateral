@@ -648,7 +648,13 @@ export function renderLanding() {
                                 <span class="lcard-live-dot"></span>
                                 <span class="lcard-live-text">$2.4k in escrow</span>
                             </div>
+                            <div class="lcard-hover-details">
+                                <div class="lcard-hover-row"><span>TRACKED VIA:</span><span class="val">STRIPE DATA</span></div>
+                                <div class="lcard-hover-row"><span>VERIFICATION:</span><span class="val green">AUTOMATIC</span></div>
+                                <div class="lcard-hover-row"><span>PAYOUT ON SUCCESS:</span><span class="val green">STAKE × 2.5</span></div>
+                            </div>
                             <div class="lcard-btn"><button class="lp-cta-btn" data-source="STRIPE" data-tier="stake" data-capital="250">Start Contract</button></div>
+                            <div class="lcard-subtext">Deposit returned once goal is verified.</div>
                         </div>
 
                         <!-- CARD 2: RIVALRY - AUDIENCE (ID: 7B92A41E) -->
@@ -694,6 +700,13 @@ export function renderLanding() {
                                     <span class="rv-card-time">14D REMAINING</span>
                                 </div>
                             </div>
+                            <div class="rv-card-hover-details" style="padding: 0 24px;">
+                                <div class="lcard-hover-row"><span>SETTLEMENT:</span><span class="val">AUTOMATED ESCROW</span></div>
+                                <div class="lcard-hover-row"><span>VERIFICATION:</span><span class="val green">X DATA AUTOMATIC</span></div>
+                                <div class="lcard-hover-row"><span>WINNER TAKES:</span><span class="val green">100% COMBINED POOL</span></div>
+                            </div>
+                            <div class="lcard-btn" style="padding: 12px 24px 8px;"><button class="lp-cta-btn" onclick="window.router.navigate('/rivalry/7B92A41E')">VIEW DUEL</button></div>
+                            <div class="lcard-subtext" style="margin-bottom: 16px;">Escrow locked during duel period.</div>
                         </div>
 
                         <!-- CARD 3: SOLO - SHOPIFY STORE SALES -->
@@ -711,7 +724,13 @@ export function renderLanding() {
                                 <span class="lcard-live-dot"></span>
                                 <span class="lcard-live-text">$1.2k in escrow</span>
                             </div>
+                            <div class="lcard-hover-details">
+                                <div class="lcard-hover-row"><span>TRACKED VIA:</span><span class="val">SHOPIFY DATA</span></div>
+                                <div class="lcard-hover-row"><span>VERIFICATION:</span><span class="val green">AUTOMATIC</span></div>
+                                <div class="lcard-hover-row"><span>PAYOUT ON SUCCESS:</span><span class="val green">PLEDGE × 1.5</span></div>
+                            </div>
                             <div class="lcard-btn"><button class="lp-cta-btn" data-source="SHOPIFY" data-tier="pledge" data-capital="100">Start Contract</button></div>
+                            <div class="lcard-subtext">Deposit returned once goal is verified.</div>
                         </div>
 
                         <!-- CARD 4: RIVALRY - REVENUE (ID: 34D63CA3) -->
@@ -757,6 +776,13 @@ export function renderLanding() {
                                     <span class="rv-card-time">0H REMAINING</span>
                                 </div>
                             </div>
+                            <div class="rv-card-hover-details" style="padding: 0 24px;">
+                                <div class="lcard-hover-row"><span>SETTLEMENT:</span><span class="val">AUTOMATED ESCROW</span></div>
+                                <div class="lcard-hover-row"><span>VERIFICATION:</span><span class="val green">STRIPE AUTOMATIC</span></div>
+                                <div class="lcard-hover-row"><span>WINNER TAKES:</span><span class="val green">100% COMBINED POOL</span></div>
+                            </div>
+                            <div class="lcard-btn" style="padding: 12px 24px 8px;"><button class="lp-cta-btn" onclick="window.router.navigate('/rivalry/34D63CA3')">VIEW DUEL</button></div>
+                            <div class="lcard-subtext" style="margin-bottom: 16px;">Escrow locked during duel period.</div>
                         </div>
                     </div>
                 </div>

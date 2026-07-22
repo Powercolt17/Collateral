@@ -1355,6 +1355,51 @@ export const landingCSS = `
 .lcard::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:#7A1220;transform:scaleX(0);transform-origin:left;transition:transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);z-index:10}
 .lcard:hover::before{transform:scaleX(1)}
 .lcard:hover{border-color:#94A3B8 !important;box-shadow:0 24px 52px -10px rgba(15, 23, 42, 0.14), 0 4px 16px rgba(15, 23, 42, 0.05) !important;transform:translateY(-8px) scale(1.015) !important}
+
+/* ═══ EXPANDABLE HOVER DETAILS PANEL (MARKET STYLE) ═══ */
+.lcard-hover-details, .rv-card-hover-details {
+    max-height: 0;
+    opacity: 0;
+    overflow: hidden;
+    transition: max-height 0.4s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.35s ease, margin 0.35s ease, padding 0.35s ease;
+    border-top: 1px dashed transparent;
+    margin-top: 0;
+    padding-top: 0;
+}
+.lcard:hover .lcard-hover-details, .rv-card:hover .rv-card-hover-details {
+    max-height: 120px;
+    opacity: 1;
+    margin-top: 14px;
+    padding-top: 12px;
+    border-top-color: #E2E8F0;
+}
+.lcard-hover-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    color: #64748B;
+    margin-bottom: 5px;
+    text-transform: uppercase;
+}
+.lcard-hover-row .val {
+    color: #0F172A;
+    font-weight: 800;
+}
+.lcard-hover-row .val.green {
+    color: #166534;
+}
+.lcard-subtext {
+    font-family: 'Inter', sans-serif;
+    font-size: 10px;
+    color: #94A3B8;
+    text-align: center;
+    margin-top: 6px;
+    font-style: italic;
+}
 .lcard-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;flex-wrap:wrap;gap:8px 12px}
 .lcard-src{font-family:'Inter',sans-serif;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--t2);display:inline-flex;align-items:center;gap:8px;background:rgba(17,17,17,0.03);border:1px solid rgba(0,0,0,0.06);border-radius:6px;padding:5px 10px 5px 8px;transition:all 0.3s ease}
 .lcard:hover .lcard-src{border-color:rgba(0,0,0,0.1);background:rgba(17,17,17,0.05)}

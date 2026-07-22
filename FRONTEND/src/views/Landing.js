@@ -833,15 +833,17 @@ export function renderLanding() {
                                         <span class="rv-player-growth leading">+12.4%</span>
                                     </div>
                                     <div class="rv-vs-divider">
-                                        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#475569" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-                                            <path d="M14.5 17.5L3 6V3H6L17.5 14.5"/>
-                                            <line x1="13" y1="19" x2="19" y2="13"/>
-                                            <line x1="16" y1="16" x2="20" y2="20"/>
-                                            <line x1="19" y1="21" x2="21" y2="19"/>
-                                            <path d="M14.5 6.5L18 3H21V6L17.5 9.5"/>
-                                            <line x1="5" y1="14" x2="9" y2="18"/>
-                                            <line x1="7" y1="17" x2="4" y2="20"/>
-                                            <line x1="3" y1="19" x2="5" y2="21"/>
+                                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                            <polygon points="2.5,2.5 11.5,10.5 10.5,11.5" fill="#475569"/>
+                                            <line x1="2.5" y1="2.5" x2="11" y2="11" stroke="#94A3B8" stroke-width="0.7"/>
+                                            <path d="M 8.5 13.5 C 10 12, 12 10, 13.5 8.5" stroke="#1E293B" stroke-width="1.8" stroke-linecap="round" fill="none"/>
+                                            <line x1="11" y1="11" x2="19.5" y2="19.5" stroke="#1E293B" stroke-width="2.2" stroke-linecap="round"/>
+                                            <circle cx="20.5" cy="20.5" r="1.6" fill="#334155" stroke="#1E293B" stroke-width="1"/>
+                                            <polygon points="21.5,2.5 12.5,10.5 13.5,11.5" fill="#475569"/>
+                                            <line x1="21.5" y1="2.5" x2="13" y2="11" stroke="#94A3B8" stroke-width="0.7"/>
+                                            <path d="M 15.5 13.5 C 14 12, 12 10, 10.5 8.5" stroke="#1E293B" stroke-width="1.8" stroke-linecap="round" fill="none"/>
+                                            <line x1="13" y1="11" x2="4.5" y2="19.5" stroke="#1E293B" stroke-width="2.2" stroke-linecap="round"/>
+                                            <circle cx="3.5" cy="20.5" r="1.6" fill="#334155" stroke="#1E293B" stroke-width="1"/>
                                         </svg>
                                     </div>
                                     <div class="rv-player right">
@@ -905,15 +907,17 @@ export function renderLanding() {
                                         <span class="rv-player-growth leading">+8.1%</span>
                                     </div>
                                     <div class="rv-vs-divider">
-                                        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#475569" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-                                            <path d="M14.5 17.5L3 6V3H6L17.5 14.5"/>
-                                            <line x1="13" y1="19" x2="19" y2="13"/>
-                                            <line x1="16" y1="16" x2="20" y2="20"/>
-                                            <line x1="19" y1="21" x2="21" y2="19"/>
-                                            <path d="M14.5 6.5L18 3H21V6L17.5 9.5"/>
-                                            <line x1="5" y1="14" x2="9" y2="18"/>
-                                            <line x1="7" y1="17" x2="4" y2="20"/>
-                                            <line x1="3" y1="19" x2="5" y2="21"/>
+                                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                            <polygon points="2.5,2.5 11.5,10.5 10.5,11.5" fill="#475569"/>
+                                            <line x1="2.5" y1="2.5" x2="11" y2="11" stroke="#94A3B8" stroke-width="0.7"/>
+                                            <path d="M 8.5 13.5 C 10 12, 12 10, 13.5 8.5" stroke="#1E293B" stroke-width="1.8" stroke-linecap="round" fill="none"/>
+                                            <line x1="11" y1="11" x2="19.5" y2="19.5" stroke="#1E293B" stroke-width="2.2" stroke-linecap="round"/>
+                                            <circle cx="20.5" cy="20.5" r="1.6" fill="#334155" stroke="#1E293B" stroke-width="1"/>
+                                            <polygon points="21.5,2.5 12.5,10.5 13.5,11.5" fill="#475569"/>
+                                            <line x1="21.5" y1="2.5" x2="13" y2="11" stroke="#94A3B8" stroke-width="0.7"/>
+                                            <path d="M 15.5 13.5 C 14 12, 12 10, 10.5 8.5" stroke="#1E293B" stroke-width="1.8" stroke-linecap="round" fill="none"/>
+                                            <line x1="13" y1="11" x2="4.5" y2="19.5" stroke="#1E293B" stroke-width="2.2" stroke-linecap="round"/>
+                                            <circle cx="3.5" cy="20.5" r="1.6" fill="#334155" stroke="#1E293B" stroke-width="1"/>
                                         </svg>
                                     </div>
                                     <div class="rv-player right">

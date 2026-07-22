@@ -439,7 +439,7 @@ export function renderLanding() {
                                 </div>
 
                                 <div class="lflow-arrow">
-                                    <svg width="32" height="12" viewBox="0 0 32 12"><path d="M0 6 H26 L22 2 M26 6 L22 10" stroke="#0F172A" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                                    <svg width="32" height="12" viewBox="0 0 32 12"><path d="M0 6 H26 L22 2 M26 6 L22 10" stroke="#0F172A" stroke-width="2.8" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
                                 </div>
 
                                 <!-- NODE: ESCROW VAULT -->
@@ -451,7 +451,7 @@ export function renderLanding() {
                                 </div>
 
                                 <div class="lflow-arrow">
-                                    <svg width="32" height="12" viewBox="0 0 32 12"><path d="M0 6 H26 L22 2 M26 6 L22 10" stroke="#0F172A" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                                    <svg width="32" height="12" viewBox="0 0 32 12"><path d="M0 6 H26 L22 2 M26 6 L22 10" stroke="#0F172A" stroke-width="2.8" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
                                 </div>
 
                                 <!-- NODE: ORACLE API -->

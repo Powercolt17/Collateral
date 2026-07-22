@@ -546,16 +546,21 @@ export const landingCSS = `
 }
 
 .lflow-node {
-    background: #FAF9F7;
+    background: #FFFFFF;
     border: 1px solid #E2E8F0;
     border-radius: 10px;
     padding: 14px 14px 12px;
     box-sizing: border-box;
+    box-shadow: 0 2px 8px rgba(15, 23, 42, 0.05), 0 12px 28px rgba(15, 23, 42, 0.07);
+    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), 
+                opacity 0.4s cubic-bezier(0.16, 1, 0.3, 1), 
+                box-shadow 0.3s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .lflow-node-vault {
     background: #FFFFFF !important;
     border: 2px solid #0F172A !important;
+    box-shadow: 0 4px 14px rgba(15, 23, 42, 0.09), 0 16px 36px rgba(15, 23, 42, 0.08) !important;
 }
 
 .lflow-node-hdr {
@@ -598,6 +603,7 @@ export const landingCSS = `
     justify-content: center;
     padding: 0 4px;
     user-select: none;
+    transition: opacity 0.4s cubic-bezier(0.16, 1, 0.3, 1), transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
 }
 .lflow-arrow svg {
     display: block;
@@ -608,6 +614,7 @@ export const landingCSS = `
     align-items: center;
     justify-content: center;
     padding: 0 4px;
+    transition: opacity 0.4s cubic-bezier(0.16, 1, 0.3, 1), transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
 }
 .lflow-split-arrows svg {
     display: block;
@@ -629,7 +636,46 @@ export const landingCSS = `
     overflow: hidden;
     background: #FFFFFF;
     border: 1px solid #E2E8F0;
+    box-shadow: 0 2px 6px rgba(15, 23, 42, 0.04), 0 8px 20px rgba(15, 23, 42, 0.05);
+    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), 
+                opacity 0.4s cubic-bezier(0.16, 1, 0.3, 1), 
+                box-shadow 0.3s cubic-bezier(0.16, 1, 0.3, 1);
 }
+
+/* Win Path Hierarchy Highlighting */
+.lflow-outcome.is-win {
+    background: linear-gradient(135deg, #F0FDF4 0%, #FFFFFF 100%) !important;
+    border: 1px solid #BBF7D0 !important;
+    box-shadow: 0 4px 14px rgba(22, 101, 52, 0.12), 0 16px 36px rgba(22, 101, 52, 0.08) !important;
+}
+
+/* ═══ SCROLL-TRIGGERED STAGGERED REVEAL ANIMATIONS ═══ */
+.lengine-section .lflow-node,
+.lengine-section .lflow-arrow,
+.lengine-section .lflow-split-arrows,
+.lengine-section .lflow-outcome {
+    opacity: 0;
+    transform: translateY(12px) scale(0.98);
+}
+
+.lengine-section.v .lflow-node,
+.lengine-section.v .lflow-arrow,
+.lengine-section.v .lflow-split-arrows,
+.lengine-section.v .lflow-outcome {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+}
+
+/* Flow order left-to-right staggered delays (~120ms per node) */
+.lengine-section.v .lflow-row > .lflow-node:nth-of-type(1) { transition-delay: 0ms; }
+.lengine-section.v .lflow-row > .lflow-arrow:nth-of-type(1) { transition-delay: 120ms; }
+.lengine-section.v .lflow-row > .lflow-node:nth-of-type(2) { transition-delay: 240ms; }
+.lengine-section.v .lflow-row > .lflow-arrow:nth-of-type(2) { transition-delay: 360ms; }
+.lengine-section.v .lflow-row > .lflow-node:nth-of-type(3) { transition-delay: 480ms; }
+.lengine-section.v .lflow-split-arrows { transition-delay: 600ms; }
+.lengine-section.v .lflow-outcomes .lflow-outcome:nth-child(1) { transition-delay: 720ms; }
+.lengine-section.v .lflow-outcomes .lflow-outcome:nth-child(2) { transition-delay: 820ms; }
+.lengine-section.v .lflow-outcomes .lflow-outcome:nth-child(3) { transition-delay: 920ms; }
 
 .lflow-outcome-indicator {
     flex-shrink: 0;

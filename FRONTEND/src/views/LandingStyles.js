@@ -3043,7 +3043,6 @@ export const landingCSS = `
     transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
 }
 .ltype-row.is-solo {
-    background: #FAF8F5 !important;
     border-left: 4px solid #64748B !important;
 }
 .ltype-row.is-solo:hover {
@@ -3052,81 +3051,12 @@ export const landingCSS = `
     box-shadow: 0 12px 28px -6px rgba(20, 18, 31, 0.06);
 }
 .ltype-row.is-rivalry {
-    background: #FFFFFF !important;
     border-left: 4px solid #7A1220 !important;
 }
 .ltype-row.is-rivalry:hover {
     border-left-color: #5C1414 !important;
     transform: translateY(-3px) !important;
     box-shadow: 0 12px 28px -6px rgba(20, 18, 31, 0.06);
-}
-
-.ltype-body-grid {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 20px;
-    align-items: center;
-}
-@media (min-width: 768px) {
-    .ltype-body-grid {
-        grid-template-columns: 1.35fr 0.85fr;
-        gap: 28px;
-    }
-}
-@media (max-width: 767px) {
-    .ltype-body-grid {
-        display: flex;
-        flex-direction: column-reverse;
-        gap: 16px;
-    }
-}
-
-.ltype-content-col {
-    display: flex;
-    flex-direction: column;
-}
-
-.ltype-image-col {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    box-sizing: border-box;
-    width: 100%;
-}
-
-.ltype-img-wrap {
-    display: block;
-    width: 100%;
-    max-width: 280px;
-    aspect-ratio: 1 / 1;
-    position: relative;
-    box-sizing: border-box;
-}
-
-.ltype-img {
-    width: 100%;
-    height: 100%;
-    max-width: 280px;
-    max-height: 280px;
-    aspect-ratio: 1 / 1;
-    object-fit: contain;
-    display: block;
-    margin: 0 auto;
-}
-
-.solo-img {
-    background: transparent;
-    border-radius: 8px;
-}
-
-.rivalry-wrap {
-    border-radius: 12px;
-    overflow: hidden;
-    box-shadow: 0 4px 16px rgba(92, 20, 20, 0.12);
-}
-.rivalry-img {
-    border-radius: 12px;
-    background: #5C1414;
 }
 .ltype-card-top {
     display: flex;

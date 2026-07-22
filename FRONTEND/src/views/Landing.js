@@ -328,53 +328,78 @@ export function renderLanding() {
 
 
 
-            <!-- ═══ CONTRACT TYPES ═══ -->
-            <div class="lw" style="padding-top: 80px; padding-bottom: 40px;">
+            <!-- ═══ CONTRACT EXECUTION MODES (PREMIUM 40/60 SPLIT) ═══ -->
+            <div class="lw" style="padding-top: 90px; padding-bottom: 50px;">
                 <div class="ltypes-asymmetric" data-r>
+                    <!-- LEFT COLUMN (40%): CLEAR PRODUCT EXPLANATION & SELECTABLE MODES -->
                     <div class="ltypes-left">
                         <div class="lred-dash reveal-item"><span class="lmono">Contract Execution Modes</span></div>
-                        <h2 class="ltypes-headline reveal-item">Solo or<br><span class="lh-gradient">Rivalry.</span></h2>
-                        <p class="ltypes-sub reveal-item">Collateral supports two distinct financial commitment models — stake against yourself to guarantee discipline, or stake head-to-head against a competitor in escrow.</p>
+                        <h2 class="ltypes-headline reveal-item">SOLO OR<br><span class="lh-gradient">RIVALRY.</span></h2>
+                        <p class="ltypes-sub reveal-item" style="font-size: 14.5px; line-height: 1.5; color: #475569; margin-bottom: 20px;">Put money behind your commitment. Complete the goal and the contract pays automatically. Miss it and the rules enforce themselves.</p>
 
-                        <!-- SOLO VS RIVALRY MODE CARDS -->
+                        <!-- SELECTABLE PRODUCT MODE CARDS -->
                         <div class="ltypes-modes-wrap reveal-item">
-                            <div class="ltypes-mode-card">
-                                <div class="lmode-badge solo">SOLO MODE</div>
+                            <!-- SOLO CARD -->
+                            <div class="ltypes-mode-card" onclick="window.app.goAction('/market', 'signup')">
+                                <div class="lmode-badge solo">SOLO</div>
                                 <div class="lmode-title">Stake Against Yourself</div>
-                                <div class="lmode-desc">Lock capital behind a personal metric. Hit your target → retain 100% principal + yield.</div>
+                                <div class="lmode-bullets">
+                                    <div class="lmode-bullet-item"><span class="b-check">✓</span> Stake against yourself</div>
+                                    <div class="lmode-bullet-item"><span class="b-check">✓</span> Keep your principal</div>
+                                    <div class="lmode-bullet-item"><span class="b-check">✓</span> Earn execution rewards</div>
+                                </div>
+                                <div class="lmode-cta-link">START SOLO <span>→</span></div>
                             </div>
-                            <div class="ltypes-mode-card highlight">
-                                <div class="lmode-badge rivalry">RIVALRY MODE</div>
+
+                            <!-- RIVALRY CARD (ACTIVE HIGHLIGHT) -->
+                            <div class="ltypes-mode-card highlight" onclick="window.router.navigate('/rivalry/7B92A41E')">
+                                <div class="lmode-badge rivalry">RIVALRY</div>
                                 <div class="lmode-title">Stake Head-to-Head</div>
-                                <div class="lmode-desc">Two competitors lock matching stakes into verified escrow. Winner takes the entire pool.</div>
+                                <div class="lmode-bullets">
+                                    <div class="lmode-bullet-item"><span class="b-check">✓</span> Two people lock capital</div>
+                                    <div class="lmode-bullet-item"><span class="b-check">✓</span> Verified winner</div>
+                                    <div class="lmode-bullet-item"><span class="b-check">✓</span> Winner receives escrow</div>
+                                </div>
+                                <div class="lmode-cta-link">START RIVALRY <span>→</span></div>
                             </div>
                         </div>
 
-                        <!-- 3-STEP MECHANISM SUMMARY -->
-                        <div class="ltypes-steps reveal-item">
-                            <div class="ltypes-step-item">
-                                <span class="ltypes-step-num">1</span>
-                                <span class="ltypes-step-text">Set a goal and lock a deposit.</span>
-                            </div>
-                            <div class="ltypes-step-item">
-                                <span class="ltypes-step-num">2</span>
-                                <span class="ltypes-step-text">Execute before the deadline.</span>
-                            </div>
-                            <div class="ltypes-step-item">
-                                <span class="ltypes-step-num">3</span>
-                                <span class="ltypes-step-text"><strong>Hit target:</strong> reclaim capital + yield. <strong>Miss:</strong> forfeit to pool.</span>
+                        <!-- HORIZONTAL PROCESS TIMELINE -->
+                        <div class="ltypes-timeline-wrap reveal-item">
+                            <div class="ltypes-timeline-grid">
+                                <div class="ltimeline-step">
+                                    <div class="ltimeline-icon">
+                                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#7A1C2B" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+                                    </div>
+                                    <span class="ltimeline-text">Lock Capital</span>
+                                </div>
+                                <div class="ltimeline-arrow">→</div>
+                                <div class="ltimeline-step">
+                                    <div class="ltimeline-icon">
+                                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#166534" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+                                    </div>
+                                    <span class="ltimeline-text">Complete Goal</span>
+                                </div>
+                                <div class="ltimeline-arrow">→</div>
+                                <div class="ltimeline-step">
+                                    <div class="ltimeline-icon">
+                                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#166534" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+                                    </div>
+                                    <span class="ltimeline-text">Auto Settlement</span>
+                                </div>
                             </div>
                         </div>
 
                         <div class="ltypes-cta-wrap reveal-item">
                             <button class="lbtn lbtn-r" id="ltypes-start-cta" onclick="window.app.goAction('/market', 'signup')">
-                                START CONTRACT <span class="lbtn-arrow">→</span>
+                                EXPLORE OPEN MARKETS <span class="lbtn-arrow">→</span>
                             </button>
                         </div>
                     </div>
 
+                    <!-- RIGHT COLUMN (60%): HERO INSTITUTIONAL VISUALIZER -->
                     <div class="ltypes-right">
-                        <div class="rv-container reveal-item" style="width: 100%; max-width: 580px; margin: 0 auto;">
+                        <div class="rv-container reveal-item" style="width: 100%; max-width: 660px; margin: 0 auto;">
                             <style>
                                 .rv-dot { opacity: 0; }
                                 @media (prefers-reduced-motion: no-preference) {
@@ -430,7 +455,7 @@ export function renderLanding() {
                                 }
                             </style>
 
-                            <!-- DESKTOP PURE SVG CANVAS (trimmed viewBox 0 0 720 420) -->
+                            <!-- DESKTOP PURE SVG CANVAS (20% larger hero size with ambient glow) -->
                             <svg class="rv-desk-svg" viewBox="0 0 720 420" style="width: 100%; height: auto; display: block;" xmlns="http://www.w3.org/2000/svg">
                                 <defs>
                                     <marker id="arrM" markerWidth="7" markerHeight="7" refX="5" refY="3.5" orient="auto">
@@ -439,19 +464,24 @@ export function renderLanding() {
                                     <marker id="arrG" markerWidth="7" markerHeight="7" refX="5" refY="3.5" orient="auto">
                                         <path d="M0 0 L7 3.5 L0 7 Z" fill="#3F9D5A" />
                                     </marker>
+                                    <radialGradient id="ambientGlow" cx="50%" cy="45%" r="50%">
+                                        <stop offset="0%" stop-color="#7A1C2B" stop-opacity="0.14" />
+                                        <stop offset="100%" stop-color="#F5F1EA" stop-opacity="0" />
+                                    </radialGradient>
                                     <filter id="cardShadow" x="-10%" y="-10%" width="120%" height="130%">
                                         <feDropShadow dx="0" dy="8" stdDeviation="12" flood-color="#1C2333" flood-opacity="0.08" />
                                     </filter>
                                     <filter id="vaultShadow" x="-10%" y="-10%" width="120%" height="130%">
-                                        <feDropShadow dx="0" dy="18" stdDeviation="23" flood-color="#7A1C2B" flood-opacity="0.18" />
+                                        <feDropShadow dx="0" dy="18" stdDeviation="23" flood-color="#7A1C2B" flood-opacity="0.22" />
                                     </filter>
                                     <filter id="payoutShadow" x="-10%" y="-10%" width="120%" height="130%">
                                         <feDropShadow dx="0" dy="8" stdDeviation="11" flood-color="#3F9D5A" flood-opacity="0.15" />
                                     </filter>
                                 </defs>
 
-                                <!-- Background Card -->
+                                <!-- Background Card with Ambient Radial Backlighting -->
                                 <rect width="720" height="420" rx="24" fill="#F5F1EA" stroke="rgba(28,35,51,0.08)" stroke-width="1.5"/>
+                                <ellipse cx="360" cy="200" rx="220" ry="130" fill="url(#ambientGlow)"/>
 
                                 <!-- Lines (leveled to y=200, matching card midlines) -->
                                 <line x1="176" y1="200" x2="268" y2="200" stroke="#B98A92" stroke-width="2" stroke-dasharray="5 5" marker-end="url(#arrM)" />
@@ -463,7 +493,7 @@ export function renderLanding() {
                                 <circle class="rv-dot rv-dR" cx="540" cy="200" r="3.6" fill="#7A1C2B" />
                                 <circle class="rv-dot rv-dP" cx="360" cy="298" r="3.6" fill="#3F9D5A" />
 
-                                <!-- Left Card: CHALLENGER (shifted to x=20 for wider gap) -->
+                                <!-- Left Card: CHALLENGER -->
                                 <g transform="translate(20, 150)">
                                     <rect width="156" height="100" rx="14" fill="#FBF9F5" stroke="rgba(28,35,51,0.08)" filter="url(#cardShadow)"/>
                                     <text x="16" y="27" fill="#635BFF" font-family="sans-serif" font-size="13" font-weight="800" letter-spacing="-0.5">stripe</text>
@@ -472,7 +502,7 @@ export function renderLanding() {
                                     <text x="16" y="78" fill="#8C8577" font-family="sans-serif" font-size="11.5"><tspan fill="#1C2333" font-weight="600">$1,000</tspan> locked</text>
                                 </g>
 
-                                <!-- Right Card: OPPONENT (shifted to x=544 for wider gap) -->
+                                <!-- Right Card: OPPONENT -->
                                 <g transform="translate(544, 150)">
                                     <rect width="156" height="100" rx="14" fill="#FBF9F5" stroke="rgba(28,35,51,0.08)" filter="url(#cardShadow)"/>
                                     <path fill="#0F1115" d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" transform="translate(16, 16) scale(0.55)"/>
@@ -500,7 +530,7 @@ export function renderLanding() {
                                     <text x="90" y="163" fill="#1C2333" font-family="sans-serif" font-size="10.5" font-weight="600" text-anchor="middle" letter-spacing="0.4">WINNER TAKES POOL</text>
                                 </g>
 
-                                <!-- Bottom Endpoint: PAYOUT PILL (moved up to y=345) -->
+                                <!-- Bottom Endpoint: PAYOUT PILL -->
                                 <g transform="translate(200, 345)">
                                     <rect width="320" height="42" rx="21" fill="#FBF9F5" stroke="#D9EBDE" stroke-width="1.5" filter="url(#payoutShadow)"/>
                                     <circle cx="25" cy="21" r="11" fill="#3F9D5A"/>
@@ -509,7 +539,7 @@ export function renderLanding() {
                                 </g>
                             </svg>
 
-                            <!-- MOBILE PURE SVG CANVAS (trimmed viewBox 0 0 360 500) -->
+                            <!-- MOBILE PURE SVG CANVAS -->
                             <svg class="rv-mob-svg" viewBox="0 0 360 500" style="width: 100%; height: auto; display: block;" xmlns="http://www.w3.org/2000/svg">
                                 <defs>
                                     <marker id="arrM2" markerWidth="7" markerHeight="7" refX="5" refY="3.5" orient="auto">

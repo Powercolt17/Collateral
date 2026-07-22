@@ -4704,43 +4704,60 @@ export const landingCSS = `
 }
 
 /* Mode Cards for Contract Types Section */
+.ltypes-asymmetric {
+    display: grid;
+    grid-template-columns: 42% 58%;
+    gap: 40px;
+    align-items: center;
+}
+
+@media (max-width: 992px) {
+    .ltypes-asymmetric {
+        grid-template-columns: 1fr;
+        gap: 36px;
+    }
+}
+
 .ltypes-modes-wrap {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 12px;
+    gap: 14px;
     margin: 20px 0 24px;
 }
 
 .ltypes-mode-card {
     background: #FFFFFF;
-    border: 1px solid rgba(226, 232, 240, 0.9);
-    border-radius: 14px;
-    padding: 14px 16px;
+    border: 1.5px solid rgba(226, 232, 240, 0.9);
+    border-radius: 16px;
+    padding: 18px 16px;
     display: flex;
     flex-direction: column;
-    gap: 6px;
-    box-shadow: 0 4px 14px rgba(15, 23, 42, 0.02);
-    transition: transform 0.25s ease, border-color 0.25s ease;
+    gap: 10px;
+    box-shadow: 0 4px 16px rgba(15, 23, 42, 0.03);
+    transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.2s ease, box-shadow 0.2s ease;
+    cursor: pointer;
 }
 
 .ltypes-mode-card:hover {
-    transform: translateY(-2px);
-    border-color: rgba(122, 18, 32, 0.25);
+    transform: translateY(-3px);
+    border-color: rgba(122, 18, 32, 0.35);
+    box-shadow: 0 12px 28px -6px rgba(15, 23, 42, 0.08);
 }
 
 .ltypes-mode-card.highlight {
-    background: #FDF9F7;
-    border-color: rgba(122, 18, 32, 0.3);
+    background: linear-gradient(180deg, #FFFDFA 0%, #FDF9F7 100%);
+    border-color: rgba(122, 18, 32, 0.4);
+    box-shadow: 0 8px 24px -6px rgba(122, 18, 32, 0.08);
 }
 
 .lmode-badge {
     align-self: flex-start;
     font-family: 'JetBrains Mono', monospace;
-    font-size: 9px;
+    font-size: 9.5px;
     font-weight: 800;
-    padding: 2px 8px;
+    padding: 3px 9px;
     border-radius: 9999px;
-    letter-spacing: 0.8px;
+    letter-spacing: 1px;
     text-transform: uppercase;
 }
 
@@ -4753,27 +4770,118 @@ export const landingCSS = `
 .lmode-badge.rivalry {
     background: #FDF2F2;
     color: #7A1220;
-    border: 1px solid rgba(122, 18, 32, 0.2);
+    border: 1px solid rgba(122, 18, 32, 0.25);
 }
 
 .lmode-title {
     font-family: 'Plus Jakarta Sans', sans-serif;
-    font-size: 13.5px;
+    font-size: 14.5px;
     font-weight: 800;
     color: #0F172A;
+    letter-spacing: -0.2px;
 }
 
-.lmode-desc {
+.lmode-bullets {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.lmode-bullet-item {
     font-family: 'Inter', sans-serif;
     font-size: 11.5px;
-    color: #64748B;
-    line-height: 1.4;
+    color: #475569;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    line-height: 1.3;
+}
+
+.lmode-bullet-item .b-check {
+    color: #166534;
+    font-weight: 800;
+    font-size: 11px;
+}
+
+.lmode-cta-link {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    font-weight: 800;
+    letter-spacing: 0.8px;
+    color: #7A1220;
+    text-transform: uppercase;
+    margin-top: 2px;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    transition: gap 0.2s ease;
+}
+
+.ltypes-mode-card:hover .lmode-cta-link {
+    gap: 7px;
+}
+
+/* Horizontal Process Timeline */
+.ltypes-timeline-wrap {
+    background: #F8FAF9;
+    border: 1px solid #E2E8F0;
+    border-radius: 14px;
+    padding: 14px 16px;
+    margin-bottom: 24px;
+}
+
+.ltypes-timeline-grid {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr auto 1fr;
+    align-items: center;
+    gap: 8px;
+}
+
+.ltimeline-step {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 4px;
+}
+
+.ltimeline-icon {
+    width: 28px;
+    height: 28px;
+    border-radius: 8px;
+    background: #FFFFFF;
+    border: 1px solid #E2E8F0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 2px 6px rgba(15, 23, 42, 0.03);
+}
+
+.ltimeline-text {
+    font-family: 'Inter', sans-serif;
+    font-size: 10.5px;
+    font-weight: 700;
+    color: #1E293B;
+    line-height: 1.2;
+}
+
+.ltimeline-arrow {
+    color: #94A3B8;
+    font-size: 12px;
+    font-weight: 700;
 }
 
 @media (max-width: 640px) {
     .ltypes-modes-wrap {
         grid-template-columns: 1fr;
         gap: 12px;
+    }
+    .ltypes-timeline-grid {
+        grid-template-columns: 1fr;
+        gap: 10px;
+    }
+    .ltimeline-arrow {
+        transform: rotate(90deg);
     }
 }
 

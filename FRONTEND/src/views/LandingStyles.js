@@ -1230,13 +1230,15 @@ export const landingCSS = `
     background: #ffffff;
     border: 1px solid #E2E8F0;
     border-radius: 16px;
+    padding: 24px;
     overflow: hidden;
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
+    justify-content: flex-start;
     transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1) !important;
     cursor: pointer;
     position: relative;
+    box-sizing: border-box;
 }
 .rv-card::before {
     content: '';
@@ -1259,7 +1261,7 @@ export const landingCSS = `
     box-shadow: 0 24px 52px -10px rgba(15, 23, 42, 0.14), 0 4px 16px rgba(15, 23, 42, 0.05) !important;
     transform: translateY(-8px) scale(1.015) !important;
 }
-.rv-card-inner { padding: 24px 24px 0; }
+.rv-card-inner { padding: 0; }
 .rv-card-header {
     display: flex; align-items: center; justify-content: space-between;
     margin-bottom: 8px;
@@ -1323,15 +1325,15 @@ export const landingCSS = `
 }
 .rv-momentum {
     height: 4px; display: flex; overflow: hidden;
-    margin: 0 24px; background: #F1F5F9; border-radius: 2px;
+    margin: 0; background: #F1F5F9; border-radius: 2px;
 }
 .rv-momentum-left { background: #166534; border-radius: 2px 0 0 2px; }
 .rv-momentum-right { background: #7A1220; border-radius: 0 2px 2px 0; }
 .rv-card-bottom {
     display: flex; align-items: flex-end; justify-content: space-between;
-    padding: 16px 24px 20px;
+    padding-top: 14px;
     border-top: 1px solid #F1F5F9;
-    margin-top: 16px;
+    margin-top: 14px;
 }
 .rv-card-stake { display: flex; flex-direction: column; gap: 2px; }
 .rv-card-stake-val { font-size: 24px; font-weight: 800; color: #0F172A; letter-spacing: -0.5px; font-family: 'Plus Jakarta Sans', sans-serif; }
@@ -1351,10 +1353,25 @@ export const landingCSS = `
     font-size: 8px; font-weight: 700; letter-spacing: 0.5px;
     color: #fff; text-transform: uppercase; border-radius: 4px;
 }
-.lcard{border:1px solid #E2E8F0;border-radius:16px;padding:28px 24px;display:flex;flex-direction:column;transition:all 0.35s cubic-bezier(0.16, 1, 0.3, 1) !important;background:#FFFFFF !important;position:relative;overflow:hidden;cursor:pointer}
+.lcard{border:1px solid #E2E8F0;border-radius:16px;padding:24px;display:flex;flex-direction:column;justify-content:flex-start;transition:all 0.35s cubic-bezier(0.16, 1, 0.3, 1) !important;background:#FFFFFF !important;position:relative;overflow:hidden;cursor:pointer;box-sizing:border-box}
 .lcard::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:#7A1220;transform:scaleX(0);transform-origin:left;transition:transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);z-index:10}
 .lcard:hover::before{transform:scaleX(1)}
 .lcard:hover{border-color:#94A3B8 !important;box-shadow:0 24px 52px -10px rgba(15, 23, 42, 0.14), 0 4px 16px rgba(15, 23, 42, 0.05) !important;transform:translateY(-8px) scale(1.015) !important}
+
+/* ═══ UNIFIED CTA BUTTON & SUBTEXT ANCHORING ═══ */
+.lcard-btn {
+    margin-top: auto !important;
+    padding-top: 16px;
+    width: 100%;
+}
+.lcard-subtext {
+    font-family: 'Inter', sans-serif;
+    font-size: 10px;
+    color: #94A3B8;
+    text-align: center;
+    margin-top: 6px !important;
+    margin-bottom: 0 !important;
+}
 
 /* ═══ EXPANDABLE HOVER DETAILS PANEL (MARKET STYLE) ═══ */
 .lcard-hover-details, .rv-card-hover-details {

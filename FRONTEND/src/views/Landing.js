@@ -795,7 +795,25 @@ export function renderLanding() {
                     </div>
 
                     <div class="lcards">
-                        <!-- CARD 1: RIVALRY - AUDIENCE (ID: 7B92A41E) -->
+                        <!-- CARD 1: SOLO - STRIPE REVENUE GROWTH -->
+                        <div class="lcard lcard-popular reveal-item">
+                            <div class="lcard-top">
+                                <span class="lcard-src"><svg class="lcard-src-logo" viewBox="0 0 24 24" fill="currentColor" style="color:#635BFF;width:14px;height:14px;display:inline-block;vertical-align:middle;margin-right:6px;"><path d="M20 10.3c0-1.8-1.5-2.7-3.6-3.2l-2-.5c-1.3-.3-1.9-.7-1.9-1.3 0-.6.7-1 1.7-1 1.7 0 3 .6 3.6 1l.7-2.6C17.9 2.2 16.3 1.8 14.8 1.8c-3.1 0-5.2 1.6-5.2 4.3 0 2.9 2.4 3.7 4.9 4.3l1.8.4c1.4.3 2 .8 2 1.5 0 .7-.8 1.1-2.1 1.1-1.9 0-3.6-.7-4.3-1.1l-.8 2.7c1 .5 2.9 1 4.7 1C18.2 16 20 14.4 20 10.3z"/></svg>Stripe</span>
+                                <span class="lcard-tier tier-stake">Stake</span>
+                            </div>
+                            <div class="lcard-title">Revenue Growth</div>
+                            <div class="lcard-target">+20% Revenue growth</div>
+                            <div class="lcard-row"><span class="k">Deposit</span><span class="v">$250 – $3,000</span></div>
+                            <div class="lcard-row"><span class="k">Total Return</span><span class="v">2.5x</span></div>
+                            <div class="lcard-row"><span class="k">Window</span><span class="v">30 days</span></div>
+                            <div class="lcard-live-indicator">
+                                <span class="lcard-live-dot"></span>
+                                <span class="lcard-live-text">$2.4k in escrow</span>
+                            </div>
+                            <div class="lcard-btn"><button class="lp-cta-btn" data-source="STRIPE" data-tier="stake" data-capital="250">Start Contract</button></div>
+                        </div>
+
+                        <!-- CARD 2: RIVALRY - AUDIENCE (ID: 7B92A41E) -->
                         <div class="rv-card reveal-item" onclick="window.router.navigate('/rivalry/7B92A41E')">
                             <div class="rv-card-inner">
                                 <div class="rv-card-header">
@@ -815,7 +833,7 @@ export function renderLanding() {
                                         <span class="rv-player-growth leading">+12.4%</span>
                                     </div>
                                     <div class="rv-vs-divider">
-                                        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#CBD5E1" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                                        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#94A3B8" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
                                             <polyline points="14.5 17.5 3 6 3 3 6 3 17.5 14.5"/>
                                             <line x1="13" x2="19" y1="19" y2="13"/>
                                             <line x1="16" x2="20" y1="16" y2="20"/>
@@ -849,7 +867,7 @@ export function renderLanding() {
                             </div>
                         </div>
 
-                        <!-- CARD 2: SOLO - SHOPIFY STORE SALES -->
+                        <!-- CARD 3: SOLO - SHOPIFY STORE SALES -->
                         <div class="lcard reveal-item">
                             <div class="lcard-top">
                                 <span class="lcard-src"><svg class="lcard-src-logo" viewBox="0 0 24 24" fill="currentColor" style="color:#96bf48;width:14px;height:14px;display:inline-block;vertical-align:middle;margin-right:6px;"><path d="M19.58 6.425a.86.86 0 00-.7-.34h-2.193a4.52 4.52 0 00-9.04 0H5.454a.86.86 0 00-.7.34.887.887 0 00-.16.766l1.97 10.96a2.41 2.41 0 002.37 1.986h6.49a2.41 2.41 0 002.37-1.985l1.97-10.96a.887.887 0 00-.184-.767zM12 3.86a2.53 2.53 0 012.513 2.225H9.487A2.53 2.53 0 0112 3.86zm3.267 11.516a2.036 2.036 0 01-1.745.892 2.374 2.374 0 01-1.614-.648A2.348 2.348 0 0010.3 15a2.036 2.036 0 01-1.745-.892.429.429 0 11.734-.442c.245.408.66.634 1.01.634.341 0 .614-.148.914-.442A3.21 3.21 0 0113.627 15c.341 0 .614-.148.914-.442a.429.429 0 01.734.442z"/></svg>Shopify</span>
@@ -867,7 +885,7 @@ export function renderLanding() {
                             <div class="lcard-btn"><button class="lp-cta-btn" data-source="SHOPIFY" data-tier="pledge" data-capital="100">Start Contract</button></div>
                         </div>
 
-                        <!-- CARD 3: RIVALRY - REVENUE (ID: 34D63CA3) -->
+                        <!-- CARD 4: RIVALRY - REVENUE (ID: 34D63CA3) -->
                         <div class="rv-card reveal-item" onclick="window.router.navigate('/rivalry/34D63CA3')">
                             <div class="rv-card-inner">
                                 <div class="rv-card-header">
@@ -887,7 +905,7 @@ export function renderLanding() {
                                         <span class="rv-player-growth leading">+8.1%</span>
                                     </div>
                                     <div class="rv-vs-divider">
-                                        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#CBD5E1" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                                        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#94A3B8" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
                                             <polyline points="14.5 17.5 3 6 3 3 6 3 17.5 14.5"/>
                                             <line x1="13" x2="19" y1="19" y2="13"/>
                                             <line x1="16" x2="20" y1="16" y2="20"/>

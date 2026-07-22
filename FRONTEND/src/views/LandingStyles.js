@@ -1205,10 +1205,10 @@ export const landingCSS = `
 @keyframes toastSlideDown{0%{opacity:1;transform:translateY(0) scale(1)}100%{opacity:0;transform:translateY(24px) scale(0.95)}}
 
 /* ═══ LIVE CONTRACTS ═══ */
-.lcontracts{padding:30px 0 48px;background:#FAF8F5 !important;position:relative}
+.lcontracts{padding:30px 0 48px;background:#FAF9F7 !important;position:relative}
 .lcontracts::after{display:none !important}
 .lcontracts .lw{max-width:1280px}
-.lcards{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+.lcards{display:grid;grid-template-columns:repeat(4,1fr);gap:20px;align-items:stretch}
 @media (max-width: 1024px) {
     .lcards{grid-template-columns:1fr}
 }

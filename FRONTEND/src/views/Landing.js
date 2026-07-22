@@ -531,68 +531,6 @@ export function renderLanding() {
                 </div>
             </div>
 
-            <script>
-                (function() {
-                    var autoDemoTimer = null;
-                    var userHasInteracted = false;
-                    var currentMode = 'solo';
-
-                    window.userStopAutoDemo = function() {
-                        userHasInteracted = true;
-                        if (autoDemoTimer) {
-                            clearInterval(autoDemoTimer);
-                            autoDemoTimer = null;
-                        }
-                    };
-
-                    window.switchProtocolMode = function(mode, isUserAction) {
-                        if (isUserAction !== false) {
-                            window.userStopAutoDemo();
-                        }
-
-                        currentMode = mode;
-                        var soloCard = document.getElementById('card-mode-solo');
-                        var rivalryCard = document.getElementById('card-mode-rivalry');
-                        var termTitle = document.getElementById('term-header-title');
-                        var termBadge = document.getElementById('term-header-badge');
-                        var badgeText = document.getElementById('term-badge-text');
-                        var viewSolo = document.getElementById('term-view-solo');
-                        var viewRivalry = document.getElementById('term-view-rivalry');
-
-                        if (!viewSolo || !viewRivalry) return;
-
-                        if (mode === 'solo') {
-                            if (soloCard) soloCard.className = 'lterm-select-card active';
-                            if (rivalryCard) rivalryCard.className = 'lterm-select-card';
-
-                            if (termTitle) termTitle.innerText = 'CONTRACT #SOLO-8124 — SOLO DISCIPLINE';
-                            if (termBadge) termBadge.className = 'lterm-status-badge live';
-                            if (badgeText) badgeText.innerText = 'LIVE EXECUTION';
-
-                            viewSolo.style.display = 'block';
-                            viewRivalry.style.display = 'none';
-                        } else {
-                            if (rivalryCard) rivalryCard.className = 'lterm-select-card active';
-                            if (soloCard) soloCard.className = 'lterm-select-card';
-
-                            if (termTitle) termTitle.innerText = 'DUEL #RIVAL-3406 — HEAD-TO-HEAD';
-                            if (termBadge) termBadge.className = 'lterm-status-badge rivalry';
-                            if (badgeText) badgeText.innerText = 'ESCROW LOCKED';
-
-                            viewSolo.style.display = 'none';
-                            viewRivalry.style.display = 'block';
-                        }
-                    };
-
-                    // Idle Auto-Demo loop (swaps every 8s until user hovers or clicks)
-                    autoDemoTimer = setInterval(function() {
-                        if (userHasInteracted) return;
-                        var nextMode = (currentMode === 'solo') ? 'rivalry' : 'solo';
-                        window.switchProtocolMode(nextMode, false);
-                    }, 8000);
-                })();
-            </script>
-
 
 
             <!-- ═══ VISUAL CENTERPIECE: CONTINUOUS MONEY FLOW SCHEMATIC ═══ -->
@@ -2992,5 +2930,80 @@ export function initLanding() {
         document.getElementById('rivalry-quick-view-overlay')?.classList.remove('active');
         window.router.navigate('/market?type=rivalry');
     });
+
+    // ═══ C. INTERACTIVE CONTRACT PROTOCOL MODE SWITCHER & IDLE AUTO-DEMO ═══
+    let autoDemoTimer = null;
+    let userHasInteracted = false;
+    let currentMode = 'solo';
+
+    window.userStopAutoDemo = function() {
+        userHasInteracted = true;
+        if (autoDemoTimer) {
+            clearInterval(autoDemoTimer);
+            autoDemoTimer = null;
+        }
+    };
+
+    window.switchProtocolMode = function(mode, isUserAction = true) {
+        if (isUserAction) {
+            window.userStopAutoDemo();
+        }
+
+        currentMode = mode;
+        const soloCard = document.getElementById('card-mode-solo');
+        const rivalryCard = document.getElementById('card-mode-rivalry');
+        const termTitle = document.getElementById('term-header-title');
+        const termBadge = document.getElementById('term-header-badge');
+        const badgeText = document.getElementById('term-badge-text');
+        const viewSolo = document.getElementById('term-view-solo');
+        const viewRivalry = document.getElementById('term-view-rivalry');
+
+        if (!viewSolo || !viewRivalry) return;
+
+        if (mode === 'solo') {
+            if (soloCard) soloCard.className = 'lterm-select-card active';
+            if (rivalryCard) rivalryCard.className = 'lterm-select-card';
+
+            if (termTitle) termTitle.innerText = 'CONTRACT #SOLO-8124 — SOLO DISCIPLINE';
+            if (termBadge) termBadge.className = 'lterm-status-badge live';
+            if (badgeText) badgeText.innerText = 'LIVE EXECUTION';
+
+            viewSolo.style.display = 'block';
+            viewRivalry.style.display = 'none';
+        } else {
+            if (rivalryCard) rivalryCard.className = 'lterm-select-card active';
+            if (soloCard) soloCard.className = 'lterm-select-card';
+
+            if (termTitle) termTitle.innerText = 'DUEL #RIVAL-3406 — HEAD-TO-HEAD';
+            if (termBadge) termBadge.className = 'lterm-status-badge rivalry';
+            if (badgeText) badgeText.innerText = 'ESCROW LOCKED';
+
+            viewSolo.style.display = 'none';
+            viewRivalry.style.display = 'block';
+        }
+    };
+
+    // Attach direct explicit listeners to the mode cards
+    document.getElementById('card-mode-solo')?.addEventListener('click', () => {
+        window.switchProtocolMode('solo', true);
+    });
+
+    document.getElementById('card-mode-rivalry')?.addEventListener('click', () => {
+        window.switchProtocolMode('rivalry', true);
+    });
+
+    // Hover or click anywhere on terminal permanently stops auto-demo
+    const termWindow = document.getElementById('protocol-terminal');
+    if (termWindow) {
+        termWindow.addEventListener('mouseenter', window.userStopAutoDemo);
+        termWindow.addEventListener('click', window.userStopAutoDemo);
+    }
+
+    // Start idle auto-demo (swaps every 8s until user hovers or clicks)
+    autoDemoTimer = setInterval(() => {
+        if (userHasInteracted) return;
+        const nextMode = (currentMode === 'solo') ? 'rivalry' : 'solo';
+        window.switchProtocolMode(nextMode, false);
+    }, 8000);
 }
 

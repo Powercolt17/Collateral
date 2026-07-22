@@ -5100,18 +5100,68 @@ export const landingCSS = `
     color: #64748B;
 }
 
-.lterm-vs-badge {
-    width: 38px; height: 38px;
-    border-radius: 50%;
-    background: #FDF2F2;
-    border: 1px solid rgba(122, 18, 32, 0.25);
+.lterm-vs-battle-wrap {
+    position: relative;
     display: flex;
     align-items: center;
     justify-content: center;
+}
+
+.lterm-vs-badge {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background: #FDF2F2;
+    border: 1.5px solid rgba(122, 18, 32, 0.35);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 14px rgba(122, 18, 32, 0.12);
+    position: relative;
+    z-index: 2;
+    gap: 1px;
+}
+
+.battle-swords {
+    font-size: 15px;
+    line-height: 1;
+    display: inline-block;
+    animation: swordClash 2.4s ease-in-out infinite;
+}
+
+.battle-vs {
     font-family: 'JetBrains Mono', monospace;
-    font-size: 11px;
+    font-size: 8.5px;
     font-weight: 800;
     color: #7A1220;
+    letter-spacing: 0.5px;
+    line-height: 1;
+}
+
+.battle-pulse-ring {
+    position: absolute;
+    top: 50%; left: 50%;
+    width: 48px; height: 48px;
+    margin-top: -24px; margin-left: -24px;
+    border-radius: 50%;
+    border: 1px solid rgba(122, 18, 32, 0.4);
+    animation: battleRingPulse 2.4s cubic-bezier(0.16, 1, 0.3, 1) infinite;
+    pointer-events: none;
+    z-index: 1;
+}
+
+@keyframes swordClash {
+    0%, 100% { transform: scale(1) rotate(0deg); }
+    20% { transform: scale(1.25) rotate(-12deg); }
+    40% { transform: scale(1.15) rotate(12deg); }
+    60% { transform: scale(1.2) rotate(-6deg); }
+    80% { transform: scale(1.05) rotate(0deg); }
+}
+
+@keyframes battleRingPulse {
+    0% { transform: scale(1); opacity: 0.8; }
+    100% { transform: scale(1.7); opacity: 0; }
 }
 
 .lterm-vault-core {

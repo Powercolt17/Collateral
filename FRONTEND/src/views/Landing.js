@@ -466,7 +466,13 @@ export function renderLanding() {
                                         <span class="metric">+12.4% Revenue</span>
                                         <span class="stake">$1,000 STAKED</span>
                                     </div>
-                                    <div class="lterm-vs-badge">VS</div>
+                                    <div class="lterm-vs-battle-wrap">
+                                        <div class="lterm-vs-badge">
+                                            <span class="battle-swords">⚔️</span>
+                                            <span class="battle-vs">VS</span>
+                                        </div>
+                                        <div class="battle-pulse-ring"></div>
+                                    </div>
                                     <div class="lterm-player-card opponent">
                                         <span class="tag">PARTICIPANT B</span>
                                         <span class="handle">@dev_sarah</span>

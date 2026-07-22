@@ -349,7 +349,24 @@ export function renderLanding() {
                     <div class="ltypes-left">
                         <div class="lred-dash reveal-item"><span class="lmono">Contract Types</span></div>
                         <h2 class="ltypes-headline reveal-item">Pick your<br><span class="lh-gradient">opponent.</span></h2>
-                        <p class="ltypes-sub reveal-item">Choose your execution mode. Lock solo capital to hold yourself accountable, or challenge a competitor head-to-head.</p>
+                        <p class="ltypes-sub reveal-item">Choose your execution mode. Lock your own capital behind a goal — hit it and you keep everything, miss it and you forfeit. Go Solo to hold yourself accountable, or enter Rivalry to stake head-to-head against a competitor. Winner takes the pool.</p>
+                        
+                        <!-- 3-STEP MECHANISM SUMMARY -->
+                        <div class="ltypes-steps reveal-item">
+                            <div class="ltypes-step-item">
+                                <span class="ltypes-step-num">1</span>
+                                <span class="ltypes-step-text">Set a goal and lock a deposit.</span>
+                            </div>
+                            <div class="ltypes-step-item">
+                                <span class="ltypes-step-num">2</span>
+                                <span class="ltypes-step-text">Execute before the deadline.</span>
+                            </div>
+                            <div class="ltypes-step-item">
+                                <span class="ltypes-step-num">3</span>
+                                <span class="ltypes-step-text"><strong>Hit target:</strong> reclaim capital + yield. <strong>Miss:</strong> forfeit to pool.</span>
+                            </div>
+                        </div>
+
                         <div class="ltypes-cta-wrap reveal-item">
                             <button class="lbtn lbtn-r" id="ltypes-start-cta" onclick="window.app.goAction('/market', 'signup')">
                                 START CONTRACT <span class="lbtn-arrow">→</span>

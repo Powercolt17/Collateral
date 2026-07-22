@@ -3000,7 +3000,47 @@ export const landingCSS = `
     color: #475569;
     line-height: 1.6;
     margin-top: 16px;
-    max-width: 440px;
+    max-width: 480px;
+}
+.ltypes-steps {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-top: 22px;
+    margin-bottom: 8px;
+    max-width: 480px;
+}
+.ltypes-step-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    font-family: 'Inter', sans-serif;
+    font-size: 13.5px;
+    color: #334155;
+    font-weight: 500;
+    line-height: 1.45;
+}
+.ltypes-step-num {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: #0F172A;
+    color: #FFFFFF;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    font-weight: 700;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    margin-top: 1px;
+}
+.ltypes-step-text {
+    color: #334155;
+}
+.ltypes-step-text strong {
+    color: #0F172A;
+    font-weight: 700;
 }
 .ltypes-cta-wrap {
     margin-top: 28px;

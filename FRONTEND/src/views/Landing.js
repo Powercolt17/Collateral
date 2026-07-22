@@ -424,44 +424,77 @@ export function renderLanding() {
                             <!-- Terminal Container Content (Dynamically Morphed by Switcher) -->
                             <div class="lterm-body" id="term-body-content">
                                 <!-- SOLO TERMINAL CONTENT (DEFAULT) -->
-                                <div class="lterm-hero-row">
-                                    <div class="lterm-metric-box">
-                                        <span class="lbl">TARGET GOAL METRIC</span>
-                                        <span class="val">+15.0% Shopify Store Sales</span>
+                                <div id="term-view-solo">
+                                    <div class="lterm-hero-row">
+                                        <div class="lterm-metric-box">
+                                            <span class="lbl">TARGET GOAL METRIC</span>
+                                            <span class="val">+15.0% Shopify Store Sales</span>
+                                        </div>
+                                        <div class="lterm-metric-box right">
+                                            <span class="lbl">CAPITAL LOCKED</span>
+                                            <span class="val green">$1,000.00 USD</span>
+                                        </div>
                                     </div>
-                                    <div class="lterm-metric-box right">
-                                        <span class="lbl">CAPITAL LOCKED</span>
-                                        <span class="val green">$1,000.00 USD</span>
-                                    </div>
-                                </div>
 
-                                <div class="lterm-grid-metrics">
-                                    <div class="lterm-m"><span class="k">Contract Window</span><span class="v">30 Days (12 Days Left)</span></div>
-                                    <div class="lterm-m"><span class="k">Data Stream Oracle</span><span class="v">Shopify Store API (Verified)</span></div>
-                                    <div class="lterm-m"><span class="k">Escrow Vault Custody</span><span class="v">Automated Escrow</span></div>
-                                    <div class="lterm-m"><span class="k">Oracle Stream Health</span><span class="v green">99.8% Sync Confidence</span></div>
-                                </div>
-
-                                <div class="lterm-progress-wrap">
-                                    <div class="lterm-progress-hdr">
-                                        <span>AUTOMATED VERIFICATION PROGRESS</span>
-                                        <span class="pct">78.4% COMPLETE</span>
+                                    <div class="lterm-grid-metrics" style="margin-top: 18px;">
+                                        <div class="lterm-m"><span class="k">Contract Window</span><span class="v">30 Days (12 Days Left)</span></div>
+                                        <div class="lterm-m"><span class="k">Data Stream Oracle</span><span class="v">Shopify Store API (Verified)</span></div>
+                                        <div class="lterm-m"><span class="k">Escrow Vault Custody</span><span class="v">Automated Escrow</span></div>
+                                        <div class="lterm-m"><span class="k">Oracle Stream Health</span><span class="v green">99.8% Sync Confidence</span></div>
                                     </div>
-                                    <div class="lterm-progress-track">
-                                        <div class="lterm-progress-fill" style="width: 78.4%;">
-                                            <div class="lterm-progress-glow"></div>
+
+                                    <div class="lterm-progress-wrap" style="margin-top: 18px;">
+                                        <div class="lterm-progress-hdr">
+                                            <span>AUTOMATED VERIFICATION PROGRESS</span>
+                                            <span class="pct">78.4% COMPLETE</span>
+                                        </div>
+                                        <div class="lterm-progress-track">
+                                            <div class="lterm-progress-fill" style="width: 78.4%;">
+                                                <div class="lterm-progress-glow"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="lterm-rules-box" style="margin-top: 18px;">
+                                        <div class="lterm-rule pass">
+                                            <span class="ic">✓</span>
+                                            <div class="txt"><strong>IF GOAL VERIFIED:</strong> $1,000 Principal Retained + $120 Execution Yield</div>
+                                        </div>
+                                        <div class="lterm-rule fail">
+                                            <span class="ic">✗</span>
+                                            <div class="txt"><strong>IF TARGET MISSED:</strong> Deposit forfeited to protocol yield pool</div>
                                         </div>
                                     </div>
                                 </div>
 
-                                <div class="lterm-rules-box">
-                                    <div class="lterm-rule pass">
-                                        <span class="ic">✓</span>
-                                        <div class="txt"><strong>IF GOAL VERIFIED:</strong> $1,000 Principal Retained + $120 Execution Yield</div>
+                                <!-- RIVALRY TERMINAL CONTENT (HIDDEN BY DEFAULT) -->
+                                <div id="term-view-rivalry" style="display: none;">
+                                    <div class="lterm-matchup-row">
+                                        <div class="lterm-player-card challenger">
+                                            <span class="tag">CHALLENGER</span>
+                                            <span class="handle">@revpilot</span>
+                                            <span class="metric">+12.4% Rev</span>
+                                            <span class="stake">$1,000 LOCKED</span>
+                                        </div>
+                                        <div class="lterm-vs-badge">VS</div>
+                                        <div class="lterm-player-card opponent">
+                                            <span class="tag">OPPONENT</span>
+                                            <span class="handle">@dev_sarah</span>
+                                            <span class="metric">+9.1% Followers</span>
+                                            <span class="stake">$1,000 LOCKED</span>
+                                        </div>
                                     </div>
-                                    <div class="lterm-rule fail">
-                                        <span class="ic">✗</span>
-                                        <div class="txt"><strong>IF TARGET MISSED:</strong> Deposit forfeited to protocol yield pool</div>
+
+                                    <div class="lterm-vault-core" style="margin-top: 18px;">
+                                        <span class="v-lbl">VERIFIED ESCROW VAULT POOL</span>
+                                        <span class="v-val">$2,000.00 USD</span>
+                                        <span class="v-sub">🔒 Smart Escrow Contract Active • 3 Days Remaining</span>
+                                    </div>
+
+                                    <div class="lterm-telemetry" style="margin-top: 18px;">
+                                        <div class="t-line"><span class="ts">[17:24:02]</span> Oracles Synced: Stripe Connect API & X Data Feed</div>
+                                        <div class="t-line"><span class="ts">[17:24:05]</span> Metric Verified: @revpilot leading growth battle by +3.3%</div>
+                                        <div class="t-line green"><span class="ts">[17:24:09]</span> Auto Settlement: Winner receives full $2,000 pool upon deadline</div>
                                     </div>
                                 </div>
                             </div>
@@ -479,101 +512,35 @@ export function renderLanding() {
                     var termTitle = document.getElementById('term-header-title');
                     var termBadge = document.getElementById('term-header-badge');
                     var badgeText = document.getElementById('term-badge-text');
-                    var termBody = document.getElementById('term-body-content');
+                    var viewSolo = document.getElementById('term-view-solo');
+                    var viewRivalry = document.getElementById('term-view-rivalry');
 
-                    if (!soloBtn || !termBody) return;
+                    if (!soloBtn || !viewSolo || !viewRivalry) return;
 
                     if (mode === 'solo') {
-                        soloBtn.classList.add('active');
-                        rivalryBtn.classList.remove('active');
-                        soloCard.classList.add('active');
-                        rivalryCard.classList.remove('active');
+                        if (soloBtn) soloBtn.className = 'lterm-tab-btn active';
+                        if (rivalryBtn) rivalryBtn.className = 'lterm-tab-btn';
+                        if (soloCard) soloCard.className = 'ltypes-mode-card active';
+                        if (rivalryCard) rivalryCard.className = 'ltypes-mode-card highlight';
 
-                        termTitle.innerText = "CONTRACT #SOLO-8124 — DISCIPLINE ENGINE";
-                        termBadge.className = "lterm-status-badge live";
-                        badgeText.innerText = "LIVE EXECUTION";
+                        if (termTitle) termTitle.innerText = 'CONTRACT #SOLO-8124 — DISCIPLINE ENGINE';
+                        if (termBadge) termBadge.className = 'lterm-status-badge live';
+                        if (badgeText) badgeText.innerText = 'LIVE EXECUTION';
 
-                        termBody.innerHTML = `
-                            <div class="lterm-hero-row">
-                                <div class="lterm-metric-box">
-                                    <span class="lbl">TARGET GOAL METRIC</span>
-                                    <span class="val">+15.0% Shopify Store Sales</span>
-                                </div>
-                                <div class="lterm-metric-box right">
-                                    <span class="lbl">CAPITAL LOCKED</span>
-                                    <span class="val green">$1,000.00 USD</span>
-                                </div>
-                            </div>
-
-                            <div class="lterm-grid-metrics">
-                                <div class="lterm-m"><span class="k">Contract Window</span><span class="v">30 Days (12 Days Left)</span></div>
-                                <div class="lterm-m"><span class="k">Data Stream Oracle</span><span class="v">Shopify Store API (Verified)</span></div>
-                                <div class="lterm-m"><span class="k">Escrow Vault Custody</span><span class="v">Automated Escrow</span></div>
-                                <div class="lterm-m"><span class="k">Oracle Stream Health</span><span class="v green">99.8% Sync Confidence</span></div>
-                            </div>
-
-                            <div class="lterm-progress-wrap">
-                                <div class="lterm-progress-hdr">
-                                    <span>AUTOMATED VERIFICATION PROGRESS</span>
-                                    <span class="pct">78.4% COMPLETE</span>
-                                </div>
-                                <div class="lterm-progress-track">
-                                    <div class="lterm-progress-fill" style="width: 78.4%;">
-                                        <div class="lterm-progress-glow"></div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="lterm-rules-box">
-                                <div class="lterm-rule pass">
-                                    <span class="ic">✓</span>
-                                    <div class="txt"><strong>IF GOAL VERIFIED:</strong> $1,000 Principal Retained + $120 Execution Yield</div>
-                                </div>
-                                <div class="lterm-rule fail">
-                                    <span class="ic">✗</span>
-                                    <div class="txt"><strong>IF TARGET MISSED:</strong> Deposit forfeited to protocol yield pool</div>
-                                </div>
-                            </div>
-                        `;
+                        viewSolo.style.display = 'block';
+                        viewRivalry.style.display = 'none';
                     } else {
-                        rivalryBtn.classList.add('active');
-                        soloBtn.classList.remove('active');
-                        rivalryCard.classList.add('active');
-                        soloCard.classList.remove('active');
+                        if (rivalryBtn) rivalryBtn.className = 'lterm-tab-btn active';
+                        if (soloBtn) soloBtn.className = 'lterm-tab-btn';
+                        if (rivalryCard) rivalryCard.className = 'ltypes-mode-card highlight active';
+                        if (soloCard) soloCard.className = 'ltypes-mode-card';
 
-                        termTitle.innerText = "DUEL #RIVAL-3406 — HEAD-TO-HEAD ESCROW";
-                        termBadge.className = "lterm-status-badge rivalry";
-                        badgeText.innerText = "ESCROW LOCKED";
+                        if (termTitle) termTitle.innerText = 'DUEL #RIVAL-3406 — HEAD-TO-HEAD ESCROW';
+                        if (termBadge) termBadge.className = 'lterm-status-badge rivalry';
+                        if (badgeText) badgeText.innerText = 'ESCROW LOCKED';
 
-                        termBody.innerHTML = `
-                            <div class="lterm-matchup-row">
-                                <div class="lterm-player-card challenger">
-                                    <span class="tag">CHALLENGER</span>
-                                    <span class="handle">@revpilot</span>
-                                    <span class="metric">+12.4% Rev</span>
-                                    <span class="stake">$1,000 LOCKED</span>
-                                </div>
-                                <div class="lterm-vs-badge">VS</div>
-                                <div class="lterm-player-card opponent">
-                                    <span class="tag">OPPONENT</span>
-                                    <span class="handle">@dev_sarah</span>
-                                    <span class="metric">+9.1% Followers</span>
-                                    <span class="stake">$1,000 LOCKED</span>
-                                </div>
-                            </div>
-
-                            <div class="lterm-vault-core">
-                                <span class="v-lbl">VERIFIED ESCROW VAULT POOL</span>
-                                <span class="v-val">$2,000.00 USD</span>
-                                <span class="v-sub">🔒 Smart Escrow Contract Active • 3 Days Remaining</span>
-                            </div>
-
-                            <div class="lterm-telemetry">
-                                <div class="t-line"><span class="ts">[17:24:02]</span> Oracles Synced: Stripe Connect API & X Data Feed</div>
-                                <div class="t-line"><span class="ts">[17:24:05]</span> Metric Verified: @revpilot leading growth battle by +3.3%</div>
-                                <div class="t-line green"><span class="ts">[17:24:09]</span> Auto Settlement: Winner receives full $2,000 pool upon deadline</div>
-                            </div>
-                        `;
+                        viewSolo.style.display = 'none';
+                        viewRivalry.style.display = 'block';
                     }
                 };
             </script>

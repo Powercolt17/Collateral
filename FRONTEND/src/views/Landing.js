@@ -665,6 +665,7 @@ export function renderLanding() {
                                     <span class="rv-card-id">ID:7B92A41E</span>
                                 </div>
                                 <div class="rv-versus">
+                                    <div class="rv-player">
                                         <span class="rv-player-label">Challenger</span>
                                         <span class="rv-player-name"><span class="rv-lead-dot" style="background:#166534"></span>jakevoss</span>
                                         <span class="rv-player-growth leading">+12.4%</span>

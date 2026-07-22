@@ -4685,4 +4685,209 @@ export const landingCSS = `
   }
 }
 
+/* ═══ INSTITUTIONAL PROTOCOL VISUALIZER (SOLO & RIVALRY) ═══ */
+.proto-execution-card {
+    background: #FAFAF7;
+    border: 1px solid rgba(226, 232, 240, 0.85);
+    border-radius: 18px;
+    padding: 24px;
+    box-shadow: 0 16px 44px -12px rgba(15, 23, 42, 0.06);
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    position: relative;
+}
+
+.proto-diagram-box {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    background: #FFFFFF;
+    border: 1px solid rgba(226, 232, 240, 0.7);
+    border-radius: 14px;
+    padding: 20px 18px;
+    position: relative;
+}
+
+.proto-node {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    padding: 12px 14px;
+    background: #FAFAF7;
+    border: 1px solid rgba(226, 232, 240, 0.8);
+    border-radius: 10px;
+    min-width: 120px;
+}
+
+.proto-node-hdr {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    font-weight: 700;
+    color: #64748B;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+}
+
+.proto-node-val {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 15px;
+    font-weight: 800;
+    color: #0F172A;
+}
+
+.proto-node-user {
+    font-size: 11px;
+    color: #64748B;
+    font-weight: 500;
+}
+
+.proto-node-user.status-green {
+    color: #166534;
+    font-weight: 700;
+}
+
+.proto-connection-line {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+    flex: 1;
+    position: relative;
+}
+
+.proto-lock-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    padding: 4px 8px;
+    border-radius: 9999px;
+    background: #FDF2F2;
+    color: #7A1220;
+    border: 1px solid rgba(122, 18, 32, 0.2);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+}
+
+.proto-vs-badge {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: #7A1220;
+    color: #FFFFFF;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 11px;
+    font-weight: 800;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 12px rgba(122, 18, 32, 0.3);
+}
+
+.proto-pool-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: rgba(122, 18, 32, 0.05);
+    border: 1px solid rgba(122, 18, 32, 0.15);
+    border-radius: 10px;
+    padding: 10px 14px;
+}
+
+.pool-lbl {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    font-weight: 700;
+    color: #7A1220;
+    letter-spacing: 0.5px;
+}
+
+.pool-val {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 13px;
+    font-weight: 800;
+    color: #7A1220;
+}
+
+/* ═══ CLTR PROTOCOL TOKEN FLYWHEEL ═══ */
+.cltr-flywheel-container {
+    width: 100%;
+    margin-top: 24px;
+    background: #FAFAF7;
+    border: 1px solid rgba(226, 232, 240, 0.85);
+    border-radius: 18px;
+    padding: 28px 20px;
+    box-shadow: 0 12px 32px -10px rgba(15, 23, 42, 0.05);
+}
+
+.cltr-flywheel-grid {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+}
+
+.flywheel-step-card {
+    background: #FFFFFF;
+    border: 1px solid rgba(226, 232, 240, 0.8);
+    border-radius: 14px;
+    padding: 16px 14px;
+    flex: 1;
+    min-width: 120px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.3s ease;
+}
+
+.flywheel-step-card:hover {
+    transform: translateY(-3px);
+    border-color: rgba(122, 18, 32, 0.3);
+}
+
+.flywheel-step-card.highlight {
+    background: #FDF2F2;
+    border-color: rgba(122, 18, 32, 0.3);
+}
+
+.flywheel-step-num {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    font-weight: 800;
+    color: #7A1220;
+}
+
+.flywheel-step-title {
+    font-family: 'Inter Tight', sans-serif;
+    font-size: 12.5px;
+    font-weight: 700;
+    color: #0F172A;
+}
+
+.flywheel-step-desc {
+    font-size: 11px;
+    color: #64748B;
+    line-height: 1.35;
+}
+
+.flywheel-arrow {
+    font-size: 16px;
+    color: #94A3B8;
+    font-weight: bold;
+}
+
+@media(max-width: 768px) {
+    .cltr-flywheel-grid {
+        flex-direction: column;
+        align-items: stretch;
+    }
+    .flywheel-arrow {
+        text-align: center;
+        transform: rotate(90deg);
+        margin: 4px 0;
+    }
+}
 `;

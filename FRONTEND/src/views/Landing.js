@@ -360,30 +360,61 @@ export function renderLanding() {
                     </div>
 
                     <div class="ltypes-right">
-                        <!-- IMAGE-ONLY MODE CAROUSEL WITH SYNCHRONIZED BADGE -->
-                        <div class="mode-image-carousel" id="mode-image-carousel">
+                        <!-- INSTITUTIONAL PROTOCOL EXECUTION VISUALIZER -->
+                        <div class="proto-execution-card" id="mode-image-carousel">
                             <!-- SYNCHRONIZED MODE PILL BADGES -->
                             <div class="mode-badge-wrap">
                                 <span class="mode-badge-pill is-solo active" id="mode-badge-0">
-                                    <span class="mode-badge-dot"></span> SOLO MODE · YOU VS. YOURSELF
+                                    <span class="mode-badge-dot"></span> SOLO MODE · PERSONAL ESCROW
                                 </span>
                                 <span class="mode-badge-pill is-rivalry" id="mode-badge-1">
-                                    <span class="mode-badge-dot secondary"></span> RIVALRY MODE · YOU VS. COMPETITORS
+                                    <span class="mode-badge-dot secondary"></span> RIVALRY MODE · HEAD-TO-HEAD DUEL
                                 </span>
                             </div>
 
                             <div class="mode-carousel-viewport">
+                                <!-- Slide 0: Solo Execution Diagram -->
                                 <div class="mode-carousel-slide active" id="mode-slide-0">
-                                    <picture>
-                                        <source srcset="/assets/images/solo-seal.webp" type="image/webp">
-                                        <img src="/assets/images/solo-seal.png" alt="Solo Mode Seal" loading="eager">
-                                    </picture>
+                                    <div class="proto-diagram-box">
+                                        <div class="proto-node node-a">
+                                            <div class="proto-node-hdr">CREATOR VAULT</div>
+                                            <div class="proto-node-val">$2,500 locked</div>
+                                            <div class="proto-node-user">@revpilot</div>
+                                        </div>
+                                        <div class="proto-connection-line">
+                                            <svg width="100%" height="2" viewBox="0 0 120 2" fill="none"><line x1="0" y1="1" x2="120" y2="1" stroke="#7A1220" stroke-width="2" stroke-dasharray="4 4"/></svg>
+                                            <span class="proto-lock-badge">
+                                                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 2a5 5 0 0 0-5 5v3H5a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V12a2 2 0 0 0-2-2h-2V7a5 5 0 0 0-5-5z"/></svg>
+                                                LOCKED ESCROW
+                                            </span>
+                                        </div>
+                                        <div class="proto-node node-oracle">
+                                            <div class="proto-node-hdr">API ORACLE</div>
+                                            <div class="proto-node-val">Stripe +20%</div>
+                                            <div class="proto-node-user status-green">✓ TELEMETRY VALID</div>
+                                        </div>
+                                    </div>
                                 </div>
+
+                                <!-- Slide 1: Rivalry Execution Diagram -->
                                 <div class="mode-carousel-slide" id="mode-slide-1">
-                                    <picture>
-                                        <source srcset="/assets/images/rivalry-seal.webp" type="image/webp">
-                                        <img src="/assets/images/rivalry-seal.png" alt="Rivalry Mode Seal" loading="lazy">
-                                    </picture>
+                                    <div class="proto-diagram-box rivalry">
+                                        <div class="proto-node node-a">
+                                            <div class="proto-node-hdr">CHALLENGER A</div>
+                                            <div class="proto-node-val">$1,000 STAKE</div>
+                                            <div class="proto-node-user">@marcusk</div>
+                                        </div>
+                                        <div class="proto-vs-badge">VS</div>
+                                        <div class="proto-node node-b">
+                                            <div class="proto-node-hdr">CHALLENGER B</div>
+                                            <div class="proto-node-val">$1,000 STAKE</div>
+                                            <div class="proto-node-user">@dev_sarah</div>
+                                        </div>
+                                    </div>
+                                    <div class="proto-pool-bar">
+                                        <span class="pool-lbl">TOTAL MATCHED POOL:</span>
+                                        <span class="pool-val">$2,000 USD (WINNER TAKES ALL)</span>
+                                    </div>
                                 </div>
                             </div>
                             <div class="mode-carousel-dots">
@@ -1030,57 +1061,54 @@ export function renderLanding() {
                     <h2 class="lh-section-title reveal-item">The CLTR Token Economy</h2>
                     <p class="lh-section-subtitle reveal-item" style="font-size:18px; color:var(--t2); margin-top:12px; margin-bottom:32px; max-width:680px; line-height:1.6;">Securing trust, locking bandwidth, and burning supply programmatically.</p>
                     
-                    <div class="lemo-grid">
-                        <div class="reveal-item">
-                            <p class="lemo-body" style="font-size:16px; line-height:1.65; color:var(--t2);">
-                                CLTR is the utility token powering Collateral reputation and execution on the Robinhood Chain.
-                                <br class="lhide-mobile"><br class="lhide-mobile">
-                                <span class="lhide-mobile">Builders bond CLTR for milestone capacity. Validators and jurors lock it to secure the network. Every contract forfeiture burns CLTR permanently.</span>
-                            </p>
-                            <div style="display:flex; gap:16px; margin-top:32px; flex-wrap:wrap;">
-                                <a href="https://app.uniswap.org/#/swap?inputCurrency=ETH&outputCurrency=0x7b69C7E57d7004EB2374E5Aabb9db5334aE73B9f" target="_blank" class="lbtn lbtn-g" style="height:50px; padding:0 24px; font-size:11px; text-decoration:none; display:inline-flex; align-items:center; gap:8px;">
-                                    <span>Trade CLTR on Uniswap</span>
-                                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M15 3h6v6"/><path d="M10 14 21 3"/><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/></svg>
-                                </a>
-                                <a href="#" onclick="window.router.navigate('/protocol?tab=economics'); return false;" class="lbtn lbtn-g" style="height:50px; padding:0 24px; font-size:11px; text-decoration:none; display:inline-flex; align-items:center;">
-                                    <span>Explore Tokenomics</span>
-                                </a>
+                    <!-- CLTR PROTOCOL FLYWHEEL -->
+                    <div class="cltr-flywheel-container reveal-item">
+                        <div class="cltr-flywheel-grid">
+                            <!-- Step 1 -->
+                            <div class="flywheel-step-card">
+                                <div class="flywheel-step-num">01</div>
+                                <div class="flywheel-step-title">User Creates Contract</div>
+                                <div class="flywheel-step-desc">Locks capital behind objective metric goal.</div>
                             </div>
-                        </div>
-                        <div class="reveal-item" style="background:var(--bg); border:1px solid var(--d); border-radius:12px; padding:32px; display:flex; flex-direction:column; gap:20px;">
-                            <div style="display:flex; justify-content:space-between; align-items:center; border-bottom:1px solid var(--d); padding-bottom:12px;">
-                                <span style="font-family:'Inter Tight', sans-serif; font-weight:800; font-size:13px; color:var(--t1);">CLTR UTILITY</span>
-                                <span style="font-family:'Inter', sans-serif; font-size:9px; font-weight:700; color:var(--r); background:rgba(92,20,20,0.06); padding:3px 8px; border-radius:100px; border:1px solid rgba(92,20,20,0.12); text-transform:uppercase;">Live Network</span>
+                            <div class="flywheel-arrow">→</div>
+
+                            <!-- Step 2 -->
+                            <div class="flywheel-step-card">
+                                <div class="flywheel-step-num">02</div>
+                                <div class="flywheel-step-title">CLTR Staked</div>
+                                <div class="flywheel-step-desc">CLTR bonded for execution capacity &amp; trust.</div>
                             </div>
-                            <div style="display:flex; flex-direction:column; gap:16px; font-size:13px; color:var(--t2);">
-                                <div style="display:flex; flex-direction:column; gap:2px;">
-                                    <div style="display:flex; align-items:center; gap:10px;">
-                                        <span style="color:var(--g); font-weight:bold;">✓</span>
-                                        <strong style="color:var(--t1);">Commitment Collateral</strong>
-                                    </div>
-                                    <div style="padding-left:20px; font-size:12px; color:var(--t3); line-height:1.4;">Stake CLTR to unlock larger personal contracts.</div>
-                                </div>
-                                <div style="display:flex; flex-direction:column; gap:2px;">
-                                    <div style="display:flex; align-items:center; gap:10px;">
-                                        <span style="color:var(--g); font-weight:bold;">✓</span>
-                                        <strong style="color:var(--t1);">Reputation Weight</strong>
-                                    </div>
-                                    <div style="padding-left:20px; font-size:12px; color:var(--t3); line-height:1.4;">Token stake increases commitment capacity and platform trust.</div>
-                                </div>
-                                <div style="display:flex; flex-direction:column; gap:2px;">
-                                    <div style="display:flex; align-items:center; gap:10px;">
-                                        <span style="color:var(--g); font-weight:bold;">✓</span>
-                                        <strong style="color:var(--t1);">Settlement Economics</strong>
-                                    </div>
-                                    <div style="padding-left:20px; font-size:12px; color:var(--t3); line-height:1.4;">A portion of completed contract volume is permanently removed from circulation.</div>
-                                </div>
-                                <div style="display:flex; flex-direction:column; gap:2px;">
-                                    <div style="display:flex; align-items:center; gap:10px;">
-                                        <span style="color:var(--g); font-weight:bold;">✓</span>
-                                        <strong style="color:var(--t1);">Accountability Layer</strong>
-                                    </div>
-                                    <div style="padding-left:20px; font-size:12px; color:var(--t3); line-height:1.4;">Failed commitments trigger penalties that reinforce the network.</div>
-                                </div>
+                            <div class="flywheel-arrow">→</div>
+
+                            <!-- Step 3 -->
+                            <div class="flywheel-step-card">
+                                <div class="flywheel-step-num">03</div>
+                                <div class="flywheel-step-title">Execution Verified</div>
+                                <div class="flywheel-step-desc">API oracle validates target completion.</div>
+                            </div>
+                            <div class="flywheel-arrow">→</div>
+
+                            <!-- Step 4 -->
+                            <div class="flywheel-step-card highlight">
+                                <div class="flywheel-step-num">04</div>
+                                <div class="flywheel-step-title">Protocol Fee Burned</div>
+                                <div class="flywheel-step-desc">CLTR burned permanently from circulation.</div>
+                            </div>
+                            <div class="flywheel-arrow">→</div>
+
+                            <!-- Step 5 -->
+                            <div class="flywheel-step-card">
+                                <div class="flywheel-step-num">05</div>
+                                <div class="flywheel-step-title">Trust &amp; Scale Up</div>
+                                <div class="flywheel-step-desc">Larger contract pools supported across network.</div>
+                            </div>
+                            <div class="flywheel-arrow">→</div>
+
+                            <!-- Step 6 -->
+                            <div class="flywheel-step-card">
+                                <div class="flywheel-step-num">06</div>
+                                <div class="flywheel-step-title">More CLTR Required</div>
+                                <div class="flywheel-step-desc">Network growth drives recurring token demand.</div>
                             </div>
                         </div>
                     </div>

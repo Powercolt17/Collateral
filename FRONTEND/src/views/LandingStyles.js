@@ -4703,7 +4703,7 @@ export const landingCSS = `
   }
 }
 
-/* ═══ FLAGSHIP DOMINANT INTERACTIVE CONTRACT TERMINAL ═══ */
+/* ═══ FLAGSHIP DOMINANT INTERACTIVE CONTRACT INSTRUMENT ═══ */
 .lterm-centerpiece-wrapper {
     max-width: 960px;
     margin: 0 auto;
@@ -4720,7 +4720,7 @@ export const landingCSS = `
 
 .lterm-select-card {
     background: #FFFFFF;
-    border: 1.5px solid rgba(226, 232, 240, 0.9);
+    border: 1.5px solid #E2E8F0;
     border-radius: 16px;
     padding: 16px 20px;
     display: flex;
@@ -4731,14 +4731,17 @@ export const landingCSS = `
     box-shadow: 0 4px 16px rgba(15, 23, 42, 0.02);
 }
 
-.lterm-select-card:hover, .lterm-select-card.active {
-    border-color: rgba(122, 18, 32, 0.45);
+.lterm-select-card:hover {
+    border-color: rgba(122, 18, 32, 0.35);
     transform: translateY(-2px);
-    box-shadow: 0 12px 28px -6px rgba(122, 18, 32, 0.14);
+    box-shadow: 0 8px 24px -6px rgba(15, 23, 42, 0.06);
 }
 
 .lterm-select-card.active {
-    background: linear-gradient(180deg, #FFFDFA 0%, #FDF9F7 100%);
+    background: #FFFDFA;
+    border-color: #7A1220 !important;
+    transform: translateY(-2px);
+    box-shadow: 0 12px 28px -6px rgba(122, 18, 32, 0.12);
 }
 
 .lselect-left {
@@ -4800,26 +4803,26 @@ export const landingCSS = `
     }
 }
 
-/* ═══ 2X LARGER GIGANTIC OPERATING SYSTEM TERMINAL ═══ */
+/* ═══ PREMIUM FINANCIAL CONTRACT INSTRUMENT PANEL ═══ */
 .lproto-term-window {
-    background: #0B132B;
-    border: 1.5px solid rgba(255, 255, 255, 0.14);
+    background: #FFFFFF;
+    border: 1.5px solid #E2E8F0;
     border-radius: 24px;
-    box-shadow: 0 32px 80px -16px rgba(11, 19, 43, 0.5), 0 0 0 1px rgba(122, 18, 32, 0.35);
+    box-shadow: 0 24px 54px -12px rgba(15, 23, 42, 0.08), 0 0 0 1px rgba(122, 18, 32, 0.06);
     overflow: hidden;
-    color: #F8FAFC;
+    color: #0F172A;
     font-family: 'Inter', sans-serif;
     position: relative;
     transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .lterm-bar {
-    background: #1C2541;
+    background: #FAF9F7;
     padding: 16px 24px;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    border-bottom: 1px solid #E2E8F0;
 }
 
 .lterm-dots {
@@ -4829,20 +4832,18 @@ export const landingCSS = `
 }
 
 .lterm-dots .dot {
-    width: 11px;
-    height: 11px;
+    width: 10px;
+    height: 10px;
     border-radius: 50%;
+    background: #CBD5E1;
 }
-.lterm-dots .dot.red { background: #EF4444; }
-.lterm-dots .dot.yellow { background: #F59E0B; }
-.lterm-dots .dot.green { background: #10B981; }
 
 .lterm-title {
     font-family: 'JetBrains Mono', monospace;
-    font-size: 12px;
-    font-weight: 800;
-    letter-spacing: 1px;
-    color: #94A3B8;
+    font-size: 11.5px;
+    font-weight: 700;
+    letter-spacing: 0.8px;
+    color: #0F172A;
     text-transform: uppercase;
 }
 
@@ -4859,21 +4860,20 @@ export const landingCSS = `
     gap: 6px;
 }
 
-.lterm-status-badge.live { background: rgba(16, 185, 129, 0.15); color: #34D399; border: 1px solid rgba(16, 185, 129, 0.3); }
-.lterm-status-badge.rivalry { background: rgba(239, 68, 68, 0.15); color: #F87171; border: 1px solid rgba(239, 68, 68, 0.3); }
+.lterm-status-badge.live { background: #FDF2F2; color: #7A1220; border: 1px solid rgba(122, 18, 32, 0.2); }
+.lterm-status-badge.rivalry { background: #FDF2F2; color: #7A1220; border: 1px solid rgba(122, 18, 32, 0.25); }
 
 .pulse-dot {
-    width: 7px;
-    height: 7px;
+    width: 6px;
+    height: 6px;
     border-radius: 50%;
-    background: #34D399;
-    animation: termDotPulse 1.8s infinite;
+    background: #7A1220;
+    animation: termDotPulse 2s ease-in-out infinite;
 }
-.pulse-dot.red { background: #F87171; }
 
 @keyframes termDotPulse {
     0%, 100% { transform: scale(1); opacity: 1; }
-    50% { transform: scale(1.4); opacity: 0.5; }
+    50% { transform: scale(1.3); opacity: 0.5; }
 }
 
 .lterm-body {
@@ -4887,8 +4887,8 @@ export const landingCSS = `
     display: flex;
     align-items: center;
     justify-content: space-between;
-    background: rgba(28, 37, 65, 0.7);
-    border: 1px solid rgba(255, 255, 255, 0.09);
+    background: #FAF9F7;
+    border: 1px solid #E2E8F0;
     border-radius: 18px;
     padding: 20px 24px;
 }
@@ -4902,9 +4902,9 @@ export const landingCSS = `
 
 .lterm-metric-box .lbl {
     font-family: 'JetBrains Mono', monospace;
-    font-size: 10px;
+    font-size: 9.5px;
     font-weight: 700;
-    letter-spacing: 1.4px;
+    letter-spacing: 1.2px;
     color: #64748B;
     text-transform: uppercase;
 }
@@ -4913,10 +4913,10 @@ export const landingCSS = `
     font-family: 'Plus Jakarta Sans', sans-serif;
     font-size: 22px;
     font-weight: 800;
-    color: #F8FAFC;
+    color: #0F172A;
     letter-spacing: -0.3px;
 }
-.lterm-metric-box .val.green { color: #34D399; }
+.lterm-metric-box .val.green { color: #7A1220; }
 
 /* Grid Metrics */
 .lterm-grid-metrics {
@@ -4932,8 +4932,8 @@ export const landingCSS = `
 }
 
 .lterm-m {
-    background: rgba(28, 37, 65, 0.45);
-    border: 1px solid rgba(255, 255, 255, 0.06);
+    background: #F8FAF9;
+    border: 1px solid #E2E8F0;
     border-radius: 12px;
     padding: 12px 16px;
     display: flex;
@@ -4954,19 +4954,19 @@ export const landingCSS = `
     font-family: 'Inter', sans-serif;
     font-size: 13px;
     font-weight: 600;
-    color: #E2E8F0;
+    color: #0F172A;
 }
-.lterm-m .v.green { color: #34D399; }
+.lterm-m .v.green { color: #166534; font-weight: 700; }
 
 /* Progress Tracks Stack */
 .lterm-tracks-stack {
     display: flex;
     flex-direction: column;
     gap: 12px;
-    background: rgba(15, 23, 42, 0.6);
-    border: 1px solid rgba(255, 255, 255, 0.06);
+    background: #FAF9F7;
+    border: 1px solid #E2E8F0;
     border-radius: 16px;
-    padding: 18px 20px;
+    padding: 20px 24px;
 }
 
 .lterm-track-item {
@@ -4982,14 +4982,14 @@ export const landingCSS = `
     font-size: 10px;
     font-weight: 700;
     letter-spacing: 0.8px;
-    color: #94A3B8;
+    color: #475569;
 }
-.lterm-track-hdr .pct { color: #34D399; font-weight: 800; }
+.lterm-track-hdr .pct { color: #7A1220; font-weight: 800; }
+.lterm-track-hdr .pct.completed { color: #166534; }
 
 .lterm-progress-track {
-    height: 10px;
-    background: rgba(30, 41, 59, 0.9);
-    border: 1px solid rgba(255, 255, 255, 0.1);
+    height: 8px;
+    background: #E2E8F0;
     border-radius: 9999px;
     overflow: hidden;
     position: relative;
@@ -4997,18 +4997,21 @@ export const landingCSS = `
 
 .lterm-progress-fill {
     height: 100%;
-    background: linear-gradient(90deg, #059669 0%, #10B981 100%);
+    background: #7A1220;
     border-radius: 9999px;
     position: relative;
     transition: width 0.8s ease-in-out;
 }
 
+.lterm-progress-fill.completed {
+    background: #166534;
+}
+
 .lterm-progress-glow {
     position: absolute;
     top: 0; right: 0; bottom: 0;
-    width: 24px;
-    background: rgba(255, 255, 255, 0.6);
-    filter: blur(4px);
+    width: 20px;
+    background: rgba(255, 255, 255, 0.4);
 }
 
 /* Rules Box */
@@ -5028,25 +5031,25 @@ export const landingCSS = `
     display: flex;
     align-items: center;
     gap: 10px;
-    padding: 12px 16px;
+    padding: 14px 18px;
     border-radius: 12px;
-    font-size: 12px;
+    font-size: 12.5px;
     line-height: 1.35;
 }
 
 .lterm-rule.pass {
-    background: rgba(16, 185, 129, 0.08);
-    border: 1px solid rgba(16, 185, 129, 0.2);
-    color: #D1FAE5;
+    background: #F0FDF4;
+    border: 1px solid #BBF7D0;
+    color: #0F172A;
 }
-.lterm-rule.pass .ic { color: #34D399; font-weight: 800; font-size: 13px; }
+.lterm-rule.pass .ic { color: #166534; font-weight: 800; font-size: 14px; }
 
 .lterm-rule.fail {
-    background: rgba(239, 68, 68, 0.08);
-    border: 1px solid rgba(239, 68, 68, 0.2);
-    color: #FEE2E2;
+    background: #FDF2F2;
+    border: 1px solid rgba(122, 18, 32, 0.2);
+    color: #0F172A;
 }
-.lterm-rule.fail .ic { color: #F87171; font-weight: 800; font-size: 13px; }
+.lterm-rule.fail .ic { color: #7A1220; font-weight: 800; font-size: 14px; }
 
 /* Rivalry Matchup Layout */
 .lterm-matchup-row {
@@ -5057,8 +5060,8 @@ export const landingCSS = `
 }
 
 .lterm-player-card {
-    background: rgba(28, 37, 65, 0.7);
-    border: 1px solid rgba(255, 255, 255, 0.09);
+    background: #FAF9F7;
+    border: 1px solid #E2E8F0;
     border-radius: 16px;
     padding: 18px 20px;
     display: flex;
@@ -5072,48 +5075,48 @@ export const landingCSS = `
     font-size: 9px;
     font-weight: 800;
     letter-spacing: 1.2px;
-    color: #94A3B8;
+    color: #64748B;
 }
 
 .lterm-player-card .handle {
     font-family: 'JetBrains Mono', monospace;
     font-size: 14px;
     font-weight: 700;
-    color: #F8FAFC;
+    color: #0F172A;
 }
 
 .lterm-player-card .metric {
     font-family: 'Plus Jakarta Sans', sans-serif;
     font-size: 18px;
     font-weight: 800;
-    color: #34D399;
+    color: #166534;
 }
-.lterm-player-card.opponent .metric { color: #F87171; }
+.lterm-player-card.opponent .metric { color: #7A1220; }
 
 .lterm-player-card .stake {
     font-family: 'JetBrains Mono', monospace;
     font-size: 11px;
     font-weight: 700;
-    color: #94A3B8;
+    color: #64748B;
 }
 
 .lterm-vs-badge {
     width: 38px; height: 38px;
     border-radius: 50%;
-    background: rgba(122, 18, 32, 0.45);
-    border: 1.5px solid rgba(239, 68, 68, 0.4);
+    background: #FDF2F2;
+    border: 1px solid rgba(122, 18, 32, 0.25);
     display: flex;
     align-items: center;
     justify-content: center;
     font-family: 'JetBrains Mono', monospace;
     font-size: 11px;
     font-weight: 800;
-    color: #F87171;
+    color: #7A1220;
 }
 
 .lterm-vault-core {
-    background: linear-gradient(180deg, rgba(122, 18, 32, 0.3) 0%, rgba(28, 37, 65, 0.85) 100%);
-    border: 1.5px solid rgba(239, 68, 68, 0.4);
+    background: linear-gradient(180deg, #FFFDFA 0%, #FDF9F7 100%);
+    border: 1.5px solid rgba(122, 18, 32, 0.3);
     border-radius: 18px;
     padding: 22px;
     text-align: center;
@@ -5122,7 +5125,7 @@ export const landingCSS = `
     align-items: center;
     gap: 4px;
     position: relative;
-    box-shadow: 0 12px 40px rgba(122, 18, 32, 0.3);
+    box-shadow: 0 8px 32px rgba(122, 18, 32, 0.06);
 }
 
 .lterm-vault-core .v-lbl {
@@ -5130,7 +5133,7 @@ export const landingCSS = `
     font-size: 10px;
     font-weight: 800;
     letter-spacing: 1.4px;
-    color: #F87171;
+    color: #7A1220;
     text-transform: uppercase;
 }
 
@@ -5139,29 +5142,29 @@ export const landingCSS = `
     font-size: 36px;
     font-weight: 900;
     letter-spacing: -0.5px;
-    color: #FFFFFF;
+    color: #7A1220;
 }
 
 .lterm-vault-core .v-sub {
     font-family: 'Inter', sans-serif;
     font-size: 12px;
-    color: #CBD5E1;
+    color: #475569;
 }
 
 .lterm-telemetry {
-    background: #020617;
-    border: 1px solid rgba(255, 255, 255, 0.08);
+    background: #FAF9F7;
+    border: 1px solid #E2E8F0;
     border-radius: 14px;
-    padding: 14px 18px;
+    padding: 16px 20px;
     font-family: 'JetBrains Mono', monospace;
     font-size: 11px;
     display: flex;
     flex-direction: column;
     gap: 6px;
 }
-.lterm-telemetry .t-line { color: #94A3B8; }
-.lterm-telemetry .t-line .ts { color: #64748B; margin-right: 8px; }
-.lterm-telemetry .t-line.green { color: #34D399; font-weight: 700; }
+.lterm-telemetry .t-line { color: #475569; }
+.lterm-telemetry .t-line .ts { color: #94A3B8; margin-right: 8px; }
+.lterm-telemetry .t-line.green { color: #166534; font-weight: 700; }
 
 /* ═══ FLAGSHIP MARKETING PROTOCOL ILLUSTRATION ═══ */
 .proto-diagram-wrapper {

@@ -400,10 +400,10 @@ export function renderLanding() {
                                     <div class="lterm-track-item">
                                         <div class="lterm-track-hdr">
                                             <span>[1] CAPITAL LOCKED IN ESCROW VAULT</span>
-                                            <span class="pct">$1,000.00 (VERIFIED)</span>
+                                            <span class="pct completed">$1,000.00 (VERIFIED)</span>
                                         </div>
                                         <div class="lterm-progress-track">
-                                            <div class="lterm-progress-fill" style="width: 100%;">
+                                            <div class="lterm-progress-fill completed" style="width: 100%;">
                                                 <div class="lterm-progress-glow"></div>
                                             </div>
                                         </div>
@@ -412,10 +412,10 @@ export function renderLanding() {
                                     <div class="lterm-track-item">
                                         <div class="lterm-track-hdr">
                                             <span>[2] ORACLE TELEMETRY STREAM</span>
-                                            <span class="pct">99.8% HEALTH</span>
+                                            <span class="pct completed">99.8% HEALTH</span>
                                         </div>
                                         <div class="lterm-progress-track">
-                                            <div class="lterm-progress-fill" style="width: 99.8%;">
+                                            <div class="lterm-progress-fill completed" style="width: 99.8%;">
                                                 <div class="lterm-progress-glow"></div>
                                             </div>
                                         </div>
@@ -475,10 +475,10 @@ export function renderLanding() {
                                     <div class="lterm-track-item">
                                         <div class="lterm-track-hdr">
                                             <span>[1] ESCROW DEPOSITS VERIFIED</span>
-                                            <span class="pct">$2,000.00 LOCKED (100%)</span>
+                                            <span class="pct completed">$2,000.00 LOCKED (100%)</span>
                                         </div>
                                         <div class="lterm-progress-track">
-                                            <div class="lterm-progress-fill" style="width: 100%;">
+                                            <div class="lterm-progress-fill completed" style="width: 100%;">
                                                 <div class="lterm-progress-glow"></div>
                                             </div>
                                         </div>
@@ -487,10 +487,10 @@ export function renderLanding() {
                                     <div class="lterm-track-item">
                                         <div class="lterm-track-hdr">
                                             <span>[2] ORACLE METRIC STREAM</span>
-                                            <span class="pct">STRIPE & X APIS SYNCED</span>
+                                            <span class="pct completed">STRIPE & X APIS SYNCED</span>
                                         </div>
                                         <div class="lterm-progress-track">
-                                            <div class="lterm-progress-fill" style="width: 100%;">
+                                            <div class="lterm-progress-fill completed" style="width: 100%;">
                                                 <div class="lterm-progress-glow"></div>
                                             </div>
                                         </div>

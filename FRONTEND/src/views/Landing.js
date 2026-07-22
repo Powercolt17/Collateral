@@ -824,23 +824,89 @@ export function renderLanding() {
                                     </tr>
                                 </thead>
                                 <tbody id="lledger-tbody-prod">
+                                    <!-- Row 1 -->
                                     <tr class="reveal-item v">
-                                        <td data-label="Contract ID" class="td-id"><span class="td-value">#C-8041 <span class="td-user">@danny_v...</span></span></td>
-                                        <td data-label="Metric" class="td-metric"><span class="td-value"><svg class="td-icon" viewBox="0 0 24 24" fill="currentColor" style="color:#635BFF;width:16px;height:16px;display:inline-block;vertical-align:middle;margin-right:8px;"><path d="M20 10.3c0-1.8-1.5-2.7-3.6-3.2l-2-.5c-1.3-.3-1.9-.7-1.9-1.3 0-.6.7-1 1.7-1 1.7 0 3 .6 3.6 1l.7-2.6C17.9 2.2 16.3 1.8 14.8 1.8c-3.1 0-5.2 1.6-5.2 4.3 0 2.9 2.4 3.7 4.9 4.3l1.8.4c1.4.3 2 .8 2 1.5 0 .7-.8 1.1-2.1 1.1-1.9 0-3.6-.7-4.3-1.1l-.8 2.7c1 .5 2.9 1 4.7 1C18.2 16 20 14.4 20 10.3z"/></svg> Stripe Revenue (+20.0%)</span></td>
-                                        <td data-label="Commitment" class="td-capital"><span class="td-value">$500.00</span></td>
-                                        <td data-label="Outcome" class="td-outcome hit"><span class="td-value"><span class="outcome-marker-hit">✓</span> Hit</span></td>
+                                        <td data-label="Contract ID" class="td-id"><span class="td-value">#C-34D6 <span class="td-user">@revpilot</span></span></td>
+                                        <td data-label="Metric" class="td-metric">
+                                            <span class="td-value">
+                                                <span class="td-icon-box">
+                                                    <svg viewBox="54 36 360.02 149.84" xmlns="http://www.w3.org/2000/svg" class="td-brand-svg"><path fill="#635BFF" d="M414,113.4c0-25.6-12.4-45.8-36.1-45.8c-23.8,0-38.2,20.2-38.2,45.6c0,30.1,17,45.3,41.4,45.3c11.9,0,20.9-2.7,27.7-6.5v-20c-6.8,3.4-14.6,5.5-24.5,5.5c-9.7,0-18.3-3.4-19.4-15.2h48.9C413.8,121,414,115.8,414,113.4z M364.6,103.9c0-11.3,6.9-16,13.2-16c6.1,0,12.6,4.7,12.6,16H364.6z M301.1,67.6c-9.8,0-16.1,4.6-19.6,7.8l-1.3-6.2h-22v116.6l25-5.3l0.1-28.3c3.6,2.6,8.9,6.3,17.7,6.3c17.9,0,34.2-14.4,34.2-46.1C335.1,83.4,318.6,67.6,301.1,67.6z M295.1,136.5c-5.9,0-9.4-2.1-11.8-4.7l-0.1-37.1c2.6-2.9,6.2-4.9,11.9-4.9c9.1,0,15.4,10.2,15.4,23.3C310.5,126.5,304.3,136.5,295.1,136.5z M223.8,61.7l25.1-5.4v-20.3l-25.1,5.3 M223.8,69.3h25.1v87.5h-25.1z M196.9,76.7l-1.6-7.4h-21.6v87.5h25V97.5c5.9-7.7,15.9-6.3,19-5.2v-23C214.5,68.1,202.8,65.9,196.9,76.7z M146.9,47.6l-24.4,5.2l-0.1,80.1c0,14.8,11.1,25.7,25.9,25.7c8.2,0,14.2-1.5,17.5-3.3V135c-3.2,1.3-19,5.9-19-8.9V90.6h19V69.3h-19L146.9,47.6z M79.3,94.7c0-3.9,3.2-5.4,8.5-5.4c7.6,0,17.2,2.3,24.8,6.4V72.2c-8.3-3.3-16.5-4.6-24.8-4.6C67.5,67.6,54,78.2,54,95.9c0,27.6,38,23.2,38,35.1c0,4.6-4,6.1-9.6,6.1c-8.3,0-18.9-3.4-27.3-8v23.8c9.3,4,18.7,5.7,27.3,5.7c20.8,0,35.1-10.3,35.1-28.2C117.4,100.6,79.3,105.9,79.3,94.7z"/></svg>
+                                                </span>
+                                                Stripe Revenue
+                                            </span>
+                                        </td>
+                                        <td data-label="Commitment" class="td-capital"><span class="td-value">$2,000.00</span></td>
+                                        <td data-label="Outcome" class="td-outcome"><span class="lstatus-badge status-active"><span class="status-dot"></span> Active</span></td>
                                     </tr>
+                                    <!-- Row 2 -->
                                     <tr class="reveal-item v">
-                                        <td data-label="Contract ID" class="td-id"><span class="td-value">#C-8022 <span class="td-user">@justin_s...</span></span></td>
-                                        <td data-label="Metric" class="td-metric"><span class="td-value"><svg class="td-icon" viewBox="0 0 24 24" fill="currentColor" style="color:#111111;width:14px;height:14px;display:inline-block;vertical-align:middle;margin-right:8px;"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg> X Followers (+1k)</span></td>
-                                        <td data-label="Commitment" class="td-capital"><span class="td-value">$250.00</span></td>
-                                        <td data-label="Outcome" class="td-outcome miss"><span class="td-value"><span class="outcome-marker-miss">✗</span> Missed</span></td>
+                                        <td data-label="Contract ID" class="td-id"><span class="td-value">#C-9F21 <span class="td-user">@marcusk</span></span></td>
+                                        <td data-label="Metric" class="td-metric">
+                                            <span class="td-value">
+                                                <span class="td-icon-box">
+                                                    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" class="td-brand-svg"><path fill="#FF0000" d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
+                                                </span>
+                                                YouTube Subs
+                                            </span>
+                                        </td>
+                                        <td data-label="Commitment" class="td-capital"><span class="td-value">10,000 subs</span></td>
+                                        <td data-label="Outcome" class="td-outcome"><span class="lstatus-badge status-won"><span class="status-dot"></span> Won</span></td>
                                     </tr>
+                                    <!-- Row 3 -->
                                     <tr class="reveal-item v">
-                                        <td data-label="Contract ID" class="td-id"><span class="td-value">#C-7988 <span class="td-user">@growth...</span></span></td>
-                                        <td data-label="Metric" class="td-metric"><span class="td-value"><svg class="td-icon" viewBox="0 0 24 24" fill="currentColor" style="color:#96bf48;width:16px;height:16px;display:inline-block;vertical-align:middle;margin-right:8px;"><path d="M19.58 6.425a.86.86 0 00-.7-.34h-2.193a4.52 4.52 0 00-9.04 0H5.454a.86.86 0 00-.7.34.887.887 0 00-.16.766l1.97 10.96a2.41 2.41 0 002.37 1.986h6.49a2.41 2.41 0 002.37-1.985l1.97-10.96a.887.887 0 00-.184-.767zM12 3.86a2.53 2.53 0 012.513 2.225H9.487A2.53 2.53 0 0112 3.86zm3.267 11.516a2.036 2.036 0 01-1.745.892 2.374 2.374 0 01-1.614-.648A2.348 2.348 0 0010.3 15a2.036 2.036 0 01-1.745-.892.429.429 0 11.734-.442c.245.408.66.634 1.01.634.341 0 .614-.148.914-.442A3.21 3.21 0 0113.627 15c.341 0 .614-.148.914-.442a.429.429 0 01.734.442z"/></svg> Shopify Gross ($50k)</span></td>
-                                        <td data-label="Commitment" class="td-capital"><span class="td-value">$1,000.00</span></td>
-                                        <td data-label="Outcome" class="td-outcome hit"><span class="td-value"><span class="outcome-marker-hit">✓</span> Hit</span></td>
+                                        <td data-label="Contract ID" class="td-id"><span class="td-value">#C-7B08 <span class="td-user">@dev_sarah</span></span></td>
+                                        <td data-label="Metric" class="td-metric">
+                                            <span class="td-value">
+                                                <span class="td-icon-box">
+                                                    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" class="td-brand-svg"><path fill="#0F172A" d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+                                                </span>
+                                                X Followers
+                                            </span>
+                                        </td>
+                                        <td data-label="Commitment" class="td-capital"><span class="td-value">25,000 followers</span></td>
+                                        <td data-label="Outcome" class="td-outcome"><span class="lstatus-badge status-settled"><span class="status-dot"></span> Settled</span></td>
+                                    </tr>
+                                    <!-- Row 4 -->
+                                    <tr class="reveal-item v">
+                                        <td data-label="Contract ID" class="td-id"><span class="td-value">#C-18E4 <span class="td-user">@shopmaster</span></span></td>
+                                        <td data-label="Metric" class="td-metric">
+                                            <span class="td-value">
+                                                <span class="td-icon-box">
+                                                    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" class="td-brand-svg"><path fill="#95BF47" d="M15.337 23.979l7.216-1.561s-2.604-17.613-2.625-17.73c-.018-.116-.114-.192-.211-.192s-1.929-.136-1.929-.136-1.275-1.274-1.439-1.411c-.045-.037-.075-.057-.121-.074l-.914 21.104h.023zM11.71 11.305s-.81-.424-1.774-.424c-1.447 0-1.504.906-1.504 1.141 0 1.232 3.24 1.715 3.24 4.629 0 2.295-1.44 3.76-3.406 3.76-2.354 0-3.54-1.465-3.54-1.465l.646-2.086s1.245 1.066 2.28 1.066c.675 0 .975-.545.975-.932 0-1.619-2.654-1.694-2.654-4.359-.034-2.237 1.571-4.416 4.827-4.416 1.257 0 1.875.361 1.875.361l-.945 2.715-.02.01zM11.17.83c.136 0 .271.038.405.135-.984.465-2.064 1.639-2.508 3.992-.656.213-1.293.405-1.889.578C7.697 3.75 8.951.84 11.17.84V.83zm1.235 2.949v.135c-.754.232-1.583.484-2.394.736.466-1.777 1.333-2.645 2.085-2.971.193.501.309 1.176.309 2.1zm.539-2.234c.694.074 1.141.867 1.429 1.755-.349.114-.735.231-1.158.366v-.252c0-.752-.096-1.371-.271-1.871v.002zm2.992 1.289c-.02 0-.06.021-.078.021s-.289.075-.714.21c-.423-1.233-1.176-2.37-2.508-2.37h-.115C12.135.209 11.669 0 11.265 0 8.159 0 6.675 3.877 6.21 5.846c-1.194.365-2.063.636-2.16.674-.675.213-.694.232-.772.87-.075.462-1.83 14.063-1.83 14.063L15.009 24l.927-21.166z"/></svg>
+                                                </span>
+                                                Shopify Sales
+                                            </span>
+                                        </td>
+                                        <td data-label="Commitment" class="td-capital"><span class="td-value">$8,500.00</span></td>
+                                        <td data-label="Outcome" class="td-outcome"><span class="lstatus-badge status-won"><span class="status-dot"></span> Won</span></td>
+                                    </tr>
+                                    <!-- Row 5 -->
+                                    <tr class="reveal-item v">
+                                        <td data-label="Contract ID" class="td-id"><span class="td-value">#C-52A9 <span class="td-user">@growth_alex</span></span></td>
+                                        <td data-label="Metric" class="td-metric">
+                                            <span class="td-value">
+                                                <span class="td-icon-box">
+                                                    <svg viewBox="54 36 360.02 149.84" xmlns="http://www.w3.org/2000/svg" class="td-brand-svg"><path fill="#635BFF" d="M414,113.4c0-25.6-12.4-45.8-36.1-45.8c-23.8,0-38.2,20.2-38.2,45.6c0,30.1,17,45.3,41.4,45.3c11.9,0,20.9-2.7,27.7-6.5v-20c-6.8,3.4-14.6,5.5-24.5,5.5c-9.7,0-18.3-3.4-19.4-15.2h48.9C413.8,121,414,115.8,414,113.4z M364.6,103.9c0-11.3,6.9-16,13.2-16c6.1,0,12.6,4.7,12.6,16H364.6z M301.1,67.6c-9.8,0-16.1,4.6-19.6,7.8l-1.3-6.2h-22v116.6l25-5.3l0.1-28.3c3.6,2.6,8.9,6.3,17.7,6.3c17.9,0,34.2-14.4,34.2-46.1C335.1,83.4,318.6,67.6,301.1,67.6z M295.1,136.5c-5.9,0-9.4-2.1-11.8-4.7l-0.1-37.1c2.6-2.9,6.2-4.9,11.9-4.9c9.1,0,15.4,10.2,15.4,23.3C310.5,126.5,304.3,136.5,295.1,136.5z M223.8,61.7l25.1-5.4v-20.3l-25.1,5.3 M223.8,69.3h25.1v87.5h-25.1z M196.9,76.7l-1.6-7.4h-21.6v87.5h25V97.5c5.9-7.7,15.9-6.3,19-5.2v-23C214.5,68.1,202.8,65.9,196.9,76.7z M146.9,47.6l-24.4,5.2l-0.1,80.1c0,14.8,11.1,25.7,25.9,25.7c8.2,0,14.2-1.5,17.5-3.3V135c-3.2,1.3-19,5.9-19-8.9V90.6h19V69.3h-19L146.9,47.6z M79.3,94.7c0-3.9,3.2-5.4,8.5-5.4c7.6,0,17.2,2.3,24.8,6.4V72.2c-8.3-3.3-16.5-4.6-24.8-4.6C67.5,67.6,54,78.2,54,95.9c0,27.6,38,23.2,38,35.1c0,4.6-4,6.1-9.6,6.1c-8.3,0-18.9-3.4-27.3-8v23.8c9.3,4,18.7,5.7,27.3,5.7c20.8,0,35.1-10.3,35.1-28.2C117.4,100.6,79.3,105.9,79.3,94.7z"/></svg>
+                                                </span>
+                                                Stripe Revenue
+                                            </span>
+                                        </td>
+                                        <td data-label="Commitment" class="td-capital"><span class="td-value">$5,000.00</span></td>
+                                        <td data-label="Outcome" class="td-outcome"><span class="lstatus-badge status-active"><span class="status-dot"></span> Active</span></td>
+                                    </tr>
+                                    <!-- Row 6 -->
+                                    <tr class="reveal-item v">
+                                        <td data-label="Contract ID" class="td-id"><span class="td-value">#C-84D2 <span class="td-user">@tech_trent</span></span></td>
+                                        <td data-label="Metric" class="td-metric">
+                                            <span class="td-value">
+                                                <span class="td-icon-box">
+                                                    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" class="td-brand-svg"><path fill="#FF0000" d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
+                                                </span>
+                                                YouTube Subs
+                                            </span>
+                                        </td>
+                                        <td data-label="Commitment" class="td-capital"><span class="td-value">50,000 subs</span></td>
+                                        <td data-label="Outcome" class="td-outcome"><span class="lstatus-badge status-settled"><span class="status-dot"></span> Settled</span></td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -2201,11 +2267,11 @@ export function initLanding() {
 
                         const getPlatformIcon = (plt) => {
                             const p = (plt || '').toUpperCase();
-                            if (p === 'STRIPE') return `<svg class="td-icon" viewBox="0 0 24 24" fill="currentColor" style="color:#635BFF;width:16px;height:16px;display:inline-block;vertical-align:middle;margin-right:8px;"><path d="M20 10.3c0-1.8-1.5-2.7-3.6-3.2l-2-.5c-1.3-.3-1.9-.7-1.9-1.3 0-.6.7-1 1.7-1 1.7 0 3 .6 3.6 1l.7-2.6C17.9 2.2 16.3 1.8 14.8 1.8c-3.1 0-5.2 1.6-5.2 4.3 0 2.9 2.4 3.7 4.9 4.3l1.8.4c1.4.3 2 .8 2 1.5 0 .7-.8 1.1-2.1 1.1-1.9 0-3.6-.7-4.3-1.1l-.8 2.7c1 .5 2.9 1 4.7 1C18.2 16 20 14.4 20 10.3z"/></svg>`;
-                            if (p === 'X' || p === 'TWITTER') return `<svg class="td-icon" viewBox="0 0 24 24" fill="currentColor" style="color:#111111;width:14px;height:14px;display:inline-block;vertical-align:middle;margin-right:8px;"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>`;
-                            if (p === 'SHOPIFY') return `<svg class="td-icon" viewBox="0 0 24 24" fill="currentColor" style="color:#96bf48;width:16px;height:16px;display:inline-block;vertical-align:middle;margin-right:8px;"><path d="M19.58 6.425a.86.86 0 00-.7-.34h-2.193a4.52 4.52 0 00-9.04 0H5.454a.86.86 0 00-.7.34.887.887 0 00-.16.766l1.97 10.96a2.41 2.41 0 002.37 1.986h6.49a2.41 2.41 0 002.37-1.985l1.97-10.96a.887.887 0 00-.184-.767zM12 3.86a2.53 2.53 0 012.513 2.225H9.487A2.53 2.53 0 0112 3.86zm3.267 11.516a2.036 2.036 0 01-1.745.892 2.374 2.374 0 01-1.614-.648A2.348 2.348 0 0010.3 15a2.036 2.036 0 01-1.745-.892.429.429 0 11.734-.442c.245.408.66.634 1.01.634.341 0 .614-.148.914-.442A3.21 3.21 0 0113.627 15c.341 0 .614-.148.914-.442a.429.429 0 01.734.442z"/></svg>`;
-                            if (p === 'YOUTUBE') return `<svg class="td-icon" viewBox="0 0 24 24" fill="currentColor" style="color:#FF0000;width:16px;height:16px;display:inline-block;vertical-align:middle;margin-right:8px;"><path d="M23.498 6.163a3.003 3.003 0 0 0-2.11-2.11C19.517 3.545 12 3.545 12 3.545s-7.517 0-9.388.508a3.003 3.003 0 0 0-2.11 2.11C0 8.033 0 12 0 12s0 3.967.502 5.837a3.003 3.003 0 0 0 2.11 2.11c1.871.508 9.388.508 9.388.508s7.517 0 9.388-.508a3.003 3.003 0 0 0 2.11-2.11C24 15.967 24 12 24 12s0-3.967-.502-5.837zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>`;
-                            return `<svg class="td-icon" viewBox="0 0 24 24" fill="currentColor" style="color:#635BFF;width:16px;height:16px;display:inline-block;vertical-align:middle;margin-right:8px;"><path d="M20 10.3c0-1.8-1.5-2.7-3.6-3.2l-2-.5c-1.3-.3-1.9-.7-1.9-1.3 0-.6.7-1 1.7-1 1.7 0 3 .6 3.6 1l.7-2.6C17.9 2.2 16.3 1.8 14.8 1.8c-3.1 0-5.2 1.6-5.2 4.3 0 2.9 2.4 3.7 4.9 4.3l1.8.4c1.4.3 2 .8 2 1.5 0 .7-.8 1.1-2.1 1.1-1.9 0-3.6-.7-4.3-1.1l-.8 2.7c1 .5 2.9 1 4.7 1C18.2 16 20 14.4 20 10.3z"/></svg>`;
+                            if (p === 'STRIPE') return `<span class="td-icon-box"><svg viewBox="54 36 360.02 149.84" xmlns="http://www.w3.org/2000/svg" class="td-brand-svg"><path fill="#635BFF" d="M414,113.4c0-25.6-12.4-45.8-36.1-45.8c-23.8,0-38.2,20.2-38.2,45.6c0,30.1,17,45.3,41.4,45.3c11.9,0,20.9-2.7,27.7-6.5v-20c-6.8,3.4-14.6,5.5-24.5,5.5c-9.7,0-18.3-3.4-19.4-15.2h48.9C413.8,121,414,115.8,414,113.4z M364.6,103.9c0-11.3,6.9-16,13.2-16c6.1,0,12.6,4.7,12.6,16H364.6z M301.1,67.6c-9.8,0-16.1,4.6-19.6,7.8l-1.3-6.2h-22v116.6l25-5.3l0.1-28.3c3.6,2.6,8.9,6.3,17.7,6.3c17.9,0,34.2-14.4,34.2-46.1C335.1,83.4,318.6,67.6,301.1,67.6z M295.1,136.5c-5.9,0-9.4-2.1-11.8-4.7l-0.1-37.1c2.6-2.9,6.2-4.9,11.9-4.9c9.1,0,15.4,10.2,15.4,23.3C310.5,126.5,304.3,136.5,295.1,136.5z M223.8,61.7l25.1-5.4v-20.3l-25.1,5.3 M223.8,69.3h25.1v87.5h-25.1z M196.9,76.7l-1.6-7.4h-21.6v87.5h25V97.5c5.9-7.7,15.9-6.3,19-5.2v-23C214.5,68.1,202.8,65.9,196.9,76.7z M146.9,47.6l-24.4,5.2l-0.1,80.1c0,14.8,11.1,25.7,25.9,25.7c8.2,0,14.2-1.5,17.5-3.3V135c-3.2,1.3-19,5.9-19-8.9V90.6h19V69.3h-19L146.9,47.6z M79.3,94.7c0-3.9,3.2-5.4,8.5-5.4c7.6,0,17.2,2.3,24.8,6.4V72.2c-8.3-3.3-16.5-4.6-24.8-4.6C67.5,67.6,54,78.2,54,95.9c0,27.6,38,23.2,38,35.1c0,4.6-4,6.1-9.6,6.1c-8.3,0-18.9-3.4-27.3-8v23.8c9.3,4,18.7,5.7,27.3,5.7c20.8,0,35.1-10.3,35.1-28.2C117.4,100.6,79.3,105.9,79.3,94.7z"/></svg></span>`;
+                            if (p === 'X' || p === 'TWITTER') return `<span class="td-icon-box"><svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" class="td-brand-svg"><path fill="#0F172A" d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg></span>`;
+                            if (p === 'SHOPIFY') return `<span class="td-icon-box"><svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" class="td-brand-svg"><path fill="#95BF47" d="M15.337 23.979l7.216-1.561s-2.604-17.613-2.625-17.73c-.018-.116-.114-.192-.211-.192s-1.929-.136-1.929-.136-1.275-1.274-1.439-1.411c-.045-.037-.075-.057-.121-.074l-.914 21.104h.023zM11.71 11.305s-.81-.424-1.774-.424c-1.447 0-1.504.906-1.504 1.141 0 1.232 3.24 1.715 3.24 4.629 0 2.295-1.44 3.76-3.406 3.76-2.354 0-3.54-1.465-3.54-1.465l.646-2.086s1.245 1.066 2.28 1.066c.675 0 .975-.545.975-.932 0-1.619-2.654-1.694-2.654-4.359-.034-2.237 1.571-4.416 4.827-4.416 1.257 0 1.875.361 1.875.361l-.945 2.715-.02.01zM11.17.83c.136 0 .271.038.405.135-.984.465-2.064 1.639-2.508 3.992-.656.213-1.293.405-1.889.578C7.697 3.75 8.951.84 11.17.84V.83zm1.235 2.949v.135c-.754.232-1.583.484-2.394.736.466-1.777 1.333-2.645 2.085-2.971.193.501.309 1.176.309 2.1zm.539-2.234c.694.074 1.141.867 1.429 1.755-.349.114-.735.231-1.158.366v-.252c0-.752-.096-1.371-.271-1.871v.002zm2.992 1.289c-.02 0-.06.021-.078.021s-.289.075-.714.21c-.423-1.233-1.176-2.37-2.508-2.37h-.115C12.135.209 11.669 0 11.265 0 8.159 0 6.675 3.877 6.21 5.846c-1.194.365-2.063.636-2.16.674-.675.213-.694.232-.772.87-.075.462-1.83 14.063-1.83 14.063L15.009 24l.927-21.166z"/></svg></span>`;
+                            if (p === 'YOUTUBE') return `<span class="td-icon-box"><svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" class="td-brand-svg"><path fill="#FF0000" d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg></span>`;
+                            return `<span class="td-icon-box"><svg viewBox="54 36 360.02 149.84" xmlns="http://www.w3.org/2000/svg" class="td-brand-svg"><path fill="#635BFF" d="M414,113.4c0-25.6-12.4-45.8-36.1-45.8c-23.8,0-38.2,20.2-38.2,45.6c0,30.1,17,45.3,41.4,45.3c11.9,0,20.9-2.7,27.7-6.5v-20c-6.8,3.4-14.6,5.5-24.5,5.5c-9.7,0-18.3-3.4-19.4-15.2h48.9C413.8,121,414,115.8,414,113.4z M364.6,103.9c0-11.3,6.9-16,13.2-16c6.1,0,12.6,4.7,12.6,16H364.6z M301.1,67.6c-9.8,0-16.1,4.6-19.6,7.8l-1.3-6.2h-22v116.6l25-5.3l0.1-28.3c3.6,2.6,8.9,6.3,17.7,6.3c17.9,0,34.2-14.4,34.2-46.1C335.1,83.4,318.6,67.6,301.1,67.6z M295.1,136.5c-5.9,0-9.4-2.1-11.8-4.7l-0.1-37.1c2.6-2.9,6.2-4.9,11.9-4.9c9.1,0,15.4,10.2,15.4,23.3C310.5,126.5,304.3,136.5,295.1,136.5z M223.8,61.7l25.1-5.4v-20.3l-25.1,5.3 M223.8,69.3h25.1v87.5h-25.1z M196.9,76.7l-1.6-7.4h-21.6v87.5h25V97.5c5.9-7.7,15.9-6.3,19-5.2v-23C214.5,68.1,202.8,65.9,196.9,76.7z M146.9,47.6l-24.4,5.2l-0.1,80.1c0,14.8,11.1,25.7,25.9,25.7c8.2,0,14.2-1.5,17.5-3.3V135c-3.2,1.3-19,5.9-19-8.9V90.6h19V69.3h-19L146.9,47.6z M79.3,94.7c0-3.9,3.2-5.4,8.5-5.4c7.6,0,17.2,2.3,24.8,6.4V72.2c-8.3-3.3-16.5-4.6-24.8-4.6C67.5,67.6,54,78.2,54,95.9c0,27.6,38,23.2,38,35.1c0,4.6-4,6.1-9.6,6.1c-8.3,0-18.9-3.4-27.3-8v23.8c9.3,4,18.7,5.7,27.3,5.7c20.8,0,35.1-10.3,35.1-28.2C117.4,100.6,79.3,105.9,79.3,94.7z"/></svg></span>`;
                         };
 
                         const getPlatformName = (plt) => {
@@ -2219,19 +2285,18 @@ export function initLanding() {
 
                         const getMaskedUser = (user) => {
                             if (!user) return 'user';
-                            return user.length > 5 ? user.slice(0, 5) + '...' : user;
+                            return user;
                         };
 
                         const renderRow = (e) => {
                             const isHit = e.eventType === 'SETTLED_SUCCESS' || e.eventType === 'RIVALRY_SETTLED';
-                            const isMiss = e.eventType === 'SETTLED_FAILURE' || e.eventType === 'RIVALRY_EXPIRED' || e.eventType === 'RIVALRY_CANCELLED';
                             let outcomeHtml = '';
                             if (isHit) {
-                                outcomeHtml = `<span class="td-outcome hit"><span class="outcome-marker-hit">✓</span> Hit</span>`;
-                            } else if (isMiss) {
-                                outcomeHtml = `<span class="td-outcome miss"><span class="outcome-marker-miss">✗</span> Missed</span>`;
+                                outcomeHtml = `<span class="lstatus-badge status-won"><span class="status-dot"></span> Won</span>`;
+                            } else if (e.eventType === 'SETTLED_FAILURE') {
+                                outcomeHtml = `<span class="lstatus-badge status-settled"><span class="status-dot"></span> Settled</span>`;
                             } else {
-                                outcomeHtml = `<span class="td-outcome tracking" style="color:var(--t3);"><span class="outcome-marker-tracking">●</span> Active</span>`;
+                                outcomeHtml = `<span class="lstatus-badge status-active"><span class="status-dot"></span> Active</span>`;
                             }
                             const depositCents = e.lockAmountUsdCents || e.amountUsdCents || 25000;
                             const depositFormatted = '$' + (depositCents / 100).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
@@ -2240,7 +2305,7 @@ export function initLanding() {
                                     <td data-label="Contract ID" class="td-id"><span class="td-value">#C-${e.contractId.slice(0, 4).toUpperCase()} <span class="td-user">@${getMaskedUser(e.principal)}</span></span></td>
                                     <td data-label="Metric" class="td-metric"><span class="td-value">${getPlatformIcon(e.platform)} ${getPlatformName(e.platform)}</span></td>
                                     <td data-label="Commitment" class="td-capital"><span class="td-value">${depositFormatted}</span></td>
-                                    <td data-label="Outcome" class="td-outcome"><span class="td-value">${outcomeHtml}</span></td>
+                                    <td data-label="Outcome" class="td-outcome">${outcomeHtml}</td>
                                 </tr>
                             `;
                         };

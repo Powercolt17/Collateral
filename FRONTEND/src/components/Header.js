@@ -147,7 +147,7 @@ export function renderHeader(currentRoute) {
             .ch-header {
                 width: 100%;
                 border-bottom: 1px solid #e5e5e5;
-                background: #fff;
+                background: #FAF8F5 !important;
                 position: fixed;
                 top: 32px;
                 z-index: 50;
@@ -159,7 +159,7 @@ export function renderHeader(currentRoute) {
             }
             .ch-header.nav-scrolled {
                 top: 0px !important;
-                background: rgba(255, 255, 255, 0.25) !important;
+                background: rgba(250, 248, 245, 0.95) !important;
                 backdrop-filter: blur(18px) saturate(180%);
                 -webkit-backdrop-filter: blur(18px) saturate(180%);
                 border-bottom-color: rgba(229, 229, 229, 0.35) !important;
@@ -243,7 +243,7 @@ export function renderHeader(currentRoute) {
                 top: 60px;
                 left: 50%;
                 transform: translateX(-50%) translateY(16px) scale(0.96);
-                background: rgba(255, 255, 255, 0.95);
+                background: rgba(250, 248, 245, 0.98);
                 backdrop-filter: blur(16px);
                 -webkit-backdrop-filter: blur(16px);
                 border: 1px solid rgba(229, 229, 229, 0.6);

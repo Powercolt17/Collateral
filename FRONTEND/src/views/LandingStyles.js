@@ -80,18 +80,7 @@ export const landingCSS = `
 
 /* Rotated Institutional Grid Layer (Full-Bleed Seam Fix) */
 .lhero-bg-grid {
-    position: absolute;
-    inset: -100%;
-    width: 300%;
-    height: 300%;
-    pointer-events: none !important;
-    z-index: 0 !important;
-    transform: rotate(-12deg);
-    opacity: 0.03;
-    background-image: 
-        linear-gradient(to right, rgba(15, 23, 42, 1) 1px, transparent 1px),
-        linear-gradient(to bottom, rgba(15, 23, 42, 1) 1px, transparent 1px);
-    background-size: 80px 80px;
+    display: none !important;
 }
 
 /* Drifting Radial Light Orb */

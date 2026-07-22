@@ -37,7 +37,6 @@ export function renderLanding() {
             </nav>            <!-- ═══ HERO ═══ -->
             <div class="lhero-section">
                 <!-- PROCEDURAL HERO BACKGROUND SYSTEM -->
-                <div class="lhero-bg-grid"></div>
                 <div class="lhero-bg-light-orb"></div>
                 
                 <div class="lw">

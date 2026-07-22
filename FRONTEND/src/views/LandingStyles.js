@@ -75,7 +75,7 @@ export const landingCSS = `
     overflow: hidden;
     padding-top: 145px !important;
     padding-bottom: 24px !important;
-    background: #FAF9F7 !important;
+    background: #FAF8F5 !important;
 }
 
 /* Rotated Institutional Grid Layer (Full-Bleed Seam Fix) */
@@ -202,7 +202,7 @@ export const landingCSS = `
 /* ═══ REAL COLLATERAL CONTRACT CARDS DECK CAROUSEL ═══ */
 .lfeatured-live-section {
     padding: 90px 0;
-    background: #FAF9F7 !important;
+    background: #FAF8F5 !important;
     color: #0F172A;
     position: relative;
     overflow: hidden;
@@ -1198,7 +1198,7 @@ export const landingCSS = `
 @keyframes toastSlideDown{0%{opacity:1;transform:translateY(0) scale(1)}100%{opacity:0;transform:translateY(24px) scale(0.95)}}
 
 /* ═══ LIVE CONTRACTS ═══ */
-.lcontracts{padding:30px 0 48px;background:#FAF9F7 !important;position:relative}
+.lcontracts{padding:30px 0 48px;background:#FAF8F5 !important;position:relative}
 .lcontracts::after{display:none !important}
 .lcontracts .lw{max-width:1280px}
 .lcards{display:grid;grid-template-columns:repeat(4,1fr);gap:32px}
@@ -1277,7 +1277,7 @@ export const landingCSS = `
 .lcard-btn button:hover::after{opacity:1;transform:translateX(0);width:auto;margin-left:6px}
 
 /* ═══ HOW IT WORKS ═══ */
-.lhow{padding:75px 0;background:#FAF9F7 !important;position:relative}
+.lhow{padding:75px 0;background:#FAF8F5 !important;position:relative}
 .lhow::before{display:none !important}
 .lhow::after{display:none !important}
 .lhow-h{font-family:'Inter Tight',sans-serif;font-size:clamp(32px,5vw,56px);font-weight:400;letter-spacing:-1px;margin-bottom:16px}
@@ -1299,7 +1299,7 @@ export const landingCSS = `
 
 
 /* ═══ CONTRACT TYPES ═══ */
-.ltypes{padding:100px 0;background:#FAF9F7 !important}
+.ltypes{padding:100px 0;background:#FAF8F5 !important}
 .ltypes-grid{display:grid;grid-template-columns:1fr 1fr;gap:80px}
 .ltype{background:transparent;border:none;padding:40px 0 0 0;border-top:1px solid rgba(0,0,0,0.08);transition:border-color 0.3s ease}
 .ltype:hover{border-top-color:var(--r)}
@@ -1309,13 +1309,13 @@ export const landingCSS = `
 .ltype-detail{font-size:15px;color:var(--t2);line-height:1.6;padding-top:24px;border-top:1px dashed rgba(0,0,0,0.08)}
 
 /* ═══ FAQ ═══ */
-.lfaq{padding:36px 0;text-align:center;background:#FAF9F7 !important;position:relative}
+.lfaq{padding:36px 0;text-align:center;background:#FAF8F5 !important;position:relative}
 .lfaq::after{display:none !important}
 .lfaq-wrap{max-width:640px;margin:0 auto;text-align:left}
 .lfaq .lred-dash{justify-content:center}
 .fq{border-bottom:1px solid var(--d)}.fq-q{padding:18px 0;font-family:'Inter Tight',sans-serif;font-size:15px;font-weight:600;color:var(--t1);cursor:pointer;display:flex;justify-content:space-between;align-items:center;user-select:none;transition:color 0.2s ease}.fq-q:hover{color:var(--r)}.fq-q::after{content:'+';font-size:16px;color:var(--t3);transition:transform 0.3s ease}.fq.open .fq-q::after{content:'\\2212';transform:rotate(180deg)}.fq-a{max-height:0;overflow:hidden;transition:max-height .3s;font-size:13px;color:var(--t2);line-height:1.6}.fq.open .fq-a{max-height:400px;padding-bottom:18px}.fq-a strong{color:var(--t1);font-weight:600}
 /* ═══ FINAL CTA ═══ */
-.lfoot{background:#FAF9F7 !important;text-align:center;padding:32px 24px;position:relative;overflow:hidden}
+.lfoot{background:#FAF8F5 !important;text-align:center;padding:32px 24px;position:relative;overflow:hidden}
 .lfoot::before{display:none !important}
 .lfoot-overdue{display:inline-flex;align-items:center;gap:8px;background:rgba(92,20,20,0.04);border:1px solid rgba(92,20,20,0.12);padding:6px 14px;border-radius:100px;font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--r);margin-bottom:24px;box-shadow:0 2px 8px rgba(92,20,20,0.02);position:relative;z-index:1}
 .lfoot-h{font-family:'Inter Tight',sans-serif;font-size:clamp(24px,4vw,36px);font-weight:700;color:var(--t1);letter-spacing:-1px;line-height:1.15;margin-bottom:12px;position:relative;z-index:1}

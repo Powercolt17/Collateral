@@ -671,7 +671,7 @@ export function renderLanding() {
                                         <span class="rv-player-growth leading">+12.4%</span>
                                     </div>
                                     <div class="rv-vs-divider">
-                                        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#475569" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                                        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#CBD5E1" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round">
                                             <polyline points="14.5 17.5 3 6 3 3 6 3 17.5 14.5"/>
                                             <line x1="13" y1="19" x2="19" y2="13"/>
                                             <line x1="16" y1="16" x2="20" y2="20"/>
@@ -743,7 +743,7 @@ export function renderLanding() {
                                         <span class="rv-player-growth leading">+8.1%</span>
                                     </div>
                                     <div class="rv-vs-divider">
-                                        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#475569" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                                        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#CBD5E1" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round">
                                             <polyline points="14.5 17.5 3 6 3 3 6 3 17.5 14.5"/>
                                             <line x1="13" y1="19" x2="19" y2="13"/>
                                             <line x1="16" y1="16" x2="20" y2="20"/>

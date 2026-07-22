@@ -393,26 +393,38 @@ export const landingCSS = `
     background: #7A1220 !important;
     color: #fff !important;
     border: 1.5px solid #7A1220 !important;
-}
-.lbtn-r:hover {
-    background: #640E1A !important;
-    border-color: #640E1A !important;
-    box-shadow: none !important;
-    transform: none !important;
+    transition: all 0.3s cubic-bezier(.16, 1, 0.3, 1) !important;
 }
 .lbtn-r::after {
-    display: none !important;
+    content: ' →';
+    display: inline-block !important;
+    opacity: 0;
+    transform: translateX(-6px);
+    transition: all 0.25s cubic-bezier(.16, 1, 0.3, 1);
+}
+.lbtn-r:hover {
+    background: #9A1829 !important;
+    border-color: #9A1829 !important;
+    box-shadow: 0 8px 28px rgba(122, 18, 32, 0.45) !important;
+    transform: translateY(-2px) scale(1.02) !important;
+}
+.lbtn-r:hover::after {
+    opacity: 1;
+    transform: translateX(0);
+    margin-left: 6px;
 }
 .lbtn-g {
     background: transparent !important;
     color: var(--t1) !important;
     border: 1.5px solid var(--t1) !important;
+    transition: all 0.3s cubic-bezier(.16, 1, 0.3, 1) !important;
 }
 .lbtn-g:hover {
     background: var(--t1) !important;
     color: #fff !important;
     border-color: var(--t1) !important;
-    transform: none !important;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15) !important;
+    transform: translateY(-2px) scale(1.02) !important;
 }
 
 /* ═══ HERO LEFT COLUMN (CLEAN KASPA REFERENCE STYLE) ═══ */
@@ -1392,9 +1404,8 @@ export const landingCSS = `
 .lcard-row:last-of-type{border:none}
 .lcard-row .k{color:var(--t3)}
 .lcard-row .v{font-weight:600;color:var(--t1)}
-.lcard-btn{margin-top:auto;padding-top:20px}
 .lcard-btn button{width:100%;height:44px;background:var(--t1);color:#fff;font-size:11px;font-weight:600;letter-spacing:1px;text-transform:uppercase;border:none;cursor:pointer;transition:all 0.3s cubic-bezier(0.16, 1, 0.3, 1);position:relative;overflow:hidden;display:inline-flex;align-items:center;justify-content:center}
-.lcard-btn button:hover{background:var(--r);transform:scale(1.02)}
+.lcard-btn button:hover{background:#7A1220 !important;transform:translateY(-2px) scale(1.02);box-shadow:0 8px 24px rgba(122, 18, 32, 0.4)}
 .lcard-btn button::after{content:'→';opacity:0;transform:translateX(-6px);transition:all .25s cubic-bezier(.16, 1, 0.3, 1);display:inline-block;width:0;margin-left:0}
 .lcard-btn button:hover::after{opacity:1;transform:translateX(0);width:auto;margin-left:6px}
 

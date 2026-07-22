@@ -60,6 +60,7 @@
     letter-spacing: 1px !important;
     font-weight: normal !important;
     text-transform: uppercase !important;
+    color: #111111 !important;
 }
 /* Override Inter's slashed zero with a clean zero from system fonts */
 @font-face {

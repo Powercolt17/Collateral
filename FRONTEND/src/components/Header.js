@@ -975,7 +975,7 @@ export function renderHeader(currentRoute) {
             <div class="ch-header-inner">
                 <!-- Logo -->
                 <a href="#" onclick="window.router.navigate('/'); return false;" class="ch-logo">
-                    <span class="logo-wordmark">COLLA<span style="color: #5C1414;">TERAL</span></span>
+                    <span class="logo-wordmark">COLLATERAL</span>
                 </a>
 
                 <!-- Nav Links (desktop) -->

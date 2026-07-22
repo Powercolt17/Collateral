@@ -328,283 +328,255 @@ export function renderLanding() {
 
 
 
-            <!-- ═══ CONTRACT EXECUTION MODES (PREMIUM 40/60 SPLIT) ═══ -->
-            <div class="lw" style="padding-top: 90px; padding-bottom: 50px;">
-                <div class="ltypes-asymmetric" data-r>
-                    <!-- LEFT COLUMN (40%): CLEAR PRODUCT EXPLANATION & SELECTABLE MODES -->
-                    <div class="ltypes-left">
-                        <div class="lred-dash reveal-item"><span class="lmono">Contract Execution Modes</span></div>
-                        <h2 class="ltypes-headline reveal-item">SOLO OR<br><span class="lh-gradient">RIVALRY.</span></h2>
-                        <p class="ltypes-sub reveal-item" style="font-size: 14.5px; line-height: 1.5; color: #475569; margin-bottom: 20px;">Put money behind your commitment. Complete the goal and the contract pays automatically. Miss it and the rules enforce themselves.</p>
+            <!-- ═══ CONTRACT EXECUTION MODES (SIGNATURE INTERACTIVE OS TERMINAL) ═══ -->
+            <div class="lw" style="padding-top: 90px; padding-bottom: 60px;">
+                <!-- SECTION HEADER WITH BRAND PROMISE -->
+                <div style="text-align: center; max-width: 760px; margin: 0 auto 36px;" data-r>
+                    <div class="lred-dash reveal-item" style="justify-content: center;"><span class="lmono">Financial Protocol Engine</span></div>
+                    <h2 class="ltypes-headline reveal-item" style="font-size: clamp(26px, 5vw, 42px); line-height: 1.1; margin: 12px 0 16px;">WHEN MONEY IS ON THE LINE,<br><span class="lh-gradient">INTENTIONS BECOME ACTIONS.</span></h2>
+                    <p class="ltypes-sub reveal-item" style="font-size: 16px; line-height: 1.6; color: #475569; margin: 0 auto;">People break promises. Money doesn't. Collateral is the first financial protocol that turns commitments into automated escrow contracts.</p>
+                </div>
 
-                        <!-- SELECTABLE PRODUCT MODE CARDS -->
+                <!-- SEGMENTED INTERACTIVE MODE TOGGLE -->
+                <div class="lterm-switcher-row reveal-item" data-r>
+                    <div class="lterm-segmented-control">
+                        <button class="lterm-tab-btn active" id="tab-solo-btn" onclick="window.switchProtocolMode('solo')">
+                            <span>SOLO CONTRACT</span>
+                        </button>
+                        <button class="lterm-tab-btn" id="tab-rivalry-btn" onclick="window.switchProtocolMode('rivalry')">
+                            <span>RIVALRY CONTRACT</span>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="ltypes-asymmetric" data-r>
+                    <!-- LEFT COLUMN (38%): PRODUCT UTILITY CARDS -->
+                    <div class="ltypes-left">
                         <div class="ltypes-modes-wrap reveal-item">
                             <!-- SOLO CARD -->
-                            <div class="ltypes-mode-card" onclick="window.app.goAction('/market', 'signup')">
+                            <div class="ltypes-mode-card active" id="card-mode-solo" onclick="window.switchProtocolMode('solo')">
                                 <div class="lmode-badge solo">SOLO</div>
                                 <div class="lmode-title">Stake Against Yourself</div>
-                                <div class="lmode-bullets">
-                                    <div class="lmode-bullet-item"><span class="b-check">✓</span> Stake against yourself</div>
-                                    <div class="lmode-bullet-item"><span class="b-check">✓</span> Keep your principal</div>
-                                    <div class="lmode-bullet-item"><span class="b-check">✓</span> Earn execution rewards</div>
+                                <div class="lmode-tagline">The discipline contract.</div>
+                                
+                                <div class="lmode-tags-hdr">Perfect for:</div>
+                                <div class="lmode-tags-pills">
+                                    <span class="lmode-tag-pill">Fitness</span>
+                                    <span class="lmode-tag-pill">Business</span>
+                                    <span class="lmode-tag-pill">Learning</span>
+                                    <span class="lmode-tag-pill">Investing</span>
                                 </div>
-                                <div class="lmode-cta-link">START SOLO <span>→</span></div>
+
+                                <div class="lmode-stat-divider"></div>
+                                <div class="lmode-stat-row">
+                                    <span class="lmode-stat-lbl">AVG COMPLETION</span>
+                                    <span class="lmode-stat-val green">82% SUCCESS</span>
+                                </div>
+                                <div class="lmode-cta-link">TEST SOLO MODE <span>→</span></div>
                             </div>
 
-                            <!-- RIVALRY CARD (ACTIVE HIGHLIGHT) -->
-                            <div class="ltypes-mode-card highlight" onclick="window.router.navigate('/rivalry/7B92A41E')">
+                            <!-- RIVALRY CARD -->
+                            <div class="ltypes-mode-card highlight" id="card-mode-rivalry" onclick="window.switchProtocolMode('rivalry')">
                                 <div class="lmode-badge rivalry">RIVALRY</div>
                                 <div class="lmode-title">Stake Head-to-Head</div>
-                                <div class="lmode-bullets">
-                                    <div class="lmode-bullet-item"><span class="b-check">✓</span> Two people lock capital</div>
-                                    <div class="lmode-bullet-item"><span class="b-check">✓</span> Verified winner</div>
-                                    <div class="lmode-bullet-item"><span class="b-check">✓</span> Winner receives escrow</div>
+                                <div class="lmode-tagline">Winner takes all.</div>
+                                
+                                <div class="lmode-tags-hdr">Perfect for:</div>
+                                <div class="lmode-tags-pills">
+                                    <span class="lmode-tag-pill">Creators</span>
+                                    <span class="lmode-tag-pill">Founders</span>
+                                    <span class="lmode-tag-pill">Sports</span>
+                                    <span class="lmode-tag-pill">Challenges</span>
                                 </div>
-                                <div class="lmode-cta-link">START RIVALRY <span>→</span></div>
+
+                                <div class="lmode-stat-divider"></div>
+                                <div class="lmode-stat-row">
+                                    <span class="lmode-stat-lbl">AVG POOL</span>
+                                    <span class="lmode-stat-val">$4,250 ESCROW</span>
+                                </div>
+                                <div class="lmode-cta-link">TEST RIVALRY MODE <span>→</span></div>
                             </div>
                         </div>
 
-                        <!-- HORIZONTAL PROCESS TIMELINE -->
-                        <div class="ltypes-timeline-wrap reveal-item">
-                            <div class="ltypes-timeline-grid">
-                                <div class="ltimeline-step">
-                                    <div class="ltimeline-icon">
-                                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#7A1C2B" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
-                                    </div>
-                                    <span class="ltimeline-text">Lock Capital</span>
-                                </div>
-                                <div class="ltimeline-arrow">→</div>
-                                <div class="ltimeline-step">
-                                    <div class="ltimeline-icon">
-                                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#166534" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
-                                    </div>
-                                    <span class="ltimeline-text">Complete Goal</span>
-                                </div>
-                                <div class="ltimeline-arrow">→</div>
-                                <div class="ltimeline-step">
-                                    <div class="ltimeline-icon">
-                                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#166534" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
-                                    </div>
-                                    <span class="ltimeline-text">Auto Settlement</span>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="ltypes-cta-wrap reveal-item">
-                            <button class="lbtn lbtn-r" id="ltypes-start-cta" onclick="window.app.goAction('/market', 'signup')">
-                                EXPLORE OPEN MARKETS <span class="lbtn-arrow">→</span>
+                        <div class="ltypes-cta-wrap reveal-item" style="margin-top: 10px;">
+                            <button class="lbtn lbtn-r" style="width: 100%;" id="ltypes-start-cta" onclick="window.app.goAction('/market', 'signup')">
+                                CREATE CONTRACT NOW <span class="lbtn-arrow">→</span>
                             </button>
                         </div>
                     </div>
 
-                    <!-- RIGHT COLUMN (60%): HERO INSTITUTIONAL VISUALIZER -->
+                    <!-- RIGHT COLUMN (62%): MORPHING OPERATING SYSTEM CONTRACT TERMINAL -->
                     <div class="ltypes-right">
-                        <div class="rv-container reveal-item" style="width: 100%; max-width: 660px; margin: 0 auto;">
-                            <style>
-                                .rv-dot { opacity: 0; }
-                                @media (prefers-reduced-motion: no-preference) {
-                                    .rv-lock-pulse { animation: rvBreath 3.2s ease-in-out infinite; }
-                                    .rv-dL { animation: rvDeskL 2.6s ease-in-out infinite; }
-                                    .rv-dR { animation: rvDeskR 2.6s ease-in-out infinite; }
-                                    .rv-dP { animation: rvDeskP 3.2s ease-in-out infinite 0.6s; }
-                                    .rv-mL { animation: rvMobL 2.6s ease-in-out infinite; }
-                                    .rv-mR { animation: rvMobR 2.6s ease-in-out infinite; }
-                                    .rv-mP { animation: rvMobP 3.2s ease-in-out infinite 0.6s; }
-                                }
-                                @keyframes rvBreath {
-                                    0%,100% { fill: rgba(122,28,43,0.08); }
-                                    50% { fill: rgba(122,28,43,0.18); }
-                                }
-                                @keyframes rvDeskL {
-                                    0% { transform: translateX(0); opacity: 0; }
-                                    15%,70% { opacity: 1; }
-                                    100% { transform: translateX(80px); opacity: 0; }
-                                }
-                                @keyframes rvDeskR {
-                                    0% { transform: translateX(0); opacity: 0; }
-                                    15%,70% { opacity: 1; }
-                                    100% { transform: translateX(-80px); opacity: 0; }
-                                }
-                                @keyframes rvDeskP {
-                                    0% { transform: translateY(0); opacity: 0; }
-                                    20%,75% { opacity: 1; }
-                                    100% { transform: translateY(42px); opacity: 0; }
-                                }
-                                @keyframes rvMobL {
-                                    0% { transform: translate(0,0); opacity: 0; }
-                                    15%,75% { opacity: 1; }
-                                    100% { transform: translate(52px,66px); opacity: 0; }
-                                }
-                                @keyframes rvMobR {
-                                    0% { transform: translate(0,0); opacity: 0; }
-                                    15%,75% { opacity: 1; }
-                                    100% { transform: translate(-52px,66px); opacity: 0; }
-                                }
-                                @keyframes rvMobP {
-                                    0% { transform: translateY(0); opacity: 0; }
-                                    20%,75% { opacity: 1; }
-                                    100% { transform: translateY(40px); opacity: 0; }
-                                }
-                                @media (min-width: 641px) {
-                                    .rv-desk-svg { display: block !important; }
-                                    .rv-mob-svg { display: none !important; }
-                                }
-                                @media (max-width: 640px) {
-                                    .rv-desk-svg { display: none !important; }
-                                    .rv-mob-svg { display: block !important; }
-                                }
-                            </style>
+                        <div class="lproto-term-window reveal-item" id="protocol-terminal">
+                            <!-- Window Titlebar -->
+                            <div class="lterm-bar">
+                                <div class="lterm-dots">
+                                    <span class="dot red"></span>
+                                    <span class="dot yellow"></span>
+                                    <span class="dot green"></span>
+                                </div>
+                                <div class="lterm-title" id="term-header-title">CONTRACT #SOLO-8124 — DISCIPLINE ENGINE</div>
+                                <div class="lterm-status-badge live" id="term-header-badge">
+                                    <span class="pulse-dot"></span> <span id="term-badge-text">LIVE EXECUTION</span>
+                                </div>
+                            </div>
 
-                            <!-- DESKTOP PURE SVG CANVAS (20% larger hero size with ambient glow) -->
-                            <svg class="rv-desk-svg" viewBox="0 0 720 420" style="width: 100%; height: auto; display: block;" xmlns="http://www.w3.org/2000/svg">
-                                <defs>
-                                    <marker id="arrM" markerWidth="7" markerHeight="7" refX="5" refY="3.5" orient="auto">
-                                        <path d="M0 0 L7 3.5 L0 7 Z" fill="#7A1C2B" />
-                                    </marker>
-                                    <marker id="arrG" markerWidth="7" markerHeight="7" refX="5" refY="3.5" orient="auto">
-                                        <path d="M0 0 L7 3.5 L0 7 Z" fill="#3F9D5A" />
-                                    </marker>
-                                    <radialGradient id="ambientGlow" cx="50%" cy="45%" r="50%">
-                                        <stop offset="0%" stop-color="#7A1C2B" stop-opacity="0.14" />
-                                        <stop offset="100%" stop-color="#F5F1EA" stop-opacity="0" />
-                                    </radialGradient>
-                                    <filter id="cardShadow" x="-10%" y="-10%" width="120%" height="130%">
-                                        <feDropShadow dx="0" dy="8" stdDeviation="12" flood-color="#1C2333" flood-opacity="0.08" />
-                                    </filter>
-                                    <filter id="vaultShadow" x="-10%" y="-10%" width="120%" height="130%">
-                                        <feDropShadow dx="0" dy="18" stdDeviation="23" flood-color="#7A1C2B" flood-opacity="0.22" />
-                                    </filter>
-                                    <filter id="payoutShadow" x="-10%" y="-10%" width="120%" height="130%">
-                                        <feDropShadow dx="0" dy="8" stdDeviation="11" flood-color="#3F9D5A" flood-opacity="0.15" />
-                                    </filter>
-                                </defs>
+                            <!-- Terminal Container Content (Dynamically Morphed by Switcher) -->
+                            <div class="lterm-body" id="term-body-content">
+                                <!-- SOLO TERMINAL CONTENT (DEFAULT) -->
+                                <div class="lterm-hero-row">
+                                    <div class="lterm-metric-box">
+                                        <span class="lbl">TARGET GOAL METRIC</span>
+                                        <span class="val">+15.0% Shopify Store Sales</span>
+                                    </div>
+                                    <div class="lterm-metric-box right">
+                                        <span class="lbl">CAPITAL LOCKED</span>
+                                        <span class="val green">$1,000.00 USD</span>
+                                    </div>
+                                </div>
 
-                                <!-- Background Card with Ambient Radial Backlighting -->
-                                <rect width="720" height="420" rx="24" fill="#F5F1EA" stroke="rgba(28,35,51,0.08)" stroke-width="1.5"/>
-                                <ellipse cx="360" cy="200" rx="220" ry="130" fill="url(#ambientGlow)"/>
+                                <div class="lterm-grid-metrics">
+                                    <div class="lterm-m"><span class="k">Contract Window</span><span class="v">30 Days (12 Days Left)</span></div>
+                                    <div class="lterm-m"><span class="k">Data Stream Oracle</span><span class="v">Shopify Store API (Verified)</span></div>
+                                    <div class="lterm-m"><span class="k">Escrow Vault Custody</span><span class="v">Automated Escrow</span></div>
+                                    <div class="lterm-m"><span class="k">Oracle Stream Health</span><span class="v green">99.8% Sync Confidence</span></div>
+                                </div>
 
-                                <!-- Lines (leveled to y=200, matching card midlines) -->
-                                <line x1="176" y1="200" x2="268" y2="200" stroke="#B98A92" stroke-width="2" stroke-dasharray="5 5" marker-end="url(#arrM)" />
-                                <line x1="544" y1="200" x2="452" y2="200" stroke="#B98A92" stroke-width="2" stroke-dasharray="5 5" marker-end="url(#arrM)" />
-                                <line x1="360" y1="295" x2="360" y2="345" stroke="#3F9D5A" stroke-width="2" stroke-dasharray="5 5" marker-end="url(#arrG)" />
+                                <div class="lterm-progress-wrap">
+                                    <div class="lterm-progress-hdr">
+                                        <span>AUTOMATED VERIFICATION PROGRESS</span>
+                                        <span class="pct">78.4% COMPLETE</span>
+                                    </div>
+                                    <div class="lterm-progress-track">
+                                        <div class="lterm-progress-fill" style="width: 78.4%;">
+                                            <div class="lterm-progress-glow"></div>
+                                        </div>
+                                    </div>
+                                </div>
 
-                                <!-- Animated Pulse Dots -->
-                                <circle class="rv-dot rv-dL" cx="180" cy="200" r="3.6" fill="#7A1C2B" />
-                                <circle class="rv-dot rv-dR" cx="540" cy="200" r="3.6" fill="#7A1C2B" />
-                                <circle class="rv-dot rv-dP" cx="360" cy="298" r="3.6" fill="#3F9D5A" />
-
-                                <!-- Left Card: CHALLENGER -->
-                                <g transform="translate(20, 150)">
-                                    <rect width="156" height="100" rx="14" fill="#FBF9F5" stroke="rgba(28,35,51,0.08)" filter="url(#cardShadow)"/>
-                                    <text x="16" y="27" fill="#635BFF" font-family="sans-serif" font-size="13" font-weight="800" letter-spacing="-0.5">stripe</text>
-                                    <text x="64" y="27" fill="#7A1C2B" font-family="sans-serif" font-size="10" font-weight="700" letter-spacing="1.4">CHALLENGER</text>
-                                    <text x="16" y="55" fill="#1C2333" font-family="sans-serif" font-size="15" font-weight="700">Revenue +12%</text>
-                                    <text x="16" y="78" fill="#8C8577" font-family="sans-serif" font-size="11.5"><tspan fill="#1C2333" font-weight="600">$1,000</tspan> locked</text>
-                                </g>
-
-                                <!-- Right Card: OPPONENT -->
-                                <g transform="translate(544, 150)">
-                                    <rect width="156" height="100" rx="14" fill="#FBF9F5" stroke="rgba(28,35,51,0.08)" filter="url(#cardShadow)"/>
-                                    <path fill="#0F1115" d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" transform="translate(16, 16) scale(0.55)"/>
-                                    <text x="36" y="27" fill="#7A1C2B" font-family="sans-serif" font-size="10" font-weight="700" letter-spacing="1.4">OPPONENT</text>
-                                    <text x="16" y="55" fill="#1C2333" font-family="sans-serif" font-size="15" font-weight="700">Followers +9%</text>
-                                    <text x="16" y="78" fill="#8C8577" font-family="sans-serif" font-size="11.5"><tspan fill="#1C2333" font-weight="600">$1,000</tspan> locked</text>
-                                </g>
-
-                                <!-- Center Anchor: ESCROW VAULT -->
-                                <g transform="translate(270, 105)">
-                                    <rect width="180" height="190" rx="18" fill="#FFFDFA" stroke="rgba(122,28,43,0.35)" stroke-width="1.5" filter="url(#vaultShadow)"/>
-                                    <!-- Verified Badge -->
-                                    <rect x="45" y="14" width="90" height="22" rx="11" fill="#D9EBDE"/>
-                                    <circle cx="57" cy="25" r="3" fill="#3F9D5A"/>
-                                    <text x="94" y="29" fill="#3F9D5A" font-family="sans-serif" font-size="10" font-weight="700" text-anchor="middle" letter-spacing="0.6">VERIFIED</text>
-                                    <!-- Lock Icon Ring -->
-                                    <circle cx="90" cy="62" r="17" fill="rgba(122,28,43,0.08)" class="rv-lock-pulse"/>
-                                    <path fill="none" stroke="#7A1C2B" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" d="M83 61 V57 a7 7 0 0 1 14 0 v4 M82 61 h16 a1 1 0 0 1 1 1 v8 a1 1 0 0 1 -1 1 h-16 a1 1 0 0 1 -1 -1 v-8 a1 1 0 0 1 1 -1 Z"/>
-                                    <!-- Pool Amount -->
-                                    <text x="90" y="108" fill="#7A1C2B" font-family="sans-serif" font-size="30" font-weight="800" text-anchor="middle" letter-spacing="-0.5">$2,000</text>
-                                    <!-- Title -->
-                                    <text x="90" y="128" fill="#8C8577" font-family="sans-serif" font-size="10.5" font-weight="700" text-anchor="middle" letter-spacing="1.4">ESCROW VAULT</text>
-                                    <!-- Outlined Pill Tag -->
-                                    <rect x="16" y="146" width="148" height="26" rx="13" fill="#FBF9F5" stroke="rgba(28,35,51,0.12)" stroke-width="1"/>
-                                    <text x="90" y="163" fill="#1C2333" font-family="sans-serif" font-size="10.5" font-weight="600" text-anchor="middle" letter-spacing="0.4">WINNER TAKES POOL</text>
-                                </g>
-
-                                <!-- Bottom Endpoint: PAYOUT PILL -->
-                                <g transform="translate(200, 345)">
-                                    <rect width="320" height="42" rx="21" fill="#FBF9F5" stroke="#D9EBDE" stroke-width="1.5" filter="url(#payoutShadow)"/>
-                                    <circle cx="25" cy="21" r="11" fill="#3F9D5A"/>
-                                    <path fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" d="m20 21 3.2 3.2L28 17.6"/>
-                                    <text x="48" y="25" fill="#1C2333" font-family="sans-serif" font-size="13">Winner receives <tspan font-weight="700">$2,000</tspan> <tspan fill="#8C8577">automatically</tspan></text>
-                                </g>
-                            </svg>
-
-                            <!-- MOBILE PURE SVG CANVAS -->
-                            <svg class="rv-mob-svg" viewBox="0 0 360 500" style="width: 100%; height: auto; display: block;" xmlns="http://www.w3.org/2000/svg">
-                                <defs>
-                                    <marker id="arrM2" markerWidth="7" markerHeight="7" refX="5" refY="3.5" orient="auto">
-                                        <path d="M0 0 L7 3.5 L0 7 Z" fill="#7A1C2B" />
-                                    </marker>
-                                    <marker id="arrG2" markerWidth="7" markerHeight="7" refX="5" refY="3.5" orient="auto">
-                                        <path d="M0 0 L7 3.5 L0 7 Z" fill="#3F9D5A" />
-                                    </marker>
-                                </defs>
-
-                                <!-- Background Card -->
-                                <rect width="360" height="500" rx="20" fill="#F5F1EA" stroke="rgba(28,35,51,0.08)" stroke-width="1.5"/>
-
-                                <line x1="96" y1="145" x2="152" y2="210" stroke="#B98A92" stroke-width="2" stroke-dasharray="5 5" marker-end="url(#arrM2)" />
-                                <line x1="264" y1="145" x2="208" y2="210" stroke="#B98A92" stroke-width="2" stroke-dasharray="5 5" marker-end="url(#arrM2)" />
-                                <line x1="180" y1="365" x2="180" y2="415" stroke="#3F9D5A" stroke-width="2" stroke-dasharray="5 5" marker-end="url(#arrG2)" />
-
-                                <circle class="rv-dot rv-mL" cx="96" cy="145" r="3.6" fill="#7A1C2B" />
-                                <circle class="rv-dot rv-mR" cx="264" cy="145" r="3.6" fill="#7A1C2B" />
-                                <circle class="rv-dot rv-mP" cx="180" cy="368" r="3.6" fill="#3F9D5A" />
-
-                                <!-- Left Card Mobile -->
-                                <g transform="translate(18, 50)">
-                                    <rect width="140" height="90" rx="12" fill="#FBF9F5" stroke="rgba(28,35,51,0.08)"/>
-                                    <text x="12" y="24" fill="#635BFF" font-family="sans-serif" font-size="12" font-weight="800" letter-spacing="-0.5">stripe</text>
-                                    <text x="56" y="24" fill="#7A1C2B" font-family="sans-serif" font-size="9" font-weight="700" letter-spacing="1.2">CHALLENGER</text>
-                                    <text x="12" y="48" fill="#1C2333" font-family="sans-serif" font-size="13" font-weight="700">Revenue +12%</text>
-                                    <text x="12" y="68" fill="#8C8577" font-family="sans-serif" font-size="10.5"><tspan fill="#1C2333" font-weight="600">$1,000</tspan> locked</text>
-                                </g>
-
-                                <!-- Right Card Mobile -->
-                                <g transform="translate(202, 50)">
-                                    <rect width="140" height="90" rx="12" fill="#FBF9F5" stroke="rgba(28,35,51,0.08)"/>
-                                    <path fill="#0F1115" d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" transform="translate(12, 14) scale(0.5)"/>
-                                    <text x="32" y="24" fill="#7A1C2B" font-family="sans-serif" font-size="9" font-weight="700" letter-spacing="1.2">OPPONENT</text>
-                                    <text x="12" y="48" fill="#1C2333" font-family="sans-serif" font-size="13" font-weight="700">Followers +9%</text>
-                                    <text x="12" y="68" fill="#8C8577" font-family="sans-serif" font-size="10.5"><tspan fill="#1C2333" font-weight="600">$1,000</tspan> locked</text>
-                                </g>
-
-                                <!-- Escrow Vault Mobile -->
-                                <g transform="translate(105, 195)">
-                                    <rect width="150" height="170" rx="16" fill="#FFFDFA" stroke="rgba(122,28,43,0.35)" stroke-width="1.5"/>
-                                    <rect x="35" y="12" width="80" height="20" rx="10" fill="#D9EBDE"/>
-                                    <circle cx="45" cy="22" r="2.5" fill="#3F9D5A"/>
-                                    <text x="80" y="25" fill="#3F9D5A" font-family="sans-serif" font-size="9" font-weight="700" text-anchor="middle" letter-spacing="0.5">VERIFIED</text>
-                                    <circle cx="75" cy="54" r="15" fill="rgba(122,28,43,0.08)"/>
-                                    <path fill="none" stroke="#7A1C2B" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" d="M69 53 V49 a6 6 0 0 1 12 0 v4 M68 53 h14 a1 1 0 0 1 1 1 v7 a1 1 0 0 1 -1 1 h-14 a1 1 0 0 1 -1 -1 v-7 a1 1 0 0 1 1 -1 Z"/>
-                                    <text x="75" y="96" fill="#7A1C2B" font-family="sans-serif" font-size="26" font-weight="800" text-anchor="middle" letter-spacing="-0.5">$2,000</text>
-                                    <text x="75" y="114" fill="#8C8577" font-family="sans-serif" font-size="9.5" font-weight="700" text-anchor="middle" letter-spacing="1.2">ESCROW VAULT</text>
-                                    <rect x="15" y="128" width="120" height="22" rx="11" fill="#FBF9F5" stroke="rgba(28,35,51,0.12)" stroke-width="1"/>
-                                    <text x="75" y="143" fill="#1C2333" font-family="sans-serif" font-size="9.5" font-weight="600" text-anchor="middle" letter-spacing="0.4">WINNER TAKES POOL</text>
-                                </g>
-
-                                <!-- Bottom Endpoint Mobile -->
-                                <g transform="translate(45, 415)">
-                                    <rect width="270" height="38" rx="19" fill="#FBF9F5" stroke="#D9EBDE" stroke-width="1.5"/>
-                                    <circle cx="20" cy="19" r="9.5" fill="#3F9D5A"/>
-                                    <path fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="m16 19 2.8 2.8L23 16"/>
-                                    <text x="38" y="23" fill="#1C2333" font-family="sans-serif" font-size="11.5">Winner receives <tspan font-weight="700">$2,000</tspan> <tspan fill="#8C8577">automatically</tspan></text>
-                                </g>
-                            </svg>
+                                <div class="lterm-rules-box">
+                                    <div class="lterm-rule pass">
+                                        <span class="ic">✓</span>
+                                        <div class="txt"><strong>IF GOAL VERIFIED:</strong> $1,000 Principal Retained + $120 Execution Yield</div>
+                                    </div>
+                                    <div class="lterm-rule fail">
+                                        <span class="ic">✗</span>
+                                        <div class="txt"><strong>IF TARGET MISSED:</strong> Deposit forfeited to protocol yield pool</div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
+
+            <script>
+                window.switchProtocolMode = function(mode) {
+                    var soloBtn = document.getElementById('tab-solo-btn');
+                    var rivalryBtn = document.getElementById('tab-rivalry-btn');
+                    var soloCard = document.getElementById('card-mode-solo');
+                    var rivalryCard = document.getElementById('card-mode-rivalry');
+                    var termTitle = document.getElementById('term-header-title');
+                    var termBadge = document.getElementById('term-header-badge');
+                    var badgeText = document.getElementById('term-badge-text');
+                    var termBody = document.getElementById('term-body-content');
+
+                    if (!soloBtn || !termBody) return;
+
+                    if (mode === 'solo') {
+                        soloBtn.classList.add('active');
+                        rivalryBtn.classList.remove('active');
+                        soloCard.classList.add('active');
+                        rivalryCard.classList.remove('active');
+
+                        termTitle.innerText = "CONTRACT #SOLO-8124 — DISCIPLINE ENGINE";
+                        termBadge.className = "lterm-status-badge live";
+                        badgeText.innerText = "LIVE EXECUTION";
+
+                        termBody.innerHTML = `
+                            <div class="lterm-hero-row">
+                                <div class="lterm-metric-box">
+                                    <span class="lbl">TARGET GOAL METRIC</span>
+                                    <span class="val">+15.0% Shopify Store Sales</span>
+                                </div>
+                                <div class="lterm-metric-box right">
+                                    <span class="lbl">CAPITAL LOCKED</span>
+                                    <span class="val green">$1,000.00 USD</span>
+                                </div>
+                            </div>
+
+                            <div class="lterm-grid-metrics">
+                                <div class="lterm-m"><span class="k">Contract Window</span><span class="v">30 Days (12 Days Left)</span></div>
+                                <div class="lterm-m"><span class="k">Data Stream Oracle</span><span class="v">Shopify Store API (Verified)</span></div>
+                                <div class="lterm-m"><span class="k">Escrow Vault Custody</span><span class="v">Automated Escrow</span></div>
+                                <div class="lterm-m"><span class="k">Oracle Stream Health</span><span class="v green">99.8% Sync Confidence</span></div>
+                            </div>
+
+                            <div class="lterm-progress-wrap">
+                                <div class="lterm-progress-hdr">
+                                    <span>AUTOMATED VERIFICATION PROGRESS</span>
+                                    <span class="pct">78.4% COMPLETE</span>
+                                </div>
+                                <div class="lterm-progress-track">
+                                    <div class="lterm-progress-fill" style="width: 78.4%;">
+                                        <div class="lterm-progress-glow"></div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="lterm-rules-box">
+                                <div class="lterm-rule pass">
+                                    <span class="ic">✓</span>
+                                    <div class="txt"><strong>IF GOAL VERIFIED:</strong> $1,000 Principal Retained + $120 Execution Yield</div>
+                                </div>
+                                <div class="lterm-rule fail">
+                                    <span class="ic">✗</span>
+                                    <div class="txt"><strong>IF TARGET MISSED:</strong> Deposit forfeited to protocol yield pool</div>
+                                </div>
+                            </div>
+                        `;
+                    } else {
+                        rivalryBtn.classList.add('active');
+                        soloBtn.classList.remove('active');
+                        rivalryCard.classList.add('active');
+                        soloCard.classList.remove('active');
+
+                        termTitle.innerText = "DUEL #RIVAL-3406 — HEAD-TO-HEAD ESCROW";
+                        termBadge.className = "lterm-status-badge rivalry";
+                        badgeText.innerText = "ESCROW LOCKED";
+
+                        termBody.innerHTML = `
+                            <div class="lterm-matchup-row">
+                                <div class="lterm-player-card challenger">
+                                    <span class="tag">CHALLENGER</span>
+                                    <span class="handle">@revpilot</span>
+                                    <span class="metric">+12.4% Rev</span>
+                                    <span class="stake">$1,000 LOCKED</span>
+                                </div>
+                                <div class="lterm-vs-badge">VS</div>
+                                <div class="lterm-player-card opponent">
+                                    <span class="tag">OPPONENT</span>
+                                    <span class="handle">@dev_sarah</span>
+                                    <span class="metric">+9.1% Followers</span>
+                                    <span class="stake">$1,000 LOCKED</span>
+                                </div>
+                            </div>
+
+                            <div class="lterm-vault-core">
+                                <span class="v-lbl">VERIFIED ESCROW VAULT POOL</span>
+                                <span class="v-val">$2,000.00 USD</span>
+                                <span class="v-sub">🔒 Smart Escrow Contract Active • 3 Days Remaining</span>
+                            </div>
+
+                            <div class="lterm-telemetry">
+                                <div class="t-line"><span class="ts">[17:24:02]</span> Oracles Synced: Stripe Connect API & X Data Feed</div>
+                                <div class="t-line"><span class="ts">[17:24:05]</span> Metric Verified: @revpilot leading growth battle by +3.3%</div>
+                                <div class="t-line green"><span class="ts">[17:24:09]</span> Auto Settlement: Winner receives full $2,000 pool upon deadline</div>
+                            </div>
+                        `;
+                    }
+                };
+            </script>
 
 
 

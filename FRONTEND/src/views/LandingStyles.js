@@ -78,51 +78,12 @@ export const landingCSS = `
     background: #FAF8F5 !important;
 }
 
-/* Rotated Institutional Grid Layer (Full-Bleed Seam Fix) */
-.lhero-bg-grid {
-    display: none !important;
-}
-
-/* Drifting Radial Light Orb */
-.lhero-bg-light-orb {
-    position: absolute;
-    top: -20%;
-    left: 20%;
-    width: 900px;
-    height: 900px;
-    border-radius: 50%;
-    background: radial-gradient(circle, rgba(20, 18, 31, 0.035) 0%, rgba(250, 249, 247, 0) 70%);
-    pointer-events: none !important;
-    z-index: 0 !important;
-    animation: driftLightOrb 18s ease-in-out infinite alternate;
-}
-
-@keyframes driftLightOrb {
-    0% { transform: translate(0, 0) scale(1); }
-    50% { transform: translate(120px, 60px) scale(1.1); }
-    100% { transform: translate(-80px, 40px) scale(0.95); }
-}
-
-/* Subtle 2.5% Paper Grain Noise Overlay */
-.lhero-section::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    pointer-events: none !important;
-    z-index: 0 !important;
-    opacity: 0.025;
-    mix-blend-mode: multiply;
-    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
-}
-
-/* Soft Edge Vignette Overlay */
+/* Rotated Institutional Grid Layer & Light Orb Overlays Disabled for Pure #FAF8F5 Background */
+.lhero-bg-grid,
+.lhero-bg-light-orb,
+.lhero-section::before,
 .lhero-section::after {
-    content: '';
-    position: absolute;
-    inset: 0;
-    pointer-events: none !important;
-    z-index: 0 !important;
-    background: radial-gradient(ellipse at center, transparent 55%, rgba(20, 18, 31, 0.035) 100%);
+    display: none !important;
 }
 
 /* ═══ MOUSE-FOLLOWING SPOTLIGHT & PHYSICAL CARD ELEVATION ═══ */

@@ -3033,11 +3033,80 @@ export const landingCSS = `
     display: flex;
     flex-direction: column;
     gap: 24px;
+    align-items: center;
+    justify-content: center;
 }
 
-.ltype-art { width: 100%; display: flex; justify-content: center; margin-bottom: 20px; }
-.ltype-art img { width: 100%; max-width: 280px; height: auto; aspect-ratio: 1/1; object-fit: contain; }
-.rivalry-art img { border-radius: 12px; }
+/* ═══ IMAGE-ONLY MODE CAROUSEL ═══ */
+.mode-image-carousel {
+    position: relative;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+}
+.mode-carousel-viewport {
+    position: relative;
+    width: 100%;
+    max-width: 420px;
+    aspect-ratio: 1 / 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    border-radius: 16px;
+}
+.mode-carousel-slide {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.8s ease-in-out, visibility 0.8s ease-in-out;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.mode-carousel-slide.active {
+    opacity: 1;
+    visibility: visible;
+}
+.mode-carousel-slide picture,
+.mode-carousel-slide img {
+    width: 100%;
+    height: 100%;
+    max-width: 420px;
+    aspect-ratio: 1 / 1;
+    object-fit: contain;
+    display: block;
+}
+.mode-carousel-slide#mode-slide-1 img {
+    border-radius: 16px;
+}
+
+.mode-carousel-dots {
+    display: flex;
+    gap: 8px;
+    justify-content: center;
+    align-items: center;
+}
+.mode-carousel-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: #CBD5E1;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+.mode-carousel-dot.active {
+    width: 24px;
+    border-radius: 4px;
+    background: #0F172A;
+}
 
 
 .ltype-row {

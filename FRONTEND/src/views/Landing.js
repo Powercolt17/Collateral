@@ -358,54 +358,25 @@ export function renderLanding() {
                     </div>
 
                     <div class="ltypes-right">
-                        <!-- SOLO CARD -->
-                        <div class="ltype-row is-solo reveal-item">
-                            <div class="ltype-art solo-art">
-                              <picture>
-                                <source srcset="/assets/images/solo-seal.webp" type="image/webp">
-                                <img src="/assets/images/solo-seal.png" alt="A hand pressing a wax seal onto a coin, locking a personal deposit." loading="lazy" width="280" height="280">
-                              </picture>
+                        <!-- IMAGE-ONLY MODE CAROUSEL -->
+                        <div class="mode-image-carousel" id="mode-image-carousel">
+                            <div class="mode-carousel-viewport">
+                                <div class="mode-carousel-slide active" id="mode-slide-0">
+                                    <picture>
+                                        <source srcset="/assets/images/solo-seal.webp" type="image/webp">
+                                        <img src="/assets/images/solo-seal.png" alt="Solo Mode Seal" loading="eager">
+                                    </picture>
+                                </div>
+                                <div class="mode-carousel-slide" id="mode-slide-1">
+                                    <picture>
+                                        <source srcset="/assets/images/rivalry-seal.webp" type="image/webp">
+                                        <img src="/assets/images/rivalry-seal.png" alt="Rivalry Mode Seal" loading="lazy">
+                                    </picture>
+                                </div>
                             </div>
-                            <div class="ltype-card-top">
-                                <span class="ltype-badge-new">Solo Mode</span>
-                                <span class="ltype-stat-pill">22 Active Contracts</span>
-                            </div>
-                            <h3 class="ltype-title-new">You vs. Yourself</h3>
-                            <p class="ltype-desc-new">Lock deposits to force yourself to execute. Hit targets to win; fail and forfeit capital.</p>
-                            <div class="ltype-stat-row">
-                                <span class="ltype-stat-k">Typical Deposit:</span>
-                                <span class="ltype-stat-v">$100 – $3,000</span>
-                            </div>
-                            <div class="ltype-meta-new">
-                                <span class="lmeta-label">Best for</span>
-                                <span class="lmeta-tag">Milestones</span>
-                                <span class="lmeta-tag">Shipping code</span>
-                                <span class="lmeta-tag">Audience building</span>
-                            </div>
-                        </div>
-
-                        <!-- RIVALRY CARD -->
-                        <div class="ltype-row is-rivalry reveal-item">
-                            <div class="ltype-art rivalry-art">
-                              <picture>
-                                <source srcset="/assets/images/rivalry-seal.webp" type="image/webp">
-                                <img src="/assets/images/rivalry-seal.png" alt="Two hands sealing deposits onto one shared pot." loading="lazy" width="280" height="280">
-                              </picture>
-                            </div>
-                            <div class="ltype-card-top">
-                                <span class="ltype-badge-new secondary">Rivalry Mode</span>
-                                <span class="ltype-stat-pill secondary">48 Active Duels</span>
-                            </div>
-                            <h3 class="ltype-title-new">You vs. Competitors</h3>
-                            <p class="ltype-desc-new">Lock equal deposits in a head-to-head race. Winner takes the entire pool.</p>
-                            <div class="ltype-stat-row">
-                                <span class="ltype-stat-k">Typical Deposit:</span>
-                                <span class="ltype-stat-v">$250 – $5,000</span>
-                            </div>
-                            <div class="ltype-meta-new">
-                                <span class="lmeta-label">Best for</span>
-                                <span class="lmeta-tag">Audience races</span>
-                                <span class="lmeta-tag">Competitive fire</span>
+                            <div class="mode-carousel-dots">
+                                <span class="mode-carousel-dot active" id="mode-img-dot-0" data-slide="0"></span>
+                                <span class="mode-carousel-dot" id="mode-img-dot-1" data-slide="1"></span>
                             </div>
                         </div>
                     </div>
@@ -1346,6 +1317,26 @@ export function initLanding() {
             el.style.animation = 'none';
         });
     }, 1000);
+
+    // ═══ IMAGE-ONLY CAROUSEL AUTO-ROTATE (EVERY 4s) ═══
+    let imgCarouselIndex = 0;
+    setInterval(() => {
+        imgCarouselIndex = (imgCarouselIndex + 1) % 2;
+        const slides = [document.getElementById('mode-slide-0'), document.getElementById('mode-slide-1')];
+        const dots = [document.getElementById('mode-img-dot-0'), document.getElementById('mode-img-dot-1')];
+        slides.forEach((s, idx) => {
+            if (s) {
+                if (idx === imgCarouselIndex) s.classList.add('active');
+                else s.classList.remove('active');
+            }
+        });
+        dots.forEach((d, idx) => {
+            if (d) {
+                if (idx === imgCarouselIndex) d.classList.add('active');
+                else d.classList.remove('active');
+            }
+        });
+    }, 4000);
 
     // Update nav CTA text if logged in
     const navCta = document.getElementById('lp-nav-cta');

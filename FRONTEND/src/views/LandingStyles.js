@@ -1288,7 +1288,8 @@ export const landingCSS = `
     background: #FFFFFF !important;
     border: 1px solid #E2E8F0 !important;
     border-radius: 16px !important;
-    padding: 24px 20px !important;
+    padding: 36px 24px !important;
+    height: 100% !important;
     display: flex;
     flex-direction: column;
     justify-content: space-between;

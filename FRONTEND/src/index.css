@@ -107,9 +107,9 @@
 /* ── Design Tokens ── */
 :root {
     /* Backgrounds */
-    --bg-page: #F9F9F9;
+    --bg-page: #FAF8F5;
     --bg-panel: #FFFFFF;
-    --bg-subtle: #F5F5F5;
+    --bg-subtle: #FAF8F5;
 
     /* Text hierarchy — all WCAG AA compliant on white */
     --text-primary: #111111;

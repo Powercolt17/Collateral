@@ -1,6 +1,6 @@
 // Landing CSS — Elite fintech conversion page
 export const landingCSS = `
-.lp{--bg:#FAF9F7;--p:#FFF;--s:#FAF9F7;--t1:#0F172A;--t2:#334155;--t3:#64748B;--d:#E2E8F0;--r:#5C1414;--rh:#6B1212;--g:#145c14;min-height:100vh;background:#FAF9F7 !important;color:var(--t1);font-family:'Inter',sans-serif;-webkit-font-smoothing:antialiased;overflow-x:hidden;opacity:0;transition:opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1)}
+.lp{--bg:#FAF8F5;--p:#FFF;--s:#FAF8F5;--t1:#0F172A;--t2:#334155;--t3:#64748B;--d:#E2E8F0;--r:#5C1414;--rh:#6B1212;--g:#145c14;min-height:100vh;background:#FAF8F5 !important;color:var(--t1);font-family:'Inter',sans-serif;-webkit-font-smoothing:antialiased;overflow-x:hidden;opacity:0;transition:opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1)}
 .lp.v{opacity:1}
 .lp *{box-sizing:border-box}
 .lloading-bar{position:fixed;top:0;left:0;height:2px;background:var(--r);z-index:1000;width:0;transition:width 0.4s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.3s ease;box-shadow:0 0 8px var(--r)}
@@ -2928,8 +2928,13 @@ export const landingCSS = `
 .panel-right {
     right: 0;
     width: 45%;
-    background: rgba(255, 255, 255, 0.45); /* Matte white overlay */
+    background: transparent !important; /* Matte white overlay removed for universal background */
     transition: transform 0.1s ease-out;
+}
+
+/* UNIVERSAL HOMEPAGE BACKGROUND ENFORCEMENT (#FAF8F5) */
+.lp, .lhero-v2, .lhero-bg-grid-v2, .l-arch-env, .ltypes-asymmetric, .lengine-section, .lhow-it-works-section, .lemo-reframe, .l-global-stats-bar, .lfaq-section, .lcta-bottom, .lp-footer, section {
+    background-color: #FAF8F5 !important;
 }
 .l-arch-seam {
     position: absolute;

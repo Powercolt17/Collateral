@@ -360,13 +360,11 @@ export function renderLanding() {
                     </div>
 
                     <div class="ltypes-right">
-                        <div class="rv-container reveal-item" style="background: #F5F1EA; border: 1px solid rgba(28,35,51,0.08); border-radius: 24px; padding: clamp(14px, 3vw, 28px); box-shadow: 0 30px 80px -50px rgba(28,35,51,0.4);">
+                        <div class="rv-container reveal-item" style="width: 100%; max-width: 580px; margin: 0 auto;">
                             <style>
-                                .rv-node:hover { transform: translate(-50%, -50%) translateY(-3px) !important; box-shadow: 0 14px 30px -14px rgba(28,35,51,0.3) !important; }
                                 .rv-dot { opacity: 0; }
-                                .rv-lock { animation: none; }
                                 @media (prefers-reduced-motion: no-preference) {
-                                    .rv-lock { animation: rvBreath 3.2s ease-in-out infinite; }
+                                    .rv-lock-pulse { animation: rvBreath 3.2s ease-in-out infinite; }
                                     .rv-dL { animation: rvDeskL 2.6s ease-in-out infinite; }
                                     .rv-dR { animation: rvDeskR 2.6s ease-in-out infinite; }
                                     .rv-dP { animation: rvDeskP 3.2s ease-in-out infinite 0.6s; }
@@ -375,8 +373,8 @@ export function renderLanding() {
                                     .rv-mP { animation: rvMobP 3.2s ease-in-out infinite 0.6s; }
                                 }
                                 @keyframes rvBreath {
-                                    0%,100% { box-shadow: 0 0 0 0 rgba(122,28,43,0); }
-                                    50% { box-shadow: 0 0 0 6px rgba(122,28,43,0.06); }
+                                    0%,100% { fill: rgba(122,28,43,0.08); }
+                                    50% { fill: rgba(122,28,43,0.18); }
                                 }
                                 @keyframes rvDeskL {
                                     0% { transform: translateX(0); opacity: 0; }
@@ -409,163 +407,156 @@ export function renderLanding() {
                                     100% { transform: translateY(80px); opacity: 0; }
                                 }
                                 @media (min-width: 641px) {
-                                    .rv-desk-wrapper { display: block !important; }
-                                    .rv-mob-wrapper { display: none !important; }
+                                    .rv-desk-svg { display: block !important; }
+                                    .rv-mob-svg { display: none !important; }
                                 }
                                 @media (max-width: 640px) {
-                                    .rv-desk-wrapper { display: none !important; }
-                                    .rv-mob-wrapper { display: block !important; }
+                                    .rv-desk-svg { display: none !important; }
+                                    .rv-mob-svg { display: block !important; }
                                 }
                             </style>
 
-                            <!-- DESKTOP STAGE -->
-                            <div class="rv-desk-wrapper" style="position: relative; width: 100%; aspect-ratio: 720 / 470;">
-                                <svg viewBox="0 0 720 470" style="position: absolute; inset: 0; width: 100%; height: 100%;" aria-hidden="true">
-                                    <defs>
-                                        <marker id="arrM" markerWidth="7" markerHeight="7" refX="5" refY="3.5" orient="auto">
-                                            <path d="M0 0 L7 3.5 L0 7 Z" fill="#7A1C2B" />
-                                        </marker>
-                                        <marker id="arrG" markerWidth="7" markerHeight="7" refX="5" refY="3.5" orient="auto">
-                                            <path d="M0 0 L7 3.5 L0 7 Z" fill="#3F9D5A" />
-                                        </marker>
-                                    </defs>
+                            <!-- DESKTOP PURE SVG CANVAS -->
+                            <svg class="rv-desk-svg" viewBox="0 0 720 470" style="width: 100%; height: auto; display: block;" xmlns="http://www.w3.org/2000/svg">
+                                <defs>
+                                    <marker id="arrM" markerWidth="7" markerHeight="7" refX="5" refY="3.5" orient="auto">
+                                        <path d="M0 0 L7 3.5 L0 7 Z" fill="#7A1C2B" />
+                                    </marker>
+                                    <marker id="arrG" markerWidth="7" markerHeight="7" refX="5" refY="3.5" orient="auto">
+                                        <path d="M0 0 L7 3.5 L0 7 Z" fill="#3F9D5A" />
+                                    </marker>
+                                    <filter id="cardShadow" x="-10%" y="-10%" width="120%" height="130%">
+                                        <feDropShadow dx="0" dy="8" stdDeviation="12" flood-color="#1C2333" flood-opacity="0.08" />
+                                    </filter>
+                                    <filter id="vaultShadow" x="-10%" y="-10%" width="120%" height="130%">
+                                        <feDropShadow dx="0" dy="18" stdDeviation="23" flood-color="#7A1C2B" flood-opacity="0.18" />
+                                    </filter>
+                                    <filter id="payoutShadow" x="-10%" y="-10%" width="120%" height="130%">
+                                        <feDropShadow dx="0" dy="8" stdDeviation="11" flood-color="#3F9D5A" flood-opacity="0.15" />
+                                    </filter>
+                                </defs>
 
-                                    <!-- left stake -> vault (tucks under both cards) -->
-                                    <line x1="196" y1="200" x2="278" y2="200" stroke="#B98A92" stroke-width="2" stroke-dasharray="5 5" marker-end="url(#arrM)" />
-                                    <!-- right stake -> vault -->
-                                    <line x1="524" y1="200" x2="442" y2="200" stroke="#B98A92" stroke-width="2" stroke-dasharray="5 5" marker-end="url(#arrM)" />
-                                    <!-- vault -> payout -->
-                                    <line x1="360" y1="272" x2="360" y2="400" stroke="#3F9D5A" stroke-width="2" stroke-dasharray="5 5" marker-end="url(#arrG)" />
+                                <!-- Background Card -->
+                                <rect width="720" height="470" rx="24" fill="#F5F1EA" stroke="rgba(28,35,51,0.08)" stroke-width="1.5"/>
 
-                                    <!-- pulse dots — animate toward the vault, then down to payout -->
-                                    <circle class="rv-dot rv-dL" cx="206" cy="200" r="3.6" fill="#7A1C2B" />
-                                    <circle class="rv-dot rv-dR" cx="514" cy="200" r="3.6" fill="#7A1C2B" />
-                                    <circle class="rv-dot rv-dP" cx="360" cy="282" r="3.6" fill="#3F9D5A" />
-                                </svg>
+                                <!-- Lines -->
+                                <line x1="196" y1="200" x2="278" y2="200" stroke="#B98A92" stroke-width="2" stroke-dasharray="5 5" marker-end="url(#arrM)" />
+                                <line x1="524" y1="200" x2="442" y2="200" stroke="#B98A92" stroke-width="2" stroke-dasharray="5 5" marker-end="url(#arrM)" />
+                                <line x1="360" y1="272" x2="360" y2="400" stroke="#3F9D5A" stroke-width="2" stroke-dasharray="5 5" marker-end="url(#arrG)" />
 
-                                <!-- cards share the SVG's coordinate space (x/720, y/470) -->
-                                <div style="position: absolute; left: 16.4%; top: 42.6%;">
-                                    <div class="rv-node" style="position: absolute; transform: translate(-50%, -50%); z-index: 10; background: #FBF9F5; border: 1px solid rgba(28,35,51,0.08); border-radius: 14px; padding: 14px 16px; box-shadow: 0 8px 24px -14px rgba(28,35,51,0.22); width: 140px;">
-                                        <div style="display: flex; align-items: center; gap: 7px;">
-                                            <span style="display: inline-flex; align-items: center; height: 14px; color: #635BFF; font-weight: 800; font-size: 13px; letter-spacing: -0.02em;">stripe</span>
-                                            <span style="font-size: 10px; font-weight: 700; letter-spacing: 0.14em; color: #7A1C2B; text-transform: uppercase;">Challenger</span>
-                                        </div>
-                                        <div style="margin-top: 10px; font-size: 15px; font-weight: 700; color: #1C2333;">Revenue +12%</div>
-                                        <div style="margin-top: 6px; font-size: 11.5px; color: #8C8577; letter-spacing: 0.02em;">
-                                            <span style="color: #1C2333; font-weight: 600;">$1,000</span> locked
-                                        </div>
-                                    </div>
-                                </div>
+                                <!-- Animated Pulse Dots -->
+                                <circle class="rv-dot rv-dL" cx="206" cy="200" r="3.6" fill="#7A1C2B" />
+                                <circle class="rv-dot rv-dR" cx="514" cy="200" r="3.6" fill="#7A1C2B" />
+                                <circle class="rv-dot rv-dP" cx="360" cy="282" r="3.6" fill="#3F9D5A" />
 
-                                <div style="position: absolute; left: 83.6%; top: 42.6%;">
-                                    <div class="rv-node" style="position: absolute; transform: translate(-50%, -50%); z-index: 10; background: #FBF9F5; border: 1px solid rgba(28,35,51,0.08); border-radius: 14px; padding: 14px 16px; box-shadow: 0 8px 24px -14px rgba(28,35,51,0.22); width: 140px;">
-                                        <div style="display: flex; align-items: center; gap: 7px;">
-                                            <span style="display: inline-flex; align-items: center; height: 14px;">
-                                                <svg width="13" height="13" viewBox="0 0 24 24" aria-hidden="true"><path fill="#0F1115" d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
-                                            </span>
-                                            <span style="font-size: 10px; font-weight: 700; letter-spacing: 0.14em; color: #7A1C2B; text-transform: uppercase;">Opponent</span>
-                                        </div>
-                                        <div style="margin-top: 10px; font-size: 15px; font-weight: 700; color: #1C2333;">Followers +9%</div>
-                                        <div style="margin-top: 6px; font-size: 11.5px; color: #8C8577; letter-spacing: 0.02em;">
-                                            <span style="color: #1C2333; font-weight: 600;">$1,000</span> locked
-                                        </div>
-                                    </div>
-                                </div>
+                                <!-- Left Card: CHALLENGER -->
+                                <g transform="translate(40, 150)">
+                                    <rect width="156" height="100" rx="14" fill="#FBF9F5" stroke="rgba(28,35,51,0.08)" filter="url(#cardShadow)"/>
+                                    <text x="16" y="27" fill="#635BFF" font-family="sans-serif" font-size="13" font-weight="800" letter-spacing="-0.5">stripe</text>
+                                    <text x="64" y="27" fill="#7A1C2B" font-family="sans-serif" font-size="10" font-weight="700" letter-spacing="1.4">CHALLENGER</text>
+                                    <text x="16" y="55" fill="#1C2333" font-family="sans-serif" font-size="15" font-weight="700">Revenue +12%</text>
+                                    <text x="16" y="78" fill="#8C8577" font-family="sans-serif" font-size="11.5"><tspan fill="#1C2333" font-weight="600">$1,000</tspan> locked</text>
+                                </g>
 
-                                <div style="position: absolute; left: 50%; top: 41.5%;">
-                                    <div class="rv-vault" style="position: absolute; transform: translate(-50%, -50%); z-index: 10; text-align: center; background: #FFFDFA; border: 1.5px solid rgba(122,28,43,0.35); border-radius: 18px; padding: 16px 22px; box-shadow: 0 18px 46px -20px rgba(122,28,43,0.35); width: 170px;">
-                                        <div style="display: inline-flex; align-items: center; gap: 5px; padding: 3px 9px; border-radius: 999px; background: #D9EBDE; color: #3F9D5A; font-size: 10px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase;">
-                                            <span style="width: 6px; height: 6px; border-radius: 999px; background: #3F9D5A;"></span> Verified
-                                        </div>
-                                        <div style="margin-top: 12px; display: flex; justify-content: center;">
-                                            <div class="rv-lock" style="width: 34px; height: 34px; border-radius: 999px; background: rgba(122,28,43,0.08); display: flex; align-items: center; justify-content: center;">
-                                                <svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true"><path fill="none" stroke="#7A1C2B" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" d="M7 10V7a5 5 0 0 1 10 0v3M6 10h12a1 1 0 0 1 1 1v7a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1v-7a1 1 0 0 1 1-1Z"/></svg>
-                                            </div>
-                                        </div>
-                                        <div style="margin-top: 10px; font-size: 30px; font-weight: 800; color: #7A1C2B; letter-spacing: -0.02em; line-height: 1;">$2,000</div>
-                                        <div style="margin-top: 5px; font-size: 10.5px; font-weight: 700; letter-spacing: 0.14em; color: #8C8577; text-transform: uppercase;">Escrow Vault</div>
-                                        <div style="margin-top: 12px; display: inline-block; padding: 4px 11px; border-radius: 999px; border: 1px solid rgba(28,35,51,0.08); font-size: 10.5px; font-weight: 600; letter-spacing: 0.04em; color: #1C2333; text-transform: uppercase;">Winner takes pool</div>
-                                    </div>
-                                </div>
+                                <!-- Right Card: OPPONENT -->
+                                <g transform="translate(524, 150)">
+                                    <rect width="156" height="100" rx="14" fill="#FBF9F5" stroke="rgba(28,35,51,0.08)" filter="url(#cardShadow)"/>
+                                    <path fill="#0F1115" d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" transform="translate(16, 16) scale(0.55)"/>
+                                    <text x="36" y="27" fill="#7A1C2B" font-family="sans-serif" font-size="10" font-weight="700" letter-spacing="1.4">OPPONENT</text>
+                                    <text x="16" y="55" fill="#1C2333" font-family="sans-serif" font-size="15" font-weight="700">Followers +9%</text>
+                                    <text x="16" y="78" fill="#8C8577" font-family="sans-serif" font-size="11.5"><tspan fill="#1C2333" font-weight="600">$1,000</tspan> locked</text>
+                                </g>
 
-                                <div style="position: absolute; left: 50%; top: 89%;">
-                                    <div class="rv-payout" style="position: absolute; transform: translate(-50%, -50%); z-index: 10; display: inline-flex; align-items: center; gap: 9px; white-space: nowrap; background: #FBF9F5; border: 1px solid #D9EBDE; border-radius: 999px; padding: 9px 16px; box-shadow: 0 8px 22px -14px rgba(63,157,90,0.4);">
-                                        <svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="11" fill="#3F9D5A"/><path fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" d="m7 12.5 3.2 3.2L17 8.6"/></svg>
-                                        <span style="font-size: 13px; color: #1C2333;">Winner receives <strong style="font-weight: 700;">$2,000</strong> <span style="color: #8C8577;">automatically</span></span>
-                                    </div>
-                                </div>
-                            </div>
+                                <!-- Center Anchor: ESCROW VAULT -->
+                                <g transform="translate(270, 105)">
+                                    <rect width="180" height="190" rx="18" fill="#FFFDFA" stroke="rgba(122,28,43,0.35)" stroke-width="1.5" filter="url(#vaultShadow)"/>
+                                    <!-- Verified Badge -->
+                                    <rect x="45" y="14" width="90" height="22" rx="11" fill="#D9EBDE"/>
+                                    <circle cx="57" cy="25" r="3" fill="#3F9D5A"/>
+                                    <text x="94" y="29" fill="#3F9D5A" font-family="sans-serif" font-size="10" font-weight="700" text-anchor="middle" letter-spacing="0.6">VERIFIED</text>
+                                    <!-- Lock Icon Ring -->
+                                    <circle cx="90" cy="62" r="17" fill="rgba(122,28,43,0.08)" class="rv-lock-pulse"/>
+                                    <path fill="none" stroke="#7A1C2B" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" d="M83 61 V57 a7 7 0 0 1 14 0 v4 M82 61 h16 a1 1 0 0 1 1 1 v8 a1 1 0 0 1 -1 1 h-16 a1 1 0 0 1 -1 -1 v-8 a1 1 0 0 1 1 -1 Z"/>
+                                    <!-- Pool Amount -->
+                                    <text x="90" y="108" fill="#7A1C2B" font-family="sans-serif" font-size="30" font-weight="800" text-anchor="middle" letter-spacing="-0.5">$2,000</text>
+                                    <!-- Title -->
+                                    <text x="90" y="128" fill="#8C8577" font-family="sans-serif" font-size="10.5" font-weight="700" text-anchor="middle" letter-spacing="1.4">ESCROW VAULT</text>
+                                    <!-- Tag -->
+                                    <rect x="30" y="144" width="120" height="24" rx="12" fill="#FBF9F5" stroke="rgba(28,35,51,0.08)"/>
+                                    <text x="90" y="160" fill="#1C2333" font-family="sans-serif" font-size="10.5" font-weight="600" text-anchor="middle" letter-spacing="0.4">WINNER TAKES POOL</text>
+                                </g>
 
-                            <!-- MOBILE STAGE -->
-                            <div class="rv-mob-wrapper" style="position: relative; width: 100%; aspect-ratio: 360 / 560;">
-                                <svg viewBox="0 0 360 560" style="position: absolute; inset: 0; width: 100%; height: 100%;" aria-hidden="true">
-                                    <defs>
-                                        <marker id="arrM2" markerWidth="7" markerHeight="7" refX="5" refY="3.5" orient="auto">
-                                            <path d="M0 0 L7 3.5 L0 7 Z" fill="#7A1C2B" />
-                                        </marker>
-                                        <marker id="arrG2" markerWidth="7" markerHeight="7" refX="5" refY="3.5" orient="auto">
-                                            <path d="M0 0 L7 3.5 L0 7 Z" fill="#3F9D5A" />
-                                        </marker>
-                                    </defs>
-                                    <line x1="96" y1="150" x2="152" y2="222" stroke="#B98A92" stroke-width="2" stroke-dasharray="5 5" marker-end="url(#arrM2)" />
-                                    <line x1="264" y1="150" x2="208" y2="222" stroke="#B98A92" stroke-width="2" stroke-dasharray="5 5" marker-end="url(#arrM2)" />
-                                    <line x1="180" y1="372" x2="180" y2="466" stroke="#3F9D5A" stroke-width="2" stroke-dasharray="5 5" marker-end="url(#arrG2)" />
-                                    <circle class="rv-dot rv-mL" cx="96" cy="150" r="3.6" fill="#7A1C2B" />
-                                    <circle class="rv-dot rv-mR" cx="264" cy="150" r="3.6" fill="#7A1C2B" />
-                                    <circle class="rv-dot rv-mP" cx="180" cy="380" r="3.6" fill="#3F9D5A" />
-                                </svg>
+                                <!-- Bottom Endpoint: PAYOUT PILL -->
+                                <g transform="translate(200, 392)">
+                                    <rect width="320" height="42" rx="21" fill="#FBF9F5" stroke="#D9EBDE" stroke-width="1.5" filter="url(#payoutShadow)"/>
+                                    <circle cx="25" cy="21" r="11" fill="#3F9D5A"/>
+                                    <path fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" d="m20 21 3.2 3.2L28 17.6"/>
+                                    <text x="48" y="25" fill="#1C2333" font-family="sans-serif" font-size="13">Winner receives <tspan font-weight="700">$2,000</tspan> <tspan fill="#8C8577">automatically</tspan></text>
+                                </g>
+                            </svg>
 
-                                <div style="position: absolute; left: 26.7%; top: 16.9%;">
-                                    <div class="rv-node" style="position: absolute; transform: translate(-50%, -50%); z-index: 10; background: #FBF9F5; border: 1px solid rgba(28,35,51,0.08); border-radius: 14px; padding: 12px 14px; box-shadow: 0 8px 24px -14px rgba(28,35,51,0.22); width: 125px;">
-                                        <div style="display: flex; align-items: center; gap: 5px;">
-                                            <span style="display: inline-flex; align-items: center; height: 14px; color: #635BFF; font-weight: 800; font-size: 12px; letter-spacing: -0.02em;">stripe</span>
-                                            <span style="font-size: 9px; font-weight: 700; letter-spacing: 0.12em; color: #7A1C2B; text-transform: uppercase;">Challenger</span>
-                                        </div>
-                                        <div style="margin-top: 8px; font-size: 13px; font-weight: 700; color: #1C2333;">Revenue +12%</div>
-                                        <div style="margin-top: 4px; font-size: 10.5px; color: #8C8577;">
-                                            <span style="color: #1C2333; font-weight: 600;">$1,000</span> locked
-                                        </div>
-                                    </div>
-                                </div>
+                            <!-- MOBILE PURE SVG CANVAS -->
+                            <svg class="rv-mob-svg" viewBox="0 0 360 560" style="width: 100%; height: auto; display: block;" xmlns="http://www.w3.org/2000/svg">
+                                <defs>
+                                    <marker id="arrM2" markerWidth="7" markerHeight="7" refX="5" refY="3.5" orient="auto">
+                                        <path d="M0 0 L7 3.5 L0 7 Z" fill="#7A1C2B" />
+                                    </marker>
+                                    <marker id="arrG2" markerWidth="7" markerHeight="7" refX="5" refY="3.5" orient="auto">
+                                        <path d="M0 0 L7 3.5 L0 7 Z" fill="#3F9D5A" />
+                                    </marker>
+                                </defs>
 
-                                <div style="position: absolute; left: 73.3%; top: 16.9%;">
-                                    <div class="rv-node" style="position: absolute; transform: translate(-50%, -50%); z-index: 10; background: #FBF9F5; border: 1px solid rgba(28,35,51,0.08); border-radius: 14px; padding: 12px 14px; box-shadow: 0 8px 24px -14px rgba(28,35,51,0.22); width: 125px;">
-                                        <div style="display: flex; align-items: center; gap: 5px;">
-                                            <span style="display: inline-flex; align-items: center; height: 14px;">
-                                                <svg width="12" height="12" viewBox="0 0 24 24" aria-hidden="true"><path fill="#0F1115" d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
-                                            </span>
-                                            <span style="font-size: 9px; font-weight: 700; letter-spacing: 0.12em; color: #7A1C2B; text-transform: uppercase;">Opponent</span>
-                                        </div>
-                                        <div style="margin-top: 8px; font-size: 13px; font-weight: 700; color: #1C2333;">Followers +9%</div>
-                                        <div style="margin-top: 4px; font-size: 10.5px; color: #8C8577;">
-                                            <span style="color: #1C2333; font-weight: 600;">$1,000</span> locked
-                                        </div>
-                                    </div>
-                                </div>
+                                <!-- Background Card -->
+                                <rect width="360" height="560" rx="20" fill="#F5F1EA" stroke="rgba(28,35,51,0.08)" stroke-width="1.5"/>
 
-                                <div style="position: absolute; left: 50%; top: 53.6%;">
-                                    <div class="rv-vault" style="position: absolute; transform: translate(-50%, -50%); z-index: 10; text-align: center; background: #FFFDFA; border: 1.5px solid rgba(122,28,43,0.35); border-radius: 18px; padding: 14px 18px; box-shadow: 0 18px 46px -20px rgba(122,28,43,0.35); width: 150px;">
-                                        <div style="display: inline-flex; align-items: center; gap: 5px; padding: 3px 8px; border-radius: 999px; background: #D9EBDE; color: #3F9D5A; font-size: 9.5px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase;">
-                                            <span style="width: 5px; height: 5px; border-radius: 999px; background: #3F9D5A;"></span> Verified
-                                        </div>
-                                        <div style="margin-top: 10px; display: flex; justify-content: center;">
-                                            <div class="rv-lock" style="width: 30px; height: 30px; border-radius: 999px; background: rgba(122,28,43,0.08); display: flex; align-items: center; justify-content: center;">
-                                                <svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true"><path fill="none" stroke="#7A1C2B" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" d="M7 10V7a5 5 0 0 1 10 0v3M6 10h12a1 1 0 0 1 1 1v7a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1v-7a1 1 0 0 1 1-1Z"/></svg>
-                                            </div>
-                                        </div>
-                                        <div style="margin-top: 8px; font-size: 26px; font-weight: 800; color: #7A1C2B; letter-spacing: -0.02em; line-height: 1;">$2,000</div>
-                                        <div style="margin-top: 4px; font-size: 9.5px; font-weight: 700; letter-spacing: 0.14em; color: #8C8577; text-transform: uppercase;">Escrow Vault</div>
-                                        <div style="margin-top: 10px; display: inline-block; padding: 3px 9px; border-radius: 999px; border: 1px solid rgba(28,35,51,0.08); font-size: 9.5px; font-weight: 600; letter-spacing: 0.04em; color: #1C2333; text-transform: uppercase;">Winner takes pool</div>
-                                    </div>
-                                </div>
+                                <line x1="96" y1="150" x2="152" y2="222" stroke="#B98A92" stroke-width="2" stroke-dasharray="5 5" marker-end="url(#arrM2)" />
+                                <line x1="264" y1="150" x2="208" y2="222" stroke="#B98A92" stroke-width="2" stroke-dasharray="5 5" marker-end="url(#arrM2)" />
+                                <line x1="180" y1="372" x2="180" y2="466" stroke="#3F9D5A" stroke-width="2" stroke-dasharray="5 5" marker-end="url(#arrG2)" />
 
-                                <div style="position: absolute; left: 50%; top: 88.6%;">
-                                    <div class="rv-payout" style="position: absolute; transform: translate(-50%, -50%); z-index: 10; display: inline-flex; align-items: center; gap: 7px; white-space: nowrap; background: #FBF9F5; border: 1px solid #D9EBDE; border-radius: 999px; padding: 8px 14px; box-shadow: 0 8px 22px -14px rgba(63,157,90,0.4);">
-                                        <svg width="14" height="14" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="11" fill="#3F9D5A"/><path fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" d="m7 12.5 3.2 3.2L17 8.6"/></svg>
-                                        <span style="font-size: 11.5px; color: #1C2333;">Winner receives <strong style="font-weight: 700;">$2,000</strong> <span style="color: #8C8577;">automatically</span></span>
-                                    </div>
-                                </div>
-                            </div>
+                                <circle class="rv-dot rv-mL" cx="96" cy="150" r="3.6" fill="#7A1C2B" />
+                                <circle class="rv-dot rv-mR" cx="264" cy="150" r="3.6" fill="#7A1C2B" />
+                                <circle class="rv-dot rv-mP" cx="180" cy="380" r="3.6" fill="#3F9D5A" />
+
+                                <!-- Left Card Mobile -->
+                                <g transform="translate(18, 55)">
+                                    <rect width="140" height="90" rx="12" fill="#FBF9F5" stroke="rgba(28,35,51,0.08)"/>
+                                    <text x="12" y="24" fill="#635BFF" font-family="sans-serif" font-size="12" font-weight="800" letter-spacing="-0.5">stripe</text>
+                                    <text x="56" y="24" fill="#7A1C2B" font-family="sans-serif" font-size="9" font-weight="700" letter-spacing="1.2">CHALLENGER</text>
+                                    <text x="12" y="48" fill="#1C2333" font-family="sans-serif" font-size="13" font-weight="700">Revenue +12%</text>
+                                    <text x="12" y="68" fill="#8C8577" font-family="sans-serif" font-size="10.5"><tspan fill="#1C2333" font-weight="600">$1,000</tspan> locked</text>
+                                </g>
+
+                                <!-- Right Card Mobile -->
+                                <g transform="translate(202, 55)">
+                                    <rect width="140" height="90" rx="12" fill="#FBF9F5" stroke="rgba(28,35,51,0.08)"/>
+                                    <path fill="#0F1115" d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" transform="translate(12, 14) scale(0.5)"/>
+                                    <text x="32" y="24" fill="#7A1C2B" font-family="sans-serif" font-size="9" font-weight="700" letter-spacing="1.2">OPPONENT</text>
+                                    <text x="12" y="48" fill="#1C2333" font-family="sans-serif" font-size="13" font-weight="700">Followers +9%</text>
+                                    <text x="12" y="68" fill="#8C8577" font-family="sans-serif" font-size="10.5"><tspan fill="#1C2333" font-weight="600">$1,000</tspan> locked</text>
+                                </g>
+
+                                <!-- Escrow Vault Mobile -->
+                                <g transform="translate(105, 210)">
+                                    <rect width="150" height="170" rx="16" fill="#FFFDFA" stroke="rgba(122,28,43,0.35)" stroke-width="1.5"/>
+                                    <rect x="35" y="12" width="80" height="20" rx="10" fill="#D9EBDE"/>
+                                    <circle cx="45" cy="22" r="2.5" fill="#3F9D5A"/>
+                                    <text x="80" y="25" fill="#3F9D5A" font-family="sans-serif" font-size="9" font-weight="700" text-anchor="middle" letter-spacing="0.5">VERIFIED</text>
+                                    <circle cx="75" cy="54" r="15" fill="rgba(122,28,43,0.08)"/>
+                                    <path fill="none" stroke="#7A1C2B" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" d="M69 53 V49 a6 6 0 0 1 12 0 v4 M68 53 h14 a1 1 0 0 1 1 1 v7 a1 1 0 0 1 -1 1 h-14 a1 1 0 0 1 -1 -1 v-7 a1 1 0 0 1 1 -1 Z"/>
+                                    <text x="75" y="96" fill="#7A1C2B" font-family="sans-serif" font-size="26" font-weight="800" text-anchor="middle" letter-spacing="-0.5">$2,000</text>
+                                    <text x="75" y="114" fill="#8C8577" font-family="sans-serif" font-size="9.5" font-weight="700" text-anchor="middle" letter-spacing="1.2">ESCROW VAULT</text>
+                                    <rect x="22" y="128" width="106" height="22" rx="11" fill="#FBF9F5" stroke="rgba(28,35,51,0.08)"/>
+                                    <text x="75" y="143" fill="#1C2333" font-family="sans-serif" font-size="9.5" font-weight="600" text-anchor="middle" letter-spacing="0.4">WINNER TAKES POOL</text>
+                                </g>
+
+                                <!-- Bottom Endpoint Mobile -->
+                                <g transform="translate(45, 470)">
+                                    <rect width="270" height="38" rx="19" fill="#FBF9F5" stroke="#D9EBDE" stroke-width="1.5"/>
+                                    <circle cx="20" cy="19" r="9.5" fill="#3F9D5A"/>
+                                    <path fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="m16 19 2.8 2.8L23 16"/>
+                                    <text x="38" y="23" fill="#1C2333" font-family="sans-serif" font-size="11.5">Winner receives <tspan font-weight="700">$2,000</tspan> <tspan fill="#8C8577">automatically</tspan></text>
+                                </g>
+                            </svg>
                         </div>
                     </div>
                 </div>

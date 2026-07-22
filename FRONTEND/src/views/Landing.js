@@ -460,7 +460,7 @@ export function renderLanding() {
                         </div>
 
                         <!-- CARD 2: RIVALRY CONTRACT (X / TWITTER AUDIENCE) -->
-                        <div class="lcard lcard-rivalry reveal-item">
+                        <div class="lcard lcard-rivalry reveal-item" onclick="window.router.navigate('/market?type=rivalry')">
                             <div class="lcard-riv-top">
                                 <div class="lcard-riv-status">
                                     <span class="lcard-riv-dot"></span> LOCKED
@@ -481,7 +481,7 @@ export function renderLanding() {
                                         <line x1="14.5" y1="17.5" x2="3" y2="6"></line>
                                         <polyline points="3 10 3 6 7 6"></polyline>
                                         <line x1="9.5" y1="6.5" x2="21" y2="18"></line>
-                                        <polyline points="21 14 21 18 17 18"></polyline>
+                                        <polyline points="21 14 21 17 17 18"></polyline>
                                     </svg>
                                 </div>
                                 <div class="lcard-riv-col is-right">
@@ -504,9 +504,6 @@ export function renderLanding() {
                                     <div class="lcard-riv-time">14D REMAINING</div>
                                 </div>
                             </div>
-                            <div class="lcard-btn">
-                                <button class="lp-cta-btn" data-source="X" data-tier="rivalry" data-capital="5000">Start Contract</button>
-                            </div>
                         </div>
 
                         <!-- CARD 3: SOLO CONTRACT (SHOPIFY STORE SALES) -->
@@ -528,7 +525,7 @@ export function renderLanding() {
                         </div>
 
                         <!-- CARD 4: RIVALRY CONTRACT (STRIPE REVENUE - IMAGE 2 EXACT MATCH) -->
-                        <div class="lcard lcard-rivalry reveal-item">
+                        <div class="lcard lcard-rivalry reveal-item" onclick="window.router.navigate('/market?type=rivalry')">
                             <div class="lcard-riv-top">
                                 <div class="lcard-riv-status">
                                     <span class="lcard-riv-dot"></span> LOCKED
@@ -571,9 +568,6 @@ export function renderLanding() {
                                     <span class="lcard-src-tag stripe">STRIPE</span>
                                     <div class="lcard-riv-time">0H REMAINING</div>
                                 </div>
-                            </div>
-                            <div class="lcard-btn">
-                                <button class="lp-cta-btn" data-source="STRIPE" data-tier="rivalry" data-capital="2000">Start Contract</button>
                             </div>
                         </div>
                     </div>

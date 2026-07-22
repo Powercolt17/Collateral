@@ -1287,7 +1287,7 @@ export const landingCSS = `
 .lcard-rivalry {
     background: #FFFFFF !important;
     border: 1px solid #E2E8F0 !important;
-    border-radius: 14px !important;
+    border-radius: 16px !important;
     padding: 24px 20px !important;
     display: flex;
     flex-direction: column;
@@ -1296,6 +1296,7 @@ export const landingCSS = `
     transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.3s cubic-bezier(0.16, 1, 0.3, 1);
     position: relative;
     overflow: hidden;
+    cursor: pointer !important;
 }
 .lcard-rivalry:hover {
     transform: translateY(-4px);
@@ -1438,7 +1439,7 @@ export const landingCSS = `
     display: flex;
     align-items: center;
     justify-content: space-between;
-    margin-bottom: 16px;
+    margin-bottom: 0;
     padding-top: 14px;
     border-top: 1px solid #F1F5F9;
 }

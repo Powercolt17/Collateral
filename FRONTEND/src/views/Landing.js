@@ -1552,19 +1552,21 @@ export function initLanding() {
             incomingContent.appendChild(lblSpan);
 
             incomingContent.style.opacity = '0';
-            incomingContent.style.transform = 'translateY(12px)';
-            incomingContent.style.willChange = 'transform, opacity';
+            incomingContent.style.transform = 'translateY(14px)';
 
             wrapper.appendChild(incomingContent);
-            incomingContent.getBoundingClientRect(); // Force reflow
 
-            currentContent.style.transition = 'opacity 200ms ease, transform 200ms ease';
-            currentContent.style.opacity = '0';
-            currentContent.style.transform = 'translateY(-12px)';
+            requestAnimationFrame(() => {
+                requestAnimationFrame(() => {
+                    currentContent.style.transition = 'opacity 350ms ease, transform 380ms cubic-bezier(0.16, 1, 0.3, 1)';
+                    currentContent.style.opacity = '0';
+                    currentContent.style.transform = 'translateY(-14px)';
 
-            incomingContent.style.transition = 'transform 450ms cubic-bezier(0.22, 1, 0.36, 1), opacity 450ms cubic-bezier(0.22, 1, 0.36, 1)';
-            incomingContent.style.opacity = '1';
-            incomingContent.style.transform = 'translateY(0)';
+                    incomingContent.style.transition = 'opacity 420ms ease, transform 420ms cubic-bezier(0.16, 1, 0.3, 1)';
+                    incomingContent.style.opacity = '1';
+                    incomingContent.style.transform = 'translateY(0)';
+                });
+            });
 
             setTimeout(() => {
                 if (currentContent.parentNode === wrapper) {
@@ -1572,9 +1574,8 @@ export function initLanding() {
                 }
                 incomingContent.classList.remove('incoming');
                 incomingContent.classList.add('current');
-                incomingContent.style.willChange = '';
                 incomingContent.style.transition = '';
-            }, 460);
+            }, 440);
         });
 
         currentState = nextState;

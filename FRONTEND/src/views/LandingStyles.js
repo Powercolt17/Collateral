@@ -2575,26 +2575,41 @@ export const landingCSS = `
 .l-stat-bar-wrapper {
     position: relative;
     overflow: hidden;
-    height: 70px;
+    height: 72px;
     width: 100%;
     display: flex;
-    flex-direction: column;
     align-items: center;
     justify-content: center;
     transform: translateZ(0); /* promote to GPU */
 }
 .l-stat-bar-content {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
     display: flex;
     flex-direction: column;
-    gap: 10px;
+    gap: 8px;
     align-items: center;
     justify-content: center;
     width: 100%;
+    height: 100%;
     text-align: center;
     opacity: 0.88;
-    transition: opacity 0.3s ease, transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    transform: translateY(0);
+    transition: opacity 0.35s ease, transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
 }
-.l-stat-bar-item:hover .l-stat-bar-content {
+.l-stat-bar-content.incoming {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    opacity: 0;
+    pointer-events: none;
+}
+.l-stat-bar-item:hover .l-stat-bar-content.current {
     opacity: 1;
     transform: translateY(-2px) scale(1.04);
 }

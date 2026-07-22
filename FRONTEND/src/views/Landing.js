@@ -34,152 +34,305 @@ export function renderLanding() {
                         </button>
                     </div>
                 </div>
-            </nav>
-
-            <!-- ═══ HERO ═══ -->
+            </nav>            <!-- ═══ HERO ═══ -->
             <div class="lhero-section">
-                <!-- PREMIUM ARCHITECTURAL ENVIRONMENT -->
-                <div class="lhero-bg-container">
-                    <div class="l-arch-light-shift"></div>
-                </div>
-
+                <!-- PROCEDURAL HERO BACKGROUND SYSTEM -->
+                <div class="lhero-bg-grid"></div>
+                <div class="lhero-bg-light-orb"></div>
+                
                 <div class="lw">
-                    <div class="lhero-grid">
-                    <div class="lhero-left">
+                    <div class="lhero-main-wrap">
+                        <!-- HERO LOWER FLEX CONTENT -->
+                        <div class="lhero-bottom-area">
+                            <div class="lhero-grid">
+                                <!-- LEFT COLUMN -->
+                                <div class="lhero-left">
+                                    <!-- MASSIVE DISPLAY TYPOGRAPHY HEADLINE -->
+                                    <div class="lhero-headline-wrap">
+                                        <h1 class="lh1 animate-fade-in-up">
+                                            YOUR BIGGEST BET<br>
+                                            SHOULD BE ON <span class="lh-gradient">YOU.</span>
+                                        </h1>
+                                    </div>
+                                    <p class="lsub animate-fade-in-up delay-1">
+                                        Every day, people risk money on outcomes they can't control—like sports teams, markets, or ad algorithms. Collateral lets you lock capital on the only asset you actually control: your own focus and execution.
+                                    </p>
+                                    <div class="lctas animate-fade-in-up delay-2">
+                                        <button class="lbtn lbtn-r" id="lp-hero-cta">START CONTRACT</button>
+                                        <button class="lbtn lbtn-g" id="lp-see-contracts-cta">SEE LIVE CONTRACTS</button>
+                                    </div>
 
-                        <div class="lhero-eyebrow animate-fade-in-up">Commitment Contracts · Verified by API</div>
-                        <h1 class="lh1 animate-fade-in-up">
-                            Your Biggest Bet<br class="lh-br">
-                            Should Be on <span class="lh-gradient">You.</span>
-                        </h1>
-                        <p class="lsub animate-fade-in-up delay-1">
-                            Every day, people risk money on outcomes they can't control—like sports teams, markets, or ad algorithms. Collateral lets you lock capital on the only asset you actually control: your own focus and execution.
-                        </p>
-                        <div class="lctas animate-fade-in-up delay-2">
-                            <button class="lbtn lbtn-r" id="lp-hero-cta">Start Contract</button>
-                            <button class="lhero-textlink" id="lp-see-contracts-cta">See Live Contracts <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></button>
+                                    <!-- COMPACT LIVE RIVALRY SNAPSHOT -->
+                                    <div class="l-live-rivalry-preview animate-fade-in-up delay-3" id="l-live-rivalry-preview-card">
+                                        <div class="l-lr-hdr">
+                                            <span class="l-lr-dot l-ticker-pulse"></span> LIVE CONTRACT RIVALRY
+                                        </div>
+                                        <div class="l-lr-ticker">
+                                            <span class="l-lr-token">@jakevoss <span class="l-lr-num lead">+8.40%</span></span>
+                                            <span class="l-lr-divider">/</span>
+                                            <span class="l-lr-token">@marcus <span class="l-lr-num lag">+7.80%</span></span>
+                                            <span class="l-lr-divider">|</span>
+                                            <span class="l-lr-cap">POOL $2.0K</span>
+                                            <span class="l-lr-divider">|</span>
+                                            <span class="l-lr-time">T-MINUS 9D</span>
+                                            <span class="l-lr-divider">|</span>
+                                            <span class="l-lr-action-badge">VIEW MATCH <span style="display:inline-block; transition: transform 0.2s ease;">→</span></span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- RIGHT COLUMN: 3 COMPACT FANNED COLLATERAL CONTRACT CARDS DECK -->
+                                <div class="lhero-right animate-fade-in-up delay-2">
+                                    <div class="lfan-right" id="lfan-deck-container" tabindex="0" aria-label="Interactive Contract Deck Carousel">
+                                        <div class="lfan-deck-viewport">
+                                            <div class="lfan-deck-stage" id="lfan-deck-stage">
+                                                
+                                                <!-- CARD 1: STRIPE REVENUE CONTRACT -->
+                                                <div class="lactivity-card lfan-real-card is-center" id="lfan-card-0">
+                                                    <div class="lc-platform-header">
+                                                        <img class="lc-plat-logo" src="https://www.vectorlogo.zone/logos/stripe/stripe-icon.svg" alt="Stripe">
+                                                        <span class="lc-plat-text">Connected via Stripe Connect</span>
+                                                    </div>
+                                                    <div class="lc-global-stats-row">
+                                                        <span class="lc-global-stats-item">
+                                                            <span class="lc-global-stats-dot"></span>
+                                                            <span class="lc-global-stats-num">22</span>
+                                                            <span class="lc-global-stats-label">Active Contracts</span>
+                                                        </span>
+                                                        <span class="lc-global-stats-divider">|</span>
+                                                        <span class="lc-global-stats-item">
+                                                            <span class="lc-global-stats-num">$8,700</span>
+                                                            <span class="lc-global-stats-label">Locked</span>
+                                                        </span>
+                                                    </div>
+                                                    <div class="lc-contract">
+                                                        <div class="lc-contract-head">
+                                                            <div>
+                                                                <div class="lc-contract-name">Stripe Revenue</div>
+                                                                <div class="lc-contract-goal">Increase Stripe revenue by 20%</div>
+                                                                <div class="lc-contract-time">18 Days Remaining</div>
+                                                            </div>
+                                                            <div class="lc-status"><span class="lc-status-dot"></span>Active</div>
+                                                        </div>
+                                                        <div class="lc-flow-horizontal">
+                                                            <div class="lc-flow-col">
+                                                                <span class="lc-flow-label">Deposit</span>
+                                                                <span class="lc-flow-val">$500</span>
+                                                            </div>
+                                                            <div class="lc-flow-arrow-right">→</div>
+                                                            <div class="lc-flow-col">
+                                                                <span class="lc-flow-label">Match</span>
+                                                                <span class="lc-flow-val lc-val-green">+$500</span>
+                                                            </div>
+                                                            <div class="lc-flow-arrow-right">→</div>
+                                                            <div class="lc-flow-col lc-col-final">
+                                                                <span class="lc-flow-label">Return</span>
+                                                                <span class="lc-flow-val">$1,000</span>
+                                                            </div>
+                                                        </div>
+                                                        <div class="lc-flow-footnote">Matches are funded by forfeited deposits and sponsors. <a href="#engine-section" class="lc-flow-link" onclick="document.getElementById('engine-section')?.scrollIntoView({behavior:'smooth'}); return false;">How it works →</a></div>
+                                                        <div class="lc-live-state-ticker">
+                                                            <span class="lc-live-state-lbl">PROTOCOL STATE</span>
+                                                            <span class="lc-live-state-val">Deposit Escrowed</span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="lc-trust" style="margin-top: 12px; padding-top: 10px;">
+                                                        <svg class="lc-trust-lock" width="10" height="10" viewBox="0 0 24 28" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><path d="M12 2a5 5 0 0 0-5 5v3H5a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V12a2 2 0 0 0-2-2h-2V7a5 5 0 0 0-5-5zm-3 5a3 3 0 0 1 6 0v3H9V7zm3 9a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3z" fill="currentColor"/></svg>
+                                                        Verified automatically via Connected API.
+                                                    </div>
+                                                </div>
+
+                                                <!-- CARD 2: SHOPIFY SALES CONTRACT -->
+                                                <div class="lactivity-card lfan-real-card is-right" id="lfan-card-1">
+                                                    <div class="lc-platform-header">
+                                                        <img class="lc-plat-logo" src="https://www.vectorlogo.zone/logos/shopify/shopify-icon.svg" alt="Shopify">
+                                                        <span class="lc-plat-text">Verified via Shopify API</span>
+                                                    </div>
+                                                    <div class="lc-global-stats-row">
+                                                        <span class="lc-global-stats-item">
+                                                            <span class="lc-global-stats-dot"></span>
+                                                            <span class="lc-global-stats-num">15</span>
+                                                            <span class="lc-global-stats-label">Active Contracts</span>
+                                                        </span>
+                                                        <span class="lc-global-stats-divider">|</span>
+                                                        <span class="lc-global-stats-item">
+                                                            <span class="lc-global-stats-num">$6,200</span>
+                                                            <span class="lc-global-stats-label">Locked</span>
+                                                        </span>
+                                                    </div>
+                                                    <div class="lc-contract">
+                                                        <div class="lc-contract-head">
+                                                            <div>
+                                                                <div class="lc-contract-name">Shopify Sales</div>
+                                                                <div class="lc-contract-goal">Generate $5,000 in net sales</div>
+                                                                <div class="lc-contract-time">30 Days Remaining</div>
+                                                            </div>
+                                                            <div class="lc-status"><span class="lc-status-dot"></span>Active</div>
+                                                        </div>
+                                                        <div class="lc-flow-horizontal">
+                                                            <div class="lc-flow-col">
+                                                                <span class="lc-flow-label">Deposit</span>
+                                                                <span class="lc-flow-val">$250</span>
+                                                            </div>
+                                                            <div class="lc-flow-arrow-right">→</div>
+                                                            <div class="lc-flow-col">
+                                                                <span class="lc-flow-label">Match</span>
+                                                                <span class="lc-flow-val lc-val-green">+$125</span>
+                                                            </div>
+                                                            <div class="lc-flow-arrow-right">→</div>
+                                                            <div class="lc-flow-col lc-col-final">
+                                                                <span class="lc-flow-label">Return</span>
+                                                                <span class="lc-flow-val">$375</span>
+                                                            </div>
+                                                        </div>
+                                                        <div class="lc-flow-footnote">Matches are funded by forfeited deposits and sponsors. <a href="#engine-section" class="lc-flow-link" onclick="document.getElementById('engine-section')?.scrollIntoView({behavior:'smooth'}); return false;">How it works →</a></div>
+                                                        <div class="lc-live-state-ticker">
+                                                            <span class="lc-live-state-lbl">PROTOCOL STATE</span>
+                                                            <span class="lc-live-state-val">Yield Multiplier Active</span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="lc-trust" style="margin-top: 12px; padding-top: 10px;">
+                                                        <svg class="lc-trust-lock" width="10" height="10" viewBox="0 0 24 28" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><path d="M12 2a5 5 0 0 0-5 5v3H5a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V12a2 2 0 0 0-2-2h-2V7a5 5 0 0 0-5-5zm-3 5a3 3 0 0 1 6 0v3H9V7zm3 9a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3z" fill="currentColor"/></svg>
+                                                        Verified automatically via Connected API.
+                                                    </div>
+                                                </div>
+
+                                                <!-- CARD 3: X AUDIENCE GROWTH CONTRACT -->
+                                                <div class="lactivity-card lfan-real-card is-left" id="lfan-card-2">
+                                                    <div class="lc-platform-header">
+                                                        <img class="lc-plat-logo" src="https://cdn.simpleicons.org/x/111111" alt="X">
+                                                        <span class="lc-plat-text">Verified via X API v2</span>
+                                                    </div>
+                                                    <div class="lc-global-stats-row">
+                                                        <span class="lc-global-stats-item">
+                                                            <span class="lc-global-stats-dot"></span>
+                                                            <span class="lc-global-stats-num">31</span>
+                                                            <span class="lc-global-stats-label">Active Contracts</span>
+                                                        </span>
+                                                        <span class="lc-global-stats-divider">|</span>
+                                                        <span class="lc-global-stats-item">
+                                                            <span class="lc-global-stats-num">$12,400</span>
+                                                            <span class="lc-global-stats-label">Locked</span>
+                                                        </span>
+                                                    </div>
+                                                    <div class="lc-contract">
+                                                        <div class="lc-contract-head">
+                                                            <div>
+                                                                <div class="lc-contract-name">X Audience Growth</div>
+                                                                <div class="lc-contract-goal">Gain 1,000 net new followers</div>
+                                                                <div class="lc-contract-time">12 Days Remaining</div>
+                                                            </div>
+                                                            <div class="lc-status"><span class="lc-status-dot"></span>Active</div>
+                                                        </div>
+                                                        <div class="lc-flow-horizontal">
+                                                            <div class="lc-flow-col">
+                                                                <span class="lc-flow-label">Deposit</span>
+                                                                <span class="lc-flow-val">$1,000</span>
+                                                            </div>
+                                                            <div class="lc-flow-arrow-right">→</div>
+                                                            <div class="lc-flow-col">
+                                                                <span class="lc-flow-label">Match</span>
+                                                                <span class="lc-flow-val lc-val-green">+$1,000</span>
+                                                            </div>
+                                                            <div class="lc-flow-arrow-right">→</div>
+                                                            <div class="lc-flow-col lc-col-final">
+                                                                <span class="lc-flow-label">Return</span>
+                                                                <span class="lc-flow-val">$2,000</span>
+                                                            </div>
+                                                        </div>
+                                                        <div class="lc-flow-footnote">Matches are funded by forfeited deposits and sponsors. <a href="#engine-section" class="lc-flow-link" onclick="document.getElementById('engine-section')?.scrollIntoView({behavior:'smooth'}); return false;">How it works →</a></div>
+                                                        <div class="lc-live-state-ticker">
+                                                            <span class="lc-live-state-lbl">PROTOCOL STATE</span>
+                                                            <span class="lc-live-state-val">Escrow Verified</span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="lc-trust" style="margin-top: 12px; padding-top: 10px;">
+                                                        <svg class="lc-trust-lock" width="10" height="10" viewBox="0 0 24 28" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><path d="M12 2a5 5 0 0 0-5 5v3H5a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V12a2 2 0 0 0-2-2h-2V7a5 5 0 0 0-5-5zm-3 5a3 3 0 0 1 6 0v3H9V7zm3 9a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3z" fill="currentColor"/></svg>
+                                                        Verified automatically via Connected API.
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-                        <div class="lcta-match ldesktop-proof animate-fade-in-up delay-2" style="margin-bottom: 24px;">First contract matched up to $250</div>
 
-                        <!-- COMPACT LIVE RIVALRY SNAPSHOT (Bloomberg Terminal style) -->
-                        <div class="l-live-rivalry-preview animate-fade-in-up delay-3" id="l-live-rivalry-preview-card">
-                            <div class="l-lr-hdr">
-                                <span class="l-lr-dot l-ticker-pulse"></span> LIVE CONTRACT RIVALRY
-                            </div>
-                            <div class="l-lr-ticker">
-                                <span class="l-lr-token">@jakevoss <span class="l-lr-num lead">+8.40%</span></span>
-                                <span class="l-lr-divider">/</span>
-                                <span class="l-lr-token">@marcus <span class="l-lr-num lag">+7.80%</span></span>
-                                <span class="l-lr-divider">|</span>
-                                <span class="l-lr-cap">POOL $2.0K</span>
-                                <span class="l-lr-divider">|</span>
-                                <span class="l-lr-time">T-MINUS 9D</span>
-                                <span class="l-lr-divider">|</span>
-                                <span class="l-lr-action-badge">VIEW MATCH <span style="display:inline-block; transition: transform 0.2s ease;">→</span></span>
-                            </div>
-                        </div>
 
-                    </div>
-                    <div class="lhero-right animate-scale-in delay-1">
-                        <div class="lactivity-card">
-                            <!-- DYNAMIC PLATFORM INTEGRATION HEADER -->
-                            <div class="lc-platform-header" id="lc-platform-header">
-                                <img class="lc-plat-logo" id="lc-plat-logo" src="https://www.vectorlogo.zone/logos/stripe/stripe-icon.svg" alt="Stripe">
-                                <span class="lc-plat-text" id="lc-plat-text">Connected via Stripe Connect</span>
-                            </div>
-
-                            <!-- INTEGRATED GLOBAL STATS ROW -->
-                            <div class="lc-global-stats-row">
-                                <span class="lc-global-stats-item">
-                                    <span class="lc-global-stats-dot"></span>
-                                    <span id="lc-global-active-count" class="lc-global-stats-num">22</span>
-                                    <span class="lc-global-stats-label">Active Contracts</span>
-                                </span>
-                                <span class="lc-global-stats-divider">|</span>
-                                <span class="lc-global-stats-item">
-                                    <span id="lc-global-locked-amount" class="lc-global-stats-num">$8,700</span>
-                                    <span class="lc-global-stats-label">Locked</span>
-                                </span>
-                            </div>
-
-                            <!-- FEATURED CONTRACT -->
-                            <div class="lc-contract">
-                                <div class="lc-contract-head">
-                                    <div>
-                                        <div class="lc-contract-name" id="lc-feat-name">Revenue Growth</div>
-                                        <div class="lc-contract-goal" id="lc-feat-goal">Increase revenue by 20%</div>
-                                        <div class="lc-contract-time" id="lc-feat-time">18 Days Remaining</div>
-                                    </div>
-                                    <div class="lc-status"><span class="lc-status-dot"></span>Active</div>
-                                </div>
-
-                                <div class="lc-flow-horizontal">
-                                    <div class="lc-flow-col">
-                                        <span class="lc-flow-label">Deposit</span>
-                                        <span class="lc-flow-val" id="lc-feat-deposit">$500</span>
-                                    </div>
-                                    <div class="lc-flow-arrow-right">→</div>
-                                    <div class="lc-flow-col">
-                                        <span class="lc-flow-label">Match</span>
-                                        <span class="lc-flow-val lc-val-green" id="lc-feat-reward">+$500</span>
-                                    </div>
-                                    <div class="lc-flow-arrow-right">→</div>
-                                    <div class="lc-flow-col lc-col-final">
-                                        <span class="lc-flow-label">Return</span>
-                                        <span class="lc-flow-val" id="lc-feat-return">$1,000</span>
-                                    </div>
-                                </div>
-                                <div class="lc-flow-footnote">Matches are funded by forfeited deposits and sponsors. <a href="#how" class="lc-flow-link" onclick="document.getElementById('how')?.scrollIntoView({behavior:'smooth'}); return false;">How it works →</a></div>
-
-                                <!-- SUBTLE LIVE STATE TICKER -->
-                                <div class="lc-live-state-ticker">
-                                    <span class="lc-live-state-lbl">PROTOCOL STATE</span>
-                                    <span class="lc-live-state-val" id="lc-live-state-val">Deposit Escrowed</span>
-                                </div>
-                            </div>
-
-                            <!-- DEDICATED LIVE ACTIVITY STRIP (CHANGE 3) -->
-                            <div class="lc-recent-activity">
-                                <div class="lc-ra-header">Recent Activity</div>
-                                <div class="lc-ra-list" id="lc-ra-list">
-                                    <!-- Populated dynamically -->
-                                </div>
-                            </div>
-
-                            <!-- TRUST COPY -->
-                            <div class="lc-trust lhide-mobile">
-                                <svg class="lc-trust-lock" width="10" height="10" viewBox="0 0 24 28" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><path d="M12 2a5 5 0 0 0-5 5v3H5a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V12a2 2 0 0 0-2-2h-2V7a5 5 0 0 0-5-5zm-3 5a3 3 0 0 1 6 0v3H9V7zm3 9a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3z" fill="currentColor"/></svg>
-                                Contracts verified automatically through connected APIs.
-                            </div>
-                        </div>
                     </div>
                 </div>
-            </div>
             </div>
 
             <!-- GLOBAL PROTOCOL STATISTICS -->
             <div class="l-global-stats-bar animate-fade-in-up delay-4">
                 <div class="lw">
-                    <div class="l-stats-bar-grid">
-                        <div class="l-stat-bar-item">
-                            <span class="l-stat-bar-val" id="ls-locked">$0.0M</span>
-                            <span class="l-stat-bar-lbl">Capital Locked</span>
-                        </div>
-                        <div class="l-stat-bar-item">
-                            <span class="l-stat-bar-val" id="ls-commitments">0</span>
-                            <span class="l-stat-bar-lbl">Total Commitments</span>
-                        </div>
-                        <div class="l-stat-bar-item lhide-mobile">
-                            <span class="l-stat-bar-val" id="ls-success">0.0%</span>
-                            <span class="l-stat-bar-lbl">Settlement Success</span>
-                        </div>
-                        <div class="l-stat-bar-item lhide-mobile">
-                            <span class="l-stat-bar-val" id="ls-identities">0</span>
-                            <span class="l-stat-bar-lbl">Execution Identities</span>
-                        </div>
+                    <!-- Visually hidden list of all metrics for screen readers -->
+                    <div style="position: absolute !important; width: 1px !important; height: 1px !important; padding: 0 !important; margin: -1px !important; overflow: hidden !important; clip: rect(0,0,0,0) !important; border: 0 !important;">
+                        Protocol metrics: Capital locked: $8.7M; Total commitments: 12,483; Settlement success: 96.2%; Execution identities: 3,442; Active contracts: 1,206; Average contract size: $6,940; Median settlement time: 1.4 days; Counterparties: 812.
+                    </div>
+                    <div class="l-stats-bar-grid" aria-live="off">
+                        <a href="/market" class="l-stat-bar-item" data-cell-index="0" aria-label="See more: capital locked">
+                            <div class="l-stat-bar-wrapper">
+                                <div class="l-stat-bar-content current">
+                                    <span class="l-stat-bar-val" id="ls-locked">$8.7M</span>
+                                    <span class="l-stat-bar-lbl">Capital Locked</span>
+                                </div>
+                            </div>
+                            <div class="l-stat-bar-overlay">
+                                SEE MORE <span class="arrow">→</span>
+                            </div>
+                            <div class="l-stat-bar-static-cta">
+                                SEE MORE →
+                            </div>
+                        </a>
+                        <a href="/market" class="l-stat-bar-item" data-cell-index="1" aria-label="See more: total commitments">
+                            <div class="l-stat-bar-wrapper">
+                                <div class="l-stat-bar-content current">
+                                    <span class="l-stat-bar-val" id="ls-commitments">12,483</span>
+                                    <span class="l-stat-bar-lbl">Total Commitments</span>
+                                </div>
+                            </div>
+                            <div class="l-stat-bar-overlay">
+                                SEE MORE <span class="arrow">→</span>
+                            </div>
+                            <div class="l-stat-bar-static-cta">
+                                SEE MORE →
+                            </div>
+                        </a>
+                        <a href="/market" class="l-stat-bar-item lhide-mobile" data-cell-index="2" aria-label="See more: settlement success">
+                            <div class="l-stat-bar-wrapper">
+                                <div class="l-stat-bar-content current">
+                                    <span class="l-stat-bar-val" id="ls-success">96.2%</span>
+                                    <span class="l-stat-bar-lbl">Settlement Success</span>
+                                </div>
+                            </div>
+                            <div class="l-stat-bar-overlay">
+                                SEE MORE <span class="arrow">→</span>
+                            </div>
+                            <div class="l-stat-bar-static-cta">
+                                SEE MORE →
+                            </div>
+                        </a>
+                        <a href="/market" class="l-stat-bar-item lhide-mobile" data-cell-index="3" aria-label="See more: execution identities">
+                            <div class="l-stat-bar-wrapper">
+                                <div class="l-stat-bar-content current">
+                                    <span class="l-stat-bar-val" id="ls-identities">3,442</span>
+                                    <span class="l-stat-bar-lbl">Execution Identities</span>
+                                </div>
+                            </div>
+                            <div class="l-stat-bar-overlay">
+                                SEE MORE <span class="arrow">→</span>
+                            </div>
+                            <div class="l-stat-bar-static-cta">
+                                SEE MORE →
+                            </div>
+                        </a>
                     </div>
                 </div>
             </div>
+
+
 
 
 
@@ -192,18 +345,32 @@ export function renderLanding() {
 
 
             <!-- ═══ CONTRACT TYPES ═══ -->
-            <div class="lw">
+            <div class="lw" style="padding-top: 80px; padding-bottom: 80px;">
                 <div class="ltypes-asymmetric" data-r>
                     <div class="ltypes-left">
                         <div class="lred-dash reveal-item"><span class="lmono">Contract Types</span></div>
-                        <h2 class="ltypes-headline reveal-item">Use financial leverage on yourself,<br>or challenge a <strong>competitor.</strong></h2>
+                        <h2 class="ltypes-headline reveal-item">Pick your<br><span class="lh-gradient">opponent.</span></h2>
+                        <p class="ltypes-sub reveal-item">Choose your execution mode. Lock solo capital to hold yourself accountable, or challenge a competitor head-to-head.</p>
+                        <div class="ltypes-cta-wrap reveal-item">
+                            <button class="lbtn lbtn-r" id="ltypes-start-cta" onclick="window.app.goAction('/market', 'signup')">
+                                START CONTRACT <span class="lbtn-arrow">→</span>
+                            </button>
+                        </div>
                     </div>
 
                     <div class="ltypes-right">
-                        <div class="ltype-row reveal-item">
-                            <div class="ltype-badge-new">Solo</div>
+                        <!-- SOLO CARD -->
+                        <div class="ltype-row is-solo reveal-item">
+                            <div class="ltype-card-top">
+                                <span class="ltype-badge-new">Solo Mode</span>
+                                <span class="ltype-stat-pill">22 Active Contracts</span>
+                            </div>
                             <h3 class="ltype-title-new">You vs. Yourself</h3>
-                            <p class="ltype-desc-new">Lock deposits to force yourself to execute. <span class="lhide-mobile">Hit targets to win; fail and forfeit capital.</span></p>
+                            <p class="ltype-desc-new">Lock deposits to force yourself to execute. Hit targets to win; fail and forfeit capital.</p>
+                            <div class="ltype-stat-row">
+                                <span class="ltype-stat-k">Typical Deposit:</span>
+                                <span class="ltype-stat-v">$100 – $3,000</span>
+                            </div>
                             <div class="ltype-meta-new">
                                 <span class="lmeta-label">Best for</span>
                                 <span class="lmeta-tag">Milestones</span>
@@ -211,10 +378,19 @@ export function renderLanding() {
                                 <span class="lmeta-tag">Audience building</span>
                             </div>
                         </div>
-                        <div class="ltype-row reveal-item">
-                            <div class="ltype-badge-new secondary">Rivalry</div>
+
+                        <!-- RIVALRY CARD -->
+                        <div class="ltype-row is-rivalry reveal-item">
+                            <div class="ltype-card-top">
+                                <span class="ltype-badge-new secondary">Rivalry Mode</span>
+                                <span class="ltype-stat-pill secondary">48 Active Duels</span>
+                            </div>
                             <h3 class="ltype-title-new">You vs. Competitors</h3>
-                            <p class="ltype-desc-new">Lock equal deposits in a head-to-head race. <span class="lhide-mobile">Winner takes the entire pool.</span></p>
+                            <p class="ltype-desc-new">Lock equal deposits in a head-to-head race. Winner takes the entire pool.</p>
+                            <div class="ltype-stat-row">
+                                <span class="ltype-stat-k">Typical Deposit:</span>
+                                <span class="ltype-stat-v">$250 – $5,000</span>
+                            </div>
                             <div class="ltype-meta-new">
                                 <span class="lmeta-label">Best for</span>
                                 <span class="lmeta-tag">Audience races</span>
@@ -225,20 +401,226 @@ export function renderLanding() {
                 </div>
             </div>
 
+            <!-- ═══ VISUAL CENTERPIECE: CONTINUOUS MONEY FLOW SCHEMATIC ═══ -->
+            <div class="lengine-section" id="engine-section" data-r>
+                <div class="lw">
+                    <div class="lengine-hdr-wrap">
+                        <div class="lengine-tag">
+                            <span class="l-lr-dot l-ticker-pulse"></span> AUTOMATED EXECUTION SCHEMATIC
+                        </div>
+                        <h2 class="lengine-h2">HOW MONEY FLOWS ON COLLATERAL</h2>
+                        <p class="lengine-sub">
+                            Every deposit is governed by custodial escrow and automated API verification. Winners receive their principal plus matching yield funded by forfeited deposits and brand sponsors.
+                        </p>
+                    </div>
+
+                    <!-- SCHEMATIC: CSS GRID LAYOUT (no absolute positioning) -->
+                    <div class="lflow-container">
+
+                        <!-- DESKTOP FLOW (hidden <900px) -->
+                        <div class="lflow-desktop">
+                            <!-- NODE ROW — CSS Grid handles horizontal containment -->
+                            <div class="lflow-row">
+                                <!-- NODE: DEPOSIT IN -->
+                                <div class="lflow-node">
+                                    <div class="lflow-node-hdr">INPUT</div>
+                                    <div class="lflow-node-title">DEPOSIT IN</div>
+                                    <div class="lflow-node-stat">$8,700,000</div>
+                                    <div class="lflow-node-sub">Stripe Connect Escrow</div>
+                                </div>
+
+                                <div class="lflow-arrow">
+                                    <svg width="32" height="12" viewBox="0 0 32 12"><path d="M0 6 H26 L22 2 M26 6 L22 10" stroke="#0F172A" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                                </div>
+
+                                <!-- NODE: ESCROW VAULT -->
+                                <div class="lflow-node lflow-node-vault" id="lflow-vault-node">
+                                    <div class="lflow-node-hdr">CUSTODY</div>
+                                    <div class="lflow-node-title">ESCROW VAULT</div>
+                                    <div class="lflow-node-stat">$8.7M LOCKED</div>
+                                    <div class="lflow-node-sub">Custodial Escrow via Stripe Connect</div>
+                                </div>
+
+                                <div class="lflow-arrow">
+                                    <svg width="32" height="12" viewBox="0 0 32 12"><path d="M0 6 H26 L22 2 M26 6 L22 10" stroke="#0F172A" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                                </div>
+
+                                <!-- NODE: ORACLE API -->
+                                <div class="lflow-node">
+                                    <div class="lflow-node-hdr">VERIFICATION</div>
+                                    <div class="lflow-node-title">ORACLE API STREAM</div>
+                                    <div class="lflow-node-stat">96.2% HIT RATE</div>
+                                    <div class="lflow-node-sub">Stripe • Shopify • X • YouTube</div>
+                                </div>
+
+                                <!-- SPLIT ARROWS — three proportionally weighted paths fanning to outcomes -->
+                                <div class="lflow-split-arrows">
+                                    <svg width="44" height="180" viewBox="0 0 44 180" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <!-- Win path (thick green #145C14) -->
+                                        <path d="M 0 90 C 16 90, 22 24, 34 24" stroke="#145C14" stroke-width="4.5" stroke-linecap="round"/>
+                                        <polygon points="42,24 32,18 32,30" fill="#145C14"/>
+
+                                        <!-- Forfeit path (medium crimson #7A1220) -->
+                                        <path d="M 0 90 H 34" stroke="#7A1220" stroke-width="2.5" stroke-linecap="round"/>
+                                        <polygon points="42,90 33,85 33,95" fill="#7A1220"/>
+
+                                        <!-- Burn path (hairline dashed crimson #7A1220) -->
+                                        <path d="M 0 90 C 16 90, 22 156, 34 156" stroke="#7A1220" stroke-width="1.2" stroke-dasharray="4 3" stroke-linecap="round"/>
+                                        <polygon points="41,156 34,152 34,160" fill="#7A1220"/>
+                                    </svg>
+                                </div>
+
+                                <!-- THREE TERMINAL OUTCOMES -->
+                                <div class="lflow-outcomes">
+                                    <div class="lflow-outcome is-win">
+                                        <div class="lflow-outcome-indicator" style="background:#145C14;width:5px;"></div>
+                                        <div class="lflow-outcome-body">
+                                            <div class="lflow-out-hdr"><span class="lflow-dot" style="background:#145C14;"></span>WIN PATH (96.2%)</div>
+                                            <div class="lflow-out-title">RETURNED TO CREATOR</div>
+                                            <div class="lflow-out-val lflow-val-green">$8,326,200</div>
+                                            <div class="lflow-out-desc">100% Principal + Matching Yield</div>
+                                        </div>
+                                    </div>
+                                    <div class="lflow-outcome is-forfeit" id="lflow-forfeit-node">
+                                        <div class="lflow-outcome-indicator" style="background:#7A1220;width:3px;"></div>
+                                        <div class="lflow-outcome-body">
+                                            <div class="lflow-out-hdr"><span class="lflow-dot" style="background:#7A1220;"></span>FORFEITED (3.8%)</div>
+                                            <div class="lflow-out-title">FORFEITED DEPOSITS</div>
+                                            <div class="lflow-out-val lflow-val-crimson">$330,600</div>
+                                            <div class="lflow-out-desc">Feeds Winner Match Pool</div>
+                                        </div>
+                                    </div>
+                                    <div class="lflow-outcome is-burn">
+                                        <div class="lflow-outcome-indicator" style="background:#7A1220;width:1px;"></div>
+                                        <div class="lflow-outcome-body">
+                                            <div class="lflow-out-hdr"><span class="lflow-dot" style="background:#7A1220;"></span>PROTOCOL FEE (0.5%)</div>
+                                            <div class="lflow-out-title">CLTR BURNED</div>
+                                            <div class="lflow-out-val">$43,200</div>
+                                            <div class="lflow-out-desc">Permanently Destroyed</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- RECIRCULATING LOOP — routed SVG path below node row -->
+                            <div class="lflow-loop-wrap">
+                                <svg class="lflow-loop-svg" viewBox="0 0 1000 60" preserveAspectRatio="none">
+                                    <defs>
+                                        <marker id="ah-loop" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+                                            <path d="M0 1 L8 5 L0 9z" fill="#7A1220"/>
+                                        </marker>
+                                    </defs>
+                                    <!-- Path: exits from ~85% (forfeit card), routes down, runs left, turns up to ~22% (vault) -->
+                                    <path class="lflow-loop-path" d="M 850 0 C 850 28, 850 42, 820 42 L 220 42 C 190 42, 190 28, 190 0" stroke="#7A1220" stroke-width="2.2" fill="none" stroke-dasharray="6 4" stroke-linecap="round" marker-end="url(#ah-loop)"/>
+                                </svg>
+                                <div class="lflow-loop-badge">↺ FORFEITED DEPOSITS RE-CIRCULATE TO ESCROW VAULT</div>
+                            </div>
+                        </div>
+
+                        <!-- MOBILE VERTICAL FLOW (shown <900px) -->
+                        <div class="lflow-mobile">
+                            <div class="lflow-mob-step">
+                                <div class="lflow-mob-num">01</div>
+                                <div class="lflow-mob-body">
+                                    <div class="lflow-node-hdr">INPUT</div>
+                                    <div class="lflow-node-title">DEPOSIT IN</div>
+                                    <div class="lflow-node-stat">$8,700,000</div>
+                                </div>
+                            </div>
+                            <div class="lflow-mob-arrow">↓</div>
+
+                            <div class="lflow-mob-step lflow-mob-vault">
+                                <div class="lflow-mob-num">02</div>
+                                <div class="lflow-mob-body">
+                                    <div class="lflow-node-hdr">CUSTODY</div>
+                                    <div class="lflow-node-title">ESCROW VAULT</div>
+                                    <div class="lflow-node-stat">$8.7M LOCKED</div>
+                                    <div class="lflow-node-sub">Custodial Escrow via Stripe Connect</div>
+                                </div>
+                            </div>
+                            <div class="lflow-mob-arrow">↓</div>
+
+                            <div class="lflow-mob-step">
+                                <div class="lflow-mob-num">03</div>
+                                <div class="lflow-mob-body">
+                                    <div class="lflow-node-hdr">VERIFICATION</div>
+                                    <div class="lflow-node-title">ORACLE API STREAM</div>
+                                    <div class="lflow-node-stat">96.2% HIT RATE</div>
+                                </div>
+                            </div>
+                            <div class="lflow-mob-arrow">↓</div>
+
+                            <div class="lflow-mob-outcomes">
+                                <div class="lflow-outcome is-win">
+                                    <div class="lflow-outcome-indicator" style="background:#145C14;height:5px;"></div>
+                                    <div class="lflow-outcome-body">
+                                        <div class="lflow-out-hdr"><span class="lflow-dot" style="background:#145C14;"></span>WIN PATH (96.2%)</div>
+                                        <div class="lflow-out-title">RETURNED TO CREATOR</div>
+                                        <div class="lflow-out-val lflow-val-green">$8,326,200</div>
+                                    </div>
+                                </div>
+                                <div class="lflow-outcome is-forfeit">
+                                    <div class="lflow-outcome-indicator" style="background:#7A1220;height:3px;"></div>
+                                    <div class="lflow-outcome-body">
+                                        <div class="lflow-out-hdr"><span class="lflow-dot" style="background:#7A1220;"></span>FORFEITED (3.8%)</div>
+                                        <div class="lflow-out-title">FORFEITED DEPOSITS</div>
+                                        <div class="lflow-out-val lflow-val-crimson">$330,600</div>
+                                        <div class="lflow-mob-loop">↺ Re-circulates to Escrow Vault</div>
+                                    </div>
+                                </div>
+                                <div class="lflow-outcome is-burn">
+                                    <div class="lflow-outcome-indicator" style="background:#7A1220;height:1.5px;"></div>
+                                    <div class="lflow-outcome-body">
+                                        <div class="lflow-out-hdr"><span class="lflow-dot" style="background:#7A1220;"></span>PROTOCOL FEE (0.5%)</div>
+                                        <div class="lflow-out-title">CLTR BURNED</div>
+                                        <div class="lflow-out-val">$43,200</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <!-- SUMMARY PARAGRAPH -->
+                    <div class="lflow-summary">
+                        Deposits are held in Stripe Connect custodial escrow accounts mapped to smart contract state. Upon automated API verification, winners receive their principal plus matching yield. Forfeited deposits re-circulate into the match pool to fund future winners. A 0.5% protocol fee is permanently burned from CLTR supply on every settled contract.
+                    </div>
+                </div>
+            </div>
+
+
+
 
             <!-- ═══ LIVE CONTRACT EXAMPLES ═══ -->
             <div class="lcontracts" id="contracts" data-r>
                 <div class="lw">
-                    <div class="reveal-item" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px; flex-wrap: wrap; gap: 16px;">
+                    <div class="reveal-item" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; flex-wrap: wrap; gap: 16px;">
                         <div class="lred-dash" style="margin-bottom: 0;"><span class="lmono">Open Contracts</span></div>
                         
                         <!-- ═══ OPEN CONTRACTS STATS ═══ -->
                         <div style="display: flex; align-items: center; gap: 10px;">
                             <span style="width: 6px; height: 6px; background: #145c14; border-radius: 50%; box-shadow: 0 0 10px rgba(20,92,20,0.8);"></span>
                             <span style="font-family: 'Inter Tight', sans-serif; font-weight: 700; color: #145c14; font-size: 15px; letter-spacing: -0.2px;">$7.6k</span>
-                            <span style="font-family: 'Inter', sans-serif; font-size: 11px; font-weight: 600; color: #666; text-transform: uppercase; letter-spacing: 0.05em;">Capital Locked</span>
+                            <span style="font-family: 'Inter', sans-serif; font-size: 11px; font-weight: 600; color: #666; text-transform: uppercase; letter-spacing: 0.05em;">Total Escrow · Solo Contracts</span>
                         </div>
                     </div>
+
+                    <!-- ═══ TIER SYSTEM LEGEND BAR ═══ -->
+                    <div class="ltier-legend-bar reveal-item">
+                        <div class="ltier-legend-item">
+                            <span class="lcard-tier tier-pledge">Pledge 1.5x</span>
+                            <span class="ltier-legend-desc">Moderate target · 30-day window · Grace period</span>
+                        </div>
+                        <div class="ltier-legend-item">
+                            <span class="lcard-tier tier-stake">Stake 2.5x</span>
+                            <span class="ltier-legend-desc">Standard target · 30-day window · Full forfeit</span>
+                        </div>
+                        <div class="ltier-legend-item">
+                            <span class="lcard-tier tier-allin">All-In 4.0x</span>
+                            <span class="ltier-legend-desc">Aggressive target · 14-day window · Full forfeit</span>
+                        </div>
+                    </div>
+
                     <div class="lcards">
                         <div class="lcard lcard-popular reveal-item">
                             <div class="lcard-top">
@@ -248,11 +630,11 @@ export function renderLanding() {
                             <div class="lcard-title">Revenue Growth</div>
                             <div class="lcard-target">+20% Revenue growth</div>
                             <div class="lcard-row"><span class="k">Deposit</span><span class="v">$250 – $3,000</span></div>
-                            <div class="lcard-row"><span class="k">Bonus Yield</span><span class="v">2.5x</span></div>
+                            <div class="lcard-row"><span class="k">Total Return</span><span class="v">2.5x</span></div>
                             <div class="lcard-row"><span class="k">Window</span><span class="v">30 days</span></div>
                             <div class="lcard-live-indicator">
                                 <span class="lcard-live-dot"></span>
-                                <span class="lcard-live-text">48 Active duels</span>
+                                <span class="lcard-live-text">$2.4k in escrow</span>
                             </div>
                             <div class="lcard-btn"><button class="lp-cta-btn" data-source="STRIPE" data-tier="stake" data-capital="250">Start Contract</button></div>
                         </div>
@@ -264,11 +646,11 @@ export function renderLanding() {
                             <div class="lcard-title">Follower Growth</div>
                             <div class="lcard-target">+1,000 Followers</div>
                             <div class="lcard-row"><span class="k">Deposit</span><span class="v">$500 – $5,000</span></div>
-                            <div class="lcard-row"><span class="k">Bonus Yield</span><span class="v">4.0x</span></div>
+                            <div class="lcard-row"><span class="k">Total Return</span><span class="v">4.0x</span></div>
                             <div class="lcard-row"><span class="k">Window</span><span class="v">14 days</span></div>
                             <div class="lcard-live-indicator">
                                 <span class="lcard-live-dot"></span>
-                                <span class="lcard-live-text">$82k Locked in escrow</span>
+                                <span class="lcard-live-text">$3.1k in escrow</span>
                             </div>
                             <div class="lcard-btn"><button class="lp-cta-btn" data-source="X" data-tier="all_in" data-capital="500">Start Contract</button></div>
                         </div>
@@ -280,11 +662,11 @@ export function renderLanding() {
                             <div class="lcard-title">Store Sales</div>
                             <div class="lcard-target">+$5,000 Net Sales</div>
                             <div class="lcard-row"><span class="k">Deposit</span><span class="v">$100 – $1,500</span></div>
-                            <div class="lcard-row"><span class="k">Bonus Yield</span><span class="v">1.5x</span></div>
+                            <div class="lcard-row"><span class="k">Total Return</span><span class="v">1.5x</span></div>
                             <div class="lcard-row"><span class="k">Window</span><span class="v">30 days</span></div>
                             <div class="lcard-live-indicator">
                                 <span class="lcard-live-dot"></span>
-                                <span class="lcard-live-text">Oracle Verified</span>
+                                <span class="lcard-live-text">$1.2k in escrow</span>
                             </div>
                             <div class="lcard-btn"><button class="lp-cta-btn" data-source="SHOPIFY" data-tier="pledge" data-capital="100">Start Contract</button></div>
                         </div>
@@ -296,11 +678,11 @@ export function renderLanding() {
                             <div class="lcard-title">Subscriber Growth</div>
                             <div class="lcard-target">+500 Subscribers</div>
                             <div class="lcard-row"><span class="k">Deposit</span><span class="v">$250 – $3,000</span></div>
-                            <div class="lcard-row"><span class="k">Bonus Yield</span><span class="v">2.5x</span></div>
+                            <div class="lcard-row"><span class="k">Total Return</span><span class="v">2.5x</span></div>
                             <div class="lcard-row"><span class="k">Window</span><span class="v">30 days</span></div>
                             <div class="lcard-live-indicator">
-                                <span class="lcard-live-dot urgent"></span>
-                                <span class="lcard-live-text">3 Hours Remaining</span>
+                                <span class="lcard-live-dot"></span>
+                                <span class="lcard-live-text">$0.9k in escrow</span>
                             </div>
                             <div class="lcard-btn"><button class="lp-cta-btn" data-source="YOUTUBE" data-tier="stake" data-capital="250">Start Contract</button></div>
                         </div>
@@ -308,40 +690,6 @@ export function renderLanding() {
                 </div>
             </div>
 
-            <!-- ═══ HOW IT WORKS ═══ -->
-            <div class="lw">
-                <div class="lhow" data-r id="how">
-                    <div class="lred-dash reveal-item"><span class="lmono">How It Works</span></div>
-                    <h2 class="lhow-h reveal-item">Set a target. Lock money.<br>Force yourself to <strong>win.</strong></h2>
-                    <p class="lhow-sub reveal-item">If you are serious, put something on the line.</p>
-
-                    <div class="lhow-timeline-wrap reveal-item">
-                        <div class="lhow-timeline-line"></div>
-                        <div class="lhow-timeline-steps">
-                            <div class="lhow-timeline-step reveal-item">
-                                <div class="lhow-timeline-node">01</div>
-                                <h3 class="lhow-timeline-title">Set Target</h3>
-                                <p class="lhow-timeline-desc">Connect Stripe, X, Shopify, or YouTube. Set your exact metric target.</p>
-                            </div>
-                            <div class="lhow-timeline-step reveal-item">
-                                <div class="lhow-timeline-node">02</div>
-                                <h3 class="lhow-timeline-title">Lock Deposit</h3>
-                                <p class="lhow-timeline-desc">Lock your security deposit in escrow. No early withdrawals allowed.</p>
-                            </div>
-                            <div class="lhow-timeline-step reveal-item">
-                                <div class="lhow-timeline-node">03</div>
-                                <h3 class="lhow-timeline-title">Execute</h3>
-                                <p class="lhow-timeline-desc">Your contract runs. Progress is tracked in real-time via platform APIs.</p>
-                            </div>
-                            <div class="lhow-timeline-step reveal-item">
-                                <div class="lhow-timeline-node final">04</div>
-                                <h3 class="lhow-timeline-title">API Settle</h3>
-                                <p class="lhow-timeline-desc">APIs verify outcomes. Hit goals to win yields; fail and forfeit deposits.</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
 
             <!-- ═══ SOCIAL PROOF (REAL RESULTS) ═══ -->
             <div class="lreal-results" data-r>
@@ -393,23 +741,23 @@ export function renderLanding() {
                                     </tr>
                                 </thead>
                                 <tbody id="lledger-tbody-prod">
-                                    <tr class="reveal-item">
-                                        <td data-label="Contract ID" class="td-id">#C-8041 <span class="td-user">@danny_v...</span></td>
-                                        <td data-label="Metric" class="td-metric"><svg class="td-icon" viewBox="0 0 24 24" fill="currentColor" style="color:#635BFF;width:16px;height:16px;display:inline-block;vertical-align:middle;margin-right:8px;"><path d="M20 10.3c0-1.8-1.5-2.7-3.6-3.2l-2-.5c-1.3-.3-1.9-.7-1.9-1.3 0-.6.7-1 1.7-1 1.7 0 3 .6 3.6 1l.7-2.6C17.9 2.2 16.3 1.8 14.8 1.8c-3.1 0-5.2 1.6-5.2 4.3 0 2.9 2.4 3.7 4.9 4.3l1.8.4c1.4.3 2 .8 2 1.5 0 .7-.8 1.1-2.1 1.1-1.9 0-3.6-.7-4.3-1.1l-.8 2.7c1 .5 2.9 1 4.7 1C18.2 16 20 14.4 20 10.3z"/></svg> Stripe Revenue (+20.0%)</td>
-                                        <td data-label="Commitment" class="td-capital">$500.00</td>
-                                        <td data-label="Outcome" class="td-outcome hit"><span class="outcome-marker-hit">✓</span> Hit</td>
+                                    <tr class="reveal-item v">
+                                        <td data-label="Contract ID" class="td-id"><span class="td-value">#C-8041 <span class="td-user">@danny_v...</span></span></td>
+                                        <td data-label="Metric" class="td-metric"><span class="td-value"><svg class="td-icon" viewBox="0 0 24 24" fill="currentColor" style="color:#635BFF;width:16px;height:16px;display:inline-block;vertical-align:middle;margin-right:8px;"><path d="M20 10.3c0-1.8-1.5-2.7-3.6-3.2l-2-.5c-1.3-.3-1.9-.7-1.9-1.3 0-.6.7-1 1.7-1 1.7 0 3 .6 3.6 1l.7-2.6C17.9 2.2 16.3 1.8 14.8 1.8c-3.1 0-5.2 1.6-5.2 4.3 0 2.9 2.4 3.7 4.9 4.3l1.8.4c1.4.3 2 .8 2 1.5 0 .7-.8 1.1-2.1 1.1-1.9 0-3.6-.7-4.3-1.1l-.8 2.7c1 .5 2.9 1 4.7 1C18.2 16 20 14.4 20 10.3z"/></svg> Stripe Revenue (+20.0%)</span></td>
+                                        <td data-label="Commitment" class="td-capital"><span class="td-value">$500.00</span></td>
+                                        <td data-label="Outcome" class="td-outcome hit"><span class="td-value"><span class="outcome-marker-hit">✓</span> Hit</span></td>
                                     </tr>
-                                    <tr class="reveal-item">
-                                        <td data-label="Contract ID" class="td-id">#C-8022 <span class="td-user">@justin_s...</span></td>
-                                        <td data-label="Metric" class="td-metric"><svg class="td-icon" viewBox="0 0 24 24" fill="currentColor" style="color:#111111;width:14px;height:14px;display:inline-block;vertical-align:middle;margin-right:8px;"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg> X Followers (+1k)</td>
-                                        <td data-label="Commitment" class="td-capital">$250.00</td>
-                                        <td data-label="Outcome" class="td-outcome miss"><span class="outcome-marker-miss">✗</span> Missed</td>
+                                    <tr class="reveal-item v">
+                                        <td data-label="Contract ID" class="td-id"><span class="td-value">#C-8022 <span class="td-user">@justin_s...</span></span></td>
+                                        <td data-label="Metric" class="td-metric"><span class="td-value"><svg class="td-icon" viewBox="0 0 24 24" fill="currentColor" style="color:#111111;width:14px;height:14px;display:inline-block;vertical-align:middle;margin-right:8px;"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg> X Followers (+1k)</span></td>
+                                        <td data-label="Commitment" class="td-capital"><span class="td-value">$250.00</span></td>
+                                        <td data-label="Outcome" class="td-outcome miss"><span class="td-value"><span class="outcome-marker-miss">✗</span> Missed</span></td>
                                     </tr>
-                                    <tr class="reveal-item">
-                                        <td data-label="Contract ID" class="td-id">#C-7988 <span class="td-user">@growth...</span></td>
-                                        <td data-label="Metric" class="td-metric"><svg class="td-icon" viewBox="0 0 24 24" fill="currentColor" style="color:#96bf48;width:16px;height:16px;display:inline-block;vertical-align:middle;margin-right:8px;"><path d="M19.58 6.425a.86.86 0 00-.7-.34h-2.193a4.52 4.52 0 00-9.04 0H5.454a.86.86 0 00-.7.34.887.887 0 00-.16.766l1.97 10.96a2.41 2.41 0 002.37 1.986h6.49a2.41 2.41 0 002.37-1.985l1.97-10.96a.887.887 0 00-.184-.767zM12 3.86a2.53 2.53 0 012.513 2.225H9.487A2.53 2.53 0 0112 3.86zm3.267 11.516a2.036 2.036 0 01-1.745.892 2.374 2.374 0 01-1.614-.648A2.348 2.348 0 0010.3 15a2.036 2.036 0 01-1.745-.892.429.429 0 11.734-.442c.245.408.66.634 1.01.634.341 0 .614-.148.914-.442A3.21 3.21 0 0113.627 15c.341 0 .614-.148.914-.442a.429.429 0 01.734.442z"/></svg> Shopify Gross ($50k)</td>
-                                        <td data-label="Commitment" class="td-capital">$1,000.00</td>
-                                        <td data-label="Outcome" class="td-outcome hit"><span class="outcome-marker-hit">✓</span> Hit</td>
+                                    <tr class="reveal-item v">
+                                        <td data-label="Contract ID" class="td-id"><span class="td-value">#C-7988 <span class="td-user">@growth...</span></span></td>
+                                        <td data-label="Metric" class="td-metric"><span class="td-value"><svg class="td-icon" viewBox="0 0 24 24" fill="currentColor" style="color:#96bf48;width:16px;height:16px;display:inline-block;vertical-align:middle;margin-right:8px;"><path d="M19.58 6.425a.86.86 0 00-.7-.34h-2.193a4.52 4.52 0 00-9.04 0H5.454a.86.86 0 00-.7.34.887.887 0 00-.16.766l1.97 10.96a2.41 2.41 0 002.37 1.986h6.49a2.41 2.41 0 002.37-1.985l1.97-10.96a.887.887 0 00-.184-.767zM12 3.86a2.53 2.53 0 012.513 2.225H9.487A2.53 2.53 0 0112 3.86zm3.267 11.516a2.036 2.036 0 01-1.745.892 2.374 2.374 0 01-1.614-.648A2.348 2.348 0 0010.3 15a2.036 2.036 0 01-1.745-.892.429.429 0 11.734-.442c.245.408.66.634 1.01.634.341 0 .614-.148.914-.442A3.21 3.21 0 0113.627 15c.341 0 .614-.148.914-.442a.429.429 0 01.734.442z"/></svg> Shopify Gross ($50k)</span></td>
+                                        <td data-label="Commitment" class="td-capital"><span class="td-value">$1,000.00</span></td>
+                                        <td data-label="Outcome" class="td-outcome hit"><span class="td-value"><span class="outcome-marker-hit">✓</span> Hit</span></td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -499,7 +847,7 @@ export function renderLanding() {
             </div>
 
             <!-- ═══ THE CLTR TOKEN ECONOMY ═══ -->
-            <div class="lemo-reframe" style="background:#fff; border-top:1px solid var(--d); border-bottom:1px solid var(--d); padding:75px 0;" data-r>
+            <div class="lemo-reframe" data-r>
                 <div class="lw">
                     <div class="lred-dash reveal-item"><span class="lmono">Protocol Token</span></div>
                     <h2 class="lh-section-title reveal-item">The CLTR Token Economy</h2>
@@ -583,8 +931,8 @@ export function renderLanding() {
             </div>
 
             <!-- ═══ FAQ ═══ -->
+            <div class="lfaq" data-r id="faq">
             <div class="lw">
-                <div class="lfaq" data-r id="faq">
                     <div class="lred-dash reveal-item"><span class="lmono">Common Questions</span></div>
                     <h2 class="lhow-h reveal-item" style="margin-bottom:28px">No fine print. Just <strong>loopholes.</strong></h2>
                     <div class="lfaq-wrap">
@@ -1008,13 +1356,339 @@ export function initLanding() {
         }, 450);
     }
 
-    // Animate new global stats bar immediately on page transition (delay-4 starts at 600ms)
-    setTimeout(() => {
-        animateCountFloat('ls-locked', 8.7, '$', 'M', 1);
-        animateCount('ls-commitments', 12483);
-        animateCountFloat('ls-success', 96.2, '', '%', 1);
-        animateCount('ls-identities', 3442);
-    }, 600);
+    // ── AUTO-ROTATING STATS TICKER ──
+    const STATS_ROTATION_INTERVAL = 3000;
+    const TOUCH_ROTATION_INTERVAL = 4500;
+
+    const METRIC_POOL = [
+        { key: 'capital_locked', label: 'Capital Locked', value: 8700000, type: 'currency_short' },
+        { key: 'total_commitments', label: 'Total Commitments', value: 12483, type: 'count' },
+        { key: 'settlement_success', label: 'Settlement Success', value: 96.2, type: 'percent' },
+        { key: 'execution_identities', label: 'Execution Identities', value: 3442, type: 'count' },
+        { key: 'active_contracts', label: 'Active Contracts', value: 1206, type: 'count' },
+        { key: 'avg_contract_size', label: 'Average Contract Size', value: 6940, type: 'currency' },
+        { key: 'median_settlement_time', label: 'Median Settlement Time', value: 1.4, type: 'days' },
+        { key: 'counterparties', label: 'Counterparties', value: 812, type: 'count' }
+    ];
+
+    function formatMetricValue(val, type) {
+        if (type === 'currency_short') {
+            return '$' + (val / 1000000).toFixed(1) + 'M';
+        }
+        if (type === 'currency') {
+            return '$' + val.toLocaleString('en-US');
+        }
+        if (type === 'count') {
+            return val.toLocaleString('en-US');
+        }
+        if (type === 'percent') {
+            return val.toFixed(1) + '%';
+        }
+        if (type === 'days') {
+            return val.toFixed(1) + ' days';
+        }
+        return val.toString();
+    }
+
+    let activeMetricIndices = [0, 1, 2, 3];
+    let nextCellToSwap = 0;
+    let isPaused = false;
+    let isTabVisible = true;
+    let isElementVisible = false;
+
+    function performSwap() {
+        const cellIndex = nextCellToSwap;
+        
+        // Find next metric from pool excluding every metric currently displayed in any of the four cells
+        const currentMetricIndex = activeMetricIndices[cellIndex];
+        const nextStartIdx = (currentMetricIndex + 1) % METRIC_POOL.length;
+        let foundIdx = -1;
+
+        for (let step = 0; step < METRIC_POOL.length; step++) {
+            const candidateIdx = (nextStartIdx + step) % METRIC_POOL.length;
+            if (!activeMetricIndices.includes(candidateIdx)) {
+                foundIdx = candidateIdx;
+                break;
+            }
+        }
+
+        if (foundIdx === -1) {
+            // Pool exhausted by active filter, skip this swap tick
+            nextCellToSwap = (nextCellToSwap + 1) % 4;
+            return;
+        }
+
+        // Update active indices list
+        activeMetricIndices[cellIndex] = foundIdx;
+        
+        // Advance staggered cell index for the next swap
+        nextCellToSwap = (nextCellToSwap + 1) % 4;
+
+        // Perform DOM transition
+        const cellEl = document.querySelector(`.l-stat-bar-item[data-cell-index="${cellIndex}"]`);
+        if (!cellEl) return;
+
+        const wrapper = cellEl.querySelector('.l-stat-bar-wrapper');
+        const currentContent = wrapper?.querySelector('.l-stat-bar-content.current');
+        if (!wrapper || !currentContent) return;
+
+        const metric = METRIC_POOL[foundIdx];
+        const formattedVal = formatMetricValue(metric.value, metric.type);
+
+        const incomingContent = document.createElement('div');
+        incomingContent.className = 'l-stat-bar-content incoming';
+        
+        const valSpan = document.createElement('span');
+        valSpan.className = 'l-stat-bar-val';
+        valSpan.textContent = formattedVal;
+        
+        const lblSpan = document.createElement('span');
+        lblSpan.className = 'l-stat-bar-lbl';
+        lblSpan.textContent = metric.label;
+
+        incomingContent.appendChild(valSpan);
+        incomingContent.appendChild(lblSpan);
+
+        // Check prefers-reduced-motion
+        const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        
+        if (prefersReducedMotion) {
+            incomingContent.style.opacity = '0';
+            incomingContent.style.transform = 'translateY(0)'; // No vertical transform
+            wrapper.appendChild(incomingContent);
+            
+            // Force reflow
+            incomingContent.getBoundingClientRect();
+            
+            currentContent.style.transition = 'opacity 150ms linear';
+            currentContent.style.opacity = '0';
+            
+            incomingContent.style.transition = 'opacity 150ms linear';
+            incomingContent.style.opacity = '1';
+            
+            setTimeout(() => {
+                if (currentContent.parentNode === wrapper) {
+                    wrapper.removeChild(currentContent);
+                }
+                incomingContent.classList.remove('incoming');
+                incomingContent.classList.add('current');
+                incomingContent.style.transition = '';
+            }, 150);
+        } else {
+            incomingContent.style.opacity = '0';
+            
+            const isMobile = window.innerWidth <= 768;
+            const yOffset = isMobile ? '30px' : '43px';
+            incomingContent.style.transform = `translateY(${yOffset})`;
+            incomingContent.style.willChange = 'transform, opacity';
+            
+            wrapper.appendChild(incomingContent);
+            
+            // Force reflow
+            incomingContent.getBoundingClientRect();
+            
+            currentContent.style.transition = 'opacity 80ms linear';
+            currentContent.style.opacity = '0';
+            
+            incomingContent.style.transition = 'transform 480ms cubic-bezier(0.22, 1, 0.36, 1), opacity 480ms cubic-bezier(0.22, 1, 0.36, 1)';
+            incomingContent.style.opacity = '1';
+            incomingContent.style.transform = 'translateY(0)';
+            
+            setTimeout(() => {
+                if (currentContent.parentNode === wrapper) {
+                    wrapper.removeChild(currentContent);
+                }
+                incomingContent.classList.remove('incoming');
+                incomingContent.classList.add('current');
+                incomingContent.style.willChange = '';
+                incomingContent.style.transition = '';
+            }, 480);
+        }
+    }
+
+    // Set up pause on hover for the stats grid
+    const statsBarGrid = document.querySelector('.l-stats-bar-grid');
+    if (statsBarGrid) {
+        statsBarGrid.addEventListener('mouseenter', () => { isPaused = true; });
+        statsBarGrid.addEventListener('mouseleave', () => { isPaused = false; });
+    }
+
+    // Tab visibility handling
+    const onVisibilityChange = () => {
+        isTabVisible = !document.hidden;
+    };
+    document.addEventListener('visibilitychange', onVisibilityChange);
+    
+    // Intersection Observer for viewport visibility
+    const statsSection = document.querySelector('.l-global-stats-bar');
+    if (statsSection && window.IntersectionObserver) {
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                isElementVisible = entry.isIntersecting;
+            });
+        }, { threshold: 0.1 });
+        observer.observe(statsSection);
+    } else {
+        isElementVisible = true;
+    }
+
+    // Staggered interval rotation
+    const isTouch = window.matchMedia('(hover: none)').matches;
+    const currentInterval = isTouch ? TOUCH_ROTATION_INTERVAL : STATS_ROTATION_INTERVAL;
+    const rotationIntervalId = setInterval(() => {
+        // Guard to prevent leaks/running when page changes (element destroyed)
+        if (!document.body.contains(statsBarGrid)) {
+            clearInterval(rotationIntervalId);
+            document.removeEventListener('visibilitychange', onVisibilityChange);
+            return;
+        }
+        if (!isPaused && isTabVisible && isElementVisible) {
+            performSwap();
+        }
+    }, currentInterval);
+    window.landingIntervals.push(rotationIntervalId);
+
+    // Set up hover/focus & click handlers for all cells
+    const cells = document.querySelectorAll('.l-stat-bar-item');
+    cells.forEach((cell, idx) => {
+        cell.addEventListener('focus', () => { isPaused = true; });
+        cell.addEventListener('blur', () => { isPaused = false; });
+        
+        cell.addEventListener('click', (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            // Route through the main landing auth logic
+            goAction('/market', 'signup');
+            
+            // Track event if available
+            if (window.trackEvent) {
+                const metricIndex = activeMetricIndices[idx];
+                const metric = METRIC_POOL[metricIndex];
+                window.trackEvent('stat_cell_click', { cell_index: idx, metric_key: metric?.key });
+            }
+        });
+    });
+
+    // ═══ INTERACTIVE MOUSE SPOTLIGHT CURSOR TRACKING ═══
+    const spotlightCards = document.querySelectorAll('.lcard, .lstep, .ltype, .lactivity-card');
+    spotlightCards.forEach(card => {
+        card.addEventListener('mousemove', (e) => {
+            const rect = card.getBoundingClientRect();
+            const x = ((e.clientX - rect.left) / rect.width) * 100;
+            const y = ((e.clientY - rect.top) / rect.height) * 100;
+            card.style.setProperty('--mouse-x', `${x}%`);
+            card.style.setProperty('--mouse-y', `${y}%`);
+        });
+    });
+
+    // ═══ INTERACTIVE SETTLEMENT ENGINE PIPELINE STAGE SWITCHER ═══
+    const engineStageData = {
+        1: {
+            title: '01. CAPITAL ESCROW & DEPOSIT LOCK',
+            desc: 'Creator commits target goal and deposits funds held in FDIC-insured Stripe Connect custodial escrow accounts mapped directly to smart contract state. Principal remains locked until target deadline or API verification event.',
+            metric1: '$500.00',
+            metric2: 'ESCROW_LOCKED',
+            exampleHtml: '',
+            logs: [
+                { ts: '[15:47:02]', text: 'INIT_ESCROW: Vault #4902 initialized', type: 'text' },
+                { ts: '[15:47:03]', text: 'DEPOSIT: $500.00 locked in Stripe Connect escrow', type: 'pending' },
+                { ts: '[15:47:03]', text: 'STATUS: Escrow locked & verified safe', type: 'success' }
+            ]
+        },
+        2: {
+            title: '02. ORACLE API VERIFICATION STREAM',
+            desc: 'Connected platform API (Stripe, Shopify, or X) streams verified telemetry payload directly to the smart contract oracle endpoint.',
+            metric1: 'STRIPE_API_V2',
+            metric2: 'VERIFIED_100%',
+            exampleHtml: '',
+            logs: [
+                { ts: '[15:48:10]', text: 'ORACLE_POLL: Requesting Stripe revenue payload', type: 'pending' },
+                { ts: '[15:48:11]', text: 'API_RESPONSE: 200 OK — Revenue milestone met', type: 'text' },
+                { ts: '[15:48:11]', text: 'STATUS: Telemetry target 100% verified', type: 'success' }
+            ]
+        },
+        3: {
+            title: '03. MATCH CAPITAL ALLOCATION',
+            desc: 'Match capital is funded directly from two explicit sources: 80% comes from forfeited deposits of users who failed to hit their targets, and 20% comes from verified corporate brand sponsors. Multipliers reflect real available pool ratios, not guaranteed investment returns.',
+            metric1: '+$500.00 MATCH',
+            metric2: '80% FORFEIT / 20% SPONSOR',
+            exampleHtml: `
+                <div class="lengine-example-box">
+                    <div class="lengine-example-hdr">
+                        <span style="color:#7A1220;">↳</span> WORKED EXAMPLE: $500 DEPOSIT → $1,000 PAYOUT
+                    </div>
+                    <div>Deposit <strong>$500.00</strong> → Complete Target → Receive <strong>$1,000.00 Total</strong></div>
+                    <div class="lengine-example-breakdown">
+                        <span>• <strong>$500.00</strong> — 100% returned principal deposit</span>
+                        <span>• <strong>+$400.00</strong> — Funded from forfeited deposits of failed contracts (80%)</span>
+                        <span>• <strong>+$100.00</strong> — Funded from corporate brand sponsors & protocol pool (20%)</span>
+                    </div>
+                </div>
+            `,
+            logs: [
+                { ts: '[15:48:15]', text: 'POOL_AUDIT: Forfeited pool ratio calculated', type: 'pending' },
+                { ts: '[15:48:16]', text: 'MATCH_ALLOCATE: +$400.00 (Forfeits) + $100.00 (Sponsors)', type: 'text' },
+                { ts: '[15:48:16]', text: 'STATUS: Total payout $1,000.00 fully backed & queued', type: 'success' }
+            ]
+        },
+        4: {
+            title: '04. SETTLEMENT & DEFLATIONARY BURN',
+            desc: 'Funds automatically unlock and return to creator account. A 0.5% protocol fee is automatically burned from total CLTR supply. Unsuccessful contracts trigger automated deposit forfeiture to fund winner matches.',
+            metric1: '$1,000.00',
+            metric2: 'SETTLED & BURNED',
+            exampleHtml: '',
+            logs: [
+                { ts: '[15:48:20]', text: 'SETTLEMENT: $1,000.00 payout executed to winner', type: 'success' },
+                { ts: '[15:48:21]', text: 'BURN_EVENT: 25.4 CLTR destroyed forever (0.5% fee)', type: 'text' },
+                { ts: '[15:48:21]', text: 'STATUS: Contract settled & closed (0.8s)', type: 'success' }
+            ]
+        }
+    };
+
+    const engineBtns = document.querySelectorAll('.lengine-step-btn');
+    engineBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+            const stage = btn.getAttribute('data-stage');
+            engineBtns.forEach(b => {
+                b.classList.remove('is-active');
+                b.setAttribute('aria-selected', 'false');
+            });
+            btn.classList.add('is-active');
+            btn.setAttribute('aria-selected', 'true');
+
+            const data = engineStageData[stage];
+            if (data) {
+                const titleEl = document.getElementById('engine-stage-title');
+                const descEl = document.getElementById('engine-stage-desc');
+                const m1El = document.getElementById('engine-metric-1');
+                const m2El = document.getElementById('engine-metric-2');
+                const exampleEl = document.getElementById('engine-stage-example');
+                const terminalBody = document.getElementById('engine-terminal-body');
+
+                if (titleEl) titleEl.textContent = data.title;
+                if (descEl) descEl.textContent = data.desc;
+                if (m1El) m1El.textContent = data.metric1;
+                if (m2El) m2El.textContent = data.metric2;
+                if (exampleEl) exampleEl.innerHTML = data.exampleHtml || '';
+
+                if (terminalBody) {
+                    terminalBody.innerHTML = data.logs.map(log => {
+                        let logClass = 'lengine-log-text';
+                        if (log.type === 'success') logClass = 'lengine-log-success';
+                        else if (log.type === 'pending') logClass = 'lengine-log-pending';
+                        else if (log.type === 'forfeit') logClass = 'lengine-log-forfeit';
+                        
+                        return `
+                            <div class="lengine-log-line">
+                                <span class="lengine-log-ts">${log.ts}</span>
+                                <span class="${logClass}">${log.text}</span>
+                            </div>
+                        `;
+                    }).join('');
+                }
+            }
+        });
+    });
 
     // Populate live toast notifications and hero activity with real data
     setTimeout(async () => {
@@ -1365,6 +2039,79 @@ export function initLanding() {
                     window.landingIntervals.push(intervalId3);
                 }
 
+                // ═══ REAL COLLATERAL CONTRACT CARDS DECK CAROUSEL CONTROLLER ═══
+                let realCardIndex = 0; // 0: Stripe Revenue, 1: Shopify Sales, 2: X Audience Growth
+                const totalRealCards = 3;
+
+                const updateRealCardPositions = () => {
+                    const card0 = document.getElementById('lfan-card-0');
+                    const card1 = document.getElementById('lfan-card-1');
+                    const card2 = document.getElementById('lfan-card-2');
+                    const cards = [card0, card1, card2].filter(Boolean);
+
+                    cards.forEach((card, i) => {
+                        let diff = (i - realCardIndex) % totalRealCards;
+                        if (diff < -1) diff += totalRealCards;
+                        if (diff > 1) diff -= totalRealCards;
+
+                        card.classList.remove('is-center', 'is-left', 'is-right', 'is-hidden');
+                        if (diff === 0) {
+                            card.classList.add('is-center');
+                        } else if (diff === 1 || diff === -2) {
+                            card.classList.add('is-right');
+                        } else {
+                            card.classList.add('is-left');
+                        }
+                    });
+                };
+
+                const nextRealCard = () => {
+                    realCardIndex = (realCardIndex + 1) % totalRealCards;
+                    updateRealCardPositions();
+                };
+
+                const prevRealCard = () => {
+                    realCardIndex = (realCardIndex - 1 + totalRealCards) % totalRealCards;
+                    updateRealCardPositions();
+                };
+
+                updateRealCardPositions();
+
+                const prevBtn = document.getElementById('lfan-prev');
+                const nextBtn = document.getElementById('lfan-next');
+                if (prevBtn) prevBtn.onclick = prevRealCard;
+                if (nextBtn) nextBtn.onclick = nextRealCard;
+
+                // Click card to advance
+                [0, 1, 2].forEach(idx => {
+                    const card = document.getElementById(`lfan-card-${idx}`);
+                    if (card) {
+                        card.onclick = () => {
+                            if (idx !== realCardIndex) {
+                                realCardIndex = idx;
+                                updateRealCardPositions();
+                            }
+                        };
+                    }
+                });
+
+                // Auto-advance every 5 seconds
+                let isRealPaused = false;
+                const realAutoTimer = setInterval(() => {
+                    if (!isRealPaused) nextRealCard();
+                }, 5000);
+                window.landingIntervals.push(realAutoTimer);
+
+                const deckContainer = document.getElementById('lfan-deck-container');
+                if (deckContainer) {
+                    deckContainer.addEventListener('mouseenter', () => { isRealPaused = true; });
+                    deckContainer.addEventListener('mouseleave', () => { isRealPaused = false; });
+                    deckContainer.addEventListener('keydown', (e) => {
+                        if (e.key === 'ArrowLeft') prevRealCard();
+                        if (e.key === 'ArrowRight') nextRealCard();
+                    });
+                }
+
                 // Populate Live Settlement Activity Table (Option B Compressed)
                 const tbodyProd = document.getElementById('lledger-tbody-prod');
                 if (tbodyProd) {
@@ -1409,11 +2156,11 @@ export function initLanding() {
                             const depositCents = e.lockAmountUsdCents || e.amountUsdCents || 25000;
                             const depositFormatted = '$' + (depositCents / 100).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
                             return `
-                                <tr class="reveal-item">
-                                    <td data-label="Contract ID" class="td-id">#C-${e.contractId.slice(0, 4).toUpperCase()} <span class="td-user">@${getMaskedUser(e.principal)}</span></td>
-                                    <td data-label="Metric" class="td-metric">${getPlatformIcon(e.platform)} ${getPlatformName(e.platform)}</td>
-                                    <td data-label="Commitment" class="td-capital">${depositFormatted}</td>
-                                    <td data-label="Outcome" class="td-outcome">${outcomeHtml}</td>
+                                <tr class="reveal-item v">
+                                    <td data-label="Contract ID" class="td-id"><span class="td-value">#C-${e.contractId.slice(0, 4).toUpperCase()} <span class="td-user">@${getMaskedUser(e.principal)}</span></span></td>
+                                    <td data-label="Metric" class="td-metric"><span class="td-value">${getPlatformIcon(e.platform)} ${getPlatformName(e.platform)}</span></td>
+                                    <td data-label="Commitment" class="td-capital"><span class="td-value">${depositFormatted}</span></td>
+                                    <td data-label="Outcome" class="td-outcome"><span class="td-value">${outcomeHtml}</span></td>
                                 </tr>
                             `;
                         };

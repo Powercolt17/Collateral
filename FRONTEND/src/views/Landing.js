@@ -359,7 +359,7 @@ export function renderLanding() {
                     </div>
 
                     <!-- 2X LARGER GIGANTIC CONTRACT OPERATING SYSTEM CENTERPIECE -->
-                    <div class="lproto-term-window reveal-item" id="protocol-terminal" data-r>
+                    <div class="lproto-term-window reveal-item" id="protocol-terminal" data-r onmouseenter="window.userStopAutoDemo()" onclick="window.userStopAutoDemo()">
                         <!-- Window Bar -->
                         <div class="lterm-bar">
                             <div class="lterm-dots">
@@ -367,7 +367,7 @@ export function renderLanding() {
                                 <span class="dot yellow"></span>
                                 <span class="dot green"></span>
                             </div>
-                            <div class="lterm-title" id="term-header-title">CONTRACT #SOLO-8124 — DISCIPLINE ENGINE</div>
+                            <div class="lterm-title" id="term-header-title">CONTRACT #SOLO-8124 — SOLO DISCIPLINE</div>
                             <div class="lterm-status-badge live" id="term-header-badge">
                                 <span class="pulse-dot"></span> <span id="term-badge-text">LIVE EXECUTION</span>
                             </div>
@@ -379,20 +379,20 @@ export function renderLanding() {
                             <div id="term-view-solo">
                                 <div class="lterm-hero-row">
                                     <div class="lterm-metric-box">
-                                        <span class="lbl">TARGET GOAL METRIC</span>
-                                        <span class="val">+15.0% Shopify Net Sales</span>
+                                        <span class="lbl">CONTRACT TYPE</span>
+                                        <span class="val">Solo Discipline Contract</span>
                                     </div>
                                     <div class="lterm-metric-box right">
-                                        <span class="lbl">CAPITAL LOCKED</span>
-                                        <span class="val green">$1,000.00 USD</span>
+                                        <span class="lbl">CAPITAL</span>
+                                        <span class="val green">$1,000</span>
                                     </div>
                                 </div>
 
                                 <div class="lterm-grid-metrics">
-                                    <div class="lterm-m"><span class="k">Contract Window</span><span class="v">30 Days (12 Left)</span></div>
-                                    <div class="lterm-m"><span class="k">Oracle Data Stream</span><span class="v">Shopify Store API</span></div>
-                                    <div class="lterm-m"><span class="k">Escrow Custody</span><span class="v">Automated Vault</span></div>
-                                    <div class="lterm-m"><span class="k">Oracle Health</span><span class="v green">99.8% Synchronized</span></div>
+                                    <div class="lterm-m"><span class="k">Target Metric</span><span class="v">+15% Shopify Sales</span></div>
+                                    <div class="lterm-m"><span class="k">Reward Yield</span><span class="v green">$120 Yield</span></div>
+                                    <div class="lterm-m"><span class="k">Data Stream</span><span class="v">Shopify API (Verified)</span></div>
+                                    <div class="lterm-m"><span class="k">Duration</span><span class="v">30 Days (12 Left)</span></div>
                                 </div>
 
                                 <!-- ALIVE ENGINE PROGRESS TRACKS STACK -->
@@ -400,7 +400,7 @@ export function renderLanding() {
                                     <div class="lterm-track-item">
                                         <div class="lterm-track-hdr">
                                             <span>[1] CAPITAL LOCKED IN ESCROW VAULT</span>
-                                            <span class="pct completed">$1,000.00 (VERIFIED)</span>
+                                            <span class="pct completed">$1,000 (VERIFIED)</span>
                                         </div>
                                         <div class="lterm-progress-track">
                                             <div class="lterm-progress-fill completed" style="width: 100%;">
@@ -441,33 +441,44 @@ export function renderLanding() {
                                     </div>
                                     <div class="lterm-rule fail">
                                         <span class="ic">✗</span>
-                                        <div class="txt"><strong>IF MISSED:</strong> Capital forfeited to protocol yield pool</div>
+                                        <div class="txt"><strong>IF FAILED:</strong> Principal enters protocol pool</div>
                                     </div>
                                 </div>
                             </div>
 
                             <!-- RIVALRY TERMINAL CONTENT (HIDDEN BY DEFAULT) -->
                             <div id="term-view-rivalry" style="display: none;">
+                                <div class="lterm-hero-row" style="margin-bottom: 4px;">
+                                    <div class="lterm-metric-box">
+                                        <span class="lbl">CONTRACT TYPE</span>
+                                        <span class="val">Head-to-Head Duel</span>
+                                    </div>
+                                    <div class="lterm-metric-box right">
+                                        <span class="lbl">VERIFIED METRIC</span>
+                                        <span class="val">+15% Growth (30 Days)</span>
+                                    </div>
+                                </div>
+
                                 <div class="lterm-matchup-row">
                                     <div class="lterm-player-card challenger">
-                                        <span class="tag">CHALLENGER</span>
+                                        <span class="tag">PARTICIPANT A</span>
                                         <span class="handle">@revpilot</span>
                                         <span class="metric">+12.4% Revenue</span>
-                                        <span class="stake">$1,000 LOCKED</span>
+                                        <span class="stake">$1,000 STAKED</span>
                                     </div>
                                     <div class="lterm-vs-badge">VS</div>
                                     <div class="lterm-player-card opponent">
-                                        <span class="tag">OPPONENT</span>
+                                        <span class="tag">PARTICIPANT B</span>
                                         <span class="handle">@dev_sarah</span>
                                         <span class="metric">+9.1% Followers</span>
-                                        <span class="stake">$1,000 LOCKED</span>
+                                        <span class="stake">$1,000 STAKED</span>
                                     </div>
                                 </div>
 
                                 <div class="lterm-vault-core">
-                                    <span class="v-lbl">VERIFIED ESCROW VAULT POOL</span>
-                                    <span class="v-val">$2,000.00 USD</span>
-                                    <span class="v-sub">🔒 Smart Escrow Contract Active • 3 Days Remaining</span>
+                                    <span class="v-lbl">ESCROW VAULT POOL</span>
+                                    <span class="v-val">$2,000</span>
+                                    <span class="v-sub">🏆 Winner Receives Full $2,000 Pool</span>
                                 </div>
 
                                 <!-- ALIVE ENGINE PROGRESS TRACKS STACK FOR RIVALRY -->
@@ -475,7 +486,7 @@ export function renderLanding() {
                                     <div class="lterm-track-item">
                                         <div class="lterm-track-hdr">
                                             <span>[1] ESCROW DEPOSITS VERIFIED</span>
-                                            <span class="pct completed">$2,000.00 LOCKED (100%)</span>
+                                            <span class="pct completed">$2,000 LOCKED (100%)</span>
                                         </div>
                                         <div class="lterm-progress-track">
                                             <div class="lterm-progress-fill completed" style="width: 100%;">
@@ -510,9 +521,9 @@ export function renderLanding() {
                                 </div>
 
                                 <div class="lterm-telemetry">
-                                    <div class="t-line"><span class="ts">[17:41:02]</span> Oracles Synced: Stripe Connect API & X Data Feed</div>
-                                    <div class="t-line"><span class="ts">[17:41:05]</span> Metric Verified: @revpilot leading growth battle by +3.3%</div>
-                                    <div class="t-line green"><span class="ts">[17:41:09]</span> Auto Settlement: Winner receives full $2,000 pool automatically upon deadline</div>
+                                    <div class="t-line"><span class="ts">[17:51:02]</span> Oracles Synced: Stripe Connect API & X Data Feed</div>
+                                    <div class="t-line"><span class="ts">[17:51:05]</span> Metric Verified: @revpilot leading growth battle by +3.3%</div>
+                                    <div class="t-line green"><span class="ts">[17:51:09]</span> Auto Settlement: Winner receives $2,000 pool automatically</div>
                                 </div>
                             </div>
                         </div>
@@ -521,39 +532,65 @@ export function renderLanding() {
             </div>
 
             <script>
-                window.switchProtocolMode = function(mode) {
-                    var soloCard = document.getElementById('card-mode-solo');
-                    var rivalryCard = document.getElementById('card-mode-rivalry');
-                    var termTitle = document.getElementById('term-header-title');
-                    var termBadge = document.getElementById('term-header-badge');
-                    var badgeText = document.getElementById('term-badge-text');
-                    var viewSolo = document.getElementById('term-view-solo');
-                    var viewRivalry = document.getElementById('term-view-rivalry');
+                (function() {
+                    var autoDemoTimer = null;
+                    var userHasInteracted = false;
+                    var currentMode = 'solo';
 
-                    if (!viewSolo || !viewRivalry) return;
+                    window.userStopAutoDemo = function() {
+                        userHasInteracted = true;
+                        if (autoDemoTimer) {
+                            clearInterval(autoDemoTimer);
+                            autoDemoTimer = null;
+                        }
+                    };
 
-                    if (mode === 'solo') {
-                        if (soloCard) soloCard.className = 'lterm-select-card active';
-                        if (rivalryCard) rivalryCard.className = 'lterm-select-card';
+                    window.switchProtocolMode = function(mode, isUserAction) {
+                        if (isUserAction !== false) {
+                            window.userStopAutoDemo();
+                        }
 
-                        if (termTitle) termTitle.innerText = 'CONTRACT #SOLO-8124 — DISCIPLINE ENGINE';
-                        if (termBadge) termBadge.className = 'lterm-status-badge live';
-                        if (badgeText) badgeText.innerText = 'LIVE EXECUTION';
+                        currentMode = mode;
+                        var soloCard = document.getElementById('card-mode-solo');
+                        var rivalryCard = document.getElementById('card-mode-rivalry');
+                        var termTitle = document.getElementById('term-header-title');
+                        var termBadge = document.getElementById('term-header-badge');
+                        var badgeText = document.getElementById('term-badge-text');
+                        var viewSolo = document.getElementById('term-view-solo');
+                        var viewRivalry = document.getElementById('term-view-rivalry');
 
-                        viewSolo.style.display = 'block';
-                        viewRivalry.style.display = 'none';
-                    } else {
-                        if (rivalryCard) rivalryCard.className = 'lterm-select-card active';
-                        if (soloCard) soloCard.className = 'lterm-select-card';
+                        if (!viewSolo || !viewRivalry) return;
 
-                        if (termTitle) termTitle.innerText = 'DUEL #RIVAL-3406 — HEAD-TO-HEAD ESCROW';
-                        if (termBadge) termBadge.className = 'lterm-status-badge rivalry';
-                        if (badgeText) badgeText.innerText = 'ESCROW LOCKED';
+                        if (mode === 'solo') {
+                            if (soloCard) soloCard.className = 'lterm-select-card active';
+                            if (rivalryCard) rivalryCard.className = 'lterm-select-card';
 
-                        viewSolo.style.display = 'none';
-                        viewRivalry.style.display = 'block';
-                    }
-                };
+                            if (termTitle) termTitle.innerText = 'CONTRACT #SOLO-8124 — SOLO DISCIPLINE';
+                            if (termBadge) termBadge.className = 'lterm-status-badge live';
+                            if (badgeText) badgeText.innerText = 'LIVE EXECUTION';
+
+                            viewSolo.style.display = 'block';
+                            viewRivalry.style.display = 'none';
+                        } else {
+                            if (rivalryCard) rivalryCard.className = 'lterm-select-card active';
+                            if (soloCard) soloCard.className = 'lterm-select-card';
+
+                            if (termTitle) termTitle.innerText = 'DUEL #RIVAL-3406 — HEAD-TO-HEAD';
+                            if (termBadge) termBadge.className = 'lterm-status-badge rivalry';
+                            if (badgeText) badgeText.innerText = 'ESCROW LOCKED';
+
+                            viewSolo.style.display = 'none';
+                            viewRivalry.style.display = 'block';
+                        }
+                    };
+
+                    // Idle Auto-Demo loop (swaps every 8s until user hovers or clicks)
+                    autoDemoTimer = setInterval(function() {
+                        if (userHasInteracted) return;
+                        var nextMode = (currentMode === 'solo') ? 'rivalry' : 'solo';
+                        window.switchProtocolMode(nextMode, false);
+                    }, 8000);
+                })();
             </script>
 
 

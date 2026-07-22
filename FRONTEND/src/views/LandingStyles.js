@@ -1411,14 +1411,13 @@ export const landingCSS = `
     display: flex;
     align-items: center;
     justify-content: center;
-    opacity: 0.85;
+    opacity: 0.6;
     padding: 0 4px;
-    color: #64748B;
 }
 .lcard-riv-swords svg {
-    width: 24px;
-    height: 24px;
-    stroke: #64748B !important;
+    width: 22px;
+    height: 22px;
+    stroke: #CBD5E1 !important;
 }
 
 .lcard-riv-progress-wrap {

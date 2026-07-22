@@ -4648,7 +4648,44 @@ export const landingCSS = `
     margin-bottom: 14px !important;
   }
   .lhow-flow {
-    grid-template-columns: 1fr !important/* ═══ FLAGSHIP MARKETING PROTOCOL ILLUSTRATION ═══ */
+    grid-template-columns: 1fr !important;
+    gap: 24px !important;
+  }
+
+  /* CLTR Token Economy Section */
+  .lemo-reframe {
+    padding: 44px 0 !important;
+  }
+  .lemo-grid {
+    grid-template-columns: 1fr !important;
+    gap: 24px !important;
+    margin-top: 20px !important;
+  }
+
+  /* FAQ Section */
+  .lfaq {
+    padding: 44px 0 !important;
+  }
+  .fq-q {
+    font-size: 14px !important;
+    padding: 14px 0 !important;
+  }
+
+  /* Footer */
+  .lfoot {
+    padding: 36px 20px 48px !important;
+    text-align: center !important;
+  }
+
+  /* Drawer Menu Width */
+  .pnl-drawer {
+    width: 100% !important;
+    max-width: 100% !important;
+    border-left: none !important;
+  }
+}
+
+/* ═══ FLAGSHIP MARKETING PROTOCOL ILLUSTRATION ═══ */
 .proto-diagram-wrapper {
     position: relative;
     width: 100%;

@@ -1299,19 +1299,7 @@ export async function initRivalry() {
                             ${challGrowth}
                         </div>
                         <div class="rv-vs-divider">
-                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <path d="M 22 2 L 20 2 L 9 13 L 11 15 Z" fill="#64748B" stroke="#334155" stroke-width="0.8"/>
-                                <line x1="21.5" y1="2.5" x2="10" y2="14" stroke="#CBD5E1" stroke-width="0.7"/>
-                                <path d="M 7.5 11.5 C 7 13.5, 10 15.5, 12.5 15" stroke="#1E293B" stroke-width="1.8" fill="none" stroke-linecap="round"/>
-                                <line x1="10" y1="14" x2="5.5" y2="18.5" stroke="#1E293B" stroke-width="2.2" stroke-linecap="round"/>
-                                <path d="M 6 18 L 3.5 21 L 5 22.5 L 7.5 20 Z" fill="#475569" stroke="#0F172A" stroke-width="1" stroke-linejoin="round"/>
-
-                                <path d="M 2 2 L 4 2 L 15 13 L 13 15 Z" fill="#64748B" stroke="#334155" stroke-width="0.8"/>
-                                <line x1="2.5" y1="2.5" x2="14" y2="14" stroke="#CBD5E1" stroke-width="0.7"/>
-                                <path d="M 16.5 11.5 C 17 13.5, 14 15.5, 11.5 15" stroke="#1E293B" stroke-width="1.8" fill="none" stroke-linecap="round"/>
-                                <line x1="14" y1="14" x2="18.5" y2="18.5" stroke="#1E293B" stroke-width="2.2" stroke-linecap="round"/>
-                                <path d="M 18 18 L 20.5 21 L 19 22.5 L 16.5 20 Z" fill="#475569" stroke="#0F172A" stroke-width="1" stroke-linejoin="round"/>
-                            </svg>
+                            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#475569" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polyline points="14.5 17.5 3 6 3 3 6 3 17.5 14.5"/><line x1="13" y1="19" x2="19" y2="13"/><line x1="16" y1="16" x2="20" y2="20"/><line x1="19" y1="21" x2="21" y2="19"/><polyline points="14.5 6.5 18 3 21 3 21 6 17.5 9.5"/><line x1="5" x2="9" y1="14" y2="18"/><line x1="7" x2="4" y1="17" y2="20"/><line x1="3" x2="5" y1="19" y2="21"/></svg>
                         </div>
                         <div class="rv-player right">
                             <span class="rv-player-label">Opponent</span>

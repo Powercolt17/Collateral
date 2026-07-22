@@ -4958,6 +4958,58 @@ export const landingCSS = `
 }
 .lterm-m .v.green { color: #166534; font-weight: 700; }
 
+/* View Container Animation */
+.lterm-view-anim {
+    animation: modeViewFadeIn 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes modeViewFadeIn {
+    0% { opacity: 0; transform: translateY(8px) scale(0.99); }
+    100% { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+.live-radar-dot {
+    display: inline-block;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: #166534;
+    vertical-align: middle;
+    margin-right: 5px;
+    box-shadow: 0 0 0 0 rgba(22, 101, 52, 0.4);
+    animation: liveRadarPulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+.live-radar-dot.burgundy {
+    background: #7A1220;
+    box-shadow: 0 0 0 0 rgba(122, 18, 32, 0.4);
+    animation: liveRadarPulseBurgundy 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+@keyframes liveRadarPulse {
+    0% { box-shadow: 0 0 0 0 rgba(22, 101, 52, 0.5); }
+    70% { box-shadow: 0 0 0 6px rgba(22, 101, 52, 0); }
+    100% { box-shadow: 0 0 0 0 rgba(22, 101, 52, 0); }
+}
+
+@keyframes liveRadarPulseBurgundy {
+    0% { box-shadow: 0 0 0 0 rgba(122, 18, 32, 0.5); }
+    70% { box-shadow: 0 0 0 6px rgba(122, 18, 32, 0); }
+    100% { box-shadow: 0 0 0 0 rgba(122, 18, 32, 0); }
+}
+
+.escrow-lock-icon {
+    display: inline-block;
+    margin-right: 4px;
+    font-size: 13px;
+    animation: lockFloat 3s ease-in-out infinite;
+}
+
+@keyframes lockFloat {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-2px); }
+}
+
 /* Progress Tracks Stack */
 .lterm-tracks-stack {
     display: flex;
@@ -4984,7 +5036,7 @@ export const landingCSS = `
     letter-spacing: 0.8px;
     color: #475569;
 }
-.lterm-track-hdr .pct { color: #7A1220; font-weight: 800; }
+.lterm-track-hdr .pct { color: #7A1220; font-weight: 800; display: flex; align-items: center; }
 .lterm-track-hdr .pct.completed { color: #166534; }
 
 .lterm-progress-track {
@@ -5009,9 +5061,15 @@ export const landingCSS = `
 
 .lterm-progress-glow {
     position: absolute;
-    top: 0; right: 0; bottom: 0;
-    width: 20px;
-    background: rgba(255, 255, 255, 0.4);
+    top: 0; bottom: 0;
+    width: 40px;
+    background: linear-gradient(90deg, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0.6) 50%, rgba(255, 255, 255, 0) 100%);
+    animation: trackShimmerTravel 2.8s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+}
+
+@keyframes trackShimmerTravel {
+    0% { left: -40px; }
+    100% { left: 100%; }
 }
 
 /* Rules Box */
@@ -5041,8 +5099,14 @@ export const landingCSS = `
     background: #F0FDF4;
     border: 1px solid #BBF7D0;
     color: #0F172A;
+    animation: passRuleBreathing 4s ease-in-out infinite;
 }
 .lterm-rule.pass .ic { color: #166534; font-weight: 800; font-size: 14px; }
+
+@keyframes passRuleBreathing {
+    0%, 100% { border-color: #BBF7D0; box-shadow: 0 2px 10px rgba(22, 101, 52, 0.04); }
+    50% { border-color: rgba(22, 101, 52, 0.4); box-shadow: 0 4px 18px rgba(22, 101, 52, 0.1); }
+}
 
 .lterm-rule.fail {
     background: #FDF2F2;

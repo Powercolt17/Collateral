@@ -376,22 +376,22 @@ export function renderLanding() {
                         <!-- Terminal Container Content -->
                         <div class="lterm-body" id="term-body-content">
                             <!-- SOLO TERMINAL CONTENT (DEFAULT) -->
-                            <div id="term-view-solo">
+                            <div id="term-view-solo" class="lterm-view-anim">
                                 <div class="lterm-hero-row">
                                     <div class="lterm-metric-box">
                                         <span class="lbl">CONTRACT TYPE</span>
                                         <span class="val">Solo Discipline Contract</span>
                                     </div>
                                     <div class="lterm-metric-box right">
-                                        <span class="lbl">CAPITAL</span>
-                                        <span class="val green">$1,000</span>
+                                        <span class="lbl">CAPITAL LOCKED</span>
+                                        <span class="val green"><span class="escrow-lock-icon">🔒</span>$1,000</span>
                                     </div>
                                 </div>
 
                                 <div class="lterm-grid-metrics">
                                     <div class="lterm-m"><span class="k">Target Metric</span><span class="v">+15% Shopify Sales</span></div>
                                     <div class="lterm-m"><span class="k">Reward Yield</span><span class="v green">$120 Yield</span></div>
-                                    <div class="lterm-m"><span class="k">Data Stream</span><span class="v">Shopify API (Verified)</span></div>
+                                    <div class="lterm-m"><span class="k">Data Stream</span><span class="v"><span class="live-radar-dot"></span>Shopify API</span></div>
                                     <div class="lterm-m"><span class="k">Duration</span><span class="v">30 Days (12 Left)</span></div>
                                 </div>
 
@@ -400,7 +400,7 @@ export function renderLanding() {
                                     <div class="lterm-track-item">
                                         <div class="lterm-track-hdr">
                                             <span>[1] CAPITAL LOCKED IN ESCROW VAULT</span>
-                                            <span class="pct completed">$1,000 (VERIFIED)</span>
+                                            <span class="pct completed"><span class="live-radar-dot"></span>$1,000 (VERIFIED)</span>
                                         </div>
                                         <div class="lterm-progress-track">
                                             <div class="lterm-progress-fill completed" style="width: 100%;">
@@ -412,7 +412,7 @@ export function renderLanding() {
                                     <div class="lterm-track-item">
                                         <div class="lterm-track-hdr">
                                             <span>[2] ORACLE TELEMETRY STREAM</span>
-                                            <span class="pct completed">99.8% HEALTH</span>
+                                            <span class="pct completed"><span class="live-radar-dot"></span>99.8% HEALTH</span>
                                         </div>
                                         <div class="lterm-progress-track">
                                             <div class="lterm-progress-fill completed" style="width: 99.8%;">
@@ -424,7 +424,7 @@ export function renderLanding() {
                                     <div class="lterm-track-item">
                                         <div class="lterm-track-hdr">
                                             <span>[3] GOAL VERIFICATION ENGINE</span>
-                                            <span class="pct">78.4% COMPLETE</span>
+                                            <span class="pct"><span class="live-radar-dot burgundy"></span>78.4% COMPLETE</span>
                                         </div>
                                         <div class="lterm-progress-track">
                                             <div class="lterm-progress-fill" style="width: 78.4%;">
@@ -447,7 +447,7 @@ export function renderLanding() {
                             </div>
 
                             <!-- RIVALRY TERMINAL CONTENT (HIDDEN BY DEFAULT) -->
-                            <div id="term-view-rivalry" style="display: none;">
+                            <div id="term-view-rivalry" class="lterm-view-anim" style="display: none;">
                                 <div class="lterm-hero-row" style="margin-bottom: 4px;">
                                     <div class="lterm-metric-box">
                                         <span class="lbl">CONTRACT TYPE</span>

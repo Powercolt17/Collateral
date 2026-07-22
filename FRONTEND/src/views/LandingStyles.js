@@ -1336,19 +1336,19 @@ export const landingCSS = `
     gap: 12px;
 }
 .lcard-riv-title {
-    font-family: 'Plus Jakarta Sans', sans-serif;
-    font-size: 15px;
-    font-weight: 800;
-    color: #0F172A;
-    letter-spacing: 0.5px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    font-weight: 700;
+    color: #64748B;
+    letter-spacing: 1.2px;
     text-transform: uppercase;
 }
 .lcard-riv-id {
     font-family: 'JetBrains Mono', monospace;
     font-size: 11px;
     font-weight: 600;
-    color: #94A3B8;
-    letter-spacing: 0.8px;
+    color: #CBD5E1;
+    letter-spacing: 1px;
 }
 
 .lcard-riv-match-grid {
@@ -1375,9 +1375,9 @@ export const landingCSS = `
     margin-bottom: 4px;
 }
 .lcard-riv-user {
-    font-family: 'Inter', sans-serif;
-    font-size: 13px;
-    font-weight: 600;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    font-weight: 700;
     color: #0F172A;
     display: flex;
     align-items: center;

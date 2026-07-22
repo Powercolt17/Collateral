@@ -393,17 +393,17 @@ export function renderLanding() {
                                 @keyframes rvDeskL {
                                     0% { transform: translateX(0); opacity: 0; }
                                     15%,70% { opacity: 1; }
-                                    100% { transform: translateX(70px); opacity: 0; }
+                                    100% { transform: translateX(80px); opacity: 0; }
                                 }
                                 @keyframes rvDeskR {
                                     0% { transform: translateX(0); opacity: 0; }
                                     15%,70% { opacity: 1; }
-                                    100% { transform: translateX(-70px); opacity: 0; }
+                                    100% { transform: translateX(-80px); opacity: 0; }
                                 }
                                 @keyframes rvDeskP {
                                     0% { transform: translateY(0); opacity: 0; }
                                     20%,75% { opacity: 1; }
-                                    100% { transform: translateY(108px); opacity: 0; }
+                                    100% { transform: translateY(42px); opacity: 0; }
                                 }
                                 @keyframes rvMobL {
                                     0% { transform: translate(0,0); opacity: 0; }
@@ -418,7 +418,7 @@ export function renderLanding() {
                                 @keyframes rvMobP {
                                     0% { transform: translateY(0); opacity: 0; }
                                     20%,75% { opacity: 1; }
-                                    100% { transform: translateY(80px); opacity: 0; }
+                                    100% { transform: translateY(40px); opacity: 0; }
                                 }
                                 @media (min-width: 641px) {
                                     .rv-desk-svg { display: block !important; }
@@ -430,8 +430,8 @@ export function renderLanding() {
                                 }
                             </style>
 
-                            <!-- DESKTOP PURE SVG CANVAS -->
-                            <svg class="rv-desk-svg" viewBox="0 0 720 470" style="width: 100%; height: auto; display: block;" xmlns="http://www.w3.org/2000/svg">
+                            <!-- DESKTOP PURE SVG CANVAS (trimmed viewBox 0 0 720 420) -->
+                            <svg class="rv-desk-svg" viewBox="0 0 720 420" style="width: 100%; height: auto; display: block;" xmlns="http://www.w3.org/2000/svg">
                                 <defs>
                                     <marker id="arrM" markerWidth="7" markerHeight="7" refX="5" refY="3.5" orient="auto">
                                         <path d="M0 0 L7 3.5 L0 7 Z" fill="#7A1C2B" />
@@ -451,20 +451,20 @@ export function renderLanding() {
                                 </defs>
 
                                 <!-- Background Card -->
-                                <rect width="720" height="470" rx="24" fill="#F5F1EA" stroke="rgba(28,35,51,0.08)" stroke-width="1.5"/>
+                                <rect width="720" height="420" rx="24" fill="#F5F1EA" stroke="rgba(28,35,51,0.08)" stroke-width="1.5"/>
 
-                                <!-- Lines -->
-                                <line x1="196" y1="200" x2="278" y2="200" stroke="#B98A92" stroke-width="2" stroke-dasharray="5 5" marker-end="url(#arrM)" />
-                                <line x1="524" y1="200" x2="442" y2="200" stroke="#B98A92" stroke-width="2" stroke-dasharray="5 5" marker-end="url(#arrM)" />
-                                <line x1="360" y1="272" x2="360" y2="400" stroke="#3F9D5A" stroke-width="2" stroke-dasharray="5 5" marker-end="url(#arrG)" />
+                                <!-- Lines (leveled to y=200, matching card midlines) -->
+                                <line x1="176" y1="200" x2="268" y2="200" stroke="#B98A92" stroke-width="2" stroke-dasharray="5 5" marker-end="url(#arrM)" />
+                                <line x1="544" y1="200" x2="452" y2="200" stroke="#B98A92" stroke-width="2" stroke-dasharray="5 5" marker-end="url(#arrM)" />
+                                <line x1="360" y1="295" x2="360" y2="345" stroke="#3F9D5A" stroke-width="2" stroke-dasharray="5 5" marker-end="url(#arrG)" />
 
                                 <!-- Animated Pulse Dots -->
-                                <circle class="rv-dot rv-dL" cx="206" cy="200" r="3.6" fill="#7A1C2B" />
-                                <circle class="rv-dot rv-dR" cx="514" cy="200" r="3.6" fill="#7A1C2B" />
-                                <circle class="rv-dot rv-dP" cx="360" cy="282" r="3.6" fill="#3F9D5A" />
+                                <circle class="rv-dot rv-dL" cx="180" cy="200" r="3.6" fill="#7A1C2B" />
+                                <circle class="rv-dot rv-dR" cx="540" cy="200" r="3.6" fill="#7A1C2B" />
+                                <circle class="rv-dot rv-dP" cx="360" cy="298" r="3.6" fill="#3F9D5A" />
 
-                                <!-- Left Card: CHALLENGER -->
-                                <g transform="translate(40, 150)">
+                                <!-- Left Card: CHALLENGER (shifted to x=20 for wider gap) -->
+                                <g transform="translate(20, 150)">
                                     <rect width="156" height="100" rx="14" fill="#FBF9F5" stroke="rgba(28,35,51,0.08)" filter="url(#cardShadow)"/>
                                     <text x="16" y="27" fill="#635BFF" font-family="sans-serif" font-size="13" font-weight="800" letter-spacing="-0.5">stripe</text>
                                     <text x="64" y="27" fill="#7A1C2B" font-family="sans-serif" font-size="10" font-weight="700" letter-spacing="1.4">CHALLENGER</text>
@@ -472,8 +472,8 @@ export function renderLanding() {
                                     <text x="16" y="78" fill="#8C8577" font-family="sans-serif" font-size="11.5"><tspan fill="#1C2333" font-weight="600">$1,000</tspan> locked</text>
                                 </g>
 
-                                <!-- Right Card: OPPONENT -->
-                                <g transform="translate(524, 150)">
+                                <!-- Right Card: OPPONENT (shifted to x=544 for wider gap) -->
+                                <g transform="translate(544, 150)">
                                     <rect width="156" height="100" rx="14" fill="#FBF9F5" stroke="rgba(28,35,51,0.08)" filter="url(#cardShadow)"/>
                                     <path fill="#0F1115" d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" transform="translate(16, 16) scale(0.55)"/>
                                     <text x="36" y="27" fill="#7A1C2B" font-family="sans-serif" font-size="10" font-weight="700" letter-spacing="1.4">OPPONENT</text>
@@ -495,13 +495,13 @@ export function renderLanding() {
                                     <text x="90" y="108" fill="#7A1C2B" font-family="sans-serif" font-size="30" font-weight="800" text-anchor="middle" letter-spacing="-0.5">$2,000</text>
                                     <!-- Title -->
                                     <text x="90" y="128" fill="#8C8577" font-family="sans-serif" font-size="10.5" font-weight="700" text-anchor="middle" letter-spacing="1.4">ESCROW VAULT</text>
-                                    <!-- Tag -->
-                                    <rect x="30" y="144" width="120" height="24" rx="12" fill="#FBF9F5" stroke="rgba(28,35,51,0.08)"/>
-                                    <text x="90" y="160" fill="#1C2333" font-family="sans-serif" font-size="10.5" font-weight="600" text-anchor="middle" letter-spacing="0.4">WINNER TAKES POOL</text>
+                                    <!-- Outlined Pill Tag -->
+                                    <rect x="16" y="146" width="148" height="26" rx="13" fill="#FBF9F5" stroke="rgba(28,35,51,0.12)" stroke-width="1"/>
+                                    <text x="90" y="163" fill="#1C2333" font-family="sans-serif" font-size="10.5" font-weight="600" text-anchor="middle" letter-spacing="0.4">WINNER TAKES POOL</text>
                                 </g>
 
-                                <!-- Bottom Endpoint: PAYOUT PILL -->
-                                <g transform="translate(200, 392)">
+                                <!-- Bottom Endpoint: PAYOUT PILL (moved up to y=345) -->
+                                <g transform="translate(200, 345)">
                                     <rect width="320" height="42" rx="21" fill="#FBF9F5" stroke="#D9EBDE" stroke-width="1.5" filter="url(#payoutShadow)"/>
                                     <circle cx="25" cy="21" r="11" fill="#3F9D5A"/>
                                     <path fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" d="m20 21 3.2 3.2L28 17.6"/>
@@ -509,8 +509,8 @@ export function renderLanding() {
                                 </g>
                             </svg>
 
-                            <!-- MOBILE PURE SVG CANVAS -->
-                            <svg class="rv-mob-svg" viewBox="0 0 360 560" style="width: 100%; height: auto; display: block;" xmlns="http://www.w3.org/2000/svg">
+                            <!-- MOBILE PURE SVG CANVAS (trimmed viewBox 0 0 360 500) -->
+                            <svg class="rv-mob-svg" viewBox="0 0 360 500" style="width: 100%; height: auto; display: block;" xmlns="http://www.w3.org/2000/svg">
                                 <defs>
                                     <marker id="arrM2" markerWidth="7" markerHeight="7" refX="5" refY="3.5" orient="auto">
                                         <path d="M0 0 L7 3.5 L0 7 Z" fill="#7A1C2B" />
@@ -521,18 +521,18 @@ export function renderLanding() {
                                 </defs>
 
                                 <!-- Background Card -->
-                                <rect width="360" height="560" rx="20" fill="#F5F1EA" stroke="rgba(28,35,51,0.08)" stroke-width="1.5"/>
+                                <rect width="360" height="500" rx="20" fill="#F5F1EA" stroke="rgba(28,35,51,0.08)" stroke-width="1.5"/>
 
-                                <line x1="96" y1="150" x2="152" y2="222" stroke="#B98A92" stroke-width="2" stroke-dasharray="5 5" marker-end="url(#arrM2)" />
-                                <line x1="264" y1="150" x2="208" y2="222" stroke="#B98A92" stroke-width="2" stroke-dasharray="5 5" marker-end="url(#arrM2)" />
-                                <line x1="180" y1="372" x2="180" y2="466" stroke="#3F9D5A" stroke-width="2" stroke-dasharray="5 5" marker-end="url(#arrG2)" />
+                                <line x1="96" y1="145" x2="152" y2="210" stroke="#B98A92" stroke-width="2" stroke-dasharray="5 5" marker-end="url(#arrM2)" />
+                                <line x1="264" y1="145" x2="208" y2="210" stroke="#B98A92" stroke-width="2" stroke-dasharray="5 5" marker-end="url(#arrM2)" />
+                                <line x1="180" y1="365" x2="180" y2="415" stroke="#3F9D5A" stroke-width="2" stroke-dasharray="5 5" marker-end="url(#arrG2)" />
 
-                                <circle class="rv-dot rv-mL" cx="96" cy="150" r="3.6" fill="#7A1C2B" />
-                                <circle class="rv-dot rv-mR" cx="264" cy="150" r="3.6" fill="#7A1C2B" />
-                                <circle class="rv-dot rv-mP" cx="180" cy="380" r="3.6" fill="#3F9D5A" />
+                                <circle class="rv-dot rv-mL" cx="96" cy="145" r="3.6" fill="#7A1C2B" />
+                                <circle class="rv-dot rv-mR" cx="264" cy="145" r="3.6" fill="#7A1C2B" />
+                                <circle class="rv-dot rv-mP" cx="180" cy="368" r="3.6" fill="#3F9D5A" />
 
                                 <!-- Left Card Mobile -->
-                                <g transform="translate(18, 55)">
+                                <g transform="translate(18, 50)">
                                     <rect width="140" height="90" rx="12" fill="#FBF9F5" stroke="rgba(28,35,51,0.08)"/>
                                     <text x="12" y="24" fill="#635BFF" font-family="sans-serif" font-size="12" font-weight="800" letter-spacing="-0.5">stripe</text>
                                     <text x="56" y="24" fill="#7A1C2B" font-family="sans-serif" font-size="9" font-weight="700" letter-spacing="1.2">CHALLENGER</text>
@@ -541,7 +541,7 @@ export function renderLanding() {
                                 </g>
 
                                 <!-- Right Card Mobile -->
-                                <g transform="translate(202, 55)">
+                                <g transform="translate(202, 50)">
                                     <rect width="140" height="90" rx="12" fill="#FBF9F5" stroke="rgba(28,35,51,0.08)"/>
                                     <path fill="#0F1115" d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" transform="translate(12, 14) scale(0.5)"/>
                                     <text x="32" y="24" fill="#7A1C2B" font-family="sans-serif" font-size="9" font-weight="700" letter-spacing="1.2">OPPONENT</text>
@@ -550,7 +550,7 @@ export function renderLanding() {
                                 </g>
 
                                 <!-- Escrow Vault Mobile -->
-                                <g transform="translate(105, 210)">
+                                <g transform="translate(105, 195)">
                                     <rect width="150" height="170" rx="16" fill="#FFFDFA" stroke="rgba(122,28,43,0.35)" stroke-width="1.5"/>
                                     <rect x="35" y="12" width="80" height="20" rx="10" fill="#D9EBDE"/>
                                     <circle cx="45" cy="22" r="2.5" fill="#3F9D5A"/>
@@ -559,12 +559,12 @@ export function renderLanding() {
                                     <path fill="none" stroke="#7A1C2B" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" d="M69 53 V49 a6 6 0 0 1 12 0 v4 M68 53 h14 a1 1 0 0 1 1 1 v7 a1 1 0 0 1 -1 1 h-14 a1 1 0 0 1 -1 -1 v-7 a1 1 0 0 1 1 -1 Z"/>
                                     <text x="75" y="96" fill="#7A1C2B" font-family="sans-serif" font-size="26" font-weight="800" text-anchor="middle" letter-spacing="-0.5">$2,000</text>
                                     <text x="75" y="114" fill="#8C8577" font-family="sans-serif" font-size="9.5" font-weight="700" text-anchor="middle" letter-spacing="1.2">ESCROW VAULT</text>
-                                    <rect x="22" y="128" width="106" height="22" rx="11" fill="#FBF9F5" stroke="rgba(28,35,51,0.08)"/>
+                                    <rect x="15" y="128" width="120" height="22" rx="11" fill="#FBF9F5" stroke="rgba(28,35,51,0.12)" stroke-width="1"/>
                                     <text x="75" y="143" fill="#1C2333" font-family="sans-serif" font-size="9.5" font-weight="600" text-anchor="middle" letter-spacing="0.4">WINNER TAKES POOL</text>
                                 </g>
 
                                 <!-- Bottom Endpoint Mobile -->
-                                <g transform="translate(45, 470)">
+                                <g transform="translate(45, 415)">
                                     <rect width="270" height="38" rx="19" fill="#FBF9F5" stroke="#D9EBDE" stroke-width="1.5"/>
                                     <circle cx="20" cy="19" r="9.5" fill="#3F9D5A"/>
                                     <path fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="m16 19 2.8 2.8L23 16"/>

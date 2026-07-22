@@ -3047,6 +3047,58 @@ export const landingCSS = `
     justify-content: center;
     gap: 16px;
 }
+
+/* SYNCHRONIZED MODE PILL BADGES */
+.mode-badge-wrap {
+    position: relative;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.mode-badge-pill {
+    position: absolute;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 6px 14px;
+    border-radius: 20px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.5s ease, transform 0.5s ease, visibility 0.5s ease;
+    transform: translateY(4px);
+    white-space: nowrap;
+}
+.mode-badge-pill.active {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+.mode-badge-pill.is-solo {
+    background: #F1F5F9;
+    color: #0F172A;
+    border: 1px solid #CBD5E1;
+}
+.mode-badge-pill.is-rivalry {
+    background: #5C1414;
+    color: #FFFFFF;
+    border: 1px solid #7A1220;
+    box-shadow: 0 4px 12px rgba(92, 20, 20, 0.2);
+}
+.mode-badge-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: #0F172A;
+}
+.mode-badge-dot.secondary {
+    background: #EF4444;
+    box-shadow: 0 0 6px #EF4444;
+}
 .mode-carousel-viewport {
     position: relative;
     width: 100%;

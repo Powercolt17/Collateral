@@ -358,8 +358,18 @@ export function renderLanding() {
                     </div>
 
                     <div class="ltypes-right">
-                        <!-- IMAGE-ONLY MODE CAROUSEL -->
+                        <!-- IMAGE-ONLY MODE CAROUSEL WITH SYNCHRONIZED BADGE -->
                         <div class="mode-image-carousel" id="mode-image-carousel">
+                            <!-- SYNCHRONIZED MODE PILL BADGES -->
+                            <div class="mode-badge-wrap">
+                                <span class="mode-badge-pill is-solo active" id="mode-badge-0">
+                                    <span class="mode-badge-dot"></span> SOLO MODE · YOU VS. YOURSELF
+                                </span>
+                                <span class="mode-badge-pill is-rivalry" id="mode-badge-1">
+                                    <span class="mode-badge-dot secondary"></span> RIVALRY MODE · YOU VS. COMPETITORS
+                                </span>
+                            </div>
+
                             <div class="mode-carousel-viewport">
                                 <div class="mode-carousel-slide active" id="mode-slide-0">
                                     <picture>
@@ -1320,10 +1330,12 @@ export function initLanding() {
 
     // ═══ IMAGE-ONLY CAROUSEL AUTO-ROTATE (EVERY 4s) ═══
     let imgCarouselIndex = 0;
-    setInterval(() => {
-        imgCarouselIndex = (imgCarouselIndex + 1) % 2;
+    const updateCarouselSlide = (targetIndex) => {
+        imgCarouselIndex = targetIndex;
         const slides = [document.getElementById('mode-slide-0'), document.getElementById('mode-slide-1')];
         const dots = [document.getElementById('mode-img-dot-0'), document.getElementById('mode-img-dot-1')];
+        const badges = [document.getElementById('mode-badge-0'), document.getElementById('mode-badge-1')];
+
         slides.forEach((s, idx) => {
             if (s) {
                 if (idx === imgCarouselIndex) s.classList.add('active');
@@ -1336,7 +1348,28 @@ export function initLanding() {
                 else d.classList.remove('active');
             }
         });
+        badges.forEach((b, idx) => {
+            if (b) {
+                if (idx === imgCarouselIndex) b.classList.add('active');
+                else b.classList.remove('active');
+            }
+        });
+    };
+
+    let carouselTimer = setInterval(() => {
+        updateCarouselSlide((imgCarouselIndex + 1) % 2);
     }, 4000);
+
+    // Dot click handling
+    [document.getElementById('mode-img-dot-0'), document.getElementById('mode-img-dot-1')].forEach((dot, idx) => {
+        dot?.addEventListener('click', () => {
+            clearInterval(carouselTimer);
+            updateCarouselSlide(idx);
+            carouselTimer = setInterval(() => {
+                updateCarouselSlide((imgCarouselIndex + 1) % 2);
+            }, 4000);
+        });
+    });
 
     // Update nav CTA text if logged in
     const navCta = document.getElementById('lp-nav-cta');

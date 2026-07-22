@@ -360,93 +360,210 @@ export function renderLanding() {
                     </div>
 
                     <div class="ltypes-right">
-                        <!-- FLAGSHIP MARKETING PROTOCOL ILLUSTRATION -->
-                        <div class="proto-diagram-wrapper reveal-item">
-                            <!-- Soft Ambient Radial Glow Background behind Escrow Vault -->
-                            <div class="proto-ambient-glow"></div>
+                        <div class="rv-container reveal-item" style="background: #F5F1EA; border: 1px solid rgba(28,35,51,0.08); border-radius: 24px; padding: clamp(14px, 3vw, 28px); box-shadow: 0 30px 80px -50px rgba(28,35,51,0.4);">
+                            <style>
+                                .rv-node:hover { transform: translate(-50%, -50%) translateY(-3px) !important; box-shadow: 0 14px 30px -14px rgba(28,35,51,0.3) !important; }
+                                .rv-dot { opacity: 0; }
+                                .rv-lock { animation: none; }
+                                @media (prefers-reduced-motion: no-preference) {
+                                    .rv-lock { animation: rvBreath 3.2s ease-in-out infinite; }
+                                    .rv-dL { animation: rvDeskL 2.6s ease-in-out infinite; }
+                                    .rv-dR { animation: rvDeskR 2.6s ease-in-out infinite; }
+                                    .rv-dP { animation: rvDeskP 3.2s ease-in-out infinite 0.6s; }
+                                    .rv-mL { animation: rvMobL 2.6s ease-in-out infinite; }
+                                    .rv-mR { animation: rvMobR 2.6s ease-in-out infinite; }
+                                    .rv-mP { animation: rvMobP 3.2s ease-in-out infinite 0.6s; }
+                                }
+                                @keyframes rvBreath {
+                                    0%,100% { box-shadow: 0 0 0 0 rgba(122,28,43,0); }
+                                    50% { box-shadow: 0 0 0 6px rgba(122,28,43,0.06); }
+                                }
+                                @keyframes rvDeskL {
+                                    0% { transform: translateX(0); opacity: 0; }
+                                    15%,70% { opacity: 1; }
+                                    100% { transform: translateX(70px); opacity: 0; }
+                                }
+                                @keyframes rvDeskR {
+                                    0% { transform: translateX(0); opacity: 0; }
+                                    15%,70% { opacity: 1; }
+                                    100% { transform: translateX(-70px); opacity: 0; }
+                                }
+                                @keyframes rvDeskP {
+                                    0% { transform: translateY(0); opacity: 0; }
+                                    20%,75% { opacity: 1; }
+                                    100% { transform: translateY(108px); opacity: 0; }
+                                }
+                                @keyframes rvMobL {
+                                    0% { transform: translate(0,0); opacity: 0; }
+                                    15%,75% { opacity: 1; }
+                                    100% { transform: translate(52px,66px); opacity: 0; }
+                                }
+                                @keyframes rvMobR {
+                                    0% { transform: translate(0,0); opacity: 0; }
+                                    15%,75% { opacity: 1; }
+                                    100% { transform: translate(-52px,66px); opacity: 0; }
+                                }
+                                @keyframes rvMobP {
+                                    0% { transform: translateY(0); opacity: 0; }
+                                    20%,75% { opacity: 1; }
+                                    100% { transform: translateY(80px); opacity: 0; }
+                                }
+                                @media (min-width: 641px) {
+                                    .rv-desk-wrapper { display: block !important; }
+                                    .rv-mob-wrapper { display: none !important; }
+                                }
+                                @media (max-width: 640px) {
+                                    .rv-desk-wrapper { display: none !important; }
+                                    .rv-mob-wrapper { display: block !important; }
+                                }
+                            </style>
 
-                            <!-- SVG Vector Path Connections Layer -->
-                            <svg class="proto-svg-canvas" viewBox="0 0 580 380" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <!-- Incoming Path Left: Challenger -> Vault -->
-                                <line x1="175" y1="135" x2="190" y2="135" stroke="#7A1220" stroke-width="2.5" stroke-dasharray="4 4" opacity="0.6" />
-                                <!-- Incoming Path Right: Opponent -> Vault -->
-                                <line x1="405" y1="135" x2="390" y2="135" stroke="#7A1220" stroke-width="2.5" stroke-dasharray="4 4" opacity="0.6" />
-                                <!-- Outgoing Path Down 1: Vault -> Verification Pill -->
-                                <line x1="290" y1="195" x2="290" y2="225" stroke="#7A1220" stroke-width="2.5" stroke-dasharray="4 4" opacity="0.5" />
-                                <!-- Outgoing Path Down 2: Verification Pill -> Settlement Endpoint -->
-                                <line x1="290" y1="265" x2="290" y2="305" stroke="#22C55E" stroke-width="2.5" stroke-dasharray="4 4" opacity="0.85" />
+                            <!-- DESKTOP STAGE -->
+                            <div class="rv-desk-wrapper" style="position: relative; width: 100%; aspect-ratio: 720 / 470;">
+                                <svg viewBox="0 0 720 470" style="position: absolute; inset: 0; width: 100%; height: 100%;" aria-hidden="true">
+                                    <defs>
+                                        <marker id="arrM" markerWidth="7" markerHeight="7" refX="5" refY="3.5" orient="auto">
+                                            <path d="M0 0 L7 3.5 L0 7 Z" fill="#7A1C2B" />
+                                        </marker>
+                                        <marker id="arrG" markerWidth="7" markerHeight="7" refX="5" refY="3.5" orient="auto">
+                                            <path d="M0 0 L7 3.5 L0 7 Z" fill="#3F9D5A" />
+                                        </marker>
+                                    </defs>
 
-                                <!-- Animated Pulses Along Paths -->
-                                <circle class="proto-pulse-circle" r="4" fill="#7A1220">
-                                    <animateMotion dur="2.0s" repeatCount="indefinite" path="M 175 135 L 190 135" />
-                                </circle>
-                                <circle class="proto-pulse-circle" r="4" fill="#7A1220">
-                                    <animateMotion dur="2.0s" repeatCount="indefinite" path="M 405 135 L 390 135" />
-                                </circle>
-                                <circle class="proto-pulse-circle" r="4" fill="#22C55E">
-                                    <animateMotion dur="2.4s" repeatCount="indefinite" path="M 290 265 L 290 305" />
-                                </circle>
-                            </svg>
+                                    <!-- left stake -> vault (tucks under both cards) -->
+                                    <line x1="196" y1="200" x2="278" y2="200" stroke="#B98A92" stroke-width="2" stroke-dasharray="5 5" marker-end="url(#arrM)" />
+                                    <!-- right stake -> vault -->
+                                    <line x1="524" y1="200" x2="442" y2="200" stroke="#B98A92" stroke-width="2" stroke-dasharray="5 5" marker-end="url(#arrM)" />
+                                    <!-- vault -> payout -->
+                                    <line x1="360" y1="272" x2="360" y2="400" stroke="#3F9D5A" stroke-width="2" stroke-dasharray="5 5" marker-end="url(#arrG)" />
 
-                            <!-- UI Node Layers Overlay -->
-                            <div class="proto-nodes-canvas">
-                                <!-- Left Node: CHALLENGER (Stripe Revenue) -->
-                                <div class="proto-mini-card challenger">
-                                    <div class="mini-card-hdr">
-                                        <svg viewBox="54 36 360.02 149.84" xmlns="http://www.w3.org/2000/svg" class="mini-brand-svg" style="width: 14px; height: 14px; max-width: 14px; max-height: 14px; flex-shrink: 0;"><path fill="#635BFF" d="M414,113.4c0-25.6-12.4-45.8-36.1-45.8c-23.8,0-38.2,20.2-38.2,45.6c0,30.1,17,45.3,41.4,45.3c11.9,0,20.9-2.7,27.7-6.5v-20c-6.8,3.4-14.6,5.5-24.5,5.5c-9.7,0-18.3-3.4-19.4-15.2h48.9C413.8,121,414,115.8,414,113.4z M364.6,103.9c0-11.3,6.9-16,13.2-16c6.1,0,12.6,4.7,12.6,16H364.6z M301.1,67.6c-9.8,0-16.1,4.6-19.6,7.8l-1.3-6.2h-22v116.6l25-5.3l0.1-28.3c3.6,2.6,8.9,6.3,17.7,6.3c17.9,0,34.2-14.4,34.2-46.1C335.1,83.4,318.6,67.6,301.1,67.6z M295.1,136.5c-5.9,0-9.4-2.1-11.8-4.7l-0.1-37.1c2.6-2.9,6.2-4.9,11.9-4.9c9.1,0,15.4,10.2,15.4,23.3C310.5,126.5,304.3,136.5,295.1,136.5z M223.8,61.7l25.1-5.4v-20.3l-25.1,5.3 M223.8,69.3h25.1v87.5h-25.1z M196.9,76.7l-1.6-7.4h-21.6v87.5h25V97.5c5.9-7.7,15.9-6.3,19-5.2v-23C214.5,68.1,202.8,65.9,196.9,76.7z M146.9,47.6l-24.4,5.2l-0.1,80.1c0,14.8,11.1,25.7,25.9,25.7c8.2,0,14.2-1.5,17.5-3.3V135c-3.2,1.3-19,5.9-19-8.9V90.6h19V69.3h-19L146.9,47.6z M79.3,94.7c0-3.9,3.2-5.4,8.5-5.4c7.6,0,17.2,2.3,24.8,6.4V72.2c-8.3-3.3-16.5-4.6-24.8-4.6C67.5,67.6,54,78.2,54,95.9c0,27.6,38,23.2,38,35.1c0,4.6-4,6.1-9.6,6.1c-8.3,0-18.9-3.4-27.3-8v23.8c9.3,4,18.7,5.7,27.3,5.7c20.8,0,35.1-10.3,35.1-28.2C117.4,100.6,79.3,105.9,79.3,94.7z"/></svg>
-                                        <span class="mini-role-eyebrow">CHALLENGER</span>
+                                    <!-- pulse dots — animate toward the vault, then down to payout -->
+                                    <circle class="rv-dot rv-dL" cx="206" cy="200" r="3.6" fill="#7A1C2B" />
+                                    <circle class="rv-dot rv-dR" cx="514" cy="200" r="3.6" fill="#7A1C2B" />
+                                    <circle class="rv-dot rv-dP" cx="360" cy="282" r="3.6" fill="#3F9D5A" />
+                                </svg>
+
+                                <!-- cards share the SVG's coordinate space (x/720, y/470) -->
+                                <div style="position: absolute; left: 16.4%; top: 42.6%;">
+                                    <div class="rv-node" style="position: absolute; transform: translate(-50%, -50%); z-index: 10; background: #FBF9F5; border: 1px solid rgba(28,35,51,0.08); border-radius: 14px; padding: 14px 16px; box-shadow: 0 8px 24px -14px rgba(28,35,51,0.22); width: 140px;">
+                                        <div style="display: flex; align-items: center; gap: 7px;">
+                                            <span style="display: inline-flex; align-items: center; height: 14px; color: #635BFF; font-weight: 800; font-size: 13px; letter-spacing: -0.02em;">stripe</span>
+                                            <span style="font-size: 10px; font-weight: 700; letter-spacing: 0.14em; color: #7A1C2B; text-transform: uppercase;">Challenger</span>
+                                        </div>
+                                        <div style="margin-top: 10px; font-size: 15px; font-weight: 700; color: #1C2333;">Revenue +12%</div>
+                                        <div style="margin-top: 6px; font-size: 11.5px; color: #8C8577; letter-spacing: 0.02em;">
+                                            <span style="color: #1C2333; font-weight: 600;">$1,000</span> locked
+                                        </div>
                                     </div>
-                                    <div class="mini-metric-row">
-                                        <span class="mini-metric">Stripe Revenue</span>
-                                        <span class="mini-badge-green">🟢 +12.4%</span>
-                                    </div>
-                                    <!-- Micro progress bar -->
-                                    <div class="mini-progress-bar">
-                                        <div class="mini-progress-fill green" style="width: 78%;"></div>
-                                    </div>
-                                    <div class="mini-lock-val">$1,000 Locked</div>
                                 </div>
 
-                                <!-- Center Anchor Node: DOMINANT ESCROW VAULT -->
-                                <div class="proto-vault-anchor dominant">
-                                    <div class="vault-header-row">
-                                        <span class="vault-verified-pill">🔒 Verified</span>
+                                <div style="position: absolute; left: 83.6%; top: 42.6%;">
+                                    <div class="rv-node" style="position: absolute; transform: translate(-50%, -50%); z-index: 10; background: #FBF9F5; border: 1px solid rgba(28,35,51,0.08); border-radius: 14px; padding: 14px 16px; box-shadow: 0 8px 24px -14px rgba(28,35,51,0.22); width: 140px;">
+                                        <div style="display: flex; align-items: center; gap: 7px;">
+                                            <span style="display: inline-flex; align-items: center; height: 14px;">
+                                                <svg width="13" height="13" viewBox="0 0 24 24" aria-hidden="true"><path fill="#0F1115" d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+                                            </span>
+                                            <span style="font-size: 10px; font-weight: 700; letter-spacing: 0.14em; color: #7A1C2B; text-transform: uppercase;">Opponent</span>
+                                        </div>
+                                        <div style="margin-top: 10px; font-size: 15px; font-weight: 700; color: #1C2333;">Followers +9%</div>
+                                        <div style="margin-top: 6px; font-size: 11.5px; color: #8C8577; letter-spacing: 0.02em;">
+                                            <span style="color: #1C2333; font-weight: 600;">$1,000</span> locked
+                                        </div>
                                     </div>
-                                    <div class="vault-main-amount">$2,000</div>
-                                    <div class="vault-main-title">ESCROW VAULT</div>
-                                    <div class="vault-tag-maroon">Winner Takes Pool</div>
                                 </div>
 
-                                <!-- Right Node: OPPONENT (X Followers) -->
-                                <div class="proto-mini-card opponent">
-                                    <div class="mini-card-hdr">
-                                        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" class="mini-brand-svg" style="width: 14px; height: 14px; max-width: 14px; max-height: 14px; flex-shrink: 0;"><path fill="#0F172A" d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
-                                        <span class="mini-role-eyebrow">OPPONENT</span>
+                                <div style="position: absolute; left: 50%; top: 41.5%;">
+                                    <div class="rv-vault" style="position: absolute; transform: translate(-50%, -50%); z-index: 10; text-align: center; background: #FFFDFA; border: 1.5px solid rgba(122,28,43,0.35); border-radius: 18px; padding: 16px 22px; box-shadow: 0 18px 46px -20px rgba(122,28,43,0.35); width: 170px;">
+                                        <div style="display: inline-flex; align-items: center; gap: 5px; padding: 3px 9px; border-radius: 999px; background: #D9EBDE; color: #3F9D5A; font-size: 10px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase;">
+                                            <span style="width: 6px; height: 6px; border-radius: 999px; background: #3F9D5A;"></span> Verified
+                                        </div>
+                                        <div style="margin-top: 12px; display: flex; justify-content: center;">
+                                            <div class="rv-lock" style="width: 34px; height: 34px; border-radius: 999px; background: rgba(122,28,43,0.08); display: flex; align-items: center; justify-content: center;">
+                                                <svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true"><path fill="none" stroke="#7A1C2B" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" d="M7 10V7a5 5 0 0 1 10 0v3M6 10h12a1 1 0 0 1 1 1v7a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1v-7a1 1 0 0 1 1-1Z"/></svg>
+                                            </div>
+                                        </div>
+                                        <div style="margin-top: 10px; font-size: 30px; font-weight: 800; color: #7A1C2B; letter-spacing: -0.02em; line-height: 1;">$2,000</div>
+                                        <div style="margin-top: 5px; font-size: 10.5px; font-weight: 700; letter-spacing: 0.14em; color: #8C8577; text-transform: uppercase;">Escrow Vault</div>
+                                        <div style="margin-top: 12px; display: inline-block; padding: 4px 11px; border-radius: 999px; border: 1px solid rgba(28,35,51,0.08); font-size: 10.5px; font-weight: 600; letter-spacing: 0.04em; color: #1C2333; text-transform: uppercase;">Winner takes pool</div>
                                     </div>
-                                    <div class="mini-metric-row">
-                                        <span class="mini-metric">X Followers</span>
-                                        <span class="mini-badge-blue">🔵 +9.1%</span>
-                                    </div>
-                                    <!-- Micro progress bar -->
-                                    <div class="mini-progress-bar">
-                                        <div class="mini-progress-fill blue" style="width: 62%;"></div>
-                                    </div>
-                                    <div class="mini-lock-val">$1,000 Locked</div>
                                 </div>
 
-                                <!-- Verification Layer Row -->
-                                <div class="proto-verification-layer">
-                                    <span class="verif-item">Stripe API ✓</span>
-                                    <span class="verif-sep">•</span>
-                                    <span class="verif-item">X API ✓</span>
-                                    <span class="verif-sep">•</span>
-                                    <span class="verif-item highlight">Escrow Verified ✓</span>
+                                <div style="position: absolute; left: 50%; top: 89%;">
+                                    <div class="rv-payout" style="position: absolute; transform: translate(-50%, -50%); z-index: 10; display: inline-flex; align-items: center; gap: 9px; white-space: nowrap; background: #FBF9F5; border: 1px solid #D9EBDE; border-radius: 999px; padding: 9px 16px; box-shadow: 0 8px 22px -14px rgba(63,157,90,0.4);">
+                                        <svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="11" fill="#3F9D5A"/><path fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" d="m7 12.5 3.2 3.2L17 8.6"/></svg>
+                                        <span style="font-size: 13px; color: #1C2333;">Winner receives <strong style="font-weight: 700;">$2,000</strong> <span style="color: #8C8577;">automatically</span></span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- MOBILE STAGE -->
+                            <div class="rv-mob-wrapper" style="position: relative; width: 100%; aspect-ratio: 360 / 560;">
+                                <svg viewBox="0 0 360 560" style="position: absolute; inset: 0; width: 100%; height: 100%;" aria-hidden="true">
+                                    <defs>
+                                        <marker id="arrM2" markerWidth="7" markerHeight="7" refX="5" refY="3.5" orient="auto">
+                                            <path d="M0 0 L7 3.5 L0 7 Z" fill="#7A1C2B" />
+                                        </marker>
+                                        <marker id="arrG2" markerWidth="7" markerHeight="7" refX="5" refY="3.5" orient="auto">
+                                            <path d="M0 0 L7 3.5 L0 7 Z" fill="#3F9D5A" />
+                                        </marker>
+                                    </defs>
+                                    <line x1="96" y1="150" x2="152" y2="222" stroke="#B98A92" stroke-width="2" stroke-dasharray="5 5" marker-end="url(#arrM2)" />
+                                    <line x1="264" y1="150" x2="208" y2="222" stroke="#B98A92" stroke-width="2" stroke-dasharray="5 5" marker-end="url(#arrM2)" />
+                                    <line x1="180" y1="372" x2="180" y2="466" stroke="#3F9D5A" stroke-width="2" stroke-dasharray="5 5" marker-end="url(#arrG2)" />
+                                    <circle class="rv-dot rv-mL" cx="96" cy="150" r="3.6" fill="#7A1C2B" />
+                                    <circle class="rv-dot rv-mR" cx="264" cy="150" r="3.6" fill="#7A1C2B" />
+                                    <circle class="rv-dot rv-mP" cx="180" cy="380" r="3.6" fill="#3F9D5A" />
+                                </svg>
+
+                                <div style="position: absolute; left: 26.7%; top: 16.9%;">
+                                    <div class="rv-node" style="position: absolute; transform: translate(-50%, -50%); z-index: 10; background: #FBF9F5; border: 1px solid rgba(28,35,51,0.08); border-radius: 14px; padding: 12px 14px; box-shadow: 0 8px 24px -14px rgba(28,35,51,0.22); width: 125px;">
+                                        <div style="display: flex; align-items: center; gap: 5px;">
+                                            <span style="display: inline-flex; align-items: center; height: 14px; color: #635BFF; font-weight: 800; font-size: 12px; letter-spacing: -0.02em;">stripe</span>
+                                            <span style="font-size: 9px; font-weight: 700; letter-spacing: 0.12em; color: #7A1C2B; text-transform: uppercase;">Challenger</span>
+                                        </div>
+                                        <div style="margin-top: 8px; font-size: 13px; font-weight: 700; color: #1C2333;">Revenue +12%</div>
+                                        <div style="margin-top: 4px; font-size: 10.5px; color: #8C8577;">
+                                            <span style="color: #1C2333; font-weight: 600;">$1,000</span> locked
+                                        </div>
+                                    </div>
                                 </div>
 
-                                <!-- Bottom Settlement Endpoint Node -->
-                                <div class="proto-settlement-endpoint">
-                                    <span class="settle-check">✓</span>
-                                    <span class="settle-text">Winner receives <strong>$2,000</strong> automatically</span>
+                                <div style="position: absolute; left: 73.3%; top: 16.9%;">
+                                    <div class="rv-node" style="position: absolute; transform: translate(-50%, -50%); z-index: 10; background: #FBF9F5; border: 1px solid rgba(28,35,51,0.08); border-radius: 14px; padding: 12px 14px; box-shadow: 0 8px 24px -14px rgba(28,35,51,0.22); width: 125px;">
+                                        <div style="display: flex; align-items: center; gap: 5px;">
+                                            <span style="display: inline-flex; align-items: center; height: 14px;">
+                                                <svg width="12" height="12" viewBox="0 0 24 24" aria-hidden="true"><path fill="#0F1115" d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+                                            </span>
+                                            <span style="font-size: 9px; font-weight: 700; letter-spacing: 0.12em; color: #7A1C2B; text-transform: uppercase;">Opponent</span>
+                                        </div>
+                                        <div style="margin-top: 8px; font-size: 13px; font-weight: 700; color: #1C2333;">Followers +9%</div>
+                                        <div style="margin-top: 4px; font-size: 10.5px; color: #8C8577;">
+                                            <span style="color: #1C2333; font-weight: 600;">$1,000</span> locked
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div style="position: absolute; left: 50%; top: 53.6%;">
+                                    <div class="rv-vault" style="position: absolute; transform: translate(-50%, -50%); z-index: 10; text-align: center; background: #FFFDFA; border: 1.5px solid rgba(122,28,43,0.35); border-radius: 18px; padding: 14px 18px; box-shadow: 0 18px 46px -20px rgba(122,28,43,0.35); width: 150px;">
+                                        <div style="display: inline-flex; align-items: center; gap: 5px; padding: 3px 8px; border-radius: 999px; background: #D9EBDE; color: #3F9D5A; font-size: 9.5px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase;">
+                                            <span style="width: 5px; height: 5px; border-radius: 999px; background: #3F9D5A;"></span> Verified
+                                        </div>
+                                        <div style="margin-top: 10px; display: flex; justify-content: center;">
+                                            <div class="rv-lock" style="width: 30px; height: 30px; border-radius: 999px; background: rgba(122,28,43,0.08); display: flex; align-items: center; justify-content: center;">
+                                                <svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true"><path fill="none" stroke="#7A1C2B" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" d="M7 10V7a5 5 0 0 1 10 0v3M6 10h12a1 1 0 0 1 1 1v7a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1v-7a1 1 0 0 1 1-1Z"/></svg>
+                                            </div>
+                                        </div>
+                                        <div style="margin-top: 8px; font-size: 26px; font-weight: 800; color: #7A1C2B; letter-spacing: -0.02em; line-height: 1;">$2,000</div>
+                                        <div style="margin-top: 4px; font-size: 9.5px; font-weight: 700; letter-spacing: 0.14em; color: #8C8577; text-transform: uppercase;">Escrow Vault</div>
+                                        <div style="margin-top: 10px; display: inline-block; padding: 3px 9px; border-radius: 999px; border: 1px solid rgba(28,35,51,0.08); font-size: 9.5px; font-weight: 600; letter-spacing: 0.04em; color: #1C2333; text-transform: uppercase;">Winner takes pool</div>
+                                    </div>
+                                </div>
+
+                                <div style="position: absolute; left: 50%; top: 88.6%;">
+                                    <div class="rv-payout" style="position: absolute; transform: translate(-50%, -50%); z-index: 10; display: inline-flex; align-items: center; gap: 7px; white-space: nowrap; background: #FBF9F5; border: 1px solid #D9EBDE; border-radius: 999px; padding: 8px 14px; box-shadow: 0 8px 22px -14px rgba(63,157,90,0.4);">
+                                        <svg width="14" height="14" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="11" fill="#3F9D5A"/><path fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" d="m7 12.5 3.2 3.2L17 8.6"/></svg>
+                                        <span style="font-size: 11.5px; color: #1C2333;">Winner receives <strong style="font-weight: 700;">$2,000</strong> <span style="color: #8C8577;">automatically</span></span>
+                                    </div>
                                 </div>
                             </div>
                         </div>

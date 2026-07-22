@@ -2095,13 +2095,15 @@ export const landingCSS = `
 .lstat-card {
     background: #FAFAF7 !important;
     border: 1px solid rgba(226, 232, 240, 0.85) !important;
-    border-radius: 18px !important;
+    border-radius: 16px !important;
     box-shadow: 0 12px 32px -10px rgba(15, 23, 42, 0.05), 0 2px 6px rgba(15, 23, 42, 0.02) !important;
-    padding: 24px 22px !important;
+    padding: 20px 20px !important;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+    min-height: 154px;
     position: relative;
+    box-sizing: border-box;
     transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.3s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.3s ease;
 }
 .lstat-card:hover {
@@ -2109,48 +2111,55 @@ export const landingCSS = `
     border-color: rgba(203, 213, 225, 0.9) !important;
     box-shadow: 0 20px 44px -12px rgba(15, 23, 42, 0.09), 0 4px 12px rgba(15, 23, 42, 0.03) !important;
 }
-.lstat-card-top {
+.lstat-card-header {
     display: flex;
-    align-items: center;
-    justify-content: flex-end;
-    margin-bottom: 12px;
+    align-items: flex-start;
+    justify-content: space-between;
+    width: 100%;
+    height: 42px;
+}
+.lstat-num {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 38px;
+    font-weight: 800;
+    color: #7A1220;
+    letter-spacing: -1.2px;
+    line-height: 1;
+    display: block;
 }
 .lstat-card-icon {
-    width: 32px;
-    height: 32px;
+    width: 28px;
+    height: 28px;
     border-radius: 8px;
     background: rgba(122, 18, 32, 0.06);
     display: flex;
     align-items: center;
     justify-content: center;
+    flex-shrink: 0;
+    margin-top: 2px;
 }
-.lstat-card-body {
+.lstat-card-footer {
     display: flex;
     flex-direction: column;
-}
-.lstat-num {
-    font-family: 'Plus Jakarta Sans', sans-serif;
-    font-size: 40px;
-    font-weight: 800;
-    color: #7A1220;
-    letter-spacing: -1.2px;
-    line-height: 1;
+    margin-top: auto;
 }
 .lstat-label {
     font-family: 'Inter Tight', sans-serif;
     font-size: 13.5px;
     font-weight: 700;
     color: #0F172A;
-    margin: 10px 0 4px;
+    margin: 0 0 4px 0;
     line-height: 1.25;
+    min-height: 18px; /* Lock label baseline */
 }
 .lstat-sub {
     font-family: 'Plus Jakarta Sans', sans-serif;
     font-size: 12px;
     color: #64748B;
-    line-height: 1.45;
+    line-height: 1.4;
     text-wrap: balance;
     margin: 0;
+    min-height: 34px; /* Lock supporting line baseline */
 }
 /* ═══ LIVE LEDGER FEED ═══ */
 .lledger-container {background:#FFF;border:1px solid var(--d);border-radius:16px;padding:32px;box-shadow:0 4px 30px rgba(0,0,0,0.015);margin-top:48px}

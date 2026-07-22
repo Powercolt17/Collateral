@@ -787,13 +787,13 @@ export function renderLanding() {
                     <div class="lstats-cards-grid">
                         <!-- Card 1 -->
                         <div class="lstat-card reveal-item">
-                            <div class="lstat-card-top">
-                                <div class="lstat-card-icon">
-                                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#7A1220" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="m9 12 2 2 4-4"/></svg>
+                            <div class="lstat-card-header">
+                                <div class="lstat-num"><span data-count="74">0</span>%</div>
+                                <div class="lstat-card-icon" title="Win Rate">
+                                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#7A1220" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="m9 12 2 2 4-4"/></svg>
                                 </div>
                             </div>
-                            <div class="lstat-card-body">
-                                <div class="lstat-num"><span data-count="74">0</span>%</div>
+                            <div class="lstat-card-footer">
                                 <div class="lstat-label">of contracts are won</div>
                                 <div class="lstat-sub">Go-getters who lock cash hit their targets way faster.</div>
                             </div>
@@ -801,13 +801,13 @@ export function renderLanding() {
 
                         <!-- Card 2 -->
                         <div class="lstat-card reveal-item">
-                            <div class="lstat-card-top">
-                                <div class="lstat-card-icon">
-                                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#7A1220" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+                            <div class="lstat-card-header">
+                                <div class="lstat-num">$<span data-count="127">0</span>k</div>
+                                <div class="lstat-card-icon" title="Capital Settled">
+                                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#7A1220" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
                                 </div>
                             </div>
-                            <div class="lstat-card-body">
-                                <div class="lstat-num">$<span data-count="127">0</span>k</div>
+                            <div class="lstat-card-footer">
                                 <div class="lstat-label">total capital settled</div>
                                 <div class="lstat-sub">Across revenue, follower, and subscriber contracts</div>
                             </div>
@@ -815,13 +815,13 @@ export function renderLanding() {
 
                         <!-- Card 3 -->
                         <div class="lstat-card reveal-item">
-                            <div class="lstat-card-top">
-                                <div class="lstat-card-icon">
-                                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#7A1220" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                            <div class="lstat-card-header">
+                                <div class="lstat-num"><span data-count="18">0</span> days</div>
+                                <div class="lstat-card-icon" title="Average Time">
+                                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#7A1220" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
                                 </div>
                             </div>
-                            <div class="lstat-card-body">
-                                <div class="lstat-num"><span data-count="18">0</span> days</div>
+                            <div class="lstat-card-footer">
                                 <div class="lstat-label">average time to target</div>
                                 <div class="lstat-sub">Accountability compresses timelines.</div>
                             </div>

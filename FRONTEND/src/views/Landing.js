@@ -477,11 +477,13 @@ export function renderLanding() {
                                     <div class="lcard-riv-score green">+12.4%</div>
                                 </div>
                                 <div class="lcard-riv-swords">
-                                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#CBD5E1" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-                                        <line x1="14.5" y1="17.5" x2="3" y2="6"></line>
-                                        <polyline points="3 10 3 6 7 6"></polyline>
-                                        <line x1="9.5" y1="6.5" x2="21" y2="18"></line>
-                                        <polyline points="21 14 21 17 17 18"></polyline>
+                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#64748B" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <path d="M14.5 17.5L3 6V3h3l11.5 11.5"></path>
+                                        <path d="M13 19l6-6"></path>
+                                        <path d="M16 16l4 4"></path>
+                                        <path d="M9.5 17.5L21 6V3h-3L6.5 14.5"></path>
+                                        <path d="M11 19L5 13"></path>
+                                        <path d="M8 16l-4 4"></path>
                                     </svg>
                                 </div>
                                 <div class="lcard-riv-col is-right">
@@ -542,11 +544,13 @@ export function renderLanding() {
                                     <div class="lcard-riv-score green">+8.1%</div>
                                 </div>
                                 <div class="lcard-riv-swords">
-                                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#CBD5E1" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-                                        <line x1="14.5" y1="17.5" x2="3" y2="6"></line>
-                                        <polyline points="3 10 3 6 7 6"></polyline>
-                                        <line x1="9.5" y1="6.5" x2="21" y2="18"></line>
-                                        <polyline points="21 14 21 18 17 18"></polyline>
+                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#64748B" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <path d="M14.5 17.5L3 6V3h3l11.5 11.5"></path>
+                                        <path d="M13 19l6-6"></path>
+                                        <path d="M16 16l4 4"></path>
+                                        <path d="M9.5 17.5L21 6V3h-3L6.5 14.5"></path>
+                                        <path d="M11 19L5 13"></path>
+                                        <path d="M8 16l-4 4"></path>
                                     </svg>
                                 </div>
                                 <div class="lcard-riv-col is-right">

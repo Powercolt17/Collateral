@@ -4690,7 +4690,7 @@ export const landingCSS = `
     position: relative;
     width: 100%;
     max-width: 560px;
-    height: 330px;
+    height: 320px;
     background: #FAFAF7;
     border: 1px solid rgba(226, 232, 240, 0.85);
     border-radius: 20px;
@@ -4708,33 +4708,34 @@ export const landingCSS = `
     z-index: 1;
 }
 
-.proto-nodes-layer {
+.proto-nodes-canvas {
     position: absolute;
     inset: 0;
-    padding: 24px;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
     z-index: 2;
 }
 
-.proto-top-nodes {
-    display: flex;
-    align-items: flex-start;
-    justify-content: space-between;
-    width: 100%;
-}
-
 .proto-mini-card {
+    position: absolute;
     background: #FFFFFF;
     border: 1px solid rgba(226, 232, 240, 0.9);
-    border-radius: 12px;
-    padding: 12px 14px;
+    border-radius: 14px;
+    padding: 14px 16px;
     width: 140px;
-    box-shadow: 0 4px 16px rgba(15, 23, 42, 0.03);
+    box-shadow: 0 8px 24px -6px rgba(15, 23, 42, 0.05);
     display: flex;
     flex-direction: column;
     gap: 4px;
+    box-sizing: border-box;
+}
+
+.proto-mini-card.challenger {
+    left: 20px;
+    top: 110px;
+}
+
+.proto-mini-card.opponent {
+    right: 20px;
+    top: 110px;
 }
 
 .mini-card-hdr {
@@ -4758,7 +4759,7 @@ export const landingCSS = `
 
 .mini-metric {
     font-family: 'Inter Tight', sans-serif;
-    font-size: 12px;
+    font-size: 12.5px;
     font-weight: 700;
     color: #0F172A;
 }
@@ -4774,20 +4775,21 @@ export const landingCSS = `
 /* Central Anchor: VERIFIED ESCROW VAULT */
 .proto-vault-anchor {
     position: absolute;
-    top: 115px;
+    top: 107px;
     left: 50%;
     transform: translateX(-50%);
     background: #FFFFFF;
     border: 1.5px solid rgba(122, 18, 32, 0.35);
-    border-radius: 14px;
-    padding: 12px 18px;
+    border-radius: 16px;
+    padding: 14px 20px;
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 4px;
-    box-shadow: 0 12px 32px -8px rgba(122, 18, 32, 0.15);
+    gap: 5px;
+    box-shadow: 0 14px 36px -8px rgba(122, 18, 32, 0.16);
     z-index: 3;
-    min-width: 160px;
+    width: 160px;
+    box-sizing: border-box;
 }
 
 .vault-lock-ring {
@@ -4802,10 +4804,11 @@ export const landingCSS = `
 
 .vault-pool-val {
     font-family: 'Plus Jakarta Sans', sans-serif;
-    font-size: 14px;
+    font-size: 13.5px;
     font-weight: 900;
     color: #7A1220;
     letter-spacing: -0.3px;
+    white-space: nowrap;
 }
 
 .vault-tag {
@@ -4821,15 +4824,20 @@ export const landingCSS = `
 
 /* Bottom Node: AUTOMATED SETTLEMENT ENDPOINT */
 .proto-settlement-endpoint {
-    align-self: center;
+    position: absolute;
+    bottom: 22px;
+    left: 50%;
+    transform: translateX(-50%);
     background: #FFFFFF;
     border: 1px solid rgba(34, 197, 94, 0.4);
     border-radius: 9999px;
-    padding: 8px 16px;
+    padding: 8px 18px;
     display: inline-flex;
     align-items: center;
     gap: 8px;
-    box-shadow: 0 4px 14px rgba(34, 197, 94, 0.08);
+    box-shadow: 0 4px 16px rgba(34, 197, 94, 0.1);
+    white-space: nowrap;
+    z-index: 3;
 }
 
 .settle-check {
@@ -4868,33 +4876,35 @@ export const landingCSS = `
     .proto-svg-canvas {
         display: none;
     }
-    .proto-nodes-layer {
+    .proto-nodes-canvas {
         position: relative;
         inset: auto;
-        padding: 0;
         display: flex;
         flex-direction: column;
         align-items: center;
         gap: 16px;
     }
-    .proto-top-nodes {
-        flex-direction: column;
-        align-items: center;
-        gap: 12px;
-    }
     .proto-mini-card {
+        position: relative;
+        left: auto !important;
+        right: auto !important;
+        top: auto !important;
         width: 100%;
         max-width: 280px;
     }
     .proto-vault-anchor {
         position: relative;
-        top: auto;
-        left: auto;
-        transform: none;
+        top: auto !important;
+        left: auto !important;
+        transform: none !important;
         width: 100%;
         max-width: 280px;
     }
     .proto-settlement-endpoint {
+        position: relative;
+        bottom: auto !important;
+        left: auto !important;
+        transform: none !important;
         width: 100%;
         max-width: 280px;
         justify-content: center;

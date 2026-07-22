@@ -4685,211 +4685,114 @@ export const landingCSS = `
   }
 }
 
-/* ═══ LARGE INSTITUTIONAL RIVALRY PROTOCOL VISUALIZER ═══ */
-.lrivalry-protocol-visualizer {
+/* ═══ CONCEPTUAL MARKETING PROTOCOL DIAGRAM ═══ */
+.proto-diagram-wrapper {
+    position: relative;
+    width: 100%;
+    max-width: 560px;
+    height: 330px;
     background: #FAFAF7;
     border: 1px solid rgba(226, 232, 240, 0.85);
     border-radius: 20px;
-    padding: 24px 22px;
-    box-shadow: 0 20px 48px -12px rgba(15, 23, 42, 0.07);
+    box-shadow: 0 20px 48px -12px rgba(15, 23, 42, 0.06);
+    overflow: hidden;
+    box-sizing: border-box;
+}
+
+.proto-svg-canvas {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 1;
+}
+
+.proto-nodes-layer {
+    position: absolute;
+    inset: 0;
+    padding: 24px;
     display: flex;
     flex-direction: column;
-    gap: 20px;
-    width: 100%;
-    box-sizing: border-box;
-    position: relative;
+    justify-content: space-between;
+    z-index: 2;
 }
 
-.rpv-header {
+.proto-top-nodes {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.proto-mini-card {
+    background: #FFFFFF;
+    border: 1px solid rgba(226, 232, 240, 0.9);
+    border-radius: 12px;
+    padding: 12px 14px;
+    width: 140px;
+    box-shadow: 0 4px 16px rgba(15, 23, 42, 0.03);
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.mini-card-hdr {
     display: flex;
     align-items: center;
-    justify-content: space-between;
-    border-bottom: 1px solid rgba(226, 232, 240, 0.8);
-    padding-bottom: 14px;
-}
-
-.rpv-status-badge {
-    display: inline-flex;
-    align-items: center;
     gap: 6px;
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 10.5px;
-    font-weight: 700;
-    color: #7A1220;
-    letter-spacing: 0.8px;
 }
 
-.rpv-pulse-dot {
-    width: 7px;
-    height: 7px;
-    border-radius: 50%;
-    background: #22C55E;
-    box-shadow: 0 0 8px rgba(34, 197, 94, 0.8);
-    animation: statusPulse 2s ease-in-out infinite;
+.mini-brand-svg {
+    width: 14px;
+    height: 14px;
+    object-fit: contain;
 }
 
-.rpv-contract-id {
+.mini-handle {
     font-family: 'JetBrains Mono', monospace;
     font-size: 11px;
     font-weight: 700;
-    color: #64748B;
+    color: #0F172A;
 }
 
-.rpv-flow-canvas {
-    display: flex;
-    flex-direction: column;
-    gap: 16px;
-    position: relative;
-}
-
-.rpv-competitor-card {
-    background: #FFFFFF;
-    border: 1px solid rgba(226, 232, 240, 0.85);
-    border-radius: 14px;
-    padding: 16px 18px;
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    box-shadow: 0 4px 14px rgba(15, 23, 42, 0.02);
-    transition: transform 0.3s ease, border-color 0.3s ease;
-}
-
-.rpv-competitor-card:hover {
-    transform: translateY(-2px);
-    border-color: rgba(122, 18, 32, 0.25);
-}
-
-.rpv-card-top {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-}
-
-.rpv-party-tag {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 9.5px;
-    font-weight: 800;
-    color: #7A1220;
-    background: rgba(122, 18, 32, 0.06);
-    padding: 2px 8px;
-    border-radius: 9999px;
-    letter-spacing: 0.5px;
-}
-
-.rpv-user-handle {
-    font-family: 'JetBrains Mono', monospace;
+.mini-metric {
+    font-family: 'Inter Tight', sans-serif;
     font-size: 12px;
     font-weight: 700;
     color: #0F172A;
 }
 
-.rpv-metric-title {
-    font-family: 'Inter Tight', sans-serif;
-    font-size: 14px;
-    font-weight: 700;
-    color: #0F172A;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-}
-
-.rpv-brand-icon {
-    width: 18px;
-    height: 18px;
-    object-fit: contain;
-}
-
-.rpv-progress-wrap {
-    display: flex;
-    flex-direction: column;
-    gap: 4px;
-}
-
-.rpv-progress-info {
-    display: flex;
-    justify-content: space-between;
-    font-size: 10.5px;
-    font-family: 'JetBrains Mono', monospace;
-    color: #64748B;
-    font-weight: 600;
-}
-
-.rpv-progress-bar {
-    width: 100%;
-    height: 6px;
-    background: #F1F5F9;
-    border-radius: 9999px;
-    overflow: hidden;
-}
-
-.rpv-progress-fill {
-    height: 100%;
-    background: #22C55E;
-    border-radius: 9999px;
-    transition: width 1s ease-out;
-}
-
-.rpv-progress-fill.secondary {
-    background: #3B82F6;
-}
-
-.rpv-stake-amount {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    border-top: 1px dashed rgba(226, 232, 240, 0.8);
-    padding-top: 8px;
-    margin-top: 2px;
-}
-
-.rpv-stake-lbl {
+.mini-lock-val {
     font-family: 'JetBrains Mono', monospace;
     font-size: 10px;
-    color: #64748B;
-    font-weight: 700;
-}
-
-.rpv-stake-val {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 13px;
     font-weight: 800;
     color: #7A1220;
+    letter-spacing: 0.5px;
 }
 
-.rpv-center-vault-area {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    position: relative;
-    margin: -4px 0;
-}
-
-.rpv-beam-container {
-    width: 100%;
-    height: 36px;
-}
-
-.rpv-core-vault {
+/* Central Anchor: VERIFIED ESCROW VAULT */
+.proto-vault-anchor {
+    position: absolute;
+    top: 115px;
+    left: 50%;
+    transform: translateX(-50%);
     background: #FFFFFF;
-    border: 1.5px solid rgba(122, 18, 32, 0.3);
+    border: 1.5px solid rgba(122, 18, 32, 0.35);
     border-radius: 14px;
-    padding: 14px 20px;
+    padding: 12px 18px;
     display: flex;
     flex-direction: column;
     align-items: center;
     gap: 4px;
-    box-shadow: 0 10px 28px -6px rgba(122, 18, 32, 0.12);
-    width: 80%;
-    max-width: 320px;
-    margin-top: -12px;
-    margin-bottom: -12px;
-    z-index: 2;
-    position: relative;
+    box-shadow: 0 12px 32px -8px rgba(122, 18, 32, 0.15);
+    z-index: 3;
+    min-width: 160px;
 }
 
-.rpv-vault-icon {
-    width: 32px;
-    height: 32px;
+.vault-lock-ring {
+    width: 28px;
+    height: 28px;
     border-radius: 50%;
     background: rgba(122, 18, 32, 0.06);
     display: flex;
@@ -4897,23 +4800,15 @@ export const landingCSS = `
     justify-content: center;
 }
 
-.rpv-vault-lbl {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 9.5px;
-    font-weight: 800;
-    color: #64748B;
-    letter-spacing: 0.8px;
-}
-
-.rpv-vault-amount {
+.vault-pool-val {
     font-family: 'Plus Jakarta Sans', sans-serif;
-    font-size: 22px;
+    font-size: 14px;
     font-weight: 900;
     color: #7A1220;
-    line-height: 1;
+    letter-spacing: -0.3px;
 }
 
-.rpv-vault-tag {
+.vault-tag {
     font-family: 'JetBrains Mono', monospace;
     font-size: 9px;
     font-weight: 800;
@@ -4924,46 +4819,86 @@ export const landingCSS = `
     border: 1px solid #BBF7D0;
 }
 
-.rpv-footer {
+/* Bottom Node: AUTOMATED SETTLEMENT ENDPOINT */
+.proto-settlement-endpoint {
+    align-self: center;
+    background: #FFFFFF;
+    border: 1px solid rgba(34, 197, 94, 0.4);
+    border-radius: 9999px;
+    padding: 8px 16px;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    box-shadow: 0 4px 14px rgba(34, 197, 94, 0.08);
+}
+
+.settle-check {
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    background: #22C55E;
+    color: #FFFFFF;
+    font-size: 10px;
+    font-weight: bold;
     display: flex;
     align-items: center;
-    justify-content: space-between;
-    background: #FFFFFF;
-    border: 1px solid rgba(226, 232, 240, 0.8);
-    border-radius: 12px;
-    padding: 12px 16px;
+    justify-content: center;
 }
 
-.rpv-foot-item {
-    display: flex;
-    flex-direction: column;
-    gap: 2px;
-}
-
-.rpv-foot-lbl {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 8.5px;
-    font-weight: 700;
-    color: #64748B;
-    letter-spacing: 0.5px;
-}
-
-.rpv-foot-val {
+.settle-text {
     font-family: 'Inter', sans-serif;
-    font-size: 11px;
-    font-weight: 600;
+    font-size: 11.5px;
     color: #0F172A;
 }
 
-.rpv-foot-val.status-green {
-    color: #166534;
+/* Reduced Motion Override */
+@media (prefers-reduced-motion: reduce) {
+    .proto-pulse-circle {
+        display: none !important;
+    }
 }
 
-@media(max-width: 768px) {
-    .rpv-footer {
+/* Mobile Vertical Reflow (below 640px) */
+@media(max-width: 640px) {
+    .proto-diagram-wrapper {
+        height: auto;
+        min-height: 420px;
+        padding: 20px 16px;
+    }
+    .proto-svg-canvas {
+        display: none;
+    }
+    .proto-nodes-layer {
+        position: relative;
+        inset: auto;
+        padding: 0;
+        display: flex;
         flex-direction: column;
-        gap: 8px;
-        align-items: flex-start;
+        align-items: center;
+        gap: 16px;
+    }
+    .proto-top-nodes {
+        flex-direction: column;
+        align-items: center;
+        gap: 12px;
+    }
+    .proto-mini-card {
+        width: 100%;
+        max-width: 280px;
+    }
+    .proto-vault-anchor {
+        position: relative;
+        top: auto;
+        left: auto;
+        transform: none;
+        width: 100%;
+        max-width: 280px;
+    }
+    .proto-settlement-endpoint {
+        width: 100%;
+        max-width: 280px;
+        justify-content: center;
+        border-radius: 12px;
     }
 }
 

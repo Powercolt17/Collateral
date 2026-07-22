@@ -4648,55 +4648,30 @@ export const landingCSS = `
     margin-bottom: 14px !important;
   }
   .lhow-flow {
-    grid-template-columns: 1fr !important;
-    gap: 24px !important;
-  }
-
-  /* CLTR Token Economy Section */
-  .lemo-reframe {
-    padding: 44px 0 !important;
-  }
-  .lemo-grid {
-    grid-template-columns: 1fr !important;
-    gap: 24px !important;
-    margin-top: 20px !important;
-  }
-
-  /* FAQ Section */
-  .lfaq {
-    padding: 44px 0 !important;
-  }
-  .fq-q {
-    font-size: 14px !important;
-    padding: 14px 0 !important;
-  }
-
-  /* Footer */
-  .lfoot {
-    padding: 36px 20px 48px !important;
-    text-align: center !important;
-  }
-
-  /* Drawer Menu Width */
-  .pnl-drawer {
-    width: 100% !important;
-    max-width: 100% !important;
-    border-left: none !important;
-  }
-}
-
-/* ═══ CONCEPTUAL MARKETING PROTOCOL DIAGRAM ═══ */
+    grid-template-columns: 1fr !important/* ═══ FLAGSHIP MARKETING PROTOCOL ILLUSTRATION ═══ */
 .proto-diagram-wrapper {
     position: relative;
     width: 100%;
-    max-width: 560px;
-    height: 320px;
-    background: #FAFAF7;
-    border: 1px solid rgba(226, 232, 240, 0.85);
-    border-radius: 20px;
-    box-shadow: 0 20px 48px -12px rgba(15, 23, 42, 0.06);
+    max-width: 580px;
+    height: 380px;
+    background: linear-gradient(180deg, #FAFAF7 0%, #F5F5F0 100%);
+    border: 1px solid rgba(226, 232, 240, 0.9);
+    border-radius: 24px;
+    box-shadow: 0 24px 54px -12px rgba(15, 23, 42, 0.08);
     overflow: hidden;
     box-sizing: border-box;
+}
+
+.proto-ambient-glow {
+    position: absolute;
+    top: 50px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 300px;
+    height: 200px;
+    background: radial-gradient(circle, rgba(122, 18, 32, 0.07) 0%, rgba(122, 18, 32, 0) 70%);
+    pointer-events: none;
+    z-index: 1;
 }
 
 .proto-svg-canvas {
@@ -4705,37 +4680,44 @@ export const landingCSS = `
     width: 100%;
     height: 100%;
     pointer-events: none;
-    z-index: 1;
+    z-index: 2;
 }
 
 .proto-nodes-canvas {
     position: absolute;
     inset: 0;
-    z-index: 2;
+    z-index: 3;
 }
 
+/* Side Competitor Cards */
 .proto-mini-card {
     position: absolute;
     background: #FFFFFF;
-    border: 1px solid rgba(226, 232, 240, 0.9);
+    border: 1px solid rgba(226, 232, 240, 0.95);
     border-radius: 14px;
-    padding: 14px 16px;
-    width: 140px;
+    padding: 14px 15px;
+    width: 155px;
     box-shadow: 0 8px 24px -6px rgba(15, 23, 42, 0.05);
     display: flex;
     flex-direction: column;
-    gap: 4px;
+    gap: 6px;
     box-sizing: border-box;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.proto-mini-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 28px -4px rgba(15, 23, 42, 0.08);
 }
 
 .proto-mini-card.challenger {
     left: 20px;
-    top: 110px;
+    top: 90px;
 }
 
 .proto-mini-card.opponent {
     right: 20px;
-    top: 110px;
+    top: 90px;
 }
 
 .mini-card-hdr {
@@ -4752,68 +4734,127 @@ export const landingCSS = `
 
 .mini-role-eyebrow {
     font-family: 'JetBrains Mono', monospace;
-    font-size: 9.5px;
+    font-size: 9px;
     font-weight: 800;
     color: #64748B;
     letter-spacing: 0.8px;
     text-transform: uppercase;
 }
 
+.mini-metric-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 4px;
+}
+
 .mini-metric {
-    font-family: 'Inter Tight', sans-serif;
-    font-size: 12.5px;
-    font-weight: 700;
-    color: #0F172A;
+    font-family: 'Inter', sans-serif;
+    font-size: 11px;
+    font-weight: 600;
+    color: #64748B;
+}
+
+.mini-badge-green {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    font-weight: 800;
+    color: #166534;
+}
+
+.mini-badge-blue {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    font-weight: 800;
+    color: #1D4ED8;
+}
+
+/* Micro progress bar */
+.mini-progress-bar {
+    width: 100%;
+    height: 5px;
+    background: #F1F5F9;
+    border-radius: 9999px;
+    overflow: hidden;
+}
+
+.mini-progress-fill.green {
+    height: 100%;
+    background: #22C55E;
+    border-radius: 9999px;
+}
+
+.mini-progress-fill.blue {
+    height: 100%;
+    background: #3B82F6;
+    border-radius: 9999px;
 }
 
 .mini-lock-val {
     font-family: 'JetBrains Mono', monospace;
-    font-size: 10px;
+    font-size: 10.5px;
     font-weight: 800;
     color: #7A1220;
-    letter-spacing: 0.5px;
+    letter-spacing: 0.4px;
 }
 
-/* Central Anchor: VERIFIED ESCROW VAULT */
-.proto-vault-anchor {
+/* DOMINANT ESCROW VAULT (Middle Box Dominates) */
+.proto-vault-anchor.dominant {
     position: absolute;
-    top: 107px;
+    top: 75px;
     left: 50%;
     transform: translateX(-50%);
     background: #FFFFFF;
-    border: 1.5px solid rgba(122, 18, 32, 0.35);
-    border-radius: 16px;
-    padding: 14px 20px;
+    border: 2px solid rgba(122, 18, 32, 0.4);
+    border-radius: 20px;
+    padding: 18px 22px;
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 5px;
-    box-shadow: 0 14px 36px -8px rgba(122, 18, 32, 0.16);
-    z-index: 3;
-    width: 160px;
+    gap: 6px;
+    box-shadow: 0 16px 44px -8px rgba(122, 18, 32, 0.18), 0 4px 12px rgba(15, 23, 42, 0.04);
+    z-index: 10;
+    width: 200px;
     box-sizing: border-box;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
-.vault-lock-ring {
-    width: 28px;
-    height: 28px;
-    border-radius: 50%;
+.proto-vault-anchor.dominant:hover {
+    transform: translateX(-50%) translateY(-2px);
+    box-shadow: 0 20px 50px -6px rgba(122, 18, 32, 0.22);
+}
+
+.vault-verified-pill {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9.5px;
+    font-weight: 800;
+    color: #7A1220;
     background: rgba(122, 18, 32, 0.06);
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    border: 1px solid rgba(122, 18, 32, 0.15);
+    padding: 3px 10px;
+    border-radius: 9999px;
+    letter-spacing: 0.5px;
 }
 
-.vault-pool-val {
+.vault-main-amount {
     font-family: 'Plus Jakarta Sans', sans-serif;
-    font-size: 13.5px;
+    font-size: 26px;
     font-weight: 900;
     color: #7A1220;
-    letter-spacing: -0.3px;
-    white-space: nowrap;
+    letter-spacing: -0.6px;
+    line-height: 1;
+    margin: 2px 0;
 }
 
-.vault-tag {
+.vault-main-title {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    font-weight: 800;
+    color: #0F172A;
+    letter-spacing: 1px;
+}
+
+.vault-tag-maroon {
     font-family: 'JetBrains Mono', monospace;
     font-size: 9px;
     font-weight: 800;
@@ -4824,6 +4865,41 @@ export const landingCSS = `
     border: 1px solid #BBF7D0;
 }
 
+/* Verification Layer Row */
+.proto-verification-layer {
+    position: absolute;
+    top: 220px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: #FFFFFF;
+    border: 1px solid rgba(226, 232, 240, 0.9);
+    border-radius: 9999px;
+    padding: 6px 14px;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    box-shadow: 0 4px 12px rgba(15, 23, 42, 0.03);
+    white-space: nowrap;
+    z-index: 4;
+}
+
+.verif-item {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9.5px;
+    font-weight: 700;
+    color: #64748B;
+}
+
+.verif-item.highlight {
+    color: #7A1220;
+    font-weight: 800;
+}
+
+.verif-sep {
+    color: #CBD5E1;
+    font-size: 10px;
+}
+
 /* Bottom Node: AUTOMATED SETTLEMENT ENDPOINT */
 .proto-settlement-endpoint {
     position: absolute;
@@ -4831,15 +4907,15 @@ export const landingCSS = `
     left: 50%;
     transform: translateX(-50%);
     background: #FFFFFF;
-    border: 1px solid rgba(34, 197, 94, 0.4);
+    border: 1.5px solid rgba(34, 197, 94, 0.45);
     border-radius: 9999px;
-    padding: 8px 18px;
+    padding: 9px 20px;
     display: inline-flex;
     align-items: center;
     gap: 8px;
-    box-shadow: 0 4px 16px rgba(34, 197, 94, 0.1);
+    box-shadow: 0 6px 20px rgba(34, 197, 94, 0.12);
     white-space: nowrap;
-    z-index: 3;
+    z-index: 4;
 }
 
 .settle-check {
@@ -4857,7 +4933,7 @@ export const landingCSS = `
 
 .settle-text {
     font-family: 'Inter', sans-serif;
-    font-size: 11.5px;
+    font-size: 12px;
     color: #0F172A;
 }
 
@@ -4872,10 +4948,10 @@ export const landingCSS = `
 @media(max-width: 640px) {
     .proto-diagram-wrapper {
         height: auto;
-        min-height: 420px;
+        min-height: 480px;
         padding: 20px 16px;
     }
-    .proto-svg-canvas {
+    .proto-svg-canvas, .proto-ambient-glow {
         display: none;
     }
     .proto-nodes-canvas {
@@ -4884,7 +4960,7 @@ export const landingCSS = `
         display: flex;
         flex-direction: column;
         align-items: center;
-        gap: 16px;
+        gap: 14px;
     }
     .proto-mini-card {
         position: relative;
@@ -4894,13 +4970,22 @@ export const landingCSS = `
         width: 100%;
         max-width: 280px;
     }
-    .proto-vault-anchor {
+    .proto-vault-anchor.dominant {
         position: relative;
         top: auto !important;
         left: auto !important;
         transform: none !important;
         width: 100%;
         max-width: 280px;
+    }
+    .proto-verification-layer {
+        position: relative;
+        top: auto !important;
+        left: auto !important;
+        transform: none !important;
+        width: 100%;
+        max-width: 280px;
+        justify-content: center;
     }
     .proto-settlement-endpoint {
         position: relative;

@@ -2512,27 +2512,34 @@ export const landingCSS = `
     font-size: 11px;
 }
 
-/* Global stats bar */
+/* ═══ ELEVATED SUPPORTED INTEGRATIONS & STATS BAND ═══ */
+.l-stats-eyebrow {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9.5px;
+    font-weight: 700;
+    letter-spacing: 2.2px;
+    text-transform: uppercase;
+    color: #94A3B8;
+    text-align: center;
+    margin-bottom: 22px;
+}
 .l-global-stats-bar {
-    background: var(--s);
-    padding: 48px 0;
+    background: #FAFAF7 !important;
+    border: 1px solid rgba(226, 232, 240, 0.85) !important;
+    border-radius: 20px !important;
+    box-shadow: 0 16px 44px -12px rgba(15, 23, 42, 0.06), 0 2px 8px rgba(15, 23, 42, 0.02) !important;
+    padding: 32px 24px !important;
+    margin: 40px auto !important;
     position: relative;
+    max-width: 1200px;
+    transition: box-shadow 0.35s ease, border-color 0.35s ease;
 }
-.l-global-stats-bar::before {
-    content: '';
-    position: absolute;
-    top: 0; left: 0; right: 0;
-    height: 40px;
-    background: linear-gradient(to bottom, var(--bg), var(--s));
-    pointer-events: none;
+.l-global-stats-bar:hover {
+    border-color: rgba(203, 213, 225, 0.9) !important;
+    box-shadow: 0 24px 56px -14px rgba(15, 23, 42, 0.09), 0 4px 12px rgba(15, 23, 42, 0.03) !important;
 }
-.l-global-stats-bar::after {
-    content: '';
-    position: absolute;
-    bottom: 0; left: 0; right: 0;
-    height: 40px;
-    background: linear-gradient(to bottom, var(--s), var(--bg));
-    pointer-events: none;
+.l-global-stats-bar::before, .l-global-stats-bar::after {
+    display: none !important;
 }
 .l-stats-bar-grid {
     display: grid;
@@ -2542,33 +2549,67 @@ export const landingCSS = `
 .l-stat-bar-item {
     text-decoration: none !important;
     position: relative;
-    overflow: hidden;
+    overflow: visible;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     background: transparent;
-    border: none;
+    border: none !important;
     outline: none;
     cursor: pointer;
     padding: 0;
     width: 100%;
-    border-right: 1px solid rgba(17, 17, 17, 0.05);
 }
-.l-stat-bar-item:last-child {
-    border-right: none;
+/* Soft gradient dividers */
+.l-stat-bar-item:not(:last-child)::after {
+    content: '';
+    position: absolute;
+    right: 0;
+    top: 15%;
+    bottom: 15%;
+    width: 1px;
+    background: linear-gradient(to bottom, rgba(226, 232, 240, 0), rgba(203, 213, 225, 0.65), rgba(226, 232, 240, 0));
+    pointer-events: none;
 }
 .l-stat-bar-wrapper {
     position: relative;
     overflow: hidden;
-    height: 68px;
+    height: 70px;
     width: 100%;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    transition: filter 220ms ease-out, opacity 220ms ease-out;
     transform: translateZ(0); /* promote to GPU */
+}
+.l-stat-bar-content {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    text-align: center;
+    opacity: 0.88;
+    transition: opacity 0.3s ease, transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.l-stat-bar-item:hover .l-stat-bar-content {
+    opacity: 1;
+    transform: translateY(-2px) scale(1.04);
+}
+.l-stat-bar-val {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 28px;
+    font-weight: 800;
+    color: #0F172A;
+    letter-spacing: -0.6px;
+    line-height: 1;
+    font-variant-numeric: tabular-nums;
+    transition: color 0.3s ease;
+}
+.l-stat-bar-item:hover .l-stat-bar-val {
+    color: #7A1220;
 }
 .l-stat-bar-logo-wrap {
     height: 32px;
@@ -2577,50 +2618,20 @@ export const landingCSS = `
     justify-content: center;
 }
 .l-stat-bar-logo-wrap svg {
-    max-height: 28px;
+    display: block;
     width: auto;
     object-fit: contain;
-    display: block;
-    transition: transform 0.3s ease;
-}
-.l-stat-bar-item:hover .l-stat-bar-logo-wrap svg {
-    transform: scale(1.06);
-}
-.l-stat-bar-content {
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-    align-items: center;
-    justify-content: center;
-    width: 100%;
-    text-align: center;
-}
-.l-stat-bar-content.incoming {
-    position: absolute;
-    left: 0;
-    right: 0;
-}
-.l-stat-bar-val {
-    font-family: 'Plus Jakarta Sans', sans-serif;
-    font-size: 28px;
-    font-weight: 800;
-    color: #111;
-    letter-spacing: -0.6px;
-    line-height: 1;
-    font-variant-numeric: tabular-nums;
-    transition: color 0.3s ease;
-}
-.l-stat-bar-item:hover .l-stat-bar-val {
-    color: var(--r);
+    transition: transform 0.3s ease, filter 0.3s ease;
 }
 .l-stat-bar-lbl {
     font-family: 'JetBrains Mono', monospace;
-    font-size: 9px;
-    font-weight: 600;
+    font-size: 9.5px;
+    font-weight: 700;
     text-transform: uppercase;
-    letter-spacing: 1.5px;
-    color: #6e6d6a;
+    letter-spacing: 1.6px;
+    color: #64748B;
     line-height: 1.2;
+    margin-top: 2px;
 }
 .l-stat-bar-overlay {
     position: absolute;

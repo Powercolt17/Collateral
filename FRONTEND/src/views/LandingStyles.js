@@ -6792,12 +6792,32 @@ html, body {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  object-position: center 42%;
   display: block;
   filter: saturate(0.85) opacity(0.82);
   transition: filter .25s ease, transform .35s cubic-bezier(.2,.7,.3,1);
 }
 .sor-mode.active .sor-art, .sor-mode.on .sor-art {
   filter: none !important;
+}
+
+/* Seamless Fade Overlay for Engraving Bands */
+.sor-art-fade {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 46px;
+  pointer-events: none;
+  z-index: 2;
+  background: linear-gradient(180deg, rgba(251,249,245,0) 0%, #FBF9F5 100%);
+  transition: background 0.2s ease;
+}
+.sor-mode.active .sor-art-fade, .sor-mode.on .sor-art-fade {
+  background: linear-gradient(180deg, rgba(255,255,255,0) 0%, #FFFFFF 100%);
+}
+
+/* ═══ GLOBAL EYEBROW PROTECTION ═══ */
+.sor-section, .lemo-reframe, .lengine-section, .lcontracts, .lreal-results, .lhow-it-works-section {
+  overflow: visible !important;
 }
 `;

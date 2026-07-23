@@ -321,13 +321,13 @@ export function renderLanding() {
 
 
             <!-- ═══ SIGNATURE TYPOGRAPHIC CONTRACT HERO (YOU vs YOU / YOU vs THEM) ═══ -->
-            <section class="sor-section" id="sor-contract-section" data-r>
+            <section class="sor-section" id="sor-contract-section" data-r style="padding: clamp(48px, 6vw, 80px) clamp(20px, 4vw, 48px);">
                 <div class="sor-grid">
                     <!-- LEFT COLUMN: MODE SELECTOR & TIMELINE -->
                     <div>
-                        <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 18px;">
+                        <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 18px; padding-top: 4px;" class="reveal-item">
                             <span style="width: 24px; height: 1.5px; background: #7A1C2B; opacity: 0.5;"></span>
-                            <span style="font-family: 'Plus Jakarta Sans', 'Inter', sans-serif; font-size: 11px; font-weight: 700; letter-spacing: 2.2px; color: #8C8577; text-transform: uppercase;">
+                            <span style="font-family: 'Plus Jakarta Sans', 'Inter', sans-serif; font-size: 11px; font-weight: 700; letter-spacing: 2.2px; color: #8C8577; text-transform: uppercase; line-height: 1.4;">
                                 CONTRACT EXECUTION MODES
                             </span>
                         </div>
@@ -345,12 +345,12 @@ export function renderLanding() {
                             <!-- SOLO CARD WITH ENGRAVING -->
                             <button id="card-mode-solo" class="sor-mode active" onclick="window.switchProtocolMode('solo')" style="text-align: left; cursor: pointer; width: 100%; padding: 0; overflow: hidden; border-radius: 16px; transition: all .2s cubic-bezier(.2,.7,.3,1);">
                                 <div style="position: relative; height: 132px; overflow: hidden; background: #EFE8DA; border-bottom: 1px solid rgba(28,35,51,0.10);">
-                                    <img src="/assets/images/solo-seal.png" alt="Solo Seal Engraving" class="sor-art" style="width: 100%; height: 100%; object-fit: cover; object-position: center 42%; display: block;" />
-                                    <div aria-hidden="true" style="position: absolute; left: 0; right: 0; bottom: 0; height: 46px; background: linear-gradient(180deg, transparent, #FFFFFF);"></div>
+                                    <img src="/assets/images/solo-seal.png" alt="Solo Seal Engraving" class="sor-art" style="width: 100%; height: 100%; object-fit: cover; object-position: center 48%; display: block;" />
+                                    <div class="sor-art-fade" aria-hidden="true" style="position: absolute; left: 0; right: 0; bottom: 0; height: 46px; pointer-events: none; z-index: 2;"></div>
                                 </div>
                                 <div style="padding: 14px 18px 16px;">
                                     <span class="sor-mode-badge" style="display: inline-block; font-family: 'Plus Jakarta Sans', sans-serif; font-size: 10px; font-weight: 700; letter-spacing: 1.4px; color: #7A1C2B; background: rgba(122,28,43,0.08); padding: 4px 10px; border-radius: 999px; margin-bottom: 11px;">SOLO</span>
-                                    <div class="sor-mode-title" style="font-family: 'Plus Jakarta Sans', sans-serif; font-size: 16.5px; font-weight: 700; color: #1C2333; margin-bottom: 12px;">Stake against yourself</div>
+                                    <div class="sor-mode-title" style="font-family: 'Plus Jakarta Sans', sans-serif; font-size: 16.5px; font-weight: 700; color: #1C2333; margin-bottom: 12px;">Beat your own goal</div>
                                     <ul class="sor-bullets" style="list-style: none; margin: 0; padding: 0; display: grid; gap: 8px;">
                                         <li style="display: flex; gap: 9px; align-items: flex-start; font-family: 'Inter', sans-serif; font-size: 13px; color: #5A6072; line-height: 1.35;">
                                             <svg width="15" height="15" viewBox="0 0 24 24" style="flex-shrink:0;margin-top:1px;" aria-hidden><circle cx="12" cy="12" r="11" fill="rgba(122,28,43,0.1)"/><path d="m7 12.5 3.2 3.2L17 8.6" fill="none" stroke="#7A1C2B" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
@@ -373,7 +373,7 @@ export function renderLanding() {
                             <button id="card-mode-rivalry" class="sor-mode" onclick="window.switchProtocolMode('rivalry')" style="text-align: left; cursor: pointer; width: 100%; padding: 0; overflow: hidden; border-radius: 16px; transition: all .2s cubic-bezier(.2,.7,.3,1);">
                                 <div style="position: relative; height: 132px; overflow: hidden; background: #5E1521; border-bottom: 1px solid rgba(251,232,228,0.14);">
                                     <img src="/assets/images/rivalry-seal.png" alt="Rivalry Seals Engraving" class="sor-art" style="width: 100%; height: 100%; object-fit: cover; object-position: center 42%; display: block;" />
-                                    <div aria-hidden="true" style="position: absolute; left: 0; right: 0; bottom: 0; height: 46px; background: linear-gradient(180deg, transparent, #FBF9F5);"></div>
+                                    <div class="sor-art-fade" aria-hidden="true" style="position: absolute; left: 0; right: 0; bottom: 0; height: 46px; pointer-events: none; z-index: 2;"></div>
                                 </div>
                                 <div style="padding: 14px 18px 16px;">
                                     <span class="sor-mode-badge" style="display: inline-block; font-family: 'Plus Jakarta Sans', sans-serif; font-size: 10px; font-weight: 700; letter-spacing: 1.4px; color: #7A1C2B; background: rgba(122,28,43,0.08); padding: 4px 10px; border-radius: 999px; margin-bottom: 11px;">RIVALRY</span>
@@ -397,8 +397,77 @@ export function renderLanding() {
                             </button>
                         </div>
 
+                        <!-- RESTORED 3-STEP TIMELINE WITH EQUAL CONNECTORS AND CUSTOM DUOTONE ICONS -->
+                        <div style="margin-bottom: 30px; width: 100%;">
+                            <div class="sor-timeline-wrap" style="display: flex; align-items: flex-start; width: 100%;">
+                                <!-- STEP 1: LOCK CAPITAL -->
+                                <div style="width: 104px; flex: 0 0 104px; display: flex; flex-direction: column; align-items: center; gap: 9px;">
+                                    <div class="tl-tile" style="width: 50px; height: 50px; border-radius: 15px; background: linear-gradient(180deg,#FFFFFF,#FAF7F2); border: 1px solid rgba(28,35,51,0.10); display: flex; align-items: center; justify-content: center; box-shadow: 0 10px 20px -13px rgba(28,35,51,0.4), inset 0 1px 0 rgba(255,255,255,0.9);">
+                                        <svg width="22" height="22" viewBox="0 0 24 24" aria-hidden="true">
+                                            <defs>
+                                                <linearGradient id="tlG1" x1="0" y1="0" x2="1" y2="1">
+                                                    <stop offset="0%" stop-color="#9A2B3D"/>
+                                                    <stop offset="100%" stop-color="#5E1521"/>
+                                                </linearGradient>
+                                            </defs>
+                                            <path d="M8.3 10.4V7.9a3.7 3.7 0 0 1 7.4 0v2.5" fill="none" stroke="#7A1C2B" stroke-width="2.2" stroke-linecap="round"/>
+                                            <rect x="4.4" y="10.1" width="15.2" height="11" rx="3.3" fill="url(#tlG1)"/>
+                                            <circle cx="12" cy="14.5" r="1.75" fill="#FBF9F5"/>
+                                            <path d="M11.15 15.6h1.7l.5 3.3h-2.7z" fill="#FBF9F5"/>
+                                        </svg>
+                                    </div>
+                                    <span style="font-family: 'Inter', sans-serif; font-size: 11.5px; font-weight: 600; color: #5A6072; text-align: center; line-height: 1.3;">Lock capital</span>
+                                </div>
+
+                                <div aria-hidden="true" style="flex: 1; height: 2px; margin-top: 24px; background: repeating-linear-gradient(90deg, rgba(28,35,51,0.16) 0 5px, transparent 5px 11px);"></div>
+
+                                <!-- STEP 2: COMPLETE GOAL -->
+                                <div style="width: 104px; flex: 0 0 104px; display: flex; flex-direction: column; align-items: center; gap: 9px;">
+                                    <div class="tl-tile" style="width: 50px; height: 50px; border-radius: 15px; background: linear-gradient(180deg,#FFFFFF,#FAF7F2); border: 1px solid rgba(28,35,51,0.10); display: flex; align-items: center; justify-content: center; box-shadow: 0 10px 20px -13px rgba(28,35,51,0.4), inset 0 1px 0 rgba(255,255,255,0.9);">
+                                        <svg width="22" height="22" viewBox="0 0 24 24" aria-hidden="true">
+                                            <defs>
+                                                <linearGradient id="tlG2" x1="0" y1="0" x2="1" y2="1">
+                                                    <stop offset="0%" stop-color="#9A2B3D"/>
+                                                    <stop offset="100%" stop-color="#5E1521"/>
+                                                </linearGradient>
+                                            </defs>
+                                            <circle cx="13" cy="11" r="8.9" fill="rgba(122,28,43,0.12)"/>
+                                            <circle cx="13" cy="11" r="8.9" fill="none" stroke="#7A1C2B" stroke-width="1.5" opacity="0.45"/>
+                                            <circle cx="13" cy="11" r="4.7" fill="none" stroke="#7A1C2B" stroke-width="1.9"/>
+                                            <circle cx="13" cy="11" r="2" fill="url(#tlG2)"/>
+                                            <path d="M3.5 20.5 11.3 12.7" stroke="#FBF9F5" stroke-width="4.6" stroke-linecap="round"/>
+                                            <path d="M3.5 20.5 11.3 12.7" stroke="#7A1C2B" stroke-width="2.15" stroke-linecap="round"/>
+                                            <path d="M14.2 9.8 12.6 14.9 9.1 11.4z" fill="#7A1C2B"/>
+                                            <path d="M3.5 20.5H6.4M3.5 20.5V17.6" stroke="#7A1C2B" stroke-width="1.8" stroke-linecap="round"/>
+                                        </svg>
+                                    </div>
+                                    <span style="font-family: 'Inter', sans-serif; font-size: 11.5px; font-weight: 600; color: #5A6072; text-align: center; line-height: 1.3;">Complete goal</span>
+                                </div>
+
+                                <div aria-hidden="true" style="flex: 1; height: 2px; margin-top: 24px; background: repeating-linear-gradient(90deg, rgba(28,35,51,0.16) 0 5px, transparent 5px 11px);"></div>
+
+                                <!-- STEP 3: AUTO SETTLEMENT -->
+                                <div style="width: 104px; flex: 0 0 104px; display: flex; flex-direction: column; align-items: center; gap: 9px;">
+                                    <div class="tl-tile" style="width: 50px; height: 50px; border-radius: 15px; background: linear-gradient(180deg,#FFFFFF,#FAF7F2); border: 1px solid rgba(28,35,51,0.10); display: flex; align-items: center; justify-content: center; box-shadow: 0 10px 20px -13px rgba(28,35,51,0.4), inset 0 1px 0 rgba(255,255,255,0.9);">
+                                        <svg width="22" height="22" viewBox="0 0 24 24" aria-hidden="true">
+                                            <defs>
+                                                <linearGradient id="tlG3" x1="0" y1="0" x2="1" y2="1">
+                                                    <stop offset="0%" stop-color="#9A2B3D"/>
+                                                    <stop offset="100%" stop-color="#5E1521"/>
+                                                </linearGradient>
+                                            </defs>
+                                            <circle cx="12" cy="12" r="9.5" fill="url(#tlG3)"/>
+                                            <circle cx="12" cy="12" r="7.6" fill="none" stroke="#FBF9F5" stroke-width="0.9" opacity="0.3"/>
+                                            <path d="M13.5 4.8 6.8 13.5h4.2l-.9 6.1 6.5-9h-4.2z" fill="#FBF9F5"/>
+                                        </svg>
+                                    </div>
+                                    <span style="font-family: 'Inter', sans-serif; font-size: 11.5px; font-weight: 600; color: #5A6072; text-align: center; line-height: 1.3;">Auto settlement</span>
+                                </div>
+                            </div>
+                        </div>
+
                         <button class="sor-primary" onclick="window.router.navigate('/create'); return false;">
-                            CREATE YOUR STAKE <span class="sor-arrow">→</span>
+                            START CONTRACT <span class="sor-arrow">→</span>
                         </button>
                     </div>
 
@@ -1142,11 +1211,11 @@ export function renderLanding() {
             </div>
 
             <!-- ═══ EMOTIONAL REFRAME (THE FORK: WHY IT WORKS) ═══ -->
-            <div class="lhow-it-works-section" data-r style="background: #F8F5F0; padding: clamp(28px,5vw,64px) 0;">
+            <div class="lhow-it-works-section" data-r style="background: #F8F5F0; padding: clamp(48px,6vw,80px) 0; overflow: visible !important;">
                 <div class="lw">
-                    <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 20px;" class="reveal-item">
+                    <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 20px; padding-top: 4px;" class="reveal-item">
                         <span style="width: 24px; height: 1.5px; background: #7A1C2B; opacity: 0.5;"></span>
-                        <span style="font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 700; letter-spacing: 2.2px; color: #8C8577; text-transform: uppercase;">
+                        <span style="font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 700; letter-spacing: 2.2px; color: #8C8577; text-transform: uppercase; line-height: 1.4;">
                             WHY IT WORKS
                         </span>
                     </div>
@@ -1284,11 +1353,11 @@ export function renderLanding() {
             </div>
 
             <!-- ═══ THE CLTR TOKEN ECONOMY (BURN CURVE DATA STORY) ═══ -->
-            <div class="lemo-reframe" data-r>
+            <div class="lemo-reframe" data-r style="padding: clamp(48px, 6vw, 80px) 0; overflow: visible !important;">
                 <div class="lw">
-                    <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 18px;" class="reveal-item">
+                    <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 18px; padding-top: 4px;" class="reveal-item">
                         <span style="width: 24px; height: 1.5px; background: #7A1C2B; opacity: 0.5;"></span>
-                        <span style="font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 700; letter-spacing: 2.2px; color: #8C8577; text-transform: uppercase;">
+                        <span style="font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 700; letter-spacing: 2.2px; color: #8C8577; text-transform: uppercase; line-height: 1.4;">
                             PROTOCOL TOKEN
                         </span>
                     </div>

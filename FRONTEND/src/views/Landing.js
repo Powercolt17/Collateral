@@ -318,7 +318,7 @@ export function renderLanding() {
             <section class="sor-section" id="sor-contract-section" data-r style="padding: clamp(48px, 6vw, 80px) clamp(20px, 4vw, 48px);">
                 <div class="sor-grid">
                     <!-- LEFT COLUMN: MODE SELECTOR & TIMELINE -->
-                    <div>
+                    <div class="sor-left-col" style="display: flex; flex-direction: column; height: 100%;">
                         <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 18px; padding-top: 4px;" class="reveal-item">
                             <span style="width: 24px; height: 1.5px; background: #7A1C2B; opacity: 0.5;"></span>
                             <span style="font-family: 'Plus Jakarta Sans', 'Inter', sans-serif; font-size: 11px; font-weight: 700; letter-spacing: 2.2px; color: #8C8577; text-transform: uppercase; line-height: 1.4;">
@@ -334,15 +334,16 @@ export function renderLanding() {
                             Lock money behind your commitment. Complete your verified goal and claim your return, or challenge an opponent head-to-head. Miss it and the rules enforce themselves automatically.
                         </p>
 
-                        <div class="sor-mode-grid" style="display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 0;">
-                            <!-- SOLO CARD WITH ENGRAVING -->
-                            <button id="card-mode-solo" class="sor-mode active" onclick="window.switchProtocolMode('solo')" style="text-align: left; cursor: pointer; width: 100%; padding: 0; overflow: hidden; border-radius: 16px; transition: all .2s cubic-bezier(.2,.7,.3,1);">
-                                <div style="position: relative; height: 120px; overflow: hidden; background: #EFE8DA;">
-                                    <img src="/assets/images/solo-seal.png" alt="Solo Seal Engraving" class="sor-art" style="width: 100%; height: 100%; object-fit: cover; object-position: center 48%; display: block;" />
+                        <!-- MODE CARDS AT THE BOTTOM OF THE COLUMN FOR PERFECT ALIGNMENT -->
+                        <div class="sor-mode-grid" style="display: grid; grid-template-columns: 1fr 1fr; gap: 14px; align-items: stretch; margin-top: auto; margin-bottom: 0;">
+                            <!-- SOLO CARD WITH ENGRAVING (176px BAND, CENTER 46% CROP) -->
+                            <button id="card-mode-solo" class="sor-mode active" onclick="window.switchProtocolMode('solo')" style="text-align: left; cursor: pointer; width: 100%; padding: 0; overflow: hidden; border-radius: 16px; transition: all .2s cubic-bezier(.2,.7,.3,1); display: flex; flex-direction: column;">
+                                <div style="position: relative; height: 176px; overflow: hidden; background: #EFE8DA; width: 100%;">
+                                    <img src="/assets/images/solo-seal.png" alt="Solo Seal Engraving" class="sor-art" style="width: 100%; height: 100%; object-fit: cover; object-position: center 46%; display: block;" />
                                     <div class="sor-art-fade" aria-hidden="true"></div>
                                 </div>
-                                <div style="padding: 14px 14px 16px;">
-                                    <span class="sor-mode-badge" style="display: inline-block; font-family: 'Plus Jakarta Sans', sans-serif; font-size: 10px; font-weight: 700; letter-spacing: 1.4px; color: #7A1C2B; background: rgba(122,28,43,0.08); padding: 4px 10px; border-radius: 999px; margin-bottom: 10px;">SOLO</span>
+                                <div style="padding: 14px 14px 16px; display: flex; flex-direction: column; flex: 1;">
+                                    <span class="sor-mode-badge" style="display: inline-block; font-family: 'Plus Jakarta Sans', sans-serif; font-size: 10px; font-weight: 700; letter-spacing: 1.4px; color: #7A1C2B; background: rgba(122,28,43,0.08); padding: 4px 10px; border-radius: 999px; margin-bottom: 10px; align-self: flex-start;">SOLO</span>
                                     <div class="sor-mode-title" style="font-family: 'Plus Jakarta Sans', sans-serif; font-size: 15px; font-weight: 700; color: #1C2333; margin-bottom: 10px; line-height: 1.25;">Beat your own goal</div>
                                     <ul class="sor-bullets" style="list-style: none; margin: 0; padding: 0; display: grid; gap: 8px;">
                                         <li style="display: flex; gap: 9px; align-items: flex-start; font-family: 'Inter', sans-serif; font-size: 13px; color: #5A6072; line-height: 1.35;">
@@ -358,18 +359,18 @@ export function renderLanding() {
                                             Earn execution rewards
                                         </li>
                                     </ul>
-                                    <div class="sor-cta" style="margin-top: 14px; font-family: 'Plus Jakarta Sans', sans-serif; font-size: 12.5px; font-weight: 700; letter-spacing: 0.3px; color: #7A1C2B; display: flex; align-items: center; gap: 6px;">Start solo <span class="sor-arrow">→</span></div>
+                                    <div class="sor-cta" style="margin-top: auto; padding-top: 14px; font-family: 'Plus Jakarta Sans', sans-serif; font-size: 12.5px; font-weight: 700; letter-spacing: 0.3px; color: #7A1C2B; display: flex; align-items: center; gap: 6px;">Start solo <span class="sor-arrow">→</span></div>
                                 </div>
                             </button>
 
-                            <!-- RIVALRY CARD WITH ENGRAVING -->
-                            <button id="card-mode-rivalry" class="sor-mode" onclick="window.switchProtocolMode('rivalry')" style="text-align: left; cursor: pointer; width: 100%; padding: 0; overflow: hidden; border-radius: 16px; transition: all .2s cubic-bezier(.2,.7,.3,1);">
-                                <div style="position: relative; height: 120px; overflow: hidden; background: #5E1521;">
+                            <!-- RIVALRY CARD WITH ENGRAVING (176px BAND, CENTER 52% CROP) -->
+                            <button id="card-mode-rivalry" class="sor-mode" onclick="window.switchProtocolMode('rivalry')" style="text-align: left; cursor: pointer; width: 100%; padding: 0; overflow: hidden; border-radius: 16px; transition: all .2s cubic-bezier(.2,.7,.3,1); display: flex; flex-direction: column;">
+                                <div style="position: relative; height: 176px; overflow: hidden; background: #5E1521; width: 100%;">
                                     <img src="/assets/images/rivalry-seal.png" alt="Rivalry Seals Engraving" class="sor-art" style="width: 100%; height: 100%; object-fit: cover; object-position: center 52%; display: block;" />
                                     <div class="sor-art-fade" aria-hidden="true"></div>
                                 </div>
-                                <div style="padding: 14px 14px 16px;">
-                                    <span class="sor-mode-badge" style="display: inline-block; font-family: 'Plus Jakarta Sans', sans-serif; font-size: 10px; font-weight: 700; letter-spacing: 1.4px; color: #7A1C2B; background: rgba(122,28,43,0.08); padding: 4px 10px; border-radius: 999px; margin-bottom: 10px;">RIVALRY</span>
+                                <div style="padding: 14px 14px 16px; display: flex; flex-direction: column; flex: 1;">
+                                    <span class="sor-mode-badge" style="display: inline-block; font-family: 'Plus Jakarta Sans', sans-serif; font-size: 10px; font-weight: 700; letter-spacing: 1.4px; color: #7A1C2B; background: rgba(122,28,43,0.08); padding: 4px 10px; border-radius: 999px; margin-bottom: 10px; align-self: flex-start;">RIVALRY</span>
                                     <div class="sor-mode-title" style="font-family: 'Plus Jakarta Sans', sans-serif; font-size: 15px; font-weight: 700; color: #1C2333; margin-bottom: 10px; line-height: 1.25;">Stake head-to-head</div>
                                     <ul class="sor-bullets" style="list-style: none; margin: 0; padding: 0; display: grid; gap: 8px;">
                                         <li style="display: flex; gap: 9px; align-items: flex-start; font-family: 'Inter', sans-serif; font-size: 13px; color: #5A6072; line-height: 1.35;">
@@ -385,7 +386,7 @@ export function renderLanding() {
                                             Winner receives escrow
                                         </li>
                                     </ul>
-                                    <div class="sor-cta" style="margin-top: 14px; font-family: 'Plus Jakarta Sans', sans-serif; font-size: 12.5px; font-weight: 700; letter-spacing: 0.3px; color: #7A1C2B; display: flex; align-items: center; gap: 6px;">Start rivalry <span class="sor-arrow">→</span></div>
+                                    <div class="sor-cta" style="margin-top: auto; padding-top: 14px; font-family: 'Plus Jakarta Sans', sans-serif; font-size: 12.5px; font-weight: 700; letter-spacing: 0.3px; color: #7A1C2B; display: flex; align-items: center; gap: 6px;">Start rivalry <span class="sor-arrow">→</span></div>
                                 </div>
                             </button>
                         </div>

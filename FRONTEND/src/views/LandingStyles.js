@@ -6200,13 +6200,43 @@ export const landingCSS = `
     display: grid;
     grid-template-columns: 48% 52%;
     gap: clamp(24px, 3.5vw, 48px);
-    align-items: center;
+    align-items: stretch;
     max-width: 1280px;
     margin: 0 auto;
 }
 @media (max-width: 900px) {
     .sor-grid { grid-template-columns: 1fr; }
     .sor-grid > div:last-child { order: -1; }
+    .sor-mode-grid { margin-top: 24px !important; }
+}
+
+.sor-left-col {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+.sor-mode-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+    align-items: stretch;
+    margin-top: auto;
+    margin-bottom: 0;
+}
+
+.sor-art-fade {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 26px;
+    pointer-events: none;
+    background: linear-gradient(180deg, transparent 0%, transparent 45%, #FBF9F5 100%);
+    transition: background 0.22s ease;
+}
+.sor-mode.active .sor-art-fade {
+    background: linear-gradient(180deg, transparent 0%, transparent 45%, #FFFFFF 100%);
 }
 
 .sor-mode {
@@ -6358,6 +6388,7 @@ export const landingCSS = `
     padding: clamp(24px, 3.5vw, 44px);
     overflow: hidden;
     min-height: 395px;
+    height: 100%;
     max-width: 600px;
     width: 100%;
     margin: 0 auto;

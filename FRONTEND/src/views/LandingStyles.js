@@ -6966,13 +6966,14 @@ html, body {
   }
 }
 
-/* ═══ NEWSREADER PARAGRAPH BODY COPY TYPOGRAPHY ═══ */
+/* ═══ INTER PARAGRAPH BODY COPY TYPOGRAPHY ═══ */
 p, .lsub, .lengine-sub, .lfaq-a {
-  font-family: "Newsreader", Georgia, Cambria, "Times New Roman", Times, serif !important;
-  font-size: 17px !important;
+  font-family: "Inter", ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif !important;
+  font-size: 16.5px !important;
   line-height: 1.6 !important;
   letter-spacing: -0.011em !important;
   max-width: 62ch !important;
+  font-feature-settings: "cv05" 1, "cv08" 1;
 }
 
 /* ═══ MOBILE COPY & HEADLINE DENSITY FIXES ═══ */

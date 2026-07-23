@@ -2082,7 +2082,6 @@ export function initLanding() {
                 incomingContent.style.transition = '';
                 incomingContent.style.transform = '';
             }, 440);
-            }, 440);
         });
 
         currentState = nextState;

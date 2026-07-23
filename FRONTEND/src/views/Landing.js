@@ -269,22 +269,47 @@ export function renderLanding() {
 
 
 
-            <!-- COMMUNITY MOMENTUM / PROTOCOL ACTIVITY TICKER BAR -->
-            <div class="l-community-momentum" data-r style="background: #FAF8F5; border-top: 1px solid rgba(28,35,51,0.08); border-bottom: 1px solid rgba(28,35,51,0.08); padding: 18px 0;">
+            <!-- GLOBAL PROTOCOL STATISTICS / CYCLING BAND -->
+            <div class="l-global-stats-bar animate-fade-in-up delay-4" id="l-stats-band">
                 <div class="lw">
-                    <div class="l-momentum-wrap">
-                        <span class="l-momentum-title reveal-item">Today's Activity</span>
-                        <div class="l-momentum-items">
-                            <span class="l-momentum-item reveal-item"><strong>178</strong> commitments created</span>
-                            <span class="l-momentum-dot">•</span>
-                            <span class="l-momentum-item reveal-item"><strong>$412k</strong> capital locked</span>
-                            <span class="l-momentum-dot">•</span>
-                            <span class="l-momentum-item reveal-item"><strong>94</strong> settlements completed</span>
-                            <span class="l-momentum-dot">•</span>
-                            <span class="l-momentum-item reveal-item"><strong>12</strong> rivalries started</span>
-                            <span class="l-momentum-dot">•</span>
-                            <span class="l-momentum-item reveal-item"><strong>1.2M CLTR</strong> burned this week</span>
-                        </div>
+                    <!-- Visually hidden list of all metrics and supported APIs for screen readers -->
+                    <div style="position: absolute !important; width: 1px !important; height: 1px !important; padding: 0 !important; margin: -1px !important; overflow: hidden !important; clip: rect(0,0,0,0) !important; border: 0 !important;">
+                        Protocol metrics: Active contracts: 1,206; Average contract size: $6,940; Median settlement time: 1.4 days; Counterparties: 812. Supported APIs: Stripe API, X / Twitter API, YouTube API, Shopify API.
+                    </div>
+                    <div class="l-stats-eyebrow">SUPPORTED INTEGRATIONS &amp; LIVE METRICS</div>
+                    <div class="l-stats-bar-grid" id="l-stats-grid" aria-live="off">
+                        <a href="/market" class="l-stat-bar-item" data-cell-index="0" aria-label="Active contracts">
+                            <div class="l-stat-bar-wrapper">
+                                <div class="l-stat-bar-content current" data-state="A">
+                                    <span class="l-stat-bar-val">1,206</span>
+                                    <span class="l-stat-bar-lbl">Active Contracts</span>
+                                </div>
+                            </div>
+                        </a>
+                        <a href="/market" class="l-stat-bar-item" data-cell-index="1" aria-label="Average contract size">
+                            <div class="l-stat-bar-wrapper">
+                                <div class="l-stat-bar-content current" data-state="A">
+                                    <span class="l-stat-bar-val">$6,940</span>
+                                    <span class="l-stat-bar-lbl">Average Contract Size</span>
+                                </div>
+                            </div>
+                        </a>
+                        <a href="/market" class="l-stat-bar-item" data-cell-index="2" aria-label="Median settlement time">
+                            <div class="l-stat-bar-wrapper">
+                                <div class="l-stat-bar-content current" data-state="A">
+                                    <span class="l-stat-bar-val">1.4 days</span>
+                                    <span class="l-stat-bar-lbl">Median Settlement Time</span>
+                                </div>
+                            </div>
+                        </a>
+                        <a href="/market" class="l-stat-bar-item" data-cell-index="3" aria-label="Verified counterparties">
+                            <div class="l-stat-bar-wrapper">
+                                <div class="l-stat-bar-content current" data-state="A">
+                                    <span class="l-stat-bar-val">812</span>
+                                    <span class="l-stat-bar-lbl">Verified Counterparties</span>
+                                </div>
+                            </div>
+                        </a>
                     </div>
                 </div>
             </div>
@@ -1028,6 +1053,26 @@ export function renderLanding() {
 
 
 
+
+            <!-- COMMUNITY MOMENTUM / PROTOCOL ACTIVITY TICKER BAR -->
+            <div class="l-community-momentum" data-r style="background: #FAF8F5; border-top: 1px solid rgba(28,35,51,0.08); border-bottom: 1px solid rgba(28,35,51,0.08); padding: 18px 0;">
+                <div class="lw">
+                    <div class="l-momentum-wrap">
+                        <span class="l-momentum-title reveal-item">Today's Activity</span>
+                        <div class="l-momentum-items">
+                            <span class="l-momentum-item reveal-item"><strong>178</strong> commitments created</span>
+                            <span class="l-momentum-dot">•</span>
+                            <span class="l-momentum-item reveal-item"><strong>$412k</strong> capital locked</span>
+                            <span class="l-momentum-dot">•</span>
+                            <span class="l-momentum-item reveal-item"><strong>94</strong> settlements completed</span>
+                            <span class="l-momentum-dot">•</span>
+                            <span class="l-momentum-item reveal-item"><strong>12</strong> rivalries started</span>
+                            <span class="l-momentum-dot">•</span>
+                            <span class="l-momentum-item reveal-item"><strong>1.2M CLTR</strong> burned this week</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
             <!-- ═══ LIVE CONTRACT EXAMPLES (OPEN CONTRACTS REDESIGN) ═══ -->
             <section class="lcontracts" id="contracts" data-r style="background: #F8F5F0; padding: clamp(36px,5vw,72px) clamp(20px,5vw,56px); font-family: 'Inter', ui-sans-serif, system-ui, -apple-system, sans-serif;">

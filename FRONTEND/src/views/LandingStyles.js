@@ -7166,14 +7166,16 @@ h1, h2, h3, .lh1, .lhow-h, .lengine-h2, .ltypes-headline {
   flex-direction: column !important;
   align-items: center !important;
   justify-content: center !important;
-  gap: 5px !important; /* Tight 5px gap between logo/value and label */
+  gap: 2px !important;
   width: 100% !important;
   margin-bottom: 0 !important;
   padding-bottom: 0 !important;
 }
 
 .l-stat-bar-value-zone {
-  height: 24px !important; /* Tight 24px fixed-height centering slot */
+  height: 28px !important;
+  min-height: 28px !important;
+  max-height: 28px !important;
   display: flex !important;
   align-items: center !important;
   justify-content: center !important;
@@ -7182,7 +7184,7 @@ h1, h2, h3, .lh1, .lhow-h, .lengine-h2, .ltypes-headline {
 
 .l-stat-bar-val {
   font-family: 'Plus Jakarta Sans', sans-serif !important;
-  font-size: clamp(17px, 1.8vw, 22px) !important;
+  font-size: clamp(20px, 2.2vw, 24px) !important;
   font-weight: 800 !important;
   color: #1C2333 !important;
   line-height: 1 !important;
@@ -7191,7 +7193,7 @@ h1, h2, h3, .lh1, .lhow-h, .lengine-h2, .ltypes-headline {
 }
 
 .l-stat-bar-logo-wrap {
-  height: 24px !important;
+  height: 28px !important;
   display: flex !important;
   align-items: center !important;
   justify-content: center !important;
@@ -7199,7 +7201,7 @@ h1, h2, h3, .lh1, .lhow-h, .lengine-h2, .ltypes-headline {
 
 .l-stat-bar-logo-wrap svg,
 .l-stat-bar-logo-wrap img {
-  max-height: 20px !important;
+  max-height: 26px !important;
   width: auto !important;
   display: block !important;
 }

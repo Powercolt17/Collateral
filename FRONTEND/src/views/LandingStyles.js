@@ -6355,4 +6355,20 @@ export const landingCSS = `
     0%, 100% { opacity: 1; }
     50% { opacity: 0.3; }
 }
+.tl-tile {
+    width: 50px;
+    height: 50px;
+    border-radius: 15px;
+    background: linear-gradient(180deg, #FFFFFF, #FAF7F2);
+    border: 1px solid rgba(28, 35, 51, 0.10);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 10px 20px -13px rgba(28, 35, 51, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.9);
+    transition: transform 0.2s cubic-bezier(0.2, 0.7, 0.3, 1), box-shadow 0.2s ease;
+}
+.tl-tile:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 16px 30px -15px rgba(28, 35, 51, 0.45), inset 0 1px 0 rgba(255, 255, 255, 0.9);
+}
 `;

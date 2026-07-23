@@ -375,28 +375,71 @@ export function renderLanding() {
                             </button>
                         </div>
 
-                        <!-- TIMELINE -->
-                        <div style="margin-bottom: 30px;">
-                            <div style="display: flex; align-items: center; gap: 4px;">
-                                <div style="display: flex; flex-direction: column; align-items: center; gap: 8px; flex: 0 0 auto;">
-                                    <div class="sor-icon-box">
-                                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#7A1C2B" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg>
+                        <!-- TIMELINE WITH DUOTONE VECTOR ICON SET V2 -->
+                        <div style="margin-bottom: 30px; width: 100%;">
+                            <div style="display: flex; align-items: flex-start; width: 100%;">
+                                <!-- STEP 1: LOCK CAPITAL -->
+                                <div style="width: 104px; flex: 0 0 104px; display: flex; flex-direction: column; align-items: center; gap: 9px;">
+                                    <div class="tl-tile">
+                                        <svg width="22" height="22" viewBox="0 0 24 24" aria-hidden>
+                                            <defs>
+                                                <linearGradient id="tlG1" x1="0" y1="0" x2="1" y2="1">
+                                                    <stop offset="0%" stop-color="#9A2B3D"/>
+                                                    <stop offset="100%" stop-color="#5E1521"/>
+                                                </linearGradient>
+                                            </defs>
+                                            <path d="M8.3 10.4V7.9a3.7 3.7 0 0 1 7.4 0v2.5" fill="none" stroke="#7A1C2B" stroke-width="2.2" stroke-linecap="round"/>
+                                            <rect x="4.4" y="10.1" width="15.2" height="11" rx="3.3" fill="url(#tlG1)"/>
+                                            <circle cx="12" cy="14.5" r="1.75" fill="#FBF9F5"/>
+                                            <path d="M11.15 15.6h1.7l.5 3.3h-2.7z" fill="#FBF9F5"/>
+                                        </svg>
                                     </div>
-                                    <span style="font-size: 11.5px; font-weight: 600; color: #5A6072; white-space: nowrap;">Lock capital</span>
+                                    <span style="font-family: ui-sans-serif, system-ui, sans-serif; font-size: 11.5px; font-weight: 600; color: #5A6072; text-align: center; line-height: 1.3;">Lock capital</span>
                                 </div>
-                                <div style="flex: 1; height: 2px; margin-top: -20px; background: repeating-linear-gradient(90deg, rgba(28,35,51,0.16) 0 5px, transparent 5px 11px);"></div>
-                                <div style="display: flex; flex-direction: column; align-items: center; gap: 8px; flex: 0 0 auto;">
-                                    <div class="sor-icon-box">
-                                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#7A1C2B" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="8"/><circle cx="12" cy="12" r="3.4"/></svg>
+
+                                <div aria-hidden style="flex: 1; height: 2px; margin-top: 24px; background: repeating-linear-gradient(90deg, rgba(28,35,51,0.16) 0 5px, transparent 5px 11px);"></div>
+
+                                <!-- STEP 2: COMPLETE GOAL -->
+                                <div style="width: 104px; flex: 0 0 104px; display: flex; flex-direction: column; align-items: center; gap: 9px;">
+                                    <div class="tl-tile">
+                                        <svg width="22" height="22" viewBox="0 0 24 24" aria-hidden>
+                                            <defs>
+                                                <linearGradient id="tlG2" x1="0" y1="0" x2="1" y2="1">
+                                                    <stop offset="0%" stop-color="#9A2B3D"/>
+                                                    <stop offset="100%" stop-color="#5E1521"/>
+                                                </linearGradient>
+                                            </defs>
+                                            <circle cx="13" cy="11" r="8.9" fill="rgba(122,28,43,0.12)"/>
+                                            <circle cx="13" cy="11" r="8.9" fill="none" stroke="#7A1C2B" stroke-width="1.5" opacity="0.45"/>
+                                            <circle cx="13" cy="11" r="4.7" fill="none" stroke="#7A1C2B" stroke-width="1.9"/>
+                                            <circle cx="13" cy="11" r="2" fill="url(#tlG2)"/>
+                                            <path d="M3.5 20.5 11.3 12.7" stroke="#FBF9F5" stroke-width="4.6" stroke-linecap="round"/>
+                                            <path d="M3.5 20.5 11.3 12.7" stroke="#7A1C2B" stroke-width="2.15" stroke-linecap="round"/>
+                                            <path d="M14.2 9.8 12.6 14.9 9.1 11.4z" fill="#7A1C2B"/>
+                                            <path d="M3.5 20.5H6.4M3.5 20.5V17.6" stroke="#7A1C2B" stroke-width="1.8" stroke-linecap="round"/>
+                                        </svg>
                                     </div>
-                                    <span style="font-size: 11.5px; font-weight: 600; color: #5A6072; white-space: nowrap;">Complete goal</span>
+                                    <span style="font-family: ui-sans-serif, system-ui, sans-serif; font-size: 11.5px; font-weight: 600; color: #5A6072; text-align: center; line-height: 1.3;">Complete goal</span>
                                 </div>
-                                <div style="flex: 1; height: 2px; margin-top: -20px; background: repeating-linear-gradient(90deg, rgba(28,35,51,0.16) 0 5px, transparent 5px 11px);"></div>
-                                <div style="display: flex; flex-direction: column; align-items: center; gap: 8px; flex: 0 0 auto;">
-                                    <div class="sor-icon-box">
-                                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#7A1C2B" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M13 3 4 14h6l-1 7 9-11h-6l1-7Z"/></svg>
+
+                                <div aria-hidden style="flex: 1; height: 2px; margin-top: 24px; background: repeating-linear-gradient(90deg, rgba(28,35,51,0.16) 0 5px, transparent 5px 11px);"></div>
+
+                                <!-- STEP 3: AUTO SETTLEMENT -->
+                                <div style="width: 104px; flex: 0 0 104px; display: flex; flex-direction: column; align-items: center; gap: 9px;">
+                                    <div class="tl-tile">
+                                        <svg width="22" height="22" viewBox="0 0 24 24" aria-hidden>
+                                            <defs>
+                                                <linearGradient id="tlG3" x1="0" y1="0" x2="1" y2="1">
+                                                    <stop offset="0%" stop-color="#9A2B3D"/>
+                                                    <stop offset="100%" stop-color="#5E1521"/>
+                                                </linearGradient>
+                                            </defs>
+                                            <circle cx="12" cy="12" r="9.5" fill="url(#tlG3)"/>
+                                            <circle cx="12" cy="12" r="7.6" fill="none" stroke="#FBF9F5" stroke-width="0.9" opacity="0.3"/>
+                                            <path d="M13.5 4.8 6.8 13.5h4.2l-.9 6.1 6.5-9h-4.2z" fill="#FBF9F5"/>
+                                        </svg>
                                     </div>
-                                    <span style="font-size: 11.5px; font-weight: 600; color: #5A6072; white-space: nowrap;">Auto settlement</span>
+                                    <span style="font-family: ui-sans-serif, system-ui, sans-serif; font-size: 11.5px; font-weight: 600; color: #5A6072; text-align: center; line-height: 1.3;">Auto settlement</span>
                                 </div>
                             </div>
                         </div>

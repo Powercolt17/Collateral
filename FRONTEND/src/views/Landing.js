@@ -342,7 +342,7 @@ export function renderLanding() {
                         </p>
 
                         <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 30px;">
-                            <button id="card-mode-solo" class="sor-mode" onclick="window.switchProtocolMode('solo')">
+                            <button id="card-mode-solo" class="sor-mode active" onclick="window.switchProtocolMode('solo')">
                                 <span class="sor-mode-badge">SOLO</span>
                                 <div class="sor-mode-title">Stake against yourself</div>
                                 <ul class="sor-bullets">
@@ -358,7 +358,7 @@ export function renderLanding() {
                                 <div class="sor-cta">Start solo <span class="sor-arrow">→</span></div>
                             </button>
 
-                            <button id="card-mode-rivalry" class="sor-mode active" onclick="window.switchProtocolMode('rivalry')">
+                            <button id="card-mode-rivalry" class="sor-mode" onclick="window.switchProtocolMode('rivalry')">
                                 <span class="sor-mode-badge">RIVALRY</span>
                                 <div class="sor-mode-title">Stake head-to-head</div>
                                 <ul class="sor-bullets">
@@ -411,7 +411,7 @@ export function renderLanding() {
                         <div class="sor-ambient-glow"></div>
                         <div class="sor-mode-tag">
                             <span class="sor-live-dot"></span>
-                            <span id="sor-tag-text">RIVALRY CONTRACT</span>
+                            <span id="sor-tag-text">SOLO CONTRACT</span>
                         </div>
 
                         <div style="position: relative; text-align: center; z-index: 1;">
@@ -421,15 +421,15 @@ export function renderLanding() {
                                 <span class="sor-vs">vs</span>
                                 <span class="sor-rule"></span>
                             </div>
-                            <div class="sor-word-bottom sor-morph" id="sor-opponent-word" style="color: #7A1C2B;">THEM</div>
+                            <div class="sor-word-bottom sor-morph" id="sor-opponent-word" style="color: #1C2333;">YOU</div>
 
                             <div class="sor-figure-wrap sor-figure" id="sor-figure-wrap" style="margin-top: clamp(18px,2.6vw,32px);">
-                                <div class="sor-figure-val" id="sor-figure-val">$2,000</div>
-                                <div class="sor-figure-lbl" id="sor-figure-lbl">WINNER TAKES THE POOL</div>
+                                <div class="sor-figure-val" id="sor-figure-val">$1,000</div>
+                                <div class="sor-figure-lbl" id="sor-figure-lbl">LOCKED BY YOU</div>
                             </div>
 
                             <div class="sor-outcome-text sor-outcome" id="sor-outcome-text">
-                                Two stakes, one verified winner. Loser forfeits.
+                                Beat your own goal — keep every dollar, plus yield.
                             </div>
                         </div>
                     </div>
@@ -2914,11 +2914,11 @@ export function initLanding() {
         heroCard.addEventListener('click', window.userStopAutoDemo);
     }
 
-    // Start idle auto-demo (swaps every 8s until user hovers or clicks)
+    // Start idle auto-demo (swaps every 4.5s between SOLO and RIVALRY until user hovers or clicks)
     autoDemoTimer = setInterval(() => {
         if (userHasInteracted) return;
         const nextMode = (currentMode === 'solo') ? 'rivalry' : 'solo';
         window.switchProtocolMode(nextMode, false);
-    }, 8000);
+    }, 4500);
 }
 

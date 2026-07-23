@@ -7077,35 +7077,50 @@ h1, h2, h3, .lh1, .lhow-h, .lengine-h2, .ltypes-headline {
 
 /* ═══ TIGHTENED SUPPORTED INTEGRATIONS & LIVE METRICS TRUST STRIP ═══ */
 .l-global-stats-bar {
-  background: #FAF8F5 !important;
-  border-top: 1px solid rgba(28,35,51,0.08) !important;
-  border-bottom: 1px solid rgba(28,35,51,0.08) !important;
-  padding: 20px 0 !important; /* Cut top and bottom padding roughly in half to 20px */
+  background: transparent !important;
+  border: none !important;
+  padding: 0 !important;
+  margin: 0 !important;
+}
+
+.l-stats-card {
+  background: #FBF9F5 !important;
+  border: 1.5px solid rgba(28, 35, 51, 0.09) !important;
+  border-radius: 18px !important;
+  padding: 12px 24px !important; /* Aggressively reduced top/bottom card padding to 12px */
+  box-shadow: 0 4px 16px -10px rgba(28, 35, 51, 0.05) !important;
+  max-width: 1100px !important;
+  margin: 0 auto !important;
 }
 
 .l-stats-eyebrow {
   font-family: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace !important;
-  font-size: 10.5px !important;
+  font-size: 9.5px !important;
   font-weight: 700 !important;
-  letter-spacing: 2.2px !important;
+  letter-spacing: 2px !important;
   color: #8C8577 !important;
   text-transform: uppercase !important;
   text-align: center !important;
-  margin-bottom: 18px !important; /* 18px gap between eyebrow and logo/grid row */
+  margin-bottom: 10px !important; /* Tight 10px gap between eyebrow and grid */
   margin-top: 0 !important;
+  line-height: 1 !important;
 }
 
 .l-stats-bar-grid {
   display: grid !important;
   grid-template-columns: repeat(4, 1fr) !important;
-  gap: 16px !important;
+  gap: 12px !important;
   align-items: center !important;
 }
 
 @media (max-width: 768px) {
+  .l-stats-card {
+    padding: 12px 14px !important;
+    border-radius: 14px !important;
+  }
   .l-stats-bar-grid {
     grid-template-columns: repeat(2, 1fr) !important;
-    gap: 16px 12px !important;
+    gap: 12px 8px !important;
   }
 }
 
@@ -7121,12 +7136,12 @@ h1, h2, h3, .lh1, .lhow-h, .lengine-h2, .ltypes-headline {
 .l-stat-bar-item:not(:last-child)::after {
   content: '';
   position: absolute;
-  right: -8px;
+  right: -6px;
   top: 50%;
   transform: translateY(-50%);
   width: 1px;
-  height: 36px;
-  background: rgba(28,35,51,0.11);
+  height: 26px;
+  background: rgba(28, 35, 51, 0.11);
 }
 
 @media (max-width: 768px) {
@@ -7146,14 +7161,14 @@ h1, h2, h3, .lh1, .lhow-h, .lengine-h2, .ltypes-headline {
   flex-direction: column !important;
   align-items: center !important;
   justify-content: center !important;
-  gap: 10px !important; /* 10px gap between logo/value zone and label */
+  gap: 5px !important; /* Tight 5px gap between logo/value and label */
   width: 100% !important;
   margin-bottom: 0 !important;
   padding-bottom: 0 !important;
 }
 
 .l-stat-bar-value-zone {
-  height: 34px !important; /* Reduced 34px fixed-height centering slot */
+  height: 24px !important; /* Tight 24px fixed-height centering slot */
   display: flex !important;
   align-items: center !important;
   justify-content: center !important;
@@ -7162,7 +7177,7 @@ h1, h2, h3, .lh1, .lhow-h, .lengine-h2, .ltypes-headline {
 
 .l-stat-bar-val {
   font-family: 'Plus Jakarta Sans', sans-serif !important;
-  font-size: clamp(20px, 2.2vw, 26px) !important;
+  font-size: clamp(17px, 1.8vw, 22px) !important;
   font-weight: 800 !important;
   color: #1C2333 !important;
   line-height: 1 !important;
@@ -7171,7 +7186,7 @@ h1, h2, h3, .lh1, .lhow-h, .lengine-h2, .ltypes-headline {
 }
 
 .l-stat-bar-logo-wrap {
-  height: 34px !important;
+  height: 24px !important;
   display: flex !important;
   align-items: center !important;
   justify-content: center !important;
@@ -7179,20 +7194,20 @@ h1, h2, h3, .lh1, .lhow-h, .lengine-h2, .ltypes-headline {
 
 .l-stat-bar-logo-wrap svg,
 .l-stat-bar-logo-wrap img {
-  max-height: 28px !important;
+  max-height: 20px !important;
   width: auto !important;
   display: block !important;
 }
 
 .l-stat-bar-lbl {
   font-family: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace !important;
-  font-size: 10px !important;
+  font-size: 9px !important;
   font-weight: 700 !important;
-  letter-spacing: 1.6px !important;
+  letter-spacing: 1.4px !important;
   color: #8C8577 !important;
   text-transform: uppercase !important;
   text-align: center !important;
-  margin-bottom: 0 !important; /* No dead space under label row */
+  margin-bottom: 0 !important;
   padding-bottom: 0 !important;
   line-height: 1 !important;
 }

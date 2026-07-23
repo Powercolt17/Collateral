@@ -320,216 +320,200 @@ export function renderLanding() {
 
 
 
-            <!-- TRUST COPY FOR MOBILE ONLY -->
-            <div class="lc-trust lmobile-only" style="margin-top: 16px; border-top: none; padding-top: 0; margin-bottom: 24px;">
-                <svg class="lc-trust-lock" width="10" height="10" viewBox="0 0 24 28" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><path d="M12 2a5 5 0 0 0-5 5v3H5a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V12a2 2 0 0 0-2-2h-2V7a5 5 0 0 0-5-5zm-3 5a3 3 0 0 1 6 0v3H9V7zm3 9a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3z" fill="currentColor"/></svg>
-                Contracts verified automatically through connected APIs.
-            </div>
+            <!-- ═══ SIGNATURE OBSIDIAN CONTRACT ENGINE (LINEAR / STAGE GRADE) ═══ -->
+            <div class="lw" style="padding-top: 80px; padding-bottom: 80px;">
+                <div style="text-align: center; max-width: 820px; margin: 0 auto 32px;">
+                    <h2 class="ltypes-headline" style="font-size: clamp(2rem, 4.5vw, 3.25rem); line-height: 1.1; margin-bottom: 12px; letter-spacing: -0.03em;">
+                        WHEN MONEY IS ON THE LINE,<br>
+                        <span style="background: linear-gradient(135deg, #7A1220 0%, #E11D48 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">INTENTIONS BECOME ACTIONS.</span>
+                    </h2>
+                    <p style="font-size: 16.5px; line-height: 1.55; color: #475569; max-width: 600px; margin: 0 auto;">
+                        Collateral transforms commitment into an enforceable financial contract.
+                    </p>
+                </div>
 
+                <!-- SLEEK LINEAR-STYLE SEGMENTED CONTROL TAB BAR -->
+                <div class="lseg-control-bar">
+                    <div class="lseg-tab active" id="card-mode-solo" onclick="window.switchProtocolMode('solo')">
+                        <span class="lseg-tab-title">SOLO DISCIPLINE</span>
+                        <span class="lseg-tab-badge green">82% SUCCESS</span>
+                    </div>
+                    <div class="lseg-tab" id="card-mode-rivalry" onclick="window.switchProtocolMode('rivalry')">
+                        <span class="lseg-tab-title">HEAD-TO-HEAD RIVALRY</span>
+                        <span class="lseg-tab-badge rose">$4,250 AVG POOL</span>
+                    </div>
+                </div>
 
-
-            <!-- ═══ SIGNATURE DOMINANT INTERACTIVE CONTRACT ENGINE ═══ -->
-            <div class="lw" style="padding-top: 90px; padding-bottom: 70px;">
-                <div class="lterm-centerpiece-wrapper">
-                    <!-- SECTION HEADER WITH ULTRA-CLEAN ONE-SENTENCE COPY -->
-                    <div style="text-align: center; max-width: 780px; margin: 0 auto 36px;" data-r>
-                        <h2 class="ltypes-headline reveal-item" style="font-size: clamp(28px, 5.5vw, 44px); line-height: 1.08; margin-bottom: 14px;">WHEN MONEY IS ON THE LINE,<br><span class="lh-gradient">INTENTIONS BECOME ACTIONS.</span></h2>
-                        <p class="ltypes-sub reveal-item" style="font-size: 16.5px; line-height: 1.5; color: #475569; margin: 0 auto;">Collateral transforms commitment into an enforceable financial contract.</p>
+                <!-- DARK OBSIDIAN EXECUTION CONSOLE -->
+                <div class="lobsidian-console" id="protocol-terminal">
+                    <!-- Mac Window Bar -->
+                    <div class="lobsidian-bar">
+                        <div class="lobsidian-dots">
+                            <span class="dot red"></span>
+                            <span class="dot yellow"></span>
+                            <span class="dot green"></span>
+                        </div>
+                        <div class="lobsidian-title" id="term-header-title">CONTRACT #SOLO-8124 &mdash; SOLO DISCIPLINE</div>
+                        <div class="lobsidian-status" id="term-header-badge">
+                            <span class="obsidian-pulse-dot"></span> <span id="term-badge-text">LIVE EXECUTION</span>
+                        </div>
                     </div>
 
-                    <!-- INTEGRATED PRODUCT MODE SELECTOR CARDS (BECOMING THE TOGGLE) -->
-                    <div class="lterm-integrated-selector reveal-item" data-r>
-                        <div class="lterm-select-card active" id="card-mode-solo" onclick="window.switchProtocolMode('solo')">
-                            <div class="lselect-left">
-                                <span class="lselect-badge solo">SOLO MODE</span>
-                                <span class="lselect-title">Stake Against Yourself</span>
-                                <span class="lselect-sub">Discipline contract • Keep principal + earn yield</span>
+                    <!-- Console Interior Content -->
+                    <div class="lobsidian-body" id="term-body-content">
+                        <!-- SOLO VIEW -->
+                        <div id="term-view-solo" class="lterm-view-anim">
+                            <!-- Hero Metrics Bar -->
+                            <div class="lobsidian-hero-bar">
+                                <div class="lobsidian-m-block">
+                                    <span class="lbl">CONTRACT TYPE</span>
+                                    <span class="val">Solo Discipline Contract</span>
+                                </div>
+                                <div class="lobsidian-m-block right">
+                                    <span class="lbl">CAPITAL LOCKED</span>
+                                    <span class="val highlight">🔒 $1,000</span>
+                                </div>
                             </div>
-                            <div class="lselect-stat-badge">82% SUCCESS</div>
+
+                            <!-- 4 Column Stats Grid -->
+                            <div class="lobsidian-stats-grid">
+                                <div class="lobsidian-stat-col">
+                                    <span class="k">TARGET METRIC</span>
+                                    <span class="v">+15% Shopify Sales</span>
+                                </div>
+                                <div class="lobsidian-stat-col">
+                                    <span class="k">REWARD YIELD</span>
+                                    <span class="v green">+$120 Yield</span>
+                                </div>
+                                <div class="lobsidian-stat-col">
+                                    <span class="k">DATA STREAM</span>
+                                    <span class="v api"><span class="obsidian-live-dot"></span> Shopify API</span>
+                                </div>
+                                <div class="lobsidian-stat-col">
+                                    <span class="k">DURATION</span>
+                                    <span class="v">30 Days (12 Left)</span>
+                                </div>
+                            </div>
+
+                            <!-- Glowing Telemetry Tracks Stack -->
+                            <div class="lobsidian-tracks-stack">
+                                <div class="lobsidian-track">
+                                    <div class="lobsidian-track-hdr">
+                                        <span>[1] CAPITAL LOCKED IN ESCROW VAULT</span>
+                                        <span class="tag green">● $1,000 (VERIFIED)</span>
+                                    </div>
+                                    <div class="lobsidian-track-bar">
+                                        <div class="lobsidian-track-fill green" style="width: 100%;">
+                                            <div class="lobsidian-glow"></div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="lobsidian-track">
+                                    <div class="lobsidian-track-hdr">
+                                        <span>[2] ORACLE TELEMETRY STREAM</span>
+                                        <span class="tag green">● 99.8% HEALTH</span>
+                                    </div>
+                                    <div class="lobsidian-track-bar">
+                                        <div class="lobsidian-track-fill green" style="width: 99.8%;">
+                                            <div class="lobsidian-glow"></div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="lobsidian-track">
+                                    <div class="lobsidian-track-hdr">
+                                        <span>[3] GOAL VERIFICATION ENGINE</span>
+                                        <span class="tag rose">● 78.4% COMPLETE</span>
+                                    </div>
+                                    <div class="lobsidian-track-bar">
+                                        <div class="lobsidian-track-fill rose" style="width: 78.4%;">
+                                            <div class="lobsidian-glow"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Terminal Terminal Lines -->
+                            <div class="lobsidian-rules-row">
+                                <div class="lobsidian-rule pass">
+                                    <span class="icon">✓</span> <span><strong>IF VERIFIED:</strong> $1,000 Principal Retained + $120 Yield</span>
+                                </div>
+                                <div class="lobsidian-rule fail">
+                                    <span class="icon">✕</span> <span><strong>IF FAILED:</strong> Principal enters protocol pool</span>
+                                </div>
+                            </div>
                         </div>
 
-                        <div class="lterm-select-card" id="card-mode-rivalry" onclick="window.switchProtocolMode('rivalry')">
-                            <div class="lselect-left">
-                                <span class="lselect-badge rivalry">RIVALRY MODE</span>
-                                <span class="lselect-title">Stake Head-to-Head</span>
-                                <span class="lselect-sub">Winner-takes-all duel • Verified API escrow</span>
-                            </div>
-                            <div class="lselect-stat-badge rivalry">$4,250 AVG POOL</div>
-                        </div>
-                    </div>
-
-                    <!-- 2X LARGER GIGANTIC CONTRACT OPERATING SYSTEM CENTERPIECE -->
-                    <div class="lproto-term-window reveal-item" id="protocol-terminal" data-r onmouseenter="window.userStopAutoDemo()" onclick="window.userStopAutoDemo()">
-                        <!-- Window Bar -->
-                        <div class="lterm-bar">
-                            <div class="lterm-dots">
-                                <span class="dot red"></span>
-                                <span class="dot yellow"></span>
-                                <span class="dot green"></span>
-                            </div>
-                            <div class="lterm-title" id="term-header-title">CONTRACT #SOLO-8124 — SOLO DISCIPLINE</div>
-                            <div class="lterm-status-badge live" id="term-header-badge">
-                                <span class="pulse-dot"></span> <span id="term-badge-text">LIVE EXECUTION</span>
-                            </div>
-                        </div>
-
-                        <!-- Terminal Container Content -->
-                        <div class="lterm-body" id="term-body-content">
-                            <!-- SOLO TERMINAL CONTENT (DEFAULT) -->
-                            <div id="term-view-solo" class="lterm-view-anim">
-                                <div class="lterm-hero-row">
-                                    <div class="lterm-metric-box">
-                                        <span class="lbl">CONTRACT TYPE</span>
-                                        <span class="val">Solo Discipline Contract</span>
-                                    </div>
-                                    <div class="lterm-metric-box right">
-                                        <span class="lbl">CAPITAL LOCKED</span>
-                                        <span class="val green"><span class="escrow-lock-icon">🔒</span>$1,000</span>
-                                    </div>
+                        <!-- RIVALRY VIEW (HIDDEN DEFAULT) -->
+                        <div id="term-view-rivalry" class="lterm-view-anim" style="display: none;">
+                            <div class="lobsidian-hero-bar">
+                                <div class="lobsidian-m-block">
+                                    <span class="lbl">CONTRACT TYPE</span>
+                                    <span class="val">Head-to-Head Duel</span>
                                 </div>
-
-                                <div class="lterm-grid-metrics">
-                                    <div class="lterm-m"><span class="k">Target Metric</span><span class="v">+15% Shopify Sales</span></div>
-                                    <div class="lterm-m"><span class="k">Reward Yield</span><span class="v green">$120 Yield</span></div>
-                                    <div class="lterm-m"><span class="k">Data Stream</span><span class="v"><span class="live-radar-dot"></span>Shopify API</span></div>
-                                    <div class="lterm-m"><span class="k">Duration</span><span class="v">30 Days (12 Left)</span></div>
+                                <div class="lobsidian-m-block right">
+                                    <span class="lbl">VERIFIED METRIC</span>
+                                    <span class="val highlight">+15% Growth (30 Days)</span>
                                 </div>
+                            </div>
 
-                                <!-- ALIVE ENGINE PROGRESS TRACKS STACK -->
-                                <div class="lterm-tracks-stack">
-                                    <div class="lterm-track-item">
-                                        <div class="lterm-track-hdr">
-                                            <span>[1] CAPITAL LOCKED IN ESCROW VAULT</span>
-                                            <span class="pct completed"><span class="live-radar-dot"></span>$1,000 (VERIFIED)</span>
-                                        </div>
-                                        <div class="lterm-progress-track">
-                                            <div class="lterm-progress-fill completed" style="width: 100%;">
-                                                <div class="lterm-progress-glow"></div>
-                                            </div>
-                                        </div>
+                            <div class="lobsidian-matchup-grid">
+                                <div class="lobsidian-player challenger">
+                                    <span class="role">CHALLENGER</span>
+                                    <span class="handle">@revpilot</span>
+                                    <span class="score green">+12.4%</span>
+                                    <span class="staked">$1,000 STAKED</span>
+                                </div>
+                                <div class="lobsidian-vs">
+                                    <span class="swords">⚔️</span>
+                                    <span class="vs-txt">VS</span>
+                                </div>
+                                <div class="lobsidian-player opponent">
+                                    <span class="role">OPPONENT</span>
+                                    <span class="handle">@dev_sarah</span>
+                                    <span class="score rose">+9.1%</span>
+                                    <span class="staked">$1,000 STAKED</span>
+                                </div>
+                            </div>
+
+                            <div class="lobsidian-vault-bar">
+                                <span class="lbl">ESCROW VAULT POOL</span>
+                                <span class="pool-val">$2,000</span>
+                                <span class="sub">🏆 Winner Receives Full $2,000 Pool</span>
+                            </div>
+
+                            <div class="lobsidian-tracks-stack">
+                                <div class="lobsidian-track">
+                                    <div class="lobsidian-track-hdr">
+                                        <span>[1] ESCROW DEPOSITS VERIFIED</span>
+                                        <span class="tag green">$2,000 LOCKED (100%)</span>
                                     </div>
-
-                                    <div class="lterm-track-item">
-                                        <div class="lterm-track-hdr">
-                                            <span>[2] ORACLE TELEMETRY STREAM</span>
-                                            <span class="pct completed"><span class="live-radar-dot"></span>99.8% HEALTH</span>
-                                        </div>
-                                        <div class="lterm-progress-track">
-                                            <div class="lterm-progress-fill completed" style="width: 99.8%;">
-                                                <div class="lterm-progress-glow"></div>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div class="lterm-track-item">
-                                        <div class="lterm-track-hdr">
-                                            <span>[3] GOAL VERIFICATION ENGINE</span>
-                                            <span class="pct"><span class="live-radar-dot burgundy"></span>78.4% COMPLETE</span>
-                                        </div>
-                                        <div class="lterm-progress-track">
-                                            <div class="lterm-progress-fill" style="width: 78.4%;">
-                                                <div class="lterm-progress-glow"></div>
-                                            </div>
+                                    <div class="lobsidian-track-bar">
+                                        <div class="lobsidian-track-fill green" style="width: 100%;">
+                                            <div class="lobsidian-glow"></div>
                                         </div>
                                     </div>
                                 </div>
-
-                                <div class="lterm-rules-box">
-                                    <div class="lterm-rule pass">
-                                        <span class="ic">✓</span>
-                                        <div class="txt"><strong>IF VERIFIED:</strong> $1,000 Principal Retained + $120 Yield</div>
+                                <div class="lobsidian-track">
+                                    <div class="lobsidian-track-hdr">
+                                        <span>[2] ORACLE METRIC MATCHUP ENGINE</span>
+                                        <span class="tag green">● LIVE AUDIT STREAM</span>
                                     </div>
-                                    <div class="lterm-rule fail">
-                                        <span class="ic">✗</span>
-                                        <div class="txt"><strong>IF FAILED:</strong> Principal enters protocol pool</div>
+                                    <div class="lobsidian-track-bar">
+                                        <div class="lobsidian-track-fill green" style="width: 88%;">
+                                            <div class="lobsidian-glow"></div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
 
-                            <!-- RIVALRY TERMINAL CONTENT (HIDDEN BY DEFAULT) -->
-                            <div id="term-view-rivalry" class="lterm-view-anim" style="display: none;">
-                                <div class="lterm-hero-row" style="margin-bottom: 4px;">
-                                    <div class="lterm-metric-box">
-                                        <span class="lbl">CONTRACT TYPE</span>
-                                        <span class="val">Head-to-Head Duel</span>
-                                    </div>
-                                    <div class="lterm-metric-box right">
-                                        <span class="lbl">VERIFIED METRIC</span>
-                                        <span class="val">+15% Growth (30 Days)</span>
-                                    </div>
+                            <div class="lobsidian-rules-row">
+                                <div class="lobsidian-rule pass">
+                                    <span class="icon">🏆</span> <span><strong>LEADER WINNER:</strong> Takes 100% of Escrow Pool ($2,000)</span>
                                 </div>
-
-                                <div class="lterm-matchup-row">
-                                    <div class="lterm-player-card challenger">
-                                        <span class="tag">PARTICIPANT A</span>
-                                        <span class="handle">@revpilot</span>
-                                        <span class="metric">+12.4% Revenue</span>
-                                        <span class="stake">$1,000 STAKED</span>
-                                    </div>
-                                    <div class="lterm-vs-battle-wrap">
-                                        <div class="lterm-vs-badge">
-                                            <span class="battle-swords">⚔️</span>
-                                            <span class="battle-vs">VS</span>
-                                        </div>
-                                        <div class="battle-pulse-ring"></div>
-                                    </div>
-                                    <div class="lterm-player-card opponent">
-                                        <span class="tag">PARTICIPANT B</span>
-                                        <span class="handle">@dev_sarah</span>
-                                        <span class="metric">+9.1% Followers</span>
-                                        <span class="stake">$1,000 STAKED</span>
-                                    </div>
-                                </div>
-
-                                <div class="lterm-vault-core">
-                                    <span class="v-lbl">ESCROW VAULT POOL</span>
-                                    <span class="v-val">$2,000</span>
-                                    <span class="v-sub">🏆 Winner Receives Full $2,000 Pool</span>
-                                </div>
-
-                                <!-- ALIVE ENGINE PROGRESS TRACKS STACK FOR RIVALRY -->
-                                <div class="lterm-tracks-stack">
-                                    <div class="lterm-track-item">
-                                        <div class="lterm-track-hdr">
-                                            <span>[1] ESCROW DEPOSITS VERIFIED</span>
-                                            <span class="pct completed">$2,000 LOCKED (100%)</span>
-                                        </div>
-                                        <div class="lterm-progress-track">
-                                            <div class="lterm-progress-fill completed" style="width: 100%;">
-                                                <div class="lterm-progress-glow"></div>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div class="lterm-track-item">
-                                        <div class="lterm-track-hdr">
-                                            <span>[2] ORACLE METRIC STREAM</span>
-                                            <span class="pct completed">STRIPE & X APIS SYNCED</span>
-                                        </div>
-                                        <div class="lterm-progress-track">
-                                            <div class="lterm-progress-fill completed" style="width: 100%;">
-                                                <div class="lterm-progress-glow"></div>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div class="lterm-track-item">
-                                        <div class="lterm-track-hdr">
-                                            <span>[3] DUEL SETTLEMENT ENGINE</span>
-                                            <span class="pct">READY FOR AUTOMATED PAYOUT</span>
-                                        </div>
-                                        <div class="lterm-progress-track">
-                                            <div class="lterm-progress-fill" style="width: 92%;">
-                                                <div class="lterm-progress-glow"></div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="lterm-telemetry">
-                                    <div class="t-line"><span class="ts">[17:51:02]</span> Oracles Synced: Stripe Connect API & X Data Feed</div>
-                                    <div class="t-line"><span class="ts">[17:51:05]</span> Metric Verified: @revpilot leading growth battle by +3.3%</div>
-                                    <div class="t-line green"><span class="ts">[17:51:09]</span> Auto Settlement: Winner receives $2,000 pool automatically</div>
+                                <div class="lobsidian-rule fail">
+                                    <span class="icon">⚔️</span> <span><strong>TRAILING PARTICIPANT:</strong> Forfeits deposit to winner</span>
                                 </div>
                             </div>
                         </div>

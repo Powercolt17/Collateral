@@ -320,206 +320,121 @@ export function renderLanding() {
 
 
 
-            <!-- ═══ SIGNATURE OBSIDIAN CONTRACT ENGINE (LINEAR / STAGE GRADE) ═══ -->
-            <div class="lw" style="padding-top: 80px; padding-bottom: 80px;">
-                <div style="text-align: center; max-width: 820px; margin: 0 auto 32px;">
-                    <h2 class="ltypes-headline" style="font-size: clamp(2rem, 4.5vw, 3.25rem); line-height: 1.1; margin-bottom: 12px; letter-spacing: -0.03em;">
-                        WHEN MONEY IS ON THE LINE,<br>
-                        <span style="background: linear-gradient(135deg, #7A1220 0%, #E11D48 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">INTENTIONS BECOME ACTIONS.</span>
-                    </h2>
-                    <p style="font-size: 16.5px; line-height: 1.55; color: #475569; max-width: 600px; margin: 0 auto;">
-                        Collateral transforms commitment into an enforceable financial contract.
-                    </p>
-                </div>
-
-                <!-- SLEEK LINEAR-STYLE SEGMENTED CONTROL TAB BAR -->
-                <div class="lseg-control-bar">
-                    <div class="lseg-tab active" id="card-mode-solo" onclick="window.switchProtocolMode('solo')">
-                        <span class="lseg-tab-title">SOLO DISCIPLINE</span>
-                        <span class="lseg-tab-badge green">82% SUCCESS</span>
-                    </div>
-                    <div class="lseg-tab" id="card-mode-rivalry" onclick="window.switchProtocolMode('rivalry')">
-                        <span class="lseg-tab-title">HEAD-TO-HEAD RIVALRY</span>
-                        <span class="lseg-tab-badge rose">$4,250 AVG POOL</span>
-                    </div>
-                </div>
-
-                <!-- DARK OBSIDIAN EXECUTION CONSOLE -->
-                <div class="lobsidian-console" id="protocol-terminal">
-                    <!-- Mac Window Bar -->
-                    <div class="lobsidian-bar">
-                        <div class="lobsidian-dots">
-                            <span class="dot red"></span>
-                            <span class="dot yellow"></span>
-                            <span class="dot green"></span>
+            <!-- ═══ SIGNATURE TYPOGRAPHIC CONTRACT HERO (YOU vs YOU / YOU vs THEM) ═══ -->
+            <section class="sor-section" id="sor-contract-section" data-r>
+                <div class="sor-grid">
+                    <!-- LEFT COLUMN: MODE SELECTOR & TIMELINE -->
+                    <div>
+                        <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 18px;">
+                            <span style="width: 24px; height: 1.5px; background: #7A1C2B; opacity: 0.5;"></span>
+                            <span style="font-family: ui-sans-serif, system-ui, -apple-system, sans-serif; font-size: 11px; font-weight: 700; letter-spacing: 2.2px; color: #8C8577; text-transform: uppercase;">
+                                CONTRACT EXECUTION MODES
+                            </span>
                         </div>
-                        <div class="lobsidian-title" id="term-header-title">CONTRACT #SOLO-8124 &mdash; SOLO DISCIPLINE</div>
-                        <div class="lobsidian-status" id="term-header-badge">
-                            <span class="obsidian-pulse-dot"></span> <span id="term-badge-text">LIVE EXECUTION</span>
+
+                        <h2 style="font-family: ui-sans-serif, system-ui, -apple-system, sans-serif; font-size: clamp(38px,5vw,58px); line-height: 1.0; margin: 0 0 20px; letter-spacing: -0.03em; font-weight: 800;">
+                            <span style="color: #1C2333;">SOLO OR<br></span>
+                            <span style="color: #7A1C2B;">RIVALRY.</span>
+                        </h2>
+
+                        <p style="font-family: ui-sans-serif, system-ui, -apple-system, sans-serif; font-size: 16px; line-height: 1.6; color: #5A6072; margin: 0 0 26px; max-width: 420px;">
+                            Put money behind your commitment. Complete the goal and the contract pays automatically. Miss it and the rules enforce themselves.
+                        </p>
+
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 30px;">
+                            <button id="card-mode-solo" class="sor-mode" onclick="window.switchProtocolMode('solo')">
+                                <span class="sor-mode-badge">SOLO</span>
+                                <div class="sor-mode-title">Stake against yourself</div>
+                                <ul class="sor-bullets">
+                                    <li>
+                                        <svg width="15" height="15" viewBox="0 0 24 24" style="flex-shrink:0;margin-top:1px;" aria-hidden><circle cx="12" cy="12" r="11" fill="rgba(122,28,43,0.1)"/><path d="m7 12.5 3.2 3.2L17 8.6" fill="none" stroke="#7A1C2B" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                                        Keep your principal
+                                    </li>
+                                    <li>
+                                        <svg width="15" height="15" viewBox="0 0 24 24" style="flex-shrink:0;margin-top:1px;" aria-hidden><circle cx="12" cy="12" r="11" fill="rgba(122,28,43,0.1)"/><path d="m7 12.5 3.2 3.2L17 8.6" fill="none" stroke="#7A1C2B" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                                        Earn execution rewards
+                                    </li>
+                                </ul>
+                                <div class="sor-cta">Start solo <span class="sor-arrow">→</span></div>
+                            </button>
+
+                            <button id="card-mode-rivalry" class="sor-mode active" onclick="window.switchProtocolMode('rivalry')">
+                                <span class="sor-mode-badge">RIVALRY</span>
+                                <div class="sor-mode-title">Stake head-to-head</div>
+                                <ul class="sor-bullets">
+                                    <li>
+                                        <svg width="15" height="15" viewBox="0 0 24 24" style="flex-shrink:0;margin-top:1px;" aria-hidden><circle cx="12" cy="12" r="11" fill="rgba(122,28,43,0.1)"/><path d="m7 12.5 3.2 3.2L17 8.6" fill="none" stroke="#7A1C2B" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                                        Two people lock capital
+                                    </li>
+                                    <li>
+                                        <svg width="15" height="15" viewBox="0 0 24 24" style="flex-shrink:0;margin-top:1px;" aria-hidden><circle cx="12" cy="12" r="11" fill="rgba(122,28,43,0.1)"/><path d="m7 12.5 3.2 3.2L17 8.6" fill="none" stroke="#7A1C2B" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                                        Verified winner
+                                    </li>
+                                </ul>
+                                <div class="sor-cta">Start rivalry <span class="sor-arrow">→</span></div>
+                            </button>
                         </div>
-                    </div>
 
-                    <!-- Console Interior Content -->
-                    <div class="lobsidian-body" id="term-body-content">
-                        <!-- SOLO VIEW -->
-                        <div id="term-view-solo" class="lterm-view-anim">
-                            <!-- Hero Metrics Bar -->
-                            <div class="lobsidian-hero-bar">
-                                <div class="lobsidian-m-block">
-                                    <span class="lbl">CONTRACT TYPE</span>
-                                    <span class="val">Solo Discipline Contract</span>
-                                </div>
-                                <div class="lobsidian-m-block right">
-                                    <span class="lbl">CAPITAL LOCKED</span>
-                                    <span class="val highlight">🔒 $1,000</span>
-                                </div>
-                            </div>
-
-                            <!-- 4 Column Stats Grid -->
-                            <div class="lobsidian-stats-grid">
-                                <div class="lobsidian-stat-col">
-                                    <span class="k">TARGET METRIC</span>
-                                    <span class="v">+15% Shopify Sales</span>
-                                </div>
-                                <div class="lobsidian-stat-col">
-                                    <span class="k">REWARD YIELD</span>
-                                    <span class="v green">+$120 Yield</span>
-                                </div>
-                                <div class="lobsidian-stat-col">
-                                    <span class="k">DATA STREAM</span>
-                                    <span class="v api"><span class="obsidian-live-dot"></span> Shopify API</span>
-                                </div>
-                                <div class="lobsidian-stat-col">
-                                    <span class="k">DURATION</span>
-                                    <span class="v">30 Days (12 Left)</span>
-                                </div>
-                            </div>
-
-                            <!-- Glowing Telemetry Tracks Stack -->
-                            <div class="lobsidian-tracks-stack">
-                                <div class="lobsidian-track">
-                                    <div class="lobsidian-track-hdr">
-                                        <span>[1] CAPITAL LOCKED IN ESCROW VAULT</span>
-                                        <span class="tag green">● $1,000 (VERIFIED)</span>
+                        <!-- TIMELINE -->
+                        <div style="margin-bottom: 30px;">
+                            <div style="display: flex; align-items: center; gap: 4px;">
+                                <div style="display: flex; flex-direction: column; align-items: center; gap: 8px; flex: 0 0 auto;">
+                                    <div class="sor-icon-box">
+                                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#7A1C2B" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg>
                                     </div>
-                                    <div class="lobsidian-track-bar">
-                                        <div class="lobsidian-track-fill green" style="width: 100%;">
-                                            <div class="lobsidian-glow"></div>
-                                        </div>
-                                    </div>
+                                    <span style="font-size: 11.5px; font-weight: 600; color: #5A6072; white-space: nowrap;">Lock capital</span>
                                 </div>
-
-                                <div class="lobsidian-track">
-                                    <div class="lobsidian-track-hdr">
-                                        <span>[2] ORACLE TELEMETRY STREAM</span>
-                                        <span class="tag green">● 99.8% HEALTH</span>
+                                <div style="flex: 1; height: 2px; margin-top: -20px; background: repeating-linear-gradient(90deg, rgba(28,35,51,0.16) 0 5px, transparent 5px 11px);"></div>
+                                <div style="display: flex; flex-direction: column; align-items: center; gap: 8px; flex: 0 0 auto;">
+                                    <div class="sor-icon-box">
+                                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#7A1C2B" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="8"/><circle cx="12" cy="12" r="3.4"/></svg>
                                     </div>
-                                    <div class="lobsidian-track-bar">
-                                        <div class="lobsidian-track-fill green" style="width: 99.8%;">
-                                            <div class="lobsidian-glow"></div>
-                                        </div>
-                                    </div>
+                                    <span style="font-size: 11.5px; font-weight: 600; color: #5A6072; white-space: nowrap;">Complete goal</span>
                                 </div>
-
-                                <div class="lobsidian-track">
-                                    <div class="lobsidian-track-hdr">
-                                        <span>[3] GOAL VERIFICATION ENGINE</span>
-                                        <span class="tag rose">● 78.4% COMPLETE</span>
+                                <div style="flex: 1; height: 2px; margin-top: -20px; background: repeating-linear-gradient(90deg, rgba(28,35,51,0.16) 0 5px, transparent 5px 11px);"></div>
+                                <div style="display: flex; flex-direction: column; align-items: center; gap: 8px; flex: 0 0 auto;">
+                                    <div class="sor-icon-box">
+                                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#7A1C2B" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M13 3 4 14h6l-1 7 9-11h-6l1-7Z"/></svg>
                                     </div>
-                                    <div class="lobsidian-track-bar">
-                                        <div class="lobsidian-track-fill rose" style="width: 78.4%;">
-                                            <div class="lobsidian-glow"></div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <!-- Terminal Terminal Lines -->
-                            <div class="lobsidian-rules-row">
-                                <div class="lobsidian-rule pass">
-                                    <span class="icon">✓</span> <span><strong>IF VERIFIED:</strong> $1,000 Principal Retained + $120 Yield</span>
-                                </div>
-                                <div class="lobsidian-rule fail">
-                                    <span class="icon">✕</span> <span><strong>IF FAILED:</strong> Principal enters protocol pool</span>
+                                    <span style="font-size: 11.5px; font-weight: 600; color: #5A6072; white-space: nowrap;">Auto settlement</span>
                                 </div>
                             </div>
                         </div>
 
-                        <!-- RIVALRY VIEW (HIDDEN DEFAULT) -->
-                        <div id="term-view-rivalry" class="lterm-view-anim" style="display: none;">
-                            <div class="lobsidian-hero-bar">
-                                <div class="lobsidian-m-block">
-                                    <span class="lbl">CONTRACT TYPE</span>
-                                    <span class="val">Head-to-Head Duel</span>
-                                </div>
-                                <div class="lobsidian-m-block right">
-                                    <span class="lbl">VERIFIED METRIC</span>
-                                    <span class="val highlight">+15% Growth (30 Days)</span>
-                                </div>
+                        <button class="sor-primary" onclick="window.router.navigate('/create'); return false;">
+                            START CONTRACT <span class="sor-arrow">→</span>
+                        </button>
+                    </div>
+
+                    <!-- RIGHT COLUMN: TYPOGRAPHIC HERO CARD -->
+                    <div class="sor-hero-card" id="sor-hero-card" onmouseenter="window.userStopAutoDemo()" onclick="window.userStopAutoDemo()">
+                        <div class="sor-ambient-glow"></div>
+                        <div class="sor-mode-tag">
+                            <span class="sor-live-dot"></span>
+                            <span id="sor-tag-text">RIVALRY CONTRACT</span>
+                        </div>
+
+                        <div style="position: relative; text-align: center; z-index: 1;">
+                            <div class="sor-word-top">YOU</div>
+                            <div class="sor-vs-row">
+                                <span class="sor-rule"></span>
+                                <span class="sor-vs">vs</span>
+                                <span class="sor-rule"></span>
+                            </div>
+                            <div class="sor-word-bottom sor-morph" id="sor-opponent-word" style="color: #7A1C2B;">THEM</div>
+
+                            <div class="sor-figure-wrap sor-figure" id="sor-figure-wrap" style="margin-top: clamp(18px,2.6vw,32px);">
+                                <div class="sor-figure-val" id="sor-figure-val">$2,000</div>
+                                <div class="sor-figure-lbl" id="sor-figure-lbl">WINNER TAKES THE POOL</div>
                             </div>
 
-                            <div class="lobsidian-matchup-grid">
-                                <div class="lobsidian-player challenger">
-                                    <span class="role">CHALLENGER</span>
-                                    <span class="handle">@revpilot</span>
-                                    <span class="score green">+12.4%</span>
-                                    <span class="staked">$1,000 STAKED</span>
-                                </div>
-                                <div class="lobsidian-vs">
-                                    <span class="swords">⚔️</span>
-                                    <span class="vs-txt">VS</span>
-                                </div>
-                                <div class="lobsidian-player opponent">
-                                    <span class="role">OPPONENT</span>
-                                    <span class="handle">@dev_sarah</span>
-                                    <span class="score rose">+9.1%</span>
-                                    <span class="staked">$1,000 STAKED</span>
-                                </div>
-                            </div>
-
-                            <div class="lobsidian-vault-bar">
-                                <span class="lbl">ESCROW VAULT POOL</span>
-                                <span class="pool-val">$2,000</span>
-                                <span class="sub">🏆 Winner Receives Full $2,000 Pool</span>
-                            </div>
-
-                            <div class="lobsidian-tracks-stack">
-                                <div class="lobsidian-track">
-                                    <div class="lobsidian-track-hdr">
-                                        <span>[1] ESCROW DEPOSITS VERIFIED</span>
-                                        <span class="tag green">$2,000 LOCKED (100%)</span>
-                                    </div>
-                                    <div class="lobsidian-track-bar">
-                                        <div class="lobsidian-track-fill green" style="width: 100%;">
-                                            <div class="lobsidian-glow"></div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="lobsidian-track">
-                                    <div class="lobsidian-track-hdr">
-                                        <span>[2] ORACLE METRIC MATCHUP ENGINE</span>
-                                        <span class="tag green">● LIVE AUDIT STREAM</span>
-                                    </div>
-                                    <div class="lobsidian-track-bar">
-                                        <div class="lobsidian-track-fill green" style="width: 88%;">
-                                            <div class="lobsidian-glow"></div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="lobsidian-rules-row">
-                                <div class="lobsidian-rule pass">
-                                    <span class="icon">🏆</span> <span><strong>LEADER WINNER:</strong> Takes 100% of Escrow Pool ($2,000)</span>
-                                </div>
-                                <div class="lobsidian-rule fail">
-                                    <span class="icon">⚔️</span> <span><strong>TRAILING PARTICIPANT:</strong> Forfeits deposit to winner</span>
-                                </div>
+                            <div class="sor-outcome-text sor-outcome" id="sor-outcome-text">
+                                Two stakes, one verified winner. Loser forfeits.
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
+            </section>
 
 
 
@@ -2942,35 +2857,45 @@ export function initLanding() {
         currentMode = mode;
         const soloCard = document.getElementById('card-mode-solo');
         const rivalryCard = document.getElementById('card-mode-rivalry');
-        const termTitle = document.getElementById('term-header-title');
-        const termBadge = document.getElementById('term-header-badge');
-        const badgeText = document.getElementById('term-badge-text');
-        const viewSolo = document.getElementById('term-view-solo');
-        const viewRivalry = document.getElementById('term-view-rivalry');
+        const tagText = document.getElementById('sor-tag-text');
+        const oppWord = document.getElementById('sor-opponent-word');
+        const figVal = document.getElementById('sor-figure-val');
+        const figLbl = document.getElementById('sor-figure-lbl');
+        const outcomeTxt = document.getElementById('sor-outcome-text');
 
-        if (!viewSolo || !viewRivalry) return;
+        if (!oppWord) return;
 
         if (mode === 'solo') {
-            if (soloCard) soloCard.className = 'lterm-select-card active';
-            if (rivalryCard) rivalryCard.className = 'lterm-select-card';
+            if (soloCard) soloCard.className = 'sor-mode active';
+            if (rivalryCard) rivalryCard.className = 'sor-mode';
+            if (tagText) tagText.innerText = 'SOLO CONTRACT';
 
-            if (termTitle) termTitle.innerText = 'CONTRACT #SOLO-8124 — SOLO DISCIPLINE';
-            if (termBadge) termBadge.className = 'lterm-status-badge live';
-            if (badgeText) badgeText.innerText = 'LIVE EXECUTION';
+            oppWord.innerText = 'YOU';
+            oppWord.style.color = '#1C2333';
 
-            viewSolo.style.display = 'block';
-            viewRivalry.style.display = 'none';
+            if (figVal) figVal.innerText = '$1,000';
+            if (figLbl) figLbl.innerText = 'LOCKED BY YOU';
+            if (outcomeTxt) outcomeTxt.innerText = 'Beat your own goal — keep every dollar, plus yield.';
         } else {
-            if (rivalryCard) rivalryCard.className = 'lterm-select-card active';
-            if (soloCard) soloCard.className = 'lterm-select-card';
+            if (rivalryCard) rivalryCard.className = 'sor-mode active';
+            if (soloCard) soloCard.className = 'sor-mode';
+            if (tagText) tagText.innerText = 'RIVALRY CONTRACT';
 
-            if (termTitle) termTitle.innerText = 'DUEL #RIVAL-3406 — HEAD-TO-HEAD';
-            if (termBadge) termBadge.className = 'lterm-status-badge rivalry';
-            if (badgeText) badgeText.innerText = 'ESCROW LOCKED';
+            oppWord.innerText = 'THEM';
+            oppWord.style.color = '#7A1C2B';
 
-            viewSolo.style.display = 'none';
-            viewRivalry.style.display = 'block';
+            if (figVal) figVal.innerText = '$2,000';
+            if (figLbl) figLbl.innerText = 'WINNER TAKES THE POOL';
+            if (outcomeTxt) outcomeTxt.innerText = 'Two stakes, one verified winner. Loser forfeits.';
         }
+
+        // Trigger smooth morphing animation restart
+        [oppWord, figVal, outcomeTxt].forEach(el => {
+            if (!el) return;
+            el.classList.remove('sor-morph', 'sor-figure', 'sor-outcome');
+            void el.offsetWidth; // force browser reflow
+            el.classList.add('sor-morph');
+        });
     };
 
     // Attach direct explicit listeners to the mode cards
@@ -2982,11 +2907,11 @@ export function initLanding() {
         window.switchProtocolMode('rivalry', true);
     });
 
-    // Hover or click anywhere on terminal permanently stops auto-demo
-    const termWindow = document.getElementById('protocol-terminal');
-    if (termWindow) {
-        termWindow.addEventListener('mouseenter', window.userStopAutoDemo);
-        termWindow.addEventListener('click', window.userStopAutoDemo);
+    // Hover or click anywhere on hero card permanently stops auto-demo
+    const heroCard = document.getElementById('sor-hero-card');
+    if (heroCard) {
+        heroCard.addEventListener('mouseenter', window.userStopAutoDemo);
+        heroCard.addEventListener('click', window.userStopAutoDemo);
     }
 
     // Start idle auto-demo (swaps every 8s until user hovers or clicks)

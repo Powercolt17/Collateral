@@ -6101,4 +6101,258 @@ export const landingCSS = `
     .lobsidian-player.opponent { text-align: center; }
     .lobsidian-hero-bar { flex-direction: column; align-items: flex-start; gap: 10px; }
 }
+
+/* ═══ SIGNATURE TYPOGRAPHIC HERO: SOLO OR RIVALRY (YOU vs YOU / YOU vs THEM) ═══ */
+.sor-section {
+    background: #F4EFE7;
+    padding: clamp(36px, 6vw, 72px) clamp(20px, 4vw, 48px);
+    font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    border-top: 1px solid rgba(28, 35, 51, 0.08);
+    border-bottom: 1px solid rgba(28, 35, 51, 0.08);
+}
+.sor-grid {
+    display: grid;
+    grid-template-columns: 42% 58%;
+    gap: clamp(28px, 4vw, 56px);
+    align-items: center;
+    max-width: 1240px;
+    margin: 0 auto;
+}
+@media (max-width: 900px) {
+    .sor-grid { grid-template-columns: 1fr; }
+    .sor-grid > div:last-child { order: -1; }
+}
+
+.sor-mode {
+    text-align: left;
+    cursor: pointer;
+    width: 100%;
+    font: inherit;
+    background: #FBF9F5;
+    border: 1.5px solid rgba(28,35,51,0.10);
+    border-radius: 16px;
+    padding: 18px;
+    box-shadow: 0 8px 24px -18px rgba(28,35,51,0.25);
+    transition: all 0.22s cubic-bezier(.2,.7,.3,1);
+    position: relative;
+}
+.sor-mode:hover {
+    transform: translateY(-3px);
+}
+.sor-mode.active {
+    background: #FFFFFF !important;
+    border-color: #7A1C2B !important;
+    box-shadow: 0 18px 40px -22px rgba(122,28,43,0.4), 0 0 0 4px rgba(122,28,43,0.08) !important;
+}
+
+.sor-mode-badge {
+    display: inline-block;
+    font-family: ui-sans-serif, system-ui, -apple-system, sans-serif;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 1.4px;
+    color: #7A1C2B;
+    background: rgba(122,28,43,0.08);
+    padding: 4px 10px;
+    border-radius: 100px;
+    margin-bottom: 12px;
+}
+
+.sor-mode-title {
+    font-family: ui-sans-serif, system-ui, -apple-system, sans-serif;
+    font-size: 16.5px;
+    font-weight: 700;
+    color: #1C2333;
+    margin-bottom: 12px;
+}
+
+.sor-bullets {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: 8px;
+}
+.sor-bullets li {
+    display: flex;
+    gap: 9px;
+    align-items: flex-start;
+    font-family: ui-sans-serif, system-ui, -apple-system, sans-serif;
+    font-size: 13px;
+    color: #5A6072;
+    line-height: 1.35;
+}
+
+.sor-cta {
+    margin-top: 14px;
+    font-family: ui-sans-serif, system-ui, -apple-system, sans-serif;
+    font-size: 12.5px;
+    font-weight: 700;
+    letter-spacing: 0.3px;
+    color: #7A1C2B;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+.sor-arrow { transition: transform .2s ease; display: inline-block; }
+.sor-mode:hover .sor-arrow { transform: translateX(4px); }
+
+.sor-icon-box {
+    width: 44px;
+    height: 44px;
+    border-radius: 12px;
+    background: #FBF9F5;
+    border: 1px solid rgba(28,35,51,0.10);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 6px 16px -12px rgba(28,35,51,0.3);
+}
+
+.sor-primary {
+    font-family: ui-sans-serif, system-ui, -apple-system, sans-serif;
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: 0.4px;
+    color: #FBF9F5;
+    background: #7A1C2B;
+    border: none;
+    border-radius: 12px;
+    padding: 15px 30px;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 9px;
+    box-shadow: 0 16px 34px -18px rgba(122,28,43,0.7);
+    transition: all .2s ease;
+}
+.sor-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 22px 44px -18px rgba(122,28,43,0.8);
+}
+.sor-primary:hover .sor-arrow { transform: translateX(4px); }
+
+/* HERO RIGHT CARD */
+.sor-hero-card {
+    position: relative;
+    background: #F7F2EA;
+    border: 1px solid rgba(28,35,51,0.10);
+    border-radius: 26px;
+    padding: clamp(26px, 4vw, 52px);
+    overflow: hidden;
+    min-height: 440px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    box-shadow: 0 40px 100px -60px rgba(28,35,51,0.5);
+}
+
+.sor-ambient-glow {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background: radial-gradient(60% 55% at 50% 42%, rgba(122,28,43,0.10), rgba(122,28,43,0) 70%);
+}
+
+.sor-mode-tag {
+    position: absolute;
+    top: 20px;
+    right: 24px;
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    font-family: ui-sans-serif, system-ui, -apple-system, sans-serif;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 1.7px;
+    color: #8C8577;
+    z-index: 2;
+}
+.sor-live-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: #3F9D5A;
+    animation: sorBlink 2s ease-in-out infinite;
+}
+
+.sor-word-top, .sor-word-bottom {
+    font-family: ui-sans-serif, system-ui, -apple-system, sans-serif;
+    font-size: clamp(58px, 9vw, 132px);
+    font-weight: 800;
+    letter-spacing: -0.045em;
+    line-height: 0.92;
+    color: #1C2333;
+}
+
+.sor-vs-row {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 18px;
+    margin: clamp(6px, 1.4vw, 14px) 0;
+}
+.sor-rule {
+    display: block;
+    width: clamp(40px, 7vw, 96px);
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(28,35,51,0.16), transparent);
+}
+.sor-vs {
+    font-family: ui-sans-serif, system-ui, -apple-system, sans-serif;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 4px;
+    color: #7A1C2B;
+    text-transform: uppercase;
+}
+
+.sor-figure-val {
+    font-family: ui-sans-serif, system-ui, -apple-system, sans-serif;
+    font-size: clamp(26px, 3.4vw, 40px);
+    font-weight: 800;
+    letter-spacing: -1px;
+    color: #7A1C2B;
+    line-height: 1;
+}
+.sor-figure-lbl {
+    margin-top: 8px;
+    font-family: ui-sans-serif, system-ui, -apple-system, sans-serif;
+    font-size: 10.5px;
+    font-weight: 700;
+    letter-spacing: 2.2px;
+    color: #8C8577;
+    text-transform: uppercase;
+}
+
+.sor-outcome-text {
+    margin-top: clamp(16px, 2.2vw, 26px);
+    font-family: ui-sans-serif, system-ui, -apple-system, sans-serif;
+    font-size: 14px;
+    color: #5A6072;
+    max-width: 420px;
+    margin-left: auto;
+    margin-right: auto;
+    line-height: 1.5;
+}
+
+/* MORPHING ANIMATIONS */
+@media (prefers-reduced-motion: no-preference) {
+    .sor-morph   { animation: sorMorph .55s cubic-bezier(.2,.75,.25,1) both; }
+    .sor-figure  { animation: sorRise .5s cubic-bezier(.2,.75,.25,1) .06s both; }
+    .sor-outcome { animation: sorRise .5s cubic-bezier(.2,.75,.25,1) .12s both; }
+}
+
+@keyframes sorMorph {
+    from { opacity: 0; transform: translateY(18px); filter: blur(6px); }
+    to   { opacity: 1; transform: translateY(0); filter: blur(0); }
+}
+@keyframes sorRise {
+    from { opacity: 0; transform: translateY(10px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes sorBlink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.3; }
+}
 `;

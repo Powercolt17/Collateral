@@ -686,8 +686,8 @@ export function renderLanding() {
                         <!-- ═══ OPEN CONTRACTS STATS ═══ -->
                         <div style="display: flex; align-items: center; gap: 10px;">
                             <span style="width: 6px; height: 6px; background: #145c14; border-radius: 50%; box-shadow: 0 0 10px rgba(20,92,20,0.8);"></span>
-                            <span style="font-family: 'Inter Tight', sans-serif; font-weight: 700; color: #145c14; font-size: 15px; letter-spacing: -0.2px;">$7.6k</span>
-                            <span style="font-family: 'Inter', sans-serif; font-size: 11px; font-weight: 600; color: #666; text-transform: uppercase; letter-spacing: 0.05em;">Total Escrow · Solo Contracts</span>
+                            <span style="font-family: 'Inter Tight', sans-serif; font-weight: 700; color: #145c14; font-size: 15px; letter-spacing: -0.2px;">$12.4k</span>
+                            <span style="font-family: 'Inter', sans-serif; font-size: 11px; font-weight: 600; color: #666; text-transform: uppercase; letter-spacing: 0.05em;">Total Escrow · Live Contracts &amp; Rivalry Duels</span>
                         </div>
                     </div>
 
@@ -708,11 +708,17 @@ export function renderLanding() {
                     </div>
 
                     <div class="lcards">
+                        <!-- ═══ GROUP 1: SOLO CONTRACTS (CARDS 1 & 2) ═══ -->
+                        
                         <!-- CARD 1: SOLO - STRIPE REVENUE GROWTH -->
                         <div class="lcard lcard-popular reveal-item">
                             <div class="lcard-top">
+                                <span class="lcard-type-badge solo">SOLO CONTRACT</span>
                                 <span class="lcard-src"><svg class="lcard-src-logo" viewBox="0 0 24 24" fill="currentColor" style="color:#635BFF;width:14px;height:14px;display:inline-block;vertical-align:middle;margin-right:6px;"><path d="M20 10.3c0-1.8-1.5-2.7-3.6-3.2l-2-.5c-1.3-.3-1.9-.7-1.9-1.3 0-.6.7-1 1.7-1 1.7 0 3 .6 3.6 1l.7-2.6C17.9 2.2 16.3 1.8 14.8 1.8c-3.1 0-5.2 1.6-5.2 4.3 0 2.9 2.4 3.7 4.9 4.3l1.8.4c1.4.3 2 .8 2 1.5 0 .7-.8 1.1-2.1 1.1-1.9 0-3.6-.7-4.3-1.1l-.8 2.7c1 .5 2.9 1 4.7 1C18.2 16 20 14.4 20 10.3z"/></svg>Stripe</span>
-                                <span class="lcard-tier tier-stake">Stake</span>
+                            </div>
+                            <div class="lcard-id-row">
+                                <span class="lcard-id">ID: #8821A41E</span>
+                                <span class="lcard-tier tier-stake">Stake 2.5x</span>
                             </div>
                             <div class="lcard-title">Revenue Growth</div>
                             <div class="lcard-target">+20% Revenue growth</div>
@@ -728,14 +734,45 @@ export function renderLanding() {
                                 <div class="lcard-hover-row"><span>VERIFICATION:</span><span class="val green">AUTOMATIC</span></div>
                                 <div class="lcard-hover-row"><span>PAYOUT ON SUCCESS:</span><span class="val green">STAKE × 2.5</span></div>
                             </div>
-                            <div class="lcard-btn"><button class="lp-cta-btn" data-source="STRIPE" data-tier="stake" data-capital="250">Start Contract</button></div>
+                            <div class="lcard-btn"><button class="lp-cta-btn maroon" data-source="STRIPE" data-tier="stake" data-capital="250">Start Contract</button></div>
                             <div class="lcard-subtext">Deposit returned once goal is verified.</div>
                         </div>
 
-                        <!-- CARD 2: RIVALRY - AUDIENCE (ID: 7B92A41E) -->
+                        <!-- CARD 2: SOLO - SHOPIFY STORE SALES -->
+                        <div class="lcard reveal-item">
+                            <div class="lcard-top">
+                                <span class="lcard-type-badge solo">SOLO CONTRACT</span>
+                                <span class="lcard-src"><svg class="lcard-src-logo" viewBox="0 0 24 24" fill="currentColor" style="color:#96bf48;width:14px;height:14px;display:inline-block;vertical-align:middle;margin-right:6px;"><path d="M19.58 6.425a.86.86 0 00-.7-.34h-2.193a4.52 4.52 0 00-9.04 0H5.454a.86.86 0 00-.7.34.887.887 0 00-.16.766l1.97 10.96a2.41 2.41 0 002.37 1.986h6.49a2.41 2.41 0 002.37-1.985l1.97-10.96a.887.887 0 00-.184-.767zM12 3.86a2.53 2.53 0 012.513 2.225H9.487A2.53 2.53 0 0112 3.86zm3.267 11.516a2.036 2.036 0 01-1.745.892 2.374 2.374 0 01-1.614-.648A2.348 2.348 0 0010.3 15a2.036 2.036 0 01-1.745-.892.429.429 0 11.734-.442c.245.408.66.634 1.01.634.341 0 .614-.148.914-.442A3.21 3.21 0 0113.627 15c.341 0 .614-.148.914-.442a.429.429 0 01.734.442z"/></svg>Shopify</span>
+                            </div>
+                            <div class="lcard-id-row">
+                                <span class="lcard-id">ID: #9042B18C</span>
+                                <span class="lcard-tier tier-pledge">Pledge 1.5x</span>
+                            </div>
+                            <div class="lcard-title">Store Sales</div>
+                            <div class="lcard-target">+$5,000 Net Sales</div>
+                            <div class="lcard-row"><span class="k">Deposit</span><span class="v">$100 – $1,500</span></div>
+                            <div class="lcard-row"><span class="k">Total Return</span><span class="v">1.5x</span></div>
+                            <div class="lcard-row"><span class="k">Window</span><span class="v">30 days</span></div>
+                            <div class="lcard-live-indicator">
+                                <span class="lcard-live-dot"></span>
+                                <span class="lcard-live-text">$1.2k in escrow</span>
+                            </div>
+                            <div class="lcard-hover-details">
+                                <div class="lcard-hover-row"><span>TRACKED VIA:</span><span class="val">SHOPIFY DATA</span></div>
+                                <div class="lcard-hover-row"><span>VERIFICATION:</span><span class="val green">AUTOMATIC</span></div>
+                                <div class="lcard-hover-row"><span>PAYOUT ON SUCCESS:</span><span class="val green">PLEDGE × 1.5</span></div>
+                            </div>
+                            <div class="lcard-btn"><button class="lp-cta-btn maroon" data-source="SHOPIFY" data-tier="pledge" data-capital="100">Start Contract</button></div>
+                            <div class="lcard-subtext">Deposit returned once goal is verified.</div>
+                        </div>
+
+                        <!-- ═══ GROUP 2: RIVALRY DUELS (CARDS 3 & 4) ═══ -->
+                        
+                        <!-- CARD 3: RIVALRY - AUDIENCE (ID: #7B92A41E) -->
                         <div class="rv-card reveal-item" onclick="window.router.navigate('/rivalry/7B92A41E')">
                             <div class="rv-card-inner">
                                 <div class="rv-card-header">
+                                    <span class="lcard-type-badge rivalry">RIVALRY DUEL</span>
                                     <div class="rv-card-status">
                                         <span class="dot"></span>
                                         LOCKED
@@ -743,7 +780,7 @@ export function renderLanding() {
                                 </div>
                                 <div class="rv-card-metric-row">
                                     <span class="rv-card-metric">AUDIENCE</span>
-                                    <span class="rv-card-id">ID:7B92A41E</span>
+                                    <span class="rv-card-id">ID: #7B92A41E</span>
                                 </div>
                                 <div class="rv-versus">
                                     <div class="rv-player">
@@ -752,7 +789,9 @@ export function renderLanding() {
                                         <span class="rv-player-growth leading">+12.4%</span>
                                     </div>
                                     <div class="rv-vs-divider">
-                                        <img src="/crossed-swords.png" alt="vs" style="width:24px;height:24px;object-fit:contain;display:block;" />
+                                        <svg class="rv-swords-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#7A1C2B" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                                            <path d="m14.5 17.5-2.5-2.5m-4.5 4.5 7-7m2-2 4-4m-1.5 5.5L20 20m-2.5-1.5 1.5 1.5M4 4l5.5 5.5m-1.5 2.5L4 8m1.5-1.5L4 4m6 10-2-2"/>
+                                        </svg>
                                     </div>
                                     <div class="rv-player right">
                                         <span class="rv-player-label">Opponent</span>
@@ -771,7 +810,7 @@ export function renderLanding() {
                                     <span class="rv-card-stake-lbl">CAPITAL EXPOSURE</span>
                                 </div>
                                 <div style="display:flex;flex-direction:column;align-items:flex-end;gap:4px;">
-                                    <span class="rv-card-provider-pill" style="background:#111">X / TWITTER</span>
+                                    <span class="rv-card-provider-pill">X / TWITTER</span>
                                     <span class="rv-card-time">14D REMAINING</span>
                                 </div>
                             </div>
@@ -780,38 +819,15 @@ export function renderLanding() {
                                 <div class="lcard-hover-row"><span>VERIFICATION:</span><span class="val green">X DATA AUTOMATIC</span></div>
                                 <div class="lcard-hover-row"><span>WINNER TAKES:</span><span class="val green">100% COMBINED POOL</span></div>
                             </div>
-                            <div class="lcard-btn"><button class="lp-cta-btn" onclick="window.router.navigate('/rivalry/7B92A41E')">VIEW DUEL</button></div>
+                            <div class="lcard-btn"><button class="lp-cta-btn maroon" onclick="window.router.navigate('/rivalry/7B92A41E')">VIEW DUEL</button></div>
                             <div class="lcard-subtext">Escrow locked during duel period.</div>
                         </div>
 
-                        <!-- CARD 3: SOLO - SHOPIFY STORE SALES -->
-                        <div class="lcard reveal-item">
-                            <div class="lcard-top">
-                                <span class="lcard-src"><svg class="lcard-src-logo" viewBox="0 0 24 24" fill="currentColor" style="color:#96bf48;width:14px;height:14px;display:inline-block;vertical-align:middle;margin-right:6px;"><path d="M19.58 6.425a.86.86 0 00-.7-.34h-2.193a4.52 4.52 0 00-9.04 0H5.454a.86.86 0 00-.7.34.887.887 0 00-.16.766l1.97 10.96a2.41 2.41 0 002.37 1.986h6.49a2.41 2.41 0 002.37-1.985l1.97-10.96a.887.887 0 00-.184-.767zM12 3.86a2.53 2.53 0 012.513 2.225H9.487A2.53 2.53 0 0112 3.86zm3.267 11.516a2.036 2.036 0 01-1.745.892 2.374 2.374 0 01-1.614-.648A2.348 2.348 0 0010.3 15a2.036 2.036 0 01-1.745-.892.429.429 0 11.734-.442c.245.408.66.634 1.01.634.341 0 .614-.148.914-.442A3.21 3.21 0 0113.627 15c.341 0 .614-.148.914-.442a.429.429 0 01.734.442z"/></svg>Shopify</span>
-                                <span class="lcard-tier tier-pledge">Pledge</span>
-                            </div>
-                            <div class="lcard-title">Store Sales</div>
-                            <div class="lcard-target">+$5,000 Net Sales</div>
-                            <div class="lcard-row"><span class="k">Deposit</span><span class="v">$100 – $1,500</span></div>
-                            <div class="lcard-row"><span class="k">Total Return</span><span class="v">1.5x</span></div>
-                            <div class="lcard-row"><span class="k">Window</span><span class="v">30 days</span></div>
-                            <div class="lcard-live-indicator">
-                                <span class="lcard-live-dot"></span>
-                                <span class="lcard-live-text">$1.2k in escrow</span>
-                            </div>
-                            <div class="lcard-hover-details">
-                                <div class="lcard-hover-row"><span>TRACKED VIA:</span><span class="val">SHOPIFY DATA</span></div>
-                                <div class="lcard-hover-row"><span>VERIFICATION:</span><span class="val green">AUTOMATIC</span></div>
-                                <div class="lcard-hover-row"><span>PAYOUT ON SUCCESS:</span><span class="val green">PLEDGE × 1.5</span></div>
-                            </div>
-                            <div class="lcard-btn"><button class="lp-cta-btn" data-source="SHOPIFY" data-tier="pledge" data-capital="100">Start Contract</button></div>
-                            <div class="lcard-subtext">Deposit returned once goal is verified.</div>
-                        </div>
-
-                        <!-- CARD 4: RIVALRY - REVENUE (ID: 34D63CA3) -->
+                        <!-- CARD 4: RIVALRY - REVENUE (ID: #34D63CA3) -->
                         <div class="rv-card reveal-item" onclick="window.router.navigate('/rivalry/34D63CA3')">
                             <div class="rv-card-inner">
                                 <div class="rv-card-header">
+                                    <span class="lcard-type-badge rivalry">RIVALRY DUEL</span>
                                     <div class="rv-card-status">
                                         <span class="dot"></span>
                                         LOCKED
@@ -819,7 +835,7 @@ export function renderLanding() {
                                 </div>
                                 <div class="rv-card-metric-row">
                                     <span class="rv-card-metric">REVENUE</span>
-                                    <span class="rv-card-id">ID:34D63CA3</span>
+                                    <span class="rv-card-id">ID: #34D63CA3</span>
                                 </div>
                                 <div class="rv-versus">
                                     <div class="rv-player">
@@ -828,7 +844,9 @@ export function renderLanding() {
                                         <span class="rv-player-growth leading">+8.1%</span>
                                     </div>
                                     <div class="rv-vs-divider">
-                                        <img src="/crossed-swords.png" alt="vs" style="width:24px;height:24px;object-fit:contain;display:block;" />
+                                        <svg class="rv-swords-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#7A1C2B" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                                            <path d="m14.5 17.5-2.5-2.5m-4.5 4.5 7-7m2-2 4-4m-1.5 5.5L20 20m-2.5-1.5 1.5 1.5M4 4l5.5 5.5m-1.5 2.5L4 8m1.5-1.5L4 4m6 10-2-2"/>
+                                        </svg>
                                     </div>
                                     <div class="rv-player right">
                                         <span class="rv-player-label">Opponent</span>
@@ -847,8 +865,8 @@ export function renderLanding() {
                                     <span class="rv-card-stake-lbl">CAPITAL EXPOSURE</span>
                                 </div>
                                 <div style="display:flex;flex-direction:column;align-items:flex-end;gap:4px;">
-                                    <span class="rv-card-provider-pill" style="background:#635BFF">STRIPE</span>
-                                    <span class="rv-card-time">0H REMAINING</span>
+                                    <span class="rv-card-provider-pill">STRIPE</span>
+                                    <span class="rv-card-time status-settling">SETTLING</span>
                                 </div>
                             </div>
                             <div class="rv-card-hover-details">
@@ -856,7 +874,7 @@ export function renderLanding() {
                                 <div class="lcard-hover-row"><span>VERIFICATION:</span><span class="val green">STRIPE AUTOMATIC</span></div>
                                 <div class="lcard-hover-row"><span>WINNER TAKES:</span><span class="val green">100% COMBINED POOL</span></div>
                             </div>
-                            <div class="lcard-btn"><button class="lp-cta-btn" onclick="window.router.navigate('/rivalry/34D63CA3')">VIEW DUEL</button></div>
+                            <div class="lcard-btn"><button class="lp-cta-btn maroon" onclick="window.router.navigate('/rivalry/34D63CA3')">VIEW DUEL</button></div>
                             <div class="lcard-subtext">Escrow locked during duel period.</div>
                         </div>
                     </div>

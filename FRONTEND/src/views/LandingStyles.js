@@ -2223,11 +2223,90 @@ export const landingCSS = `
 .lhow-card-title {font-family:'Plus Jakarta Sans',sans-serif;font-size:18px;font-weight:700;color:var(--t1);letter-spacing:-0.3px;margin:0}
 .lhow-card-desc {font-size:13px;color:var(--t2);line-height:1.5;margin:0}
 
-/* ═══ CONTRACT CARDS DIFFERENTIATION ═══ */
+/* ═══ CONTRACT CARDS DIFFERENTIATION & MAROON CTAS ═══ */
 .lcard-popular{border-color:#0F172A !important;transform:scale(1.02);box-shadow:0 12px 30px rgba(15,23,42,0.06);position:relative;z-index:10}
 .lcard-popular:hover{transform:scale(1.04) translateY(-6px) !important;box-shadow:0 20px 40px rgba(15,23,42,0.1) !important}
 .lcard-popular-badge{background:var(--r);color:#fff;font-family:'Inter',sans-serif;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:1px;padding:5px 10px;border-radius:6px;white-space:nowrap}
 .tier-3x-yield{color:#fff !important;background:var(--r) !important;border:1px solid var(--r) !important}
+
+.lcard-type-badge {
+    display: inline-block;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9.5px;
+    font-weight: 800;
+    letter-spacing: 1.2px;
+    padding: 3px 8px;
+    border-radius: 4px;
+    text-transform: uppercase;
+}
+.lcard-type-badge.solo {
+    background: rgba(28, 35, 51, 0.06);
+    color: #1C2333;
+    border: 1px solid rgba(28, 35, 51, 0.14);
+}
+.lcard-type-badge.rivalry {
+    background: rgba(122, 28, 43, 0.08);
+    color: #7A1C2B;
+    border: 1px solid rgba(122, 28, 43, 0.22);
+}
+
+.lcard-id-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 10px;
+    margin-bottom: 6px;
+}
+.lcard-id {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10.5px;
+    font-weight: 700;
+    color: #64748B;
+    letter-spacing: 0.5px;
+}
+
+.lp-cta-btn {
+    width: 100%;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 13px;
+    font-weight: 800;
+    letter-spacing: 0.6px;
+    text-transform: uppercase;
+    color: #FFFFFF !important;
+    background: linear-gradient(135deg, #7A1C2B 0%, #5E1521 100%) !important;
+    border: 1px solid rgba(255, 255, 255, 0.15) !important;
+    border-radius: 8px !important;
+    padding: 12px 20px !important;
+    cursor: pointer;
+    transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1) !important;
+    box-shadow: 0 8px 20px -8px rgba(122, 28, 43, 0.5) !important;
+}
+.lp-cta-btn:hover {
+    transform: translateY(-2px) !important;
+    background: linear-gradient(135deg, #9A2B3D 0%, #6E1827 100%) !important;
+    box-shadow: 0 12px 28px -6px rgba(122, 28, 43, 0.75) !important;
+}
+
+.rv-swords-icon {
+    width: 24px;
+    height: 24px;
+    color: #7A1C2B;
+    filter: drop-shadow(0 2px 4px rgba(122, 28, 43, 0.2));
+    transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.rv-card:hover .rv-swords-icon {
+    transform: scale(1.15) rotate(-6deg);
+}
+
+.rv-card-time.status-settling {
+    color: #D97706 !important;
+    font-weight: 800 !important;
+    background: rgba(217, 119, 6, 0.1) !important;
+    border: 1px solid rgba(217, 119, 6, 0.25) !important;
+    padding: 2px 7px !important;
+    border-radius: 4px !important;
+    letter-spacing: 0.8px !important;
+}
 
 /* ═══ EMOTIONAL REFRAME ═══ */
 .lemo-reframe{padding:100px 0;background:var(--bg);position:relative}

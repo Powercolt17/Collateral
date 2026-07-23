@@ -6198,8 +6198,8 @@ export const landingCSS = `
 }
 .sor-grid {
     display: grid;
-    grid-template-columns: 42% 58%;
-    gap: clamp(28px, 4vw, 56px);
+    grid-template-columns: 48% 52%;
+    gap: clamp(24px, 3.5vw, 48px);
     align-items: center;
     max-width: 1240px;
     margin: 0 auto;
@@ -6354,14 +6354,17 @@ export const landingCSS = `
     position: relative;
     background: #F7F2EA;
     border: 1px solid rgba(28,35,51,0.10);
-    border-radius: 26px;
-    padding: clamp(26px, 4vw, 52px);
+    border-radius: 22px;
+    padding: clamp(20px, 3vw, 36px);
     overflow: hidden;
-    min-height: 440px;
+    min-height: 350px;
+    max-width: 520px;
+    width: 100%;
+    margin: 0 auto;
     display: flex;
     flex-direction: column;
     justify-content: center;
-    box-shadow: 0 40px 100px -60px rgba(28,35,51,0.5);
+    box-shadow: 0 24px 70px -45px rgba(28,35,51,0.45);
 }
 
 .sor-ambient-glow {
@@ -6395,7 +6398,7 @@ export const landingCSS = `
 
 .sor-word-top, .sor-word-bottom {
     font-family: 'Plus Jakarta Sans', sans-serif;
-    font-size: clamp(58px, 9vw, 132px);
+    font-size: clamp(40px, 5.5vw, 80px);
     font-weight: 900;
     letter-spacing: -0.045em;
     line-height: 0.92;
@@ -6408,7 +6411,7 @@ export const landingCSS = `
     align-items: center;
     justify-content: center;
     gap: 18px;
-    margin: clamp(6px, 1.4vw, 14px) 0;
+    margin: clamp(4px, 1vw, 10px) 0;
 }
 .sor-rule {
     display: block;
@@ -6418,7 +6421,7 @@ export const landingCSS = `
 }
 .sor-vs {
     font-family: 'Plus Jakarta Sans', sans-serif;
-    font-size: 13px;
+    font-size: 12px;
     font-weight: 800;
     letter-spacing: 4px;
     color: #7A1C2B;
@@ -6427,18 +6430,18 @@ export const landingCSS = `
 
 .sor-figure-val {
     font-family: 'Plus Jakarta Sans', sans-serif;
-    font-size: clamp(26px, 3.4vw, 40px);
+    font-size: clamp(22px, 2.8vw, 32px);
     font-weight: 900;
     letter-spacing: -1px;
     color: #7A1C2B;
     line-height: 1;
 }
 .sor-figure-lbl {
-    margin-top: 8px;
+    margin-top: 6px;
     font-family: 'JetBrains Mono', monospace;
-    font-size: 10.5px;
+    font-size: 10px;
     font-weight: 700;
-    letter-spacing: 2.2px;
+    letter-spacing: 2px;
     color: #8C8577;
     text-transform: uppercase;
 }

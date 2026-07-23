@@ -6806,14 +6806,14 @@ html, body {
   left: 0;
   right: 0;
   bottom: 0;
-  height: 46px;
+  height: 60px;
   pointer-events: none;
-  z-index: 2;
-  background: linear-gradient(180deg, rgba(251,249,245,0) 0%, #FBF9F5 100%);
-  transition: background 0.2s ease;
+  z-index: 5;
+  background: linear-gradient(180deg, rgba(251,249,245,0) 0%, rgba(251,249,245,0.45) 45%, rgba(251,249,245,0.85) 75%, #FBF9F5 100%) !important;
+  transition: background 0.25s ease;
 }
 .sor-mode.active .sor-art-fade, .sor-mode.on .sor-art-fade {
-  background: linear-gradient(180deg, rgba(255,255,255,0) 0%, #FFFFFF 100%);
+  background: linear-gradient(180deg, rgba(255,255,255,0) 0%, rgba(255,255,255,0.55) 45%, rgba(255,255,255,0.9) 75%, #FFFFFF 100%) !important;
 }
 
 /* ═══ GLOBAL EYEBROW PROTECTION ═══ */

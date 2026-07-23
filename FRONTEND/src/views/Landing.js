@@ -333,8 +333,7 @@ export function renderLanding() {
                         </div>
 
                         <h2 style="font-family: 'Plus Jakarta Sans', sans-serif; font-size: clamp(38px,5.2vw,62px); line-height: 0.95; margin: 0 0 20px; letter-spacing: -0.035em; font-weight: 900; text-transform: uppercase;">
-                            <span style="color: #1C2333;">SOLO OR<br></span>
-                            <span style="color: #7A1C2B;">RIVALRY.</span>
+                            <span style="color: #1C2333;">SOLO OR </span><span style="color: #7A1C2B;">RIVALRY.</span>
                         </h2>
 
                         <p style="font-family: 'Inter', sans-serif; font-size: 16.5px; line-height: 1.55; color: #5A6072; margin: 0 0 26px; max-width: 420px;">
@@ -344,9 +343,9 @@ export function renderLanding() {
                         <div class="sor-mode-grid" style="display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 30px;">
                             <!-- SOLO CARD WITH ENGRAVING -->
                             <button id="card-mode-solo" class="sor-mode active" onclick="window.switchProtocolMode('solo')" style="text-align: left; cursor: pointer; width: 100%; padding: 0; overflow: hidden; border-radius: 16px; transition: all .2s cubic-bezier(.2,.7,.3,1);">
-                                <div style="position: relative; height: 132px; overflow: hidden; background: #EFE8DA; border-bottom: 1px solid rgba(28,35,51,0.10);">
+                                <div style="position: relative; height: 132px; overflow: hidden; background: #EFE8DA;">
                                     <img src="/assets/images/solo-seal.png" alt="Solo Seal Engraving" class="sor-art" style="width: 100%; height: 100%; object-fit: cover; object-position: center 48%; display: block;" />
-                                    <div class="sor-art-fade" aria-hidden="true" style="position: absolute; left: 0; right: 0; bottom: 0; height: 46px; pointer-events: none; z-index: 2;"></div>
+                                    <div class="sor-art-fade" aria-hidden="true"></div>
                                 </div>
                                 <div style="padding: 14px 18px 16px;">
                                     <span class="sor-mode-badge" style="display: inline-block; font-family: 'Plus Jakarta Sans', sans-serif; font-size: 10px; font-weight: 700; letter-spacing: 1.4px; color: #7A1C2B; background: rgba(122,28,43,0.08); padding: 4px 10px; border-radius: 999px; margin-bottom: 11px;">SOLO</span>
@@ -371,9 +370,9 @@ export function renderLanding() {
 
                             <!-- RIVALRY CARD WITH ENGRAVING -->
                             <button id="card-mode-rivalry" class="sor-mode" onclick="window.switchProtocolMode('rivalry')" style="text-align: left; cursor: pointer; width: 100%; padding: 0; overflow: hidden; border-radius: 16px; transition: all .2s cubic-bezier(.2,.7,.3,1);">
-                                <div style="position: relative; height: 132px; overflow: hidden; background: #5E1521; border-bottom: 1px solid rgba(251,232,228,0.14);">
-                                    <img src="/assets/images/rivalry-seal.png" alt="Rivalry Seals Engraving" class="sor-art" style="width: 100%; height: 100%; object-fit: cover; object-position: center 42%; display: block;" />
-                                    <div class="sor-art-fade" aria-hidden="true" style="position: absolute; left: 0; right: 0; bottom: 0; height: 46px; pointer-events: none; z-index: 2;"></div>
+                                <div style="position: relative; height: 132px; overflow: hidden; background: #5E1521;">
+                                    <img src="/assets/images/rivalry-seal.png" alt="Rivalry Seals Engraving" class="sor-art" style="width: 100%; height: 100%; object-fit: cover; object-position: center 52%; display: block;" />
+                                    <div class="sor-art-fade" aria-hidden="true"></div>
                                 </div>
                                 <div style="padding: 14px 18px 16px;">
                                     <span class="sor-mode-badge" style="display: inline-block; font-family: 'Plus Jakarta Sans', sans-serif; font-size: 10px; font-weight: 700; letter-spacing: 1.4px; color: #7A1C2B; background: rgba(122,28,43,0.08); padding: 4px 10px; border-radius: 999px; margin-bottom: 11px;">RIVALRY</span>

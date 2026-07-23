@@ -4714,7 +4714,7 @@ export const landingCSS = `
 .lterm-integrated-selector {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 16px;
+    gap: 20px;
     margin-bottom: 28px;
 }
 
@@ -4722,32 +4722,37 @@ export const landingCSS = `
     background: #FFFFFF;
     border: 1.5px solid #E2E8F0;
     border-radius: 16px;
-    padding: 16px 20px;
+    padding: 20px 24px;
     display: flex;
     align-items: center;
     justify-content: space-between;
     cursor: pointer;
-    transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
-    box-shadow: 0 4px 16px rgba(15, 23, 42, 0.02);
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    box-shadow: 0 2px 8px rgba(15, 23, 42, 0.03);
 }
 
 .lterm-select-card:hover {
-    border-color: rgba(122, 18, 32, 0.35);
+    border-color: #CBD5E1;
     transform: translateY(-2px);
-    box-shadow: 0 8px 24px -6px rgba(15, 23, 42, 0.06);
+    box-shadow: 0 8px 24px rgba(15, 23, 42, 0.06);
 }
 
 .lterm-select-card.active {
-    background: #FFFDFA;
-    border-color: #7A1220 !important;
+    background: #FFFFFF !important;
+    border: 2px solid #0F172A !important;
     transform: translateY(-2px);
-    box-shadow: 0 12px 28px -6px rgba(122, 18, 32, 0.12);
+    box-shadow: 0 4px 20px rgba(15, 23, 42, 0.08), 0 12px 32px rgba(15, 23, 42, 0.06) !important;
+}
+
+.lterm-select-card.active#card-mode-rivalry {
+    border-color: #7A1220 !important;
+    box-shadow: 0 4px 20px rgba(122, 18, 32, 0.08), 0 12px 32px rgba(15, 23, 42, 0.06) !important;
 }
 
 .lselect-left {
     display: flex;
     flex-direction: column;
-    gap: 2px;
+    gap: 3px;
 }
 
 .lselect-badge {
@@ -4755,45 +4760,49 @@ export const landingCSS = `
     font-family: 'JetBrains Mono', monospace;
     font-size: 9.5px;
     font-weight: 800;
-    padding: 2px 8px;
-    border-radius: 9999px;
-    letter-spacing: 1px;
+    padding: 3px 8px;
+    border-radius: 4px;
+    letter-spacing: 1.2px;
     text-transform: uppercase;
 }
 
 .lselect-badge.solo { background: #F1F5F9; color: #475569; border: 1px solid #E2E8F0; }
-.lselect-badge.rivalry { background: #FDF2F2; color: #7A1220; border: 1px solid rgba(122, 18, 32, 0.25); }
+.lselect-badge.rivalry { background: #FDF2F2; color: #991B1B; border: 1px solid #FECDD3; }
 
 .lselect-title {
     font-family: 'Plus Jakarta Sans', sans-serif;
-    font-size: 15px;
+    font-size: 17px;
     font-weight: 800;
     color: #0F172A;
-    margin-top: 4px;
+    margin-top: 2px;
+    letter-spacing: -0.3px;
 }
 
 .lselect-sub {
     font-family: 'Inter', sans-serif;
-    font-size: 12px;
+    font-size: 12.5px;
     color: #64748B;
+    font-weight: 500;
 }
 
 .lselect-stat-badge {
     font-family: 'JetBrains Mono', monospace;
-    font-size: 11px;
+    font-size: 10px;
     font-weight: 800;
     color: #166534;
-    background: #F0FDF4;
+    background: #DCFCE7;
     border: 1px solid #BBF7D0;
-    padding: 4px 10px;
-    border-radius: 8px;
+    padding: 5px 12px;
+    border-radius: 100px;
     white-space: nowrap;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
 }
 
 .lselect-stat-badge.rivalry {
-    color: #7A1220;
-    background: #FDF2F2;
-    border-color: rgba(122, 18, 32, 0.2);
+    color: #991B1B;
+    background: #FEE2E2;
+    border: 1px solid #FECDD3;
 }
 
 @media (max-width: 768px) {
@@ -4806,9 +4815,9 @@ export const landingCSS = `
 /* ═══ PREMIUM FINANCIAL CONTRACT INSTRUMENT PANEL ═══ */
 .lproto-term-window {
     background: #FFFFFF;
-    border: 1.5px solid #E2E8F0;
-    border-radius: 24px;
-    box-shadow: 0 24px 54px -12px rgba(15, 23, 42, 0.08), 0 0 0 1px rgba(122, 18, 32, 0.06);
+    border: 1px solid #E2E8F0;
+    border-radius: 20px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.02), 0 20px 50px -10px rgba(15, 23, 42, 0.08);
     overflow: hidden;
     color: #0F172A;
     font-family: 'Inter', sans-serif;
@@ -4817,33 +4826,35 @@ export const landingCSS = `
 }
 
 .lterm-bar {
-    background: #FAF9F7;
-    padding: 16px 24px;
+    background: #FAFAFA;
+    padding: 14px 22px;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    border-bottom: 1px solid #E2E8F0;
+    border-bottom: 1px solid #F1F5F9;
 }
 
 .lterm-dots {
     display: flex;
     align-items: center;
-    gap: 8px;
+    gap: 7px;
 }
 
 .lterm-dots .dot {
     width: 10px;
     height: 10px;
     border-radius: 50%;
-    background: #CBD5E1;
 }
+.lterm-dots .dot.red { background: #EF4444; }
+.lterm-dots .dot.yellow { background: #F59E0B; }
+.lterm-dots .dot.green { background: #10B981; }
 
 .lterm-title {
     font-family: 'JetBrains Mono', monospace;
-    font-size: 11.5px;
+    font-size: 11px;
     font-weight: 700;
-    letter-spacing: 0.8px;
-    color: #0F172A;
+    letter-spacing: 1px;
+    color: #475569;
     text-transform: uppercase;
 }
 
@@ -4852,22 +4863,23 @@ export const landingCSS = `
     font-size: 10px;
     font-weight: 800;
     letter-spacing: 1px;
-    padding: 4px 12px;
-    border-radius: 9999px;
+    padding: 4px 11px;
+    border-radius: 100px;
     text-transform: uppercase;
     display: flex;
     align-items: center;
     gap: 6px;
 }
 
-.lterm-status-badge.live { background: #FDF2F2; color: #7A1220; border: 1px solid rgba(122, 18, 32, 0.2); }
-.lterm-status-badge.rivalry { background: #FDF2F2; color: #7A1220; border: 1px solid rgba(122, 18, 32, 0.25); }
+.lterm-status-badge.live { background: #FDF2F2; color: #7A1220; border: 1px solid #FECDD3; }
+.lterm-status-badge.rivalry { background: #FDF2F2; color: #7A1220; border: 1px solid #FECDD3; }
 
 .pulse-dot {
     width: 6px;
     height: 6px;
     border-radius: 50%;
-    background: #7A1220;
+    background: #991B1B;
+    box-shadow: 0 0 8px rgba(153, 27, 27, 0.6);
     animation: termDotPulse 2s ease-in-out infinite;
 }
 
@@ -4877,20 +4889,21 @@ export const landingCSS = `
 }
 
 .lterm-body {
-    padding: 32px;
+    padding: 24px;
     display: flex;
     flex-direction: column;
-    gap: 22px;
+    gap: 20px;
+    background: #FFFFFF;
 }
 
 .lterm-hero-row {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    background: #FAF9F7;
-    border: 1px solid #E2E8F0;
-    border-radius: 18px;
-    padding: 20px 24px;
+    background: #F8FAFC;
+    border: 1px solid #F1F5F9;
+    border-radius: 14px;
+    padding: 18px 22px;
 }
 
 .lterm-metric-box {
@@ -4902,7 +4915,7 @@ export const landingCSS = `
 
 .lterm-metric-box .lbl {
     font-family: 'JetBrains Mono', monospace;
-    font-size: 9.5px;
+    font-size: 10px;
     font-weight: 700;
     letter-spacing: 1.2px;
     color: #64748B;
@@ -4914,7 +4927,7 @@ export const landingCSS = `
     font-size: 22px;
     font-weight: 800;
     color: #0F172A;
-    letter-spacing: -0.3px;
+    letter-spacing: -0.4px;
 }
 .lterm-metric-box .val.green { color: #7A1220; }
 
@@ -4922,7 +4935,7 @@ export const landingCSS = `
 .lterm-grid-metrics {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
-    gap: 12px;
+    gap: 14px;
 }
 
 @media (max-width: 768px) {
@@ -4932,31 +4945,31 @@ export const landingCSS = `
 }
 
 .lterm-m {
-    background: #F8FAF9;
+    background: #FFFFFF;
     border: 1px solid #E2E8F0;
     border-radius: 12px;
-    padding: 12px 16px;
+    padding: 14px 16px;
     display: flex;
     flex-direction: column;
-    gap: 3px;
+    gap: 4px;
 }
 
 .lterm-m .k {
     font-family: 'JetBrains Mono', monospace;
     font-size: 9px;
     font-weight: 700;
-    color: #64748B;
+    color: #94A3B8;
     text-transform: uppercase;
-    letter-spacing: 0.8px;
+    letter-spacing: 1px;
 }
 
 .lterm-m .v {
-    font-family: 'Inter', sans-serif;
-    font-size: 13px;
-    font-weight: 600;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 14px;
+    font-weight: 800;
     color: #0F172A;
 }
-.lterm-m .v.green { color: #166534; font-weight: 700; }
+.lterm-m .v.green { color: #16A34A; }
 
 /* View Container Animation */
 .lterm-view-anim {
@@ -5014,49 +5027,51 @@ export const landingCSS = `
 .lterm-tracks-stack {
     display: flex;
     flex-direction: column;
-    gap: 12px;
-    background: #FAF9F7;
-    border: 1px solid #E2E8F0;
-    border-radius: 16px;
-    padding: 20px 24px;
+    gap: 16px;
+    background: #F8FAFC;
+    border: 1px solid #F1F5F9;
+    border-radius: 14px;
+    padding: 20px;
 }
 
 .lterm-track-item {
     display: flex;
     flex-direction: column;
-    gap: 6px;
+    gap: 8px;
 }
 
 .lterm-track-hdr {
     display: flex;
     justify-content: space-between;
     font-family: 'JetBrains Mono', monospace;
-    font-size: 10px;
+    font-size: 11px;
     font-weight: 700;
     letter-spacing: 0.8px;
     color: #475569;
 }
-.lterm-track-hdr .pct { color: #7A1220; font-weight: 800; display: flex; align-items: center; }
+.lterm-track-hdr .pct { color: #991B1B; font-weight: 800; display: flex; align-items: center; }
 .lterm-track-hdr .pct.completed { color: #166534; }
 
 .lterm-progress-track {
-    height: 8px;
+    height: 10px;
     background: #E2E8F0;
-    border-radius: 9999px;
+    border-radius: 100px;
     overflow: hidden;
     position: relative;
 }
 
 .lterm-progress-fill {
     height: 100%;
-    background: #7A1220;
-    border-radius: 9999px;
+    background: linear-gradient(90deg, #7A1220, #991B1B);
+    box-shadow: 0 0 10px rgba(153, 27, 27, 0.25);
+    border-radius: 100px;
     position: relative;
     transition: width 0.8s ease-in-out;
 }
 
 .lterm-progress-fill.completed {
-    background: #166534;
+    background: linear-gradient(90deg, #16A34A, #22C55E);
+    box-shadow: 0 0 10px rgba(34, 197, 94, 0.25);
 }
 
 .lterm-progress-glow {
@@ -5076,7 +5091,7 @@ export const landingCSS = `
 .lterm-rules-box {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 12px;
+    gap: 14px;
 }
 
 @media (max-width: 640px) {
@@ -5091,29 +5106,24 @@ export const landingCSS = `
     gap: 10px;
     padding: 14px 18px;
     border-radius: 12px;
-    font-size: 12.5px;
+    font-family: 'Inter', sans-serif;
+    font-size: 13px;
     line-height: 1.35;
 }
 
 .lterm-rule.pass {
     background: #F0FDF4;
     border: 1px solid #BBF7D0;
-    color: #0F172A;
-    animation: passRuleBreathing 4s ease-in-out infinite;
+    color: #166534;
 }
 .lterm-rule.pass .ic { color: #166534; font-weight: 800; font-size: 14px; }
 
-@keyframes passRuleBreathing {
-    0%, 100% { border-color: #BBF7D0; box-shadow: 0 2px 10px rgba(22, 101, 52, 0.04); }
-    50% { border-color: rgba(22, 101, 52, 0.4); box-shadow: 0 4px 18px rgba(22, 101, 52, 0.1); }
-}
-
 .lterm-rule.fail {
     background: #FDF2F2;
-    border: 1px solid rgba(122, 18, 32, 0.2);
-    color: #0F172A;
+    border: 1px solid #FECDD3;
+    color: #991B1B;
 }
-.lterm-rule.fail .ic { color: #7A1220; font-weight: 800; font-size: 14px; }
+.lterm-rule.fail .ic { color: #991B1B; font-weight: 800; font-size: 14px; }
 
 /* Rivalry Matchup Layout */
 .lterm-matchup-row {

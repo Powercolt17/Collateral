@@ -432,7 +432,7 @@ export function renderLanding() {
             </section>
 
             <!-- ═══ EMOTIONAL REFRAME (THE FORK: WHY IT WORKS) ═══ -->
-            <div class="lhow-it-works-section" data-r style="background: #F8F5F0; padding: clamp(48px,6vw,80px) 0; overflow: visible !important;">
+            <div class="lhow-it-works-section" data-r style="background: #F8F5F0; padding: clamp(48px,7vw,96px) 0; overflow: visible !important;">
                 <div class="lw">
                     <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 20px; padding-top: 4px;" class="reveal-item">
                         <span style="width: 24px; height: 1.5px; background: #7A1C2B; opacity: 0.5;"></span>
@@ -458,8 +458,8 @@ export function renderLanding() {
                         </div>
 
                         <!-- THE FORK SVG PANEL -->
-                        <div style="background: #FCFAF7; border: 1px solid rgba(28,35,51,0.11); border-radius: 22px; padding: clamp(12px,1.8vw,20px); box-shadow: 0 30px 70px -50px rgba(28,35,51,0.4);">
-                            <svg viewBox="0 0 680 500" width="100%" role="img" aria-label="One goal, two paths: without stakes the path fades to nothing; with a locked deposit it ends in capital returned plus yield." style="display: block; height: auto;">
+                        <div style="background: #FCFAF7; border: 1px solid rgba(28,35,51,0.11); border-radius: 22px; padding: clamp(10px,1.2vw,16px); box-shadow: 0 30px 70px -50px rgba(28,35,51,0.4);">
+                            <svg viewBox="0 0 680 520" width="100%" role="img" aria-label="One goal, two paths: without stakes the path fades to nothing; with a locked deposit it ends in capital returned plus yield." style="display: block; height: auto;">
                                 <defs>
                                     <marker id="fkArrow" markerWidth="7" markerHeight="7" refX="5.5" refY="3.5" orient="auto">
                                         <path d="M0 0.5 L6.5 3.5 L0 6.5 Z" fill="#7A1C2B" />
@@ -475,97 +475,97 @@ export function renderLanding() {
 
                                 <!-- shared origin -->
                                 <g>
-                                    <rect x="248" y="18" width="184" height="42" rx="12" fill="#FBF9F5" stroke="rgba(28,35,51,0.11)" />
-                                    <text x="340" y="44" text-anchor="middle" font-family="'Plus Jakarta Sans', sans-serif" font-size="14" font-weight="700" fill="#1C2333">You set a goal.</text>
+                                    <rect x="230" y="16" width="220" height="50" rx="12" fill="#FBF9F5" stroke="rgba(28,35,51,0.11)" />
+                                    <text x="340" y="41" text-anchor="middle" dominant-baseline="central" font-family="'Plus Jakarta Sans', sans-serif" font-size="17" font-weight="700" fill="#1C2333">You set a goal.</text>
                                 </g>
 
                                 <!-- the fork itself -->
-                                <path d="M310 60 C 280 82, 213 78, 173 100" fill="none" stroke="#8C8577" stroke-width="1.4" stroke-dasharray="4 5" opacity="0.6" />
-                                <path d="M370 60 C 400 82, 467 78, 507 100" fill="none" stroke="#7A1C2B" stroke-width="1.7" opacity="0.65" marker-end="url(#fkArrow)" />
+                                <path d="M305 66 C 275 84, 213 78, 173 98" fill="none" stroke="#8C8577" stroke-width="1.4" stroke-dasharray="4 5" opacity="0.6" />
+                                <path d="M375 66 C 405 84, 467 78, 507 98" fill="none" stroke="#7A1C2B" stroke-width="1.7" opacity="0.65" marker-end="url(#fkArrow)" />
 
                                 <!-- column headers -->
-                                <text x="26" y="92" font-family="'JetBrains Mono', monospace" font-size="9.5" font-weight="700" letter-spacing="1.8" fill="#8C8577">WITHOUT STAKES</text>
-                                <text x="360" y="92" font-family="'JetBrains Mono', monospace" font-size="9.5" font-weight="700" letter-spacing="1.8" fill="#7A1C2B">WITH COLLATERAL</text>
+                                <text x="26" y="90" font-family="'JetBrains Mono', monospace" font-size="11" font-weight="700" letter-spacing="1.8" fill="#8C8577">WITHOUT STAKES</text>
+                                <text x="360" y="90" font-family="'JetBrains Mono', monospace" font-size="11" font-weight="700" letter-spacing="1.8" fill="#7A1C2B">WITH COLLATERAL</text>
 
                                 <!-- ---- LEFT: the path that dissolves ---- -->
                                 <!-- Step 01 -->
                                 <g opacity="1">
-                                    <rect x="26" y="108" width="294" height="52" rx="11" fill="#FCFAF7" stroke="rgba(28,35,51,0.11)" stroke-dasharray="0" />
-                                    <text x="42" y="135" dominant-baseline="central" font-family="'JetBrains Mono', monospace" font-size="10" font-weight="700" fill="#A8A49B">01</text>
-                                    <text x="70" y="135" dominant-baseline="central" font-family="'Inter', sans-serif" font-size="14" fill="#5A6072">Plan a new goal</text>
+                                    <rect x="26" y="106" width="294" height="62" rx="11" fill="#FCFAF7" stroke="rgba(28,35,51,0.11)" stroke-dasharray="0" />
+                                    <text x="42" y="137" dominant-baseline="central" font-family="'JetBrains Mono', monospace" font-size="11.5" font-weight="700" fill="#A8A49B">01</text>
+                                    <text x="72" y="137" dominant-baseline="central" font-family="'Inter', sans-serif" font-size="16" fill="#5A6072">Plan a new goal</text>
                                 </g>
                                 <!-- Step 02 -->
                                 <g opacity="0.68">
-                                    <rect x="26" y="172" width="294" height="52" rx="11" fill="#FCFAF7" stroke="rgba(28,35,51,0.11)" stroke-dasharray="0" />
-                                    <text x="42" y="199" dominant-baseline="central" font-family="'JetBrains Mono', monospace" font-size="10" font-weight="700" fill="#A8A49B">02</text>
-                                    <text x="70" y="199" dominant-baseline="central" font-family="'Inter', sans-serif" font-size="14" fill="#5A6072">Get distracted</text>
+                                    <rect x="26" y="182" width="294" height="62" rx="11" fill="#FCFAF7" stroke="rgba(28,35,51,0.11)" stroke-dasharray="0" />
+                                    <text x="42" y="213" dominant-baseline="central" font-family="'JetBrains Mono', monospace" font-size="11.5" font-weight="700" fill="#A8A49B">02</text>
+                                    <text x="72" y="213" dominant-baseline="central" font-family="'Inter', sans-serif" font-size="16" fill="#5A6072">Get distracted</text>
                                 </g>
                                 <!-- Step 03 -->
                                 <g opacity="0.44">
-                                    <rect x="26" y="236" width="294" height="52" rx="11" fill="#FCFAF7" stroke="rgba(28,35,51,0.11)" stroke-dasharray="5 5" />
-                                    <text x="42" y="263" dominant-baseline="central" font-family="'JetBrains Mono', monospace" font-size="10" font-weight="700" fill="#A8A49B">03</text>
-                                    <text x="70" y="263" dominant-baseline="central" font-family="'Inter', sans-serif" font-size="14" fill="#5A6072">Push the deadline</text>
+                                    <rect x="26" y="258" width="294" height="62" rx="11" fill="#FCFAF7" stroke="rgba(28,35,51,0.11)" stroke-dasharray="5 5" />
+                                    <text x="42" y="289" dominant-baseline="central" font-family="'JetBrains Mono', monospace" font-size="11.5" font-weight="700" fill="#A8A49B">03</text>
+                                    <text x="72" y="289" dominant-baseline="central" font-family="'Inter', sans-serif" font-size="16" fill="#5A6072">Push the deadline</text>
                                 </g>
                                 <!-- Step 04 -->
                                 <g opacity="0.26">
-                                    <rect x="26" y="300" width="294" height="52" rx="11" fill="#FCFAF7" stroke="rgba(28,35,51,0.11)" stroke-dasharray="5 5" />
-                                    <text x="42" y="327" dominant-baseline="central" font-family="'JetBrains Mono', monospace" font-size="10" font-weight="700" fill="#A8A49B">04</text>
-                                    <text x="70" y="327" dominant-baseline="central" font-family="'Inter', sans-serif" font-size="14" fill="#5A6072">Another year slides by</text>
+                                    <rect x="26" y="334" width="294" height="62" rx="11" fill="#FCFAF7" stroke="rgba(28,35,51,0.11)" stroke-dasharray="5 5" />
+                                    <text x="42" y="365" dominant-baseline="central" font-family="'JetBrains Mono', monospace" font-size="11.5" font-weight="700" fill="#A8A49B">04</text>
+                                    <text x="72" y="365" dominant-baseline="central" font-family="'Inter', sans-serif" font-size="16" fill="#5A6072">Another year slides by</text>
                                 </g>
 
                                 <!-- connectors thin out as path fades -->
-                                <line x1="173" y1="161" x2="173" y2="171" stroke="#8C8577" stroke-width="1.3" stroke-dasharray="3 5" opacity="0.54" />
-                                <line x1="173" y1="225" x2="173" y2="235" stroke="#8C8577" stroke-width="1.0" stroke-dasharray="3 5" opacity="0.35" />
-                                <line x1="173" y1="289" x2="173" y2="299" stroke="#8C8577" stroke-width="0.7" stroke-dasharray="3 5" opacity="0.21" />
+                                <line x1="173" y1="168" x2="173" y2="182" stroke="#8C8577" stroke-width="1.3" stroke-dasharray="3 5" opacity="0.54" />
+                                <line x1="173" y1="244" x2="173" y2="258" stroke="#8C8577" stroke-width="1.0" stroke-dasharray="3 5" opacity="0.35" />
+                                <line x1="173" y1="320" x2="173" y2="334" stroke="#8C8577" stroke-width="0.7" stroke-dasharray="3 5" opacity="0.21" />
 
                                 <!-- dead end -->
-                                <line x1="173" y1="353" x2="173" y2="376" stroke="url(#fkFade)" stroke-width="1" stroke-dasharray="3 5" />
-                                <g opacity="0.85">
-                                    <rect x="26" y="378" width="294" height="62" rx="12" fill="none" stroke="#A8A49B" stroke-width="1" stroke-dasharray="6 6" />
-                                    <text x="173" y="404" text-anchor="middle" font-family="'Plus Jakarta Sans', sans-serif" font-size="15" font-weight="700" fill="#A8A49B">Nothing was at risk.</text>
-                                    <text x="173" y="424" text-anchor="middle" font-family="'Inter', sans-serif" font-size="12.5" fill="#8C8577">So nothing changed.</text>
+                                <line x1="173" y1="396" x2="173" y2="422" stroke="url(#fkFade)" stroke-width="1" stroke-dasharray="3 5" />
+                                <g opacity="0.9">
+                                    <rect x="26" y="424" width="294" height="76" rx="14" fill="none" stroke="#8C8577" stroke-width="1.5" stroke-dasharray="6 6" />
+                                    <text x="173" y="454" text-anchor="middle" font-family="'Plus Jakarta Sans', sans-serif" font-size="18" font-weight="700" fill="#6E685C">Nothing was at risk.</text>
+                                    <text x="173" y="480" text-anchor="middle" font-family="'Inter', sans-serif" font-size="14" font-weight="500" fill="#5A6072">So nothing changed.</text>
                                 </g>
 
                                 <!-- ---- RIGHT: the path that firms up ---- -->
                                 <!-- Step 01 -->
                                 <g>
-                                    <rect x="360" y="108" width="294" height="52" rx="11" fill="#FCFAF7" stroke="rgba(122,28,43,0.14)" stroke-width="1" />
-                                    <text x="376" y="135" dominant-baseline="central" font-family="'JetBrains Mono', monospace" font-size="10" font-weight="700" fill="#7A1C2B" opacity="0.55">01</text>
-                                    <text x="404" y="135" dominant-baseline="central" font-family="'Plus Jakarta Sans', sans-serif" font-size="14" font-weight="600" fill="#1C2333">Lock a deposit on target</text>
+                                    <rect x="360" y="106" width="294" height="62" rx="11" fill="#FCFAF7" stroke="rgba(122,28,43,0.14)" stroke-width="1" />
+                                    <text x="376" y="137" dominant-baseline="central" font-family="'JetBrains Mono', monospace" font-size="11.5" font-weight="700" fill="#7A1C2B" opacity="0.55">01</text>
+                                    <text x="406" y="137" dominant-baseline="central" font-family="'Plus Jakarta Sans', sans-serif" font-size="16" font-weight="600" fill="#1C2333">Lock a deposit on target</text>
                                 </g>
                                 <!-- Step 02 -->
                                 <g>
-                                    <rect x="360" y="172" width="294" height="52" rx="11" fill="#FCFAF7" stroke="rgba(122,28,43,0.21)" stroke-width="1" />
-                                    <text x="376" y="199" dominant-baseline="central" font-family="'JetBrains Mono', monospace" font-size="10" font-weight="700" fill="#7A1C2B" opacity="0.7">02</text>
-                                    <text x="404" y="199" dominant-baseline="central" font-family="'Plus Jakarta Sans', sans-serif" font-size="14" font-weight="600" fill="#1C2333">Failure now has a cost</text>
+                                    <rect x="360" y="182" width="294" height="62" rx="11" fill="#FCFAF7" stroke="rgba(122,28,43,0.21)" stroke-width="1" />
+                                    <text x="376" y="213" dominant-baseline="central" font-family="'JetBrains Mono', monospace" font-size="11.5" font-weight="700" fill="#7A1C2B" opacity="0.7">02</text>
+                                    <text x="406" y="213" dominant-baseline="central" font-family="'Plus Jakarta Sans', sans-serif" font-size="16" font-weight="600" fill="#1C2333">Failure now has a cost</text>
                                 </g>
                                 <!-- Step 03 -->
                                 <g>
-                                    <rect x="360" y="236" width="294" height="52" rx="11" fill="#FCFAF7" stroke="rgba(122,28,43,0.28)" stroke-width="1" />
-                                    <text x="376" y="263" dominant-baseline="central" font-family="'JetBrains Mono', monospace" font-size="10" font-weight="700" fill="#7A1C2B" opacity="0.85">03</text>
-                                    <text x="404" y="263" dominant-baseline="central" font-family="'Plus Jakarta Sans', sans-serif" font-size="14" font-weight="600" fill="#1C2333">Work through the night</text>
+                                    <rect x="360" y="258" width="294" height="62" rx="11" fill="#FCFAF7" stroke="rgba(122,28,43,0.28)" stroke-width="1" />
+                                    <text x="376" y="289" dominant-baseline="central" font-family="'JetBrains Mono', monospace" font-size="11.5" font-weight="700" fill="#7A1C2B" opacity="0.85">03</text>
+                                    <text x="406" y="289" dominant-baseline="central" font-family="'Plus Jakarta Sans', sans-serif" font-size="16" font-weight="600" fill="#1C2333">Work through the night</text>
                                 </g>
                                 <!-- Step 04 -->
                                 <g>
-                                    <rect x="360" y="300" width="294" height="52" rx="11" fill="rgba(63,157,90,0.06)" stroke="rgba(63,157,90,0.4)" stroke-width="1.5" />
-                                    <text x="376" y="327" dominant-baseline="central" font-family="'JetBrains Mono', monospace" font-size="10" font-weight="700" fill="#3F9D5A" opacity="1">04</text>
-                                    <text x="404" y="327" dominant-baseline="central" font-family="'Plus Jakarta Sans', sans-serif" font-size="14" font-weight="700" fill="#3F9D5A">Hit target, claim yield</text>
+                                    <rect x="360" y="334" width="294" height="62" rx="11" fill="rgba(63,157,90,0.06)" stroke="rgba(63,157,90,0.4)" stroke-width="1.5" />
+                                    <text x="376" y="365" dominant-baseline="central" font-family="'JetBrains Mono', monospace" font-size="11.5" font-weight="700" fill="#3F9D5A" opacity="1">04</text>
+                                    <text x="406" y="365" dominant-baseline="central" font-family="'Plus Jakarta Sans', sans-serif" font-size="16" font-weight="700" fill="#3F9D5A">Hit target, claim yield</text>
                                 </g>
 
                                 <!-- Right solid connectors -->
-                                <line x1="507" y1="161" x2="507" y2="167" stroke="#7A1C2B" stroke-width="1.5" opacity="0.4" marker-end="url(#fkArrow)" />
-                                <line x1="507" y1="225" x2="507" y2="231" stroke="#7A1C2B" stroke-width="1.5" opacity="0.55" marker-end="url(#fkArrow)" />
-                                <line x1="507" y1="289" x2="507" y2="295" stroke="#7A1C2B" stroke-width="1.5" opacity="0.7" marker-end="url(#fkArrow)" />
+                                <line x1="507" y1="168" x2="507" y2="176" stroke="#7A1C2B" stroke-width="1.5" opacity="0.4" marker-end="url(#fkArrow)" />
+                                <line x1="507" y1="244" x2="507" y2="252" stroke="#7A1C2B" stroke-width="1.5" opacity="0.55" marker-end="url(#fkArrow)" />
+                                <line x1="507" y1="320" x2="507" y2="328" stroke="#7A1C2B" stroke-width="1.5" opacity="0.7" marker-end="url(#fkArrow)" />
 
-                                <line x1="507" y1="353" x2="507" y2="372" stroke="#3F9D5A" stroke-width="1.6" opacity="0.7" marker-end="url(#fkArrowG)" />
+                                <line x1="507" y1="396" x2="507" y2="418" stroke="#3F9D5A" stroke-width="1.6" opacity="0.7" marker-end="url(#fkArrowG)" />
 
                                 <!-- payout badge -->
                                 <g class="fk-payout">
-                                    <rect x="360" y="378" width="294" height="62" rx="12" fill="rgba(63,157,90,0.07)" stroke="rgba(63,157,90,0.45)" stroke-width="1.5" />
-                                    <circle cx="390" cy="409" r="11" fill="#3F9D5A" class="fk-check" />
-                                    <path d="m-4.4 0 2.9 2.9 5.7-5.8" fill="none" stroke="#fff" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" transform="translate(390, 409)" />
-                                    <text x="412" y="404" font-family="'Plus Jakarta Sans', sans-serif" font-size="15" font-weight="700" fill="#1C2333">Capital returned + yield.</text>
-                                    <text x="412" y="424" font-family="'Inter', sans-serif" font-size="12.5" fill="#5A6072">The goal actually happened.</text>
+                                    <rect x="360" y="424" width="294" height="76" rx="14" fill="rgba(63,157,90,0.11)" stroke="rgba(63,157,90,0.6)" stroke-width="2" />
+                                    <circle cx="394" cy="462" r="13" fill="#3F9D5A" class="fk-check" />
+                                    <path d="m-4.4 0 2.9 2.9 5.7-5.8" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" transform="translate(394, 462) scale(1.15)" />
+                                    <text x="418" y="454" font-family="'Plus Jakarta Sans', sans-serif" font-size="18" font-weight="700" fill="#1C2333">Capital returned + yield.</text>
+                                    <text x="418" y="480" font-family="'Inter', sans-serif" font-size="14" fill="#5A6072">The goal actually happened.</text>
                                 </g>
                             </svg>
                         </div>

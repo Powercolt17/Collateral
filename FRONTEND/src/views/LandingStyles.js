@@ -6742,9 +6742,12 @@ html, body {
 }
 
 /* ═══ THE FORK: WHY IT WORKS STYLES ═══ */
+.lhow-it-works-section .lw {
+  max-width: 1320px !important;
+}
 .fk-grid {
   display: grid; 
-  grid-template-columns: 38% 1fr;
+  grid-template-columns: 32% 1fr;
   gap: clamp(28px,4vw,56px); 
   align-items: center;
 }

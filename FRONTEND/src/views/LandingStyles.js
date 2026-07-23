@@ -73,8 +73,8 @@ export const landingCSS = `
 .lhero-section {
     position: relative;
     overflow: hidden;
-    padding-top: 145px !important;
-    padding-bottom: 24px !important;
+    padding-top: 160px !important;
+    padding-bottom: 40px !important;
     background: #FAF8F5 !important;
 }
 
@@ -113,8 +113,8 @@ export const landingCSS = `
     box-shadow: 0 20px 48px -12px rgba(20, 18, 31, 0.08), 0 1px 3px rgba(20, 18, 31, 0.02) !important;
 }
 
-.lhero-headline-wrap{margin-bottom:16px;position:relative;z-index:2}
-.lh1{font-family:'Plus Jakarta Sans',sans-serif;font-weight:900;font-size:clamp(2.3rem, 4.6vw, 4.2rem) !important;line-height:0.95 !important;letter-spacing:-0.025em !important;color:var(--t1);text-transform:uppercase;margin:0 0 12px}
+.lhero-headline-wrap{margin-bottom:20px;position:relative;z-index:2}
+.lh1{font-family:'Plus Jakarta Sans',sans-serif;font-weight:900;font-size:clamp(2.6rem, 5.0vw, 4.6rem) !important;line-height:0.98 !important;letter-spacing:-0.025em !important;color:var(--t1);text-transform:uppercase;margin:0 0 16px}
 .lh-gradient{color:#7A1220 !important;background:none !important;-webkit-background-clip:initial !important;-webkit-text-fill-color:initial !important;display:inline-block}
 .lh-badge{display:inline-flex;align-items:center;gap:8px;background:rgba(92,20,20,0.04);border:1px solid rgba(92,20,20,0.12);padding:6px 14px;border-radius:100px;font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--r);margin-bottom:20px;box-shadow:0 2px 8px rgba(92,20,20,0.02)}
 .lh-badge-dot{width:6px;height:6px;background:var(--g);border-radius:50%;display:inline-block;box-shadow:0 0 8px rgba(20,92,20,0.8);animation:badgeDotPulse 1.8s ease-in-out infinite}
@@ -130,8 +130,8 @@ export const landingCSS = `
 }
 .lhero-grid {
     display: grid;
-    grid-template-columns: 0.54fr 0.46fr;
-    gap: 40px;
+    grid-template-columns: 0.52fr 0.48fr;
+    gap: 52px;
     align-items: center;
     position: relative;
     z-index: 2;
@@ -152,8 +152,8 @@ export const landingCSS = `
     padding-right: 0;
     box-sizing: border-box;
 }
-.lsub{font-size:15.5px;color:var(--t2);line-height:1.5;margin:0 0 20px;max-width:560px;letter-spacing:-.2px}
-.lctas{display:flex;gap:12px;flex-wrap:wrap;align-items:center;margin-bottom:18px}
+.lsub{font-size:17.5px !important;color:var(--t2);line-height:1.6 !important;margin:0 0 28px !important;max-width:580px !important;letter-spacing:-.2px}
+.lctas{display:flex;gap:18px !important;flex-wrap:wrap;align-items:center;margin-bottom:32px !important}
 .lhero-footer-strip{display:flex;justify-content:flex-end;margin-top:24px;position:relative;z-index:2}
 .lhero-scroll-down{display:inline-flex;align-items:center;gap:8px;font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--t3);text-decoration:none;transition:color 0.25s ease,transform 0.25s ease}
 .lhero-scroll-down:hover{color:var(--r);transform:translateY(2px)}
@@ -254,8 +254,8 @@ export const landingCSS = `
 .lfan-deck-viewport {
     position: relative;
     width: 100%;
-    max-width: 520px;
-    height: 410px;
+    max-width: 580px;
+    height: 460px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -265,8 +265,8 @@ export const landingCSS = `
 
 .lfan-deck-stage {
     position: relative;
-    width: 365px;
-    height: 385px;
+    width: 410px;
+    height: 430px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -275,18 +275,18 @@ export const landingCSS = `
 
 .lfan-real-card {
     position: absolute !important;
-    width: 365px !important;
+    width: 410px !important;
     top: 0;
-    padding: 22px 24px !important;
+    padding: 26px 28px !important;
     display: flex !important;
     flex-direction: column !important;
-    gap: 12px !important;
+    gap: 15px !important;
     transition: transform 500ms cubic-bezier(0.16, 1, 0.3, 1), opacity 500ms cubic-bezier(0.16, 1, 0.3, 1), box-shadow 350ms ease !important;
     transform-origin: bottom center !important;
     cursor: pointer;
     border: 1px solid rgba(15, 23, 42, 0.12) !important;
     background: #FFFFFF !important;
-    border-radius: 16px !important;
+    border-radius: 18px !important;
 }
 
 .lfan-real-card.is-center {
@@ -300,9 +300,9 @@ export const landingCSS = `
 }
 
 .lfan-real-card.is-left {
-    transform: translateX(-20px) translateY(12px) rotate(-3deg) scale(0.95) !important;
+    transform: translateX(-24px) translateY(14px) rotate(-3.5deg) scale(0.96) !important;
     z-index: 2 !important;
-    opacity: 0.60 !important;
+    opacity: 0.65 !important;
     box-shadow: 0 4px 16px rgba(15, 23, 42, 0.04) !important;
     pointer-events: auto !important;
     filter: blur(0.5px) !important;
@@ -310,9 +310,9 @@ export const landingCSS = `
 }
 
 .lfan-real-card.is-right {
-    transform: translateX(20px) translateY(12px) rotate(3deg) scale(0.95) !important;
+    transform: translateX(24px) translateY(14px) rotate(3.5deg) scale(0.96) !important;
     z-index: 2 !important;
-    opacity: 0.60 !important;
+    opacity: 0.65 !important;
     box-shadow: 0 4px 16px rgba(15, 23, 42, 0.04) !important;
     pointer-events: auto !important;
     filter: blur(0.5px) !important;
@@ -7474,5 +7474,169 @@ button.ln-cta,
     padding-top: 6px !important;
     border-top: 1px dashed rgba(28,35,51,0.1) !important;
   }
+}
+
+/* ═══ INTERACTIVE HERO CONTRACT CARD DECK STYLING ═══ */
+.lc-platform-header {
+  display: flex !important;
+  align-items: center !important;
+  gap: 10px !important;
+}
+
+.lc-plat-logo {
+  height: 20px !important;
+  width: auto !important;
+}
+
+.lc-plat-text {
+  font-family: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace !important;
+  font-size: 12px !important;
+  font-weight: 700 !important;
+  letter-spacing: 0.8px !important;
+  color: #64748B !important;
+}
+
+.lc-global-stats-row {
+  display: flex !important;
+  align-items: center !important;
+  gap: 12px !important;
+  font-family: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace !important;
+  font-size: 11.5px !important;
+  color: #64748B !important;
+  padding-bottom: 12px !important;
+  border-bottom: 1px solid rgba(15, 23, 42, 0.08) !important;
+}
+
+.lc-global-stats-num {
+  font-weight: 800 !important;
+  color: #0F172A !important;
+}
+
+.lc-contract-name {
+  font-family: 'Plus Jakarta Sans', sans-serif !important;
+  font-size: 19px !important;
+  font-weight: 900 !important;
+  color: #0F172A !important;
+  letter-spacing: -0.02em !important;
+  margin-bottom: 4px !important;
+}
+
+.lc-contract-goal {
+  font-size: 14.5px !important;
+  color: #334155 !important;
+  line-height: 1.4 !important;
+  margin-bottom: 4px !important;
+}
+
+.lc-contract-time {
+  font-family: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace !important;
+  font-size: 11.5px !important;
+  font-weight: 700 !important;
+  color: #64748B !important;
+  letter-spacing: 0.6px !important;
+  text-transform: uppercase !important;
+}
+
+.lc-status {
+  font-family: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace !important;
+  font-size: 11px !important;
+  font-weight: 700 !important;
+  letter-spacing: 1px !important;
+  color: #145C14 !important;
+  background: rgba(20, 92, 20, 0.08) !important;
+  padding: 4px 10px !important;
+  border-radius: 999px !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 6px !important;
+  text-transform: uppercase !important;
+}
+
+.lc-status-dot {
+  width: 6px !important;
+  height: 6px !important;
+  background: #145C14 !important;
+  border-radius: 50% !important;
+}
+
+.lc-flow-horizontal {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  background: #FAF8F5 !important;
+  border: 1px solid rgba(15, 23, 42, 0.08) !important;
+  border-radius: 12px !important;
+  padding: 14px 18px !important;
+  margin: 12px 0 !important;
+}
+
+.lc-flow-col {
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  gap: 2px !important;
+}
+
+.lc-flow-label {
+  font-family: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace !important;
+  font-size: 10.5px !important;
+  font-weight: 700 !important;
+  letter-spacing: 1px !important;
+  color: #64748B !important;
+  text-transform: uppercase !important;
+}
+
+.lc-flow-val {
+  font-family: 'Plus Jakarta Sans', sans-serif !important;
+  font-size: 18px !important;
+  font-weight: 800 !important;
+  color: #0F172A !important;
+}
+
+.lc-val-green {
+  color: #145C14 !important;
+}
+
+.lc-flow-arrow-right {
+  font-size: 16px !important;
+  color: #94A3B8 !important;
+}
+
+.lc-flow-footnote {
+  font-size: 12.5px !important;
+  color: #64748B !important;
+  line-height: 1.45 !important;
+}
+
+.lc-flow-link {
+  color: #7A1220 !important;
+  font-weight: 700 !important;
+  text-decoration: none !important;
+}
+
+.lc-live-state-ticker {
+  display: flex !important;
+  justify-content: space-between !important;
+  align-items: center !important;
+  background: #FAF8F5 !important;
+  border: 1px dashed rgba(15, 23, 42, 0.12) !important;
+  border-radius: 8px !important;
+  padding: 8px 14px !important;
+  margin-top: 12px !important;
+}
+
+.lc-live-state-lbl {
+  font-family: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace !important;
+  font-size: 10.5px !important;
+  font-weight: 700 !important;
+  letter-spacing: 1.2px !important;
+  color: #64748B !important;
+}
+
+.lc-live-state-val {
+  font-family: 'Plus Jakarta Sans', sans-serif !important;
+  font-size: 12.5px !important;
+  font-weight: 800 !important;
+  color: #7A1220 !important;
 }
 `;

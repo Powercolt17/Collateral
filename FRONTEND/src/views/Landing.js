@@ -431,6 +431,8 @@ export function renderLanding() {
                 </div>
             </section>
 
+            <!-- ═══ SOCIAL PROOF (REAL RESULTS) ═══ -->
+
             <!-- ═══ EMOTIONAL REFRAME (THE FORK: WHY IT WORKS) ═══ -->
             <div class="lhow-it-works-section" data-r style="background: #F8F5F0; padding: clamp(48px,7vw,96px) 0; overflow: visible !important;">
                 <div class="lw">

@@ -7090,7 +7090,7 @@ h1, h2, h3, .lh1, .lhow-h, .lengine-h2, .ltypes-headline {
   background: #FBF9F5 !important;
   border: 1.5px solid rgba(28, 35, 51, 0.09) !important;
   border-radius: 14px !important;
-  padding: 10px 24px !important;
+  padding: 7px 24px !important;
   box-shadow: 0 4px 16px -10px rgba(28, 35, 51, 0.05) !important;
   width: 100% !important;
   max-width: 100% !important;
@@ -7106,7 +7106,7 @@ h1, h2, h3, .lh1, .lhow-h, .lengine-h2, .ltypes-headline {
   color: #8C8577 !important;
   text-transform: uppercase !important;
   text-align: center !important;
-  margin-bottom: 10px !important; /* Tight 10px gap between eyebrow and grid */
+  margin-bottom: 2px !important;
   margin-top: 0 !important;
   line-height: 1 !important;
 }
@@ -7120,7 +7120,7 @@ h1, h2, h3, .lh1, .lhow-h, .lengine-h2, .ltypes-headline {
 
 @media (max-width: 768px) {
   .l-stats-card {
-    padding: 12px 14px !important;
+    padding: 10px 14px !important;
     border-radius: 14px !important;
   }
   .l-stats-bar-grid {
@@ -7173,9 +7173,9 @@ h1, h2, h3, .lh1, .lhow-h, .lengine-h2, .ltypes-headline {
 }
 
 .l-stat-bar-value-zone {
-  height: 28px !important;
-  min-height: 28px !important;
-  max-height: 28px !important;
+  height: 34px !important;
+  min-height: 34px !important;
+  max-height: 34px !important;
   display: flex !important;
   align-items: center !important;
   justify-content: center !important;
@@ -7184,7 +7184,7 @@ h1, h2, h3, .lh1, .lhow-h, .lengine-h2, .ltypes-headline {
 
 .l-stat-bar-val {
   font-family: 'Plus Jakarta Sans', sans-serif !important;
-  font-size: clamp(20px, 2.2vw, 24px) !important;
+  font-size: clamp(23px, 2.6vw, 30px) !important;
   font-weight: 800 !important;
   color: #1C2333 !important;
   line-height: 1 !important;
@@ -7193,7 +7193,7 @@ h1, h2, h3, .lh1, .lhow-h, .lengine-h2, .ltypes-headline {
 }
 
 .l-stat-bar-logo-wrap {
-  height: 28px !important;
+  height: 34px !important;
   display: flex !important;
   align-items: center !important;
   justify-content: center !important;
@@ -7201,7 +7201,7 @@ h1, h2, h3, .lh1, .lhow-h, .lengine-h2, .ltypes-headline {
 
 .l-stat-bar-logo-wrap svg,
 .l-stat-bar-logo-wrap img {
-  max-height: 26px !important;
+  max-height: 32px !important;
   width: auto !important;
   display: block !important;
 }

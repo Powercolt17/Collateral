@@ -7220,4 +7220,169 @@ h1, h2, h3, .lh1, .lhow-h, .lengine-h2, .ltypes-headline {
 @media (max-width: 640px) {
   .l-br-desktop { display: none !important; }
 }
+
+/* ═══ COMPREHENSIVE MOBILE REFINEMENTS & CRITICAL BUG FIXES (390px READY) ═══ */
+
+/* 1. Header CTA button maroon color (#7A1C2B) */
+button.ln-cta,
+#lp-nav-cta,
+.ln-cta {
+  background: #7A1C2B !important;
+  background-color: #7A1C2B !important;
+  color: #FFFFFF !important;
+  border: 1.5px solid #7A1C2B !important;
+}
+
+/* 2. Cycling Band strict state isolation (no multi-state overlap) */
+.l-stat-bar-wrapper {
+  position: relative !important;
+  width: 100% !important;
+  min-height: 42px !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  overflow: hidden !important;
+}
+
+.l-stat-bar-content:not(.current):not(.incoming) {
+  display: none !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
+}
+
+/* 3. Live duel rows modular structure */
+.oc-duel-head {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.oc-duel-match {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: nowrap;
+}
+.oc-duel-player {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 6px;
+  font-family: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace;
+  font-size: 12.5px;
+  white-space: nowrap;
+}
+.oc-duel-user { color: #5A6072; }
+.oc-duel-val.green { color: #166534; font-weight: 700; }
+.oc-duel-val.red { color: #7A1C2B; font-weight: 700; }
+.oc-duel-vs {
+  font-family: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace;
+  font-size: 10px;
+  color: #8C8577;
+  letter-spacing: 1px;
+}
+.oc-duel-meta {
+  margin-left: auto;
+  display: inline-flex;
+  align-items: center;
+  gap: 16px;
+}
+
+/* 4. Mobile layout overrides (<768px & <620px) */
+@media (max-width: 768px) {
+  /* Section padding capped at 36px top & bottom */
+  .sor-section,
+  .lemo-reframe,
+  .lengine-section,
+  .lcontracts,
+  .lreal-results,
+  .lhow-it-works-section,
+  .lfaq,
+  .lcommunity-momentum {
+    padding-top: 36px !important;
+    padding-bottom: 36px !important;
+  }
+
+  /* 2x2 grid for stats bars & Proof of Settlement stats */
+  .l-stats-bar-grid, #l-stats-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 14px 10px !important;
+  }
+
+  .ps-stats {
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 16px 12px !important;
+    text-align: center !important;
+  }
+
+  .ps-stats > div {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    text-align: center !important;
+  }
+
+  .l-stat-bar-lbl,
+  .ps-stats div {
+    white-space: normal !important;
+    word-break: break-word !important;
+    text-wrap: balance !important;
+  }
+
+  /* Hero badge repositioning above giant "YOU" */
+  .sor-mode-tag {
+    position: static !important;
+    display: inline-flex !important;
+    align-self: center !important;
+    margin: 0 auto 16px auto !important;
+  }
+
+  .sor-hero-card {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+  }
+
+  /* DENIED stamp repositioning below amount */
+  .ps-seal {
+    position: relative !important;
+    right: auto !important;
+    bottom: auto !important;
+    margin-top: 10px !important;
+    display: flex !important;
+    justify-content: flex-end !important;
+    width: 100% !important;
+  }
+
+  .ps-seal svg {
+    max-width: 115px !important;
+    height: auto !important;
+  }
+}
+
+@media (max-width: 620px) {
+  /* Restructure live duels into clean 3-line block */
+  .oc-duel {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    gap: 8px !important;
+    padding: 14px 10px !important;
+    border-bottom: 1px solid rgba(28,35,51,0.11) !important;
+    width: 100% !important;
+  }
+
+  .oc-duel-match {
+    width: 100% !important;
+    justify-content: flex-start !important;
+    gap: 10px !important;
+    white-space: nowrap !important;
+  }
+
+  .oc-duel-meta {
+    width: 100% !important;
+    margin-left: 0 !important;
+    justify-content: space-between !important;
+    padding-top: 6px !important;
+    border-top: 1px dashed rgba(28,35,51,0.1) !important;
+  }
+}
 `;

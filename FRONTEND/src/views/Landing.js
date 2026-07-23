@@ -24,7 +24,7 @@ export function renderLanding() {
                         <span class="logo-wordmark">Collateral</span>
                     </a>
                     <div style="display:flex; align-items:center;">
-                        <button class="ln-cta" id="lp-nav-cta">Sign In</button>
+                        <button class="ln-cta" id="lp-nav-cta" style="background: #7A1C2B !important; background-color: #7A1C2B !important; color: #FFFFFF !important; border: 1.5px solid #7A1C2B !important;">Sign In</button>
                         <button class="ch-hamburger" id="mobile-menu-btn" aria-label="Menu" onclick="window.app.toggleMobileMenu()">
                             <div class="ch-hamburger-lines">
                                 <span></span>
@@ -341,7 +341,7 @@ export function renderLanding() {
                         </h2>
 
                         <p style="font-family: 'Inter', sans-serif; font-size: 16.5px; line-height: 1.6; letter-spacing: -0.011em; color: #5A6072; margin: 0 0 24px; max-width: 62ch;">
-                            Lock money behind your commitment. Complete your verified goal and claim your return, or challenge an opponent head-to-head. Miss it and the rules enforce themselves automatically.
+                            Lock money behind a goal. Hit it and get paid. Miss it and forfeit.
                         </p>
 
                         <!-- MODE CARDS AT THE BOTTOM OF THE COLUMN FOR PERFECT ALIGNMENT -->
@@ -1204,83 +1204,89 @@ export function renderLanding() {
                         </div>
 
                         <!-- DUEL 1 -->
-                        <div class="oc-duel" onclick="window.router && window.router.navigate('/rivalry/7B92A41E')" style="display: flex; align-items: center; gap: 14px; flex-wrap: wrap; padding: 14px 4px; border-bottom: 1px solid rgba(28,35,51,0.11); cursor: pointer; transition: background .18s ease;">
-                            <svg width="15" height="15" viewBox="0 0 24 24" aria-hidden="true" style="display: block; flex-shrink: 0;">
-                                <g transform="translate(12 11.5)">
-                                    <g transform="rotate(-43) translate(0 2)">
-                                        <polygon points="0,-9.5 1.9,-6.9 1.9,1.5 -1.9,1.5 -1.9,-6.9" fill="#7A1C2B"></polygon>
-                                        <rect x="-4.9" y="1.5" width="9.8" height="1.8" rx="0.9" fill="#5E1521"></rect>
-                                    </g>
-                                    <g transform="rotate(43) translate(0 2)">
-                                        <g fill="#FBF9F5" stroke="#FBF9F5" stroke-width="2.2" stroke-linejoin="round">
-                                            <polygon points="0,-9.5 1.9,-6.9 1.9,1.5 -1.9,1.5 -1.9,-6.9"></polygon>
-                                            <rect x="-4.9" y="1.5" width="9.8" height="1.8" rx="0.9"></rect>
+                        <div class="oc-duel" onclick="window.router && window.router.navigate('/rivalry/7B92A41E')">
+                            <div class="oc-duel-head">
+                                <svg width="15" height="15" viewBox="0 0 24 24" aria-hidden="true" style="display: block; flex-shrink: 0;">
+                                    <g transform="translate(12 11.5)">
+                                        <g transform="rotate(-43) translate(0 2)">
+                                            <polygon points="0,-9.5 1.9,-6.9 1.9,1.5 -1.9,1.5 -1.9,-6.9" fill="#7A1C2B"></polygon>
+                                            <rect x="-4.9" y="1.5" width="9.8" height="1.8" rx="0.9" fill="#5E1521"></rect>
                                         </g>
-                                        <polygon points="0,-9.5 1.9,-6.9 1.9,1.5 -1.9,1.5 -1.9,-6.9" fill="#7A1C2B"></polygon>
-                                        <rect x="-4.9" y="1.5" width="9.8" height="1.8" rx="0.9" fill="#5E1521"></rect>
+                                        <g transform="rotate(43) translate(0 2)">
+                                            <g fill="#FBF9F5" stroke="#FBF9F5" stroke-width="2.2" stroke-linejoin="round">
+                                                <polygon points="0,-9.5 1.9,-6.9 1.9,1.5 -1.9,1.5 -1.9,-6.9"></polygon>
+                                                <rect x="-4.9" y="1.5" width="9.8" height="1.8" rx="0.9"></rect>
+                                            </g>
+                                            <polygon points="0,-9.5 1.9,-6.9 1.9,1.5 -1.9,1.5 -1.9,-6.9" fill="#7A1C2B"></polygon>
+                                            <rect x="-4.9" y="1.5" width="9.8" height="1.8" rx="0.9" fill="#5E1521"></rect>
+                                        </g>
                                     </g>
-                                </g>
-                            </svg>
+                                </svg>
+                                <span class="oc-duel-type">AUDIENCE</span>
+                            </div>
 
-                            <span style="font-family: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace; font-size: 11px; font-weight: 700; letter-spacing: 1.3px; color: #1C2333; min-width: 74px;">AUDIENCE</span>
+                            <div class="oc-duel-match">
+                                <span class="oc-duel-player">
+                                    <span class="oc-duel-user">@jakevoss</span>
+                                    <strong class="oc-duel-val green">+12.4%</strong>
+                                </span>
+                                <span class="oc-duel-vs">VS</span>
+                                <span class="oc-duel-player">
+                                    <span class="oc-duel-user">@marcus</span>
+                                    <strong class="oc-duel-val red">+9.2%</strong>
+                                </span>
+                            </div>
 
-                            <span style="display: inline-flex; align-items: baseline; gap: 7px; font-family: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace; font-size: 12.5px;">
-                                <span style="color: #5A6072;">@jakevoss</span>
-                                <strong style="color: #3F9D5A; font-weight: 700;">+12.4%</strong>
-                            </span>
-                            <span style="font-family: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace; font-size: 10px; color: #8C8577; letter-spacing: 1px;">VS</span>
-                            <span style="display: inline-flex; align-items: baseline; gap: 7px; font-family: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace; font-size: 12.5px;">
-                                <span style="color: #5A6072;">@marcus</span>
-                                <strong style="color: #7A1C2B; font-weight: 700;">+9.2%</strong>
-                            </span>
-
-                            <span style="margin-left: auto; display: inline-flex; align-items: center; gap: 16px;">
-                                <span style="font-size: 13.5px; font-weight: 700; color: #1C2333; font-variant-numeric: tabular-nums;">$5,000 <span style="font-weight: 400; color: #8C8577; font-size: 12px;">pool</span></span>
-                                <span style="font-family: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace; font-size: 10px; font-weight: 700; letter-spacing: 1px; color: #8C8577;">14d left</span>
-                                <button class="oc-view" style="background: none; border: none; cursor: pointer; padding: 0; font-size: 13px; font-weight: 700; color: #7A1C2B; display: inline-flex; align-items: center; gap: 5px;">
+                            <div class="oc-duel-meta">
+                                <span class="oc-duel-pool">$5,000 <span class="oc-duel-sub">pool</span></span>
+                                <span class="oc-duel-time">14d left</span>
+                                <button class="oc-view">
                                     View <span class="oc-arrow">→</span>
                                 </button>
-                            </span>
+                            </div>
                         </div>
 
                         <!-- DUEL 2 -->
-                        <div class="oc-duel" onclick="window.router && window.router.navigate('/rivalry/34D63CA3')" style="display: flex; align-items: center; gap: 14px; flex-wrap: wrap; padding: 14px 4px; cursor: pointer; transition: background .18s ease;">
-                            <svg width="15" height="15" viewBox="0 0 24 24" aria-hidden="true" style="display: block; flex-shrink: 0;">
-                                <g transform="translate(12 11.5)">
-                                    <g transform="rotate(-43) translate(0 2)">
-                                        <polygon points="0,-9.5 1.9,-6.9 1.9,1.5 -1.9,1.5 -1.9,-6.9" fill="#7A1C2B"></polygon>
-                                        <rect x="-4.9" y="1.5" width="9.8" height="1.8" rx="0.9" fill="#5E1521"></rect>
-                                    </g>
-                                    <g transform="rotate(43) translate(0 2)">
-                                        <g fill="#FBF9F5" stroke="#FBF9F5" stroke-width="2.2" stroke-linejoin="round">
-                                            <polygon points="0,-9.5 1.9,-6.9 1.9,1.5 -1.9,1.5 -1.9,-6.9"></polygon>
-                                            <rect x="-4.9" y="1.5" width="9.8" height="1.8" rx="0.9"></rect>
+                        <div class="oc-duel" onclick="window.router && window.router.navigate('/rivalry/34D63CA3')">
+                            <div class="oc-duel-head">
+                                <svg width="15" height="15" viewBox="0 0 24 24" aria-hidden="true" style="display: block; flex-shrink: 0;">
+                                    <g transform="translate(12 11.5)">
+                                        <g transform="rotate(-43) translate(0 2)">
+                                            <polygon points="0,-9.5 1.9,-6.9 1.9,1.5 -1.9,1.5 -1.9,-6.9" fill="#7A1C2B"></polygon>
+                                            <rect x="-4.9" y="1.5" width="9.8" height="1.8" rx="0.9" fill="#5E1521"></rect>
                                         </g>
-                                        <polygon points="0,-9.5 1.9,-6.9 1.9,1.5 -1.9,1.5 -1.9,-6.9" fill="#7A1C2B"></polygon>
-                                        <rect x="-4.9" y="1.5" width="9.8" height="1.8" rx="0.9" fill="#5E1521"></rect>
+                                        <g transform="rotate(43) translate(0 2)">
+                                            <g fill="#FBF9F5" stroke="#FBF9F5" stroke-width="2.2" stroke-linejoin="round">
+                                                <polygon points="0,-9.5 1.9,-6.9 1.9,1.5 -1.9,1.5 -1.9,-6.9"></polygon>
+                                                <rect x="-4.9" y="1.5" width="9.8" height="1.8" rx="0.9"></rect>
+                                            </g>
+                                            <polygon points="0,-9.5 1.9,-6.9 1.9,1.5 -1.9,1.5 -1.9,-6.9" fill="#7A1C2B"></polygon>
+                                            <rect x="-4.9" y="1.5" width="9.8" height="1.8" rx="0.9" fill="#5E1521"></rect>
+                                        </g>
                                     </g>
-                                </g>
-                            </svg>
+                                </svg>
+                                <span class="oc-duel-type">REVENUE</span>
+                            </div>
 
-                            <span style="font-family: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace; font-size: 11px; font-weight: 700; letter-spacing: 1.3px; color: #1C2333; min-width: 74px;">REVENUE</span>
+                            <div class="oc-duel-match">
+                                <span class="oc-duel-player">
+                                    <span class="oc-duel-user">@revpilot</span>
+                                    <strong class="oc-duel-val green">+8.1%</strong>
+                                </span>
+                                <span class="oc-duel-vs">VS</span>
+                                <span class="oc-duel-player">
+                                    <span class="oc-duel-user">@quotaops</span>
+                                    <strong class="oc-duel-val red">+5.4%</strong>
+                                </span>
+                            </div>
 
-                            <span style="display: inline-flex; align-items: baseline; gap: 7px; font-family: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace; font-size: 12.5px;">
-                                <span style="color: #5A6072;">@revpilot</span>
-                                <strong style="color: #3F9D5A; font-weight: 700;">+8.1%</strong>
-                            </span>
-                            <span style="font-family: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace; font-size: 10px; color: #8C8577; letter-spacing: 1px;">VS</span>
-                            <span style="display: inline-flex; align-items: baseline; gap: 7px; font-family: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace; font-size: 12.5px;">
-                                <span style="color: #5A6072;">@quotaops</span>
-                                <strong style="color: #7A1C2B; font-weight: 700;">+5.4%</strong>
-                            </span>
-
-                            <span style="margin-left: auto; display: inline-flex; align-items: center; gap: 16px;">
-                                <span style="font-size: 13.5px; font-weight: 700; color: #1C2333; font-variant-numeric: tabular-nums;">$2,000 <span style="font-weight: 400; color: #8C8577; font-size: 12px;">pool</span></span>
-                                <span style="font-family: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace; font-size: 10px; font-weight: 700; letter-spacing: 1px; color: #7A1C2B; background: rgba(122,28,43,0.08); padding: 3px 8px; border-radius: 999px;">SETTLING</span>
-                                <button class="oc-view" style="background: none; border: none; cursor: pointer; padding: 0; font-size: 13px; font-weight: 700; color: #7A1C2B; display: inline-flex; align-items: center; gap: 5px;">
+                            <div class="oc-duel-meta">
+                                <span class="oc-duel-pool">$2,000 <span class="oc-duel-sub">pool</span></span>
+                                <span class="oc-duel-settling">SETTLING</span>
+                                <button class="oc-view">
                                     View <span class="oc-arrow">→</span>
                                 </button>
-                            </span>
+                            </div>
                         </div>
                     </div>
 
@@ -1313,7 +1319,7 @@ export function renderLanding() {
                                 Supply only<br /><span style="color: #7A1C2B;">goes down.</span>
                             </h2>
                             <p style="font-family: 'Inter', sans-serif; font-size: 16.5px; color: #5A6072; margin: 0; max-width: 62ch; line-height: 1.6; letter-spacing: -0.011em;">
-                                Every settled contract burns a protocol fee from circulation permanently. As contract volume grows, total supply decreases automatically. Less supply means every remaining token backs a larger execution network.
+                                Every settled contract burns supply. Permanently.
                             </p>
 
                             <div style="margin-top: 34px; display: grid; grid-template-columns: 1fr 1fr; gap: 26px 20px; max-width: 400px;">
@@ -1511,9 +1517,19 @@ export function renderLanding() {
             </div>
 
             <!-- ═══ FOOTER ═══ -->
-            <div class="lfoot" data-r>
-                <div class="lfoot-line reveal-item">Collateral.market · © 2026</div>
-            </div>
+            <footer class="lfoot" data-r style="background: #7A1C2B !important; padding: 48px 24px !important; text-align: center !important; color: #FBF9F5 !important;">
+                <div class="lw" style="max-width: 1000px !important; margin: 0 auto !important; display: flex !important; flex-direction: column !important; align-items: center !important; gap: 12px !important;">
+                    <div style="font-family: 'Plus Jakarta Sans', sans-serif !important; font-size: 20px !important; font-weight: 800 !important; letter-spacing: 2.5px !important; color: #FBF9F5 !important; text-transform: uppercase !important;">
+                        COLLATERAL
+                    </div>
+                    <div style="font-family: 'Inter', sans-serif !important; font-size: 14px !important; color: rgba(251, 249, 245, 0.75) !important; max-width: 480px !important; line-height: 1.5 !important; text-align: center !important;">
+                        Lock capital behind your commitment. Complete your verified goal and claim your return.
+                    </div>
+                    <div class="lfoot-line reveal-item" style="margin-top: 14px !important; font-family: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace !important; font-size: 11px !important; color: rgba(251, 249, 245, 0.6) !important; letter-spacing: 1.2px !important;">
+                        Collateral.market · © 2026
+                    </div>
+                </div>
+            </footer>
 
             <!-- Landing Mobile Menu Overlay & Drawer -->
             <div id="mobile-menu-overlay" class="pnl-overlay" onclick="window.app.closeMobileMenu()"></div>
@@ -2007,7 +2023,7 @@ export function initLanding() {
             const incomingContent = document.createElement('div');
             incomingContent.className = 'l-stat-bar-content incoming';
             incomingContent.setAttribute('data-state', nextState);
-            incomingContent.style.cssText = 'display: flex !important; flex-direction: column !important; align-items: center !important; justify-content: center !important; gap: 4px !important; margin: 0 !important; padding: 0 !important;';
+            incomingContent.style.cssText = 'position: absolute !important; inset: 0 !important; display: flex !important; flex-direction: column !important; align-items: center !important; justify-content: center !important; gap: 4px !important; margin: 0 !important; padding: 0 !important; width: 100% !important;';
 
             const valueZone = document.createElement('div');
             valueZone.className = 'l-stat-bar-value-zone';
@@ -2037,6 +2053,10 @@ export function initLanding() {
             incomingContent.style.opacity = '0';
             incomingContent.style.transform = 'translateY(14px)';
 
+            currentContent.style.position = 'absolute';
+            currentContent.style.inset = '0';
+            currentContent.style.pointerEvents = 'none';
+
             wrapper.appendChild(incomingContent);
 
             requestAnimationFrame(() => {
@@ -2057,7 +2077,11 @@ export function initLanding() {
                 }
                 incomingContent.classList.remove('incoming');
                 incomingContent.classList.add('current');
+                incomingContent.style.position = 'relative';
+                incomingContent.style.inset = 'auto';
                 incomingContent.style.transition = '';
+                incomingContent.style.transform = '';
+            }, 440);
             }, 440);
         });
 

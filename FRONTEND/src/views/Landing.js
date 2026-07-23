@@ -445,8 +445,8 @@ export function renderLanding() {
 
                     <!-- HEAD STACK -->
                     <div class="ps-head reveal-item" style="display: flex; justify-content: space-between; align-items: flex-end; gap: 40px; flex-wrap: wrap; margin-bottom: clamp(26px,3vw,42px);">
-                        <h2 style="font-size: clamp(30px,3.8vw,46px); font-weight: 800; letter-spacing: -0.03em; color: #1C2333; margin: 0; line-height: 1.06; max-width: 640px;">
-                            Skin in the game is the only thing<br />that <span style="color: #7A1C2B;">actually works.</span>
+                        <h2 style="font-family: 'Plus Jakarta Sans', sans-serif; font-size: clamp(32px, 5.2vw, 60px); font-weight: 800; line-height: 1.04; letter-spacing: -0.03em; text-wrap: balance; color: #1C2333; margin: 0 0 14px; max-width: 22ch; width: 100%;">
+                            Skin in the game is the<br class="l-br-desktop" />only thing that <span style="color: #7A1C2B;">works.</span>
                         </h2>
                         <p style="font-size: 16.5px; color: #5A6072; margin: 0; max-width: 62ch; line-height: 1.6; letter-spacing: -0.011em; font-family: 'Inter', sans-serif;">
                             Skin in the game is the only mechanism that enforces real execution. Every contract settles automatically on objective API telemetry — including the ones people lose.

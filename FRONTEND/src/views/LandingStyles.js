@@ -7196,4 +7196,8 @@ h1, h2, h3, .lh1, .lhow-h, .lengine-h2, .ltypes-headline {
   padding-bottom: 0 !important;
   line-height: 1 !important;
 }
+
+@media (max-width: 640px) {
+  .l-br-desktop { display: none !important; }
+}
 `;

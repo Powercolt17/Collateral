@@ -789,9 +789,71 @@ export function renderLanding() {
                                         <span class="rv-player-growth leading">+12.4%</span>
                                     </div>
                                     <div class="rv-vs-divider">
-                                        <svg class="rv-swords-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#7A1C2B" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-                                            <path d="m14.5 17.5-2.5-2.5m-4.5 4.5 7-7m2-2 4-4m-1.5 5.5L20 20m-2.5-1.5 1.5 1.5M4 4l5.5 5.5m-1.5 2.5L4 8m1.5-1.5L4 4m6 10-2-2"/>
-                                        </svg>
+                                        <span class="rv-vs-badge" style="display: inline-flex; align-items: center; justify-content: center; width: 34px; height: 34px; border-radius: 999px; background: rgba(122,28,43,0.07); border: 1px solid rgba(122,28,43,0.16); box-shadow: inset 0 1px 0 rgba(255,255,255,0.8); flex-shrink: 0;">
+                                            <svg width="22" height="22" viewBox="0 0 48 48" aria-hidden="true" style="display: block;">
+                                                <defs>
+                                                    <linearGradient id="cs_steel_card1" x1="0" y1="0" x2="1" y2="0.35">
+                                                        <stop offset="0%" stop-color="#F4F2EE" />
+                                                        <stop offset="45%" stop-color="#CFCBC3" />
+                                                        <stop offset="100%" stop-color="#948F86" />
+                                                    </linearGradient>
+                                                    <linearGradient id="cs_hilt_card1" x1="0" y1="0" x2="1" y2="1">
+                                                        <stop offset="0%" stop-color="#8A2233" />
+                                                        <stop offset="100%" stop-color="#4E1119" />
+                                                    </linearGradient>
+                                                    <radialGradient id="cs_glint_card1" cx="50%" cy="50%" r="50%">
+                                                        <stop offset="0%" stop-color="#FFF6E6" stop-opacity="0.95" />
+                                                        <stop offset="100%" stop-color="#E8B45C" stop-opacity="0" />
+                                                    </radialGradient>
+                                                </defs>
+                                                <g transform="translate(24 23.5) scale(0.86)">
+                                                    <g transform="rotate(-43)">
+                                                        <polygon points="0,-26 2.5,-20.5 2.5,5 -2.5,5 -2.5,-20.5" fill="url(#cs_steel_card1)" />
+                                                        <polygon points="0,-22.5 0.85,-19 0.85,3.4 -0.85,3.4 -0.85,-19" fill="#948F86" opacity="0.45" />
+                                                        <polygon points="0,-26 -2.5,-20.5 -2.5,5 -1.55,5 -1.55,-20.2" fill="#FFFFFF" opacity="0.6" />
+                                                        <rect x="-2.5" y="3.2" width="5" height="1.8" fill="#948F86" opacity="0.5" />
+                                                        <rect x="-8.2" y="5" width="16.4" height="3.3" rx="1.65" fill="url(#cs_hilt_card1)" />
+                                                        <circle cx="-8.4" cy="6.65" r="2.15" fill="url(#cs_hilt_card1)" />
+                                                        <circle cx="8.4" cy="6.65" r="2.15" fill="url(#cs_hilt_card1)" />
+                                                        <rect x="-8.2" y="5" width="16.4" height="1.1" rx="0.55" fill="#FFFFFF" opacity="0.22" />
+                                                        <rect x="-1.95" y="8.3" width="3.9" height="9.2" rx="1.5" fill="#4E1119" />
+                                                        <rect x="-1.95" y="10.1" width="3.9" height="0.9" rx="0.45" fill="#FFFFFF" opacity="0.18" />
+                                                        <rect x="-1.95" y="12.4" width="3.9" height="0.9" rx="0.45" fill="#FFFFFF" opacity="0.18" />
+                                                        <rect x="-1.95" y="14.7" width="3.9" height="0.9" rx="0.45" fill="#FFFFFF" opacity="0.18" />
+                                                        <circle cx="0" cy="19.4" r="2.85" fill="url(#cs_hilt_card1)" />
+                                                        <circle cx="-0.8" cy="18.6" r="0.95" fill="#FFFFFF" opacity="0.42" />
+                                                    </g>
+                                                    <g transform="rotate(43)">
+                                                        <g fill="#FBF9F5" stroke="#FBF9F5" stroke-width="3.2" stroke-linejoin="round">
+                                                            <polygon points="0,-26 2.5,-20.5 2.5,5 -2.5,5 -2.5,-20.5" />
+                                                            <rect x="-8.2" y="5" width="16.4" height="3.3" rx="1.65" />
+                                                            <circle cx="-8.4" cy="6.65" r="2.15" />
+                                                            <circle cx="8.4" cy="6.65" r="2.15" />
+                                                            <rect x="-1.95" y="8.3" width="3.9" height="9.2" rx="1.5" />
+                                                            <circle cx="0" cy="19.4" r="2.85" />
+                                                        </g>
+                                                        <polygon points="0,-26 2.5,-20.5 2.5,5 -2.5,5 -2.5,-20.5" fill="url(#cs_steel_card1)" />
+                                                        <polygon points="0,-22.5 0.85,-19 0.85,3.4 -0.85,3.4 -0.85,-19" fill="#948F86" opacity="0.45" />
+                                                        <polygon points="0,-26 -2.5,-20.5 -2.5,5 -1.55,5 -1.55,-20.2" fill="#FFFFFF" opacity="0.6" />
+                                                        <rect x="-2.5" y="3.2" width="5" height="1.8" fill="#948F86" opacity="0.5" />
+                                                        <rect x="-8.2" y="5" width="16.4" height="3.3" rx="1.65" fill="url(#cs_hilt_card1)" />
+                                                        <circle cx="-8.4" cy="6.65" r="2.15" fill="url(#cs_hilt_card1)" />
+                                                        <circle cx="8.4" cy="6.65" r="2.15" fill="url(#cs_hilt_card1)" />
+                                                        <rect x="-8.2" y="5" width="16.4" height="1.1" rx="0.55" fill="#FFFFFF" opacity="0.22" />
+                                                        <rect x="-1.95" y="8.3" width="3.9" height="9.2" rx="1.5" fill="#4E1119" />
+                                                        <rect x="-1.95" y="10.1" width="3.9" height="0.9" rx="0.45" fill="#FFFFFF" opacity="0.18" />
+                                                        <rect x="-1.95" y="12.4" width="3.9" height="0.9" rx="0.45" fill="#FFFFFF" opacity="0.18" />
+                                                        <rect x="-1.95" y="14.7" width="3.9" height="0.9" rx="0.45" fill="#FFFFFF" opacity="0.18" />
+                                                        <circle cx="0" cy="19.4" r="2.85" fill="url(#cs_hilt_card1)" />
+                                                        <circle cx="-0.8" cy="18.6" r="0.95" fill="#FFFFFF" opacity="0.42" />
+                                                    </g>
+                                                    <g transform="translate(0 -9)">
+                                                        <circle r="7" fill="url(#cs_glint_card1)" />
+                                                        <path d="M0,-6 L1.5,-1.5 L6,0 L1.5,1.5 L0,6 L-1.5,1.5 L-6,0 L-1.5,-1.5 Z" fill="#FFF3DF" opacity="0.9" />
+                                                    </g>
+                                                </g>
+                                            </svg>
+                                        </span>
                                     </div>
                                     <div class="rv-player right">
                                         <span class="rv-player-label">Opponent</span>
@@ -844,9 +906,71 @@ export function renderLanding() {
                                         <span class="rv-player-growth leading">+8.1%</span>
                                     </div>
                                     <div class="rv-vs-divider">
-                                        <svg class="rv-swords-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#7A1C2B" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-                                            <path d="m14.5 17.5-2.5-2.5m-4.5 4.5 7-7m2-2 4-4m-1.5 5.5L20 20m-2.5-1.5 1.5 1.5M4 4l5.5 5.5m-1.5 2.5L4 8m1.5-1.5L4 4m6 10-2-2"/>
-                                        </svg>
+                                        <span class="rv-vs-badge" style="display: inline-flex; align-items: center; justify-content: center; width: 34px; height: 34px; border-radius: 999px; background: rgba(122,28,43,0.07); border: 1px solid rgba(122,28,43,0.16); box-shadow: inset 0 1px 0 rgba(255,255,255,0.8); flex-shrink: 0;">
+                                            <svg width="22" height="22" viewBox="0 0 48 48" aria-hidden="true" style="display: block;">
+                                                <defs>
+                                                    <linearGradient id="cs_steel_card2" x1="0" y1="0" x2="1" y2="0.35">
+                                                        <stop offset="0%" stop-color="#F4F2EE" />
+                                                        <stop offset="45%" stop-color="#CFCBC3" />
+                                                        <stop offset="100%" stop-color="#948F86" />
+                                                    </linearGradient>
+                                                    <linearGradient id="cs_hilt_card2" x1="0" y1="0" x2="1" y2="1">
+                                                        <stop offset="0%" stop-color="#8A2233" />
+                                                        <stop offset="100%" stop-color="#4E1119" />
+                                                    </linearGradient>
+                                                    <radialGradient id="cs_glint_card2" cx="50%" cy="50%" r="50%">
+                                                        <stop offset="0%" stop-color="#FFF6E6" stop-opacity="0.95" />
+                                                        <stop offset="100%" stop-color="#E8B45C" stop-opacity="0" />
+                                                    </radialGradient>
+                                                </defs>
+                                                <g transform="translate(24 23.5) scale(0.86)">
+                                                    <g transform="rotate(-43)">
+                                                        <polygon points="0,-26 2.5,-20.5 2.5,5 -2.5,5 -2.5,-20.5" fill="url(#cs_steel_card2)" />
+                                                        <polygon points="0,-22.5 0.85,-19 0.85,3.4 -0.85,3.4 -0.85,-19" fill="#948F86" opacity="0.45" />
+                                                        <polygon points="0,-26 -2.5,-20.5 -2.5,5 -1.55,5 -1.55,-20.2" fill="#FFFFFF" opacity="0.6" />
+                                                        <rect x="-2.5" y="3.2" width="5" height="1.8" fill="#948F86" opacity="0.5" />
+                                                        <rect x="-8.2" y="5" width="16.4" height="3.3" rx="1.65" fill="url(#cs_hilt_card2)" />
+                                                        <circle cx="-8.4" cy="6.65" r="2.15" fill="url(#cs_hilt_card2)" />
+                                                        <circle cx="8.4" cy="6.65" r="2.15" fill="url(#cs_hilt_card2)" />
+                                                        <rect x="-8.2" y="5" width="16.4" height="1.1" rx="0.55" fill="#FFFFFF" opacity="0.22" />
+                                                        <rect x="-1.95" y="8.3" width="3.9" height="9.2" rx="1.5" fill="#4E1119" />
+                                                        <rect x="-1.95" y="10.1" width="3.9" height="0.9" rx="0.45" fill="#FFFFFF" opacity="0.18" />
+                                                        <rect x="-1.95" y="12.4" width="3.9" height="0.9" rx="0.45" fill="#FFFFFF" opacity="0.18" />
+                                                        <rect x="-1.95" y="14.7" width="3.9" height="0.9" rx="0.45" fill="#FFFFFF" opacity="0.18" />
+                                                        <circle cx="0" cy="19.4" r="2.85" fill="url(#cs_hilt_card2)" />
+                                                        <circle cx="-0.8" cy="18.6" r="0.95" fill="#FFFFFF" opacity="0.42" />
+                                                    </g>
+                                                    <g transform="rotate(43)">
+                                                        <g fill="#FBF9F5" stroke="#FBF9F5" stroke-width="3.2" stroke-linejoin="round">
+                                                            <polygon points="0,-26 2.5,-20.5 2.5,5 -2.5,5 -2.5,-20.5" />
+                                                            <rect x="-8.2" y="5" width="16.4" height="3.3" rx="1.65" />
+                                                            <circle cx="-8.4" cy="6.65" r="2.15" />
+                                                            <circle cx="8.4" cy="6.65" r="2.15" />
+                                                            <rect x="-1.95" y="8.3" width="3.9" height="9.2" rx="1.5" />
+                                                            <circle cx="0" cy="19.4" r="2.85" />
+                                                        </g>
+                                                        <polygon points="0,-26 2.5,-20.5 2.5,5 -2.5,5 -2.5,-20.5" fill="url(#cs_steel_card2)" />
+                                                        <polygon points="0,-22.5 0.85,-19 0.85,3.4 -0.85,3.4 -0.85,-19" fill="#948F86" opacity="0.45" />
+                                                        <polygon points="0,-26 -2.5,-20.5 -2.5,5 -1.55,5 -1.55,-20.2" fill="#FFFFFF" opacity="0.6" />
+                                                        <rect x="-2.5" y="3.2" width="5" height="1.8" fill="#948F86" opacity="0.5" />
+                                                        <rect x="-8.2" y="5" width="16.4" height="3.3" rx="1.65" fill="url(#cs_hilt_card2)" />
+                                                        <circle cx="-8.4" cy="6.65" r="2.15" fill="url(#cs_hilt_card2)" />
+                                                        <circle cx="8.4" cy="6.65" r="2.15" fill="url(#cs_hilt_card2)" />
+                                                        <rect x="-8.2" y="5" width="16.4" height="1.1" rx="0.55" fill="#FFFFFF" opacity="0.22" />
+                                                        <rect x="-1.95" y="8.3" width="3.9" height="9.2" rx="1.5" fill="#4E1119" />
+                                                        <rect x="-1.95" y="10.1" width="3.9" height="0.9" rx="0.45" fill="#FFFFFF" opacity="0.18" />
+                                                        <rect x="-1.95" y="12.4" width="3.9" height="0.9" rx="0.45" fill="#FFFFFF" opacity="0.18" />
+                                                        <rect x="-1.95" y="14.7" width="3.9" height="0.9" rx="0.45" fill="#FFFFFF" opacity="0.18" />
+                                                        <circle cx="0" cy="19.4" r="2.85" fill="url(#cs_hilt_card2)" />
+                                                        <circle cx="-0.8" cy="18.6" r="0.95" fill="#FFFFFF" opacity="0.42" />
+                                                    </g>
+                                                    <g transform="translate(0 -9)">
+                                                        <circle r="7" fill="url(#cs_glint_card2)" />
+                                                        <path d="M0,-6 L1.5,-1.5 L6,0 L1.5,1.5 L0,6 L-1.5,1.5 L-6,0 L-1.5,-1.5 Z" fill="#FFF3DF" opacity="0.9" />
+                                                    </g>
+                                                </g>
+                                            </svg>
+                                        </span>
                                     </div>
                                     <div class="rv-player right">
                                         <span class="rv-player-label">Opponent</span>

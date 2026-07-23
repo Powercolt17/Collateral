@@ -49,8 +49,8 @@ export function renderLanding() {
                                     <!-- MASSIVE DISPLAY TYPOGRAPHY HEADLINE -->
                                     <div class="lhero-headline-wrap">
                                         <h1 class="lh1 animate-fade-in-up">
-                                            YOUR BIGGEST BET<br>
-                                            SHOULD BE ON <span class="lh-gradient">YOU.</span>
+                                            WHEN MONEY IS ON THE LINE,<br>
+                                            INTENTIONS BECOME <span class="lh-gradient">ACTIONS.</span>
                                         </h1>
                                     </div>
                                     <p class="lsub animate-fade-in-up delay-1">
@@ -320,6 +320,151 @@ export function renderLanding() {
 
 
 
+            <!-- ═══ EMOTIONAL REFRAME (THE FORK: WHY IT WORKS) ═══ -->
+            <div class="lhow-it-works-section" data-r style="background: #F8F5F0; padding: clamp(48px,7vw,96px) 0; overflow: visible !important;">
+                <div class="lw">
+                    <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 20px; padding-top: 4px;" class="reveal-item">
+                        <span style="width: 24px; height: 1.5px; background: #7A1C2B; opacity: 0.5;"></span>
+                        <span style="font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 700; letter-spacing: 2.2px; color: #8C8577; text-transform: uppercase; line-height: 1.4;">
+                            WHY IT WORKS
+                        </span>
+                    </div>
+
+
+                    <div class="fk-grid reveal-item">
+                        <div>
+                            <h2 style="font-family: 'Plus Jakarta Sans', sans-serif; font-size: clamp(34px,4.2vw,50px); font-weight: 800; letter-spacing: -0.03em; color: #1C2333; margin: 0 0 20px; line-height: 1.06;">
+                                A plan without stakes is just a <span style="color: #7A1C2B;">comfortable wish.</span>
+                            </h2>
+                            <p style="font-family: 'Inter', sans-serif; font-size: 16px; color: #5A6072; margin: 0 0 18px; max-width: 420px; line-height: 1.62;">
+                                Planning is easy. Executing is hard. You miss targets because failing is free — it costs you nothing but time you'll never see.
+                            </p>
+                            <p style="font-family: 'Inter', sans-serif; font-size: 16px; color: #5A6072; margin: 0; max-width: 420px; line-height: 1.62;">
+                                Collateral makes failure cost something real. That single change moves you from passive planning to pure execution.
+                            </p>
+                            <p style="margin-top: 26px; padding-top: 20px; border-top: 1px solid rgba(28,35,51,0.11); font-family: 'Inter', sans-serif; font-size: 14.5px; color: #7A1C2B; font-weight: 600; max-width: 420px; line-height: 1.55;">
+                                Stop betting on variables you can't control. Bet on your own focus.
+                            </p>
+                        </div>
+
+                        <!-- THE FORK SVG PANEL -->
+                        <div style="background: #FCFAF7; border: 1px solid rgba(28,35,51,0.11); border-radius: 22px; padding: clamp(10px,1.2vw,16px); box-shadow: 0 30px 70px -50px rgba(28,35,51,0.4);">
+                            <svg viewBox="0 0 680 520" width="100%" role="img" aria-label="One goal, two paths: without stakes the path fades to nothing; with a locked deposit it ends in capital returned plus yield." style="display: block; height: auto;">
+                                <defs>
+                                    <marker id="fkArrow" markerWidth="7" markerHeight="7" refX="5.5" refY="3.5" orient="auto">
+                                        <path d="M0 0.5 L6.5 3.5 L0 6.5 Z" fill="#7A1C2B" />
+                                    </marker>
+                                    <marker id="fkArrowG" markerWidth="7" markerHeight="7" refX="5.5" refY="3.5" orient="auto">
+                                        <path d="M0 0.5 L6.5 3.5 L0 6.5 Z" fill="#3F9D5A" />
+                                    </marker>
+                                    <linearGradient id="fkFade" x1="0" y1="0" x2="0" y2="1">
+                                        <stop offset="0%" stop-color="#8C8577" stop-opacity="0.5" />
+                                        <stop offset="100%" stop-color="#8C8577" stop-opacity="0.08" />
+                                    </linearGradient>
+                                </defs>
+
+                                <!-- shared origin -->
+                                <g>
+                                    <rect x="230" y="16" width="220" height="50" rx="12" fill="#FBF9F5" stroke="rgba(28,35,51,0.11)" />
+                                    <text x="340" y="41" text-anchor="middle" dominant-baseline="central" font-family="'Plus Jakarta Sans', sans-serif" font-size="17" font-weight="700" fill="#1C2333">You set a goal.</text>
+                                </g>
+
+                                <!-- the fork itself -->
+                                <path d="M305 66 C 275 84, 213 78, 173 98" fill="none" stroke="#8C8577" stroke-width="1.4" stroke-dasharray="4 5" opacity="0.6" />
+                                <path d="M375 66 C 405 84, 467 78, 507 98" fill="none" stroke="#7A1C2B" stroke-width="1.7" opacity="0.65" marker-end="url(#fkArrow)" />
+
+                                <!-- column headers -->
+                                <text x="26" y="90" font-family="'JetBrains Mono', monospace" font-size="11" font-weight="700" letter-spacing="1.8" fill="#8C8577">WITHOUT STAKES</text>
+                                <text x="360" y="90" font-family="'JetBrains Mono', monospace" font-size="11" font-weight="700" letter-spacing="1.8" fill="#7A1C2B">WITH COLLATERAL</text>
+
+                                <!-- ---- LEFT: the path that dissolves ---- -->
+                                <!-- Step 01 -->
+                                <g opacity="1">
+                                    <rect x="26" y="106" width="294" height="62" rx="11" fill="#FCFAF7" stroke="rgba(28,35,51,0.11)" stroke-dasharray="0" />
+                                    <text x="42" y="137" dominant-baseline="central" font-family="'JetBrains Mono', monospace" font-size="11.5" font-weight="700" fill="#A8A49B">01</text>
+                                    <text x="72" y="137" dominant-baseline="central" font-family="'Inter', sans-serif" font-size="16" fill="#5A6072">Plan a new goal</text>
+                                </g>
+                                <!-- Step 02 -->
+                                <g opacity="0.68">
+                                    <rect x="26" y="182" width="294" height="62" rx="11" fill="#FCFAF7" stroke="rgba(28,35,51,0.11)" stroke-dasharray="0" />
+                                    <text x="42" y="213" dominant-baseline="central" font-family="'JetBrains Mono', monospace" font-size="11.5" font-weight="700" fill="#A8A49B">02</text>
+                                    <text x="72" y="213" dominant-baseline="central" font-family="'Inter', sans-serif" font-size="16" fill="#5A6072">Get distracted</text>
+                                </g>
+                                <!-- Step 03 -->
+                                <g opacity="0.44">
+                                    <rect x="26" y="258" width="294" height="62" rx="11" fill="#FCFAF7" stroke="rgba(28,35,51,0.11)" stroke-dasharray="5 5" />
+                                    <text x="42" y="289" dominant-baseline="central" font-family="'JetBrains Mono', monospace" font-size="11.5" font-weight="700" fill="#A8A49B">03</text>
+                                    <text x="72" y="289" dominant-baseline="central" font-family="'Inter', sans-serif" font-size="16" fill="#5A6072">Push the deadline</text>
+                                </g>
+                                <!-- Step 04 -->
+                                <g opacity="0.26">
+                                    <rect x="26" y="334" width="294" height="62" rx="11" fill="#FCFAF7" stroke="rgba(28,35,51,0.11)" stroke-dasharray="5 5" />
+                                    <text x="42" y="365" dominant-baseline="central" font-family="'JetBrains Mono', monospace" font-size="11.5" font-weight="700" fill="#A8A49B">04</text>
+                                    <text x="72" y="365" dominant-baseline="central" font-family="'Inter', sans-serif" font-size="16" fill="#5A6072">Another year slides by</text>
+                                </g>
+
+                                <!-- connectors thin out as path fades -->
+                                <line x1="173" y1="168" x2="173" y2="182" stroke="#8C8577" stroke-width="1.3" stroke-dasharray="3 5" opacity="0.54" />
+                                <line x1="173" y1="244" x2="173" y2="258" stroke="#8C8577" stroke-width="1.0" stroke-dasharray="3 5" opacity="0.35" />
+                                <line x1="173" y1="320" x2="173" y2="334" stroke="#8C8577" stroke-width="0.7" stroke-dasharray="3 5" opacity="0.21" />
+
+                                <!-- dead end -->
+                                <line x1="173" y1="396" x2="173" y2="422" stroke="url(#fkFade)" stroke-width="1" stroke-dasharray="3 5" />
+                                <g opacity="0.9">
+                                    <rect x="26" y="424" width="294" height="76" rx="14" fill="none" stroke="#8C8577" stroke-width="1.5" stroke-dasharray="6 6" />
+                                    <text x="173" y="454" text-anchor="middle" font-family="'Plus Jakarta Sans', sans-serif" font-size="18" font-weight="700" fill="#6E685C">Nothing was at risk.</text>
+                                    <text x="173" y="480" text-anchor="middle" font-family="'Inter', sans-serif" font-size="14" font-weight="500" fill="#5A6072">So nothing changed.</text>
+                                </g>
+
+                                <!-- ---- RIGHT: the path that firms up ---- -->
+                                <!-- Step 01 -->
+                                <g>
+                                    <rect x="360" y="106" width="294" height="62" rx="11" fill="#FCFAF7" stroke="rgba(122,28,43,0.14)" stroke-width="1" />
+                                    <text x="376" y="137" dominant-baseline="central" font-family="'JetBrains Mono', monospace" font-size="11.5" font-weight="700" fill="#7A1C2B" opacity="0.55">01</text>
+                                    <text x="406" y="137" dominant-baseline="central" font-family="'Plus Jakarta Sans', sans-serif" font-size="16" font-weight="600" fill="#1C2333">Lock a deposit on target</text>
+                                </g>
+                                <!-- Step 02 -->
+                                <g>
+                                    <rect x="360" y="182" width="294" height="62" rx="11" fill="#FCFAF7" stroke="rgba(122,28,43,0.21)" stroke-width="1" />
+                                    <text x="376" y="213" dominant-baseline="central" font-family="'JetBrains Mono', monospace" font-size="11.5" font-weight="700" fill="#7A1C2B" opacity="0.7">02</text>
+                                    <text x="406" y="213" dominant-baseline="central" font-family="'Plus Jakarta Sans', sans-serif" font-size="16" font-weight="600" fill="#1C2333">Failure now has a cost</text>
+                                </g>
+                                <!-- Step 03 -->
+                                <g>
+                                    <rect x="360" y="258" width="294" height="62" rx="11" fill="#FCFAF7" stroke="rgba(122,28,43,0.28)" stroke-width="1" />
+                                    <text x="376" y="289" dominant-baseline="central" font-family="'JetBrains Mono', monospace" font-size="11.5" font-weight="700" fill="#7A1C2B" opacity="0.85">03</text>
+                                    <text x="406" y="289" dominant-baseline="central" font-family="'Plus Jakarta Sans', sans-serif" font-size="16" font-weight="600" fill="#1C2333">Work through the night</text>
+                                </g>
+                                <!-- Step 04 -->
+                                <g>
+                                    <rect x="360" y="334" width="294" height="62" rx="11" fill="rgba(63,157,90,0.06)" stroke="rgba(63,157,90,0.4)" stroke-width="1.5" />
+                                    <text x="376" y="365" dominant-baseline="central" font-family="'JetBrains Mono', monospace" font-size="11.5" font-weight="700" fill="#3F9D5A" opacity="1">04</text>
+                                    <text x="406" y="365" dominant-baseline="central" font-family="'Plus Jakarta Sans', sans-serif" font-size="16" font-weight="700" fill="#3F9D5A">Hit target, claim yield</text>
+                                </g>
+
+                                <!-- Right solid connectors -->
+                                <line x1="507" y1="168" x2="507" y2="176" stroke="#7A1C2B" stroke-width="1.5" opacity="0.4" marker-end="url(#fkArrow)" />
+                                <line x1="507" y1="244" x2="507" y2="252" stroke="#7A1C2B" stroke-width="1.5" opacity="0.55" marker-end="url(#fkArrow)" />
+                                <line x1="507" y1="320" x2="507" y2="328" stroke="#7A1C2B" stroke-width="1.5" opacity="0.7" marker-end="url(#fkArrow)" />
+
+                                <line x1="507" y1="396" x2="507" y2="418" stroke="#3F9D5A" stroke-width="1.6" opacity="0.7" marker-end="url(#fkArrowG)" />
+
+                                <!-- payout badge -->
+                                <g class="fk-payout">
+                                    <rect x="360" y="424" width="294" height="76" rx="14" fill="rgba(63,157,90,0.11)" stroke="rgba(63,157,90,0.6)" stroke-width="2" />
+                                    <circle cx="394" cy="462" r="13" fill="#3F9D5A" class="fk-check" />
+                                    <path d="m-4.4 0 2.9 2.9 5.7-5.8" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" transform="translate(394, 462) scale(1.15)" />
+                                    <text x="418" y="454" font-family="'Plus Jakarta Sans', sans-serif" font-size="18" font-weight="700" fill="#1C2333">Capital returned + yield.</text>
+                                    <text x="418" y="480" font-family="'Inter', sans-serif" font-size="14" fill="#5A6072">The goal actually happened.</text>
+                                </g>
+                            </svg>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+
             <!-- ═══ SIGNATURE TYPOGRAPHIC CONTRACT HERO (YOU vs YOU / YOU vs THEM) ═══ -->
             <section class="sor-section" id="sor-contract-section" data-r style="padding: clamp(48px, 6vw, 80px) clamp(20px, 4vw, 48px);">
                 <div class="sor-grid">
@@ -426,6 +571,521 @@ export function renderLanding() {
                     </div>
                 </div>
             </section>
+
+            <!-- ═══ VISUAL CENTERPIECE: CONTINUOUS MONEY FLOW SCHEMATIC ═══ -->
+            <div class="lengine-section" id="engine-section" data-r>
+                <div class="lw">
+                    <div class="lengine-hdr-wrap">
+                        <div class="lengine-tag">
+                            <span class="l-lr-dot l-ticker-pulse"></span> AUTOMATED EXECUTION SCHEMATIC
+                        </div>
+                        <h2 class="lengine-h2">HOW MONEY FLOWS ON COLLATERAL</h2>
+                        <p class="lengine-sub">
+                            Every deposit is governed by custodial escrow and automated API verification. Winners receive their principal plus matching yield funded by forfeited deposits and brand sponsors.
+                        </p>
+                    </div>
+
+                    <!-- SCHEMATIC: CSS GRID LAYOUT (no absolute positioning) -->
+                    <div class="lflow-container">
+
+                        <!-- DESKTOP FLOW (hidden <900px) -->
+                        <div class="lflow-desktop">
+                            <!-- NODE ROW — CSS Grid handles horizontal containment -->
+                            <div class="lflow-row">
+                                <!-- NODE: DEPOSIT IN -->
+                                <div class="lflow-node">
+                                    <div class="lflow-node-hdr">INPUT</div>
+                                    <div class="lflow-node-title">DEPOSIT IN</div>
+                                    <div class="lflow-node-stat">$8,700,000</div>
+                                    <div class="lflow-node-sub">Stripe Connect Escrow</div>
+                                </div>
+
+                                <div class="lflow-arrow">
+                                    <svg width="34" height="12" viewBox="0 0 34 12" fill="none">
+                                        <path d="M 0 6 H 24" stroke="#7A1C2B" stroke-width="2" stroke-linecap="round"/>
+                                        <polygon points="32,6 24,2 24,10" fill="#7A1C2B"/>
+                                    </svg>
+                                </div>
+
+                                <!-- NODE: ESCROW VAULT -->
+                                <div class="lflow-node lflow-node-vault" id="lflow-vault-node">
+                                    <div class="lflow-node-hdr">CUSTODY</div>
+                                    <div class="lflow-node-title">ESCROW VAULT</div>
+                                    <div class="lflow-node-stat">$8.7M LOCKED</div>
+                                    <div class="lflow-node-sub">Custodial Escrow via Stripe Connect</div>
+                                </div>
+
+                                <div class="lflow-arrow">
+                                    <svg width="34" height="12" viewBox="0 0 34 12" fill="none">
+                                        <path d="M 0 6 H 24" stroke="#7A1C2B" stroke-width="2" stroke-linecap="round"/>
+                                        <polygon points="32,6 24,2 24,10" fill="#7A1C2B"/>
+                                    </svg>
+                                </div>
+
+                                <!-- NODE: ORACLE API -->
+                                <div class="lflow-node">
+                                    <div class="lflow-node-hdr">VERIFICATION</div>
+                                    <div class="lflow-node-title">ORACLE API STREAM</div>
+                                    <div class="lflow-node-stat">96.2% HIT RATE</div>
+                                    <div class="lflow-node-sub">Stripe • Shopify • X • YouTube</div>
+                                </div>
+
+                                <!-- SPLIT ARROWS — three proportionally weighted paths fanning to outcomes -->
+                                <div class="lflow-split-arrows">
+                                    <svg width="44" height="156" viewBox="0 0 44 156" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <!-- Win path (thick green #145C14) -->
+                                        <path d="M 0 78 C 16 78, 22 20, 34 20" stroke="#145C14" stroke-width="4.5" stroke-linecap="round"/>
+                                        <polygon points="42,20 32,14 32,26" fill="#145C14"/>
+
+                                        <!-- Forfeit path (medium crimson #7A1220) -->
+                                        <path d="M 0 78 H 34" stroke="#7A1220" stroke-width="2.5" stroke-linecap="round"/>
+                                        <polygon points="42,78 33,73 33,83" fill="#7A1220"/>
+
+                                        <!-- Burn path (hairline dashed crimson #7A1220) -->
+                                        <path d="M 0 78 C 16 78, 22 136, 34 136" stroke="#7A1220" stroke-width="1.2" stroke-dasharray="4 3" stroke-linecap="round"/>
+                                        <polygon points="41,136 34,132 34,140" fill="#7A1220"/>
+                                    </svg>
+                                </div>
+
+                                <!-- THREE TERMINAL OUTCOMES -->
+                                <div class="lflow-outcomes">
+                                    <div class="lflow-outcome is-win">
+                                        <div class="lflow-outcome-indicator" style="background:#145C14;width:5px;"></div>
+                                        <div class="lflow-outcome-body">
+                                            <div class="lflow-out-hdr"><span class="lflow-dot" style="background:#145C14;"></span>WIN PATH (95.7%)</div>
+                                            <div class="lflow-out-title">RETURNED TO CREATOR</div>
+                                            <div class="lflow-out-val lflow-val-green">$8,326,200</div>
+                                            <div class="lflow-out-desc">100% Principal + Matching Yield</div>
+                                        </div>
+                                    </div>
+                                    <div class="lflow-outcome is-forfeit" id="lflow-forfeit-node">
+                                        <div class="lflow-outcome-indicator" style="background:#7A1220;width:3px;"></div>
+                                        <div class="lflow-outcome-body">
+                                            <div class="lflow-out-hdr"><span class="lflow-dot" style="background:#7A1220;"></span>FORFEITED (3.8%)</div>
+                                            <div class="lflow-out-title">FORFEITED DEPOSITS</div>
+                                            <div class="lflow-out-val lflow-val-crimson">$330,600</div>
+                                            <div class="lflow-out-desc">Feeds Winner Match Pool</div>
+                                        </div>
+                                    </div>
+                                    <div class="lflow-outcome is-burn">
+                                        <div class="lflow-outcome-indicator" style="background:#7A1220;width:1px;"></div>
+                                        <div class="lflow-outcome-body">
+                                            <div class="lflow-out-hdr"><span class="lflow-dot" style="background:#7A1220;"></span>PROTOCOL FEE (0.5%)</div>
+                                            <div class="lflow-out-title">CLTR BURNED</div>
+                                            <div class="lflow-out-val">$43,200</div>
+                                            <div class="lflow-out-desc">Permanently Destroyed</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- RECIRCULATING LOOP — routed SVG path below node row landing directly into Escrow Vault -->
+                            <div class="lflow-loop-wrap">
+                                <svg class="lflow-loop-svg" viewBox="0 0 1000 48" preserveAspectRatio="none">
+                                    <defs>
+                                        <marker id="ah-loop" viewBox="0 0 10 10" refX="5" refY="3" markerWidth="6" markerHeight="6" orient="auto">
+                                            <path d="M 1 9 L 5 1 L 9 9 Z" fill="#7A1C2B"/>
+                                        </marker>
+                                    </defs>
+                                    <!-- Path: exits from x=845 (center of forfeited card), routes down to y=38, runs left, turns UP into x=310 (center of Escrow Vault) -->
+                                    <path class="lflow-loop-path" d="M 845 0 C 845 26, 820 38, 770 38 L 385 38 C 310 38, 310 26, 310 2" stroke="#7A1C2B" stroke-width="2.2" fill="none" stroke-dasharray="6 4" stroke-linecap="round" marker-end="url(#ah-loop)"/>
+                                </svg>
+                                <div class="lflow-loop-badge">↺ FORFEITED DEPOSITS RE-CIRCULATE TO ESCROW VAULT</div>
+                            </div>
+                        </div>
+
+                        <!-- MOBILE VERTICAL FLOW (shown <900px) -->
+                        <div class="lflow-mobile">
+                            <div class="lflow-mob-step">
+                                <div class="lflow-mob-num">01</div>
+                                <div class="lflow-mob-body">
+                                    <div class="lflow-node-hdr">INPUT</div>
+                                    <div class="lflow-node-title">DEPOSIT IN</div>
+                                    <div class="lflow-node-stat">$8,700,000</div>
+                                </div>
+                            </div>
+                            <div class="lflow-mob-arrow">↓</div>
+
+                            <div class="lflow-mob-step lflow-mob-vault">
+                                <div class="lflow-mob-num">02</div>
+                                <div class="lflow-mob-body">
+                                    <div class="lflow-node-hdr">CUSTODY</div>
+                                    <div class="lflow-node-title">ESCROW VAULT</div>
+                                    <div class="lflow-node-stat">$8.7M LOCKED</div>
+                                    <div class="lflow-node-sub">Custodial Escrow via Stripe Connect</div>
+                                </div>
+                            </div>
+                            <div class="lflow-mob-arrow">↓</div>
+
+                            <div class="lflow-mob-step">
+                                <div class="lflow-mob-num">03</div>
+                                <div class="lflow-mob-body">
+                                    <div class="lflow-node-hdr">VERIFICATION</div>
+                                    <div class="lflow-node-title">ORACLE API STREAM</div>
+                                    <div class="lflow-node-stat">96.2% HIT RATE</div>
+                                </div>
+                            </div>
+                            <div class="lflow-mob-arrow">↓</div>
+
+                            <div class="lflow-mob-outcomes">
+                                <div class="lflow-outcome is-win">
+                                    <div class="lflow-outcome-indicator" style="background:#145C14;height:5px;"></div>
+                                    <div class="lflow-outcome-body">
+                                        <div class="lflow-out-hdr"><span class="lflow-dot" style="background:#145C14;"></span>WIN PATH (95.7%)</div>
+                                        <div class="lflow-out-title">RETURNED TO CREATOR</div>
+                                        <div class="lflow-out-val lflow-val-green">$8,326,200</div>
+                                    </div>
+                                </div>
+                                <div class="lflow-outcome is-forfeit">
+                                    <div class="lflow-outcome-indicator" style="background:#7A1220;height:3px;"></div>
+                                    <div class="lflow-outcome-body">
+                                        <div class="lflow-out-hdr"><span class="lflow-dot" style="background:#7A1220;"></span>FORFEITED (3.8%)</div>
+                                        <div class="lflow-out-title">FORFEITED DEPOSITS</div>
+                                        <div class="lflow-out-val lflow-val-crimson">$330,600</div>
+                                        <div class="lflow-mob-loop">↺ Re-circulates to Escrow Vault</div>
+                                    </div>
+                                </div>
+                                <div class="lflow-outcome is-burn">
+                                    <div class="lflow-outcome-indicator" style="background:#7A1220;height:1.5px;"></div>
+                                    <div class="lflow-outcome-body">
+                                        <div class="lflow-out-hdr"><span class="lflow-dot" style="background:#7A1220;"></span>PROTOCOL FEE (0.5%)</div>
+                                        <div class="lflow-out-title">CLTR BURNED</div>
+                                        <div class="lflow-out-val">$43,200</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <!-- SUMMARY PARAGRAPH -->
+                    <div class="lflow-summary">
+                        Deposits are held in Stripe Connect custodial escrow accounts mapped to smart contract state. Upon automated API verification, winners receive their principal plus matching yield. Forfeited deposits re-circulate into the match pool to fund future winners. A 0.5% protocol fee is permanently burned from CLTR supply.
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <!-- ═══ PROOF OF SETTLEMENT (STAMPED RECEIPTS & STATS) ═══ -->
+            <div class="lreal-results" data-r style="background: #F8F5F0; padding: clamp(40px,6vw,88px) clamp(20px,5vw,64px); font-family: ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;">
+                <div class="lw" style="max-width: 1240px; margin: 0 auto;">
+                    <!-- SECTION TAG -->
+                    <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 18px;" class="reveal-item">
+                        <span style="width: 24px; height: 1.5px; background: #7A1C2B; opacity: 0.5;"></span>
+                        <span style="font-family: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace; font-size: 11px; font-weight: 700; letter-spacing: 2.2px; color: #8C8577; text-transform: uppercase;">
+                            PROOF OF SETTLEMENT
+                        </span>
+                    </div>
+
+                    <!-- HEAD STACK -->
+                    <div class="ps-head reveal-item" style="display: flex; justify-content: space-between; align-items: flex-end; gap: 40px; flex-wrap: wrap; margin-bottom: clamp(26px,3vw,42px);">
+                        <h2 style="font-size: clamp(30px,3.8vw,46px); font-weight: 800; letter-spacing: -0.03em; color: #1C2333; margin: 0; line-height: 1.06; max-width: 640px;">
+                            Skin in the game is the only thing<br />that <span style="color: #7A1C2B;">actually works.</span>
+                        </h2>
+                        <p style="font-size: 15.5px; color: #5A6072; margin: 0; max-width: 340px; line-height: 1.6;">
+                            Every contract settles the same way — automatically, on verified API data. Including the ones people lose.
+                        </p>
+                    </div>
+
+                    <!-- 3 STAMPED RECEIPT CARDS GRID -->
+                    <div class="ps-grid" style="display: grid; grid-template-columns: repeat(3, 1fr); gap: clamp(16px,2vw,26px);">
+                        
+                        <!-- RECEIPT 1: @revpilot (WIN) -->
+                        <article class="ps-card reveal-item" style="position: relative; background: #FFFDFA; border: 1px solid rgba(28,35,51,0.11); border-radius: 6px; box-shadow: 0 14px 34px -22px rgba(28,35,51,0.4); display: flex; flex-direction: column; transition: transform .22s cubic-bezier(.2,.7,.3,1), box-shadow .22s ease;">
+                            <!-- HEADER -->
+                            <div style="padding: 16px 18px 12px; border-bottom: 1px solid rgba(28,35,51,0.11);">
+                                <div style="display: flex; justify-content: space-between; align-items: center;">
+                                    <span style="font-family: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace; font-size: 9.5px; font-weight: 700; letter-spacing: 1.7px; color: #7A1C2B;">SETTLEMENT RECEIPT</span>
+                                    <span style="font-family: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace; font-size: 10px; color: #8C8577; font-variant-numeric: tabular-nums;">№ C-34D6</span>
+                                </div>
+                                <div style="margin-top: 10px; font-size: 15.5px; font-weight: 700; color: #1C2333;">
+                                    +20% revenue in 30 days
+                                </div>
+                                <div style="margin-top: 4px; font-family: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace; font-size: 11px; color: #8C8577;">
+                                    @revpilot · via Stripe API
+                                </div>
+                            </div>
+
+                            <!-- BODY ROWS -->
+                            <div style="padding: 14px 18px 16px; display: grid; gap: 9px;">
+                                <div style="display: flex; justify-content: space-between; align-items: baseline; gap: 12px;">
+                                    <span style="font-family: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace; font-size: 9.5px; letter-spacing: 1.2px; color: #8C8577;">CAPITAL STAKED</span>
+                                    <span style="font-family: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace; font-size: 12.5px; font-weight: 600; color: #1C2333; text-align: right; font-variant-numeric: tabular-nums;">$2,000.00</span>
+                                </div>
+                                <div style="display: flex; justify-content: space-between; align-items: baseline; gap: 12px;">
+                                    <span style="font-family: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace; font-size: 9.5px; letter-spacing: 1.2px; color: #8C8577;">VERIFIED BY</span>
+                                    <span style="font-size: 13px; font-weight: 600; color: #1C2333; text-align: right;">Stripe oracle</span>
+                                </div>
+                                <div style="display: flex; justify-content: space-between; align-items: baseline; gap: 12px;">
+                                    <span style="font-family: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace; font-size: 9.5px; letter-spacing: 1.2px; color: #8C8577;">SETTLED ON</span>
+                                    <span style="font-family: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace; font-size: 12.5px; font-weight: 600; color: #1C2333; text-align: right; font-variant-numeric: tabular-nums;">Mar 14, 2026</span>
+                                </div>
+                            </div>
+
+                            <!-- TEAR LINE WITH NOTCHES -->
+                            <div style="position: relative; height: 1px;">
+                                <div style="position: absolute; left: 12px; right: 12px; top: 0; height: 1px; background: repeating-linear-gradient(90deg, rgba(28,35,51,0.11) 0 5px, transparent 5px 10px);"></div>
+                                <span class="ps-notch ps-notch-left"></span>
+                                <span class="ps-notch ps-notch-right"></span>
+                            </div>
+
+                            <!-- OUTCOME BLOCK WITH WAX SEAL -->
+                            <div style="position: relative; padding: 16px 18px 20px; background: rgba(63,157,90,0.09); border-radius: 0 0 6px 6px; min-height: 96px;">
+                                <div style="font-size: 22px; font-weight: 800; letter-spacing: -0.02em; color: #3F9D5A; font-variant-numeric: tabular-nums;">+$2,240.00</div>
+                                <div style="margin-top: 5px; font-family: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace; font-size: 9px; font-weight: 700; letter-spacing: 1.3px; color: #8C8577; max-width: 150px;">PRINCIPAL + YIELD RETURNED</div>
+
+                                <div class="ps-seal" style="position: absolute; right: 8px; bottom: 8px;">
+                                    <svg width="150" height="55" viewBox="0 0 300 110" aria-hidden="true" style="display: block; overflow: visible;">
+                                        <defs>
+                                            <filter id="stamp1g" x="-30%" y="-30%" width="160%" height="160%">
+                                                <feTurbulence type="fractalNoise" baseFrequency="0.13" numOctaves="3" seed="7" result="coarse"/>
+                                                <feColorMatrix in="coarse" type="matrix" values="0 0 0 0 0, 0 0 0 0 0, 0 0 0 0 0, 1 0 0 0 -0.26" result="blotch"/>
+                                                <feComposite in="SourceGraphic" in2="blotch" operator="out" result="pass1"/>
+                                                <feTurbulence type="fractalNoise" baseFrequency="0.7" numOctaves="4" seed="18" result="fine"/>
+                                                <feColorMatrix in="fine" type="matrix" values="0 0 0 0 0, 0 0 0 0 0, 0 0 0 0 0, 1 0 0 0 -0.52" result="speck"/>
+                                                <feComposite in="pass1" in2="speck" operator="out" result="pass2"/>
+                                                <feTurbulence type="fractalNoise" baseFrequency="0.018" numOctaves="2" seed="10" result="warp"/>
+                                                <feDisplacementMap in="pass2" in2="warp" scale="2.8" xChannelSelector="R" yChannelSelector="G"/>
+                                            </filter>
+                                            <filter id="stamp1b" x="-10%" y="-10%" width="120%" height="120%">
+                                                <feGaussianBlur stdDeviation="0.7" />
+                                            </filter>
+                                            <linearGradient id="pressure1" x1="0" y1="0" x2="1" y2="1">
+                                                <stop offset="0%" stop-color="#fff" stop-opacity="1"/>
+                                                <stop offset="55%" stop-color="#fff" stop-opacity="0.92"/>
+                                                <stop offset="100%" stop-color="#fff" stop-opacity="0.62"/>
+                                            </linearGradient>
+                                            <mask id="pressureMask1">
+                                                <rect x="0" y="0" width="300" height="110" fill="url(#pressure1)"/>
+                                            </mask>
+                                        </defs>
+                                        <g filter="url(#stamp1b)" opacity="0.28" transform="translate(0.5, 0.5) rotate(-9 150 55)">
+                                            <rect x="10" y="13" width="280" height="84" rx="8" fill="none" stroke="#2F7A45" stroke-width="5" />
+                                            <rect x="18" y="21" width="264" height="68" rx="5" fill="none" stroke="#2F7A45" stroke-width="1.6" />
+                                            <text x="151.5" y="55" text-anchor="middle" dominant-baseline="central" font-family='"Arial Narrow", "Helvetica Neue Condensed", "Oswald", "DejaVu Sans Condensed", Impact, system-ui, sans-serif' font-size="35" font-weight="700" letter-spacing="3" fill="#2F7A45" style="font-stretch: condensed;">APPROVED</text>
+                                        </g>
+                                        <g filter="url(#stamp1g)" mask="url(#pressureMask1)" opacity="0.86" transform="rotate(-9 150 55)">
+                                            <rect x="10" y="13" width="280" height="84" rx="8" fill="none" stroke="#2F7A45" stroke-width="5" />
+                                            <rect x="18" y="21" width="264" height="68" rx="5" fill="none" stroke="#2F7A45" stroke-width="1.6" />
+                                            <text x="151.5" y="55" text-anchor="middle" dominant-baseline="central" font-family='"Arial Narrow", "Helvetica Neue Condensed", "Oswald", "DejaVu Sans Condensed", Impact, system-ui, sans-serif' font-size="35" font-weight="700" letter-spacing="3" fill="#2F7A45" style="font-stretch: condensed;">APPROVED</text>
+                                        </g>
+                                    </svg>
+                                </div>
+                            </div>
+                        </article>
+
+                        <!-- RECEIPT 2: @deltacreator (WIN) -->
+                        <article class="ps-card reveal-item" style="position: relative; background: #FFFDFA; border: 1px solid rgba(28,35,51,0.11); border-radius: 6px; box-shadow: 0 14px 34px -22px rgba(28,35,51,0.4); display: flex; flex-direction: column; transition: transform .22s cubic-bezier(.2,.7,.3,1), box-shadow .22s ease;">
+                            <!-- HEADER -->
+                            <div style="padding: 16px 18px 12px; border-bottom: 1px solid rgba(28,35,51,0.11);">
+                                <div style="display: flex; justify-content: space-between; align-items: center;">
+                                    <span style="font-family: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace; font-size: 9.5px; font-weight: 700; letter-spacing: 1.7px; color: #7A1C2B;">SETTLEMENT RECEIPT</span>
+                                    <span style="font-family: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace; font-size: 10px; color: #8C8577; font-variant-numeric: tabular-nums;">№ C-9F21</span>
+                                </div>
+                                <div style="margin-top: 10px; font-size: 15.5px; font-weight: 700; color: #1C2333;">
+                                    50,000 subscribers in 60 days
+                                </div>
+                                <div style="margin-top: 4px; font-family: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace; font-size: 11px; color: #8C8577;">
+                                    @deltacreator · via YouTube API
+                                </div>
+                            </div>
+
+                            <!-- BODY ROWS -->
+                            <div style="padding: 14px 18px 16px; display: grid; gap: 9px;">
+                                <div style="display: flex; justify-content: space-between; align-items: baseline; gap: 12px;">
+                                    <span style="font-family: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace; font-size: 9.5px; letter-spacing: 1.2px; color: #8C8577;">CAPITAL STAKED</span>
+                                    <span style="font-family: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace; font-size: 12.5px; font-weight: 600; color: #1C2333; text-align: right; font-variant-numeric: tabular-nums;">$1,000.00</span>
+                                </div>
+                                <div style="display: flex; justify-content: space-between; align-items: baseline; gap: 12px;">
+                                    <span style="font-family: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace; font-size: 9.5px; letter-spacing: 1.2px; color: #8C8577;">VERIFIED BY</span>
+                                    <span style="font-size: 13px; font-weight: 600; color: #1C2333; text-align: right;">YouTube oracle</span>
+                                </div>
+                                <div style="display: flex; justify-content: space-between; align-items: baseline; gap: 12px;">
+                                    <span style="font-family: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace; font-size: 9.5px; letter-spacing: 1.2px; color: #8C8577;">SETTLED ON</span>
+                                    <span style="font-family: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace; font-size: 12.5px; font-weight: 600; color: #1C2333; text-align: right; font-variant-numeric: tabular-nums;">Mar 09, 2026</span>
+                                </div>
+                            </div>
+
+                            <!-- TEAR LINE WITH NOTCHES -->
+                            <div style="position: relative; height: 1px;">
+                                <div style="position: absolute; left: 12px; right: 12px; top: 0; height: 1px; background: repeating-linear-gradient(90deg, rgba(28,35,51,0.11) 0 5px, transparent 5px 10px);"></div>
+                                <span class="ps-notch ps-notch-left"></span>
+                                <span class="ps-notch ps-notch-right"></span>
+                            </div>
+
+                            <!-- OUTCOME BLOCK WITH RUBBER STAMP -->
+                            <div style="position: relative; padding: 16px 18px 20px; background: rgba(63,157,90,0.09); border-radius: 0 0 6px 6px; min-height: 96px;">
+                                <div style="font-size: 22px; font-weight: 800; letter-spacing: -0.02em; color: #3F9D5A; font-variant-numeric: tabular-nums;">+$1,120.00</div>
+                                <div style="margin-top: 5px; font-family: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace; font-size: 9px; font-weight: 700; letter-spacing: 1.3px; color: #8C8577; max-width: 150px;">PRINCIPAL + YIELD RETURNED</div>
+
+                                <div class="ps-seal" style="position: absolute; right: 8px; bottom: 8px;">
+                                    <svg width="150" height="55" viewBox="0 0 300 110" aria-hidden="true" style="display: block; overflow: visible;">
+                                        <defs>
+                                            <filter id="stamp2g" x="-30%" y="-30%" width="160%" height="160%">
+                                                <feTurbulence type="fractalNoise" baseFrequency="0.13" numOctaves="3" seed="13" result="coarse"/>
+                                                <feColorMatrix in="coarse" type="matrix" values="0 0 0 0 0, 0 0 0 0 0, 0 0 0 0 0, 1 0 0 0 -0.26" result="blotch"/>
+                                                <feComposite in="SourceGraphic" in2="blotch" operator="out" result="pass1"/>
+                                                <feTurbulence type="fractalNoise" baseFrequency="0.7" numOctaves="4" seed="24" result="fine"/>
+                                                <feColorMatrix in="fine" type="matrix" values="0 0 0 0 0, 0 0 0 0 0, 0 0 0 0 0, 1 0 0 0 -0.52" result="speck"/>
+                                                <feComposite in="pass1" in2="speck" operator="out" result="pass2"/>
+                                                <feTurbulence type="fractalNoise" baseFrequency="0.018" numOctaves="2" seed="16" result="warp"/>
+                                                <feDisplacementMap in="pass2" in2="warp" scale="2.8" xChannelSelector="R" yChannelSelector="G"/>
+                                            </filter>
+                                            <filter id="stamp2b" x="-10%" y="-10%" width="120%" height="120%">
+                                                <feGaussianBlur stdDeviation="0.7" />
+                                            </filter>
+                                            <linearGradient id="pressure2" x1="1" y1="0" x2="0" y2="1">
+                                                <stop offset="0%" stop-color="#fff" stop-opacity="1"/>
+                                                <stop offset="55%" stop-color="#fff" stop-opacity="0.92"/>
+                                                <stop offset="100%" stop-color="#fff" stop-opacity="0.62"/>
+                                            </linearGradient>
+                                            <mask id="pressureMask2">
+                                                <rect x="0" y="0" width="300" height="110" fill="url(#pressure2)"/>
+                                            </mask>
+                                        </defs>
+                                        <g filter="url(#stamp2b)" opacity="0.28" transform="translate(0.5, 0.5) rotate(-14 150 55)">
+                                            <rect x="10" y="13" width="280" height="84" rx="8" fill="none" stroke="#2F7A45" stroke-width="5" />
+                                            <rect x="18" y="21" width="264" height="68" rx="5" fill="none" stroke="#2F7A45" stroke-width="1.6" />
+                                            <text x="151.5" y="55" text-anchor="middle" dominant-baseline="central" font-family='"Arial Narrow", "Helvetica Neue Condensed", "Oswald", "DejaVu Sans Condensed", Impact, system-ui, sans-serif' font-size="35" font-weight="700" letter-spacing="3" fill="#2F7A45" style="font-stretch: condensed;">APPROVED</text>
+                                        </g>
+                                        <g filter="url(#stamp2g)" mask="url(#pressureMask2)" opacity="0.92" transform="rotate(-14 150 55)">
+                                            <rect x="10" y="13" width="280" height="84" rx="8" fill="none" stroke="#2F7A45" stroke-width="5" />
+                                            <rect x="18" y="21" width="264" height="68" rx="5" fill="none" stroke="#2F7A45" stroke-width="1.6" />
+                                            <text x="151.5" y="55" text-anchor="middle" dominant-baseline="central" font-family='"Arial Narrow", "Helvetica Neue Condensed", "Oswald", "DejaVu Sans Condensed", Impact, system-ui, sans-serif' font-size="35" font-weight="700" letter-spacing="3" fill="#2F7A45" style="font-stretch: condensed;">APPROVED</text>
+                                        </g>
+                                    </svg>
+                                </div>
+                            </div>
+                        </article>
+
+                        <!-- RECEIPT 3: @marcusk (FORFEIT / LOSS) -->
+                        <article class="ps-card reveal-item" style="position: relative; background: #FFFDFA; border: 1px solid rgba(28,35,51,0.11); border-radius: 6px; box-shadow: 0 14px 34px -22px rgba(28,35,51,0.4); display: flex; flex-direction: column; transition: transform .22s cubic-bezier(.2,.7,.3,1), box-shadow .22s ease;">
+                            <!-- HEADER -->
+                            <div style="padding: 16px 18px 12px; border-bottom: 1px solid rgba(28,35,51,0.11);">
+                                <div style="display: flex; justify-content: space-between; align-items: center;">
+                                    <span style="font-family: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace; font-size: 9.5px; font-weight: 700; letter-spacing: 1.7px; color: #7A1C2B;">SETTLEMENT RECEIPT</span>
+                                    <span style="font-family: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace; font-size: 10px; color: #8C8577; font-variant-numeric: tabular-nums;">№ C-7B08</span>
+                                </div>
+                                <div style="margin-top: 10px; font-size: 15.5px; font-weight: 700; color: #1C2333;">
+                                    25,000 followers in 30 days
+                                </div>
+                                <div style="margin-top: 4px; font-family: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace; font-size: 11px; color: #8C8577;">
+                                    @marcusk · via X API
+                                </div>
+                            </div>
+
+                            <!-- BODY ROWS -->
+                            <div style="padding: 14px 18px 16px; display: grid; gap: 9px;">
+                                <div style="display: flex; justify-content: space-between; align-items: baseline; gap: 12px;">
+                                    <span style="font-family: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace; font-size: 9.5px; letter-spacing: 1.2px; color: #8C8577;">CAPITAL STAKED</span>
+                                    <span style="font-family: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace; font-size: 12.5px; font-weight: 600; color: #1C2333; text-align: right; font-variant-numeric: tabular-nums;">$1,500.00</span>
+                                </div>
+                                <div style="display: flex; justify-content: space-between; align-items: baseline; gap: 12px;">
+                                    <span style="font-family: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace; font-size: 9.5px; letter-spacing: 1.2px; color: #8C8577;">VERIFIED BY</span>
+                                    <span style="font-size: 13px; font-weight: 600; color: #1C2333; text-align: right;">X oracle</span>
+                                </div>
+                                <div style="display: flex; justify-content: space-between; align-items: baseline; gap: 12px;">
+                                    <span style="font-family: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace; font-size: 9.5px; letter-spacing: 1.2px; color: #8C8577;">SETTLED ON</span>
+                                    <span style="font-family: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace; font-size: 12.5px; font-weight: 600; color: #1C2333; text-align: right; font-variant-numeric: tabular-nums;">Mar 02, 2026</span>
+                                </div>
+                            </div>
+
+                            <!-- TEAR LINE WITH NOTCHES -->
+                            <div style="position: relative; height: 1px;">
+                                <div style="position: absolute; left: 12px; right: 12px; top: 0; height: 1px; background: repeating-linear-gradient(90deg, rgba(28,35,51,0.11) 0 5px, transparent 5px 10px);"></div>
+                                <span class="ps-notch ps-notch-left"></span>
+                                <span class="ps-notch ps-notch-right"></span>
+                            </div>
+
+                            <!-- OUTCOME BLOCK WITH RUBBER STAMP (DENIED) -->
+                            <div style="position: relative; padding: 16px 18px 20px; background: rgba(168,68,63,0.06); border-radius: 0 0 6px 6px; min-height: 96px;">
+                                <div style="font-size: 22px; font-weight: 800; letter-spacing: -0.02em; color: #A8443F; font-variant-numeric: tabular-nums;">−$1,500.00</div>
+                                <div style="margin-top: 5px; font-family: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace; font-size: 9px; font-weight: 700; letter-spacing: 1.3px; color: #8C8577; max-width: 150px;">FORFEITED TO MATCH POOL</div>
+
+                                <div class="ps-seal" style="position: absolute; right: 8px; bottom: 8px;">
+                                    <svg width="150" height="55" viewBox="0 0 300 110" aria-hidden="true" style="display: block; overflow: visible;">
+                                        <defs>
+                                            <filter id="stamp3g" x="-30%" y="-30%" width="160%" height="160%">
+                                                <feTurbulence type="fractalNoise" baseFrequency="0.13" numOctaves="3" seed="21" result="coarse"/>
+                                                <feColorMatrix in="coarse" type="matrix" values="0 0 0 0 0, 0 0 0 0 0, 0 0 0 0 0, 1 0 0 0 -0.26" result="blotch"/>
+                                                <feComposite in="SourceGraphic" in2="blotch" operator="out" result="pass1"/>
+                                                <feTurbulence type="fractalNoise" baseFrequency="0.7" numOctaves="4" seed="32" result="fine"/>
+                                                <feColorMatrix in="fine" type="matrix" values="0 0 0 0 0, 0 0 0 0 0, 0 0 0 0 0, 1 0 0 0 -0.52" result="speck"/>
+                                                <feComposite in="pass1" in2="speck" operator="out" result="pass2"/>
+                                                <feTurbulence type="fractalNoise" baseFrequency="0.018" numOctaves="2" seed="24" result="warp"/>
+                                                <feDisplacementMap in="pass2" in2="warp" scale="2.8" xChannelSelector="R" yChannelSelector="G"/>
+                                            </filter>
+                                            <filter id="stamp3b" x="-10%" y="-10%" width="120%" height="120%">
+                                                <feGaussianBlur stdDeviation="0.7" />
+                                            </filter>
+                                            <linearGradient id="pressure3" x1="0" y1="1" x2="1" y2="0">
+                                                <stop offset="0%" stop-color="#fff" stop-opacity="1"/>
+                                                <stop offset="55%" stop-color="#fff" stop-opacity="0.92"/>
+                                                <stop offset="100%" stop-color="#fff" stop-opacity="0.62"/>
+                                            </linearGradient>
+                                            <mask id="pressureMask3">
+                                                <rect x="0" y="0" width="300" height="110" fill="url(#pressure3)"/>
+                                            </mask>
+                                        </defs>
+                                        <g filter="url(#stamp3b)" opacity="0.28" transform="translate(0.5, 0.5) rotate(-11 150 55)">
+                                            <rect x="10" y="13" width="280" height="84" rx="8" fill="none" stroke="#7A1C2B" stroke-width="5" />
+                                            <rect x="18" y="21" width="264" height="68" rx="5" fill="none" stroke="#7A1C2B" stroke-width="1.6" />
+                                            <text x="158" y="55" text-anchor="middle" dominant-baseline="central" font-family='"Arial Narrow", "Helvetica Neue Condensed", "Oswald", "DejaVu Sans Condensed", Impact, system-ui, sans-serif' font-size="35" font-weight="700" letter-spacing="16" fill="#7A1C2B" style="font-stretch: condensed;">DENIED</text>
+                                        </g>
+                                        <g filter="url(#stamp3g)" mask="url(#pressureMask3)" opacity="0.88" transform="rotate(-11 150 55)">
+                                            <rect x="10" y="13" width="280" height="84" rx="8" fill="none" stroke="#7A1C2B" stroke-width="5" />
+                                            <rect x="18" y="21" width="264" height="68" rx="5" fill="none" stroke="#7A1C2B" stroke-width="1.6" />
+                                            <text x="158" y="55" text-anchor="middle" dominant-baseline="central" font-family='"Arial Narrow", "Helvetica Neue Condensed", "Oswald", "DejaVu Sans Condensed", Impact, system-ui, sans-serif' font-size="35" font-weight="700" letter-spacing="16" fill="#7A1C2B" style="font-stretch: condensed;">DENIED</text>
+                                        </g>
+                                    </svg>
+                                </div>
+                            </div>
+                        </article>
+
+                    </div>
+
+                    <!-- 4 STATS STRIP BELOW -->
+                    <div class="ps-stats reveal-item" style="margin-top: clamp(34px,4vw,54px); padding-top: clamp(24px,3vw,34px); border-top: 1px solid rgba(28,35,51,0.11); display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px;">
+                        <div>
+                            <div style="font-size: clamp(24px,2.6vw,32px); font-weight: 800; letter-spacing: -0.02em; color: #7A1C2B; line-height: 1; font-variant-numeric: tabular-nums;">74%</div>
+                            <div style="margin-top: 8px; font-family: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace; font-size: 9.5px; font-weight: 700; letter-spacing: 1.5px; color: #8C8577; text-transform: uppercase;">OF CONTRACTS ARE WON</div>
+                        </div>
+                        <div>
+                            <div style="font-size: clamp(24px,2.6vw,32px); font-weight: 800; letter-spacing: -0.02em; color: #7A1C2B; line-height: 1; font-variant-numeric: tabular-nums;">$127k</div>
+                            <div style="margin-top: 8px; font-family: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace; font-size: 9.5px; font-weight: 700; letter-spacing: 1.5px; color: #8C8577; text-transform: uppercase;">TOTAL CAPITAL SETTLED</div>
+                        </div>
+                        <div>
+                            <div style="font-size: clamp(24px,2.6vw,32px); font-weight: 800; letter-spacing: -0.02em; color: #7A1C2B; line-height: 1; font-variant-numeric: tabular-nums;">18 days</div>
+                            <div style="margin-top: 8px; font-family: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace; font-size: 9.5px; font-weight: 700; letter-spacing: 1.5px; color: #8C8577; text-transform: uppercase;">AVERAGE TIME TO TARGET</div>
+                        </div>
+                        <div>
+                            <div style="font-size: clamp(24px,2.6vw,32px); font-weight: 800; letter-spacing: -0.02em; color: #7A1C2B; line-height: 1; font-variant-numeric: tabular-nums;">812</div>
+                            <div style="margin-top: 8px; font-family: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace; font-size: 9.5px; font-weight: 700; letter-spacing: 1.5px; color: #8C8577; text-transform: uppercase;">VERIFIED COUNTERPARTIES</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- COMMUNITY MOMENTUM / PROTOCOL ACTIVITY -->
+            <div class="l-community-momentum" data-r>
+                <div class="lw">
+                    <div class="l-momentum-wrap">
+                        <span class="l-momentum-title reveal-item">Today's Activity</span>
+                        <div class="l-momentum-items">
+                            <span class="l-momentum-item reveal-item"><strong>178</strong> commitments created</span>
+                            <span class="l-momentum-dot">•</span>
+                            <span class="l-momentum-item reveal-item"><strong>$412k</strong> capital locked</span>
+                            <span class="l-momentum-dot">•</span>
+                            <span class="l-momentum-item reveal-item"><strong>94</strong> settlements completed</span>
+                            <span class="l-momentum-dot">•</span>
+                            <span class="l-momentum-item reveal-item"><strong>12</strong> rivalries started</span>
+                            <span class="l-momentum-dot">•</span>
+                            <span class="l-momentum-item reveal-item"><strong>1.2M CLTR</strong> burned this week</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
             <!-- ═══ LIVE CONTRACT EXAMPLES ═══ -->
             <div class="lcontracts" id="contracts" data-r>
@@ -755,646 +1415,6 @@ export function renderLanding() {
                 </div>
             </div>
 
-            <!-- ═══ EMOTIONAL REFRAME (THE FORK: WHY IT WORKS) ═══ -->
-            <div class="lhow-it-works-section" data-r style="background: #F8F5F0; padding: clamp(48px,7vw,96px) 0; overflow: visible !important;">
-                <div class="lw">
-                    <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 20px; padding-top: 4px;" class="reveal-item">
-                        <span style="width: 24px; height: 1.5px; background: #7A1C2B; opacity: 0.5;"></span>
-                        <span style="font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 700; letter-spacing: 2.2px; color: #8C8577; text-transform: uppercase; line-height: 1.4;">
-                            WHY IT WORKS
-                        </span>
-                    </div>
-
-
-                    <div class="fk-grid reveal-item">
-                        <div>
-                            <h2 style="font-family: 'Plus Jakarta Sans', sans-serif; font-size: clamp(34px,4.2vw,50px); font-weight: 800; letter-spacing: -0.03em; color: #1C2333; margin: 0 0 20px; line-height: 1.06;">
-                                A plan without stakes is just a <span style="color: #7A1C2B;">comfortable wish.</span>
-                            </h2>
-                            <p style="font-family: 'Inter', sans-serif; font-size: 16px; color: #5A6072; margin: 0 0 18px; max-width: 420px; line-height: 1.62;">
-                                Planning is easy. Executing is hard. You miss targets because failing is free — it costs you nothing but time you'll never see.
-                            </p>
-                            <p style="font-family: 'Inter', sans-serif; font-size: 16px; color: #5A6072; margin: 0; max-width: 420px; line-height: 1.62;">
-                                Collateral makes failure cost something real. That single change moves you from passive planning to pure execution.
-                            </p>
-                            <p style="margin-top: 26px; padding-top: 20px; border-top: 1px solid rgba(28,35,51,0.11); font-family: 'Inter', sans-serif; font-size: 14.5px; color: #7A1C2B; font-weight: 600; max-width: 420px; line-height: 1.55;">
-                                Stop betting on variables you can't control. Bet on your own focus.
-                            </p>
-                        </div>
-
-                        <!-- THE FORK SVG PANEL -->
-                        <div style="background: #FCFAF7; border: 1px solid rgba(28,35,51,0.11); border-radius: 22px; padding: clamp(10px,1.2vw,16px); box-shadow: 0 30px 70px -50px rgba(28,35,51,0.4);">
-                            <svg viewBox="0 0 680 520" width="100%" role="img" aria-label="One goal, two paths: without stakes the path fades to nothing; with a locked deposit it ends in capital returned plus yield." style="display: block; height: auto;">
-                                <defs>
-                                    <marker id="fkArrow" markerWidth="7" markerHeight="7" refX="5.5" refY="3.5" orient="auto">
-                                        <path d="M0 0.5 L6.5 3.5 L0 6.5 Z" fill="#7A1C2B" />
-                                    </marker>
-                                    <marker id="fkArrowG" markerWidth="7" markerHeight="7" refX="5.5" refY="3.5" orient="auto">
-                                        <path d="M0 0.5 L6.5 3.5 L0 6.5 Z" fill="#3F9D5A" />
-                                    </marker>
-                                    <linearGradient id="fkFade" x1="0" y1="0" x2="0" y2="1">
-                                        <stop offset="0%" stop-color="#8C8577" stop-opacity="0.5" />
-                                        <stop offset="100%" stop-color="#8C8577" stop-opacity="0.08" />
-                                    </linearGradient>
-                                </defs>
-
-                                <!-- shared origin -->
-                                <g>
-                                    <rect x="230" y="16" width="220" height="50" rx="12" fill="#FBF9F5" stroke="rgba(28,35,51,0.11)" />
-                                    <text x="340" y="41" text-anchor="middle" dominant-baseline="central" font-family="'Plus Jakarta Sans', sans-serif" font-size="17" font-weight="700" fill="#1C2333">You set a goal.</text>
-                                </g>
-
-                                <!-- the fork itself -->
-                                <path d="M305 66 C 275 84, 213 78, 173 98" fill="none" stroke="#8C8577" stroke-width="1.4" stroke-dasharray="4 5" opacity="0.6" />
-                                <path d="M375 66 C 405 84, 467 78, 507 98" fill="none" stroke="#7A1C2B" stroke-width="1.7" opacity="0.65" marker-end="url(#fkArrow)" />
-
-                                <!-- column headers -->
-                                <text x="26" y="90" font-family="'JetBrains Mono', monospace" font-size="11" font-weight="700" letter-spacing="1.8" fill="#8C8577">WITHOUT STAKES</text>
-                                <text x="360" y="90" font-family="'JetBrains Mono', monospace" font-size="11" font-weight="700" letter-spacing="1.8" fill="#7A1C2B">WITH COLLATERAL</text>
-
-                                <!-- ---- LEFT: the path that dissolves ---- -->
-                                <!-- Step 01 -->
-                                <g opacity="1">
-                                    <rect x="26" y="106" width="294" height="62" rx="11" fill="#FCFAF7" stroke="rgba(28,35,51,0.11)" stroke-dasharray="0" />
-                                    <text x="42" y="137" dominant-baseline="central" font-family="'JetBrains Mono', monospace" font-size="11.5" font-weight="700" fill="#A8A49B">01</text>
-                                    <text x="72" y="137" dominant-baseline="central" font-family="'Inter', sans-serif" font-size="16" fill="#5A6072">Plan a new goal</text>
-                                </g>
-                                <!-- Step 02 -->
-                                <g opacity="0.68">
-                                    <rect x="26" y="182" width="294" height="62" rx="11" fill="#FCFAF7" stroke="rgba(28,35,51,0.11)" stroke-dasharray="0" />
-                                    <text x="42" y="213" dominant-baseline="central" font-family="'JetBrains Mono', monospace" font-size="11.5" font-weight="700" fill="#A8A49B">02</text>
-                                    <text x="72" y="213" dominant-baseline="central" font-family="'Inter', sans-serif" font-size="16" fill="#5A6072">Get distracted</text>
-                                </g>
-                                <!-- Step 03 -->
-                                <g opacity="0.44">
-                                    <rect x="26" y="258" width="294" height="62" rx="11" fill="#FCFAF7" stroke="rgba(28,35,51,0.11)" stroke-dasharray="5 5" />
-                                    <text x="42" y="289" dominant-baseline="central" font-family="'JetBrains Mono', monospace" font-size="11.5" font-weight="700" fill="#A8A49B">03</text>
-                                    <text x="72" y="289" dominant-baseline="central" font-family="'Inter', sans-serif" font-size="16" fill="#5A6072">Push the deadline</text>
-                                </g>
-                                <!-- Step 04 -->
-                                <g opacity="0.26">
-                                    <rect x="26" y="334" width="294" height="62" rx="11" fill="#FCFAF7" stroke="rgba(28,35,51,0.11)" stroke-dasharray="5 5" />
-                                    <text x="42" y="365" dominant-baseline="central" font-family="'JetBrains Mono', monospace" font-size="11.5" font-weight="700" fill="#A8A49B">04</text>
-                                    <text x="72" y="365" dominant-baseline="central" font-family="'Inter', sans-serif" font-size="16" fill="#5A6072">Another year slides by</text>
-                                </g>
-
-                                <!-- connectors thin out as path fades -->
-                                <line x1="173" y1="168" x2="173" y2="182" stroke="#8C8577" stroke-width="1.3" stroke-dasharray="3 5" opacity="0.54" />
-                                <line x1="173" y1="244" x2="173" y2="258" stroke="#8C8577" stroke-width="1.0" stroke-dasharray="3 5" opacity="0.35" />
-                                <line x1="173" y1="320" x2="173" y2="334" stroke="#8C8577" stroke-width="0.7" stroke-dasharray="3 5" opacity="0.21" />
-
-                                <!-- dead end -->
-                                <line x1="173" y1="396" x2="173" y2="422" stroke="url(#fkFade)" stroke-width="1" stroke-dasharray="3 5" />
-                                <g opacity="0.9">
-                                    <rect x="26" y="424" width="294" height="76" rx="14" fill="none" stroke="#8C8577" stroke-width="1.5" stroke-dasharray="6 6" />
-                                    <text x="173" y="454" text-anchor="middle" font-family="'Plus Jakarta Sans', sans-serif" font-size="18" font-weight="700" fill="#6E685C">Nothing was at risk.</text>
-                                    <text x="173" y="480" text-anchor="middle" font-family="'Inter', sans-serif" font-size="14" font-weight="500" fill="#5A6072">So nothing changed.</text>
-                                </g>
-
-                                <!-- ---- RIGHT: the path that firms up ---- -->
-                                <!-- Step 01 -->
-                                <g>
-                                    <rect x="360" y="106" width="294" height="62" rx="11" fill="#FCFAF7" stroke="rgba(122,28,43,0.14)" stroke-width="1" />
-                                    <text x="376" y="137" dominant-baseline="central" font-family="'JetBrains Mono', monospace" font-size="11.5" font-weight="700" fill="#7A1C2B" opacity="0.55">01</text>
-                                    <text x="406" y="137" dominant-baseline="central" font-family="'Plus Jakarta Sans', sans-serif" font-size="16" font-weight="600" fill="#1C2333">Lock a deposit on target</text>
-                                </g>
-                                <!-- Step 02 -->
-                                <g>
-                                    <rect x="360" y="182" width="294" height="62" rx="11" fill="#FCFAF7" stroke="rgba(122,28,43,0.21)" stroke-width="1" />
-                                    <text x="376" y="213" dominant-baseline="central" font-family="'JetBrains Mono', monospace" font-size="11.5" font-weight="700" fill="#7A1C2B" opacity="0.7">02</text>
-                                    <text x="406" y="213" dominant-baseline="central" font-family="'Plus Jakarta Sans', sans-serif" font-size="16" font-weight="600" fill="#1C2333">Failure now has a cost</text>
-                                </g>
-                                <!-- Step 03 -->
-                                <g>
-                                    <rect x="360" y="258" width="294" height="62" rx="11" fill="#FCFAF7" stroke="rgba(122,28,43,0.28)" stroke-width="1" />
-                                    <text x="376" y="289" dominant-baseline="central" font-family="'JetBrains Mono', monospace" font-size="11.5" font-weight="700" fill="#7A1C2B" opacity="0.85">03</text>
-                                    <text x="406" y="289" dominant-baseline="central" font-family="'Plus Jakarta Sans', sans-serif" font-size="16" font-weight="600" fill="#1C2333">Work through the night</text>
-                                </g>
-                                <!-- Step 04 -->
-                                <g>
-                                    <rect x="360" y="334" width="294" height="62" rx="11" fill="rgba(63,157,90,0.06)" stroke="rgba(63,157,90,0.4)" stroke-width="1.5" />
-                                    <text x="376" y="365" dominant-baseline="central" font-family="'JetBrains Mono', monospace" font-size="11.5" font-weight="700" fill="#3F9D5A" opacity="1">04</text>
-                                    <text x="406" y="365" dominant-baseline="central" font-family="'Plus Jakarta Sans', sans-serif" font-size="16" font-weight="700" fill="#3F9D5A">Hit target, claim yield</text>
-                                </g>
-
-                                <!-- Right solid connectors -->
-                                <line x1="507" y1="168" x2="507" y2="176" stroke="#7A1C2B" stroke-width="1.5" opacity="0.4" marker-end="url(#fkArrow)" />
-                                <line x1="507" y1="244" x2="507" y2="252" stroke="#7A1C2B" stroke-width="1.5" opacity="0.55" marker-end="url(#fkArrow)" />
-                                <line x1="507" y1="320" x2="507" y2="328" stroke="#7A1C2B" stroke-width="1.5" opacity="0.7" marker-end="url(#fkArrow)" />
-
-                                <line x1="507" y1="396" x2="507" y2="418" stroke="#3F9D5A" stroke-width="1.6" opacity="0.7" marker-end="url(#fkArrowG)" />
-
-                                <!-- payout badge -->
-                                <g class="fk-payout">
-                                    <rect x="360" y="424" width="294" height="76" rx="14" fill="rgba(63,157,90,0.11)" stroke="rgba(63,157,90,0.6)" stroke-width="2" />
-                                    <circle cx="394" cy="462" r="13" fill="#3F9D5A" class="fk-check" />
-                                    <path d="m-4.4 0 2.9 2.9 5.7-5.8" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" transform="translate(394, 462) scale(1.15)" />
-                                    <text x="418" y="454" font-family="'Plus Jakarta Sans', sans-serif" font-size="18" font-weight="700" fill="#1C2333">Capital returned + yield.</text>
-                                    <text x="418" y="480" font-family="'Inter', sans-serif" font-size="14" fill="#5A6072">The goal actually happened.</text>
-                                </g>
-                            </svg>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-
-
-            <!-- ═══ VISUAL CENTERPIECE: CONTINUOUS MONEY FLOW SCHEMATIC ═══ -->
-            <div class="lengine-section" id="engine-section" data-r>
-                <div class="lw">
-                    <div class="lengine-hdr-wrap">
-                        <div class="lengine-tag">
-                            <span class="l-lr-dot l-ticker-pulse"></span> AUTOMATED EXECUTION SCHEMATIC
-                        </div>
-                        <h2 class="lengine-h2">HOW MONEY FLOWS ON COLLATERAL</h2>
-                        <p class="lengine-sub">
-                            Every deposit is governed by custodial escrow and automated API verification. Winners receive their principal plus matching yield funded by forfeited deposits and brand sponsors.
-                        </p>
-                    </div>
-
-                    <!-- SCHEMATIC: CSS GRID LAYOUT (no absolute positioning) -->
-                    <div class="lflow-container">
-
-                        <!-- DESKTOP FLOW (hidden <900px) -->
-                        <div class="lflow-desktop">
-                            <!-- NODE ROW — CSS Grid handles horizontal containment -->
-                            <div class="lflow-row">
-                                <!-- NODE: DEPOSIT IN -->
-                                <div class="lflow-node">
-                                    <div class="lflow-node-hdr">INPUT</div>
-                                    <div class="lflow-node-title">DEPOSIT IN</div>
-                                    <div class="lflow-node-stat">$8,700,000</div>
-                                    <div class="lflow-node-sub">Stripe Connect Escrow</div>
-                                </div>
-
-                                <div class="lflow-arrow">
-                                    <svg width="34" height="12" viewBox="0 0 34 12" fill="none">
-                                        <path d="M 0 6 H 24" stroke="#7A1C2B" stroke-width="2" stroke-linecap="round"/>
-                                        <polygon points="32,6 24,2 24,10" fill="#7A1C2B"/>
-                                    </svg>
-                                </div>
-
-                                <!-- NODE: ESCROW VAULT -->
-                                <div class="lflow-node lflow-node-vault" id="lflow-vault-node">
-                                    <div class="lflow-node-hdr">CUSTODY</div>
-                                    <div class="lflow-node-title">ESCROW VAULT</div>
-                                    <div class="lflow-node-stat">$8.7M LOCKED</div>
-                                    <div class="lflow-node-sub">Custodial Escrow via Stripe Connect</div>
-                                </div>
-
-                                <div class="lflow-arrow">
-                                    <svg width="34" height="12" viewBox="0 0 34 12" fill="none">
-                                        <path d="M 0 6 H 24" stroke="#7A1C2B" stroke-width="2" stroke-linecap="round"/>
-                                        <polygon points="32,6 24,2 24,10" fill="#7A1C2B"/>
-                                    </svg>
-                                </div>
-
-                                <!-- NODE: ORACLE API -->
-                                <div class="lflow-node">
-                                    <div class="lflow-node-hdr">VERIFICATION</div>
-                                    <div class="lflow-node-title">ORACLE API STREAM</div>
-                                    <div class="lflow-node-stat">96.2% HIT RATE</div>
-                                    <div class="lflow-node-sub">Stripe • Shopify • X • YouTube</div>
-                                </div>
-
-                                <!-- SPLIT ARROWS — three proportionally weighted paths fanning to outcomes -->
-                                <div class="lflow-split-arrows">
-                                    <svg width="44" height="156" viewBox="0 0 44 156" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                        <!-- Win path (thick green #145C14) -->
-                                        <path d="M 0 78 C 16 78, 22 20, 34 20" stroke="#145C14" stroke-width="4.5" stroke-linecap="round"/>
-                                        <polygon points="42,20 32,14 32,26" fill="#145C14"/>
-
-                                        <!-- Forfeit path (medium crimson #7A1220) -->
-                                        <path d="M 0 78 H 34" stroke="#7A1220" stroke-width="2.5" stroke-linecap="round"/>
-                                        <polygon points="42,78 33,73 33,83" fill="#7A1220"/>
-
-                                        <!-- Burn path (hairline dashed crimson #7A1220) -->
-                                        <path d="M 0 78 C 16 78, 22 136, 34 136" stroke="#7A1220" stroke-width="1.2" stroke-dasharray="4 3" stroke-linecap="round"/>
-                                        <polygon points="41,136 34,132 34,140" fill="#7A1220"/>
-                                    </svg>
-                                </div>
-
-                                <!-- THREE TERMINAL OUTCOMES -->
-                                <div class="lflow-outcomes">
-                                    <div class="lflow-outcome is-win">
-                                        <div class="lflow-outcome-indicator" style="background:#145C14;width:5px;"></div>
-                                        <div class="lflow-outcome-body">
-                                            <div class="lflow-out-hdr"><span class="lflow-dot" style="background:#145C14;"></span>WIN PATH (95.7%)</div>
-                                            <div class="lflow-out-title">RETURNED TO CREATOR</div>
-                                            <div class="lflow-out-val lflow-val-green">$8,326,200</div>
-                                            <div class="lflow-out-desc">100% Principal + Matching Yield</div>
-                                        </div>
-                                    </div>
-                                    <div class="lflow-outcome is-forfeit" id="lflow-forfeit-node">
-                                        <div class="lflow-outcome-indicator" style="background:#7A1220;width:3px;"></div>
-                                        <div class="lflow-outcome-body">
-                                            <div class="lflow-out-hdr"><span class="lflow-dot" style="background:#7A1220;"></span>FORFEITED (3.8%)</div>
-                                            <div class="lflow-out-title">FORFEITED DEPOSITS</div>
-                                            <div class="lflow-out-val lflow-val-crimson">$330,600</div>
-                                            <div class="lflow-out-desc">Feeds Winner Match Pool</div>
-                                        </div>
-                                    </div>
-                                    <div class="lflow-outcome is-burn">
-                                        <div class="lflow-outcome-indicator" style="background:#7A1220;width:1px;"></div>
-                                        <div class="lflow-outcome-body">
-                                            <div class="lflow-out-hdr"><span class="lflow-dot" style="background:#7A1220;"></span>PROTOCOL FEE (0.5%)</div>
-                                            <div class="lflow-out-title">CLTR BURNED</div>
-                                            <div class="lflow-out-val">$43,200</div>
-                                            <div class="lflow-out-desc">Permanently Destroyed</div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <!-- RECIRCULATING LOOP — routed SVG path below node row landing directly into Escrow Vault -->
-                            <div class="lflow-loop-wrap">
-                                <svg class="lflow-loop-svg" viewBox="0 0 1000 48" preserveAspectRatio="none">
-                                    <defs>
-                                        <marker id="ah-loop" viewBox="0 0 10 10" refX="5" refY="3" markerWidth="6" markerHeight="6" orient="auto">
-                                            <path d="M 1 9 L 5 1 L 9 9 Z" fill="#7A1C2B"/>
-                                        </marker>
-                                    </defs>
-                                    <!-- Path: exits from x=845 (center of forfeited card), routes down to y=38, runs left, turns UP into x=310 (center of Escrow Vault) -->
-                                    <path class="lflow-loop-path" d="M 845 0 C 845 26, 820 38, 770 38 L 385 38 C 310 38, 310 26, 310 2" stroke="#7A1C2B" stroke-width="2.2" fill="none" stroke-dasharray="6 4" stroke-linecap="round" marker-end="url(#ah-loop)"/>
-                                </svg>
-                                <div class="lflow-loop-badge">↺ FORFEITED DEPOSITS RE-CIRCULATE TO ESCROW VAULT</div>
-                            </div>
-                        </div>
-
-                        <!-- MOBILE VERTICAL FLOW (shown <900px) -->
-                        <div class="lflow-mobile">
-                            <div class="lflow-mob-step">
-                                <div class="lflow-mob-num">01</div>
-                                <div class="lflow-mob-body">
-                                    <div class="lflow-node-hdr">INPUT</div>
-                                    <div class="lflow-node-title">DEPOSIT IN</div>
-                                    <div class="lflow-node-stat">$8,700,000</div>
-                                </div>
-                            </div>
-                            <div class="lflow-mob-arrow">↓</div>
-
-                            <div class="lflow-mob-step lflow-mob-vault">
-                                <div class="lflow-mob-num">02</div>
-                                <div class="lflow-mob-body">
-                                    <div class="lflow-node-hdr">CUSTODY</div>
-                                    <div class="lflow-node-title">ESCROW VAULT</div>
-                                    <div class="lflow-node-stat">$8.7M LOCKED</div>
-                                    <div class="lflow-node-sub">Custodial Escrow via Stripe Connect</div>
-                                </div>
-                            </div>
-                            <div class="lflow-mob-arrow">↓</div>
-
-                            <div class="lflow-mob-step">
-                                <div class="lflow-mob-num">03</div>
-                                <div class="lflow-mob-body">
-                                    <div class="lflow-node-hdr">VERIFICATION</div>
-                                    <div class="lflow-node-title">ORACLE API STREAM</div>
-                                    <div class="lflow-node-stat">96.2% HIT RATE</div>
-                                </div>
-                            </div>
-                            <div class="lflow-mob-arrow">↓</div>
-
-                            <div class="lflow-mob-outcomes">
-                                <div class="lflow-outcome is-win">
-                                    <div class="lflow-outcome-indicator" style="background:#145C14;height:5px;"></div>
-                                    <div class="lflow-outcome-body">
-                                        <div class="lflow-out-hdr"><span class="lflow-dot" style="background:#145C14;"></span>WIN PATH (95.7%)</div>
-                                        <div class="lflow-out-title">RETURNED TO CREATOR</div>
-                                        <div class="lflow-out-val lflow-val-green">$8,326,200</div>
-                                    </div>
-                                </div>
-                                <div class="lflow-outcome is-forfeit">
-                                    <div class="lflow-outcome-indicator" style="background:#7A1220;height:3px;"></div>
-                                    <div class="lflow-outcome-body">
-                                        <div class="lflow-out-hdr"><span class="lflow-dot" style="background:#7A1220;"></span>FORFEITED (3.8%)</div>
-                                        <div class="lflow-out-title">FORFEITED DEPOSITS</div>
-                                        <div class="lflow-out-val lflow-val-crimson">$330,600</div>
-                                        <div class="lflow-mob-loop">↺ Re-circulates to Escrow Vault</div>
-                                    </div>
-                                </div>
-                                <div class="lflow-outcome is-burn">
-                                    <div class="lflow-outcome-indicator" style="background:#7A1220;height:1.5px;"></div>
-                                    <div class="lflow-outcome-body">
-                                        <div class="lflow-out-hdr"><span class="lflow-dot" style="background:#7A1220;"></span>PROTOCOL FEE (0.5%)</div>
-                                        <div class="lflow-out-title">CLTR BURNED</div>
-                                        <div class="lflow-out-val">$43,200</div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                    </div>
-
-                    <!-- SUMMARY PARAGRAPH -->
-                    <div class="lflow-summary">
-                        Deposits are held in Stripe Connect custodial escrow accounts mapped to smart contract state. Upon automated API verification, winners receive their principal plus matching yield. Forfeited deposits re-circulate into the match pool to fund future winners. A 0.5% protocol fee is permanently burned from CLTR                   <div class="lcard-subtext">Escrow locked during duel period.</div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-
-            <!-- ═══ PROOF OF SETTLEMENT (STAMPED RECEIPTS & STATS) ═══ -->
-            <div class="lreal-results" data-r style="background: #F8F5F0; padding: clamp(40px,6vw,88px) clamp(20px,5vw,64px); font-family: ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;">
-                <div class="lw" style="max-width: 1240px; margin: 0 auto;">
-                    <!-- SECTION TAG -->
-                    <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 18px;" class="reveal-item">
-                        <span style="width: 24px; height: 1.5px; background: #7A1C2B; opacity: 0.5;"></span>
-                        <span style="font-family: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace; font-size: 11px; font-weight: 700; letter-spacing: 2.2px; color: #8C8577; text-transform: uppercase;">
-                            PROOF OF SETTLEMENT
-                        </span>
-                    </div>
-
-                    <!-- HEAD STACK -->
-                    <div class="ps-head reveal-item" style="display: flex; justify-content: space-between; align-items: flex-end; gap: 40px; flex-wrap: wrap; margin-bottom: clamp(26px,3vw,42px);">
-                        <h2 style="font-size: clamp(30px,3.8vw,46px); font-weight: 800; letter-spacing: -0.03em; color: #1C2333; margin: 0; line-height: 1.06; max-width: 640px;">
-                            Skin in the game is the only thing<br />that <span style="color: #7A1C2B;">actually works.</span>
-                        </h2>
-                        <p style="font-size: 15.5px; color: #5A6072; margin: 0; max-width: 340px; line-height: 1.6;">
-                            Every contract settles the same way — automatically, on verified API data. Including the ones people lose.
-                        </p>
-                    </div>
-
-                    <!-- 3 STAMPED RECEIPT CARDS GRID -->
-                    <div class="ps-grid" style="display: grid; grid-template-columns: repeat(3, 1fr); gap: clamp(16px,2vw,26px);">
-                        
-                        <!-- RECEIPT 1: @revpilot (WIN) -->
-                        <article class="ps-card reveal-item" style="position: relative; background: #FFFDFA; border: 1px solid rgba(28,35,51,0.11); border-radius: 6px; box-shadow: 0 14px 34px -22px rgba(28,35,51,0.4); display: flex; flex-direction: column; transition: transform .22s cubic-bezier(.2,.7,.3,1), box-shadow .22s ease;">
-                            <!-- HEADER -->
-                            <div style="padding: 16px 18px 12px; border-bottom: 1px solid rgba(28,35,51,0.11);">
-                                <div style="display: flex; justify-content: space-between; align-items: center;">
-                                    <span style="font-family: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace; font-size: 9.5px; font-weight: 700; letter-spacing: 1.7px; color: #7A1C2B;">SETTLEMENT RECEIPT</span>
-                                    <span style="font-family: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace; font-size: 10px; color: #8C8577; font-variant-numeric: tabular-nums;">№ C-34D6</span>
-                                </div>
-                                <div style="margin-top: 10px; font-size: 15.5px; font-weight: 700; color: #1C2333;">
-                                    +20% revenue in 30 days
-                                </div>
-                                <div style="margin-top: 4px; font-family: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace; font-size: 11px; color: #8C8577;">
-                                    @revpilot · via Stripe API
-                                </div>
-                            </div>
-
-                            <!-- BODY ROWS -->
-                            <div style="padding: 14px 18px 16px; display: grid; gap: 9px;">
-                                <div style="display: flex; justify-content: space-between; align-items: baseline; gap: 12px;">
-                                    <span style="font-family: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace; font-size: 9.5px; letter-spacing: 1.2px; color: #8C8577;">CAPITAL STAKED</span>
-                                    <span style="font-family: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace; font-size: 12.5px; font-weight: 600; color: #1C2333; text-align: right; font-variant-numeric: tabular-nums;">$2,000.00</span>
-                                </div>
-                                <div style="display: flex; justify-content: space-between; align-items: baseline; gap: 12px;">
-                                    <span style="font-family: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace; font-size: 9.5px; letter-spacing: 1.2px; color: #8C8577;">VERIFIED BY</span>
-                                    <span style="font-size: 13px; font-weight: 600; color: #1C2333; text-align: right;">Stripe oracle</span>
-                                </div>
-                                <div style="display: flex; justify-content: space-between; align-items: baseline; gap: 12px;">
-                                    <span style="font-family: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace; font-size: 9.5px; letter-spacing: 1.2px; color: #8C8577;">SETTLED ON</span>
-                                    <span style="font-family: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace; font-size: 12.5px; font-weight: 600; color: #1C2333; text-align: right; font-variant-numeric: tabular-nums;">Mar 14, 2026</span>
-                                </div>
-                            </div>
-
-                            <!-- TEAR LINE WITH NOTCHES -->
-                            <div style="position: relative; height: 1px;">
-                                <div style="position: absolute; left: 12px; right: 12px; top: 0; height: 1px; background: repeating-linear-gradient(90deg, rgba(28,35,51,0.11) 0 5px, transparent 5px 10px);"></div>
-                                <span class="ps-notch ps-notch-left"></span>
-                                <span class="ps-notch ps-notch-right"></span>
-                            </div>
-
-                            <!-- OUTCOME BLOCK WITH WAX SEAL -->
-                            <div style="position: relative; padding: 16px 18px 20px; background: rgba(63,157,90,0.09); border-radius: 0 0 6px 6px; min-height: 96px;">
-                                <div style="font-size: 22px; font-weight: 800; letter-spacing: -0.02em; color: #3F9D5A; font-variant-numeric: tabular-nums;">+$2,240.00</div>
-                                <div style="margin-top: 5px; font-family: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace; font-size: 9px; font-weight: 700; letter-spacing: 1.3px; color: #8C8577; max-width: 150px;">PRINCIPAL + YIELD RETURNED</div>
-
-                                <div class="ps-seal" style="position: absolute; right: 8px; bottom: 8px;">
-                                    <svg width="150" height="55" viewBox="0 0 300 110" aria-hidden="true" style="display: block; overflow: visible;">
-                                        <defs>
-                                            <filter id="stamp1g" x="-30%" y="-30%" width="160%" height="160%">
-                                                <feTurbulence type="fractalNoise" baseFrequency="0.13" numOctaves="3" seed="7" result="coarse"/>
-                                                <feColorMatrix in="coarse" type="matrix" values="0 0 0 0 0, 0 0 0 0 0, 0 0 0 0 0, 1 0 0 0 -0.26" result="blotch"/>
-                                                <feComposite in="SourceGraphic" in2="blotch" operator="out" result="pass1"/>
-                                                <feTurbulence type="fractalNoise" baseFrequency="0.7" numOctaves="4" seed="18" result="fine"/>
-                                                <feColorMatrix in="fine" type="matrix" values="0 0 0 0 0, 0 0 0 0 0, 0 0 0 0 0, 1 0 0 0 -0.52" result="speck"/>
-                                                <feComposite in="pass1" in2="speck" operator="out" result="pass2"/>
-                                                <feTurbulence type="fractalNoise" baseFrequency="0.018" numOctaves="2" seed="10" result="warp"/>
-                                                <feDisplacementMap in="pass2" in2="warp" scale="2.8" xChannelSelector="R" yChannelSelector="G"/>
-                                            </filter>
-                                            <filter id="stamp1b" x="-10%" y="-10%" width="120%" height="120%">
-                                                <feGaussianBlur stdDeviation="0.7" />
-                                            </filter>
-                                            <linearGradient id="pressure1" x1="0" y1="0" x2="1" y2="1">
-                                                <stop offset="0%" stop-color="#fff" stop-opacity="1"/>
-                                                <stop offset="55%" stop-color="#fff" stop-opacity="0.92"/>
-                                                <stop offset="100%" stop-color="#fff" stop-opacity="0.62"/>
-                                            </linearGradient>
-                                            <mask id="pressureMask1">
-                                                <rect x="0" y="0" width="300" height="110" fill="url(#pressure1)"/>
-                                            </mask>
-                                        </defs>
-                                        <g filter="url(#stamp1b)" opacity="0.28" transform="translate(0.5, 0.5) rotate(-9 150 55)">
-                                            <rect x="10" y="13" width="280" height="84" rx="8" fill="none" stroke="#2F7A45" stroke-width="5" />
-                                            <rect x="18" y="21" width="264" height="68" rx="5" fill="none" stroke="#2F7A45" stroke-width="1.6" />
-                                            <text x="151.5" y="55" text-anchor="middle" dominant-baseline="central" font-family='"Arial Narrow", "Helvetica Neue Condensed", "Oswald", "DejaVu Sans Condensed", Impact, system-ui, sans-serif' font-size="35" font-weight="700" letter-spacing="3" fill="#2F7A45" style="font-stretch: condensed;">APPROVED</text>
-                                        </g>
-                                        <g filter="url(#stamp1g)" mask="url(#pressureMask1)" opacity="0.86" transform="rotate(-9 150 55)">
-                                            <rect x="10" y="13" width="280" height="84" rx="8" fill="none" stroke="#2F7A45" stroke-width="5" />
-                                            <rect x="18" y="21" width="264" height="68" rx="5" fill="none" stroke="#2F7A45" stroke-width="1.6" />
-                                            <text x="151.5" y="55" text-anchor="middle" dominant-baseline="central" font-family='"Arial Narrow", "Helvetica Neue Condensed", "Oswald", "DejaVu Sans Condensed", Impact, system-ui, sans-serif' font-size="35" font-weight="700" letter-spacing="3" fill="#2F7A45" style="font-stretch: condensed;">APPROVED</text>
-                                        </g>
-                                    </svg>
-                                </div>
-                            </div>
-                        </article>
-
-                        <!-- RECEIPT 2: @deltacreator (WIN) -->
-                        <article class="ps-card reveal-item" style="position: relative; background: #FFFDFA; border: 1px solid rgba(28,35,51,0.11); border-radius: 6px; box-shadow: 0 14px 34px -22px rgba(28,35,51,0.4); display: flex; flex-direction: column; transition: transform .22s cubic-bezier(.2,.7,.3,1), box-shadow .22s ease;">
-                            <!-- HEADER -->
-                            <div style="padding: 16px 18px 12px; border-bottom: 1px solid rgba(28,35,51,0.11);">
-                                <div style="display: flex; justify-content: space-between; align-items: center;">
-                                    <span style="font-family: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace; font-size: 9.5px; font-weight: 700; letter-spacing: 1.7px; color: #7A1C2B;">SETTLEMENT RECEIPT</span>
-                                    <span style="font-family: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace; font-size: 10px; color: #8C8577; font-variant-numeric: tabular-nums;">№ C-9F21</span>
-                                </div>
-                                <div style="margin-top: 10px; font-size: 15.5px; font-weight: 700; color: #1C2333;">
-                                    50,000 subscribers in 60 days
-                                </div>
-                                <div style="margin-top: 4px; font-family: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace; font-size: 11px; color: #8C8577;">
-                                    @deltacreator · via YouTube API
-                                </div>
-                            </div>
-
-                            <!-- BODY ROWS -->
-                            <div style="padding: 14px 18px 16px; display: grid; gap: 9px;">
-                                <div style="display: flex; justify-content: space-between; align-items: baseline; gap: 12px;">
-                                    <span style="font-family: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace; font-size: 9.5px; letter-spacing: 1.2px; color: #8C8577;">CAPITAL STAKED</span>
-                                    <span style="font-family: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace; font-size: 12.5px; font-weight: 600; color: #1C2333; text-align: right; font-variant-numeric: tabular-nums;">$1,000.00</span>
-                                </div>
-                                <div style="display: flex; justify-content: space-between; align-items: baseline; gap: 12px;">
-                                    <span style="font-family: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace; font-size: 9.5px; letter-spacing: 1.2px; color: #8C8577;">VERIFIED BY</span>
-                                    <span style="font-size: 13px; font-weight: 600; color: #1C2333; text-align: right;">YouTube oracle</span>
-                                </div>
-                                <div style="display: flex; justify-content: space-between; align-items: baseline; gap: 12px;">
-                                    <span style="font-family: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace; font-size: 9.5px; letter-spacing: 1.2px; color: #8C8577;">SETTLED ON</span>
-                                    <span style="font-family: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace; font-size: 12.5px; font-weight: 600; color: #1C2333; text-align: right; font-variant-numeric: tabular-nums;">Mar 09, 2026</span>
-                                </div>
-                            </div>
-
-                            <!-- TEAR LINE WITH NOTCHES -->
-                            <div style="position: relative; height: 1px;">
-                                <div style="position: absolute; left: 12px; right: 12px; top: 0; height: 1px; background: repeating-linear-gradient(90deg, rgba(28,35,51,0.11) 0 5px, transparent 5px 10px);"></div>
-                                <span class="ps-notch ps-notch-left"></span>
-                                <span class="ps-notch ps-notch-right"></span>
-                            </div>
-
-                            <!-- OUTCOME BLOCK WITH RUBBER STAMP -->
-                            <div style="position: relative; padding: 16px 18px 20px; background: rgba(63,157,90,0.09); border-radius: 0 0 6px 6px; min-height: 96px;">
-                                <div style="font-size: 22px; font-weight: 800; letter-spacing: -0.02em; color: #3F9D5A; font-variant-numeric: tabular-nums;">+$1,120.00</div>
-                                <div style="margin-top: 5px; font-family: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace; font-size: 9px; font-weight: 700; letter-spacing: 1.3px; color: #8C8577; max-width: 150px;">PRINCIPAL + YIELD RETURNED</div>
-
-                                <div class="ps-seal" style="position: absolute; right: 8px; bottom: 8px;">
-                                    <svg width="150" height="55" viewBox="0 0 300 110" aria-hidden="true" style="display: block; overflow: visible;">
-                                        <defs>
-                                            <filter id="stamp2g" x="-30%" y="-30%" width="160%" height="160%">
-                                                <feTurbulence type="fractalNoise" baseFrequency="0.13" numOctaves="3" seed="13" result="coarse"/>
-                                                <feColorMatrix in="coarse" type="matrix" values="0 0 0 0 0, 0 0 0 0 0, 0 0 0 0 0, 1 0 0 0 -0.26" result="blotch"/>
-                                                <feComposite in="SourceGraphic" in2="blotch" operator="out" result="pass1"/>
-                                                <feTurbulence type="fractalNoise" baseFrequency="0.7" numOctaves="4" seed="24" result="fine"/>
-                                                <feColorMatrix in="fine" type="matrix" values="0 0 0 0 0, 0 0 0 0 0, 0 0 0 0 0, 1 0 0 0 -0.52" result="speck"/>
-                                                <feComposite in="pass1" in2="speck" operator="out" result="pass2"/>
-                                                <feTurbulence type="fractalNoise" baseFrequency="0.018" numOctaves="2" seed="16" result="warp"/>
-                                                <feDisplacementMap in="pass2" in2="warp" scale="2.8" xChannelSelector="R" yChannelSelector="G"/>
-                                            </filter>
-                                            <filter id="stamp2b" x="-10%" y="-10%" width="120%" height="120%">
-                                                <feGaussianBlur stdDeviation="0.7" />
-                                            </filter>
-                                            <linearGradient id="pressure2" x1="1" y1="0" x2="0" y2="1">
-                                                <stop offset="0%" stop-color="#fff" stop-opacity="1"/>
-                                                <stop offset="55%" stop-color="#fff" stop-opacity="0.92"/>
-                                                <stop offset="100%" stop-color="#fff" stop-opacity="0.62"/>
-                                            </linearGradient>
-                                            <mask id="pressureMask2">
-                                                <rect x="0" y="0" width="300" height="110" fill="url(#pressure2)"/>
-                                            </mask>
-                                        </defs>
-                                        <g filter="url(#stamp2b)" opacity="0.28" transform="translate(0.5, 0.5) rotate(-14 150 55)">
-                                            <rect x="10" y="13" width="280" height="84" rx="8" fill="none" stroke="#2F7A45" stroke-width="5" />
-                                            <rect x="18" y="21" width="264" height="68" rx="5" fill="none" stroke="#2F7A45" stroke-width="1.6" />
-                                            <text x="151.5" y="55" text-anchor="middle" dominant-baseline="central" font-family='"Arial Narrow", "Helvetica Neue Condensed", "Oswald", "DejaVu Sans Condensed", Impact, system-ui, sans-serif' font-size="35" font-weight="700" letter-spacing="3" fill="#2F7A45" style="font-stretch: condensed;">APPROVED</text>
-                                        </g>
-                                        <g filter="url(#stamp2g)" mask="url(#pressureMask2)" opacity="0.92" transform="rotate(-14 150 55)">
-                                            <rect x="10" y="13" width="280" height="84" rx="8" fill="none" stroke="#2F7A45" stroke-width="5" />
-                                            <rect x="18" y="21" width="264" height="68" rx="5" fill="none" stroke="#2F7A45" stroke-width="1.6" />
-                                            <text x="151.5" y="55" text-anchor="middle" dominant-baseline="central" font-family='"Arial Narrow", "Helvetica Neue Condensed", "Oswald", "DejaVu Sans Condensed", Impact, system-ui, sans-serif' font-size="35" font-weight="700" letter-spacing="3" fill="#2F7A45" style="font-stretch: condensed;">APPROVED</text>
-                                        </g>
-                                    </svg>
-                                </div>
-                            </div>
-                        </article>
-
-                        <!-- RECEIPT 3: @marcusk (FORFEIT / LOSS) -->
-                        <article class="ps-card reveal-item" style="position: relative; background: #FFFDFA; border: 1px solid rgba(28,35,51,0.11); border-radius: 6px; box-shadow: 0 14px 34px -22px rgba(28,35,51,0.4); display: flex; flex-direction: column; transition: transform .22s cubic-bezier(.2,.7,.3,1), box-shadow .22s ease;">
-                            <!-- HEADER -->
-                            <div style="padding: 16px 18px 12px; border-bottom: 1px solid rgba(28,35,51,0.11);">
-                                <div style="display: flex; justify-content: space-between; align-items: center;">
-                                    <span style="font-family: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace; font-size: 9.5px; font-weight: 700; letter-spacing: 1.7px; color: #7A1C2B;">SETTLEMENT RECEIPT</span>
-                                    <span style="font-family: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace; font-size: 10px; color: #8C8577; font-variant-numeric: tabular-nums;">№ C-7B08</span>
-                                </div>
-                                <div style="margin-top: 10px; font-size: 15.5px; font-weight: 700; color: #1C2333;">
-                                    25,000 followers in 30 days
-                                </div>
-                                <div style="margin-top: 4px; font-family: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace; font-size: 11px; color: #8C8577;">
-                                    @marcusk · via X API
-                                </div>
-                            </div>
-
-                            <!-- BODY ROWS -->
-                            <div style="padding: 14px 18px 16px; display: grid; gap: 9px;">
-                                <div style="display: flex; justify-content: space-between; align-items: baseline; gap: 12px;">
-                                    <span style="font-family: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace; font-size: 9.5px; letter-spacing: 1.2px; color: #8C8577;">CAPITAL STAKED</span>
-                                    <span style="font-family: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace; font-size: 12.5px; font-weight: 600; color: #1C2333; text-align: right; font-variant-numeric: tabular-nums;">$1,500.00</span>
-                                </div>
-                                <div style="display: flex; justify-content: space-between; align-items: baseline; gap: 12px;">
-                                    <span style="font-family: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace; font-size: 9.5px; letter-spacing: 1.2px; color: #8C8577;">VERIFIED BY</span>
-                                    <span style="font-size: 13px; font-weight: 600; color: #1C2333; text-align: right;">X oracle</span>
-                                </div>
-                                <div style="display: flex; justify-content: space-between; align-items: baseline; gap: 12px;">
-                                    <span style="font-family: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace; font-size: 9.5px; letter-spacing: 1.2px; color: #8C8577;">SETTLED ON</span>
-                                    <span style="font-family: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace; font-size: 12.5px; font-weight: 600; color: #1C2333; text-align: right; font-variant-numeric: tabular-nums;">Mar 02, 2026</span>
-                                </div>
-                            </div>
-
-                            <!-- TEAR LINE WITH NOTCHES -->
-                            <div style="position: relative; height: 1px;">
-                                <div style="position: absolute; left: 12px; right: 12px; top: 0; height: 1px; background: repeating-linear-gradient(90deg, rgba(28,35,51,0.11) 0 5px, transparent 5px 10px);"></div>
-                                <span class="ps-notch ps-notch-left"></span>
-                                <span class="ps-notch ps-notch-right"></span>
-                            </div>
-
-                            <!-- OUTCOME BLOCK WITH RUBBER STAMP (DENIED) -->
-                            <div style="position: relative; padding: 16px 18px 20px; background: rgba(168,68,63,0.06); border-radius: 0 0 6px 6px; min-height: 96px;">
-                                <div style="font-size: 22px; font-weight: 800; letter-spacing: -0.02em; color: #A8443F; font-variant-numeric: tabular-nums;">−$1,500.00</div>
-                                <div style="margin-top: 5px; font-family: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace; font-size: 9px; font-weight: 700; letter-spacing: 1.3px; color: #8C8577; max-width: 150px;">FORFEITED TO MATCH POOL</div>
-
-                                <div class="ps-seal" style="position: absolute; right: 8px; bottom: 8px;">
-                                    <svg width="150" height="55" viewBox="0 0 300 110" aria-hidden="true" style="display: block; overflow: visible;">
-                                        <defs>
-                                            <filter id="stamp3g" x="-30%" y="-30%" width="160%" height="160%">
-                                                <feTurbulence type="fractalNoise" baseFrequency="0.13" numOctaves="3" seed="21" result="coarse"/>
-                                                <feColorMatrix in="coarse" type="matrix" values="0 0 0 0 0, 0 0 0 0 0, 0 0 0 0 0, 1 0 0 0 -0.26" result="blotch"/>
-                                                <feComposite in="SourceGraphic" in2="blotch" operator="out" result="pass1"/>
-                                                <feTurbulence type="fractalNoise" baseFrequency="0.7" numOctaves="4" seed="32" result="fine"/>
-                                                <feColorMatrix in="fine" type="matrix" values="0 0 0 0 0, 0 0 0 0 0, 0 0 0 0 0, 1 0 0 0 -0.52" result="speck"/>
-                                                <feComposite in="pass1" in2="speck" operator="out" result="pass2"/>
-                                                <feTurbulence type="fractalNoise" baseFrequency="0.018" numOctaves="2" seed="24" result="warp"/>
-                                                <feDisplacementMap in="pass2" in2="warp" scale="2.8" xChannelSelector="R" yChannelSelector="G"/>
-                                            </filter>
-                                            <filter id="stamp3b" x="-10%" y="-10%" width="120%" height="120%">
-                                                <feGaussianBlur stdDeviation="0.7" />
-                                            </filter>
-                                            <linearGradient id="pressure3" x1="0" y1="1" x2="1" y2="0">
-                                                <stop offset="0%" stop-color="#fff" stop-opacity="1"/>
-                                                <stop offset="55%" stop-color="#fff" stop-opacity="0.92"/>
-                                                <stop offset="100%" stop-color="#fff" stop-opacity="0.62"/>
-                                            </linearGradient>
-                                            <mask id="pressureMask3">
-                                                <rect x="0" y="0" width="300" height="110" fill="url(#pressure3)"/>
-                                            </mask>
-                                        </defs>
-                                        <g filter="url(#stamp3b)" opacity="0.28" transform="translate(0.5, 0.5) rotate(-11 150 55)">
-                                            <rect x="10" y="13" width="280" height="84" rx="8" fill="none" stroke="#7A1C2B" stroke-width="5" />
-                                            <rect x="18" y="21" width="264" height="68" rx="5" fill="none" stroke="#7A1C2B" stroke-width="1.6" />
-                                            <text x="158" y="55" text-anchor="middle" dominant-baseline="central" font-family='"Arial Narrow", "Helvetica Neue Condensed", "Oswald", "DejaVu Sans Condensed", Impact, system-ui, sans-serif' font-size="35" font-weight="700" letter-spacing="16" fill="#7A1C2B" style="font-stretch: condensed;">DENIED</text>
-                                        </g>
-                                        <g filter="url(#stamp3g)" mask="url(#pressureMask3)" opacity="0.88" transform="rotate(-11 150 55)">
-                                            <rect x="10" y="13" width="280" height="84" rx="8" fill="none" stroke="#7A1C2B" stroke-width="5" />
-                                            <rect x="18" y="21" width="264" height="68" rx="5" fill="none" stroke="#7A1C2B" stroke-width="1.6" />
-                                            <text x="158" y="55" text-anchor="middle" dominant-baseline="central" font-family='"Arial Narrow", "Helvetica Neue Condensed", "Oswald", "DejaVu Sans Condensed", Impact, system-ui, sans-serif' font-size="35" font-weight="700" letter-spacing="16" fill="#7A1C2B" style="font-stretch: condensed;">DENIED</text>
-                                        </g>
-                                    </svg>
-                                </div>
-                            </div>
-                        </article>
-
-                    </div>
-
-                    <!-- 4 STATS STRIP BELOW -->
-                    <div class="ps-stats reveal-item" style="margin-top: clamp(34px,4vw,54px); padding-top: clamp(24px,3vw,34px); border-top: 1px solid rgba(28,35,51,0.11); display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px;">
-                        <div>
-                            <div style="font-size: clamp(24px,2.6vw,32px); font-weight: 800; letter-spacing: -0.02em; color: #7A1C2B; line-height: 1; font-variant-numeric: tabular-nums;">74%</div>
-                            <div style="margin-top: 8px; font-family: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace; font-size: 9.5px; font-weight: 700; letter-spacing: 1.5px; color: #8C8577; text-transform: uppercase;">OF CONTRACTS ARE WON</div>
-                        </div>
-                        <div>
-                            <div style="font-size: clamp(24px,2.6vw,32px); font-weight: 800; letter-spacing: -0.02em; color: #7A1C2B; line-height: 1; font-variant-numeric: tabular-nums;">$127k</div>
-                            <div style="margin-top: 8px; font-family: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace; font-size: 9.5px; font-weight: 700; letter-spacing: 1.5px; color: #8C8577; text-transform: uppercase;">TOTAL CAPITAL SETTLED</div>
-                        </div>
-                        <div>
-                            <div style="font-size: clamp(24px,2.6vw,32px); font-weight: 800; letter-spacing: -0.02em; color: #7A1C2B; line-height: 1; font-variant-numeric: tabular-nums;">18 days</div>
-                            <div style="margin-top: 8px; font-family: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace; font-size: 9.5px; font-weight: 700; letter-spacing: 1.5px; color: #8C8577; text-transform: uppercase;">AVERAGE TIME TO TARGET</div>
-                        </div>
-                        <div>
-                            <div style="font-size: clamp(24px,2.6vw,32px); font-weight: 800; letter-spacing: -0.02em; color: #7A1C2B; line-height: 1; font-variant-numeric: tabular-nums;">812</div>
-                            <div style="margin-top: 8px; font-family: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace; font-size: 9.5px; font-weight: 700; letter-spacing: 1.5px; color: #8C8577; text-transform: uppercase;">VERIFIED COUNTERPARTIES</div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
             <!-- MINI CTA BLOCK -->
             <div class="lw">
                 <div class="lmini-cta" data-r>
@@ -1572,26 +1592,6 @@ export function renderLanding() {
                             <path d="M 1008.3 54 C 1008.3 78, 980 82, 640 82 L 181.6 82 C 120 82, 91.6 78, 91.6 58" fill="none" stroke="#7A1C2B" stroke-width="1.3" stroke-dasharray="4 6" opacity="0.55" marker-end="url(#bcArrow)" />
                             <text x="550" y="78" text-anchor="middle" font-family='JetBrains Mono', monospace font-size="9.5" font-weight="700" letter-spacing="1.6" fill="#7A1C2B" opacity="0.8">GROWTH COMPOUNDS</text>
                         </svg>
-                    </div>
-                </div>
-            </div>
-
-            <!-- COMMUNITY MOMENTUM / PROTOCOL ACTIVITY -->
-            <div class="l-community-momentum" data-r>
-                <div class="lw">
-                    <div class="l-momentum-wrap">
-                        <span class="l-momentum-title reveal-item">Today's Activity</span>
-                        <div class="l-momentum-items">
-                            <span class="l-momentum-item reveal-item"><strong>178</strong> commitments created</span>
-                            <span class="l-momentum-dot">•</span>
-                            <span class="l-momentum-item reveal-item"><strong>$412k</strong> capital locked</span>
-                            <span class="l-momentum-dot">•</span>
-                            <span class="l-momentum-item reveal-item"><strong>94</strong> settlements completed</span>
-                            <span class="l-momentum-dot">•</span>
-                            <span class="l-momentum-item reveal-item"><strong>12</strong> rivalries started</span>
-                            <span class="l-momentum-dot">•</span>
-                            <span class="l-momentum-item reveal-item"><strong>1.2M CLTR</strong> burned this week</span>
-                        </div>
                     </div>
                 </div>
             </div>

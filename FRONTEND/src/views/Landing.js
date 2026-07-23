@@ -1163,20 +1163,22 @@ export function renderLanding() {
                                 <div style="font-size: 22px; font-weight: 800; letter-spacing: -0.02em; color: #3F9D5A; font-variant-numeric: tabular-nums;">+$2,240.00</div>
                                 <div style="margin-top: 5px; font-family: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace; font-size: 9px; font-weight: 700; letter-spacing: 1.3px; color: #8C8577; max-width: 150px;">PRINCIPAL + YIELD RETURNED</div>
 
-                                <div class="ps-seal" style="position: absolute; right: 14px; bottom: 14px; transform: rotate(-9deg); opacity: 0.95;">
-                                    <svg width="74" height="74" viewBox="0 0 80 80" aria-hidden style="display: block;">
+                                <div class="ps-seal" style="position: absolute; right: 8px; bottom: 8px; opacity: 0.9;">
+                                    <svg width="150" height="55" viewBox="0 0 300 110" aria-hidden="true" style="display: block; overflow: visible;">
                                         <defs>
-                                            <radialGradient id="waxW1" cx="36%" cy="30%" r="78%">
-                                                <stop offset="0%" stop-color="#9A2B3D" />
-                                                <stop offset="100%" stop-color="#5E1521" />
-                                            </radialGradient>
+                                            <filter id="stamp1g" x="-25%" y="-25%" width="150%" height="150%">
+                                                <feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="4" seed="7" result="noise" />
+                                                <feColorMatrix in="noise" type="matrix" values="0 0 0 0 0, 0 0 0 0 0, 0 0 0 0 0, 1 0 0 0 -0.45" result="holes" />
+                                                <feComposite in="SourceGraphic" in2="holes" operator="out" result="eroded" />
+                                                <feTurbulence type="fractalNoise" baseFrequency="0.035" numOctaves="2" seed="12" result="warp" />
+                                                <feDisplacementMap in="eroded" in2="warp" scale="1.1" xChannelSelector="R" yChannelSelector="G" />
+                                            </filter>
                                         </defs>
-                                        <path d="M40.00 6.00L44.34 9.81L49.58 7.38L52.67 12.26L58.38 11.40L59.97 16.95L65.70 17.73L65.66 23.51L70.93 25.88L69.26 31.41L73.65 35.16L70.50 40.00L73.65 44.84L69.26 48.59L70.93 54.12L65.66 56.49L65.70 62.27L59.97 63.05L58.38 68.60L52.67 67.74L49.58 72.62L44.34 70.19L40.00 74.00L35.66 70.19L30.42 72.62L27.33 67.74L21.62 68.60L20.03 63.05L14.30 62.27L14.34 56.49L9.07 54.12L10.74 48.59L6.35 44.84L9.50 40.00L6.35 35.16L10.74 31.41L9.07 25.88L14.34 23.51L14.30 17.73L20.03 16.95L21.62 11.40L27.33 12.26L30.42 7.38L35.66 9.81Z" fill="url(#waxW1)" opacity="0.95" />
-                                        <circle cx="40" cy="40" r="25" fill="none" stroke="rgba(251,232,228,0.35)" stroke-width="1" />
-                                        <text x="40" y="36.5" text-anchor="middle" font-family="ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace" font-size="9.5" font-weight="700" letter-spacing="1.2" fill="#FBE8E4">SETTLED</text>
-                                        <line x1="26" y1="41.5" x2="54" y2="41.5" stroke="rgba(251,232,228,0.4)" stroke-width="0.8" />
-                                        <text x="40" y="52" text-anchor="middle" font-family="ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace" font-size="7" letter-spacing="1" fill="rgba(251,232,228,0.85)">VERIFIED</text>
-                                        <circle cx="40" cy="40" r="33" fill="none" stroke="rgba(0,0,0,0.10)" stroke-width="1" />
+                                        <g filter="url(#stamp1g)" opacity="0.9" transform="rotate(-12 150 55)">
+                                            <rect x="10" y="13" width="280" height="84" rx="8" fill="none" stroke="#2F7A45" stroke-width="5" />
+                                            <rect x="18" y="21" width="264" height="68" rx="5" fill="none" stroke="#2F7A45" stroke-width="1.6" />
+                                            <text x="150" y="55" text-anchor="middle" dominant-baseline="central" font-family='"Arial Narrow", "Helvetica Neue Condensed", "Oswald", "DejaVu Sans Condensed", Impact, system-ui, sans-serif' font-size="35" font-weight="700" letter-spacing="3" fill="#2F7A45" style="font-stretch: condensed;">APPROVED</text>
+                                        </g>
                                     </svg>
                                 </div>
                             </div>
@@ -1221,25 +1223,27 @@ export function renderLanding() {
                                 <span class="ps-notch ps-notch-right"></span>
                             </div>
 
-                            <!-- OUTCOME BLOCK WITH WAX SEAL -->
+                            <!-- OUTCOME BLOCK WITH RUBBER STAMP -->
                             <div style="position: relative; padding: 16px 18px 20px; background: rgba(63,157,90,0.09); border-radius: 0 0 6px 6px; min-height: 96px;">
                                 <div style="font-size: 22px; font-weight: 800; letter-spacing: -0.02em; color: #3F9D5A; font-variant-numeric: tabular-nums;">+$1,120.00</div>
                                 <div style="margin-top: 5px; font-family: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace; font-size: 9px; font-weight: 700; letter-spacing: 1.3px; color: #8C8577; max-width: 150px;">PRINCIPAL + YIELD RETURNED</div>
 
-                                <div class="ps-seal" style="position: absolute; right: 14px; bottom: 14px; transform: rotate(-9deg); opacity: 0.95;">
-                                    <svg width="74" height="74" viewBox="0 0 80 80" aria-hidden style="display: block;">
+                                <div class="ps-seal" style="position: absolute; right: 8px; bottom: 8px; opacity: 0.9;">
+                                    <svg width="150" height="55" viewBox="0 0 300 110" aria-hidden="true" style="display: block; overflow: visible;">
                                         <defs>
-                                            <radialGradient id="waxW2" cx="36%" cy="30%" r="78%">
-                                                <stop offset="0%" stop-color="#9A2B3D" />
-                                                <stop offset="100%" stop-color="#5E1521" />
-                                            </radialGradient>
+                                            <filter id="stamp2g" x="-25%" y="-25%" width="150%" height="150%">
+                                                <feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="4" seed="13" result="noise" />
+                                                <feColorMatrix in="noise" type="matrix" values="0 0 0 0 0, 0 0 0 0 0, 0 0 0 0 0, 1 0 0 0 -0.45" result="holes" />
+                                                <feComposite in="SourceGraphic" in2="holes" operator="out" result="eroded" />
+                                                <feTurbulence type="fractalNoise" baseFrequency="0.035" numOctaves="2" seed="18" result="warp" />
+                                                <feDisplacementMap in="eroded" in2="warp" scale="1.1" xChannelSelector="R" yChannelSelector="G" />
+                                            </filter>
                                         </defs>
-                                        <path d="M40.00 6.00L44.34 9.81L49.58 7.38L52.67 12.26L58.38 11.40L59.97 16.95L65.70 17.73L65.66 23.51L70.93 25.88L69.26 31.41L73.65 35.16L70.50 40.00L73.65 44.84L69.26 48.59L70.93 54.12L65.66 56.49L65.70 62.27L59.97 63.05L58.38 68.60L52.67 67.74L49.58 72.62L44.34 70.19L40.00 74.00L35.66 70.19L30.42 72.62L27.33 67.74L21.62 68.60L20.03 63.05L14.30 62.27L14.34 56.49L9.07 54.12L10.74 48.59L6.35 44.84L9.50 40.00L6.35 35.16L10.74 31.41L9.07 25.88L14.34 23.51L14.30 17.73L20.03 16.95L21.62 11.40L27.33 12.26L30.42 7.38L35.66 9.81Z" fill="url(#waxW2)" opacity="0.95" />
-                                        <circle cx="40" cy="40" r="25" fill="none" stroke="rgba(251,232,228,0.35)" stroke-width="1" />
-                                        <text x="40" y="36.5" text-anchor="middle" font-family="ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace" font-size="9.5" font-weight="700" letter-spacing="1.2" fill="#FBE8E4">SETTLED</text>
-                                        <line x1="26" y1="41.5" x2="54" y2="41.5" stroke="rgba(251,232,228,0.4)" stroke-width="0.8" />
-                                        <text x="40" y="52" text-anchor="middle" font-family="ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace" font-size="7" letter-spacing="1" fill="rgba(251,232,228,0.85)">VERIFIED</text>
-                                        <circle cx="40" cy="40" r="33" fill="none" stroke="rgba(0,0,0,0.10)" stroke-width="1" />
+                                        <g filter="url(#stamp2g)" opacity="0.9" transform="rotate(-8 150 55)">
+                                            <rect x="10" y="13" width="280" height="84" rx="8" fill="none" stroke="#2F7A45" stroke-width="5" />
+                                            <rect x="18" y="21" width="264" height="68" rx="5" fill="none" stroke="#2F7A45" stroke-width="1.6" />
+                                            <text x="150" y="55" text-anchor="middle" dominant-baseline="central" font-family='"Arial Narrow", "Helvetica Neue Condensed", "Oswald", "DejaVu Sans Condensed", Impact, system-ui, sans-serif' font-size="35" font-weight="700" letter-spacing="3" fill="#2F7A45" style="font-stretch: condensed;">APPROVED</text>
+                                        </g>
                                     </svg>
                                 </div>
                             </div>
@@ -1284,25 +1288,27 @@ export function renderLanding() {
                                 <span class="ps-notch ps-notch-right"></span>
                             </div>
 
-                            <!-- OUTCOME BLOCK WITH WAX SEAL (FORFEIT) -->
+                            <!-- OUTCOME BLOCK WITH RUBBER STAMP (DENIED) -->
                             <div style="position: relative; padding: 16px 18px 20px; background: rgba(168,68,63,0.06); border-radius: 0 0 6px 6px; min-height: 96px;">
                                 <div style="font-size: 22px; font-weight: 800; letter-spacing: -0.02em; color: #A8443F; font-variant-numeric: tabular-nums;">−$1,500.00</div>
                                 <div style="margin-top: 5px; font-family: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace; font-size: 9px; font-weight: 700; letter-spacing: 1.3px; color: #8C8577; max-width: 150px;">FORFEITED TO MATCH POOL</div>
 
-                                <div class="ps-seal" style="position: absolute; right: 14px; bottom: 14px; transform: rotate(-9deg); opacity: 0.95;">
-                                    <svg width="74" height="74" viewBox="0 0 80 80" aria-hidden style="display: block;">
+                                <div class="ps-seal" style="position: absolute; right: 8px; bottom: 8px; opacity: 0.9;">
+                                    <svg width="150" height="55" viewBox="0 0 300 110" aria-hidden="true" style="display: block; overflow: visible;">
                                         <defs>
-                                            <radialGradient id="waxF" cx="36%" cy="30%" r="78%">
-                                                <stop offset="0%" stop-color="#8C8781" />
-                                                <stop offset="100%" stop-color="#6E6A62" />
-                                            </radialGradient>
+                                            <filter id="stamp3g" x="-25%" y="-25%" width="150%" height="150%">
+                                                <feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="4" seed="21" result="noise" />
+                                                <feColorMatrix in="noise" type="matrix" values="0 0 0 0 0, 0 0 0 0 0, 0 0 0 0 0, 1 0 0 0 -0.45" result="holes" />
+                                                <feComposite in="SourceGraphic" in2="holes" operator="out" result="eroded" />
+                                                <feTurbulence type="fractalNoise" baseFrequency="0.035" numOctaves="2" seed="26" result="warp" />
+                                                <feDisplacementMap in="eroded" in2="warp" scale="1.1" xChannelSelector="R" yChannelSelector="G" />
+                                            </filter>
                                         </defs>
-                                        <path d="M40.00 6.00L44.34 9.81L49.58 7.38L52.67 12.26L58.38 11.40L59.97 16.95L65.70 17.73L65.66 23.51L70.93 25.88L69.26 31.41L73.65 35.16L70.50 40.00L73.65 44.84L69.26 48.59L70.93 54.12L65.66 56.49L65.70 62.27L59.97 63.05L58.38 68.60L52.67 67.74L49.58 72.62L44.34 70.19L40.00 74.00L35.66 70.19L30.42 72.62L27.33 67.74L21.62 68.60L20.03 63.05L14.30 62.27L14.34 56.49L9.07 54.12L10.74 48.59L6.35 44.84L9.50 40.00L6.35 35.16L10.74 31.41L9.07 25.88L14.34 23.51L14.30 17.73L20.03 16.95L21.62 11.40L27.33 12.26L30.42 7.38L35.66 9.81Z" fill="url(#waxF)" opacity="0.95" />
-                                        <circle cx="40" cy="40" r="25" fill="none" stroke="rgba(251,232,228,0.35)" stroke-width="1" />
-                                        <text x="40" y="36.5" text-anchor="middle" font-family="ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace" font-size="9.5" font-weight="700" letter-spacing="1.2" fill="#FBE8E4">FORFEIT</text>
-                                        <line x1="26" y1="41.5" x2="54" y2="41.5" stroke="rgba(251,232,228,0.4)" stroke-width="0.8" />
-                                        <text x="40" y="52" text-anchor="middle" font-family="ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace" font-size="7" letter-spacing="1" fill="rgba(251,232,228,0.85)">VERIFIED</text>
-                                        <circle cx="40" cy="40" r="33" fill="none" stroke="rgba(0,0,0,0.10)" stroke-width="1" />
+                                        <g filter="url(#stamp3g)" opacity="0.9" transform="rotate(-10 150 55)">
+                                            <rect x="10" y="13" width="280" height="84" rx="8" fill="none" stroke="#7A1C2B" stroke-width="5" />
+                                            <rect x="18" y="21" width="264" height="68" rx="5" fill="none" stroke="#7A1C2B" stroke-width="1.6" />
+                                            <text x="150" y="55" text-anchor="middle" dominantBaseline="central" font-family='"Arial Narrow", "Helvetica Neue Condensed", "Oswald", "DejaVu Sans Condensed", Impact, system-ui, sans-serif' font-size="54" font-weight="700" letter-spacing="3" fill="#7A1C2B" style="font-stretch: condensed;">DENIED</text>
+                                        </g>
                                     </svg>
                                 </div>
                             </div>

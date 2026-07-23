@@ -1100,8 +1100,8 @@ export function renderLanding() {
                         Bigger stake, bigger return. Miss the target and you forfeit.
                     </p>
 
-                    <!-- 3 TIER CARDS GRID -->
-                    <div class="oc-grid reveal-item">
+                    <!-- 3 TIER CARDS GRID (INLINE GRID STYLES FOR HARDENED 3-COLUMN LAYOUT) -->
+                    <div class="oc-grid reveal-item" style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: clamp(16px, 2vw, 24px); align-items: stretch;">
                         
                         <!-- TIER 1: PLEDGE -->
                         <div class="oc-tier" style="position: relative; background: #FFFDFA; border: 1.5px solid rgba(28,35,51,0.11); border-radius: 18px; padding: 26px 24px 24px; display: flex; flex-direction: column; box-shadow: 0 12px 30px -22px rgba(28,35,51,0.32); transition: transform .22s cubic-bezier(.2,.7,.3,1), box-shadow .22s ease;">
@@ -1124,7 +1124,7 @@ export function renderLanding() {
                                 </div>
                             </div>
 
-                            <button class="oc-cta lp-cta-btn" data-source="SHOPIFY" data-tier="pledge" data-capital="100" style="margin-top: auto; width: 100%; cursor: pointer; font-size: 14px; font-weight: 700; letter-spacing: 0.2px; color: #7A1C2B; background: transparent; border: 1.5px solid #7A1C2B; border-radius: 11px; padding: 13px 18px; display: inline-flex; align-items: center; justify-content: center; gap: 8px; transition: all .2s ease;">
+                            <button class="oc-cta oc-cta-ghost" data-source="SHOPIFY" data-tier="pledge" data-capital="100" style="margin-top: auto; width: 100%; cursor: pointer; font-size: 14px; font-weight: 700; letter-spacing: 0.2px; color: #7A1C2B !important; background-color: transparent !important; background-image: none !important; border: 1.5px solid #7A1C2B !important; border-radius: 11px; padding: 13px 18px; display: inline-flex; align-items: center; justify-content: center; gap: 8px; transition: all .2s ease;">
                                 Start pledge <span class="oc-arrow">→</span>
                             </button>
                         </div>
@@ -1152,7 +1152,7 @@ export function renderLanding() {
                                 </div>
                             </div>
 
-                            <button class="oc-cta lp-cta-btn" data-source="STRIPE" data-tier="stake" data-capital="250" style="margin-top: auto; width: 100%; cursor: pointer; font-size: 14px; font-weight: 700; letter-spacing: 0.2px; color: #FBF9F5; background: #7A1C2B; border: 1.5px solid #7A1C2B; border-radius: 11px; padding: 13px 18px; display: inline-flex; align-items: center; justify-content: center; gap: 8px; transition: all .2s ease;">
+                            <button class="oc-cta oc-cta-solid" data-source="STRIPE" data-tier="stake" data-capital="250" style="margin-top: auto; width: 100%; cursor: pointer; font-size: 14px; font-weight: 700; letter-spacing: 0.2px; color: #FBF9F5 !important; background-color: #7A1C2B !important; background-image: none !important; border: 1.5px solid #7A1C2B !important; border-radius: 11px; padding: 13px 18px; display: inline-flex; align-items: center; justify-content: center; gap: 8px; transition: all .2s ease;">
                                 Start stake <span class="oc-arrow">→</span>
                             </button>
                         </div>
@@ -1178,7 +1178,7 @@ export function renderLanding() {
                                 </div>
                             </div>
 
-                            <button class="oc-cta lp-cta-btn" data-source="STRIPE" data-tier="allin" data-capital="500" style="margin-top: auto; width: 100%; cursor: pointer; font-size: 14px; font-weight: 700; letter-spacing: 0.2px; color: #7A1C2B; background: transparent; border: 1.5px solid #7A1C2B; border-radius: 11px; padding: 13px 18px; display: inline-flex; align-items: center; justify-content: center; gap: 8px; transition: all .2s ease;">
+                            <button class="oc-cta oc-cta-ghost" data-source="STRIPE" data-tier="allin" data-capital="500" style="margin-top: auto; width: 100%; cursor: pointer; font-size: 14px; font-weight: 700; letter-spacing: 0.2px; color: #7A1C2B !important; background-color: transparent !important; background-image: none !important; border: 1.5px solid #7A1C2B !important; border-radius: 11px; padding: 13px 18px; display: inline-flex; align-items: center; justify-content: center; gap: 8px; transition: all .2s ease;">
                                 Start all-in <span class="oc-arrow">→</span>
                             </button>
                         </div>

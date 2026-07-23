@@ -3,8 +3,11 @@ import React, { useMemo } from "react";
 /**
  * RubberStamp — distressed ink stamp. APPROVED / DENIED.
  * -------------------------------------------------------------------------
- * Two-scale grunge filter (coarse blotches baseFrequency=0.13 + fine speckle baseFrequency=0.7)
- * plus edge displacement (scale=2.8), uneven pressure gradient mask, and ink bleed blur shadow.
+ * Shared GLYPH_SIZE = 35 across all stamp dies.
+ * Width is matched via tracking (letterSpacing) so APPROVED (3) and DENIED (16)
+ * fill the interior frame to ~213-214px inside a 228px frame.
+ * Text x-position is offset by `tracking / 2` to compensate for SVG's trailing
+ * letter-spacing and keep text perfectly centered.
  */
 
 const TONES = {
@@ -12,13 +15,15 @@ const TONES = {
   maroon: "#7A1C2B",  // DENIED — Collateral brand
 };
 
-const SIZING = {
-  APPROVED: 35,
-  DENIED: 54,
-  SETTLED: 42,
-  FORFEIT: 42,
-  VERIFIED: 38,
-  DEFAULT: 40,
+const GLYPH_SIZE = 35;
+
+const TRACKING = {
+  APPROVED: 3,
+  DENIED: 16,
+  SETTLED: 12,
+  FORFEIT: 12,
+  VERIFIED: 6,
+  DEFAULT: 8,
 };
 
 const STAMP_FONT =
@@ -39,7 +44,9 @@ export default function RubberStamp({
 }) {
   const id = useMemo(() => `stamp${++uid}`, []);
   const color = TONES[tone] || TONES.green;
-  const fontSize = SIZING[label.toUpperCase()] || SIZING.DEFAULT;
+  const key = label.toUpperCase();
+  const tracking = TRACKING[key] ?? TRACKING.DEFAULT;
+  const textX = 150 + tracking / 2;
   const H = (width * 110) / 300;
 
   return (
@@ -89,9 +96,9 @@ export default function RubberStamp({
       <g filter={`url(#${id}b)`} opacity="0.28" transform={`translate(0.5, 0.5) rotate(${rotate} 150 55)`}>
         <rect x="10" y="13" width="280" height="84" rx="8" fill="none" stroke={color} strokeWidth="5" />
         <rect x="18" y="21" width="264" height="68" rx="5" fill="none" stroke={color} strokeWidth="1.6" />
-        <text x="150" y="55" textAnchor="middle" dominantBaseline="central"
-          fontFamily={STAMP_FONT} fontSize={fontSize} fontWeight="700"
-          letterSpacing="3" fill={color} style={{ fontStretch: "condensed" }}>
+        <text x={textX} y="55" textAnchor="middle" dominantBaseline="central"
+          fontFamily={STAMP_FONT} fontSize={GLYPH_SIZE} fontWeight="700"
+          letterSpacing={tracking} fill={color} style={{ fontStretch: "condensed" }}>
           {label}
         </text>
       </g>
@@ -105,9 +112,9 @@ export default function RubberStamp({
         <rect x="18" y="21" width="264" height="68" rx="5"
           fill="none" stroke={color} strokeWidth="1.6" />
         {/* word — sized to fit, never compressed */}
-        <text x="150" y="55" textAnchor="middle" dominantBaseline="central"
-          fontFamily={STAMP_FONT} fontSize={fontSize} fontWeight="700"
-          letterSpacing="3" fill={color}
+        <text x={textX} y="55" textAnchor="middle" dominantBaseline="central"
+          fontFamily={STAMP_FONT} fontSize={GLYPH_SIZE} fontWeight="700"
+          letterSpacing={tracking} fill={color}
           style={{ fontStretch: "condensed" }}>
           {label}
         </text>

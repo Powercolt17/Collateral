@@ -764,7 +764,7 @@ export function renderLanding() {
                                         <path d="M0 0.5 L6.5 3.5 L0 6.5 Z" fill="#7A1C2B" />
                                     </marker>
                                     <marker id="fkArrowG" markerWidth="7" markerHeight="7" refX="5.5" refY="3.5" orient="auto">
-                                        <path d="M0 0.5 L6.5 3.5 L0 6.5 Z" fill="#3F9D5A" />
+                                        <path d="M0 0.5 L6.5 3.5 L0 6.5 Z" fill="#166534" />
                                     </marker>
                                     <linearGradient id="fkFade" x1="0" y1="0" x2="0" y2="1">
                                         <stop offset="0%" stop-color="#8C8577" stop-opacity="0.5" />
@@ -846,9 +846,9 @@ export function renderLanding() {
                                 </g>
                                 <!-- Step 04 -->
                                 <g>
-                                    <rect x="360" y="334" width="294" height="62" rx="11" fill="rgba(63,157,90,0.06)" stroke="rgba(63,157,90,0.4)" stroke-width="1.5" />
-                                    <text x="376" y="365" dominant-baseline="central" font-family="'JetBrains Mono', monospace" font-size="11.5" font-weight="700" fill="#3F9D5A" opacity="1">04</text>
-                                    <text x="406" y="365" dominant-baseline="central" font-family="'Plus Jakarta Sans', sans-serif" font-size="16" font-weight="700" fill="#3F9D5A">Hit target, claim yield</text>
+                                    <rect x="360" y="334" width="294" height="62" rx="11" fill="rgba(22,101,52,0.07)" stroke="rgba(22,101,52,0.45)" stroke-width="1.5" />
+                                    <text x="376" y="365" dominant-baseline="central" font-family="'JetBrains Mono', monospace" font-size="11.5" font-weight="700" fill="#166534" opacity="1">04</text>
+                                    <text x="406" y="365" dominant-baseline="central" font-family="'Plus Jakarta Sans', sans-serif" font-size="16" font-weight="700" fill="#166534">Hit target, claim yield</text>
                                 </g>
 
                                 <!-- Right solid connectors -->
@@ -856,12 +856,12 @@ export function renderLanding() {
                                 <line x1="507" y1="244" x2="507" y2="252" stroke="#7A1C2B" stroke-width="1.5" opacity="0.55" marker-end="url(#fkArrow)" />
                                 <line x1="507" y1="320" x2="507" y2="328" stroke="#7A1C2B" stroke-width="1.5" opacity="0.7" marker-end="url(#fkArrow)" />
 
-                                <line x1="507" y1="396" x2="507" y2="418" stroke="#3F9D5A" stroke-width="1.6" opacity="0.7" marker-end="url(#fkArrowG)" />
+                                <line x1="507" y1="396" x2="507" y2="418" stroke="#166534" stroke-width="1.6" opacity="0.7" marker-end="url(#fkArrowG)" />
 
                                 <!-- payout badge -->
                                 <g class="fk-payout">
-                                    <rect x="360" y="424" width="294" height="76" rx="14" fill="rgba(63,157,90,0.11)" stroke="rgba(63,157,90,0.6)" stroke-width="2" />
-                                    <circle cx="394" cy="462" r="13" fill="#3F9D5A" class="fk-check" />
+                                    <rect x="360" y="424" width="294" height="76" rx="14" fill="rgba(22,101,52,0.11)" stroke="rgba(22,101,52,0.55)" stroke-width="2" />
+                                    <circle cx="394" cy="462" r="13" fill="#166534" class="fk-check" />
                                     <path d="m-4.4 0 2.9 2.9 5.7-5.8" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" transform="translate(394, 462) scale(1.15)" />
                                     <text x="418" y="454" font-family="'Plus Jakarta Sans', sans-serif" font-size="18" font-weight="700" fill="#1C2333">Capital returned + yield.</text>
                                     <text x="418" y="480" font-family="'Inter', sans-serif" font-size="14" fill="#5A6072">The goal actually happened.</text>

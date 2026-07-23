@@ -6963,6 +6963,15 @@ html, body {
   }
 }
 
+/* ═══ NEWSREADER PARAGRAPH BODY COPY TYPOGRAPHY ═══ */
+p, .lsub, .lengine-sub, .lfaq-a {
+  font-family: "Newsreader", Georgia, Cambria, "Times New Roman", Times, serif !important;
+  font-size: 17px !important;
+  line-height: 1.6 !important;
+  letter-spacing: -0.011em !important;
+  max-width: 62ch !important;
+}
+
 /* ═══ MOBILE COPY & HEADLINE DENSITY FIXES ═══ */
 h1, h2, h3, .lh1, .lhow-h, .lengine-h2, .ltypes-headline {
   text-wrap: balance;
@@ -6983,8 +6992,8 @@ h1, h2, h3, .lh1, .lhow-h, .lengine-h2, .ltypes-headline {
 
   /* Body copy font size & line height on mobile */
   p, .lsub, .lengine-sub, .lfaq-a {
-    font-size: 15px !important;
-    line-height: 1.5 !important;
+    font-size: 15.5px !important;
+    line-height: 1.55 !important;
     max-width: 60ch !important;
   }
 
@@ -6993,6 +7002,7 @@ h1, h2, h3, .lh1, .lhow-h, .lengine-h2, .ltypes-headline {
     display: none !important;
   }
 }
+
 
 
 `;

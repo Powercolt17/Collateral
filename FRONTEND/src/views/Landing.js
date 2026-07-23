@@ -272,6 +272,26 @@ export function renderLanding() {
 
 
 
+            <!-- COMMUNITY MOMENTUM / PROTOCOL ACTIVITY TICKER BAR -->
+            <div class="l-community-momentum" data-r style="background: #FAF8F5; border-top: 1px solid rgba(28,35,51,0.08); border-bottom: 1px solid rgba(28,35,51,0.08); padding: 18px 0;">
+                <div class="lw">
+                    <div class="l-momentum-wrap">
+                        <span class="l-momentum-title reveal-item">Today's Activity</span>
+                        <div class="l-momentum-items">
+                            <span class="l-momentum-item reveal-item"><strong>178</strong> commitments created</span>
+                            <span class="l-momentum-dot">•</span>
+                            <span class="l-momentum-item reveal-item"><strong>$412k</strong> capital locked</span>
+                            <span class="l-momentum-dot">•</span>
+                            <span class="l-momentum-item reveal-item"><strong>94</strong> settlements completed</span>
+                            <span class="l-momentum-dot">•</span>
+                            <span class="l-momentum-item reveal-item"><strong>12</strong> rivalries started</span>
+                            <span class="l-momentum-dot">•</span>
+                            <span class="l-momentum-item reveal-item"><strong>1.2M CLTR</strong> burned this week</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
             <!-- ═══ EMOTIONAL REFRAME (THE FORK: WHY IT WORKS) ═══ -->
             <div class="lhow-it-works-section" data-r style="background: #F8F5F0; padding: clamp(48px,7vw,96px) 0; overflow: visible !important;">
                 <div class="lw">
@@ -1007,26 +1027,6 @@ export function renderLanding() {
                         <div>
                             <div style="font-size: clamp(24px,2.6vw,32px); font-weight: 800; letter-spacing: -0.02em; color: #7A1C2B; line-height: 1; font-variant-numeric: tabular-nums;">812</div>
                             <div style="margin-top: 8px; font-family: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace; font-size: 9.5px; font-weight: 700; letter-spacing: 1.5px; color: #8C8577; text-transform: uppercase;">VERIFIED COUNTERPARTIES</div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- COMMUNITY MOMENTUM / PROTOCOL ACTIVITY -->
-            <div class="l-community-momentum" data-r>
-                <div class="lw">
-                    <div class="l-momentum-wrap">
-                        <span class="l-momentum-title reveal-item">Today's Activity</span>
-                        <div class="l-momentum-items">
-                            <span class="l-momentum-item reveal-item"><strong>178</strong> commitments created</span>
-                            <span class="l-momentum-dot">•</span>
-                            <span class="l-momentum-item reveal-item"><strong>$412k</strong> capital locked</span>
-                            <span class="l-momentum-dot">•</span>
-                            <span class="l-momentum-item reveal-item"><strong>94</strong> settlements completed</span>
-                            <span class="l-momentum-dot">•</span>
-                            <span class="l-momentum-item reveal-item"><strong>12</strong> rivalries started</span>
-                            <span class="l-momentum-dot">•</span>
-                            <span class="l-momentum-item reveal-item"><strong>1.2M CLTR</strong> burned this week</span>
                         </div>
                     </div>
                 </div>

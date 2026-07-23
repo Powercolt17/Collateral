@@ -7080,17 +7080,22 @@ h1, h2, h3, .lh1, .lhow-h, .lengine-h2, .ltypes-headline {
   background: transparent !important;
   border: none !important;
   padding: 0 !important;
-  margin: 0 !important;
+  margin: 0 auto !important;
+  width: 100% !important;
+  display: flex !important;
+  justify-content: center !important;
 }
 
 .l-stats-card {
   background: #FBF9F5 !important;
   border: 1.5px solid rgba(28, 35, 51, 0.09) !important;
-  border-radius: 18px !important;
-  padding: 12px 24px !important; /* Aggressively reduced top/bottom card padding to 12px */
+  border-radius: 14px !important;
+  padding: 10px 24px !important;
   box-shadow: 0 4px 16px -10px rgba(28, 35, 51, 0.05) !important;
-  max-width: 1100px !important;
+  width: 100% !important;
+  max-width: 100% !important;
   margin: 0 auto !important;
+  box-sizing: border-box !important;
 }
 
 .l-stats-eyebrow {

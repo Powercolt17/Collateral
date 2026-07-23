@@ -270,9 +270,9 @@ export function renderLanding() {
 
 
             <!-- GLOBAL PROTOCOL STATISTICS / CYCLING BAND -->
-            <div class="l-global-stats-bar animate-fade-in-up delay-4" id="l-stats-band" style="padding: 0 !important; margin: 0 !important; background: transparent !important; border: none !important;">
-                <div class="lw" style="max-width: 1050px; margin: 0 auto;">
-                    <div class="l-stats-card" style="background: #FBF9F5 !important; border: 1.5px solid rgba(28, 35, 51, 0.09) !important; border-radius: 14px !important; padding: 10px 24px !important; box-shadow: 0 4px 16px -10px rgba(28, 35, 51, 0.05) !important; max-width: 1050px !important; margin: 0 auto !important; height: auto !important; min-height: 0 !important;">
+            <div class="l-global-stats-bar animate-fade-in-up delay-4" id="l-stats-band" style="padding: 0 !important; margin: 0 auto !important; background: transparent !important; border: none !important; width: 100% !important; display: flex !important; justify-content: center !important;">
+                <div class="lw" style="width: 100% !important; max-width: 1240px !important; margin: 0 auto !important; padding: 0 24px !important; box-sizing: border-box !important;">
+                    <div class="l-stats-card" style="background: #FBF9F5 !important; border: 1.5px solid rgba(28, 35, 51, 0.09) !important; border-radius: 14px !important; padding: 10px 24px !important; box-shadow: 0 4px 16px -10px rgba(28, 35, 51, 0.05) !important; width: 100% !important; max-width: 100% !important; margin: 0 auto !important; height: auto !important; min-height: 0 !important; box-sizing: border-box !important;">
                         <!-- Visually hidden list of all metrics and supported APIs for screen readers -->
                         <div style="position: absolute !important; width: 1px !important; height: 1px !important; padding: 0 !important; margin: -1px !important; overflow: hidden !important; clip: rect(0,0,0,0) !important; border: 0 !important;">
                             Protocol metrics: Active contracts: 1,206; Average contract size: $6,940; Median settlement time: 1.4 days; Counterparties: 812. Supported APIs: Stripe API, X / Twitter API, YouTube API, Shopify API.

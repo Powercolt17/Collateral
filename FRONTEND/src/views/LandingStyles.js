@@ -600,6 +600,9 @@ export const landingCSS = `
     font-weight: 800;
     color: #0F172A;
     margin-top: 5px;
+    font-variant-numeric: tabular-nums;
+    letter-spacing: 0 !important;
+    font-feature-settings: "tnum";
 }
 
 .lflow-node-sub {
@@ -736,6 +739,9 @@ export const landingCSS = `
     font-weight: 800;
     color: #0F172A;
     margin-top: 2px;
+    font-variant-numeric: tabular-nums;
+    letter-spacing: 0 !important;
+    font-feature-settings: "tnum";
 }
 
 .lflow-val-green { color: #145C14 !important; }
@@ -751,7 +757,7 @@ export const landingCSS = `
 .lflow-loop-wrap {
     position: relative;
     width: 100%;
-    height: 56px;
+    height: 48px;
     margin-top: 4px;
 }
 
@@ -760,7 +766,7 @@ export const landingCSS = `
     top: 0;
     left: 0;
     width: 100%;
-    height: 56px;
+    height: 48px;
     pointer-events: none;
 }
 
@@ -770,7 +776,7 @@ export const landingCSS = `
 
 .lflow-loop-badge {
     position: absolute;
-    top: 50%;
+    top: 38px;
     left: 50%;
     transform: translate(-50%, -50%);
     font-family: 'JetBrains Mono', monospace;

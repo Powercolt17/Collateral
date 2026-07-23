@@ -510,7 +510,10 @@ export function renderLanding() {
                                 </div>
 
                                 <div class="lflow-arrow">
-                                    <svg width="32" height="12" viewBox="0 0 32 12"><path d="M0 6 H26 L22 2 M26 6 L22 10" stroke="#0F172A" stroke-width="2.8" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                                    <svg width="34" height="12" viewBox="0 0 34 12" fill="none">
+                                        <path d="M 0 6 H 24" stroke="#7A1C2B" stroke-width="2" stroke-linecap="round"/>
+                                        <polygon points="32,6 24,2 24,10" fill="#7A1C2B"/>
+                                    </svg>
                                 </div>
 
                                 <!-- NODE: ESCROW VAULT -->
@@ -522,7 +525,10 @@ export function renderLanding() {
                                 </div>
 
                                 <div class="lflow-arrow">
-                                    <svg width="32" height="12" viewBox="0 0 32 12"><path d="M0 6 H26 L22 2 M26 6 L22 10" stroke="#0F172A" stroke-width="2.8" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                                    <svg width="34" height="12" viewBox="0 0 34 12" fill="none">
+                                        <path d="M 0 6 H 24" stroke="#7A1C2B" stroke-width="2" stroke-linecap="round"/>
+                                        <polygon points="32,6 24,2 24,10" fill="#7A1C2B"/>
+                                    </svg>
                                 </div>
 
                                 <!-- NODE: ORACLE API -->
@@ -535,18 +541,18 @@ export function renderLanding() {
 
                                 <!-- SPLIT ARROWS — three proportionally weighted paths fanning to outcomes -->
                                 <div class="lflow-split-arrows">
-                                    <svg width="44" height="180" viewBox="0 0 44 180" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <svg width="44" height="156" viewBox="0 0 44 156" fill="none" xmlns="http://www.w3.org/2000/svg">
                                         <!-- Win path (thick green #145C14) -->
-                                        <path d="M 0 90 C 16 90, 22 24, 34 24" stroke="#145C14" stroke-width="4.5" stroke-linecap="round"/>
-                                        <polygon points="42,24 32,18 32,30" fill="#145C14"/>
+                                        <path d="M 0 78 C 16 78, 22 20, 34 20" stroke="#145C14" stroke-width="4.5" stroke-linecap="round"/>
+                                        <polygon points="42,20 32,14 32,26" fill="#145C14"/>
 
                                         <!-- Forfeit path (medium crimson #7A1220) -->
-                                        <path d="M 0 90 H 34" stroke="#7A1220" stroke-width="2.5" stroke-linecap="round"/>
-                                        <polygon points="42,90 33,85 33,95" fill="#7A1220"/>
+                                        <path d="M 0 78 H 34" stroke="#7A1220" stroke-width="2.5" stroke-linecap="round"/>
+                                        <polygon points="42,78 33,73 33,83" fill="#7A1220"/>
 
                                         <!-- Burn path (hairline dashed crimson #7A1220) -->
-                                        <path d="M 0 90 C 16 90, 22 156, 34 156" stroke="#7A1220" stroke-width="1.2" stroke-dasharray="4 3" stroke-linecap="round"/>
-                                        <polygon points="41,156 34,152 34,160" fill="#7A1220"/>
+                                        <path d="M 0 78 C 16 78, 22 136, 34 136" stroke="#7A1220" stroke-width="1.2" stroke-dasharray="4 3" stroke-linecap="round"/>
+                                        <polygon points="41,136 34,132 34,140" fill="#7A1220"/>
                                     </svg>
                                 </div>
 
@@ -555,7 +561,7 @@ export function renderLanding() {
                                     <div class="lflow-outcome is-win">
                                         <div class="lflow-outcome-indicator" style="background:#145C14;width:5px;"></div>
                                         <div class="lflow-outcome-body">
-                                            <div class="lflow-out-hdr"><span class="lflow-dot" style="background:#145C14;"></span>WIN PATH (96.2%)</div>
+                                            <div class="lflow-out-hdr"><span class="lflow-dot" style="background:#145C14;"></span>WIN PATH (95.7%)</div>
                                             <div class="lflow-out-title">RETURNED TO CREATOR</div>
                                             <div class="lflow-out-val lflow-val-green">$8,326,200</div>
                                             <div class="lflow-out-desc">100% Principal + Matching Yield</div>
@@ -582,16 +588,16 @@ export function renderLanding() {
                                 </div>
                             </div>
 
-                            <!-- RECIRCULATING LOOP — routed SVG path below node row -->
+                            <!-- RECIRCULATING LOOP — routed SVG path below node row landing directly into Escrow Vault -->
                             <div class="lflow-loop-wrap">
-                                <svg class="lflow-loop-svg" viewBox="0 0 1000 60" preserveAspectRatio="none">
+                                <svg class="lflow-loop-svg" viewBox="0 0 1000 48" preserveAspectRatio="none">
                                     <defs>
-                                        <marker id="ah-loop" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
-                                            <path d="M0 1 L8 5 L0 9z" fill="#7A1220"/>
+                                        <marker id="ah-loop" viewBox="0 0 10 10" refX="5" refY="3" markerWidth="6" markerHeight="6" orient="auto">
+                                            <path d="M 1 9 L 5 1 L 9 9 Z" fill="#7A1C2B"/>
                                         </marker>
                                     </defs>
-                                    <!-- Path: exits from ~85% (forfeit card), routes down, runs left, turns up to ~22% (vault) -->
-                                    <path class="lflow-loop-path" d="M 850 0 C 850 28, 850 42, 820 42 L 220 42 C 190 42, 190 28, 190 0" stroke="#7A1220" stroke-width="2.2" fill="none" stroke-dasharray="6 4" stroke-linecap="round" marker-end="url(#ah-loop)"/>
+                                    <!-- Path: exits from x=845 (center of forfeited card), routes down to y=38, runs left, turns UP into x=310 (center of Escrow Vault) -->
+                                    <path class="lflow-loop-path" d="M 845 0 C 845 26, 820 38, 770 38 L 385 38 C 310 38, 310 26, 310 2" stroke="#7A1C2B" stroke-width="2.2" fill="none" stroke-dasharray="6 4" stroke-linecap="round" marker-end="url(#ah-loop)"/>
                                 </svg>
                                 <div class="lflow-loop-badge">↺ FORFEITED DEPOSITS RE-CIRCULATE TO ESCROW VAULT</div>
                             </div>
@@ -634,7 +640,7 @@ export function renderLanding() {
                                 <div class="lflow-outcome is-win">
                                     <div class="lflow-outcome-indicator" style="background:#145C14;height:5px;"></div>
                                     <div class="lflow-outcome-body">
-                                        <div class="lflow-out-hdr"><span class="lflow-dot" style="background:#145C14;"></span>WIN PATH (96.2%)</div>
+                                        <div class="lflow-out-hdr"><span class="lflow-dot" style="background:#145C14;"></span>WIN PATH (95.7%)</div>
                                         <div class="lflow-out-title">RETURNED TO CREATOR</div>
                                         <div class="lflow-out-val lflow-val-green">$8,326,200</div>
                                     </div>

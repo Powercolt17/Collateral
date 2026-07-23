@@ -6676,4 +6676,36 @@ html, body {
     max-width: 100% !important;
   }
 }
+
+/* ═══ CLTR CLOSED-LOOP FLYWHEEL RING & ANIMATIONS ═══ */
+.cltr-flywheel-container {
+    width: 100%;
+    margin: 0 auto;
+    position: relative;
+}
+.fw-desktop { display: block; width: 100%; max-width: 800px; margin: 0 auto; }
+.fw-mobile  { display: none; width: 100%; max-width: 360px; margin: 0 auto; }
+.fw-mobile > svg { display: block !important; }
+
+@media (max-width: 820px) {
+  .fw-desktop { display: none !important; }
+  .fw-mobile  { display: block !important; }
+}
+
+.fw-card { transition: transform .22s cubic-bezier(.2,.7,.3,1); }
+.fw-card:hover { transform: translateY(-3px); }
+
+@media (prefers-reduced-motion: no-preference) {
+  .fw-guide { animation: fwMarch 2.6s linear infinite; }
+  .fw-sonar { transform-box: fill-box; transform-origin: center; opacity: 0; }
+  .fw-sonar.a { animation: fwSonar 4s ease-out infinite; }
+  .fw-sonar.b { animation: fwSonar 4s ease-out infinite 2s; }
+}
+
+@keyframes fwMarch { to { stroke-dashoffset: -10; } }
+@keyframes fwSonar {
+  0%   { transform: scale(1); opacity: .35; }
+  70%  { opacity: 0; }
+  100% { transform: scale(1.35); opacity: 0; }
+}
 `;

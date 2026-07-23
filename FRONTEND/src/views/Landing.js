@@ -1260,57 +1260,204 @@ export function renderLanding() {
                 <div class="lw">
                     <div class="lred-dash reveal-item"><span class="lmono">Protocol Token</span></div>
                     <h2 class="lh-section-title reveal-item">The CLTR Token Economy</h2>
-                    <p class="lh-section-subtitle reveal-item" style="font-size:18px; color:var(--t2); margin-top:12px; margin-bottom:32px; max-width:680px; line-height:1.6;">Securing trust, locking bandwidth, and burning supply programmatically.</p>
+                    <p class="lh-section-subtitle reveal-item" style="font-size:16px; color:var(--t2); margin-top:10px; margin-bottom:24px; max-width:620px; line-height:1.55;">Every settled contract burns supply — and the growth that burn creates drives the next contract. The loop pays for itself.</p>
                     
-                    <!-- CLTR PROTOCOL FLYWHEEL -->
-                    <div class="cltr-flywheel-container reveal-item">
-                        <div class="cltr-flywheel-grid">
-                            <!-- Step 1 -->
-                            <div class="flywheel-step-card">
-                                <div class="flywheel-step-num">01</div>
-                                <div class="flywheel-step-title">User Creates Contract</div>
-                                <div class="flywheel-step-desc">Locks capital behind objective metric goal.</div>
-                            </div>
-                            <div class="flywheel-arrow">→</div>
+                    <!-- CLTR PROTOCOL FLYWHEEL CLOSED LOOP RING -->
+                    <div class="cltr-flywheel-container reveal-item" style="margin-top: 24px;">
+                        <div class="fw-desktop">
+                            <svg viewBox="0 0 800 660" width="100%" role="img" aria-label="The CLTR token economy as a closed loop" style="display: block; height: auto;">
+                                <defs>
+                                    <radialGradient id="fwCore" cx="36%" cy="30%" r="82%">
+                                        <stop offset="0%" stop-color="#9A2B3D" />
+                                        <stop offset="58%" stop-color="#7A1C2B" />
+                                        <stop offset="100%" stop-color="#4E1119" />
+                                    </radialGradient>
+                                    <radialGradient id="fwGlow" cx="50%" cy="50%" r="50%">
+                                        <stop offset="55%" stop-color="rgba(122,28,43,0.10)" />
+                                        <stop offset="100%" stop-color="rgba(122,28,43,0)" />
+                                    </radialGradient>
+                                    <filter id="fwSh" x="-40%" y="-40%" width="180%" height="180%">
+                                        <feDropShadow dx="0" dy="6" stdDeviation="8" floodColor="#1C2333" floodOpacity="0.12" />
+                                    </filter>
+                                    <filter id="fwShCore" x="-50%" y="-50%" width="200%" height="200%">
+                                        <feDropShadow dx="0" dy="16" stdDeviation="20" floodColor="#7A1C2B" floodOpacity="0.32" />
+                                    </filter>
+                                    <marker id="fwArrow" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+                                        <path d="M0 0.6 L7 4 L0 7.4 Z" fill="#7A1C2B" />
+                                    </marker>
+                                </defs>
 
-                            <!-- Step 2 -->
-                            <div class="flywheel-step-card">
-                                <div class="flywheel-step-num">02</div>
-                                <div class="flywheel-step-title">CLTR Staked</div>
-                                <div class="flywheel-step-desc">CLTR bonded for execution capacity &amp; trust.</div>
-                            </div>
-                            <div class="flywheel-arrow">→</div>
+                                <!-- Faint guide ring -->
+                                <circle cx="400" cy="328" r="232" fill="none" stroke="rgba(122,28,43,0.22)" stroke-width="1" stroke-dasharray="2 8" class="fw-guide" />
 
-                            <!-- Step 3 -->
-                            <div class="flywheel-step-card">
-                                <div class="flywheel-step-num">03</div>
-                                <div class="flywheel-step-title">Execution Verified</div>
-                                <div class="flywheel-step-desc">API oracle validates target completion.</div>
-                            </div>
-                            <div class="flywheel-arrow">→</div>
+                                <!-- Clockwise arrows between steps -->
+                                <path d="M467.8 106.1 A 232 232 0 0 1 558.2 158.3" fill="none" stroke="#7A1C2B" stroke-width="1.7" stroke-linecap="round" opacity="0.55" marker-end="url(#fwArrow)" />
+                                <path d="M626.1 275.8 A 232 232 0 0 1 626.1 380.2" fill="none" stroke="#7A1C2B" stroke-width="1.7" stroke-linecap="round" opacity="0.55" marker-end="url(#fwArrow)" />
+                                <path d="M558.2 497.7 A 232 232 0 0 1 467.8 549.9" fill="none" stroke="#7A1C2B" stroke-width="1.7" stroke-linecap="round" opacity="0.55" marker-end="url(#fwArrow)" />
+                                <path d="M332.2 549.9 A 232 232 0 0 1 241.8 497.7" fill="none" stroke="#7A1C2B" stroke-width="1.7" stroke-linecap="round" opacity="0.55" marker-end="url(#fwArrow)" />
+                                <path d="M173.9 380.2 A 232 232 0 0 1 173.9 275.8" fill="none" stroke="#7A1C2B" stroke-width="1.7" stroke-linecap="round" opacity="0.55" marker-end="url(#fwArrow)" />
+                                <path d="M241.8 158.3 A 232 232 0 0 1 332.2 106.1" fill="none" stroke="#7A1C2B" stroke-width="1.7" stroke-linecap="round" opacity="0.55" marker-end="url(#fwArrow)" />
 
-                            <!-- Step 4 -->
-                            <div class="flywheel-step-card highlight">
-                                <div class="flywheel-step-num">04</div>
-                                <div class="flywheel-step-title">Protocol Fee Burned</div>
-                                <div class="flywheel-step-desc">CLTR burned permanently from circulation.</div>
-                            </div>
-                            <div class="flywheel-arrow">→</div>
+                                <!-- Travelling token -->
+                                <path id="fwLoop" d="M400 96 A 232 232 0 1 1 399.99 96" fill="none" stroke="none" />
+                                <circle r="5.5" fill="#7A1C2B" stroke="#FBF9F5" stroke-width="1.6">
+                                    <animateMotion dur="16s" repeatCount="indefinite" rotate="auto">
+                                        <mpath href="#fwLoop" />
+                                    </animateMotion>
+                                </circle>
 
-                            <!-- Step 5 -->
-                            <div class="flywheel-step-card">
-                                <div class="flywheel-step-num">05</div>
-                                <div class="flywheel-step-title">Trust &amp; Scale Up</div>
-                                <div class="flywheel-step-desc">Larger contract pools supported across network.</div>
-                            </div>
-                            <div class="flywheel-arrow">→</div>
+                                <!-- Central Medallion -->
+                                <g>
+                                    <circle cx="400" cy="328" r="126" fill="url(#fwGlow)" />
+                                    <circle class="fw-sonar a" cx="400" cy="328" r="92" fill="none" stroke="#7A1C2B" stroke-width="1.2" />
+                                    <circle class="fw-sonar b" cx="400" cy="328" r="92" fill="none" stroke="#7A1C2B" stroke-width="1.2" />
+                                    <circle cx="400" cy="328" r="92" fill="url(#fwCore)" filter="url(#fwShCore)" />
+                                    <circle cx="400" cy="328" r="91" fill="none" stroke="rgba(251,220,212,0.42)" stroke-width="1" />
+                                    <circle cx="400" cy="328" r="83" fill="none" stroke="rgba(251,220,212,0.13)" stroke-width="1" />
 
-                            <!-- Step 6 -->
-                            <div class="flywheel-step-card">
-                                <div class="flywheel-step-num">06</div>
-                                <div class="flywheel-step-title">More CLTR Required</div>
-                                <div class="flywheel-step-desc">Network growth drives recurring token demand.</div>
-                            </div>
+                                    <text x="400" y="302" text-anchor="middle" font-family='Plus Jakarta Sans', sans-serif font-size="15" font-weight="800" letter-spacing="4" fill="#FBE8E4">CLTR</text>
+                                    <line x1="370" y1="313" x2="430" y2="313" stroke="rgba(251,220,212,0.28)" />
+                                    <text x="400" y="344" text-anchor="middle" font-family='Plus Jakarta Sans', sans-serif font-size="30" font-weight="800" letter-spacing="-1" fill="#FBE8E4">1.2M</text>
+                                    <text x="400" y="362" text-anchor="middle" font-family='JetBrains Mono', monospace font-size="8" font-weight="700" letter-spacing="1.9" fill="rgba(251,232,228,0.7)">BURNED THIS WEEK</text>
+                                </g>
+
+                                <!-- STEP 01 -->
+                                <g class="fw-card">
+                                    <rect x="331" y="47" width="138" height="98" rx="13" fill="#FCFAF7" stroke="rgba(28,35,51,0.11)" stroke-width="1" filter="url(#fwSh)" />
+                                    <text x="344" y="68" font-family='JetBrains Mono', monospace font-size="9.5" font-weight="700" letter-spacing="1.5" fill="rgba(122,28,43,0.55)">01</text>
+                                    <text x="344" y="86" font-family='Plus Jakarta Sans', sans-serif font-size="11.8" font-weight="700" fill="#1C2333">User Creates</text>
+                                    <text x="344" y="99.5" font-family='Plus Jakarta Sans', sans-serif font-size="11.8" font-weight="700" fill="#1C2333">Contract</text>
+                                    <text x="344" y="118" font-family='Inter', sans-serif font-size="9.6" fill="#8C8577">Locks capital behind</text>
+                                    <text x="344" y="130" font-family='Inter', sans-serif font-size="9.6" fill="#8C8577">objective metric goal.</text>
+                                </g>
+
+                                <!-- STEP 02 -->
+                                <g class="fw-card">
+                                    <rect x="531.9" y="163" width="138" height="98" rx="13" fill="#FCFAF7" stroke="rgba(28,35,51,0.11)" stroke-width="1" filter="url(#fwSh)" />
+                                    <text x="544.9" y="184" font-family='JetBrains Mono', monospace font-size="9.5" font-weight="700" letter-spacing="1.5" fill="rgba(122,28,43,0.55)">02</text>
+                                    <text x="544.9" y="202" font-family='Plus Jakarta Sans', sans-serif font-size="11.8" font-weight="700" fill="#1C2333">CLTR Staked</text>
+                                    <text x="544.9" y="234" font-family='Inter', sans-serif font-size="9.6" fill="#8C8577">CLTR bonded for</text>
+                                    <text x="544.9" y="246" font-family='Inter', sans-serif font-size="9.6" fill="#8C8577">execution capacity &amp; trust.</text>
+                                </g>
+
+                                <!-- STEP 03 -->
+                                <g class="fw-card">
+                                    <rect x="531.9" y="395" width="138" height="98" rx="13" fill="#FCFAF7" stroke="rgba(28,35,51,0.11)" stroke-width="1" filter="url(#fwSh)" />
+                                    <text x="544.9" y="416" font-family='JetBrains Mono', monospace font-size="9.5" font-weight="700" letter-spacing="1.5" fill="rgba(122,28,43,0.55)">03</text>
+                                    <text x="544.9" y="434" font-family='Plus Jakarta Sans', sans-serif font-size="11.8" font-weight="700" fill="#1C2333">Execution</text>
+                                    <text x="544.9" y="447.5" font-family='Plus Jakarta Sans', sans-serif font-size="11.8" font-weight="700" fill="#1C2333">Verified</text>
+                                    <text x="544.9" y="466" font-family='Inter', sans-serif font-size="9.6" fill="#8C8577">API oracle validates</text>
+                                    <text x="544.9" y="478" font-family='Inter', sans-serif font-size="9.6" fill="#8C8577">target completion.</text>
+                                </g>
+
+                                <!-- STEP 04 (HIGHLIGHTED BURN STEP) -->
+                                <g class="fw-card">
+                                    <rect x="331" y="511" width="138" height="98" rx="13" fill="rgba(122,28,43,0.05)" stroke="rgba(122,28,43,0.42)" stroke-width="1.5" filter="url(#fwSh)" />
+                                    <text x="344" y="532" font-family='JetBrains Mono', monospace font-size="9.5" font-weight="700" letter-spacing="1.5" fill="#7A1C2B">04</text>
+                                    <text x="344" y="550" font-family='Plus Jakarta Sans', sans-serif font-size="11.8" font-weight="700" fill="#1C2333">Protocol Fee</text>
+                                    <text x="344" y="563.5" font-family='Plus Jakarta Sans', sans-serif font-size="11.8" font-weight="700" fill="#1C2333">Burned</text>
+                                    <text x="344" y="582" font-family='Inter', sans-serif font-size="9.6" fill="#8C8577">CLTR burned permanently</text>
+                                    <text x="344" y="594" font-family='Inter', sans-serif font-size="9.6" fill="#8C8577">from circulation.</text>
+                                </g>
+
+                                <!-- STEP 05 -->
+                                <g class="fw-card">
+                                    <rect x="130.1" y="395" width="138" height="98" rx="13" fill="#FCFAF7" stroke="rgba(28,35,51,0.11)" stroke-width="1" filter="url(#fwSh)" />
+                                    <text x="143.1" y="416" font-family='JetBrains Mono', monospace font-size="9.5" font-weight="700" letter-spacing="1.5" fill="rgba(122,28,43,0.55)">05</text>
+                                    <text x="143.1" y="434" font-family='Plus Jakarta Sans', sans-serif font-size="11.8" font-weight="700" fill="#1C2333">Trust &amp; Scale Up</text>
+                                    <text x="143.1" y="466" font-family='Inter', sans-serif font-size="9.6" fill="#8C8577">Larger contract pools</text>
+                                    <text x="143.1" y="478" font-family='Inter', sans-serif font-size="9.6" fill="#8C8577">supported across network.</text>
+                                </g>
+
+                                <!-- STEP 06 -->
+                                <g class="fw-card">
+                                    <rect x="130.1" y="163" width="138" height="98" rx="13" fill="#FCFAF7" stroke="rgba(28,35,51,0.11)" stroke-width="1" filter="url(#fwSh)" />
+                                    <text x="143.1" y="184" font-family='JetBrains Mono', monospace font-size="9.5" font-weight="700" letter-spacing="1.5" fill="rgba(122,28,43,0.55)">06</text>
+                                    <text x="143.1" y="202" font-family='Plus Jakarta Sans', sans-serif font-size="11.8" font-weight="700" fill="#1C2333">More CLTR</text>
+                                    <text x="143.1" y="215.5" font-family='Plus Jakarta Sans', sans-serif font-size="11.8" font-weight="700" fill="#1C2333">Required</text>
+                                    <text x="143.1" y="234" font-family='Inter', sans-serif font-size="9.6" fill="#8C8577">Network growth drives</text>
+                                    <text x="143.1" y="246" font-family='Inter', sans-serif font-size="9.6" fill="#8C8577">recurring token demand.</text>
+                                </g>
+                            </svg>
+                        </div>
+
+                        <!-- MOBILE STACK SVG -->
+                        <div class="fw-mobile">
+                            <svg viewBox="0 0 360 660" width="100%" role="img" aria-label="The CLTR token economy loop, vertical layout" style="display: block; height: auto;">
+                                <defs>
+                                    <radialGradient id="fwCoreMob" cx="36%" cy="30%" r="82%">
+                                        <stop offset="0%" stop-color="#9A2B3D" />
+                                        <stop offset="58%" stop-color="#7A1C2B" />
+                                        <stop offset="100%" stop-color="#4E1119" />
+                                    </radialGradient>
+                                    <filter id="fwShMob" x="-40%" y="-40%" width="180%" height="180%">
+                                        <feDropShadow dx="0" dy="6" stdDeviation="8" floodColor="#1C2333" floodOpacity="0.12" />
+                                    </filter>
+                                    <marker id="fwArrowMob" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+                                        <path d="M0 0.6 L7 4 L0 7.4 Z" fill="#7A1C2B" />
+                                    </marker>
+                                </defs>
+
+                                <!-- Downward connectors -->
+                                <line x1="205" y1="107" x2="205" y2="121" stroke="#7A1C2B" stroke-width="1.7" stroke-linecap="round" opacity="0.55" marker-end="url(#fwArrowMob)" />
+                                <line x1="205" y1="207" x2="205" y2="221" stroke="#7A1C2B" stroke-width="1.7" stroke-linecap="round" opacity="0.55" marker-end="url(#fwArrowMob)" />
+                                <line x1="205" y1="307" x2="205" y2="321" stroke="#7A1C2B" stroke-width="1.7" stroke-linecap="round" opacity="0.55" marker-end="url(#fwArrowMob)" />
+                                <line x1="205" y1="407" x2="205" y2="421" stroke="#7A1C2B" stroke-width="1.7" stroke-linecap="round" opacity="0.55" marker-end="url(#fwArrowMob)" />
+                                <line x1="205" y1="507" x2="205" y2="521" stroke="#7A1C2B" stroke-width="1.7" stroke-linecap="round" opacity="0.55" marker-end="url(#fwArrowMob)" />
+
+                                <!-- Return loop: 06 back up to 01 -->
+                                <path id="fwReturn" d="M 64 565 C 38 565, 24 564, 24 534 L 24 72 C 24 42, 38 39, 62 39" fill="none" stroke="#7A1C2B" stroke-width="1.7" stroke-linecap="round" stroke-dasharray="4 6" opacity="0.6" marker-end="url(#fwArrowMob)" />
+
+                                <text x="16" y="300" text-anchor="middle" font-family='JetBrains Mono', monospace font-size="8.5" font-weight="700" letter-spacing="1.6" fill="#7A1C2B" opacity="0.75" transform="rotate(-90 16 300)">LOOP REPEATS</text>
+
+                                <!-- STEP 01 -->
+                                <g class="fw-card">
+                                    <rect x="64" y="26" width="282" height="78" rx="13" fill="#FCFAF7" stroke="rgba(28,35,51,0.11)" stroke-width="1" filter="url(#fwShMob)" />
+                                    <text x="79" y="53" font-family='JetBrains Mono', monospace font-size="10" font-weight="700" letter-spacing="1.5" fill="rgba(122,28,43,0.55)">01</text>
+                                    <text x="108" y="53" font-family='Plus Jakarta Sans', sans-serif font-size="13" font-weight="700" fill="#1C2333">User Creates Contract</text>
+                                    <text x="79" y="76" font-family='Inter', sans-serif font-size="10" fill="#8C8577">Locks capital behind objective metric goal.</text>
+                                </g>
+
+                                <!-- STEP 02 -->
+                                <g class="fw-card">
+                                    <rect x="64" y="126" width="282" height="78" rx="13" fill="#FCFAF7" stroke="rgba(28,35,51,0.11)" stroke-width="1" filter="url(#fwShMob)" />
+                                    <text x="79" y="153" font-family='JetBrains Mono', monospace font-size="10" font-weight="700" letter-spacing="1.5" fill="rgba(122,28,43,0.55)">02</text>
+                                    <text x="108" y="153" font-family='Plus Jakarta Sans', sans-serif font-size="13" font-weight="700" fill="#1C2333">CLTR Staked</text>
+                                    <text x="79" y="176" font-family='Inter', sans-serif font-size="10" fill="#8C8577">CLTR bonded for execution capacity &amp; trust.</text>
+                                </g>
+
+                                <!-- STEP 03 -->
+                                <g class="fw-card">
+                                    <rect x="64" y="226" width="282" height="78" rx="13" fill="#FCFAF7" stroke="rgba(28,35,51,0.11)" stroke-width="1" filter="url(#fwShMob)" />
+                                    <text x="79" y="253" font-family='JetBrains Mono', monospace font-size="10" font-weight="700" letter-spacing="1.5" fill="rgba(122,28,43,0.55)">03</text>
+                                    <text x="108" y="253" font-family='Plus Jakarta Sans', sans-serif font-size="13" font-weight="700" fill="#1C2333">Execution Verified</text>
+                                    <text x="79" y="276" font-family='Inter', sans-serif font-size="10" fill="#8C8577">API oracle validates target completion.</text>
+                                </g>
+
+                                <!-- STEP 04 (HIGHLIGHTED BURN STEP) -->
+                                <g class="fw-card">
+                                    <rect x="64" y="326" width="282" height="78" rx="13" fill="rgba(122,28,43,0.05)" stroke="rgba(122,28,43,0.42)" stroke-width="1.5" filter="url(#fwShMob)" />
+                                    <text x="79" y="353" font-family='JetBrains Mono', monospace font-size="10" font-weight="700" letter-spacing="1.5" fill="#7A1C2B">04</text>
+                                    <text x="108" y="353" font-family='Plus Jakarta Sans', sans-serif font-size="13" font-weight="700" fill="#1C2333">Protocol Fee Burned</text>
+                                    <text x="79" y="376" font-family='Inter', sans-serif font-size="10" fill="#8C8577">CLTR burned permanently from circulation.</text>
+                                </g>
+
+                                <!-- STEP 05 -->
+                                <g class="fw-card">
+                                    <rect x="64" y="426" width="282" height="78" rx="13" fill="#FCFAF7" stroke="rgba(28,35,51,0.11)" stroke-width="1" filter="url(#fwShMob)" />
+                                    <text x="79" y="453" font-family='JetBrains Mono', monospace font-size="10" font-weight="700" letter-spacing="1.5" fill="rgba(122,28,43,0.55)">05</text>
+                                    <text x="108" y="453" font-family='Plus Jakarta Sans', sans-serif font-size="13" font-weight="700" fill="#1C2333">Trust &amp; Scale Up</text>
+                                    <text x="79" y="476" font-family='Inter', sans-serif font-size="10" fill="#8C8577">Larger contract pools supported across network.</text>
+                                </g>
+
+                                <!-- STEP 06 -->
+                                <g class="fw-card">
+                                    <rect x="64" y="526" width="282" height="78" rx="13" fill="#FCFAF7" stroke="rgba(28,35,51,0.11)" stroke-width="1" filter="url(#fwShMob)" />
+                                    <text x="79" y="553" font-family='JetBrains Mono', monospace font-size="10" font-weight="700" letter-spacing="1.5" fill="rgba(122,28,43,0.55)">06</text>
+                                    <text x="108" y="553" font-family='Plus Jakarta Sans', sans-serif font-size="13" font-weight="700" fill="#1C2333">More CLTR Required</text>
+                                    <text x="79" y="576" font-family='Inter', sans-serif font-size="10" fill="#8C8577">Network growth drives recurring token demand.</text>
+                                </g>
+                            </svg>
                         </div>
                     </div>
                 </div>

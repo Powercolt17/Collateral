@@ -1226,7 +1226,7 @@ export const landingCSS = `
 .lcontracts{padding:30px 0 48px;background:#FAF9F7 !important;position:relative}
 .lcontracts::after{display:none !important}
 .lcontracts .lw{max-width:1280px}
-.lcards{display:grid;grid-template-columns:repeat(4,1fr);gap:20px;align-items:start !important;}
+.lcards{display:grid;grid-template-columns:repeat(4,1fr);gap:20px;align-items:stretch !important;}
 @media (max-width: 1024px) {
     .lcards{grid-template-columns:1fr}
 }
@@ -1246,6 +1246,7 @@ export const landingCSS = `
     position: relative;
     box-sizing: border-box;
     min-height: 440px;
+    height: 100% !important;
 }
 .rv-card::before {
     content: '';
@@ -1360,7 +1361,7 @@ export const landingCSS = `
     font-size: 8px; font-weight: 700; letter-spacing: 0.5px;
     color: #fff; text-transform: uppercase; border-radius: 4px;
 }
-.lcard{border:1px solid #E2E8F0;border-radius:16px;padding:24px;display:flex;flex-direction:column;justify-content:flex-start;transition:all 0.35s cubic-bezier(0.16, 1, 0.3, 1) !important;background:#FFFFFF !important;position:relative;overflow:hidden;cursor:pointer;box-sizing:border-box;min-height:440px;}
+.lcard{border:1px solid #E2E8F0;border-radius:16px;padding:24px;display:flex;flex-direction:column;justify-content:flex-start;transition:all 0.35s cubic-bezier(0.16, 1, 0.3, 1) !important;background:#FFFFFF !important;position:relative;overflow:hidden;cursor:pointer;box-sizing:border-box;min-height:440px;height:100% !important;}
 .lcard::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:#7A1220;transform:scaleX(0);transform-origin:left;transition:transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);z-index:10}
 .lcard:hover::before{transform:scaleX(1)}
 .lcard:hover{border-color:#94A3B8 !important;box-shadow:0 24px 52px -10px rgba(15, 23, 42, 0.14), 0 4px 16px rgba(15, 23, 42, 0.05) !important;transform:translateY(-8px) scale(1.015) !important}

@@ -6198,10 +6198,10 @@ export const landingCSS = `
 }
 .sor-grid {
     display: grid;
-    grid-template-columns: 44% 56%;
-    gap: clamp(26px, 3.8vw, 52px);
+    grid-template-columns: 48% 52%;
+    gap: clamp(24px, 3.5vw, 48px);
     align-items: center;
-    max-width: 1240px;
+    max-width: 1280px;
     margin: 0 auto;
 }
 @media (max-width: 900px) {

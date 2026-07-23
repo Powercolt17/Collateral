@@ -3328,14 +3328,15 @@ export const landingCSS = `
     gap: 4px;
 }
 .l-modal-graph {
-    height: 170px;
-    width: 100%;
-    border: 1px solid var(--d);
-    border-radius: 8px;
-    position: relative;
-    overflow: visible;
-    background: #fff;
-    padding: 8px 0;
+    height: 190px !important;
+    width: 100% !important;
+    border: 1.5px solid rgba(28, 35, 51, 0.12) !important;
+    border-radius: 12px !important;
+    position: relative !important;
+    overflow: visible !important;
+    background: #FFFFFF !important;
+    padding: 16px 20px 28px 45px !important;
+    box-sizing: border-box !important;
 }
 
 /* Oracle structured Feed */

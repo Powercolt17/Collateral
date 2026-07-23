@@ -1676,26 +1676,66 @@ export function renderLanding() {
 
                         <!-- 3. PERFORMANCE CHART -->
                         <div class="l-modal-graph-container">
-                            <div class="l-mg-header">
-                                <span class="l-mg-title">PERFORMANCE METRIC HISTORY</span>
-                                <span class="l-mg-live-dot">● LIVE STREAM</span>
+                            <div class="l-mg-header" style="display: flex !important; justify-content: space-between !important; align-items: center !important; margin-bottom: 8px !important; flex-wrap: wrap !important; gap: 8px !important;">
+                                <div style="display: flex !important; align-items: center !important; gap: 14px !important; flex-wrap: wrap !important;">
+                                    <span class="l-mg-title" style="font-family: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace !important; font-size: 10px !important; font-weight: 700 !important; letter-spacing: 1.2px !important; color: #8C8577 !important; text-transform: uppercase !important;">PERFORMANCE METRIC HISTORY</span>
+                                    <div style="display: flex !important; align-items: center !important; gap: 12px !important; font-family: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace !important; font-size: 10.5px !important; font-weight: 700 !important;">
+                                        <span style="color: #166534 !important; display: flex !important; align-items: center !important; gap: 5px !important;"><span style="display: inline-block !important; width: 8px !important; height: 8px !important; border-radius: 50% !important; background: #166534 !important;"></span> JakeVoss (+8.40%)</span>
+                                        <span style="color: #7A1C2B !important; display: flex !important; align-items: center !important; gap: 5px !important;"><span style="display: inline-block !important; width: 12px !important; height: 0 !important; border-top: 2px dashed #7A1C2B !important;"></span> Marcus (+7.80%)</span>
+                                    </div>
+                                </div>
+                                <span class="l-mg-live-dot" style="font-family: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace !important; font-size: 10px !important; font-weight: 700 !important; color: #166534 !important; display: flex !important; align-items: center !important; gap: 6px !important;">
+                                    <span style="display: inline-block !important; width: 6px !important; height: 6px !important; border-radius: 50% !important; background: #166534 !important; box-shadow: 0 0 8px #166534 !important;"></span> LIVE STREAM
+                                </span>
                             </div>
-                            <div class="l-modal-graph">
-                                <svg width="100%" height="100%" viewBox="0 0 532 170" preserveAspectRatio="none" style="display: block; overflow: visible;">
-                                    <!-- Grids -->
-                                    <line x1="0" y1="42.5" x2="532" y2="42.5" stroke="rgba(0,0,0,0.03)" stroke-width="1" stroke-dasharray="3,3"/>
-                                    <line x1="0" y1="85" x2="532" y2="85" stroke="rgba(0,0,0,0.03)" stroke-width="1" stroke-dasharray="3,3"/>
-                                    <line x1="0" y1="127.5" x2="532" y2="127.5" stroke="rgba(0,0,0,0.03)" stroke-width="1" stroke-dasharray="3,3"/>
-                                    <!-- Paths -->
-                                    <path d="M 0 130 Q 100 120 200 95 T 400 65 T 532 30" fill="none" stroke="var(--g)" stroke-width="1.5"/>
-                                    <path d="M 0 130 Q 100 125 200 110 T 400 90 T 532 60" fill="none" stroke="var(--r)" stroke-width="1.2" stroke-dasharray="2,2"/>
-                                    <!-- Live Pulse Dot -->
-                                    <circle cx="532" cy="30" r="3" fill="var(--g)"/>
-                                    <circle cx="532" cy="30" r="8" fill="none" stroke="var(--g)" stroke-width="0.8">
-                                        <animate attributeName="r" values="3;9;3" dur="2.2s" repeatCount="indefinite" />
-                                        <animate attributeName="opacity" values="1;0;1" dur="2.2s" repeatCount="indefinite" />
+                            <div class="l-modal-graph" style="height: 190px !important; width: 100% !important; border: 1.5px solid rgba(28, 35, 51, 0.12) !important; border-radius: 12px !important; position: relative !important; background: #FFFFFF !important; padding: 16px 20px 28px 45px !important; box-sizing: border-box !important;">
+                                <svg width="100%" height="100%" viewBox="0 0 500 130" preserveAspectRatio="none" style="display: block !important; overflow: visible !important;">
+                                    <defs>
+                                        <linearGradient id="jakeGrad" x1="0" y1="0" x2="0" y2="1">
+                                            <stop offset="0%" stop-color="#166534" stop-opacity="0.18" />
+                                            <stop offset="100%" stop-color="#166534" stop-opacity="0.0" />
+                                        </linearGradient>
+                                    </defs>
+
+                                    <!-- Horizontal Grid Lines -->
+                                    <line x1="0" y1="10" x2="500" y2="10" stroke="rgba(28, 35, 51, 0.08)" stroke-width="1" stroke-dasharray="4 4" />
+                                    <line x1="0" y1="48" x2="500" y2="48" stroke="rgba(28, 35, 51, 0.08)" stroke-width="1" stroke-dasharray="4 4" />
+                                    <line x1="0" y1="86" x2="500" y2="86" stroke="rgba(28, 35, 51, 0.08)" stroke-width="1" stroke-dasharray="4 4" />
+                                    <line x1="0" y1="124" x2="500" y2="124" stroke="rgba(28, 35, 51, 0.14)" stroke-width="1" />
+
+                                    <!-- Y-Axis Labels -->
+                                    <text x="-6" y="13" font-family="ui-monospace, SFMono-Regular, monospace" font-size="9" font-weight="700" fill="#8C8577" text-anchor="end">+10.0%</text>
+                                    <text x="-6" y="51" font-family="ui-monospace, SFMono-Regular, monospace" font-size="9" font-weight="700" fill="#8C8577" text-anchor="end">+5.0%</text>
+                                    <text x="-6" y="89" font-family="ui-monospace, SFMono-Regular, monospace" font-size="9" font-weight="700" fill="#8C8577" text-anchor="end">+2.5%</text>
+                                    <text x="-6" y="127" font-family="ui-monospace, SFMono-Regular, monospace" font-size="9" font-weight="700" fill="#8C8577" text-anchor="end">0.0%</text>
+
+                                    <!-- Area Fill for Leader (JakeVoss) -->
+                                    <path d="M 0 124 C 110 110, 210 70, 330 40 L 500 18 L 500 124 Z" fill="url(#jakeGrad)" />
+
+                                    <!-- Trailing Line (Marcus: +7.80%) -->
+                                    <path d="M 0 124 C 110 118, 210 90, 330 64 L 500 32" fill="none" stroke="#7A1C2B" stroke-width="2.2" stroke-dasharray="5 4" stroke-linecap="round" />
+
+                                    <!-- Leading Line (JakeVoss: +8.40%) -->
+                                    <path d="M 0 124 C 110 110, 210 70, 330 40 L 500 18" fill="none" stroke="#166534" stroke-width="2.8" stroke-linecap="round" />
+
+                                    <!-- End Dot for Marcus -->
+                                    <circle cx="500" cy="32" r="4" fill="#7A1C2B" />
+
+                                    <!-- Pulsing End Dot for JakeVoss (Leader) -->
+                                    <circle cx="500" cy="18" r="5" fill="#166534" />
+                                    <circle cx="500" cy="18" r="10" fill="none" stroke="#166534" stroke-width="1.5" opacity="0.6">
+                                        <animate attributeName="r" values="5;13;5" dur="2.2s" repeatCount="indefinite" />
+                                        <animate attributeName="opacity" values="0.8;0;0.8" dur="2.2s" repeatCount="indefinite" />
                                     </circle>
                                 </svg>
+
+                                <!-- X-Axis Time Labels -->
+                                <div style="display: flex !important; justify-content: space-between !important; margin-top: 6px !important; font-family: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace !important; font-size: 9px !important; font-weight: 700 !important; color: #8C8577 !important;">
+                                    <span>DAY 1</span>
+                                    <span>DAY 3</span>
+                                    <span>DAY 6</span>
+                                    <span>TODAY</span>
+                                </div>
                             </div>
                         </div>
 

@@ -6762,4 +6762,42 @@ html, body {
 }
 @keyframes fkRise { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; } }
 @keyframes fkPop { 0%,92%,100% { transform: scale(1); } 96% { transform: scale(1.12); } }
+
+/* ═══ ENGRAVED MODE CARDS & ART BANDS ═══ */
+.sor-mode {
+  text-align: left;
+  cursor: pointer;
+  width: 100%;
+  padding: 0;
+  overflow: hidden;
+  background: #FBF9F5;
+  border: 1.5px solid rgba(28,35,51,0.10);
+  border-radius: 16px;
+  box-shadow: 0 8px 24px -18px rgba(28,35,51,0.25);
+  transition: all .2s cubic-bezier(.2,.7,.3,1);
+}
+.sor-mode.active, .sor-mode.on {
+  background: #FFFFFF !important;
+  border-color: #7A1C2B !important;
+  box-shadow: 0 18px 40px -22px rgba(122,28,43,0.4), 0 0 0 4px rgba(122,28,43,0.08) !important;
+}
+.sor-mode:hover {
+  transform: translateY(-3px);
+}
+.sor-mode:hover .sor-art {
+  transform: scale(1.04);
+  filter: none !important;
+}
+.sor-art {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 42%;
+  display: block;
+  filter: saturate(0.85) opacity(0.82);
+  transition: filter .25s ease, transform .35s cubic-bezier(.2,.7,.3,1);
+}
+.sor-mode.active .sor-art, .sor-mode.on .sor-art {
+  filter: none !important;
+}
 `;

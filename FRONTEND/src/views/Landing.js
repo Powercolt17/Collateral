@@ -342,36 +342,59 @@ export function renderLanding() {
                         </p>
 
                         <div class="sor-mode-grid" style="display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 30px;">
-                            <button id="card-mode-solo" class="sor-mode active" onclick="window.switchProtocolMode('solo')">
-                                <span class="sor-mode-badge">SOLO</span>
-                                <div class="sor-mode-title">Stake against yourself</div>
-                                <ul class="sor-bullets">
-                                    <li>
-                                        <svg width="15" height="15" viewBox="0 0 24 24" style="flex-shrink:0;margin-top:1px;" aria-hidden><circle cx="12" cy="12" r="11" fill="rgba(122,28,43,0.1)"/><path d="m7 12.5 3.2 3.2L17 8.6" fill="none" stroke="#7A1C2B" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                                        Keep your principal
-                                    </li>
-                                    <li>
-                                        <svg width="15" height="15" viewBox="0 0 24 24" style="flex-shrink:0;margin-top:1px;" aria-hidden><circle cx="12" cy="12" r="11" fill="rgba(122,28,43,0.1)"/><path d="m7 12.5 3.2 3.2L17 8.6" fill="none" stroke="#7A1C2B" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                                        Earn execution rewards
-                                    </li>
-                                </ul>
-                                <div class="sor-cta">Start solo <span class="sor-arrow">→</span></div>
+                            <!-- SOLO CARD WITH ENGRAVING -->
+                            <button id="card-mode-solo" class="sor-mode active" onclick="window.switchProtocolMode('solo')" style="text-align: left; cursor: pointer; width: 100%; padding: 0; overflow: hidden; border-radius: 16px; transition: all .2s cubic-bezier(.2,.7,.3,1);">
+                                <div style="position: relative; height: 132px; overflow: hidden; background: #EFE8DA; border-bottom: 1px solid rgba(28,35,51,0.10);">
+                                    <img src="/assets/images/solo-seal.png" alt="Solo Seal Engraving" class="sor-art" style="width: 100%; height: 100%; object-fit: cover; object-position: center 42%; display: block;" />
+                                    <div aria-hidden="true" style="position: absolute; left: 0; right: 0; bottom: 0; height: 46px; background: linear-gradient(180deg, transparent, #FFFFFF);"></div>
+                                </div>
+                                <div style="padding: 14px 18px 16px;">
+                                    <span class="sor-mode-badge" style="display: inline-block; font-family: 'Plus Jakarta Sans', sans-serif; font-size: 10px; font-weight: 700; letter-spacing: 1.4px; color: #7A1C2B; background: rgba(122,28,43,0.08); padding: 4px 10px; border-radius: 999px; margin-bottom: 11px;">SOLO</span>
+                                    <div class="sor-mode-title" style="font-family: 'Plus Jakarta Sans', sans-serif; font-size: 16.5px; font-weight: 700; color: #1C2333; margin-bottom: 12px;">Stake against yourself</div>
+                                    <ul class="sor-bullets" style="list-style: none; margin: 0; padding: 0; display: grid; gap: 8px;">
+                                        <li style="display: flex; gap: 9px; align-items: flex-start; font-family: 'Inter', sans-serif; font-size: 13px; color: #5A6072; line-height: 1.35;">
+                                            <svg width="15" height="15" viewBox="0 0 24 24" style="flex-shrink:0;margin-top:1px;" aria-hidden><circle cx="12" cy="12" r="11" fill="rgba(122,28,43,0.1)"/><path d="m7 12.5 3.2 3.2L17 8.6" fill="none" stroke="#7A1C2B" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                                            Stake against yourself
+                                        </li>
+                                        <li style="display: flex; gap: 9px; align-items: flex-start; font-family: 'Inter', sans-serif; font-size: 13px; color: #5A6072; line-height: 1.35;">
+                                            <svg width="15" height="15" viewBox="0 0 24 24" style="flex-shrink:0;margin-top:1px;" aria-hidden><circle cx="12" cy="12" r="11" fill="rgba(122,28,43,0.1)"/><path d="m7 12.5 3.2 3.2L17 8.6" fill="none" stroke="#7A1C2B" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                                            Keep your principal
+                                        </li>
+                                        <li style="display: flex; gap: 9px; align-items: flex-start; font-family: 'Inter', sans-serif; font-size: 13px; color: #5A6072; line-height: 1.35;">
+                                            <svg width="15" height="15" viewBox="0 0 24 24" style="flex-shrink:0;margin-top:1px;" aria-hidden><circle cx="12" cy="12" r="11" fill="rgba(122,28,43,0.1)"/><path d="m7 12.5 3.2 3.2L17 8.6" fill="none" stroke="#7A1C2B" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                                            Earn execution rewards
+                                        </li>
+                                    </ul>
+                                    <div class="sor-cta" style="margin-top: 14px; font-family: 'Plus Jakarta Sans', sans-serif; font-size: 12.5px; font-weight: 700; letter-spacing: 0.3px; color: #7A1C2B; display: flex; align-items: center; gap: 6px;">Start solo <span class="sor-arrow">→</span></div>
+                                </div>
                             </button>
 
-                            <button id="card-mode-rivalry" class="sor-mode" onclick="window.switchProtocolMode('rivalry')">
-                                <span class="sor-mode-badge">RIVALRY</span>
-                                <div class="sor-mode-title">Stake head-to-head</div>
-                                <ul class="sor-bullets">
-                                    <li>
-                                        <svg width="15" height="15" viewBox="0 0 24 24" style="flex-shrink:0;margin-top:1px;" aria-hidden><circle cx="12" cy="12" r="11" fill="rgba(122,28,43,0.1)"/><path d="m7 12.5 3.2 3.2L17 8.6" fill="none" stroke="#7A1C2B" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                                        Two people lock capital
-                                    </li>
-                                    <li>
-                                        <svg width="15" height="15" viewBox="0 0 24 24" style="flex-shrink:0;margin-top:1px;" aria-hidden><circle cx="12" cy="12" r="11" fill="rgba(122,28,43,0.1)"/><path d="m7 12.5 3.2 3.2L17 8.6" fill="none" stroke="#7A1C2B" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                                        Verified winner
-                                    </li>
-                                </ul>
-                                <div class="sor-cta">Start rivalry <span class="sor-arrow">→</span></div>
+                            <!-- RIVALRY CARD WITH ENGRAVING -->
+                            <button id="card-mode-rivalry" class="sor-mode" onclick="window.switchProtocolMode('rivalry')" style="text-align: left; cursor: pointer; width: 100%; padding: 0; overflow: hidden; border-radius: 16px; transition: all .2s cubic-bezier(.2,.7,.3,1);">
+                                <div style="position: relative; height: 132px; overflow: hidden; background: #5E1521; border-bottom: 1px solid rgba(251,232,228,0.14);">
+                                    <img src="/assets/images/rivalry-seal.png" alt="Rivalry Seals Engraving" class="sor-art" style="width: 100%; height: 100%; object-fit: cover; object-position: center 42%; display: block;" />
+                                    <div aria-hidden="true" style="position: absolute; left: 0; right: 0; bottom: 0; height: 46px; background: linear-gradient(180deg, transparent, #FBF9F5);"></div>
+                                </div>
+                                <div style="padding: 14px 18px 16px;">
+                                    <span class="sor-mode-badge" style="display: inline-block; font-family: 'Plus Jakarta Sans', sans-serif; font-size: 10px; font-weight: 700; letter-spacing: 1.4px; color: #7A1C2B; background: rgba(122,28,43,0.08); padding: 4px 10px; border-radius: 999px; margin-bottom: 11px;">RIVALRY</span>
+                                    <div class="sor-mode-title" style="font-family: 'Plus Jakarta Sans', sans-serif; font-size: 16.5px; font-weight: 700; color: #1C2333; margin-bottom: 12px;">Stake head-to-head</div>
+                                    <ul class="sor-bullets" style="list-style: none; margin: 0; padding: 0; display: grid; gap: 8px;">
+                                        <li style="display: flex; gap: 9px; align-items: flex-start; font-family: 'Inter', sans-serif; font-size: 13px; color: #5A6072; line-height: 1.35;">
+                                            <svg width="15" height="15" viewBox="0 0 24 24" style="flex-shrink:0;margin-top:1px;" aria-hidden><circle cx="12" cy="12" r="11" fill="rgba(122,28,43,0.1)"/><path d="m7 12.5 3.2 3.2L17 8.6" fill="none" stroke="#7A1C2B" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                                            Two people lock capital
+                                        </li>
+                                        <li style="display: flex; gap: 9px; align-items: flex-start; font-family: 'Inter', sans-serif; font-size: 13px; color: #5A6072; line-height: 1.35;">
+                                            <svg width="15" height="15" viewBox="0 0 24 24" style="flex-shrink:0;margin-top:1px;" aria-hidden><circle cx="12" cy="12" r="11" fill="rgba(122,28,43,0.1)"/><path d="m7 12.5 3.2 3.2L17 8.6" fill="none" stroke="#7A1C2B" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                                            Verified winner
+                                        </li>
+                                        <li style="display: flex; gap: 9px; align-items: flex-start; font-family: 'Inter', sans-serif; font-size: 13px; color: #5A6072; line-height: 1.35;">
+                                            <svg width="15" height="15" viewBox="0 0 24 24" style="flex-shrink:0;margin-top:1px;" aria-hidden><circle cx="12" cy="12" r="11" fill="rgba(122,28,43,0.1)"/><path d="m7 12.5 3.2 3.2L17 8.6" fill="none" stroke="#7A1C2B" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                                            Winner receives escrow
+                                        </li>
+                                    </ul>
+                                    <div class="sor-cta" style="margin-top: 14px; font-family: 'Plus Jakarta Sans', sans-serif; font-size: 12.5px; font-weight: 700; letter-spacing: 0.3px; color: #7A1C2B; display: flex; align-items: center; gap: 6px;">Start rivalry <span class="sor-arrow">→</span></div>
+                                </div>
+                            </button>
                         </div>
 
                         <button class="sor-primary" onclick="window.router.navigate('/create'); return false;">

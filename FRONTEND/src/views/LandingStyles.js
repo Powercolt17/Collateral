@@ -6747,8 +6747,8 @@ html, body {
 }
 .fk-grid {
   display: grid; 
-  grid-template-columns: 32% 1fr;
-  gap: clamp(28px,4vw,56px); 
+  grid-template-columns: 38% 1fr;
+  gap: clamp(24px,3.5vw,48px); 
   align-items: center;
 }
 @media (max-width: 900px) { 

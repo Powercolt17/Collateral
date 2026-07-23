@@ -49,11 +49,8 @@ export function renderLanding() {
                                     <!-- MASSIVE DISPLAY TYPOGRAPHY HEADLINE -->
                                     <div class="lhero-headline-wrap">
                                         <h1 class="lh1 animate-fade-in-up">
-                                            WHEN MONEY IS<br>
-                                            ON THE LINE,<br>
-                                            INTENTIONS<br>
-                                            BECOME<br>
-                                            <span class="lh-gradient">ACTIONS.</span>
+                                            PUT YOUR MONEY<br>
+                                            BEHIND YOUR <span class="lh-gradient">WORD.</span>
                                         </h1>
                                     </div>
                                     <p class="lsub animate-fade-in-up delay-1">

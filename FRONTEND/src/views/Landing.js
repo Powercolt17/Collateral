@@ -285,17 +285,14 @@ export function renderLanding() {
 
                     <div class="fk-grid reveal-item">
                         <div>
-                            <h2 style="font-family: 'Plus Jakarta Sans', sans-serif; font-size: clamp(34px,4.2vw,50px); font-weight: 800; letter-spacing: -0.03em; color: #1C2333; margin: 0 0 20px; line-height: 1.06;">
+                            <h2 style="font-family: 'Plus Jakarta Sans', sans-serif; font-size: clamp(28px,4.2vw,50px); font-weight: 800; letter-spacing: -0.03em; color: #1C2333; margin: 0 0 20px; line-height: 1.06; text-wrap: balance;">
                                 A plan without stakes is just a <span style="color: #7A1C2B;">comfortable wish.</span>
                             </h2>
-                            <p style="font-family: 'Inter', sans-serif; font-size: 16px; color: #5A6072; margin: 0 0 18px; max-width: 420px; line-height: 1.62;">
-                                Planning is easy. Executing is hard. You miss targets because failing is free — it costs you nothing but time you'll never see.
+                            <p style="font-family: 'Inter', sans-serif; font-size: 15px; color: #5A6072; margin: 0; max-width: 60ch; line-height: 1.5;">
+                                You miss targets because failing is free. Collateral makes it cost something.
                             </p>
-                            <p style="font-family: 'Inter', sans-serif; font-size: 16px; color: #5A6072; margin: 0; max-width: 420px; line-height: 1.62;">
-                                Collateral makes failure cost something real. That single change moves you from passive planning to pure execution.
-                            </p>
-                            <p style="margin-top: 26px; padding-top: 20px; border-top: 1px solid rgba(28,35,51,0.11); font-family: 'Inter', sans-serif; font-size: 14.5px; color: #7A1C2B; font-weight: 600; max-width: 420px; line-height: 1.55;">
-                                Stop betting on variables you can't control. Bet on your own focus.
+                            <p class="l-sec-line" style="margin-top: 18px; padding-top: 14px; border-top: 1px solid rgba(28,35,51,0.11); font-family: 'Inter', sans-serif; font-size: 14.5px; color: #7A1C2B; font-weight: 600; max-width: 60ch; line-height: 1.5;">
+                                Bet on your own focus.
                             </p>
                         </div>
 
@@ -433,8 +430,8 @@ export function renderLanding() {
                             <span style="color: #1C2333;">SOLO OR </span><span style="color: #7A1C2B;">RIVALRY.</span>
                         </h2>
 
-                        <p style="font-family: 'Inter', sans-serif; font-size: 16.5px; line-height: 1.55; color: #5A6072; margin: 0 0 26px; max-width: 420px;">
-                            Put money behind your commitment. Complete the goal and the contract pays automatically. Miss it and the rules enforce themselves.
+                        <p style="font-family: 'Inter', sans-serif; font-size: 15px; line-height: 1.5; color: #5A6072; margin: 0 0 24px; max-width: 60ch;">
+                            Lock money behind a goal. Hit it and get paid. Miss it and forfeit.
                         </p>
 
                         <div class="sor-mode-grid" style="display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 0;">
@@ -532,8 +529,8 @@ export function renderLanding() {
                             <span class="l-lr-dot l-ticker-pulse"></span> AUTOMATED EXECUTION SCHEMATIC
                         </div>
                         <h2 class="lengine-h2">HOW MONEY FLOWS ON COLLATERAL</h2>
-                        <p class="lengine-sub">
-                            Every deposit is governed by custodial escrow and automated API verification. Winners receive their principal plus matching yield funded by forfeited deposits and brand sponsors.
+                        <p class="lengine-sub" style="max-width: 60ch; font-size: 15px; line-height: 1.5;">
+                            Custodial escrow. Automated API verification. Winners receive principal plus yield.
                         </p>
                     </div>
 
@@ -710,10 +707,6 @@ export function renderLanding() {
 
                     </div>
 
-                    <!-- SUMMARY PARAGRAPH -->
-                    <div class="lflow-summary">
-                        Deposits are held in Stripe Connect custodial escrow accounts mapped to smart contract state. Upon automated API verification, winners receive their principal plus matching yield. Forfeited deposits re-circulate into the match pool to fund future winners. A 0.5% protocol fee is permanently burned from CLTR supply.
-                        </div>
                     </div>
                 </div>
             </div>
@@ -735,8 +728,8 @@ export function renderLanding() {
                         <h2 style="font-size: clamp(30px,3.8vw,46px); font-weight: 800; letter-spacing: -0.03em; color: #1C2333; margin: 0; line-height: 1.06; max-width: 640px;">
                             Skin in the game is the only thing<br />that <span style="color: #7A1C2B;">actually works.</span>
                         </h2>
-                        <p style="font-size: 15.5px; color: #5A6072; margin: 0; max-width: 340px; line-height: 1.6;">
-                            Every contract settles the same way — automatically, on verified API data. Including the ones people lose.
+                        <p style="font-size: 15px; color: #5A6072; margin: 0; max-width: 60ch; line-height: 1.5;">
+                            Every contract settles automatically. Including the ones people lose.
                         </p>
                     </div>
 
@@ -1091,11 +1084,6 @@ export function renderLanding() {
                                 <span class="lcard-live-dot"></span>
                                 <span class="lcard-live-text">$2.4k in escrow</span>
                             </div>
-                            <div class="lcard-hover-details">
-                                <div class="lcard-hover-row"><span>TRACKED VIA:</span><span class="val">STRIPE DATA</span></div>
-                                <div class="lcard-hover-row"><span>VERIFICATION:</span><span class="val green">AUTOMATIC</span></div>
-                                <div class="lcard-hover-row"><span>PAYOUT ON SUCCESS:</span><span class="val green">STAKE × 2.5</span></div>
-                            </div>
                             <div class="lcard-btn"><button class="lp-cta-btn maroon" data-source="STRIPE" data-tier="stake" data-capital="250">Start Contract</button></div>
                             <div class="lcard-subtext">Deposit returned once goal is verified.</div>
                         </div>
@@ -1118,11 +1106,6 @@ export function renderLanding() {
                             <div class="lcard-live-indicator">
                                 <span class="lcard-live-dot"></span>
                                 <span class="lcard-live-text">$1.2k in escrow</span>
-                            </div>
-                            <div class="lcard-hover-details">
-                                <div class="lcard-hover-row"><span>TRACKED VIA:</span><span class="val">SHOPIFY DATA</span></div>
-                                <div class="lcard-hover-row"><span>VERIFICATION:</span><span class="val green">AUTOMATIC</span></div>
-                                <div class="lcard-hover-row"><span>PAYOUT ON SUCCESS:</span><span class="val green">PLEDGE × 1.5</span></div>
                             </div>
                             <div class="lcard-btn"><button class="lp-cta-btn maroon" data-source="SHOPIFY" data-tier="pledge" data-capital="100">Start Contract</button></div>
                             <div class="lcard-subtext">Deposit returned once goal is verified.</div>
@@ -1238,12 +1221,7 @@ export function renderLanding() {
                                     <span class="rv-card-time">14D REMAINING</span>
                                 </div>
                             </div>
-                            <div class="lcard-hover-details">
-                                <div class="lcard-hover-row"><span>SETTLEMENT:</span><span class="val">AUTOMATED ESCROW</span></div>
-                                <div class="lcard-hover-row"><span>VERIFICATION:</span><span class="val green">X DATA AUTOMATIC</span></div>
-                                <div class="lcard-hover-row"><span>WINNER TAKES:</span><span class="val green">100% COMBINED POOL</span></div>
-                            </div>
-                            <div class="lcard-btn"><button class="lp-cta-btn maroon" onclick="window.router.navigate('/rivalry/7B92A41E')">VIEW DUEL</button></div>
+                             <div class="lcard-btn"><button class="lp-cta-btn maroon" onclick="window.router.navigate('/rivalry/7B92A41E')">VIEW DUEL</button></div>
                             <div class="lcard-subtext">Escrow locked during duel period.</div>
                         </div>
 
@@ -1355,11 +1333,6 @@ export function renderLanding() {
                                     <span class="rv-card-time status-settling">SETTLING</span>
                                 </div>
                             </div>
-                            <div class="lcard-hover-details">
-                                <div class="lcard-hover-row"><span>SETTLEMENT:</span><span class="val">AUTOMATED ESCROW</span></div>
-                                <div class="lcard-hover-row"><span>VERIFICATION:</span><span class="val green">STRIPE AUTOMATIC</span></div>
-                                <div class="lcard-hover-row"><span>WINNER TAKES:</span><span class="val green">100% COMBINED POOL</span></div>
-                            </div>
                             <div class="lcard-btn"><button class="lp-cta-btn maroon" onclick="window.router.navigate('/rivalry/34D63CA3')">VIEW DUEL</button></div>
                             <div class="lcard-subtext">Escrow locked during duel period.</div>
                         </div>
@@ -1392,8 +1365,8 @@ export function renderLanding() {
                             <h2 style="font-family: 'Plus Jakarta Sans', sans-serif; font-size: clamp(34px,4.4vw,52px); font-weight: 800; letter-spacing: -0.03em; color: #1C2333; margin: 0 0 14px; line-height: 1.02;">
                                 Supply only<br /><span style="color: #7A1C2B;">goes down.</span>
                             </h2>
-                            <p style="font-family: 'Inter', sans-serif; font-size: 16px; color: #5A6072; margin: 0; max-width: 400px; line-height: 1.6;">
-                                Every settled contract burns a protocol fee from circulation — permanently. More contracts means less CLTR, and less CLTR means every remaining token backs a larger network.
+                            <p style="font-family: 'Inter', sans-serif; font-size: 15px; color: #5A6072; margin: 0; max-width: 60ch; line-height: 1.5;">
+                                Every settled contract burns supply. Permanently.
                             </p>
 
                             <div style="margin-top: 34px; display: grid; grid-template-columns: 1fr 1fr; gap: 26px 20px; max-width: 400px;">
@@ -1552,7 +1525,7 @@ export function renderLanding() {
             <div class="lfaq" data-r id="faq">
             <div class="lw">
                     <div class="lred-dash reveal-item"><span class="lmono">Common Questions</span></div>
-                    <h2 class="lhow-h reveal-item" style="margin-bottom:28px">No fine print. Just <strong>loopholes.</strong></h2>
+                    <h2 class="lhow-h reveal-item" style="margin-bottom:28px">No fine print. No <strong>loopholes.</strong></h2>
                     <div class="lfaq-wrap">
                         <div class="fq open reveal-item">
                             <div class="fq-q">Is this gambling?</div>

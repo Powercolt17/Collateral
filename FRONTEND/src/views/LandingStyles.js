@@ -6963,4 +6963,36 @@ html, body {
   }
 }
 
+/* ═══ MOBILE COPY & HEADLINE DENSITY FIXES ═══ */
+h1, h2, h3, .lh1, .lhow-h, .lengine-h2, .ltypes-headline {
+  text-wrap: balance;
+}
+
+@media (max-width: 640px) {
+  /* Reduce section vertical padding on mobile to ~32px */
+  .sor-section, .lemo-reframe, .lengine-section, .lcontracts, .lreal-results, .lhow-it-works-section, .lfaq {
+    padding-top: 32px !important;
+    padding-bottom: 32px !important;
+  }
+
+  /* Cap section headline sizes on mobile to clamp(28px, 8vw, 34px) */
+  h2, .lhow-h, .lengine-h2, .ltypes-headline {
+    font-size: clamp(28px, 8vw, 34px) !important;
+    line-height: 1.1 !important;
+  }
+
+  /* Body copy font size & line height on mobile */
+  p, .lsub, .lengine-sub, .lfaq-a {
+    font-size: 15px !important;
+    line-height: 1.5 !important;
+    max-width: 60ch !important;
+  }
+
+  /* Hide secondary lines on mobile */
+  .l-sec-line {
+    display: none !important;
+  }
+}
+
+
 `;

@@ -6740,4 +6740,26 @@ html, body {
   70% { opacity: 0; }
   100% { transform: scale(2.6); opacity: 0; }
 }
+
+/* ═══ THE FORK: WHY IT WORKS STYLES ═══ */
+.fk-grid {
+  display: grid; 
+  grid-template-columns: 38% 1fr;
+  gap: clamp(28px,4vw,56px); 
+  align-items: center;
+}
+@media (max-width: 900px) { 
+  .fk-grid { grid-template-columns: 1fr !important; } 
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .fk-payout { animation: fkRise .6s cubic-bezier(.2,.75,.25,1) .5s both; }
+  .fk-check {
+    transform-box: fill-box; 
+    transform-origin: center;
+    animation: fkPop 4s ease-in-out infinite 1.2s;
+  }
+}
+@keyframes fkRise { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; } }
+@keyframes fkPop { 0%,92%,100% { transform: scale(1); } 96% { transform: scale(1.12); } }
 `;

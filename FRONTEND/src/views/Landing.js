@@ -276,12 +276,14 @@ export function renderLanding() {
                     <div style="position: absolute !important; width: 1px !important; height: 1px !important; padding: 0 !important; margin: -1px !important; overflow: hidden !important; clip: rect(0,0,0,0) !important; border: 0 !important;">
                         Protocol metrics: Active contracts: 1,206; Average contract size: $6,940; Median settlement time: 1.4 days; Counterparties: 812. Supported APIs: Stripe API, X / Twitter API, YouTube API, Shopify API.
                     </div>
-                    <div class="l-stats-eyebrow">SUPPORTED INTEGRATIONS &amp; LIVE METRICS</div>
+                    <div class="l-stats-eyebrow" id="l-stats-eyebrow">LIVE METRICS</div>
                     <div class="l-stats-bar-grid" id="l-stats-grid" aria-live="off">
                         <a href="/market" class="l-stat-bar-item" data-cell-index="0" aria-label="Active contracts">
                             <div class="l-stat-bar-wrapper">
                                 <div class="l-stat-bar-content current" data-state="A">
-                                    <span class="l-stat-bar-val">1,206</span>
+                                    <div class="l-stat-bar-value-zone">
+                                        <span class="l-stat-bar-val">1,206</span>
+                                    </div>
                                     <span class="l-stat-bar-lbl">Active Contracts</span>
                                 </div>
                             </div>
@@ -289,7 +291,9 @@ export function renderLanding() {
                         <a href="/market" class="l-stat-bar-item" data-cell-index="1" aria-label="Average contract size">
                             <div class="l-stat-bar-wrapper">
                                 <div class="l-stat-bar-content current" data-state="A">
-                                    <span class="l-stat-bar-val">$6,940</span>
+                                    <div class="l-stat-bar-value-zone">
+                                        <span class="l-stat-bar-val">$6,940</span>
+                                    </div>
                                     <span class="l-stat-bar-lbl">Average Contract Size</span>
                                 </div>
                             </div>
@@ -297,7 +301,9 @@ export function renderLanding() {
                         <a href="/market" class="l-stat-bar-item" data-cell-index="2" aria-label="Median settlement time">
                             <div class="l-stat-bar-wrapper">
                                 <div class="l-stat-bar-content current" data-state="A">
-                                    <span class="l-stat-bar-val">1.4 days</span>
+                                    <div class="l-stat-bar-value-zone">
+                                        <span class="l-stat-bar-val">1.4 days</span>
+                                    </div>
                                     <span class="l-stat-bar-lbl">Median Settlement Time</span>
                                 </div>
                             </div>
@@ -305,7 +311,9 @@ export function renderLanding() {
                         <a href="/market" class="l-stat-bar-item" data-cell-index="3" aria-label="Verified counterparties">
                             <div class="l-stat-bar-wrapper">
                                 <div class="l-stat-bar-content current" data-state="A">
-                                    <span class="l-stat-bar-val">812</span>
+                                    <div class="l-stat-bar-value-zone">
+                                        <span class="l-stat-bar-val">812</span>
+                                    </div>
                                     <span class="l-stat-bar-lbl">Verified Counterparties</span>
                                 </div>
                             </div>

@@ -1163,18 +1163,37 @@ export function renderLanding() {
                                 <div style="font-size: 22px; font-weight: 800; letter-spacing: -0.02em; color: #3F9D5A; font-variant-numeric: tabular-nums;">+$2,240.00</div>
                                 <div style="margin-top: 5px; font-family: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace; font-size: 9px; font-weight: 700; letter-spacing: 1.3px; color: #8C8577; max-width: 150px;">PRINCIPAL + YIELD RETURNED</div>
 
-                                <div class="ps-seal" style="position: absolute; right: 8px; bottom: 8px; opacity: 0.9;">
+                                <div class="ps-seal" style="position: absolute; right: 8px; bottom: 8px;">
                                     <svg width="150" height="55" viewBox="0 0 300 110" aria-hidden="true" style="display: block; overflow: visible;">
                                         <defs>
-                                            <filter id="stamp1g" x="-25%" y="-25%" width="150%" height="150%">
-                                                <feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="4" seed="7" result="noise" />
-                                                <feColorMatrix in="noise" type="matrix" values="0 0 0 0 0, 0 0 0 0 0, 0 0 0 0 0, 1 0 0 0 -0.45" result="holes" />
-                                                <feComposite in="SourceGraphic" in2="holes" operator="out" result="eroded" />
-                                                <feTurbulence type="fractalNoise" baseFrequency="0.035" numOctaves="2" seed="12" result="warp" />
-                                                <feDisplacementMap in="eroded" in2="warp" scale="1.1" xChannelSelector="R" yChannelSelector="G" />
+                                            <filter id="stamp1g" x="-30%" y="-30%" width="160%" height="160%">
+                                                <feTurbulence type="fractalNoise" baseFrequency="0.13" numOctaves="3" seed="7" result="coarse"/>
+                                                <feColorMatrix in="coarse" type="matrix" values="0 0 0 0 0, 0 0 0 0 0, 0 0 0 0 0, 1 0 0 0 -0.26" result="blotch"/>
+                                                <feComposite in="SourceGraphic" in2="blotch" operator="out" result="pass1"/>
+                                                <feTurbulence type="fractalNoise" baseFrequency="0.7" numOctaves="4" seed="18" result="fine"/>
+                                                <feColorMatrix in="fine" type="matrix" values="0 0 0 0 0, 0 0 0 0 0, 0 0 0 0 0, 1 0 0 0 -0.52" result="speck"/>
+                                                <feComposite in="pass1" in2="speck" operator="out" result="pass2"/>
+                                                <feTurbulence type="fractalNoise" baseFrequency="0.018" numOctaves="2" seed="10" result="warp"/>
+                                                <feDisplacementMap in="pass2" in2="warp" scale="2.8" xChannelSelector="R" yChannelSelector="G"/>
                                             </filter>
+                                            <filter id="stamp1b" x="-10%" y="-10%" width="120%" height="120%">
+                                                <feGaussianBlur stdDeviation="0.7" />
+                                            </filter>
+                                            <linearGradient id="pressure1" x1="0" y1="0" x2="1" y2="1">
+                                                <stop offset="0%" stop-color="#fff" stop-opacity="1"/>
+                                                <stop offset="55%" stop-color="#fff" stop-opacity="0.92"/>
+                                                <stop offset="100%" stop-color="#fff" stop-opacity="0.62"/>
+                                            </linearGradient>
+                                            <mask id="pressureMask1">
+                                                <rect x="0" y="0" width="300" height="110" fill="url(#pressure1)"/>
+                                            </mask>
                                         </defs>
-                                        <g filter="url(#stamp1g)" opacity="0.9" transform="rotate(-12 150 55)">
+                                        <g filter="url(#stamp1b)" opacity="0.28" transform="translate(0.5, 0.5) rotate(-9 150 55)">
+                                            <rect x="10" y="13" width="280" height="84" rx="8" fill="none" stroke="#2F7A45" stroke-width="5" />
+                                            <rect x="18" y="21" width="264" height="68" rx="5" fill="none" stroke="#2F7A45" stroke-width="1.6" />
+                                            <text x="150" y="55" text-anchor="middle" dominant-baseline="central" font-family='"Arial Narrow", "Helvetica Neue Condensed", "Oswald", "DejaVu Sans Condensed", Impact, system-ui, sans-serif' font-size="35" font-weight="700" letter-spacing="3" fill="#2F7A45" style="font-stretch: condensed;">APPROVED</text>
+                                        </g>
+                                        <g filter="url(#stamp1g)" mask="url(#pressureMask1)" opacity="0.86" transform="rotate(-9 150 55)">
                                             <rect x="10" y="13" width="280" height="84" rx="8" fill="none" stroke="#2F7A45" stroke-width="5" />
                                             <rect x="18" y="21" width="264" height="68" rx="5" fill="none" stroke="#2F7A45" stroke-width="1.6" />
                                             <text x="150" y="55" text-anchor="middle" dominant-baseline="central" font-family='"Arial Narrow", "Helvetica Neue Condensed", "Oswald", "DejaVu Sans Condensed", Impact, system-ui, sans-serif' font-size="35" font-weight="700" letter-spacing="3" fill="#2F7A45" style="font-stretch: condensed;">APPROVED</text>
@@ -1228,18 +1247,37 @@ export function renderLanding() {
                                 <div style="font-size: 22px; font-weight: 800; letter-spacing: -0.02em; color: #3F9D5A; font-variant-numeric: tabular-nums;">+$1,120.00</div>
                                 <div style="margin-top: 5px; font-family: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace; font-size: 9px; font-weight: 700; letter-spacing: 1.3px; color: #8C8577; max-width: 150px;">PRINCIPAL + YIELD RETURNED</div>
 
-                                <div class="ps-seal" style="position: absolute; right: 8px; bottom: 8px; opacity: 0.9;">
+                                <div class="ps-seal" style="position: absolute; right: 8px; bottom: 8px;">
                                     <svg width="150" height="55" viewBox="0 0 300 110" aria-hidden="true" style="display: block; overflow: visible;">
                                         <defs>
-                                            <filter id="stamp2g" x="-25%" y="-25%" width="150%" height="150%">
-                                                <feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="4" seed="13" result="noise" />
-                                                <feColorMatrix in="noise" type="matrix" values="0 0 0 0 0, 0 0 0 0 0, 0 0 0 0 0, 1 0 0 0 -0.45" result="holes" />
-                                                <feComposite in="SourceGraphic" in2="holes" operator="out" result="eroded" />
-                                                <feTurbulence type="fractalNoise" baseFrequency="0.035" numOctaves="2" seed="18" result="warp" />
-                                                <feDisplacementMap in="eroded" in2="warp" scale="1.1" xChannelSelector="R" yChannelSelector="G" />
+                                            <filter id="stamp2g" x="-30%" y="-30%" width="160%" height="160%">
+                                                <feTurbulence type="fractalNoise" baseFrequency="0.13" numOctaves="3" seed="13" result="coarse"/>
+                                                <feColorMatrix in="coarse" type="matrix" values="0 0 0 0 0, 0 0 0 0 0, 0 0 0 0 0, 1 0 0 0 -0.26" result="blotch"/>
+                                                <feComposite in="SourceGraphic" in2="blotch" operator="out" result="pass1"/>
+                                                <feTurbulence type="fractalNoise" baseFrequency="0.7" numOctaves="4" seed="24" result="fine"/>
+                                                <feColorMatrix in="fine" type="matrix" values="0 0 0 0 0, 0 0 0 0 0, 0 0 0 0 0, 1 0 0 0 -0.52" result="speck"/>
+                                                <feComposite in="pass1" in2="speck" operator="out" result="pass2"/>
+                                                <feTurbulence type="fractalNoise" baseFrequency="0.018" numOctaves="2" seed="16" result="warp"/>
+                                                <feDisplacementMap in="pass2" in2="warp" scale="2.8" xChannelSelector="R" yChannelSelector="G"/>
                                             </filter>
+                                            <filter id="stamp2b" x="-10%" y="-10%" width="120%" height="120%">
+                                                <feGaussianBlur stdDeviation="0.7" />
+                                            </filter>
+                                            <linearGradient id="pressure2" x1="1" y1="0" x2="0" y2="1">
+                                                <stop offset="0%" stop-color="#fff" stop-opacity="1"/>
+                                                <stop offset="55%" stop-color="#fff" stop-opacity="0.92"/>
+                                                <stop offset="100%" stop-color="#fff" stop-opacity="0.62"/>
+                                            </linearGradient>
+                                            <mask id="pressureMask2">
+                                                <rect x="0" y="0" width="300" height="110" fill="url(#pressure2)"/>
+                                            </mask>
                                         </defs>
-                                        <g filter="url(#stamp2g)" opacity="0.9" transform="rotate(-8 150 55)">
+                                        <g filter="url(#stamp2b)" opacity="0.28" transform="translate(0.5, 0.5) rotate(-14 150 55)">
+                                            <rect x="10" y="13" width="280" height="84" rx="8" fill="none" stroke="#2F7A45" stroke-width="5" />
+                                            <rect x="18" y="21" width="264" height="68" rx="5" fill="none" stroke="#2F7A45" stroke-width="1.6" />
+                                            <text x="150" y="55" text-anchor="middle" dominant-baseline="central" font-family='"Arial Narrow", "Helvetica Neue Condensed", "Oswald", "DejaVu Sans Condensed", Impact, system-ui, sans-serif' font-size="35" font-weight="700" letter-spacing="3" fill="#2F7A45" style="font-stretch: condensed;">APPROVED</text>
+                                        </g>
+                                        <g filter="url(#stamp2g)" mask="url(#pressureMask2)" opacity="0.92" transform="rotate(-14 150 55)">
                                             <rect x="10" y="13" width="280" height="84" rx="8" fill="none" stroke="#2F7A45" stroke-width="5" />
                                             <rect x="18" y="21" width="264" height="68" rx="5" fill="none" stroke="#2F7A45" stroke-width="1.6" />
                                             <text x="150" y="55" text-anchor="middle" dominant-baseline="central" font-family='"Arial Narrow", "Helvetica Neue Condensed", "Oswald", "DejaVu Sans Condensed", Impact, system-ui, sans-serif' font-size="35" font-weight="700" letter-spacing="3" fill="#2F7A45" style="font-stretch: condensed;">APPROVED</text>
@@ -1293,21 +1331,40 @@ export function renderLanding() {
                                 <div style="font-size: 22px; font-weight: 800; letter-spacing: -0.02em; color: #A8443F; font-variant-numeric: tabular-nums;">−$1,500.00</div>
                                 <div style="margin-top: 5px; font-family: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace; font-size: 9px; font-weight: 700; letter-spacing: 1.3px; color: #8C8577; max-width: 150px;">FORFEITED TO MATCH POOL</div>
 
-                                <div class="ps-seal" style="position: absolute; right: 8px; bottom: 8px; opacity: 0.9;">
+                                <div class="ps-seal" style="position: absolute; right: 8px; bottom: 8px;">
                                     <svg width="150" height="55" viewBox="0 0 300 110" aria-hidden="true" style="display: block; overflow: visible;">
                                         <defs>
-                                            <filter id="stamp3g" x="-25%" y="-25%" width="150%" height="150%">
-                                                <feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="4" seed="21" result="noise" />
-                                                <feColorMatrix in="noise" type="matrix" values="0 0 0 0 0, 0 0 0 0 0, 0 0 0 0 0, 1 0 0 0 -0.45" result="holes" />
-                                                <feComposite in="SourceGraphic" in2="holes" operator="out" result="eroded" />
-                                                <feTurbulence type="fractalNoise" baseFrequency="0.035" numOctaves="2" seed="26" result="warp" />
-                                                <feDisplacementMap in="eroded" in2="warp" scale="1.1" xChannelSelector="R" yChannelSelector="G" />
+                                            <filter id="stamp3g" x="-30%" y="-30%" width="160%" height="160%">
+                                                <feTurbulence type="fractalNoise" baseFrequency="0.13" numOctaves="3" seed="21" result="coarse"/>
+                                                <feColorMatrix in="coarse" type="matrix" values="0 0 0 0 0, 0 0 0 0 0, 0 0 0 0 0, 1 0 0 0 -0.26" result="blotch"/>
+                                                <feComposite in="SourceGraphic" in2="blotch" operator="out" result="pass1"/>
+                                                <feTurbulence type="fractalNoise" baseFrequency="0.7" numOctaves="4" seed="32" result="fine"/>
+                                                <feColorMatrix in="fine" type="matrix" values="0 0 0 0 0, 0 0 0 0 0, 0 0 0 0 0, 1 0 0 0 -0.52" result="speck"/>
+                                                <feComposite in="pass1" in2="speck" operator="out" result="pass2"/>
+                                                <feTurbulence type="fractalNoise" baseFrequency="0.018" numOctaves="2" seed="24" result="warp"/>
+                                                <feDisplacementMap in="pass2" in2="warp" scale="2.8" xChannelSelector="R" yChannelSelector="G"/>
                                             </filter>
+                                            <filter id="stamp3b" x="-10%" y="-10%" width="120%" height="120%">
+                                                <feGaussianBlur stdDeviation="0.7" />
+                                            </filter>
+                                            <linearGradient id="pressure3" x1="0" y1="1" x2="1" y2="0">
+                                                <stop offset="0%" stop-color="#fff" stop-opacity="1"/>
+                                                <stop offset="55%" stop-color="#fff" stop-opacity="0.92"/>
+                                                <stop offset="100%" stop-color="#fff" stop-opacity="0.62"/>
+                                            </linearGradient>
+                                            <mask id="pressureMask3">
+                                                <rect x="0" y="0" width="300" height="110" fill="url(#pressure3)"/>
+                                            </mask>
                                         </defs>
-                                        <g filter="url(#stamp3g)" opacity="0.9" transform="rotate(-10 150 55)">
+                                        <g filter="url(#stamp3b)" opacity="0.28" transform="translate(0.5, 0.5) rotate(-11 150 55)">
                                             <rect x="10" y="13" width="280" height="84" rx="8" fill="none" stroke="#7A1C2B" stroke-width="5" />
                                             <rect x="18" y="21" width="264" height="68" rx="5" fill="none" stroke="#7A1C2B" stroke-width="1.6" />
-                                            <text x="150" y="55" text-anchor="middle" dominantBaseline="central" font-family='"Arial Narrow", "Helvetica Neue Condensed", "Oswald", "DejaVu Sans Condensed", Impact, system-ui, sans-serif' font-size="54" font-weight="700" letter-spacing="3" fill="#7A1C2B" style="font-stretch: condensed;">DENIED</text>
+                                            <text x="150" y="55" text-anchor="middle" dominant-baseline="central" font-family='"Arial Narrow", "Helvetica Neue Condensed", "Oswald", "DejaVu Sans Condensed", Impact, system-ui, sans-serif' font-size="54" font-weight="700" letter-spacing="3" fill="#7A1C2B" style="font-stretch: condensed;">DENIED</text>
+                                        </g>
+                                        <g filter="url(#stamp3g)" mask="url(#pressureMask3)" opacity="0.88" transform="rotate(-11 150 55)">
+                                            <rect x="10" y="13" width="280" height="84" rx="8" fill="none" stroke="#7A1C2B" stroke-width="5" />
+                                            <rect x="18" y="21" width="264" height="68" rx="5" fill="none" stroke="#7A1C2B" stroke-width="1.6" />
+                                            <text x="150" y="55" text-anchor="middle" dominant-baseline="central" font-family='"Arial Narrow", "Helvetica Neue Condensed", "Oswald", "DejaVu Sans Condensed", Impact, system-ui, sans-serif' font-size="54" font-weight="700" letter-spacing="3" fill="#7A1C2B" style="font-stretch: condensed;">DENIED</text>
                                         </g>
                                     </svg>
                                 </div>

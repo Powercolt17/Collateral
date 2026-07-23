@@ -288,8 +288,8 @@ export function renderLanding() {
                             <h2 style="font-family: 'Plus Jakarta Sans', sans-serif; font-size: clamp(28px,4.2vw,50px); font-weight: 800; letter-spacing: -0.03em; color: #1C2333; margin: 0 0 20px; line-height: 1.06; text-wrap: balance;">
                                 A plan without stakes is just a <span style="color: #7A1C2B;">comfortable wish.</span>
                             </h2>
-                            <p style="font-family: 'Inter', sans-serif; font-size: 15px; color: #5A6072; margin: 0; max-width: 60ch; line-height: 1.5;">
-                                You miss targets because failing is free. Collateral makes it cost something.
+                            <p style="font-family: 'Inter', sans-serif; font-size: 15px; color: #5A6072; margin: 0; max-width: 60ch; line-height: 1.55;">
+                                Planning is easy. Executing is hard. You miss targets because failing is free — Collateral makes failure cost something real so intentions become actions.
                             </p>
                             <p class="l-sec-line" style="margin-top: 18px; padding-top: 14px; border-top: 1px solid rgba(28,35,51,0.11); font-family: 'Inter', sans-serif; font-size: 14.5px; color: #7A1C2B; font-weight: 600; max-width: 60ch; line-height: 1.5;">
                                 Bet on your own focus.
@@ -430,8 +430,8 @@ export function renderLanding() {
                             <span style="color: #1C2333;">SOLO OR </span><span style="color: #7A1C2B;">RIVALRY.</span>
                         </h2>
 
-                        <p style="font-family: 'Inter', sans-serif; font-size: 15px; line-height: 1.5; color: #5A6072; margin: 0 0 24px; max-width: 60ch;">
-                            Lock money behind a goal. Hit it and get paid. Miss it and forfeit.
+                        <p style="font-family: 'Inter', sans-serif; font-size: 15px; line-height: 1.55; color: #5A6072; margin: 0 0 24px; max-width: 60ch;">
+                            Lock money behind your commitment. Complete your verified goal and claim your return, or challenge an opponent head-to-head. Miss it and the rules enforce themselves automatically.
                         </p>
 
                         <div class="sor-mode-grid" style="display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 0;">
@@ -529,8 +529,8 @@ export function renderLanding() {
                             <span class="l-lr-dot l-ticker-pulse"></span> AUTOMATED EXECUTION SCHEMATIC
                         </div>
                         <h2 class="lengine-h2">HOW MONEY FLOWS ON COLLATERAL</h2>
-                        <p class="lengine-sub" style="max-width: 60ch; font-size: 15px; line-height: 1.5;">
-                            Custodial escrow. Automated API verification. Winners receive principal plus yield.
+                        <p class="lengine-sub" style="max-width: 60ch; font-size: 15px; line-height: 1.55;">
+                            Every deposit is secured in custodial escrow until verified by direct platform APIs. Winners receive their principal plus matching yield funded by forfeited deposits. No manual claims required.
                         </p>
                     </div>
 
@@ -728,8 +728,8 @@ export function renderLanding() {
                         <h2 style="font-size: clamp(30px,3.8vw,46px); font-weight: 800; letter-spacing: -0.03em; color: #1C2333; margin: 0; line-height: 1.06; max-width: 640px;">
                             Skin in the game is the only thing<br />that <span style="color: #7A1C2B;">actually works.</span>
                         </h2>
-                        <p style="font-size: 15px; color: #5A6072; margin: 0; max-width: 60ch; line-height: 1.5;">
-                            Every contract settles automatically. Including the ones people lose.
+                        <p style="font-size: 15px; color: #5A6072; margin: 0; max-width: 60ch; line-height: 1.55;">
+                            Skin in the game is the only mechanism that enforces real execution. Every contract settles automatically on objective API telemetry — including the ones people lose.
                         </p>
                     </div>
 
@@ -1365,8 +1365,8 @@ export function renderLanding() {
                             <h2 style="font-family: 'Plus Jakarta Sans', sans-serif; font-size: clamp(34px,4.4vw,52px); font-weight: 800; letter-spacing: -0.03em; color: #1C2333; margin: 0 0 14px; line-height: 1.02;">
                                 Supply only<br /><span style="color: #7A1C2B;">goes down.</span>
                             </h2>
-                            <p style="font-family: 'Inter', sans-serif; font-size: 15px; color: #5A6072; margin: 0; max-width: 60ch; line-height: 1.5;">
-                                Every settled contract burns supply. Permanently.
+                            <p style="font-family: 'Inter', sans-serif; font-size: 15px; color: #5A6072; margin: 0; max-width: 60ch; line-height: 1.55;">
+                                Every settled contract burns a protocol fee from circulation permanently. As contract volume grows, total supply decreases automatically. Less supply means every remaining token backs a larger execution network.
                             </p>
 
                             <div style="margin-top: 34px; display: grid; grid-template-columns: 1fr 1fr; gap: 26px 20px; max-width: 400px;">

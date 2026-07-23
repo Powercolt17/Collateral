@@ -340,7 +340,7 @@ export function renderLanding() {
                             Put money behind your commitment. Complete the goal and the contract pays automatically. Miss it and the rules enforce themselves.
                         </p>
 
-                        <div class="sor-mode-grid" style="display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 30px;">
+                        <div class="sor-mode-grid" style="display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 0;">
                             <!-- SOLO CARD WITH ENGRAVING -->
                             <button id="card-mode-solo" class="sor-mode active" onclick="window.switchProtocolMode('solo')" style="text-align: left; cursor: pointer; width: 100%; padding: 0; overflow: hidden; border-radius: 16px; transition: all .2s cubic-bezier(.2,.7,.3,1);">
                                 <div style="position: relative; height: 132px; overflow: hidden; background: #EFE8DA;">
@@ -395,10 +395,6 @@ export function renderLanding() {
                                 </div>
                             </button>
                         </div>
-
-                        <button class="sor-primary" onclick="window.router.navigate('/create'); return false;">
-                            START CONTRACT <span class="sor-arrow">→</span>
-                        </button>
                     </div>
 
                     <!-- RIGHT COLUMN: TYPOGRAPHIC HERO CARD -->

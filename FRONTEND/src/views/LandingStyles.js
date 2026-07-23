@@ -6198,8 +6198,8 @@ export const landingCSS = `
 }
 .sor-grid {
     display: grid;
-    grid-template-columns: 48% 52%;
-    gap: clamp(24px, 3.5vw, 48px);
+    grid-template-columns: 44% 56%;
+    gap: clamp(26px, 3.8vw, 52px);
     align-items: center;
     max-width: 1240px;
     margin: 0 auto;
@@ -6354,17 +6354,17 @@ export const landingCSS = `
     position: relative;
     background: #F7F2EA;
     border: 1px solid rgba(28,35,51,0.10);
-    border-radius: 22px;
-    padding: clamp(20px, 3vw, 36px);
+    border-radius: 24px;
+    padding: clamp(24px, 3.5vw, 44px);
     overflow: hidden;
-    min-height: 350px;
-    max-width: 520px;
+    min-height: 395px;
+    max-width: 600px;
     width: 100%;
     margin: 0 auto;
     display: flex;
     flex-direction: column;
     justify-content: center;
-    box-shadow: 0 24px 70px -45px rgba(28,35,51,0.45);
+    box-shadow: 0 32px 85px -50px rgba(28,35,51,0.48);
 }
 
 .sor-ambient-glow {
@@ -6398,7 +6398,7 @@ export const landingCSS = `
 
 .sor-word-top, .sor-word-bottom {
     font-family: 'Plus Jakarta Sans', sans-serif;
-    font-size: clamp(40px, 5.5vw, 80px);
+    font-size: clamp(48px, 7.2vw, 102px);
     font-weight: 900;
     letter-spacing: -0.045em;
     line-height: 0.92;
@@ -6411,7 +6411,7 @@ export const landingCSS = `
     align-items: center;
     justify-content: center;
     gap: 18px;
-    margin: clamp(4px, 1vw, 10px) 0;
+    margin: clamp(5px, 1.2vw, 12px) 0;
 }
 .sor-rule {
     display: block;
@@ -6421,7 +6421,7 @@ export const landingCSS = `
 }
 .sor-vs {
     font-family: 'Plus Jakarta Sans', sans-serif;
-    font-size: 12px;
+    font-size: 12.5px;
     font-weight: 800;
     letter-spacing: 4px;
     color: #7A1C2B;
@@ -6430,14 +6430,14 @@ export const landingCSS = `
 
 .sor-figure-val {
     font-family: 'Plus Jakarta Sans', sans-serif;
-    font-size: clamp(22px, 2.8vw, 32px);
+    font-size: clamp(24px, 3.2vw, 36px);
     font-weight: 900;
     letter-spacing: -1px;
     color: #7A1C2B;
     line-height: 1;
 }
 .sor-figure-lbl {
-    margin-top: 6px;
+    margin-top: 7px;
     font-family: 'JetBrains Mono', monospace;
     font-size: 10px;
     font-weight: 700;
@@ -6750,8 +6750,8 @@ html, body {
 }
 .fk-grid {
   display: grid; 
-  grid-template-columns: 38% 1fr;
-  gap: clamp(24px,3.5vw,48px); 
+  grid-template-columns: 35% 1fr;
+  gap: clamp(26px,3.8vw,52px); 
   align-items: center;
 }
 @media (max-width: 900px) { 

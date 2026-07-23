@@ -314,7 +314,7 @@ export function renderLanding() {
                         </div>
 
                         <!-- THE FORK SVG PANEL -->
-                        <div style="background: #FCFAF7; border: 1px solid rgba(28,35,51,0.11); border-radius: 22px; padding: clamp(10px,1.2vw,16px); box-shadow: 0 30px 70px -50px rgba(28,35,51,0.4); max-width: 570px; width: 100%; margin: 0 auto;">
+                        <div style="background: #FCFAF7; border: 1px solid rgba(28,35,51,0.11); border-radius: 22px; padding: clamp(12px,1.4vw,20px); box-shadow: 0 30px 70px -50px rgba(28,35,51,0.4); max-width: 630px; width: 100%; margin: 0 auto;">
                             <svg viewBox="0 0 680 520" width="100%" role="img" aria-label="One goal, two paths: without stakes the path fades to nothing; with a locked deposit it ends in capital returned plus yield." style="display: block; height: auto;">
                                 <defs>
                                     <marker id="fkArrow" markerWidth="7" markerHeight="7" refX="5.5" refY="3.5" orient="auto">

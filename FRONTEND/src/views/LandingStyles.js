@@ -7252,40 +7252,125 @@ button.ln-cta,
   pointer-events: none !important;
 }
 
-/* 3. Live duel rows modular structure */
+/* 3. Live duel rows modular structure (DESKTOP & MOBILE) */
+.oc-duel {
+  display: flex !important;
+  flex-direction: row !important;
+  align-items: center !important;
+  gap: 14px !important;
+  padding: 14px 4px !important;
+  border-bottom: 1px solid rgba(28, 35, 51, 0.11) !important;
+  cursor: pointer !important;
+  transition: background 0.18s ease !important;
+  width: 100% !important;
+}
+
+.oc-duel:hover {
+  background: rgba(28, 35, 51, 0.02) !important;
+}
+
 .oc-duel-head {
-  display: flex;
-  align-items: center;
-  gap: 8px;
+  display: flex !important;
+  align-items: center !important;
+  gap: 8px !important;
+  min-width: 110px !important;
 }
+
+.oc-duel-type {
+  font-family: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace !important;
+  font-size: 11px !important;
+  font-weight: 700 !important;
+  letter-spacing: 1.3px !important;
+  color: #1C2333 !important;
+}
+
 .oc-duel-match {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  flex-wrap: nowrap;
+  display: flex !important;
+  align-items: center !important;
+  gap: 8px !important;
+  flex-wrap: nowrap !important;
 }
+
 .oc-duel-player {
-  display: inline-flex;
-  align-items: baseline;
-  gap: 6px;
-  font-family: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace;
-  font-size: 12.5px;
-  white-space: nowrap;
+  display: inline-flex !important;
+  align-items: baseline !important;
+  gap: 6px !important;
+  font-family: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace !important;
+  font-size: 12.5px !important;
+  white-space: nowrap !important;
 }
-.oc-duel-user { color: #5A6072; }
-.oc-duel-val.green { color: #166534; font-weight: 700; }
-.oc-duel-val.red { color: #7A1C2B; font-weight: 700; }
+
+.oc-duel-user {
+  color: #5A6072 !important;
+}
+
+.oc-duel-val.green {
+  color: #166534 !important;
+  font-weight: 700 !important;
+}
+
+.oc-duel-val.red {
+  color: #7A1C2B !important;
+  font-weight: 700 !important;
+}
+
 .oc-duel-vs {
-  font-family: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace;
-  font-size: 10px;
-  color: #8C8577;
-  letter-spacing: 1px;
+  font-family: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace !important;
+  font-size: 10px !important;
+  color: #8C8577 !important;
+  letter-spacing: 1px !important;
 }
+
 .oc-duel-meta {
-  margin-left: auto;
-  display: inline-flex;
-  align-items: center;
-  gap: 16px;
+  margin-left: auto !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 16px !important;
+}
+
+.oc-duel-pool {
+  font-size: 13.5px !important;
+  font-weight: 700 !important;
+  color: #1C2333 !important;
+  font-variant-numeric: tabular-nums !important;
+}
+
+.oc-duel-sub {
+  font-weight: 400 !important;
+  color: #8C8577 !important;
+  font-size: 12px !important;
+}
+
+.oc-duel-time {
+  font-family: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace !important;
+  font-size: 10px !important;
+  font-weight: 700 !important;
+  letter-spacing: 1px !important;
+  color: #8C8577 !important;
+}
+
+.oc-duel-settling {
+  font-family: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace !important;
+  font-size: 10px !important;
+  font-weight: 700 !important;
+  letter-spacing: 1px !important;
+  color: #7A1C2B !important;
+  background: rgba(122, 28, 43, 0.08) !important;
+  padding: 3px 8px !important;
+  border-radius: 999px !important;
+}
+
+.oc-view {
+  background: none !important;
+  border: none !important;
+  cursor: pointer !important;
+  padding: 0 !important;
+  font-size: 13px !important;
+  font-weight: 700 !important;
+  color: #7A1C2B !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 5px !important;
 }
 
 /* 4. Mobile layout overrides (<768px & <620px) */
@@ -7363,13 +7448,16 @@ button.ln-cta,
 @media (max-width: 620px) {
   /* Restructure live duels into clean 3-line block */
   .oc-duel {
-    display: flex !important;
     flex-direction: column !important;
     align-items: flex-start !important;
     gap: 8px !important;
     padding: 14px 10px !important;
     border-bottom: 1px solid rgba(28,35,51,0.11) !important;
     width: 100% !important;
+  }
+
+  .oc-duel-head {
+    min-width: auto !important;
   }
 
   .oc-duel-match {

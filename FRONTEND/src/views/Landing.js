@@ -1029,313 +1029,207 @@ export function renderLanding() {
 
 
 
-            <!-- ═══ LIVE CONTRACT EXAMPLES ═══ -->
-            <div class="lcontracts" id="contracts" data-r>
-                <div class="lw">
-                    <div class="reveal-item" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; flex-wrap: wrap; gap: 16px;">
-                        <div class="lred-dash" style="margin-bottom: 0;"><span class="lmono">Open Contracts</span></div>
-                        
-                        <!-- ═══ OPEN CONTRACTS STATS ═══ -->
+            <!-- ═══ LIVE CONTRACT EXAMPLES (OPEN CONTRACTS REDESIGN) ═══ -->
+            <section class="lcontracts" id="contracts" data-r style="background: #F8F5F0; padding: clamp(36px,5vw,72px) clamp(20px,5vw,56px); font-family: 'Inter', ui-sans-serif, system-ui, -apple-system, sans-serif;">
+                <div class="lw" style="max-width: 1200px; margin: 0 auto;">
+
+                    <!-- SECTION HEADER -->
+                    <div class="oc-head reveal-item">
                         <div style="display: flex; align-items: center; gap: 10px;">
-                            <span style="width: 6px; height: 6px; background: #145c14; border-radius: 50%; box-shadow: 0 0 10px rgba(20,92,20,0.8);"></span>
-                            <span style="font-family: 'Inter Tight', sans-serif; font-weight: 700; color: #145c14; font-size: 15px; letter-spacing: -0.2px;">$12.4k</span>
-                            <span style="font-family: 'Inter', sans-serif; font-size: 11px; font-weight: 600; color: #666; text-transform: uppercase; letter-spacing: 0.05em;">Total Escrow · Live Contracts &amp; Rivalry Duels</span>
+                            <span style="width: 24px; height: 1.5px; background: #7A1C2B; opacity: 0.5;"></span>
+                            <span style="font-family: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace; font-size: 11px; font-weight: 700; letter-spacing: 2.2px; color: #8C8577; text-transform: uppercase;">
+                                CHOOSE YOUR COMMITMENT
+                            </span>
+                        </div>
+                        <div style="display: inline-flex; align-items: center; gap: 9px;">
+                            <span class="oc-live" style="width: 7px; height: 7px; border-radius: 999px; background: #3F9D5A; display: inline-block;"></span>
+                            <strong style="font-size: 15px; font-weight: 800; color: #3F9D5A; font-variant-numeric: tabular-nums;">$12.4k</strong>
+                            <span style="font-family: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace; font-size: 10px; letter-spacing: 1.3px; color: #8C8577;">CURRENTLY IN ESCROW</span>
                         </div>
                     </div>
 
-                    <!-- ═══ TIER SYSTEM LEGEND BAR ═══ -->
-                    <div class="ltier-legend-bar reveal-item">
-                        <div class="ltier-legend-item">
-                            <span class="lcard-tier tier-pledge">Pledge 1.5x</span>
-                            <span class="ltier-legend-desc">Moderate target · 30-day window · Grace period</span>
-                        </div>
-                        <div class="ltier-legend-item">
-                            <span class="lcard-tier tier-stake">Stake 2.5x</span>
-                            <span class="ltier-legend-desc">Standard target · 30-day window · Full forfeit</span>
-                        </div>
-                        <div class="ltier-legend-item">
-                            <span class="lcard-tier tier-allin">All-In 4.0x</span>
-                            <span class="ltier-legend-desc">Aggressive target · 14-day window · Full forfeit</span>
-                        </div>
-                    </div>
+                    <h2 class="reveal-item" style="font-family: 'Plus Jakarta Sans', sans-serif; font-size: clamp(28px,3.4vw,42px); font-weight: 800; letter-spacing: -0.03em; color: #1C2333; margin: 18px 0 6px; line-height: 1.06;">
+                        How much is the goal <span style="color: #7A1C2B;">worth to you?</span>
+                    </h2>
+                    <p class="reveal-item" style="font-size: 16px; color: #5A6072; margin: 0 0 clamp(28px,3vw,44px); max-width: 460px; line-height: 1.55;">
+                        Bigger stake, bigger return. Miss the target and you forfeit.
+                    </p>
 
-                    <div class="lcards">
-                        <!-- ═══ GROUP 1: SOLO CONTRACTS (CARDS 1 & 2) ═══ -->
+                    <!-- 3 TIER CARDS GRID -->
+                    <div class="oc-grid reveal-item">
                         
-                        <!-- CARD 1: SOLO - STRIPE REVENUE GROWTH -->
-                        <div class="lcard lcard-popular reveal-item">
-                            <div class="lcard-top">
-                                <span class="lcard-type-badge solo">SOLO CONTRACT</span>
-                                <span class="lcard-src"><svg viewBox="54 36 360.02 149.84" xmlns="http://www.w3.org/2000/svg" style="width:36px;height:14px;display:inline-block;vertical-align:middle;margin-right:4px;"><path fill="#635BFF" d="M414,113.4c0-25.6-12.4-45.8-36.1-45.8c-23.8,0-38.2,20.2-38.2,45.6c0,30.1,17,45.3,41.4,45.3c11.9,0,20.9-2.7,27.7-6.5v-20c-6.8,3.4-14.6,5.5-24.5,5.5c-9.7,0-18.3-3.4-19.4-15.2h48.9C413.8,121,414,115.8,414,113.4z M364.6,103.9c0-11.3,6.9-16,13.2-16c6.1,0,12.6,4.7,12.6,16H364.6z M301.1,67.6c-9.8,0-16.1,4.6-19.6,7.8l-1.3-6.2h-22v116.6l25-5.3l0.1-28.3c3.6,2.6,8.9,6.3,17.7,6.3c17.9,0,34.2-14.4,34.2-46.1C335.1,83.4,318.6,67.6,301.1,67.6z M295.1,136.5c-5.9,0-9.4-2.1-11.8-4.7l-0.1-37.1c2.6-2.9,6.2-4.9,11.9-4.9c9.1,0,15.4,10.2,15.4,23.3C310.5,126.5,304.3,136.5,295.1,136.5z M223.8,61.7l25.1-5.4v-20.3l-25.1,5.3 M223.8,69.3h25.1v87.5h-25.1z M196.9,76.7l-1.6-7.4h-21.6v87.5h25V97.5c5.9-7.7,15.9-6.3,19-5.2v-23C214.5,68.1,202.8,65.9,196.9,76.7z M146.9,47.6l-24.4,5.2l-0.1,80.1c0,14.8,11.1,25.7,25.9,25.7c8.2,0,14.2-1.5,17.5-3.3V135c-3.2,1.3-19,5.9-19-8.9V90.6h19V69.3h-19L146.9,47.6z M79.3,94.7c0-3.9,3.2-5.4,8.5-5.4c7.6,0,17.2,2.3,24.8,6.4V72.2c-8.3-3.3-16.5-4.6-24.8-4.6C67.5,67.6,54,78.2,54,95.9c0,27.6,38,23.2,38,35.1c0,4.6-4,6.1-9.6,6.1c-8.3,0-18.9-3.4-27.3-8v23.8c9.3,4,18.7,5.7,27.3,5.7c20.8,0,35.1-10.3,35.1-28.2C117.4,100.6,79.3,105.9,79.3,94.7z"/></svg></span>
+                        <!-- TIER 1: PLEDGE -->
+                        <div class="oc-tier" style="position: relative; background: #FFFDFA; border: 1.5px solid rgba(28,35,51,0.11); border-radius: 18px; padding: 26px 24px 24px; display: flex; flex-direction: column; box-shadow: 0 12px 30px -22px rgba(28,35,51,0.32); transition: transform .22s cubic-bezier(.2,.7,.3,1), box-shadow .22s ease;">
+                            <span style="font-family: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace; font-size: 10px; font-weight: 700; letter-spacing: 2px; color: #7A1C2B;">PLEDGE</span>
+                            <div style="margin-top: 12px; font-family: 'Plus Jakarta Sans', sans-serif; font-size: 54px; font-weight: 800; letter-spacing: -0.03em; color: #7A1C2B; line-height: 0.95; font-variant-numeric: tabular-nums;">1.5×</div>
+                            <div style="margin-top: 8px; font-family: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace; font-size: 9.5px; font-weight: 700; letter-spacing: 1.6px; color: #8C8577;">RETURN ON SUCCESS</div>
+
+                            <div style="margin-top: 22px; margin-bottom: 22px;">
+                                <div style="display: flex; justify-content: space-between; align-items: baseline; padding: 11px 0; border-top: 1px solid rgba(28,35,51,0.11);">
+                                    <span style="font-size: 13.5px; color: #5A6072;">Deposit</span>
+                                    <span style="font-size: 13.5px; font-weight: 600; color: #1C2333; font-variant-numeric: tabular-nums;">$100 – $1,500</span>
+                                </div>
+                                <div style="display: flex; justify-content: space-between; align-items: baseline; padding: 11px 0; border-top: 1px solid rgba(28,35,51,0.11);">
+                                    <span style="font-size: 13.5px; color: #5A6072;">Window</span>
+                                    <span style="font-size: 13.5px; font-weight: 600; color: #1C2333; font-variant-numeric: tabular-nums;">30 days</span>
+                                </div>
+                                <div style="display: flex; justify-content: space-between; align-items: baseline; padding: 11px 0; border-top: 1px solid rgba(28,35,51,0.11);">
+                                    <span style="font-size: 13.5px; color: #5A6072;">On miss</span>
+                                    <span style="font-size: 13.5px; font-weight: 600; color: #1C2333; font-variant-numeric: tabular-nums;">Grace period</span>
+                                </div>
                             </div>
-                            <div class="lcard-id-row">
-                                <span class="lcard-id">ID: #8821A41E</span>
-                                <span class="lcard-tier tier-stake">Stake 2.5x</span>
-                            </div>
-                            <div class="lcard-title">Revenue Growth</div>
-                            <div class="lcard-target">+20% Revenue growth</div>
-                            <div class="lcard-row"><span class="k">Deposit</span><span class="v">$250 – $3,000</span></div>
-                            <div class="lcard-row"><span class="k">Total Return</span><span class="v">2.5x</span></div>
-                            <div class="lcard-row"><span class="k">Window</span><span class="v">30 days</span></div>
-                            <div class="lcard-live-indicator">
-                                <span class="lcard-live-dot"></span>
-                                <span class="lcard-live-text">$2.4k in escrow</span>
-                            </div>
-                            <div class="lcard-btn"><button class="lp-cta-btn maroon" data-source="STRIPE" data-tier="stake" data-capital="250">Start Contract</button></div>
-                            <div class="lcard-subtext">Deposit returned once goal is verified.</div>
+
+                            <button class="oc-cta lp-cta-btn" data-source="SHOPIFY" data-tier="pledge" data-capital="100" style="margin-top: auto; width: 100%; cursor: pointer; font-size: 14px; font-weight: 700; letter-spacing: 0.2px; color: #7A1C2B; background: transparent; border: 1.5px solid #7A1C2B; border-radius: 11px; padding: 13px 18px; display: inline-flex; align-items: center; justify-content: center; gap: 8px; transition: all .2s ease;">
+                                Start pledge <span class="oc-arrow">→</span>
+                            </button>
                         </div>
 
-                        <!-- CARD 2: SOLO - SHOPIFY STORE SALES -->
-                        <div class="lcard reveal-item">
-                            <div class="lcard-top">
-                                <span class="lcard-type-badge solo">SOLO CONTRACT</span>
-                                <span class="lcard-src"><svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" style="width:14px;height:14px;display:inline-block;vertical-align:middle;margin-right:4px;"><path fill="#95BF47" d="M15.337 23.979l7.216-1.561s-2.604-17.613-2.625-17.73c-.018-.116-.114-.192-.211-.192s-1.929-.136-1.929-.136-1.275-1.274-1.439-1.411c-.045-.037-.075-.057-.121-.074l-.914 21.104h.023zM11.71 11.305s-.81-.424-1.774-.424c-1.447 0-1.504.906-1.504 1.141 0 1.232 3.24 1.715 3.24 4.629 0 2.295-1.44 3.76-3.406 3.76-2.354 0-3.54-1.465-3.54-1.465l.646-2.086s1.245 1.066 2.28 1.066c.675 0 .975-.545.975-.932 0-1.619-2.654-1.694-2.654-4.359-.034-2.237 1.571-4.416 4.827-4.416 1.257 0 1.875.361 1.875.361l-.945 2.715-.02.01zM11.17.83c.136 0 .271.038.405.135-.984.465-2.064 1.639-2.508 3.992-.656.213-1.293.405-1.889.578C7.697 3.75 8.951.84 11.17.84V.83zm1.235 2.949v.135c-.754.232-1.583.484-2.394.736.466-1.777 1.333-2.645 2.085-2.971.193.501.309 1.176.309 2.1zm.539-2.234c.694.074 1.141.867 1.429 1.755-.349.114-.735.231-1.158.366v-.252c0-.752-.096-1.371-.271-1.871v.002zm2.992 1.289c-.02 0-.06.021-.078.021s-.289.075-.714.21c-.423-1.233-1.176-2.37-2.508-2.37h-.115C12.135.209 11.669 0 11.265 0 8.159 0 6.675 3.877 6.21 5.846c-1.194.365-2.063.636-2.16.674-.675.213-.694.232-.772.87-.075.462-1.83 14.063-1.83 14.063L15.009 24l.927-21.166z"/></svg>Shopify</span>
+                        <!-- TIER 2: STAKE (MOST CHOSEN / FEATURED) -->
+                        <div class="oc-tier" style="position: relative; background: #FFFFFF; border: 1.5px solid #7A1C2B; border-radius: 18px; padding: 26px 24px 24px; display: flex; flex-direction: column; transform: translateY(-6px); box-shadow: 0 26px 54px -28px rgba(122,28,43,0.35), 0 0 0 4px rgba(122,28,43,0.07); transition: transform .22s cubic-bezier(.2,.7,.3,1), box-shadow .22s ease;">
+                            <span style="position: absolute; top: -11px; left: 50%; transform: translateX(-50%); background: #7A1C2B; color: #FBF9F5; font-family: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace; font-size: 9px; font-weight: 700; letter-spacing: 1.4px; padding: 5px 12px; border-radius: 999px; white-space: nowrap;">MOST CHOSEN</span>
+
+                            <span style="font-family: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace; font-size: 10px; font-weight: 700; letter-spacing: 2px; color: #7A1C2B;">STAKE</span>
+                            <div style="margin-top: 12px; font-family: 'Plus Jakarta Sans', sans-serif; font-size: 54px; font-weight: 800; letter-spacing: -0.03em; color: #7A1C2B; line-height: 0.95; font-variant-numeric: tabular-nums;">2.5×</div>
+                            <div style="margin-top: 8px; font-family: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace; font-size: 9.5px; font-weight: 700; letter-spacing: 1.6px; color: #8C8577;">RETURN ON SUCCESS</div>
+
+                            <div style="margin-top: 22px; margin-bottom: 22px;">
+                                <div style="display: flex; justify-content: space-between; align-items: baseline; padding: 11px 0; border-top: 1px solid rgba(28,35,51,0.11);">
+                                    <span style="font-size: 13.5px; color: #5A6072;">Deposit</span>
+                                    <span style="font-size: 13.5px; font-weight: 600; color: #1C2333; font-variant-numeric: tabular-nums;">$250 – $3,000</span>
+                                </div>
+                                <div style="display: flex; justify-content: space-between; align-items: baseline; padding: 11px 0; border-top: 1px solid rgba(28,35,51,0.11);">
+                                    <span style="font-size: 13.5px; color: #5A6072;">Window</span>
+                                    <span style="font-size: 13.5px; font-weight: 600; color: #1C2333; font-variant-numeric: tabular-nums;">30 days</span>
+                                </div>
+                                <div style="display: flex; justify-content: space-between; align-items: baseline; padding: 11px 0; border-top: 1px solid rgba(28,35,51,0.11);">
+                                    <span style="font-size: 13.5px; color: #5A6072;">On miss</span>
+                                    <span style="font-size: 13.5px; font-weight: 600; color: #1C2333; font-variant-numeric: tabular-nums;">Full forfeit</span>
+                                </div>
                             </div>
-                            <div class="lcard-id-row">
-                                <span class="lcard-id">ID: #9042B18C</span>
-                                <span class="lcard-tier tier-pledge">Pledge 1.5x</span>
-                            </div>
-                            <div class="lcard-title">Store Sales</div>
-                            <div class="lcard-target">+$5,000 Net Sales</div>
-                            <div class="lcard-row"><span class="k">Deposit</span><span class="v">$100 – $1,500</span></div>
-                            <div class="lcard-row"><span class="k">Total Return</span><span class="v">1.5x</span></div>
-                            <div class="lcard-row"><span class="k">Window</span><span class="v">30 days</span></div>
-                            <div class="lcard-live-indicator">
-                                <span class="lcard-live-dot"></span>
-                                <span class="lcard-live-text">$1.2k in escrow</span>
-                            </div>
-                            <div class="lcard-btn"><button class="lp-cta-btn maroon" data-source="SHOPIFY" data-tier="pledge" data-capital="100">Start Contract</button></div>
-                            <div class="lcard-subtext">Deposit returned once goal is verified.</div>
+
+                            <button class="oc-cta lp-cta-btn" data-source="STRIPE" data-tier="stake" data-capital="250" style="margin-top: auto; width: 100%; cursor: pointer; font-size: 14px; font-weight: 700; letter-spacing: 0.2px; color: #FBF9F5; background: #7A1C2B; border: 1.5px solid #7A1C2B; border-radius: 11px; padding: 13px 18px; display: inline-flex; align-items: center; justify-content: center; gap: 8px; transition: all .2s ease;">
+                                Start stake <span class="oc-arrow">→</span>
+                            </button>
                         </div>
 
-                        <!-- ═══ GROUP 2: RIVALRY DUELS (CARDS 3 & 4) ═══ -->
-                        
-                        <!-- CARD 3: RIVALRY - AUDIENCE (ID: #7B92A41E) -->
-                        <div class="rv-card reveal-item" onclick="window.router.navigate('/rivalry/7B92A41E')">
-                            <div class="rv-card-inner">
-                                <div class="rv-card-header">
-                                    <span class="lcard-type-badge rivalry">RIVALRY DUEL</span>
-                                    <div class="rv-card-status">
-                                        <span class="dot"></span>
-                                        LOCKED
-                                    </div>
+                        <!-- TIER 3: ALL-IN -->
+                        <div class="oc-tier" style="position: relative; background: #FFFDFA; border: 1.5px solid rgba(28,35,51,0.11); border-radius: 18px; padding: 26px 24px 24px; display: flex; flex-direction: column; box-shadow: 0 12px 30px -22px rgba(28,35,51,0.32); transition: transform .22s cubic-bezier(.2,.7,.3,1), box-shadow .22s ease;">
+                            <span style="font-family: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace; font-size: 10px; font-weight: 700; letter-spacing: 2px; color: #7A1C2B;">ALL-IN</span>
+                            <div style="margin-top: 12px; font-family: 'Plus Jakarta Sans', sans-serif; font-size: 54px; font-weight: 800; letter-spacing: -0.03em; color: #7A1C2B; line-height: 0.95; font-variant-numeric: tabular-nums;">4.0×</div>
+                            <div style="margin-top: 8px; font-family: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace; font-size: 9.5px; font-weight: 700; letter-spacing: 1.6px; color: #8C8577;">RETURN ON SUCCESS</div>
+
+                            <div style="margin-top: 22px; margin-bottom: 22px;">
+                                <div style="display: flex; justify-content: space-between; align-items: baseline; padding: 11px 0; border-top: 1px solid rgba(28,35,51,0.11);">
+                                    <span style="font-size: 13.5px; color: #5A6072;">Deposit</span>
+                                    <span style="font-size: 13.5px; font-weight: 600; color: #1C2333; font-variant-numeric: tabular-nums;">$500 – $10,000</span>
                                 </div>
-                                <div class="rv-card-metric-row">
-                                    <span class="rv-card-metric">AUDIENCE</span>
-                                    <span class="rv-card-id">ID: #7B92A41E</span>
+                                <div style="display: flex; justify-content: space-between; align-items: baseline; padding: 11px 0; border-top: 1px solid rgba(28,35,51,0.11);">
+                                    <span style="font-size: 13.5px; color: #5A6072;">Window</span>
+                                    <span style="font-size: 13.5px; font-weight: 600; color: #1C2333; font-variant-numeric: tabular-nums;">14 days</span>
                                 </div>
-                                <div class="rv-versus">
-                                    <div class="rv-player">
-                                        <span class="rv-player-label">Challenger</span>
-                                        <span class="rv-player-name"><span class="rv-lead-dot" style="background:#166534"></span>jakevoss</span>
-                                        <span class="rv-player-growth leading">+12.4%</span>
-                                    </div>
-                                    <div class="rv-vs-divider">
-                                        <span class="rv-vs-badge" style="display: inline-flex; align-items: center; justify-content: center; width: 34px; height: 34px; border-radius: 999px; background: rgba(122,28,43,0.07); border: 1px solid rgba(122,28,43,0.16); box-shadow: inset 0 1px 0 rgba(255,255,255,0.8); flex-shrink: 0;">
-                                            <svg width="22" height="22" viewBox="0 0 48 48" aria-hidden="true" style="display: block;">
-                                                <defs>
-                                                    <linearGradient id="cs_steel_card1" x1="0" y1="0" x2="1" y2="0.35">
-                                                        <stop offset="0%" stop-color="#F4F2EE" />
-                                                        <stop offset="45%" stop-color="#CFCBC3" />
-                                                        <stop offset="100%" stop-color="#948F86" />
-                                                    </linearGradient>
-                                                    <linearGradient id="cs_hilt_card1" x1="0" y1="0" x2="1" y2="1">
-                                                        <stop offset="0%" stop-color="#8A2233" />
-                                                        <stop offset="100%" stop-color="#4E1119" />
-                                                    </linearGradient>
-                                                    <radialGradient id="cs_glint_card1" cx="50%" cy="50%" r="50%">
-                                                        <stop offset="0%" stop-color="#FFF6E6" stop-opacity="0.95" />
-                                                        <stop offset="100%" stop-color="#E8B45C" stop-opacity="0" />
-                                                    </radialGradient>
-                                                </defs>
-                                                <g transform="translate(24 23.5) scale(0.86)">
-                                                    <g transform="rotate(-43)">
-                                                        <polygon points="0,-26 2.5,-20.5 2.5,5 -2.5,5 -2.5,-20.5" fill="url(#cs_steel_card1)" />
-                                                        <polygon points="0,-22.5 0.85,-19 0.85,3.4 -0.85,3.4 -0.85,-19" fill="#948F86" opacity="0.45" />
-                                                        <polygon points="0,-26 -2.5,-20.5 -2.5,5 -1.55,5 -1.55,-20.2" fill="#FFFFFF" opacity="0.6" />
-                                                        <rect x="-2.5" y="3.2" width="5" height="1.8" fill="#948F86" opacity="0.5" />
-                                                        <rect x="-8.2" y="5" width="16.4" height="3.3" rx="1.65" fill="url(#cs_hilt_card1)" />
-                                                        <circle cx="-8.4" cy="6.65" r="2.15" fill="url(#cs_hilt_card1)" />
-                                                        <circle cx="8.4" cy="6.65" r="2.15" fill="url(#cs_hilt_card1)" />
-                                                        <rect x="-8.2" y="5" width="16.4" height="1.1" rx="0.55" fill="#FFFFFF" opacity="0.22" />
-                                                        <rect x="-1.95" y="8.3" width="3.9" height="9.2" rx="1.5" fill="#4E1119" />
-                                                        <rect x="-1.95" y="10.1" width="3.9" height="0.9" rx="0.45" fill="#FFFFFF" opacity="0.18" />
-                                                        <rect x="-1.95" y="12.4" width="3.9" height="0.9" rx="0.45" fill="#FFFFFF" opacity="0.18" />
-                                                        <rect x="-1.95" y="14.7" width="3.9" height="0.9" rx="0.45" fill="#FFFFFF" opacity="0.18" />
-                                                        <circle cx="0" cy="19.4" r="2.85" fill="url(#cs_hilt_card1)" />
-                                                        <circle cx="-0.8" cy="18.6" r="0.95" fill="#FFFFFF" opacity="0.42" />
-                                                    </g>
-                                                    <g transform="rotate(43)">
-                                                        <g fill="#FBF9F5" stroke="#FBF9F5" stroke-width="3.2" stroke-linejoin="round">
-                                                            <polygon points="0,-26 2.5,-20.5 2.5,5 -2.5,5 -2.5,-20.5" />
-                                                            <rect x="-8.2" y="5" width="16.4" height="3.3" rx="1.65" />
-                                                            <circle cx="-8.4" cy="6.65" r="2.15" />
-                                                            <circle cx="8.4" cy="6.65" r="2.15" />
-                                                            <rect x="-1.95" y="8.3" width="3.9" height="9.2" rx="1.5" />
-                                                            <circle cx="0" cy="19.4" r="2.85" />
-                                                        </g>
-                                                        <polygon points="0,-26 2.5,-20.5 2.5,5 -2.5,5 -2.5,-20.5" fill="url(#cs_steel_card1)" />
-                                                        <polygon points="0,-22.5 0.85,-19 0.85,3.4 -0.85,3.4 -0.85,-19" fill="#948F86" opacity="0.45" />
-                                                        <polygon points="0,-26 -2.5,-20.5 -2.5,5 -1.55,5 -1.55,-20.2" fill="#FFFFFF" opacity="0.6" />
-                                                        <rect x="-2.5" y="3.2" width="5" height="1.8" fill="#948F86" opacity="0.5" />
-                                                        <rect x="-8.2" y="5" width="16.4" height="3.3" rx="1.65" fill="url(#cs_hilt_card1)" />
-                                                        <circle cx="-8.4" cy="6.65" r="2.15" fill="url(#cs_hilt_card1)" />
-                                                        <circle cx="8.4" cy="6.65" r="2.15" fill="url(#cs_hilt_card1)" />
-                                                        <rect x="-8.2" y="5" width="16.4" height="1.1" rx="0.55" fill="#FFFFFF" opacity="0.22" />
-                                                        <rect x="-1.95" y="8.3" width="3.9" height="9.2" rx="1.5" fill="#4E1119" />
-                                                        <rect x="-1.95" y="10.1" width="3.9" height="0.9" rx="0.45" fill="#FFFFFF" opacity="0.18" />
-                                                        <rect x="-1.95" y="12.4" width="3.9" height="0.9" rx="0.45" fill="#FFFFFF" opacity="0.18" />
-                                                        <rect x="-1.95" y="14.7" width="3.9" height="0.9" rx="0.45" fill="#FFFFFF" opacity="0.18" />
-                                                        <circle cx="0" cy="19.4" r="2.85" fill="url(#cs_hilt_card1)" />
-                                                        <circle cx="-0.8" cy="18.6" r="0.95" fill="#FFFFFF" opacity="0.42" />
-                                                    </g>
-                                                    <g transform="translate(0 -9)">
-                                                        <circle r="7" fill="url(#cs_glint_card1)" />
-                                                        <path d="M0,-6 L1.5,-1.5 L6,0 L1.5,1.5 L0,6 L-1.5,1.5 L-6,0 L-1.5,-1.5 Z" fill="#FFF3DF" opacity="0.9" />
-                                                    </g>
-                                                </g>
-                                            </svg>
-                                        </span>
-                                    </div>
-                                    <div class="rv-player right">
-                                        <span class="rv-player-label">Opponent</span>
-                                        <span class="rv-player-name">marcus<span class="rv-lead-dot" style="background:#7A1220"></span></span>
-                                        <span class="rv-player-growth trailing">+9.2%</span>
-                                    </div>
+                                <div style="display: flex; justify-content: space-between; align-items: baseline; padding: 11px 0; border-top: 1px solid rgba(28,35,51,0.11);">
+                                    <span style="font-size: 13.5px; color: #5A6072;">On miss</span>
+                                    <span style="font-size: 13.5px; font-weight: 600; color: #1C2333; font-variant-numeric: tabular-nums;">Full forfeit</span>
                                 </div>
                             </div>
-                            <div class="rv-momentum">
-                                <div class="rv-momentum-left" style="width: 58%;"></div>
-                                <div class="rv-momentum-right" style="width: 42%;"></div>
-                            </div>
-                            <div class="rv-card-bottom">
-                                <div class="rv-card-stake">
-                                    <span class="rv-card-stake-val">$5,000</span>
-                                    <span class="rv-card-stake-lbl">CAPITAL EXPOSURE</span>
-                                </div>
-                                <div style="display:flex;flex-direction:column;align-items:flex-end;gap:4px;">
-                                    <span class="rv-card-provider-pill" style="background:#0F172A; display: inline-flex; align-items: center; gap: 5px; padding: 4px 8px;"><svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" style="width:12px;height:12px;fill:#FFFFFF;"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg> X / TWITTER</span>
-                                    <span class="rv-card-time">14D REMAINING</span>
-                                </div>
-                            </div>
-                             <div class="lcard-btn"><button class="lp-cta-btn maroon" onclick="window.router.navigate('/rivalry/7B92A41E')">VIEW DUEL</button></div>
-                            <div class="lcard-subtext">Escrow locked during duel period.</div>
+
+                            <button class="oc-cta lp-cta-btn" data-source="STRIPE" data-tier="allin" data-capital="500" style="margin-top: auto; width: 100%; cursor: pointer; font-size: 14px; font-weight: 700; letter-spacing: 0.2px; color: #7A1C2B; background: transparent; border: 1.5px solid #7A1C2B; border-radius: 11px; padding: 13px 18px; display: inline-flex; align-items: center; justify-content: center; gap: 8px; transition: all .2s ease;">
+                                Start all-in <span class="oc-arrow">→</span>
+                            </button>
                         </div>
 
-                        <!-- CARD 4: RIVALRY - REVENUE (ID: #34D63CA3) -->
-                        <div class="rv-card reveal-item" onclick="window.router.navigate('/rivalry/34D63CA3')">
-                            <div class="rv-card-inner">
-                                <div class="rv-card-header">
-                                    <span class="lcard-type-badge rivalry">RIVALRY DUEL</span>
-                                    <div class="rv-card-status">
-                                        <span class="dot"></span>
-                                        LOCKED
-                                    </div>
-                                </div>
-                                <div class="rv-card-metric-row">
-                                    <span class="rv-card-metric">REVENUE</span>
-                                    <span class="rv-card-id">ID: #34D63CA3</span>
-                                </div>
-                                <div class="rv-versus">
-                                    <div class="rv-player">
-                                        <span class="rv-player-label">Challenger</span>
-                                        <span class="rv-player-name"><span class="rv-lead-dot" style="background:#166534"></span>revpilot</span>
-                                        <span class="rv-player-growth leading">+8.1%</span>
-                                    </div>
-                                    <div class="rv-vs-divider">
-                                        <span class="rv-vs-badge" style="display: inline-flex; align-items: center; justify-content: center; width: 34px; height: 34px; border-radius: 999px; background: rgba(122,28,43,0.07); border: 1px solid rgba(122,28,43,0.16); box-shadow: inset 0 1px 0 rgba(255,255,255,0.8); flex-shrink: 0;">
-                                            <svg width="22" height="22" viewBox="0 0 48 48" aria-hidden="true" style="display: block;">
-                                                <defs>
-                                                    <linearGradient id="cs_steel_card2" x1="0" y1="0" x2="1" y2="0.35">
-                                                        <stop offset="0%" stop-color="#F4F2EE" />
-                                                        <stop offset="45%" stop-color="#CFCBC3" />
-                                                        <stop offset="100%" stop-color="#948F86" />
-                                                    </linearGradient>
-                                                    <linearGradient id="cs_hilt_card2" x1="0" y1="0" x2="1" y2="1">
-                                                        <stop offset="0%" stop-color="#8A2233" />
-                                                        <stop offset="100%" stop-color="#4E1119" />
-                                                    </linearGradient>
-                                                    <radialGradient id="cs_glint_card2" cx="50%" cy="50%" r="50%">
-                                                        <stop offset="0%" stop-color="#FFF6E6" stop-opacity="0.95" />
-                                                        <stop offset="100%" stop-color="#E8B45C" stop-opacity="0" />
-                                                    </radialGradient>
-                                                </defs>
-                                                <g transform="translate(24 23.5) scale(0.86)">
-                                                    <g transform="rotate(-43)">
-                                                        <polygon points="0,-26 2.5,-20.5 2.5,5 -2.5,5 -2.5,-20.5" fill="url(#cs_steel_card2)" />
-                                                        <polygon points="0,-22.5 0.85,-19 0.85,3.4 -0.85,3.4 -0.85,-19" fill="#948F86" opacity="0.45" />
-                                                        <polygon points="0,-26 -2.5,-20.5 -2.5,5 -1.55,5 -1.55,-20.2" fill="#FFFFFF" opacity="0.6" />
-                                                        <rect x="-2.5" y="3.2" width="5" height="1.8" fill="#948F86" opacity="0.5" />
-                                                        <rect x="-8.2" y="5" width="16.4" height="3.3" rx="1.65" fill="url(#cs_hilt_card2)" />
-                                                        <circle cx="-8.4" cy="6.65" r="2.15" fill="url(#cs_hilt_card2)" />
-                                                        <circle cx="8.4" cy="6.65" r="2.15" fill="url(#cs_hilt_card2)" />
-                                                        <rect x="-8.2" y="5" width="16.4" height="1.1" rx="0.55" fill="#FFFFFF" opacity="0.22" />
-                                                        <rect x="-1.95" y="8.3" width="3.9" height="9.2" rx="1.5" fill="#4E1119" />
-                                                        <rect x="-1.95" y="10.1" width="3.9" height="0.9" rx="0.45" fill="#FFFFFF" opacity="0.18" />
-                                                        <rect x="-1.95" y="12.4" width="3.9" height="0.9" rx="0.45" fill="#FFFFFF" opacity="0.18" />
-                                                        <rect x="-1.95" y="14.7" width="3.9" height="0.9" rx="0.45" fill="#FFFFFF" opacity="0.18" />
-                                                        <circle cx="0" cy="19.4" r="2.85" fill="url(#cs_hilt_card2)" />
-                                                        <circle cx="-0.8" cy="18.6" r="0.95" fill="#FFFFFF" opacity="0.42" />
-                                                    </g>
-                                                    <g transform="rotate(43)">
-                                                        <g fill="#FBF9F5" stroke="#FBF9F5" stroke-width="3.2" stroke-linejoin="round">
-                                                            <polygon points="0,-26 2.5,-20.5 2.5,5 -2.5,5 -2.5,-20.5" />
-                                                            <rect x="-8.2" y="5" width="16.4" height="3.3" rx="1.65" />
-                                                            <circle cx="-8.4" cy="6.65" r="2.15" />
-                                                            <circle cx="8.4" cy="6.65" r="2.15" />
-                                                            <rect x="-1.95" y="8.3" width="3.9" height="9.2" rx="1.5" />
-                                                            <circle cx="0" cy="19.4" r="2.85" />
-                                                        </g>
-                                                        <polygon points="0,-26 2.5,-20.5 2.5,5 -2.5,5 -2.5,-20.5" fill="url(#cs_steel_card2)" />
-                                                        <polygon points="0,-22.5 0.85,-19 0.85,3.4 -0.85,3.4 -0.85,-19" fill="#948F86" opacity="0.45" />
-                                                        <polygon points="0,-26 -2.5,-20.5 -2.5,5 -1.55,5 -1.55,-20.2" fill="#FFFFFF" opacity="0.6" />
-                                                        <rect x="-2.5" y="3.2" width="5" height="1.8" fill="#948F86" opacity="0.5" />
-                                                        <rect x="-8.2" y="5" width="16.4" height="3.3" rx="1.65" fill="url(#cs_hilt_card2)" />
-                                                        <circle cx="-8.4" cy="6.65" r="2.15" fill="url(#cs_hilt_card2)" />
-                                                        <circle cx="8.4" cy="6.65" r="2.15" fill="url(#cs_hilt_card2)" />
-                                                        <rect x="-8.2" y="5" width="16.4" height="1.1" rx="0.55" fill="#FFFFFF" opacity="0.22" />
-                                                        <rect x="-1.95" y="8.3" width="3.9" height="9.2" rx="1.5" fill="#4E1119" />
-                                                        <rect x="-1.95" y="10.1" width="3.9" height="0.9" rx="0.45" fill="#FFFFFF" opacity="0.18" />
-                                                        <rect x="-1.95" y="12.4" width="3.9" height="0.9" rx="0.45" fill="#FFFFFF" opacity="0.18" />
-                                                        <rect x="-1.95" y="14.7" width="3.9" height="0.9" rx="0.45" fill="#FFFFFF" opacity="0.18" />
-                                                        <circle cx="0" cy="19.4" r="2.85" fill="url(#cs_hilt_card2)" />
-                                                        <circle cx="-0.8" cy="18.6" r="0.95" fill="#FFFFFF" opacity="0.42" />
-                                                    </g>
-                                                    <g transform="translate(0 -9)">
-                                                        <circle r="7" fill="url(#cs_glint_card2)" />
-                                                        <path d="M0,-6 L1.5,-1.5 L6,0 L1.5,1.5 L0,6 L-1.5,1.5 L-6,0 L-1.5,-1.5 Z" fill="#FFF3DF" opacity="0.9" />
-                                                    </g>
-                                                </g>
-                                            </svg>
-                                        </span>
-                                    </div>
-                                    <div class="rv-player right">
-                                        <span class="rv-player-label">Opponent</span>
-                                        <span class="rv-player-name">quotaops<span class="rv-lead-dot" style="background:#7A1220"></span></span>
-                                        <span class="rv-player-growth trailing">+5.4%</span>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="rv-momentum">
-                                <div class="rv-momentum-left" style="width: 60%;"></div>
-                                <div class="rv-momentum-right" style="width: 40%;"></div>
-                            </div>
-                            <div class="rv-card-bottom">
-                                <div class="rv-card-stake">
-                                    <span class="rv-card-stake-val">$2,000</span>
-                                    <span class="rv-card-stake-lbl">CAPITAL EXPOSURE</span>
-                                </div>
-                                <div style="display:flex;flex-direction:column;align-items:flex-end;gap:4px;">
-                                    <span class="rv-card-provider-pill" style="background:#635BFF; display: inline-flex; align-items: center; gap: 5px; padding: 4px 8px;"><svg viewBox="54 36 360.02 149.84" xmlns="http://www.w3.org/2000/svg" style="width:28px;height:11px;"><path fill="#FFFFFF" d="M414,113.4c0-25.6-12.4-45.8-36.1-45.8c-23.8,0-38.2,20.2-38.2,45.6c0,30.1,17,45.3,41.4,45.3c11.9,0,20.9-2.7,27.7-6.5v-20c-6.8,3.4-14.6,5.5-24.5,5.5c-9.7,0-18.3-3.4-19.4-15.2h48.9C413.8,121,414,115.8,414,113.4z M364.6,103.9c0-11.3,6.9-16,13.2-16c6.1,0,12.6,4.7,12.6,16H364.6z M301.1,67.6c-9.8,0-16.1,4.6-19.6,7.8l-1.3-6.2h-22v116.6l25-5.3l0.1-28.3c3.6,2.6,8.9,6.3,17.7,6.3c17.9,0,34.2-14.4,34.2-46.1C335.1,83.4,318.6,67.6,301.1,67.6z M295.1,136.5c-5.9,0-9.4-2.1-11.8-4.7l-0.1-37.1c2.6-2.9,6.2-4.9,11.9-4.9c9.1,0,15.4,10.2,15.4,23.3C310.5,126.5,304.3,136.5,295.1,136.5z M223.8,61.7l25.1-5.4v-20.3l-25.1,5.3 M223.8,69.3h25.1v87.5h-25.1z M196.9,76.7l-1.6-7.4h-21.6v87.5h25V97.5c5.9-7.7,15.9-6.3,19-5.2v-23C214.5,68.1,202.8,65.9,196.9,76.7z M146.9,47.6l-24.4,5.2l-0.1,80.1c0,14.8,11.1,25.7,25.9,25.7c8.2,0,14.2-1.5,17.5-3.3V135c-3.2,1.3-19,5.9-19-8.9V90.6h19V69.3h-19L146.9,47.6z M79.3,94.7c0-3.9,3.2-5.4,8.5-5.4c7.6,0,17.2,2.3,24.8,6.4V72.2c-8.3-3.3-16.5-4.6-24.8-4.6C67.5,67.6,54,78.2,54,95.9c0,27.6,38,23.2,38,35.1c0,4.6-4,6.1-9.6,6.1c-8.3,0-18.9-3.4-27.3-8v23.8c9.3,4,18.7,5.7,27.3,5.7c20.8,0,35.1-10.3,35.1-28.2C117.4,100.6,79.3,105.9,79.3,94.7z"/></svg> STRIPE</span>
-                                    <span class="rv-card-time status-settling">SETTLING</span>
-                                </div>
-                            </div>
-                            <div class="lcard-btn"><button class="lp-cta-btn maroon" onclick="window.router.navigate('/rivalry/34D63CA3')">VIEW DUEL</button></div>
-                            <div class="lcard-subtext">Escrow locked during duel period.</div>
+                    </div>
+
+                    <!-- LIVE DUELS STRIP BELOW -->
+                    <div class="reveal-item" style="margin-top: clamp(36px,4vw,58px);">
+                        <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 4px;">
+                            <span style="font-family: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace; font-size: 10px; font-weight: 700; letter-spacing: 1.8px; color: #8C8577;">LIVE DUELS</span>
+                            <span style="flex: 1; height: 1px; background: rgba(28,35,51,0.11);"></span>
+                        </div>
+
+                        <!-- DUEL 1 -->
+                        <div class="oc-duel" onclick="window.router && window.router.navigate('/rivalry/7B92A41E')" style="display: flex; align-items: center; gap: 14px; flex-wrap: wrap; padding: 14px 4px; border-bottom: 1px solid rgba(28,35,51,0.11); cursor: pointer; transition: background .18s ease;">
+                            <svg width="15" height="15" viewBox="0 0 24 24" aria-hidden="true" style="display: block; flex-shrink: 0;">
+                                <g transform="translate(12 11.5)">
+                                    <g transform="rotate(-43) translate(0 2)">
+                                        <polygon points="0,-9.5 1.9,-6.9 1.9,1.5 -1.9,1.5 -1.9,-6.9" fill="#7A1C2B"></polygon>
+                                        <rect x="-4.9" y="1.5" width="9.8" height="1.8" rx="0.9" fill="#5E1521"></rect>
+                                    </g>
+                                    <g transform="rotate(43) translate(0 2)">
+                                        <g fill="#FBF9F5" stroke="#FBF9F5" stroke-width="2.2" stroke-linejoin="round">
+                                            <polygon points="0,-9.5 1.9,-6.9 1.9,1.5 -1.9,1.5 -1.9,-6.9"></polygon>
+                                            <rect x="-4.9" y="1.5" width="9.8" height="1.8" rx="0.9"></rect>
+                                        </g>
+                                        <polygon points="0,-9.5 1.9,-6.9 1.9,1.5 -1.9,1.5 -1.9,-6.9" fill="#7A1C2B"></polygon>
+                                        <rect x="-4.9" y="1.5" width="9.8" height="1.8" rx="0.9" fill="#5E1521"></rect>
+                                    </g>
+                                </g>
+                            </svg>
+
+                            <span style="font-family: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace; font-size: 11px; font-weight: 700; letter-spacing: 1.3px; color: #1C2333; min-width: 74px;">AUDIENCE</span>
+
+                            <span style="display: inline-flex; align-items: baseline; gap: 7px; font-family: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace; font-size: 12.5px;">
+                                <span style="color: #5A6072;">@jakevoss</span>
+                                <strong style="color: #3F9D5A; font-weight: 700;">+12.4%</strong>
+                            </span>
+                            <span style="font-family: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace; font-size: 10px; color: #8C8577; letter-spacing: 1px;">VS</span>
+                            <span style="display: inline-flex; align-items: baseline; gap: 7px; font-family: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace; font-size: 12.5px;">
+                                <span style="color: #5A6072;">@marcus</span>
+                                <strong style="color: #7A1C2B; font-weight: 700;">+9.2%</strong>
+                            </span>
+
+                            <span style="margin-left: auto; display: inline-flex; align-items: center; gap: 16px;">
+                                <span style="font-size: 13.5px; font-weight: 700; color: #1C2333; font-variant-numeric: tabular-nums;">$5,000 <span style="font-weight: 400; color: #8C8577; font-size: 12px;">pool</span></span>
+                                <span style="font-family: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace; font-size: 10px; font-weight: 700; letter-spacing: 1px; color: #8C8577;">14d left</span>
+                                <button class="oc-view" style="background: none; border: none; cursor: pointer; padding: 0; font-size: 13px; font-weight: 700; color: #7A1C2B; display: inline-flex; align-items: center; gap: 5px;">
+                                    View <span class="oc-arrow">→</span>
+                                </button>
+                            </span>
+                        </div>
+
+                        <!-- DUEL 2 -->
+                        <div class="oc-duel" onclick="window.router && window.router.navigate('/rivalry/34D63CA3')" style="display: flex; align-items: center; gap: 14px; flex-wrap: wrap; padding: 14px 4px; cursor: pointer; transition: background .18s ease;">
+                            <svg width="15" height="15" viewBox="0 0 24 24" aria-hidden="true" style="display: block; flex-shrink: 0;">
+                                <g transform="translate(12 11.5)">
+                                    <g transform="rotate(-43) translate(0 2)">
+                                        <polygon points="0,-9.5 1.9,-6.9 1.9,1.5 -1.9,1.5 -1.9,-6.9" fill="#7A1C2B"></polygon>
+                                        <rect x="-4.9" y="1.5" width="9.8" height="1.8" rx="0.9" fill="#5E1521"></rect>
+                                    </g>
+                                    <g transform="rotate(43) translate(0 2)">
+                                        <g fill="#FBF9F5" stroke="#FBF9F5" stroke-width="2.2" stroke-linejoin="round">
+                                            <polygon points="0,-9.5 1.9,-6.9 1.9,1.5 -1.9,1.5 -1.9,-6.9"></polygon>
+                                            <rect x="-4.9" y="1.5" width="9.8" height="1.8" rx="0.9"></rect>
+                                        </g>
+                                        <polygon points="0,-9.5 1.9,-6.9 1.9,1.5 -1.9,1.5 -1.9,-6.9" fill="#7A1C2B"></polygon>
+                                        <rect x="-4.9" y="1.5" width="9.8" height="1.8" rx="0.9" fill="#5E1521"></rect>
+                                    </g>
+                                </g>
+                            </svg>
+
+                            <span style="font-family: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace; font-size: 11px; font-weight: 700; letter-spacing: 1.3px; color: #1C2333; min-width: 74px;">REVENUE</span>
+
+                            <span style="display: inline-flex; align-items: baseline; gap: 7px; font-family: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace; font-size: 12.5px;">
+                                <span style="color: #5A6072;">@revpilot</span>
+                                <strong style="color: #3F9D5A; font-weight: 700;">+8.1%</strong>
+                            </span>
+                            <span style="font-family: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace; font-size: 10px; color: #8C8577; letter-spacing: 1px;">VS</span>
+                            <span style="display: inline-flex; align-items: baseline; gap: 7px; font-family: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace; font-size: 12.5px;">
+                                <span style="color: #5A6072;">@quotaops</span>
+                                <strong style="color: #7A1C2B; font-weight: 700;">+5.4%</strong>
+                            </span>
+
+                            <span style="margin-left: auto; display: inline-flex; align-items: center; gap: 16px;">
+                                <span style="font-size: 13.5px; font-weight: 700; color: #1C2333; font-variant-numeric: tabular-nums;">$2,000 <span style="font-weight: 400; color: #8C8577; font-size: 12px;">pool</span></span>
+                                <span style="font-family: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace; font-size: 10px; font-weight: 700; letter-spacing: 1px; color: #7A1C2B; background: rgba(122,28,43,0.08); padding: 3px 8px; border-radius: 999px;">SETTLING</span>
+                                <button class="oc-view" style="background: none; border: none; cursor: pointer; padding: 0; font-size: 13px; font-weight: 700; color: #7A1C2B; display: inline-flex; align-items: center; gap: 5px;">
+                                    View <span class="oc-arrow">→</span>
+                                </button>
+                            </span>
                         </div>
                     </div>
+
                 </div>
-            </div>
+            </section>
 
             <!-- MINI CTA BLOCK -->
             <div class="lw">

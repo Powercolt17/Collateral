@@ -7005,8 +7005,33 @@ h1, h2, h3, .lh1, .lhow-h, .lengine-h2, .ltypes-headline {
   .l-sec-line {
     display: none !important;
   }
+/* ═══ OPEN CONTRACTS REDESIGN TYPOGRAPHY & LAYOUT ═══ */
+.oc-head {
+  display: flex; justify-content: space-between; align-items: center;
+  gap: 20px; flex-wrap: wrap;
+}
+.oc-grid {
+  display: grid; grid-template-columns: repeat(3, 1fr);
+  gap: clamp(16px,2vw,24px); align-items: stretch;
+}
+@media (max-width: 880px) {
+  .oc-grid { grid-template-columns: 1fr; gap: 26px; }
+  .oc-tier { transform: none !important; }
 }
 
+.oc-arrow { transition: transform .2s ease; display: inline-block; }
+.oc-tier:hover { transform: translateY(-8px); }
+.oc-cta:hover { filter: brightness(1.06); }
+.oc-cta:hover .oc-arrow, .oc-view:hover .oc-arrow { transform: translateX(3px); }
+.oc-duel:hover { background: rgba(122,28,43,0.03); }
 
+@media (prefers-reduced-motion: no-preference) {
+  .oc-live { animation: ocBlink 2s ease-in-out infinite; }
+}
+@keyframes ocBlink { 0%,100%{opacity:1} 50%{opacity:.3} }
 
+@media (max-width: 620px) {
+  .oc-duel { gap: 10px; }
+  .oc-duel > span:last-child { margin-left: 0; width: 100%; justify-content: space-between; }
+}
 `;

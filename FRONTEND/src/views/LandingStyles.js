@@ -6708,4 +6708,36 @@ html, body {
   70%  { opacity: 0; }
   100% { transform: scale(1.35); opacity: 0; }
 }
+
+/* ═══ CLTR BURN CURVE DATA STORY STYLES ═══ */
+.bc-head {
+  display: grid; 
+  grid-template-columns: 38% 1fr;
+  gap: clamp(28px,4vw,56px); 
+  align-items: center;
+}
+@media (max-width: 900px) { 
+  .bc-head { grid-template-columns: 1fr !important; } 
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .bc-draw {
+    stroke-dasharray: 1; 
+    stroke-dashoffset: 1;
+    animation: bcDraw 1.8s cubic-bezier(.35,.75,.35,1) .15s forwards;
+  }
+  .bc-callout { animation: bcFade .6s ease 1.5s both; }
+  .bc-pulse {
+    transform-box: fill-box; 
+    transform-origin: center;
+    animation: bcPulse 2.6s ease-out infinite 1.9s;
+  }
+}
+@keyframes bcDraw { to { stroke-dashoffset: 0; } }
+@keyframes bcFade { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; } }
+@keyframes bcPulse {
+  0% { transform: scale(1); opacity: .55; }
+  70% { opacity: 0; }
+  100% { transform: scale(2.6); opacity: 0; }
+}
 `;

@@ -1098,173 +1098,238 @@ export function renderLanding() {
             </div>
 
 
-            <!-- ═══ SOCIAL PROOF (REAL RESULTS) ═══ -->
-            <div class="lreal-results" data-r>
-                <div class="lw">
-                    <div class="lreal-header-stack">
-                        <div class="lred-dash reveal-item"><span class="lmono">Real Results</span></div>
-                        <h2 class="lh-section-title reveal-item">Skin in the game is the only thing that works.</h2>
-                        <p class="lh-section-subtitle reveal-item">Stop pretending you will do it tomorrow. Lock capital today, execute your goals, and win.</p>
-                    </div>
-                    
-                    <!-- 3-Up Premium Stat Cards Grid -->
-                    <div class="lstats-cards-grid">
-                        <!-- Card 1 -->
-                        <div class="lstat-card reveal-item">
-                            <div class="lstat-card-header">
-                                <div class="lstat-num"><span data-count="74">0</span>%</div>
-                                <div class="lstat-card-icon" title="Win Rate">
-                                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#7A1220" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="m9 12 2 2 4-4"/></svg>
-                                </div>
-                            </div>
-                            <div class="lstat-card-footer">
-                                <div class="lstat-label">of contracts are won</div>
-                                <div class="lstat-sub">Go-getters who lock cash hit their targets way faster.</div>
-                            </div>
-                        </div>
-
-                        <!-- Card 2 -->
-                        <div class="lstat-card reveal-item">
-                            <div class="lstat-card-header">
-                                <div class="lstat-num">$<span data-count="127">0</span>k</div>
-                                <div class="lstat-card-icon" title="Capital Settled">
-                                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#7A1220" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
-                                </div>
-                            </div>
-                            <div class="lstat-card-footer">
-                                <div class="lstat-label">total capital settled</div>
-                                <div class="lstat-sub">Across revenue, follower, and subscriber contracts</div>
-                            </div>
-                        </div>
-
-                        <!-- Card 3 -->
-                        <div class="lstat-card reveal-item">
-                            <div class="lstat-card-header">
-                                <div class="lstat-num"><span data-count="18">0</span> days</div>
-                                <div class="lstat-card-icon" title="Average Time">
-                                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#7A1220" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-                                </div>
-                            </div>
-                            <div class="lstat-card-footer">
-                                <div class="lstat-label">average time to target</div>
-                                <div class="lstat-sub">Accountability compresses timelines.</div>
-                            </div>
-                        </div>
+            <!-- ═══ PROOF OF SETTLEMENT (STAMPED RECEIPTS & STATS) ═══ -->
+            <div class="lreal-results" data-r style="background: #F8F5F0; padding: clamp(40px,6vw,88px) clamp(20px,5vw,64px); font-family: ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;">
+                <div class="lw" style="max-width: 1240px; margin: 0 auto;">
+                    <!-- SECTION TAG -->
+                    <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 18px;" class="reveal-item">
+                        <span style="width: 24px; height: 1.5px; background: #7A1C2B; opacity: 0.5;"></span>
+                        <span style="font-family: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace; font-size: 11px; font-weight: 700; letter-spacing: 2.2px; color: #8C8577; text-transform: uppercase;">
+                            PROOF OF SETTLEMENT
+                        </span>
                     </div>
 
-                    <!-- Fused connecting element: stats -> ledger -->
-                    <div class="lledger-connector-wrap reveal-item">
-                        <div class="lledger-connector-line"></div>
-                        <span class="lledger-connector-label">Audited Evidence</span>
-                        <div class="lledger-connector-line"></div>
+                    <!-- HEAD STACK -->
+                    <div class="ps-head reveal-item" style="display: flex; justify-content: space-between; align-items: flex-end; gap: 40px; flex-wrap: wrap; margin-bottom: clamp(26px,3vw,42px);">
+                        <h2 style="font-size: clamp(30px,3.8vw,46px); font-weight: 800; letter-spacing: -0.03em; color: #1C2333; margin: 0; line-height: 1.06; max-width: 640px;">
+                            Skin in the game is the only thing<br />that <span style="color: #7A1C2B;">actually works.</span>
+                        </h2>
+                        <p style="font-size: 15.5px; color: #5A6072; margin: 0; max-width: 340px; line-height: 1.6;">
+                            Every contract settles the same way — automatically, on verified API data. Including the ones people lose.
+                        </p>
                     </div>
 
-                    <!-- Verified Ledger Feed (Compressed Option B) -->
-                    <div class="lledger-container-prod reveal-item">
-                        <div class="lledger-header-prod">
-                            <h3 class="lledger-h-title-prod">Live Settlement Activity</h3>
-                            <div class="lledger-h-desc-prod">Verified platform outcomes.</div>
+                    <!-- 3 STAMPED RECEIPT CARDS GRID -->
+                    <div class="ps-grid" style="display: grid; grid-template-columns: repeat(3, 1fr); gap: clamp(16px,2vw,26px);">
+                        
+                        <!-- RECEIPT 1: @revpilot (WIN) -->
+                        <article class="ps-card reveal-item" style="position: relative; background: #FFFDFA; border: 1px solid rgba(28,35,51,0.11); border-radius: 6px; box-shadow: 0 14px 34px -22px rgba(28,35,51,0.4); display: flex; flex-direction: column; transition: transform .22s cubic-bezier(.2,.7,.3,1), box-shadow .22s ease;">
+                            <!-- HEADER -->
+                            <div style="padding: 16px 18px 12px; border-bottom: 1px solid rgba(28,35,51,0.11);">
+                                <div style="display: flex; justify-content: space-between; align-items: center;">
+                                    <span style="font-family: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace; font-size: 9.5px; font-weight: 700; letter-spacing: 1.7px; color: #7A1C2B;">SETTLEMENT RECEIPT</span>
+                                    <span style="font-family: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace; font-size: 10px; color: #8C8577; font-variant-numeric: tabular-nums;">№ C-34D6</span>
+                                </div>
+                                <div style="margin-top: 10px; font-size: 15.5px; font-weight: 700; color: #1C2333;">
+                                    +20% revenue in 30 days
+                                </div>
+                                <div style="margin-top: 4px; font-family: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace; font-size: 11px; color: #8C8577;">
+                                    @revpilot · via Stripe API
+                                </div>
+                            </div>
+
+                            <!-- BODY ROWS -->
+                            <div style="padding: 14px 18px 16px; display: grid; gap: 9px;">
+                                <div style="display: flex; justify-content: space-between; align-items: baseline; gap: 12px;">
+                                    <span style="font-family: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace; font-size: 9.5px; letter-spacing: 1.2px; color: #8C8577;">CAPITAL STAKED</span>
+                                    <span style="font-family: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace; font-size: 12.5px; font-weight: 600; color: #1C2333; text-align: right; font-variant-numeric: tabular-nums;">$2,000.00</span>
+                                </div>
+                                <div style="display: flex; justify-content: space-between; align-items: baseline; gap: 12px;">
+                                    <span style="font-family: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace; font-size: 9.5px; letter-spacing: 1.2px; color: #8C8577;">VERIFIED BY</span>
+                                    <span style="font-size: 13px; font-weight: 600; color: #1C2333; text-align: right;">Stripe oracle</span>
+                                </div>
+                                <div style="display: flex; justify-content: space-between; align-items: baseline; gap: 12px;">
+                                    <span style="font-family: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace; font-size: 9.5px; letter-spacing: 1.2px; color: #8C8577;">SETTLED ON</span>
+                                    <span style="font-family: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace; font-size: 12.5px; font-weight: 600; color: #1C2333; text-align: right; font-variant-numeric: tabular-nums;">Mar 14, 2026</span>
+                                </div>
+                            </div>
+
+                            <!-- TEAR LINE WITH NOTCHES -->
+                            <div style="position: relative; height: 1px;">
+                                <div style="position: absolute; left: 12px; right: 12px; top: 0; height: 1px; background: repeating-linear-gradient(90deg, rgba(28,35,51,0.11) 0 5px, transparent 5px 10px);"></div>
+                                <span class="ps-notch ps-notch-left"></span>
+                                <span class="ps-notch ps-notch-right"></span>
+                            </div>
+
+                            <!-- OUTCOME BLOCK WITH WAX SEAL -->
+                            <div style="position: relative; padding: 16px 18px 20px; background: rgba(63,157,90,0.09); border-radius: 0 0 6px 6px; min-height: 96px;">
+                                <div style="font-size: 22px; font-weight: 800; letter-spacing: -0.02em; color: #3F9D5A; font-variant-numeric: tabular-nums;">+$2,240.00</div>
+                                <div style="margin-top: 5px; font-family: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace; font-size: 9px; font-weight: 700; letter-spacing: 1.3px; color: #8C8577; max-width: 150px;">PRINCIPAL + YIELD RETURNED</div>
+
+                                <div class="ps-seal" style="position: absolute; right: 14px; bottom: 14px; transform: rotate(-9deg); opacity: 0.95;">
+                                    <svg width="74" height="74" viewBox="0 0 80 80" aria-hidden style="display: block;">
+                                        <defs>
+                                            <radialGradient id="waxW1" cx="36%" cy="30%" r="78%">
+                                                <stop offset="0%" stop-color="#9A2B3D" />
+                                                <stop offset="100%" stop-color="#5E1521" />
+                                            </radialGradient>
+                                        </defs>
+                                        <path d="M40.00 6.00L44.34 9.81L49.58 7.38L52.67 12.26L58.38 11.40L59.97 16.95L65.70 17.73L65.66 23.51L70.93 25.88L69.26 31.41L73.65 35.16L70.50 40.00L73.65 44.84L69.26 48.59L70.93 54.12L65.66 56.49L65.70 62.27L59.97 63.05L58.38 68.60L52.67 67.74L49.58 72.62L44.34 70.19L40.00 74.00L35.66 70.19L30.42 72.62L27.33 67.74L21.62 68.60L20.03 63.05L14.30 62.27L14.34 56.49L9.07 54.12L10.74 48.59L6.35 44.84L9.50 40.00L6.35 35.16L10.74 31.41L9.07 25.88L14.34 23.51L14.30 17.73L20.03 16.95L21.62 11.40L27.33 12.26L30.42 7.38L35.66 9.81Z" fill="url(#waxW1)" opacity="0.95" />
+                                        <circle cx="40" cy="40" r="25" fill="none" stroke="rgba(251,232,228,0.35)" stroke-width="1" />
+                                        <text x="40" y="36.5" text-anchor="middle" font-family="ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace" font-size="9.5" font-weight="700" letter-spacing="1.2" fill="#FBE8E4">SETTLED</text>
+                                        <line x1="26" y1="41.5" x2="54" y2="41.5" stroke="rgba(251,232,228,0.4)" stroke-width="0.8" />
+                                        <text x="40" y="52" text-anchor="middle" font-family="ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace" font-size="7" letter-spacing="1" fill="rgba(251,232,228,0.85)">VERIFIED</text>
+                                        <circle cx="40" cy="40" r="33" fill="none" stroke="rgba(0,0,0,0.10)" stroke-width="1" />
+                                    </svg>
+                                </div>
+                            </div>
+                        </article>
+
+                        <!-- RECEIPT 2: @deltacreator (WIN) -->
+                        <article class="ps-card reveal-item" style="position: relative; background: #FFFDFA; border: 1px solid rgba(28,35,51,0.11); border-radius: 6px; box-shadow: 0 14px 34px -22px rgba(28,35,51,0.4); display: flex; flex-direction: column; transition: transform .22s cubic-bezier(.2,.7,.3,1), box-shadow .22s ease;">
+                            <!-- HEADER -->
+                            <div style="padding: 16px 18px 12px; border-bottom: 1px solid rgba(28,35,51,0.11);">
+                                <div style="display: flex; justify-content: space-between; align-items: center;">
+                                    <span style="font-family: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace; font-size: 9.5px; font-weight: 700; letter-spacing: 1.7px; color: #7A1C2B;">SETTLEMENT RECEIPT</span>
+                                    <span style="font-family: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace; font-size: 10px; color: #8C8577; font-variant-numeric: tabular-nums;">№ C-9F21</span>
+                                </div>
+                                <div style="margin-top: 10px; font-size: 15.5px; font-weight: 700; color: #1C2333;">
+                                    50,000 subscribers in 60 days
+                                </div>
+                                <div style="margin-top: 4px; font-family: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace; font-size: 11px; color: #8C8577;">
+                                    @deltacreator · via YouTube API
+                                </div>
+                            </div>
+
+                            <!-- BODY ROWS -->
+                            <div style="padding: 14px 18px 16px; display: grid; gap: 9px;">
+                                <div style="display: flex; justify-content: space-between; align-items: baseline; gap: 12px;">
+                                    <span style="font-family: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace; font-size: 9.5px; letter-spacing: 1.2px; color: #8C8577;">CAPITAL STAKED</span>
+                                    <span style="font-family: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace; font-size: 12.5px; font-weight: 600; color: #1C2333; text-align: right; font-variant-numeric: tabular-nums;">$1,000.00</span>
+                                </div>
+                                <div style="display: flex; justify-content: space-between; align-items: baseline; gap: 12px;">
+                                    <span style="font-family: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace; font-size: 9.5px; letter-spacing: 1.2px; color: #8C8577;">VERIFIED BY</span>
+                                    <span style="font-size: 13px; font-weight: 600; color: #1C2333; text-align: right;">YouTube oracle</span>
+                                </div>
+                                <div style="display: flex; justify-content: space-between; align-items: baseline; gap: 12px;">
+                                    <span style="font-family: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace; font-size: 9.5px; letter-spacing: 1.2px; color: #8C8577;">SETTLED ON</span>
+                                    <span style="font-family: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace; font-size: 12.5px; font-weight: 600; color: #1C2333; text-align: right; font-variant-numeric: tabular-nums;">Mar 09, 2026</span>
+                                </div>
+                            </div>
+
+                            <!-- TEAR LINE WITH NOTCHES -->
+                            <div style="position: relative; height: 1px;">
+                                <div style="position: absolute; left: 12px; right: 12px; top: 0; height: 1px; background: repeating-linear-gradient(90deg, rgba(28,35,51,0.11) 0 5px, transparent 5px 10px);"></div>
+                                <span class="ps-notch ps-notch-left"></span>
+                                <span class="ps-notch ps-notch-right"></span>
+                            </div>
+
+                            <!-- OUTCOME BLOCK WITH WAX SEAL -->
+                            <div style="position: relative; padding: 16px 18px 20px; background: rgba(63,157,90,0.09); border-radius: 0 0 6px 6px; min-height: 96px;">
+                                <div style="font-size: 22px; font-weight: 800; letter-spacing: -0.02em; color: #3F9D5A; font-variant-numeric: tabular-nums;">+$1,120.00</div>
+                                <div style="margin-top: 5px; font-family: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace; font-size: 9px; font-weight: 700; letter-spacing: 1.3px; color: #8C8577; max-width: 150px;">PRINCIPAL + YIELD RETURNED</div>
+
+                                <div class="ps-seal" style="position: absolute; right: 14px; bottom: 14px; transform: rotate(-9deg); opacity: 0.95;">
+                                    <svg width="74" height="74" viewBox="0 0 80 80" aria-hidden style="display: block;">
+                                        <defs>
+                                            <radialGradient id="waxW2" cx="36%" cy="30%" r="78%">
+                                                <stop offset="0%" stop-color="#9A2B3D" />
+                                                <stop offset="100%" stop-color="#5E1521" />
+                                            </radialGradient>
+                                        </defs>
+                                        <path d="M40.00 6.00L44.34 9.81L49.58 7.38L52.67 12.26L58.38 11.40L59.97 16.95L65.70 17.73L65.66 23.51L70.93 25.88L69.26 31.41L73.65 35.16L70.50 40.00L73.65 44.84L69.26 48.59L70.93 54.12L65.66 56.49L65.70 62.27L59.97 63.05L58.38 68.60L52.67 67.74L49.58 72.62L44.34 70.19L40.00 74.00L35.66 70.19L30.42 72.62L27.33 67.74L21.62 68.60L20.03 63.05L14.30 62.27L14.34 56.49L9.07 54.12L10.74 48.59L6.35 44.84L9.50 40.00L6.35 35.16L10.74 31.41L9.07 25.88L14.34 23.51L14.30 17.73L20.03 16.95L21.62 11.40L27.33 12.26L30.42 7.38L35.66 9.81Z" fill="url(#waxW2)" opacity="0.95" />
+                                        <circle cx="40" cy="40" r="25" fill="none" stroke="rgba(251,232,228,0.35)" stroke-width="1" />
+                                        <text x="40" y="36.5" text-anchor="middle" font-family="ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace" font-size="9.5" font-weight="700" letter-spacing="1.2" fill="#FBE8E4">SETTLED</text>
+                                        <line x1="26" y1="41.5" x2="54" y2="41.5" stroke="rgba(251,232,228,0.4)" stroke-width="0.8" />
+                                        <text x="40" y="52" text-anchor="middle" font-family="ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace" font-size="7" letter-spacing="1" fill="rgba(251,232,228,0.85)">VERIFIED</text>
+                                        <circle cx="40" cy="40" r="33" fill="none" stroke="rgba(0,0,0,0.10)" stroke-width="1" />
+                                    </svg>
+                                </div>
+                            </div>
+                        </article>
+
+                        <!-- RECEIPT 3: @marcusk (FORFEIT / LOSS) -->
+                        <article class="ps-card reveal-item" style="position: relative; background: #FFFDFA; border: 1px solid rgba(28,35,51,0.11); border-radius: 6px; box-shadow: 0 14px 34px -22px rgba(28,35,51,0.4); display: flex; flex-direction: column; transition: transform .22s cubic-bezier(.2,.7,.3,1), box-shadow .22s ease;">
+                            <!-- HEADER -->
+                            <div style="padding: 16px 18px 12px; border-bottom: 1px solid rgba(28,35,51,0.11);">
+                                <div style="display: flex; justify-content: space-between; align-items: center;">
+                                    <span style="font-family: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace; font-size: 9.5px; font-weight: 700; letter-spacing: 1.7px; color: #7A1C2B;">SETTLEMENT RECEIPT</span>
+                                    <span style="font-family: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace; font-size: 10px; color: #8C8577; font-variant-numeric: tabular-nums;">№ C-7B08</span>
+                                </div>
+                                <div style="margin-top: 10px; font-size: 15.5px; font-weight: 700; color: #1C2333;">
+                                    25,000 followers in 30 days
+                                </div>
+                                <div style="margin-top: 4px; font-family: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace; font-size: 11px; color: #8C8577;">
+                                    @marcusk · via X API
+                                </div>
+                            </div>
+
+                            <!-- BODY ROWS -->
+                            <div style="padding: 14px 18px 16px; display: grid; gap: 9px;">
+                                <div style="display: flex; justify-content: space-between; align-items: baseline; gap: 12px;">
+                                    <span style="font-family: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace; font-size: 9.5px; letter-spacing: 1.2px; color: #8C8577;">CAPITAL STAKED</span>
+                                    <span style="font-family: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace; font-size: 12.5px; font-weight: 600; color: #1C2333; text-align: right; font-variant-numeric: tabular-nums;">$1,500.00</span>
+                                </div>
+                                <div style="display: flex; justify-content: space-between; align-items: baseline; gap: 12px;">
+                                    <span style="font-family: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace; font-size: 9.5px; letter-spacing: 1.2px; color: #8C8577;">VERIFIED BY</span>
+                                    <span style="font-size: 13px; font-weight: 600; color: #1C2333; text-align: right;">X oracle</span>
+                                </div>
+                                <div style="display: flex; justify-content: space-between; align-items: baseline; gap: 12px;">
+                                    <span style="font-family: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace; font-size: 9.5px; letter-spacing: 1.2px; color: #8C8577;">SETTLED ON</span>
+                                    <span style="font-family: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace; font-size: 12.5px; font-weight: 600; color: #1C2333; text-align: right; font-variant-numeric: tabular-nums;">Mar 02, 2026</span>
+                                </div>
+                            </div>
+
+                            <!-- TEAR LINE WITH NOTCHES -->
+                            <div style="position: relative; height: 1px;">
+                                <div style="position: absolute; left: 12px; right: 12px; top: 0; height: 1px; background: repeating-linear-gradient(90deg, rgba(28,35,51,0.11) 0 5px, transparent 5px 10px);"></div>
+                                <span class="ps-notch ps-notch-left"></span>
+                                <span class="ps-notch ps-notch-right"></span>
+                            </div>
+
+                            <!-- OUTCOME BLOCK WITH WAX SEAL (FORFEIT) -->
+                            <div style="position: relative; padding: 16px 18px 20px; background: rgba(168,68,63,0.06); border-radius: 0 0 6px 6px; min-height: 96px;">
+                                <div style="font-size: 22px; font-weight: 800; letter-spacing: -0.02em; color: #A8443F; font-variant-numeric: tabular-nums;">−$1,500.00</div>
+                                <div style="margin-top: 5px; font-family: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace; font-size: 9px; font-weight: 700; letter-spacing: 1.3px; color: #8C8577; max-width: 150px;">FORFEITED TO MATCH POOL</div>
+
+                                <div class="ps-seal" style="position: absolute; right: 14px; bottom: 14px; transform: rotate(-9deg); opacity: 0.95;">
+                                    <svg width="74" height="74" viewBox="0 0 80 80" aria-hidden style="display: block;">
+                                        <defs>
+                                            <radialGradient id="waxF" cx="36%" cy="30%" r="78%">
+                                                <stop offset="0%" stop-color="#8C8781" />
+                                                <stop offset="100%" stop-color="#6E6A62" />
+                                            </radialGradient>
+                                        </defs>
+                                        <path d="M40.00 6.00L44.34 9.81L49.58 7.38L52.67 12.26L58.38 11.40L59.97 16.95L65.70 17.73L65.66 23.51L70.93 25.88L69.26 31.41L73.65 35.16L70.50 40.00L73.65 44.84L69.26 48.59L70.93 54.12L65.66 56.49L65.70 62.27L59.97 63.05L58.38 68.60L52.67 67.74L49.58 72.62L44.34 70.19L40.00 74.00L35.66 70.19L30.42 72.62L27.33 67.74L21.62 68.60L20.03 63.05L14.30 62.27L14.34 56.49L9.07 54.12L10.74 48.59L6.35 44.84L9.50 40.00L6.35 35.16L10.74 31.41L9.07 25.88L14.34 23.51L14.30 17.73L20.03 16.95L21.62 11.40L27.33 12.26L30.42 7.38L35.66 9.81Z" fill="url(#waxF)" opacity="0.95" />
+                                        <circle cx="40" cy="40" r="25" fill="none" stroke="rgba(251,232,228,0.35)" stroke-width="1" />
+                                        <text x="40" y="36.5" text-anchor="middle" font-family="ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace" font-size="9.5" font-weight="700" letter-spacing="1.2" fill="#FBE8E4">FORFEIT</text>
+                                        <line x1="26" y1="41.5" x2="54" y2="41.5" stroke="rgba(251,232,228,0.4)" stroke-width="0.8" />
+                                        <text x="40" y="52" text-anchor="middle" font-family="ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace" font-size="7" letter-spacing="1" fill="rgba(251,232,228,0.85)">VERIFIED</text>
+                                        <circle cx="40" cy="40" r="33" fill="none" stroke="rgba(0,0,0,0.10)" stroke-width="1" />
+                                    </svg>
+                                </div>
+                            </div>
+                        </article>
+
+                    </div>
+
+                    <!-- 4 STATS STRIP BELOW -->
+                    <div class="ps-stats reveal-item" style="margin-top: clamp(34px,4vw,54px); padding-top: clamp(24px,3vw,34px); border-top: 1px solid rgba(28,35,51,0.11); display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px;">
+                        <div>
+                            <div style="font-size: clamp(24px,2.6vw,32px); font-weight: 800; letter-spacing: -0.02em; color: #7A1C2B; line-height: 1; font-variant-numeric: tabular-nums;">74%</div>
+                            <div style="margin-top: 8px; font-family: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace; font-size: 9.5px; font-weight: 700; letter-spacing: 1.5px; color: #8C8577; text-transform: uppercase;">OF CONTRACTS ARE WON</div>
                         </div>
-                        <div class="lledger-table-wrap-prod">
-                            <table class="lledger-table-prod">
-                                <thead>
-                                    <tr>
-                                        <th>Contract ID</th>
-                                        <th>Metric</th>
-                                        <th>Commitment</th>
-                                        <th>Outcome</th>
-                                    </tr>
-                                </thead>
-                                <tbody id="lledger-tbody-prod">
-                                    <!-- Row 1 -->
-                                    <tr class="reveal-item v">
-                                        <td data-label="Contract ID" class="td-id"><span class="td-value">#C-34D6 <span class="td-user">@revpilot</span></span></td>
-                                        <td data-label="Metric" class="td-metric">
-                                            <span class="td-value">
-                                                <span class="td-icon-box">
-                                                    <svg viewBox="54 36 360.02 149.84" xmlns="http://www.w3.org/2000/svg" class="td-brand-svg"><path fill="#635BFF" d="M414,113.4c0-25.6-12.4-45.8-36.1-45.8c-23.8,0-38.2,20.2-38.2,45.6c0,30.1,17,45.3,41.4,45.3c11.9,0,20.9-2.7,27.7-6.5v-20c-6.8,3.4-14.6,5.5-24.5,5.5c-9.7,0-18.3-3.4-19.4-15.2h48.9C413.8,121,414,115.8,414,113.4z M364.6,103.9c0-11.3,6.9-16,13.2-16c6.1,0,12.6,4.7,12.6,16H364.6z M301.1,67.6c-9.8,0-16.1,4.6-19.6,7.8l-1.3-6.2h-22v116.6l25-5.3l0.1-28.3c3.6,2.6,8.9,6.3,17.7,6.3c17.9,0,34.2-14.4,34.2-46.1C335.1,83.4,318.6,67.6,301.1,67.6z M295.1,136.5c-5.9,0-9.4-2.1-11.8-4.7l-0.1-37.1c2.6-2.9,6.2-4.9,11.9-4.9c9.1,0,15.4,10.2,15.4,23.3C310.5,126.5,304.3,136.5,295.1,136.5z M223.8,61.7l25.1-5.4v-20.3l-25.1,5.3 M223.8,69.3h25.1v87.5h-25.1z M196.9,76.7l-1.6-7.4h-21.6v87.5h25V97.5c5.9-7.7,15.9-6.3,19-5.2v-23C214.5,68.1,202.8,65.9,196.9,76.7z M146.9,47.6l-24.4,5.2l-0.1,80.1c0,14.8,11.1,25.7,25.9,25.7c8.2,0,14.2-1.5,17.5-3.3V135c-3.2,1.3-19,5.9-19-8.9V90.6h19V69.3h-19L146.9,47.6z M79.3,94.7c0-3.9,3.2-5.4,8.5-5.4c7.6,0,17.2,2.3,24.8,6.4V72.2c-8.3-3.3-16.5-4.6-24.8-4.6C67.5,67.6,54,78.2,54,95.9c0,27.6,38,23.2,38,35.1c0,4.6-4,6.1-9.6,6.1c-8.3,0-18.9-3.4-27.3-8v23.8c9.3,4,18.7,5.7,27.3,5.7c20.8,0,35.1-10.3,35.1-28.2C117.4,100.6,79.3,105.9,79.3,94.7z"/></svg>
-                                                </span>
-                                                Stripe Revenue
-                                            </span>
-                                        </td>
-                                        <td data-label="Commitment" class="td-capital"><span class="td-value">$2,000.00</span></td>
-                                        <td data-label="Outcome" class="td-outcome"><span class="lstatus-badge status-active"><span class="status-dot"></span> Active</span></td>
-                                    </tr>
-                                    <!-- Row 2 -->
-                                    <tr class="reveal-item v">
-                                        <td data-label="Contract ID" class="td-id"><span class="td-value">#C-9F21 <span class="td-user">@marcusk</span></span></td>
-                                        <td data-label="Metric" class="td-metric">
-                                            <span class="td-value">
-                                                <span class="td-icon-box">
-                                                    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" class="td-brand-svg"><path fill="#FF0000" d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
-                                                </span>
-                                                YouTube Subs
-                                            </span>
-                                        </td>
-                                        <td data-label="Commitment" class="td-capital"><span class="td-value">10,000 subs</span></td>
-                                        <td data-label="Outcome" class="td-outcome"><span class="lstatus-badge status-won"><span class="status-dot"></span> Won</span></td>
-                                    </tr>
-                                    <!-- Row 3 -->
-                                    <tr class="reveal-item v">
-                                        <td data-label="Contract ID" class="td-id"><span class="td-value">#C-7B08 <span class="td-user">@dev_sarah</span></span></td>
-                                        <td data-label="Metric" class="td-metric">
-                                            <span class="td-value">
-                                                <span class="td-icon-box">
-                                                    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" class="td-brand-svg"><path fill="#0F172A" d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
-                                                </span>
-                                                X Followers
-                                            </span>
-                                        </td>
-                                        <td data-label="Commitment" class="td-capital"><span class="td-value">25,000 followers</span></td>
-                                        <td data-label="Outcome" class="td-outcome"><span class="lstatus-badge status-settled"><span class="status-dot"></span> Settled</span></td>
-                                    </tr>
-                                    <!-- Row 4 -->
-                                    <tr class="reveal-item v">
-                                        <td data-label="Contract ID" class="td-id"><span class="td-value">#C-18E4 <span class="td-user">@shopmaster</span></span></td>
-                                        <td data-label="Metric" class="td-metric">
-                                            <span class="td-value">
-                                                <span class="td-icon-box">
-                                                    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" class="td-brand-svg"><path fill="#95BF47" d="M15.337 23.979l7.216-1.561s-2.604-17.613-2.625-17.73c-.018-.116-.114-.192-.211-.192s-1.929-.136-1.929-.136-1.275-1.274-1.439-1.411c-.045-.037-.075-.057-.121-.074l-.914 21.104h.023zM11.71 11.305s-.81-.424-1.774-.424c-1.447 0-1.504.906-1.504 1.141 0 1.232 3.24 1.715 3.24 4.629 0 2.295-1.44 3.76-3.406 3.76-2.354 0-3.54-1.465-3.54-1.465l.646-2.086s1.245 1.066 2.28 1.066c.675 0 .975-.545.975-.932 0-1.619-2.654-1.694-2.654-4.359-.034-2.237 1.571-4.416 4.827-4.416 1.257 0 1.875.361 1.875.361l-.945 2.715-.02.01zM11.17.83c.136 0 .271.038.405.135-.984.465-2.064 1.639-2.508 3.992-.656.213-1.293.405-1.889.578C7.697 3.75 8.951.84 11.17.84V.83zm1.235 2.949v.135c-.754.232-1.583.484-2.394.736.466-1.777 1.333-2.645 2.085-2.971.193.501.309 1.176.309 2.1zm.539-2.234c.694.074 1.141.867 1.429 1.755-.349.114-.735.231-1.158.366v-.252c0-.752-.096-1.371-.271-1.871v.002zm2.992 1.289c-.02 0-.06.021-.078.021s-.289.075-.714.21c-.423-1.233-1.176-2.37-2.508-2.37h-.115C12.135.209 11.669 0 11.265 0 8.159 0 6.675 3.877 6.21 5.846c-1.194.365-2.063.636-2.16.674-.675.213-.694.232-.772.87-.075.462-1.83 14.063-1.83 14.063L15.009 24l.927-21.166z"/></svg>
-                                                </span>
-                                                Shopify Sales
-                                            </span>
-                                        </td>
-                                        <td data-label="Commitment" class="td-capital"><span class="td-value">$8,500.00</span></td>
-                                        <td data-label="Outcome" class="td-outcome"><span class="lstatus-badge status-won"><span class="status-dot"></span> Won</span></td>
-                                    </tr>
-                                    <!-- Row 5 -->
-                                    <tr class="reveal-item v">
-                                        <td data-label="Contract ID" class="td-id"><span class="td-value">#C-52A9 <span class="td-user">@growth_alex</span></span></td>
-                                        <td data-label="Metric" class="td-metric">
-                                            <span class="td-value">
-                                                <span class="td-icon-box">
-                                                    <svg viewBox="54 36 360.02 149.84" xmlns="http://www.w3.org/2000/svg" class="td-brand-svg"><path fill="#635BFF" d="M414,113.4c0-25.6-12.4-45.8-36.1-45.8c-23.8,0-38.2,20.2-38.2,45.6c0,30.1,17,45.3,41.4,45.3c11.9,0,20.9-2.7,27.7-6.5v-20c-6.8,3.4-14.6,5.5-24.5,5.5c-9.7,0-18.3-3.4-19.4-15.2h48.9C413.8,121,414,115.8,414,113.4z M364.6,103.9c0-11.3,6.9-16,13.2-16c6.1,0,12.6,4.7,12.6,16H364.6z M301.1,67.6c-9.8,0-16.1,4.6-19.6,7.8l-1.3-6.2h-22v116.6l25-5.3l0.1-28.3c3.6,2.6,8.9,6.3,17.7,6.3c17.9,0,34.2-14.4,34.2-46.1C335.1,83.4,318.6,67.6,301.1,67.6z M295.1,136.5c-5.9,0-9.4-2.1-11.8-4.7l-0.1-37.1c2.6-2.9,6.2-4.9,11.9-4.9c9.1,0,15.4,10.2,15.4,23.3C310.5,126.5,304.3,136.5,295.1,136.5z M223.8,61.7l25.1-5.4v-20.3l-25.1,5.3 M223.8,69.3h25.1v87.5h-25.1z M196.9,76.7l-1.6-7.4h-21.6v87.5h25V97.5c5.9-7.7,15.9-6.3,19-5.2v-23C214.5,68.1,202.8,65.9,196.9,76.7z M146.9,47.6l-24.4,5.2l-0.1,80.1c0,14.8,11.1,25.7,25.9,25.7c8.2,0,14.2-1.5,17.5-3.3V135c-3.2,1.3-19,5.9-19-8.9V90.6h19V69.3h-19L146.9,47.6z M79.3,94.7c0-3.9,3.2-5.4,8.5-5.4c7.6,0,17.2,2.3,24.8,6.4V72.2c-8.3-3.3-16.5-4.6-24.8-4.6C67.5,67.6,54,78.2,54,95.9c0,27.6,38,23.2,38,35.1c0,4.6-4,6.1-9.6,6.1c-8.3,0-18.9-3.4-27.3-8v23.8c9.3,4,18.7,5.7,27.3,5.7c20.8,0,35.1-10.3,35.1-28.2C117.4,100.6,79.3,105.9,79.3,94.7z"/></svg>
-                                                </span>
-                                                Stripe Revenue
-                                            </span>
-                                        </td>
-                                        <td data-label="Commitment" class="td-capital"><span class="td-value">$5,000.00</span></td>
-                                        <td data-label="Outcome" class="td-outcome"><span class="lstatus-badge status-active"><span class="status-dot"></span> Active</span></td>
-                                    </tr>
-                                    <!-- Row 6 -->
-                                    <tr class="reveal-item v">
-                                        <td data-label="Contract ID" class="td-id"><span class="td-value">#C-84D2 <span class="td-user">@tech_trent</span></span></td>
-                                        <td data-label="Metric" class="td-metric">
-                                            <span class="td-value">
-                                                <span class="td-icon-box">
-                                                    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" class="td-brand-svg"><path fill="#FF0000" d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
-                                                </span>
-                                                YouTube Subs
-                                            </span>
-                                        </td>
-                                        <td data-label="Commitment" class="td-capital"><span class="td-value">50,000 subs</span></td>
-                                        <td data-label="Outcome" class="td-outcome"><span class="lstatus-badge status-settled"><span class="status-dot"></span> Settled</span></td>
-                                    </tr>
-                                </tbody>
-                            </table>
+                        <div>
+                            <div style="font-size: clamp(24px,2.6vw,32px); font-weight: 800; letter-spacing: -0.02em; color: #7A1C2B; line-height: 1; font-variant-numeric: tabular-nums;">$127k</div>
+                            <div style="margin-top: 8px; font-family: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace; font-size: 9.5px; font-weight: 700; letter-spacing: 1.5px; color: #8C8577; text-transform: uppercase;">TOTAL CAPITAL SETTLED</div>
                         </div>
-                        <div class="lledger-footer-prod">
-                            <a href="#" onclick="window.router.navigate('/ledger'); return false;" class="lledger-more-link-prod">View all settlements →</a>
+                        <div>
+                            <div style="font-size: clamp(24px,2.6vw,32px); font-weight: 800; letter-spacing: -0.02em; color: #7A1C2B; line-height: 1; font-variant-numeric: tabular-nums;">18 days</div>
+                            <div style="margin-top: 8px; font-family: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace; font-size: 9.5px; font-weight: 700; letter-spacing: 1.5px; color: #8C8577; text-transform: uppercase;">AVERAGE TIME TO TARGET</div>
+                        </div>
+                        <div>
+                            <div style="font-size: clamp(24px,2.6vw,32px); font-weight: 800; letter-spacing: -0.02em; color: #7A1C2B; line-height: 1; font-variant-numeric: tabular-nums;">812</div>
+                            <div style="margin-top: 8px; font-family: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace; font-size: 9.5px; font-weight: 700; letter-spacing: 1.5px; color: #8C8577; text-transform: uppercase;">VERIFIED COUNTERPARTIES</div>
                         </div>
                     </div>
                 </div>

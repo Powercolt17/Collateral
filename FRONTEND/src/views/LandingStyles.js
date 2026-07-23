@@ -6823,4 +6823,37 @@ html, body {
 .sor-section, .lemo-reframe, .lengine-section, .lcontracts, .lreal-results, .lhow-it-works-section {
   overflow: visible !important;
 }
+
+/* ═══ PROOF OF SETTLEMENT (STAMPED RECEIPTS) ═══ */
+.ps-notch {
+  position: absolute;
+  top: -9px;
+  width: 18px;
+  height: 18px;
+  border-radius: 999px;
+  background: #F8F5F0;
+  border: 1px solid rgba(28,35,51,0.11);
+  clip-path: inset(0 0 0 0);
+}
+.ps-notch-left {
+  left: -9px;
+}
+.ps-notch-right {
+  left: auto;
+  right: -9px;
+}
+.ps-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 22px 46px -24px rgba(28,35,51,0.45) !important;
+}
+@media (prefers-reduced-motion: reduce) {
+  .ps-card:hover { transform: none !important; }
+}
+@media (max-width: 900px) {
+  .ps-grid { grid-template-columns: 1fr !important; }
+}
+@media (max-width: 760px) {
+  .ps-stats { grid-template-columns: 1fr 1fr !important; gap: 28px 20px !important; }
+}
+
 `;

@@ -6106,7 +6106,7 @@ export const landingCSS = `
 .sor-section {
     background: #F4EFE7;
     padding: clamp(36px, 6vw, 72px) clamp(20px, 4vw, 48px);
-    font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    font-family: 'Inter', sans-serif;
     border-top: 1px solid rgba(28, 35, 51, 0.08);
     border-bottom: 1px solid rgba(28, 35, 51, 0.08);
 }
@@ -6147,9 +6147,9 @@ export const landingCSS = `
 
 .sor-mode-badge {
     display: inline-block;
-    font-family: ui-sans-serif, system-ui, -apple-system, sans-serif;
+    font-family: 'JetBrains Mono', monospace;
     font-size: 10px;
-    font-weight: 700;
+    font-weight: 800;
     letter-spacing: 1.4px;
     color: #7A1C2B;
     background: rgba(122,28,43,0.08);
@@ -6159,11 +6159,12 @@ export const landingCSS = `
 }
 
 .sor-mode-title {
-    font-family: ui-sans-serif, system-ui, -apple-system, sans-serif;
+    font-family: 'Plus Jakarta Sans', sans-serif;
     font-size: 16.5px;
-    font-weight: 700;
+    font-weight: 800;
     color: #1C2333;
     margin-bottom: 12px;
+    letter-spacing: -0.02em;
 }
 
 .sor-bullets {
@@ -6177,7 +6178,7 @@ export const landingCSS = `
     display: flex;
     gap: 9px;
     align-items: flex-start;
-    font-family: ui-sans-serif, system-ui, -apple-system, sans-serif;
+    font-family: 'Inter', sans-serif;
     font-size: 13px;
     color: #5A6072;
     line-height: 1.35;
@@ -6185,9 +6186,9 @@ export const landingCSS = `
 
 .sor-cta {
     margin-top: 14px;
-    font-family: ui-sans-serif, system-ui, -apple-system, sans-serif;
+    font-family: 'Plus Jakarta Sans', sans-serif;
     font-size: 12.5px;
-    font-weight: 700;
+    font-weight: 800;
     letter-spacing: 0.3px;
     color: #7A1C2B;
     display: flex;
@@ -6210,10 +6211,10 @@ export const landingCSS = `
 }
 
 .sor-primary {
-    font-family: ui-sans-serif, system-ui, -apple-system, sans-serif;
+    font-family: 'Plus Jakarta Sans', sans-serif;
     font-size: 14px;
-    font-weight: 700;
-    letter-spacing: 0.4px;
+    font-weight: 800;
+    letter-spacing: 0.5px;
     color: #FBF9F5;
     background: #7A1C2B;
     border: none;
@@ -6261,7 +6262,7 @@ export const landingCSS = `
     display: inline-flex;
     align-items: center;
     gap: 7px;
-    font-family: ui-sans-serif, system-ui, -apple-system, sans-serif;
+    font-family: 'JetBrains Mono', monospace;
     font-size: 10px;
     font-weight: 700;
     letter-spacing: 1.7px;
@@ -6277,12 +6278,13 @@ export const landingCSS = `
 }
 
 .sor-word-top, .sor-word-bottom {
-    font-family: ui-sans-serif, system-ui, -apple-system, sans-serif;
+    font-family: 'Plus Jakarta Sans', sans-serif;
     font-size: clamp(58px, 9vw, 132px);
-    font-weight: 800;
+    font-weight: 900;
     letter-spacing: -0.045em;
     line-height: 0.92;
     color: #1C2333;
+    text-transform: uppercase;
 }
 
 .sor-vs-row {
@@ -6299,25 +6301,25 @@ export const landingCSS = `
     background: linear-gradient(90deg, transparent, rgba(28,35,51,0.16), transparent);
 }
 .sor-vs {
-    font-family: ui-sans-serif, system-ui, -apple-system, sans-serif;
+    font-family: 'Plus Jakarta Sans', sans-serif;
     font-size: 13px;
-    font-weight: 700;
+    font-weight: 800;
     letter-spacing: 4px;
     color: #7A1C2B;
     text-transform: uppercase;
 }
 
 .sor-figure-val {
-    font-family: ui-sans-serif, system-ui, -apple-system, sans-serif;
+    font-family: 'Plus Jakarta Sans', sans-serif;
     font-size: clamp(26px, 3.4vw, 40px);
-    font-weight: 800;
+    font-weight: 900;
     letter-spacing: -1px;
     color: #7A1C2B;
     line-height: 1;
 }
 .sor-figure-lbl {
     margin-top: 8px;
-    font-family: ui-sans-serif, system-ui, -apple-system, sans-serif;
+    font-family: 'JetBrains Mono', monospace;
     font-size: 10.5px;
     font-weight: 700;
     letter-spacing: 2.2px;
@@ -6327,7 +6329,7 @@ export const landingCSS = `
 
 .sor-outcome-text {
     margin-top: clamp(16px, 2.2vw, 26px);
-    font-family: ui-sans-serif, system-ui, -apple-system, sans-serif;
+    font-family: 'Inter', sans-serif;
     font-size: 14px;
     color: #5A6072;
     max-width: 420px;

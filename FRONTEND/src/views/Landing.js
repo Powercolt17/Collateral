@@ -327,17 +327,17 @@ export function renderLanding() {
                     <div>
                         <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 18px;">
                             <span style="width: 24px; height: 1.5px; background: #7A1C2B; opacity: 0.5;"></span>
-                            <span style="font-family: ui-sans-serif, system-ui, -apple-system, sans-serif; font-size: 11px; font-weight: 700; letter-spacing: 2.2px; color: #8C8577; text-transform: uppercase;">
+                            <span style="font-family: 'Plus Jakarta Sans', 'Inter', sans-serif; font-size: 11px; font-weight: 700; letter-spacing: 2.2px; color: #8C8577; text-transform: uppercase;">
                                 CONTRACT EXECUTION MODES
                             </span>
                         </div>
 
-                        <h2 style="font-family: ui-sans-serif, system-ui, -apple-system, sans-serif; font-size: clamp(38px,5vw,58px); line-height: 1.0; margin: 0 0 20px; letter-spacing: -0.03em; font-weight: 800;">
+                        <h2 style="font-family: 'Plus Jakarta Sans', sans-serif; font-size: clamp(38px,5.2vw,62px); line-height: 0.95; margin: 0 0 20px; letter-spacing: -0.035em; font-weight: 900; text-transform: uppercase;">
                             <span style="color: #1C2333;">SOLO OR<br></span>
                             <span style="color: #7A1C2B;">RIVALRY.</span>
                         </h2>
 
-                        <p style="font-family: ui-sans-serif, system-ui, -apple-system, sans-serif; font-size: 16px; line-height: 1.6; color: #5A6072; margin: 0 0 26px; max-width: 420px;">
+                        <p style="font-family: 'Inter', sans-serif; font-size: 16.5px; line-height: 1.55; color: #5A6072; margin: 0 0 26px; max-width: 420px;">
                             Put money behind your commitment. Complete the goal and the contract pays automatically. Miss it and the rules enforce themselves.
                         </p>
 

@@ -396,6 +396,306 @@ export function renderLanding() {
                 </div>
             </section>
 
+            <!-- ═══ PROOF OF SETTLEMENT (STAMPED RECEIPTS & STATS) ═══ -->
+            <div class="lreal-results" data-r style="background: #F8F5F0; padding: clamp(40px,6vw,88px) clamp(20px,5vw,64px); font-family: ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;">
+                <div class="lw" style="max-width: 1240px; margin: 0 auto;">
+                    <!-- SECTION TAG -->
+                    <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 18px;" class="reveal-item">
+                        <span style="width: 24px; height: 1.5px; background: #7A1C2B; opacity: 0.5;"></span>
+                        <span style="font-family: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace; font-size: 11px; font-weight: 700; letter-spacing: 2.2px; color: #8C8577; text-transform: uppercase;">
+                            PROOF OF SETTLEMENT
+                        </span>
+                    </div>
+
+                    <!-- HEAD STACK -->
+                    <div class="ps-head reveal-item" style="display: flex; justify-content: space-between; align-items: flex-end; gap: 40px; flex-wrap: wrap; margin-bottom: clamp(26px,3vw,42px);">
+                        <h2 style="font-size: clamp(30px,3.8vw,46px); font-weight: 800; letter-spacing: -0.03em; color: #1C2333; margin: 0; line-height: 1.06; max-width: 640px;">
+                            Skin in the game is the only thing<br />that <span style="color: #7A1C2B;">actually works.</span>
+                        </h2>
+                        <p style="font-size: 16.5px; color: #5A6072; margin: 0; max-width: 62ch; line-height: 1.6; letter-spacing: -0.011em; font-family: 'Inter', sans-serif;">
+                            Skin in the game is the only mechanism that enforces real execution. Every contract settles automatically on objective API telemetry — including the ones people lose.
+                        </p>
+                    </div>
+
+                    <!-- 3 STAMPED RECEIPT CARDS GRID -->
+                    <div class="ps-grid" style="display: grid; grid-template-columns: repeat(3, 1fr); gap: clamp(16px,2vw,26px);">
+                        
+                        <!-- RECEIPT 1: @revpilot (WIN) -->
+                        <article class="ps-card reveal-item" style="position: relative; background: #FFFDFA; border: 1px solid rgba(28,35,51,0.11); border-radius: 6px; box-shadow: 0 14px 34px -22px rgba(28,35,51,0.4); display: flex; flex-direction: column; transition: transform .22s cubic-bezier(.2,.7,.3,1), box-shadow .22s ease;">
+                            <!-- HEADER -->
+                            <div style="padding: 16px 18px 12px; border-bottom: 1px solid rgba(28,35,51,0.11);">
+                                <div style="display: flex; justify-content: space-between; align-items: center;">
+                                    <span style="font-family: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace; font-size: 9.5px; font-weight: 700; letter-spacing: 1.7px; color: #7A1C2B;">SETTLEMENT RECEIPT</span>
+                                    <span style="font-family: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace; font-size: 10px; color: #8C8577; font-variant-numeric: tabular-nums;">№ C-34D6</span>
+                                </div>
+                                <div style="margin-top: 10px; font-size: 15.5px; font-weight: 700; color: #1C2333;">
+                                    +20% revenue in 30 days
+                                </div>
+                                <div style="margin-top: 4px; font-family: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace; font-size: 11px; color: #8C8577;">
+                                    @revpilot · via Stripe API
+                                </div>
+                            </div>
+
+                            <!-- BODY ROWS -->
+                            <div style="padding: 14px 18px 16px; display: grid; gap: 9px;">
+                                <div style="display: flex; justify-content: space-between; align-items: baseline; gap: 12px;">
+                                    <span style="font-family: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace; font-size: 9.5px; letter-spacing: 1.2px; color: #8C8577;">CAPITAL STAKED</span>
+                                    <span style="font-family: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace; font-size: 12.5px; font-weight: 600; color: #1C2333; text-align: right; font-variant-numeric: tabular-nums;">$2,000.00</span>
+                                </div>
+                                <div style="display: flex; justify-content: space-between; align-items: baseline; gap: 12px;">
+                                    <span style="font-family: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace; font-size: 9.5px; letter-spacing: 1.2px; color: #8C8577;">VERIFIED BY</span>
+                                    <span style="font-size: 13px; font-weight: 600; color: #1C2333; text-align: right;">Stripe oracle</span>
+                                </div>
+                                <div style="display: flex; justify-content: space-between; align-items: baseline; gap: 12px;">
+                                    <span style="font-family: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace; font-size: 9.5px; letter-spacing: 1.2px; color: #8C8577;">SETTLED ON</span>
+                                    <span style="font-family: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace; font-size: 12.5px; font-weight: 600; color: #1C2333; text-align: right; font-variant-numeric: tabular-nums;">Mar 14, 2026</span>
+                                </div>
+                            </div>
+
+                            <!-- TEAR LINE WITH NOTCHES -->
+                            <div style="position: relative; height: 1px;">
+                                <div style="position: absolute; left: 12px; right: 12px; top: 0; height: 1px; background: repeating-linear-gradient(90deg, rgba(28,35,51,0.11) 0 5px, transparent 5px 10px);"></div>
+                                <span class="ps-notch ps-notch-left"></span>
+                                <span class="ps-notch ps-notch-right"></span>
+                            </div>
+
+                            <!-- OUTCOME BLOCK WITH WAX SEAL -->
+                            <div style="position: relative; padding: 16px 18px 20px; background: rgba(63,157,90,0.09); border-radius: 0 0 6px 6px; min-height: 96px;">
+                                <div style="font-size: 22px; font-weight: 800; letter-spacing: -0.02em; color: #3F9D5A; font-variant-numeric: tabular-nums;">+$2,240.00</div>
+                                <div style="margin-top: 5px; font-family: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace; font-size: 9px; font-weight: 700; letter-spacing: 1.3px; color: #8C8577; max-width: 150px;">PRINCIPAL + YIELD RETURNED</div>
+
+                                <div class="ps-seal" style="position: absolute; right: 8px; bottom: 8px;">
+                                    <svg width="150" height="55" viewBox="0 0 300 110" aria-hidden="true" style="display: block; overflow: visible;">
+                                        <defs>
+                                            <filter id="stamp1g" x="-30%" y="-30%" width="160%" height="160%">
+                                                <feTurbulence type="fractalNoise" baseFrequency="0.13" numOctaves="3" seed="7" result="coarse"/>
+                                                <feColorMatrix in="coarse" type="matrix" values="0 0 0 0 0, 0 0 0 0 0, 0 0 0 0 0, 1 0 0 0 -0.26" result="blotch"/>
+                                                <feComposite in="SourceGraphic" in2="blotch" operator="out" result="pass1"/>
+                                                <feTurbulence type="fractalNoise" baseFrequency="0.7" numOctaves="4" seed="18" result="fine"/>
+                                                <feColorMatrix in="fine" type="matrix" values="0 0 0 0 0, 0 0 0 0 0, 0 0 0 0 0, 1 0 0 0 -0.52" result="speck"/>
+                                                <feComposite in="pass1" in2="speck" operator="out" result="pass2"/>
+                                                <feTurbulence type="fractalNoise" baseFrequency="0.018" numOctaves="2" seed="10" result="warp"/>
+                                                <feDisplacementMap in="pass2" in2="warp" scale="2.8" xChannelSelector="R" yChannelSelector="G"/>
+                                            </filter>
+                                            <filter id="stamp1b" x="-10%" y="-10%" width="120%" height="120%">
+                                                <feGaussianBlur stdDeviation="0.7" />
+                                            </filter>
+                                            <linearGradient id="pressure1" x1="0" y1="0" x2="1" y2="1">
+                                                <stop offset="0%" stop-color="#fff" stop-opacity="1"/>
+                                                <stop offset="55%" stop-color="#fff" stop-opacity="0.92"/>
+                                                <stop offset="100%" stop-color="#fff" stop-opacity="0.62"/>
+                                            </linearGradient>
+                                            <mask id="pressureMask1">
+                                                <rect x="0" y="0" width="300" height="110" fill="url(#pressure1)"/>
+                                            </mask>
+                                        </defs>
+                                        <g filter="url(#stamp1b)" opacity="0.28" transform="translate(0.5, 0.5) rotate(-9 150 55)">
+                                            <rect x="10" y="13" width="280" height="84" rx="8" fill="none" stroke="#2F7A45" stroke-width="5" />
+                                            <rect x="18" y="21" width="264" height="68" rx="5" fill="none" stroke="#2F7A45" stroke-width="1.6" />
+                                            <text x="151.5" y="55" text-anchor="middle" dominant-baseline="central" font-family='"Arial Narrow", "Helvetica Neue Condensed", "Oswald", "DejaVu Sans Condensed", Impact, system-ui, sans-serif' font-size="35" font-weight="700" letter-spacing="3" fill="#2F7A45" style="font-stretch: condensed;">APPROVED</text>
+                                        </g>
+                                        <g filter="url(#stamp1g)" mask="url(#pressureMask1)" opacity="0.86" transform="rotate(-9 150 55)">
+                                            <rect x="10" y="13" width="280" height="84" rx="8" fill="none" stroke="#2F7A45" stroke-width="5" />
+                                            <rect x="18" y="21" width="264" height="68" rx="5" fill="none" stroke="#2F7A45" stroke-width="1.6" />
+                                            <text x="151.5" y="55" text-anchor="middle" dominant-baseline="central" font-family='"Arial Narrow", "Helvetica Neue Condensed", "Oswald", "DejaVu Sans Condensed", Impact, system-ui, sans-serif' font-size="35" font-weight="700" letter-spacing="3" fill="#2F7A45" style="font-stretch: condensed;">APPROVED</text>
+                                        </g>
+                                    </svg>
+                                </div>
+                            </div>
+                        </article>
+
+                        <!-- RECEIPT 2: @deltacreator (WIN) -->
+                        <article class="ps-card reveal-item" style="position: relative; background: #FFFDFA; border: 1px solid rgba(28,35,51,0.11); border-radius: 6px; box-shadow: 0 14px 34px -22px rgba(28,35,51,0.4); display: flex; flex-direction: column; transition: transform .22s cubic-bezier(.2,.7,.3,1), box-shadow .22s ease;">
+                            <!-- HEADER -->
+                            <div style="padding: 16px 18px 12px; border-bottom: 1px solid rgba(28,35,51,0.11);">
+                                <div style="display: flex; justify-content: space-between; align-items: center;">
+                                    <span style="font-family: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace; font-size: 9.5px; font-weight: 700; letter-spacing: 1.7px; color: #7A1C2B;">SETTLEMENT RECEIPT</span>
+                                    <span style="font-family: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace; font-size: 10px; color: #8C8577; font-variant-numeric: tabular-nums;">№ C-9F21</span>
+                                </div>
+                                <div style="margin-top: 10px; font-size: 15.5px; font-weight: 700; color: #1C2333;">
+                                    50,000 subscribers in 60 days
+                                </div>
+                                <div style="margin-top: 4px; font-family: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace; font-size: 11px; color: #8C8577;">
+                                    @deltacreator · via YouTube API
+                                </div>
+                            </div>
+
+                            <!-- BODY ROWS -->
+                            <div style="padding: 14px 18px 16px; display: grid; gap: 9px;">
+                                <div style="display: flex; justify-content: space-between; align-items: baseline; gap: 12px;">
+                                    <span style="font-family: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace; font-size: 9.5px; letter-spacing: 1.2px; color: #8C8577;">CAPITAL STAKED</span>
+                                    <span style="font-family: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace; font-size: 12.5px; font-weight: 600; color: #1C2333; text-align: right; font-variant-numeric: tabular-nums;">$1,000.00</span>
+                                </div>
+                                <div style="display: flex; justify-content: space-between; align-items: baseline; gap: 12px;">
+                                    <span style="font-family: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace; font-size: 9.5px; letter-spacing: 1.2px; color: #8C8577;">VERIFIED BY</span>
+                                    <span style="font-size: 13px; font-weight: 600; color: #1C2333; text-align: right;">YouTube oracle</span>
+                                </div>
+                                <div style="display: flex; justify-content: space-between; align-items: baseline; gap: 12px;">
+                                    <span style="font-family: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace; font-size: 9.5px; letter-spacing: 1.2px; color: #8C8577;">SETTLED ON</span>
+                                    <span style="font-family: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace; font-size: 12.5px; font-weight: 600; color: #1C2333; text-align: right; font-variant-numeric: tabular-nums;">Mar 09, 2026</span>
+                                </div>
+                            </div>
+
+                            <!-- TEAR LINE WITH NOTCHES -->
+                            <div style="position: relative; height: 1px;">
+                                <div style="position: absolute; left: 12px; right: 12px; top: 0; height: 1px; background: repeating-linear-gradient(90deg, rgba(28,35,51,0.11) 0 5px, transparent 5px 10px);"></div>
+                                <span class="ps-notch ps-notch-left"></span>
+                                <span class="ps-notch ps-notch-right"></span>
+                            </div>
+
+                            <!-- OUTCOME BLOCK WITH WAX SEAL -->
+                            <div style="position: relative; padding: 16px 18px 20px; background: rgba(63,157,90,0.09); border-radius: 0 0 6px 6px; min-height: 96px;">
+                                <div style="font-size: 22px; font-weight: 800; letter-spacing: -0.02em; color: #3F9D5A; font-variant-numeric: tabular-nums;">+$1,120.00</div>
+                                <div style="margin-top: 5px; font-family: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace; font-size: 9px; font-weight: 700; letter-spacing: 1.3px; color: #8C8577; max-width: 150px;">PRINCIPAL + YIELD RETURNED</div>
+
+                                <div class="ps-seal" style="position: absolute; right: 8px; bottom: 8px;">
+                                    <svg width="150" height="55" viewBox="0 0 300 110" aria-hidden="true" style="display: block; overflow: visible;">
+                                        <defs>
+                                            <filter id="stamp2g" x="-30%" y="-30%" width="160%" height="160%">
+                                                <feTurbulence type="fractalNoise" baseFrequency="0.13" numOctaves="3" seed="14" result="coarse"/>
+                                                <feColorMatrix in="coarse" type="matrix" values="0 0 0 0 0, 0 0 0 0 0, 0 0 0 0 0, 1 0 0 0 -0.26" result="blotch"/>
+                                                <feComposite in="SourceGraphic" in2="blotch" operator="out" result="pass1"/>
+                                                <feTurbulence type="fractalNoise" baseFrequency="0.7" numOctaves="4" seed="22" result="fine"/>
+                                                <feColorMatrix in="fine" type="matrix" values="0 0 0 0 0, 0 0 0 0 0, 0 0 0 0 0, 1 0 0 0 -0.52" result="speck"/>
+                                                <feComposite in="pass1" in2="speck" operator="out" result="pass2"/>
+                                                <feTurbulence type="fractalNoise" baseFrequency="0.018" numOctaves="2" seed="12" result="warp"/>
+                                                <feDisplacementMap in="pass2" in2="warp" scale="2.8" xChannelSelector="R" yChannelSelector="G"/>
+                                            </filter>
+                                            <filter id="stamp2b" x="-10%" y="-10%" width="120%" height="120%">
+                                                <feGaussianBlur stdDeviation="0.7" />
+                                            </filter>
+                                            <linearGradient id="pressure2" x1="0" y1="0" x2="1" y2="1">
+                                                <stop offset="0%" stop-color="#fff" stop-opacity="1"/>
+                                                <stop offset="55%" stop-color="#fff" stop-opacity="0.92"/>
+                                                <stop offset="100%" stop-color="#fff" stop-opacity="0.62"/>
+                                            </linearGradient>
+                                            <mask id="pressureMask2">
+                                                <rect x="0" y="0" width="300" height="110" fill="url(#pressure2)"/>
+                                            </mask>
+                                        </defs>
+                                        <g filter="url(#stamp2b)" opacity="0.28" transform="translate(0.5, 0.5) rotate(-6 150 55)">
+                                            <rect x="10" y="13" width="280" height="84" rx="8" fill="none" stroke="#2F7A45" stroke-width="5" />
+                                            <rect x="18" y="21" width="264" height="68" rx="5" fill="none" stroke="#2F7A45" stroke-width="1.6" />
+                                            <text x="151.5" y="55" text-anchor="middle" dominant-baseline="central" font-family='"Arial Narrow", "Helvetica Neue Condensed", "Oswald", "DejaVu Sans Condensed", Impact, system-ui, sans-serif' font-size="35" font-weight="700" letter-spacing="3" fill="#2F7A45" style="font-stretch: condensed;">APPROVED</text>
+                                        </g>
+                                        <g filter="url(#stamp2g)" mask="url(#pressureMask2)" opacity="0.86" transform="rotate(-6 150 55)">
+                                            <rect x="10" y="13" width="280" height="84" rx="8" fill="none" stroke="#2F7A45" stroke-width="5" />
+                                            <rect x="18" y="21" width="264" height="68" rx="5" fill="none" stroke="#2F7A45" stroke-width="1.6" />
+                                            <text x="151.5" y="55" text-anchor="middle" dominant-baseline="central" font-family='"Arial Narrow", "Helvetica Neue Condensed", "Oswald", "DejaVu Sans Condensed", Impact, system-ui, sans-serif' font-size="35" font-weight="700" letter-spacing="3" fill="#2F7A45" style="font-stretch: condensed;">APPROVED</text>
+                                        </g>
+                                    </svg>
+                                </div>
+                            </div>
+                        </article>
+
+                        <!-- RECEIPT 3: @marcusk (FORFEIT/DENIED) -->
+                        <article class="ps-card reveal-item" style="position: relative; background: #FFFDFA; border: 1px solid rgba(28,35,51,0.11); border-radius: 6px; box-shadow: 0 14px 34px -22px rgba(28,35,51,0.4); display: flex; flex-direction: column; transition: transform .22s cubic-bezier(.2,.7,.3,1), box-shadow .22s ease;">
+                            <!-- HEADER -->
+                            <div style="padding: 16px 18px 12px; border-bottom: 1px solid rgba(28,35,51,0.11);">
+                                <div style="display: flex; justify-content: space-between; align-items: center;">
+                                    <span style="font-family: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace; font-size: 9.5px; font-weight: 700; letter-spacing: 1.7px; color: #7A1C2B;">SETTLEMENT RECEIPT</span>
+                                    <span style="font-family: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace; font-size: 10px; color: #8C8577; font-variant-numeric: tabular-nums;">№ C-780B</span>
+                                </div>
+                                <div style="margin-top: 10px; font-size: 15.5px; font-weight: 700; color: #1C2333;">
+                                    25,000 followers in 30 days
+                                </div>
+                                <div style="margin-top: 4px; font-family: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace; font-size: 11px; color: #8C8577;">
+                                    @marcusk · via X API
+                                </div>
+                            </div>
+
+                            <!-- BODY ROWS -->
+                            <div style="padding: 14px 18px 16px; display: grid; gap: 9px;">
+                                <div style="display: flex; justify-content: space-between; align-items: baseline; gap: 12px;">
+                                    <span style="font-family: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace; font-size: 9.5px; letter-spacing: 1.2px; color: #8C8577;">CAPITAL STAKED</span>
+                                    <span style="font-family: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace; font-size: 12.5px; font-weight: 600; color: #1C2333; text-align: right; font-variant-numeric: tabular-nums;">$1,500.00</span>
+                                </div>
+                                <div style="display: flex; justify-content: space-between; align-items: baseline; gap: 12px;">
+                                    <span style="font-family: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace; font-size: 9.5px; letter-spacing: 1.2px; color: #8C8577;">VERIFIED BY</span>
+                                    <span style="font-size: 13px; font-weight: 600; color: #1C2333; text-align: right;">X oracle</span>
+                                </div>
+                                <div style="display: flex; justify-content: space-between; align-items: baseline; gap: 12px;">
+                                    <span style="font-family: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace; font-size: 9.5px; letter-spacing: 1.2px; color: #8C8577;">SETTLED ON</span>
+                                    <span style="font-family: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace; font-size: 12.5px; font-weight: 600; color: #1C2333; text-align: right; font-variant-numeric: tabular-nums;">Mar 02, 2026</span>
+                                </div>
+                            </div>
+
+                            <!-- TEAR LINE WITH NOTCHES -->
+                            <div style="position: relative; height: 1px;">
+                                <div style="position: absolute; left: 12px; right: 12px; top: 0; height: 1px; background: repeating-linear-gradient(90deg, rgba(28,35,51,0.11) 0 5px, transparent 5px 10px);"></div>
+                                <span class="ps-notch ps-notch-left"></span>
+                                <span class="ps-notch ps-notch-right"></span>
+                            </div>
+
+                            <!-- OUTCOME BLOCK WITH RUBBER STAMP (DENIED) -->
+                            <div style="position: relative; padding: 16px 18px 20px; background: rgba(168,68,63,0.06); border-radius: 0 0 6px 6px; min-height: 96px;">
+                                <div style="font-size: 22px; font-weight: 800; letter-spacing: -0.02em; color: #A8443F; font-variant-numeric: tabular-nums;">−$1,500.00</div>
+                                <div style="margin-top: 5px; font-family: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace; font-size: 9px; font-weight: 700; letter-spacing: 1.3px; color: #8C8577; max-width: 150px;">FORFEITED TO MATCH POOL</div>
+
+                                <div class="ps-seal" style="position: absolute; right: 8px; bottom: 8px;">
+                                    <svg width="150" height="55" viewBox="0 0 300 110" aria-hidden="true" style="display: block; overflow: visible;">
+                                        <defs>
+                                            <filter id="stamp3g" x="-30%" y="-30%" width="160%" height="160%">
+                                                <feTurbulence type="fractalNoise" baseFrequency="0.13" numOctaves="3" seed="21" result="coarse"/>
+                                                <feColorMatrix in="coarse" type="matrix" values="0 0 0 0 0, 0 0 0 0 0, 0 0 0 0 0, 1 0 0 0 -0.26" result="blotch"/>
+                                                <feComposite in="SourceGraphic" in2="blotch" operator="out" result="pass1"/>
+                                                <feTurbulence type="fractalNoise" baseFrequency="0.7" numOctaves="4" seed="32" result="fine"/>
+                                                <feColorMatrix in="fine" type="matrix" values="0 0 0 0 0, 0 0 0 0 0, 0 0 0 0 0, 1 0 0 0 -0.52" result="speck"/>
+                                                <feComposite in="pass1" in2="speck" operator="out" result="pass2"/>
+                                                <feTurbulence type="fractalNoise" baseFrequency="0.018" numOctaves="2" seed="24" result="warp"/>
+                                                <feDisplacementMap in="pass2" in2="warp" scale="2.8" xChannelSelector="R" yChannelSelector="G"/>
+                                            </filter>
+                                            <filter id="stamp3b" x="-10%" y="-10%" width="120%" height="120%">
+                                                <feGaussianBlur stdDeviation="0.7" />
+                                            </filter>
+                                            <linearGradient id="pressure3" x1="0" y1="1" x2="1" y2="0">
+                                                <stop offset="0%" stop-color="#fff" stop-opacity="1"/>
+                                                <stop offset="55%" stop-color="#fff" stop-opacity="0.92"/>
+                                                <stop offset="100%" stop-color="#fff" stop-opacity="0.62"/>
+                                            </linearGradient>
+                                            <mask id="pressureMask3">
+                                                <rect x="0" y="0" width="300" height="110" fill="url(#pressure3)"/>
+                                            </mask>
+                                        </defs>
+                                        <g filter="url(#stamp3b)" opacity="0.28" transform="translate(0.5, 0.5) rotate(-11 150 55)">
+                                            <rect x="10" y="13" width="280" height="84" rx="8" fill="none" stroke="#7A1C2B" stroke-width="5" />
+                                            <rect x="18" y="21" width="264" height="68" rx="5" fill="none" stroke="#7A1C2B" stroke-width="1.6" />
+                                            <text x="158" y="55" text-anchor="middle" dominant-baseline="central" font-family='"Arial Narrow", "Helvetica Neue Condensed", "Oswald", "DejaVu Sans Condensed", Impact, system-ui, sans-serif' font-size="35" font-weight="700" letter-spacing="16" fill="#7A1C2B" style="font-stretch: condensed;">DENIED</text>
+                                        </g>
+                                        <g filter="url(#stamp3g)" mask="url(#pressureMask3)" opacity="0.88" transform="rotate(-11 150 55)">
+                                            <rect x="10" y="13" width="280" height="84" rx="8" fill="none" stroke="#7A1C2B" stroke-width="5" />
+                                            <rect x="18" y="21" width="264" height="68" rx="5" fill="none" stroke="#7A1C2B" stroke-width="1.6" />
+                                            <text x="158" y="55" text-anchor="middle" dominant-baseline="central" font-family='"Arial Narrow", "Helvetica Neue Condensed", "Oswald", "DejaVu Sans Condensed", Impact, system-ui, sans-serif' font-size="35" font-weight="700" letter-spacing="16" fill="#7A1C2B" style="font-stretch: condensed;">DENIED</text>
+                                        </g>
+                                    </svg>
+                                </div>
+                            </div>
+                        </article>
+
+                    </div>
+
+                    <!-- 4 STATS STRIP BELOW -->
+                    <div class="ps-stats reveal-item" style="margin-top: clamp(34px,4vw,54px); padding-top: clamp(24px,3vw,34px); border-top: 1px solid rgba(28,35,51,0.11); display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px;">
+                        <div>
+                            <div style="font-size: clamp(24px,2.6vw,32px); font-weight: 800; letter-spacing: -0.02em; color: #7A1C2B; line-height: 1; font-variant-numeric: tabular-nums;">74%</div>
+                            <div style="margin-top: 8px; font-family: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace; font-size: 9.5px; font-weight: 700; letter-spacing: 1.5px; color: #8C8577; text-transform: uppercase;">OF CONTRACTS ARE WON</div>
+                        </div>
+                        <div>
+                            <div style="font-size: clamp(24px,2.6vw,32px); font-weight: 800; letter-spacing: -0.02em; color: #7A1C2B; line-height: 1; font-variant-numeric: tabular-nums;">$127k</div>
+                            <div style="margin-top: 8px; font-family: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace; font-size: 9.5px; font-weight: 700; letter-spacing: 1.5px; color: #8C8577; text-transform: uppercase;">TOTAL CAPITAL SETTLED</div>
+                        </div>
+                        <div>
+                            <div style="font-size: clamp(24px,2.6vw,32px); font-weight: 800; letter-spacing: -0.02em; color: #7A1C2B; line-height: 1; font-variant-numeric: tabular-nums;">18 days</div>
+                            <div style="margin-top: 8px; font-family: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace; font-size: 9.5px; font-weight: 700; letter-spacing: 1.5px; color: #8C8577; text-transform: uppercase;">AVERAGE TIME TO TARGET</div>
+                        </div>
+                        <div>
+                            <div style="font-size: clamp(24px,2.6vw,32px); font-weight: 800; letter-spacing: -0.02em; color: #7A1C2B; line-height: 1; font-variant-numeric: tabular-nums;">812</div>
+                            <div style="margin-top: 8px; font-family: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace; font-size: 9.5px; font-weight: 700; letter-spacing: 1.5px; color: #8C8577; text-transform: uppercase;">VERIFIED COUNTERPARTIES</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
             <!-- ═══ EMOTIONAL REFRAME (THE FORK: WHY IT WORKS) ═══ -->
             <div class="lhow-it-works-section" data-r style="background: #F8F5F0; padding: clamp(48px,7vw,96px) 0; overflow: visible !important;">
                 <div class="lw">
@@ -727,305 +1027,7 @@ export function renderLanding() {
             </div>
 
 
-            <!-- ═══ PROOF OF SETTLEMENT (STAMPED RECEIPTS & STATS) ═══ -->
-            <div class="lreal-results" data-r style="background: #F8F5F0; padding: clamp(40px,6vw,88px) clamp(20px,5vw,64px); font-family: ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;">
-                <div class="lw" style="max-width: 1240px; margin: 0 auto;">
-                    <!-- SECTION TAG -->
-                    <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 18px;" class="reveal-item">
-                        <span style="width: 24px; height: 1.5px; background: #7A1C2B; opacity: 0.5;"></span>
-                        <span style="font-family: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace; font-size: 11px; font-weight: 700; letter-spacing: 2.2px; color: #8C8577; text-transform: uppercase;">
-                            PROOF OF SETTLEMENT
-                        </span>
-                    </div>
 
-                    <!-- HEAD STACK -->
-                    <div class="ps-head reveal-item" style="display: flex; justify-content: space-between; align-items: flex-end; gap: 40px; flex-wrap: wrap; margin-bottom: clamp(26px,3vw,42px);">
-                        <h2 style="font-size: clamp(30px,3.8vw,46px); font-weight: 800; letter-spacing: -0.03em; color: #1C2333; margin: 0; line-height: 1.06; max-width: 640px;">
-                            Skin in the game is the only thing<br />that <span style="color: #7A1C2B;">actually works.</span>
-                        </h2>
-                        <p style="font-size: 16.5px; color: #5A6072; margin: 0; max-width: 62ch; line-height: 1.6; letter-spacing: -0.011em; font-family: 'Inter', sans-serif;">
-                            Skin in the game is the only mechanism that enforces real execution. Every contract settles automatically on objective API telemetry — including the ones people lose.
-                        </p>
-                    </div>
-
-                    <!-- 3 STAMPED RECEIPT CARDS GRID -->
-                    <div class="ps-grid" style="display: grid; grid-template-columns: repeat(3, 1fr); gap: clamp(16px,2vw,26px);">
-                        
-                        <!-- RECEIPT 1: @revpilot (WIN) -->
-                        <article class="ps-card reveal-item" style="position: relative; background: #FFFDFA; border: 1px solid rgba(28,35,51,0.11); border-radius: 6px; box-shadow: 0 14px 34px -22px rgba(28,35,51,0.4); display: flex; flex-direction: column; transition: transform .22s cubic-bezier(.2,.7,.3,1), box-shadow .22s ease;">
-                            <!-- HEADER -->
-                            <div style="padding: 16px 18px 12px; border-bottom: 1px solid rgba(28,35,51,0.11);">
-                                <div style="display: flex; justify-content: space-between; align-items: center;">
-                                    <span style="font-family: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace; font-size: 9.5px; font-weight: 700; letter-spacing: 1.7px; color: #7A1C2B;">SETTLEMENT RECEIPT</span>
-                                    <span style="font-family: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace; font-size: 10px; color: #8C8577; font-variant-numeric: tabular-nums;">№ C-34D6</span>
-                                </div>
-                                <div style="margin-top: 10px; font-size: 15.5px; font-weight: 700; color: #1C2333;">
-                                    +20% revenue in 30 days
-                                </div>
-                                <div style="margin-top: 4px; font-family: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace; font-size: 11px; color: #8C8577;">
-                                    @revpilot · via Stripe API
-                                </div>
-                            </div>
-
-                            <!-- BODY ROWS -->
-                            <div style="padding: 14px 18px 16px; display: grid; gap: 9px;">
-                                <div style="display: flex; justify-content: space-between; align-items: baseline; gap: 12px;">
-                                    <span style="font-family: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace; font-size: 9.5px; letter-spacing: 1.2px; color: #8C8577;">CAPITAL STAKED</span>
-                                    <span style="font-family: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace; font-size: 12.5px; font-weight: 600; color: #1C2333; text-align: right; font-variant-numeric: tabular-nums;">$2,000.00</span>
-                                </div>
-                                <div style="display: flex; justify-content: space-between; align-items: baseline; gap: 12px;">
-                                    <span style="font-family: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace; font-size: 9.5px; letter-spacing: 1.2px; color: #8C8577;">VERIFIED BY</span>
-                                    <span style="font-size: 13px; font-weight: 600; color: #1C2333; text-align: right;">Stripe oracle</span>
-                                </div>
-                                <div style="display: flex; justify-content: space-between; align-items: baseline; gap: 12px;">
-                                    <span style="font-family: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace; font-size: 9.5px; letter-spacing: 1.2px; color: #8C8577;">SETTLED ON</span>
-                                    <span style="font-family: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace; font-size: 12.5px; font-weight: 600; color: #1C2333; text-align: right; font-variant-numeric: tabular-nums;">Mar 14, 2026</span>
-                                </div>
-                            </div>
-
-                            <!-- TEAR LINE WITH NOTCHES -->
-                            <div style="position: relative; height: 1px;">
-                                <div style="position: absolute; left: 12px; right: 12px; top: 0; height: 1px; background: repeating-linear-gradient(90deg, rgba(28,35,51,0.11) 0 5px, transparent 5px 10px);"></div>
-                                <span class="ps-notch ps-notch-left"></span>
-                                <span class="ps-notch ps-notch-right"></span>
-                            </div>
-
-                            <!-- OUTCOME BLOCK WITH WAX SEAL -->
-                            <div style="position: relative; padding: 16px 18px 20px; background: rgba(63,157,90,0.09); border-radius: 0 0 6px 6px; min-height: 96px;">
-                                <div style="font-size: 22px; font-weight: 800; letter-spacing: -0.02em; color: #3F9D5A; font-variant-numeric: tabular-nums;">+$2,240.00</div>
-                                <div style="margin-top: 5px; font-family: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace; font-size: 9px; font-weight: 700; letter-spacing: 1.3px; color: #8C8577; max-width: 150px;">PRINCIPAL + YIELD RETURNED</div>
-
-                                <div class="ps-seal" style="position: absolute; right: 8px; bottom: 8px;">
-                                    <svg width="150" height="55" viewBox="0 0 300 110" aria-hidden="true" style="display: block; overflow: visible;">
-                                        <defs>
-                                            <filter id="stamp1g" x="-30%" y="-30%" width="160%" height="160%">
-                                                <feTurbulence type="fractalNoise" baseFrequency="0.13" numOctaves="3" seed="7" result="coarse"/>
-                                                <feColorMatrix in="coarse" type="matrix" values="0 0 0 0 0, 0 0 0 0 0, 0 0 0 0 0, 1 0 0 0 -0.26" result="blotch"/>
-                                                <feComposite in="SourceGraphic" in2="blotch" operator="out" result="pass1"/>
-                                                <feTurbulence type="fractalNoise" baseFrequency="0.7" numOctaves="4" seed="18" result="fine"/>
-                                                <feColorMatrix in="fine" type="matrix" values="0 0 0 0 0, 0 0 0 0 0, 0 0 0 0 0, 1 0 0 0 -0.52" result="speck"/>
-                                                <feComposite in="pass1" in2="speck" operator="out" result="pass2"/>
-                                                <feTurbulence type="fractalNoise" baseFrequency="0.018" numOctaves="2" seed="10" result="warp"/>
-                                                <feDisplacementMap in="pass2" in2="warp" scale="2.8" xChannelSelector="R" yChannelSelector="G"/>
-                                            </filter>
-                                            <filter id="stamp1b" x="-10%" y="-10%" width="120%" height="120%">
-                                                <feGaussianBlur stdDeviation="0.7" />
-                                            </filter>
-                                            <linearGradient id="pressure1" x1="0" y1="0" x2="1" y2="1">
-                                                <stop offset="0%" stop-color="#fff" stop-opacity="1"/>
-                                                <stop offset="55%" stop-color="#fff" stop-opacity="0.92"/>
-                                                <stop offset="100%" stop-color="#fff" stop-opacity="0.62"/>
-                                            </linearGradient>
-                                            <mask id="pressureMask1">
-                                                <rect x="0" y="0" width="300" height="110" fill="url(#pressure1)"/>
-                                            </mask>
-                                        </defs>
-                                        <g filter="url(#stamp1b)" opacity="0.28" transform="translate(0.5, 0.5) rotate(-9 150 55)">
-                                            <rect x="10" y="13" width="280" height="84" rx="8" fill="none" stroke="#2F7A45" stroke-width="5" />
-                                            <rect x="18" y="21" width="264" height="68" rx="5" fill="none" stroke="#2F7A45" stroke-width="1.6" />
-                                            <text x="151.5" y="55" text-anchor="middle" dominant-baseline="central" font-family='"Arial Narrow", "Helvetica Neue Condensed", "Oswald", "DejaVu Sans Condensed", Impact, system-ui, sans-serif' font-size="35" font-weight="700" letter-spacing="3" fill="#2F7A45" style="font-stretch: condensed;">APPROVED</text>
-                                        </g>
-                                        <g filter="url(#stamp1g)" mask="url(#pressureMask1)" opacity="0.86" transform="rotate(-9 150 55)">
-                                            <rect x="10" y="13" width="280" height="84" rx="8" fill="none" stroke="#2F7A45" stroke-width="5" />
-                                            <rect x="18" y="21" width="264" height="68" rx="5" fill="none" stroke="#2F7A45" stroke-width="1.6" />
-                                            <text x="151.5" y="55" text-anchor="middle" dominant-baseline="central" font-family='"Arial Narrow", "Helvetica Neue Condensed", "Oswald", "DejaVu Sans Condensed", Impact, system-ui, sans-serif' font-size="35" font-weight="700" letter-spacing="3" fill="#2F7A45" style="font-stretch: condensed;">APPROVED</text>
-                                        </g>
-                                    </svg>
-                                </div>
-                            </div>
-                        </article>
-
-                        <!-- RECEIPT 2: @deltacreator (WIN) -->
-                        <article class="ps-card reveal-item" style="position: relative; background: #FFFDFA; border: 1px solid rgba(28,35,51,0.11); border-radius: 6px; box-shadow: 0 14px 34px -22px rgba(28,35,51,0.4); display: flex; flex-direction: column; transition: transform .22s cubic-bezier(.2,.7,.3,1), box-shadow .22s ease;">
-                            <!-- HEADER -->
-                            <div style="padding: 16px 18px 12px; border-bottom: 1px solid rgba(28,35,51,0.11);">
-                                <div style="display: flex; justify-content: space-between; align-items: center;">
-                                    <span style="font-family: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace; font-size: 9.5px; font-weight: 700; letter-spacing: 1.7px; color: #7A1C2B;">SETTLEMENT RECEIPT</span>
-                                    <span style="font-family: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace; font-size: 10px; color: #8C8577; font-variant-numeric: tabular-nums;">№ C-9F21</span>
-                                </div>
-                                <div style="margin-top: 10px; font-size: 15.5px; font-weight: 700; color: #1C2333;">
-                                    50,000 subscribers in 60 days
-                                </div>
-                                <div style="margin-top: 4px; font-family: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace; font-size: 11px; color: #8C8577;">
-                                    @deltacreator · via YouTube API
-                                </div>
-                            </div>
-
-                            <!-- BODY ROWS -->
-                            <div style="padding: 14px 18px 16px; display: grid; gap: 9px;">
-                                <div style="display: flex; justify-content: space-between; align-items: baseline; gap: 12px;">
-                                    <span style="font-family: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace; font-size: 9.5px; letter-spacing: 1.2px; color: #8C8577;">CAPITAL STAKED</span>
-                                    <span style="font-family: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace; font-size: 12.5px; font-weight: 600; color: #1C2333; text-align: right; font-variant-numeric: tabular-nums;">$1,000.00</span>
-                                </div>
-                                <div style="display: flex; justify-content: space-between; align-items: baseline; gap: 12px;">
-                                    <span style="font-family: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace; font-size: 9.5px; letter-spacing: 1.2px; color: #8C8577;">VERIFIED BY</span>
-                                    <span style="font-size: 13px; font-weight: 600; color: #1C2333; text-align: right;">YouTube oracle</span>
-                                </div>
-                                <div style="display: flex; justify-content: space-between; align-items: baseline; gap: 12px;">
-                                    <span style="font-family: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace; font-size: 9.5px; letter-spacing: 1.2px; color: #8C8577;">SETTLED ON</span>
-                                    <span style="font-family: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace; font-size: 12.5px; font-weight: 600; color: #1C2333; text-align: right; font-variant-numeric: tabular-nums;">Mar 09, 2026</span>
-                                </div>
-                            </div>
-
-                            <!-- TEAR LINE WITH NOTCHES -->
-                            <div style="position: relative; height: 1px;">
-                                <div style="position: absolute; left: 12px; right: 12px; top: 0; height: 1px; background: repeating-linear-gradient(90deg, rgba(28,35,51,0.11) 0 5px, transparent 5px 10px);"></div>
-                                <span class="ps-notch ps-notch-left"></span>
-                                <span class="ps-notch ps-notch-right"></span>
-                            </div>
-
-                            <!-- OUTCOME BLOCK WITH RUBBER STAMP -->
-                            <div style="position: relative; padding: 16px 18px 20px; background: rgba(63,157,90,0.09); border-radius: 0 0 6px 6px; min-height: 96px;">
-                                <div style="font-size: 22px; font-weight: 800; letter-spacing: -0.02em; color: #3F9D5A; font-variant-numeric: tabular-nums;">+$1,120.00</div>
-                                <div style="margin-top: 5px; font-family: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace; font-size: 9px; font-weight: 700; letter-spacing: 1.3px; color: #8C8577; max-width: 150px;">PRINCIPAL + YIELD RETURNED</div>
-
-                                <div class="ps-seal" style="position: absolute; right: 8px; bottom: 8px;">
-                                    <svg width="150" height="55" viewBox="0 0 300 110" aria-hidden="true" style="display: block; overflow: visible;">
-                                        <defs>
-                                            <filter id="stamp2g" x="-30%" y="-30%" width="160%" height="160%">
-                                                <feTurbulence type="fractalNoise" baseFrequency="0.13" numOctaves="3" seed="13" result="coarse"/>
-                                                <feColorMatrix in="coarse" type="matrix" values="0 0 0 0 0, 0 0 0 0 0, 0 0 0 0 0, 1 0 0 0 -0.26" result="blotch"/>
-                                                <feComposite in="SourceGraphic" in2="blotch" operator="out" result="pass1"/>
-                                                <feTurbulence type="fractalNoise" baseFrequency="0.7" numOctaves="4" seed="24" result="fine"/>
-                                                <feColorMatrix in="fine" type="matrix" values="0 0 0 0 0, 0 0 0 0 0, 0 0 0 0 0, 1 0 0 0 -0.52" result="speck"/>
-                                                <feComposite in="pass1" in2="speck" operator="out" result="pass2"/>
-                                                <feTurbulence type="fractalNoise" baseFrequency="0.018" numOctaves="2" seed="16" result="warp"/>
-                                                <feDisplacementMap in="pass2" in2="warp" scale="2.8" xChannelSelector="R" yChannelSelector="G"/>
-                                            </filter>
-                                            <filter id="stamp2b" x="-10%" y="-10%" width="120%" height="120%">
-                                                <feGaussianBlur stdDeviation="0.7" />
-                                            </filter>
-                                            <linearGradient id="pressure2" x1="1" y1="0" x2="0" y2="1">
-                                                <stop offset="0%" stop-color="#fff" stop-opacity="1"/>
-                                                <stop offset="55%" stop-color="#fff" stop-opacity="0.92"/>
-                                                <stop offset="100%" stop-color="#fff" stop-opacity="0.62"/>
-                                            </linearGradient>
-                                            <mask id="pressureMask2">
-                                                <rect x="0" y="0" width="300" height="110" fill="url(#pressure2)"/>
-                                            </mask>
-                                        </defs>
-                                        <g filter="url(#stamp2b)" opacity="0.28" transform="translate(0.5, 0.5) rotate(-14 150 55)">
-                                            <rect x="10" y="13" width="280" height="84" rx="8" fill="none" stroke="#2F7A45" stroke-width="5" />
-                                            <rect x="18" y="21" width="264" height="68" rx="5" fill="none" stroke="#2F7A45" stroke-width="1.6" />
-                                            <text x="151.5" y="55" text-anchor="middle" dominant-baseline="central" font-family='"Arial Narrow", "Helvetica Neue Condensed", "Oswald", "DejaVu Sans Condensed", Impact, system-ui, sans-serif' font-size="35" font-weight="700" letter-spacing="3" fill="#2F7A45" style="font-stretch: condensed;">APPROVED</text>
-                                        </g>
-                                        <g filter="url(#stamp2g)" mask="url(#pressureMask2)" opacity="0.92" transform="rotate(-14 150 55)">
-                                            <rect x="10" y="13" width="280" height="84" rx="8" fill="none" stroke="#2F7A45" stroke-width="5" />
-                                            <rect x="18" y="21" width="264" height="68" rx="5" fill="none" stroke="#2F7A45" stroke-width="1.6" />
-                                            <text x="151.5" y="55" text-anchor="middle" dominant-baseline="central" font-family='"Arial Narrow", "Helvetica Neue Condensed", "Oswald", "DejaVu Sans Condensed", Impact, system-ui, sans-serif' font-size="35" font-weight="700" letter-spacing="3" fill="#2F7A45" style="font-stretch: condensed;">APPROVED</text>
-                                        </g>
-                                    </svg>
-                                </div>
-                            </div>
-                        </article>
-
-                        <!-- RECEIPT 3: @marcusk (FORFEIT / LOSS) -->
-                        <article class="ps-card reveal-item" style="position: relative; background: #FFFDFA; border: 1px solid rgba(28,35,51,0.11); border-radius: 6px; box-shadow: 0 14px 34px -22px rgba(28,35,51,0.4); display: flex; flex-direction: column; transition: transform .22s cubic-bezier(.2,.7,.3,1), box-shadow .22s ease;">
-                            <!-- HEADER -->
-                            <div style="padding: 16px 18px 12px; border-bottom: 1px solid rgba(28,35,51,0.11);">
-                                <div style="display: flex; justify-content: space-between; align-items: center;">
-                                    <span style="font-family: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace; font-size: 9.5px; font-weight: 700; letter-spacing: 1.7px; color: #7A1C2B;">SETTLEMENT RECEIPT</span>
-                                    <span style="font-family: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace; font-size: 10px; color: #8C8577; font-variant-numeric: tabular-nums;">№ C-7B08</span>
-                                </div>
-                                <div style="margin-top: 10px; font-size: 15.5px; font-weight: 700; color: #1C2333;">
-                                    25,000 followers in 30 days
-                                </div>
-                                <div style="margin-top: 4px; font-family: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace; font-size: 11px; color: #8C8577;">
-                                    @marcusk · via X API
-                                </div>
-                            </div>
-
-                            <!-- BODY ROWS -->
-                            <div style="padding: 14px 18px 16px; display: grid; gap: 9px;">
-                                <div style="display: flex; justify-content: space-between; align-items: baseline; gap: 12px;">
-                                    <span style="font-family: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace; font-size: 9.5px; letter-spacing: 1.2px; color: #8C8577;">CAPITAL STAKED</span>
-                                    <span style="font-family: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace; font-size: 12.5px; font-weight: 600; color: #1C2333; text-align: right; font-variant-numeric: tabular-nums;">$1,500.00</span>
-                                </div>
-                                <div style="display: flex; justify-content: space-between; align-items: baseline; gap: 12px;">
-                                    <span style="font-family: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace; font-size: 9.5px; letter-spacing: 1.2px; color: #8C8577;">VERIFIED BY</span>
-                                    <span style="font-size: 13px; font-weight: 600; color: #1C2333; text-align: right;">X oracle</span>
-                                </div>
-                                <div style="display: flex; justify-content: space-between; align-items: baseline; gap: 12px;">
-                                    <span style="font-family: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace; font-size: 9.5px; letter-spacing: 1.2px; color: #8C8577;">SETTLED ON</span>
-                                    <span style="font-family: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace; font-size: 12.5px; font-weight: 600; color: #1C2333; text-align: right; font-variant-numeric: tabular-nums;">Mar 02, 2026</span>
-                                </div>
-                            </div>
-
-                            <!-- TEAR LINE WITH NOTCHES -->
-                            <div style="position: relative; height: 1px;">
-                                <div style="position: absolute; left: 12px; right: 12px; top: 0; height: 1px; background: repeating-linear-gradient(90deg, rgba(28,35,51,0.11) 0 5px, transparent 5px 10px);"></div>
-                                <span class="ps-notch ps-notch-left"></span>
-                                <span class="ps-notch ps-notch-right"></span>
-                            </div>
-
-                            <!-- OUTCOME BLOCK WITH RUBBER STAMP (DENIED) -->
-                            <div style="position: relative; padding: 16px 18px 20px; background: rgba(168,68,63,0.06); border-radius: 0 0 6px 6px; min-height: 96px;">
-                                <div style="font-size: 22px; font-weight: 800; letter-spacing: -0.02em; color: #A8443F; font-variant-numeric: tabular-nums;">−$1,500.00</div>
-                                <div style="margin-top: 5px; font-family: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace; font-size: 9px; font-weight: 700; letter-spacing: 1.3px; color: #8C8577; max-width: 150px;">FORFEITED TO MATCH POOL</div>
-
-                                <div class="ps-seal" style="position: absolute; right: 8px; bottom: 8px;">
-                                    <svg width="150" height="55" viewBox="0 0 300 110" aria-hidden="true" style="display: block; overflow: visible;">
-                                        <defs>
-                                            <filter id="stamp3g" x="-30%" y="-30%" width="160%" height="160%">
-                                                <feTurbulence type="fractalNoise" baseFrequency="0.13" numOctaves="3" seed="21" result="coarse"/>
-                                                <feColorMatrix in="coarse" type="matrix" values="0 0 0 0 0, 0 0 0 0 0, 0 0 0 0 0, 1 0 0 0 -0.26" result="blotch"/>
-                                                <feComposite in="SourceGraphic" in2="blotch" operator="out" result="pass1"/>
-                                                <feTurbulence type="fractalNoise" baseFrequency="0.7" numOctaves="4" seed="32" result="fine"/>
-                                                <feColorMatrix in="fine" type="matrix" values="0 0 0 0 0, 0 0 0 0 0, 0 0 0 0 0, 1 0 0 0 -0.52" result="speck"/>
-                                                <feComposite in="pass1" in2="speck" operator="out" result="pass2"/>
-                                                <feTurbulence type="fractalNoise" baseFrequency="0.018" numOctaves="2" seed="24" result="warp"/>
-                                                <feDisplacementMap in="pass2" in2="warp" scale="2.8" xChannelSelector="R" yChannelSelector="G"/>
-                                            </filter>
-                                            <filter id="stamp3b" x="-10%" y="-10%" width="120%" height="120%">
-                                                <feGaussianBlur stdDeviation="0.7" />
-                                            </filter>
-                                            <linearGradient id="pressure3" x1="0" y1="1" x2="1" y2="0">
-                                                <stop offset="0%" stop-color="#fff" stop-opacity="1"/>
-                                                <stop offset="55%" stop-color="#fff" stop-opacity="0.92"/>
-                                                <stop offset="100%" stop-color="#fff" stop-opacity="0.62"/>
-                                            </linearGradient>
-                                            <mask id="pressureMask3">
-                                                <rect x="0" y="0" width="300" height="110" fill="url(#pressure3)"/>
-                                            </mask>
-                                        </defs>
-                                        <g filter="url(#stamp3b)" opacity="0.28" transform="translate(0.5, 0.5) rotate(-11 150 55)">
-                                            <rect x="10" y="13" width="280" height="84" rx="8" fill="none" stroke="#7A1C2B" stroke-width="5" />
-                                            <rect x="18" y="21" width="264" height="68" rx="5" fill="none" stroke="#7A1C2B" stroke-width="1.6" />
-                                            <text x="158" y="55" text-anchor="middle" dominant-baseline="central" font-family='"Arial Narrow", "Helvetica Neue Condensed", "Oswald", "DejaVu Sans Condensed", Impact, system-ui, sans-serif' font-size="35" font-weight="700" letter-spacing="16" fill="#7A1C2B" style="font-stretch: condensed;">DENIED</text>
-                                        </g>
-                                        <g filter="url(#stamp3g)" mask="url(#pressureMask3)" opacity="0.88" transform="rotate(-11 150 55)">
-                                            <rect x="10" y="13" width="280" height="84" rx="8" fill="none" stroke="#7A1C2B" stroke-width="5" />
-                                            <rect x="18" y="21" width="264" height="68" rx="5" fill="none" stroke="#7A1C2B" stroke-width="1.6" />
-                                            <text x="158" y="55" text-anchor="middle" dominant-baseline="central" font-family='"Arial Narrow", "Helvetica Neue Condensed", "Oswald", "DejaVu Sans Condensed", Impact, system-ui, sans-serif' font-size="35" font-weight="700" letter-spacing="16" fill="#7A1C2B" style="font-stretch: condensed;">DENIED</text>
-                                        </g>
-                                    </svg>
-                                </div>
-                            </div>
-                        </article>
-
-                    </div>
-
-                    <!-- 4 STATS STRIP BELOW -->
-                    <div class="ps-stats reveal-item" style="margin-top: clamp(34px,4vw,54px); padding-top: clamp(24px,3vw,34px); border-top: 1px solid rgba(28,35,51,0.11); display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px;">
-                        <div>
-                            <div style="font-size: clamp(24px,2.6vw,32px); font-weight: 800; letter-spacing: -0.02em; color: #7A1C2B; line-height: 1; font-variant-numeric: tabular-nums;">74%</div>
-                            <div style="margin-top: 8px; font-family: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace; font-size: 9.5px; font-weight: 700; letter-spacing: 1.5px; color: #8C8577; text-transform: uppercase;">OF CONTRACTS ARE WON</div>
-                        </div>
-                        <div>
-                            <div style="font-size: clamp(24px,2.6vw,32px); font-weight: 800; letter-spacing: -0.02em; color: #7A1C2B; line-height: 1; font-variant-numeric: tabular-nums;">$127k</div>
-                            <div style="margin-top: 8px; font-family: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace; font-size: 9.5px; font-weight: 700; letter-spacing: 1.5px; color: #8C8577; text-transform: uppercase;">TOTAL CAPITAL SETTLED</div>
-                        </div>
-                        <div>
-                            <div style="font-size: clamp(24px,2.6vw,32px); font-weight: 800; letter-spacing: -0.02em; color: #7A1C2B; line-height: 1; font-variant-numeric: tabular-nums;">18 days</div>
-                            <div style="margin-top: 8px; font-family: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace; font-size: 9.5px; font-weight: 700; letter-spacing: 1.5px; color: #8C8577; text-transform: uppercase;">AVERAGE TIME TO TARGET</div>
-                        </div>
-                        <div>
-                            <div style="font-size: clamp(24px,2.6vw,32px); font-weight: 800; letter-spacing: -0.02em; color: #7A1C2B; line-height: 1; font-variant-numeric: tabular-nums;">812</div>
-                            <div style="margin-top: 8px; font-family: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace; font-size: 9.5px; font-weight: 700; letter-spacing: 1.5px; color: #8C8577; text-transform: uppercase;">VERIFIED COUNTERPARTIES</div>
-                        </div>
-                    </div>
-                </div>
-            </div>
 
             <!-- ═══ LIVE CONTRACT EXAMPLES ═══ -->
             <div class="lcontracts" id="contracts" data-r>

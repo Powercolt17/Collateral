@@ -445,7 +445,7 @@ export function renderLanding() {
                         </div>
 
                         <button class="sor-primary" onclick="window.router.navigate('/create'); return false;">
-                            START CONTRACT <span class="sor-arrow">→</span>
+                            CREATE YOUR STAKE <span class="sor-arrow">→</span>
                         </button>
                     </div>
 

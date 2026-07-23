@@ -6212,26 +6212,56 @@ export const landingCSS = `
 
 .sor-primary {
     font-family: 'Plus Jakarta Sans', sans-serif;
-    font-size: 14px;
+    font-size: 13.5px;
     font-weight: 800;
-    letter-spacing: 0.5px;
-    color: #FBF9F5;
-    background: #7A1C2B;
-    border: none;
-    border-radius: 12px;
-    padding: 15px 30px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: #FFFFFF;
+    background: linear-gradient(135deg, #7A1C2B 0%, #5E1521 100%);
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    border-radius: 6px;
+    padding: 16px 32px;
     cursor: pointer;
     display: inline-flex;
     align-items: center;
-    gap: 9px;
-    box-shadow: 0 16px 34px -18px rgba(122,28,43,0.7);
-    transition: all .2s ease;
+    gap: 12px;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 10px 24px -10px rgba(122,28,43,0.6), 0 2px 4px rgba(0,0,0,0.1);
+    transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
 }
+
+.sor-primary::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 65%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent 0%, rgba(255, 255, 255, 0.4) 50%, transparent 100%);
+    transform: skewX(-22deg);
+    transition: left 0.65s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
 .sor-primary:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 22px 44px -18px rgba(122,28,43,0.8);
+    transform: translateY(-3px) scale(1.02);
+    background: linear-gradient(135deg, #9A2B3D 0%, #6E1827 100%);
+    border-color: rgba(255, 255, 255, 0.4);
+    box-shadow: 0 16px 36px -10px rgba(122,28,43,0.85), 0 0 24px rgba(154,43,61,0.45);
 }
-.sor-primary:hover .sor-arrow { transform: translateX(4px); }
+
+.sor-primary:hover::before {
+    left: 140%;
+}
+
+.sor-primary:hover .sor-arrow {
+    transform: translateX(6px) scale(1.15);
+    color: #FFFFFF;
+}
+
+.sor-primary:active {
+    transform: translateY(-1px) scale(0.99);
+}
 
 /* HERO RIGHT CARD */
 .sor-hero-card {

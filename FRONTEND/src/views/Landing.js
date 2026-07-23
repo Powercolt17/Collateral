@@ -2836,22 +2836,15 @@ export function initLanding() {
         window.router.navigate('/market?type=rivalry');
     });
 
-    // ═══ C. INTERACTIVE CONTRACT PROTOCOL MODE SWITCHER & IDLE AUTO-DEMO ═══
+    // ═══ C. CONTINUOUS SYNCHRONIZED AUTO-CYCLE ENGINE ═══
     let autoDemoTimer = null;
-    let userHasInteracted = false;
+    let userPauseUntil = 0;
     let currentMode = 'solo';
 
-    window.userStopAutoDemo = function() {
-        userHasInteracted = true;
-        if (autoDemoTimer) {
-            clearInterval(autoDemoTimer);
-            autoDemoTimer = null;
-        }
-    };
-
-    window.switchProtocolMode = function(mode, isUserAction = true) {
-        if (isUserAction) {
-            window.userStopAutoDemo();
+    window.switchProtocolMode = function(mode, isUserClick = false) {
+        if (isUserClick) {
+            // Pause auto-cycle for 10 seconds if user explicitly clicks, then resume
+            userPauseUntil = Date.now() + 10000;
         }
 
         currentMode = mode;
@@ -2889,7 +2882,7 @@ export function initLanding() {
             if (outcomeTxt) outcomeTxt.innerText = 'Two stakes, one verified winner. Loser forfeits.';
         }
 
-        // Trigger smooth morphing animation restart
+        // Trigger smooth morphing animation restart on picture elements
         [oppWord, figVal, outcomeTxt].forEach(el => {
             if (!el) return;
             el.classList.remove('sor-morph', 'sor-figure', 'sor-outcome');
@@ -2898,7 +2891,10 @@ export function initLanding() {
         });
     };
 
-    // Attach direct explicit listeners to the mode cards
+    // Explicitly initialize on SOLO immediately on load
+    window.switchProtocolMode('solo', false);
+
+    // Attach direct click listeners to the left mode cards
     document.getElementById('card-mode-solo')?.addEventListener('click', () => {
         window.switchProtocolMode('solo', true);
     });
@@ -2907,18 +2903,12 @@ export function initLanding() {
         window.switchProtocolMode('rivalry', true);
     });
 
-    // Hover or click anywhere on hero card permanently stops auto-demo
-    const heroCard = document.getElementById('sor-hero-card');
-    if (heroCard) {
-        heroCard.addEventListener('mouseenter', window.userStopAutoDemo);
-        heroCard.addEventListener('click', window.userStopAutoDemo);
-    }
-
-    // Start idle auto-demo (swaps every 4.5s between SOLO and RIVALRY until user hovers or clicks)
+    // Start continuous auto-cycle (swaps both left cards & right picture in sync every 3.5s)
+    if (autoDemoTimer) clearInterval(autoDemoTimer);
     autoDemoTimer = setInterval(() => {
-        if (userHasInteracted) return;
+        if (Date.now() < userPauseUntil) return;
         const nextMode = (currentMode === 'solo') ? 'rivalry' : 'solo';
         window.switchProtocolMode(nextMode, false);
-    }, 4500);
+    }, 3500);
 }
 

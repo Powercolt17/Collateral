@@ -6489,4 +6489,191 @@ export const landingCSS = `
     transform: translateY(-3px);
     box-shadow: 0 16px 30px -15px rgba(28, 35, 51, 0.45), inset 0 1px 0 rgba(255, 255, 255, 0.9);
 }
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   COMPREHENSIVE MOBILE AUDIT OVERRIDES (360px, 390px, 430px)
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+html, body {
+  overflow-x: hidden !important;
+  max-width: 100vw !important;
+}
+
+@media (max-width: 768px) {
+  /* 1. Global Fluidity & Container Bounds */
+  body, .lmain, .lw, .sor-section, .lcontracts, .lhow-it-works-section, .lreal-results, .lemo-reframe, .lengine-section {
+    overflow-x: hidden !important;
+    max-width: 100% !important;
+    box-sizing: border-box !important;
+  }
+
+  /* 2. Reduced Section Padding (~20-24px) */
+  .lmain { padding-top: 72px !important; }
+  .sor-section { padding: 32px 16px !important; }
+  .lengine-section { padding: 32px 16px !important; }
+  .lcontracts { padding: 32px 16px !important; }
+  .lreal-results { padding: 32px 16px !important; }
+  .lhow-it-works-section { padding: 32px 16px !important; }
+  .lemo-reframe { padding: 32px 16px !important; }
+  .lfoot { padding: 36px 16px 48px !important; }
+
+  /* 3. Text Hierarchy & Tap Target Minimums */
+  body { font-size: 15px !important; }
+  .lsub, .sor-outcome-text, .lengine-sub { font-size: 15px !important; line-height: 1.55 !important; }
+  
+  .lbtn, .lp-cta-btn, .sor-primary, .lfoot-btn, .lcard-btn button {
+    min-height: 44px !important;
+    width: 100% !important;
+    justify-content: center !important;
+    box-sizing: border-box !important;
+  }
+
+  /* SECTION A: Hero Stats / Integrations Band (2x2 Grid below 768px) */
+  .l-stats-bar-grid, #l-stats-grid {
+    grid-template-columns: 1fr 1fr !important;
+    gap: 12px !important;
+  }
+  .l-stats-bar-grid > div {
+    min-height: 44px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+  }
+
+  /* SECTION B: Real Results (3-across -> 1 column) & Table Card Transformation */
+  .lstats-cards-grid {
+    grid-template-columns: 1fr !important;
+    gap: 14px !important;
+  }
+  .lledger-table-wrap-prod {
+    overflow-x: visible !important;
+    width: 100% !important;
+  }
+  .lledger-table-prod, 
+  .lledger-table-prod thead, 
+  .lledger-table-prod tbody, 
+  .lledger-table-prod th, 
+  .lledger-table-prod td, 
+  .lledger-table-prod tr { 
+    display: block !important; 
+    width: 100% !important;
+    box-sizing: border-box !important;
+  }
+  .lledger-table-prod thead { display: none !important; }
+  .lledger-table-prod tr {
+    background: #FFFFFF !important;
+    border: 1px solid #E2E8F0 !important;
+    border-radius: 14px !important;
+    padding: 14px 16px !important;
+    margin-bottom: 12px !important;
+    box-shadow: 0 2px 8px rgba(15, 23, 42, 0.04) !important;
+  }
+  .lledger-table-prod td {
+    display: flex !important;
+    justify-content: space-between !important;
+    align-items: center !important;
+    padding: 8px 0 !important;
+    border-bottom: 1px solid rgba(241, 245, 249, 0.8) !important;
+    font-size: 13.5px !important;
+    text-align: right !important;
+  }
+  .lledger-table-prod td:last-child { border-bottom: none !important; }
+  .lledger-table-prod td::before {
+    content: attr(data-label);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    font-weight: 700;
+    color: #64748B;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    margin-right: 12px;
+    flex-shrink: 0;
+    text-align: left;
+  }
+
+  /* SECTION C: Money Flows Schematic Reflow */
+  .lflow-desktop { display: none !important; }
+  .lflow-mobile { display: flex !important; flex-direction: column !important; gap: 14px !important; }
+
+  /* SECTION D: SOLO OR RIVALRY Section Reflow */
+  .sor-grid {
+    grid-template-columns: 1fr !important;
+    gap: 24px !important;
+  }
+  .sor-grid > div:last-child {
+    order: -1 !important; /* Hero card on top */
+  }
+  .sor-word-top, .sor-word-bottom {
+    font-size: clamp(34px, 11vw, 64px) !important;
+    line-height: 0.95 !important;
+    letter-spacing: -0.035em !important;
+  }
+  .sor-hero-card {
+    min-height: auto !important;
+    padding: 24px 18px !important;
+    border-radius: 20px !important;
+  }
+  .sor-mode-grid {
+    grid-template-columns: 1fr !important;
+    gap: 12px !important;
+  }
+  .sor-mode {
+    width: 100% !important;
+    box-sizing: border-box !important;
+  }
+
+  /* SECTION E: Open Contracts Card Grid & Tier Legend Bar */
+  .lcards {
+    display: flex !important;
+    flex-direction: column !important;
+    overflow: visible !important;
+    gap: 16px !important;
+    padding: 0 !important;
+    margin: 0 !important;
+  }
+  .lcard, .rv-card {
+    width: 100% !important;
+    max-width: 100% !important;
+    flex: 1 1 100% !important;
+    margin: 0 !important;
+    box-sizing: border-box !important;
+  }
+  .ltier-legend-bar {
+    grid-template-columns: 1fr !important;
+    gap: 10px !important;
+    padding: 14px 16px !important;
+  }
+  .ltier-legend-item {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    gap: 4px !important;
+  }
+
+  /* SECTION F: Diagrams & 3-Step Timeline Vertical Reflow */
+  .sor-timeline-wrap {
+    flex-direction: column !important;
+    align-items: center !important;
+    gap: 14px !important;
+  }
+  .sor-timeline-wrap > div[style*="width: 104px"],
+  .sor-timeline-wrap > div[style*="flex: 0 0 104px"] {
+    width: 100% !important;
+    flex: 1 1 100% !important;
+    flex-direction: row !important;
+    justify-content: flex-start !important;
+    gap: 14px !important;
+  }
+  .sor-timeline-wrap > div[aria-hidden] {
+    width: 2px !important;
+    height: 18px !important;
+    margin: 0 0 0 24px !important;
+    background: repeating-linear-gradient(180deg, rgba(28,35,51,0.16) 0 4px, transparent 4px 8px) !important;
+    flex: none !important;
+  }
+
+  img, svg {
+    max-width: 100% !important;
+  }
+}
 `;

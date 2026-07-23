@@ -341,7 +341,7 @@ export function renderLanding() {
                             Put money behind your commitment. Complete the goal and the contract pays automatically. Miss it and the rules enforce themselves.
                         </p>
 
-                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 30px;">
+                        <div class="sor-mode-grid" style="display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 30px;">
                             <button id="card-mode-solo" class="sor-mode active" onclick="window.switchProtocolMode('solo')">
                                 <span class="sor-mode-badge">SOLO</span>
                                 <div class="sor-mode-title">Stake against yourself</div>
@@ -377,7 +377,7 @@ export function renderLanding() {
 
                         <!-- TIMELINE WITH DUOTONE VECTOR ICON SET V2 -->
                         <div style="margin-bottom: 30px; width: 100%;">
-                            <div style="display: flex; align-items: flex-start; width: 100%;">
+                            <div class="sor-timeline-wrap" style="display: flex; align-items: flex-start; width: 100%;">
                                 <!-- STEP 1: LOCK CAPITAL -->
                                 <div style="width: 104px; flex: 0 0 104px; display: flex; flex-direction: column; align-items: center; gap: 9px;">
                                     <div class="tl-tile">

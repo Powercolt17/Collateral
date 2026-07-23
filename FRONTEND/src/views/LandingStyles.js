@@ -6856,4 +6856,111 @@ html, body {
   .ps-stats { grid-template-columns: 1fr 1fr !important; gap: 28px 20px !important; }
 }
 
+
+
+/* ═══ EXTRA MOBILE AUDIT POLISH OVERRIDES ═══ */
+@media (max-width: 768px) {
+  .ln-in {
+    padding: 0 20px !important;
+    height: 64px !important;
+  }
+  .lhero-section {
+    padding-top: 96px !important;
+    padding-bottom: 24px !important;
+  }
+  .lhero-section .lw {
+    padding: 0 20px !important;
+  }
+  .lh1 {
+    font-size: clamp(1.95rem, 8vw, 2.9rem) !important;
+    line-height: 1.02 !important;
+    letter-spacing: -0.03em !important;
+  }
+  .lsub {
+    font-size: 14.5px !important;
+    line-height: 1.5 !important;
+    margin-bottom: 18px !important;
+  }
+  .lctas {
+    flex-direction: column !important;
+    width: 100% !important;
+    gap: 10px !important;
+  }
+  .lctas .lbtn {
+    width: 100% !important;
+    max-width: 100% !important;
+  }
+  .l-live-rivalry-preview {
+    margin-top: 14px !important;
+    padding: 12px 14px !important;
+  }
+  .l-lr-ticker {
+    display: flex !important;
+    flex-wrap: wrap !important;
+    gap: 6px 8px !important;
+    font-size: 11px !important;
+  }
+  .l-lr-divider {
+    display: inline-block !important;
+    opacity: 0.4 !important;
+  }
+  .ps-card {
+    padding: 0 !important;
+  }
+  .ps-head {
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    gap: 12px !important;
+  }
+  .ps-seal svg {
+    max-width: 130px !important;
+    height: auto !important;
+  }
+  .l-momentum-wrap {
+    padding: 16px 20px !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    text-align: center !important;
+    gap: 10px !important;
+  }
+  .l-momentum-items {
+    display: flex !important;
+    flex-wrap: wrap !important;
+    justify-content: center !important;
+    gap: 6px 10px !important;
+  }
+  .lmini-cta {
+    padding: 28px 20px !important;
+    border-radius: 18px !important;
+    text-align: center !important;
+  }
+  .lmini-cta-h {
+    font-size: clamp(22px, 6vw, 32px) !important;
+  }
+}
+
+@media (max-width: 480px) {
+  .lhero-section {
+    padding-top: 84px !important;
+  }
+  .ln-brand {
+    font-size: 14px !important;
+    letter-spacing: 2px !important;
+  }
+  .lh1 {
+    font-size: clamp(1.75rem, 8.5vw, 2.4rem) !important;
+  }
+  .sor-mode {
+    padding: 14px !important;
+  }
+  .sor-word-top, .sor-word-bottom {
+    font-size: clamp(30px, 12vw, 48px) !important;
+  }
+  .ps-stats {
+    grid-template-columns: 1fr !important;
+    gap: 20px !important;
+    text-align: center !important;
+  }
+}
+
 `;

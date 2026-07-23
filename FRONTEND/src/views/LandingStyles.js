@@ -595,13 +595,13 @@ export const landingCSS = `
 }
 
 .lflow-node-stat {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 15px;
+    font-family: 'Plus Jakarta Sans', sans-serif !important;
+    font-size: 15.5px;
     font-weight: 800;
     color: #0F172A;
     margin-top: 5px;
     font-variant-numeric: tabular-nums;
-    letter-spacing: 0 !important;
+    letter-spacing: -0.02em !important;
     font-feature-settings: "tnum";
 }
 
@@ -734,13 +734,13 @@ export const landingCSS = `
 }
 
 .lflow-out-val {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 14px;
+    font-family: 'Plus Jakarta Sans', sans-serif !important;
+    font-size: 14.5px;
     font-weight: 800;
     color: #0F172A;
     margin-top: 2px;
     font-variant-numeric: tabular-nums;
-    letter-spacing: 0 !important;
+    letter-spacing: -0.02em !important;
     font-feature-settings: "tnum";
 }
 

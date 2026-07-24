@@ -134,11 +134,13 @@ export function renderLanding() {
                                 <span class="mono">SPECIMEN</span>
                                 <span class="mono">SOLO CONTRACT</span>
                             </div>
-                            <p class="demo-you">You</p>
-                            <p class="demo-vs">VS</p>
-                            <p class="demo-you">You</p>
-                            <p class="demo-amt">$1,000</p>
-                            <p class="mono demo-sub">Locked by you, against you</p>
+                            <div class="demo-center-block">
+                                <p class="demo-you">You</p>
+                                <p class="demo-vs">VS</p>
+                                <p class="demo-you">You</p>
+                                <p class="demo-amt">$1,000</p>
+                                <p class="mono demo-sub">Locked by you, against you</p>
+                            </div>
 
                             <dl class="demo-ledger">
                                 <div class="t-row"><dt>DEPOSIT</dt><span class="dots"></span><dd>$1,000</dd></div>

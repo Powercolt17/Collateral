@@ -258,23 +258,28 @@ export const landingCSS = `
   position: absolute;
   width: 11px;
   height: 11px;
+  background: transparent !important;
   pointer-events: none;
-  opacity: .55;
+  opacity: .75;
   z-index: 3;
 }
 
 .ticks::before {
-  top: -1px;
-  left: -1px;
+  top: 1px;
+  left: 1px;
   border-top: 1px solid var(--gilt);
   border-left: 1px solid var(--gilt);
+  border-bottom: none !important;
+  border-right: none !important;
 }
 
 .ticks::after {
-  bottom: -1px;
-  right: -1px;
+  bottom: 1px;
+  right: 1px;
   border-bottom: 1px solid var(--gilt);
   border-right: 1px solid var(--gilt);
+  border-top: none !important;
+  border-left: none !important;
 }
 
 /* ═══════════ GLOBAL BANNER HIDE ON LANDING ═══════════ */
@@ -835,9 +840,9 @@ export const landingCSS = `
   margin-bottom: 24px;
 }
 
-.demo-main {
+.demo-center-block {
   text-align: center;
-  margin-bottom: 20px;
+  margin-bottom: 16px;
 }
 
 .demo-you {
@@ -848,6 +853,7 @@ export const landingCSS = `
   letter-spacing: -.052em;
   text-transform: uppercase;
   color: var(--ink) !important;
+  text-align: center;
 }
 
 .demo-vs {
@@ -857,6 +863,24 @@ export const landingCSS = `
   letter-spacing: .52em;
   color: var(--blood);
   text-indent: .52em;
+  text-align: center;
+}
+
+.demo-amt {
+  margin: 18px 0 4px;
+  font-family: var(--mono);
+  font-size: 32px;
+  font-weight: 500;
+  font-variant-numeric: tabular-nums;
+  color: var(--blood) !important;
+  letter-spacing: -.02em;
+  text-align: center;
+}
+
+.demo-sub {
+  text-align: center;
+  font-size: 11px;
+  color: var(--ink-3);
 }
 
 .demo-ledger {
@@ -919,7 +943,7 @@ export const landingCSS = `
 }
 
 #modes .idx-mark {
-  top: var(--section-y) !important;
+  top: calc(var(--section-y) + 12px) !important;
 }
 
 /* ═══════════ CASE ═══════════ */

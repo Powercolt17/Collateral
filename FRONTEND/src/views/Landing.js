@@ -21,7 +21,7 @@ export function renderLanding() {
                     <a class="ln-brand" href="/" onclick="window.router.navigate('/'); return false;">
                         <span class="logo-wordmark">COLLATERAL</span>
                     </a>
-                    <div style="display:flex; align-items:center; gap:8px;">
+                    <div class="ln-right-group">
                         <button class="ln-cta" id="lp-nav-cta" type="button" onclick="if(window.app && window.app.openAccessModal){ window.app.openAccessModal('login'); } else { window.router.navigate('/signin'); } return false;">SIGN IN</button>
                         <button class="ch-hamburger" id="mobile-menu-btn" aria-label="Menu" onclick="window.app.toggleMobileMenu()">
                             <div class="ch-hamburger-lines">

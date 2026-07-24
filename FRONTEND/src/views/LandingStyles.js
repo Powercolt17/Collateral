@@ -366,7 +366,8 @@ export const landingCSS = `
 
 .ln-in {
   width: 100%;
-  max-width: 100%;
+  max-width: 1240px;
+  margin: 0 auto;
   padding: 0 48px;
   height: 68px;
   display: flex;
@@ -376,7 +377,7 @@ export const landingCSS = `
 
 .ln-brand {
   font-family: var(--wordmark);
-  font-size: 19px;
+  font-size: 18px;
   font-weight: 800;
   letter-spacing: .22em;
   color: #0F172A !important;
@@ -384,6 +385,11 @@ export const landingCSS = `
   display: inline-flex;
   align-items: center;
   text-transform: uppercase;
+  transition: opacity 0.2s ease;
+}
+
+.ln-brand:hover {
+  opacity: 0.85;
 }
 
 .logo-wordmark {
@@ -391,6 +397,12 @@ export const landingCSS = `
   font-weight: 800 !important;
   letter-spacing: .22em !important;
   text-transform: uppercase !important;
+}
+
+.ln-right-group {
+  display: flex;
+  align-items: center;
+  gap: 16px;
 }
 
 .ln-cta {
@@ -401,43 +413,47 @@ export const landingCSS = `
   font-weight: 700;
   letter-spacing: 0.14em;
   text-transform: uppercase;
-  padding: 10px 22px;
+  padding: 10px 24px;
   border: none;
-  border-radius: var(--r);
-  box-shadow: inset 0 1px 0 rgba(255,255,255,.16), 0 4px 12px rgba(122,28,41,.35);
+  border-radius: 4px;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.16), 0 4px 14px rgba(122,28,41,.3);
   cursor: pointer;
-  transition: all .25s ease;
+  transition: all .2s cubic-bezier(.16, 1, 0.3, 1);
 }
 
 .ln-cta:hover {
   background: #5C1414 !important;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.2), 0 6px 18px rgba(92,20,20,.4);
   transform: translateY(-1px);
 }
 
+.ln-cta:active {
+  transform: translateY(0);
+}
+
 .ch-hamburger {
-  width: 40px;
-  height: 40px;
+  width: 38px;
+  height: 38px;
   display: flex;
   align-items: center;
   justify-content: center;
   background: transparent;
-  border: 1px solid transparent;
-  border-radius: var(--r);
+  border: 1px solid rgba(0,0,0,0.08);
+  border-radius: 6px;
   cursor: pointer;
   position: relative;
-  transition: border-color 0.2s, background 0.2s;
+  transition: all 0.2s ease;
   flex-shrink: 0;
-  margin-left: 8px;
 }
 
 .ch-hamburger:hover {
-  border-color: var(--rule);
-  background: var(--paper-alt);
+  border-color: var(--rule-strong);
+  background: rgba(0,0,0,0.03);
 }
 
 .ch-hamburger-lines {
-  width: 18px;
-  height: 12px;
+  width: 16px;
+  height: 11px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -448,13 +464,18 @@ export const landingCSS = `
   width: 100%;
   height: 1.5px;
   background: #111;
+  border-radius: 1px;
   transition: transform 0.3s ease, opacity 0.3s ease, width 0.3s ease;
   transform-origin: center;
 }
 
 .ch-hamburger-lines span:nth-child(2) {
-  width: 12px;
+  width: 11px;
   margin-left: auto;
+}
+
+@media(max-width:960px){
+  .ln-in { padding: 0 32px; }
 }
 
 @media(max-width:760px){

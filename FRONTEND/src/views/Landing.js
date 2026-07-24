@@ -175,20 +175,22 @@ export function renderLanding() {
                         </aside>
                     </div>
 
-                    <p class="cmp-caption mono r-item" style="--i:3">Same goal, recorded two ways</p>
-                    <table class="cmp plate-quiet r-plate" style="--i:3">
-                        <thead>
-                            <tr><th scope="col">Wk</th><th scope="col">Without stakes &middot; VOID</th><th scope="col">Under contract</th></tr>
-                        </thead>
-                        <tbody>
-                            <tr><td>01</td><td class="void">Announce the goal</td><td>Lock the deposit</td></tr>
-                            <tr><td>02</td><td class="void">Something urgent comes up</td><td>Something urgent comes up anyway</td></tr>
-                            <tr><td>03</td><td class="void">Move the deadline, quietly</td><td>The deadline does not move</td></tr>
-                            <tr><td>04</td><td class="void">Decide it wasn't the right time</td><td>Ship it at 2am, badly, on time</td></tr>
-                            <tr><td>&mdash;</td><td class="void">Nothing at risk, nothing changed</td>
-                                <td class="won-txt">Money back. And the thing exists.</td></tr>
-                        </tbody>
-                    </table>
+                    <div>
+                        <p class="cmp-caption mono r-item" style="--i:3">Same goal, recorded two ways</p>
+                        <table class="cmp plate-quiet r-plate" style="--i:3">
+                            <thead>
+                                <tr><th scope="col">Wk</th><th scope="col">Without stakes &middot; VOID</th><th scope="col">Under contract</th></tr>
+                            </thead>
+                            <tbody>
+                                <tr><td>01</td><td class="void">Announce the goal</td><td>Lock the deposit</td></tr>
+                                <tr><td>02</td><td class="void">Something urgent comes up</td><td>Something urgent comes up anyway</td></tr>
+                                <tr><td>03</td><td class="void">Move the deadline, quietly</td><td>The deadline does not move</td></tr>
+                                <tr><td>04</td><td class="void">Decide it wasn't the right time</td><td>Ship it at 2am, badly, on time</td></tr>
+                                <tr><td>&mdash;</td><td class="void">Nothing at risk, nothing changed</td>
+                                    <td class="won-txt">Money back. And the thing exists.</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </section>
 

@@ -1,9 +1,9 @@
 // ═══════════════════════════════════════════════════════════
 // Collateral — motion system
-// One easing, one vocabulary, four primitives. Import into Landing.js / Landing.jsx.
+// One easing, one vocabulary, entrance primitives. Import into Landing.js / Landing.jsx.
 // ═══════════════════════════════════════════════════════════
 
-import { useEffect, useRef, useState, useCallback } from "react";
+import { useEffect, useRef, useState } from "react";
 
 /* ───────────────────────────────────────────────────────────
    1 · useReveal — scroll-triggered entrance, fires once
@@ -88,60 +88,7 @@ export function useCountUp(target, { duration = 1500, active = true, format = (n
 }
 
 /* ───────────────────────────────────────────────────────────
-   3 · useDrawOnce — plotter effect for the schematic
-   Fail-visible: Do NOT hide strokes on mount.
-   Applies strokeDasharray/offset and adds .is-drawing in active effect.
-   Safety timeout guarantees linework is never left blank.
-   ─────────────────────────────────────────────────────────── */
-export function useDrawOnce(active) {
-  const ref = useRef(null);
-
-  useEffect(() => {
-    const svg = ref.current;
-    if (!svg || !active) return;
-    const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    if (reduce) return; // leave strokes fully drawn
-
-    svg.querySelectorAll("[data-draw]").forEach((el) => {
-      let len = 0;
-      try {
-        len = el.getTotalLength ? el.getTotalLength() : 0;
-      } catch {
-        len = 0;
-      }
-      if (!len && el.tagName === "rect") {
-        const w = +el.getAttribute("width") || 0;
-        const h = +el.getAttribute("height") || 0;
-        len = (w + h) * 2;
-      }
-      if (!len) return;
-      el.style.strokeDasharray = String(len);
-      el.style.strokeDashoffset = String(len);
-    });
-
-    requestAnimationFrame(() => svg.classList.add("is-drawing"));
-  }, [active]);
-
-  useEffect(() => {
-    const svg = ref.current;
-    if (!svg) return;
-    const t = setTimeout(() => {
-      svg.querySelectorAll("[data-draw]").forEach((el) => {
-        el.style.strokeDasharray = "";
-        el.style.strokeDashoffset = "";
-      });
-      svg.querySelectorAll("[data-fade]").forEach((el) => {
-        el.style.opacity = "1";
-      });
-    }, 6000);
-    return () => clearTimeout(t);
-  }, []);
-
-  return ref;
-}
-
-/* ───────────────────────────────────────────────────────────
-   4 · Styles — append to landingStyles
+   3 · Styles — append to landingStyles
    ─────────────────────────────────────────────────────────── */
 export const revealStyles = `
 /* ═══════════ MOTION PRIMITIVES ═══════════ */
@@ -186,50 +133,9 @@ export const revealStyles = `
 }
 .reveal.is-in tbody tr{opacity:1;transform:none}
 
-/* ═══════════ SCHEMATIC PLOTTER ═══════════ */
-.sch svg [data-draw]{ transition:none; }
-.sch svg.is-drawing [data-draw]{
-  animation:cl-plot 1.05s var(--ease-plot) forwards;
-  animation-delay:calc(var(--d,0) * 1ms);
-}
-@keyframes cl-plot{ to{ stroke-dashoffset:0; } }
-
-/* labels default to visible (fail-visible) */
-.sch svg [data-fade]{ opacity:1; }
-.sch svg.is-drawing [data-fade]{
-  opacity:0;
-  animation:cl-fadein .5s var(--ease-out) forwards;
-  animation-delay:calc(var(--d,0) * 1ms);
-}
-@keyframes cl-fadein{ to{ opacity:1; } }
-
-/* the win path arrives last and gets one beat of emphasis —
-   a weight change, not a glow. */
-.sch svg.is-drawing [data-win]{
-  animation:cl-plot 1.15s var(--ease-plot) forwards,
-            cl-settle .6s var(--ease-out) 2.35s;
-}
-@keyframes cl-settle{
-  0%{stroke-width:1.5}
-  40%{stroke-width:2.6}
-  100%{stroke-width:1.5}
-}
-.sch svg.is-drawing [data-win-box]{
-  animation:cl-plot 1s var(--ease-plot) 2.1s forwards,
-            cl-box-settle .6s var(--ease-out) 2.6s;
-}
-@keyframes cl-box-settle{
-  0%{stroke-width:1}
-  40%{stroke-width:2.2}
-  100%{stroke-width:1}
-}
-
 @media(prefers-reduced-motion:reduce){
   .reveal .r-item,.reveal .r-plate,.reveal tbody tr{
     opacity:1!important;transform:none!important;transition:none!important}
   .reveal .r-rule{transform:none!important;transition:none!important}
-  .sch svg [data-draw]{stroke-dasharray:none!important;stroke-dashoffset:0!important;
-    animation:none!important}
-  .sch svg [data-fade]{opacity:1!important;animation:none!important}
 }
 `;

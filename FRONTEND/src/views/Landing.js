@@ -1,7 +1,7 @@
 // Landing Page — Collateral Financial Document System with Paper Grain & Scoped Styling
 import api from '../api.js';
 import { landingCSS } from './LandingStyles.js';
-import { useReveal, useCountUp, useDrawOnce, revealStyles } from './LandingMotion.js';
+import { useReveal, useCountUp, revealStyles } from './LandingMotion.js';
 
 // Inject LandingCSS once into document head
 if (!document.getElementById('lp-injected-styles')) {
@@ -414,7 +414,7 @@ export function renderLanding() {
                             <span class="mono">Drawing 01 &middot; full settlement path</span>
                             <span class="mono">Rev. 2026.03</span>
                         </div>
-                        <svg id="sch-svg" viewBox="0 0 1080 400" role="img"
+                        <svg viewBox="0 0 1080 400" role="img"
                              aria-label="Schematic: deposits enter custodial escrow, are verified by platform APIs, then split into returned capital, forfeited deposits which recirculate, and a protocol fee.">
                             <defs>
                                 <marker id="cl-ar" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
@@ -422,56 +422,56 @@ export function renderLanding() {
                                 </marker>
                             </defs>
                             <g fill="none" stroke="#0E1420" stroke-width="1">
-                                <rect x="20" y="150" width="180" height="86" rx="2" data-draw style="--d:0"/>
-                                <rect x="290" y="150" width="180" height="86" rx="2" stroke-width="1.7" data-draw style="--d:180"/>
-                                <rect x="560" y="150" width="180" height="86" rx="2" data-draw style="--d:360"/>
+                                <rect x="20" y="150" width="180" height="86" rx="2"/>
+                                <rect x="290" y="150" width="180" height="86" rx="2" stroke-width="1.7"/>
+                                <rect x="560" y="150" width="180" height="86" rx="2"/>
                             </g>
                             <g font-family="IBM Plex Mono, monospace" font-size="10" letter-spacing="1.6" fill="#6E7686">
-                                <text x="34" y="172" data-fade style="--d:300">INPUT</text>
-                                <text x="304" y="172" data-fade style="--d:480">CUSTODY</text>
-                                <text x="574" y="172" data-fade style="--d:660">VERIFICATION</text>
+                                <text x="34" y="172">INPUT</text>
+                                <text x="304" y="172">CUSTODY</text>
+                                <text x="574" y="172">VERIFICATION</text>
                             </g>
                             <g font-family="Archivo, sans-serif" font-size="14" font-weight="600" fill="#0E1420">
-                                <text x="34" y="197" data-fade style="--d:300">Deposit in</text>
-                                <text x="304" y="197" data-fade style="--d:480">Escrow vault</text>
-                                <text x="574" y="197" data-fade style="--d:660">Oracle API stream</text>
+                                <text x="34" y="197">Deposit in</text>
+                                <text x="304" y="197">Escrow vault</text>
+                                <text x="574" y="197">Oracle API stream</text>
                             </g>
                             <g font-family="IBM Plex Mono, monospace" font-size="14" fill="#7A1C29">
-                                <text x="34" y="221" data-fade style="--d:300">$8,700,000</text>
-                                <text x="304" y="221" data-fade style="--d:480">$8.7M locked</text>
-                                <text x="574" y="221" data-fade style="--d:660">96.2% hit rate</text>
+                                <text x="34" y="221">$8,700,000</text>
+                                <text x="304" y="221">$8.7M locked</text>
+                                <text x="574" y="221">96.2% hit rate</text>
                             </g>
                             <g stroke-width="1" marker-end="url(#cl-ar)" fill="none">
-                                <line x1="204" y1="193" x2="282" y2="193" stroke="#0E1420" data-draw style="--d:200"/>
-                                <line x1="474" y1="193" x2="552" y2="193" stroke="#0E1420" data-draw style="--d:380"/>
-                                <path d="M744 193 L800 193 L800 78 L856 78" stroke="#186B4A" stroke-width="1.5" data-draw data-win style="--d:900"/>
-                                <path d="M744 193 L820 193 L856 193" stroke="#7A1C29" stroke-dasharray="5 4" data-draw style="--d:1300"/>
-                                <path d="M744 193 L800 193 L800 310 L856 310" stroke="#6E7686" stroke-dasharray="2 4" data-draw style="--d:1700"/>
+                                <line x1="204" y1="193" x2="282" y2="193" stroke="#0E1420"/>
+                                <line x1="474" y1="193" x2="552" y2="193" stroke="#0E1420"/>
+                                <path d="M744 193 L800 193 L800 78 L856 78" stroke="#186B4A" stroke-width="1.5"/>
+                                <path d="M744 193 L820 193 L856 193" stroke="#7A1C29" stroke-dasharray="5 4"/>
+                                <path d="M744 193 L800 193 L800 310 L856 310" stroke="#6E7686" stroke-dasharray="2 4"/>
                             </g>
                             <g fill="none" stroke-width="1">
-                                <rect x="860" y="40" width="200" height="76" rx="2" stroke="#186B4A" data-draw data-win-box/>
-                                <rect x="860" y="155" width="200" height="76" rx="2" stroke="#7A1C29" data-draw style="--d:1500"/>
-                                <rect x="860" y="272" width="200" height="76" rx="2" stroke="#DCD5C6" data-draw style="--d:1900"/>
+                                <rect x="860" y="40" width="200" height="76" rx="2" stroke="#186B4A"/>
+                                <rect x="860" y="155" width="200" height="76" rx="2" stroke="#7A1C29"/>
+                                <rect x="860" y="272" width="200" height="76" rx="2" stroke="#DCD5C6"/>
                             </g>
                             <g font-family="IBM Plex Mono, monospace" font-size="10" letter-spacing="1.6">
-                                <text x="874" y="62" fill="#186B4A" data-fade style="--d:2400">WIN PATH &middot; 95.7%</text>
-                                <text x="874" y="177" fill="#7A1C29" data-fade style="--d:1600">FORFEITED &middot; 3.8%</text>
-                                <text x="874" y="294" fill="#6E7686" data-fade style="--d:2000">PROTOCOL FEE &middot; 0.5%</text>
+                                <text x="874" y="62" fill="#186B4A">WIN PATH &middot; 95.7%</text>
+                                <text x="874" y="177" fill="#7A1C29">FORFEITED &middot; 3.8%</text>
+                                <text x="874" y="294" fill="#6E7686">PROTOCOL FEE &middot; 0.5%</text>
                             </g>
                             <g font-family="Archivo, sans-serif" font-size="13" font-weight="600" fill="#0E1420">
-                                <text x="874" y="84" data-fade style="--d:2400">Returned to creator</text>
-                                <text x="874" y="199" data-fade style="--d:1600">Feeds winner match pool</text>
-                                <text x="874" y="316" data-fade style="--d:2000">Operations</text>
+                                <text x="874" y="84">Returned to creator</text>
+                                <text x="874" y="199">Feeds winner match pool</text>
+                                <text x="874" y="316">Operations</text>
                             </g>
                             <g font-family="IBM Plex Mono, monospace" font-size="14">
-                                <text x="874" y="106" fill="#186B4A" id="sch-win-amt" data-fade style="--d:2400">$8,326,200</text>
-                                <text x="874" y="221" fill="#7A1C29" id="sch-lose-amt" data-fade style="--d:1600">$330,600</text>
-                                <text x="874" y="338" fill="#6E7686" id="sch-fee-amt" data-fade style="--d:2000">$43,200</text>
+                                <text x="874" y="106" fill="#186B4A">$8,326,200</text>
+                                <text x="874" y="221" fill="#7A1C29">$330,600</text>
+                                <text x="874" y="338" fill="#6E7686">$43,200</text>
                             </g>
-                            <path d="M960 235 L960 372 L380 372 L380 240" fill="none" stroke="#7A1C29" stroke-width="1" stroke-dasharray="5 4" marker-end="url(#cl-ar)" data-draw style="--d:2100"/>
-                            <text x="670" y="366" font-family="IBM Plex Mono, monospace" font-size="10" letter-spacing="1.6" fill="#7A1C29" text-anchor="middle" data-fade style="--d:2200">FORFEITED DEPOSITS RECIRCULATE TO ESCROW VAULT</text>
-                            <g stroke="#6E7686" stroke-width=".6"><path d="M20 268 v10 M200 268 v10 M20 273 h180" data-draw style="--d:700"/></g>
-                            <text x="110" y="290" font-family="IBM Plex Mono, monospace" font-size="9.5" letter-spacing="1.4" fill="#6E7686" text-anchor="middle" data-fade style="--d:700">STRIPE CONNECT CUSTODY</text>
+                            <path d="M960 235 L960 372 L380 372 L380 240" fill="none" stroke="#7A1C29" stroke-width="1" stroke-dasharray="5 4" marker-end="url(#cl-ar)"/>
+                            <text x="670" y="366" font-family="IBM Plex Mono, monospace" font-size="10" letter-spacing="1.6" fill="#7A1C29" text-anchor="middle">FORFEITED DEPOSITS RECIRCULATE TO ESCROW VAULT</text>
+                            <g stroke="#6E7686" stroke-width=".6"><path d="M20 268 v10 M200 268 v10 M20 273 h180"/></g>
+                            <text x="110" y="290" font-family="IBM Plex Mono, monospace" font-size="9.5" letter-spacing="1.4" fill="#6E7686" text-anchor="middle">STRIPE CONNECT CUSTODY</text>
                         </svg>
                         <dl class="sch-mobile">
                             <div class="sm-row"><dt>Deposits in</dt><span class="dots"></span><dd>$8,700,000</dd></div>
@@ -481,7 +481,7 @@ export function renderLanding() {
                             <div class="sm-row blood"><dt>Forfeited &middot; 3.8%</dt><span class="dots"></span><dd>$330,600</dd></div>
                             <div class="sm-row"><dt>Protocol fee &middot; 0.5%</dt><span class="dots"></span><dd>$43,200</dd></div>
                         </dl>
-                        <div class="sch-foot" data-fade style="--d:2600">
+                        <div class="sch-foot">
                             <span class="legend"><span class="swatch" style="color:#186B4A"></span>Returned capital</span>
                             <span class="legend"><span class="swatch dash" style="color:#7A1C29"></span>Forfeited &amp; recirculated</span>
                             <span class="legend"><span class="swatch dash" style="color:#6E7686"></span>Protocol fee</span>
@@ -692,7 +692,7 @@ export function initLanding() {
         return '$' + Math.round(n).toLocaleString('en-US');
     }
 
-    /* ── Motion System (Reveal Observers & Plotter) ── */
+    /* ── Motion System (Section Reveal Observers) ── */
     if ('IntersectionObserver' in window) {
         const revealObserver = new IntersectionObserver((entries) => {
             entries.forEach((e) => {
@@ -705,29 +705,6 @@ export function initLanding() {
                         const bookTotalEl = document.getElementById('book-total-amt');
                         countUp(bookTotalEl, 8700000, money);
                     }
-
-                    // Trigger schematic plotter and count up schematic figures when Section 06 becomes active
-                    if (e.target.id === 'flow') {
-                        const schSvg = document.getElementById('sch-svg');
-                        if (schSvg && !reduce) {
-                            schSvg.querySelectorAll('[data-draw]').forEach((el) => {
-                                let len = 0;
-                                try { len = el.getTotalLength ? el.getTotalLength() : 0; } catch (err) { len = 0; }
-                                if (!len && el.tagName === 'rect') {
-                                    const w = +el.getAttribute('width') || 0;
-                                    const h = +el.getAttribute('height') || 0;
-                                    len = (w + h) * 2;
-                                }
-                                if (!len) return;
-                                el.style.strokeDasharray = String(len);
-                                el.style.strokeDashoffset = String(len);
-                            });
-                            requestAnimationFrame(() => schSvg.classList.add('is-drawing'));
-                        }
-                        countUp(document.getElementById('sch-win-amt'), 8326200, money);
-                        countUp(document.getElementById('sch-lose-amt'), 330600, money);
-                        countUp(document.getElementById('sch-fee-amt'), 43200, money);
-                    }
                 }
             });
         }, { threshold: 0.18, rootMargin: '0px 0px -12% 0px' });
@@ -739,47 +716,12 @@ export function initLanding() {
                 if (sec.id === 'record') {
                     countUp(document.getElementById('book-total-amt'), 8700000, money);
                 }
-                if (sec.id === 'flow') {
-                    const schSvg = document.getElementById('sch-svg');
-                    if (schSvg && !reduce) {
-                        schSvg.querySelectorAll('[data-draw]').forEach((el) => {
-                            let len = 0;
-                            try { len = el.getTotalLength ? el.getTotalLength() : 0; } catch (err) { len = 0; }
-                            if (!len && el.tagName === 'rect') {
-                                const w = +el.getAttribute('width') || 0;
-                                const h = +el.getAttribute('height') || 0;
-                                len = (w + h) * 2;
-                            }
-                            if (!len) return;
-                            el.style.strokeDasharray = String(len);
-                            el.style.strokeDashoffset = String(len);
-                        });
-                        requestAnimationFrame(() => schSvg.classList.add('is-drawing'));
-                    }
-                    countUp(document.getElementById('sch-win-amt'), 8326200, money);
-                    countUp(document.getElementById('sch-lose-amt'), 330600, money);
-                    countUp(document.getElementById('sch-fee-amt'), 43200, money);
-                }
             } else {
                 revealObserver.observe(sec);
             }
         });
     } else {
         document.querySelectorAll('.reveal').forEach((sec) => sec.classList.add('is-in'));
-    }
-
-    // Safety timeout: Guarantee schematic linework is never left blank if observer fails
-    const schSvg = document.getElementById('sch-svg');
-    if (schSvg) {
-        setTimeout(() => {
-            schSvg.querySelectorAll('[data-draw]').forEach((el) => {
-                el.style.strokeDasharray = '';
-                el.style.strokeDashoffset = '';
-            });
-            schSvg.querySelectorAll('[data-fade]').forEach((el) => {
-                el.style.opacity = '1';
-            });
-        }, 6000);
     }
 
     function countUp(el, target, formatFn) {

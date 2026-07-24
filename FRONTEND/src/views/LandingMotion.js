@@ -1,1 +1,1 @@
-export { useReveal, useCountUp, useDrawOnce, revealStyles } from "./LandingMotion.jsx";
+export { useReveal, useCountUp, revealStyles } from "./LandingMotion.jsx";

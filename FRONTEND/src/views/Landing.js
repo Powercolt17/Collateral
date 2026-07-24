@@ -699,6 +699,30 @@ export function initLanding() {
     const schEl = document.querySelector('.sch');
     if (schEl && !reduce) {
         schEl.classList.add('is-armed');
+
+        if ('IntersectionObserver' in window) {
+            const schObserver = new IntersectionObserver((entries) => {
+                entries.forEach((e) => {
+                    if (e.isIntersecting) {
+                        schEl.classList.add('is-revealed');
+                        schObserver.disconnect();
+                    }
+                });
+            }, { threshold: 0.05, rootMargin: '0px 0px 50px 0px' });
+            schObserver.observe(schEl);
+
+            const rect = schEl.getBoundingClientRect();
+            if (rect.top < window.innerHeight * 0.95 && rect.bottom > 0) {
+                schEl.classList.add('is-revealed');
+            }
+
+            // Guaranteed safety fallback: reveal drawing within 1.8s max under any condition
+            setTimeout(() => {
+                schEl.classList.add('is-revealed');
+            }, 1800);
+        } else {
+            schEl.classList.add('is-revealed');
+        }
     }
 
     /* ── Motion System (Section Reveal Observers) ── */
@@ -714,13 +738,6 @@ export function initLanding() {
                         const bookTotalEl = document.getElementById('book-total-amt');
                         countUp(bookTotalEl, 8700000, money);
                     }
-
-                    // Trigger schematic sweep reveal when Section 06 becomes active
-                    if (e.target.id === 'flow') {
-                        if (schEl && !reduce) {
-                            schEl.classList.add('is-revealed');
-                        }
-                    }
                 }
             });
         }, { threshold: 0.18, rootMargin: '0px 0px -12% 0px' });
@@ -732,18 +749,12 @@ export function initLanding() {
                 if (sec.id === 'record') {
                     countUp(document.getElementById('book-total-amt'), 8700000, money);
                 }
-                if (sec.id === 'flow') {
-                    if (schEl && !reduce) {
-                        schEl.classList.add('is-revealed');
-                    }
-                }
             } else {
                 revealObserver.observe(sec);
             }
         });
     } else {
         document.querySelectorAll('.reveal').forEach((sec) => sec.classList.add('is-in'));
-        if (schEl) schEl.classList.add('is-revealed');
     }
 
     function countUp(el, target, formatFn) {

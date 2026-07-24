@@ -1208,7 +1208,7 @@ export function renderLanding() {
 
                         <div class="oc-duels-card" style="background: #FFFDFA !important; border: 1.5px solid rgba(28,35,51,0.11) !important; border-radius: 16px !important; padding: 12px 20px !important; box-shadow: 0 8px 24px -16px rgba(28,35,51,0.25) !important; max-width: 1080px !important; margin: 0 auto !important; box-sizing: border-box !important;">
                             <!-- DUEL 1 -->
-                            <div class="oc-duel" onclick="window.router && window.router.navigate('/rivalry/7B92A41E')">
+                            <div class="oc-duel" data-rivalry-id="R-VOSS-MARCUS" data-p1="JakeVoss" data-p1-delta="+12.4%" data-p2="Marcus" data-p2-delta="+9.2%" data-pool="$5,000" data-time="14 Days" data-platform="YouTube" style="cursor: pointer;">
                                 <div class="oc-duel-head">
                                     <div style="display: flex !important; align-items: center !important; gap: 8px !important;">
                                         <svg width="15" height="15" viewBox="0 0 24 24" aria-hidden="true" style="display: block !important; flex-shrink: 0 !important;">
@@ -1254,7 +1254,7 @@ export function renderLanding() {
                             </div>
 
                             <!-- DUEL 2 -->
-                            <div class="oc-duel" onclick="window.router && window.router.navigate('/rivalry/34D63CA3')">
+                            <div class="oc-duel" data-rivalry-id="R-REVPILOT-QUOTA" data-p1="revpilot" data-p1-delta="+8.1%" data-p2="quotaops" data-p2-delta="+5.4%" data-pool="$2,000" data-time="Settling" data-platform="Stripe Revenue" style="cursor: pointer;">
                                 <div class="oc-duel-head">
                                     <div style="display: flex !important; align-items: center !important; gap: 8px !important;">
                                         <svg width="15" height="15" viewBox="0 0 24 24" aria-hidden="true" style="display: block !important; flex-shrink: 0 !important;">
@@ -2998,11 +2998,55 @@ export function initLanding() {
             }
     
             // ═══ B. RIVALRY QUICK-VIEW OVERLAY MODAL ═══
-            // 1. Rivalry Preview Card Click
-            const rivalryCard = e.target.closest('#l-live-rivalry-preview-card');
-            if (rivalryCard) {
+            // 1. Rivalry Preview Card / Duel Item Click
+            const rivalryTrigger = e.target.closest('#l-live-rivalry-preview-card, .oc-duel, [data-rivalry-modal]');
+            if (rivalryTrigger) {
                 e.preventDefault();
                 e.stopPropagation();
+
+                const p1 = rivalryTrigger.getAttribute('data-p1');
+                const p1Delta = rivalryTrigger.getAttribute('data-p1-delta');
+                const p2 = rivalryTrigger.getAttribute('data-p2');
+                const p2Delta = rivalryTrigger.getAttribute('data-p2-delta');
+                const pool = rivalryTrigger.getAttribute('data-pool');
+                const time = rivalryTrigger.getAttribute('data-time');
+                const platform = rivalryTrigger.getAttribute('data-platform');
+                const id = rivalryTrigger.getAttribute('data-rivalry-id');
+
+                if (id) {
+                    const titleEl = document.querySelector('#rivalry-quick-view-overlay .l-modal-title');
+                    if (titleEl) titleEl.innerHTML = `<span class="l-ticker-pulse"></span> RIVALRY SPECIFICATION · ID: ${id}`;
+                }
+                if (p1 && p2) {
+                    const p1NameEl = document.querySelector('#rivalry-quick-view-overlay .l-ms-player.left .l-ms-name');
+                    const p1DeltaEl = document.querySelector('#rivalry-quick-view-overlay .l-ms-player.left .l-ms-delta');
+                    const p2NameEl = document.querySelector('#rivalry-quick-view-overlay .l-ms-player.right .l-ms-name');
+                    const p2DeltaEl = document.querySelector('#rivalry-quick-view-overlay .l-ms-player.right .l-ms-delta');
+
+                    if (p1NameEl) p1NameEl.textContent = p1;
+                    if (p1DeltaEl) p1DeltaEl.textContent = p1Delta || '+8.40%';
+                    if (p2NameEl) p2NameEl.textContent = p2;
+                    if (p2DeltaEl) p2DeltaEl.textContent = p2Delta || '+7.80%';
+
+                    const momentumNames = document.querySelectorAll('#rivalry-quick-view-overlay .l-ms-momentum-names span');
+                    if (momentumNames.length >= 2) {
+                        momentumNames[0].textContent = p1;
+                        momentumNames[1].textContent = p2;
+                    }
+                }
+                if (pool) {
+                    const poolEl = document.querySelector('#rivalry-quick-view-overlay .l-ss-item:nth-child(1) .l-ss-val');
+                    if (poolEl) poolEl.textContent = pool;
+                }
+                if (time) {
+                    const timeEl = document.querySelector('#rivalry-quick-view-overlay .l-ss-item:nth-child(3) .l-ss-val');
+                    if (timeEl) timeEl.textContent = time;
+                }
+                if (platform) {
+                    const platEl = document.querySelector('#rivalry-quick-view-overlay .l-ss-item:nth-child(5) .l-ss-val');
+                    if (platEl) platEl.textContent = platform;
+                }
+
                 const overlay = document.getElementById('rivalry-quick-view-overlay');
                 if (overlay) overlay.classList.add('active');
                 return;

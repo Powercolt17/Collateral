@@ -366,9 +366,8 @@ export const landingCSS = `
 
 .ln-in {
   width: 100%;
-  max-width: 1240px;
-  margin: 0 auto;
-  padding: 0 48px;
+  max-width: 100%;
+  padding: 0 24px 0 48px;
   height: 68px;
   display: flex;
   justify-content: space-between;
@@ -402,7 +401,7 @@ export const landingCSS = `
 .ln-right-group {
   display: flex;
   align-items: center;
-  gap: 16px;
+  gap: 28px;
 }
 
 .ln-cta {
@@ -432,28 +431,26 @@ export const landingCSS = `
 }
 
 .ch-hamburger {
-  width: 38px;
-  height: 38px;
+  width: 32px;
+  height: 32px;
   display: flex;
   align-items: center;
   justify-content: center;
   background: transparent;
-  border: 1px solid rgba(0,0,0,0.08);
-  border-radius: 6px;
+  border: none;
   cursor: pointer;
   position: relative;
-  transition: all 0.2s ease;
+  transition: opacity 0.2s ease;
   flex-shrink: 0;
 }
 
 .ch-hamburger:hover {
-  border-color: var(--rule-strong);
-  background: rgba(0,0,0,0.03);
+  opacity: 0.7;
 }
 
 .ch-hamburger-lines {
-  width: 16px;
-  height: 11px;
+  width: 18px;
+  height: 12px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -470,16 +467,13 @@ export const landingCSS = `
 }
 
 .ch-hamburger-lines span:nth-child(2) {
-  width: 11px;
+  width: 12px;
   margin-left: auto;
 }
 
-@media(max-width:960px){
-  .ln-in { padding: 0 32px; }
-}
-
 @media(max-width:760px){
-  .ln-in { padding: 0 20px; height: 60px; }
+  .ln-in { padding: 0 16px; height: 60px; }
+  .ln-right-group { gap: 16px; }
 }
 
 /* ═══════════ HERO ═══════════ */

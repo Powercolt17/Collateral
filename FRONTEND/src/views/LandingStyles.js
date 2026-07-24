@@ -7254,27 +7254,46 @@ button.ln-cta,
 }
 
 /* 3. Live duel rows modular structure (DESKTOP & MOBILE) */
+.oc-duels-card {
+  background: #FFFDFA !important;
+  border: 1.5px solid rgba(28, 35, 51, 0.11) !important;
+  border-radius: 16px !important;
+  padding: 12px 20px !important;
+  box-shadow: 0 8px 24px -16px rgba(28, 35, 51, 0.25) !important;
+  max-width: 1080px !important;
+  margin: 0 auto !important;
+  box-sizing: border-box !important;
+  width: 100% !important;
+}
+
 .oc-duel {
   display: flex !important;
   flex-direction: row !important;
   align-items: center !important;
-  gap: 14px !important;
-  padding: 14px 4px !important;
-  border-bottom: 1px solid rgba(28, 35, 51, 0.11) !important;
+  justify-content: space-between !important;
+  gap: 16px !important;
+  padding: 14px 10px !important;
+  border-bottom: 1px solid rgba(28, 35, 51, 0.08) !important;
   cursor: pointer !important;
-  transition: background 0.18s ease !important;
+  transition: all 0.18s ease !important;
   width: 100% !important;
+  box-sizing: border-box !important;
+  border-radius: 10px !important;
+}
+
+.oc-duel:last-child {
+  border-bottom: none !important;
 }
 
 .oc-duel:hover {
-  background: rgba(28, 35, 51, 0.02) !important;
+  background: rgba(122, 28, 43, 0.03) !important;
 }
 
 .oc-duel-head {
   display: flex !important;
   align-items: center !important;
   gap: 8px !important;
-  min-width: 110px !important;
+  min-width: 120px !important;
 }
 
 .oc-duel-type {
@@ -7288,8 +7307,10 @@ button.ln-cta,
 .oc-duel-match {
   display: flex !important;
   align-items: center !important;
-  gap: 8px !important;
+  justify-content: center !important;
+  gap: 12px !important;
   flex-wrap: nowrap !important;
+  flex: 1 !important;
 }
 
 .oc-duel-player {
@@ -7297,7 +7318,7 @@ button.ln-cta,
   align-items: baseline !important;
   gap: 6px !important;
   font-family: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace !important;
-  font-size: 12.5px !important;
+  font-size: 13px !important;
   white-space: nowrap !important;
 }
 
@@ -7447,33 +7468,52 @@ button.ln-cta,
 }
 
 @media (max-width: 620px) {
-  /* Restructure live duels into clean 3-line block */
+  .oc-duels-card {
+    padding: 12px 12px !important;
+    border-radius: 14px !important;
+    background: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+  }
   .oc-duel {
     flex-direction: column !important;
-    align-items: flex-start !important;
-    gap: 8px !important;
-    padding: 14px 10px !important;
-    border-bottom: 1px solid rgba(28,35,51,0.11) !important;
+    align-items: stretch !important;
+    gap: 10px !important;
+    padding: 14px 16px !important;
+    background: #FFFFFF !important;
+    border: 1px solid rgba(28, 35, 51, 0.09) !important;
+    border-radius: 12px !important;
+    margin-bottom: 10px !important;
+    box-shadow: 0 2px 8px rgba(28, 35, 51, 0.04) !important;
     width: 100% !important;
   }
-
+  .oc-duel:last-child {
+    margin-bottom: 0 !important;
+  }
   .oc-duel-head {
+    display: flex !important;
+    justify-content: space-between !important;
+    align-items: center !important;
+    width: 100% !important;
     min-width: auto !important;
   }
-
   .oc-duel-match {
-    width: 100% !important;
-    justify-content: flex-start !important;
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
     gap: 10px !important;
+    width: 100% !important;
     white-space: nowrap !important;
+    padding: 4px 0 !important;
   }
-
   .oc-duel-meta {
+    display: flex !important;
+    justify-content: space-between !important;
+    align-items: center !important;
     width: 100% !important;
     margin-left: 0 !important;
-    justify-content: space-between !important;
-    padding-top: 6px !important;
-    border-top: 1px dashed rgba(28,35,51,0.1) !important;
+    padding-top: 8px !important;
+    border-top: 1px dashed rgba(28, 35, 51, 0.1) !important;
   }
 }
 

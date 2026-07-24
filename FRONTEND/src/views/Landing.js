@@ -1197,95 +1197,106 @@ export function renderLanding() {
                     </div>
 
                     <!-- LIVE DUELS STRIP BELOW -->
-                    <div class="reveal-item" style="margin-top: clamp(36px,4vw,58px);">
-                        <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 4px;">
-                            <span style="font-family: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace; font-size: 10px; font-weight: 700; letter-spacing: 1.8px; color: #8C8577;">LIVE DUELS</span>
-                            <span style="flex: 1; height: 1px; background: rgba(28,35,51,0.11);"></span>
+                    <div class="reveal-item" style="margin-top: clamp(36px,4vw,58px); width: 100% !important; max-width: 1080px !important; margin-left: auto !important; margin-right: auto !important;">
+                        <div style="display: flex !important; align-items: center !important; justify-content: center !important; gap: 12px !important; margin-bottom: 16px !important;">
+                            <span style="width: 32px !important; height: 1.5px !important; background: #7A1C2B !important; opacity: 0.5 !important;"></span>
+                            <span style="font-family: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace !important; font-size: 10.5px !important; font-weight: 700 !important; letter-spacing: 2px !important; color: #8C8577 !important; text-transform: uppercase !important; display: flex !important; align-items: center !important; gap: 6px !important;">
+                                <span style="width: 6px !important; height: 6px !important; border-radius: 50% !important; background: #3F9D5A !important; display: inline-block !important;"></span> LIVE RIVALRY DUELS
+                            </span>
+                            <span style="width: 32px !important; height: 1.5px !important; background: #7A1C2B !important; opacity: 0.5 !important;"></span>
                         </div>
 
-                        <!-- DUEL 1 -->
-                        <div class="oc-duel" onclick="window.router && window.router.navigate('/rivalry/7B92A41E')">
-                            <div class="oc-duel-head">
-                                <svg width="15" height="15" viewBox="0 0 24 24" aria-hidden="true" style="display: block; flex-shrink: 0;">
-                                    <g transform="translate(12 11.5)">
-                                        <g transform="rotate(-43) translate(0 2)">
-                                            <polygon points="0,-9.5 1.9,-6.9 1.9,1.5 -1.9,1.5 -1.9,-6.9" fill="#7A1C2B"></polygon>
-                                            <rect x="-4.9" y="1.5" width="9.8" height="1.8" rx="0.9" fill="#5E1521"></rect>
-                                        </g>
-                                        <g transform="rotate(43) translate(0 2)">
-                                            <g fill="#FBF9F5" stroke="#FBF9F5" stroke-width="2.2" stroke-linejoin="round">
-                                                <polygon points="0,-9.5 1.9,-6.9 1.9,1.5 -1.9,1.5 -1.9,-6.9"></polygon>
-                                                <rect x="-4.9" y="1.5" width="9.8" height="1.8" rx="0.9"></rect>
+                        <div class="oc-duels-card" style="background: #FFFDFA !important; border: 1.5px solid rgba(28,35,51,0.11) !important; border-radius: 16px !important; padding: 12px 20px !important; box-shadow: 0 8px 24px -16px rgba(28,35,51,0.25) !important; max-width: 1080px !important; margin: 0 auto !important; box-sizing: border-box !important;">
+                            <!-- DUEL 1 -->
+                            <div class="oc-duel" onclick="window.router && window.router.navigate('/rivalry/7B92A41E')">
+                                <div class="oc-duel-head">
+                                    <div style="display: flex !important; align-items: center !important; gap: 8px !important;">
+                                        <svg width="15" height="15" viewBox="0 0 24 24" aria-hidden="true" style="display: block !important; flex-shrink: 0 !important;">
+                                            <g transform="translate(12 11.5)">
+                                                <g transform="rotate(-43) translate(0 2)">
+                                                    <polygon points="0,-9.5 1.9,-6.9 1.9,1.5 -1.9,1.5 -1.9,-6.9" fill="#7A1C2B"></polygon>
+                                                    <rect x="-4.9" y="1.5" width="9.8" height="1.8" rx="0.9" fill="#5E1521"></rect>
+                                                </g>
+                                                <g transform="rotate(43) translate(0 2)">
+                                                    <g fill="#FBF9F5" stroke="#FBF9F5" stroke-width="2.2" stroke-linejoin="round">
+                                                        <polygon points="0,-9.5 1.9,-6.9 1.9,1.5 -1.9,1.5 -1.9,-6.9"></polygon>
+                                                        <rect x="-4.9" y="1.5" width="9.8" height="1.8" rx="0.9"></rect>
+                                                    </g>
+                                                    <polygon points="0,-9.5 1.9,-6.9 1.9,1.5 -1.9,1.5 -1.9,-6.9" fill="#7A1C2B"></polygon>
+                                                    <rect x="-4.9" y="1.5" width="9.8" height="1.8" rx="0.9" fill="#5E1521"></rect>
+                                                </g>
                                             </g>
-                                            <polygon points="0,-9.5 1.9,-6.9 1.9,1.5 -1.9,1.5 -1.9,-6.9" fill="#7A1C2B"></polygon>
-                                            <rect x="-4.9" y="1.5" width="9.8" height="1.8" rx="0.9" fill="#5E1521"></rect>
-                                        </g>
-                                    </g>
-                                </svg>
-                                <span class="oc-duel-type">AUDIENCE</span>
+                                        </svg>
+                                        <span class="oc-duel-type">AUDIENCE</span>
+                                    </div>
+                                    <div class="oc-duel-mob-sub" style="display: none;">$5,000 pool · 14d left</div>
+                                </div>
+
+                                <div class="oc-duel-match">
+                                    <span class="oc-duel-player">
+                                        <span class="oc-duel-user">@jakevoss</span>
+                                        <strong class="oc-duel-val green">+12.4%</strong>
+                                    </span>
+                                    <span class="oc-duel-vs">VS</span>
+                                    <span class="oc-duel-player">
+                                        <span class="oc-duel-user">@marcus</span>
+                                        <strong class="oc-duel-val red">+9.2%</strong>
+                                    </span>
+                                </div>
+
+                                <div class="oc-duel-meta">
+                                    <span class="oc-duel-pool">$5,000 <span class="oc-duel-sub">pool</span></span>
+                                    <span class="oc-duel-time">14d left</span>
+                                    <button class="oc-view">
+                                        View <span class="oc-arrow">→</span>
+                                    </button>
+                                </div>
                             </div>
 
-                            <div class="oc-duel-match">
-                                <span class="oc-duel-player">
-                                    <span class="oc-duel-user">@jakevoss</span>
-                                    <strong class="oc-duel-val green">+12.4%</strong>
-                                </span>
-                                <span class="oc-duel-vs">VS</span>
-                                <span class="oc-duel-player">
-                                    <span class="oc-duel-user">@marcus</span>
-                                    <strong class="oc-duel-val red">+9.2%</strong>
-                                </span>
-                            </div>
-
-                            <div class="oc-duel-meta">
-                                <span class="oc-duel-pool">$5,000 <span class="oc-duel-sub">pool</span></span>
-                                <span class="oc-duel-time">14d left</span>
-                                <button class="oc-view">
-                                    View <span class="oc-arrow">→</span>
-                                </button>
-                            </div>
-                        </div>
-
-                        <!-- DUEL 2 -->
-                        <div class="oc-duel" onclick="window.router && window.router.navigate('/rivalry/34D63CA3')">
-                            <div class="oc-duel-head">
-                                <svg width="15" height="15" viewBox="0 0 24 24" aria-hidden="true" style="display: block; flex-shrink: 0;">
-                                    <g transform="translate(12 11.5)">
-                                        <g transform="rotate(-43) translate(0 2)">
-                                            <polygon points="0,-9.5 1.9,-6.9 1.9,1.5 -1.9,1.5 -1.9,-6.9" fill="#7A1C2B"></polygon>
-                                            <rect x="-4.9" y="1.5" width="9.8" height="1.8" rx="0.9" fill="#5E1521"></rect>
-                                        </g>
-                                        <g transform="rotate(43) translate(0 2)">
-                                            <g fill="#FBF9F5" stroke="#FBF9F5" stroke-width="2.2" stroke-linejoin="round">
-                                                <polygon points="0,-9.5 1.9,-6.9 1.9,1.5 -1.9,1.5 -1.9,-6.9"></polygon>
-                                                <rect x="-4.9" y="1.5" width="9.8" height="1.8" rx="0.9"></rect>
+                            <!-- DUEL 2 -->
+                            <div class="oc-duel" onclick="window.router && window.router.navigate('/rivalry/34D63CA3')">
+                                <div class="oc-duel-head">
+                                    <div style="display: flex !important; align-items: center !important; gap: 8px !important;">
+                                        <svg width="15" height="15" viewBox="0 0 24 24" aria-hidden="true" style="display: block !important; flex-shrink: 0 !important;">
+                                            <g transform="translate(12 11.5)">
+                                                <g transform="rotate(-43) translate(0 2)">
+                                                    <polygon points="0,-9.5 1.9,-6.9 1.9,1.5 -1.9,1.5 -1.9,-6.9" fill="#7A1C2B"></polygon>
+                                                    <rect x="-4.9" y="1.5" width="9.8" height="1.8" rx="0.9" fill="#5E1521"></rect>
+                                                </g>
+                                                <g transform="rotate(43) translate(0 2)">
+                                                    <g fill="#FBF9F5" stroke="#FBF9F5" stroke-width="2.2" stroke-linejoin="round">
+                                                        <polygon points="0,-9.5 1.9,-6.9 1.9,1.5 -1.9,1.5 -1.9,-6.9"></polygon>
+                                                        <rect x="-4.9" y="1.5" width="9.8" height="1.8" rx="0.9"></rect>
+                                                    </g>
+                                                    <polygon points="0,-9.5 1.9,-6.9 1.9,1.5 -1.9,1.5 -1.9,-6.9" fill="#7A1C2B"></polygon>
+                                                    <rect x="-4.9" y="1.5" width="9.8" height="1.8" rx="0.9" fill="#5E1521"></rect>
+                                                </g>
                                             </g>
-                                            <polygon points="0,-9.5 1.9,-6.9 1.9,1.5 -1.9,1.5 -1.9,-6.9" fill="#7A1C2B"></polygon>
-                                            <rect x="-4.9" y="1.5" width="9.8" height="1.8" rx="0.9" fill="#5E1521"></rect>
-                                        </g>
-                                    </g>
-                                </svg>
-                                <span class="oc-duel-type">REVENUE</span>
-                            </div>
+                                        </svg>
+                                        <span class="oc-duel-type">REVENUE</span>
+                                    </div>
+                                    <div class="oc-duel-mob-sub" style="display: none;">$2,000 pool · SETTLING</div>
+                                </div>
 
-                            <div class="oc-duel-match">
-                                <span class="oc-duel-player">
-                                    <span class="oc-duel-user">@revpilot</span>
-                                    <strong class="oc-duel-val green">+8.1%</strong>
-                                </span>
-                                <span class="oc-duel-vs">VS</span>
-                                <span class="oc-duel-player">
-                                    <span class="oc-duel-user">@quotaops</span>
-                                    <strong class="oc-duel-val red">+5.4%</strong>
-                                </span>
-                            </div>
+                                <div class="oc-duel-match">
+                                    <span class="oc-duel-player">
+                                        <span class="oc-duel-user">@revpilot</span>
+                                        <strong class="oc-duel-val green">+8.1%</strong>
+                                    </span>
+                                    <span class="oc-duel-vs">VS</span>
+                                    <span class="oc-duel-player">
+                                        <span class="oc-duel-user">@quotaops</span>
+                                        <strong class="oc-duel-val red">+5.4%</strong>
+                                    </span>
+                                </div>
 
-                            <div class="oc-duel-meta">
-                                <span class="oc-duel-pool">$2,000 <span class="oc-duel-sub">pool</span></span>
-                                <span class="oc-duel-settling">SETTLING</span>
-                                <button class="oc-view">
-                                    View <span class="oc-arrow">→</span>
-                                </button>
+                                <div class="oc-duel-meta">
+                                    <span class="oc-duel-pool">$2,000 <span class="oc-duel-sub">pool</span></span>
+                                    <span class="oc-duel-settling">SETTLING</span>
+                                    <button class="oc-view">
+                                        View <span class="oc-arrow">→</span>
+                                    </button>
+                                </div>
                             </div>
                         </div>
                     </div>

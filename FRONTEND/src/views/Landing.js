@@ -1,4 +1,4 @@
-// Landing Page — Collateral Financial Document Homepage & Interactive Engine
+// Landing Page — Collateral Financial Document System with Paper Grain & Scoped Styling
 import api from '../api.js';
 import { landingCSS } from './LandingStyles.js';
 
@@ -12,7 +12,8 @@ if (!document.getElementById('lp-injected-styles')) {
 
 export function renderLanding() {
     return `
-        <div class="lp">
+        <div class="lp cl-root">
+            <div class="cl-grain" aria-hidden="true"></div>
 
             <!-- ═════ NAV ═════ -->
             <header class="nav">
@@ -26,10 +27,11 @@ export function renderLanding() {
             </header>
 
             <!-- ═════ 1 · HERO + LIVE TAPE ═════ -->
-            <section class="hero">
+            <section class="hero section">
+                <span class="idx-mark" aria-hidden="true">01</span>
                 <div class="shell hero-grid">
                     <div>
-                        <h1 class="hero-title"><span class="rise" style="--d:120ms;display:block">Put your money</span><span class="rise" style="--d:210ms;display:block">behind your <span class="em">word.</span></span></h1>
+                        <h1 class="h1"><span class="rise" style="--d:120ms;display:block">Put your money</span><span class="rise" style="--d:210ms;display:block">behind your <span class="em">word.</span></span></h1>
                         <p class="hero-copy rise" style="--d:330ms">Everyone means it when they say it. The problem is that quitting is
                             free, so the deadline slides and nothing arrives to mark it. Collateral puts your own
                             money on the line and hands the decision to an API that doesn't care how your week went.</p>
@@ -38,16 +40,16 @@ export function renderLanding() {
                             <a class="btn btn-out" href="#terms">Name your number</a>
                         </div>
                         <div class="oracles">
-                            <span class="draw" style="--d:480ms;position:absolute;left:0;right:0;top:-1px;height:1px;background:var(--rule)"></span>
+                            <span class="rule-top" style="--d:480ms"></span>
                             <span class="mono rise" style="--d:540ms">Settles on</span>
-                            <a class="mono rise" style="--d:570ms;color:var(--ink);text-decoration:none" href="#oracles">Stripe</a>
-                            <a class="mono rise" style="--d:600ms;color:var(--ink);text-decoration:none" href="#oracles">X</a>
-                            <a class="mono rise" style="--d:630ms;color:var(--ink);text-decoration:none" href="#oracles">YouTube</a>
-                            <a class="mono rise" style="--d:660ms;color:var(--ink);text-decoration:none" href="#oracles">Shopify</a>
+                            <a class="mono rise" style="--d:570ms" href="#oracles">Stripe</a>
+                            <a class="mono rise" style="--d:600ms" href="#oracles">X</a>
+                            <a class="mono rise" style="--d:630ms" href="#oracles">YouTube</a>
+                            <a class="mono rise" style="--d:660ms" href="#oracles">Shopify</a>
                         </div>
                     </div>
 
-                    <div class="tape seat" style="--d:260ms">
+                    <div class="tape seat ticks" style="--d:260ms">
                         <div class="tape-head">
                             <span class="dot pulse"></span>
                             <span class="mono">Recently settled &middot; oracle feed</span>
@@ -75,6 +77,7 @@ export function renderLanding() {
 
             <!-- ═════ 2 · MODES ═════ -->
             <section class="section alt" id="modes">
+                <span class="idx-mark" aria-hidden="true">02</span>
                 <div class="shell">
                     <p class="eyebrow">Contract execution modes</p>
                     <h2 class="title">Two ways to make quitting expensive</h2>
@@ -82,7 +85,7 @@ export function renderLanding() {
                         you claim to. Both settle the same way, and neither asks your opinion.</p>
 
                     <div class="modes">
-                        <div class="plates">
+                        <div class="plates plate ticks">
                             <article class="leaf">
                                 <div class="leaf-art">
                                     <svg viewBox="0 0 360 150" role="img" aria-label="Engraving: a hand pressing a coin into still water">
@@ -144,7 +147,7 @@ export function renderLanding() {
                             </article>
                         </div>
 
-                        <aside class="demo">
+                        <aside class="demo plate-quiet ticks">
                             <div class="demo-top">
                                 <span class="mono">Specimen</span>
                                 <span class="mono">Solo contract</span>
@@ -162,6 +165,7 @@ export function renderLanding() {
 
             <!-- ═════ 3 · CASE ═════ -->
             <section class="section" id="case">
+                <span class="idx-mark" aria-hidden="true">03</span>
                 <div class="shell argue">
                     <div>
                         <p class="eyebrow">Why it works</p>
@@ -177,7 +181,7 @@ export function renderLanding() {
                         </aside>
                     </div>
 
-                    <table class="cmp">
+                    <table class="cmp plate-quiet ticks">
                         <caption>Same goal, recorded two ways</caption>
                         <thead>
                             <tr><th scope="col">Wk</th><th scope="col">Without stakes</th><th scope="col">Under contract</th></tr>
@@ -196,13 +200,14 @@ export function renderLanding() {
 
             <!-- ═════ 3b · ORACLE REGISTER ═════ -->
             <section class="section" id="oracles" style="padding-top:0">
+                <span class="idx-mark" aria-hidden="true">04</span>
                 <div class="shell">
                     <p class="eyebrow">Verification sources</p>
                     <h2 class="title">Four APIs decide every contract</h2>
                     <p class="lede">Collateral does not score you. It reads the same numbers your platform
                         already reports, on a fixed schedule, and settles on whatever it finds there.</p>
 
-                    <table class="reg">
+                    <table class="reg plate ticks">
                         <caption>Register of accepted oracles &middot; read-only scopes</caption>
                         <thead>
                             <tr>
@@ -271,6 +276,7 @@ export function renderLanding() {
 
             <!-- ═════ 4 · RECORD ═════ -->
             <section class="section alt" id="record">
+                <span class="idx-mark" aria-hidden="true">05</span>
                 <div class="shell">
                     <p class="eyebrow">Settlement record</p>
                     <h2 class="title">The receipts, including the ones that hurt</h2>
@@ -279,7 +285,7 @@ export function renderLanding() {
                         losses in it isn't a record.</p>
 
                     <div class="receipts">
-                        <article class="receipt">
+                        <article class="receipt ticks">
                             <div class="r-top">
                                 <div class="r-meta"><span class="mono">Settlement receipt</span><span class="mono">№ C&ndash;34D6</span></div>
                                 <h3 class="r-goal">+20% revenue in 30 days</h3>
@@ -297,7 +303,7 @@ export function renderLanding() {
                             </div>
                         </article>
 
-                        <article class="receipt">
+                        <article class="receipt ticks">
                             <div class="r-top">
                                 <div class="r-meta"><span class="mono">Settlement receipt</span><span class="mono">№ C&ndash;9F21</span></div>
                                 <h3 class="r-goal">50,000 subscribers in 60 days</h3>
@@ -315,7 +321,7 @@ export function renderLanding() {
                             </div>
                         </article>
 
-                        <article class="receipt">
+                        <article class="receipt ticks">
                             <div class="r-top">
                                 <div class="r-meta"><span class="mono">Settlement receipt</span><span class="mono">№ C&ndash;780B</span></div>
                                 <h3 class="r-goal">25,000 followers in 30 days</h3>
@@ -345,13 +351,13 @@ export function renderLanding() {
                     </div>
 
                     <div class="cp">
-                        <figure class="cp-portrait" style="margin:0">
+                        <figure class="cp-portrait plate ticks" style="margin:0">
                             <svg viewBox="0 0 200 236" role="img" aria-label="Engraved portrait of Marcus Kade">
                                 <defs>
                                     <clipPath id="cp-oval"><ellipse cx="100" cy="112" rx="76" ry="94"/></clipPath>
                                 </defs>
-                                <ellipse cx="100" cy="112" rx="76" ry="94" fill="#F2EEE7"/>
-                                <g clip-path="url(#cp-oval)" fill="none" stroke="#131A2B" stroke-width=".65" stroke-linecap="round">
+                                <ellipse cx="100" cy="112" rx="76" ry="94" fill="#EFEAE0"/>
+                                <g clip-path="url(#cp-oval)" fill="none" stroke="#0E1420" stroke-width=".65" stroke-linecap="round">
                                     <g opacity=".26">
                                         <path d="M24 40h152M24 54h152M24 68h152M24 82h152M24 96h152M24 110h152M24 124h152M24 138h152M24 152h152M24 166h152M24 180h152M24 194h152"/>
                                     </g>
@@ -369,8 +375,8 @@ export function renderLanding() {
                                         <path d="M70 62c8-6 20-8 30-8s22 2 30 8"/>
                                     </g>
                                 </g>
-                                <ellipse cx="100" cy="112" rx="76" ry="94" fill="none" stroke="#131A2B" stroke-width="1"/>
-                                <ellipse cx="100" cy="112" rx="70" ry="88" fill="none" stroke="#7B1E2B" stroke-width=".5" opacity=".55"/>
+                                <ellipse cx="100" cy="112" rx="76" ry="94" fill="none" stroke="#0E1420" stroke-width="1"/>
+                                <ellipse cx="100" cy="112" rx="70" ry="88" fill="none" stroke="#7A1C29" stroke-width=".5" opacity=".55"/>
                             </svg>
                             <figcaption class="cp-cap">
                                 <span class="mono">Counterparty № 0417</span>
@@ -402,13 +408,14 @@ export function renderLanding() {
 
             <!-- ═════ 5 · FORFEIT FLOW + SCHEMATIC ═════ -->
             <section class="section" id="flow">
+                <span class="idx-mark" aria-hidden="true">06</span>
                 <div class="shell">
                     <p class="eyebrow">Where forfeited money goes</p>
                     <h2 class="title">Losers pay winners. That is the whole engine.</h2>
                     <p class="lede">Marcus's fifteen hundred dollars did not vanish into a house account. Watch
                         where it actually went, then read the full path underneath.</p>
 
-                    <div class="flow-wrap" id="flowwrap">
+                    <div class="flow-wrap plate ticks" id="flowwrap">
                         <div class="flow-head">
                             <span class="mono">Cycle 2026&ndash;W12 &middot; recirculation</span>
                             <span class="mono">Settled 14 Mar 2026</span>
@@ -452,7 +459,7 @@ export function renderLanding() {
                             pool, and no scenario in which Collateral profits more when you miss.</p>
                     </div>
 
-                    <div class="sch" style="margin-top:34px">
+                    <div class="sch plate-quiet ticks" style="margin-top:34px">
                         <div class="sch-head">
                             <span class="mono">Drawing 01 &middot; full settlement path</span>
                             <span class="mono">Rev. 2026.03</span>
@@ -464,54 +471,54 @@ export function renderLanding() {
                                     <path d="M1 1L9 5L1 9" fill="none" stroke="context-stroke" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
                                 </marker>
                             </defs>
-                            <g fill="none" stroke="#131A2B" stroke-width="1">
-                                <rect x="20" y="150" width="180" height="86" rx="3"/>
-                                <rect x="290" y="150" width="180" height="86" rx="3" stroke-width="1.7"/>
-                                <rect x="560" y="150" width="180" height="86" rx="3"/>
+                            <g fill="none" stroke="#0E1420" stroke-width="1">
+                                <rect x="20" y="150" width="180" height="86" rx="2"/>
+                                <rect x="290" y="150" width="180" height="86" rx="2" stroke-width="1.7"/>
+                                <rect x="560" y="150" width="180" height="86" rx="2"/>
                             </g>
-                            <g font-family="IBM Plex Mono, monospace" font-size="10" letter-spacing="1.6" fill="#6C7280">
+                            <g font-family="IBM Plex Mono, monospace" font-size="10" letter-spacing="1.6" fill="#6E7686">
                                 <text x="34" y="172">INPUT</text><text x="304" y="172">CUSTODY</text><text x="574" y="172">VERIFICATION</text>
                             </g>
-                            <g font-family="Archivo, sans-serif" font-size="14" font-weight="600" fill="#131A2B">
+                            <g font-family="Archivo, sans-serif" font-size="14" font-weight="600" fill="#0E1420">
                                 <text x="34" y="197">Deposit in</text><text x="304" y="197">Escrow vault</text><text x="574" y="197">Oracle API stream</text>
                             </g>
-                            <g font-family="IBM Plex Mono, monospace" font-size="14" fill="#7B1E2B">
+                            <g font-family="IBM Plex Mono, monospace" font-size="14" fill="#7A1C29">
                                 <text x="34" y="221">$8,700,000</text><text x="304" y="221">$8.7M locked</text><text x="574" y="221">96.2% hit rate</text>
                             </g>
                             <g stroke-width="1" marker-end="url(#cl-ar)" fill="none">
-                                <line x1="204" y1="193" x2="282" y2="193" stroke="#131A2B"/>
-                                <line x1="474" y1="193" x2="552" y2="193" stroke="#131A2B"/>
-                                <path d="M744 193 L800 193 L800 78 L856 78" stroke="#1A7A52" stroke-width="1.5"/>
-                                <path d="M744 193 L820 193 L856 193" stroke="#7B1E2B" stroke-dasharray="5 4"/>
-                                <path d="M744 193 L800 193 L800 310 L856 310" stroke="#6C7280" stroke-dasharray="2 4"/>
+                                <line x1="204" y1="193" x2="282" y2="193" stroke="#0E1420"/>
+                                <line x1="474" y1="193" x2="552" y2="193" stroke="#0E1420"/>
+                                <path d="M744 193 L800 193 L800 78 L856 78" stroke="#186B4A" stroke-width="1.5"/>
+                                <path d="M744 193 L820 193 L856 193" stroke="#7A1C29" stroke-dasharray="5 4"/>
+                                <path d="M744 193 L800 193 L800 310 L856 310" stroke="#6E7686" stroke-dasharray="2 4"/>
                             </g>
                             <g fill="none" stroke-width="1">
-                                <rect x="860" y="40" width="200" height="76" rx="3" stroke="#1A7A52"/>
-                                <rect x="860" y="155" width="200" height="76" rx="3" stroke="#7B1E2B"/>
-                                <rect x="860" y="272" width="200" height="76" rx="3" stroke="#DED8CC"/>
+                                <rect x="860" y="40" width="200" height="76" rx="2" stroke="#186B4A"/>
+                                <rect x="860" y="155" width="200" height="76" rx="2" stroke="#7A1C29"/>
+                                <rect x="860" y="272" width="200" height="76" rx="2" stroke="#DCD5C6"/>
                             </g>
                             <g font-family="IBM Plex Mono, monospace" font-size="10" letter-spacing="1.6">
-                                <text x="874" y="62" fill="#1A7A52">WIN PATH &middot; 95.7%</text>
-                                <text x="874" y="177" fill="#7B1E2B">FORFEITED &middot; 3.8%</text>
-                                <text x="874" y="294" fill="#6C7280">PROTOCOL FEE &middot; 0.5%</text>
+                                <text x="874" y="62" fill="#186B4A">WIN PATH &middot; 95.7%</text>
+                                <text x="874" y="177" fill="#7A1C29">FORFEITED &middot; 3.8%</text>
+                                <text x="874" y="294" fill="#6E7686">PROTOCOL FEE &middot; 0.5%</text>
                             </g>
-                            <g font-family="Archivo, sans-serif" font-size="13" font-weight="600" fill="#131A2B">
+                            <g font-family="Archivo, sans-serif" font-size="13" font-weight="600" fill="#0E1420">
                                 <text x="874" y="84">Returned to creator</text>
                                 <text x="874" y="199">Feeds winner match pool</text>
                                 <text x="874" y="316">Operations</text>
                             </g>
                             <g font-family="IBM Plex Mono, monospace" font-size="14">
-                                <text x="874" y="106" fill="#1A7A52">$8,326,200</text>
-                                <text x="874" y="221" fill="#7B1E2B">$330,600</text>
-                                <text x="874" y="338" fill="#6C7280">$43,200</text>
+                                <text x="874" y="106" fill="#186B4A">$8,326,200</text>
+                                <text x="874" y="221" fill="#7A1C29">$330,600</text>
+                                <text x="874" y="338" fill="#6E7686">$43,200</text>
                             </g>
-                            <path d="M960 235 L960 372 L380 372 L380 240" fill="none" stroke="#7B1E2B"
+                            <path d="M960 235 L960 372 L380 372 L380 240" fill="none" stroke="#7A1C29"
                                   stroke-width="1" stroke-dasharray="5 4" marker-end="url(#cl-ar)"/>
                             <text x="670" y="366" font-family="IBM Plex Mono, monospace" font-size="10"
-                                  letter-spacing="1.6" fill="#7B1E2B" text-anchor="middle">FORFEITED DEPOSITS RECIRCULATE TO ESCROW VAULT</text>
-                            <g stroke="#6C7280" stroke-width=".6"><path d="M20 268 v10 M200 268 v10 M20 273 h180"/></g>
+                                  letter-spacing="1.6" fill="#7A1C29" text-anchor="middle">FORFEITED DEPOSITS RECIRCULATE TO ESCROW VAULT</text>
+                            <g stroke="#6E7686" stroke-width=".6"><path d="M20 268 v10 M200 268 v10 M20 273 h180"/></g>
                             <text x="110" y="290" font-family="IBM Plex Mono, monospace" font-size="9.5"
-                                  letter-spacing="1.4" fill="#6C7280" text-anchor="middle">STRIPE CONNECT CUSTODY</text>
+                                  letter-spacing="1.4" fill="#6E7686" text-anchor="middle">STRIPE CONNECT CUSTODY</text>
                         </svg>
                         <dl class="sch-mobile">
                             <div class="sm-row"><dt>Deposits in</dt><span class="dots"></span><dd>$8,700,000</dd></div>
@@ -522,9 +529,9 @@ export function renderLanding() {
                             <div class="sm-row"><dt>Protocol fee &middot; 0.5%</dt><span class="dots"></span><dd>$43,200</dd></div>
                         </dl>
                         <div class="sch-foot">
-                            <span class="legend"><span class="swatch" style="color:#1A7A52"></span>Returned capital</span>
-                            <span class="legend"><span class="swatch dash" style="color:#7B1E2B"></span>Forfeited &amp; recirculated</span>
-                            <span class="legend"><span class="swatch dash" style="color:#6C7280"></span>Protocol fee</span>
+                            <span class="legend"><span class="swatch" style="color:#186B4A"></span>Returned capital</span>
+                            <span class="legend"><span class="swatch dash" style="color:#7A1C29"></span>Forfeited &amp; recirculated</span>
+                            <span class="legend"><span class="swatch dash" style="color:#6E7686"></span>Protocol fee</span>
                             <span class="legend" style="margin-left:auto">Sums to deposits in</span>
                         </div>
                     </div>
@@ -533,13 +540,14 @@ export function renderLanding() {
 
             <!-- ═════ 6 · CALCULATOR + TIERS ═════ -->
             <section class="section alt" id="terms">
+                <span class="idx-mark" aria-hidden="true">07</span>
                 <div class="shell">
                     <p class="eyebrow">Price your own contract</p>
                     <h2 class="title">Name a number that would actually hurt to lose</h2>
                     <p class="lede">Too small and you'll shrug it off in week two. Too large and you'll talk
                         yourself out of signing at all. The right number is the one you flinch at slightly.</p>
 
-                    <div class="calc">
+                    <div class="calc plate ticks">
                         <div class="calc-left">
                             <span class="mono">Contract parameters</span>
                             <div class="field">
@@ -590,7 +598,7 @@ export function renderLanding() {
                     </div>
 
                     <div class="tiers" id="tiers">
-                        <article class="tier" data-tier="60">
+                        <button type="button" class="tier ticks" data-tier="60">
                             <span class="tier-tab">Your selection</span>
                             <span class="mono">Schedule A &middot; Pledge</span>
                             <p class="tier-mult">1.5<small>&times;</small></p>
@@ -599,8 +607,8 @@ export function renderLanding() {
                                 <div class="t-row"><dt>Deposit</dt><span class="dots"></span><dd>$100 &ndash; $1,500</dd></div>
                                 <div class="t-row"><dt>On miss</dt><span class="dots"></span><dd>Grace period</dd></div>
                             </dl>
-                        </article>
-                        <article class="tier" data-tier="30" data-active="true">
+                        </button>
+                        <button type="button" class="tier ticks" data-tier="30" data-active="true">
                             <span class="tier-tab">Your selection</span>
                             <span class="mono">Schedule A &middot; Stake</span>
                             <p class="tier-mult">2.5<small>&times;</small></p>
@@ -609,8 +617,8 @@ export function renderLanding() {
                                 <div class="t-row"><dt>Deposit</dt><span class="dots"></span><dd>$250 &ndash; $3,000</dd></div>
                                 <div class="t-row"><dt>On miss</dt><span class="dots"></span><dd>Full forfeit</dd></div>
                             </dl>
-                        </article>
-                        <article class="tier" data-tier="14">
+                        </button>
+                        <button type="button" class="tier ticks" data-tier="14">
                             <span class="tier-tab">Your selection</span>
                             <span class="mono">Schedule A &middot; All-in</span>
                             <p class="tier-mult">4.0<small>&times;</small></p>
@@ -619,7 +627,7 @@ export function renderLanding() {
                                 <div class="t-row"><dt>Deposit</dt><span class="dots"></span><dd>$500 &ndash; $10,000</dd></div>
                                 <div class="t-row"><dt>On miss</dt><span class="dots"></span><dd>Full forfeit</dd></div>
                             </dl>
-                        </article>
+                        </button>
                     </div>
 
                     <div class="marg" style="margin-top:34px">
@@ -632,6 +640,7 @@ export function renderLanding() {
 
             <!-- ═════ 7 · DUELS ═════ -->
             <section class="section" id="duels">
+                <span class="idx-mark" aria-hidden="true">08</span>
                 <div class="shell">
                     <p class="eyebrow eyebrow--live">Live rivalry duels</p>
                     <h2 class="title">Open right now, and somebody is behind</h2>
@@ -639,7 +648,7 @@ export function renderLanding() {
                         the full position.</p>
 
                     <div class="duels">
-                        <button class="duel" type="button" onclick="window.router.navigate('/signin'); return false;">
+                        <button class="duel ticks" type="button" onclick="window.router.navigate('/signin'); return false;">
                             <span class="duel-head">
                                 <span class="mono">Audience &middot; X API</span>
                                 <span class="duel-badge badge-live">Live &middot; 14d left</span>
@@ -658,7 +667,7 @@ export function renderLanding() {
                             </span>
                         </button>
 
-                        <button class="duel" type="button" onclick="window.router.navigate('/signin'); return false;">
+                        <button class="duel ticks" type="button" onclick="window.router.navigate('/signin'); return false;">
                             <span class="duel-head">
                                 <span class="mono">Revenue &middot; Stripe API</span>
                                 <span class="duel-badge badge-settle">Settling</span>
@@ -682,10 +691,11 @@ export function renderLanding() {
 
             <!-- ═════ 8 · SIGNATURE ═════ -->
             <section class="section alt" style="padding-top:0">
+                <span class="idx-mark" aria-hidden="true">09</span>
                 <div class="shell">
-                    <div class="sign">
+                    <div class="sign plate ticks">
                         <svg width="70" height="70" viewBox="0 0 76 76" role="img" aria-label="Collateral seal"
-                             style="margin:0 auto" fill="none" stroke="#7B1E2B">
+                             style="margin:0 auto" fill="none" stroke="#7A1C29">
                             <circle cx="38" cy="38" r="35" stroke-width="1"/>
                             <circle cx="38" cy="38" r="30" stroke-width=".6"/>
                             <circle cx="38" cy="38" r="17" stroke-width=".6"/>
@@ -693,7 +703,7 @@ export function renderLanding() {
                                 <path d="M38 8v6M38 62v6M8 38h6M62 38h6M17 17l4 4M55 55l4 4M59 17l-4 4M21 55l-4 4"/>
                             </g>
                             <text x="38" y="43" text-anchor="middle" font-family="Archivo, sans-serif"
-                                  font-size="17" font-weight="700" fill="#7B1E2B" stroke="none">C</text>
+                                  font-size="17" font-weight="700" fill="#7A1C29" stroke="none">C</text>
                         </svg>
                         <h2 class="sign-title">Sign it, and the week reorders itself</h2>
                         <p class="sign-copy">You will know within about four days whether you meant it. That is

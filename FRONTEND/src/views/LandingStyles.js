@@ -343,6 +343,13 @@ export const landingCSS = `
   text-transform: uppercase !important;
 }
 
+footer .logo-wordmark,
+footer .logo-wordmark-light,
+#global-footer .logo-wordmark,
+#global-footer .logo-wordmark-light {
+  color: #FFFFFF !important;
+}
+
 .ln-right-group {
   display: flex;
   align-items: center;

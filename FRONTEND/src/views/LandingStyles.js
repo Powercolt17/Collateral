@@ -343,48 +343,58 @@ export const landingCSS = `
   border-right: 1px solid var(--gilt);
 }
 
-/* ═══════════ TOP BANNER & NAV ═══════════ */
+/* ═══════════ TOP BANNER & FULL-WIDTH HEADER ═══════════ */
 .top-banner {
+  position: relative;
+  width: 100%;
+  min-height: 32px;
   background: #5C1414;
   color: #FFF8F5;
-  min-height: 34px;
-  padding: 6px 16px;
   display: flex;
   align-items: center;
   justify-content: center;
   text-align: center;
+  z-index: 60;
   border-bottom: 1px solid rgba(0,0,0,0.15);
 }
 
-.top-banner .mono {
-  color: #F6E9EB;
+.top-banner .promo-text {
   font-size: 11px;
-  letter-spacing: .16em;
-  font-weight: 500;
+  font-weight: 600;
+  font-family: var(--mono);
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: #FFFFFF;
 }
 
 .nav {
   position: sticky;
   top: 0;
-  z-index: 60;
-  background: rgba(247,244,237,.95);
+  z-index: 50;
+  width: 100%;
+  background: #FAF8F5 !important;
   backdrop-filter: saturate(1.6) blur(14px);
   border-bottom: 1px solid var(--rule);
 }
 
 .nav-in {
-  max-width: var(--shell);
-  margin: 0 auto;
-  padding: 0 var(--gutter);
+  width: 100%;
+  max-width: 100%;
+  padding: 0 40px;
   height: 64px;
   display: flex;
   align-items: center;
-  gap: 18px;
+  justify-content: space-between;
+}
+
+.nav-left {
+  display: flex;
+  align-items: center;
 }
 
 .wordmark {
   font-family: var(--wordmark);
-  font-size: 20px;
+  font-size: 19px;
   font-weight: 800;
   letter-spacing: .22em;
   text-transform: uppercase;
@@ -392,24 +402,28 @@ export const landingCSS = `
   color: #0F172A !important;
 }
 
+.nav-divider {
+  width: 1px;
+  height: 18px;
+  background: var(--rule-strong);
+  margin: 0 18px;
+}
+
 .nav-tape {
   display: flex;
   align-items: center;
-  gap: 9px;
-  margin-left: 20px;
-  padding-left: 20px;
-  border-left: 1px solid var(--rule);
+  gap: 8px;
 }
 
 .nav-right {
   margin-left: auto;
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 14px;
 }
 
 .nav-btn {
-  min-height: 38px;
+  min-height: 36px;
   padding: 0 22px;
   font-size: 11px;
   font-weight: 700;
@@ -417,14 +431,14 @@ export const landingCSS = `
   background: #7B1E2B !important;
   color: #FFFFFF !important;
   border-radius: var(--r);
-  box-shadow: inset 0 1px 0 rgba(255,255,255,.16), 0 4px 12px rgba(122,28,41,.4);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.16), 0 4px 12px rgba(123,30,43,.35);
   border: none;
   cursor: pointer;
 }
 
 @media(max-width:760px){
-  .nav-tape { display: none; }
-  .nav-in { height: 58px; }
+  .nav-in { padding: 0 20px; height: 56px; }
+  .nav-tape, .nav-divider { display: none; }
 }
 
 /* ═══════════ HERO ═══════════ */

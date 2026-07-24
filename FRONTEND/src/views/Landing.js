@@ -174,8 +174,8 @@ export function renderLanding() {
                         </aside>
                     </div>
 
+                    <p class="cmp-caption mono">Same goal, recorded two ways</p>
                     <table class="cmp plate-quiet">
-                        <caption>Same goal, recorded two ways</caption>
                         <thead>
                             <tr><th scope="col">Wk</th><th scope="col">Without stakes &middot; VOID</th><th scope="col">Under contract</th></tr>
                         </thead>
@@ -209,8 +209,8 @@ export function renderLanding() {
                         </aside>
                     </div>
 
+                    <p class="reg-caption mono">Register of accepted oracles &middot; read-only scopes</p>
                     <table class="reg plate">
-                        <caption>Register of accepted oracles &middot; read-only scopes</caption>
                         <thead>
                             <tr>
                                 <th scope="col">Platform</th>

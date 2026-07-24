@@ -973,17 +973,17 @@ export const landingCSS = `
   color: var(--ink-2);
 }
 
-.cmp { width: 100%; border-collapse: collapse; }
-.cmp caption {
-  caption-side: top;
-  text-align: left;
-  padding: 16px 20px 10px;
+.cmp-caption, .reg-caption {
   font-family: var(--mono);
   font-size: 10.5px;
   letter-spacing: .16em;
   text-transform: uppercase;
   color: var(--ink-3);
+  margin-bottom: 12px;
+  display: block;
 }
+
+.cmp { width: 100%; border-collapse: collapse; margin-top: 0; }
 
 .cmp th {
   text-align: left;
@@ -1051,18 +1051,7 @@ export const landingCSS = `
   color: var(--ink-2);
 }
 
-.reg { width: 100%; border-collapse: collapse; margin-top: 16px; }
-.reg caption {
-  caption-side: top;
-  text-align: left;
-  padding: 0 0 12px 0;
-  font-family: var(--mono);
-  font-size: 10.5px;
-  letter-spacing: .16em;
-  text-transform: uppercase;
-  color: var(--ink-3);
-  background: transparent;
-}
+.reg { width: 100%; border-collapse: collapse; margin-top: 0; }
 
 .reg th {
   text-align: left;

@@ -89,20 +89,20 @@ export function useCountUp(target, { duration = 1500, active = true, format = (n
 
 /* ───────────────────────────────────────────────────────────
    3 · useDrawOnce — plotter effect for the schematic
-   Measures every path/line/rect inside the ref'd <svg> and
-   sets dasharray/dashoffset so CSS can draw them in sequence.
+   Fail-visible: Do NOT hide strokes on mount.
+   Applies strokeDasharray/offset and adds .is-drawing in active effect.
+   Safety timeout guarantees linework is never left blank.
    ─────────────────────────────────────────────────────────── */
 export function useDrawOnce(active) {
   const ref = useRef(null);
-  const prepared = useRef(false);
 
-  const prepare = useCallback(() => {
+  useEffect(() => {
     const svg = ref.current;
-    if (!svg || prepared.current) return;
-    prepared.current = true;
+    if (!svg || !active) return;
+    const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    if (reduce) return; // leave strokes fully drawn
 
-    const strokes = svg.querySelectorAll("[data-draw]");
-    strokes.forEach((el) => {
+    svg.querySelectorAll("[data-draw]").forEach((el) => {
       let len = 0;
       try {
         len = el.getTotalLength ? el.getTotalLength() : 0;
@@ -115,26 +115,27 @@ export function useDrawOnce(active) {
         len = (w + h) * 2;
       }
       if (!len) return;
-      el.style.strokeDasharray = `${len}`;
-      el.style.strokeDashoffset = `${len}`;
+      el.style.strokeDasharray = String(len);
+      el.style.strokeDashoffset = String(len);
     });
-  }, []);
 
-  useEffect(() => { prepare(); }, [prepare]);
+    requestAnimationFrame(() => svg.classList.add("is-drawing"));
+  }, [active]);
 
   useEffect(() => {
     const svg = ref.current;
-    if (!svg || !active) return;
-    const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    if (reduce) {
+    if (!svg) return;
+    const t = setTimeout(() => {
       svg.querySelectorAll("[data-draw]").forEach((el) => {
         el.style.strokeDasharray = "";
         el.style.strokeDashoffset = "";
       });
-      return;
-    }
-    svg.classList.add("is-drawing");
-  }, [active]);
+      svg.querySelectorAll("[data-fade]").forEach((el) => {
+        el.style.opacity = "1";
+      });
+    }, 6000);
+    return () => clearTimeout(t);
+  }, []);
 
   return ref;
 }
@@ -193,9 +194,10 @@ export const revealStyles = `
 }
 @keyframes cl-plot{ to{ stroke-dashoffset:0; } }
 
-/* labels fade in behind their linework */
-.sch svg [data-fade]{ opacity:0; }
+/* labels default to visible (fail-visible) */
+.sch svg [data-fade]{ opacity:1; }
 .sch svg.is-drawing [data-fade]{
+  opacity:0;
   animation:cl-fadein .5s var(--ease-out) forwards;
   animation-delay:calc(var(--d,0) * 1ms);
 }

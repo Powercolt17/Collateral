@@ -64,18 +64,18 @@ export function renderLanding() {
                         <div class="tape-meters">
                             <div class="meter">
                                 <span class="mono">Held in escrow</span>
-                                <span class="meter-val blood" id="m-escrow">$0</span>
+                                <span class="meter-val blood" id="m-escrow">$8,700,000</span>
                             </div>
                             <div class="meter-div"></div>
                             <div class="meter">
                                 <span class="mono">Settled today</span>
-                                <span class="meter-val win" id="m-settled">$0</span>
+                                <span class="meter-val win" id="m-settled">$34,200</span>
                             </div>
                         </div>
                         <div class="tape-rows" id="rows"></div>
                         <div class="tape-foot">
                             <span class="mono">Custody &middot; Stripe Connect</span>
-                            <span class="mono" id="m-count">0 settled</span>
+                            <span class="mono" id="m-count">48 settled</span>
                         </div>
                     </div>
                 </div>
@@ -279,7 +279,7 @@ export function renderLanding() {
             </section>
 
             <!-- ═════ 4 · RECORD ═════ -->
-            <section class="section alt reveal" id="record">
+            <section class="section alt reveal" id="record" style="padding-bottom: 52px;">
                 <span class="idx-mark" aria-hidden="true">05</span>
                 <div class="shell">
                     <p class="eyebrow r-item" style="--i:0">Settlement record</p>
@@ -709,7 +709,21 @@ export function initLanding() {
                     // Trigger schematic plotter and count up schematic figures when Section 06 becomes active
                     if (e.target.id === 'flow') {
                         const schSvg = document.getElementById('sch-svg');
-                        if (schSvg && !reduce) schSvg.classList.add('is-drawing');
+                        if (schSvg && !reduce) {
+                            schSvg.querySelectorAll('[data-draw]').forEach((el) => {
+                                let len = 0;
+                                try { len = el.getTotalLength ? el.getTotalLength() : 0; } catch (err) { len = 0; }
+                                if (!len && el.tagName === 'rect') {
+                                    const w = +el.getAttribute('width') || 0;
+                                    const h = +el.getAttribute('height') || 0;
+                                    len = (w + h) * 2;
+                                }
+                                if (!len) return;
+                                el.style.strokeDasharray = String(len);
+                                el.style.strokeDashoffset = String(len);
+                            });
+                            requestAnimationFrame(() => schSvg.classList.add('is-drawing'));
+                        }
                         countUp(document.getElementById('sch-win-amt'), 8326200, money);
                         countUp(document.getElementById('sch-lose-amt'), 330600, money);
                         countUp(document.getElementById('sch-fee-amt'), 43200, money);
@@ -727,7 +741,21 @@ export function initLanding() {
                 }
                 if (sec.id === 'flow') {
                     const schSvg = document.getElementById('sch-svg');
-                    if (schSvg) schSvg.classList.add('is-drawing');
+                    if (schSvg && !reduce) {
+                        schSvg.querySelectorAll('[data-draw]').forEach((el) => {
+                            let len = 0;
+                            try { len = el.getTotalLength ? el.getTotalLength() : 0; } catch (err) { len = 0; }
+                            if (!len && el.tagName === 'rect') {
+                                const w = +el.getAttribute('width') || 0;
+                                const h = +el.getAttribute('height') || 0;
+                                len = (w + h) * 2;
+                            }
+                            if (!len) return;
+                            el.style.strokeDasharray = String(len);
+                            el.style.strokeDashoffset = String(len);
+                        });
+                        requestAnimationFrame(() => schSvg.classList.add('is-drawing'));
+                    }
                     countUp(document.getElementById('sch-win-amt'), 8326200, money);
                     countUp(document.getElementById('sch-lose-amt'), 330600, money);
                     countUp(document.getElementById('sch-fee-amt'), 43200, money);
@@ -740,27 +768,18 @@ export function initLanding() {
         document.querySelectorAll('.reveal').forEach((sec) => sec.classList.add('is-in'));
     }
 
-    // Prepare SVG stroke dash lengths for plotter before animation runs
+    // Safety timeout: Guarantee schematic linework is never left blank if observer fails
     const schSvg = document.getElementById('sch-svg');
     if (schSvg) {
-        const strokes = schSvg.querySelectorAll('[data-draw]');
-        strokes.forEach((el) => {
-            let len = 0;
-            try {
-                len = el.getTotalLength ? el.getTotalLength() : 0;
-            } catch (err) {
-                len = 0;
-            }
-            if (!len && el.tagName === 'rect') {
-                const w = +el.getAttribute('width') || 0;
-                const h = +el.getAttribute('height') || 0;
-                len = (w + h) * 2;
-            }
-            if (len) {
-                el.style.strokeDasharray = len;
-                el.style.strokeDashoffset = len;
-            }
-        });
+        setTimeout(() => {
+            schSvg.querySelectorAll('[data-draw]').forEach((el) => {
+                el.style.strokeDasharray = '';
+                el.style.strokeDashoffset = '';
+            });
+            schSvg.querySelectorAll('[data-fade]').forEach((el) => {
+                el.style.opacity = '1';
+            });
+        }, 6000);
     }
 
     function countUp(el, target, formatFn) {
@@ -797,10 +816,11 @@ export function initLanding() {
         { g: '100k views on launch video',    u: '@indiehacker', p: 'YouTube API', a: 800,  w: false }
     ];
 
-    var escrow = 148200;
+    var escrow = 8700000;
     var settledToday = 34200;
     var settledCount = 48;
     var rowCounter = 100;
+    var pickIndex = 4;
 
     function paint() {
         if (escrowEl)  escrowEl.textContent  = money(escrow);
@@ -815,12 +835,11 @@ export function initLanding() {
         div.dataset.amt = data.a;
         div.dataset.win = data.w ? '1' : '0';
         div.innerHTML =
-            '<div class="row-left">' +
-                '<span class="row-id">№ ' + rowCounter + '</span>' +
-                '<p class="row-goal">' + data.g + '</p>' +
+            '<div class="row-main">' +
+                '<p class="row-goal"><span class="row-id" style="font-family:var(--mono);font-size:10px;opacity:.6;margin-right:8px">№ ' + rowCounter + '</span>' + data.g + '</p>' +
                 '<p class="row-src">' + data.u + ' &middot; via ' + data.p + '</p>' +
             '</div>' +
-            '<div class="row-right">' +
+            '<div class="row-right" style="min-width:90px;text-align:right">' +
                 '<span class="row-amt">' + money(data.a) + '</span>' +
                 '<span class="row-state"><span class="dot-live"></span>Pending</span>' +
             '</div>';
@@ -843,7 +862,9 @@ export function initLanding() {
     }
 
     function pick() {
-        return SAMPLE_GOALS[Math.floor(Math.random() * SAMPLE_GOALS.length)];
+        var item = SAMPLE_GOALS[pickIndex % SAMPLE_GOALS.length];
+        pickIndex++;
+        return item;
     }
 
     function settleTop() {
@@ -882,7 +903,7 @@ export function initLanding() {
         row.appendChild(stamp);
         escrow -= amt;
         settledToday += won ? Math.round(amt * 1.12) : amt;
-        settledCount++;
+        if (settledCount < 54) settledCount++;
         paint();
         setTimeout(function(){
             row.classList.add('exiting');
@@ -891,7 +912,8 @@ export function initLanding() {
                 while (rowsEl.children.length < 4) {
                     rowsEl.appendChild(makeRow(pick()));
                 }
-                escrow += 1200 + Math.round(Math.random()*2400);
+                escrow += amt;
+                escrow = Math.max(8400000, Math.min(8900000, escrow));
                 paint();
             }, 420);
         }, 1500);

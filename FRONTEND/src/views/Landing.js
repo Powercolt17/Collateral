@@ -95,7 +95,10 @@ export function renderLanding() {
                                 <div class="leaf-art">
                                     <img src="/assets/images/solo-seal.png" alt="Solo Contract Seal" class="leaf-img" loading="lazy" />
                                 </div>
-                                <span class="mono mono-b">Mode 01 &middot; Solo</span>
+                                <div class="leaf-header">
+                                    <span class="mono mono-b">Mode 01 &middot; Solo</span>
+                                    <span class="mono leaf-form-ref">FORM S&ndash;01</span>
+                                </div>
                                 <h3 class="leaf-name">The only opponent is the version of you who quits</h3>
                                 <ul class="leaf-list">
                                     <li>You set the target. You don't get to move it</li>
@@ -111,8 +114,12 @@ export function renderLanding() {
                                 <div class="leaf-art">
                                     <img src="/assets/images/rivalry-seal.png" alt="Rivalry Contract Seal" class="leaf-img" loading="lazy" />
                                 </div>
-                                <span class="mono">Mode 02 &middot; Rivalry</span>
+                                <div class="leaf-header">
+                                    <span class="mono">Mode 02 &middot; Rivalry</span>
+                                    <span class="mono leaf-form-ref">FORM R&ndash;02</span>
+                                </div>
                                 <h3 class="leaf-name">Someone else is counting on you to fail</h3>
+                                <p class="rivalry-subline">TWO COUNTERPARTIES &middot; ONE ORACLE &middot; NO DRAW</p>
                                 <ul class="leaf-list">
                                     <li>Equal capital, same metric, same clock</li>
                                     <li>One oracle decides. Neither of you gets a vote</li>
@@ -127,12 +134,36 @@ export function renderLanding() {
                                 <span class="mono">Specimen</span>
                                 <span class="mono">Solo contract</span>
                             </div>
-                            <p class="demo-you">You</p>
-                            <p class="demo-vs">VS</p>
-                            <p class="demo-you">You</p>
-                            <p class="demo-amt">$1,000</p>
-                            <p class="mono">Locked by you, against you</p>
-                            <p class="demo-foot">No opponent to blame. That is the entire feature.</p>
+                            <div class="demo-main">
+                                <p class="demo-you">You</p>
+                                <p class="demo-vs">VS</p>
+                                <p class="demo-you">You</p>
+                            </div>
+                            <div class="demo-ledger">
+                                <div class="demo-row">
+                                    <span class="mono">DEPOSIT</span>
+                                    <span class="dots"></span>
+                                    <span class="mono val">$1,000</span>
+                                </div>
+                                <div class="demo-row">
+                                    <span class="mono">WINDOW</span>
+                                    <span class="dots"></span>
+                                    <span class="mono val">30 days</span>
+                                </div>
+                                <div class="demo-row">
+                                    <span class="mono">ON SUCCESS</span>
+                                    <span class="dots"></span>
+                                    <span class="mono val win">$2,500</span>
+                                </div>
+                                <div class="demo-row">
+                                    <span class="mono">ON MISS</span>
+                                    <span class="dots"></span>
+                                    <span class="mono val blood">&minus;$1,000</span>
+                                </div>
+                            </div>
+                            <div class="demo-foot-bar">
+                                <span class="mono">SPECIMEN &middot; NOT A LIVE CONTRACT</span>
+                            </div>
                         </aside>
                     </div>
                 </div>

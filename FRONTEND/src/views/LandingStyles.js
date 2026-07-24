@@ -715,7 +715,7 @@ export const landingCSS = `
   .vrule { height: 1px; }
 }
 
-.leaf { padding: 26px; display: flex; flex-direction: column; }
+.leaf { padding: 26px; display: flex; flex-direction: column; height: 100%; }
 
 .leaf--dark {
   color: #F7EDEA;
@@ -725,13 +725,35 @@ export const landingCSS = `
 .leaf--dark .mono { color: #DEBBC0; }
 .leaf--dark .link { color: #FFF; }
 
+.leaf-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+
+.leaf-form-ref {
+  font-size: 10px;
+  letter-spacing: .14em;
+  opacity: .6;
+}
+
+.rivalry-subline {
+  font-family: var(--mono);
+  font-size: 9.5px;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: #DEBBC0;
+  margin: -4px 0 14px;
+}
+
 .leaf-art {
   position: relative;
   border: 1px solid var(--rule);
   background: var(--paper);
-  margin-bottom: 24px;
+  margin-bottom: 20px;
   overflow: hidden;
-  height: 140px;
+  height: 165px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -797,34 +819,39 @@ export const landingCSS = `
 }
 
 .leaf--dark .leaf-list li::before { color: #E5B4BC; }
-.leaf .link { margin-top: auto; align-self: flex-start; }
+.leaf .link { margin-top: auto !important; align-self: flex-start; }
 
+/* ═══════════ SPECIMEN PANEL ═══════════ */
 .demo {
-  padding: 40px 30px;
-  text-align: center;
+  padding: 32px 28px;
   display: flex;
   flex-direction: column;
-  justify-content: center;
   height: 100%;
 }
 
 .demo-top {
   display: flex;
   justify-content: space-between;
-  margin-bottom: 30px;
+  margin-bottom: 24px;
+}
+
+.demo-main {
+  text-align: center;
+  margin-bottom: 20px;
 }
 
 .demo-you {
   font-family: var(--display);
-  font-size: clamp(46px, 7vw, 78px);
-  font-weight: 700;
+  font-size: clamp(44px, 6vw, 72px);
+  font-weight: 800;
   line-height: .88;
   letter-spacing: -.052em;
   text-transform: uppercase;
+  color: var(--ink) !important;
 }
 
 .demo-vs {
-  margin: 12px 0;
+  margin: 10px 0;
   font-family: var(--mono);
   font-size: 10px;
   letter-spacing: .52em;
@@ -832,22 +859,54 @@ export const landingCSS = `
   text-indent: .52em;
 }
 
-.demo-amt {
-  margin: 26px 0 6px;
-  font-family: var(--mono);
-  font-size: 32px;
-  font-weight: 500;
-  font-variant-numeric: tabular-nums;
-  color: var(--blood);
-  letter-spacing: -.02em;
+.demo-ledger {
+  margin-top: auto;
+  padding: 18px 0 14px;
+  border-top: 1px solid var(--rule);
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
 }
 
-.demo-foot {
-  margin: 24px 0 0;
-  padding-top: 18px;
-  border-top: 1px dotted var(--rule);
-  font-size: 14px;
-  color: var(--ink-2);
+.demo-row {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  font-size: 11px;
+}
+
+.demo-row .mono { font-size: 11px; color: var(--ink-3); }
+.demo-row .dots {
+  flex: 1;
+  border-bottom: 1px dotted var(--rule-strong);
+  margin: 0 4px;
+}
+
+.demo-row .val {
+  font-weight: 500;
+  color: var(--ink);
+}
+
+.demo-row .val.win { color: var(--win); font-weight: 600; }
+.demo-row .val.blood { color: var(--blood); font-weight: 600; }
+
+.demo-foot-bar {
+  margin-top: 14px;
+  padding-top: 12px;
+  border-top: 1px solid var(--rule);
+  text-align: center;
+  font-size: 10px;
+  letter-spacing: .14em;
+  color: var(--ink-3);
+}
+
+/* Section 02 explicit overrides */
+#modes .title {
+  margin-bottom: 26px !important;
+}
+
+#modes .idx-mark {
+  top: var(--section-y) !important;
 }
 
 /* ═══════════ CASE ═══════════ */

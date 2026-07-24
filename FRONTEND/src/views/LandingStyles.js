@@ -199,72 +199,6 @@ export const landingCSS = `
   text-align: center;
 }
 
-.idx-mark {
-  position: absolute;
-  top: calc(var(--section-y) - 30px);
-  right: var(--gutter);
-  font-family: var(--display);
-  font-size: 136px;
-  font-weight: 700;
-  line-height: 1;
-  letter-spacing: -.06em;
-  color: var(--ink);
-  opacity: .035;
-  pointer-events: none;
-  user-select: none;
-}
-
-@media(max-width:1140px){
-  .idx-mark { display: none; }
-}
-
-/* ═══════════ ACTIONS ═══════════ */
-.btn {
-  position: relative;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 10px;
-  min-height: 56px;
-  padding: 0 32px;
-  border: 1px solid transparent;
-  border-radius: var(--r);
-  font-family: var(--body);
-  font-size: 11.5px;
-  font-weight: 600;
-  letter-spacing: .17em;
-  text-transform: uppercase;
-  text-decoration: none;
-  cursor: pointer;
-  transition: background .3s var(--ease), color .3s var(--ease), border-color .3s var(--ease),
-    box-shadow .3s var(--ease), transform .3s var(--ease);
-}
-
-.btn:active { transform: translateY(1px); }
-
-.btn-fill {
-  background: var(--blood);
-  color: #FFF8F5 !important;
-  box-shadow: inset 0 1px 0 rgba(255,255,255,.16), 0 10px 24px -16px rgba(122,28,41,.85);
-}
-
-.btn-fill:hover {
-  background: var(--blood-deep);
-  box-shadow: inset 0 1px 0 rgba(255,255,255,.2), 0 16px 32px -16px rgba(122,28,41,.9);
-}
-
-.btn-out {
-  background: transparent;
-  border-color: var(--ink);
-  color: var(--ink) !important;
-}
-
-.btn-out:hover {
-  background: var(--ink);
-  color: var(--paper) !important;
-  box-shadow: 0 12px 26px -18px rgba(14,20,32,.8);
-}
-
 .link {
   position: relative;
   font-size: 14px;
@@ -474,36 +408,6 @@ export const landingCSS = `
   .ln-right-group { gap: 16px; }
 }
 
-/* ═══════════ HERO ═══════════ */
-.hero {
-  position: relative;
-  padding-top: var(--section-y);
-}
-
-.hero-grid {
-  display: grid;
-  grid-template-columns: 1fr 460px;
-  gap: 56px;
-  align-items: start;
-}
-
-.hero-copy {
-  margin: 0 0 32px;
-  font-size: 17.5px;
-  line-height: 1.62;
-  color: var(--ink-2);
-  max-width: 42ch;
-  text-wrap: pretty;
-}
-
-.hero-actions {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 14px;
-  margin-top: 48px;
-  margin-bottom: 36px;
-}
-
 /* ═══════════ BUTTONS & ACTIONS ═══════════ */
 .btn {
   position: relative;
@@ -570,27 +474,7 @@ export const landingCSS = `
   .idx-mark { display: none; }
 }
 
-/* ═══════════ TAPE FEED ═══════════ */
-.tape-rows {
-  position: relative;
-  min-height: 150px;
-}
-
-.bar-mini {
-  height: 2px;
-  background: var(--rule-soft);
-  margin-top: 9px;
-  overflow: hidden;
-}
-
-.bar-mini i {
-  display: block;
-  height: 100%;
-  background: var(--rule-strong);
-  transition: width 1s linear, background .5s var(--ease);
-}
-
-/* ═══════════ HERO ═══════════ */
+/* ═══════════ HERO (authoritative block) ═══════════ */
 .hero { padding-block: 88px 104px; }
 .hero-grid {
   display: grid;
@@ -615,8 +499,8 @@ export const landingCSS = `
 }
 
 .h1 .em { color: var(--blood); }
-.hero-copy { margin: 32px 0 0; max-width: 47ch; color: var(--ink-2); font-size: 17.5px; line-height: 1.68; }
-.hero-actions { display: flex; flex-wrap: wrap; gap: 14px; margin-top: 38px; }
+.hero-copy { margin: 32px 0 0; max-width: 42ch; color: var(--ink-2); font-size: 17.5px; line-height: 1.68; text-wrap: pretty; }
+.hero-actions { display: flex; flex-wrap: wrap; gap: 14px; margin-top: 48px; }
 
 .oracles {
   position: relative;
@@ -707,7 +591,7 @@ export const landingCSS = `
 
 .tape-rows {
   position: relative;
-  min-height: 300px;
+  min-height: 150px;
 }
 
 .row {
@@ -754,26 +638,10 @@ export const landingCSS = `
   color: var(--ink-4);
 }
 
-.bar-mini {
-  height: 2px;
-  background: var(--paper-deep);
-  margin-top: 9px;
-  overflow: hidden;
-}
-
-.bar-mini i {
-  display: block;
-  height: 100%;
-  background: var(--ink-4);
-  transition: width 1s linear, background .5s var(--ease);
-}
-
 .row.won { background: var(--win-wash); }
 .row.lost { background: var(--blood-wash); }
 .row.won .row-amt { color: var(--win); }
 .row.lost .row-amt { color: var(--blood); }
-.row.won .bar-mini i { background: var(--win); }
-.row.lost .bar-mini i { background: var(--blood); }
 .row.exiting { opacity: 0; transform: translateY(-10px); }
 .row.settled .row-right { opacity: 0; transition: opacity .2s; }
 
@@ -792,6 +660,13 @@ export const landingCSS = `
   pointer-events: none;
   transform-origin: center;
   animation: cl-press .46s cubic-bezier(.18,.92,.24,1) forwards;
+}
+
+/* Static stamp: rendered at mount, not triggered by settleTop — skip animation */
+.stamp.static {
+  animation: none;
+  opacity: .78;
+  transform: translateY(-50%) rotate(-11deg) scale(1);
 }
 
 .stamp.won { color: var(--win); }
@@ -2036,7 +1911,6 @@ export const landingCSS = `
     overflow: hidden;
   }
   .row-amt { font-size: 13.5px; }
-  .bar-mini { display: none; }
   .tape-rows { min-height: 0; }
   .meter-val { font-size: 21px; }
   .stamp { right: 11px; font-size: 10px; padding: 4px 8px; }

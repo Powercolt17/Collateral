@@ -22,7 +22,7 @@ export function renderLanding() {
                         <span class="logo-wordmark">COLLATERAL</span>
                     </a>
                     <div class="ln-right-group">
-                        <button class="ln-cta" id="lp-nav-cta" type="button" onclick="if(window.app && window.app.openAccessModal){ window.app.openAccessModal('login'); } else { window.router.navigate('/signin'); } return false;">SIGN IN</button>
+                        <button class="ln-cta" id="lp-nav-cta" type="button" style="background:transparent;color:#0E1420;border:1px solid #0E1420;" onclick="if(window.app && window.app.openAccessModal){ window.app.openAccessModal('login'); } else { window.router.navigate('/signin'); } return false;">SIGN IN</button>
                         <button class="ch-hamburger" id="mobile-menu-btn" aria-label="Menu" onclick="window.app.toggleMobileMenu()">
                             <div class="ch-hamburger-lines">
                                 <span></span>
@@ -768,8 +768,7 @@ export function initLanding() {
         el.dataset.amt = c.amt;
         el.dataset.win = c.win ? '1' : '0';
         el.innerHTML =
-            '<div class="row-main"><p class="row-goal"></p><p class="row-src"></p>' +
-            '<div class="bar-mini"><i style="width:' + (28 + Math.random()*46).toFixed(0) + '%"></i></div></div>' +
+            '<div class="row-main"><p class="row-goal"></p><p class="row-src"></p></div>' +
             '<div class="row-right"><span class="row-amt"></span><span class="row-state">Pending</span></div>';
         el.querySelector('.row-goal').textContent = c.goal;
         el.querySelector('.row-src').textContent  = c.src;
@@ -781,13 +780,15 @@ export function initLanding() {
         rowsEl.innerHTML = '';
         for (var i = 0; i < 4; i++) {
             var r = makeRow(pick());
-            if (i === 0) {
-                // Pre-seed top row as already settled ("won" / "Approved") on mount so stamp renders immediately
+            if (i === 2) {
+                // Pre-seed row at index 2 as already settled ("won" / "Approved")
+                // so the stamp renders immediately on first paint.
+                // Using 'stamp static won' skips the cl-press animation (which starts at opacity:0).
+                // Placed at index 2 so the queue has two pending rows at the head to settle first,
+                // keeping the stamp visible until this row's natural turn in the cycle.
                 r.classList.add('settled', 'won');
-                var fill = r.querySelector('.bar-mini i');
-                if (fill) fill.style.width = '100%';
                 var stamp = document.createElement('span');
-                stamp.className = 'stamp won';
+                stamp.className = 'stamp static won';
                 stamp.textContent = 'Approved';
                 r.appendChild(stamp);
                 var stateSpan = r.querySelector('.row-state');
@@ -812,6 +813,7 @@ export function initLanding() {
         if (!row) return;
 
         if (row.dataset.seeded === '1') {
+            // Seeded row reached the head — recycle it normally
             delete row.dataset.seeded;
             row.classList.add('exiting');
             setTimeout(function(){
@@ -824,8 +826,6 @@ export function initLanding() {
 
         var amt = +row.dataset.amt, won = row.dataset.win === '1';
         row.classList.add('settled', won ? 'won' : 'lost');
-        var fill = row.querySelector('.bar-mini i');
-        if (fill) fill.style.width = won ? '100%' : '62%';
         var stamp = document.createElement('span');
         stamp.className = 'stamp ' + (won ? 'won' : 'lost');
         stamp.textContent = won ? 'Approved' : 'Denied';

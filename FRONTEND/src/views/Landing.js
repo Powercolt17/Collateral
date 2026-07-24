@@ -662,7 +662,7 @@ export function renderLanding() {
     `;
 }
 
-export function initLanding() {
+export function initLandingEvents() {
     // Enable smooth hash scrolling for inline nav links
     document.querySelectorAll('.lp a[href^="#"]').forEach(anchor => {
         anchor.addEventListener('click', function (e) {
@@ -675,5 +675,3 @@ export function initLanding() {
         });
     });
 }
-
-export const initLandingEvents = initLanding;
